@@ -6,7 +6,7 @@ import './Home.css';
 function Home() {
   return (
     <div>
-      Hongbo Miao
+      <h1 className="title">Hongbo Miao</h1>
     </div>
   );
 }
