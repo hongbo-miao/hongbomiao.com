@@ -1,3 +1,4 @@
+import 'core-js';
 import React, {
   Suspense,
 } from 'react';
