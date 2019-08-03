@@ -29,19 +29,21 @@ function Footer() {
 
   return (
     <footer className="footer hm-footer">
-      <nav className="level">
-        <div className="level-left">
-          <p className="level-item">
+      <div className="container">
+        <nav className="level">
+          <div className="level-left">
+            <p className="level-item">
+              {renderLogos()}
+            </p>
+          </div>
+
+          <div className="level-right">
             <div className="hm-copyright">
               © 2019 H.M.
             </div>
-          </p>
-        </div>
-
-        <div className="level-right">
-          {renderLogos()}
-        </div>
-      </nav>
+          </div>
+        </nav>
+      </div>
     </footer>
   );
 }
