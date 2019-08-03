@@ -1,8 +1,9 @@
 import React from 'react';
 
-import './App.css';
+import './Home.css';
 
-function App() {
+
+function Home() {
   return (
     <div>
       Hongbo Miao
@@ -10,4 +11,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
