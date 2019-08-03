@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import 'bulma/css/bulma.css';
+import 'normalize.css';
 
 import * as serviceWorker from './serviceWorker';
 import Paths from './shared/utils/paths';
