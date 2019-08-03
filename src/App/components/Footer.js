@@ -32,15 +32,15 @@ function Footer() {
       <div className="container">
         <nav className="level">
           <div className="level-left">
-            <p className="level-item">
-              {renderLogos()}
-            </p>
+            {renderLogos()}
           </div>
 
           <div className="level-right">
-            <div className="hm-copyright">
-              © 2019 H.M.
-            </div>
+            <p className="level-item">
+              <div className="hm-copyright">
+                © 2019 H.M.
+              </div>
+            </p>
           </div>
         </nav>
       </div>
