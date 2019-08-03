@@ -1,8 +1,12 @@
 import React, {
   Suspense,
 } from 'react';
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
 import Paths from './shared/utils/paths';
