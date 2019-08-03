@@ -1,5 +1,5 @@
 const Paths = {
-  AppRootPath: '/',
+  appRootPath: '/',
 };
 
 export default Paths;
