@@ -20,7 +20,7 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src={src} className="hm-logo" alt={name} />
+              <img className="hm-logo" src={src} alt={name} />
             </a>
           </p>
         );
