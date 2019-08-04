@@ -3,6 +3,7 @@ import React, {
   Suspense,
 } from 'react';
 import {
+  BrowserRouter,
   Redirect,
   Route,
   Switch,
@@ -20,20 +21,22 @@ const HmHome = lazy(() => import('../../Home/components/Home'));
 function App() {
   return (
     <div className="hm-app">
-      <Suspense fallback={HmLoading}>
-        <Switch>
-          <Route
-            exact
-            path={Paths.appRootPath}
-            component={HmHome}
-          />
-          <Redirect
-            to={Paths.appRootPath}
-          />
-        </Switch>
-      </Suspense>
+      <BrowserRouter>
+        <Suspense fallback={<HmLoading />}>
+          <Switch>
+            <Route
+              exact
+              path={Paths.appRootPath}
+              component={HmHome}
+            />
+            <Redirect
+              to={Paths.appRootPath}
+            />
+          </Switch>
+        </Suspense>
+      </BrowserRouter>
 
-      <Suspense fallback={HmLoading}>
+      <Suspense fallback={<HmLoading />}>
         <HmFooter />
       </Suspense>
     </div>
