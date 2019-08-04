@@ -1,7 +1,6 @@
 import 'core-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 import 'bulma/css/bulma.css';
 import 'normalize.css';
 
@@ -11,11 +10,7 @@ import './index.css';
 
 
 ReactDOM.render(
-  (
-    <BrowserRouter>
-      <HmApp />
-    </BrowserRouter>
-  ),
+  <HmApp />,
   document.getElementById('root'),
 );
 
