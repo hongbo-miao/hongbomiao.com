@@ -29,7 +29,7 @@ function Footer() {
 
   return (
     <footer className="footer hm-footer">
-      <div className="container">
+      <div className="container hm-container">
         <nav className="level">
           <div className="level-left">
             {renderLogos()}
