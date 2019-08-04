@@ -6,6 +6,9 @@ cache: yarn
 
 jobs:
   include:
+    - stage: test
+      install: yarn install --frozen-lockfile
+      script: yarn test
     - stage: lighthouse
       if: type = pull_request
       install: yarn install --frozen-lockfile
