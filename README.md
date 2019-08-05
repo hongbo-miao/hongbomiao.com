@@ -1,7 +1,7 @@
 # Hongbo Miao
 
-![Netlify status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fdeveloper.oswaldlabs.com%2Fnetlify-status%2F13c2e544-91b2-4869-9ae1-bc97ff3108a4)
-![Travis (.com) branch](https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com/master)
-![David](https://img.shields.io/david/hongbo-miao/hongbomiao.com)
+[![Netlify status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fdeveloper.oswaldlabs.com%2Fnetlify-status%2F13c2e544-91b2-4869-9ae1-bc97ff3108a4)](https://app.netlify.com/sites/hongbomiao/deploys)
+[![Travis (.com) branch](https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com/master)](https://travis-ci.com/hongbo-miao/hongbomiao.com)
+[![David](https://img.shields.io/david/hongbo-miao/hongbomiao.com)](https://david-dm.org/hongbo-miao/hongbomiao.com)
 
 [hongbomiao.com](https://hongbomiao.com/)
