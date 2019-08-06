@@ -6,25 +6,25 @@ import './Footer.css';
 
 function Footer() {
   function renderLogos() {
-    return Websites.map(website => {
+    return Websites.map((website) => {
       const {
         name,
         src,
         url,
       } = website;
 
-        return (
-          <p key={name} className="level-item">
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img className="hm-logo" src={src} alt={name} />
-            </a>
-          </p>
-        );
-      });
+      return (
+        <p key={name} className="level-item">
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img className="hm-logo" src={src} alt={name} />
+          </a>
+        </p>
+      );
+    });
   }
 
   return (
