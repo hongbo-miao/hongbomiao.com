@@ -2,10 +2,10 @@ import path from 'path';
 import sm from 'sitemap';
 import fs from 'fs';
 
-import Paths from './shared/utils/paths';
+import Paths from './paths';
 
 
-const OUTPUT_FILE = path.resolve(__dirname, '..', 'public', 'sitemap.xml');
+const OUTPUT_FILE = path.resolve(__dirname, '..', '..', '..', 'public', 'sitemap.xml');
 
 const sitemap = sm.createSitemap({
   hostname: 'https://hongbomiao.com',
