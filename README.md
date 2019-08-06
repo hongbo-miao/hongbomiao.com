@@ -1,6 +1,6 @@
 # Hongbo Miao
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dc922acc14014b4abc978afd0810e56b)](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com?utm_source=github.com&utm_medium=referral&utm_content=Hongbo-Miao/hongbomiao.com&utm_campaign=Badge_Grade_Dashboard)
+[![Codacy grade](https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b)](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)
 [![Netlify status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fdeveloper.oswaldlabs.com%2Fnetlify-status%2F13c2e544-91b2-4869-9ae1-bc97ff3108a4)](https://app.netlify.com/sites/hongbomiao/deploys)
 [![Travis (.com) branch](https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com/master)](https://travis-ci.com/hongbo-miao/hongbomiao.com)
 [![David](https://img.shields.io/david/hongbo-miao/hongbomiao.com)](https://david-dm.org/hongbo-miao/hongbomiao.com)
