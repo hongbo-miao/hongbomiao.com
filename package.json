@@ -10,7 +10,8 @@
     "react-dom": "16.9.0",
     "react-router-dom": "5.0.1",
     "react-scripts": "3.1.0",
-    "sitemap": "3.2.2"
+    "sitemap": "3.2.2",
+    "snyk": "^1.216.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -20,7 +21,9 @@
     "lint": "eslint .",
     "sitemap": "babel-node src/shared/utils/build-sitemap.js",
     "prebuild": "yarn sitemap",
-    "lh": "lighthousebot"
+    "lh": "lighthousebot",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,5 +51,6 @@
     "eslint-plugin-react": "7.14.3",
     "lighthousebot": "https://github.com/GoogleChromeLabs/lighthousebot",
     "wait-for-netlify-preview": "1.2.1"
-  }
+  },
+  "snyk": true
 }
