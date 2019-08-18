@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  hongbomiao.com-prod:
+    container_name: hongbomiao.com-prod
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '80:5000'
+    environment:
+      - NODE_ENV=production
