@@ -1,0 +1,27 @@
+# base image
+FROM node:12.8.0-alpine as build
+
+# set working directory
+WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install git
+RUN apk --no-cache add git
+
+# install and cache app dependencies
+COPY package.json /app/package.json
+RUN npm install --silent
+
+# build
+COPY . /app
+RUN npm run build
+
+# remove sourcemap
+RUN rm build/static/js/*.map
+RUN rm build/static/css/*.map
+
+# serve
+RUN npm install serve -g --silent
+CMD ["serve", "-s", "build"]
