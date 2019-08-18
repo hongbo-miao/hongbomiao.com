@@ -1,9 +1,33 @@
-# Hongbo Miao
+<p align="center">
+  <a href="https://hongbomiao.com" target="_blank" rel="noopener noreferrer">
+    <img width="100" src="https://github.com/Hongbo-Miao/hongbomiao.com/blob/master/public/favicon.png" alt="Lightning">
+  </a>
+</p>
 
-[![Codacy grade](https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b)](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)
-[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/Hongbo-Miao/hongbomiao.com)](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)
-[![Netlify status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fdeveloper.oswaldlabs.com%2Fnetlify-status%2F13c2e544-91b2-4869-9ae1-bc97ff3108a4)](https://app.netlify.com/sites/hongbomiao/deploys)
-[![Travis (.com)](https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com)](https://travis-ci.com/hongbo-miao/hongbomiao.com)
-[![David](https://img.shields.io/david/hongbo-miao/hongbomiao.com)](https://david-dm.org/hongbo-miao/hongbomiao.com)
+<h2 align="center">
+  Hongbo Miao
+</h2>
 
-[hongbomiao.com](https://hongbomiao.com/)
+<p align="center">
+  <a href="https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com">
+    <img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b">
+  </a>
+  <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability">
+    <img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/Hongbo-Miao/hongbomiao.com">
+  </a>
+  <a href="https://app.netlify.com/sites/hongbomiao/deploys">
+    <img alt="Netlify status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fdeveloper.oswaldlabs.com%2Fnetlify-status%2F13c2e544-91b2-4869-9ae1-bc97ff3108a4">
+  </a>
+  <a href="https://travis-ci.com/hongbo-miao/hongbomiao.com">
+    <img alt="Travis (.com)" src="https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com">
+  </a>
+  <a href="https://david-dm.org/hongbo-miao/hongbomiao.com">
+    <img alt="David" src="https://img.shields.io/david/hongbo-miao/hongbomiao.com">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://hongbomiao.com/">
+    hongbomiao.com
+  </a>
+</p>
