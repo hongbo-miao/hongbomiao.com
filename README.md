@@ -44,6 +44,9 @@
   >
     <img alt="David" src="https://img.shields.io/david/hongbo-miao/hongbomiao.com" />
   </a>
+</p>
+
+<p align="center">
   <img alt="GitHub code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com">
   <img alt="GitHub license" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com">
 </p>
