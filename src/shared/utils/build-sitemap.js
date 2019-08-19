@@ -1,13 +1,13 @@
 import path from 'path';
-import sm from 'sitemap';
 import fs from 'fs';
+import { Sitemap } from 'sitemap';
 
 import Paths from './paths';
 
 
 const OUTPUT_FILE = path.resolve(__dirname, '..', '..', '..', 'public', 'sitemap.xml');
 
-const sitemap = sm.createSitemap({
+const sitemap = new Sitemap({
   hostname: 'https://hongbomiao.com',
   cacheTime: 10 * 60 * 1000, // 10 min, cache purge period
   urls: [
