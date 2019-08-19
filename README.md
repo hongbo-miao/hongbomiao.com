@@ -44,6 +44,7 @@
   >
     <img alt="David" src="https://img.shields.io/david/hongbo-miao/hongbomiao.com" />
   </a>
+  <img alt="GitHub code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com">
 </p>
 
 <p align="center">
