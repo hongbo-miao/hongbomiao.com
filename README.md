@@ -10,6 +10,13 @@
 
 <p align="center">
   <a
+    href="https://observatory.mozilla.org/analyze/hongbomiao.com"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img alt="Mozilla Observatory grade" src="https://img.shields.io/mozilla-observatory/grade/hongbomiao.com">
+  </a>
+  <a
     href="https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com"
     target="_blank"
     rel="noopener noreferrer"
