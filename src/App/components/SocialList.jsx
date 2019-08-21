@@ -14,7 +14,7 @@ function SocialList(props) {
     } = website;
 
     return (
-      <div key={name} className="level-item hm-social">
+      <div key={name} className="level-item hm-social-item">
         <a
           href={url}
           target="_blank"
