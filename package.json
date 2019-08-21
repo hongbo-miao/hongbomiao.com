@@ -14,12 +14,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "yarn sitemap",
     "build": "react-scripts build",
+    "postbuild": "rm build/static/js/*.map && rm build/static/css/*.map",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "sitemap": "babel-node src/shared/utils/build-sitemap.js",
-    "prebuild": "yarn sitemap",
     "lh": "lighthousebot"
   },
   "eslintConfig": {
