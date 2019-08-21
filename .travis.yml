@@ -30,4 +30,4 @@ jobs:
     - stage: lighthouse
       if: type = pull_request
       script:
-        - yarn lh "$(wait-for-netlify-preview)"
+        - yarn run lh -- "$(wait-for-netlify-preview)"
