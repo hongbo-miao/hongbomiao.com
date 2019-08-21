@@ -1,40 +1,26 @@
-import React from 'react';
+import React, {
+  lazy, Suspense,
+} from 'react';
 
+import HmLoading from '../../shared/components/Loading';
 import Websites from '../fixtures/websites';
 import './Footer.css';
 
 
+const HmSocialList = lazy(() => import('./SocialList'));
+
 function Footer() {
-  function renderLogos() {
-    return Websites.map((website) => {
-      const {
-        name,
-        src,
-        url,
-      } = website;
-
-      return (
-        <div key={name} className="level-item">
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img className="hm-logo" src={src} alt={name} />
-          </a>
-        </div>
-      );
-    });
-  }
-
   return (
     <footer className="footer hm-footer">
       <div className="container hm-container">
         <nav className="level">
           <div className="level-left">
-            {renderLogos()}
+            <Suspense fallback={<HmLoading />}>
+              <HmSocialList
+                websites={Websites}
+              />
+            </Suspense>
           </div>
-
           <div className="level-right">
             <div className="level-item">
               <div className="hm-copyright">
