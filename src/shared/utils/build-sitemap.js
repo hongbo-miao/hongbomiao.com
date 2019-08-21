@@ -1,18 +1,21 @@
 import path from 'path';
-import fs from 'fs';
+import { promises as fsp } from 'fs';
 import { Sitemap } from 'sitemap';
 
 import Paths from './paths';
 
 
-const OUTPUT_FILE = path.resolve(__dirname, '..', '..', '..', 'public', 'sitemap.xml');
+async function buildSitemap() {
+  const sitemap = new Sitemap({
+    hostname: 'https://hongbomiao.com',
+    cacheTime: 10 * 60 * 1000, // 10 min, cache purge period
+    urls: [
+      { url: Paths.appRootPath, changefreq: 'hourly', priority: 1 },
+    ],
+  });
 
-const sitemap = new Sitemap({
-  hostname: 'https://hongbomiao.com',
-  cacheTime: 10 * 60 * 1000, // 10 min, cache purge period
-  urls: [
-    { url: Paths.appRootPath, changefreq: 'hourly', priority: 1 },
-  ],
-});
+  const sitemapPath = path.resolve(__dirname, '..', '..', '..', 'public', 'sitemap.xml');
+  await fsp.writeFile(sitemapPath, String(sitemap));
+}
 
-fs.writeFileSync(OUTPUT_FILE, sitemap.toString());
+buildSitemap();
