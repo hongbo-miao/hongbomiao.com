@@ -14,7 +14,7 @@ function Footer() {
       } = website;
 
       return (
-        <p key={name} className="level-item">
+        <div key={name} className="level-item">
           <a
             href={url}
             target="_blank"
@@ -22,7 +22,7 @@ function Footer() {
           >
             <img className="hm-logo" src={src} alt={name} />
           </a>
-        </p>
+        </div>
       );
     });
   }
@@ -36,11 +36,11 @@ function Footer() {
           </div>
 
           <div className="level-right">
-            <p className="level-item">
+            <div className="level-item">
               <div className="hm-copyright">
                 © 2019 H.M.
               </div>
-            </p>
+            </div>
           </div>
         </nav>
       </div>
