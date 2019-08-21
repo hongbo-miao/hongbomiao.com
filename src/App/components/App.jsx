@@ -17,7 +17,6 @@ import './App.css';
 const HmFooter = lazy(() => import('./Footer'));
 const HmHome = lazy(() => import('../../Home/components/Home'));
 
-
 function App() {
   return (
     <div className="hm-app">
