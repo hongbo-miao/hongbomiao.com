@@ -12,12 +12,9 @@ install:
 
 jobs:
   include:
-    - stage: lint
-      script:
-        - yarn lint
-
     - stage: test
       script:
+        - yarn lint
         - yarn test
 
     - stage: coverage
