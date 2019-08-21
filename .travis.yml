@@ -9,6 +9,9 @@ notifications:
 
 jobs:
   include:
+    - stage: lint
+      install: yarn install --frozen-lockfile
+      script: yarn lint
     - stage: test
       install: yarn install --frozen-lockfile
       script: yarn test
