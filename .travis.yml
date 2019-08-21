@@ -7,21 +7,27 @@ cache: yarn
 notifications:
   email: false
 
+install:
+  - yarn install --frozen-lockfile
+
 jobs:
   include:
     - stage: lint
-      install: yarn install --frozen-lockfile
-      script: yarn lint
+      script:
+        - yarn lint
+
     - stage: test
-      install: yarn install --frozen-lockfile
-      script: yarn test
+      script:
+        - yarn test
+
     - stage: coverage
-      install: yarn install --frozen-lockfile
-      script: yarn coverage
+      script:
+        - yarn coverage
       after_script:
-        # Upload coverage reports
+        # upload coverage reports
         - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN yarn coveralls
+
     - stage: lighthouse
       if: type = pull_request
-      install: yarn install --frozen-lockfile
-      script: yarn lh "$(wait-for-netlify-preview)"
+      script:
+        - yarn lh "$(wait-for-netlify-preview)"
