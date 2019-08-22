@@ -1,3 +1,6 @@
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Hongbo-Miao/hongbomiao.com.svg)](https://greenkeeper.io/)
+
 <p align="center">
   <a href="https://hongbomiao.com"><img width="100" src="https://github.com/hongbo-miao/hongbomiao.com/blob/master/public/favicon.png" alt="Lightning" /></a>
 </p>
