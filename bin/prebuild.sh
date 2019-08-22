@@ -2,4 +2,4 @@
 
 set -e
 
-yarn sitemap
+babel-node bin/prebuild.js
