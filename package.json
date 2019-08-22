@@ -5,9 +5,9 @@
   "homepage": "https://hongbomiao.com/",
   "scripts": {
     "start": "react-scripts start",
-    "prebuild": "yarn sitemap",
+    "prebuild": "./bin/prebuild.sh",
     "build": "react-scripts build",
-    "postbuild": "rm build/static/js/*.map && rm build/static/css/*.map && babel-node src/shared/utils/updateHeaders.js",
+    "postbuild": "./bin/postbuild.sh",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "coverage": "react-scripts test --coverage",
