@@ -1,15 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
 
+import TestUtils from '../../shared/utils/testUtils';
 import HmFooter from './Footer';
 
 
 describe('Footer', () => {
   test('render Footer', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<HmFooter />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    TestUtils.testComponent(<HmFooter />);
   });
 
   test('render .hm-copyright', () => {
