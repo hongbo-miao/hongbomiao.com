@@ -2,8 +2,9 @@ import React, {
   lazy, Suspense,
 } from 'react';
 
-import HmLoading from '../../shared/components/Loading';
+import Config from '../../config';
 import Websites from '../fixtures/websites';
+import HmLoading from '../../shared/components/Loading';
 import './Footer.css';
 
 
@@ -23,9 +24,14 @@ function Footer() {
           </div>
           <div className="level-right">
             <div className="level-item">
-              <div className="hm-copyright">
+              <a
+                className="hm-copyright"
+                href={Config.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 © 2019 H.M.
-              </div>
+              </a>
             </div>
           </div>
         </nav>
