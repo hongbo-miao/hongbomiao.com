@@ -3,10 +3,7 @@ import path from 'path';
 import { promises as fsp } from 'fs';
 
 
-async function updateHeaders() {
-  const indexPath = path.resolve(__dirname, '..', '..', '..', 'build', 'index.html');
-  const index = await fsp.readFile(indexPath, 'utf-8');
-
+export function getScriptSrcHashes(index) {
   let hashes = '';
   const matches = index.match(/<script>.+?<\/script>/g);
 
@@ -25,13 +22,24 @@ async function updateHeaders() {
     });
   }
 
+  return hashes;
+}
+
+export function getHeaders(headers, hashes) {
+  const scriptSrc = `script-src 'self' ${hashes}`;
+  return headers.replace('script-src \'self\' ', scriptSrc);
+}
+
+async function updateHeaders() {
   const headersPath = path.resolve(__dirname, '..', '..', '..', 'build', '_headers');
   const headers = await fsp.readFile(headersPath, 'utf-8');
 
-  const scriptSrc = `script-src 'self' ${hashes}`;
-  const newHeaders = headers.replace('script-src \'self\' ', scriptSrc);
+  const indexPath = path.resolve(__dirname, '..', '..', '..', 'build', 'index.html');
+  const index = await fsp.readFile(indexPath, 'utf-8');
+  const hashes = getScriptSrcHashes(index);
 
+  const newHeaders = getHeaders(headers, hashes);
   await fsp.writeFile(headersPath, newHeaders);
 }
 
-updateHeaders();
+export default updateHeaders;
