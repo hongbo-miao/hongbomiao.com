@@ -1,16 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
 
-import HmSocialList from './SocialList';
+import TestUtils from '../../shared/utils/testUtils';
 import Websites from '../fixtures/websites';
+import HmSocialList from './SocialList';
 
 
 describe('SocialList', () => {
   test('render SocialList', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<HmSocialList websites={Websites} />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    TestUtils.testComponent(<HmSocialList websites={Websites} />);
   });
 
   test('render .hm-social-item', () => {

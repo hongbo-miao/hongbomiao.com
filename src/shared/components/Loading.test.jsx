@@ -1,13 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
+import TestUtils from '../utils/testUtils';
 import HmLoading from './Loading';
 
 
 describe('Loading', () => {
   test('render Loading', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<HmLoading />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    TestUtils.testComponent(<HmLoading />);
   });
 });
