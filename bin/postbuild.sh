@@ -4,4 +4,4 @@ set -e
 
 rm build/static/js/*.map
 rm build/static/css/*.map
-babel-node src/shared/utils/updateHeaders.js
+babel-node bin/postbuild.js
