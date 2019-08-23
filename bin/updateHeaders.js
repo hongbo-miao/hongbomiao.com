@@ -1,7 +1,7 @@
 import path from 'path';
 import { promises as fsp } from 'fs';
 
-import getHeaders from '../src/shared/utils/getHeaders';
+import insertHashesToScriptSrc from '../src/shared/utils/insertHashesToScriptSrc';
 import getScriptSrcHashes from '../src/shared/utils/getScriptSrcHashes';
 
 
@@ -13,7 +13,7 @@ async function updateHeaders() {
   const index = await fsp.readFile(indexPath, 'utf-8');
   const hashes = getScriptSrcHashes(index);
 
-  const newHeaders = getHeaders(headers, hashes);
+  const newHeaders = insertHashesToScriptSrc(headers, hashes);
   await fsp.writeFile(headersPath, newHeaders);
 }
 
