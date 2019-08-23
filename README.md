@@ -3,8 +3,14 @@
 </p>
 
 <h2 align="center">
-  Hongbo Miao
+  HONGBO MIAO
 </h2>
+
+<p align="center">
+  Making magic happen
+</p>
+
+<br />
 
 <p align="center">
   <a href="https://app.netlify.com/sites/hongbomiao/deploys"><img alt="Netlify status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fdeveloper.oswaldlabs.com%2Fnetlify-status%2F13c2e544-91b2-4869-9ae1-bc97ff3108a4" /></a>
