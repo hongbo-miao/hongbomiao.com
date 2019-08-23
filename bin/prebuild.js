@@ -1,4 +1,4 @@
-import buildSitemap from '../src/shared/utils/buildSitemap';
+import buildSitemap from './buildSitemap';
 
 
 buildSitemap();
