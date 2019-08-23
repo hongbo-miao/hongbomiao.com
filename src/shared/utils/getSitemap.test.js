@@ -1,8 +1,8 @@
-import { getSitemap } from './buildSitemap';
+import getSitemap from './getSitemap';
 
 
-describe('buildSitemap', () => {
-  test('getSitemap', () => {
+describe('getSitemap', () => {
+  test('get sitemap', () => {
     const hostname = 'https://example.com';
     const cacheTime = 10 * 60 * 1000;
     const urls = [
