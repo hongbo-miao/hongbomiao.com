@@ -1,4 +1,4 @@
-import updateHeaders from '../src/shared/utils/updateHeaders';
+import updateHeaders from './updateHeaders';
 
 
 updateHeaders();
