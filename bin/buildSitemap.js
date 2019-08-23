@@ -1,17 +1,9 @@
 import path from 'path';
 import { promises as fsp } from 'fs';
-import { Sitemap } from 'sitemap';
 
-import Paths from './paths';
+import Paths from '../src/shared/utils/paths';
+import getSitemap from '../src/shared/utils/getSitemap';
 
-
-export function getSitemap(hostname, cacheTime, urls) {
-  return new Sitemap({
-    hostname,
-    cacheTime,
-    urls,
-  });
-}
 
 async function buildSitemap() {
   const hostname = 'https://hongbomiao.com';
@@ -19,7 +11,7 @@ async function buildSitemap() {
   const urls = [
     { url: Paths.appRootPath, changefreq: 'hourly', priority: 1 },
   ];
-  const sitemapPath = path.resolve(__dirname, '..', '..', '..', 'public', 'sitemap.xml');
+  const sitemapPath = path.resolve(__dirname, '..', 'public', 'sitemap.xml');
 
   const sitemap = getSitemap(hostname, cacheTime, urls);
   await fsp.writeFile(sitemapPath, String(sitemap));
