@@ -2,15 +2,17 @@ import React, {
   lazy, Suspense,
 } from 'react';
 
-import Config from '../../config';
 import Websites from '../fixtures/websites';
 import HmLoading from '../../shared/components/Loading';
 import './Footer.css';
 
 
+const HmCopyright = lazy(() => import('./Copyright'));
 const HmSocialList = lazy(() => import('./SocialList'));
 
 function Footer() {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="footer hm-footer">
       <div className="container hm-container">
@@ -24,14 +26,11 @@ function Footer() {
           </div>
           <div className="level-right">
             <div className="level-item">
-              <a
-                className="hm-copyright"
-                href={Config.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                © 2019 H.M.
-              </a>
+              <Suspense fallback={<HmLoading />}>
+                <HmCopyright
+                  year={year}
+                />
+              </Suspense>
             </div>
           </div>
         </nav>
