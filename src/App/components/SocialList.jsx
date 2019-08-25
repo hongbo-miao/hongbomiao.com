@@ -4,7 +4,9 @@ import './SocialList.css';
 
 
 function SocialList(props) {
-  const { websites } = props;
+  const {
+    websites,
+  } = props;
 
   return websites.map((website) => {
     const {
