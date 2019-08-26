@@ -1,8 +1,8 @@
 import { ISitemapOptions, Sitemap } from 'sitemap';
 
 
-function getSitemap(options: ISitemapOptions): string {
-  return String(new Sitemap(options));
-}
+const getSitemap = (options: ISitemapOptions): string => (
+  String(new Sitemap(options))
+);
 
 export default getSitemap;
