@@ -1,10 +1,11 @@
+import Website from '../typings/website';
 import githubLogo from '../images/github.svg';
 import linkedinLogo from '../images/linkedin.svg';
 import pinterestLogo from '../images/pinterest.svg';
 import twitterLogo from '../images/twitter.svg';
 
 
-const Websites = [
+const WEBSITES: Website[] = [
   {
     name: 'Pinterest',
     src: pinterestLogo,
@@ -27,4 +28,4 @@ const Websites = [
   },
 ];
 
-export default Websites;
+export default WEBSITES;
