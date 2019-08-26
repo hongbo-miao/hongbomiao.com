@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 
 
-function testComponent(component) {
+function testComponent(component: any): void {
   const div = document.createElement('div');
   ReactDOM.render(component, div);
   ReactDOM.unmountComponentAtNode(div);

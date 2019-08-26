@@ -6,6 +6,6 @@ import HmCopyright from './Copyright';
 
 describe('Copyright', () => {
   test('render Copyright', () => {
-    TestUtils.testComponent(<HmCopyright />);
+    TestUtils.testComponent(<HmCopyright year={1990} />);
   });
 });
