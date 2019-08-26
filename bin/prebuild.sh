@@ -2,4 +2,5 @@
 
 set -e
 
-babel-node bin/prebuild.js
+yarn run babel bin --out-dir tmp --extensions '.ts,.tsx'
+babel-node tmp/prebuild.js
