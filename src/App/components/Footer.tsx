@@ -10,7 +10,7 @@ import './Footer.css';
 const HmCopyright = lazy(() => import('./Copyright'));
 const HmSocialList = lazy(() => import('./SocialList'));
 
-function Footer() {
+const Footer: React.FC = () => {
   const year = new Date().getFullYear();
 
   return (
@@ -37,6 +37,6 @@ function Footer() {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;
