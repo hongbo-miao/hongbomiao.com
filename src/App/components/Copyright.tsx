@@ -4,7 +4,11 @@ import Config from '../../config';
 import './Copyright.css';
 
 
-function Copyright(props) {
+interface Props {
+  year: number;
+}
+
+const Copyright: React.FC<Props> = (props: Props) => {
   const {
     year,
   } = props;
@@ -21,6 +25,6 @@ function Copyright(props) {
       {copyright}
     </a>
   );
-}
+};
 
 export default Copyright;

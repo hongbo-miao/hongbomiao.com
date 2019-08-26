@@ -3,12 +3,22 @@ import React from 'react';
 import './SocialList.css';
 
 
-function SocialList(props) {
+interface Website {
+  name: string;
+  src: string;
+  url: string;
+}
+
+export interface Props {
+  websites: Array<Website>;
+}
+
+const SocialList: React.FC<Props> = (props: Props) => {
   const {
     websites,
   } = props;
 
-  return websites.map((website) => {
+  const socialListItems = websites.map((website) => {
     const {
       name,
       src,
@@ -27,6 +37,12 @@ function SocialList(props) {
       </div>
     );
   });
-}
+
+  return (
+    <>
+      {socialListItems}
+    </>
+  );
+};
 
 export default SocialList;
