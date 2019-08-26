@@ -1,8 +1,9 @@
 import React, {
-  lazy, Suspense,
+  lazy,
+  Suspense,
 } from 'react';
 
-import Websites from '../fixtures/websites';
+import WEBSITES from '../fixtures/websites';
 import HmLoading from '../../shared/components/Loading';
 import './Footer.css';
 
@@ -20,7 +21,7 @@ const Footer: React.FC = () => {
           <div className="level-left">
             <Suspense fallback={<HmLoading />}>
               <HmSocialList
-                websites={Websites}
+                websites={WEBSITES}
               />
             </Suspense>
           </div>
