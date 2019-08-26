@@ -1,10 +1,8 @@
 import React from 'react';
 
 
-function Loading() {
-  return (
-    <div />
-  );
-}
+const Loading: React.FC = () => (
+  <div />
+);
 
 export default Loading;
