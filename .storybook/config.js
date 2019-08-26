@@ -6,10 +6,10 @@ import 'normalize.css';
 import '../src/index.css';
 
 
-const req = requireContext('../src', true, /\.stories\.jsx$/);
+const req = requireContext('../src', true, /\.stories\.tsx$/);
 
 function loadStories() {
-  req.keys().forEach(filename => req(filename));
+  req.keys().forEach(req);
 }
 
 configure(loadStories, module);
