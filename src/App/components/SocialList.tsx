@@ -1,16 +1,11 @@
 import React from 'react';
 
+import { Website } from '../typings/website';
 import './SocialList.css';
 
 
-interface Website {
-  name: string;
-  src: string;
-  url: string;
-}
-
-export interface Props {
-  websites: Array<Website>;
+interface Props {
+  websites: Website[];
 }
 
 const SocialList: React.FC<Props> = (props: Props) => {
