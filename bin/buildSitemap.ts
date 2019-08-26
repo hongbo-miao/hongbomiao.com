@@ -9,7 +9,7 @@ import Paths from '../src/shared/utils/paths';
 import getSitemap from './getSitemap';
 
 
-async function buildSitemap(): Promise<void> {
+const buildSitemap = async (): Promise<void> => {
   const sitemapOptions: ISitemapOptions = {
     hostname: 'https://hongbomiao.com',
     cacheTime: 10 * 60 * 1000, // 10 min, cache purge period
@@ -21,6 +21,6 @@ async function buildSitemap(): Promise<void> {
 
   const sitemap = getSitemap(sitemapOptions);
   await fsp.writeFile(sitemapPath, sitemap);
-}
+};
 
 export default buildSitemap;
