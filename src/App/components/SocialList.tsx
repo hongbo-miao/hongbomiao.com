@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Website } from '../typings/website';
+import Website from '../typings/website';
 import './SocialList.css';
 
 
