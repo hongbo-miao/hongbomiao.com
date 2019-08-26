@@ -20,7 +20,7 @@ module.exports = {
   },
   env: {
     browser: true,
-    jest: true
+    jest: true,
   },
   rules: {
     'import/no-extraneous-dependencies': ['error', {
@@ -32,5 +32,5 @@ module.exports = {
     'spaced-comment': ['error', 'always', {
       'markers': ['/'],
     }],
-  }
+  },
 };
