@@ -17,29 +17,27 @@ import './App.css';
 const HmFooter = lazy(() => import('./Footer'));
 const HmHome = lazy(() => import('../../Home/components/Home'));
 
-function App() {
-  return (
-    <div className="hm-app">
-      <BrowserRouter>
-        <Suspense fallback={<HmLoading />}>
-          <Switch>
-            <Route
-              exact
-              path={Paths.appRootPath}
-              component={HmHome}
-            />
-            <Redirect
-              to={Paths.appRootPath}
-            />
-          </Switch>
-        </Suspense>
-      </BrowserRouter>
-
+const App: React.FC = () => (
+  <div className="hm-app">
+    <BrowserRouter>
       <Suspense fallback={<HmLoading />}>
-        <HmFooter />
+        <Switch>
+          <Route
+            exact
+            path={Paths.appRootPath}
+            component={HmHome}
+          />
+          <Redirect
+            to={Paths.appRootPath}
+          />
+        </Switch>
       </Suspense>
-    </div>
-  );
-}
+    </BrowserRouter>
+
+    <Suspense fallback={<HmLoading />}>
+      <HmFooter />
+    </Suspense>
+  </div>
+);
 
 export default App;

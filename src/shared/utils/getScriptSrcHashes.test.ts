@@ -1,4 +1,4 @@
-import getScriptSrcHashes from './getScriptSrcHashes';
+import getScriptSrcHashes from '../../../bin/getScriptSrcHashes';
 
 
 describe('getScriptSrcHashes', () => {

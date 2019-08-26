@@ -13,7 +13,7 @@ describe('index', () => {
     document.body.appendChild(div);
 
     // eslint-disable-next-line global-require
-    require('./index.jsx');
+    require('./index.tsx');
     expect(ReactDOM.render).toHaveBeenCalledWith(<HmApp />, div);
   });
 });

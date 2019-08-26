@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
 
-function getScriptSrcHashes(index) {
+function getScriptSrcHashes(index: string): string {
   let hashes = '';
   const matches = index.match(/<script>.+?<\/script>/g);
 
