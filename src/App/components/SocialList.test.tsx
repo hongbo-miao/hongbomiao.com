@@ -5,7 +5,6 @@ import WEBSITES from '../fixtures/websites';
 import TestUtils from '../../shared/utils/testUtils';
 import HmSocialList from './SocialList';
 
-
 describe('SocialList', () => {
   test('render SocialList', () => {
     TestUtils.testComponent(<HmSocialList websites={WEBSITES} />);

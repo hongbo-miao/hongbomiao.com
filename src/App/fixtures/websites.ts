@@ -4,7 +4,6 @@ import linkedinLogo from '../images/linkedin.svg';
 import pinterestLogo from '../images/pinterest.svg';
 import twitterLogo from '../images/twitter.svg';
 
-
 const WEBSITES: Website[] = [
   {
     name: 'Pinterest',
