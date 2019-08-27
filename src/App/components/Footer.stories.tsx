@@ -3,6 +3,4 @@ import { storiesOf } from '@storybook/react';
 
 import HmFooter from './Footer';
 
-
-storiesOf('Footer', module)
-  .add('default', () => <HmFooter />);
+storiesOf('Footer', module).add('default', () => <HmFooter />);

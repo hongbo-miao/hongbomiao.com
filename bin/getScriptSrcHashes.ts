@@ -1,20 +1,15 @@
 import crypto from 'crypto';
 
-
 const getScriptSrcHashes = (index: string): string => {
   let hashes = '';
   const matches = index.match(/<script>.+?<\/script>/g);
 
   if (matches) {
-    matches.forEach((scriptTag) => {
+    matches.forEach(scriptTag => {
       const hash = crypto.createHash('sha256');
-      const content = scriptTag
-        .replace('<script>', '')
-        .replace('</script>', '');
+      const content = scriptTag.replace('<script>', '').replace('</script>', '');
 
-      const sha256 = hash
-        .update(content)
-        .digest('base64');
+      const sha256 = hash.update(content).digest('base64');
 
       hashes += `'sha256-${sha256}' `;
     });
