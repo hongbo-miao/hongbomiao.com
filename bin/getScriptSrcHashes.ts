@@ -6,11 +6,11 @@ const getScriptSrcHashes = (index: string): string => {
 
   if (matches) {
     matches.forEach(scriptTag => {
-      const hash = crypto.createHash('sha256');
       const content = scriptTag.replace('<script>', '').replace('</script>', '');
-
-      const sha256 = hash.update(content).digest('base64');
-
+      const sha256 = crypto
+        .createHash('sha256')
+        .update(content)
+        .digest('base64');
       hashes += `'sha256-${sha256}' `;
     });
   }
