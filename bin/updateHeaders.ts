@@ -4,7 +4,6 @@ import { promises as fsp } from 'fs';
 import insertHashesToScriptSrc from './insertHashesToScriptSrc';
 import getScriptSrcHashes from './getScriptSrcHashes';
 
-
 const updateHeaders = async (): Promise<void> => {
   const headersPath = path.resolve(__dirname, '..', 'build', '_headers');
   const headers = await fsp.readFile(headersPath, 'utf-8');
