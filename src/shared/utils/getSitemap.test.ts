@@ -1,6 +1,6 @@
 import { EnumChangefreq, ISitemapOptions } from 'sitemap';
 
-import getSitemap from '../../../bin/getSitemap';
+import getSitemap from '../../../scripts/getSitemap';
 
 describe('getSitemap', () => {
   test('get sitemap', () => {
