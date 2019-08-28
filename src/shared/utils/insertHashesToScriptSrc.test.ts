@@ -1,4 +1,4 @@
-import insertHashesToScriptSrc from '../../../bin/insertHashesToScriptSrc';
+import insertHashesToScriptSrc from '../../../scripts/insertHashesToScriptSrc';
 
 describe('insertHashesToScriptSrc', () => {
   test('insert hash in script-src', () => {
