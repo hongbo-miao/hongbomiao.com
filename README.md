@@ -28,9 +28,9 @@
 </p>
 
 <p align="center">
-  <img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" />
-  <img alt="Code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com" />
-  <img alt="License" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com" />
+  <a href="https://github.com/prettier/prettier"><img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" /></a>
+  <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com" /></a>
+  <a href="https://github.com/Hongbo-Miao/hongbomiao.com/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com" /></a>
 </p>
 
 <p align="center">
