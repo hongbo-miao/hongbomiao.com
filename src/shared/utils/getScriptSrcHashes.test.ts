@@ -1,4 +1,4 @@
-import getScriptSrcHashes from '../../../bin/getScriptSrcHashes';
+import getScriptSrcHashes from '../../../scripts/getScriptSrcHashes';
 
 describe('getScriptSrcHashes', () => {
   test('hash usage for script element with content', () => {

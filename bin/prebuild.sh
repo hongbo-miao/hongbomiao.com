@@ -2,5 +2,5 @@
 
 set -e
 
-yarn run babel bin --out-dir tmp --extensions '.ts,.tsx'
+yarn run babel scripts --out-dir tmp --extensions '.ts,.tsx'
 babel-node tmp/runBuildSitemap.js
