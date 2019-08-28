@@ -3,4 +3,4 @@
 set -e
 
 yarn run babel bin --out-dir tmp --extensions '.ts,.tsx'
-babel-node tmp/prebuild.js
+babel-node tmp/runBuildSitemap.js
