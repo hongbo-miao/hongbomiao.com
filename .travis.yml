@@ -23,8 +23,12 @@ jobs:
         - yarn test
         - yarn test:coverage
       after_script:
-        # upload coverage reports
+        # Upload coverage reports to Coveralls
         - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN yarn coveralls
+
+    - stage: storybook
+      script:
+        - CHROMATIC_APP_CODE=$CHROMATIC_APP_CODE yarn run chromatic
 
     - stage: lighthouse
       if: type = pull_request
