@@ -28,8 +28,9 @@
 </p>
 
 <p align="center">
-  <img alt="GitHub code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com" />
-  <img alt="GitHub license" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com" />
+  <img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" />
+  <img alt="Code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com" />
+  <img alt="License" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com" />
 </p>
 
 <p align="center">

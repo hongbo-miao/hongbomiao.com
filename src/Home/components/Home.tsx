@@ -4,7 +4,6 @@ import hatImage from '../images/hat.png';
 import magicImage from '../images/magic.png';
 import './Home.css';
 
-
 const Home: React.FC = () => (
   <div className="hm-home">
     <div className="container hm-container">
