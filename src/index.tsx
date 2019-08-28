@@ -8,10 +8,6 @@ import * as serviceWorker from './shared/lib/serviceWorker';
 import HmApp from './App/components/App';
 import './index.css';
 
-
-ReactDOM.render(
-  <HmApp />,
-  document.getElementById('root'),
-);
+ReactDOM.render(<HmApp />, document.getElementById('root'));
 
 serviceWorker.register();
