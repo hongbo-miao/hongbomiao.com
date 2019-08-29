@@ -3,13 +3,13 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import Paths from '../../shared/utils/paths';
 import HmLoading from '../../shared/components/Loading';
-import './App.css';
+import styles from './App.module.css';
 
 const HmFooter = lazy(() => import('./Footer'));
 const HmHome = lazy(() => import('../../Home/components/Home'));
 
 const App: React.FC = () => (
-  <div className="hm-app">
+  <div className={styles.hmApp}>
     <BrowserRouter>
       <Suspense fallback={<HmLoading />}>
         <Switch>

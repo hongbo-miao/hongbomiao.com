@@ -10,8 +10,8 @@ describe('SocialList', () => {
     TestUtils.testComponent(<HmSocialList websites={WEBSITES} />);
   });
 
-  test('render .hm-social-item', () => {
+  test('render .level-item', () => {
     const wrapper = shallow(<HmSocialList websites={WEBSITES} />);
-    expect(wrapper.find('.hm-social-item')).toHaveLength(WEBSITES.length);
+    expect(wrapper.find('.level-item')).toHaveLength(WEBSITES.length);
   });
 });
