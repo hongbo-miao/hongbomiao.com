@@ -1,7 +1,7 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy } from 'react';
 
 import WEBSITES from '../fixtures/websites';
-import HmLoading from '../../shared/components/Loading';
+import LazyComponent from '../../shared/components/LazyComponent';
 import styles from './Footer.module.css';
 
 const HmCopyright = lazy(() => import('./Copyright'));
@@ -15,15 +15,15 @@ const Footer: React.FC = () => {
       <div className={`container ${styles.hmContainer}`}>
         <nav className="level">
           <div className="level-left">
-            <Suspense fallback={<HmLoading />}>
+            <LazyComponent>
               <HmSocialList websites={WEBSITES} />
-            </Suspense>
+            </LazyComponent>
           </div>
           <div className="level-right">
             <div className="level-item">
-              <Suspense fallback={<HmLoading />}>
+              <LazyComponent>
                 <HmCopyright year={year} />
-              </Suspense>
+              </LazyComponent>
             </div>
           </div>
         </nav>
