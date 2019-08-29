@@ -1,8 +1,8 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import Paths from '../../shared/utils/paths';
-import HmLoading from '../../shared/components/Loading';
+import LazyComponent from '../../shared/components/LazyComponent';
 import styles from './App.module.css';
 
 const HmFooter = lazy(() => import('./Footer'));
@@ -11,17 +11,17 @@ const HmHome = lazy(() => import('../../Home/components/Home'));
 const App: React.FC = () => (
   <div className={styles.hmApp}>
     <BrowserRouter>
-      <Suspense fallback={<HmLoading />}>
+      <LazyComponent>
         <Switch>
           <Route exact path={Paths.appRootPath} component={HmHome} />
           <Redirect to={Paths.appRootPath} />
         </Switch>
-      </Suspense>
+      </LazyComponent>
     </BrowserRouter>
 
-    <Suspense fallback={<HmLoading />}>
+    <LazyComponent>
       <HmFooter />
-    </Suspense>
+    </LazyComponent>
   </div>
 );
 
