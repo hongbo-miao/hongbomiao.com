@@ -39,5 +39,9 @@
 </p>
 
 <p align="center">
+  <a href="https://www.chromaticqa.com/library?appId=5d626a63a601530020759b10"><img alt="Storybook" src="https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg" /></a>
+</p>
+
+<p align="center">
   <a href="https://hongbomiao.com/">hongbomiao.com</a>
 </p>
