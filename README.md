@@ -13,7 +13,7 @@
 <br />
 
 <p align="center">
-  <a href="https://app.netlify.com/sites/hongbomiao/deploys"><img alt="Netlify status" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fdeveloper.oswaldlabs.com%2Fnetlify-status%2F13c2e544-91b2-4869-9ae1-bc97ff3108a4" /></a>
+  <a href="https://app.netlify.com/sites/hongbomiao/deploys"><img alt="Netlify" src="https://img.shields.io/netlify/13c2e544-91b2-4869-9ae1-bc97ff3108a4"></a>
   <a href="https://travis-ci.com/hongbo-miao/hongbomiao.com"><img alt="Travis (.com)" src="https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com/master" /></a>
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com.svg?type=shield" alt="FOSSA Status" /></a>
   <a href="https://david-dm.org/hongbo-miao/hongbomiao.com"><img alt="David" src="https://img.shields.io/david/hongbo-miao/hongbomiao.com" /></a>
