@@ -14,8 +14,8 @@
 
 <p align="center">
   <a href="https://app.netlify.com/sites/hongbomiao/deploys"><img alt="Netlify" src="https://img.shields.io/netlify/13c2e544-91b2-4869-9ae1-bc97ff3108a4"></a>
-  <a href="https://travis-ci.com/hongbo-miao/hongbomiao.com"><img alt="Travis (.com)" src="https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com/master" /></a>
-  <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com.svg?type=shield" alt="FOSSA Status" /></a>
+  <a href="https://travis-ci.com/hongbo-miao/hongbomiao.com"><img alt="Travis" src="https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com/master" /></a>
+  <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com"><img alt="FOSSA Status" src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com.svg?type=shield" /></a>
   <a href="https://david-dm.org/hongbo-miao/hongbomiao.com"><img alt="David" src="https://img.shields.io/david/hongbo-miao/hongbomiao.com" /></a>
   <a href="https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements"><img alt="Requires.io requirements status" src="https://img.shields.io/requires/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://stats.uptimerobot.com/RoOoGTvyWN"><img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m783305207-c7842815153e530df85633fe" /></a>
