@@ -27,6 +27,7 @@ jobs:
         - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN yarn coveralls
 
     - stage: storybook
+      if: type = push
       script:
         - CHROMATIC_APP_CODE=$CHROMATIC_APP_CODE yarn run chromatic
 
