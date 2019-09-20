@@ -31,7 +31,7 @@ jobs:
         # run chromatic only when a build does not originate from a pull request (push build), or when it is a pull request build originating from a fork
         - |
           if [[ $TRAVIS_PULL_REQUEST_SLUG != $TRAVIS_REPO_SLUG ]]; then
-            CHROMATIC_APP_CODE=$CHROMATIC_APP_CODE yarn run chromatic
+            yarn run chromatic
           fi
 
     - stage: lighthouse
