@@ -47,3 +47,32 @@
 <p align="center">
   <a href="https://hongbomiao.com/">hongbomiao.com</a>
 </p>
+
+---
+
+# Introduction
+
+An experiment to replace myself as much as possible.
+
+## Bots / Services / Technologies
+
+- TypeScript for static type-checking
+- ESLint, Stylelint, Prettier check and format code style
+- Jest, Enzyme for testing
+- Coveralls for test coverage
+- Storybook, Chromatic for visual testing
+- Renovate, Dependabot update dependencies
+- ImgBot optimizes images
+- Lighthouse Bot reviews performance, accessibility, best practices, SEO, PWA
+- Codacy, Code Climate, LGTM, CodeFactor review codes
+- Mozilla Observatory, Synk monitor security
+- FOSSA scans licenses
+- PurgeCSS removes unused CSS
+- Mergify merges the code
+- Netlify, Docker deploy
+- Travis runs the CI/CD
+- Stale closes stale issues and pull requests
+- Delete merged branch deletes merged branches
+- Requires.io, David monitor dependency status
+- Uptime Robot monitors downtime
+
