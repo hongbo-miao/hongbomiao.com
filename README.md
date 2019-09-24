@@ -56,6 +56,7 @@ An experiment to replace myself as much as possible.
 
 ## Bots / Services / Technologies
 
+- React as front-end framework
 - TypeScript for static type-checking
 - ESLint, Stylelint, Prettier check and format code style
 - Jest, Enzyme for testing
@@ -75,4 +76,4 @@ An experiment to replace myself as much as possible.
 - Delete merged branch deletes merged branches
 - Requires.io, David monitor dependency status
 - Uptime Robot monitors downtime
-
+- Google Tag Manager, Google Analytics, FullStory for data and experience analytics
