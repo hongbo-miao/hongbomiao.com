@@ -53,7 +53,7 @@
 
 # Introduction
 
-An experiment to replace myself as much as possible.
+An automation experiment to replace myself.
 
 ## Bots / Services / Technologies
 
