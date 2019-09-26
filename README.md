@@ -19,13 +19,14 @@
   <a href="https://david-dm.org/hongbo-miao/hongbomiao.com"><img alt="David" src="https://img.shields.io/david/hongbo-miao/hongbomiao.com" /></a>
   <a href="https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements"><img alt="Requires.io requirements status" src="https://img.shields.io/requires/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://stats.uptimerobot.com/RoOoGTvyWN"><img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m783305207-c7842815153e530df85633fe" /></a>
+  <a href="https://hstspreload.org/?domain=hongbomiao.com"><img alt="Chromium HSTS preload" src="https://img.shields.io/hsts/preload/hongbomiao.com" /></a>
 </p>
 
 <p align="center">
   <a href="https://observatory.mozilla.org/analyze/hongbomiao.com"><img alt="Mozilla Observatory grade" src="https://img.shields.io/mozilla-observatory/grade/hongbomiao.com" /></a>
+  <a href="https://securityheaders.com/?q=https%3A%2F%2Fhongbomiao.com"><img alt="Security Headers" src="https://img.shields.io/security-headers?url=https%3A%2F%2Fhongbomiao.com" /></a>
   <a href="https://app.codacy.com/app/hongbo-miao/hongbomiao.com"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
   <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/Hongbo-Miao/hongbomiao.com" /></a>
-  <a href="https://hstspreload.org/?domain=hongbomiao.com"><img alt="Chromium HSTS preload" src="https://img.shields.io/hsts/preload/hongbomiao.com" /></a>
   <a href="https://coveralls.io/github/Hongbo-Miao/hongbomiao.com"><img alt="Coveralls" src="https://img.shields.io/coveralls/github/Hongbo-Miao/hongbomiao.com" /></a>
 </p>
 
@@ -66,7 +67,7 @@ An experiment to replace myself as much as possible.
 - ImgBot optimizes images
 - Lighthouse Bot reviews performance, accessibility, best practices, SEO, PWA
 - Codacy, Code Climate, LGTM, CodeFactor review codes
-- Mozilla Observatory, Synk monitor security
+- Mozilla Observatory, Security Headers, Synk monitor security
 - FOSSA scans licenses
 - PurgeCSS removes unused CSS
 - Mergify merges the code
