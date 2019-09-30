@@ -79,3 +79,9 @@ An automation experiment to replace myself.
 - Uptime Robot monitors downtime
 - Google Tag Manager, Google Analytics, FullStory for data and experience analytics
 - ZenHub for agile project management 
+
+## Automation Example
+
+This [pull request](https://github.com/Hongbo-Miao/hongbomiao.com/pull/234) shows how these bots / services / technologies work together from different aspects to achieve 100% automation without human interaction.
+
+![image](https://user-images.githubusercontent.com/3375461/65900482-f6503180-e36a-11e9-907e-dca26cca356c.png)
