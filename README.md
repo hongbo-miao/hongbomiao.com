@@ -51,7 +51,7 @@
 
 ---
 
-# Introduction
+## Introduction
 
 An automation experiment to replace myself.
 
