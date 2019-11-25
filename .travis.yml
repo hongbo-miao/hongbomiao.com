@@ -11,6 +11,9 @@ cache: yarn
 notifications:
   email: false
 
+before_install:
+  - yarn global add @lhci/cli
+
 install:
   - yarn install --frozen-lockfile
 
@@ -37,4 +40,7 @@ jobs:
     - stage: lighthouse
       if: type = pull_request
       script:
-        - yarn run lh --perf 70 --pwa 70 --a11y 70 --bp 70 --seo 70 "$(wait-for-netlify-preview)"
+        - yarn build
+        - lhci autorun
+      addons:
+        chrome: stable
