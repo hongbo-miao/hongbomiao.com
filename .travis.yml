@@ -31,16 +31,18 @@ jobs:
 
     - stage: storybook
       script:
-        # run chromatic only when a build does not originate from a pull request (push build), or when it is a pull request build originating from a fork
+        # Run chromatic only when a build does not originate from a pull request (push build), or when it is a pull request build originating from a fork
         - |
           if [[ $TRAVIS_PULL_REQUEST_SLUG != $TRAVIS_REPO_SLUG ]]; then
             yarn run chromatic
           fi
 
     - stage: lighthouse
-      if: type = pull_request
       script:
         - yarn build
         - lhci autorun
+      after_script:
+        # Set the results as GitHub status checks
+        - lhci upload
       addons:
         chrome: stable
