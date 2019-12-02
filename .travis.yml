@@ -40,6 +40,6 @@ jobs:
     - stage: lighthouse
       script:
         - yarn build
-        - lhci autorun
+        - lhci autorun --upload.target=temporary-public-storage
       addons:
         chrome: stable
