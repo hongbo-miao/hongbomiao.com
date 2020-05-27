@@ -5,12 +5,9 @@ const getScriptSrcHashes = (index: string): string => {
   const matches = index.match(/<script>.+?<\/script>/g);
 
   if (matches) {
-    matches.forEach(scriptTag => {
+    matches.forEach((scriptTag) => {
       const content = scriptTag.replace('<script>', '').replace('</script>', '');
-      const sha256 = crypto
-        .createHash('sha256')
-        .update(content)
-        .digest('base64');
+      const sha256 = crypto.createHash('sha256').update(content).digest('base64');
       hashes += `'sha256-${sha256}' `;
     });
   }
