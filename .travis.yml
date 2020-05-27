@@ -11,9 +11,6 @@ cache: yarn
 notifications:
   email: false
 
-before_install:
-  - yarn global add @lhci/cli
-
 install:
   - yarn install --frozen-lockfile
 
@@ -40,6 +37,6 @@ jobs:
     - stage: lighthouse
       script:
         - yarn build
-        - lhci autorun --upload.target=temporary-public-storage
+        - yarn run lighthouse
       addons:
         chrome: stable
