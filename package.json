@@ -20,7 +20,9 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "chromatic": "chromatic test",
-    "lighthouse": "lhci autorun --upload.target=temporary-public-storage"
+    "lighthouse": "lhci autorun --upload.target=temporary-public-storage",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -47,7 +49,8 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "snyk": "^1.330.1"
   },
   "devDependencies": {
     "@babel/cli": "7.10.0",
@@ -94,5 +97,6 @@
     "stylelint-config-standard": "20.0.0",
     "stylelint-prettier": "1.1.2",
     "typescript": "3.9.3"
-  }
+  },
+  "snyk": true
 }
