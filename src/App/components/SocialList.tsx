@@ -10,7 +10,7 @@ interface Props {
 const SocialList: React.FC<Props> = (props: Props) => {
   const { websites } = props;
 
-  const socialListItems = websites.map(website => {
+  const socialListItems = websites.map((website) => {
     const { name, src, url } = website;
 
     return (
