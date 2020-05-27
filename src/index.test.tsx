@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 
 import HmApp from './App/components/App';
@@ -13,6 +13,11 @@ describe('index', () => {
 
     // eslint-disable-next-line global-require
     require('./index.tsx');
-    expect(ReactDOM.render).toHaveBeenCalledWith(<HmApp />, div);
+    expect(ReactDOM.render).toHaveBeenCalledWith(
+      <StrictMode>
+        <HmApp />
+      </StrictMode>,
+      div
+    );
   });
 });
