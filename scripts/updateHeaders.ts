@@ -1,8 +1,8 @@
 import path from 'path';
 import { promises as fsp } from 'fs';
 
-import insertHashesToScriptSrc from './insertHashesToScriptSrc';
 import getScriptSrcHashes from './getScriptSrcHashes';
+import insertHashesToScriptSrc from './insertHashesToScriptSrc';
 
 const updateHeaders = async (): Promise<void> => {
   const headersPath = path.resolve(__dirname, '..', 'build', '_headers');
