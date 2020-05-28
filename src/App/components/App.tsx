@@ -1,8 +1,8 @@
 import React, { lazy } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
-import Paths from '../../shared/utils/paths';
 import LazyComponent from '../../shared/components/LazyComponent';
+import Paths from '../../shared/utils/paths';
 import styles from './App.module.css';
 
 const HmFooter = lazy(() => import('./Footer'));
