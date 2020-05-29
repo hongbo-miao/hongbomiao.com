@@ -8,7 +8,7 @@ import styles from './Home.module.css';
 const Home: React.FC = () => (
   <div className={styles.hmHome}>
     <div className={`container ${styles.hmContainer}`}>
-      <h1 className="title">HONGBO MIAO</h1>
+      <h1 className={styles.hmTitle}>HONGBO MIAO</h1>
       <a className={styles.hmContent} href={Config.githubUrl} target="_blank" rel="noopener noreferrer">
         <img className={styles.hmEmoji} src={hatImage} alt="Magical Hat" />
         <div className={styles.hmText}>Making magic happen</div>
