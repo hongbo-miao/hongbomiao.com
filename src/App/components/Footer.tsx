@@ -1,8 +1,8 @@
 import React, { lazy } from 'react';
 
-import WEBSITES from '../fixtures/websites';
-import LazyComponent from '../../shared/components/LazyComponent';
+import HmLazyComponent from '../../shared/components/LazyComponent';
 import styles from './Footer.module.css';
+import WEBSITES from '../fixtures/websites';
 
 const HmCopyright = lazy(() => import('./Copyright'));
 const HmSocialList = lazy(() => import('./SocialList'));
@@ -15,15 +15,15 @@ const Footer: React.FC = () => {
       <div className={`container ${styles.hmContainer}`}>
         <nav className="level">
           <div className="level-left">
-            <LazyComponent>
+            <HmLazyComponent>
               <HmSocialList websites={WEBSITES} />
-            </LazyComponent>
+            </HmLazyComponent>
           </div>
           <div className="level-right">
             <div className="level-item">
-              <LazyComponent>
+              <HmLazyComponent>
                 <HmCopyright year={year} />
-              </LazyComponent>
+              </HmLazyComponent>
             </div>
           </div>
         </nav>
