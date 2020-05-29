@@ -3,11 +3,11 @@ import React from 'react';
 import Config from '../../config';
 import hatPNG from '../images/hat.png';
 import hatWebP from '../images/hat.webp';
+import HmImage from '../../shared/components/Image';
+import LazyComponent from '../../shared/components/LazyComponent';
 import magicPNG from '../images/magic.png';
 import magicWebP from '../images/magic.webp';
 import styles from './Home.module.css';
-import LazyComponent from '../../shared/components/LazyComponent';
-import HmImage from '../../shared/components/Image';
 
 const Home: React.FC = () => (
   <div className={styles.hmHome}>
