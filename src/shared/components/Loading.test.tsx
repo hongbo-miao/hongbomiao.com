@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TestUtils from '../utils/testUtils';
 import HmLoading from './Loading';
+import TestUtils from '../utils/testUtils';
 
 describe('Loading', () => {
   test('render Loading', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TestUtils from '../../shared/utils/testUtils';
 import HmFooter from './Footer';
+import TestUtils from '../../shared/utils/testUtils';
 
 describe('Footer', () => {
   test('render Footer', () => {
