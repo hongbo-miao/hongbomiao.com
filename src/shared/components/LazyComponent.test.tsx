@@ -1,10 +1,10 @@
 import React from 'react';
 
+import HmLazyComponent from './LazyComponent';
 import TestUtils from '../utils/testUtils';
-import LazyComponent from './LazyComponent';
 
 describe('Suspense', () => {
   test('render Suspense', () => {
-    TestUtils.testComponent(<LazyComponent>hello</LazyComponent>);
+    TestUtils.testComponent(<HmLazyComponent>hello</HmLazyComponent>);
   });
 });

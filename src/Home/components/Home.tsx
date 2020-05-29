@@ -4,7 +4,7 @@ import Config from '../../config';
 import hatPNG from '../images/hat.png';
 import hatWebP from '../images/hat.webp';
 import HmImage from '../../shared/components/Image';
-import LazyComponent from '../../shared/components/LazyComponent';
+import HmLazyComponent from '../../shared/components/LazyComponent';
 import magicPNG from '../images/magic.png';
 import magicWebP from '../images/magic.webp';
 import styles from './Home.module.css';
@@ -14,13 +14,13 @@ const Home: React.FC = () => (
     <div className={`container ${styles.hmContainer}`}>
       <h1 className={styles.hmTitle}>HONGBO MIAO</h1>
       <a className={styles.hmContent} href={Config.githubUrl} target="_blank" rel="noopener noreferrer">
-        <LazyComponent>
+        <HmLazyComponent>
           <HmImage className={styles.hmEmoji} alt="Magical Hat" src={hatPNG} webpSrc={hatWebP} />
-        </LazyComponent>
+        </HmLazyComponent>
         <div className={styles.hmText}>Making magic happen</div>
-        <LazyComponent>
+        <HmLazyComponent>
           <HmImage className={styles.hmEmoji} alt="Magic" src={magicPNG} webpSrc={magicWebP} />
-        </LazyComponent>
+        </HmLazyComponent>
       </a>
     </div>
   </div>
