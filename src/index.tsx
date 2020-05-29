@@ -12,4 +12,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+// eslint-disable-next-line no-console
+window.addEventListener('securitypolicyviolation', console.error.bind(console));
+
 serviceWorker.register();
