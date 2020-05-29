@@ -57,28 +57,29 @@ An automation experiment to replace myself.
 
 ## Bots / Services / Technologies
 
-- React as front-end framework
-- TypeScript for static type-checking
-- ESLint, Stylelint, Prettier check and format code style
-- Jest, Enzyme for testing
-- Coveralls for test coverage
-- Storybook, Chromatic for visual testing
-- Renovate, Dependabot update dependencies
-- ImgBot optimizes images
-- Lighthouse Bot reviews performance, accessibility, best practices, SEO, PWA
-- Codacy, Code Climate, LGTM, CodeFactor review codes
-- Mozilla Observatory, Security Headers, Synk monitor security
-- FOSSA scans licenses
-- PurgeCSS removes unused CSS
-- Mergify merges the code
-- Netlify, Docker deploy
-- Travis runs the CI/CD
-- Stale closes stale issues and pull requests
-- Delete merged branch deletes merged branches
-- Requires.io, David monitor dependency status
-- Uptime Robot monitors downtime
-- Google Tag Manager, Google Analytics, FullStory for data and experience analytics
-- ZenHub for agile project management 
+- **React** as front-end framework
+- **TypeScript** for static type-checking
+- **ESLint**, **Stylelint**, **Prettier** check and format code style
+- **Jest**, **Enzyme** for testing
+- **Husky**, **lint-staged** for preventing bad git commit and push
+- **Coveralls** for test coverage
+- **Storybook**, **Chromatic** for visual testing
+- **Renovate**, **Dependabot** update dependencies
+- **ImgBot** optimizes images
+- **Lighthouse Bot** reviews performance, accessibility, best practices, SEO, PWA
+- **Codacy**, **Code Climate**, **LGTM**, **CodeFactor** review codes
+- **Mozilla Observatory**, **Security Headers**, **Synk** monitor security
+- **FOSSA** scans licenses
+- **PurgeCSS** removes unused CSS
+- **Mergify** merges the code
+- **Netlify**, **Docker** deploy
+- **Travis** runs the CI/CD
+- **Stale** closes stale issues and pull requests
+- **Delete merged branch** deletes merged branches
+- **Requires.io**, **David** monitor dependency status
+- **Uptime Robot** monitors downtime
+- **Google Tag Manager**, **Google Analytics**, **FullStory** for data and experience analytics
+- **ZenHub** for agile project management
 
 ## Automation Example
 
