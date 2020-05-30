@@ -66,7 +66,7 @@ An automation experiment to replace myself.
 - **Storybook**, **Chromatic** for visual testing
 - **Renovate**, **Dependabot** update dependencies
 - **ImgBot** optimizes images
-- **Lighthouse Bot** reviews performance, accessibility, best practices, SEO, PWA
+- **Lighthouse CI** reviews performance, accessibility, best practices, SEO, PWA
 - **Codacy**, **Code Climate**, **LGTM**, **CodeFactor** review codes
 - **Mozilla Observatory**, **Security Headers**, **Synk** monitor security
 - **FOSSA** scans licenses
