@@ -1,11 +1,10 @@
 import cors, { CorsOptions } from 'cors';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 
+import Config from '../config';
+
 const corsMiddleware = (req: Request, res: Response, next: NextFunction): RequestHandler => {
-  const nonProdWhiteList = ['http://localhost:3000', 'http://localhost:3001'];
-  // const prodWhiteList = ['https://hongbomiao.com', 'https://www.hongbomiao.com'];
-  // const whitelist = process.env.NODE_ENV === 'production' ? prodWhiteList : nonProdWhiteList;
-  const whitelist = nonProdWhiteList;
+  const whitelist = process.env.NODE_ENV === 'production' ? Config.prodWhitelist : Config.devWhitelist;
   const corsOptions: CorsOptions = {
     allowedHeaders: ['Authorization', 'Content-Type'],
     credentials: true,
