@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "tsc && babel build --out-dir build",
-    "start": "nodemon --ext ts --exec \"yarn build && node --require dotenv/config build/index.js\"",
+    "serve": "yarn build && node --require dotenv/config build/index.js",
+    "start": "nodemon --ext ts --exec yarn serve",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
