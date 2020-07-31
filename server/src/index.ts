@@ -1,8 +1,8 @@
-import express from 'express';
 import path from 'path';
+import express from 'express';
 
-import helmetMiddleware from './middlewares/helmet.middleware';
 import corsMiddleware from './middlewares/cors.middleware';
+import helmetMiddleware from './middlewares/helmet.middleware';
 
 const app: express.Application = express();
 const port = 3001;
