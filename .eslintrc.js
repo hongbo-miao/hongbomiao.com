@@ -43,6 +43,16 @@ module.exports = {
         devDependencies: true,
       },
     ],
+    'import/order': [
+      'error',
+      {
+        // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/order.md#groups-array
+        groups: ['builtin', 'external', 'parent', 'sibling', 'index'],
+        alphabetize: {
+          order: 'asc',
+        },
+      },
+    ],
     'react/jsx-filename-extension': [
       1,
       {
