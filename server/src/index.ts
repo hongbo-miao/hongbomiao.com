@@ -1,13 +1,13 @@
-import cors from 'cors';
 import express from 'express';
 import path from 'path';
 
 import helmetMiddleware from './middlewares/helmet.middleware';
+import corsMiddleware from './middlewares/cors.middleware';
 
 const app: express.Application = express();
 const port = 3001;
 
-app.use(cors());
+app.use(corsMiddleware);
 app.use(helmetMiddleware);
 app.use(express.static(path.join(__dirname, '../../client/build')));
 app.get('/', (req, res) => {
