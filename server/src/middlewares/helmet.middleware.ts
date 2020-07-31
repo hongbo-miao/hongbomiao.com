@@ -1,7 +1,7 @@
 import { promises as fsp } from 'fs';
 import path from 'path';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import helmet from 'helmet';
+import helmet, { IHelmetConfiguration } from 'helmet';
 
 import getScriptSrcHashes from '../utils/getScriptSrcHashes';
 
@@ -9,8 +9,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
   const indexPath = path.resolve(__dirname, '..', '..', '..', 'client', 'build', 'index.html');
   const index = await fsp.readFile(indexPath, 'utf-8');
   const hashes = await getScriptSrcHashes(index);
-
-  return helmet({
+  const helmetOptions: IHelmetConfiguration = {
     contentSecurityPolicy: {
       directives: {
         baseUri: ["'none'"],
@@ -49,7 +48,8 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
         // upgradeInsecureRequests: true,
       },
     },
-  })(req, res, next);
+  };
+  return helmet(helmetOptions)(req, res, next);
 };
 
 export default helmetMiddleware;
