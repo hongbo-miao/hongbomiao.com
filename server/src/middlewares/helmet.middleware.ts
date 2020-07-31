@@ -1,7 +1,7 @@
-import helmet from 'helmet';
+import { promises as fsp } from 'fs';
 import path from 'path';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import { promises as fsp } from 'fs';
+import helmet from 'helmet';
 
 import getScriptSrcHashes from '../utils/getScriptSrcHashes';
 
