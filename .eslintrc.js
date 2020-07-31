@@ -17,8 +17,8 @@ module.exports = {
   ],
   settings: {
     'import/resolver': {
-      'node': {
-        'extensions': ['.js','.jsx','.ts','.tsx','.d.ts'],
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
       },
     },
   },
@@ -31,20 +31,30 @@ module.exports = {
       'error',
       'ignorePackages',
       {
-        'js': 'never',
-        'jsx': 'never',
-        'ts': 'never',
-        'tsx': 'never'
-      }
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
     ],
-    'import/no-extraneous-dependencies': ['error', {
-      devDependencies: true,
-    }],
-    'react/jsx-filename-extension': [1, {
-      extensions: ['.jsx', '.tsx'],
-    }],
-    'spaced-comment': ['error', 'always', {
-      'markers': ['/'],
-    }],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true,
+      },
+    ],
+    'react/jsx-filename-extension': [
+      1,
+      {
+        extensions: ['.jsx', '.tsx'],
+      },
+    ],
+    'spaced-comment': [
+      'error',
+      'always',
+      {
+        markers: ['/'],
+      },
+    ],
   },
 };
