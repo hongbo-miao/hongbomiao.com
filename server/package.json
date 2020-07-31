@@ -3,8 +3,8 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "start": "nodemon --watch src/**/*.ts --exec \"yarn build && babel-node build/index.js\"",
+    "build": "tsc && babel build --out-dir build",
+    "start": "nodemon --watch src/**/*.ts --exec \"yarn build && node build/index.js\"",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
@@ -20,7 +20,6 @@
   "devDependencies": {
     "@babel/cli": "7.10.1",
     "@babel/core": "7.10.2",
-    "@babel/node": "7.10.1",
     "@babel/preset-env": "7.10.2",
     "@babel/preset-typescript": "7.10.1",
     "@types/cors": "2.8.6",
