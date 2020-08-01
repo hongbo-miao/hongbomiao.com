@@ -54,6 +54,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
     frameguard: {
       action: 'deny',
     },
+    hidePoweredBy: true,
     permittedCrossDomainPolicies: {
       permittedPolicies: 'none',
     },
