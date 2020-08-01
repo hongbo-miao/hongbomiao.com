@@ -1,84 +1,17 @@
 {
   "name": "hongbomiao.com",
-  "version": "0.1.0",
   "private": true,
-  "homepage": "https://hongbomiao.com/",
   "scripts": {
-    "eject": "react-scripts eject",
-    "start": "react-scripts start",
-    "prebuild": "./bin/prebuild.sh",
-    "build": "react-scripts build",
-    "postbuild": "./bin/postbuild.sh",
-    "analyze": "react-scripts build && source-map-explorer 'build/static/js/*.js'",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "lint:css": "stylelint \"**/*.css\" \"!**/build/**\" \"!**/coverage/**\"",
-    "lint:css:fix": "stylelint \"**/*.css\" \"!**/build/**\" \"!**/coverage/**\" --fix",
-    "test": "react-scripts test --watchAll=false",
-    "test:watch": "react-scripts test",
-    "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public",
-    "chromatic": "chromatic test",
-    "lighthouse": "lhci autorun --upload.target=temporary-public-storage"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "jest": {
-    "coveragePathIgnorePatterns": [
-      "src/shared/lib/*"
-    ]
-  },
-  "dependencies": {
-    "bulma": "0.8.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.1"
+    "lint:css:fix": "stylelint \"**/*.css\" \"!**/build/**\" \"!**/coverage/**\" --fix"
   },
   "devDependencies": {
-    "@babel/cli": "7.10.4",
-    "@babel/node": "7.10.4",
-    "@babel/preset-env": "7.10.4",
-    "@babel/preset-react": "7.10.4",
-    "@babel/preset-typescript": "7.10.4",
-    "@lhci/cli": "0.4.2",
-    "@storybook/addon-actions": "5.3.19",
-    "@storybook/addon-links": "5.3.19",
-    "@storybook/addon-storyshots": "5.3.19",
-    "@storybook/addons": "5.3.19",
-    "@storybook/preset-create-react-app": "3.1.2",
-    "@storybook/react": "5.3.19",
-    "@testing-library/jest-dom": "5.11.0",
-    "@testing-library/react": "10.0.4",
-    "@testing-library/user-event": "10.4.0",
-    "@types/enzyme": "3.10.5",
-    "@types/enzyme-adapter-react-16": "1.0.6",
-    "@types/jest": "25.2.3",
-    "@types/node": "14.0.6",
-    "@types/react": "16.9.35",
-    "@types/react-dom": "16.9.8",
-    "@types/react-router-dom": "5.1.5",
-    "@types/storybook__react": "5.2.1",
+    "@types/node": "14.0.27",
     "@typescript-eslint/eslint-plugin": "2.23.0",
     "@typescript-eslint/parser": "2.23.0",
-    "coveralls": "3.1.0",
-    "enzyme": "3.11.0",
-    "enzyme-adapter-react-16": "1.15.2",
+    "eslint": "7.5.0",
     "eslint-config-airbnb": "18.1.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "2.20.2",
@@ -88,15 +21,10 @@
     "husky": "4.2.5",
     "lint-staged": "10.2.7",
     "prettier": "2.0.5",
-    "purgecss": "2.2.1",
-    "react-test-renderer": "16.13.1",
-    "sitemap": "6.1.5",
-    "source-map-explorer": "2.4.2",
-    "storybook-chromatic": "4.0.2",
     "stylelint": "13.5.0",
     "stylelint-config-prettier": "8.0.1",
     "stylelint-config-standard": "20.0.0",
     "stylelint-prettier": "1.1.2",
-    "typescript": "3.9.3"
+    "typescript": "3.9.7"
   }
 }

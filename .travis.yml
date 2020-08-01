@@ -13,20 +13,41 @@ notifications:
 
 install:
   - yarn install --frozen-lockfile
+  - cd $TRAVIS_BUILD_DIR/client && yarn install --frozen-lockfile
+  - cd $TRAVIS_BUILD_DIR/server && yarn install --frozen-lockfile
 
 jobs:
   include:
-    - stage: test
+    - stage: Lint
+      before_script:
+        - cd $TRAVIS_BUILD_DIR
       script:
         - yarn lint
         - yarn lint:css
+
+    - stage: Test - Client
+      before_script:
+        - cd $TRAVIS_BUILD_DIR/client
+      script:
         - yarn test
         - yarn test:coverage
       after_script:
         # Upload coverage reports to Coveralls
         - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN yarn coveralls
 
-    - stage: storybook
+    - stage: Test - Server
+      before_script:
+        - cd $TRAVIS_BUILD_DIR/server
+      script:
+        - yarn test
+        - yarn test:coverage
+      after_script:
+        # Upload coverage reports to Coveralls
+        - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN yarn coveralls
+
+    - stage: Storybook - Client
+      before_script:
+        - cd $TRAVIS_BUILD_DIR/client
       script:
         # Run chromatic only when a build does not originate from a pull request (push build), or when it is a pull request build originating from a fork
         - |
@@ -34,7 +55,9 @@ jobs:
             yarn run chromatic --exit-zero-on-changes
           fi
 
-    - stage: lighthouse
+    - stage: Lighthouse - Client
+      before_script:
+        - cd $TRAVIS_BUILD_DIR/client
       script:
         - yarn build
         - yarn run lighthouse
