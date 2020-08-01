@@ -70,6 +70,7 @@ An automation experiment to replace myself.
 - **Lighthouse CI** reviews performance, accessibility, best practices, SEO, PWA
 - **Codacy**, **Code Climate**, **LGTM**, **CodeFactor** review codes
 - **Mozilla Observatory**, **Security Headers**, **Synk** monitor security
+- **Validator.nu** for W3C validation
 - **FOSSA** scans licenses
 - **PurgeCSS** removes unused CSS
 - **Mergify** merges the code
