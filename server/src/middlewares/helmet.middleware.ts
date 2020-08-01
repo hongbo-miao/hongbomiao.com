@@ -48,6 +48,9 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
         // upgradeInsecureRequests: true,
       },
     },
+    permittedCrossDomainPolicies: {
+      permittedPolicies: 'none',
+    },
   };
   return helmet(helmetOptions)(req, res, next);
 };
