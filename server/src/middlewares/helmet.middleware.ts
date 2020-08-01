@@ -48,6 +48,9 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
         // upgradeInsecureRequests: true,
       },
     },
+    dnsPrefetchControl: {
+      allow: false,
+    },
     frameguard: {
       action: 'deny',
     },
