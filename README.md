@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://hongbomiao.com"><img width="100" src="https://github.com/hongbo-miao/hongbomiao.com/blob/master/public/favicon.png" alt="Lightning" /></a>
+  <a href="https://hongbomiao.com"><img width="100" src="https://github.com/hongbo-miao/hongbomiao.com/blob/master/client/public/favicon.png" alt="Lightning" /></a>
 </p>
 
 <h2 align="center">
@@ -59,6 +59,7 @@ An automation experiment to replace myself.
 ## Bots / Services / Technologies
 
 - **React** as front-end framework
+- **Express** as back-end framework
 - **TypeScript** for static type-checking
 - **ESLint**, **Stylelint**, **Prettier** check and format code style
 - **Jest**, **Enzyme** for testing
@@ -70,6 +71,7 @@ An automation experiment to replace myself.
 - **Lighthouse CI** reviews performance, accessibility, best practices, SEO, PWA
 - **Codacy**, **Code Climate**, **LGTM**, **CodeFactor** review codes
 - **Mozilla Observatory**, **Security Headers**, **Synk** monitor security
+- **Validator.nu** for W3C validation
 - **FOSSA** scans licenses
 - **PurgeCSS** removes unused CSS
 - **Mergify** merges the code
