@@ -4,7 +4,7 @@ import styles from './Image.module.css';
 
 interface Props {
   alt: string;
-  className?: string;
+  className: string;
   src: string;
   webpSrc: string;
 }
