@@ -59,6 +59,7 @@ An automation experiment to replace myself.
 ## Bots / Services / Technologies
 
 - **React** as front-end framework
+- **Express** as back-end framework
 - **TypeScript** for static type-checking
 - **ESLint**, **Stylelint**, **Prettier** check and format code style
 - **Jest**, **Enzyme** for testing
