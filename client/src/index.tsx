@@ -2,8 +2,8 @@ import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
-import * as serviceWorker from './shared/lib/serviceWorker';
 import HmApp from './App/components/App';
+import * as serviceWorker from './shared/lib/serviceWorker';
 
 ReactDOM.render(
   <StrictMode>

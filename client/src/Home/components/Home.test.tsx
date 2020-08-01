@@ -1,7 +1,7 @@
 import React from 'react';
 
-import HmHome from './Home';
 import TestUtils from '../../shared/utils/testUtils';
+import HmHome from './Home';
 
 describe('Home', () => {
   test('render Home', () => {

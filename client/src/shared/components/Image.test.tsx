@@ -1,8 +1,8 @@
-import React from 'react';
 import { shallow } from 'enzyme';
+import React from 'react';
 
-import HmImage from './Image';
 import TestUtils from '../utils/testUtils';
+import HmImage from './Image';
 
 describe('Image', () => {
   const alt = 'Hello';
