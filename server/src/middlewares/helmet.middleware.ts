@@ -9,7 +9,9 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
   const indexPath = path.resolve(__dirname, '../../../client/build/index.html');
   const index = await fsp.readFile(indexPath, 'utf-8');
   const hashes = await getScriptSrcHashes(index);
+
   const helmetOptions: IHelmetConfiguration = {
+    // Content-Security-Policy
     contentSecurityPolicy: {
       directives: {
         baseUri: ["'none'"],
@@ -48,13 +50,21 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
         // upgradeInsecureRequests: true,
       },
     },
+
+    // X-DNS-Prefetch-Control
     dnsPrefetchControl: {
       allow: false,
     },
+
+    // X-Frame-Options
     frameguard: {
       action: 'deny',
     },
+
+    // X-Powered-By
     hidePoweredBy: true,
+
+    // Strict-Transport-Security
     hsts: {
       // Must be at least 1 year to be approved
       maxAge: 31536000,
@@ -63,16 +73,27 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
       includeSubDomains: true,
       preload: true,
     },
+
+    // X-Download-Options
     ieNoOpen: true,
+
+    // X-Content-Type-Options
     noSniff: true,
+
+    // X-Permitted-Cross-Domain-Policies
     permittedCrossDomainPolicies: {
       permittedPolicies: 'none',
     },
+
+    // Referrer-Policy
     referrerPolicy: {
       policy: 'no-referrer-when-downgrade',
     },
+
+    // X-XSS-Protection
     xssFilter: true,
   };
+
   return helmet(helmetOptions)(req, res, next);
 };
 
