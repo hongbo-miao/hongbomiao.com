@@ -1,9 +1,9 @@
-import React from 'react';
 import { shallow } from 'enzyme';
+import React from 'react';
 
-import HmSocialList from './SocialList';
 import TestUtils from '../../shared/utils/testUtils';
 import WEBSITES from '../fixtures/websites';
+import HmSocialList from './SocialList';
 
 describe('SocialList', () => {
   test('render SocialList', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import HmApp from './App';
 import TestUtils from '../../shared/utils/testUtils';
+import HmApp from './App';
 
 describe('App', () => {
   test('render App', () => {

@@ -1,8 +1,8 @@
 import React, { lazy } from 'react';
 
 import HmLazyComponent from '../../shared/components/LazyComponent';
-import styles from './Footer.module.css';
 import WEBSITES from '../fixtures/websites';
+import styles from './Footer.module.css';
 
 const HmCopyright = lazy(() => import('./Copyright'));
 const HmSocialList = lazy(() => import('./SocialList'));

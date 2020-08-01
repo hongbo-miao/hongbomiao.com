@@ -1,7 +1,7 @@
 import React from 'react';
 
-import HmCopyright from './Copyright';
 import TestUtils from '../../shared/utils/testUtils';
+import HmCopyright from './Copyright';
 
 describe('Copyright', () => {
   test('render Copyright', () => {

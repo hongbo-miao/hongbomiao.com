@@ -1,8 +1,8 @@
-import Website from '../typings/website';
 import githubLogo from '../images/github.svg';
 import linkedinLogo from '../images/linkedin.svg';
 import pinterestLogo from '../images/pinterest.svg';
 import twitterLogo from '../images/twitter.svg';
+import Website from '../typings/website';
 
 const WEBSITES: Website[] = [
   {
