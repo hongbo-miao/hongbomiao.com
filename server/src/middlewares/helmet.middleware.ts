@@ -64,6 +64,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
       preload: true,
     },
     ieNoOpen: true,
+    noSniff: true,
     permittedCrossDomainPolicies: {
       permittedPolicies: 'none',
     },
