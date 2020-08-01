@@ -8,7 +8,7 @@ describe('Image', () => {
   const alt = 'Hello';
   const src = 'https://example.com/image.png';
   const webpSrc = 'https://example.com/image.webp';
-  const component = <HmImage alt="Hello" src={src} webpSrc={webpSrc} />;
+  const component = <HmImage className="hmHello" alt="Hello" src={src} webpSrc={webpSrc} />;
 
   test('render Image', () => {
     TestUtils.testComponent(component);
@@ -21,6 +21,6 @@ describe('Image', () => {
 
   test('picture contains fallback img', () => {
     const wrapper = shallow(component);
-    expect(wrapper.contains(<img src={src} alt={alt} />)).toBe(true);
+    expect(wrapper.contains(<img className="hmHello" src={src} alt={alt} />)).toBe(true);
   });
 });
