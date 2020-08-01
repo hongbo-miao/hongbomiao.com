@@ -51,6 +51,9 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
     permittedCrossDomainPolicies: {
       permittedPolicies: 'none',
     },
+    referrerPolicy: {
+      policy: 'no-referrer-when-downgrade',
+    },
   };
   return helmet(helmetOptions)(req, res, next);
 };
