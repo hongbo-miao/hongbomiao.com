@@ -1,9 +1,9 @@
+import { promises as fsp } from 'fs';
 import path from 'path';
 import { EnumChangefreq, SitemapItemLoose, SitemapStreamOptions } from 'sitemap';
-import { promises as fsp } from 'fs';
 
-import getSitemap from './getSitemap';
 import Paths from '../src/shared/utils/paths';
+import getSitemap from './getSitemap';
 
 const buildSitemap = async (): Promise<void> => {
   const options: SitemapStreamOptions = {

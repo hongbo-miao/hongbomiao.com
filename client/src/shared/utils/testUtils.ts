@@ -1,5 +1,5 @@
-import ReactDOM from 'react-dom';
 import { ReactElement } from 'react';
+import ReactDOM from 'react-dom';
 
 const testComponent = (component: ReactElement): void => {
   const div = document.createElement('div');
