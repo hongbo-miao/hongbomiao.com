@@ -71,6 +71,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
     referrerPolicy: {
       policy: 'no-referrer-when-downgrade',
     },
+    xssFilter: true,
   };
   return helmet(helmetOptions)(req, res, next);
 };
