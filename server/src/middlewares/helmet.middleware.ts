@@ -55,6 +55,14 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
       action: 'deny',
     },
     hidePoweredBy: true,
+    hsts: {
+      // Must be at least 1 year to be approved
+      maxAge: 31536000,
+
+      // Must be enabled to be approved
+      includeSubDomains: true,
+      preload: true,
+    },
     permittedCrossDomainPolicies: {
       permittedPolicies: 'none',
     },
