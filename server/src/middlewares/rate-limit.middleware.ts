@@ -1,10 +1,9 @@
-import rateLimit, { Options } from 'express-rate-limit';
+import rateLimit from 'express-rate-limit';
 
-const rateLimitOptions: Options = {
+const rateLimitMiddleware = rateLimit({
   windowMs: 60 * 1000, // 60 sec
   max: 100, // requests per IP
   message: 'Sorry, too many requests, please try again later.',
-};
-const rateLimitMiddleware = rateLimit(rateLimitOptions);
+});
 
 export default rateLimitMiddleware;
