@@ -30,20 +30,21 @@ jobs:
         - cd $TRAVIS_BUILD_DIR/client
       script:
         - yarn test
-        - yarn test:coverage
-      after_script:
-        # Upload coverage reports to Coveralls
-        - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN yarn coveralls
 
     - stage: Test - Server
       before_script:
         - cd $TRAVIS_BUILD_DIR/server
       script:
         - yarn test
+
+    - stage: Test Coverage
+      before_script:
+        - cd $TRAVIS_BUILD_DIR
+      script:
         - yarn test:coverage
       after_script:
         # Upload coverage reports to Coveralls
-        - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN yarn coveralls
+        - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN yarn test:coverage:report
 
     - stage: Storybook - Client
       before_script:
