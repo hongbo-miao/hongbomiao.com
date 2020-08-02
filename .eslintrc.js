@@ -55,6 +55,7 @@ module.exports = {
         alphabetize: {
           order: 'asc',
         },
+        'newlines-between': 'never',
       },
     ],
     'react/jsx-filename-extension': [
