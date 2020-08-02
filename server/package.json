@@ -7,8 +7,8 @@
   },
   "scripts": {
     "build": "tsc && babel build --out-dir build",
-    "serve": "yarn build && node --require dotenv/config build/index.js",
-    "start": "nodemon --ext ts --exec yarn serve",
+    "serve": "yarn build && NODE_ENV=production node --require dotenv/config build/index.js",
+    "start": "nodemon --ext ts --exec \"yarn build && NODE_ENV=devlopment node --require dotenv/config build/index.js\"",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
