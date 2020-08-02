@@ -1,8 +1,9 @@
 import cors from 'cors';
 
 import Config from '../config';
+import isProd from '../utils/isProd';
 
-const whitelist = process.env.NODE_ENV === 'production' ? Config.prodWhitelist : Config.devWhitelist;
+const whitelist = isProd ? Config.prodWhitelist : Config.devWhitelist;
 
 const corsMiddleware = cors({
   allowedHeaders: ['Authorization', 'Content-Type'],

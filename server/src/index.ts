@@ -1,13 +1,14 @@
 import path from 'path';
 import express from 'express';
 
+import Config from './config';
 import corsMiddleware from './middlewares/cors.middleware';
 import helmetMiddleware from './middlewares/helmet.middleware';
 import rateLimitMiddleware from './middlewares/rate-limit.middleware';
 import redirectSSLMiddleware from './middlewares/redirect-ssl.middleware';
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = Config.port || 3001;
 
 app.use(corsMiddleware);
 app.use(rateLimitMiddleware);
