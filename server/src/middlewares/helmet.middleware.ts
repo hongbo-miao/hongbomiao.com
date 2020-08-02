@@ -1,7 +1,7 @@
 import { promises as fsp } from 'fs';
 import path from 'path';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import helmet, { IHelmetConfiguration } from 'helmet';
+import helmet from 'helmet';
 
 import getScriptSrcHashes from '../utils/getScriptSrcHashes';
 
@@ -10,7 +10,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
   const index = await fsp.readFile(indexPath, 'utf-8');
   const hashes = await getScriptSrcHashes(index);
 
-  const helmetOptions: IHelmetConfiguration = {
+  return helmet({
     // Content-Security-Policy
     contentSecurityPolicy: {
       directives: {
@@ -92,9 +92,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
 
     // X-XSS-Protection
     xssFilter: true,
-  };
-
-  return helmet(helmetOptions)(req, res, next);
+  })(req, res, next);
 };
 
 export default helmetMiddleware;
