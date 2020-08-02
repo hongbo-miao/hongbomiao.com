@@ -1,7 +1,12 @@
 {
   "name": "hongbomiao.com",
+  "homepage": "https://hongbomiao.com/",
   "private": true,
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
+    "start": "cd client && yarn build && cd ../server && yarn serve",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "lint:css": "stylelint \"**/*.css\" \"!**/build/**\" \"!**/coverage/**\"",
