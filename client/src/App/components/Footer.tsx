@@ -1,5 +1,4 @@
 import React, { lazy } from 'react';
-
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import WEBSITES from '../fixtures/websites';
 import styles from './Footer.module.css';

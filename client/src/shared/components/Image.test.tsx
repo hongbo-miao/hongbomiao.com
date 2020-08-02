@@ -1,6 +1,5 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-
 import TestUtils from '../utils/testUtils';
 import HmImage from './Image';
 

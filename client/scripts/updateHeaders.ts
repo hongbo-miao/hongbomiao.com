@@ -1,6 +1,5 @@
 import { promises as fsp } from 'fs';
 import path from 'path';
-
 import getScriptSrcHashes from './getScriptSrcHashes';
 import insertHashesToScriptSrc from './insertHashesToScriptSrc';
 
