@@ -5,8 +5,8 @@ import corsMiddleware from './middlewares/cors.middleware';
 import helmetMiddleware from './middlewares/helmet.middleware';
 import rateLimitMiddleware from './middlewares/rate-limit.middleware';
 
-const app: express.Application = express();
-const port = 3001;
+const app = express();
+const port = process.env.PORT || 3001;
 
 app.use(corsMiddleware);
 app.use(rateLimitMiddleware);
@@ -17,4 +17,4 @@ app.get('/', (req, res) => {
 });
 
 // eslint-disable-next-line no-console
-app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+app.listen(port, () => console.log(`Listening at port ${port}`));
