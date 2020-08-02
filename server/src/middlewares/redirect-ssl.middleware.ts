@@ -1,7 +1,9 @@
 import redirectSSL from 'redirect-ssl';
 
+import isProd from '../utils/isProd';
+
 const redirectSSLMiddleware = redirectSSL.create({
-  enabled: process.env.NODE_ENV === 'production',
+  enabled: isProd,
 });
 
 export default redirectSSLMiddleware;
