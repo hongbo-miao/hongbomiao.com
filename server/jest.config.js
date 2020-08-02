@@ -1,3 +1,3 @@
 module.exports = {
-  testPathIgnorePatterns: ['build'],
+  testPathIgnorePatterns: ['<rootDir>/build'],
 };
