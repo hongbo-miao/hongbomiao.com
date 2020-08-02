@@ -1,5 +1,4 @@
 import cors from 'cors';
-
 import Config from '../config';
 import isProd from '../utils/isProd';
 

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import TestUtils from '../utils/testUtils';
 import HmLoading from './Loading';
 

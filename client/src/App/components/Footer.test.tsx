@@ -1,5 +1,4 @@
 import React from 'react';
-
 import TestUtils from '../../shared/utils/testUtils';
 import HmFooter from './Footer';
 

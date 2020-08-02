@@ -1,5 +1,4 @@
 import morgan from 'morgan';
-
 import isProd from '../utils/isProd';
 
 // https://github.com/expressjs/morgan#predefined-formats

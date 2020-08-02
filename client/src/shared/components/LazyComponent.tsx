@@ -1,5 +1,4 @@
 import React, { ReactNode, Suspense } from 'react';
-
 import HmLoading from './Loading';
 
 interface Props {

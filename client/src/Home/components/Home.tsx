@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Config from '../../config';
 import HmImage from '../../shared/components/Image';
 import HmLazyComponent from '../../shared/components/LazyComponent';
