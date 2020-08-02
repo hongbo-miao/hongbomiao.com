@@ -2,7 +2,6 @@ import { promises as fsp } from 'fs';
 import path from 'path';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import helmet from 'helmet';
-
 import getScriptSrcHashes from '../utils/getScriptSrcHashes';
 
 const helmetMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<RequestHandler> => {

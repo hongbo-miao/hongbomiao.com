@@ -1,6 +1,5 @@
 import React, { lazy } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import Paths from '../../shared/utils/paths';
 import styles from './App.module.css';

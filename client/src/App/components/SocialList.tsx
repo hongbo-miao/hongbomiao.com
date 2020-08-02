@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Website from '../typings/website';
 import styles from './SocialList.module.css';
 
