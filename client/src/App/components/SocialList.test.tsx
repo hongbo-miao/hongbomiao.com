@@ -1,6 +1,5 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-
 import TestUtils from '../../shared/utils/testUtils';
 import WEBSITES from '../fixtures/websites';
 import HmSocialList from './SocialList';

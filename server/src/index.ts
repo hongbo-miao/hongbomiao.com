@@ -1,6 +1,5 @@
 import path from 'path';
 import express from 'express';
-
 import Config from './config';
 import corsMiddleware from './middlewares/cors.middleware';
 import helmetMiddleware from './middlewares/helmet.middleware';

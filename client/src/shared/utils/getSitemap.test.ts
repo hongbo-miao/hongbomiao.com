@@ -1,5 +1,4 @@
 import { EnumChangefreq, SitemapItemLoose, SitemapStreamOptions } from 'sitemap';
-
 import getSitemap from '../../../scripts/getSitemap';
 
 describe('getSitemap', () => {

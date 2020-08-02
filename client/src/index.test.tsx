@@ -1,6 +1,5 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-
 import HmApp from './App/components/App';
 
 jest.mock('react-dom', () => ({ render: jest.fn() }));
