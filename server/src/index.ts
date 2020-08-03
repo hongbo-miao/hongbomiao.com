@@ -1,4 +1,5 @@
 import path from 'path';
+import bodyParser from 'body-parser';
 import express from 'express';
 import Config from './config';
 import corsMiddleware from './middlewares/cors.middleware';
@@ -6,6 +7,7 @@ import helmetMiddleware from './middlewares/helmet.middleware';
 import morganMiddleware from './middlewares/morgan.middleware';
 import rateLimitMiddleware from './middlewares/rateLimit.middleware';
 import redirectSSLMiddleware from './middlewares/redirectSSL.middleware';
+import apiRouter from './routers/api.router';
 
 const app = express();
 const port = Config.port || 3001;
@@ -15,6 +17,10 @@ app.use(corsMiddleware);
 app.use(rateLimitMiddleware);
 app.use(helmetMiddleware);
 app.use(redirectSSLMiddleware);
+app.use(bodyParser.json());
+
+app.use('/api', apiRouter);
+
 app.use(express.static(path.join(__dirname, '../../client/build')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../../client/build/index.html'));

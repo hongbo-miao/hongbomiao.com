@@ -44,7 +44,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
         ],
         styleSrc: ["'self'", 'https://fonts.googleapis.com'],
         // sandbox: ['allow-forms', 'allow-scripts'],
-        // reportUri: '/report-violation',
+        reportUri: '/api/report-csp-violation',
         // objectSrc: ["'none'"],
         // upgradeInsecureRequests: true,
       },
