@@ -1,16 +1,16 @@
 import { promises as fsp } from 'fs';
 import path from 'path';
-import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import getScriptSrcHashes from '../utils/getScriptSrcHashes';
 
-const helmetMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<RequestHandler> => {
+const helmetMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const indexPath = path.resolve(__dirname, '../../../client/build/index.html');
   const index = await fsp.readFile(indexPath, 'utf-8');
   const hashes = await getScriptSrcHashes(index);
 
   return helmet({
-    // Content-Security-Policy
+    // Set 'Content-Security-Policy'
     contentSecurityPolicy: {
       directives: {
         baseUri: ["'none'"],
@@ -34,7 +34,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
         manifestSrc: ["'self'"],
         scriptSrc: [
           "'self'",
-          "'sha256-KYbqXqOYv6xOvzbfRwXslg+GK2ebpVi0G6EzAvF6Yc8='",
+          "'sha256-KYbqXqOYv6xOvzbfRwXslg+GK2ebpVi0G6EzAvF6Yc8='", // Google Tag Manager
           'https://edge.fullstory.com',
           'https://fullstory.com',
           'https://storage.googleapis.com',
@@ -50,20 +50,26 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
       },
     },
 
-    // X-DNS-Prefetch-Control
+    // Set 'X-DNS-Prefetch-Control: off'
     dnsPrefetchControl: {
       allow: false,
     },
 
-    // X-Frame-Options
+    // Set 'Expect-CT: enforce, max-age=86400'
+    expectCt: {
+      maxAge: 86400,
+      enforce: true,
+    },
+
+    // Set 'X-Frame-Options: DENY'
     frameguard: {
       action: 'deny',
     },
 
-    // X-Powered-By
-    hidePoweredBy: true,
+    // Remove 'X-Powered-By'
+    hidePoweredBy: undefined,
 
-    // Strict-Transport-Security
+    // Set 'Strict-Transport-Security: max-age=31536000; includeSubDomains; preload'
     hsts: {
       // Must be at least 1 year to be approved
       maxAge: 31536000,
@@ -73,24 +79,24 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
       preload: true,
     },
 
-    // X-Download-Options
-    ieNoOpen: true,
+    // Set 'X-Download-Options: noopen'
+    ieNoOpen: undefined,
 
-    // X-Content-Type-Options
-    noSniff: true,
+    // Set 'X-Content-Type-Options: nosniff'
+    noSniff: undefined,
 
-    // X-Permitted-Cross-Domain-Policies
+    // Set 'X-Permitted-Cross-Domain-Policies: none'
     permittedCrossDomainPolicies: {
       permittedPolicies: 'none',
     },
 
-    // Referrer-Policy
+    // Set 'Referrer-Policy: no-referrer'
     referrerPolicy: {
-      policy: 'no-referrer-when-downgrade',
+      policy: 'no-referrer',
     },
 
-    // X-XSS-Protection
-    xssFilter: true,
+    // Set 'X-XSS-Protection: 0'
+    xssFilter: undefined,
   })(req, res, next);
 };
 
