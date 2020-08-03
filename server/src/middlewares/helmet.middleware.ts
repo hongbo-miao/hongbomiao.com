@@ -84,12 +84,12 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
       permittedPolicies: 'none',
     },
 
-    // Referrer-Policy
+    // Sets "Referrer-Policy: no-referrer"
     referrerPolicy: {
-      policy: 'no-referrer-when-downgrade',
+      policy: 'no-referrer',
     },
 
-    // X-XSS-Protection
+    // Sets "X-XSS-Protection: 0"
     xssFilter: undefined,
   })(req, res, next);
 };
