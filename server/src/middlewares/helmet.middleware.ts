@@ -10,7 +10,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
   const hashes = await getScriptSrcHashes(index);
 
   return helmet({
-    // Content-Security-Policy
+    // Set 'Content-Security-Policy'
     contentSecurityPolicy: {
       directives: {
         baseUri: ["'none'"],
@@ -34,7 +34,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
         manifestSrc: ["'self'"],
         scriptSrc: [
           "'self'",
-          "'sha256-KYbqXqOYv6xOvzbfRwXslg+GK2ebpVi0G6EzAvF6Yc8='",
+          "'sha256-KYbqXqOYv6xOvzbfRwXslg+GK2ebpVi0G6EzAvF6Yc8='", // Google Tag Manager
           'https://edge.fullstory.com',
           'https://fullstory.com',
           'https://storage.googleapis.com',
@@ -50,20 +50,20 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
       },
     },
 
-    // X-DNS-Prefetch-Control
+    // Set 'X-DNS-Prefetch-Control: off'
     dnsPrefetchControl: {
       allow: false,
     },
 
-    // X-Frame-Options
+    // Set 'X-Frame-Options: DENY'
     frameguard: {
       action: 'deny',
     },
 
-    // X-Powered-By
+    // Remove 'X-Powered-By'
     hidePoweredBy: undefined,
 
-    // Strict-Transport-Security
+    // Set 'Strict-Transport-Security: max-age=31536000; includeSubDomains; preload'
     hsts: {
       // Must be at least 1 year to be approved
       maxAge: 31536000,
@@ -73,23 +73,23 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
       preload: true,
     },
 
-    // X-Download-Options
+    // Set 'X-Download-Options: noopen'
     ieNoOpen: undefined,
 
-    // X-Content-Type-Options
+    // Set 'X-Content-Type-Options: nosniff'
     noSniff: undefined,
 
-    // X-Permitted-Cross-Domain-Policies
+    // Set 'X-Permitted-Cross-Domain-Policies: none'
     permittedCrossDomainPolicies: {
       permittedPolicies: 'none',
     },
 
-    // Sets "Referrer-Policy: no-referrer"
+    // Set 'Referrer-Policy: no-referrer'
     referrerPolicy: {
       policy: 'no-referrer',
     },
 
-    // Sets "X-XSS-Protection: 0"
+    // Set 'X-XSS-Protection: 0'
     xssFilter: undefined,
   })(req, res, next);
 };
