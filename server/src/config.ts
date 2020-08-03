@@ -2,7 +2,7 @@ const { nodeEnv, port } = process.env;
 
 const Config = {
   nodeEnv,
-  port,
+  port: port || 3001,
 
   devWhitelist: ['http://localhost:3000', 'http://localhost:3001'],
   prodWhitelist: ['https://hongbomiao.com', 'https://www.hongbomiao.com'],
