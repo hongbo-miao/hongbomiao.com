@@ -2,7 +2,7 @@ import cors from 'cors';
 import Config from '../config';
 import isProd from '../utils/isProd';
 
-const whitelist = isProd ? Config.prodWhitelist : Config.devWhitelist;
+const allowList = isProd ? Config.prodAllowList : Config.devAllowList;
 
 const corsMiddleware = cors({
   allowedHeaders: ['Authorization', 'Content-Type'],
@@ -13,7 +13,7 @@ const corsMiddleware = cors({
     if (
       origin == null || // Server-to-server requests and REST tools
       origin === 'null' || // Safari reports CSP violation on localhost
-      whitelist.includes(origin)
+      allowList.includes(origin)
     ) {
       callback(null, true);
     } else {
