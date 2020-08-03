@@ -16,7 +16,6 @@ import logger from './utils/logger';
 
 initSentry();
 
-const port = Config.port || 3001;
 const app = express();
 
 app.use(Sentry.Handlers.requestHandler()); // The request handler must be the first middleware on the app
@@ -35,4 +34,4 @@ app.get('/', sendIndexPage);
 app.use(Sentry.Handlers.errorHandler()); // The error handler must be before any other error middleware and after all controllers
 app.use(handleError);
 
-app.listen(port, () => logger.info(`Listening at port ${port}`));
+app.listen(Config.port, () => logger.info(`Listening at port ${Config.port}`));
