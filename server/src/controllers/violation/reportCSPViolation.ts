@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
+import logger from '../../utils/logger';
 
-const reportCSPViolation = async (req: Request, res: Response): Promise<void> => {
-  console.log('req.body', req.body);
+const reportCSPViolation = (req: Request, res: Response): void => {
+  logger.error('reportCSPViolation', req.body);
   res.status(200);
 };
 
