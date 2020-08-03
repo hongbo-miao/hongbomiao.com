@@ -12,6 +12,7 @@ import rateLimitMiddleware from './middlewares/rateLimit.middleware';
 import redirectSSLMiddleware from './middlewares/redirectSSL.middleware';
 import apiRouter from './routers/api.router';
 import initSentry from './utils/initSentry';
+import logger from './utils/logger';
 
 initSentry();
 
@@ -34,5 +35,4 @@ app.get('/', sendIndexPage);
 app.use(Sentry.Handlers.errorHandler()); // The error handler must be before any other error middleware and after all controllers
 app.use(handleError);
 
-// eslint-disable-next-line no-console
-app.listen(port, () => console.info(`Listening at port ${port}`));
+app.listen(port, () => logger.info(`Listening at port ${port}`));
