@@ -55,6 +55,12 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
       allow: false,
     },
 
+    // Set 'Expect-CT: enforce, max-age=86400'
+    expectCt: {
+      maxAge: 86400,
+      enforce: true,
+    },
+
     // Set 'X-Frame-Options: DENY'
     frameguard: {
       action: 'deny',
