@@ -10,11 +10,9 @@ import morganMiddleware from './middlewares/morgan.middleware';
 import rateLimitMiddleware from './middlewares/rateLimit.middleware';
 import redirectSSLMiddleware from './middlewares/redirectSSL.middleware';
 import apiRouter from './routers/api.router';
+import initSentry from './utils/initSentry';
 
-Sentry.init({
-  dsn: Config.sentryDSN,
-  environment: Config.nodeEnv,
-});
+initSentry();
 
 const port = Config.port || 3001;
 const app = express();
