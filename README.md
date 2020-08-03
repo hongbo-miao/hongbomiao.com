@@ -76,7 +76,8 @@ An automation experiment to replace myself.
 - **FOSSA** scans licenses
 - **PurgeCSS** removes unused CSS
 - **Mergify** merges the code
-- **Netlify**, **Docker** deploy
+- **Docker** as container
+- **Netlify**, **Heroku** for hosting
 - **Travis** runs the CI/CD
 - **Stale** closes stale issues and pull requests
 - **Delete merged branch** deletes merged branches
