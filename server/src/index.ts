@@ -35,6 +35,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(Sentry.Handlers.errorHandler()); // The error handler must be before any other error middleware and after all controllers
+app.use(handleError);
 
 // eslint-disable-next-line no-console
 app.listen(port, () => console.log(`Listening at port ${port}`));
