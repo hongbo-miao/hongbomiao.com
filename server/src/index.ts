@@ -38,4 +38,4 @@ app.use(Sentry.Handlers.errorHandler()); // The error handler must be before any
 app.use(handleError);
 
 // eslint-disable-next-line no-console
-app.listen(port, () => console.log(`Listening at port ${port}`));
+app.listen(port, () => console.info(`Listening at port ${port}`));
