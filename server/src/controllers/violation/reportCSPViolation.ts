@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-const reportCSPViolation = async (req: Request, res: Response): Promise<void> => {
+const reportCSPViolation = (req: Request, res: Response): void => {
   // eslint-disable-next-line no-console
   console.error('reportCSPViolation', req.body);
   res.status(200);
