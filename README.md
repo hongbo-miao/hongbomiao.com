@@ -63,9 +63,10 @@ An automation experiment to replace myself.
 - **TypeScript** for static type-checking
 - **ESLint**, **Stylelint**, **Prettier** check and format code style
 - **Jest**, **Enzyme** for testing
-- **Husky**, **lint-staged** for preventing bad git commit and push
 - **Coveralls** for test coverage
 - **Storybook**, **Chromatic** for visual testing
+- **Sentry**, **winston** for error tracking
+- **Husky**, **lint-staged** for preventing bad git commit and push
 - **Renovate**, **Dependabot** update dependencies
 - **ImgBot** optimizes images
 - **Lighthouse CI** reviews performance, accessibility, best practices, SEO, PWA
