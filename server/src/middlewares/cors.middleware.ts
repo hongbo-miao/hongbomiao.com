@@ -11,12 +11,13 @@ const corsMiddleware = cors({
   optionsSuccessStatus: 200,
   origin: (origin, callback) => {
     if (
-      origin == null || // Do not block server-to-server requests and REST tools
+      origin == null || // Server-to-server requests and REST tools
+      origin === 'null' || // Safari reports CSP violation on localhost
       whitelist.includes(origin)
     ) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error(`${origin} is not allowed by CORS.`));
     }
   },
 });
