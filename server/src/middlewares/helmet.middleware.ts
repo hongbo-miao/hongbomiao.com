@@ -1,10 +1,10 @@
 import { promises as fsp } from 'fs';
 import path from 'path';
-import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import getScriptSrcHashes from '../utils/getScriptSrcHashes';
 
-const helmetMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<RequestHandler> => {
+const helmetMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const indexPath = path.resolve(__dirname, '../../../client/build/index.html');
   const index = await fsp.readFile(indexPath, 'utf-8');
   const hashes = await getScriptSrcHashes(index);
@@ -61,7 +61,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
     },
 
     // X-Powered-By
-    hidePoweredBy: true,
+    hidePoweredBy: undefined,
 
     // Strict-Transport-Security
     hsts: {
@@ -74,10 +74,10 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
     },
 
     // X-Download-Options
-    ieNoOpen: true,
+    ieNoOpen: undefined,
 
     // X-Content-Type-Options
-    noSniff: true,
+    noSniff: undefined,
 
     // X-Permitted-Cross-Domain-Policies
     permittedCrossDomainPolicies: {
@@ -90,7 +90,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
     },
 
     // X-XSS-Protection
-    xssFilter: true,
+    xssFilter: undefined,
   })(req, res, next);
 };
 
