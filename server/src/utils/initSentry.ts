@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/node';
 import Config from '../config';
 
-const initSentry = () => {
+const initSentry = (): void => {
   Sentry.init(Config.sentryOptions);
 };
 
