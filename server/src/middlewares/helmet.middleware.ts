@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import getScriptSrcHashes from '../utils/getScriptSrcHashes';
 
 const helmetMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const indexPath = path.resolve(__dirname, '../../../client/build/index.html');
+  const indexPath = path.resolve(__dirname, '../../dist/index.html');
   const index = await fsp.readFile(indexPath, 'utf-8');
   const hashes = await getScriptSrcHashes(index);
 

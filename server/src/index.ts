@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 
 app.use('/api', apiRouter);
 
-app.use(express.static(path.join(__dirname, '../../client/build')));
+app.use(express.static(path.join(__dirname, '../dist')));
 app.get('/', sendIndexPage);
 
 app.use(Sentry.Handlers.errorHandler()); // The error handler must be before any other error middleware and after all controllers
