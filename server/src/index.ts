@@ -20,23 +20,20 @@ import redirectSSLMiddleware from './security/middlewares/redirectSSL.middleware
 initSentry();
 
 const app = express();
-
-app.use(Sentry.Handlers.requestHandler()); // The request handler must be the first middleware on the app
-app.use(morganMiddleware);
-app.use(corsMiddleware);
-app.use(rateLimitMiddleware);
-app.use(helmetMiddleware);
-app.use(redirectSSLMiddleware);
-app.use(bodyParser.json());
-
-app.use('/graphql', graphQLMiddleware);
-app.use('/api', apiRouter);
-
-app.use(express.static(path.join(__dirname, '../dist')));
-app.get('/', sendIndexPage);
-
-app.use(Sentry.Handlers.errorHandler()); // The error handler must be before any other error middleware and after all controllers
-app.use(handleError);
+app
+  .use(Sentry.Handlers.requestHandler()) // The request handler must be the first middleware on the app
+  .use(morganMiddleware)
+  .use(corsMiddleware)
+  .use(helmetMiddleware)
+  .use(redirectSSLMiddleware)
+  .use(express.static(path.join(__dirname, '../dist')))
+  .get('/', sendIndexPage)
+  .use(rateLimitMiddleware)
+  .use(bodyParser.json())
+  .use('/graphql', graphQLMiddleware)
+  .use('/api', apiRouter)
+  .use(Sentry.Handlers.errorHandler()) // The error handler must be before any other error middleware and after all controllers
+  .use(handleError);
 
 if (isProd) {
   app.listen(Config.port, printStatus);
