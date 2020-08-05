@@ -5,13 +5,8 @@ pull_request_rules:
     conditions:
       - author=Hongbo-Miao
       - status-success=Summary
-      - status-success=Codacy/PR Quality Review
-      - status-success=coverage/coveralls
       - status-success=lhci/url/index.html
       - status-success=Travis CI - Pull Request
-      - status-success=Header rules - hongbomiao
-      - status-success=Mixed content - hongbomiao
-      - status-success=netlify/hongbomiao/deploy-preview
       - base=master
       - label!=work in progress
     actions:
@@ -25,39 +20,6 @@ pull_request_rules:
       - status-success=Summary
       - status-success=lhci/url/index.html
       - status-success=Travis CI - Pull Request
-      - status-success=Header rules - hongbomiao
-      - status-success=Mixed content - hongbomiao
-      - status-success=netlify/hongbomiao/deploy-preview
-      - base=master
-    actions:
-      merge:
-        method: merge
-        strict: true
-
-  - name: automatic merge for Dependabot pull requests
-    conditions:
-      - author=dependabot[bot]
-      - status-success=Summary
-      - status-success=lhci/url/index.html
-      - status-success=Travis CI - Pull Request
-      - status-success=Header rules - hongbomiao
-      - status-success=Mixed content - hongbomiao
-      - status-success=netlify/hongbomiao/deploy-preview
-      - base=master
-    actions:
-      merge:
-        method: merge
-        strict: true
-
-  - name: automatic merge for Dependabot Preview pull requests
-    conditions:
-      - author=dependabot-preview[bot]
-      - status-success=Summary
-      - status-success=lhci/url/index.html
-      - status-success=Travis CI - Pull Request
-      - status-success=Header rules - hongbomiao
-      - status-success=Mixed content - hongbomiao
-      - status-success=netlify/hongbomiao/deploy-preview
       - base=master
     actions:
       merge:
