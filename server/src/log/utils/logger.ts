@@ -1,6 +1,6 @@
 import winston, { createLogger } from 'winston';
 import SentryTransport from 'winston-transport-sentry-node';
-import Config from '../config';
+import Config from '../../config';
 
 const logger = createLogger({
   transports: [
