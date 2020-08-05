@@ -1,6 +1,6 @@
 import cors from 'cors';
-import Config from '../config';
-import isProd from '../utils/isProd';
+import isProd from '../../app/utils/isProd';
+import Config from '../../config';
 
 const allowList = isProd ? Config.prodAllowList : Config.devAllowList;
 
