@@ -11,8 +11,10 @@ import morganMiddleware from './middlewares/morgan.middleware';
 import rateLimitMiddleware from './middlewares/rateLimit.middleware';
 import redirectSSLMiddleware from './middlewares/redirectSSL.middleware';
 import apiRouter from './routers/api.router';
+import createHTTP2Server from './utils/createHTTP2Server';
 import initSentry from './utils/initSentry';
-import logger from './utils/logger';
+import isProd from './utils/isProd';
+import printStatus from './utils/printStatus';
 
 initSentry();
 
@@ -34,4 +36,9 @@ app.get('/', sendIndexPage);
 app.use(Sentry.Handlers.errorHandler()); // The error handler must be before any other error middleware and after all controllers
 app.use(handleError);
 
-app.listen(Config.port, () => logger.info(`Listening at port ${Config.port}`));
+if (isProd) {
+  app.listen(Config.port, printStatus);
+} else {
+  const http2Server = createHTTP2Server(app);
+  http2Server.listen(Config.port, printStatus);
+}
