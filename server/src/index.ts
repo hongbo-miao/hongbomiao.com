@@ -1,9 +1,7 @@
-import fs from 'fs';
 import path from 'path';
 import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import express from 'express';
-import spdy, { ServerOptions } from 'spdy';
 import Config from './config';
 import handleError from './controllers/error/handleError';
 import sendIndexPage from './controllers/page/sendIndexPage';
@@ -13,6 +11,7 @@ import morganMiddleware from './middlewares/morgan.middleware';
 import rateLimitMiddleware from './middlewares/rateLimit.middleware';
 import redirectSSLMiddleware from './middlewares/redirectSSL.middleware';
 import apiRouter from './routers/api.router';
+import createHTTP2Server from './utils/createHTTP2Server';
 import initSentry from './utils/initSentry';
 import isProd from './utils/isProd';
 import logger from './utils/logger';
@@ -40,12 +39,8 @@ app.use(handleError);
 if (isProd) {
   app.listen(Config.port, () => logger.info(`Listening at port ${Config.port}`));
 } else {
-  const options: ServerOptions = {
-    key: fs.readFileSync(path.join(__dirname, '../private/ssl/hongbomiao.key')),
-    cert: fs.readFileSync(path.join(__dirname, '../private/ssl/hongbomiao.crt')),
-  };
-  const server = spdy.createServer(options, app);
-  server.listen(Config.port, () => {
+  const http2Server = createHTTP2Server(app);
+  http2Server.listen(Config.port, () => {
     logger.info(`Listening at port ${Config.port}`);
   });
 }
