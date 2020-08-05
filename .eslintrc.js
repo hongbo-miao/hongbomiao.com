@@ -4,10 +4,12 @@ module.exports = {
     'react',
     '@typescript-eslint',
     'prettier', // eslint-config-prettier
+    'security', // eslint-plugin-security
   ],
   extends: [
     'airbnb',
     'eslint:recommended',
+    'plugin:security/recommended', // eslint-plugin-security
     'plugin:@typescript-eslint/eslint-recommended', // Not all eslint core rules are compatible with TypeScript, so you need to add both eslint:recommended and plugin:@typescript-eslint/eslint-recommended
     'plugin:@typescript-eslint/recommended', // All the recommended rules for the plugin typescript-eslint
     'plugin:react/recommended',
