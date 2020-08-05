@@ -2,6 +2,7 @@ import path from 'path';
 import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import express from 'express';
+import graphQLMiddleware from './app/middlewares/graphQL.middleware';
 import apiRouter from './app/routers/api.router';
 import createHTTP2Server from './app/utils/createHTTP2Server';
 import isProd from './app/utils/isProd';
@@ -28,6 +29,7 @@ app.use(helmetMiddleware);
 app.use(redirectSSLMiddleware);
 app.use(bodyParser.json());
 
+app.use('/graphql', graphQLMiddleware);
 app.use('/api', apiRouter);
 
 app.use(express.static(path.join(__dirname, '../dist')));
