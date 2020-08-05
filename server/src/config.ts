@@ -4,7 +4,7 @@ const Config = {
   nodeEnv,
   port: port || 3001,
 
-  devAllowList: ['http://localhost:3000', 'http://localhost:3001'],
+  devAllowList: ['https://localhost:3000', 'https://localhost:3001'],
   prodAllowList: ['https://hongbomiao.com', 'https://www.hongbomiao.com'],
 
   sentryOptions: {

@@ -1,7 +1,9 @@
+import fs from 'fs';
 import path from 'path';
 import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import express from 'express';
+import spdy, { ServerOptions } from 'spdy';
 import Config from './config';
 import handleError from './controllers/error/handleError';
 import sendIndexPage from './controllers/page/sendIndexPage';
@@ -12,6 +14,7 @@ import rateLimitMiddleware from './middlewares/rateLimit.middleware';
 import redirectSSLMiddleware from './middlewares/redirectSSL.middleware';
 import apiRouter from './routers/api.router';
 import initSentry from './utils/initSentry';
+import isProd from './utils/isProd';
 import logger from './utils/logger';
 
 initSentry();
@@ -34,4 +37,15 @@ app.get('/', sendIndexPage);
 app.use(Sentry.Handlers.errorHandler()); // The error handler must be before any other error middleware and after all controllers
 app.use(handleError);
 
-app.listen(Config.port, () => logger.info(`Listening at port ${Config.port}`));
+if (isProd) {
+  app.listen(Config.port, () => logger.info(`Listening at port ${Config.port}`));
+} else {
+  const options: ServerOptions = {
+    key: fs.readFileSync(path.join(__dirname, '../private/ssl/hongbomiao.key')),
+    cert: fs.readFileSync(path.join(__dirname, '../private/ssl/hongbomiao.crt')),
+  };
+  const server = spdy.createServer(options, app);
+  server.listen(Config.port, () => {
+    logger.info(`Listening at port ${Config.port}`);
+  });
+}
