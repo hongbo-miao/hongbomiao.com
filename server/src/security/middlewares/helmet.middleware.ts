@@ -7,23 +7,22 @@ import getScriptSrcHashes from '../utils/getScriptSrcHashes';
 const helmetMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const indexPath = path.resolve(__dirname, '../../../dist/index.html');
   const index = await fsp.readFile(indexPath, 'utf-8');
-  const hashes = await getScriptSrcHashes(index);
+  const hashes = getScriptSrcHashes(index);
 
   return helmet({
     // Set 'Content-Security-Policy'
     contentSecurityPolicy: {
       directives: {
-        baseUri: ["'none'"],
-        defaultSrc: ["'none'"],
+        /* Fetch directives */
         connectSrc: [
           "'self'",
           'https://www.google-analytics.com',
           'https://stats.g.doubleclick.net',
           'https://rs.fullstory.com',
         ],
-        formAction: ["'none'"],
+        defaultSrc: ["'none'"],
         fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
-        frameAncestors: ["'none'"],
+        frameSrc: ["'none'"],
         imgSrc: [
           "'self'",
           'data:',
@@ -32,6 +31,8 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
           'https://www.google.com',
         ],
         manifestSrc: ["'self'"],
+        mediaSrc: ["'none'"],
+        objectSrc: ["'none'"],
         scriptSrc: [
           "'self'",
           "'sha256-KYbqXqOYv6xOvzbfRwXslg+GK2ebpVi0G6EzAvF6Yc8='", // Google Tag Manager
@@ -43,10 +44,22 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
           ...hashes,
         ],
         styleSrc: ["'self'", 'https://fonts.googleapis.com'],
-        // sandbox: ['allow-forms', 'allow-scripts'],
+
+        /* Document directives */
+        baseUri: ["'none'"],
+        // pluginTypes: [], // To disallow all plugins, the object-src directive should be set to 'none' which will disallow plugins. The plugin-types directive is only used if you are allowing plugins with object-src at all.
+        sandbox: ['allow-same-origin', 'allow-scripts'],
+
+        /* Navigation directives */
+        formAction: ["'none'"],
+        frameAncestors: ["'none'"],
+
+        /* Reporting directives */
         reportUri: '/api/violation/report-csp-violation',
-        // objectSrc: ["'none'"],
-        // upgradeInsecureRequests: true,
+
+        /* Other directives */
+        // blockAllMixedContent: [], // The upgrade-insecure-requests directive is evaluated before block-all-mixed-content and if it is set, the latter is effectively a no-op. It is recommended to set either directive, but not both, unless you want to force HTTPS on older browsers that do not force it after a redirect to HTTP.
+        upgradeInsecureRequests: [],
       },
     },
 
