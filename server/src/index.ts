@@ -14,7 +14,7 @@ import apiRouter from './routers/api.router';
 import createHTTP2Server from './utils/createHTTP2Server';
 import initSentry from './utils/initSentry';
 import isProd from './utils/isProd';
-import logger from './utils/logger';
+import printStatus from './utils/printStatus';
 
 initSentry();
 
@@ -37,10 +37,8 @@ app.use(Sentry.Handlers.errorHandler()); // The error handler must be before any
 app.use(handleError);
 
 if (isProd) {
-  app.listen(Config.port, () => logger.info(`Listening at port ${Config.port}`));
+  app.listen(Config.port, printStatus);
 } else {
   const http2Server = createHTTP2Server(app);
-  http2Server.listen(Config.port, () => {
-    logger.info(`Listening at port ${Config.port}`);
-  });
+  http2Server.listen(Config.port, printStatus);
 }
