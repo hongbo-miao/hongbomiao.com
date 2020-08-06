@@ -1,8 +1,8 @@
 import * as Sentry from '@sentry/node';
-import Config from '../../config';
+import config from '../../config';
 
 const initSentry = (): void => {
-  Sentry.init(Config.sentryOptions);
+  Sentry.init(config.sentryOptions);
 };
 
 export default initSentry;

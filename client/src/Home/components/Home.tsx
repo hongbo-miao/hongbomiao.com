@@ -1,5 +1,5 @@
 import React from 'react';
-import Config from '../../config';
+import config from '../../config';
 import HmImage from '../../shared/components/Image';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import hatPNG from '../images/hat.png';
@@ -12,7 +12,7 @@ const Home: React.FC = () => (
   <div className={styles.hmHome}>
     <div className={`container ${styles.hmContainer}`}>
       <h1 className={styles.hmTitle}>HONGBO MIAO</h1>
-      <a className={styles.hmContent} href={Config.githubUrl} target="_blank" rel="noopener noreferrer">
+      <a className={styles.hmContent} href={config.githubUrl} target="_blank" rel="noopener noreferrer">
         <HmLazyComponent>
           <HmImage className={styles.hmEmoji} alt="Magical Hat" src={hatPNG} webpSrc={hatWebP} />
         </HmLazyComponent>
