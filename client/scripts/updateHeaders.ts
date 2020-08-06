@@ -8,8 +8,8 @@ const updateHeaders = async (): Promise<void> => {
   const headers = await fsp.readFile(headersPath, 'utf-8');
 
   const indexPath = path.join(__dirname, '../build/index.html');
-  const index = await fsp.readFile(indexPath, 'utf-8');
-  const hashes = getScriptSrcHashes(index);
+  const indexHTML = await fsp.readFile(indexPath, 'utf-8');
+  const hashes = getScriptSrcHashes(indexHTML);
 
   const newHeaders = insertHashesToScriptSrc(headers, hashes);
   await fsp.writeFile(headersPath, newHeaders);
