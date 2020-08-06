@@ -10,8 +10,7 @@ const buildSitemap = async (): Promise<void> => {
   };
   const links: SitemapItemLoose[] = [{ url: Paths.appRootPath, changefreq: EnumChangefreq.HOURLY, priority: 1 }];
   const sitemap = await getSitemap(options, links);
-  const sitemapPath = path.resolve(__dirname, '../public/sitemap.xml');
-  await fsp.writeFile(sitemapPath, sitemap);
+  await fsp.writeFile(path.join(__dirname, '../public/sitemap.xml'), sitemap);
 };
 
 export default buildSitemap;
