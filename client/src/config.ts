@@ -1,5 +1,5 @@
-const Config = {
+const config = {
   githubUrl: 'https://github.com/hongbo-miao/hongbomiao.com',
 };
 
-export default Config;
+export default config;

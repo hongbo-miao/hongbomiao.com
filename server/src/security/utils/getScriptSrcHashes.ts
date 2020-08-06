@@ -1,8 +1,10 @@
 import crypto from 'crypto';
 
-const getScriptSrcHashes = (index: string): string[] => {
+const getScriptSrcHashes = (html: string): string[] => {
+  if (html == null) return [];
+
   const hashes: string[] = [];
-  const matches = index.match(/<script>.+?<\/script>/g);
+  const matches = html.match(/<script>.+?<\/script>/g);
 
   if (matches) {
     matches.forEach((scriptTag) => {

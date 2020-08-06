@@ -1,14 +1,14 @@
-import { promises as fsp } from 'fs';
+import fs from 'fs';
 import path from 'path';
-import { NextFunction, Request, Response } from 'express';
+import { RequestHandler } from 'express';
 import helmet from 'helmet';
 import getScriptSrcHashes from '../utils/getScriptSrcHashes';
 
-const helmetMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const indexPath = path.resolve(__dirname, '../../../dist/index.html');
-  const index = await fsp.readFile(indexPath, 'utf-8');
-  const hashes = getScriptSrcHashes(index);
+const SCRIPT_SRC_HASHES = getScriptSrcHashes(
+  fs.readFileSync(path.join(__dirname, '../../../dist/index.html'), 'utf-8')
+);
 
+const helmetMiddleware = (scriptSrcHashes: string[] = SCRIPT_SRC_HASHES): RequestHandler => {
   return helmet({
     // Set 'Content-Security-Policy'
     contentSecurityPolicy: {
@@ -35,13 +35,13 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
         objectSrc: ["'none'"],
         scriptSrc: [
           "'self'",
-          "'sha256-KYbqXqOYv6xOvzbfRwXslg+GK2ebpVi0G6EzAvF6Yc8='", // Google Tag Manager
           'https://edge.fullstory.com',
           'https://fullstory.com',
           'https://storage.googleapis.com',
           'https://www.google-analytics.com',
           'https://www.googletagmanager.com',
-          ...hashes,
+          "'sha256-KYbqXqOYv6xOvzbfRwXslg+GK2ebpVi0G6EzAvF6Yc8='", // Google Tag Manager
+          ...scriptSrcHashes,
         ],
         styleSrc: ["'self'", 'https://fonts.googleapis.com'],
 
@@ -110,7 +110,7 @@ const helmetMiddleware = async (req: Request, res: Response, next: NextFunction)
 
     // Set 'X-XSS-Protection: 0'
     xssFilter: undefined,
-  })(req, res, next);
+  });
 };
 
 export default helmetMiddleware;
