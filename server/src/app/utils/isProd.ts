@@ -1,5 +1,5 @@
-import Config from '../../config';
+import config from '../../config';
 
-const isProd = Config.nodeEnv === 'production';
+const isProd = config.nodeEnv === 'production';
 
 export default isProd;

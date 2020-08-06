@@ -1,9 +1,9 @@
-import Config from '../../config';
+import config from '../../config';
 import logger from './logger';
 
 const printStatus = (): void => {
-  logger.info(`NODE_ENV: ${Config.nodeEnv}`);
-  logger.info(`PORT: ${Config.port}`);
+  logger.info(`NODE_ENV: ${config.nodeEnv}`);
+  logger.info(`PORT: ${config.port}`);
 };
 
 export default printStatus;
