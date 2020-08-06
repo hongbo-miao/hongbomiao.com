@@ -2,6 +2,8 @@ import express from 'express';
 import request from 'supertest';
 import helmetMiddleware from './helmet.middleware';
 
+jest.mock('fs');
+
 describe('helmetMiddleware', () => {
   const app = express()
     .use(helmetMiddleware())
