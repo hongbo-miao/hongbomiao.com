@@ -14,13 +14,13 @@ import redirectSSLMiddleware from './security/middlewares/redirectSSL.middleware
 
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // The request handler must be the first middleware on the app
-  .use(morganMiddleware)
-  .use(corsMiddleware)
-  .use(helmetMiddleware)
-  .use(redirectSSLMiddleware)
+  .use(morganMiddleware())
+  .use(corsMiddleware())
+  .use(helmetMiddleware())
+  .use(redirectSSLMiddleware())
   .use(express.static(path.join(__dirname, '../dist')))
   .get('/', sendIndexPage)
-  .use(rateLimitMiddleware)
+  .use(rateLimitMiddleware())
   .use(bodyParser.json())
   .use('/graphql', graphQLMiddleware)
   .use('/api', apiRouter)
