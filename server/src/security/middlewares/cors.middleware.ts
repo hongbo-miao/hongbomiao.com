@@ -1,8 +1,8 @@
 import cors from 'cors';
 import isProd from '../../app/utils/isProd';
-import Config from '../../config';
+import config from '../../config';
 
-const corsAllowList = isProd ? Config.prodCORSAllowList : Config.devCORSAllowList;
+const corsAllowList = isProd ? config.prodCORSAllowList : config.devCORSAllowList;
 
 const corsMiddleware = cors({
   allowedHeaders: ['Authorization', 'Content-Type'],
