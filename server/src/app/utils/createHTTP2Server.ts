@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { Application } from 'express';
-import spdy, { Server } from 'spdy';
+import express from 'express';
+import spdy from 'spdy';
 
-const createHTTP2Server = (app: Application): Server => {
+const createHTTP2Server = (app: express.Application): spdy.Server => {
   return spdy.createServer(
     {
       key: fs.readFileSync(path.join(__dirname, '../../../private/ssl/hongbomiao.key')),
