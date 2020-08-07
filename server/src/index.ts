@@ -1,15 +1,18 @@
+import http from 'http';
 import app from './app';
 import createHTTP2Server from './app/utils/createHTTP2Server';
 import isProd from './app/utils/isProd';
 import config from './config';
+import createTerminus from './health/utils/createTerminus';
 import initSentry from './log/utils/initSentry';
-import printStatus from './log/utils/printStatus';
+import logger from './log/utils/logger';
 
 initSentry();
 
-if (isProd) {
-  app.listen(config.port, printStatus);
-} else {
-  const http2Server = createHTTP2Server(app);
-  http2Server.listen(config.port, printStatus);
-}
+const server = isProd ? http.createServer(app) : createHTTP2Server(app);
+server.listen(config.port, () => {
+  logger.info(`NODE_ENV: ${config.nodeEnv}`);
+  logger.info(`PORT: ${config.port}`);
+});
+
+createTerminus(server);
