@@ -4,8 +4,8 @@ import spdy from 'spdy';
 import checkHealth from './checkHealth';
 import cleanup from './cleanup';
 
-const createTerminus = (server: http.Server | spdy.Server) => {
-  return terminus.createTerminus(server, {
+const createTerminus = (server: http.Server | spdy.Server): void => {
+  terminus.createTerminus(server, {
     signal: 'SIGINT',
     healthChecks: {
       verbatim: true,
