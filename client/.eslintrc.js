@@ -1,2 +1,10 @@
-// Allow root ESLint to apply client folder
-module.exports = {};
+module.exports = {
+  overrides: [
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
+};
