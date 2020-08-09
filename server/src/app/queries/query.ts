@@ -1,5 +1,5 @@
 import { GraphQLObjectType } from 'graphql';
-import MeType from '../types/me.type';
+import MeType from '../types/Me.type';
 
 const query = new GraphQLObjectType({
   name: 'Query',

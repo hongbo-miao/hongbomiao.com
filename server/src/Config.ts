@@ -4,7 +4,7 @@ const sharedCORSAllowList = [
   'null', // Safari reports CSP violation
 ];
 
-const config = {
+const Config = {
   nodeEnv: NODE_ENV,
   port: PORT || 3001,
 
@@ -17,4 +17,4 @@ const config = {
   },
 };
 
-export default config;
+export default Config;
