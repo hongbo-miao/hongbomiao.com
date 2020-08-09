@@ -1,25 +1,23 @@
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import React from 'react';
-import TestUtils from '../utils/testUtils';
 import HmImage from './Image';
 
 describe('Image', () => {
-  const alt = 'Hello';
   const src = 'https://example.com/image.png';
   const webpSrc = 'https://example.com/image.webp';
-  const component = <HmImage className="hmHello" alt="Hello" src={src} webpSrc={webpSrc} />;
+  const component = <HmImage className="hmHello" alt="Hello, World!" src={src} webpSrc={webpSrc} />;
 
   test('render Image', () => {
-    TestUtils.testComponent(component);
+    render(component);
   });
 
   test('picture contains webp', () => {
-    const wrapper = shallow(component);
-    expect(wrapper.contains(<source type="image/webp" srcSet={webpSrc} />)).toBe(true);
+    const { container } = render(component);
+    expect(container.getElementsByTagName('source')).toHaveLength(1);
   });
 
   test('picture contains fallback img', () => {
-    const wrapper = shallow(component);
-    expect(wrapper.contains(<img className="hmHello" src={src} alt={alt} />)).toBe(true);
+    const { container } = render(component);
+    expect(container.getElementsByTagName('img')).toHaveLength(1);
   });
 });
