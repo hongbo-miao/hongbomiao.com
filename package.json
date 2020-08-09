@@ -15,7 +15,10 @@
     "lint:css:fix": "stylelint \"**/*.css\" \"!**/build/**\" \"!**/coverage/**\" --fix",
     "test:coverage": "./bin/testCoverage.sh",
     "test:coverage:report": "cat coverage/lcov.info | node node_modules/.bin/coveralls",
-    "clean": "./bin/clean.sh"
+    "clean": "./bin/clean.sh",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:stop": "docker-compose stop"
   },
   "devDependencies": {
     "@types/node": "14.0.27",
