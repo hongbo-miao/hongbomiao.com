@@ -7,7 +7,8 @@ import HmHome from './Home';
 describe('Home', () => {
   test('render Home', () => {
     const mockStore = configureStore();
-    const store = mockStore();
+    const initialState = { me: {} };
+    const store = mockStore(initialState);
 
     render(
       <Provider store={store}>
