@@ -6,7 +6,7 @@ const query = new GraphQLObjectType({
   fields: {
     me: {
       type: MeType,
-      resolve() {
+      resolve: () => {
         return { name: 'Hongbo Miao', slogan: 'Making magic happen' };
       },
     },
