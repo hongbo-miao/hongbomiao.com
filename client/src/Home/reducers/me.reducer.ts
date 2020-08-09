@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
-import MeActionType from '../actionTypes/me.actionType';
-import Me from '../types/me.type';
+import MeActionType from '../actionTypes/Me.actionType';
+import Me from '../types/Me.type';
 
 const initialState: Me = {
   name: 'Hongbo Miao',
