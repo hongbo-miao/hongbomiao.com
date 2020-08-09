@@ -3,9 +3,9 @@ import path from 'path';
 import { RequestHandler } from 'express';
 import helmet from 'helmet';
 import Config from '../../Config';
-import getScriptSrcHashes from '../utils/getScriptSrcHashes';
+import createScriptSrcHashes from '../utils/createScriptSrcHashes';
 
-const SCRIPT_SRC_HASHES = getScriptSrcHashes(
+const SCRIPT_SRC_HASHES = createScriptSrcHashes(
   fs.readFileSync(path.join(__dirname, '../../../dist/index.html'), 'utf-8')
 );
 

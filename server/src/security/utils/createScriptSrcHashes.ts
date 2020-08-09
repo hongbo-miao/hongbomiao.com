@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-const getScriptSrcHashes = (html: string): string[] => {
+const createScriptSrcHashes = (html: string): string[] => {
   if (html == null) return [];
 
   const hashes: string[] = [];
@@ -17,4 +17,4 @@ const getScriptSrcHashes = (html: string): string[] => {
   return hashes;
 };
 
-export default getScriptSrcHashes;
+export default createScriptSrcHashes;
