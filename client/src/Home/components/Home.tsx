@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import config from '../../config';
+import { RootState } from '../../reducer';
 import HmImage from '../../shared/components/Image';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import MeActions from '../actions/me.action';
@@ -8,13 +9,18 @@ import hatPNG from '../images/hat.png';
 import hatWebP from '../images/hat.webp';
 import magicPNG from '../images/magic.png';
 import magicWebP from '../images/magic.webp';
-import Me from '../types/me.type';
 import styles from './Home.module.css';
 
-interface Props {
-  me: Me;
-  getMe: Function;
-}
+const connector = connect(
+  (state: RootState) => ({
+    me: state.me,
+  }),
+  {
+    getMe: MeActions.getMe,
+  }
+);
+
+type Props = ConnectedProps<typeof connector>;
 
 const Home: React.FC<Props> = (props) => {
   const { me, getMe } = props;
@@ -43,11 +49,4 @@ const Home: React.FC<Props> = (props) => {
   );
 };
 
-export default connect(
-  (state: any) => ({
-    me: state.me,
-  }),
-  {
-    getMe: MeActions.getMe,
-  }
-)(Home);
+export default connector(Home);

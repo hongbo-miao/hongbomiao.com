@@ -1,4 +1,8 @@
-const checkHealth = async (): Promise<any> => {
+interface Health {
+  server: string;
+}
+
+const checkHealth = async (): Promise<Health> => {
   return Promise.resolve({ server: 'ok' });
 };
 
