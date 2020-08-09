@@ -16,9 +16,10 @@ const helmetMiddleware = (scriptSrcHashes: string[] = SCRIPT_SRC_HASHES): Reques
         /* Fetch directives */
         connectSrc: [
           "'self'",
-          'https://www.google-analytics.com',
-          'https://stats.g.doubleclick.net',
+          'https://hongbomiao.herokuapp.com',
           'https://rs.fullstory.com',
+          'https://stats.g.doubleclick.net',
+          'https://www.google-analytics.com',
         ],
         defaultSrc: ["'none'"],
         fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
