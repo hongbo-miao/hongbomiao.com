@@ -20,7 +20,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
+        extensions: ['.js', '.ts', '.tsx'],
       },
     },
     // https://github.com/yannickcr/eslint-plugin-react/issues/1955
