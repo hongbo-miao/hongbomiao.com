@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-const getScriptSrcHashes = (html: string): string => {
+const createScriptSrcHashes = (html: string): string => {
   let hashes = '';
   const matches = html.match(/<script>.+?<\/script>/g);
 
@@ -15,4 +15,4 @@ const getScriptSrcHashes = (html: string): string => {
   return hashes;
 };
 
-export default getScriptSrcHashes;
+export default createScriptSrcHashes;
