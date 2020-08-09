@@ -4,7 +4,7 @@ import rateLimitMiddleware from './rateLimit.middleware';
 
 describe('rateLimitMiddleware', () => {
   const windowMs = 60 * 1000; // 60 sec
-  const max = 2; // requests per IP
+  const max = 2; // Requests per IP
 
   const app = express()
     .use(rateLimitMiddleware(windowMs, max))
