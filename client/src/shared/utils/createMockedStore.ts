@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import Me from '../../Home/types/Me.type';
-import { RootState } from '../../reducer';
+import RootState from '../types/RootState.type';
 
 const mockStore = configureStore();
 const me: Me = {
