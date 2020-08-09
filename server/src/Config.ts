@@ -4,11 +4,16 @@ const sharedCORSAllowList = [
   'null', // Safari reports CSP violation
 ];
 
-const config = {
+const Config = {
   nodeEnv: NODE_ENV,
   port: PORT || 3001,
 
-  devCORSAllowList: [...sharedCORSAllowList, 'https://localhost:3000', 'https://localhost:3001'],
+  devCORSAllowList: [
+    ...sharedCORSAllowList,
+    'https://localhost:3000',
+    'https://localhost:3001',
+    'https://localhost:4001',
+  ],
   prodCORSAllowList: [...sharedCORSAllowList, 'https://hongbomiao.com', 'https://www.hongbomiao.com'],
 
   sentryOptions: {
@@ -17,4 +22,4 @@ const config = {
   },
 };
 
-export default config;
+export default Config;

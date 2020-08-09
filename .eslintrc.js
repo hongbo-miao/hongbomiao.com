@@ -37,8 +37,6 @@ module.exports = {
       'error',
       'ignorePackages',
       {
-        js: 'never',
-        jsx: 'never',
         ts: 'never',
         tsx: 'never',
       },
@@ -63,7 +61,7 @@ module.exports = {
     'react/jsx-filename-extension': [
       1,
       {
-        extensions: ['.jsx', '.tsx'],
+        extensions: ['.tsx'],
       },
     ],
     'spaced-comment': [
@@ -74,4 +72,13 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+        'security/detect-non-literal-fs-filename': 'off',
+      },
+    },
+  ],
 };

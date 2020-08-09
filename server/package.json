@@ -7,7 +7,8 @@
   },
   "scripts": {
     "build": "tsc && babel build --out-dir build",
-    "start": "nodemon --ext ts --exec \"yarn build && NODE_ENV=devlopment node --require dotenv/config build/index.js\"",
+    "dev": "nodemon --ext ts --exec \"yarn build && NODE_ENV=devlopment node --require dotenv/config build/index.js\"",
+    "serve:local": "NODE_ENV=production:local node --require dotenv/config build/index.js",
     "serve": "NODE_ENV=production node --require dotenv/config build/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -42,6 +43,7 @@
     "@types/express-rate-limit": "5.0.0",
     "@types/jest": "26.0.8",
     "@types/morgan": "1.9.1",
+    "@types/node": "14.0.27",
     "@types/spdy": "3.4.4",
     "@types/supertest": "2.0.10",
     "dotenv": "8.2.0",

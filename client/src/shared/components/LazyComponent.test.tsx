@@ -1,9 +1,9 @@
+import { render } from '@testing-library/react';
 import React from 'react';
-import TestUtils from '../utils/testUtils';
 import HmLazyComponent from './LazyComponent';
 
 describe('Suspense', () => {
   test('render Suspense', () => {
-    TestUtils.testComponent(<HmLazyComponent>hello</HmLazyComponent>);
+    render(<HmLazyComponent>Hello, World!</HmLazyComponent>);
   });
 });
