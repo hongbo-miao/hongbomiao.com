@@ -2,13 +2,13 @@ import { Epic, ofType } from 'redux-observable';
 import { ajax } from 'rxjs/ajax';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import config from '../../config';
-import MeActionTypes from '../actionTypes/me.actionType';
+import MeActionType from '../actionTypes/me.actionType';
 import MeActions from '../actions/me.action';
 import meQuery from '../queries/me.query';
 
 const getMeEpic: Epic = (action$) =>
   action$.pipe(
-    ofType(MeActionTypes.GET_ME),
+    ofType(MeActionType.GET_ME),
     mergeMap(() =>
       ajax
         .post(

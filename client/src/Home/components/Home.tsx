@@ -8,28 +8,32 @@ import hatPNG from '../images/hat.png';
 import hatWebP from '../images/hat.webp';
 import magicPNG from '../images/magic.png';
 import magicWebP from '../images/magic.webp';
+import Me from '../types/me.type';
 import styles from './Home.module.css';
 
 interface Props {
+  me: Me;
   getMe: Function;
 }
 
 const Home: React.FC<Props> = (props) => {
-  const { getMe } = props;
+  const { me, getMe } = props;
 
   useEffect(() => {
     getMe();
   }, [getMe]);
 
+  const { name, slogan } = me;
+
   return (
     <div className={styles.hmHome}>
       <div className={`container ${styles.hmContainer}`}>
-        <h1 className={styles.hmTitle}>HONGBO MIAO</h1>
+        <h1 className={styles.hmTitle}>{name}</h1>
         <a className={styles.hmContent} href={config.githubUrl} target="_blank" rel="noopener noreferrer">
           <HmLazyComponent>
             <HmImage className={styles.hmEmoji} alt="Magical Hat" src={hatPNG} webpSrc={hatWebP} />
           </HmLazyComponent>
-          <div className={styles.hmText}>Making magic happen</div>
+          <div className={styles.hmText}>{slogan}</div>
           <HmLazyComponent>
             <HmImage className={styles.hmEmoji} alt="Magic" src={magicPNG} webpSrc={magicWebP} />
           </HmLazyComponent>
@@ -39,6 +43,11 @@ const Home: React.FC<Props> = (props) => {
   );
 };
 
-export default connect(() => ({}), {
-  getMe: MeActions.getMe,
-})(Home);
+export default connect(
+  (state: any) => ({
+    me: state.me,
+  }),
+  {
+    getMe: MeActions.getMe,
+  }
+)(Home);

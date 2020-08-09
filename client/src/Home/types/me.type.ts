@@ -1,3 +1,6 @@
-export default interface Me {
+interface Me {
   name: string;
+  slogan: string;
 }
+
+export default Me;
