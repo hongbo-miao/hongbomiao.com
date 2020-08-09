@@ -1,6 +1,6 @@
 import { GraphQLObjectType, GraphQLString } from 'graphql';
 
-const MeType = new GraphQLObjectType({
+const MeGraphQLType = new GraphQLObjectType({
   name: 'Me',
   fields: {
     name: { type: GraphQLString },
@@ -8,4 +8,4 @@ const MeType = new GraphQLObjectType({
   },
 });
 
-export default MeType;
+export default MeGraphQLType;

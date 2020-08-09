@@ -1,7 +1,7 @@
 import cors from 'cors';
 import { RequestHandler } from 'express';
 import Config from '../../Config';
-import isProduction from '../../app/utils/isProduction';
+import isProduction from '../../shared/utils/isProduction';
 
 const ALLOW_LIST = isProduction ? Config.prodCORSAllowList : Config.devCORSAllowList;
 
