@@ -1,10 +1,10 @@
 import { RequestHandler } from 'express';
 import redirectSSL from 'redirect-ssl';
-import isProd from '../../app/utils/isProd';
+import isProduction from '../../app/utils/isProduction';
 
 const redirectSSLMiddleware = (): RequestHandler => {
   return redirectSSL.create({
-    enabled: isProd,
+    enabled: isProduction,
   });
 };
 

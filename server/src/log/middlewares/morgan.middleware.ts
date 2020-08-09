@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
 import morgan from 'morgan';
-import isProd from '../../app/utils/isProd';
+import isProduction from '../../app/utils/isProduction';
 
 // https://github.com/expressjs/morgan#predefined-formats
-const FORMAT = isProd ? 'combined' : 'dev';
+const FORMAT = isProduction ? 'combined' : 'dev';
 
 const morganMiddleware = (format: string = FORMAT): RequestHandler => {
   return morgan(format);

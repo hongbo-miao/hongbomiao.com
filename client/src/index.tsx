@@ -8,13 +8,13 @@ import HmApp from './App/components/App';
 import rootEpic from './Home/epics/getMeEpic';
 import rootReducer from './reducer';
 import * as serviceWorker from './shared/lib/serviceWorker';
-import isProd from './shared/utils/isProd';
+import isProduction from './shared/utils/isProduction';
 import './index.css';
 
 const epicMiddleware = createEpicMiddleware();
 const middlewares = [epicMiddleware];
 const enhancer = applyMiddleware(...middlewares);
-const store = createStore(rootReducer, isProd ? enhancer : composeWithDevTools(enhancer));
+const store = createStore(rootReducer, isProduction ? enhancer : composeWithDevTools(enhancer));
 
 epicMiddleware.run(rootEpic);
 
