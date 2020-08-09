@@ -4,6 +4,7 @@ const MeType = new GraphQLObjectType({
   name: 'Me',
   fields: {
     name: { type: GraphQLString },
+    slogan: { type: GraphQLString },
   },
 });
 

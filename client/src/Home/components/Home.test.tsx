@@ -1,9 +1,19 @@
+import { render } from '@testing-library/react';
 import React from 'react';
-import TestUtils from '../../shared/utils/testUtils';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import HmHome from './Home';
 
 describe('Home', () => {
   test('render Home', () => {
-    TestUtils.testComponent(<HmHome />);
+    const mockStore = configureStore();
+    const initialState = { me: {} };
+    const store = mockStore(initialState);
+
+    render(
+      <Provider store={store}>
+        <HmHome />
+      </Provider>
+    );
   });
 });

@@ -1,9 +1,9 @@
 import cors from 'cors';
 import { RequestHandler } from 'express';
-import isProd from '../../app/utils/isProd';
-import config from '../../config';
+import Config from '../../Config';
+import isProduction from '../../app/utils/isProduction';
 
-const ALLOW_LIST = isProd ? config.prodCORSAllowList : config.devCORSAllowList;
+const ALLOW_LIST = isProduction ? Config.prodCORSAllowList : Config.devCORSAllowList;
 
 const corsMiddleware = (allowList: string[] = ALLOW_LIST): RequestHandler => {
   return cors({

@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import WEBSITES from '../fixtures/websites';
+import WEBSITES from '../fixtures/WEBSITES';
 import HmSocialList from './SocialList';
 
 storiesOf('SocialList', module)
