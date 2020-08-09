@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import config from '../../config';
+import Config from '../../Config';
 import { RootState } from '../../reducer';
 import HmImage from '../../shared/components/Image';
 import HmLazyComponent from '../../shared/components/LazyComponent';
-import MeActions from '../actions/me.action';
+import MeAction from '../actions/Me.action';
 import hatPNG from '../images/hat.png';
 import hatWebP from '../images/hat.webp';
 import magicPNG from '../images/magic.png';
@@ -16,7 +16,7 @@ const connector = connect(
     me: state.me,
   }),
   {
-    getMe: MeActions.getMe,
+    getMe: MeAction.getMe,
   }
 );
 
@@ -35,7 +35,7 @@ const Home: React.FC<Props> = (props) => {
     <div className={styles.hmHome}>
       <div className={`container ${styles.hmContainer}`}>
         <h1 className={styles.hmTitle}>{name}</h1>
-        <a className={styles.hmContent} href={config.githubUrl} target="_blank" rel="noopener noreferrer">
+        <a className={styles.hmContent} href={Config.githubUrl} target="_blank" rel="noopener noreferrer">
           <HmLazyComponent>
             <HmImage className={styles.hmEmoji} alt="Magical Hat" src={hatPNG} webpSrc={hatWebP} />
           </HmLazyComponent>

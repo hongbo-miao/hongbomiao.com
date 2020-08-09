@@ -1,5 +1,5 @@
 import React from 'react';
-import Website from '../types/website.type';
+import Website from '../types/Website.type';
 import styles from './SocialList.module.css';
 
 interface Props {

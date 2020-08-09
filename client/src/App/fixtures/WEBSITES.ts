@@ -2,7 +2,7 @@ import githubLogo from '../images/github.svg';
 import linkedinLogo from '../images/linkedin.svg';
 import pinterestLogo from '../images/pinterest.svg';
 import twitterLogo from '../images/twitter.svg';
-import Website from '../types/website.type';
+import Website from '../types/Website.type';
 
 const WEBSITES: Website[] = [
   {

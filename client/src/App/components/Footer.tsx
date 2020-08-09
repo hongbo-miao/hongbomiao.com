@@ -1,6 +1,6 @@
 import React, { lazy } from 'react';
 import HmLazyComponent from '../../shared/components/LazyComponent';
-import WEBSITES from '../fixtures/websites';
+import WEBSITES from '../fixtures/WEBSITES';
 import styles from './Footer.module.css';
 
 const HmCopyright = lazy(() => import('./Copyright'));
