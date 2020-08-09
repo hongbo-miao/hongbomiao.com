@@ -1,4 +1,4 @@
-const { NODE_ENV, PORT } = process.env;
+const { DOMAIN, NODE_ENV, PORT } = process.env;
 const sharedCORSAllowList = [
   'electron://altair', // Altair GraphQL Client
   'null', // Safari reports CSP violation
@@ -6,7 +6,8 @@ const sharedCORSAllowList = [
 
 const Config = {
   nodeEnv: NODE_ENV,
-  port: PORT || 3001,
+  domain: DOMAIN,
+  port: PORT,
 
   devCORSAllowList: [
     ...sharedCORSAllowList,

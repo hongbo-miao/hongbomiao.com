@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { RequestHandler } from 'express';
 import helmet from 'helmet';
+import Config from '../../Config';
 import getScriptSrcHashes from '../utils/getScriptSrcHashes';
 
 const SCRIPT_SRC_HASHES = getScriptSrcHashes(
@@ -27,8 +28,8 @@ const helmetMiddleware = (scriptSrcHashes: string[] = SCRIPT_SRC_HASHES): Reques
         imgSrc: [
           "'self'",
           'data:',
-          'https://www.google-analytics.com',
           'https://stats.g.doubleclick.net',
+          'https://www.google-analytics.com',
           'https://www.google.com',
         ],
         manifestSrc: ["'self'"],
@@ -56,7 +57,7 @@ const helmetMiddleware = (scriptSrcHashes: string[] = SCRIPT_SRC_HASHES): Reques
         frameAncestors: ["'none'"],
 
         /* Reporting directives */
-        reportUri: '/api/violation/report-csp-violation',
+        reportUri: `https://${Config.domain}:${Config.port}/api/violation/report-csp-violation`,
 
         /* Other directives */
         // blockAllMixedContent: [], // The upgrade-insecure-requests directive is evaluated before block-all-mixed-content and if it is set, the latter is effectively a no-op. It is recommended to set either directive, but not both, unless you want to force HTTPS on older browsers that do not force it after a redirect to HTTP.
