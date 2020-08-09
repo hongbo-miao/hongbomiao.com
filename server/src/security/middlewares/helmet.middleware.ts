@@ -27,8 +27,8 @@ const helmetMiddleware = (scriptSrcHashes: string[] = SCRIPT_SRC_HASHES): Reques
         imgSrc: [
           "'self'",
           'data:',
-          'https://www.google-analytics.com',
           'https://stats.g.doubleclick.net',
+          'https://www.google-analytics.com',
           'https://www.google.com',
         ],
         manifestSrc: ["'self'"],
