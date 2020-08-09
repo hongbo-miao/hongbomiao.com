@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import Config from '../../Config';
-import { RootState } from '../../reducer';
 import HmImage from '../../shared/components/Image';
 import HmLazyComponent from '../../shared/components/LazyComponent';
+import RootState from '../../shared/types/RootState.type';
 import MeAction from '../actions/Me.action';
 import hatPNG from '../images/hat.png';
 import hatWebP from '../images/hat.webp';
