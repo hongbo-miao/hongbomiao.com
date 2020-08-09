@@ -1,11 +1,11 @@
 import http from 'http';
 import Config from './Config';
 import app from './app';
-import createHTTP2Server from './app/utils/createHTTP2Server';
-import isProduction from './app/utils/isProduction';
 import createTerminus from './health/utils/createTerminus';
 import initSentry from './log/utils/initSentry';
 import logger from './log/utils/logger';
+import createHTTP2Server from './shared/utils/createHTTP2Server';
+import isProduction from './shared/utils/isProduction';
 
 initSentry();
 
