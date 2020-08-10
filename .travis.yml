@@ -18,26 +18,30 @@ install:
 
 jobs:
   include:
-    - stage: Lint
+    - stage: Test
+      name: "Lint"
       before_script:
         - cd $TRAVIS_BUILD_DIR
       script:
         - yarn lint
         - yarn lint:css
 
-    - stage: Test - Client
+    - stage: Test
+      name: "Test - Client"
       before_script:
         - cd $TRAVIS_BUILD_DIR/client
       script:
         - yarn test
 
-    - stage: Test - Server
+    - stage: Test
+      name: "Test - Server"
       before_script:
         - cd $TRAVIS_BUILD_DIR/server
       script:
         - yarn test
 
-    - stage: Test Coverage
+    - stage: Test
+      name: "Test Coverage"
       before_script:
         - cd $TRAVIS_BUILD_DIR
       script:
@@ -46,7 +50,8 @@ jobs:
         # Upload coverage reports to Coveralls
         - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN yarn test:coverage:report
 
-    - stage: Storybook - Client
+    - stage: Test
+      name: "Storybook - Client"
       before_script:
         - cd $TRAVIS_BUILD_DIR/client
       script:
@@ -56,7 +61,8 @@ jobs:
             yarn run chromatic --exit-zero-on-changes
           fi
 
-    - stage: Lighthouse - Client
+    - stage: Test
+      name: "Lighthouse - Client"
       before_script:
         - cd $TRAVIS_BUILD_DIR/client
       script:
