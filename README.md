@@ -53,40 +53,68 @@
 
 ## Introduction
 
-An automation experiment to replace myself.
+A cutting-edge technology playground. An automation experiment.
 
-## Bots / Services / Technologies
+## Technologies
 
-- **React** as front-end framework
-- **Express** as back-end framework
-- **TypeScript** for static type-checking
-- **ESLint**, **Stylelint**, **Prettier** check and format code style
-- **Jest**, **Enzyme** for testing
-- **Coveralls** for test coverage
+#### Front End
+
+- **React** for building user interfaces
+- **RxJS** for asynchronous programming with observable streams
+- **Redux** for state container
+- **redux-observable** for side effects
+- **Jest**, **React Testing Library** for testing
 - **Storybook**, **Chromatic** for visual testing
-- **Sentry**, **winston** for error tracking
+- **Google Tag Manager**, **Google Analytics**, **FullStory** for data and experience analytics
+- **Lighthouse CI** for reviewing performance, accessibility, best practices, SEO, PWA
+- **PurgeCSS** for removing unused CSS
+
+#### Back End
+
+- **Express** as Node.js web application framework
+- **Sentry**, **Winston**, **Morgan** for logging and error tracking
+- **CORS**, **Helmet** for security
+- **Terminus** for health check and graceful shutdown
+- **Express Rate Limit** for rate limiting
+- **SuperTest** for testing Node.js HTTP servers
+
+#### Code
+
+- **TypeScript** for static type-checking
+- **ESLint**, **Stylelint** for static code analysis
+- **Prettier** as code formatter
 - **Husky**, **lint-staged** for preventing bad git commit and push
-- **Renovate**, **Dependabot** update dependencies
-- **ImgBot** optimizes images
-- **Lighthouse CI** reviews performance, accessibility, best practices, SEO, PWA
-- **Codacy**, **Code Climate**, **LGTM**, **CodeFactor** review codes
-- **Mozilla Observatory**, **Synk** monitor security
-- **Validator.nu** for W3C validation
-- **FOSSA** scans licenses
-- **PurgeCSS** removes unused CSS
-- **Mergify** merges the code
+
+#### Deployment
+
 - **Docker** as container
+- **Travis** for continuous integration
 - **Netlify**, **Heroku** for hosting
-- **Travis** runs the CI/CD
+
+#### Services
+
+- **Mozilla Observatory**, **Synk** for security monitoring
+- **FOSSA** for license compliance and vulnerabilities
+- **Requires.io**, **David** for monitoring dependencies
+- **Uptime Robot** for uptime monitoring
+- **Validator.nu** for W3C validation
+- **Coveralls** for test coverage statistics
+
+#### Bots
+
+- **Renovate**, **Dependabot** update dependencies
+- **Codacy**, **Code Climate**, **LGTM**, **CodeFactor** review codes
+- **ImgBot** optimizes images
+- **Mergify** merges the code
 - **Stale** closes stale issues and pull requests
 - **Delete merged branch** deletes merged branches
-- **Requires.io**, **David** monitor dependency status
-- **Uptime Robot** monitors downtime
-- **Google Tag Manager**, **Google Analytics**, **FullStory** for data and experience analytics
+
+#### Project Management
+
 - **ZenHub** for agile project management
 
 ## Automation Example
 
-This [pull request](https://github.com/Hongbo-Miao/hongbomiao.com/pull/234) shows how these bots / services / technologies work together from different aspects to achieve 100% automation without human interaction.
+This [pull request](https://github.com/Hongbo-Miao/hongbomiao.com/pull/234) shows how these technologies work together from different aspects to achieve 100% automation without human interaction.
 
 ![image](https://user-images.githubusercontent.com/3375461/65900482-f6503180-e36a-11e9-907e-dca26cca356c.png)
