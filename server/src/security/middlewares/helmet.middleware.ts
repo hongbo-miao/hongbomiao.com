@@ -76,9 +76,6 @@ const helmetMiddleware = (): RequestHandler => {
             'https://www.google-analytics.com',
             'https://ssl.google-analytics.com',
 
-            // Google Optimize
-            'https://www.google-analytics.com',
-
             // Google Ads
             'https://www.googleadservices.com',
             'https://googleads.g.doubleclick.net',

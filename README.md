@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://hongbomiao.com"><img width="100" src="https://github.com/hongbo-miao/hongbomiao.com/blob/master/client/public/favicon.png" alt="Lightning" /></a>
+  <a href="https://hongbomiao.com/"><img width="100" src="https://github.com/hongbo-miao/hongbomiao.com/blob/master/client/public/favicon.png" alt="Lightning" /></a>
 </p>
 
 <h2 align="center">
@@ -17,7 +17,7 @@
   <a href="https://travis-ci.com/hongbo-miao/hongbomiao.com"><img alt="Travis" src="https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com/master" /></a>
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com"><img alt="FOSSA Status" src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com.svg?type=shield" /></a>
   <a href="https://validator.nu/?doc=https%3A%2F%2Fhongbomiao.com"><img alt="W3C Validation" src="https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Fhongbomiao.com" /></a>
-  <a href="https://david-dm.org/hongbo-miao/hongbomiao.com"><img alt="David" src="https://img.shields.io/david/hongbo-miao/hongbomiao.com" /></a>
+  <a href="https://david-dm.org/hongbo-miao/hongbomiao.com"><img alt="David" src="https://img.shields.io/david/hongbo-miao/hongbomiao.com?path=server" /></a>
   <a href="https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements"><img alt="Requires.io requirements status" src="https://img.shields.io/requires/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://stats.uptimerobot.com/RoOoGTvyWN"><img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m783305207-c7842815153e530df85633fe" /></a>
 </p>
@@ -31,6 +31,7 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/commitizen/cz-cli"><img alt="Commitizen friendly" src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" /></a>
   <a href="https://github.com/prettier/prettier"><img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com" /></a>
@@ -83,6 +84,7 @@ A cutting-edge technology playground. An automation experiment.
 - **TypeScript** for static type-checking
 - **ESLint**, **Stylelint** for static code analysis
 - **Prettier** for code formatting
+- **commitlint** for commit message linting
 - **Husky**, **lint-staged** for preventing bad git commit and push
 
 #### Deployment
