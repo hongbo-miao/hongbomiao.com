@@ -40,7 +40,7 @@ const helmetMiddleware = (): RequestHandler => {
             'data:',
 
             // Google Tag Manager's Preview Mode
-            'www.googletagmanager.com',
+            'https://www.googletagmanager.com',
             'https://ssl.gstatic.com',
 
             // Universal Analytics (Google Analytics)
@@ -65,6 +65,9 @@ const helmetMiddleware = (): RequestHandler => {
             // FullStory
             'https://edge.fullstory.com',
             'https://fullstory.com',
+
+            // Google Tag Manager
+            'https://www.googletagmanager.com',
 
             // Google Tag Manager's Preview Mode
             'https://tagmanager.google.com',
