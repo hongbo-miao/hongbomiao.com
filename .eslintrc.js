@@ -58,6 +58,7 @@ module.exports = {
         'newlines-between': 'never',
       },
     ],
+    'multiline-comment-style': ['error', 'starred-block'],
     'react/jsx-filename-extension': [
       1,
       {
