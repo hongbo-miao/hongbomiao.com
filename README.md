@@ -84,6 +84,7 @@ A cutting-edge technology playground. An automation experiment.
 - **TypeScript** for static type-checking
 - **ESLint**, **Stylelint** for static code analysis
 - **Prettier** for code formatting
+- **commitlint** for commit message linting
 - **Husky**, **lint-staged** for preventing bad git commit and push
 
 #### Deployment
