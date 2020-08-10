@@ -1,6 +1,6 @@
 import { promises as fsp } from 'fs';
 import path from 'path';
-import getScriptSrcHashes from './getScriptSrcHashes';
+import createScriptSrcHashes from './createScriptSrcHashes';
 import insertHashesToScriptSrc from './insertHashesToScriptSrc';
 
 const updateHeaders = async (): Promise<void> => {
@@ -9,7 +9,7 @@ const updateHeaders = async (): Promise<void> => {
 
   const indexPath = path.join(__dirname, '../build/index.html');
   const indexHTML = await fsp.readFile(indexPath, 'utf-8');
-  const hashes = getScriptSrcHashes(indexHTML);
+  const hashes = createScriptSrcHashes(indexHTML);
 
   const newHeaders = insertHashesToScriptSrc(headers, hashes);
   await fsp.writeFile(headersPath, newHeaders);
