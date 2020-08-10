@@ -13,18 +13,18 @@ import graphQLMiddleware from './shared/middlewares/graphQL.middleware';
 import apiRouter from './shared/routers/api.router';
 
 const app = express()
-  .use(Sentry.Handlers.requestHandler()) // The request handler must be the first middleware on the app
+  .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
   .use(morganMiddleware())
   .use(corsMiddleware())
   .use(helmetMiddleware())
   .use(redirectSSLMiddleware())
-  .use(express.static(path.join(__dirname, '../dist')))
   .get('/', sendIndexPage)
+  .use(express.static(path.join(__dirname, '../dist')))
   .use(rateLimitMiddleware())
   .use(bodyParser.json())
   .use('/graphql', graphQLMiddleware)
   .use('/api', apiRouter)
-  .use(Sentry.Handlers.errorHandler()) // The error handler must be before any other error middleware and after all controllers
+  .use(Sentry.Handlers.errorHandler()) // Must be before any other error middleware and after all controllers
   .use(handleError);
 
 export default app;
