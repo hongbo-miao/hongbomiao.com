@@ -64,7 +64,7 @@ A cutting-edge technology playground. An automation experiment.
 - **Redux** for state container
 - **redux-observable** for side effects
 - **Jest**, **React Testing Library** for testing
-- **Storybook**, **Chromatic** for visual testing
+- **Storybook** for visual testing
 - **Google Tag Manager**, **Google Analytics**, **FullStory** for data and experience analytics
 - **Lighthouse CI** for reviewing performance, accessibility, best practices, SEO, PWA
 - **PurgeCSS** for removing unused CSS
@@ -82,32 +82,32 @@ A cutting-edge technology playground. An automation experiment.
 
 - **TypeScript** for static type-checking
 - **ESLint**, **Stylelint** for static code analysis
-- **Prettier** as code formatter
+- **Prettier** for code formatting
 - **Husky**, **lint-staged** for preventing bad git commit and push
 
 #### Deployment
 
-- **Docker** as container
 - **Travis** for continuous integration
+- **Docker, Docker Compose** for container
 - **Netlify**, **Heroku** for hosting
 
 #### Services
 
+- **Codacy**, **Code Climate**, **LGTM** for code reviews and analytics
+- **Coveralls** for test coverage statistics
+- **Chromatic** for UI reviewing and feedback collecting
 - **Mozilla Observatory**, **Synk** for security monitoring
-- **FOSSA** for license compliance and vulnerabilities
-- **Requires.io**, **David** for monitoring dependencies
+- **FOSSA** for license compliance
+- **Requires.io**, **David** for dependency monitoring
 - **Uptime Robot** for uptime monitoring
 - **Validator.nu** for W3C validation
-- **Coveralls** for test coverage statistics
 
 #### Bots
 
-- **Renovate**, **Dependabot** update dependencies
-- **Codacy**, **Code Climate**, **LGTM**, **CodeFactor** review codes
-- **ImgBot** optimizes images
-- **Mergify** merges the code
-- **Stale** closes stale issues and pull requests
-- **Delete merged branch** deletes merged branches
+- **Renovate** for dependency update
+- **ImgBot** for image compression
+- **Mergify** for automatically merging
+- **Stale** for closing stale issues and pull requests
 
 #### Project Management
 
