@@ -24,7 +24,6 @@
 
 <p align="center">
   <a href="https://observatory.mozilla.org/analyze/hongbomiao.com"><img alt="Mozilla Observatory grade" src="https://img.shields.io/mozilla-observatory/grade/hongbomiao.com" /></a>
-  <a href="https://securityheaders.com/?q=https%3A%2F%2Fhongbomiao.com&followRedirects=on"><img alt="Security Headers" src="https://img.shields.io/security-headers?url=https%3A%2F%2Fhongbomiao.com" /></a>
   <a href="https://app.codacy.com/app/hongbo-miao/hongbomiao.com"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
   <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://coveralls.io/github/Hongbo-Miao/hongbomiao.com"><img alt="Coveralls" src="https://img.shields.io/coveralls/github/Hongbo-Miao/hongbomiao.com" /></a>
@@ -71,7 +70,7 @@ An automation experiment to replace myself.
 - **ImgBot** optimizes images
 - **Lighthouse CI** reviews performance, accessibility, best practices, SEO, PWA
 - **Codacy**, **Code Climate**, **LGTM**, **CodeFactor** review codes
-- **Mozilla Observatory**, **Security Headers**, **Synk** monitor security
+- **Mozilla Observatory**, **Synk** monitor security
 - **Validator.nu** for W3C validation
 - **FOSSA** scans licenses
 - **PurgeCSS** removes unused CSS
