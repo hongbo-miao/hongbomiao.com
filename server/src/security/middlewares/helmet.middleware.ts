@@ -1,10 +1,10 @@
-import { RequestHandler } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import helmet from 'helmet';
 import Config from '../../Config';
 import createCSPNonce from '../utils/createCSPNonce';
 
 const helmetMiddleware = (): RequestHandler => {
-  return (req, res, next) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     const cspNonce = createCSPNonce();
     res.locals.cspNonce = cspNonce;
 
