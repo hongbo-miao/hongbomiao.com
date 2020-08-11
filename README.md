@@ -79,7 +79,7 @@ A cutting-edge technology playground. An automation experiment.
 - **CORS**, **Helmet** for security
 - **Terminus** for health check and graceful shutdown
 - **Express Rate Limit** for rate limiting
-- **SuperTest** for testing Node.js HTTP servers
+- **SuperTest** for HTTP testing
 
 #### Code
 
