@@ -64,10 +64,12 @@ A cutting-edge technology playground. An automation experiment.
 - **RxJS** for asynchronous programming with observable streams
 - **Redux** for state container
 - **redux-observable** for side effects
-- **Jest**, **React Testing Library** for testing
+- **Jest** as JavaScript testing framework
+- **React Testing Library** for React component testing
 - **Storybook** for visual testing
+- **Cypress** for end-to-end testing
+- **Lighthouse CI** for performance, accessibility, best practices, SEO, PWA testing
 - **Google Tag Manager**, **Google Analytics**, **FullStory** for data and experience analytics
-- **Lighthouse CI** for reviewing performance, accessibility, best practices, SEO, PWA
 - **PurgeCSS** for removing unused CSS
 
 #### Back End
