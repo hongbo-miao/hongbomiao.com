@@ -75,6 +75,7 @@ A cutting-edge technology playground. An automation experiment.
 #### Back End
 
 - **Express** as Node.js web application framework
+- **GraphQL** as the query language for the API, and the server-side runtime
 - **Sentry**, **Winston**, **Morgan** for logging and error tracking
 - **CORS**, **Helmet** for security
 - **Terminus** for health check and graceful shutdown
