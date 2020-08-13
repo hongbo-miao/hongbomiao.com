@@ -9,11 +9,11 @@ const initialState: Me = {
 
 const meReducer: Reducer = (state = initialState, action) => {
   switch (action.type) {
-    case MeActionType.GET_ME_SUCCEED: {
-      const { me } = action.payload;
+    case MeActionType.FETCH_ME_SUCCEED: {
+      const { res } = action.payload;
       return {
         ...state,
-        ...me,
+        ...res.response.data.me,
       };
     }
 
