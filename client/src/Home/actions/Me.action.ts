@@ -2,28 +2,28 @@ import { Observable, of } from 'rxjs';
 import MeActionType from '../actionTypes/Me.actionType';
 import Me from '../types/Me.type';
 
-interface GetMe {
-  type: typeof MeActionType.GET_ME;
+interface FetchMe {
+  type: typeof MeActionType.FETCH_ME;
 }
-interface GetMeSucceed {
-  type: typeof MeActionType.GET_ME_SUCCEED;
+interface FetchMeSucceed {
+  type: typeof MeActionType.FETCH_ME_SUCCEED;
   payload: {
     me: Me;
   };
 }
-type GetMeFailed = Observable<{
-  type: typeof MeActionType.GET_ME_FAILED;
+type FetchMeFailed = Observable<{
+  type: typeof MeActionType.FETCH_ME_FAILED;
   payload: Error;
 }>;
 
-const getMe = (): GetMe => ({ type: MeActionType.GET_ME });
-const getMeSucceed = (me: Me): GetMeSucceed => ({ type: MeActionType.GET_ME_SUCCEED, payload: { me } });
-const getMeFailed = (err: Error): GetMeFailed => of({ type: MeActionType.GET_ME_FAILED, payload: err });
+const fetchMe = (): FetchMe => ({ type: MeActionType.FETCH_ME });
+const fetchMeSucceed = (me: Me): FetchMeSucceed => ({ type: MeActionType.FETCH_ME_SUCCEED, payload: { me } });
+const fetchMeFailed = (err: Error): FetchMeFailed => of({ type: MeActionType.FETCH_ME_FAILED, payload: err });
 
 const MeAction = {
-  getMe,
-  getMeSucceed,
-  getMeFailed,
+  fetchMe,
+  fetchMeSucceed,
+  fetchMeFailed,
 };
 
 export default MeAction;

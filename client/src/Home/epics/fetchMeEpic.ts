@@ -6,9 +6,9 @@ import MeActionType from '../actionTypes/Me.actionType';
 import MeAction from '../actions/Me.action';
 import meQuery from '../queries/me.query';
 
-const getMeEpic: Epic = (action$) =>
+const fetchMeEpic: Epic = (action$) =>
   action$.pipe(
-    ofType(MeActionType.GET_ME),
+    ofType(MeActionType.FETCH_ME),
     mergeMap(() =>
       ajax
         .post(
@@ -19,10 +19,10 @@ const getMeEpic: Epic = (action$) =>
           { 'Content-Type': 'application/json' }
         )
         .pipe(
-          map((res) => MeAction.getMeSucceed(res.response.data.me)),
-          catchError(MeAction.getMeFailed)
+          map((res) => MeAction.fetchMeSucceed(res.response.data.me)),
+          catchError(MeAction.fetchMeFailed)
         )
     )
   );
 
-export default getMeEpic;
+export default fetchMeEpic;

@@ -16,18 +16,18 @@ const connector = connect(
     me: state.me,
   }),
   {
-    getMe: MeAction.getMe,
+    fetchMe: MeAction.fetchMe,
   }
 );
 
 type Props = ConnectedProps<typeof connector>;
 
 const Home: React.FC<Props> = (props) => {
-  const { me, getMe } = props;
+  const { me, fetchMe } = props;
 
   useEffect(() => {
-    getMe();
-  }, [getMe]);
+    fetchMe();
+  }, [fetchMe]);
 
   const { name, slogan } = me;
 
