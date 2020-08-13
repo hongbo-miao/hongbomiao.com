@@ -9,7 +9,7 @@ const initialState: Me = {
 
 const meReducer: Reducer = (state = initialState, action) => {
   switch (action.type) {
-    case MeActionType.GET_ME_SUCCEED: {
+    case MeActionType.FETCH_ME_SUCCEED: {
       const { me } = action.payload;
       return {
         ...state,
