@@ -10,10 +10,10 @@ const initialState: Me = {
 const meReducer: Reducer = (state = initialState, action) => {
   switch (action.type) {
     case MeActionType.FETCH_ME_SUCCEED: {
-      const { me } = action.payload;
+      const { res } = action.payload;
       return {
         ...state,
-        ...me,
+        ...res.response.data.me,
       };
     }
 
