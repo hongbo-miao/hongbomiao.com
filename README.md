@@ -61,9 +61,10 @@ A cutting-edge technology playground. An automation experiment.
 #### Front End
 
 - **React** for building user interfaces
-- **RxJS** for asynchronous programming with observable streams
 - **Redux** for state container
 - **redux-observable** for side effects
+- **RxJS** for asynchronous programming with observable streams
+- **rxjs/testing** for marble testing
 - **Jest** as JavaScript testing framework
 - **React Testing Library** for React component testing
 - **Storybook** for visual testing
