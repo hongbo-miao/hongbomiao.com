@@ -4,6 +4,9 @@ import Me from '../types/Me.type';
 
 interface FetchMe {
   type: typeof MeActionType.FETCH_ME;
+  payload: {
+    query: string;
+  };
 }
 interface FetchMeSucceed {
   type: typeof MeActionType.FETCH_ME_SUCCEED;
@@ -16,7 +19,7 @@ type FetchMeFailed = Observable<{
   payload: Error;
 }>;
 
-const fetchMe = (): FetchMe => ({ type: MeActionType.FETCH_ME });
+const fetchMe = (query: string): FetchMe => ({ type: MeActionType.FETCH_ME, payload: { query } });
 const fetchMeSucceed = (me: Me): FetchMeSucceed => ({ type: MeActionType.FETCH_ME_SUCCEED, payload: { me } });
 const fetchMeFailed = (err: Error): FetchMeFailed => of({ type: MeActionType.FETCH_ME_FAILED, payload: err });
 

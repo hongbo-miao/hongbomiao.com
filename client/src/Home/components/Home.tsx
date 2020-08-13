@@ -9,6 +9,7 @@ import hatPNG from '../images/hat.png';
 import hatWebP from '../images/hat.webp';
 import magicPNG from '../images/magic.png';
 import magicWebP from '../images/magic.webp';
+import meQuery from '../queries/me.query';
 import styles from './Home.module.css';
 
 const connector = connect(
@@ -26,7 +27,7 @@ const Home: React.FC<Props> = (props) => {
   const { me, fetchMe } = props;
 
   useEffect(() => {
-    fetchMe();
+    fetchMe(meQuery);
   }, [fetchMe]);
 
   const { name, slogan } = me;
