@@ -9,7 +9,7 @@ import isProduction from './shared/utils/isProduction';
 
 initSentry();
 
-const server = isProduction ? http.createServer(app) : createHTTP2Server(app);
+const server = isProduction() ? http.createServer(app) : createHTTP2Server(app);
 server.listen(Config.port, () => {
   logger.info(`NODE_ENV: ${Config.nodeEnv}`);
   logger.info(`PORT: ${Config.port}`);
