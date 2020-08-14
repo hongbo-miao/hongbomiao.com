@@ -1,5 +1,7 @@
 import Config from '../../Config';
 
-const isProduction = Config.nodeEnv === 'production' && Config.domain !== 'localhost';
+const isProduction = (nodeEnv = Config.nodeEnv): boolean => {
+  return nodeEnv === 'production';
+};
 
 export default isProduction;

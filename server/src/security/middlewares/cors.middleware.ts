@@ -3,7 +3,7 @@ import { RequestHandler } from 'express';
 import Config from '../../Config';
 import isProduction from '../../shared/utils/isProduction';
 
-const ALLOW_LIST = isProduction ? Config.prodCORSAllowList : Config.devCORSAllowList;
+const ALLOW_LIST = isProduction() ? Config.prodCORSAllowList : Config.devCORSAllowList;
 
 const corsMiddleware = (allowList: string[] = ALLOW_LIST): RequestHandler => {
   return cors({
