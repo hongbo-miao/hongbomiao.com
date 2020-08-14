@@ -13,21 +13,22 @@
 <br />
 
 <p align="center">
-  <a href="https://app.netlify.com/sites/hongbomiao/deploys"><img alt="Netlify" src="https://img.shields.io/netlify/13c2e544-91b2-4869-9ae1-bc97ff3108a4"></a>
+  <a href="https://app.netlify.com/sites/hongbomiao/deploys"><img alt="Netlify" src="https://img.shields.io/netlify/13c2e544-91b2-4869-9ae1-bc97ff3108a4" /></a>
   <a href="https://travis-ci.com/hongbo-miao/hongbomiao.com"><img alt="Travis" src="https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com/master" /></a>
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com"><img alt="FOSSA Status" src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com.svg?type=shield" /></a>
-  <a href="https://validator.nu/?doc=https%3A%2F%2Fhongbomiao.com"><img alt="W3C Validation" src="https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Fhongbomiao.com" /></a>
   <a href="https://david-dm.org/hongbo-miao/hongbomiao.com"><img alt="David" src="https://img.shields.io/david/hongbo-miao/hongbomiao.com?path=server" /></a>
   <a href="https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements"><img alt="Requires.io requirements status" src="https://img.shields.io/requires/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://stats.uptimerobot.com/RoOoGTvyWN"><img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m783305207-c7842815153e530df85633fe" /></a>
+  <a href="https://coveralls.io/github/Hongbo-Miao/hongbomiao.com"><img alt="Coveralls" src="https://img.shields.io/coveralls/github/Hongbo-Miao/hongbomiao.com" /></a>
 </p>
 
 <p align="center">
   <a href="https://observatory.mozilla.org/analyze/hongbomiao.com"><img alt="Mozilla Observatory grade" src="https://img.shields.io/mozilla-observatory/grade/hongbomiao.com" /></a>
   <a href="https://app.codacy.com/app/hongbo-miao/hongbomiao.com"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
   <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/Hongbo-Miao/hongbomiao.com" /></a>
-  <a href="https://coveralls.io/github/Hongbo-Miao/hongbomiao.com"><img alt="Coveralls" src="https://img.shields.io/coveralls/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://hstspreload.org/?domain=hongbomiao.com"><img alt="Chromium HSTS preload" src="https://img.shields.io/hsts/preload/hongbomiao.com" /></a>
+  <a href="https://snyk.io/test/github/Hongbo-Miao/hongbomiao.com"><img alt="Snyk vulnerabilities" src="https://img.shields.io/snyk/vulnerabilities/github/hongbo-miao/hongbomiao.com" /></a>
+  <a href="https://validator.nu/?doc=https%3A%2F%2Fhongbomiao.com"><img alt="W3C Validation" src="https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Fhongbomiao.com" /></a>
 </p>
 
 <p align="center">
@@ -64,10 +65,10 @@ A cutting-edge technology playground. An automation experiment.
 - **Redux** for state container
 - **redux-observable** for side effects
 - **RxJS** for asynchronous programming with observable streams
-- **rxjs/testing** for marble testing
 - **Jest** as JavaScript testing framework
 - **React Testing Library** for React component testing
 - **Storybook** for visual testing
+- **rxjs/testing** for marble testing
 - **Cypress** for end-to-end testing
 - **Lighthouse CI** for performance, accessibility, best practices, SEO, PWA testing
 - **Google Tag Manager**, **Google Analytics**, **FullStory** for data and experience analytics
@@ -102,7 +103,7 @@ A cutting-edge technology playground. An automation experiment.
 - **Codacy**, **Code Climate**, **LGTM** for code reviews and analytics
 - **Coveralls** for test coverage statistics
 - **Chromatic** for UI reviewing and feedback collecting
-- **Mozilla Observatory**, **Synk** for security monitoring
+- **Mozilla Observatory**, **Snyk** for security monitoring
 - **FOSSA** for license compliance
 - **Requires.io**, **David** for dependency monitoring
 - **Uptime Robot** for uptime monitoring

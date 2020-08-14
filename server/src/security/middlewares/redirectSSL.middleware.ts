@@ -4,7 +4,7 @@ import isProduction from '../../shared/utils/isProduction';
 
 const redirectSSLMiddleware = (): RequestHandler => {
   return redirectSSL.create({
-    enabled: isProduction,
+    enabled: isProduction(),
   });
 };
 
