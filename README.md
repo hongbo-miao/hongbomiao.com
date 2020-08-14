@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://hongbomiao.com/"><img width="100" src="https://github.com/hongbo-miao/hongbomiao.com/blob/master/client/public/favicon.png" alt="Lightning" /></a>
+  <a href="https://hongbomiao.com/"><img width="100" src="https://user-images.githubusercontent.com/3375461/90245344-1397cc80-de65-11ea-82d2-b7ebbe8948c8.png" alt="Lightning" /></a>
 </p>
 
 <h2 align="center">
