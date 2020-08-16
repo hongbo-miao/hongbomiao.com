@@ -1,7 +1,10 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import helmet from 'helmet';
 import Config from '../../Config';
+import isProduction from '../../shared/utils/isProduction';
 import createCSPNonce from '../utils/createCSPNonce';
+
+const cspConnectSrc = isProduction() ? Config.prodCSPConnectSrc : Config.devCSPConnectSrc;
 
 const helmetMiddleware = (): RequestHandler => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -22,6 +25,8 @@ const helmetMiddleware = (): RequestHandler => {
 
             // Universal Analytics (Google Analytics)
             'https://www.google-analytics.com',
+
+            ...cspConnectSrc,
           ],
           defaultSrc: ["'none'"],
           fontSrc: [
