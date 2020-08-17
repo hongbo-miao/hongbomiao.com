@@ -70,3 +70,12 @@ jobs:
         - yarn run lighthouse
       addons:
         chrome: stable
+
+    - stage: Deploy
+      deploy:
+        provider: heroku
+        api_key:
+          secure: $HEROKU_API_KEY
+        app: hongbomiao
+        on:
+          branch: master
