@@ -11,6 +11,11 @@ cache: yarn
 notifications:
   email: false
 
+env:
+  global:
+    - LIGHTSTEP_TOEKN=$LIGHTSTEP_TOEKN
+    - REACT_APP_LIGHTSTEP_TOEKN=$REACT_APP_LIGHTSTEP_TOEKN
+
 install:
   - yarn install --frozen-lockfile
   - cd $TRAVIS_BUILD_DIR/client && yarn install --frozen-lockfile
@@ -77,7 +82,7 @@ jobs:
       deploy:
         provider: heroku
         api_key:
-          secure: "IlWm0csumtKE5kNStV2hHdsDCyF/0LYCMXvfnpEr4cZrfV2ZKWXaqKoA3kXbMWJU+8ihoGy/8Vz4VbkYP0232wNZAeM4p9mC7RUcxR+Y/Rz1mU8aAQ1VFod17XNtQTpX1iXWbgt77zABiBJURdSyTCQDTgoC+GdV/rPQnbcsAbZTeChRcwgv1R5YxINNrHPFlXrvnzyFTajgq3ulRTpUSVGH50pbZ+FklF+W8uPbj+xQG8O/sOzKbuNmpdrFIgRsZBG8HM8WXJHQgISQ4R2y2974U5oZwNDyNC7QjlyJWvs21HOCYHZv6kKM4PiAL3lBtQ/g9Sj1r6lAFleqQeK9uHQvzBG6i+uTfcjfszmyj0CYGC8y4tlAXPu2KpMDXopa+CJi1k3TyqJvP/VkaHTkHVskZXSwo3sZL/u6V0NSbM0ObGzlOCPkrev7MMaZFIqEB5yWV3xN6YzVMIl1tsNwZnCVQKkTwtiOTCVuROI2gw763KNoN4ZpA8Sv9hi2lc0/VrMBihfAKnTmTq4vto789IB0wKo8XsHy1yGRaHXKKV3e3VlF1VeuQUlpCmCQn/sS2c7rCZJ1wfiMrAoerUlM1jIsLOZJcvOAnK/CRpkMYS6CZwl2wW91W9d7vgcZ/2qwkfS0Re8xD2rsk3Fsb5tWncGT/6B0H7GrXkGRC0suzcs="
+          secure: "sx1p98NzubuaCaaGTWnOKFsStMLOgQMgO9k7aK85ROrRJ653/i9n/e1/Y4ESDPI2Sj5AFHgod0SCkL6fgKyvFje3RNKSbNyxJreaezxJ5fiDMkOHwEqGtF7AfsjX5yhNkgejBxELkapIAhlEjthkpFhwN9F5a+WKj3iTlh1Bl6Mv3aJmf98m/G2c97caIxjb5e9jAsijPSnIITCs70y2nwhyShA7cusLgxcRog78Qs+9mL5VLx+ZlA5HcdKj+OCuasDggadUVDAJhitNgUJ4jVO+qEGvXxIjZUgu2eofA7Zc5HxAhu8ocbpcLHb9pVqIDkOxtgABi27INM4QHmrGk8nyVn1yLKHKG4hcC/pzd161Yf+9ueBC+PUP6JwAIoobDINac5zlU/ORop70Rtb1abKbiPf1s023ufvtMcHd1GW9CwKyD4U3fBWfn15uzlge9xrS/xoG6ZCEd10EqX08ezShxUKgY+79GjOGFgX1H47tFCUuU+BwEOZLWmDQfZ0sRwTm//L9iRticeGL1h797LpNiC50chdqTuoYVBSGtxpRCedjrVFpSDMfBSS33Ve0KxcoQf5Cm5Fgil3a3r2MRMxnvfXNp6CW+uXqg1avPNOdnlf3SUMGgwVEIZMUa5GlNeilgfEWDbfexXt6QhfAkDQVTawaYeG5afVEi6IKIWE="
         app: hongbomiao
         on:
           branch: master
