@@ -79,6 +79,8 @@ jobs:
         chrome: stable
 
     - stage: Deploy
+      before_deploy:
+        - cd $TRAVIS_BUILD_DIR
       deploy:
         provider: heroku
         api_key:
