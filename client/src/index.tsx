@@ -5,8 +5,10 @@ import './index.css';
 import HmApp from './App/components/App';
 import * as serviceWorker from './shared/libs/serviceWorker';
 import initSentry from './shared/utils/initSentry';
+import initTracer from './shared/utils/initTracer';
 import store from './shared/utils/store';
 
+initTracer();
 initSentry();
 
 ReactDOM.render(
