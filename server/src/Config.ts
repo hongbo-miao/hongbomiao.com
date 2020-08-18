@@ -1,4 +1,7 @@
-const { DOMAIN, NODE_ENV, PORT } = process.env;
+const { DOMAIN, LIGHTSTEP_TOEKN, NODE_ENV, PORT } = process.env;
+const sharedCSPConnectSrc = [
+  'https://collector.lightstep.com', // Lightstep
+];
 const sharedCORSAllowList = [
   'electron://altair', // Altair GraphQL Client
   'null', // Safari reports CSP violation
@@ -8,6 +11,11 @@ const Config = {
   nodeEnv: NODE_ENV,
   domain: DOMAIN,
   port: PORT,
+
+  lightstepToken: LIGHTSTEP_TOEKN,
+
+  devCSPConnectSrc: [...sharedCSPConnectSrc],
+  prodCSPConnectSrc: [...sharedCSPConnectSrc],
 
   devCORSAllowList: [
     ...sharedCORSAllowList,
