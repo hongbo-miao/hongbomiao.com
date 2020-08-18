@@ -3,7 +3,7 @@ import { NodeTracerProvider } from '@opentelemetry/node';
 import { BatchSpanProcessor, ConsoleSpanExporter, SimpleSpanProcessor } from '@opentelemetry/tracing';
 import { LightstepExporter } from 'lightstep-opentelemetry-exporter';
 import Config from '../../Config';
-import isProduction from './isProduction';
+import isDevelopment from './isDevelopment';
 
 const initTracer = (): void => {
   const serviceName = 'hongbomiao-server';
@@ -24,7 +24,7 @@ const initTracer = (): void => {
     },
   });
 
-  if (!isProduction()) {
+  if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
     tracerProvider.addSpanProcessor(
       new BatchSpanProcessor(

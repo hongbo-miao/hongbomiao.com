@@ -4,7 +4,7 @@ import { SimpleSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing
 import { WebTracerProvider } from '@opentelemetry/web';
 import { LightstepExporter } from 'lightstep-opentelemetry-exporter';
 import Config from '../../Config';
-import isProduction from './isProduction';
+import isDevelopment from './isDevelopment';
 
 const initTracer = (): void => {
   const serviceName = 'hongbomiao-client';
@@ -12,7 +12,7 @@ const initTracer = (): void => {
     plugins: [new DocumentLoad(), new XMLHttpRequestPlugin()],
   });
 
-  if (!isProduction()) {
+  if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
   }
 
