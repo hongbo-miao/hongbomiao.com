@@ -62,10 +62,10 @@ A cutting-edge technology playground. An automation experiment.
 #### Front End
 
 - **React** for building user interfaces
-- **Redux** for state container
+- **Redux** as the state container
 - **redux-observable** for side effects
 - **RxJS** for asynchronous programming with observable streams
-- **Jest** as JavaScript testing framework
+- **Jest** as the JavaScript testing framework
 - **React Testing Library** for React component testing
 - **Storybook** for visual testing
 - **rxjs/testing** for marble testing
@@ -76,9 +76,10 @@ A cutting-edge technology playground. An automation experiment.
 
 #### Back End
 
-- **Express** as Node.js web application framework
+- **Express** as the Node.js web application framework
 - **GraphQL** as the query language for the API, and the server-side runtime
-- **Sentry**, **Winston**, **Morgan** for logging and error tracking
+- **OpenTelemetry**, **Jaeger** for distributed tracing
+- **Winston**, **Morgan** for logging
 - **CORS**, **Helmet** for security
 - **Terminus** for health check and graceful shutdown
 - **Express Rate Limit** for rate limiting
@@ -95,11 +96,13 @@ A cutting-edge technology playground. An automation experiment.
 #### Deployment
 
 - **Travis** for continuous integration
-- **Docker, Docker Compose** for container
+- **Docker**, **Docker Compose** for container
 - **Netlify**, **Heroku** for hosting
 
 #### Services
 
+- **Sentry** for error tracking
+- **Lightstep** for distributed tracing
 - **Codacy**, **Code Climate**, **LGTM** for code reviews and analytics
 - **Coveralls** for test coverage statistics
 - **Chromatic** for UI reviewing and feedback collecting
@@ -108,6 +111,7 @@ A cutting-edge technology playground. An automation experiment.
 - **Requires.io**, **David** for dependency monitoring
 - **Uptime Robot** for uptime monitoring
 - **Validator.nu** for W3C validation
+- **ZenHub** for agile project management
 
 #### Bots
 
@@ -115,10 +119,6 @@ A cutting-edge technology playground. An automation experiment.
 - **ImgBot** for image compression
 - **Mergify** for automatically merging
 - **Stale** for closing stale issues and pull requests
-
-#### Project Management
-
-- **ZenHub** for agile project management
 
 ## Automation Example
 

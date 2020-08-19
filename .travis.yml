@@ -11,11 +11,6 @@ cache: yarn
 notifications:
   email: false
 
-env:
-  global:
-    - LIGHTSTEP_TOEKN=$LIGHTSTEP_TOEKN
-    - REACT_APP_LIGHTSTEP_TOEKN=$REACT_APP_LIGHTSTEP_TOEKN
-
 install:
   - yarn install --frozen-lockfile
   - cd $TRAVIS_BUILD_DIR/client && yarn install --frozen-lockfile
