@@ -74,6 +74,7 @@ jobs:
         chrome: stable
 
     - stage: Deploy
+      if: branch = master && type = push && fork = false
       before_deploy:
         - cd $TRAVIS_BUILD_DIR
       deploy:
