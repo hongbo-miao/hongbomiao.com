@@ -1,9 +1,10 @@
-import { JaegerExporter } from '@opentelemetry/exporter-jaeger';
+import { CollectorProtocolNode, CollectorTraceExporter } from '@opentelemetry/exporter-collector';
 import { NodeTracerProvider } from '@opentelemetry/node';
-import { BatchSpanProcessor, ConsoleSpanExporter, SimpleSpanProcessor } from '@opentelemetry/tracing';
+import { ConsoleSpanExporter, SimpleSpanProcessor } from '@opentelemetry/tracing';
 import { LightstepExporter } from 'lightstep-opentelemetry-exporter';
 import Config from '../../Config';
 import isDevelopment from './isDevelopment';
+import isProduction from './isProduction';
 
 const initTracer = (): void => {
   const serviceName = 'hongbomiao-server';
@@ -26,26 +27,38 @@ const initTracer = (): void => {
 
   if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
+    /*
+     * tracerProvider.addSpanProcessor(
+     *   new BatchSpanProcessor(
+     *     new JaegerExporter({
+     *       serviceName,
+     *       host: 'localhost',
+     *       port: 6832,
+     *       maxPacketSize: 65000,
+     *     })
+     *   )
+     * );
+     */
     tracerProvider.addSpanProcessor(
-      new BatchSpanProcessor(
-        new JaegerExporter({
-          serviceName,
-          host: 'localhost',
-          port: 6832,
-          maxPacketSize: 65000,
+      new SimpleSpanProcessor(
+        new CollectorTraceExporter({
+          protocolNode: CollectorProtocolNode.HTTP_PROTO,
+          serviceName: 'hongbomiao-server',
         })
       )
     );
   }
 
-  tracerProvider.addSpanProcessor(
-    new SimpleSpanProcessor(
-      new LightstepExporter({
-        serviceName,
-        token: Config.lightstepToken,
-      })
-    )
-  );
+  if (isProduction()) {
+    tracerProvider.addSpanProcessor(
+      new SimpleSpanProcessor(
+        new LightstepExporter({
+          serviceName,
+          token: Config.lightstepToken,
+        })
+      )
+    );
+  }
 
   tracerProvider.register();
 };
