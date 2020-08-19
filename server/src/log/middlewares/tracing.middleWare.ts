@@ -1,7 +1,7 @@
 import opentelemetry from '@opentelemetry/api';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 
-const tracingMiddleWare = (): RequestHandler => {
+const tracingMiddleware = (): RequestHandler => {
   return (req: Request, res: Response, next: NextFunction) => {
     const { path } = req;
     const tracer = opentelemetry.trace.getTracer('hongbomiao-server');
@@ -42,4 +42,4 @@ const tracingMiddleWare = (): RequestHandler => {
   };
 };
 
-export default tracingMiddleWare;
+export default tracingMiddleware;
