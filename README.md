@@ -78,12 +78,14 @@ A cutting-edge technology playground. An automation experiment.
 
 - **Express** as the Node.js web application framework
 - **GraphQL** as the query language for the API, and the server-side runtime
-- **OpenTelemetry**, **Jaeger** for distributed tracing
+- **OpenTelemetry**, **Jaeger**, **Zipkin** for distributed tracing
+- **Prometheus** for monitoring and alerting
 - **Winston**, **Morgan** for logging
 - **CORS**, **Helmet** for security
 - **Terminus** for health check and graceful shutdown
 - **Express Rate Limit** for rate limiting
 - **SuperTest** for HTTP testing
+- **Docker**, **Docker Compose** for container
 
 #### Code
 
@@ -93,16 +95,12 @@ A cutting-edge technology playground. An automation experiment.
 - **commitlint** for commit message linting
 - **Husky**, **lint-staged** for preventing bad git commit and push
 
-#### Deployment
-
-- **Travis** for continuous integration
-- **Docker**, **Docker Compose** for container
-- **Netlify**, **Heroku** for hosting
-
 #### Services
 
-- **Sentry** for error tracking
 - **Lightstep** for distributed tracing
+- **Sentry** for error tracking
+- **Travis** for continuous integration
+- **Netlify**, **Heroku** for hosting
 - **Codacy**, **Code Climate**, **LGTM** for code reviews and analytics
 - **Coveralls** for test coverage statistics
 - **Chromatic** for UI reviewing and feedback collecting
