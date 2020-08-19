@@ -27,18 +27,6 @@ const initTracer = (): void => {
 
   if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
-    /*
-     * tracerProvider.addSpanProcessor(
-     *   new BatchSpanProcessor(
-     *     new JaegerExporter({
-     *       serviceName,
-     *       host: 'localhost',
-     *       port: 6832,
-     *       maxPacketSize: 65000,
-     *     })
-     *   )
-     * );
-     */
     tracerProvider.addSpanProcessor(
       new SimpleSpanProcessor(
         new CollectorTraceExporter({
