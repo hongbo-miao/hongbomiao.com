@@ -16,10 +16,22 @@ const initTracer = (): void => {
       },
       http: {
         enabled: true,
+        // https://github.com/open-telemetry/opentelemetry-js/issues/585
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        ignoreOutgoingUrls: [
+          /\/v1\/trace/, // OpenTelemetry
+        ],
         path: '@opentelemetry/plugin-http',
       },
       https: {
         enabled: true,
+        // https://github.com/open-telemetry/opentelemetry-js/issues/585
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        ignoreOutgoingUrls: [
+          /\/v1\/trace/, // OpenTelemetry
+        ],
         path: '@opentelemetry/plugin-https',
       },
     },
