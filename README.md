@@ -118,6 +118,14 @@ A cutting-edge technology playground. An automation experiment.
 - **Mergify** for automatically merging
 - **Stale** for closing stale issues and pull requests
 
+## URLs
+
+- Client: https://localhost:3000
+- Server: https://localhost:3001
+- Jaeger: http://localhost:16686
+- Zipkin: http://localhost:9411
+- Prometheus: http://localhost:9090
+
 ## Automation Example
 
 This [pull request](https://github.com/Hongbo-Miao/hongbomiao.com/pull/234) shows how these technologies work together from different aspects to achieve 100% automation without human interaction.
