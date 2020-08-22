@@ -19,15 +19,15 @@ const Config = {
 
   devCORSAllowList: [
     ...sharedCORSAllowList,
-    'https://localhost:3000',
-    'https://localhost:3001',
-    'https://localhost:4001',
+    'https://localhost:5000',
+    'https://localhost:5001',
+    'https://localhost:8080',
   ],
   prodCORSAllowList: [
     ...sharedCORSAllowList,
     'https://hongbomiao.com',
-    'https://www.hongbomiao.com',
     'https://hongbomiao.herokuapp.com',
+    'https://www.hongbomiao.com',
   ],
 
   sentryOptions: {
