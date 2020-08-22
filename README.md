@@ -121,8 +121,8 @@ A cutting-edge technology playground. An automation experiment.
 
 ## URLs
 
-- Client: https://localhost:3000
-- Server: https://localhost:3001
+- Client: https://localhost:8080
+- Server: https://localhost:5000
 - Jaeger: http://localhost:16686
 - Kibana: http://localhost:5601
 - Zipkin: http://localhost:9411
