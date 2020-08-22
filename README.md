@@ -127,8 +127,14 @@ A cutting-edge technology playground. An automation experiment.
 - Zipkin: http://localhost:9411
 - Prometheus: http://localhost:9090
 
-## Automation Example
+## Distributed Tracing
 
-This [pull request](https://github.com/Hongbo-Miao/hongbomiao.com/pull/234) shows how these technologies work together from different aspects to achieve 100% automation without human interaction.
+Ths presents telemetry data on Jaeger UI after OpenTelemetry processes telemetry data.
 
-![image](https://user-images.githubusercontent.com/3375461/65900482-f6503180-e36a-11e9-907e-dca26cca356c.png)
+![Distributed Tracing](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
+
+## Automation
+
+This [pull request](https://github.com/Hongbo-Miao/hongbomiao.com/pull/234) shows how these technologies work together from different aspects to achieve automation.
+
+![Automation](https://user-images.githubusercontent.com/3375461/65900482-f6503180-e36a-11e9-907e-dca26cca356c.png)
