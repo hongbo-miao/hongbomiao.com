@@ -1,10 +1,10 @@
-const { REACT_APP_DOMAIN, REACT_APP_LIGHTSTEP_TOEKN, REACT_APP_PORT, NODE_ENV } = process.env;
+const { REACT_APP_SERVER_DOMAIN, REACT_APP_LIGHTSTEP_TOEKN, REACT_APP_SERVER_PORT, NODE_ENV } = process.env;
 
 const Config = {
   nodeEnv: NODE_ENV,
 
   githubURL: 'https://github.com/hongbo-miao/hongbomiao.com',
-  graphQLURL: `https://${REACT_APP_DOMAIN}:${REACT_APP_PORT}/graphql`,
+  graphQLURL: `https://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
 
   lightstepToken: REACT_APP_LIGHTSTEP_TOEKN,
 
