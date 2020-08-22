@@ -79,6 +79,7 @@ A cutting-edge technology playground. An automation experiment.
 - **Express** as the Node.js web application framework
 - **GraphQL** as the query language for the API, and the server-side runtime
 - **OpenTelemetry**, **Jaeger**, **Zipkin** for distributed tracing
+- **Elasticsearch** as distributed search and analytics engine
 - **Prometheus** for monitoring and alerting
 - **Winston**, **Morgan** for logging
 - **CORS**, **Helmet** for security
