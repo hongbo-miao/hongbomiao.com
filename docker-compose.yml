@@ -30,7 +30,7 @@ services:
 
   # Jaeger
   jaeger-collector:
-    image: jaegertracing/jaeger-opentelemetry-collector
+    image: jaegertracing/jaeger-opentelemetry-collector:latest
     command: [
       "--es.num-shards=1",
       "--es.num-replicas=0",
@@ -47,7 +47,7 @@ services:
       - elasticsearch
 
   jaeger-agent:
-    image: jaegertracing/jaeger-opentelemetry-agent
+    image: jaegertracing/jaeger-opentelemetry-agent:latest
     command: [
       "--config=/config/otel-agent-config.yml",
       "--reporter.grpc.host-port=jaeger-collector:14250"
@@ -63,7 +63,7 @@ services:
       - jaeger-collector
 
   jaeger-query:
-    image: jaegertracing/jaeger-query
+    image: jaegertracing/jaeger-query:latest
     command: [
       "--es.num-shards=1",
       "--es.num-replicas=0",
