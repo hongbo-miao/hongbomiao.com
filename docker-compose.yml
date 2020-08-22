@@ -2,7 +2,6 @@ version: '3.7'
 
 services:
   hongbomiao.com:
-    container_name: hongbomiao.com
     build:
       context: .
       dockerfile: Dockerfile
@@ -95,7 +94,6 @@ services:
 
   # Prometheus
   prometheus:
-    container_name: prometheus
     image: prom/prometheus:latest
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yml
