@@ -31,11 +31,14 @@ services:
   # Jaeger
   jaeger-collector:
     image: jaegertracing/jaeger-opentelemetry-collector
-    command: ["--es.num-shards=1", "--es.num-replicas=0", "--es.server-urls=http://elasticsearch:9200", "--collector.zipkin.host-port=:9411"]
+    command: [
+      "--es.num-shards=1",
+      "--es.num-replicas=0",
+      "--es.server-urls=http://elasticsearch:9200"
+    ]
     ports:
       - "14250"
       - "14268"
-      - "9411"
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - LOG_LEVEL=debug
@@ -45,7 +48,10 @@ services:
 
   jaeger-agent:
     image: jaegertracing/jaeger-opentelemetry-agent
-    command: ["--config=/config/otel-agent-config.yml", "--reporter.grpc.host-port=jaeger-collector:14250"]
+    command: [
+      "--config=/config/otel-agent-config.yml",
+      "--reporter.grpc.host-port=jaeger-collector:14250"
+    ]
     volumes:
       - ./:/config/:ro
     ports:
@@ -58,7 +64,11 @@ services:
 
   jaeger-query:
     image: jaegertracing/jaeger-query
-    command: ["--es.num-shards=1", "--es.num-replicas=0", "--es.server-urls=http://elasticsearch:9200"]
+    command: [
+      "--es.num-shards=1",
+      "--es.num-replicas=0",
+      "--es.server-urls=http://elasticsearch:9200"
+    ]
     ports:
       - "16686:16686"
       - "16687"
