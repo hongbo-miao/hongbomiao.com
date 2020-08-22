@@ -1,7 +1,8 @@
 version: '3.7'
 
 services:
-  hongbomiao.com:
+  # Server
+  server:
     build:
       context: .
       dockerfile: Dockerfile
@@ -16,7 +17,10 @@ services:
   # OpenTelemetry Collector
   opentelemetry-collector:
     image: otel/opentelemetry-collector:latest
-    command: ["--config=/conf/opentelemetry-collector.config.yaml", "--log-level=DEBUG"]
+    command: [
+      "--config=/conf/opentelemetry-collector.config.yaml",
+      "--log-level=DEBUG"
+    ]
     volumes:
       - ./opentelemetry-collector.config.yaml:/conf/opentelemetry-collector.config.yaml
     ports:
@@ -80,6 +84,7 @@ services:
 
   # Elasticsearch
   elasticsearch:
+    # https://www.docker.elastic.co/r/elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.9
     environment:
       - discovery.type=single-node
