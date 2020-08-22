@@ -79,7 +79,7 @@ A cutting-edge technology playground. An automation experiment.
 - **Express** as the Node.js web application framework
 - **GraphQL** as the query language for the API, and the server-side runtime
 - **OpenTelemetry**, **Jaeger**, **Zipkin** for distributed tracing
-- **Elasticsearch** as distributed search and analytics engine
+- **Elasticsearch**, **Kibana** as distributed search and analytics engine
 - **Prometheus** for monitoring and alerting
 - **Winston**, **Morgan** for logging
 - **CORS**, **Helmet** for security
@@ -124,14 +124,25 @@ A cutting-edge technology playground. An automation experiment.
 - Client: https://localhost:3000
 - Server: https://localhost:3001
 - Jaeger: http://localhost:16686
+- Kibana: http://localhost:5601
 - Zipkin: http://localhost:9411
 - Prometheus: http://localhost:9090
 
 ## Distributed Tracing
 
-Ths presents telemetry data on Jaeger UI after OpenTelemetry processes telemetry data.
+After OpenTelemetry processing, the data save in Elasticsearch.
 
-![Distributed Tracing](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
+#### Jaeger
+
+![Jaeger](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
+
+#### Kibana
+
+![Kibana](https://user-images.githubusercontent.com/3375461/90955224-50d80c00-e4ae-11ea-9345-dfa8e97ed41a.jpg)
+
+#### Prometheus
+
+![Prometheus](https://user-images.githubusercontent.com/3375461/90955864-d14d3b80-e4b3-11ea-926b-8012cadb4f70.jpg)
 
 ## Automation
 
