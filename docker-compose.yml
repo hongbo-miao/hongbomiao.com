@@ -84,12 +84,19 @@ services:
 
   # Elasticsearch
   elasticsearch:
-    # https://www.docker.elastic.co/r/elasticsearch
+    # https://www.docker.elastic.co/r/elasticsearch/elasticsearch-oss
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.9
     environment:
       - discovery.type=single-node
     ports:
       - "9200/tcp"
+
+  # Kibana
+  kibana:
+    # https://www.docker.elastic.co/r/kibana/kibana-oss
+    image: docker.elastic.co/kibana/kibana-oss:6.8.9
+    ports:
+      - 5601:5601
 
   # Zipkin
   zipkin-all-in-one:
