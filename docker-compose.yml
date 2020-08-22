@@ -1,8 +1,8 @@
 version: '3.7'
 
 services:
-  hongbomiao.com:
-    container_name: hongbomiao.com
+  # Server
+  server:
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,9 +17,12 @@ services:
   # OpenTelemetry Collector
   opentelemetry-collector:
     image: otel/opentelemetry-collector:latest
-    command: ["--config=/conf/opentelemetry-collector.config.yaml", "--log-level=DEBUG"]
+    command: [
+      "--config=/conf/otel-collector.config.yaml",
+      "--log-level=DEBUG"
+    ]
     volumes:
-      - ./opentelemetry-collector.config.yaml:/conf/opentelemetry-collector.config.yaml
+      - ./otel-collector.config.yaml:/conf/otel-collector.config.yaml
     ports:
       - "9464:9464"
       - "55680:55680"
@@ -30,12 +33,15 @@ services:
 
   # Jaeger
   jaeger-collector:
-    image: jaegertracing/jaeger-opentelemetry-collector
-    command: ["--es.num-shards=1", "--es.num-replicas=0", "--es.server-urls=http://elasticsearch:9200", "--collector.zipkin.host-port=:9411"]
+    image: jaegertracing/jaeger-opentelemetry-collector:latest
+    command: [
+      "--es.num-shards=1",
+      "--es.num-replicas=0",
+      "--es.server-urls=http://elasticsearch:9200"
+    ]
     ports:
       - "14250"
       - "14268"
-      - "9411"
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - LOG_LEVEL=debug
@@ -44,8 +50,11 @@ services:
       - elasticsearch
 
   jaeger-agent:
-    image: jaegertracing/jaeger-opentelemetry-agent
-    command: ["--config=/config/otel-agent-config.yml", "--reporter.grpc.host-port=jaeger-collector:14250"]
+    image: jaegertracing/jaeger-opentelemetry-agent:latest
+    command: [
+      "--config=/config/otel-agent.config.yml",
+      "--reporter.grpc.host-port=jaeger-collector:14250"
+    ]
     volumes:
       - ./:/config/:ro
     ports:
@@ -57,8 +66,12 @@ services:
       - jaeger-collector
 
   jaeger-query:
-    image: jaegertracing/jaeger-query
-    command: ["--es.num-shards=1", "--es.num-replicas=0", "--es.server-urls=http://elasticsearch:9200"]
+    image: jaegertracing/jaeger-query:latest
+    command: [
+      "--es.num-shards=1",
+      "--es.num-replicas=0",
+      "--es.server-urls=http://elasticsearch:9200"
+    ]
     ports:
       - "16686:16686"
       - "16687"
@@ -71,11 +84,19 @@ services:
 
   # Elasticsearch
   elasticsearch:
+    # https://www.docker.elastic.co/r/elasticsearch/elasticsearch-oss
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.9
     environment:
       - discovery.type=single-node
     ports:
       - "9200/tcp"
+
+  # Kibana
+  kibana:
+    # https://www.docker.elastic.co/r/kibana/kibana-oss
+    image: docker.elastic.co/kibana/kibana-oss:6.8.9
+    ports:
+      - 5601:5601
 
   # Zipkin
   zipkin-all-in-one:
@@ -85,7 +106,6 @@ services:
 
   # Prometheus
   prometheus:
-    container_name: prometheus
     image: prom/prometheus:latest
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yml
