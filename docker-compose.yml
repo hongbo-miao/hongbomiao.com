@@ -18,11 +18,11 @@ services:
   opentelemetry-collector:
     image: otel/opentelemetry-collector:latest
     command: [
-      "--config=/conf/opentelemetry-collector.config.yaml",
+      "--config=/conf/otel-collector.config.yaml",
       "--log-level=DEBUG"
     ]
     volumes:
-      - ./opentelemetry-collector.config.yaml:/conf/opentelemetry-collector.config.yaml
+      - ./otel-collector.config.yaml:/conf/otel-collector.config.yaml
     ports:
       - "9464:9464"
       - "55680:55680"
@@ -52,7 +52,7 @@ services:
   jaeger-agent:
     image: jaegertracing/jaeger-opentelemetry-agent:latest
     command: [
-      "--config=/config/otel-agent-config.yml",
+      "--config=/config/otel-agent.config.yml",
       "--reporter.grpc.host-port=jaeger-collector:14250"
     ]
     volumes:
