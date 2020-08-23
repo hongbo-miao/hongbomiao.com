@@ -80,7 +80,7 @@ A cutting-edge technology playground. An automation experiment.
 - **GraphQL** as the query language for the API, and the server-side runtime
 - **OpenTelemetry**, **Jaeger**, **Zipkin** for distributed tracing
 - **Elasticsearch**, **Kibana** as distributed search and analytics engine
-- **Prometheus** for monitoring and alerting
+- **Grafana**, **Prometheus** for monitoring and alerting
 - **Winston**, **Morgan** for logging
 - **CORS**, **Helmet** for security
 - **Terminus** for health check and graceful shutdown
@@ -124,8 +124,9 @@ A cutting-edge technology playground. An automation experiment.
 - Client: https://localhost:8080
 - Server: https://localhost:5000
 - Jaeger: http://localhost:16686
-- Kibana: http://localhost:5601
 - Zipkin: http://localhost:9411
+- Kibana: http://localhost:5601
+- Grafana: http://localhost:3000
 - Prometheus: http://localhost:9090
 
 ## Distributed Tracing
@@ -140,13 +141,13 @@ After OpenTelemetry processing, the data save in Elasticsearch.
 
 ![Kibana](https://user-images.githubusercontent.com/3375461/90955224-50d80c00-e4ae-11ea-9345-dfa8e97ed41a.jpg)
 
-#### Prometheus
-
-![Prometheus](https://user-images.githubusercontent.com/3375461/90955864-d14d3b80-e4b3-11ea-926b-8012cadb4f70.jpg)
-
 #### Grafana
 
 ![Grafana](https://user-images.githubusercontent.com/3375461/90973255-eaf19000-e552-11ea-819c-b098bbadea1b.jpg)
+
+#### Prometheus
+
+![Prometheus](https://user-images.githubusercontent.com/3375461/90955864-d14d3b80-e4b3-11ea-926b-8012cadb4f70.jpg)
 
 ## Automation
 
