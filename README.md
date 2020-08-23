@@ -144,6 +144,10 @@ After OpenTelemetry processing, the data save in Elasticsearch.
 
 ![Prometheus](https://user-images.githubusercontent.com/3375461/90955864-d14d3b80-e4b3-11ea-926b-8012cadb4f70.jpg)
 
+#### Grafana
+
+![Grafana](https://user-images.githubusercontent.com/3375461/90973255-eaf19000-e552-11ea-819c-b098bbadea1b.jpg)
+
 ## Automation
 
 This [pull request](https://github.com/Hongbo-Miao/hongbomiao.com/pull/234) shows how these technologies work together from different aspects to achieve automation.
