@@ -3,9 +3,9 @@ import React from 'react';
 import HmImage from './Image';
 
 describe('Image', () => {
-  const src = 'https://example.com/image.png';
   const webpSrc = 'https://example.com/image.webp';
-  const component = <HmImage className="hmHello" alt="Hello, World!" src={src} webpSrc={webpSrc} />;
+  const fallbackSrc = 'https://example.com/image.png';
+  const component = <HmImage webpSrc={webpSrc} fallbackSrc={fallbackSrc} height="1" width="1" alt="Hello, World!" />;
 
   test('render Image', () => {
     render(component);
