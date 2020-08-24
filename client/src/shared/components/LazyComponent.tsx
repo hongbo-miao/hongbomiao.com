@@ -5,7 +5,7 @@ interface Props {
   children: ReactNode;
 }
 
-const LazyComponent: React.FC<Props> = (props: Props) => {
+const LazyComponent: React.FC<Props> = (props) => {
   const { children } = props;
   return <Suspense fallback={<HmLoading />}>{children}</Suspense>;
 };
