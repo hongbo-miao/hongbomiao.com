@@ -4,8 +4,8 @@ import HmLazyComponent from '../../shared/components/LazyComponent';
 import Paths from '../../shared/utils/paths';
 import styles from './App.module.css';
 
-const HmFooter = lazy(() => import('./Footer'));
 const HmHome = lazy(() => import('../../Home/components/Home'));
+const HmFooter = lazy(() => import('./Footer'));
 
 const App: React.FC = () => (
   <div className={styles.hmApp}>
