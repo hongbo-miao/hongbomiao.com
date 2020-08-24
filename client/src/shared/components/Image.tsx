@@ -9,7 +9,7 @@ interface Props {
   alt: string;
 }
 
-const Image: React.FC<Props> = (props: Props) => {
+const Image: React.FC<Props> = (props) => {
   const { webpSrc, fallbackSrc, height, width, alt } = props;
   return (
     <picture className={styles.hmPicture}>

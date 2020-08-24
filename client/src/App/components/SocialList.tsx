@@ -6,7 +6,7 @@ interface Props {
   websites: Website[];
 }
 
-const SocialList: React.FC<Props> = (props: Props) => {
+const SocialList: React.FC<Props> = (props) => {
   const { websites } = props;
 
   const socialListItems = websites.map((website) => {
