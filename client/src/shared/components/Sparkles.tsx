@@ -25,11 +25,13 @@ const Sparkles: React.FC<Props> = (props) => {
     450
   );
 
+  const sparkleItems = sparkles.map((sparkle) => (
+    <HmSparkle key={sparkle.id} color={sparkle.color} size={sparkle.size} style={sparkle.style} />
+  ));
+
   return (
     <span className={styles.hmWrapper}>
-      {sparkles.map((sparkle) => (
-        <HmSparkle key={sparkle.id} color={sparkle.color} size={sparkle.size} style={sparkle.style} />
-      ))}
+      {sparkleItems}
       <div className={styles.hmChildrenWrapper}>{children}</div>
     </span>
   );
