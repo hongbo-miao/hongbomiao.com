@@ -40,11 +40,21 @@ const Home: React.FC<Props> = (props) => {
         <HmSparkles>
           <a className={styles.hmContent} href={Config.githubURL} target="_blank" rel="noopener noreferrer">
             <HmLazyComponent>
-              <HmImage webpSrc={hatWebP} fallbackSrc={hatPNG} height="22" width="22" alt="Magical Hat" />
+              <HmImage
+                webpSrc={hatWebP}
+                fallbackSrc={hatPNG}
+                style={{ height: '22px', width: '22px' }}
+                alt="Magical Hat"
+              />
             </HmLazyComponent>
             <div className={styles.hmText}>{slogan}</div>
             <HmLazyComponent>
-              <HmImage webpSrc={magicWebP} fallbackSrc={magicPNG} height="22" width="22" alt="Magic" />
+              <HmImage
+                webpSrc={magicWebP}
+                fallbackSrc={magicPNG}
+                style={{ height: '22px', width: '22px' }}
+                alt="Magic"
+              />
             </HmLazyComponent>
           </a>
         </HmSparkles>

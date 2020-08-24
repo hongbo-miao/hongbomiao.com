@@ -5,7 +5,9 @@ import HmImage from './Image';
 describe('Image', () => {
   const webpSrc = 'https://example.com/image.webp';
   const fallbackSrc = 'https://example.com/image.png';
-  const component = <HmImage webpSrc={webpSrc} fallbackSrc={fallbackSrc} height="1" width="1" alt="Hello, World!" />;
+  const component = (
+    <HmImage webpSrc={webpSrc} fallbackSrc={fallbackSrc} style={{ height: '1px', width: '1px' }} alt="Hello, World!" />
+  );
 
   test('render Image', () => {
     render(component);
