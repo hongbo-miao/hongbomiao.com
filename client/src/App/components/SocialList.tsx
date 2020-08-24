@@ -15,7 +15,7 @@ const SocialList: React.FC<Props> = (props: Props) => {
     return (
       <div key={name} className="level-item">
         <a href={url} target="_blank" rel="noopener noreferrer">
-          <img className={styles.hmLogo} src={src} alt={name} />
+          <img className={styles.hmLogo} src={src} height="28" width="28" alt={name} />
         </a>
       </div>
     );
