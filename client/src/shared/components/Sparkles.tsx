@@ -1,17 +1,8 @@
 import React, { ReactNode } from 'react';
-import styled from 'styled-components';
 import useRandomInterval from '../hooks/useRandomInterval.hook';
 import generateSparkle from '../utils/generateSparkle';
 import HmSparkle from './Sparkle';
-
-const Wrapper = styled.span`
-  display: inline-block;
-  position: relative;
-`;
-const ChildWrapper = styled.div`
-  position: relative;
-  z-index: 1;
-`;
+import styles from './Sparkles.module.css';
 
 interface Props {
   children: ReactNode;
@@ -19,9 +10,11 @@ interface Props {
 
 const Sparkles: React.FC<Props> = (props) => {
   const { children } = props;
+
   const [sparkles, setSparkles] = React.useState(() => {
     return Array(3).map(() => generateSparkle());
   });
+
   useRandomInterval(
     () => {
       const sparkle = generateSparkle();
@@ -31,13 +24,14 @@ const Sparkles: React.FC<Props> = (props) => {
     50,
     450
   );
+
   return (
-    <Wrapper>
+    <span className={styles.hmWrapper}>
       {sparkles.map((sparkle) => (
         <HmSparkle key={sparkle.id} color={sparkle.color} size={sparkle.size} style={sparkle.style} />
       ))}
-      <ChildWrapper>{children}</ChildWrapper>
-    </Wrapper>
+      <div className={styles.hmChildrenWrapper}>{children}</div>
+    </span>
   );
 };
 

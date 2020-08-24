@@ -88,7 +88,6 @@ const helmetMiddleware = (): RequestHandler => {
           ],
           styleSrc: [
             "'self'",
-            "'unsafe-inline'",
 
             // Google Tag Manager's Preview Mode
             'https://tagmanager.google.com',
