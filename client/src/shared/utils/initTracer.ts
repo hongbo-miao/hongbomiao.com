@@ -9,7 +9,7 @@ import isDevelopment from './isDevelopment';
 import isProduction from './isProduction';
 
 const initTracer = (): void => {
-  const serviceName = 'hongbomiao-client';
+  const serviceName = 'client-trace-service';
   const tracerProvider = new WebTracerProvider({
     plugins: [new DocumentLoad(), new XMLHttpRequestPlugin()],
   });
@@ -20,7 +20,7 @@ const initTracer = (): void => {
       new SimpleSpanProcessor(
         new CollectorTraceExporter({
           protocolNode: CollectorProtocolNode.HTTP_PROTO,
-          serviceName: 'hongbomiao-client',
+          serviceName,
         })
       )
     );
