@@ -8,22 +8,22 @@ const WEBSITES: Website[] = [
   {
     name: 'Pinterest',
     src: pinterestLogo,
-    url: 'https://www.pinterest.com/hongbo_miao/',
+    url: 'https://www.pinterest.com/hongbo_miao',
   },
   {
     name: 'GitHub',
     src: githubLogo,
-    url: 'https://github.com/hongbo-miao/',
+    url: 'https://github.com/hongbo-miao',
   },
   {
     name: 'Twitter',
     src: twitterLogo,
-    url: 'https://twitter.com/hongbo_miao/',
+    url: 'https://twitter.com/hongbo_miao',
   },
   {
     name: 'LinkedIn',
     src: linkedinLogo,
-    url: 'https://www.linkedin.com/in/hongbomiao/',
+    url: 'https://www.linkedin.com/in/hongbomiao',
   },
 ];
 
