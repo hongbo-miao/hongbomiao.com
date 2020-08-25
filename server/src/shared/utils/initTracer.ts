@@ -7,7 +7,7 @@ import isDevelopment from './isDevelopment';
 import isProduction from './isProduction';
 
 const initTracer = (): void => {
-  const serviceName = 'hongbomiao-server';
+  const serviceName = 'server-trace-service';
   const tracerProvider = new NodeTracerProvider({
     plugins: {
       express: {
@@ -43,7 +43,7 @@ const initTracer = (): void => {
       new SimpleSpanProcessor(
         new CollectorTraceExporter({
           protocolNode: CollectorProtocolNode.HTTP_PROTO,
-          serviceName: 'hongbomiao-server',
+          serviceName,
         })
       )
     );
