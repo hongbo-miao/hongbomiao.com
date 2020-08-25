@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import express from 'express';
 import handleError from './error/controllers/handleError';
+import requestCountMiddleware from './log/middlewares/requestCount.middleware';
 import morganMiddleware from './log/middlewares/morgan.middleware';
 import tracingMiddleware from './log/middlewares/tracing.middleWare';
 import sendIndexPage from './page/controllers/sendIndexPage';
@@ -16,6 +17,7 @@ import apiRouter from './shared/routers/api.router';
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
   .use(tracingMiddleware())
+  .use(requestCountMiddleware())
   .use(morganMiddleware())
   .use(corsMiddleware())
   .use(redirectSSLMiddleware())
