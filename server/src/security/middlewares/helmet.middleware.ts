@@ -101,7 +101,7 @@ const helmetMiddleware = (): RequestHandler => {
            * The plugin-types directive is only used if you are allowing plugins with object-src at all.
            * pluginTypes: [],
            */
-          sandbox: ['allow-same-origin', 'allow-scripts'],
+          sandbox: ['allow-popups', 'allow-same-origin', 'allow-scripts'],
 
           /* Navigation directives */
           formAction: ["'none'"],
