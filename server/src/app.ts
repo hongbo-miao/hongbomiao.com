@@ -5,7 +5,6 @@ import express from 'express';
 import handleError from './error/controllers/handleError';
 import morganMiddleware from './log/middlewares/morgan.middleware';
 import requestCountMiddleware from './log/middlewares/requestCount.middleware';
-import tracingMiddleware from './log/middlewares/tracing.middleWare';
 import sendIndexPage from './page/controllers/sendIndexPage';
 import corsMiddleware from './security/middlewares/cors.middleware';
 import helmetMiddleware from './security/middlewares/helmet.middleware';
@@ -15,7 +14,6 @@ import apiRouter from './shared/routers/api.router';
 
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
-  .use(tracingMiddleware())
   .use(requestCountMiddleware())
   .use(morganMiddleware())
   .use(corsMiddleware())
