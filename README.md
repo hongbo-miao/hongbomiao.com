@@ -100,6 +100,7 @@ A cutting-edge technology playground. An automation experiment.
 - **Sentry** for error tracking
 - **Travis** for continuous integration
 - **Heroku** for hosting
+- **Cloudflare** for CDN, DNS, DDoS protection
 - **Codacy**, **Code Climate**, **LGTM** for code reviews and analytics
 - **Coveralls** for test coverage statistics
 - **Chromatic** for UI reviewing and feedback collecting
