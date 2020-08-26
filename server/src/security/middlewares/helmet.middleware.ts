@@ -67,6 +67,12 @@ const helmetMiddleware = (): RequestHandler => {
             /* Content Security Policy Level 2 (backward compatible) */
             "'self'",
 
+            // Cloudflare Browser Insights
+            'https://static.cloudflareinsights.com',
+
+            // Cloudflare Rocket Loader
+            'https://ajax.cloudflare.com',
+
             // FullStory
             'https://edge.fullstory.com',
             'https://fullstory.com',
