@@ -70,9 +70,6 @@ const helmetMiddleware = (): RequestHandler => {
             // Cloudflare Browser Insights
             'https://static.cloudflareinsights.com',
 
-            // Cloudflare Rocket Loader
-            'https://ajax.cloudflare.com',
-
             // FullStory
             'https://edge.fullstory.com',
             'https://fullstory.com',
