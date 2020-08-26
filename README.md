@@ -64,6 +64,7 @@ A cutting-edge technology playground. An automation experiment.
 - **Redux** as the state container
 - **redux-observable** for side effects
 - **RxJS** for asynchronous programming with observable streams
+- **Bulma** as the CSS framework
 - **Jest** as the JavaScript testing framework
 - **React Testing Library** for React component testing
 - **Storybook** for visual testing
@@ -106,10 +107,12 @@ A cutting-edge technology playground. An automation experiment.
 - **Codacy**, **Code Climate**, **LGTM** for code reviews and analytics
 - **Coveralls** for test coverage statistics
 - **Chromatic** for UI reviewing and feedback collecting
+- **HTTP/3 Check** for HTTP/3 checking
+- **hstspreload.org** for HSTS checking
 - **Mozilla Observatory**, **Snyk** for security monitoring
-- **FOSSA** for license compliance
 - **Requires.io**, **David** for dependency monitoring
 - **Uptime Robot** for uptime monitoring
+- **FOSSA** for license compliance
 - **ZenHub** for agile project management
 
 #### Bots
