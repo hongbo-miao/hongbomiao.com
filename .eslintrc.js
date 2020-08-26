@@ -10,6 +10,7 @@ module.exports = {
   extends: [
     'airbnb',
     'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended', // @typescript-eslint/eslint-plugin. Not all eslint core rules are compatible with TypeScript, so you need to add both eslint:recommended and plugin:@typescript-eslint/eslint-recommended
     'plugin:@typescript-eslint/recommended', // @typescript-eslint/eslint-plugin
     'plugin:cypress/recommended', // eslint-plugin-cypress
     'plugin:react/recommended', // eslint-plugin-react
