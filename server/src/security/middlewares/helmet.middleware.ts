@@ -140,10 +140,10 @@ const helmetMiddleware = (): RequestHandler => {
       // Remove 'X-Powered-By'
       hidePoweredBy: undefined,
 
-      // Set 'Strict-Transport-Security: max-age=15552000; includeSubDomains; preload'
+      // Set 'Strict-Transport-Security: max-age=31536000; includeSubDomains; preload'
       hsts: {
-        // Must be at least 180 days to be approved
-        maxAge: 15552000,
+        // Must be at least 1 year to be approved
+        maxAge: 31536000,
 
         // Must be enabled to be approved
         includeSubDomains: true,
