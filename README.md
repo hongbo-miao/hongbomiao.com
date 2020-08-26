@@ -27,7 +27,6 @@
   <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://hstspreload.org/?domain=hongbomiao.com"><img alt="Chromium HSTS preload" src="https://img.shields.io/hsts/preload/hongbomiao.com" /></a>
   <a href="https://snyk.io/test/github/Hongbo-Miao/hongbomiao.com"><img alt="Snyk vulnerabilities" src="https://img.shields.io/snyk/vulnerabilities/github/hongbo-miao/hongbomiao.com" /></a>
-  <a href="https://validator.nu/?doc=https%3A%2F%2Fhongbomiao.com"><img alt="W3C Validation" src="https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Fhongbomiao.com" /></a>
 </p>
 
 <p align="center">
@@ -101,6 +100,8 @@ A cutting-edge technology playground. An automation experiment.
 - **Sentry** for error tracking
 - **Travis** for continuous integration
 - **Heroku** for hosting
+- **Namecheap** for domain
+- **Cloudflare** for CDN, DNS, DDoS protection
 - **Codacy**, **Code Climate**, **LGTM** for code reviews and analytics
 - **Coveralls** for test coverage statistics
 - **Chromatic** for UI reviewing and feedback collecting
@@ -108,7 +109,6 @@ A cutting-edge technology playground. An automation experiment.
 - **FOSSA** for license compliance
 - **Requires.io**, **David** for dependency monitoring
 - **Uptime Robot** for uptime monitoring
-- **Validator.nu** for W3C validation
 - **ZenHub** for agile project management
 
 #### Bots
