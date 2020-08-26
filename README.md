@@ -13,7 +13,6 @@
 <br />
 
 <p align="center">
-  <a href="https://app.netlify.com/sites/hongbomiao/deploys"><img alt="Netlify" src="https://img.shields.io/netlify/13c2e544-91b2-4869-9ae1-bc97ff3108a4" /></a>
   <a href="https://travis-ci.com/hongbo-miao/hongbomiao.com"><img alt="Travis" src="https://img.shields.io/travis/com/hongbo-miao/hongbomiao.com/master" /></a>
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com"><img alt="FOSSA Status" src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com.svg?type=shield" /></a>
   <a href="https://david-dm.org/hongbo-miao/hongbomiao.com"><img alt="David" src="https://img.shields.io/david/hongbo-miao/hongbomiao.com?path=server" /></a>
@@ -101,7 +100,7 @@ A cutting-edge technology playground. An automation experiment.
 - **Lightstep** for distributed tracing
 - **Sentry** for error tracking
 - **Travis** for continuous integration
-- **Netlify**, **Heroku** for hosting
+- **Heroku** for hosting
 - **Codacy**, **Code Climate**, **LGTM** for code reviews and analytics
 - **Coveralls** for test coverage statistics
 - **Chromatic** for UI reviewing and feedback collecting
