@@ -10,7 +10,6 @@ import sendIndexPage from './page/controllers/sendIndexPage';
 import corsMiddleware from './security/middlewares/cors.middleware';
 import helmetMiddleware from './security/middlewares/helmet.middleware';
 import rateLimitMiddleware from './security/middlewares/rateLimit.middleware';
-import redirectSSLMiddleware from './security/middlewares/redirectSSL.middleware';
 import graphQLMiddleware from './shared/middlewares/graphQL.middleware';
 import apiRouter from './shared/routers/api.router';
 
@@ -20,7 +19,6 @@ const app = express()
   .use(requestCountMiddleware())
   .use(morganMiddleware())
   .use(corsMiddleware())
-  .use(redirectSSLMiddleware())
   .use(helmetMiddleware())
   .get('/', sendIndexPage)
   .use(express.static(path.join(__dirname, '../dist')))
