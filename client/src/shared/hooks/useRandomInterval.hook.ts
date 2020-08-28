@@ -1,7 +1,9 @@
 import React from 'react';
 import random from '../utils/random';
 
-const useRandomInterval = (callback: () => void, minDelay: number, maxDelay: number): (() => void) => {
+type Callback = () => void;
+
+const useRandomInterval = (callback: Callback, minDelay: number, maxDelay: number): Callback => {
   const timeoutId = React.useRef(0);
   const savedCallback = React.useRef(callback);
 
