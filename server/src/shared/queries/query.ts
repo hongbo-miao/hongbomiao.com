@@ -1,4 +1,5 @@
 import { GraphQLInt, GraphQLNonNull, GraphQLObjectType } from 'graphql';
+import validator from 'validator';
 import FibonacciGraphQLType from '../graphQLTypes/Fibonacci.type';
 import MeGraphQLType from '../graphQLTypes/Me.type';
 import calFibonacci from '../utils/calFibonacci';
@@ -19,6 +20,9 @@ const query = new GraphQLObjectType({
       },
       resolve: (parentValue, args) => {
         const { n } = args;
+        if (!validator.isInt(String(n), { min: 0, max: 10 })) {
+          throw new Error('n should be in the range of 0 and 10.');
+        }
         return {
           n,
           ans: calFibonacci(n),
