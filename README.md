@@ -100,20 +100,20 @@ A cutting-edge technology playground. An automation experiment.
 
 - **Lightstep** for distributed tracing
 - **Sentry** for error tracking
-- **Travis** for continuous integration
 - **Heroku** for hosting
 - **Namecheap** for domain
 - **Cloudflare** for CDN, DNS, DDoS protection
-- **Codacy**, **Code Climate**, **LGTM** for code reviews and analytics
-- **Coveralls** for test coverage statistics
-- **Chromatic** for UI reviewing and feedback collecting
-- **HTTP/3 Check** for HTTP/3 checking
-- **hstspreload.org** for HSTS checking
-- **Mozilla Observatory**, **Snyk** for security monitoring
-- **Requires.io**, **David** for dependency monitoring
-- **Uptime Robot** for uptime monitoring
-- **FOSSA** for license compliance
 - **ZenHub** for agile project management
+- **[Travis](https://travis-ci.com/hongbo-miao/hongbomiao.com)** for continuous integration
+- **[Codacy](https://app.codacy.com/app/hongbo-miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** for code reviews and analytics
+- **[Coveralls](https://coveralls.io/github/Hongbo-Miao/hongbomiao.com)** for test coverage statistics
+- **[Chromatic](https://www.chromaticqa.com/library?appId=5d626a63a601530020759b10)** for UI reviewing and feedback collecting
+- **[HTTP/3 Check](https://www.http3check.net/?host=hongbomiao.com)** for HTTP/3 checking
+- **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** for HSTS checking
+- **[Mozilla Observatory](https://observatory.mozilla.org/analyze/hongbomiao.com)**, **[Snyk](https://snyk.io/test/github/Hongbo-Miao/hongbomiao.com)** for security monitoring
+- **[David](https://david-dm.org/hongbo-miao/hongbomiao.com)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** for dependency monitoring
+- **[Uptime Robot](https://stats.uptimerobot.com/RoOoGTvyWN)** for uptime monitoring
+- **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** for license compliance
 
 #### Bots
 
