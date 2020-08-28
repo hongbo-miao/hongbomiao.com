@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.http3check.net/?host=hongbomiao.com"><img alt="HTTP/3" src="https://img.shields.io/badge/http%2F3-enabled-brightgreen" /></a>
+  <a href="https://www.http3check.net/?host=hongbomiao.com"><img alt="HTTP/3" src="https://img.shields.io/badge/http%2F3-supported-brightgreen" /></a>
   <a href="https://hstspreload.org/?domain=hongbomiao.com"><img alt="Chromium HSTS preload" src="https://img.shields.io/hsts/preload/hongbomiao.com" /></a>
   <a href="https://observatory.mozilla.org/analyze/hongbomiao.com"><img alt="Mozilla Observatory grade" src="https://img.shields.io/mozilla-observatory/grade/hongbomiao.com" /></a>
   <a href="https://app.codacy.com/app/hongbo-miao/hongbomiao.com"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
@@ -60,67 +60,67 @@ A cutting-edge technology playground. An automation experiment.
 
 #### Front End
 
-- **React** for building user interfaces
-- **Redux** as the state container
-- **redux-observable** for side effects
-- **RxJS** for asynchronous programming with observable streams
-- **Bulma** as the CSS framework
-- **Jest** as the JavaScript testing framework
-- **React Testing Library** for React component testing
-- **Storybook** for visual testing
-- **rxjs/testing** for marble testing
-- **Cypress** for end-to-end testing
-- **Lighthouse CI** for performance, accessibility, best practices, SEO, PWA testing
-- **Google Tag Manager**, **Google Analytics**, **FullStory** for data and experience analytics
-- **PurgeCSS** for removing unused CSS
+- **React** - User interface building
+- **Redux** - State container
+- **redux-observable** - Side effects
+- **RxJS** - Asynchronous programming with observable streams
+- **Bulma** - CSS framework
+- **Jest** - JavaScript testing framework
+- **React Testing Library** - React component testing
+- **Storybook** - Visual testing
+- **rxjs/testing** - Marble testing
+- **Cypress** - End-to-end testing
+- **Lighthouse CI** - Performance, accessibility, best practices, SEO, PWA testing
+- **Google Tag Manager**, **Google Analytics**, **FullStory** = Data and experience analytics
+- **PurgeCSS** - Unused CSS removing
 
 #### Back End
 
-- **Express** as the Node.js web application framework
-- **GraphQL** as the query language for the API, and the server-side runtime
-- **OpenTelemetry**, **Jaeger**, **Zipkin** for distributed tracing
-- **Elasticsearch**, **Kibana** as distributed search and analytics engine
-- **Grafana**, **Prometheus** for monitoring and alerting
-- **Winston**, **Morgan** for logging
-- **CORS**, **Helmet** for security
-- **Terminus** for health check and graceful shutdown
-- **Express Rate Limit** for rate limiting
-- **SuperTest** for HTTP testing
-- **Docker**, **Docker Compose** for container
+- **Express** - Node.js web application framework
+- **GraphQL** - Query language for the API, and the server-side runtime
+- **OpenTelemetry**, **Jaeger**, **Zipkin** - Distributed tracing
+- **Elasticsearch**, **Kibana** - Distributed search and analytics engine
+- **Grafana**, **Prometheus** - Monitoring and alerting
+- **Winston**, **Morgan** - Logging
+- **CORS**, **Helmet** - Security
+- **Terminus** - Health check and graceful shutdown
+- **Express Rate Limit** - Rate limiting
+- **SuperTest** - HTTP testing
+- **Docker**, **Docker Compose** - Container
 
 #### Code
 
-- **TypeScript** for static type-checking
-- **ESLint**, **Stylelint** for static code analysis
-- **Prettier** for code formatting
-- **commitlint** for commit message linting
-- **Husky**, **lint-staged** for preventing bad git commit and push
+- **TypeScript** - Static type-checking
+- **ESLint**, **Stylelint** - Static code analysis
+- **Prettier** - Code formatting
+- **commitlint** - Commit message linting
+- **Husky**, **lint-staged** - Bad git commit and push preventing
 
 #### Services
 
-- **Lightstep** for distributed tracing
-- **Sentry** for error tracking
-- **Heroku** for hosting
-- **Namecheap** for domain
-- **Cloudflare** for CDN, DNS, DDoS protection
-- **ZenHub** for agile project management
-- **[Travis](https://travis-ci.com/hongbo-miao/hongbomiao.com)** for continuous integration
-- **[Codacy](https://app.codacy.com/app/hongbo-miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** for code reviews and analytics
-- **[Coveralls](https://coveralls.io/github/Hongbo-Miao/hongbomiao.com)** for test coverage statistics
-- **[Chromatic](https://www.chromaticqa.com/library?appId=5d626a63a601530020759b10)** for UI reviewing and feedback collecting
-- **[HTTP/3 Check](https://www.http3check.net/?host=hongbomiao.com)** for HTTP/3 checking
-- **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** for HSTS checking
-- **[Mozilla Observatory](https://observatory.mozilla.org/analyze/hongbomiao.com)**, **[Snyk](https://snyk.io/test/github/Hongbo-Miao/hongbomiao.com)** for security monitoring
-- **[David](https://david-dm.org/hongbo-miao/hongbomiao.com)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** for dependency monitoring
-- **[Uptime Robot](https://stats.uptimerobot.com/RoOoGTvyWN)** for uptime monitoring
-- **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** for license compliance
+- **Lightstep** - Distributed tracing
+- **Sentry** - Error tracking
+- **Heroku** - Hosting
+- **Namecheap** - Domain
+- **Cloudflare** - CDN, DNS, DDoS protection
+- **ZenHub** - Agile project management
+- **[Travis](https://travis-ci.com/hongbo-miao/hongbomiao.com)** - Continuous integration
+- **[Codacy](https://app.codacy.com/app/hongbo-miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
+- **[Coveralls](https://coveralls.io/github/Hongbo-Miao/hongbomiao.com)** - Test coverage statistics
+- **[Chromatic](https://www.chromaticqa.com/library?appId=5d626a63a601530020759b10)** - UI reviewing and feedback collecting
+- **[HTTP/3 Check](https://www.http3check.net/?host=hongbomiao.com)** - HTTP/3 checking
+- **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** - HSTS checking
+- **[Mozilla Observatory](https://observatory.mozilla.org/analyze/hongbomiao.com)**, **[Snyk](https://snyk.io/test/github/Hongbo-Miao/hongbomiao.com)** - Security monitoring
+- **[David](https://david-dm.org/hongbo-miao/hongbomiao.com)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** - Dependency monitoring
+- **[Uptime Robot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
+- **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
 
 #### Bots
 
-- **Renovate** for dependency update
-- **ImgBot** for image compression
-- **Mergify** for automatically merging
-- **Stale** for closing stale issues and pull requests
+- **Renovate** - Dependency update
+- **ImgBot** - Image compression
+- **Mergify** - Automatically merging
+- **Stale** - Stale issues and pull requests closing
 
 ## URLs
 
