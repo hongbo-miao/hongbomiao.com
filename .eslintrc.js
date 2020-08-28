@@ -1,23 +1,36 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: [
-    'react', // eslint-plugin-react
+    '@babel', // @babel/eslint-plugin
     '@typescript-eslint', // @typescript-eslint/eslint-plugin
     'cypress', // eslint-plugin-cypress
-    'prettier', // eslint-config-prettier
+    'jest', // eslint-plugin-jest
+    'jest-dom', // eslint-plugin-jest-dom
+    'jsx-a11y', // eslint-plugin-jsx-a11y
+    'prettier', // eslint-plugin-prettier
+    'react', // eslint-plugin-react
+    'react-hooks', // eslint-plugin-react-hooks
     'security', // eslint-plugin-security
+    'testing-library', // eslint-plugin-testing-library
   ],
   extends: [
-    'airbnb',
-    'eslint:recommended',
+    'eslint:recommended', // eslint
+    'airbnb', // eslint-config-airbnb
     'plugin:@typescript-eslint/eslint-recommended', // @typescript-eslint/eslint-plugin. Not all eslint core rules are compatible with TypeScript, so you need to add both eslint:recommended and plugin:@typescript-eslint/eslint-recommended
     'plugin:@typescript-eslint/recommended', // @typescript-eslint/eslint-plugin
+    'plugin:jest/recommended', // eslint-plugin-jest
+    'plugin:jest-dom/recommended', // eslint-plugin-jest-dom
+    'plugin:testing-library/recommended', // eslint-plugin-testing-library
     'plugin:cypress/recommended', // eslint-plugin-cypress
     'plugin:react/recommended', // eslint-plugin-react
+    'plugin:react-hooks/recommended', // eslint-plugin-react-hooks
+    'plugin:jsx-a11y/recommended', // eslint-plugin-jsx-a11y
     'plugin:security/recommended', // eslint-plugin-security
-    'prettier', // Make sure to put it last in the extends array, so it gets the chance to override other configs.
-    'prettier/@typescript-eslint', // Use eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-    'plugin:prettier/recommended', // eslint-plugin-prettier exposes a "recommended" configuration that configures both eslint-plugin-prettier and eslint-config-prettier in a single step. Make sure this is always the last configuration in the extends array.
+    'prettier', // eslint-plugin-prettier. Make sure to put it last in the extends array, so it gets the chance to override other configs
+    'prettier/@typescript-eslint', // eslint-config-prettier. Disables ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+    'prettier/babel', // eslint-config-prettier
+    'prettier/react', // eslint-config-prettier
+    'plugin:prettier/recommended', // eslint-plugin-prettier. Exposes a "recommended" configuration that configures both eslint-plugin-prettier and eslint-config-prettier in a single step. Make sure this is always the last configuration in the extends array
   ],
   settings: {
     'import/resolver': {
@@ -79,6 +92,7 @@ module.exports = {
     {
       files: ['**/*.ts', '**/*.tsx'],
       rules: {
+        'jest/expect-expect': 'off',
         'react/prop-types': 'off',
         'security/detect-non-literal-fs-filename': 'off',
       },
