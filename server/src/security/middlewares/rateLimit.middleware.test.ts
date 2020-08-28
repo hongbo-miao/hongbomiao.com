@@ -12,9 +12,9 @@ describe('rateLimitMiddleware', () => {
       res.send('Hello, World!');
     });
 
-  test('should limit rate', (done) => {
-    request(app).get('/').expect(200).end(done);
-    request(app).get('/').expect(200).end(done);
-    request(app).get('/').expect(429).expect('Sorry, too many requests, please try again later.').end(done);
+  test('should limit rate', async () => {
+    await request(app).get('/').expect(200);
+    await request(app).get('/').expect(200);
+    await request(app).get('/').expect(429).expect('Sorry, too many requests, please try again later.');
   });
 });
