@@ -1,14 +1,16 @@
 import meQuery from '../../client/src/Home/queries/me.query';
 
 describe('Home', () => {
+  const { domain, clientPort, serverPort } = Cypress.env();
+
   it('render Home', () => {
-    cy.visit('https://localhost:5000/');
+    cy.visit(`${domain}:${clientPort}`);
     cy.contains('Making magic happen');
   });
 
   it('receive GraphQL meQuery data', () => {
     // eslint-disable-next-line jest/valid-expect-in-promise
-    cy.request('POST', 'https://localhost:5000/graphql', {
+    cy.request('POST', `${domain}:${serverPort}/graphql`, {
       query: meQuery,
     }).then((res) => {
       expect(res).property('status').to.equal(200);
