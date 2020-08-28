@@ -1,8 +1,8 @@
-import meQuery from '../../src/Home/queries/me.query';
+import meQuery from '../../client/src/Home/queries/me.query';
 
 describe('Home', () => {
   it('render Home', () => {
-    cy.visit('https://localhost:8080/');
+    cy.visit('https://localhost:5000/');
     cy.contains('Making magic happen');
   });
 
