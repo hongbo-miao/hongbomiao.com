@@ -9,7 +9,6 @@ module.exports = {
     'jsx-a11y', // eslint-plugin-jsx-a11y
     'prettier', // eslint-plugin-prettier
     'react', // eslint-plugin-react
-    'react-hooks', // eslint-plugin-react-hooks
     'security', // eslint-plugin-security
     'testing-library', // eslint-plugin-testing-library
   ],
@@ -23,7 +22,6 @@ module.exports = {
     'plugin:testing-library/recommended', // eslint-plugin-testing-library
     'plugin:cypress/recommended', // eslint-plugin-cypress
     'plugin:react/recommended', // eslint-plugin-react
-    'plugin:react-hooks/recommended', // eslint-plugin-react-hooks
     'plugin:jsx-a11y/recommended', // eslint-plugin-jsx-a11y
     'plugin:security/recommended', // eslint-plugin-security
     'prettier', // eslint-plugin-prettier. Make sure to put it last in the extends array, so it gets the chance to override other configs
