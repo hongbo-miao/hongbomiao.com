@@ -6,7 +6,17 @@ branches:
   only:
     - master
 
-cache: yarn
+addons:
+  apt:
+    packages:
+      # For Cypress on Ubuntu 16+, https://github.com/cypress-io/cypress-documentation/pull/1647
+      - libgconf-2-4
+
+cache:
+  yarn: true
+  directories:
+    # For Cypress, https://docs.cypress.io/guides/guides/continuous-integration.html#Caching
+    - ~/.cache
 
 notifications:
   email: false
@@ -72,6 +82,19 @@ jobs:
         - yarn run lighthouse
       addons:
         chrome: stable
+
+    - stage: Test
+      # https://docs.cypress.io/guides/guides/continuous-integration.html#Travis
+      name: "Cypress"
+      before_script:
+        # Set CI=false to let Travis pass "Treating warnings as errors because process.env.CI = true."
+        # caused by https://github.com/lightstep/opentelemetry-exporter-js/issues/12
+        - cd $TRAVIS_BUILD_DIR/client && CI=false yarn build
+        - cd $TRAVIS_BUILD_DIR && cp -r client/build/ server/dist/
+        - cd $TRAVIS_BUILD_DIR/server && yarn build
+        - cd $TRAVIS_BUILD_DIR
+      script:
+        - yarn test:cypress:headless:ci
 
     - stage: Deploy
       if: branch = master && type = push && fork = false
