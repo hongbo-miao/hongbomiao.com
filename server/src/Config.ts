@@ -1,4 +1,15 @@
-const { DOMAIN, LIGHTSTEP_TOEKN, NODE_ENV, PORT } = process.env;
+const {
+  DOMAIN,
+  LIGHTSTEP_TOEKN,
+  NODE_ENV,
+  PORT,
+  POSTGRES_DATABASE,
+  POSTGRES_HOST,
+  POSTGRES_PASSWORD,
+  POSTGRES_PORT,
+  POSTGRES_USER,
+} = process.env;
+
 const sharedCSPConnectSrc = [
   'https://collector.lightstep.com', // Lightstep
 ];
@@ -11,8 +22,6 @@ const Config = {
   nodeEnv: NODE_ENV,
   domain: DOMAIN,
   port: PORT,
-
-  lightstepToken: LIGHTSTEP_TOEKN,
 
   devCSPConnectSrc: [...sharedCSPConnectSrc],
   prodCSPConnectSrc: [...sharedCSPConnectSrc],
@@ -29,6 +38,16 @@ const Config = {
     'https://hongbomiao.herokuapp.com',
     'https://www.hongbomiao.com',
   ],
+
+  postgresConnection: {
+    host: POSTGRES_HOST,
+    port: Number(POSTGRES_PORT),
+    database: POSTGRES_DATABASE,
+    user: POSTGRES_USER,
+    password: POSTGRES_PASSWORD,
+  },
+
+  lightstepToken: LIGHTSTEP_TOEKN,
 
   sentryOptions: {
     dsn: 'https://2f46725646834700b4c2675abbc2da6a@o379185.ingest.sentry.io/5375232',
