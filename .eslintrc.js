@@ -1,5 +1,16 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
+  env: {
+    browser: true,
+    jest: true,
+  },
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
   plugins: [
     '@babel', // @babel/eslint-plugin
     '@typescript-eslint', // @typescript-eslint/eslint-plugin
@@ -40,10 +51,6 @@ module.exports = {
     react: {
       version: '999.999.999',
     },
-  },
-  env: {
-    browser: true,
-    jest: true,
   },
   rules: {
     'import/extensions': [
