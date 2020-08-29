@@ -11,17 +11,17 @@ describe('corsMiddleware', () => {
       res.send('Hello, World!');
     });
 
-  test('should succeed if origin is undefined for server-to-server requests and REST tools)', (done) => {
-    request(app).get('/').expect(200).end(done);
+  test('should succeed if origin is undefined for server-to-server requests and REST tools)', async () => {
+    await request(app).get('/').expect(200);
   });
 
-  test('should succeed if origin is in whitelist', (done) => {
+  test('should succeed if origin is in whitelist', async () => {
     const allowOrigin = allowList[0];
-    request(app).get('/').set('Origin', allowOrigin).expect(200).end(done);
+    await request(app).get('/').set('Origin', allowOrigin).expect(200);
   });
 
-  test('should fail if origin is not in whitelist', (done) => {
+  test('should fail if origin is not in whitelist', async () => {
     const nonAllowOrigin = 'https://evil.com';
-    request(app).get('/').set('Origin', nonAllowOrigin).expect(500).end(done);
+    await request(app).get('/').set('Origin', nonAllowOrigin).expect(500);
   });
 });

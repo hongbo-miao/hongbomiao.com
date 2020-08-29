@@ -7,6 +7,7 @@ describe('Home', () => {
   });
 
   it('receive GraphQL meQuery data', () => {
+    // eslint-disable-next-line jest/valid-expect-in-promise
     cy.request('POST', 'https://localhost:5000/graphql', {
       query: meQuery,
     }).then((res) => {
