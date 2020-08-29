@@ -73,6 +73,7 @@ module.exports = {
         'newlines-between': 'never',
       },
     ],
+    'jest/expect-expect': 'off',
     'multiline-comment-style': ['error', 'starred-block'],
     'react/jsx-filename-extension': [
       1,
@@ -80,6 +81,8 @@ module.exports = {
         extensions: ['.tsx'],
       },
     ],
+    'react/prop-types': 'off',
+    'security/detect-non-literal-fs-filename': 'off',
     'spaced-comment': [
       'error',
       'always',
@@ -88,14 +91,4 @@ module.exports = {
       },
     ],
   },
-  overrides: [
-    {
-      files: ['**/*.ts', '**/*.tsx'],
-      rules: {
-        'jest/expect-expect': 'off',
-        'react/prop-types': 'off',
-        'security/detect-non-literal-fs-filename': 'off',
-      },
-    },
-  ],
 };
