@@ -3,13 +3,13 @@ import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import express from 'express';
 import handleError from './error/controllers/handleError';
+import graphQLMiddleware from './graphQL/middlewares/graphQL.middleware';
 import morganMiddleware from './log/middlewares/morgan.middleware';
 import requestCountMiddleware from './log/middlewares/requestCount.middleware';
 import sendIndexPage from './page/controllers/sendIndexPage';
 import corsMiddleware from './security/middlewares/cors.middleware';
 import helmetMiddleware from './security/middlewares/helmet.middleware';
 import rateLimitMiddleware from './security/middlewares/rateLimit.middleware';
-import graphQLMiddleware from './shared/middlewares/graphQL.middleware';
 import apiRouter from './shared/routers/api.router';
 
 const app = express()

@@ -4,7 +4,7 @@ import Me from '../types/Me.type';
 
 const initialState: Me = {
   name: 'Hongbo Miao',
-  slogan: 'Making magic happen',
+  bio: 'Making magic happen',
 };
 
 const meReducer: Reducer = (state = initialState, action) => {
@@ -13,7 +13,7 @@ const meReducer: Reducer = (state = initialState, action) => {
       const { res } = action.payload;
       return {
         ...state,
-        ...res.response.data.me,
+        ...(res.response.data.me || {}),
       };
     }
 
