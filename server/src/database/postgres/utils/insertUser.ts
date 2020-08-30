@@ -7,12 +7,14 @@ const insertUser = async (
   firstname: string,
   lastname: string
 ): Promise<QueryBuilder> => {
-  return pg('users').insert({
-    email: email.toLowerCase(),
-    password: pg.raw(`crypt('${password}', gen_salt('bf'))`),
-    firstname,
-    lastname,
-  });
+  return pg('users')
+    .returning('id')
+    .insert({
+      email: email.toLowerCase(),
+      password: pg.raw(`crypt('${password}', gen_salt('bf'))`),
+      firstname,
+      lastname,
+    });
 };
 
 export default insertUser;
