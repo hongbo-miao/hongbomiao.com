@@ -32,7 +32,7 @@ const Home: React.FC<Props> = (props) => {
     fetchMe(meQuery);
   }, [fetchMe]);
 
-  const { name, slogan } = me;
+  const { bio, name } = me;
 
   return (
     <div className={styles.hmHome}>
@@ -47,7 +47,7 @@ const Home: React.FC<Props> = (props) => {
                 style={{ height: '22px', width: '22px' }}
                 alt="Magical Hat"
               />
-              <div className={styles.hmText}>{slogan}</div>
+              <div className={styles.hmText}>{bio}</div>
               <HmImage
                 webpSrc={magicWebP}
                 fallbackSrc={magicPNG}

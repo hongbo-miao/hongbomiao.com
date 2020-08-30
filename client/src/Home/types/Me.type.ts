@@ -1,6 +1,6 @@
 interface Me {
-  name?: string;
-  slogan?: string;
+  name: string;
+  bio?: string;
 }
 
 export default Me;
