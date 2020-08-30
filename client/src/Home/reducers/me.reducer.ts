@@ -13,7 +13,7 @@ const meReducer: Reducer = (state = initialState, action) => {
       const { res } = action.payload;
       return {
         ...state,
-        ...res.response.data.me,
+        ...(res.response.data.me || {}),
       };
     }
 
