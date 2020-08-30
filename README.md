@@ -65,14 +65,13 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **redux-observable** - Side effects
 - **RxJS** - Asynchronous programming with observable streams
 - **Bulma** - CSS framework
+- **PurgeCSS** - Unused CSS removing
 - **Jest** - JavaScript testing framework
 - **React Testing Library** - React component testing
 - **Storybook** - Visual testing
 - **rxjs/testing** - Marble testing
 - **Cypress** - End-to-end testing
 - **Lighthouse CI** - Performance, accessibility, best practices, SEO, PWA testing
-- **Google Tag Manager**, **Google Analytics**, **FullStory** = Data and experience analytics
-- **PurgeCSS** - Unused CSS removing
 
 #### Back End
 
@@ -102,6 +101,9 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 - **Lightstep** - Distributed tracing
 - **Sentry** - Error tracking
+- **Google Tag Manager** - Tag management
+- **Google Analytics** - Web analytics
+- **FullStory** - Experience analytics, session replay, heatmaps
 - **Heroku** - Hosting
 - **Namecheap** - Domain
 - **Cloudflare** - CDN, DNS, DDoS protection
