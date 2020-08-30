@@ -18,7 +18,6 @@ const helmetMiddleware = (): RequestHandler => {
           /* Fetch directives */
           connectSrc: [
             "'self'",
-            'https://hongbomiao.herokuapp.com',
 
             // FullStory
             'https://rs.fullstory.com',
