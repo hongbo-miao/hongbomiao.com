@@ -54,7 +54,7 @@
 
 ## Introduction
 
-A cutting-edge technology playground. An automation experiment.
+A minimalist website. A cutting-edge technology playground. An automation experiment.
 
 ## Technologies
 
