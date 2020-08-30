@@ -82,6 +82,7 @@ A cutting-edge technology playground. An automation experiment.
 - **Elasticsearch**, **Kibana** - Distributed search and analytics engine
 - **Grafana**, **Prometheus** - Monitoring and alerting
 - **PostgreSQL** - Relational database management system
+- **Knex.js** - SQL query builder
 - **Winston**, **Morgan** - Logging
 - **CORS**, **Helmet** - Security
 - **Terminus** - Health check and graceful shutdown
