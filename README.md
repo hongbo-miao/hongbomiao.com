@@ -81,6 +81,7 @@ A cutting-edge technology playground. An automation experiment.
 - **OpenTelemetry**, **Jaeger**, **Zipkin** - Distributed tracing
 - **Elasticsearch**, **Kibana** - Distributed search and analytics engine
 - **Grafana**, **Prometheus** - Monitoring and alerting
+- **PostgreSQL** - Relational database management system
 - **Winston**, **Morgan** - Logging
 - **CORS**, **Helmet** - Security
 - **Terminus** - Health check and graceful shutdown
