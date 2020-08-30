@@ -4,16 +4,16 @@ import pg from '../pg';
 const insertUser = async (
   email: string,
   password: string,
-  firstname: string,
-  lastname: string
+  firstName: string,
+  lastName: string
 ): Promise<QueryBuilder> => {
   return pg('users')
     .returning('id')
     .insert({
       email: email.toLowerCase(),
       password: pg.raw(`crypt('${password}', gen_salt('bf'))`),
-      firstname,
-      lastname,
+      first_name: firstName,
+      last_name: lastName,
     });
 };
 
