@@ -5,7 +5,7 @@ import RootState from '../types/RootState.type';
 const mockStore = configureStore();
 const me: Me = {
   name: 'Hongbo Miao',
-  slogan: 'Making magic happen',
+  bio: 'Making magic happen',
 };
 const initialState: RootState = { me };
 const mockedStore = mockStore(initialState);

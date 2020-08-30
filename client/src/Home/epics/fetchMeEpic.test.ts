@@ -14,7 +14,7 @@ describe('fetchMeEpic', () => {
     response: {
       data: {
         name: 'Hongbo Miao',
-        slogan: 'Making magic happen',
+        bio: 'Making magic happen',
       },
     },
   } as AjaxResponse;

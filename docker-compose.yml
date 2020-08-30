@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
   # Server
@@ -13,6 +13,19 @@ services:
       - '5001:5000'
     environment:
       - NODE_ENV=development
+    depends_on:
+      - postgres
+
+  # PostgreSQL
+  postgres:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - ./.env.development.local
+    ports:
+      - "5432:5432"
 
   # OpenTelemetry Collector
   collector:
@@ -122,3 +135,7 @@ services:
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel
     depends_on:
       - prometheus
+
+volumes:
+  # For persistence between restarts
+  postgres_data:
