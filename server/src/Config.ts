@@ -37,12 +37,7 @@ const Config = {
     'https://localhost:5001',
     'https://localhost:8080',
   ],
-  prodCORSAllowList: [
-    ...sharedCORSAllowList,
-    'https://hongbomiao.com',
-    'https://hongbomiao.herokuapp.com',
-    'https://www.hongbomiao.com',
-  ],
+  prodCORSAllowList: [...sharedCORSAllowList, 'https://hongbomiao.com', 'https://www.hongbomiao.com'],
 
   postgresConnection: {
     host: POSTGRES_HOST,
