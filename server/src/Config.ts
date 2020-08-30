@@ -8,6 +8,11 @@ const {
   POSTGRES_PASSWORD,
   POSTGRES_PORT,
   POSTGRES_USER,
+  SEED_USER_BIO,
+  SEED_USER_EMAIL,
+  SEED_USER_FIRST_NAME,
+  SEED_USER_LAST_NAME,
+  SEED_USER_PASSWORD,
 } = process.env;
 
 const sharedCSPConnectSrc = [
@@ -45,6 +50,14 @@ const Config = {
     database: POSTGRES_DATABASE,
     user: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
+  },
+
+  seedUser: {
+    email: SEED_USER_EMAIL,
+    password: SEED_USER_PASSWORD,
+    firstName: SEED_USER_FIRST_NAME,
+    lastName: SEED_USER_LAST_NAME,
+    bio: SEED_USER_BIO,
   },
 
   lightstepToken: LIGHTSTEP_TOEKN,

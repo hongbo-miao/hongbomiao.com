@@ -6,7 +6,7 @@ describe('meReducer', () => {
   test('initial state', () => {
     expect(meReducer(undefined, {} as Action)).toEqual({
       name: 'Hongbo Miao',
-      slogan: 'Making magic happen',
+      bio: 'Making magic happen',
     });
   });
 
@@ -20,7 +20,7 @@ describe('meReducer', () => {
               data: {
                 me: {
                   name: 'Jack Dawson',
-                  slogan: "I'm the king of the world!",
+                  bio: "I'm the king of the world!",
                 },
               },
             },
@@ -29,7 +29,7 @@ describe('meReducer', () => {
       })
     ).toEqual({
       name: 'Jack Dawson',
-      slogan: "I'm the king of the world!",
+      bio: "I'm the king of the world!",
     });
   });
 });

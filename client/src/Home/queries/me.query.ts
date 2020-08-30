@@ -2,7 +2,7 @@ const meQuery = `
   query Me {
     me {
       name
-      slogan
+      bio
     }
   }
 `;

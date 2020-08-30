@@ -20,7 +20,7 @@ describe('Home', () => {
           data: {
             me: {
               name: 'Hongbo Miao',
-              slogan: 'Making magic happen',
+              bio: 'Making magic happen',
             },
           },
         });
