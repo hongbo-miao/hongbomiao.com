@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLString } from 'graphql';
 
-const MeGraphQLType = new GraphQLObjectType({
-  name: 'Me',
+const UserGraphQLType = new GraphQLObjectType({
+  name: 'User',
   fields: {
     id: { type: GraphQLString },
     name: { type: GraphQLString },
@@ -11,4 +11,4 @@ const MeGraphQLType = new GraphQLObjectType({
   },
 });
 
-export default MeGraphQLType;
+export default UserGraphQLType;
