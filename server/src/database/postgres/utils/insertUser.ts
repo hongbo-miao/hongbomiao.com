@@ -1,8 +1,8 @@
 import pg from '../pg';
-import UserPostgresType from '../postgresTypes/user.postgresType';
 import PostgresInputUser from '../types/PostgresInputUser.type';
+import PostgresUserType from '../types/PostgresUser.type';
 
-const insertUser = async (user: PostgresInputUser): Promise<UserPostgresType> => {
+const insertUser = async (user: PostgresInputUser): Promise<PostgresUserType> => {
   const { email, password, firstName, lastName, bio } = user;
   return pg('users')
     .returning('*')
