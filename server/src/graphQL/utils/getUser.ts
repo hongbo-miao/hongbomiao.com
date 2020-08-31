@@ -9,6 +9,7 @@ const getUser = async (id: string): Promise<GraphQLUser> => {
 
   const { first_name: firstName, last_name: lastName, bio } = user;
   return {
+    id,
     name: `${firstName} ${lastName}`,
     firstName,
     lastName,

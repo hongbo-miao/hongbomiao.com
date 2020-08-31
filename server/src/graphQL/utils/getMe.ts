@@ -13,9 +13,12 @@ const getMe = async (): Promise<GraphQLMe> => {
     throw new Error('User does not exist.');
   }
 
-  const { first_name: firstName, last_name: lastName, bio } = user;
+  const { id, first_name: firstName, last_name: lastName, bio } = user;
   return {
+    id,
     name: `${firstName} ${lastName}`,
+    firstName,
+    lastName,
     bio,
   };
 };
