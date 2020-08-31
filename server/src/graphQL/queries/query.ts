@@ -4,8 +4,6 @@ import MeGraphQLType from '../graphQLTypes/Me.graphQLType';
 import UserGraphQLType from '../graphQLTypes/User.graphQLType';
 import getFibonacci from '../utils/getFibonacci';
 import getMe from '../utils/getMe';
-import getUser from '../utils/getUser';
-import getUsers from '../utils/getUsers';
 
 const query = new GraphQLObjectType({
   name: 'Query',
@@ -31,9 +29,10 @@ const query = new GraphQLObjectType({
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
-      resolve: async (parentValue, args) => {
+      resolve: async (parentValue, args, context) => {
         const { id } = args;
-        return getUser(id);
+        const { dataLoaders } = context;
+        return dataLoaders.user.load(id);
       },
     },
     users: {
@@ -41,9 +40,10 @@ const query = new GraphQLObjectType({
       args: {
         ids: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
       },
-      resolve: async (parentValue, args) => {
+      resolve: async (parentValue, args, context) => {
         const { ids } = args;
-        return getUsers(ids);
+        const { dataLoaders } = context;
+        return Promise.all(ids.map((id: string) => dataLoaders.user.load(id)));
       },
     },
   },

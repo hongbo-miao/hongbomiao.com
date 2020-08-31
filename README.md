@@ -77,6 +77,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 - **Express** - Node.js web application framework
 - **GraphQL** - Query language for the API, and the server-side runtime
+- **DataLoader** - Batching and caching
 - **OpenTelemetry**, **Jaeger**, **Zipkin** - Distributed tracing
 - **Elasticsearch**, **Kibana** - Distributed search and analytics engine
 - **Grafana**, **Prometheus** - Monitoring and alerting
