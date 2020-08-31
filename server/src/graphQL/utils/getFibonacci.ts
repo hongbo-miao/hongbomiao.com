@@ -1,19 +1,19 @@
 import validator from 'validator';
-import calFibonacci from '../../shared/utils/calFibonacci';
+import calcFibonacci from './calcFibonacci';
 
 interface Fibonacci {
   n: number;
   ans: number;
 }
 
-const fibonacci = async (n: number): Promise<Fibonacci> => {
+const getFibonacci = (n: number): Fibonacci => {
   if (!validator.isInt(String(n), { min: 0, max: 10 })) {
     throw new Error('n should be in the range of 0 and 10.');
   }
   return {
     n,
-    ans: calFibonacci(n),
+    ans: calcFibonacci(n),
   };
 };
 
-export default fibonacci;
+export default getFibonacci;

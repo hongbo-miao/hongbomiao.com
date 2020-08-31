@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-interface UserPostgresType {
+interface PostgresUserType {
   id: string;
   email: string;
   password: string;
@@ -11,4 +11,4 @@ interface UserPostgresType {
   last_login: Date | null;
 }
 
-export default UserPostgresType;
+export default PostgresUserType;

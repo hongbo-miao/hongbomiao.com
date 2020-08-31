@@ -1,7 +1,7 @@
 import pg from '../pg';
-import UserPostgresType from '../postgresTypes/user.postgresType';
+import PostgresUserType from '../types/PostgresUser.type';
 
-const findUserByEmail = async (email: string): Promise<UserPostgresType | undefined> => {
+const findUserByEmail = async (email: string): Promise<PostgresUserType | undefined> => {
   return pg.select('*').from('users').where('email', email.toLowerCase()).first();
 };
 
