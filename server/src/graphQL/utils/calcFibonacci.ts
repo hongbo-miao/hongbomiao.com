@@ -24,9 +24,9 @@ const fibonacci = (n: number, tracer: Tracer, parentSpan: Span | null): number =
   return val;
 };
 
-const calFibonacci = (n: number): number => {
+const calcFibonacci = (n: number): number => {
   const tracer = opentelemetry.trace.getTracer('fibonacci-tracer');
   return fibonacci(n, tracer, null);
 };
 
-export default calFibonacci;
+export default calcFibonacci;
