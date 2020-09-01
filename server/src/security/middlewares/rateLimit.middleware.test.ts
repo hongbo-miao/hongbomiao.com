@@ -1,13 +1,21 @@
 import express from 'express';
+// https://github.com/stipsan/ioredis-mock/pull/849
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import MockedRedis from 'ioredis-mock';
 import request from 'supertest';
 import rateLimitMiddleware from './rateLimit.middleware';
 
 describe('rateLimitMiddleware', () => {
-  const windowMs = 60 * 1000; // 60 sec
-  const max = 2; // Requests per IP
+  const duration = 60; // Seconds
+  const points = 2; // Requests per IP
+
+  const redis = new MockedRedis({
+    enableOfflineQueue: false,
+  });
 
   const app = express()
-    .use(rateLimitMiddleware(windowMs, max))
+    .use(rateLimitMiddleware(redis, duration, points))
     .get('/', (req, res) => {
       res.send('Hello, World!');
     });
