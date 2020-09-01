@@ -10,7 +10,6 @@ const {
   POSTGRES_USER,
   REDIS_HOST,
   REDIS_PORT,
-  REDIS_USER,
   REDIS_PASSWORD,
   SEED_USER_BIO,
   SEED_USER_EMAIL,
@@ -46,7 +45,6 @@ const Config = {
   redisOptions: {
     host: REDIS_HOST,
     port: Number(REDIS_PORT),
-    username: REDIS_USER,
     password: REDIS_PASSWORD,
     enableOfflineQueue: false,
   },

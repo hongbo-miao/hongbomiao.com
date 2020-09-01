@@ -102,6 +102,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 #### Services
 
 - **Lightstep** - Distributed tracing
+- **Redis Enterprise Cloud** - Redis hosting
 - **Sentry** - Error tracking
 - **Google Tag Manager** - Tag management
 - **Google Analytics** - Web analytics
