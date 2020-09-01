@@ -14,7 +14,16 @@ services:
     environment:
       - NODE_ENV=development
     depends_on:
+      - redis
       - postgres
+
+  # Redis
+  redis:
+    image: "redis:alpine"
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
 
   # PostgreSQL
   postgres:
@@ -138,4 +147,5 @@ services:
 
 volumes:
   # For persistence between restarts
+  redis_data:
   postgres_data:
