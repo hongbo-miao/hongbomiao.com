@@ -4,7 +4,7 @@ import { RateLimiterRedis } from 'rate-limiter-flexible';
 import Config from '../../Config';
 
 const DURATION = 60; // Seconds
-const POINTS = 5; // Requests per IP
+const POINTS = 100; // Requests per IP
 const REDIS = new Redis(Config.redisOptions);
 
 const rateLimitMiddleware = (
