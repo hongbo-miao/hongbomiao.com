@@ -8,6 +8,10 @@ const {
   POSTGRES_PASSWORD,
   POSTGRES_PORT,
   POSTGRES_USER,
+  REDIS_HOST,
+  REDIS_PORT,
+  REDIS_USER,
+  REDIS_PASSWORD,
   SEED_USER_BIO,
   SEED_USER_EMAIL,
   SEED_USER_FIRST_NAME,
@@ -38,6 +42,14 @@ const Config = {
     'https://localhost:8080',
   ],
   prodCORSAllowList: [...sharedCORSAllowList, 'https://hongbomiao.com', 'https://www.hongbomiao.com'],
+
+  redisOptions: {
+    host: REDIS_HOST,
+    port: Number(REDIS_PORT),
+    username: REDIS_USER,
+    password: REDIS_PASSWORD,
+    enableOfflineQueue: false,
+  },
 
   postgresConnection: {
     host: POSTGRES_HOST,

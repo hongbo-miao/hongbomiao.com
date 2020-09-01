@@ -83,10 +83,11 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Grafana**, **Prometheus** - Monitoring and alerting
 - **PostgreSQL** - Relational database management system
 - **Knex.js** - SQL query builder
+- **Redis** - In-memory database
+- **rate-limiter-flexible** - Rate limiting
 - **Winston**, **Morgan** - Logging
 - **CORS**, **Helmet** - Security
 - **Terminus** - Health check and graceful shutdown
-- **Express Rate Limit** - Rate limiting
 - **SuperTest** - HTTP testing
 - **Docker**, **Docker Compose** - Container
 
