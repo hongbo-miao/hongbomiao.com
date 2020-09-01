@@ -1,6 +1,6 @@
 import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
 import { NodeTracerProvider } from '@opentelemetry/node';
-import { ConsoleSpanExporter, SimpleSpanProcessor } from '@opentelemetry/tracing';
+import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import { LightstepExporter } from 'lightstep-opentelemetry-exporter';
 import Config from '../../Config';
 import isDevelopment from './isDevelopment';
@@ -38,9 +38,9 @@ const initTracer = (): void => {
   });
 
   if (isDevelopment()) {
-    tracerProvider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
+    tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
     tracerProvider.addSpanProcessor(
-      new SimpleSpanProcessor(
+      new BatchSpanProcessor(
         new CollectorTraceExporter({
           serviceName,
         })
@@ -50,7 +50,7 @@ const initTracer = (): void => {
 
   if (isProduction()) {
     tracerProvider.addSpanProcessor(
-      new SimpleSpanProcessor(
+      new BatchSpanProcessor(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         new LightstepExporter({
