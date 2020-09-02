@@ -78,4 +78,4 @@ const initTracer = (): void => {
   tracerProvider.register();
 };
 
-export default initTracer;
+initTracer();
