@@ -108,12 +108,12 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 #### Services
 
 - **Lightstep** - Distributed tracing
-- **Redis Enterprise Cloud** - Redis hosting
 - **Sentry** - Error tracking
 - **Google Tag Manager** - Tag management
 - **Google Analytics** - Web analytics
 - **FullStory** - Experience analytics, session replay, heatmaps
 - **Heroku** - Hosting
+- **Redis Enterprise Cloud** - Redis hosting
 - **Namecheap** - Domain
 - **Cloudflare** - CDN, DNS, DDoS protection
 - **ZenHub** - Agile project management
