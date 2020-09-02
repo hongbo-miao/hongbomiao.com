@@ -36,6 +36,18 @@ const initTracer = (): void => {
         ],
         path: '@opentelemetry/plugin-https',
       },
+      ioredis: {
+        enabled: true,
+        path: '@opentelemetry/plugin-ioredis',
+      },
+      pg: {
+        enabled: true,
+        path: '@opentelemetry/plugin-pg',
+      },
+      'pg-pool': {
+        enabled: true,
+        path: '@opentelemetry/plugin-pg-pool',
+      },
     },
   });
 
