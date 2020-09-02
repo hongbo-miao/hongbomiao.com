@@ -1,7 +1,8 @@
 module.exports = {
+  root: true,
   parser: '@typescript-eslint/parser',
   env: {
-    node: true,
+    mocha: true,
   },
   parserOptions: {
     ecmaVersion: 2020,
@@ -11,20 +12,19 @@ module.exports = {
     },
   },
   plugins: [
-    '@babel', // @babel/eslint-plugin
     '@typescript-eslint', // @typescript-eslint/eslint-plugin
+    'cypress', // eslint-plugin-cypress
     'prettier', // eslint-plugin-prettier
-    'security', // eslint-plugin-security
+    'testing-library', // eslint-plugin-testing-library
   ],
   extends: [
     'eslint:recommended', // eslint
     'airbnb-base', // eslint-config-airbnb-base
     'plugin:@typescript-eslint/eslint-recommended', // @typescript-eslint/eslint-plugin. Not all eslint core rules are compatible with TypeScript, so you need to add both eslint:recommended and plugin:@typescript-eslint/eslint-recommended
     'plugin:@typescript-eslint/recommended', // @typescript-eslint/eslint-plugin
-    'plugin:security/recommended', // eslint-plugin-security
+    'plugin:cypress/recommended', // eslint-plugin-cypress
     'prettier', // eslint-plugin-prettier. Make sure to put it last in the extends array, so it gets the chance to override other configs
     'prettier/@typescript-eslint', // eslint-config-prettier. Disables ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-    'prettier/babel', // eslint-config-prettier
     'plugin:prettier/recommended', // eslint-plugin-prettier. Exposes a "recommended" configuration that configures both eslint-plugin-prettier and eslint-config-prettier in a single step. Make sure this is always the last configuration in the extends array
   ],
   settings: {
@@ -61,7 +61,6 @@ module.exports = {
       },
     ],
     'multiline-comment-style': ['error', 'starred-block'],
-    'security/detect-non-literal-fs-filename': 'off',
     'spaced-comment': [
       'error',
       'always',
