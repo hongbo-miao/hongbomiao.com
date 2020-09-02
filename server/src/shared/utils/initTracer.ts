@@ -1,4 +1,4 @@
-import { CollectorProtocolNode, CollectorTraceExporter } from '@opentelemetry/exporter-collector';
+import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
 import { NodeTracerProvider } from '@opentelemetry/node';
 import { ConsoleSpanExporter, SimpleSpanProcessor } from '@opentelemetry/tracing';
 import { LightstepExporter } from 'lightstep-opentelemetry-exporter';
@@ -42,7 +42,6 @@ const initTracer = (): void => {
     tracerProvider.addSpanProcessor(
       new SimpleSpanProcessor(
         new CollectorTraceExporter({
-          protocolNode: CollectorProtocolNode.HTTP_PROTO,
           serviceName,
         })
       )
@@ -52,6 +51,8 @@ const initTracer = (): void => {
   if (isProduction()) {
     tracerProvider.addSpanProcessor(
       new SimpleSpanProcessor(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         new LightstepExporter({
           serviceName,
           token: Config.lightstepToken,
