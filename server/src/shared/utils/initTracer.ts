@@ -20,7 +20,8 @@ const initTracer = (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         ignoreOutgoingUrls: [
-          /\/v1\/trace/, // OpenTelemetry
+          /\/v1\/trace/, // OpenTelemetry tracing
+          /\/v1\/metrics/, // OpenTelemetry metrics
         ],
         path: '@opentelemetry/plugin-http',
       },
@@ -30,7 +31,8 @@ const initTracer = (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         ignoreOutgoingUrls: [
-          /\/v1\/trace/, // OpenTelemetry
+          /\/v1\/trace/, // OpenTelemetry tracing
+          /\/v1\/metrics/, // OpenTelemetry metrics
         ],
         path: '@opentelemetry/plugin-https',
       },
