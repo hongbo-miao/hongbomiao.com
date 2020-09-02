@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://hongbomiao.com/"><img width="100" src="https://user-images.githubusercontent.com/3375461/90245344-1397cc80-de65-11ea-82d2-b7ebbe8948c8.png" alt="Lightning" /></a>
+  <a href="https://hongbomiao.com"><img width="100" src="https://user-images.githubusercontent.com/3375461/90245344-1397cc80-de65-11ea-82d2-b7ebbe8948c8.png" alt="Lightning" /></a>
 </p>
 
 <h2 align="center">
@@ -47,7 +47,7 @@
 </p>
 
 <p align="center">
-  <a href="https://hongbomiao.com/">hongbomiao.com</a>
+  <a href="https://hongbomiao.com">hongbomiao.com</a>
 </p>
 
 ---
@@ -58,7 +58,9 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 ## Preview
 
-[![hongbomiao.com](https://user-images.githubusercontent.com/3375461/91978222-5b1fc300-ed56-11ea-96b8-49ec409a8e61.gif)](https://hongbomiao.com/)
+[https://hongbomiao.com](https://hongbomiao.com)
+
+[![hongbomiao.com](https://user-images.githubusercontent.com/3375461/91978222-5b1fc300-ed56-11ea-96b8-49ec409a8e61.gif)](https://hongbomiao.com)
 
 ## Technologies
 
