@@ -19,7 +19,7 @@ const {
 } = process.env;
 
 const sharedCSPConnectSrc = [
-  'https://collector.lightstep.com', // Lightstep
+  'https://ingest.lightstep.com', // Lightstep
 ];
 const sharedCORSAllowList = [
   'electron://altair', // Altair GraphQL Client
