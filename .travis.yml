@@ -76,9 +76,7 @@ jobs:
       before_script:
         - cd $TRAVIS_BUILD_DIR/client
       script:
-        # Set CI=false to let Travis pass "Treating warnings as errors because process.env.CI = true."
-        # caused by https://github.com/lightstep/opentelemetry-exporter-js/issues/12
-        - CI=false yarn build
+        - yarn build
         - yarn run lighthouse
       addons:
         chrome: stable
@@ -87,9 +85,7 @@ jobs:
       # https://docs.cypress.io/guides/guides/continuous-integration.html#Travis
       name: "Cypress"
       before_script:
-        # Set CI=false to let Travis pass "Treating warnings as errors because process.env.CI = true."
-        # caused by https://github.com/lightstep/opentelemetry-exporter-js/issues/12
-        - cd $TRAVIS_BUILD_DIR/client && CI=false yarn build
+        - cd $TRAVIS_BUILD_DIR/client && yarn build
         - cd $TRAVIS_BUILD_DIR && cp -r client/build/ server/dist/
         - cd $TRAVIS_BUILD_DIR/server && yarn build
         - cd $TRAVIS_BUILD_DIR
