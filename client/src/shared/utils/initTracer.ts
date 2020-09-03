@@ -32,6 +32,7 @@ const initTracer = (): void => {
     tracerProvider.addSpanProcessor(
       new BatchSpanProcessor(
         new CollectorTraceExporter({
+          serviceName,
           url: traceURL,
           headers: {
             'Lightstep-Access-Token': token,
