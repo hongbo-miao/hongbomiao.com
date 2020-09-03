@@ -4,8 +4,8 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import handleError from './error/controllers/handleError';
 import graphQLMiddleware from './graphQL/middlewares/graphQL.middleware';
+import incomingRequestCounterMiddleware from './log/middlewares/incomingRequestCounter.middleware';
 import morganMiddleware from './log/middlewares/morgan.middleware';
-import requestCountMiddleware from './log/middlewares/requestCount.middleware';
 import sendIndexPage from './page/controllers/sendIndexPage';
 import corsMiddleware from './security/middlewares/cors.middleware';
 import helmetMiddleware from './security/middlewares/helmet.middleware';
@@ -14,7 +14,7 @@ import apiRouter from './shared/routers/api.router';
 
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
-  .use(requestCountMiddleware())
+  .use(incomingRequestCounterMiddleware())
   .use(morganMiddleware())
   .use(corsMiddleware())
   .use(helmetMiddleware())
