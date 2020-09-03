@@ -3,7 +3,6 @@ import { DocumentLoad } from '@opentelemetry/plugin-document-load';
 import { XMLHttpRequestPlugin } from '@opentelemetry/plugin-xml-http-request';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import { WebTracerProvider } from '@opentelemetry/web';
-import { LightstepExporter } from 'lightstep-opentelemetry-exporter';
 import Config from '../../Config';
 import isDevelopment from './isDevelopment';
 import isProduction from './isProduction';
@@ -29,13 +28,14 @@ const initTracer = (): void => {
   }
 
   if (isProduction()) {
+    const { token, traceURL } = Config.lightstep;
     tracerProvider.addSpanProcessor(
       new BatchSpanProcessor(
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        new LightstepExporter({
-          serviceName,
-          token: Config.lightstepToken,
+        new CollectorTraceExporter({
+          url: traceURL,
+          headers: {
+            'Lightstep-Access-Token': token,
+          },
         })
       )
     );

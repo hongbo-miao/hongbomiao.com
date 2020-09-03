@@ -65,7 +65,10 @@ const Config = {
     bio: SEED_USER_BIO,
   },
 
-  lightstepToken: LIGHTSTEP_TOEKN,
+  lightstep: {
+    token: LIGHTSTEP_TOEKN,
+    traceURL: 'https://ingest.lightstep.com:443/api/v2/otel/trace',
+  },
 
   sentryOptions: {
     dsn: 'https://2f46725646834700b4c2675abbc2da6a@o379185.ingest.sentry.io/5375232',
