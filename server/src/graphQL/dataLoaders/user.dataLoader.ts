@@ -1,9 +1,9 @@
 import DataLoader from 'dataloader';
+import findUserByID from '../../database/postgres/utils/findUserByID';
 import GraphQLUser from '../types/GraphQLUser.type';
-import getUser from '../utils/getUser';
 
-const batchGetUsers = async (ids: readonly string[]): Promise<GraphQLUser[]> => {
-  return Promise.all(ids.map((id) => getUser(id)));
+const batchGetUsers = async (ids: readonly string[]): Promise<(GraphQLUser | null)[]> => {
+  return Promise.all(ids.map((id) => findUserByID(id)));
 };
 
 const userDataLoader = new DataLoader(batchGetUsers);
