@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "tsc && babel build --out-dir build",
-    "dev": "nodemon --ext ts --exec \"yarn build && NODE_ENV=development node --require dotenv-flow/config build/index.js\"",
+    "dev": "nodemon --config nodemon.json",
     "serve": "NODE_ENV=production node --require dotenv-flow/config build/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
