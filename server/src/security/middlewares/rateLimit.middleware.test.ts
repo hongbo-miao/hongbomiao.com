@@ -7,8 +7,8 @@ import request from 'supertest';
 import rateLimitMiddleware from './rateLimit.middleware';
 
 describe('rateLimitMiddleware', () => {
-  const duration = 60; // Seconds
-  const points = 2; // Requests per IP
+  const duration = 60; // Number of points
+  const points = 2; // Per 60 seconds
 
   const redis = new MockedRedis({
     enableOfflineQueue: false,
