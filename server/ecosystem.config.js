@@ -3,6 +3,8 @@ module.exports = {
     {
       name: 'server',
       script: './build/index.js',
+      instances: 'max',
+      exec_mode: 'cluster',
       env_development: {
         NODE_ENV: 'development',
       },
