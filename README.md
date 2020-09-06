@@ -154,7 +154,7 @@ This is the website [security report](https://observatory.mozilla.org/analyze/ho
 
 ## Distributed Tracing
 
-After OpenTelemetry processing, the data save in Elasticsearch.
+After OpenTelemetry processing, Elasticsearch saves the data.
 
 #### Jaeger
 
@@ -171,6 +171,12 @@ After OpenTelemetry processing, the data save in Elasticsearch.
 #### Grafana
 
 ![Grafana](https://user-images.githubusercontent.com/3375461/90973255-eaf19000-e552-11ea-819c-b098bbadea1b.jpg)
+
+## Cluster
+
+Eight clusters are running as PM2 shows.
+
+![PM2](https://user-images.githubusercontent.com/3375461/92335017-80e5f880-f0c5-11ea-907b-2dc15e55db8a.jpg)
 
 ## Automation
 
