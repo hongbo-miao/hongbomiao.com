@@ -7,7 +7,7 @@ const metricExporter = new CollectorMetricExporter({
 
 const meter = new MeterProvider({
   exporter: metricExporter,
-  interval: 1000,
+  interval: 60 * 1000, // 60 seconds
 }).getMeter('server-meter');
 
 export default meter;
