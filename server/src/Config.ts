@@ -1,3 +1,7 @@
+import dotenvFlow from 'dotenv-flow';
+
+dotenvFlow.config();
+
 const {
   DOMAIN,
   LIGHTSTEP_TOEKN,
