@@ -8,10 +8,11 @@
   "scripts": {
     "build": "tsc && babel build --out-dir build",
     "dev": "nodemon --ext ts --exec \"yarn build && NODE_ENV=development node build/index.js\"",
-    "dev:pm2": "nodemon --ext ts --exec \"yarn build && pm2 start --env development\"",
+    "dev:pm2": "nodemon --ext ts --exec \"yarn build && pm2 start ecosystem.config.js --env development\"",
     "dev:pm2:stop": "pm2 stop server",
     "dev:pm2:delete": "pm2 stop server",
     "serve": "NODE_ENV=production node build/index.js",
+    "serve:pm2": "pm2-runtime start ecosystem.config.js --env production",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
