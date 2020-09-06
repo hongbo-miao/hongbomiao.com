@@ -82,6 +82,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 #### Back End
 
 - **Express** - Node.js web application framework
+- **PM2** - Node.js application production process manager
 - **GraphQL** - Query language for the API, and the server-side runtime
 - **DataLoader** - Batching and caching
 - **OpenTelemetry**, **Jaeger**, **Zipkin** - Distributed tracing
