@@ -1,18 +1,33 @@
 version: '3.8'
 
 services:
+  # Client
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    environment:
+      - NODE_ENV=development
+    ports:
+      - '80:80'
+    depends_on:
+      - server
+
   # Server
   server:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.server
     volumes:
       - '.:/app'
       - '/app/node_modules'
-    ports:
-      - '5001:5000'
     environment:
       - NODE_ENV=development
+    ports:
+      - '5000:5000'
     depends_on:
       - redis
       - postgres
