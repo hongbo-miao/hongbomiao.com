@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'server',
       script: './build/index.js',
-      instances: 'max',
+      instances: -2, // https://pm2.keymetrics.io/docs/usage/cluster-mode/#usage
       exec_mode: 'cluster',
       env_development: {
         NODE_ENV: 'development',
