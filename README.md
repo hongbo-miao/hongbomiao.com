@@ -82,20 +82,21 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 #### Back End
 
 - **Express** - Node.js web application framework
-- **PM2** - Node.js application production process manager
 - **GraphQL** - Query language for the API, and the server-side runtime
 - **DataLoader** - Batching and caching
+- **Knex.js** - SQL query builder
+- **PostgreSQL** - Relational database management system
+- **Redis** - In-memory database
+- **rate-limiter-flexible** - Rate limiting
+- **CORS**, **Helmet** - Security
+- **Terminus** - Health check and graceful shutdown
+- **Winston**, **Morgan** - Logging
+- **SuperTest** - HTTP testing
+- **PM2** - Node.js application production process manager
+- **NGINX** - Reverse proxy, load balancer
 - **OpenTelemetry**, **Jaeger**, **Zipkin** - Distributed tracing
 - **Elasticsearch**, **Kibana** - Distributed search and analytics engine
 - **Grafana**, **Prometheus** - Monitoring and alerting
-- **PostgreSQL** - Relational database management system
-- **Knex.js** - SQL query builder
-- **Redis** - In-memory database
-- **rate-limiter-flexible** - Rate limiting
-- **Winston**, **Morgan** - Logging
-- **CORS**, **Helmet** - Security
-- **Terminus** - Health check and graceful shutdown
-- **SuperTest** - HTTP testing
 - **Docker**, **Docker Compose** - Container
 
 #### Code
