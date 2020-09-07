@@ -33,7 +33,7 @@
 <p align="center">
   <a href="https://github.com/prettier/prettier"><img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com" /></a>
-  <a href="https://coveralls.io/github/Hongbo-Miao/hongbomiao.com"><img alt="Coveralls" src="https://img.shields.io/coveralls/github/Hongbo-Miao/hongbomiao.com" /></a>
+  <a href="https://codecov.io/gh/Hongbo-Miao/hongbomiao.com"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com" /></a>
 </p>
 
@@ -120,7 +120,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **ZenHub** - Agile project management
 - **[Travis](https://travis-ci.com/hongbo-miao/hongbomiao.com)** - Continuous integration
 - **[Codacy](https://app.codacy.com/app/hongbo-miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
-- **[Coveralls](https://coveralls.io/github/Hongbo-Miao/hongbomiao.com)** - Test coverage statistics
+- **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
 - **[Chromatic](https://www.chromaticqa.com/library?appId=5d626a63a601530020759b10)** - UI reviewing and feedback collecting
 - **[HTTP/3 Check](https://www.http3check.net/?host=hongbomiao.com)** - HTTP/3 checking
 - **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** - HSTS checking
