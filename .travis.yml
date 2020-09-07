@@ -57,8 +57,8 @@ jobs:
       script:
         - yarn test:coverage
       after_script:
-        # Upload coverage reports to Coveralls
-        - COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN yarn test:coverage:report
+        # Upload coverage reports to Codecov
+        - yarn test:coverage:report
 
     - stage: Test
       name: "Storybook - Client"
