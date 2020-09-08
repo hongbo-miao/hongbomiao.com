@@ -2,16 +2,16 @@
 version: '3.8'
 
 services:
-  # Client
-  client:
+  # NGINX
+  nginx:
     build:
       context: .
-      dockerfile: Dockerfile.client.production
+      dockerfile: Dockerfile.nginx.production
     volumes:
       - '.:/app'
       - '/app/node_modules'
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
     ports:
       - '80:80'
     depends_on:
