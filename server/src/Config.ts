@@ -35,7 +35,7 @@ const Config = {
   domain: DOMAIN,
   port: PORT,
 
-  devCSPConnectSrc: [...sharedCSPConnectSrc],
+  devCSPConnectSrc: [...sharedCSPConnectSrc, 'https://localhost:443'],
   prodCSPConnectSrc: [...sharedCSPConnectSrc],
 
   devCORSAllowList: [
