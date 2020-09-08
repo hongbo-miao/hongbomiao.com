@@ -12,6 +12,7 @@ services:
       - '/app/node_modules'
     environment:
       - NODE_ENV=development
+    restart: on-failure
     ports:
       - '443:443'
     depends_on:
@@ -27,6 +28,7 @@ services:
       - '/app/node_modules'
     environment:
       - NODE_ENV=development
+    restart: on-failure
     ports:
       - '5000:5000'
     depends_on:
@@ -38,6 +40,7 @@ services:
     image: redis:6.0.7-alpine
     volumes:
       - redis_data:/data
+    restart: on-failure
     ports:
       - "6379:6379"
 
@@ -49,6 +52,7 @@ services:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - ./.env.development.local
+    restart: on-failure
     ports:
       - "5432:5432"
 
@@ -61,6 +65,7 @@ services:
     ]
     volumes:
       - ./otel-collector.config.yaml:/conf/otel-collector.config.yaml
+    restart: on-failure
     ports:
       - "9464:9464"
       - "55680:55680"
@@ -77,13 +82,13 @@ services:
       "--es.num-replicas=0",
       "--es.server-urls=http://elasticsearch:9200"
     ]
-    ports:
-      - "14250"
-      - "14268"
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - LOG_LEVEL=debug
     restart: on-failure
+    ports:
+      - "14250"
+      - "14268"
     depends_on:
       - elasticsearch
 
@@ -110,13 +115,13 @@ services:
       "--es.num-replicas=0",
       "--es.server-urls=http://elasticsearch:9200"
     ]
-    ports:
-      - "16686:16686"
-      - "16687"
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - LOG_LEVEL=debug
     restart: on-failure
+    ports:
+      - "16686:16686"
+      - "16687"
     depends_on:
       - elasticsearch
 
@@ -126,6 +131,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.1
     environment:
       - discovery.type=single-node
+    restart: on-failure
     ports:
       - "9200/tcp"
 
@@ -133,12 +139,14 @@ services:
   kibana:
     # https://www.docker.elastic.co/r/kibana/kibana-oss
     image: docker.elastic.co/kibana/kibana-oss:7.9.1
+    restart: on-failure
     ports:
       - 5601:5601
 
   # Zipkin
   zipkin-all-in-one:
     image: openzipkin/zipkin:latest
+    restart: on-failure
     ports:
       - "9411:9411"
 
@@ -147,17 +155,19 @@ services:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    restart: on-failure
     ports:
       - "9090:9090"
 
   # Grafana
   grafana:
     image: grafana/grafana:latest
-    ports:
-      - '3000:3000'
     environment:
       # https://grafana.com/grafana/plugins
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel
+    restart: on-failure
+    ports:
+      - '3000:3000'
     depends_on:
       - prometheus
 
