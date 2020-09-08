@@ -13,6 +13,7 @@
   },
   "scripts": {
     "commit": "commit",
+    "setup": "sh ./bin/setup.sh",
     "build": "sh ./bin/build.sh",
     "start": "cd server && yarn serve:pm2",
     "lint": "eslint . --ext .js,.ts,.tsx",
@@ -24,7 +25,7 @@
     "test:coverage:report": "cat coverage/lcov.info | ./node_modules/.bin/codecov",
     "test:cypress:gui": "./node_modules/.bin/cypress open --config-file ./cypress/cypress.json",
     "test:cypress:headless": "./node_modules/.bin/cypress run --config-file ./cypress/cypress.json",
-    "test:cypress:headless:ci": "./bin/testCypressHeadlessCI.sh",
+    "test:cypress:headless:ci": "sh ./bin/testCypressHeadlessCI.sh",
     "clean": "sh ./bin/clean.sh",
     "docker:build": "docker-compose build",
     "docker:up": "docker-compose up -d",
