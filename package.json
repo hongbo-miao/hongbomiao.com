@@ -27,10 +27,10 @@
     "test:cypress:headless": "./node_modules/.bin/cypress run --config-file ./cypress/cypress.json",
     "test:cypress:headless:ci": "sh ./bin/testCypressHeadlessCI.sh",
     "clean": "sh ./bin/clean.sh",
-    "docker:build": "docker-compose build",
-    "docker:up": "docker-compose up -d",
-    "docker:stop": "docker-compose stop",
-    "docker:down": "docker-compose down --volumes",
+    "docker:build": "docker-compose -f docker-compose.development.yml build",
+    "docker:up": "docker-compose -f docker-compose.development.yml up -d",
+    "docker:stop": "docker-compose -f docker-compose.development.yml stop",
+    "docker:down": "docker-compose -f docker-compose.development.yml down --volumes",
     "docker:delete": "docker system prune"
   },
   "devDependencies": {
