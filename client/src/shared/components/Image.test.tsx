@@ -3,17 +3,17 @@ import React from 'react';
 import HmImage from './Image';
 
 describe('Image', () => {
-  const webpSrc = 'https://example.com/image.webp';
+  const avifSrc = 'https://example.com/image.avif';
   const fallbackSrc = 'https://example.com/image.png';
   const component = (
-    <HmImage webpSrc={webpSrc} fallbackSrc={fallbackSrc} style={{ height: '1px', width: '1px' }} alt="Hello, World!" />
+    <HmImage avifSrc={avifSrc} fallbackSrc={fallbackSrc} style={{ height: '1px', width: '1px' }} alt="Hello, World!" />
   );
 
   test('render Image', () => {
     render(component);
   });
 
-  test('picture contains webp', () => {
+  test('picture contains avif', () => {
     const { container } = render(component);
     expect(container.getElementsByTagName('source')).toHaveLength(1);
   });
