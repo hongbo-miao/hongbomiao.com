@@ -1,16 +1,17 @@
+# https://docs.docker.com/compose/compose-file/compose-versioning
 version: '3.8'
 
 services:
-  # Client
-  client:
+  # NGINX
+  nginx:
     build:
       context: .
-      dockerfile: Dockerfile.client
+      dockerfile: Dockerfile.nginx.production
     volumes:
       - '.:/app'
       - '/app/node_modules'
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
     ports:
       - '80:80'
     depends_on:
@@ -20,12 +21,12 @@ services:
   server:
     build:
       context: .
-      dockerfile: Dockerfile.server
+      dockerfile: Dockerfile.server.production
     volumes:
       - '.:/app'
       - '/app/node_modules'
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
     ports:
       - '5000:5000'
     depends_on:
@@ -55,8 +56,8 @@ services:
   collector:
     image: otel/opentelemetry-collector:latest
     command: [
-      "--config=/conf/otel-collector.config.yaml",
-      "--log-level=DEBUG"
+        "--config=/conf/otel-collector.config.yaml",
+        "--log-level=DEBUG"
     ]
     volumes:
       - ./otel-collector.config.yaml:/conf/otel-collector.config.yaml
@@ -72,9 +73,9 @@ services:
   jaeger-collector:
     image: jaegertracing/jaeger-opentelemetry-collector:latest
     command: [
-      "--es.num-shards=1",
-      "--es.num-replicas=0",
-      "--es.server-urls=http://elasticsearch:9200"
+        "--es.num-shards=1",
+        "--es.num-replicas=0",
+        "--es.server-urls=http://elasticsearch:9200"
     ]
     ports:
       - "14250"
@@ -89,8 +90,8 @@ services:
   jaeger-agent:
     image: jaegertracing/jaeger-opentelemetry-agent:latest
     command: [
-      "--config=/config/otel-agent.config.yml",
-      "--reporter.grpc.host-port=jaeger-collector:14250"
+        "--config=/config/otel-agent.config.yml",
+        "--reporter.grpc.host-port=jaeger-collector:14250"
     ]
     volumes:
       - ./:/config/:ro
@@ -105,9 +106,9 @@ services:
   jaeger-query:
     image: jaegertracing/jaeger-query:latest
     command: [
-      "--es.num-shards=1",
-      "--es.num-replicas=0",
-      "--es.server-urls=http://elasticsearch:9200"
+        "--es.num-shards=1",
+        "--es.num-replicas=0",
+        "--es.server-urls=http://elasticsearch:9200"
     ]
     ports:
       - "16686:16686"
