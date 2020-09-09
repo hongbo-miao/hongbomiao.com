@@ -98,7 +98,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **PM2** - Node.js application production process manager
 - **NGINX** - Reverse proxy, load balancer
 - **OpenTelemetry** - Observability framework
-- **Jaeger**, **Zipkin** - Distributed tracing system
+- **Jaeger** - Distributed tracing system
 - **Elasticsearch** - Distributed search and analytics engine
 - **Kibana** - Data visualization dashboard for Elasticsearch
 - **Grafana** - Monitoring and observability platform
@@ -148,7 +148,6 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - Client: https://localhost:8080
 - Server: https://localhost:5000
 - Jaeger: http://localhost:16686
-- Zipkin: http://localhost:9411
 - Kibana: http://localhost:5601
 - Grafana: http://localhost:3000
 - Prometheus: http://localhost:9090
