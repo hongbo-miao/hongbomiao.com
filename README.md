@@ -77,7 +77,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Storybook** - Visual testing
 - **rxjs/testing** - Marble testing
 - **Cypress** - End-to-end testing
-- **Lighthouse CI** - Performance, accessibility, best practices, SEO, PWA testing
+- **Lighthouse CI** - Performance, accessibility, SEO, progressive web app (PWA) analyzing
 
 #### Back End
 
