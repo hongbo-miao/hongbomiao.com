@@ -5,8 +5,6 @@ receivers:
       http:
 
 exporters:
-  zipkin:
-    endpoint: "http://zipkin-all-in-one:9411/api/v2/spans"
   jaeger:
     endpoint: jaeger-collector:14250
     insecure: true
@@ -21,7 +19,7 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [jaeger, zipkin]
+      exporters: [jaeger]
       processors: [batch, queued_retry]
     metrics:
       receivers: [otlp]

@@ -72,7 +72,6 @@ services:
       - "55681:55681"
     depends_on:
       - jaeger-collector
-      - zipkin-all-in-one
 
   # Jaeger
   jaeger-collector:
@@ -142,13 +141,6 @@ services:
     restart: on-failure
     ports:
       - 5601:5601
-
-  # Zipkin
-  zipkin-all-in-one:
-    image: openzipkin/zipkin:latest
-    restart: on-failure
-    ports:
-      - "9411:9411"
 
   # Prometheus
   prometheus:
