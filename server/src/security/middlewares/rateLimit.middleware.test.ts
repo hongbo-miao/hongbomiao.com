@@ -12,9 +12,7 @@ describe('rateLimitMiddleware', () => {
   const burstPointsRate = 1.5;
   const burstDurationRate = 10;
 
-  const redis = new MockedRedis({
-    enableOfflineQueue: false,
-  });
+  const redis = new MockedRedis();
 
   const app = express()
     .use(rateLimitMiddleware(redis, points, duration, burstPointsRate, burstDurationRate))
