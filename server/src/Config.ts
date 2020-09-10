@@ -4,7 +4,7 @@ dotenvFlow.config();
 
 const {
   DOMAIN,
-  LIGHTSTEP_TOEKN,
+  LIGHTSTEP_TOKEN,
   NODE_ENV,
   PORT,
   POSTGRES_DATABASE,
@@ -70,7 +70,7 @@ const Config = {
   },
 
   lightstep: {
-    token: LIGHTSTEP_TOEKN,
+    token: LIGHTSTEP_TOKEN,
     traceURL: 'https://ingest.lightstep.com:443/api/v2/otel/trace',
   },
 
