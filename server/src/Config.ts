@@ -22,6 +22,58 @@ const {
   SEED_USER_PASSWORD,
 } = process.env;
 
+if (DOMAIN == null || DOMAIN === '') {
+  throw new Error('Failed to read DOMAIN.');
+}
+if (LIGHTSTEP_TOKEN == null || LIGHTSTEP_TOKEN === '') {
+  throw new Error('Failed to read LIGHTSTEP_TOKEN.');
+}
+if (NODE_ENV == null || NODE_ENV === '') {
+  throw new Error('Failed to read NODE_ENV.');
+}
+if (PORT == null || PORT === '') {
+  throw new Error('Failed to read PORT.');
+}
+if (POSTGRES_DATABASE == null || POSTGRES_DATABASE === '') {
+  throw new Error('Failed to read POSTGRES_DATABASE.');
+}
+if (POSTGRES_HOST == null || POSTGRES_HOST === '') {
+  throw new Error('Failed to read POSTGRES_HOST.');
+}
+if (POSTGRES_PASSWORD == null || POSTGRES_PASSWORD === '') {
+  throw new Error('Failed to read POSTGRES_PASSWORD.');
+}
+if (POSTGRES_PORT == null || POSTGRES_PORT === '') {
+  throw new Error('Failed to read POSTGRES_PORT.');
+}
+if (POSTGRES_USER == null || POSTGRES_USER === '') {
+  throw new Error('Failed to read POSTGRES_USER.');
+}
+if (REDIS_HOST == null || REDIS_HOST === '') {
+  throw new Error('Failed to read REDIS_HOST.');
+}
+if (REDIS_PORT == null || REDIS_PORT === '') {
+  throw new Error('Failed to read REDIS_PORT.');
+}
+if (REDIS_PASSWORD == null) {
+  throw new Error('Failed to read REDIS_PASSWORD.');
+}
+if (SEED_USER_BIO == null || SEED_USER_BIO === '') {
+  throw new Error('Failed to read SEED_USER_BIO.');
+}
+if (SEED_USER_EMAIL == null || SEED_USER_EMAIL === '') {
+  throw new Error('Failed to read SEED_USER_EMAIL.');
+}
+if (SEED_USER_FIRST_NAME == null || SEED_USER_FIRST_NAME === '') {
+  throw new Error('Failed to read SEED_USER_FIRST_NAME.');
+}
+if (SEED_USER_LAST_NAME == null || SEED_USER_LAST_NAME === '') {
+  throw new Error('Failed to read SEED_USER_LAST_NAME.');
+}
+if (SEED_USER_PASSWORD == null || SEED_USER_PASSWORD === '') {
+  throw new Error('Failed to read SEED_USER_PASSWORD.');
+}
+
 const sharedCSPConnectSrc = [
   'https://ingest.lightstep.com', // Lightstep
 ];

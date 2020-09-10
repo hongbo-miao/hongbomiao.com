@@ -1,5 +1,15 @@
 const { REACT_APP_SERVER_DOMAIN, REACT_APP_LIGHTSTEP_TOKEN, REACT_APP_SERVER_PORT, NODE_ENV } = process.env;
 
+if (NODE_ENV == null) {
+  throw new Error('Failed to read NODE_ENV.');
+}
+if (REACT_APP_SERVER_DOMAIN == null || REACT_APP_SERVER_DOMAIN === '') {
+  throw new Error('Failed to read REACT_APP_SERVER_DOMAIN.');
+}
+if (REACT_APP_SERVER_PORT == null || REACT_APP_SERVER_PORT === '') {
+  throw new Error('Failed to read REACT_APP_SERVER_PORT.');
+}
+
 const Config = {
   nodeEnv: NODE_ENV,
 
