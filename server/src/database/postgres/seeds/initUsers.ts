@@ -5,10 +5,6 @@ import insertUsers from '../utils/insertUsers';
 
 const initUsers = async (): Promise<void> => {
   const { email, password, firstName, lastName, bio } = Config.seedUser;
-  if (email == null || password == null || firstName == null || lastName == null) {
-    throw new Error('Missing seed user.');
-  }
-
   const user = await findUserByEmail(email);
   if (user == null) {
     let users = [{ email, password, firstName, lastName, bio }];

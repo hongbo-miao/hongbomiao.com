@@ -4,9 +4,6 @@ import GraphQLMe from '../types/GraphQLMe.type';
 
 const getMe = async (): Promise<GraphQLMe | null> => {
   const { email } = Config.seedUser;
-  if (email == null) {
-    throw new Error('Missing seed user.');
-  }
   return findUserByEmail(email);
 };
 
