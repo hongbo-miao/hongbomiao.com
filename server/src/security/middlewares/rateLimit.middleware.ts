@@ -1,7 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import Redis from 'ioredis';
 import { BurstyRateLimiter, RateLimiterMemory, RateLimiterRedis } from 'rate-limiter-flexible';
-import Config from '../../Config';
 
 const BURST_POINTS_RATE = 2.5;
 const BURST_DURATION_RATE = 10;
@@ -11,10 +10,8 @@ const DURATION = 60; // Per 60 seconds
 const INMEMORY_BLOCK_DURATION = 60; // If IP consume >= inmemoryBlockOnConsumed points, block it for 60 seconds in memory, so no requests go to Redis
 const PROCESS_NUM = 1;
 
-const REDIS = new Redis(Config.redisOptions);
-
 const rateLimitMiddleware = (
-  redis: Redis.Redis = REDIS,
+  redis: Redis.Redis,
   points: number = POINTS,
   duration: number = DURATION,
   burstPointsRate: number = BURST_POINTS_RATE,
