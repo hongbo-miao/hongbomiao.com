@@ -2,6 +2,8 @@ import path from 'path';
 import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import express from 'express';
+import Redis from 'ioredis';
+import Config from './Config';
 import handleError from './error/controllers/handleError';
 import graphQLMiddleware from './graphQL/middlewares/graphQL.middleware';
 import incomingRequestCounterMiddleware from './log/middlewares/incomingRequestCounter.middleware';
@@ -12,6 +14,8 @@ import helmetMiddleware from './security/middlewares/helmet.middleware';
 import rateLimitMiddleware from './security/middlewares/rateLimit.middleware';
 import apiRouter from './shared/routers/api.router';
 
+const redis = new Redis(Config.redisOptions);
+
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
   .use(incomingRequestCounterMiddleware())
@@ -20,7 +24,7 @@ const app = express()
   .use(helmetMiddleware())
   .get('/', sendIndexPage)
   .use(express.static(path.join(__dirname, '../dist')))
-  .use(rateLimitMiddleware())
+  .use(rateLimitMiddleware(redis))
   .use(bodyParser.json())
   .use('/graphql', graphQLMiddleware)
   .use('/api', apiRouter)
