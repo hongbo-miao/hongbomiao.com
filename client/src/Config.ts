@@ -1,4 +1,4 @@
-const { REACT_APP_SERVER_DOMAIN, REACT_APP_LIGHTSTEP_TOEKN, REACT_APP_SERVER_PORT, NODE_ENV } = process.env;
+const { REACT_APP_SERVER_DOMAIN, REACT_APP_LIGHTSTEP_TOKEN, REACT_APP_SERVER_PORT, NODE_ENV } = process.env;
 
 const Config = {
   nodeEnv: NODE_ENV,
@@ -7,7 +7,7 @@ const Config = {
   graphQLURL: `https://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
 
   lightstep: {
-    token: REACT_APP_LIGHTSTEP_TOEKN,
+    token: REACT_APP_LIGHTSTEP_TOKEN,
     traceURL: 'https://ingest.lightstep.com:443/api/v2/otel/trace',
   },
 
