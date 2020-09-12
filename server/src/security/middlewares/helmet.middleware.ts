@@ -77,6 +77,9 @@ const helmetMiddleware = (
             'https://edge.fullstory.com',
             'https://fullstory.com',
 
+            // Workbox
+            'https://storage.googleapis.com',
+
             // Google Tag Manager
             'https://www.googletagmanager.com',
 
