@@ -15,6 +15,7 @@ services:
       - NODE_ENV=production
     restart: on-failure
     ports:
+      - '80:80'
       - '443:443'
     depends_on:
       - server
@@ -59,6 +60,23 @@ services:
     restart: on-failure
     ports:
       - "5432:5432"
+
+  # Fluent Bit
+  fluent-bit:
+    container_name: hm_fluent_bit
+    image: fluent/fluent-bit:1.5.6
+    volumes:
+      - ./fluent-bit/conf:/fluent-bit/etc
+    restart: on-failure
+    ports:
+      - 24224:24224
+      - 5140:5140/udp
+      - 2020:2020
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
 
   # OpenTelemetry Collector
   collector:
