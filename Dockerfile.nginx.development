@@ -1,6 +1,6 @@
 FROM nginx:1.19.2-alpine
 
-COPY ./default.conf /etc/nginx/conf.d/default.conf
+COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 COPY ./server/private/ssl/hongbomiao.crt /etc/ssl/hongbomiao.crt
 COPY ./server/private/ssl/hongbomiao.key /etc/ssl/hongbomiao.key

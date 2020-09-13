@@ -3,13 +3,14 @@
 set -e
 
 # .env
-cp -n .env.development.local.example .env.development.local || true
-
 cp -n client/.env.development.local.example client/.env.development.local || true
 cp -n client/.env.production.local.example client/.env.production.local || true
 
 cp -n server/.env.development.local.example server/.env.development.local || true
 cp -n server/.env.production.local.example server/.env.production.local || true
+
+cp -n docker/postgres/.env.development.local.example docker/postgres/.env.development.local || true
+cp -n docker/postgres/.env.production.local.example docker/postgres/.env.production.local || true
 
 # SSL
 cp -n client/private/ssl/hongbomiao.crt.example client/private/ssl/hongbomiao.crt || true
