@@ -1,5 +1,5 @@
 # https://docs.docker.com/compose/compose-file/compose-versioning
-version: '3.8'
+version: "3.8"
 
 services:
   # NGINX
@@ -9,14 +9,14 @@ services:
       context: .
       dockerfile: Dockerfile.nginx.development
     volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      - ".:/app"
+      - "/app/node_modules"
     environment:
       - NODE_ENV=development
     restart: on-failure
     ports:
-      - '80:80'
-      - '443:443'
+      - "80:80"
+      - "443:443"
     depends_on:
       - server
 
@@ -27,13 +27,13 @@ services:
       context: .
       dockerfile: Dockerfile.server.development
     volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      - ".:/app"
+      - "/app/node_modules"
     environment:
       - NODE_ENV=development
     restart: on-failure
     ports:
-      - '5000:5000'
+      - "5000:5000"
     depends_on:
       - redis
       - postgres
@@ -54,9 +54,9 @@ services:
     image: postgres:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
-      - ./.env.development.local
+      - ./docker/postgres/.env.development.local
     restart: on-failure
     ports:
       - "5432:5432"
@@ -66,12 +66,12 @@ services:
     container_name: hm_fluent_bit
     image: fluent/fluent-bit:1.5.6
     volumes:
-      - ./fluent-bit/conf:/fluent-bit/etc
+      - ./docker/fluent-bit/conf:/fluent-bit/etc
     restart: on-failure
     ports:
-      - 24224:24224
-      - 5140:5140/udp
-      - 2020:2020
+      - "24224:24224"
+      - "5140:5140/udp"
+      - "2020:2020"
     logging:
       driver: "json-file"
       options:
@@ -79,7 +79,7 @@ services:
         max-file: "5"
 
   # OpenTelemetry Collector
-  collector:
+  opentelemetry-collector:
     container_name: hm_opentelemetry_collector
     image: otel/opentelemetry-collector:latest
     command: [
@@ -87,7 +87,7 @@ services:
       "--log-level=DEBUG"
     ]
     volumes:
-      - ./otel-collector.config.yaml:/conf/otel-collector.config.yaml
+      - ./docker/opentelemetry-collector/otel-collector.config.yaml:/conf/otel-collector.config.yaml
     restart: on-failure
     ports:
       - "9464:9464"
@@ -119,7 +119,7 @@ services:
     container_name: hm_jaeger_agent
     image: jaegertracing/jaeger-opentelemetry-agent:latest
     command: [
-      "--config=/config/otel-agent.config.yml",
+      "--config=./docker/jaeger-agent/otel-agent.config.yml",
       "--reporter.grpc.host-port=jaeger-collector:14250"
     ]
     volumes:
@@ -175,7 +175,7 @@ services:
     container_name: hm_prometheus
     image: prom/prometheus:latest
     volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./docker/prometheus/prometheus.development.yaml:/etc/prometheus/prometheus.yml
     restart: on-failure
     ports:
       - "9090:9090"
@@ -189,7 +189,7 @@ services:
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel
     restart: on-failure
     ports:
-      - '3000:3000'
+      - "3000:3000"
     depends_on:
       - prometheus
 
