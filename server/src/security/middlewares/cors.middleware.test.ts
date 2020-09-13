@@ -3,7 +3,7 @@ import request from 'supertest';
 import corsMiddleware from './cors.middleware';
 
 describe('corsMiddleware', () => {
-  const allowList = ['https://hongbomiao.com'];
+  const allowList = ['https://www.hongbomiao.com'];
 
   const app = express()
     .use(corsMiddleware(allowList))
