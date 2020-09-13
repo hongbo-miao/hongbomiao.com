@@ -5,6 +5,7 @@ dotenvFlow.config();
 const {
   DOMAIN,
   FLUENT_BIT_HOST,
+  FLUENT_BIT_PORT,
   LIGHTSTEP_TOKEN,
   NODE_ENV,
   PORT,
@@ -25,9 +26,6 @@ const {
 
 if (DOMAIN == null || DOMAIN === '') {
   throw new Error('Failed to read DOMAIN.');
-}
-if (FLUENT_BIT_HOST == null || FLUENT_BIT_HOST === '') {
-  throw new Error('Failed to read FLUENT_BIT_HOST.');
 }
 if (LIGHTSTEP_TOKEN == null || LIGHTSTEP_TOKEN === '') {
   throw new Error('Failed to read LIGHTSTEP_TOKEN.');
@@ -76,6 +74,15 @@ if (SEED_USER_LAST_NAME == null || SEED_USER_LAST_NAME === '') {
 }
 if (SEED_USER_PASSWORD == null || SEED_USER_PASSWORD === '') {
   throw new Error('Failed to read SEED_USER_PASSWORD.');
+}
+
+if (NODE_ENV === 'development') {
+  if (FLUENT_BIT_HOST == null || FLUENT_BIT_HOST === '') {
+    throw new Error('Failed to read FLUENT_BIT_HOST.');
+  }
+  if (FLUENT_BIT_PORT == null || FLUENT_BIT_PORT === '') {
+    throw new Error('Failed to read FLUENT_BIT_PORT.');
+  }
 }
 
 const sharedCSPConnectSrc = [
@@ -137,8 +144,8 @@ const Config = {
   },
 
   fluentBitConfig: {
-    host: 'localhost',
-    port: 24224,
+    host: FLUENT_BIT_HOST,
+    port: Number(FLUENT_BIT_PORT),
     timeout: 3.0,
     requireAckResponse: true, // Add this option to wait response from Fluent Bit certainly
   },
