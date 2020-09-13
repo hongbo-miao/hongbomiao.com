@@ -6,7 +6,7 @@ import generateSitemap from './generateSitemap';
 
 const buildSitemap = async (): Promise<void> => {
   const options: SitemapStreamOptions = {
-    hostname: 'https://hongbomiao.com',
+    hostname: 'https://www.hongbomiao.com',
   };
   const links: SitemapItemLoose[] = [{ url: Paths.appRootPath, changefreq: EnumChangefreq.HOURLY, priority: 1 }];
   const sitemap = await generateSitemap(options, links);
