@@ -1,5 +1,5 @@
 # https://docs.docker.com/compose/compose-file/compose-versioning
-version: '3.8'
+version: "3.8"
 
 services:
   # NGINX
@@ -9,14 +9,14 @@ services:
       context: .
       dockerfile: Dockerfile.nginx.production
     volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      - ".:/app"
+      - "/app/node_modules"
     environment:
       - NODE_ENV=production
     restart: on-failure
     ports:
-      - '80:80'
-      - '443:443'
+      - "80:80"
+      - "443:443"
     depends_on:
       - server
 
@@ -27,13 +27,13 @@ services:
       context: .
       dockerfile: Dockerfile.server.production
     volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      - ".:/app"
+      - "/app/node_modules"
     environment:
       - NODE_ENV=production
     restart: on-failure
     ports:
-      - '5000:5000'
+      - "5000:5000"
     depends_on:
       - redis
       - postgres
@@ -69,9 +69,9 @@ services:
       - ./fluent-bit/conf:/fluent-bit/etc
     restart: on-failure
     ports:
-      - 24224:24224
-      - 5140:5140/udp
-      - 2020:2020
+      - "24224:24224"
+      - "5140:5140/udp"
+      - "2020:2020"
     logging:
       driver: "json-file"
       options:
@@ -189,7 +189,7 @@ services:
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel
     restart: on-failure
     ports:
-      - '3000:3000'
+      - "3000:3000"
    depends_on:
       - prometheus
 
