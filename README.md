@@ -90,7 +90,8 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **rate-limiter-flexible** - Rate limiting
 - **CORS**, **Helmet** - Security
 - **Terminus** - Health check and graceful shutdown
-- **Winston**, **Morgan** - Logging
+- **Winston** - Universal logging library with support for multiple transports
+- **Fluent Bit** - Data collector for unified logging layer
 - **SuperTest** - HTTP testing
 
 #### Site Reliability
@@ -185,13 +186,15 @@ After it processes, Elasticsearch saves the data. You can analyze them using Jae
 
 ![Jaeger screenshot](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
 
-#### Kibana
-
-![Kibana screenshot](https://user-images.githubusercontent.com/3375461/90955224-50d80c00-e4ae-11ea-9345-dfa8e97ed41a.jpg)
-
 #### Prometheus
 
 ![Prometheus screenshot](https://user-images.githubusercontent.com/3375461/90955864-d14d3b80-e4b3-11ea-926b-8012cadb4f70.jpg)
+
+### Site Reliability
+
+#### Kibana
+
+![Kibana screenshot](https://user-images.githubusercontent.com/3375461/90955224-50d80c00-e4ae-11ea-9345-dfa8e97ed41a.jpg)
 
 #### Grafana
 

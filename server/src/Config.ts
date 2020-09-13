@@ -4,6 +4,7 @@ dotenvFlow.config();
 
 const {
   DOMAIN,
+  FLUENT_BIT_HOST,
   LIGHTSTEP_TOKEN,
   NODE_ENV,
   PORT,
@@ -13,8 +14,8 @@ const {
   POSTGRES_PORT,
   POSTGRES_USER,
   REDIS_HOST,
-  REDIS_PORT,
   REDIS_PASSWORD,
+  REDIS_PORT,
   SEED_USER_BIO,
   SEED_USER_EMAIL,
   SEED_USER_FIRST_NAME,
@@ -24,6 +25,9 @@ const {
 
 if (DOMAIN == null || DOMAIN === '') {
   throw new Error('Failed to read DOMAIN.');
+}
+if (FLUENT_BIT_HOST == null || FLUENT_BIT_HOST === '') {
+  throw new Error('Failed to read FLUENT_BIT_HOST.');
 }
 if (LIGHTSTEP_TOKEN == null || LIGHTSTEP_TOKEN === '') {
   throw new Error('Failed to read LIGHTSTEP_TOKEN.');
@@ -52,11 +56,11 @@ if (POSTGRES_USER == null || POSTGRES_USER === '') {
 if (REDIS_HOST == null || REDIS_HOST === '') {
   throw new Error('Failed to read REDIS_HOST.');
 }
-if (REDIS_PORT == null || REDIS_PORT === '') {
-  throw new Error('Failed to read REDIS_PORT.');
-}
 if (REDIS_PASSWORD == null) {
   throw new Error('Failed to read REDIS_PASSWORD.');
+}
+if (REDIS_PORT == null || REDIS_PORT === '') {
+  throw new Error('Failed to read REDIS_PORT.');
 }
 if (SEED_USER_BIO == null || SEED_USER_BIO === '') {
   throw new Error('Failed to read SEED_USER_BIO.');
@@ -130,6 +134,13 @@ const Config = {
   sentryOptions: {
     dsn: 'https://2f46725646834700b4c2675abbc2da6a@o379185.ingest.sentry.io/5375232',
     environment: NODE_ENV,
+  },
+
+  fluentBitConfig: {
+    host: 'localhost',
+    port: 24224,
+    timeout: 3.0,
+    requireAckResponse: true, // Add this option to wait response from Fluent Bit certainly
   },
 };
 
