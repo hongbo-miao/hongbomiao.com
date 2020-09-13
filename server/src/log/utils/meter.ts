@@ -1,14 +1,18 @@
 import { CollectorMetricExporter } from '@opentelemetry/exporter-collector';
 import { MeterProvider } from '@opentelemetry/metrics';
-import isProduction from '../../shared/utils/isProduction';
+import isDevelopment from '../../shared/utils/isDevelopment';
 
 const metricExporter = new CollectorMetricExporter({
   serviceName: 'server-metric-service',
 });
 
-const meter = new MeterProvider({
-  exporter: metricExporter,
-  interval: isProduction() ? 60 * 1000 : 5 * 1000, // ms
-}).getMeter('server-meter');
+const metricProvider = isDevelopment()
+  ? new MeterProvider({
+      exporter: metricExporter,
+      interval: 5 * 1000, // ms
+    })
+  : new MeterProvider();
+
+const meter = metricProvider.getMeter('server-meter');
 
 export default meter;
