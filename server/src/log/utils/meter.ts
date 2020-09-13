@@ -3,7 +3,7 @@ import { MeterProvider } from '@opentelemetry/metrics';
 import isDevelopment from '../../shared/utils/isDevelopment';
 
 const metricExporter = new CollectorMetricExporter({
-  serviceName: 'server-metric-service',
+  serviceName: 'hm-server-metric-service',
 });
 
 const metricProvider = isDevelopment()
@@ -13,6 +13,6 @@ const metricProvider = isDevelopment()
     })
   : new MeterProvider();
 
-const meter = metricProvider.getMeter('server-meter');
+const meter = metricProvider.getMeter('hm-server-meter');
 
 export default meter;

@@ -13,7 +13,7 @@ const logger = createLogger({
     // @ts-ignore
     new SentryTransport(Config.sentryOptions),
 
-    ...(isDevelopment() ? [new FluentTransport('server-tag', Config.fluentBitConfig)] : []),
+    ...(isDevelopment() ? [new FluentTransport('hm-server-tag', Config.fluentBitConfig)] : []),
   ],
 });
 
