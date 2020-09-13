@@ -54,9 +54,9 @@ services:
     image: postgres:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
-      - ./.env.development.local
+      - ./docker/postgres/.env.development.local
     restart: on-failure
     ports:
       - "5432:5432"
@@ -66,7 +66,7 @@ services:
     container_name: hm_fluent_bit
     image: fluent/fluent-bit:1.5.6
     volumes:
-      - ./fluent-bit/conf:/fluent-bit/etc
+      - ./docker/fluent-bit/conf:/fluent-bit/etc
     restart: on-failure
     ports:
       - "24224:24224"
@@ -79,7 +79,7 @@ services:
         max-file: "5"
 
   # OpenTelemetry Collector
-  collector:
+  opentelemetry-collector:
     container_name: hm_opentelemetry_collector
     image: otel/opentelemetry-collector:latest
     command: [
@@ -87,7 +87,7 @@ services:
       "--log-level=DEBUG"
     ]
     volumes:
-      - ./otel-collector.config.yaml:/conf/otel-collector.config.yaml
+      - ./docker/opentelemetry-collector/otel-collector.config.yaml:/conf/otel-collector.config.yaml
     restart: on-failure
     ports:
       - "9464:9464"
@@ -119,7 +119,7 @@ services:
     container_name: hm_jaeger_agent
     image: jaegertracing/jaeger-opentelemetry-agent:latest
     command: [
-      "--config=/config/otel-agent.config.yml",
+      "--config=./docker/jaeger-agent/otel-agent.config.yml",
       "--reporter.grpc.host-port=jaeger-collector:14250"
     ]
     volumes:
@@ -175,7 +175,7 @@ services:
     container_name: hm_prometheus
     image: prom/prometheus:latest
     volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./docker/prometheus/prometheus.development.yaml:/etc/prometheus/prometheus.yml
     restart: on-failure
     ports:
       - "9090:9090"
