@@ -108,7 +108,7 @@ const Config = {
     'https://localhost:5000',
     'https://localhost:8080',
   ],
-  prodCORSAllowList: [...sharedCORSAllowList, 'https://hongbomiao.com', 'https://www.hongbomiao.com'],
+  prodCORSAllowList: [...sharedCORSAllowList, 'https://www.hongbomiao.com'],
 
   redisOptions: {
     host: REDIS_HOST,
