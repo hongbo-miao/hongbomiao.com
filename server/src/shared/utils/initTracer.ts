@@ -6,7 +6,7 @@ import isDevelopment from './isDevelopment';
 import isProduction from './isProduction';
 
 const initTracer = (): void => {
-  const serviceName = 'server-trace-service';
+  const serviceName = 'hm-server-trace-service';
   const tracerProvider = new NodeTracerProvider({
     plugins: {
       express: {
