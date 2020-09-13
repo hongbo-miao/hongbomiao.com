@@ -1,4 +1,5 @@
 import dotenvFlow from 'dotenv-flow';
+import NodeEnv from './shared/utils/NodeEnv';
 
 dotenvFlow.config();
 
@@ -76,7 +77,7 @@ if (SEED_USER_PASSWORD == null || SEED_USER_PASSWORD === '') {
   throw new Error('Failed to read SEED_USER_PASSWORD.');
 }
 
-if (NODE_ENV === 'development') {
+if (NODE_ENV === NodeEnv.development) {
   if (FLUENT_BIT_HOST == null || FLUENT_BIT_HOST === '') {
     throw new Error('Failed to read FLUENT_BIT_HOST.');
   }
