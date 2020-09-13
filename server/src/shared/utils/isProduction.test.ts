@@ -1,15 +1,16 @@
+import NodeEnv from './NodeEnv';
 import isProduction from './isProduction';
 
 describe('isProduction', () => {
   test('return true for production', () => {
-    expect(isProduction('production')).toEqual(true);
+    expect(isProduction(NodeEnv.production)).toEqual(true);
   });
 
   test('return false for development', () => {
-    expect(isProduction('development')).toEqual(false);
+    expect(isProduction(NodeEnv.development)).toEqual(false);
   });
 
   test('return false for test', () => {
-    expect(isProduction('test')).toEqual(false);
+    expect(isProduction(NodeEnv.test)).toEqual(false);
   });
 });
