@@ -26,6 +26,9 @@ const helmetMiddleware = (
             // FullStory
             'https://rs.fullstory.com',
 
+            // LogRocket
+            'https://r.lr-ingest.io',
+
             // Universal Analytics (Google Analytics)
             'https://www.google-analytics.com',
             'https://stats.g.doubleclick.net',
