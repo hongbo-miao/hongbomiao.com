@@ -6,10 +6,12 @@ import { Provider } from 'react-redux';
 import HmApp from './App/components/App';
 import reportWebVitals from './shared/libs/reportWebVitals';
 import * as serviceWorkerRegistration from './shared/libs/serviceWorkerRegistration';
+import initLogRocket from './shared/utils/initLogRocket';
 import initSentry from './shared/utils/initSentry';
 import store from './shared/utils/store';
 
 initSentry();
+initLogRocket();
 
 ReactDOM.render(
   <StrictMode>
