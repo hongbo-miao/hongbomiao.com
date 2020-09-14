@@ -10,7 +10,7 @@ const reportCSPViolation = (req: Request, res: Response): void => {
   logger.warn('reportCSPViolation', req.body);
   const labels = req.body['csp-report'];
   cspViolationCounter.bind(labels).add(1);
-  res.status(200);
+  res.sendStatus(200);
 };
 
 export default reportCSPViolation;
