@@ -14,8 +14,10 @@ initPostgres();
 
 const server = isProduction() ? http.createServer(app) : createHTTP2Server(app);
 server.listen(Config.port, () => {
-  logger.info(`NODE_ENV: ${Config.nodeEnv}`);
-  logger.info(`PORT: ${Config.port}`);
+  logger.info({
+    nodeEnv: Config.nodeEnv,
+    port: Config.port,
+  });
 });
 
 createTerminus(server);
