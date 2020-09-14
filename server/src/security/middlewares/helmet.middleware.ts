@@ -28,6 +28,7 @@ const helmetMiddleware = (
 
             // Universal Analytics (Google Analytics)
             'https://www.google-analytics.com',
+            'https://stats.g.doubleclick.net',
 
             ...cspConnectSrc,
           ],
