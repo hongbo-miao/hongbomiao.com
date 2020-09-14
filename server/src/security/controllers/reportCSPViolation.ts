@@ -7,7 +7,7 @@ const cspViolationCounter = meter.createCounter('cspViolationCounter', {
 });
 
 const reportCSPViolation = (req: Request, res: Response): void => {
-  logger.error('reportCSPViolation', req.body);
+  logger.warn('reportCSPViolation', req.body);
   const labels = req.body['csp-report'];
   cspViolationCounter.bind(labels).add(1);
   res.status(200);
