@@ -11,4 +11,5 @@ module.exports = {
     '@babel/preset-typescript',
     '@babel/react',
   ],
+  plugins: ['add-react-displayname'],
 };
