@@ -28,6 +28,7 @@ const helmetMiddleware = (
 
             // Universal Analytics (Google Analytics)
             'https://www.google-analytics.com',
+            'https://stats.g.doubleclick.net',
 
             ...cspConnectSrc,
           ],
@@ -39,10 +40,7 @@ const helmetMiddleware = (
             // Google Tag Manager's Preview Mode
             'https://fonts.gstatic.com',
           ],
-          frameSrc: [
-            // Google Ads remarketing
-            'https://bid.g.doubleclick.net',
-          ],
+          frameSrc: ["'none'"],
           imgSrc: [
             "'self'",
             'data:',
@@ -54,10 +52,6 @@ const helmetMiddleware = (
             // Universal Analytics (Google Analytics)
             'https://www.google-analytics.com',
             'https://stats.g.doubleclick.net',
-
-            // Google Ads
-            'https://googleads.g.doubleclick.net',
-            'https://www.google.com',
           ],
           manifestSrc: ["'self'"],
           mediaSrc: ["'none'"],
@@ -89,11 +83,6 @@ const helmetMiddleware = (
             // Universal Analytics (Google Analytics)
             'https://www.google-analytics.com',
             'https://ssl.google-analytics.com',
-
-            // Google Ads
-            'https://www.googleadservices.com',
-            'https://googleads.g.doubleclick.net',
-            'https://www.google.com',
           ],
           styleSrc: [
             "'self'",
