@@ -8,7 +8,9 @@ const FluentTransport = fluentLogger.support.winstonTransport();
 
 const logger = createLogger({
   transports: [
-    new winston.transports.Console({ level: 'info' }),
+    new winston.transports.Console({
+      format: winston.format.combine(winston.format.colorize({ all: true })),
+    }),
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     new SentryTransport(Config.sentryOptions),
