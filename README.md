@@ -121,6 +121,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Google Tag Manager** - Tag management
 - **Google Analytics** - Web analytics
 - **FullStory** - Experience analytics, session replay, heatmaps
+- **LogRocket** - Logging and session replay for JavaScript apps
 - **Heroku** - Hosting
 - **Redis Enterprise Cloud** - Redis hosting
 - **Namecheap** - Domain
