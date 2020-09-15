@@ -77,6 +77,9 @@ const helmetMiddleware = (
             'https://edge.fullstory.com',
             'https://fullstory.com',
 
+            // LogRocket
+            'https://cdn.lr-ingest.io',
+
             // Workbox
             'https://storage.googleapis.com',
 
