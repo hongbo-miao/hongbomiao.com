@@ -1,4 +1,4 @@
-import * as LogRocket from 'logrocket';
+import LogRocket from 'logrocket';
 import setupLogRocketReact from 'logrocket-react';
 import Config from '../../Config';
 
