@@ -91,13 +91,13 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **CORS**, **Helmet** - Security
 - **Terminus** - Health check and graceful shutdown
 - **Winston** - Universal logging library with support for multiple transports
-- **Fluent Bit** - Data collector for unified logging layer
 - **SuperTest** - HTTP testing
 
 #### Site Reliability
 
 - **PM2** - Node.js application production process manager
 - **NGINX** - Reverse proxy, load balancer
+- **Fluent Bit** - Data collector for unified logging layer
 - **OpenTelemetry** - Observability framework
 - **Jaeger** - Distributed tracing system
 - **Elasticsearch** - Distributed search and analytics engine
