@@ -29,6 +29,9 @@ const helmetMiddleware = (
             // LogRocket
             'https://r.lr-ingest.io',
 
+            // Sentry
+            'https://o379185.ingest.sentry.io',
+
             // Universal Analytics (Google Analytics)
             'https://www.google-analytics.com',
             'https://stats.g.doubleclick.net',
