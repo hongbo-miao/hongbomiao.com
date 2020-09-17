@@ -5,23 +5,18 @@ import Config from '../../Config';
 import isDevelopment from '../../shared/utils/isDevelopment';
 import isProduction from '../../shared/utils/isProduction';
 
-const logger = createLogger();
+const logger = createLogger({
+  transports: [
+    new winston.transports.Console({
+      format: winston.format.combine(winston.format.colorize({ all: true })),
+    }),
 
-logger.add(
-  new winston.transports.Console({
-    format: winston.format.combine(winston.format.colorize({ all: true })),
-  })
-);
+    ...(isDevelopment() ? [new (fluentLogger.support.winstonTransport())('hm-server', Config.fluentBitConfig)] : []),
 
-if (isDevelopment()) {
-  const FluentTransport = fluentLogger.support.winstonTransport();
-  logger.add(new FluentTransport('hm-server', Config.fluentBitConfig));
-}
-
-if (isDevelopment() || isProduction()) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  logger.add(new SentryTransport(Config.sentryOptions));
-}
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    ...(isDevelopment() || isProduction() ? [new SentryTransport(Config.sentryOptions)] : []),
+  ],
+});
 
 export default logger;
