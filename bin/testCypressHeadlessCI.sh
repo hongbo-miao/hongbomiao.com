@@ -4,9 +4,9 @@ set -e
 
 # https://create-react-app.dev/docs/adding-custom-environment-variables/
 # In create-react-app, when you run 'yarn build' to make a production bundle, it is always equal to 'production'.
-# You cannot override NODE_ENV manually.
-# So use development version .env as production version
-cp -n client/.env.development.local.example client/.env.production.local || true
+# So using REACT_APP_SERVER_DOMAIN=localhost and REACT_APP_SERVER_PORT=5000 in .env.production.local.example
+# to avoid sending data to production server
+cp -n client/.env.production.local.example client/.env.production.local || true
 
 cp -n server/private/ssl/hongbomiao.crt.example server/private/ssl/hongbomiao.crt || true
 cp -n server/private/ssl/hongbomiao.key.example server/private/ssl/hongbomiao.key || true
