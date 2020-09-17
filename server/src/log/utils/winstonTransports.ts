@@ -7,7 +7,14 @@ import isProduction from '../../shared/utils/isProduction';
 
 const winstonTransports = [
   new winston.transports.Console({
-    format: winston.format.combine(winston.format.colorize({ all: true })),
+    format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.colorize({ all: true }),
+      winston.format.printf((info) => {
+        const { timestamp, level, message, ...args } = info;
+        return `${timestamp} ${level}: ${message} ${Object.keys(args).length ? JSON.stringify(args, null, 2) : ''}`;
+      })
+    ),
   }),
 
   ...(isDevelopment() ? [new (fluentLogger.support.winstonTransport())('hm-server', Config.fluentBitConfig)] : []),
