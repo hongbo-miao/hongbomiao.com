@@ -5,16 +5,13 @@ import Config from '../../Config';
 import isDevelopment from '../../shared/utils/isDevelopment';
 import isProduction from '../../shared/utils/isProduction';
 
+const formats = isProduction()
+  ? [winston.format.timestamp(), winston.format.json()]
+  : [winston.format.timestamp(), winston.format.prettyPrint(), winston.format.colorize({ all: true })];
+
 const winstonTransports = [
   new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.timestamp(),
-      winston.format.colorize({ all: true }),
-      winston.format.printf((info) => {
-        const { timestamp, level, message, ...args } = info;
-        return `${timestamp} ${level}: ${message} ${Object.keys(args).length ? JSON.stringify(args, null, 2) : ''}`;
-      })
-    ),
+    format: winston.format.combine(...formats),
   }),
 
   ...(isDevelopment() ? [new (fluentLogger.support.winstonTransport())('hm-server', Config.fluentBitConfig)] : []),
