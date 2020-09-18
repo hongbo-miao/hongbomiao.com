@@ -57,8 +57,7 @@ jobs:
       script:
         - yarn test:coverage
       after_script:
-        # Upload coverage reports to Codecov
-        - yarn test:coverage:report
+        - yarn test:coverage:publish
 
     - stage: Test
       name: "Lighthouse - Client"
