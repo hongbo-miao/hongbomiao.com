@@ -13,9 +13,13 @@ initSentry();
 initPostgres();
 
 const server = isProduction() ? http.createServer(app) : createHTTP2Server(app);
-server.listen(Config.port, () => {
-  logger.info('nodeEnv', { data: Config.nodeEnv });
-  logger.info('port', { data: Config.port });
+const { nodeEnv, port } = Config;
+
+server.listen(port, () => {
+  logger.info('env', {
+    nodeEnv,
+    port,
+  });
 });
 
 createTerminus(server);
