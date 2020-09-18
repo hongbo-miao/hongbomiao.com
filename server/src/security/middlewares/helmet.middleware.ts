@@ -1,5 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import helmet from 'helmet';
+import lodashUniq from 'lodash.uniq';
 import Config from '../../Config';
 import isProduction from '../../shared/utils/isProduction';
 import createCSPNonce from '../utils/createCSPNonce';
@@ -20,7 +21,7 @@ const helmetMiddleware = (
       contentSecurityPolicy: {
         directives: {
           /* Fetch directives */
-          connectSrc: [
+          connectSrc: lodashUniq([
             "'self'",
 
             // FullStory
@@ -33,36 +34,49 @@ const helmetMiddleware = (
             'https://o379185.ingest.sentry.io',
 
             // Universal Analytics (Google Analytics)
-            'https://www.google-analytics.com',
             'https://stats.g.doubleclick.net',
+            'https://www.google-analytics.com',
 
             ...cspConnectSrc,
-          ],
+          ]),
           defaultSrc: ["'none'"],
-          fontSrc: [
+          fontSrc: lodashUniq([
             "'self'",
             'data:',
 
             // Google Tag Manager's Preview Mode
             'https://fonts.gstatic.com',
-          ],
-          frameSrc: ["'none'"],
-          imgSrc: [
+          ]),
+          frameSrc: lodashUniq([
+            // Google Ads remarketing
+            'https://bid.g.doubleclick.net',
+          ]),
+          imgSrc: lodashUniq([
             "'self'",
             'data:',
 
+            // Favicon on bare domain
+            'https://hongbomiao.com',
+
+            // Google Ads conversions
+            'https://googleads.g.doubleclick.net',
+            'https://www.google.com',
+
+            // Google Ads remarketing
+            'https://www.google.com',
+
             // Google Tag Manager's Preview Mode
-            'https://www.googletagmanager.com',
             'https://ssl.gstatic.com',
+            'https://www.googletagmanager.com',
 
             // Universal Analytics (Google Analytics)
-            'https://www.google-analytics.com',
             'https://stats.g.doubleclick.net',
-          ],
+            'https://www.google-analytics.com',
+          ]),
           manifestSrc: ["'self'"],
           mediaSrc: ["'none'"],
           objectSrc: ["'none'"],
-          scriptSrc: [
+          scriptSrc: lodashUniq([
             /* Content Security Policy Level 3 */
             "'strict-dynamic'",
             `'nonce-${cspNonce}'`,
@@ -83,6 +97,15 @@ const helmetMiddleware = (
             // Workbox
             'https://storage.googleapis.com',
 
+            // Google Ads conversions
+            'https://www.google.com',
+            'https://www.googleadservices.com',
+
+            // Google Ads remarketing
+            'https://googleads.g.doubleclick.net',
+            'https://www.google.com',
+            'https://www.googleadservices.com',
+
             // Google Tag Manager
             'https://www.googletagmanager.com',
 
@@ -90,17 +113,17 @@ const helmetMiddleware = (
             'https://tagmanager.google.com',
 
             // Universal Analytics (Google Analytics)
-            'https://www.google-analytics.com',
             'https://ssl.google-analytics.com',
-          ],
-          styleSrc: [
+            'https://www.google-analytics.com',
+          ]),
+          styleSrc: lodashUniq([
             "'self'",
 
             // Google Tag Manager's Preview Mode
-            'https://tagmanager.google.com',
             'https://fonts.googleapis.com',
-          ],
-          workerSrc: ["'self'"],
+            'https://tagmanager.google.com',
+          ]),
+          workerSrc: ["'self'", 'blob:'],
 
           /* Document directives */
           baseUri: ["'none'"],
