@@ -65,10 +65,10 @@ jobs:
       before_script:
         - cd $TRAVIS_BUILD_DIR/client
       script:
-        # Run chromatic only when a build does not originate from a pull request (push build), or when it is a pull request build originating from a fork
+        # Run only when a build does not originate from a pull request (push build), or when it is a pull request build originating from a fork
         - |
           if [[ $TRAVIS_PULL_REQUEST_SLUG != $TRAVIS_REPO_SLUG ]]; then
-            yarn run chromatic --exit-zero-on-changes
+            yarn run storybook:publish --exit-zero-on-changes
           fi
 
     - stage: Test
