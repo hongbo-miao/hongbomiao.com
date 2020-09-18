@@ -125,7 +125,10 @@ const helmetMiddleware = (
             'https://fonts.googleapis.com',
             'https://tagmanager.google.com',
           ]),
-          workerSrc: ["'self'", 'blob:'],
+          workerSrc: ['blob:'],
+
+          // Safari does not support worker-src. Backward compatible.
+          childSrc: ['blob:'],
 
           /* Document directives */
           baseUri: ["'none'"],
