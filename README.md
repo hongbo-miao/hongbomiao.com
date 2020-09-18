@@ -118,6 +118,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 - **Lightstep** - Distributed tracing
 - **Sentry** - Error tracking
+- **Report URI** - Security reporting
 - **Google Tag Manager** - Tag management
 - **Google Analytics** - Web analytics
 - **FullStory** - Experience analytics, session replay, heatmaps

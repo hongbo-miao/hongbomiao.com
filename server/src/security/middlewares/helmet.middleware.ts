@@ -6,11 +6,13 @@ import isProduction from '../../shared/utils/isProduction';
 import createCSPNonce from '../utils/createCSPNonce';
 
 const CSP_CONNECT_SRC = isProduction() ? Config.prodCSPConnectSrc : Config.devCSPConnectSrc;
-const EXTERNAL_PORT = isProduction() ? Config.externalPort : Config.port;
+const CSP_REPORT_URI = isProduction()
+  ? 'https://hongbomiao.report-uri.com/r/d/csp/enforce'
+  : `https://${Config.domain}:${Config.port}/api/violation/report-csp-violation`;
 
 const helmetMiddleware = (
   cspConnectSrc: string[] = CSP_CONNECT_SRC,
-  externalPort: number = EXTERNAL_PORT
+  cspReportUri: string = CSP_REPORT_URI
 ): RequestHandler => {
   return (req: Request, res: Response, next: NextFunction) => {
     const cspNonce = createCSPNonce();
@@ -139,7 +141,7 @@ const helmetMiddleware = (
           frameAncestors: ["'none'"],
 
           /* Reporting directives */
-          reportUri: `https://${Config.domain}:${externalPort}/api/violation/report-csp-violation`,
+          reportUri: cspReportUri,
 
           /* Other directives */
           /*
