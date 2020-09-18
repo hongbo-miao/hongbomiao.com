@@ -100,7 +100,7 @@ const helmetMiddleware = (
             'https://tagmanager.google.com',
             'https://fonts.googleapis.com',
           ],
-          workerSrc: ["'self'"],
+          workerSrc: ["'self'", 'blob:'],
 
           /* Document directives */
           baseUri: ["'none'"],
