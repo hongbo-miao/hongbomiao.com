@@ -11,4 +11,4 @@ cp -n client/.env.production.local.example client/.env.production.local || true
 cp -n server/private/ssl/hongbomiao.crt.example server/private/ssl/hongbomiao.crt || true
 cp -n server/private/ssl/hongbomiao.key.example server/private/ssl/hongbomiao.key || true
 
-START_SERVER_AND_TEST_INSECURE=1 start-server-and-test 'cd server && yarn dev:cypress' https://localhost:5000 './node_modules/.bin/cypress run --config-file ./cypress/cypress.ci.json'
+START_SERVER_AND_TEST_INSECURE=1 start-server-and-test 'cd server && yarn dev:cypress' https://localhost:5000 'cypress run --config-file ./cypress/cypress.ci.json'
