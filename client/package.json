@@ -15,8 +15,8 @@
     "test": "react-scripts test --watchAll=false",
     "test:watch": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public",
+    "storybook": "start-storybook --static-dir public --port 9009 --https --ssl-cert ./private/ssl/hongbomiao.crt --ssl-key ./private/ssl/hongbomiao.key",
+    "storybook:build": "build-storybook -s public",
     "chromatic": "chromatic test",
     "lighthouse": "sh ./bin/lighthouse.sh"
   },
