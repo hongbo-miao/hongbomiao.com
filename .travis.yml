@@ -61,17 +61,6 @@ jobs:
         - yarn test:coverage:report
 
     - stage: Test
-      name: "Storybook - Client"
-      before_script:
-        - cd $TRAVIS_BUILD_DIR/client
-      script:
-        # Run only when a build does not originate from a pull request (push build), or when it is a pull request build originating from a fork
-        - |
-          if [[ $TRAVIS_PULL_REQUEST_SLUG != $TRAVIS_REPO_SLUG ]]; then
-            yarn run storybook:publish --exit-zero-on-changes
-          fi
-
-    - stage: Test
       name: "Lighthouse - Client"
       before_script:
         - cd $TRAVIS_BUILD_DIR/client
@@ -80,6 +69,14 @@ jobs:
         - yarn run lighthouse
       addons:
         chrome: stable
+
+    - stage: Test
+      if: branch = master && type = push && fork = false
+      name: "Storybook - Client"
+      before_script:
+        - cd $TRAVIS_BUILD_DIR/client
+      script:
+        - yarn run storybook:publish --exit-zero-on-changes
 
     - stage: Test
       # https://docs.cypress.io/guides/guides/continuous-integration.html#Travis
