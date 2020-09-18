@@ -98,7 +98,6 @@ const Config = {
   nodeEnv: NODE_ENV,
   domain: DOMAIN,
   port: Number(PORT),
-  externalPort: 443,
 
   devCSPConnectSrc: [...sharedCSPConnectSrc, 'https://localhost:443'],
   prodCSPConnectSrc: [...sharedCSPConnectSrc],
