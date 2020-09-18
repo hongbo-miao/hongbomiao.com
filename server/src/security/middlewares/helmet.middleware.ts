@@ -51,6 +51,9 @@ const helmetMiddleware = (
             "'self'",
             'data:',
 
+            // Favicon on bare domain
+            'https://hongbomiao.com',
+
             // Google Tag Manager's Preview Mode
             'https://www.googletagmanager.com',
             'https://ssl.gstatic.com',
