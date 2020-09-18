@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import express from 'express';
 import Redis from 'ioredis';
+import favicon from 'serve-favicon';
 import Config from './Config';
 import handleError from './error/controllers/handleError';
 import graphQLMiddleware from './graphQL/middlewares/graphQL.middleware';
@@ -23,6 +24,7 @@ const app = express()
   .use(corsMiddleware())
   .use(helmetMiddleware())
   .get('/', sendIndexPage)
+  .use(favicon(path.join(__dirname, '../dist/favicon.ico')))
   .use(express.static(path.join(__dirname, '../dist')))
   .use(rateLimitMiddleware(redis))
   .use(bodyParser.json())
