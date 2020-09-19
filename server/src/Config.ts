@@ -99,9 +99,6 @@ const Config = {
   domain: DOMAIN,
   port: Number(PORT),
 
-  devCSPConnectSrc: [...sharedCSPConnectSrc, 'https://localhost:443'],
-  prodCSPConnectSrc: [...sharedCSPConnectSrc],
-
   devCORSAllowList: [
     ...sharedCORSAllowList,
     'https://localhost:443',
@@ -109,6 +106,14 @@ const Config = {
     'https://localhost:8080',
   ],
   prodCORSAllowList: [...sharedCORSAllowList, 'https://www.hongbomiao.com'],
+
+  devCSPConnectSrc: [...sharedCSPConnectSrc, 'https://localhost:443'],
+  prodCSPConnectSrc: [...sharedCSPConnectSrc],
+
+  reportURI: {
+    cspReportUri: 'https://hongbomiao.report-uri.com/r/d/csp/enforce',
+    exceptCtReportUri: 'https://hongbomiao.report-uri.com/r/d/ct/enforce',
+  },
 
   redisOptions: {
     host: REDIS_HOST,

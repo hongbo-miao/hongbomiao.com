@@ -7,12 +7,14 @@ import createCSPNonce from '../utils/createCSPNonce';
 
 const CSP_CONNECT_SRC = isProduction() ? Config.prodCSPConnectSrc : Config.devCSPConnectSrc;
 const CSP_REPORT_URI = isProduction()
-  ? 'https://hongbomiao.report-uri.com/r/d/csp/enforce'
+  ? Config.reportURI.cspReportUri
   : `https://${Config.domain}:${Config.port}/api/violation/report-csp-violation`;
+const EXCEPT_CT_REPORT_URI = Config.reportURI.exceptCtReportUri;
 
 const helmetMiddleware = (
   cspConnectSrc: string[] = CSP_CONNECT_SRC,
-  cspReportUri: string = CSP_REPORT_URI
+  cspReportUri: string = CSP_REPORT_URI,
+  exceptCtReportUri: string = EXCEPT_CT_REPORT_URI
 ): RequestHandler => {
   return (req: Request, res: Response, next: NextFunction) => {
     const cspNonce = createCSPNonce();
@@ -156,10 +158,11 @@ const helmetMiddleware = (
         allow: false,
       },
 
-      // Set 'Expect-CT: enforce, max-age=86400'
+      // Set 'Expect-CT: enforce, max-age=86400', report-uri="https://example.com/api"
       expectCt: {
         maxAge: 86400,
         enforce: true,
+        reportUri: exceptCtReportUri,
       },
 
       // Set 'X-Frame-Options: DENY'
