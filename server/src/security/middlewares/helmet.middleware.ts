@@ -158,7 +158,7 @@ const helmetMiddleware = (
         allow: false,
       },
 
-      // Set 'Expect-CT: enforce, max-age=86400', report-uri="https://example.com/api"
+      // Set 'Expect-CT: enforce, max-age=86400, report-uri="https://example.com/api"'
       expectCt: {
         maxAge: 86400,
         enforce: true,
