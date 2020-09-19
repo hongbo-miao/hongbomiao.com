@@ -57,6 +57,9 @@ const helmetMiddleware = (
             // Favicon on bare domain
             'https://hongbomiao.com',
 
+            // FullStory
+            'https://rs.fullstory.com',
+
             // Google Ads conversions
             'https://googleads.g.doubleclick.net',
             'https://www.google.com',
@@ -88,6 +91,7 @@ const helmetMiddleware = (
 
             // FullStory
             'https://edge.fullstory.com',
+            'https://www.fullstory.com',
             'https://fullstory.com',
 
             // Workbox
