@@ -29,9 +29,6 @@ const helmetMiddleware = (
             // FullStory
             'https://rs.fullstory.com',
 
-            // LogRocket
-            'https://r.lr-ingest.io',
-
             // Sentry
             'https://o379185.ingest.sentry.io',
 
@@ -93,9 +90,6 @@ const helmetMiddleware = (
             'https://edge.fullstory.com',
             'https://fullstory.com',
 
-            // LogRocket
-            'https://cdn.lr-ingest.io',
-
             // Workbox
             'https://storage.googleapis.com',
 
@@ -125,10 +119,6 @@ const helmetMiddleware = (
             'https://fonts.googleapis.com',
             'https://tagmanager.google.com',
           ]),
-          workerSrc: ['blob:'],
-
-          // Safari does not support worker-src. Backward compatible.
-          childSrc: ['blob:'],
 
           /* Document directives */
           baseUri: ["'none'"],
