@@ -1,4 +1,3 @@
-import LogRocket from 'logrocket';
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { createEpicMiddleware } from 'redux-observable';
@@ -10,7 +9,7 @@ const epicMiddleware = createEpicMiddleware({
   dependencies: { fetchData: graphQLFetch },
 });
 
-const middlewares = [epicMiddleware, LogRocket.reduxMiddleware()];
+const middlewares = [epicMiddleware];
 const enhancer = applyMiddleware(...middlewares);
 const store = createStore(rootReducer, composeWithDevTools(enhancer));
 
