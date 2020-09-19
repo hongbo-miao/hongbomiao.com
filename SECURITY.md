@@ -2,4 +2,4 @@
 
 ## Reporting a Vulnerability
 
-Please report the vulnerability by [creating an issue](https://github.com/hongbo-miao/hongbomiao.com/issues/new).
+Please report the vulnerability by [creating an issue](https://github.com/Hongbo-Miao/hongbomiao.com/issues/new).
