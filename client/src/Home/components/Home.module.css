@@ -18,18 +18,27 @@
 
 .hmContent {
   display: flex;
-  font-size: 20px;
-  white-space: nowrap;
   align-items: center;
   margin: 10px 0 0 0;
+  font-size: 20px;
+  white-space: nowrap;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .hmText {
+    margin: 0 10px;
+    color: var(--black);
+    transition: none;
+  }
 }
 
 .hmText {
   margin: 0 10px;
   color: var(--black);
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
-.hmText:hover {
+.hmText:hover,
+.hmText:focus {
   opacity: 0.7;
 }
