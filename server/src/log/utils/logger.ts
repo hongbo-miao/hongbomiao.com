@@ -8,10 +8,7 @@ import winstonTransports from './winstonTransports';
 const logger = winston.createLogger({
   transports: [
     ...winstonTransports,
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    ...(isDevelopment() || isProduction() ? [new SentryTransport(Config.sentryOptions)] : []),
+    ...(isDevelopment() || isProduction() ? [new SentryTransport({ sentry: Config.sentryOptions })] : []),
   ],
 });
 
