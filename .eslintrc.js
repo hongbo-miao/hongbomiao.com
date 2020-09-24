@@ -11,7 +11,6 @@ module.exports = {
     },
   },
   plugins: [
-    '@babel', // @babel/eslint-plugin
     '@typescript-eslint', // @typescript-eslint/eslint-plugin
     'prettier', // eslint-plugin-prettier
     'security', // eslint-plugin-security

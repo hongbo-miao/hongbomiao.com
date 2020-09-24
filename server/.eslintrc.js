@@ -13,7 +13,6 @@ module.exports = {
     },
   },
   plugins: [
-    '@babel', // @babel/eslint-plugin
     '@typescript-eslint', // @typescript-eslint/eslint-plugin
     'import', // eslint-plugin-import
     'jest', // eslint-plugin-jest
