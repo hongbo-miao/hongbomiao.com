@@ -16,7 +16,6 @@ module.exports = {
     'cypress', // eslint-plugin-cypress
     'import', // eslint-plugin-import
     'prettier', // eslint-plugin-prettier
-    'testing-library', // eslint-plugin-testing-library
   ],
   extends: [
     'eslint:recommended', // eslint
