@@ -16,13 +16,11 @@ module.exports = {
     'cypress', // eslint-plugin-cypress
     'import', // eslint-plugin-import
     'prettier', // eslint-plugin-prettier
-    'testing-library', // eslint-plugin-testing-library
   ],
   extends: [
     'eslint:recommended', // eslint
     'airbnb-base', // eslint-config-airbnb-base
-    'plugin:import/errors', // eslint-plugin-import
-    'plugin:import/warnings', // eslint-plugin-import
+    'plugin:import/recommended', // eslint-plugin-import
     'plugin:import/typescript', // eslint-plugin-import
     'plugin:@typescript-eslint/eslint-recommended', // @typescript-eslint/eslint-plugin. Not all eslint core rules are compatible with TypeScript, so you need to add both eslint:recommended and plugin:@typescript-eslint/eslint-recommended
     'plugin:@typescript-eslint/recommended', // @typescript-eslint/eslint-plugin
