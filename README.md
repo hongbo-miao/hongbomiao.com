@@ -177,6 +177,12 @@ Below is the website [security report](https://observatory.mozilla.org/analyze/w
 
 [![Mozilla Observatory screenshot](https://user-images.githubusercontent.com/3375461/91974826-fb72e900-ed50-11ea-9a1b-19359ea09860.jpg)](https://observatory.mozilla.org/analyze/www.hongbomiao.com)
 
+### Profiling
+
+Profiling result by Clinic.js and autocannon.
+
+![Profiling screenshot](https://user-images.githubusercontent.com/3375461/94321506-4b487700-ffc2-11ea-983b-670dc54515be.jpg)
+
 ### Distributed Tracing
 
 #### OpenTelemetry
