@@ -17,7 +17,8 @@
     "serve:pm2:production": "pm2-runtime start ecosystem.config.js --env production",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "profile": "yarn build && cross-env NODE_ENV=development clinic doctor --autocannon https://localhost:5000 -- node build/index.js"
   },
   "repository": {
     "type": "git"
@@ -74,6 +75,8 @@
     "@types/spdy": "3.4.4",
     "@types/supertest": "2.0.10",
     "@types/validator": "13.1.0",
+    "autocannon": "6.4.0",
+    "clinic": "7.0.0",
     "cross-env": "7.0.2",
     "dotenv-flow": "3.2.0",
     "ioredis-mock": "4.21.3",
