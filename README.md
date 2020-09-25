@@ -92,6 +92,8 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Terminus** - Health check and graceful shutdown
 - **Winston** - Universal logging library with support for multiple transports
 - **SuperTest** - HTTP testing
+- **autocannon** - HTTP benchmarking
+- **Clinic.js** - Node.js performance profiling
 
 #### Site Reliability
 
