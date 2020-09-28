@@ -1,4 +1,5 @@
 import dotenvFlow from 'dotenv-flow';
+import { argv } from 'yargs';
 import NodeEnv from './shared/utils/NodeEnv';
 
 dotenvFlow.config();
@@ -95,6 +96,8 @@ const sharedCORSAllowList = [
 ];
 
 const Config = {
+  shouldShowLog: argv.log,
+
   nodeEnv: NODE_ENV,
   domain: DOMAIN,
   port: Number(PORT),

@@ -9,9 +9,13 @@ const consoleFormats = isProduction()
   : [winston.format.timestamp(), winston.format.prettyPrint(), winston.format.colorize({ all: true })];
 
 const winstonTransports = [
-  new winston.transports.Console({
-    format: winston.format.combine(...consoleFormats),
-  }),
+  ...(Config.shouldShowLog
+    ? [
+        new winston.transports.Console({
+          format: winston.format.combine(...consoleFormats),
+        }),
+      ]
+    : []),
 
   ...(isDevelopment() ? [new (fluentLogger.support.winstonTransport())('hm-server', Config.fluentBitConfig)] : []),
 ];
