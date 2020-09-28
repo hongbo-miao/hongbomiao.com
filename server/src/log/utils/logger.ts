@@ -1,15 +1,8 @@
-import winston from 'winston';
-import SentryTransport from 'winston-transport-sentry-node';
-import Config from '../../Config';
+import pino from 'pino';
 import isDevelopment from '../../shared/utils/isDevelopment';
-import isProduction from '../../shared/utils/isProduction';
-import winstonTransports from './winstonTransports';
 
-const logger = winston.createLogger({
-  transports: [
-    ...winstonTransports,
-    ...(isDevelopment() || isProduction() ? [new SentryTransport({ sentry: Config.sentryOptions })] : []),
-  ],
+const logger = pino({
+  prettyPrint: isDevelopment(),
 });
 
 export default logger;

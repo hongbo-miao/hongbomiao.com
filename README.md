@@ -90,7 +90,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **rate-limiter-flexible** - Rate limiting
 - **CORS**, **Helmet** - Security
 - **Terminus** - Health check and graceful shutdown
-- **Winston** - Universal logging library with support for multiple transports
+- **pino** - Node.js logger
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
 - **Clinic.js** - Node.js performance profiling
