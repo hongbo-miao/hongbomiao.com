@@ -1,13 +1,10 @@
 import dotenvFlow from 'dotenv-flow';
 import { argv } from 'yargs';
-import NodeEnv from './shared/utils/NodeEnv';
 
 dotenvFlow.config();
 
 const {
   DOMAIN,
-  FLUENT_BIT_HOST,
-  FLUENT_BIT_PORT,
   LIGHTSTEP_TOKEN,
   NODE_ENV,
   PORT,
@@ -78,17 +75,14 @@ if (SEED_USER_PASSWORD == null || SEED_USER_PASSWORD === '') {
   throw new Error('Failed to read SEED_USER_PASSWORD.');
 }
 
-if (NODE_ENV === NodeEnv.development) {
-  if (FLUENT_BIT_HOST == null || FLUENT_BIT_HOST === '') {
-    throw new Error('Failed to read FLUENT_BIT_HOST.');
-  }
-  if (FLUENT_BIT_PORT == null || FLUENT_BIT_PORT === '') {
-    throw new Error('Failed to read FLUENT_BIT_PORT.');
-  }
+const { showHTTPLog, prettifyLog } = argv;
+
+if (showHTTPLog != null && typeof showHTTPLog !== 'boolean') {
+  throw new Error('Failed to read showHTTPLog.');
 }
 
-if (argv.log != null && typeof argv.log !== 'boolean') {
-  throw new Error('Failed to read argv log.');
+if (prettifyLog != null && typeof prettifyLog !== 'boolean') {
+  throw new Error('Failed to read prettifyLog.');
 }
 
 const sharedCSPConnectSrc = [
@@ -100,7 +94,8 @@ const sharedCORSAllowList = [
 ];
 
 const Config = {
-  shouldShowLog: !!argv.log,
+  shouldShowHTTPLog: !!showHTTPLog,
+  shouldPrettifyLog: !!prettifyLog,
 
   nodeEnv: NODE_ENV,
   domain: DOMAIN,
@@ -153,13 +148,6 @@ const Config = {
   sentryOptions: {
     dsn: 'https://2f46725646834700b4c2675abbc2da6a@o379185.ingest.sentry.io/5375232',
     environment: NODE_ENV,
-  },
-
-  fluentBitConfig: {
-    host: FLUENT_BIT_HOST,
-    port: Number(FLUENT_BIT_PORT),
-    timeout: 3.0,
-    requireAckResponse: true, // Add this option to wait response from Fluent Bit certainly
   },
 };
 

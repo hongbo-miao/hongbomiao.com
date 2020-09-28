@@ -1,8 +1,8 @@
 import pino from 'pino';
-import isDevelopment from '../../shared/utils/isDevelopment';
+import Config from '../../Config';
 
 const logger = pino({
-  prettyPrint: isDevelopment(),
+  prettyPrint: Config.shouldPrettifyLog,
 });
 
 export default logger;
