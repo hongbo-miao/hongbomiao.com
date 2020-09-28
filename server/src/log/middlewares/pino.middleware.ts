@@ -5,7 +5,7 @@ import logger from '../utils/logger';
 
 const pinoMiddleware = (): RequestHandler => {
   return pinoHTTP({
-    autoLogging: Config.shouldShowLog,
+    autoLogging: Config.shouldShowHTTPLog,
     logger,
   });
 };
