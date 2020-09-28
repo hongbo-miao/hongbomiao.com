@@ -87,6 +87,10 @@ if (NODE_ENV === NodeEnv.development) {
   }
 }
 
+if (argv.log != null && typeof argv.log !== 'boolean') {
+  throw new Error('Failed to read argv log.');
+}
+
 const sharedCSPConnectSrc = [
   'https://ingest.lightstep.com', // Lightstep
 ];
@@ -96,7 +100,7 @@ const sharedCORSAllowList = [
 ];
 
 const Config = {
-  shouldShowLog: argv.log,
+  shouldShowLog: !!argv.log,
 
   nodeEnv: NODE_ENV,
   domain: DOMAIN,
