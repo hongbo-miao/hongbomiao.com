@@ -19,6 +19,7 @@ const redis = new Redis(Config.redisOptions);
 
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
+  .use(bodyParser.json())
   .use(pinoMiddleware())
   .use(incomingRequestCounterMiddleware())
   .use(corsMiddleware())
@@ -27,7 +28,6 @@ const app = express()
   .use(favicon(path.join(__dirname, '../dist/favicon.ico')))
   .use(express.static(path.join(__dirname, '../dist')))
   .use(rateLimitMiddleware(redis))
-  .use(bodyParser.json())
   .use('/graphql', graphQLMiddleware)
   .use('/api', apiRouter)
   .use(Sentry.Handlers.errorHandler()) // Must be before any other error middleware and after all controllers
