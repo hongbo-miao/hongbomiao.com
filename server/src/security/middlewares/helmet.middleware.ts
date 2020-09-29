@@ -12,7 +12,7 @@ const CSP_REPORT_URI = isProduction()
 const EXCEPT_CT_REPORT_URI = Config.reportURI.exceptCtReportUri;
 
 const helmetMiddleware = (
-  cspConnectSrc: string[] = CSP_CONNECT_SRC,
+  cspConnectSrc: ReadonlyArray<string> = CSP_CONNECT_SRC,
   cspReportUri: string = CSP_REPORT_URI,
   exceptCtReportUri: string = EXCEPT_CT_REPORT_URI
 ): RequestHandler => {

@@ -8,7 +8,9 @@ const buildSitemap = async (): Promise<void> => {
   const options: SitemapStreamOptions = {
     hostname: 'https://www.hongbomiao.com',
   };
-  const links: SitemapItemLoose[] = [{ url: Paths.appRootPath, changefreq: EnumChangefreq.HOURLY, priority: 1 }];
+  const links: ReadonlyArray<SitemapItemLoose> = [
+    { url: Paths.appRootPath, changefreq: EnumChangefreq.HOURLY, priority: 1 },
+  ];
   const sitemap = await generateSitemap(options, links);
   await fsp.writeFile(path.join(__dirname, '../public/sitemap.xml'), sitemap);
 };
