@@ -6,7 +6,7 @@ import isProduction from '../../shared/utils/isProduction';
 
 const ALLOW_LIST = isProduction() ? Config.prodCORSAllowList : Config.devCORSAllowList;
 
-const corsMiddleware = (allowList: string[] = ALLOW_LIST): RequestHandler => {
+const corsMiddleware = (allowList: ReadonlyArray<string> = ALLOW_LIST): RequestHandler => {
   const corsViolationCounter = meter.createCounter('corsViolationCounter', {
     description: 'Count CORS violations',
   });
