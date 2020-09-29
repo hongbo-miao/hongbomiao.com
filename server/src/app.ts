@@ -8,7 +8,7 @@ import Config from './Config';
 import handleError from './error/controllers/handleError';
 import graphQLMiddleware from './graphQL/middlewares/graphQL.middleware';
 import incomingRequestCounterMiddleware from './log/middlewares/incomingRequestCounter.middleware';
-import winstonMiddleware from './log/middlewares/winston.middleware';
+import pinoMiddleware from './log/middlewares/pino.middleware';
 import sendIndexPage from './page/controllers/sendIndexPage';
 import corsMiddleware from './security/middlewares/cors.middleware';
 import helmetMiddleware from './security/middlewares/helmet.middleware';
@@ -19,7 +19,7 @@ const redis = new Redis(Config.redisOptions);
 
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
-  .use(winstonMiddleware())
+  .use(pinoMiddleware())
   .use(incomingRequestCounterMiddleware())
   .use(corsMiddleware())
   .use(helmetMiddleware())

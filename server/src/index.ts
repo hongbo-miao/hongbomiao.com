@@ -16,10 +16,13 @@ const server = isProduction() ? http.createServer(app) : createHTTP2Server(app);
 const { nodeEnv, port } = Config;
 
 server.listen(port, () => {
-  logger.info('env', {
-    nodeEnv,
-    port,
-  });
+  logger.info(
+    {
+      nodeEnv,
+      port,
+    },
+    'env'
+  );
 });
 
 createTerminus(server);
