@@ -4,7 +4,7 @@ import pinterestLogo from '../images/pinterest.svg';
 import twitterLogo from '../images/twitter.svg';
 import Website from '../types/Website.type';
 
-const WEBSITES: Website[] = [
+const WEBSITES: ReadonlyArray<Website> = [
   {
     name: 'Pinterest',
     src: pinterestLogo,

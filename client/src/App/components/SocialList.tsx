@@ -3,7 +3,7 @@ import Website from '../types/Website.type';
 import styles from './SocialList.module.css';
 
 interface Props {
-  websites: Website[];
+  websites: ReadonlyArray<Website>;
 }
 
 const SocialList: React.FC<Props> = (props) => {
