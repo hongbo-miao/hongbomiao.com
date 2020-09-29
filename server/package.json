@@ -8,8 +8,8 @@
   "scripts": {
     "build": "tsc && babel build --out-dir build",
     "debug": "yarn build && cross-env NODE_ENV=development node --inspect-brk build/index.js",
-    "dev": "nodemon --ext ts --exec \"yarn build && cross-env NODE_ENV=development node build/index.js --prettifyLog\"",
-    "dev:log": "nodemon --ext ts --exec \"yarn build && cross-env NODE_ENV=development node build/index.js --showHTTPLog --prettifyLog\"",
+    "dev": "nodemon --ext ts --exec \"yarn build && cross-env NODE_ENV=development node build/index.js --hideHTTPLog --prettifyLog\"",
+    "dev:log": "nodemon --ext ts --exec \"yarn build && cross-env NODE_ENV=development node build/index.js --prettifyLog\"",
     "dev:cypress": "nodemon --ext ts --exec \"yarn build && cross-env NODE_ENV=test node build/index.js\"",
     "dev:pm2": "nodemon --ext ts --exec \"yarn build && pm2 start ecosystem.config.js --env development\"",
     "dev:pm2:stop": "pm2 stop server",

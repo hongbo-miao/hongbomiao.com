@@ -75,10 +75,10 @@ if (SEED_USER_PASSWORD == null || SEED_USER_PASSWORD === '') {
   throw new Error('Failed to read SEED_USER_PASSWORD.');
 }
 
-const { showHTTPLog, prettifyLog } = argv;
+const { hideHTTPLog, prettifyLog } = argv;
 
-if (showHTTPLog != null && typeof showHTTPLog !== 'boolean') {
-  throw new Error('Failed to read showHTTPLog.');
+if (hideHTTPLog != null && typeof hideHTTPLog !== 'boolean') {
+  throw new Error('Failed to read hideHTTPLog.');
 }
 
 if (prettifyLog != null && typeof prettifyLog !== 'boolean') {
@@ -94,8 +94,8 @@ const sharedCORSAllowList = [
 ];
 
 const Config = {
-  shouldShowHTTPLog: !!showHTTPLog,
-  shouldPrettifyLog: !!prettifyLog,
+  shouldHideHTTPLog: hideHTTPLog === true,
+  shouldPrettifyLog: prettifyLog === true,
 
   nodeEnv: NODE_ENV,
   domain: DOMAIN,
