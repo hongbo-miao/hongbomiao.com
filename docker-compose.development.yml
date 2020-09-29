@@ -26,15 +26,20 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.server.development
+    environment:
+      - NODE_ENV=development
     volumes:
       - ".:/app"
       - "/app/node_modules"
-    environment:
-      - NODE_ENV=development
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
     restart: on-failure
     ports:
       - "5000:5000"
     depends_on:
+      - fluent-bit
       - redis
       - postgres
 
@@ -67,16 +72,18 @@ services:
     image: fluent/fluent-bit:1.5.7
     volumes:
       - ./docker/fluent-bit/conf:/fluent-bit/etc
-    restart: on-failure
-    ports:
-      - "24224:24224"
-      - "5140:5140/udp"
-      - "2020:2020"
     logging:
       driver: "json-file"
       options:
         max-size: "100m"
         max-file: "5"
+    restart: on-failure
+    ports:
+      - "24224:24224"
+      - "5140:5140/udp"
+      - "2020:2020"
+    depends_on:
+      - elasticsearch
 
   # OpenTelemetry Collector
   opentelemetry-collector:
