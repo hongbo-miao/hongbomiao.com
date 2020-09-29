@@ -6,7 +6,7 @@ describe('generateSitemap', () => {
     const options: SitemapStreamOptions = {
       hostname: 'https://example.com',
     };
-    const links: SitemapItemLoose[] = [{ url: '/', changefreq: EnumChangefreq.HOURLY, priority: 1 }];
+    const links: ReadonlyArray<SitemapItemLoose> = [{ url: '/', changefreq: EnumChangefreq.HOURLY, priority: 1 }];
     const sitemap = await generateSitemap(options, links);
     expect(sitemap).toMatchSnapshot();
   });
