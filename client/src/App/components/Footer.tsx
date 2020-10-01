@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className={`footer ${styles.hmFooter}`}>
-      <div className={`container ${styles.hmContainer}`}>
+      <div className={`container is-max-desktop ${styles.hmContainer}`}>
         <nav className="level">
           <div className="level-left">
             <HmLazyComponent>
