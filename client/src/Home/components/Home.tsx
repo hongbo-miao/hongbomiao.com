@@ -42,7 +42,7 @@ const Home: React.FC<Props> = (props) => {
 
   return (
     <div className={styles.hmHome}>
-      <div className={`container ${styles.hmContainer}`}>
+      <div className={`container is-max-desktop ${styles.hmContainer}`}>
         <h1 className={styles.hmTitle}>{name}</h1>
         <HmLazyComponent>
           <HmSparkles>
