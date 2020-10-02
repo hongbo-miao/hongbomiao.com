@@ -182,7 +182,7 @@ Below is the website [security report](https://observatory.mozilla.org/analyze/w
 
 Profiling result by Clinic.js and autocannon.
 
-![Profiling screenshot](https://user-images.githubusercontent.com/3375461/94321506-4b487700-ffc2-11ea-983b-670dc54515be.jpg)
+![Profiling screenshot](https://user-images.githubusercontent.com/3375461/94974667-cde0b180-0541-11eb-9604-a67052237d25.jpg)
 
 ### Distributed Tracing
 
