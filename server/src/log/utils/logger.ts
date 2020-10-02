@@ -1,8 +1,8 @@
 import pino from 'pino';
-import Config from '../../Config';
+import config from '../../config';
 
 const logger = pino({
-  prettyPrint: Config.shouldPrettifyLog,
+  prettyPrint: config.shouldPrettifyLog,
 
   // https://getpino.io/#/docs/redaction
   redact: ['req.body.variables.password'],

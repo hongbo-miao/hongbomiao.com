@@ -4,9 +4,9 @@ import generateSparkle from '../utils/generateSparkle';
 import HmSparkle from './Sparkle';
 import styles from './Sparkles.module.css';
 
-interface Props {
+type Props = {
   children: ReactNode;
-}
+};
 
 const Sparkles: React.FC<Props> = (props) => {
   const { children } = props;

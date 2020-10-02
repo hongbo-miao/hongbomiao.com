@@ -1,15 +1,15 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import helmet from 'helmet';
 import lodashUniq from 'lodash.uniq';
-import Config from '../../Config';
+import config from '../../config';
 import isProduction from '../../shared/utils/isProduction';
 import createCSPNonce from '../utils/createCSPNonce';
 
-const CSP_CONNECT_SRC = isProduction() ? Config.prodCSPConnectSrc : Config.devCSPConnectSrc;
+const CSP_CONNECT_SRC = isProduction() ? config.prodCSPConnectSrc : config.devCSPConnectSrc;
 const CSP_REPORT_URI = isProduction()
-  ? Config.reportURI.cspReportUri
-  : `https://${Config.domain}:${Config.port}/api/violation/report-csp-violation`;
-const EXCEPT_CT_REPORT_URI = Config.reportURI.exceptCtReportUri;
+  ? config.reportURI.cspReportUri
+  : `https://${config.domain}:${config.port}/api/violation/report-csp-violation`;
+const EXCEPT_CT_REPORT_URI = config.reportURI.exceptCtReportUri;
 
 const helmetMiddleware = (
   cspConnectSrc: ReadonlyArray<string> = CSP_CONNECT_SRC,

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Image.module.css';
 
-interface Props {
+type Props = {
   avifSrc: string;
   fallbackSrc: string;
   alt: string;
@@ -9,7 +9,7 @@ interface Props {
     height: string;
     width: string;
   };
-}
+};
 
 const Image: React.FC<Props> = (props) => {
   const { avifSrc, fallbackSrc, style, alt } = props;

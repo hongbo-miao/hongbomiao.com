@@ -2,7 +2,7 @@ import random from './random';
 
 const SPARKLE_COLOR = '#FFC700';
 
-interface Sparkle {
+type Sparkle = {
   id: string;
   createdAt: number;
   color: string;
@@ -11,7 +11,7 @@ interface Sparkle {
     top: string;
     left: string;
   };
-}
+};
 
 const generateSparkle = (): Sparkle => {
   return {

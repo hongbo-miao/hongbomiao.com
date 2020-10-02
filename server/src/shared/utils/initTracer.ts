@@ -1,7 +1,7 @@
 import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
 import { NodeTracerProvider } from '@opentelemetry/node';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
-import Config from '../../Config';
+import config from '../../config';
 import isDevelopment from './isDevelopment';
 import isProduction from './isProduction';
 
@@ -62,7 +62,7 @@ const initTracer = (): void => {
   }
 
   if (isProduction()) {
-    const { token, traceURL } = Config.lightstep;
+    const { token, traceURL } = config.lightstep;
     tracerProvider.addSpanProcessor(
       new BatchSpanProcessor(
         new CollectorTraceExporter({

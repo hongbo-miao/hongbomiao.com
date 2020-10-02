@@ -1,7 +1,20 @@
+import * as Sentry from '@sentry/node';
 import dotenvFlow from 'dotenv-flow';
+import Redis from 'ioredis';
+import knex from 'knex';
 import { argv } from 'yargs';
+import PostgresInputUser from './database/postgres/types/PostgresInputUser.type';
 
 dotenvFlow.config();
+
+const { hideHTTPLog, prettifyLog } = argv;
+
+if (hideHTTPLog != null && typeof hideHTTPLog !== 'boolean') {
+  throw new Error('Failed to read hideHTTPLog.');
+}
+if (prettifyLog != null && typeof prettifyLog !== 'boolean') {
+  throw new Error('Failed to read prettifyLog.');
+}
 
 const {
   DOMAIN,
@@ -29,7 +42,7 @@ if (DOMAIN == null || DOMAIN === '') {
 if (LIGHTSTEP_TOKEN == null || LIGHTSTEP_TOKEN === '') {
   throw new Error('Failed to read LIGHTSTEP_TOKEN.');
 }
-if (NODE_ENV == null || NODE_ENV === '') {
+if (NODE_ENV !== 'development' && NODE_ENV !== 'production' && NODE_ENV !== 'test') {
   throw new Error('Failed to read NODE_ENV.');
 }
 if (PORT == null || PORT === '') {
@@ -75,16 +88,6 @@ if (SEED_USER_PASSWORD == null || SEED_USER_PASSWORD === '') {
   throw new Error('Failed to read SEED_USER_PASSWORD.');
 }
 
-const { hideHTTPLog, prettifyLog } = argv;
-
-if (hideHTTPLog != null && typeof hideHTTPLog !== 'boolean') {
-  throw new Error('Failed to read hideHTTPLog.');
-}
-
-if (prettifyLog != null && typeof prettifyLog !== 'boolean') {
-  throw new Error('Failed to read prettifyLog.');
-}
-
 const sharedCSPConnectSrc = [
   'https://ingest.lightstep.com', // Lightstep
 ];
@@ -93,14 +96,38 @@ const sharedCORSAllowList = [
   'null', // Safari reports CSP violation
 ];
 
-const Config = {
+type Config = {
+  shouldHideHTTPLog: boolean;
+  shouldPrettifyLog: boolean;
+
+  nodeEnv: 'development' | 'production' | 'test';
+  domain: string;
+  port: number;
+  devCORSAllowList: ReadonlyArray<string>;
+  prodCORSAllowList: ReadonlyArray<string>;
+  devCSPConnectSrc: ReadonlyArray<string>;
+  prodCSPConnectSrc: ReadonlyArray<string>;
+  reportURI: {
+    cspReportUri: string;
+    exceptCtReportUri: string;
+  };
+  redisOptions: Redis.RedisOptions;
+  postgresConnection: knex.StaticConnectionConfig;
+  seedUser: PostgresInputUser;
+  lightstep: {
+    token: string | undefined;
+    traceURL: string;
+  };
+  sentryOptions: Sentry.NodeOptions;
+};
+
+const config: Config = {
   shouldHideHTTPLog: hideHTTPLog === true,
   shouldPrettifyLog: prettifyLog === true,
 
   nodeEnv: NODE_ENV,
   domain: DOMAIN,
   port: Number(PORT),
-
   devCORSAllowList: [
     ...sharedCORSAllowList,
     'https://localhost:443',
@@ -108,22 +135,18 @@ const Config = {
     'https://localhost:8080',
   ],
   prodCORSAllowList: [...sharedCORSAllowList, 'https://www.hongbomiao.com'],
-
   devCSPConnectSrc: [...sharedCSPConnectSrc, 'https://localhost:443'],
   prodCSPConnectSrc: [...sharedCSPConnectSrc],
-
   reportURI: {
     cspReportUri: 'https://hongbomiao.report-uri.com/r/d/csp/enforce',
     exceptCtReportUri: 'https://hongbomiao.report-uri.com/r/d/ct/enforce',
   },
-
   redisOptions: {
     host: REDIS_HOST,
     port: Number(REDIS_PORT),
     password: REDIS_PASSWORD,
     enableOfflineQueue: false,
   },
-
   postgresConnection: {
     host: POSTGRES_HOST,
     port: Number(POSTGRES_PORT),
@@ -131,7 +154,6 @@ const Config = {
     user: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
   },
-
   seedUser: {
     email: SEED_USER_EMAIL,
     password: SEED_USER_PASSWORD,
@@ -139,16 +161,14 @@ const Config = {
     lastName: SEED_USER_LAST_NAME,
     bio: SEED_USER_BIO,
   },
-
   lightstep: {
     token: LIGHTSTEP_TOKEN,
     traceURL: 'https://ingest.lightstep.com:443/api/v2/otel/trace',
   },
-
   sentryOptions: {
     dsn: 'https://2f46725646834700b4c2675abbc2da6a@o379185.ingest.sentry.io/5375232',
     environment: NODE_ENV,
   },
 };
 
-export default Config;
+export default config;

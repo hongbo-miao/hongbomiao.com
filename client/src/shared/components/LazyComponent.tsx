@@ -1,9 +1,9 @@
 import React, { ReactNode, Suspense } from 'react';
 import HmLoading from './Loading';
 
-interface Props {
+type Props = {
   children: ReactNode;
-}
+};
 
 const LazyComponent: React.FC<Props> = (props) => {
   const { children } = props;
