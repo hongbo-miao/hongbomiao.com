@@ -1,9 +1,9 @@
-import Config from '../../Config';
+import config from '../../config';
 import findUserByEmail from '../../database/postgres/utils/findUserByEmail';
 import GraphQLMe from '../types/GraphQLMe.type';
 
 const getMe = async (): Promise<GraphQLMe | null> => {
-  const { email } = Config.seedUser;
+  const { email } = config.seedUser;
   return findUserByEmail(email);
 };
 

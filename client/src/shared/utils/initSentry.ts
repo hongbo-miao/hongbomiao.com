@@ -1,8 +1,8 @@
 import * as Sentry from '@sentry/react';
-import Config from '../../Config';
+import config from '../../config';
 
 const initSentry = (): void => {
-  Sentry.init(Config.sentryOptions);
+  Sentry.init(config.sentryOptions);
 };
 
 export default initSentry;

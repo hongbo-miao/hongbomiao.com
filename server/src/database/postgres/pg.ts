@@ -1,9 +1,9 @@
 import knex from 'knex';
-import Config from '../../Config';
+import config from '../../config';
 
 const pg = knex({
   client: 'pg',
-  connection: Config.postgresConnection,
+  connection: config.postgresConnection,
   pool: {
     min: 2,
     max: 10,
