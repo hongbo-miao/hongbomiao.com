@@ -135,8 +135,19 @@ const config: Config = {
     'https://localhost:8080',
   ],
   prodCORSAllowList: [...sharedCORSAllowList, 'https://www.hongbomiao.com'],
-  devCSPConnectSrc: [...sharedCSPConnectSrc, 'https://localhost:443'],
-  prodCSPConnectSrc: [...sharedCSPConnectSrc],
+  devCSPConnectSrc: [
+    ...sharedCSPConnectSrc,
+
+    // For Safari, "'self'" is not enough for WebSocket.
+    'wss://localhost:443',
+    'wss://localhost:5000',
+  ],
+  prodCSPConnectSrc: [
+    ...sharedCSPConnectSrc,
+
+    // For Safari, "'self'" is not enough for WebSocket.
+    'wss://www.hongbomiao.com',
+  ],
   reportURI: {
     cspReportUri: 'https://hongbomiao.report-uri.com/r/d/csp/enforce',
     exceptCtReportUri: 'https://hongbomiao.report-uri.com/r/d/ct/enforce',
