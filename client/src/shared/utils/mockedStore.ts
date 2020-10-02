@@ -1,13 +1,17 @@
 import configureStore from 'redux-mock-store';
-import Me from '../../Home/types/Me.type';
+import ReducerMe from '../../Home/types/ReducerMe.type';
+import ReducerHealth from '../../health/types/ReducerHealth.type';
 import RootState from '../types/RootState.type';
 
 const mockStore = configureStore();
-const me: Me = {
+
+const me: ReducerMe = {
   name: 'Hongbo Miao',
   bio: 'Making magic happen',
 };
-const initialState: RootState = { me };
+const health: ReducerHealth = {};
+
+const initialState: RootState = { me, health };
 const mockedStore = mockStore(initialState);
 
 export default mockedStore;
