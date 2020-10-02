@@ -2,6 +2,7 @@ import path from 'path';
 import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
 import express from 'express';
+import requestId from 'express-request-id';
 import Redis from 'ioredis';
 import responseTime from 'response-time';
 import favicon from 'serve-favicon';
@@ -25,6 +26,7 @@ const app = express()
   .use(incomingRequestCounterMiddleware())
   .use(corsMiddleware())
   .use(helmetMiddleware())
+  .use(requestId())
   .use(responseTime())
   .get('/', sendIndexPage)
   .use(favicon(path.join(__dirname, '../dist/favicon.ico')))
