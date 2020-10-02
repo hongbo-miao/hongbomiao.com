@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './Copyright.module.css';
 
-interface Props {
+type Props = {
   year: number;
-}
+};
 
 const Copyright: React.FC<Props> = (props) => {
   const { year } = props;

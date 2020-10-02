@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from './Sparkle.module.css';
 
-interface Props {
+type Props = {
   size: number;
   color: string;
   style: {
     top: string;
     left: string;
   };
-}
+};
 
 const Sparkle: React.FC<Props> = (props) => {
   const { size, color, style } = props;
