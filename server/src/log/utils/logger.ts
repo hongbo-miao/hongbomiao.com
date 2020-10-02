@@ -8,12 +8,4 @@ const logger = pino({
   redact: ['req.body.variables.password'],
 });
 
-/*
- * Asynchronously flush every 10 seconds to keep the buffer empty in periods of low activity
- * https://github.com/pinojs/pino/blob/master/docs/asynchronous.md#log-loss-prevention
- */
-setInterval(() => {
-  logger.flush();
-}, 10 * 1000).unref();
-
 export default logger;
