@@ -1,10 +1,10 @@
 import cors from 'cors';
 import { RequestHandler } from 'express';
-import Config from '../../Config';
+import config from '../../config';
 import meter from '../../log/utils/meter';
 import isProduction from '../../shared/utils/isProduction';
 
-const ALLOW_LIST = isProduction() ? Config.prodCORSAllowList : Config.devCORSAllowList;
+const ALLOW_LIST = isProduction() ? config.prodCORSAllowList : config.devCORSAllowList;
 
 const corsMiddleware = (allowList: ReadonlyArray<string> = ALLOW_LIST): RequestHandler => {
   const corsViolationCounter = meter.createCounter('corsViolationCounter', {

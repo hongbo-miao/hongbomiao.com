@@ -1,10 +1,10 @@
 import faker from 'faker';
-import Config from '../../../Config';
+import config from '../../../config';
 import findUserByEmail from '../utils/findUserByEmail';
 import insertUsers from '../utils/insertUsers';
 
 const initUsers = async (): Promise<void> => {
-  const { email, password, firstName, lastName, bio } = Config.seedUser;
+  const { email, password, firstName, lastName, bio } = config.seedUser;
   const user = await findUserByEmail(email);
   if (user == null) {
     let users = [{ email, password, firstName, lastName, bio }];

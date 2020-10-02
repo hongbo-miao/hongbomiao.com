@@ -1,22 +1,22 @@
 import { AjaxError, AjaxResponse } from 'rxjs/ajax';
 import MeActionType from '../actionTypes/Me.actionType';
 
-interface FetchMe {
+type FetchMe = {
   type: typeof MeActionType.FETCH_ME;
   payload: {
     query: string;
   };
-}
-interface FetchMeSucceed {
+};
+type FetchMeSucceed = {
   type: typeof MeActionType.FETCH_ME_SUCCEED;
   payload: {
     res: AjaxResponse;
   };
-}
-interface FetchMeFailed {
+};
+type FetchMeFailed = {
   type: typeof MeActionType.FETCH_ME_FAILED;
   payload: AjaxError;
-}
+};
 
 const fetchMe = (query: string): FetchMe => ({ type: MeActionType.FETCH_ME, payload: { query } });
 const fetchMeSucceed = (res: AjaxResponse): FetchMeSucceed => ({

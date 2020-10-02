@@ -6,7 +6,7 @@ import requestId from 'express-request-id';
 import Redis from 'ioredis';
 import responseTime from 'response-time';
 import favicon from 'serve-favicon';
-import Config from './Config';
+import config from './config';
 import handleError from './error/controllers/handleError';
 import graphQLMiddleware from './graphQL/middlewares/graphQL.middleware';
 import incomingRequestCounterMiddleware from './log/middlewares/incomingRequestCounter.middleware';
@@ -17,7 +17,7 @@ import helmetMiddleware from './security/middlewares/helmet.middleware';
 import rateLimitMiddleware from './security/middlewares/rateLimit.middleware';
 import apiRouter from './shared/routers/api.router';
 
-const redis = new Redis(Config.redisOptions);
+const redis = new Redis(config.redisOptions);
 
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app

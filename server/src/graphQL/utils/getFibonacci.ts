@@ -1,10 +1,10 @@
 import validator from 'validator';
 import calcFibonacci from './calcFibonacci';
 
-interface Fibonacci {
+type Fibonacci = {
   n: number;
   ans: number;
-}
+};
 
 const getFibonacci = (n: number): Fibonacci => {
   if (!validator.isInt(String(n), { min: 0, max: 10 })) {

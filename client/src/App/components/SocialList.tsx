@@ -2,9 +2,9 @@ import React from 'react';
 import Website from '../types/Website.type';
 import styles from './SocialList.module.css';
 
-interface Props {
+type Props = {
   websites: ReadonlyArray<Website>;
-}
+};
 
 const SocialList: React.FC<Props> = (props) => {
   const { websites } = props;
