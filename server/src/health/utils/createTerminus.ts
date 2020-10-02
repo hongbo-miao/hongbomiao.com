@@ -6,7 +6,7 @@ import cleanup from './cleanup';
 
 const createTerminus = (server: http.Server | spdy.Server): void => {
   terminus.createTerminus(server, {
-    signals: ['SIGINT', 'SIGBREAK', 'SIGHUP', 'SIGTERM'],
+    signal: 'SIGINT',
     healthChecks: {
       verbatim: true,
       '/health': checkHealth,
