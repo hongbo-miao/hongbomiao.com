@@ -1,6 +1,8 @@
 import React, { lazy, useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import config from '../../config';
+import HealthAction from '../../health/actions/Health.action';
+import pingQuery from '../../health/queries/ping.query';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import RootState from '../../shared/types/RootState.type';
 import MeAction from '../actions/Me.action';
@@ -26,16 +28,18 @@ const connector = connect(
   }),
   {
     fetchMe: MeAction.fetchMe,
+    subscribePing: HealthAction.subscribePing,
   }
 );
 
 type Props = ConnectedProps<typeof connector>;
 
 const Home: React.FC<Props> = (props) => {
-  const { me, fetchMe } = props;
+  const { me, fetchMe, subscribePing } = props;
 
   useEffect(() => {
     fetchMe(meQuery);
+    subscribePing(pingQuery);
   }, [fetchMe]);
 
   const { bio, name } = me;

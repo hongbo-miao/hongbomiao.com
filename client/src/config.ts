@@ -16,6 +16,7 @@ type Config = {
   nodeEnv: 'development' | 'production' | 'test';
   githubURL: string;
   graphQLURL: string;
+  webSocketGraphQLURL: string;
   lightstep: {
     token: string | undefined;
     traceURL: string;
@@ -27,6 +28,7 @@ const config: Config = {
   nodeEnv: NODE_ENV,
   githubURL: 'https://github.com/Hongbo-Miao/hongbomiao.com',
   graphQLURL: `https://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
+  webSocketGraphQLURL: `wss://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
   lightstep: {
     token: REACT_APP_LIGHTSTEP_TOKEN,
     traceURL: 'https://ingest.lightstep.com:443/api/v2/otel/trace',
