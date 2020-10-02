@@ -83,6 +83,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 - **Express** - Node.js web application framework
 - **GraphQL** - Query language for the API, and the server-side runtime
+- **graphql-transport-ws**, **graphql-subscriptions** - GraphQL subscriptions
 - **DataLoader** - Batching and caching
 - **Knex.js** - SQL query builder
 - **PostgreSQL** - Relational database management system
