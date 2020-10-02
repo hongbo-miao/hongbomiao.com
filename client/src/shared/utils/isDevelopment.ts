@@ -1,7 +1,7 @@
-import Config from '../../Config';
+import config from '../../config';
 import NodeEnv from './NodeEnv';
 
-const isDevelopment = (nodeEnv = Config.nodeEnv): boolean => {
+const isDevelopment = (nodeEnv = config.nodeEnv): boolean => {
   return nodeEnv === NodeEnv.development;
 };
 

@@ -1,6 +1,6 @@
 import React, { lazy, useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import Config from '../../Config';
+import config from '../../config';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import RootState from '../../shared/types/RootState.type';
 import MeAction from '../actions/Me.action';
@@ -46,7 +46,7 @@ const Home: React.FC<Props> = (props) => {
         <h1 className={styles.hmTitle}>{name}</h1>
         <HmLazyComponent>
           <HmSparkles>
-            <a className={styles.hmContent} href={Config.githubURL} target="_blank" rel="noopener noreferrer">
+            <a className={styles.hmContent} href={config.githubURL} target="_blank" rel="noopener noreferrer">
               <HmImage
                 avifSrc={hatAVIF}
                 fallbackSrc={hatPNG}
