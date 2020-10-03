@@ -5,15 +5,15 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import MeActionType from '../actionTypes/Me.actionType';
 import MeAction from '../actions/Me.action';
 
-const fetchMeEpic: Epic = (action$, state$, { fetchData }) =>
+const queryMeEpic: Epic = (action$, state$, { fetchData }) =>
   action$.pipe(
-    ofType(MeActionType.FETCH_ME),
+    ofType(MeActionType.QUERY_ME),
     switchMap((action) =>
       fetchData(action.payload.query).pipe(
-        map((res: AjaxResponse) => MeAction.fetchMeSucceed(res)),
-        catchError((err: AjaxError) => of(MeAction.fetchMeFailed(err)))
+        map((res: AjaxResponse) => MeAction.queryMeSucceed(res)),
+        catchError((err: AjaxError) => of(MeAction.queryMeFailed(err)))
       )
     )
   );
 
-export default fetchMeEpic;
+export default queryMeEpic;

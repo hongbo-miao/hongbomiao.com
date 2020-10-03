@@ -7,9 +7,9 @@ import { TestScheduler } from 'rxjs/testing';
 import RootState from '../../shared/types/RootState.type';
 import MeAction from '../actions/Me.action';
 import meQuery from '../queries/me.query';
-import fetchMeEpic from './fetchMeEpic';
+import queryMeEpic from './queryMe.epic';
 
-describe('fetchMeEpic', () => {
+describe('queryMeEpic', () => {
   const res = {
     response: {
       data: {
@@ -20,7 +20,7 @@ describe('fetchMeEpic', () => {
   } as AjaxResponse;
   const err = new Error('Test error') as AjaxError;
 
-  test('fetchMeSucceed', () => {
+  test('queryMeSucceed', () => {
     const marbles = {
       i: '-i', // Input action
       r: '--r', // Mock API response
@@ -34,7 +34,7 @@ describe('fetchMeEpic', () => {
 
     scheduler.run(({ hot, cold, expectObservable }) => {
       const action$ = hot(marbles.i, {
-        i: MeAction.fetchMe(meQuery),
+        i: MeAction.queryMe(meQuery),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }) as any;
       const state$ = {} as StateObservable<RootState>;
@@ -44,15 +44,15 @@ describe('fetchMeEpic', () => {
             r: res,
           }),
       };
-      const output$ = fetchMeEpic(action$, state$, dependencies);
+      const output$ = queryMeEpic(action$, state$, dependencies);
 
       expectObservable(output$).toBe(marbles.o, {
-        o: MeAction.fetchMeSucceed(res),
+        o: MeAction.queryMeSucceed(res),
       });
     });
   });
 
-  test('fetchMeFailed', () => {
+  test('queryMeFailed', () => {
     const scheduler = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected);
       expect(actual[0].notification.value.payload).toEqual(err);
@@ -65,7 +65,7 @@ describe('fetchMeEpic', () => {
 
     scheduler.run(({ hot, expectObservable }) => {
       const action$ = hot(marbles.i, {
-        i: MeAction.fetchMe(meQuery),
+        i: MeAction.queryMe(meQuery),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       }) as any;
       const state$ = {} as StateObservable<RootState>;
@@ -73,10 +73,10 @@ describe('fetchMeEpic', () => {
       const dependencies = {
         fetchData: (): Observable<never> => timer(duration).pipe(switchMap(() => throwError(err))),
       };
-      const output$ = fetchMeEpic(action$, state$, dependencies);
+      const output$ = queryMeEpic(action$, state$, dependencies);
 
       expectObservable(output$).toBe(marbles.o, {
-        o: MeAction.fetchMeFailed(err),
+        o: MeAction.queryMeFailed(err),
       });
     });
   });

@@ -10,10 +10,10 @@ describe('meReducer', () => {
     });
   });
 
-  test('handle FETCH_ME_SUCCEED', () => {
+  test('handle QUERY_ME_SUCCEED', () => {
     expect(
       meReducer([], {
-        type: MeActionType.FETCH_ME_SUCCEED,
+        type: MeActionType.QUERY_ME_SUCCEED,
         payload: {
           res: {
             response: {

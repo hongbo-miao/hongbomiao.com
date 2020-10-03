@@ -28,7 +28,7 @@ const connector = connect(
     me: state.me,
   }),
   {
-    fetchMe: MeAction.fetchMe,
+    queryMe: MeAction.queryMe,
     subscribePing: HealthAction.subscribePing,
   }
 );
@@ -36,14 +36,14 @@ const connector = connect(
 type Props = ConnectedProps<typeof connector>;
 
 const Home: React.FC<Props> = (props) => {
-  const { me, fetchMe, subscribePing } = props;
+  const { me, queryMe, subscribePing } = props;
 
   useEffect(() => {
-    fetchMe(meQuery);
+    queryMe(meQuery);
     subscribePing(pingSubscription);
 
     analytics.page();
-  }, [fetchMe]);
+  }, [queryMe]);
 
   const { bio, name } = me;
 

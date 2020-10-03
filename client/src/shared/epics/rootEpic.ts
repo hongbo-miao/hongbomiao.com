@@ -1,8 +1,8 @@
 import { combineEpics } from 'redux-observable';
-import fetchMeEpic from '../../Home/epics/fetchMeEpic';
-import pingEpic from '../../health/epics/pingEpic';
+import queryMeEpic from '../../Home/epics/queryMe.epic';
+import pingEpic from '../../health/epics/ping.epic';
 
-const epics = [fetchMeEpic, pingEpic];
+const epics = [queryMeEpic, pingEpic];
 const rootEpic = combineEpics(...epics);
 
 export default rootEpic;
