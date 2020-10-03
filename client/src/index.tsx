@@ -1,3 +1,4 @@
+// OpenTelemetry need to be setup before importing other modules
 import './shared/utils/initTracer';
 import './index.css';
 import React, { StrictMode } from 'react';
