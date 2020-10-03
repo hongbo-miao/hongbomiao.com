@@ -17,6 +17,9 @@ type Config = {
   githubURL: string;
   graphQLURL: string;
   webSocketGraphQLURL: string;
+  googleTagManagerOptions: {
+    containerId: string;
+  };
   lightstep: {
     token: string | undefined;
     traceURL: string;
@@ -29,6 +32,9 @@ const config: Config = {
   githubURL: 'https://github.com/Hongbo-Miao/hongbomiao.com',
   graphQLURL: `https://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
   webSocketGraphQLURL: `wss://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
+  googleTagManagerOptions: {
+    containerId: 'GTM-MKMQ55P',
+  },
   lightstep: {
     token: REACT_APP_LIGHTSTEP_TOKEN,
     traceURL: 'https://ingest.lightstep.com:443/api/v2/otel/trace',
