@@ -1,37 +1,37 @@
 import { AjaxError, AjaxResponse } from 'rxjs/ajax';
 import MeActionType from '../actionTypes/Me.actionType';
 
-type FetchMe = {
-  type: typeof MeActionType.FETCH_ME;
+type QueryMe = {
+  type: typeof MeActionType.QUERY_ME;
   payload: {
     query: string;
   };
 };
-type FetchMeSucceed = {
-  type: typeof MeActionType.FETCH_ME_SUCCEED;
+type QueryMeSucceed = {
+  type: typeof MeActionType.QUERY_ME_SUCCEED;
   payload: {
     res: AjaxResponse;
   };
 };
-type FetchMeFailed = {
-  type: typeof MeActionType.FETCH_ME_FAILED;
+type QueryMeFailed = {
+  type: typeof MeActionType.QUERY_ME_FAILED;
   payload: AjaxError;
 };
 
-const fetchMe = (query: string): FetchMe => ({ type: MeActionType.FETCH_ME, payload: { query } });
-const fetchMeSucceed = (res: AjaxResponse): FetchMeSucceed => ({
-  type: MeActionType.FETCH_ME_SUCCEED,
+const queryMe = (query: string): QueryMe => ({ type: MeActionType.QUERY_ME, payload: { query } });
+const queryMeSucceed = (res: AjaxResponse): QueryMeSucceed => ({
+  type: MeActionType.QUERY_ME_SUCCEED,
   payload: { res },
 });
-const fetchMeFailed = (err: AjaxError): FetchMeFailed => ({
-  type: MeActionType.FETCH_ME_FAILED,
+const queryMeFailed = (err: AjaxError): QueryMeFailed => ({
+  type: MeActionType.QUERY_ME_FAILED,
   payload: err,
 });
 
 const MeAction = {
-  fetchMe,
-  fetchMeSucceed,
-  fetchMeFailed,
+  queryMe,
+  queryMeSucceed,
+  queryMeFailed,
 };
 
 export default MeAction;
