@@ -8,7 +8,7 @@ type SubscribePing = {
     query: string;
   };
 };
-export type ReceivePingSucceed = {
+type ReceivePingSucceed = {
   type: typeof HealthActionType.RECEIVE_PING_SUCCEED;
   payload: {
     res: GraphQLResponse<GraphQLPing>;
