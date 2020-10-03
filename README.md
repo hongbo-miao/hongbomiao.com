@@ -70,6 +70,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Redux** - State container
 - **redux-observable** - Side effects
 - **RxJS** - Asynchronous programming with observable streams
+- **graphql-tag** - GraphQL query parsing
 - **Bulma** - CSS framework
 - **PurgeCSS** - Unused CSS removing
 - **Jest** - JavaScript testing framework
