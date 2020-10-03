@@ -4,8 +4,6 @@ pull_request_rules:
   - name: automatic merge on CI success and review
     conditions:
       - author=Hongbo-Miao
-      - status-success=Summary
-      - status-success=lhci/url/index.html
       - status-success=Travis CI - Pull Request
       - base=master
       - label!=work in progress
@@ -17,8 +15,6 @@ pull_request_rules:
   - name: automatic merge for Renovate pull requests
     conditions:
       - author=renovate[bot]
-      - status-success=Summary
-      - status-success=lhci/url/index.html
       - status-success=Travis CI - Pull Request
       - base=master
     actions:
