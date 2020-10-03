@@ -2,7 +2,7 @@ import React, { lazy, useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import config from '../../config';
 import HealthAction from '../../health/actions/Health.action';
-import pingQuery from '../../health/queries/ping.query';
+import pingSubscription from '../../health/queries/ping.subscription';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import RootState from '../../shared/types/RootState.type';
 import analytics from '../../shared/utils/analytics';
@@ -28,7 +28,7 @@ const connector = connect(
     me: state.me,
   }),
   {
-    fetchMe: MeAction.fetchMe,
+    queryMe: MeAction.queryMe,
     subscribePing: HealthAction.subscribePing,
   }
 );
@@ -36,14 +36,14 @@ const connector = connect(
 type Props = ConnectedProps<typeof connector>;
 
 const Home: React.FC<Props> = (props) => {
-  const { me, fetchMe, subscribePing } = props;
+  const { me, queryMe, subscribePing } = props;
 
   useEffect(() => {
-    fetchMe(meQuery);
-    subscribePing(pingQuery);
+    queryMe(meQuery);
+    subscribePing(pingSubscription);
 
     analytics.page();
-  }, [fetchMe]);
+  }, [queryMe]);
 
   const { bio, name } = me;
 
