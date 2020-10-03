@@ -5,6 +5,7 @@ import HealthAction from '../../health/actions/Health.action';
 import pingQuery from '../../health/queries/ping.query';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import RootState from '../../shared/types/RootState.type';
+import analytics from '../../shared/utils/analytics';
 import MeAction from '../actions/Me.action';
 // https://github.com/facebook/create-react-app/pull/9611
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -40,6 +41,8 @@ const Home: React.FC<Props> = (props) => {
   useEffect(() => {
     fetchMe(meQuery);
     subscribePing(pingQuery);
+
+    analytics.page();
   }, [fetchMe]);
 
   const { bio, name } = me;
