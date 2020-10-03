@@ -170,7 +170,7 @@ The website [supports HTTP/3](https://www.http3check.net/?host=hongbomiao.com).
 
 Images on the website are using AVIF format.
 
-> “Roughly speaking, at an acceptable quality, the WebP is almost half the size of JPEG, and AVIF is under half the size of WebP.” - [Jake Archibald, 2020](https://jakearchibald.com/2020/avif-has-landed/)
+> “Roughly speaking, at an acceptable quality, the WebP is almost half the size of JPEG, and AVIF is under half the size of WebP.” – [Jake Archibald, 2020](https://jakearchibald.com/2020/avif-has-landed/)
 
 ### Security
 
