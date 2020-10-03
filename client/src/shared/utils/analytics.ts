@@ -2,14 +2,17 @@
 // @ts-ignore
 import googleTagManager from '@analytics/google-tag-manager';
 import Analytics from 'analytics';
+import isProduction from './isProduction';
 
 const analytics = Analytics({
   app: 'hm-client-analytics',
-  plugins: [
-    googleTagManager({
-      containerId: 'GTM-MKMQ55P',
-    }),
-  ],
+  plugins: isProduction()
+    ? [
+        googleTagManager({
+          containerId: 'GTM-MKMQ55P',
+        }),
+      ]
+    : [],
 });
 
 export default analytics;
