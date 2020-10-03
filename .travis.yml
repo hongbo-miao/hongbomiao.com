@@ -30,6 +30,7 @@ jobs:
   include:
     - stage: Test
       name: "Lint"
+      if: type = pull_request
       before_script:
         - cd $TRAVIS_BUILD_DIR
       script:
@@ -38,6 +39,7 @@ jobs:
 
     - stage: Test
       name: "Test - Client"
+      if: type = pull_request
       before_script:
         - cd $TRAVIS_BUILD_DIR/client
       script:
@@ -45,6 +47,7 @@ jobs:
 
     - stage: Test
       name: "Test - Server"
+      if: type = pull_request
       before_script:
         - cd $TRAVIS_BUILD_DIR/server
       script:
@@ -52,6 +55,7 @@ jobs:
 
     - stage: Test
       name: "Test Coverage"
+      if: type = pull_request
       before_script:
         - cd $TRAVIS_BUILD_DIR
       script:
@@ -61,6 +65,7 @@ jobs:
 
     - stage: Test
       name: "Lighthouse - Client"
+      if: type = pull_request
       before_script:
         - cd $TRAVIS_BUILD_DIR/client
       script:
@@ -70,16 +75,17 @@ jobs:
         chrome: stable
 
     - stage: Test
-      if: branch = master && type = push && fork = false
       name: "Storybook - Client"
+      if: type = pull_request
       before_script:
         - cd $TRAVIS_BUILD_DIR/client
       script:
         - yarn run storybook:publish --exit-zero-on-changes
 
-    - stage: Test
       # https://docs.cypress.io/guides/guides/continuous-integration.html#Travis
+    - stage: Test
       name: "Cypress"
+      if: type = pull_request
       before_script:
         - cd $TRAVIS_BUILD_DIR/client && yarn build
         - cd $TRAVIS_BUILD_DIR && cp -r client/build/ server/dist/
@@ -89,6 +95,7 @@ jobs:
         - yarn test:cypress:headless:ci
 
     - stage: Deploy
+      name: "Heroku"
       if: branch = master && type = push && fork = false
       before_deploy:
         - cd $TRAVIS_BUILD_DIR
