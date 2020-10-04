@@ -7,14 +7,14 @@ import createCSPNonce from '../utils/createCSPNonce';
 
 const CSP_CONNECT_SRC = isProduction() ? config.prodCSPConnectSrc : config.devCSPConnectSrc;
 const CSP_REPORT_URI = isProduction()
-  ? config.reportURI.cspReportUri
+  ? config.reportURI.cspReportURI
   : `https://${config.domain}:${config.port}/api/violation/report-csp-violation`;
-const EXCEPT_CT_REPORT_URI = config.reportURI.exceptCtReportUri;
+const EXCEPT_CT_REPORT_URI = config.reportURI.exceptCTReportURI;
 
 const helmetMiddleware = (
   cspConnectSrc: ReadonlyArray<string> = CSP_CONNECT_SRC,
-  cspReportUri: string = CSP_REPORT_URI,
-  exceptCtReportUri: string = EXCEPT_CT_REPORT_URI
+  cspReportURI: string = CSP_REPORT_URI,
+  exceptCTReportURI: string = EXCEPT_CT_REPORT_URI
 ): RequestHandler => {
   return (req: Request, res: Response, next: NextFunction) => {
     const cspNonce = createCSPNonce();
@@ -140,7 +140,7 @@ const helmetMiddleware = (
           frameAncestors: ["'none'"],
 
           /* Reporting directives */
-          reportUri: cspReportUri,
+          reportUri: cspReportURI,
 
           /* Other directives */
           /*
@@ -162,7 +162,7 @@ const helmetMiddleware = (
       expectCt: {
         maxAge: 86400,
         enforce: true,
-        reportUri: exceptCtReportUri,
+        reportUri: exceptCTReportURI,
       },
 
       // Set 'X-Frame-Options: DENY'
