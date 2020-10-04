@@ -108,6 +108,7 @@ type Config = {
   devCSPConnectSrc: ReadonlyArray<string>;
   prodCSPConnectSrc: ReadonlyArray<string>;
   reportURI: {
+    reportToURL: string;
     cspReportUri: string;
     exceptCtReportUri: string;
   };
@@ -149,6 +150,7 @@ const config: Config = {
     'wss://www.hongbomiao.com',
   ],
   reportURI: {
+    reportToURL: 'https://hongbomiao.report-uri.com/a/d/g',
     cspReportUri: 'https://hongbomiao.report-uri.com/r/d/csp/enforce',
     exceptCtReportUri: 'https://hongbomiao.report-uri.com/r/d/ct/enforce',
   },

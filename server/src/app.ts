@@ -14,7 +14,9 @@ import pinoMiddleware from './log/middlewares/pino.middleware';
 import sendIndexPage from './page/controllers/sendIndexPage';
 import corsMiddleware from './security/middlewares/cors.middleware';
 import helmetMiddleware from './security/middlewares/helmet.middleware';
+import networkErrorLoggingMiddleware from './security/middlewares/networkErrorLogging.middleware';
 import rateLimitMiddleware from './security/middlewares/rateLimit.middleware';
+import reportToMiddleware from './security/middlewares/reportTo.middleware';
 import apiRouter from './shared/routers/api.router';
 
 const redis = new Redis(config.redisOptions);
@@ -25,6 +27,8 @@ const app = express()
   .use(pinoMiddleware())
   .use(incomingRequestCounterMiddleware())
   .use(corsMiddleware())
+  .use(reportToMiddleware())
+  .use(networkErrorLoggingMiddleware())
   .use(helmetMiddleware())
   .use(requestId())
   .use(responseTime())
