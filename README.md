@@ -90,7 +90,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **PostgreSQL** - Relational database management system
 - **Redis** - In-memory database
 - **rate-limiter-flexible** - Rate limiting
-- **CORS**, **Helmet** - Security
+- **CORS**, **Helmet**, **network-error-logging**, **report-to** - Security
 - **Terminus** - Health check and graceful shutdown
 - **pino** - Node.js logger
 - **SuperTest** - HTTP testing
