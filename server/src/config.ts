@@ -108,8 +108,9 @@ type Config = {
   devCSPConnectSrc: ReadonlyArray<string>;
   prodCSPConnectSrc: ReadonlyArray<string>;
   reportURI: {
-    cspReportUri: string;
-    exceptCtReportUri: string;
+    cspReportURI: string;
+    exceptCTReportURI: string;
+    reportToURL: string;
   };
   redisOptions: Redis.RedisOptions;
   postgresConnection: knex.StaticConnectionConfig;
@@ -149,8 +150,9 @@ const config: Config = {
     'wss://www.hongbomiao.com',
   ],
   reportURI: {
-    cspReportUri: 'https://hongbomiao.report-uri.com/r/d/csp/enforce',
-    exceptCtReportUri: 'https://hongbomiao.report-uri.com/r/d/ct/enforce',
+    cspReportURI: 'https://hongbomiao.report-uri.com/r/d/csp/enforce',
+    exceptCTReportURI: 'https://hongbomiao.report-uri.com/r/d/ct/enforce',
+    reportToURL: 'https://hongbomiao.report-uri.com/a/d/g',
   },
   redisOptions: {
     host: REDIS_HOST,
