@@ -21,7 +21,7 @@ const helmetMiddleware = (
     res.locals.cspNonce = cspNonce;
 
     return helmet({
-      // Set 'Content-Security-Policy'
+      // Set header 'Content-Security-Policy'
       contentSecurityPolicy: {
         directives: {
           /* Fetch directives */
@@ -153,27 +153,19 @@ const helmetMiddleware = (
         },
       },
 
-      // Set 'X-DNS-Prefetch-Control: off'
-      dnsPrefetchControl: {
-        allow: false,
-      },
-
-      // Set 'Expect-CT: enforce, max-age=86400, report-uri="https://example.com/api"'
+      // Set header 'Expect-CT: max-age=86400, enforce, report-uri="https://example.com/api"'
       expectCt: {
         maxAge: 86400,
         enforce: true,
         reportUri: exceptCTReportURI,
       },
 
-      // Set 'X-Frame-Options: DENY'
-      frameguard: {
-        action: 'deny',
+      // Set header 'Referrer-Policy: no-referrer'
+      referrerPolicy: {
+        policy: 'no-referrer',
       },
 
-      // Remove 'X-Powered-By'
-      hidePoweredBy: undefined,
-
-      // Set 'Strict-Transport-Security: max-age=31536000; includeSubDomains; preload'
+      // Set header 'Strict-Transport-Security: max-age=31536000; includeSubDomains; preload'
       hsts: {
         // Must be at least 1 year to be approved
         maxAge: 31536000,
@@ -183,23 +175,31 @@ const helmetMiddleware = (
         preload: true,
       },
 
-      // Set 'X-Download-Options: noopen'
-      ieNoOpen: undefined,
-
-      // Set 'X-Content-Type-Options: nosniff'
+      // Set header 'X-Content-Type-Options: nosniff'
       noSniff: undefined,
 
-      // Set 'X-Permitted-Cross-Domain-Policies: none'
+      // Set header 'X-DNS-Prefetch-Control: off'
+      dnsPrefetchControl: {
+        allow: false,
+      },
+
+      // Set header 'X-Download-Options: noopen'
+      ieNoOpen: undefined,
+
+      // Set header 'X-Frame-Options: DENY'
+      frameguard: {
+        action: 'deny',
+      },
+
+      // Set header 'X-Permitted-Cross-Domain-Policies: none'
       permittedCrossDomainPolicies: {
         permittedPolicies: 'none',
       },
 
-      // Set 'Referrer-Policy: no-referrer'
-      referrerPolicy: {
-        policy: 'no-referrer',
-      },
+      // Remove header 'X-Powered-By'
+      hidePoweredBy: undefined,
 
-      // Set 'X-XSS-Protection: 0'
+      // Set header 'X-XSS-Protection: 0'
       xssFilter: undefined,
     })(req, res, next);
   };
