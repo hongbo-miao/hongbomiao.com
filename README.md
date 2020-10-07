@@ -90,7 +90,12 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **PostgreSQL** - Relational database management system
 - **Redis** - In-memory database
 - **rate-limiter-flexible** - Rate limiting
-- **CORS**, **Helmet**, **network-error-logging**, **report-to** - Security
+- **CORS** - Cross-Origin Resource Sharing
+- **Helmet** - HTTP header `Content-Security-Policy`, `Expect-CT`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
+- **Report To** - HTTP header `Report-To`
+- **Network Error Logging** - HTTP header `NEL`
+- **express-request-id** - HTTP header `X-Request-ID`
+- **response-time** - HTTP header `X-Response-Time`
 - **Terminus** - Health check and graceful shutdown
 - **pino** - Node.js logger
 - **SuperTest** - HTTP testing
