@@ -10,13 +10,13 @@ import config from './config';
 import handleError from './error/controllers/handleError';
 import graphQLMiddleware from './graphQL/middlewares/graphQL.middleware';
 import incomingRequestCounterMiddleware from './log/middlewares/incomingRequestCounter.middleware';
+import networkErrorLoggingMiddleware from './log/middlewares/networkErrorLogging.middleware';
 import pinoMiddleware from './log/middlewares/pino.middleware';
+import reportToMiddleware from './log/middlewares/reportTo.middleware';
 import sendIndexPage from './page/controllers/sendIndexPage';
 import corsMiddleware from './security/middlewares/cors.middleware';
 import helmetMiddleware from './security/middlewares/helmet.middleware';
-import networkErrorLoggingMiddleware from './security/middlewares/networkErrorLogging.middleware';
 import rateLimitMiddleware from './security/middlewares/rateLimit.middleware';
-import reportToMiddleware from './security/middlewares/reportTo.middleware';
 import apiRouter from './shared/routers/api.router';
 
 const redis = new Redis(config.redisOptions);
