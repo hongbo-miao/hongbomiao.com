@@ -7,6 +7,7 @@ import config from '../../config';
 const REPORT_TO_URL = config.reportURI.reportToURL;
 
 const reportToMiddleware = (reportToURL: string = REPORT_TO_URL): RequestHandler => {
+  // Set header 'Report-To'
   return reportTo({
     groups: [
       {
