@@ -23,9 +23,9 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "autocannon": "autocannon http://localhost:5000",
-    "profile:doctor": "cross-env NODE_ENV=production clinic doctor --on-port 'autocannon --connections 5 --amount 500 http://localhost:5000' -- node build/index.js",
-    "profile:bubbleprof": "cross-env NODE_ENV=production clinic bubbleprof --on-port 'autocannon --connections 5 --amount 500 http://localhost:5000' -- node build/index.js",
-    "profile:flame": "cross-env NODE_ENV=production clinic flame --on-port 'autocannon --connections 5 --amount 500 http://localhost:5000' -- node build/index.js"
+    "profile:doctor": "yarn build && cross-env NODE_ENV=production clinic doctor --on-port 'autocannon --connections 5 --amount 500 http://localhost:5000' -- node build/index.js",
+    "profile:bubbleprof": "yarn build && cross-env NODE_ENV=production clinic bubbleprof --on-port 'autocannon --connections 5 --amount 500 http://localhost:5000' -- node build/index.js",
+    "profile:flame": "yarn build && cross-env NODE_ENV=production clinic flame --on-port 'autocannon --connections 5 --amount 500 http://localhost:5000' -- node build/index.js"
   },
   "repository": {
     "type": "git"
