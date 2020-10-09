@@ -5,7 +5,7 @@ import attachCSPNonce from '../../security/utils/attachCSPNonce';
 
 const sendIndexPage = (req: Request, res: Response): void => {
   const { cspNonce } = res.locals;
-  const html = fs.readFileSync(path.join(__dirname, '../../../dist/index.html'), 'utf-8');
+  const html = fs.readFileSync(path.join(__dirname, '../../../../dist/index.html'), 'utf-8');
   res.send(attachCSPNonce(html, cspNonce));
 };
 
