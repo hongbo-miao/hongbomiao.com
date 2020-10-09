@@ -16,6 +16,7 @@ rm -f public/sitemap.xml
 
 # Server
 cd ../server
+rm -rf .clinic
 rm -rf build
 rm -rf dist
 rm -rf coverage
