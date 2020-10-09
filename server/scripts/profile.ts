@@ -1,14 +1,9 @@
-import autocannon from 'autocannon';
+import profileIndexPage from './profile/profileIndexPage';
+import profileMe from './profile/profileMe';
 
-async function profile() {
-  const result = await autocannon({
-    url: 'http://localhost:5000',
-    connections: 5,
-    amount: 500,
-  });
+const promises = [profileIndexPage(), profileMe()];
 
+Promise.all(promises).then((results) => {
   // eslint-disable-next-line no-console
-  console.log(result);
-}
-
-profile();
+  console.log(results);
+});
