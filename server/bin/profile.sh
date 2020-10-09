@@ -2,4 +2,4 @@
 
 set -e
 
-node build/scripts/profileBubbleprof.js
+node build/scripts/profile.js
