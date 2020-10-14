@@ -1,6 +1,7 @@
 import cors from 'cors';
 import { RequestHandler } from 'express';
 import config from '../../config';
+import logger from '../../log/utils/logger';
 import meter from '../../log/utils/meter';
 import isProduction from '../../shared/utils/isProduction';
 
@@ -25,7 +26,9 @@ const corsMiddleware = (allowList: ReadonlyArray<string> = ALLOW_LIST): RequestH
       } else {
         const labels = { origin };
         corsViolationCounter.bind(labels).add(1);
-        callback(new Error(`${origin} is not allowed by CORS.`));
+        const errMsg = `${origin} is not allowed by CORS.`;
+        logger.warn(errMsg);
+        callback(new Error(errMsg));
       }
     },
   });
