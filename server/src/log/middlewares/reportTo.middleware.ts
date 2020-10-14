@@ -3,11 +3,7 @@ import reportTo from 'report-to';
 import config from '../../config';
 import isProduction from '../../shared/utils/isProduction';
 
-const REPORT_TO_URL = isProduction()
-  ? config.reportURI.reportToURL
-  : `https://${config.domain}:${config.port}/api/violation/report-to`;
-
-const reportToMiddleware = (reportToURL: string = REPORT_TO_URL): RequestHandler => {
+const reportToMiddleware = (): RequestHandler => {
   // Set header 'Report-To'
   return reportTo({
     groups: [
@@ -16,8 +12,16 @@ const reportToMiddleware = (reportToURL: string = REPORT_TO_URL): RequestHandler
         max_age: 31536000,
         include_subdomains: true,
         endpoints: [
+          ...(isProduction()
+            ? [
+                {
+                  url: config.reportURI.reportToURL,
+                  priority: 1,
+                },
+              ]
+            : []),
           {
-            url: reportToURL,
+            url: `https://${config.domain}:${config.port}/api/violation/report-to`,
             priority: 1,
           },
         ],
