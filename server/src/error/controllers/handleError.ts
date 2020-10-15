@@ -4,9 +4,15 @@ import { NextFunction, Request, Response } from 'express';
 const handleError = (err: Error, req: Request, res: Response, next: NextFunction): void => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const { sentry } = res;
-  res.statusCode = 500;
-  res.end(sentry);
+  if (err.code === 'ETIMEDOUT') {
+    res.statusCode = 408;
+  } else {
+    res.statusCode = 500;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  res.end(res.sentry);
 };
 
 export default handleError;

@@ -96,6 +96,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Network Error Logging** - HTTP header `NEL`
 - **express-request-id** - HTTP header `X-Request-ID`
 - **response-time** - HTTP header `X-Response-Time`
+- **connect-timeout** - Request timeout
 - **Terminus** - Health check and graceful shutdown
 - **pino** - Node.js logger
 - **SuperTest** - HTTP testing
