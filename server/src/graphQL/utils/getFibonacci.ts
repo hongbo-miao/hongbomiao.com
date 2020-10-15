@@ -7,8 +7,8 @@ type Fibonacci = {
 };
 
 const getFibonacci = (n: number): Fibonacci => {
-  if (!validator.isInt(String(n), { min: 0, max: 10 })) {
-    throw new Error('n should be in the range of 0 and 10.');
+  if (!validator.isInt(String(n), { min: 0, max: 20 })) {
+    throw new Error('n should be in the range of 0 and 20.');
   }
   return {
     n,
