@@ -40,7 +40,7 @@ const config: Config = {
     traceURL: 'https://ingest.lightstep.com:443/api/v2/otel/trace',
   },
   sentryOptions: {
-    dsn: 'https://7a5703c6beeb467e9cdb314cec25a237@o379185.ingest.sentry.io/5384453',
+    dsn: 'https://2f46725646834700b4c2675abbc2da6a@o379185.ingest.sentry.io/5375232',
     environment: NODE_ENV,
   },
 };
