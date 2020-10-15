@@ -1,6 +1,7 @@
 import path from 'path';
 import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
+import timeout from 'connect-timeout';
 import express from 'express';
 import requestId from 'express-request-id';
 import Redis from 'ioredis';
@@ -37,7 +38,7 @@ const app = express()
   .use(express.static(path.join(__dirname, '../../dist')))
   .use(rateLimitMiddleware(redis))
   .use('/graphql', graphQLMiddleware)
-  .use('/api', apiRouter)
+  .use('/api', timeout('5s'), apiRouter)
   .use(Sentry.Handlers.errorHandler()) // Must be before any other error middleware and after all controllers
   .use(handleError);
 
