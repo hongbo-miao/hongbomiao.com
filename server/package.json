@@ -23,6 +23,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "autocannon": "autocannon http://localhost:5000",
+    "profile:endpoints": "yarn build && NODE_ENV=production node build/scripts/profileEndpoints.js",
     "profile:bubbleprof": "yarn build && cross-env NODE_ENV=production clinic bubbleprof --on-port 'sh bin/profile.sh' -- node build/src/index.js",
     "profile:doctor": "yarn build && cross-env NODE_ENV=production clinic doctor --on-port 'sh bin/profile.sh' -- node build/src/index.js",
     "profile:flame": "yarn build && cross-env NODE_ENV=production clinic flame --on-port 'sh bin/profile.sh' -- node build/src/index.js"
@@ -79,6 +80,7 @@
     "@types/cors": "2.8.8",
     "@types/dotenv-flow": "3.1.0",
     "@types/express": "4.17.8",
+    "@types/express-list-endpoints": "4.0.1",
     "@types/express-request-id": "1.4.1",
     "@types/faker": "5.1.2",
     "@types/ioredis": "4.17.5",
@@ -96,6 +98,7 @@
     "clinic": "7.0.0",
     "cross-env": "7.0.2",
     "dotenv-flow": "3.2.0",
+    "express-list-endpoints": "5.0.0",
     "ioredis-mock": "4.21.8",
     "jest": "26.5.3",
     "nodemon": "2.0.5",
