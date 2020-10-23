@@ -11,7 +11,7 @@ const initTracer = (): void => {
   const serviceName = 'hm-client-trace-service';
   const tracerProvider = new WebTracerProvider({
     // https://github.com/open-telemetry/opentelemetry-js-contrib/issues/193
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     plugins: [new DocumentLoad(), new XMLHttpRequestPlugin()],
   });

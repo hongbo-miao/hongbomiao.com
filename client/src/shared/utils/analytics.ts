@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import googleTagManager from '@analytics/google-tag-manager';
 import Analytics from 'analytics';

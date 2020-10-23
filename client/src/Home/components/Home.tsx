@@ -8,12 +8,12 @@ import RootState from '../../shared/types/RootState.type';
 import analytics from '../../shared/utils/analytics';
 import MeAction from '../actions/Me.action';
 // https://github.com/facebook/create-react-app/pull/9611
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import hatAVIF from '../images/hat.avif';
 import hatPNG from '../images/hat.png';
 // https://github.com/facebook/create-react-app/pull/9611
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import magicAVIF from '../images/magic.avif';
 import magicPNG from '../images/magic.png';
