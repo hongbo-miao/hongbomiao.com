@@ -29,7 +29,6 @@ module.exports = {
     'airbnb', // eslint-config-airbnb
     'plugin:import/recommended', // eslint-plugin-import
     'plugin:import/typescript', // eslint-plugin-import
-    'plugin:@typescript-eslint/eslint-recommended', // @typescript-eslint/eslint-plugin. Not all eslint core rules are compatible with TypeScript, so you need to add both eslint:recommended and plugin:@typescript-eslint/eslint-recommended
     'plugin:@typescript-eslint/recommended', // @typescript-eslint/eslint-plugin
     'plugin:jest/recommended', // eslint-plugin-jest
     'plugin:jest-dom/recommended', // eslint-plugin-jest-dom
@@ -101,5 +100,7 @@ module.exports = {
     // Note must disable the base rule as it can report incorrect errors
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'error',
   },
 };
