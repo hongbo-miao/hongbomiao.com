@@ -18,7 +18,6 @@ module.exports = {
   extends: [
     'eslint:recommended', // eslint
     'airbnb-base', // eslint-config-airbnb-base
-    'plugin:@typescript-eslint/eslint-recommended', // @typescript-eslint/eslint-plugin. Not all eslint core rules are compatible with TypeScript, so you need to add both eslint:recommended and plugin:@typescript-eslint/eslint-recommended
     'plugin:@typescript-eslint/recommended', // @typescript-eslint/eslint-plugin
     'plugin:security/recommended', // eslint-plugin-security
     'prettier', // eslint-plugin-prettier. Make sure to put it last in the extends array, so it gets the chance to override other configs
