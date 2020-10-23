@@ -2188,6 +2188,14 @@ agent-base@~4.2.1:
   dependencies:
     es6-promisify "^5.0.0"
 
+aggregate-error@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/aggregate-error/-/aggregate-error-3.1.0.tgz#92670ff50f5359bdb7a3e0d40d0ec30c5737687a"
+  integrity sha512-4I7Td01quW/RpocfNayFdFVk1qSuoh0E7JrbRJ16nH01HhKFQ88INq9Sd+nd72zqRySlr9BmDA8xlEJ6vJMrYA==
+  dependencies:
+    clean-stack "^2.0.0"
+    indent-string "^4.0.0"
+
 ajv@^6.12.3:
   version "6.12.5"
   resolved "https://registry.npmjs.org/ajv/-/ajv-6.12.5.tgz"
@@ -3177,6 +3185,11 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
+
+clean-stack@^2.0.0:
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/clean-stack/-/clean-stack-2.2.0.tgz#ee8472dbb129e727b31e8a10a427dee9dfe4008b"
+  integrity sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==
 
 cli-boxes@^2.2.0:
   version "2.2.1"
@@ -5628,6 +5641,11 @@ imurmurhash@^0.1.4:
   resolved "https://registry.npmjs.org/imurmurhash/-/imurmurhash-0.1.4.tgz"
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
 
+indent-string@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/indent-string/-/indent-string-4.0.0.tgz#624f8f4497d619b2d9768531d58f4122854d7251"
+  integrity sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg==
+
 inflight@^1.0.4:
   version "1.0.6"
   resolved "https://registry.npmjs.org/inflight/-/inflight-1.0.6.tgz"
@@ -5752,17 +5770,18 @@ ioredis-mock@5.0.0:
     object-assign "^4.1.1"
     standard-as-callback "^2.0.1"
 
-ioredis@4.17.3:
-  version "4.17.3"
-  resolved "https://registry.npmjs.org/ioredis/-/ioredis-4.17.3.tgz"
-  integrity sha512-iRvq4BOYzNFkDnSyhx7cmJNOi1x/HWYe+A4VXHBu4qpwJaGT1Mp+D2bVGJntH9K/Z/GeOM/Nprb8gB3bmitz1Q==
+ioredis@4.19.0:
+  version "4.19.0"
+  resolved "https://registry.npmjs.org/ioredis/-/ioredis-4.19.0.tgz#1ab3b36362cb3e805c4dbe90fbb7061182f94b63"
+  integrity sha512-7NIkLtpDQ/6WkEircBljnYz/E+kDQcwCJspfR504/tzyXJJQcHaSofMP6G0nuuLfDpOVnpS0AEwDrNIbW38HGg==
   dependencies:
     cluster-key-slot "^1.1.0"
     debug "^4.1.1"
     denque "^1.1.0"
     lodash.defaults "^4.2.0"
     lodash.flatten "^4.4.0"
-    redis-commands "1.5.0"
+    p-map "^4.0.0"
+    redis-commands "1.6.0"
     redis-errors "^1.2.0"
     redis-parser "^3.0.0"
     standard-as-callback "^2.0.1"
@@ -7875,6 +7894,13 @@ p-locate@^4.1.0:
   dependencies:
     p-limit "^2.2.0"
 
+p-map@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/p-map/-/p-map-4.0.0.tgz#bb2f95a5eda2ec168ec9274e06a747c3e2904d2b"
+  integrity sha512-/bjOqmgETBYB5BoEeGVea8dmvHb2m9GLy1E9W43yeyfP6QQCZGFNa+XRceJEuDB6zqr+gKpIAmlLebMpykw/MQ==
+  dependencies:
+    aggregate-error "^3.0.0"
+
 p-try@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
@@ -8825,10 +8851,10 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-redis-commands@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.npmjs.org/redis-commands/-/redis-commands-1.5.0.tgz"
-  integrity sha512-6KxamqpZ468MeQC3bkWmCB1fp56XL64D4Kf0zJSwDZbVLLm7KFkoIcHrgRvQ+sk8dnhySs7+yBg94yIkAK7aJg==
+redis-commands@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npmjs.org/redis-commands/-/redis-commands-1.6.0.tgz#36d4ca42ae9ed29815cdb30ad9f97982eba1ce23"
+  integrity sha512-2jnZ0IkjZxvguITjFTrGiLyzQZcTvaw8DAaCXxZq/dsHXz7KfMQ3OUJy7Tz9vnRtZRVz6VRCPDvruvU8Ts44wQ==
 
 redis-errors@^1.0.0, redis-errors@^1.2.0:
   version "1.2.0"
