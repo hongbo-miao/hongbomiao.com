@@ -1,11 +1,13 @@
 import { graphqlHTTP } from 'express-graphql';
 import isDevelopment from '../../shared/utils/isDevelopment';
+import starshipDataLoader from '../dataLoaders/starship.dataLoader';
 import userDataLoader from '../dataLoaders/user.dataLoader';
 import schema from '../schemas/schema';
 
 const graphQLMiddleware = graphqlHTTP({
   context: {
     dataLoaders: {
+      starship: starshipDataLoader,
       user: userDataLoader,
     },
   },
