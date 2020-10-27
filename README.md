@@ -98,10 +98,11 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **response-time** - HTTP header `X-Response-Time`
 - **connect-timeout** - Request timeout
 - **Terminus** - Health check and graceful shutdown
+- **Opossum** - Node.js circuit breaker
 - **pino** - Node.js logger
+- **Clinic.js** - Node.js performance profiling
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
-- **Clinic.js** - Node.js performance profiling
 
 #### Site Reliability
 
