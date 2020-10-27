@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import reportTo from 'report-to';
 import config from '../../config';
-// import isProduction from '../../shared/utils/isProduction';
+import isProduction from '../../shared/utils/isProduction';
 
 const reportToMiddleware = (): RequestHandler => {
   // Set header 'Report-To'
@@ -23,7 +23,9 @@ const reportToMiddleware = (): RequestHandler => {
            *   : []),
            */
           {
-            url: `https://${config.domain}:${config.port}/api/violation/report-to`,
+            url: isProduction()
+              ? `https://${config.domain}/api/violation/report-to`
+              : `https://${config.domain}:${config.port}/api/violation/report-to`,
             priority: 1,
           },
         ],
