@@ -99,7 +99,6 @@ const sharedCORSAllowList = [
 type Config = {
   shouldHideHTTPLog: boolean;
   shouldPrettifyLog: boolean;
-
   nodeEnv: 'development' | 'production' | 'test';
   domain: string;
   port: number;
@@ -120,12 +119,12 @@ type Config = {
     traceURL: string;
   };
   sentryOptions: Sentry.NodeOptions;
+  swapiURL: string;
 };
 
 const config: Config = {
   shouldHideHTTPLog: hideHTTPLog === true,
   shouldPrettifyLog: prettifyLog === true,
-
   nodeEnv: NODE_ENV,
   domain: DOMAIN,
   port: Number(PORT),
@@ -182,6 +181,7 @@ const config: Config = {
     dsn: 'https://2f46725646834700b4c2675abbc2da6a@o379185.ingest.sentry.io/5375232',
     environment: NODE_ENV,
   },
+  swapiURL: 'https://swapi.dev',
 };
 
 export default config;
