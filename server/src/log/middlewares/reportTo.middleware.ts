@@ -12,16 +12,14 @@ const reportToMiddleware = (): RequestHandler => {
         max_age: 31536000,
         include_subdomains: true,
         endpoints: [
-          /*
-           * ...(isProduction()
-           *   ? [
-           *       {
-           *         url: config.reportURI.reportToURL,
-           *         priority: 1,
-           *       },
-           *     ]
-           *   : []),
-           */
+          ...(isProduction()
+            ? [
+                {
+                  url: config.reportURI.reportToURL,
+                  priority: 1,
+                },
+              ]
+            : []),
           {
             url: isProduction()
               ? `https://${config.domain}/api/violation/report-to`
