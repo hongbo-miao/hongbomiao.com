@@ -1,9 +1,19 @@
 import { RequestHandler } from 'express';
-import reportTo from 'report-to';
+import reportTo, { Endpoint } from 'report-to';
 import config from '../../config';
 import isProduction from '../../shared/utils/isProduction';
 
-const reportToMiddleware = (): RequestHandler => {
+const REPORT_TO_ENDPOINT: Endpoint = isProduction()
+  ? {
+      url: config.reportURI.reportToURL,
+      priority: 1,
+    }
+  : {
+      url: `https://${config.domain}:${config.port}/api/violation/report-to`,
+      priority: 1,
+    };
+
+const reportToMiddleware = (reportToEndpoint: Endpoint = REPORT_TO_ENDPOINT): RequestHandler => {
   // Set header 'Report-To'
   return reportTo({
     groups: [
@@ -11,22 +21,7 @@ const reportToMiddleware = (): RequestHandler => {
         group: 'default',
         max_age: 31536000,
         include_subdomains: true,
-        endpoints: [
-          ...(isProduction()
-            ? [
-                {
-                  url: config.reportURI.reportToURL,
-                  priority: 1,
-                },
-              ]
-            : []),
-          {
-            url: isProduction()
-              ? `https://${config.domain}/api/violation/report-to`
-              : `https://${config.domain}:${config.port}/api/violation/report-to`,
-            priority: 1,
-          },
-        ],
+        endpoints: [reportToEndpoint],
       },
     ],
   });
