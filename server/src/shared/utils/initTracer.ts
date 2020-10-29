@@ -9,6 +9,10 @@ const initTracer = (): void => {
   const serviceName = 'hm-server-trace-service';
   const tracerProvider = new NodeTracerProvider({
     plugins: {
+      dns: {
+        enabled: true,
+        path: '@opentelemetry/plugin-dns',
+      },
       express: {
         enabled: true,
         path: '@opentelemetry/plugin-express',
