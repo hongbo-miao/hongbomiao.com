@@ -44,7 +44,7 @@ services:
   # Redis
   redis:
     container_name: hm_redis
-    image: redis:6.0.7-alpine
+    image: redis:6.0.9-alpine
     volumes:
       - redis_data:/data
     restart: on-failure
@@ -54,7 +54,7 @@ services:
   # PostgreSQL
   postgres:
     container_name: hm_postgres
-    image: postgres:latest
+    image: postgres:13.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -67,7 +67,7 @@ services:
   # Fluent Bit
   fluent-bit:
     container_name: hm_fluent_bit
-    image: fluent/fluent-bit:1.5.6
+    image: fluent/fluent-bit:1.6.2
     volumes:
       - ./docker/fluent-bit/conf:/fluent-bit/etc
     logging:
@@ -159,7 +159,7 @@ services:
   elasticsearch:
     container_name: hm_elasticsearch
     # https://www.docker.elastic.co/r/elasticsearch/elasticsearch-oss
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.1
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.3
     environment:
       - discovery.type=single-node
     restart: on-failure
@@ -170,7 +170,7 @@ services:
   kibana:
     container_name: hm_kibana
     # https://www.docker.elastic.co/r/kibana/kibana-oss
-    image: docker.elastic.co/kibana/kibana-oss:7.9.1
+    image: docker.elastic.co/kibana/kibana-oss:7.9.3
     restart: on-failure
     ports:
       - 5601:5601
@@ -178,7 +178,7 @@ services:
   # Prometheus
   prometheus:
     container_name: hm_prometheus
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.22.0
     volumes:
       - ./docker/prometheus/prometheus.production.yaml:/etc/prometheus/prometheus.yml
     restart: on-failure
@@ -188,7 +188,7 @@ services:
   # Grafana
   grafana:
     container_name: hm_grafana
-    image: grafana/grafana:latest
+    image: grafana/grafana:7.3.0
     environment:
       # https://grafana.com/grafana/plugins
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel

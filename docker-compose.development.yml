@@ -56,7 +56,7 @@ services:
   # PostgreSQL
   postgres:
     container_name: hm_postgres
-    image: postgres:latest
+    image: postgres:13.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -180,7 +180,7 @@ services:
   # Prometheus
   prometheus:
     container_name: hm_prometheus
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.22.0
     volumes:
       - ./docker/prometheus/prometheus.development.yaml:/etc/prometheus/prometheus.yml
     restart: on-failure
@@ -190,7 +190,7 @@ services:
   # Grafana
   grafana:
     container_name: hm_grafana
-    image: grafana/grafana:latest
+    image: grafana/grafana:7.3.0
     environment:
       # https://grafana.com/grafana/plugins
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel
