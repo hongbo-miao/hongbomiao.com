@@ -2,7 +2,7 @@
 import './shared/utils/initTracer';
 import http from 'http';
 import { execute, subscribe } from 'graphql';
-import { createServer } from 'graphql-transport-ws';
+import { createServer } from 'graphql-ws';
 import app from './app';
 import config from './config';
 import initPostgres from './database/postgres/seeds/initPostgres';
