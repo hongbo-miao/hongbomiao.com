@@ -1,4 +1,4 @@
-import { createClient } from 'graphql-transport-ws';
+import { createClient } from 'graphql-ws';
 import config from '../../config';
 
 const graphQLSubscriptionClient = createClient({
