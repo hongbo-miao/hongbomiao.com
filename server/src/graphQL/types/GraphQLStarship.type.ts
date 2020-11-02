@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 type GraphQLStarship = {
   id: string;
   name: string;
