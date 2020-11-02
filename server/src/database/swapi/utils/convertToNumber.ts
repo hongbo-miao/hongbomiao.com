@@ -1,10 +1,10 @@
-const convertToNumber = (value: string): number | null => {
-  if (['unknown', 'n/a'].indexOf(value) !== -1) {
+const convertToNumber = (val: string): number | null => {
+  if (['unknown', 'n/a'].indexOf(val) !== -1) {
     return null;
   }
 
   // Remove digit grouping
-  const numberString = value.replace(/,/, '');
+  const numberString = val.replace(/,/, '');
   return Number(numberString);
 };
 
