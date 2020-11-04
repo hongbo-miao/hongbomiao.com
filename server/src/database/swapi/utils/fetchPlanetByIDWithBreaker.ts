@@ -3,7 +3,7 @@ import config from '../../../config';
 // eslint-disable-next-line import/no-cycle
 import planetDataLoader from '../../../graphQL/dataLoaders/planet.dataLoader';
 import GraphQLPlanet from '../../../graphQL/types/GraphQLPlanet.type';
-import Breaker from '../../../reliability/utils/Breaker';
+import createCircuitBreaker from '../../../reliability/utils/createCircuitBreaker';
 import formatPlanet from './formatPlanet';
 
 const fetchPlanetByID = async (id: string): Promise<GraphQLPlanet | null> => {
@@ -11,10 +11,16 @@ const fetchPlanetByID = async (id: string): Promise<GraphQLPlanet | null> => {
   return formatPlanet(id, swapiPlanet);
 };
 
-const breaker = new Breaker<GraphQLPlanet | null>('planet', fetchPlanetByID);
+const breaker = createCircuitBreaker(fetchPlanetByID);
 
 const fetchPlanetByIDWithBreaker = async (id: string): Promise<GraphQLPlanet | null> => {
-  return breaker.fire(id, planetDataLoader);
+  return breaker
+    .fire(id)
+    .then((res) => res)
+    .catch((err) => {
+      planetDataLoader.clear(id);
+      return err;
+    });
 };
 
 export default fetchPlanetByIDWithBreaker;
