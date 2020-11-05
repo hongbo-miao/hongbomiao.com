@@ -2,7 +2,7 @@ import logger from '../../log/utils/logger';
 import createCircuitBreaker from './createCircuitBreaker';
 
 describe('createCircuitBreaker', () => {
-  const loggerInfoSpy = jest.spyOn(logger, 'info').mockImplementation(() => 0);
+  const loggerInfoSpy = jest.spyOn(logger, 'info').mockImplementation(() => null);
   const asyncFunc = jest.fn(async () => 'World');
   const breaker = createCircuitBreaker(asyncFunc);
 
