@@ -1,4 +1,5 @@
 import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
+import { GraphQLInstrumentation } from '@opentelemetry/instrumentation-graphql';
 import { NodeTracerProvider } from '@opentelemetry/node';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import config from '../../config';
@@ -53,6 +54,10 @@ const initTracer = (): void => {
       },
     },
   });
+
+  const graphQLInstrumentation = new GraphQLInstrumentation();
+  graphQLInstrumentation.setTracerProvider(tracerProvider);
+  graphQLInstrumentation.enable();
 
   if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
