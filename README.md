@@ -106,6 +106,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 #### Site Reliability
 
+- **Locust** - Load testing
 - **PM2** - Node.js application production process manager
 - **NGINX** - Reverse proxy, load balancer
 - **Fluent Bit** - Data collector for unified logging layer
