@@ -12,3 +12,16 @@ class WebsiteUser(HttpUser):
   @task
   def index(self):
     self.client.get('/')
+
+  @task
+  def index(self):
+    query = """
+      query Me {
+        me {
+          id
+          name
+          bio
+        }
+      }
+    """
+    self.client.post('graphql', json={'query': query}, verify=False)
