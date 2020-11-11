@@ -6,7 +6,7 @@ const logger = pino(
     prettyPrint: config.shouldPrettifyLog,
 
     // https://getpino.io/#/docs/redaction
-    redact: ['req.body.variables.password'],
+    redact: ['buffer'],
   },
   pino.destination({
     minLength: 4096, // Bytes. Buffer before writing
