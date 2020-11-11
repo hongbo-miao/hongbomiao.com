@@ -1,7 +1,7 @@
 import path from 'path';
 import * as Sentry from '@sentry/node';
 import bodyParser from 'body-parser';
-import timeout from 'connect-timeout';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import requestId from 'express-request-id';
 import Redis from 'ioredis';
@@ -14,7 +14,7 @@ import incomingRequestCounterMiddleware from './log/middlewares/incomingRequestC
 import networkErrorLoggingMiddleware from './log/middlewares/networkErrorLogging.middleware';
 import pinoMiddleware from './log/middlewares/pino.middleware';
 import reportToMiddleware from './log/middlewares/reportTo.middleware';
-import sendIndexPage from './page/controllers/sendIndexPage';
+import indexRouter from './page/routers/index.router';
 import corsMiddleware from './security/middlewares/cors.middleware';
 import helmetMiddleware from './security/middlewares/helmet.middleware';
 import rateLimitMiddleware from './security/middlewares/rateLimit.middleware';
@@ -25,6 +25,7 @@ const redis = new Redis(config.redisOptions);
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
   .use(bodyParser.json())
+  .use(cookieParser())
   .use(pinoMiddleware())
   .use(incomingRequestCounterMiddleware())
   .use(corsMiddleware())
@@ -33,12 +34,12 @@ const app = express()
   .use(helmetMiddleware())
   .use(requestId())
   .use(responseTime())
-  .get('/', sendIndexPage)
+  .use('/', indexRouter)
   .use(favicon(path.join(__dirname, '../../dist/favicon.ico')))
   .use(express.static(path.join(__dirname, '../../dist')))
   .use(rateLimitMiddleware(redis))
   .use('/graphql', graphQLMiddleware)
-  .use('/api', timeout('5s'), apiRouter)
+  .use('/api', apiRouter)
   .use(Sentry.Handlers.errorHandler()) // Must be before any other error middleware and after all controllers
   .use(handleError);
 
