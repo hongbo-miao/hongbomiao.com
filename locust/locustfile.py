@@ -10,7 +10,7 @@ class WebsiteUser(HttpUser):
         self.client.get('/manifest.json', verify=False)
 
     @task
-    def index(self):
+    def fetch_me(self):
         query = """
             query Me {
                 me {
