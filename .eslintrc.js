@@ -17,6 +17,9 @@ module.exports = {
   ],
   extends: [
     'eslint:recommended', // eslint
+    'plugin:import/errors', // eslint-plugin-import
+    'plugin:import/warnings', // eslint-plugin-import
+    'plugin:import/typescript', // eslint-plugin-import
     'airbnb-base', // eslint-config-airbnb-base
     'plugin:@typescript-eslint/recommended', // @typescript-eslint/eslint-plugin
     'plugin:security/recommended', // eslint-plugin-security
