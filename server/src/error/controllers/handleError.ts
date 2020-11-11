@@ -4,10 +4,22 @@ import { NextFunction, Request, Response } from 'express';
 const handleError = (err: Error, req: Request, res: Response, next: NextFunction): void => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  if (err.code === 'ETIMEDOUT') {
-    res.statusCode = 408;
-  } else {
-    res.statusCode = 500;
+  switch (err.code) {
+    case 'LIMIT_FILE_SIZE': {
+      res.statusCode = 400;
+      break;
+    }
+    case 'EBADCSRFTOKEN': {
+      res.statusCode = 403;
+      break;
+    }
+    case 'ETIMEDOUT': {
+      res.statusCode = 408;
+      break;
+    }
+    default: {
+      res.statusCode = 500;
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

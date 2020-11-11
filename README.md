@@ -91,6 +91,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Redis** - In-memory database
 - **rate-limiter-flexible** - Rate limiting
 - **CORS** - Cross-Origin Resource Sharing
+- **csurf** - CSRF protection
 - **Helmet** - HTTP header `Content-Security-Policy`, `Expect-CT`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
 - **Report To** - HTTP header `Report-To`
 - **Network Error Logging** - HTTP header `NEL`
@@ -98,16 +99,14 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **response-time** - HTTP header `X-Response-Time`
 - **connect-timeout** - Request timeout
 - **Terminus** - Health check and graceful shutdown
-- **Opossum** - Node.js circuit breaker
-- **pino** - Node.js logger
-- **Clinic.js** - Node.js performance profiling
+- **Opossum** - Circuit breaker
+- **pino** - Logger
+- **Clinic.js** - Performance profiling
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
 
 #### Site Reliability
 
-- **Locust** - Load testing
-- **PM2** - Node.js application production process manager
 - **NGINX** - Reverse proxy, load balancer
 - **Fluent Bit** - Data collector for unified logging layer
 - **OpenTelemetry** - Observability framework
@@ -116,7 +115,9 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Kibana** - Data visualization dashboard for Elasticsearch
 - **Grafana** - Monitoring and observability platform
 - **Prometheus** - Monitoring system
+- **PM2** - Node.js application production process manager
 - **Docker**, **Docker Compose** - Container
+- **Locust** - Load testing
 
 #### Code
 
@@ -166,6 +167,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - Kibana: http://localhost:5601
 - Grafana: http://localhost:3000
 - Prometheus: http://localhost:9090
+- Locust: http://localhost:8089
 
 ## Highlights
 
@@ -192,6 +194,12 @@ Below is the website [security report](https://observatory.mozilla.org/analyze/w
 Profiling result by Clinic.js and autocannon.
 
 ![Profiling screenshot](https://user-images.githubusercontent.com/3375461/94975997-100bf200-0546-11eb-9284-db40711a3052.jpg)
+
+### Load Testing
+
+Load testing result by Locust.
+
+![Load testing screenshot](https://user-images.githubusercontent.com/3375461/98866512-0613d200-24a8-11eb-8275-d245efdc4727.jpg)
 
 ### Distributed Tracing
 
