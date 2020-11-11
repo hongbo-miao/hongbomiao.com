@@ -8,7 +8,9 @@ import uploadFile from '../../storage/controllers/uploadFile';
 
 const csrfProtection = csrf({ cookie: true });
 const parseForm = bodyParser.urlencoded({ extended: false });
-const upload = multer();
+const upload = multer({
+  limits: { fileSize: 1e6 }, // 1MB
+});
 
 const apiRouter = Router()
   .use('/violation', timeout('5s'), violationRouter)

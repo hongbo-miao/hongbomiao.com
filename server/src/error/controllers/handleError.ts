@@ -5,6 +5,10 @@ const handleError = (err: Error, req: Request, res: Response, next: NextFunction
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   switch (err.code) {
+    case 'LIMIT_FILE_SIZE': {
+      res.statusCode = 400;
+      break;
+    }
     case 'EBADCSRFTOKEN': {
       res.statusCode = 403;
       break;
