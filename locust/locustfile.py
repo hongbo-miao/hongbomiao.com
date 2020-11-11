@@ -21,3 +21,14 @@ class WebsiteUser(HttpUser):
             }
         """
         self.client.post('/graphql', json={'query': query}, verify=False)
+
+    @task
+    def upload_file(self):
+        res = self.client.get('/', verify=False)
+        csrf_token = res.cookies['X-CSRF-Token']
+        file = open('fixture/file.txt', 'rb')
+        self.client.post(
+            '/api/upload-file',
+            headers={'X-CSRF-Token': csrf_token},
+            files={'file': file},
+            verify=False)
