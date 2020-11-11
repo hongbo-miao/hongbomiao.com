@@ -91,6 +91,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Redis** - In-memory database
 - **rate-limiter-flexible** - Rate limiting
 - **CORS** - Cross-Origin Resource Sharing
+- **csurf** - CSRF protection
 - **Helmet** - HTTP header `Content-Security-Policy`, `Expect-CT`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
 - **Report To** - HTTP header `Report-To`
 - **Network Error Logging** - HTTP header `NEL`
@@ -98,9 +99,9 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **response-time** - HTTP header `X-Response-Time`
 - **connect-timeout** - Request timeout
 - **Terminus** - Health check and graceful shutdown
-- **Opossum** - Node.js circuit breaker
-- **pino** - Node.js logger
-- **Clinic.js** - Node.js performance profiling
+- **Opossum** - Circuit breaker
+- **pino** - Logger
+- **Clinic.js** - Performance profiling
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
 
