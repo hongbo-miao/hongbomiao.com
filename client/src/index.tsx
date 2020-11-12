@@ -2,7 +2,7 @@
 import './shared/utils/initTracer';
 import './index.css';
 import * as Sentry from '@sentry/react';
-import React, { StrictMode } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import HmApp from './App/components/App';
@@ -14,13 +14,13 @@ import store from './shared/utils/store';
 initSentry();
 
 ReactDOM.render(
-  <StrictMode>
+  <React.StrictMode>
     <Sentry.ErrorBoundary fallback="An error has occurred">
       <Provider store={store}>
         <HmApp />
       </Provider>
     </Sentry.ErrorBoundary>
-  </StrictMode>,
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
