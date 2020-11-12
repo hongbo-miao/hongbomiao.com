@@ -1,6 +1,7 @@
 // OpenTelemetry need to be setup before importing other modules
 import './shared/utils/initTracer';
 import './index.css';
+import * as Sentry from '@sentry/react';
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -14,9 +15,11 @@ initSentry();
 
 ReactDOM.render(
   <StrictMode>
-    <Provider store={store}>
-      <HmApp />
-    </Provider>
+    <Sentry.ErrorBoundary fallback="An error has occurred">
+      <Provider store={store}>
+        <HmApp />
+      </Provider>
+    </Sentry.ErrorBoundary>
   </StrictMode>,
   document.getElementById('root')
 );
