@@ -9,7 +9,7 @@ import GraphQLPing from '../types/GraphQLPing.type';
 
 const subscribePing$ = (query: string): Observable<GraphQLResponse<GraphQLPing>> => {
   return new Observable((observer) => {
-    graphQLSubscriptionClient.subscribe(
+    return graphQLSubscriptionClient.subscribe(
       {
         query,
       },
