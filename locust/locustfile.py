@@ -7,10 +7,26 @@ import config
 class WebsiteUser(HttpUser):
     wait_time = between(5, 15)
 
+    csrf_token = ""
+    jwt_token = ""
+
     def on_start(self):
-        self.client.get('/favicon.ico', verify=False)
-        self.client.get('/favicon.png', verify=False)
-        self.client.get('/manifest.json', verify=False)
+        # Get CSRF token
+        res = self.client.get('/', verify=False)
+        self.csrf_token = res.cookies['__Host-csrfToken']
+
+        # Get JWT token
+        query = """
+            mutation SignIn($email: String!, $password: String!) {
+                signIn(email: $email, password: $password) {
+                    jwtToken
+                }
+            }
+        """
+        variables = {'email': config.seed_user_email, 'password': config.seed_user_password}
+        res = self.client.post('/graphql', json={'query': query, 'variables': variables})
+        content = json.loads(res.content)
+        self.jwt_token = content['data']['signIn']['jwtToken']
 
     @task
     def index(self):
@@ -31,29 +47,9 @@ class WebsiteUser(HttpUser):
 
     @task
     def upload_file(self):
-        # Get CSRF token
-        res = self.client.get('/', verify=False)
-        csrf_token = res.cookies['__Host-csrfToken']
-
-        # Get JWT token
-        query = """
-            mutation SignIn($email: String!, $password: String!) {
-                signIn(email: $email, password: $password) {
-                    jwtToken
-                }
-            }
-        """
-        variables = {'email': config.seed_user_email, 'password': config.seed_user_password}
-        res = self.client.post('/graphql', json={'query': query, 'variables': variables})
-        content = json.loads(res.content)
-        jwt_token = content['data']['signIn']['jwtToken']
-
-        # Read file
         file = open('fixture/file.txt', 'rb')
-
-        # Upload file
         self.client.post(
             '/api/upload-file',
-            headers={'Authorization': f'Bearer {jwt_token}', 'X-CSRF-Token': csrf_token},
+            headers={'Authorization': f'Bearer {self.jwt_token}', 'X-CSRF-Token': self.csrf_token},
             files={'file': file},
             verify=False)
