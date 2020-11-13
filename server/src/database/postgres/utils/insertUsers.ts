@@ -1,8 +1,8 @@
-import GraphQLUser from '../../../graphQL/types/GraphQLUser.type';
 import PostgresInputUser from '../types/PostgresInputUser.type';
+import PostgresUser from '../types/PostgresUser.type';
 import insertUser from './insertUser';
 
-const insertUsers = async (users: Array<PostgresInputUser>): Promise<(GraphQLUser | null)[]> => {
+const insertUsers = async (users: Array<PostgresInputUser>): Promise<PostgresUser[]> => {
   return Promise.all(users.map((user) => insertUser(user)));
 };
 
