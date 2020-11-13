@@ -18,6 +18,7 @@ if (prettifyLog != null && typeof prettifyLog !== 'boolean') {
 
 const {
   DOMAIN,
+  JWT_SECRET,
   LIGHTSTEP_TOKEN,
   NODE_ENV,
   PORT,
@@ -38,6 +39,9 @@ const {
 
 if (DOMAIN == null || DOMAIN === '') {
   throw new Error('Failed to read DOMAIN.');
+}
+if (JWT_SECRET == null || JWT_SECRET === '') {
+  throw new Error('Failed to read JWT_SECRET.');
 }
 if (LIGHTSTEP_TOKEN == null || LIGHTSTEP_TOKEN === '') {
   throw new Error('Failed to read LIGHTSTEP_TOKEN.');
@@ -111,6 +115,7 @@ type Config = {
     exceptCTReportURI: string;
     reportToURL: string;
   };
+  jwtSecret: string;
   redisOptions: Redis.RedisOptions;
   postgresConnection: knex.StaticConnectionConfig;
   seedUser: PostgresInputUser;
@@ -153,6 +158,7 @@ const config: Config = {
     exceptCTReportURI: 'https://hongbomiao.report-uri.com/r/d/ct/enforce',
     reportToURL: 'https://hongbomiao.report-uri.com/a/d/g',
   },
+  jwtSecret: JWT_SECRET,
   redisOptions: {
     host: REDIS_HOST,
     port: Number(REDIS_PORT),
