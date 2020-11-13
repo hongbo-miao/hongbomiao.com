@@ -6,7 +6,7 @@ import attachCSPNonce from '../../security/utils/attachCSPNonce';
 const sendIndexPage = (req: Request, res: Response): void => {
   const { cspNonce } = res.locals;
   const html = fs.readFileSync(path.join(__dirname, '../../../../dist/index.html'), 'utf-8');
-  res.cookie('X-CSRF-Token', req.csrfToken());
+  res.cookie('csrfToken', req.csrfToken(), { sameSite: 'strict', secure: true });
   res.send(attachCSPNonce(html, cspNonce));
 };
 

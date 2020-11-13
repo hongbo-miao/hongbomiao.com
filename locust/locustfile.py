@@ -25,7 +25,7 @@ class WebsiteUser(HttpUser):
     @task
     def upload_file(self):
         res = self.client.get('/', verify=False)
-        csrf_token = res.cookies['X-CSRF-Token']
+        csrf_token = res.cookies['csrfToken']
         file = open('fixture/file.txt', 'rb')
         self.client.post(
             '/api/upload-file',
