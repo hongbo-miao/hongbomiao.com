@@ -7,6 +7,7 @@ const MeGraphQLType = new GraphQLObjectType({
     name: { type: GraphQLString },
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
+    email: { type: GraphQLString },
     bio: { type: GraphQLString },
   },
 });

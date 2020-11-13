@@ -1,9 +1,7 @@
-type GraphQLMe = {
-  id: string;
-  name: string;
-  firstName: string;
-  lastName: string;
-  bio: string | null;
+import GraphQLUser from './GraphQLUser.type';
+
+type GraphQLMe = GraphQLUser & {
+  email: string;
 };
 
 export default GraphQLMe;

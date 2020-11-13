@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-type PostgresUserType = {
+type PostgresUser = {
   id: string;
   email: string;
   password: string;
@@ -11,4 +11,4 @@ type PostgresUserType = {
   last_login: Date | null;
 };
 
-export default PostgresUserType;
+export default PostgresUser;

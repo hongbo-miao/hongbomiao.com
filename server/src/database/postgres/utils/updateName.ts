@@ -1,8 +1,7 @@
-import GraphQLUser from '../../../graphQL/types/GraphQLUser.type';
 import pg from '../pg';
-import formatUser from './formatUser';
+import PostgresUser from '../types/PostgresUser.type';
 
-const updateName = async (id: string, firstName: string, lastName: string): Promise<GraphQLUser | null> => {
+const updateName = async (id: string, firstName: string, lastName: string): Promise<PostgresUser> => {
   const [firstUser] = await pg('users')
     .where({ id })
     .update({
@@ -14,7 +13,7 @@ const updateName = async (id: string, firstName: string, lastName: string): Prom
   if (firstUser == null) {
     throw new Error('User does not exist.');
   }
-  return formatUser(firstUser);
+  return firstUser;
 };
 
 export default updateName;
