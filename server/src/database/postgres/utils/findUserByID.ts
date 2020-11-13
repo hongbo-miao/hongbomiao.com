@@ -1,10 +1,9 @@
-import GraphQLUser from '../../../graphQL/types/GraphQLUser.type';
 import pg from '../pg';
-import formatUser from './formatUser';
+import PostgresUser from '../types/PostgresUser.type';
 
-const findUserByID = async (id: string): Promise<GraphQLUser | null> => {
+const findUserByID = async (id: string): Promise<PostgresUser> => {
   const [firstUser] = await pg.select('*').from('users').where('id', id);
-  return formatUser(firstUser);
+  return firstUser;
 };
 
 export default findUserByID;

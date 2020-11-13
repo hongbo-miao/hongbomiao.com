@@ -92,6 +92,8 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **rate-limiter-flexible** - Rate limiting
 - **CORS** - Cross-Origin Resource Sharing
 - **csurf** - CSRF protection
+- **jsonwebtoken**, **express-jwt** - JSON Web Tokens (JWT)
+- **bcrypt** - Password hashing
 - **Helmet** - HTTP header `Content-Security-Policy`, `Expect-CT`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
 - **Report To** - HTTP header `Report-To`
 - **Network Error Logging** - HTTP header `NEL`

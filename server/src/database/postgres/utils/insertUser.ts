@@ -1,22 +1,22 @@
-import GraphQLUser from '../../../graphQL/types/GraphQLUser.type';
+import bcrypt from 'bcrypt';
 import pg from '../pg';
 import PostgresInputUser from '../types/PostgresInputUser.type';
-import formatUser from './formatUser';
+import PostgresUser from '../types/PostgresUser.type';
 
-const insertUser = async (user: PostgresInputUser): Promise<GraphQLUser | null> => {
+const insertUser = async (user: PostgresInputUser): Promise<PostgresUser> => {
   const { email, password, firstName, lastName, bio } = user;
 
   const [firstUser] = await pg('users')
     .insert({
       email: email.toLowerCase(),
-      password: pg.raw(`crypt('${password}', gen_salt('bf'))`),
+      password: await bcrypt.hash(password, 10),
       first_name: firstName,
       last_name: lastName,
       bio,
     })
     .returning('*');
 
-  return formatUser(firstUser);
+  return firstUser;
 };
 
 export default insertUser;

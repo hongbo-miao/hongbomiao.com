@@ -1,11 +1,12 @@
 import faker from 'faker';
 import config from '../../../config';
 import findUserByEmail from '../utils/findUserByEmail';
+import formatUser from '../utils/formatUser';
 import insertUsers from '../utils/insertUsers';
 
 const initUsers = async (): Promise<void> => {
   const { email, password, firstName, lastName, bio } = config.seedUser;
-  const user = await findUserByEmail(email);
+  const user = formatUser(await findUserByEmail(email));
   if (user == null) {
     let users = [{ email, password, firstName, lastName, bio }];
     for (let i = 0; i < 20; i += 1) {
