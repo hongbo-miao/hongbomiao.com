@@ -7,7 +7,7 @@ import authMiddleware from '../../security/middlewares/auth.middleware';
 import violationRouter from '../../security/routers/violation.router';
 import uploadFile from '../../storage/controllers/uploadFile';
 
-const csrfProtection = csrf({ cookie: true });
+const csrfProtection = csrf({ cookie: { key: '__Host-csrf' } });
 const parseForm = bodyParser.urlencoded({ extended: false });
 const upload = multer({
   limits: { fileSize: 1e6 }, // 1MB
