@@ -15,11 +15,11 @@ const logger = pino(
 );
 
 /*
- * Asynchronously flush every 10 seconds to keep the buffer empty in periods of low activity
+ * Asynchronously flush periodically to keep the buffer empty in periods of low activity
  * https://github.com/pinojs/pino/blob/master/docs/asynchronous.md#log-loss-prevention
  */
 setInterval(() => {
   logger.flush();
-}, 10 * 1000).unref();
+}, 10e3).unref(); // 10s
 
 export default logger;
