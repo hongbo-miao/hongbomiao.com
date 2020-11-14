@@ -9,7 +9,7 @@ const metricExporter = new CollectorMetricExporter({
 const metricProvider = isDevelopment()
   ? new MeterProvider({
       exporter: metricExporter,
-      interval: 5 * 1000, // ms
+      interval: 5e3, // 5s
     })
   : new MeterProvider();
 
