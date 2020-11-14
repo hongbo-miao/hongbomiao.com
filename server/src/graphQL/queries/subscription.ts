@@ -25,6 +25,6 @@ setInterval(() => {
   pubsub.publish('ping', {
     ping: 'pong',
   });
-}, 5 * 1000).unref();
+}, 5e3).unref(); // 5s
 
 export default subscription;
