@@ -6,8 +6,9 @@ const indexRouter = Router().get(
   '/',
   csrf({
     cookie: {
-      httpOnly: true,
+      key: '__Host-csrf',
       sameSite: 'strict',
+      httpOnly: true,
       secure: true,
     },
   }),
