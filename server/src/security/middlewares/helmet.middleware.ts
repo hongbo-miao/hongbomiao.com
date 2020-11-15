@@ -34,6 +34,9 @@ const helmetMiddleware = (
             // Sentry
             'https://o379185.ingest.sentry.io',
 
+            // Google Analytics 4
+            'https://analytics.google.com',
+
             // Universal Analytics (Google Analytics)
             'https://stats.g.doubleclick.net',
             'https://www.google-analytics.com',
