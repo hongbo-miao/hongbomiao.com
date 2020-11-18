@@ -15,6 +15,6 @@ const upload = multer({
 
 const apiRouter = Router()
   .use('/violation', timeout('5s'), violationRouter)
-  .use('/upload-file', authMiddleware(), parseForm, csrfProtection, upload.single('file'), uploadFile);
+  .post('/upload-file', authMiddleware(), parseForm, csrfProtection, upload.single('file'), uploadFile);
 
 export default apiRouter;

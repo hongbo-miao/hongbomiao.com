@@ -1,5 +1,7 @@
 from locust import HttpUser, between, task
 import json
+import magic
+import os
 
 import config
 
@@ -7,8 +9,8 @@ import config
 class WebsiteUser(HttpUser):
     wait_time = between(5, 15)
 
-    csrf_token = ""
-    jwt_token = ""
+    csrf_token = ''
+    jwt_token = ''
 
     def on_start(self):
         # Get CSRF token
@@ -47,9 +49,16 @@ class WebsiteUser(HttpUser):
 
     @task
     def upload_file(self):
-        file = open('fixture/file.txt', 'rb')
+        file_path = 'fixture/image.png'
+        file_name = os.path.basename(file_path)
+        file = open(file_path, 'rb')
+        mime = magic.Magic(mime=True)
+        file_mimetype = mime.from_file(file_path)
+        files = {
+            'file': (file_name, file, file_mimetype),
+        }
         self.client.post(
             '/api/upload-file',
             headers={'Authorization': f'Bearer {self.jwt_token}', 'X-CSRF-Token': self.csrf_token},
-            files={'file': file},
+            files=files,
             verify=False)
