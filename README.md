@@ -163,7 +163,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 ## URLs
 
 - NGINX: https://localhost:443
-- Client: https://localhost:8080
+- Web: https://localhost:8080
 - Server: https://localhost:5000
 - Jaeger: http://localhost:16686
 - Kibana: http://localhost:5601

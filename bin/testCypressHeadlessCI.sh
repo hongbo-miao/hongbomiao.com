@@ -6,7 +6,7 @@ set -e
 # In create-react-app, when you run 'yarn build' to make a production bundle, it is always equal to 'production'.
 # So using REACT_APP_SERVER_DOMAIN=localhost and REACT_APP_SERVER_PORT=5000 in .env.production.local.example
 # to avoid sending data to production server
-cp -n client/.env.production.local.example client/.env.production.local || true
+cp -n web/.env.production.local.example web/.env.production.local || true
 
 cp -n server/private/ssl/hongbomiao.crt.example server/private/ssl/hongbomiao.crt || true
 cp -n server/private/ssl/hongbomiao.key.example server/private/ssl/hongbomiao.key || true

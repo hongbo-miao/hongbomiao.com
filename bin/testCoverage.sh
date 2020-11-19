@@ -2,7 +2,7 @@
 
 set -e
 
-cd client
+cd web
 yarn test:coverage
 
 cd ../server
@@ -10,7 +10,7 @@ yarn test:coverage
 
 cd ..
 mkdir -p tmp
-cp client/coverage/coverage-final.json tmp/coverage-final-client.json
+cp web/coverage/coverage-final.json tmp/coverage-final-web.json
 cp server/coverage/coverage-final.json tmp/coverage-final-server.json
 
 mkdir -p coverage
