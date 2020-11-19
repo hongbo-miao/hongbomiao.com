@@ -8,7 +8,7 @@ import isDevelopment from './isDevelopment';
 import isProduction from './isProduction';
 
 const initTracer = (): void => {
-  const serviceName = 'hm-client-trace-service';
+  const serviceName = 'hm-web-trace-service';
   const tracerProvider = new WebTracerProvider({
     // https://github.com/open-telemetry/opentelemetry-js-contrib/issues/193
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
