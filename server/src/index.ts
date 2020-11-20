@@ -2,7 +2,8 @@
 import './shared/utils/initTracer';
 import http from 'http';
 import { execute, subscribe } from 'graphql';
-import { createServer } from 'graphql-ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+import ws from 'ws';
 import app from './app';
 import config from './config';
 import initPostgres from './database/postgres/seeds/initPostgres';
@@ -16,23 +17,25 @@ import isProduction from './shared/utils/isProduction';
 initSentry();
 initPostgres();
 
-const server = isProduction() ? http.createServer(app) : createHTTP2Server(app);
 const { nodeEnv, port } = config;
 
-server.listen(port, () => {
+const httpServer = isProduction() ? http.createServer(app) : createHTTP2Server(app);
+const wsServer = new ws.Server({
+  server: httpServer,
+  path: '/graphql',
+});
+
+httpServer.listen(port, () => {
   logger.info({ nodeEnv, port }, 'env');
 });
 
-createServer(
+useServer(
   {
     schema: subscriptionSchema,
     execute,
     subscribe,
   },
-  {
-    server,
-    path: '/graphql',
-  }
+  wsServer
 );
 
-createTerminus(server);
+createTerminus(httpServer);
