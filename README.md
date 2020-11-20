@@ -13,7 +13,7 @@
 <br />
 
 <p align="center">
-  <a href="https://travis-ci.com/Hongbo-Miao/hongbomiao.com"><img alt="Travis" src="https://img.shields.io/travis/com/Hongbo-Miao/hongbomiao.com/master" /></a>
+  <a href="https://github.com/Hongbo-Miao/hongbomiao.com/actions"><img alt="GitHub Actions" src="https://img.shields.io/github/workflow/status/Hongbo-Miao/hongbomiao.com/Deploy" /></a>
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com"><img alt="FOSSA Status" src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com.svg?type=shield" /></a>
   <a href="https://david-dm.org/Hongbo-Miao/hongbomiao.com"><img alt="David" src="https://img.shields.io/david/Hongbo-Miao/hongbomiao.com?path=server" /></a>
   <a href="https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements"><img alt="Requires.io requirements status" src="https://img.shields.io/requires/github/Hongbo-Miao/hongbomiao.com" /></a>
