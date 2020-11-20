@@ -4,7 +4,13 @@ pull_request_rules:
   - name: automatic merge on CI success and review
     conditions:
       - author=Hongbo-Miao
-      - status-success=Travis CI - Pull Request
+      - check-success=Lint
+      - check-success=Web - Test
+      - check-success=Server - Test
+      - check-success=Coverage
+      - check-success=Web - Lighthouse
+      - check-success=Web - Storybook
+      - check-success=Cypress
       - base=master
       - label!=work in progress
     actions:
@@ -15,7 +21,13 @@ pull_request_rules:
   - name: automatic merge for Renovate pull requests
     conditions:
       - author=renovate[bot]
-      - status-success=Travis CI - Pull Request
+      - check-success=Lint
+      - check-success=Web - Test
+      - check-success=Server - Test
+      - check-success=Coverage
+      - check-success=Web - Lighthouse
+      - check-success=Web - Storybook
+      - check-success=Cypress
       - base=master
     actions:
       merge:
