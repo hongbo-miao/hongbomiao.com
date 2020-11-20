@@ -1,0 +1,18 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  # https://github.com/marketplace/actions/deploy-to-heroku
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.6.8
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "hongbomiao"
+          heroku_email: "hongbo.miao@outlook.com"
