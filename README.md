@@ -66,7 +66,8 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 #### Front End
 
-- **React** - User interface building
+- **React** - Web framework
+- **React Native** - Mobile application framework
 - **Redux** - State container
 - **redux-observable** - Side effects
 - **RxJS** - Asynchronous programming with observable streams
@@ -164,6 +165,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 - NGINX: https://localhost:443
 - Web: https://localhost:8080
+- Expo: http://localhost:19002
 - Server: https://localhost:5000
 - Jaeger: http://localhost:16686
 - Kibana: http://localhost:5601
