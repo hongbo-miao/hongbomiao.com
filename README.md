@@ -142,7 +142,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Namecheap** - Domain
 - **Cloudflare** - CDN, DNS, DDoS protection
 - **ZenHub** - Agile project management
-- **[Travis](https://travis-ci.com/Hongbo-Miao/hongbomiao.com)** - Continuous integration
+- **[GitHub Actions](https://github.com/Hongbo-Miao/hongbomiao.com/actions)** - Continuous integration
 - **[Codacy](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
 - **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
 - **[Chromatic](https://www.chromaticqa.com/library?appId=5d626a63a601530020759b10)** - UI reviewing and feedback collecting
