@@ -1,0 +1,150 @@
+name: Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15.2.1'
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          cd web && yarn install --frozen-lockfile
+          cd ../server && yarn install --frozen-lockfile
+      - name: Lint
+        run: |
+          yarn lint:js
+          yarn lint:css
+
+  web-test:
+    name: Web - Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15.2.1'
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          cd web && yarn install --frozen-lockfile
+      - name: Test
+        working-directory: web
+        run: |
+          yarn test
+
+  server-test:
+    name: Server - Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15.2.1'
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          cd server && yarn install --frozen-lockfile
+      - name: Test
+        working-directory: server
+        run: |
+          yarn test
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15.2.1'
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          cd web && yarn install --frozen-lockfile
+          cd ../server && yarn install --frozen-lockfile
+      - name: Coverage
+        run: |
+          yarn test:coverage
+          yarn test:coverage:publish
+
+  web-lighthouse:
+    name: Web - Lighthouse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15.2.1'
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          cd web && yarn install --frozen-lockfile
+      - name: Lighthouse
+        working-directory: web
+        run: |
+          yarn build
+          yarn run lighthouse
+
+   # https://www.chromatic.com/docs/github-actions
+  web-storybook:
+    name: Web - Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Required to retrieve git history
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15.2.1'
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          cd web && yarn install --frozen-lockfile
+      - name: Build
+        working-directory: web
+        run: |
+          yarn build
+          yarn storybook:build
+      - name: Publish storybook to Chromatic
+        working-directory: web
+        run: |
+          yarn storybook:publish --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
+
+  cypress:
+    name: Cypress
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15.2.1'
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          cd web && yarn install --frozen-lockfile
+          cd ../server && yarn install --frozen-lockfile
+      - name: Build
+        run: |
+          cd web && yarn build
+          cd .. && cp -r web/build/ server/dist/
+          cd server && yarn build
+      - name: Test - Cypress
+        run: |
+          yarn test:cypress:headless:ci
