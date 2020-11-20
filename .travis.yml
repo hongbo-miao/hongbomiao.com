@@ -29,7 +29,7 @@ notifications:
 
 install:
   - yarn install --frozen-lockfile
-  - cd $TRAVIS_BUILD_DIR/client && yarn install --frozen-lockfile
+  - cd $TRAVIS_BUILD_DIR/web && yarn install --frozen-lockfile
   - cd $TRAVIS_BUILD_DIR/server && yarn install --frozen-lockfile
 
 jobs:
@@ -44,10 +44,10 @@ jobs:
         - yarn lint:css
 
     - stage: Test
-      name: "Test - Client"
+      name: "Test - Web"
       if: type = pull_request
       before_script:
-        - cd $TRAVIS_BUILD_DIR/client
+        - cd $TRAVIS_BUILD_DIR/web
       script:
         - yarn test
 
@@ -70,10 +70,10 @@ jobs:
         - yarn test:coverage:publish
 
     - stage: Test
-      name: "Lighthouse - Client"
+      name: "Lighthouse - Web"
       if: type = pull_request
       before_script:
-        - cd $TRAVIS_BUILD_DIR/client
+        - cd $TRAVIS_BUILD_DIR/web
       script:
         - yarn build
         - yarn run lighthouse
@@ -81,10 +81,10 @@ jobs:
         chrome: stable
 
     - stage: Test
-      name: "Storybook - Client"
+      name: "Storybook - Web"
       if: type = pull_request
       before_script:
-        - cd $TRAVIS_BUILD_DIR/client
+        - cd $TRAVIS_BUILD_DIR/web
       script:
         - yarn run storybook:publish --exit-zero-on-changes
 
@@ -93,8 +93,8 @@ jobs:
       name: "Cypress"
       if: type = pull_request
       before_script:
-        - cd $TRAVIS_BUILD_DIR/client && yarn build
-        - cd $TRAVIS_BUILD_DIR && cp -r client/build/ server/dist/
+        - cd $TRAVIS_BUILD_DIR/web && yarn build
+        - cd $TRAVIS_BUILD_DIR && cp -r web/build/ server/dist/
         - cd $TRAVIS_BUILD_DIR/server && yarn build
         - cd $TRAVIS_BUILD_DIR
       script:

@@ -6,8 +6,8 @@ set -e
 rm -rf coverage
 rm -rf node_modules
 
-# Client
-cd client
+# Web
+cd web
 rm -rf build
 rm -rf tmp
 rm -rf coverage

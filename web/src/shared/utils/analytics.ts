@@ -7,7 +7,7 @@ import isDevelopment from './isDevelopment';
 import isProduction from './isProduction';
 
 const analytics = Analytics({
-  app: 'hm-client-analytics',
+  app: 'hm-web-analytics',
   debug: isDevelopment(),
   plugins: isProduction() ? [googleTagManager(config.googleTagManagerOptions)] : [],
 });

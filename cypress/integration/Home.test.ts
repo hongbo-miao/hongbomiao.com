@@ -1,13 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { skipOn } from '@cypress/skip-test';
-import meQuery from '../../client/src/Home/queries/me.query';
+import meQuery from '../../web/src/Home/queries/me.query';
 
 describe('Home', () => {
-  const { ci, domain, clientPort, serverPort } = Cypress.env();
+  const { ci, domain, serverPort, webPort } = Cypress.env();
 
   it('render Home', () => {
-    cy.visit(`${domain}:${clientPort}`);
+    cy.visit(`${domain}:${webPort}`);
     cy.contains('Making magic happen');
   });
 
