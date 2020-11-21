@@ -3,7 +3,7 @@ import './shared/utils/initTracer';
 import http from 'http';
 import { execute, subscribe } from 'graphql';
 import { useServer } from 'graphql-ws/lib/use/ws';
-import ws from 'ws';
+import WebSocket from 'ws';
 import app from './app';
 import config from './config';
 import initPostgres from './database/postgres/seeds/initPostgres';
@@ -20,7 +20,7 @@ initPostgres();
 const { nodeEnv, port } = config;
 
 const httpServer = isProduction() ? http.createServer(app) : createHTTP2Server(app);
-const wsServer = new ws.Server({
+const wsServer = new WebSocket.Server({
   server: httpServer,
   path: '/graphql',
 });
