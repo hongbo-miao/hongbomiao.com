@@ -19,7 +19,8 @@ cp -n web/private/ssl/hongbomiao.key.example web/private/ssl/hongbomiao.key || t
 cp -n server/private/ssl/hongbomiao.crt.example server/private/ssl/hongbomiao.crt || true
 cp -n server/private/ssl/hongbomiao.key.example server/private/ssl/hongbomiao.key || true
 
-# Install
+# Install dependencies
 yarn install
 cd web && yarn install
+cd mobile && yarn install
 cd ../server && yarn install
