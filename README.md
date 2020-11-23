@@ -64,10 +64,9 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 ## Tech Stack
 
-#### Front End
+#### Web
 
 - **React** - Web framework
-- **React Native** - Mobile application framework
 - **Redux** - State container
 - **redux-observable** - Side effects
 - **RxJS** - Asynchronous programming with observable streams
@@ -80,6 +79,11 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **rxjs/testing** - Marble testing
 - **Cypress** - End-to-end testing
 - **Lighthouse CI** - Performance, accessibility, SEO, progressive web app (PWA) analyzing
+
+#### Mobile
+
+- **React Native** - Mobile application framework
+- **UI Kitten** - UI Library
 
 #### Back End
 
