@@ -83,7 +83,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 #### Mobile
 
 - **React Native** - Mobile application framework
-- **UI Kitten** - UI Library
+- **UI Kitten** - UI library
 
 #### Back End
 
