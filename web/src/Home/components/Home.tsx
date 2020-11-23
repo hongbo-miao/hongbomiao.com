@@ -44,17 +44,17 @@ const Home: React.FC<Props> = (props) => {
   return (
     <div className={styles.hmHome}>
       <div className={`container is-max-desktop ${styles.hmContainer}`}>
-        <h1 className={styles.hmTitle}>{name}</h1>
+        <h1 className={styles.hmName}>{name}</h1>
         <HmLazyComponent>
           <HmSparkles>
-            <a className={styles.hmContent} href={config.githubURL} target="_blank" rel="noopener noreferrer">
+            <a className={styles.hmBioContainer} href={config.githubURL} target="_blank" rel="noopener noreferrer">
               <HmImage
                 avifSrc={hatAVIF}
                 fallbackSrc={hatPNG}
                 style={{ height: '22px', width: '22px' }}
                 alt="Magical Hat"
               />
-              <div className={styles.hmText}>{bio}</div>
+              <div className={styles.hmBio}>{bio}</div>
               <HmImage
                 avifSrc={magicAVIF}
                 fallbackSrc={magicPNG}
