@@ -14,6 +14,10 @@ rm -rf coverage
 rm -rf node_modules
 rm -f public/sitemap.xml
 
+# Mobile
+cd ../mobile
+rm -rf node_modules
+
 # Server
 cd ../server
 rm -rf .clinic
