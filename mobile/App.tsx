@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
 });
 
 const App: React.FC = () => {
-  const [fontsLoaded] = useFonts({
+  const [isFontLoaded] = useFonts({
     OpenSans_400Regular,
   });
 
-  if (!fontsLoaded) {
+  if (!isFontLoaded) {
     return <AppLoading />;
   }
 
