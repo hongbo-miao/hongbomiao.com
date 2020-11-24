@@ -81,7 +81,7 @@ const helmetMiddleware = (
             'https://www.google-analytics.com',
           ]),
           manifestSrc: ["'self'"],
-          mediaSrc: ["'none'"],
+          mediaSrc: ["'self'"],
           objectSrc: ["'none'"],
           scriptSrc: lodashUniq([
             /* Content Security Policy Level 3 */
