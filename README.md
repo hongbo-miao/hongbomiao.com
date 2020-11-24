@@ -60,7 +60,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 [https://www.hongbomiao.com](https://www.hongbomiao.com)
 
-[![hongbomiao.com record](https://user-images.githubusercontent.com/3375461/91978222-5b1fc300-ed56-11ea-96b8-49ec409a8e61.gif)](https://www.hongbomiao.com)
+[![hongbomiao.com record](https://user-images.githubusercontent.com/3375461/100162554-deccf400-2eee-11eb-89b4-49cd6c23026d.gif)](https://www.hongbomiao.com)
 
 ## Tech Stack
 
