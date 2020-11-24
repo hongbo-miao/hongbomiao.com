@@ -30,7 +30,7 @@ const AudioPlayer: React.FC<Props> = (props) => {
     <>
       {audioElement}
       <button className={playButtonClassName} type="button" onClick={onTogglePlay}>
-        <img className={styles.hmMusicalNote} width="25" height="25" src={musicalNoteGIF} alt="Music" />
+        <img className={styles.hmMusicalNote} width="20" height="20" src={musicalNoteGIF} alt="Music" />
       </button>
     </>
   );
