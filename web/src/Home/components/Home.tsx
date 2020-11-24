@@ -7,6 +7,9 @@ import HmLazyComponent from '../../shared/components/LazyComponent';
 import RootState from '../../shared/types/RootState.type';
 import analytics from '../../shared/utils/analytics';
 import MeAction from '../actions/Me.action';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import springWaltzMP3 from '../audio/spring-waltz.mp3';
 import hatAVIF from '../images/hat.avif';
 import hatPNG from '../images/hat.png';
 import magicAVIF from '../images/magic.avif';
@@ -14,6 +17,7 @@ import magicPNG from '../images/magic.png';
 import meQuery from '../queries/me.query';
 import styles from './Home.module.css';
 
+const HmAudioPlayer = lazy(() => import('../../shared/components/AudioPlayer'));
 const HmImage = lazy(() => import('../../shared/components/Image'));
 const HmSparkles = lazy(() => import('../../shared/components/Sparkles'));
 
@@ -44,7 +48,12 @@ const Home: React.FC<Props> = (props) => {
   return (
     <div className={styles.hmHome}>
       <div className={`container is-max-desktop ${styles.hmContainer}`}>
-        <h1 className={styles.hmName}>{name}</h1>
+        <div className={styles.hmNameContainer}>
+          <h1 className={styles.hmName}>{name}</h1>
+          <HmLazyComponent>
+            <HmAudioPlayer audioSrc={springWaltzMP3} />
+          </HmLazyComponent>
+        </div>
         <HmLazyComponent>
           <HmSparkles>
             <a className={styles.hmBioContainer} href={config.githubURL} target="_blank" rel="noopener noreferrer">
