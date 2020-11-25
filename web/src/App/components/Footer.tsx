@@ -1,10 +1,10 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import WEBSITES from '../fixtures/WEBSITES';
 import styles from './Footer.module.css';
 
-const HmCopyright = lazy(() => import('./Copyright'));
-const HmSocialList = lazy(() => import('./SocialList'));
+const HmCopyright = React.lazy(() => import('./Copyright'));
+const HmSocialList = React.lazy(() => import('./SocialList'));
 
 const Footer: React.FC = () => {
   const year = new Date().getFullYear();
