@@ -1,11 +1,11 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import Paths from '../../shared/utils/paths';
 import styles from './App.module.css';
 
-const HmHome = lazy(() => import('../../Home/components/Home'));
-const HmFooter = lazy(() => import('./Footer'));
+const HmHome = React.lazy(() => import('../../Home/components/Home'));
+const HmFooter = React.lazy(() => import('./Footer'));
 
 const App: React.FC = () => (
   <div className={styles.hmApp}>
