@@ -1,15 +1,16 @@
 import * as eva from '@eva-design/eva';
-// eslint-disable-next-line camelcase
-import { useFonts, OpenSans_400Regular, OpenSans_700Bold } from '@expo-google-fonts/open-sans';
 import { ApplicationProvider } from '@ui-kitten/components';
 import { AppLoading } from 'expo';
+import { useFonts } from 'expo-font';
 import React from 'react';
 import HmHome from './Home/components/Home';
 
 const App: React.FC = () => {
   const [isFontLoaded] = useFonts({
-    OpenSans_400Regular,
-    OpenSans_700Bold,
+    // eslint-disable-next-line global-require
+    NeoSansProRegular: require('./assets/fonts/NeoSansProRegular.otf'),
+    // eslint-disable-next-line global-require
+    NeoSansProBold: require('./assets/fonts/NeoSansProBold.otf'),
   });
 
   if (!isFontLoaded) {

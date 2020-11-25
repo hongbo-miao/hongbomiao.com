@@ -9,15 +9,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   hmName: {
-    fontFamily: 'OpenSans_700Bold',
+    fontFamily: 'NeoSansProBold',
     fontSize: 35,
     marginTop: 20,
     textTransform: 'uppercase',
   },
   hmBio: {
-    fontFamily: 'OpenSans_400Regular',
+    fontFamily: 'NeoSansProRegular',
     fontSize: 20,
-    marginTop: 20,
+    marginTop: 40,
   },
 });
 
