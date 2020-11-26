@@ -15,7 +15,7 @@
 <p align="center">
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com/actions"><img alt="GitHub Actions" src="https://img.shields.io/github/workflow/status/Hongbo-Miao/hongbomiao.com/Deploy" /></a>
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com"><img alt="FOSSA Status" src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com.svg?type=shield" /></a>
-  <a href="https://david-dm.org/Hongbo-Miao/hongbomiao.com"><img alt="David" src="https://img.shields.io/david/Hongbo-Miao/hongbomiao.com?path=server" /></a>
+  <a href="https://depfu.com/repos/github/Hongbo-Miao/hongbomiao.com"><img alt="Depfu" src="https://img.shields.io/depfu/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements"><img alt="Requires.io requirements status" src="https://img.shields.io/requires/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://stats.uptimerobot.com/RoOoGTvyWN"><img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m783305207-c7842815153e530df85633fe" /></a>
   <a href="https://github.com/commitizen/cz-cli"><img alt="Commitizen friendly" src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" /></a>
@@ -155,7 +155,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **[HTTP/3 Check](https://www.http3check.net/?host=hongbomiao.com)** - HTTP/3 checking
 - **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** - HSTS checking
 - **[Mozilla Observatory](https://observatory.mozilla.org/analyze/www.hongbomiao.com)**, **[Snyk](https://snyk.io/test/github/Hongbo-Miao/hongbomiao.com)** - Security monitoring
-- **[David](https://david-dm.org/Hongbo-Miao/hongbomiao.com)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** - Dependency monitoring
+- **[Depfu](https://depfu.com/repos/github/Hongbo-Miao/hongbomiao.com)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** - Dependency monitoring
 - **[Uptime Robot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
 
