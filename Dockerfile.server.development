@@ -4,8 +4,18 @@ WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY . /app
-RUN yarn build
+COPY ["package.json", "yarn.lock", "./"]
+COPY ["web/package.json", "web/yarn.lock", "./web/"]
+COPY ["server/package.json", "server/yarn.lock", "./server/"]
+RUN yarn install
+RUN cd web && yarn install
+RUN cd server && yarn install
+
+COPY . .
+
+RUN cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" yarn build
+RUN cp -r web/build/ server/dist/
+RUN cd server && yarn build
 
 EXPOSE 5000
 CMD ["yarn", "start:development"]
