@@ -8,9 +8,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.nginx.production
-    volumes:
-      - ".:/app"
-      - "/app/node_modules"
     environment:
       - NODE_ENV=production
     restart: always
@@ -28,9 +25,6 @@ services:
       dockerfile: Dockerfile.server.production
     environment:
       - NODE_ENV=production
-    volumes:
-      - ".:/app"
-      - "/app/node_modules"
     logging:
       driver: fluentd
       options:
