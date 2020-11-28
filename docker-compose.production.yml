@@ -13,7 +13,7 @@ services:
       - "/app/node_modules"
     environment:
       - NODE_ENV=production
-    restart: on-failure
+    restart: always
     ports:
       - "80:80"
       - "443:443"
@@ -35,7 +35,7 @@ services:
       driver: fluentd
       options:
         fluentd-address: localhost:24224
-    restart: on-failure
+    restart: always
     ports:
       - "5000:5000"
     depends_on:
@@ -49,7 +49,7 @@ services:
     image: redis:6.0.9-alpine
     volumes:
       - redis_data:/data
-    restart: on-failure
+    restart: always
     ports:
       - "6379:6379"
 
@@ -62,7 +62,7 @@ services:
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - ./docker/postgres/.env.production.local
-    restart: on-failure
+    restart: always
     ports:
       - "5432:5432"
 
@@ -77,7 +77,7 @@ services:
       options:
         max-size: "100m"
         max-file: "5"
-    restart: on-failure
+    restart: always
     ports:
       - "24224:24224"
       - "5140:5140/udp"
@@ -95,7 +95,7 @@ services:
     ]
     volumes:
       - ./docker/opentelemetry-collector/otel-collector.config.yaml:/conf/otel-collector.config.yaml
-    restart: on-failure
+    restart: always
     ports:
       - "9464:9464"
       - "55680:55680"
@@ -115,7 +115,7 @@ services:
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - LOG_LEVEL=debug
-    restart: on-failure
+    restart: always
     ports:
       - "14250"
       - "14268"
@@ -135,7 +135,7 @@ services:
       - "6831/udp"
       - "6832/udp"
       - "5778"
-    restart: on-failure
+    restart: always
     depends_on:
       - jaeger-collector
 
@@ -150,7 +150,7 @@ services:
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - LOG_LEVEL=debug
-    restart: on-failure
+    restart: always
     ports:
       - "16686:16686"
       - "16687"
@@ -164,7 +164,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.0
     environment:
       - discovery.type=single-node
-    restart: on-failure
+    restart: always
     ports:
       - "9200/tcp"
 
@@ -173,7 +173,7 @@ services:
     container_name: hm_kibana
     # https://www.docker.elastic.co/r/kibana/kibana-oss
     image: docker.elastic.co/kibana/kibana-oss:7.10.0
-    restart: on-failure
+    restart: always
     ports:
       - 5601:5601
 
@@ -183,7 +183,7 @@ services:
     image: prom/prometheus:v2.23.0
     volumes:
       - ./docker/prometheus/prometheus.production.yaml:/etc/prometheus/prometheus.yml
-    restart: on-failure
+    restart: always
     ports:
       - "9090:9090"
 
@@ -194,7 +194,7 @@ services:
     environment:
       # https://grafana.com/grafana/plugins
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel
-    restart: on-failure
+    restart: always
     ports:
       - "3000:3000"
     depends_on:
