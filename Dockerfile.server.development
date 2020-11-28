@@ -4,6 +4,7 @@ WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
+# Install dependencies
 COPY ["package.json", "yarn.lock", "./"]
 COPY ["web/package.json", "web/yarn.lock", "./web/"]
 COPY ["server/package.json", "server/yarn.lock", "./server/"]
@@ -11,11 +12,21 @@ RUN yarn install
 RUN cd web && yarn install
 RUN cd server && yarn install
 
-COPY . .
+# Build web
+COPY web/private/ssl/hongbomiao.crt.example web/private/ssl/hongbomiao.crt
+COPY web/private/ssl/hongbomiao.key.example web/private/ssl/hongbomiao.key
+COPY web/.env.development.local.example web/.env.development.local
+COPY web web
+# Skip lint check during react-scripts build
+RUN rm -f web/.eslintrc.js
+RUN cd web && cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" yarn build
 
-RUN cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" yarn build
+# Build server
+COPY server/private/ssl/hongbomiao.crt.example server/private/ssl/hongbomiao.crt
+COPY server/private/ssl/hongbomiao.key.example server/private/ssl/hongbomiao.key
+COPY server/.env.development.local.example server/.env.development.local
+COPY server server
 RUN cp -r web/build/ server/dist/
-RUN cd server && yarn build
 
 EXPOSE 5000
-CMD ["yarn", "start:development"]
+CMD ["yarn", "dev"]
