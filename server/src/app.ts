@@ -36,7 +36,7 @@ const app = express()
   .use(responseTime())
   .use('/', indexRouter)
   .use(favicon(path.join(__dirname, '../../dist/favicon.ico')))
-  .use(express.static(path.join(__dirname, '../../dist')))
+  .use(express.static(path.join(__dirname, '../../dist'), { maxAge: 31536000 })) // 1 year
   .use(rateLimitMiddleware(redis))
   .use('/graphql', graphQLMiddleware)
   .use('/api', apiRouter)
