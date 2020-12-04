@@ -6,9 +6,7 @@ import isProduction from '../../shared/utils/isProduction';
 import createCSPNonce from '../utils/createCSPNonce';
 
 const CSP_CONNECT_SRC = isProduction() ? config.prodCSPConnectSrc : config.devCSPConnectSrc;
-const CSP_REPORT_URI = isProduction()
-  ? config.reportURI.cspReportURI
-  : `${config.httpProtocol}://${config.host}:${config.port}/api/violation/report-csp-violation`;
+const CSP_REPORT_URI = isProduction() ? config.reportURI.cspReportURI : '/api/violation/report-csp-violation';
 const EXCEPT_CT_REPORT_URI = config.reportURI.exceptCTReportURI;
 
 const helmetMiddleware = (
