@@ -9,7 +9,7 @@ const REPORT_TO_ENDPOINT: Endpoint = isProduction()
       priority: 1,
     }
   : {
-      url: `https://${config.domain}:${config.port}/api/violation/report-to`,
+      url: `https://${config.host}:${config.port}/api/violation/report-to`,
       priority: 1,
     };
 
