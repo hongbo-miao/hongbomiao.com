@@ -168,11 +168,11 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 ## URLs
 
-- Server: https://localhost:5000
-- Web: https://localhost:8080
+- Server: http://localhost:5000
+- Web: http://localhost:8080
 - Expo: http://localhost:19002
 - React Native Debugger: http://localhost:19001
-- NGINX: https://localhost:443
+- NGINX: http://localhost:80
 - Jaeger: http://localhost:16686
 - Kibana: http://localhost:5601
 - Grafana: http://localhost:3000
