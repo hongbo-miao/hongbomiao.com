@@ -8,7 +8,7 @@ import createCSPNonce from '../utils/createCSPNonce';
 const CSP_CONNECT_SRC = isProduction() ? config.prodCSPConnectSrc : config.devCSPConnectSrc;
 const CSP_REPORT_URI = isProduction()
   ? config.reportURI.cspReportURI
-  : `https://${config.domain}:${config.port}/api/violation/report-csp-violation`;
+  : `https://${config.host}:${config.port}/api/violation/report-csp-violation`;
 const EXCEPT_CT_REPORT_URI = config.reportURI.exceptCTReportURI;
 
 const helmetMiddleware = (

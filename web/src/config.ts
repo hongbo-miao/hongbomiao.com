@@ -1,12 +1,12 @@
 import * as Sentry from '@sentry/react';
 
-const { REACT_APP_SERVER_DOMAIN, REACT_APP_LIGHTSTEP_TOKEN, REACT_APP_SERVER_PORT, NODE_ENV } = process.env;
+const { REACT_APP_LIGHTSTEP_TOKEN, REACT_APP_SERVER_HOST, REACT_APP_SERVER_PORT, NODE_ENV } = process.env;
 
 if (NODE_ENV !== 'development' && NODE_ENV !== 'production' && NODE_ENV !== 'test') {
   throw new Error('Failed to read NODE_ENV.');
 }
-if (REACT_APP_SERVER_DOMAIN == null || REACT_APP_SERVER_DOMAIN === '') {
-  throw new Error('Failed to read REACT_APP_SERVER_DOMAIN.');
+if (REACT_APP_SERVER_HOST == null || REACT_APP_SERVER_HOST === '') {
+  throw new Error('Failed to read REACT_APP_SERVER_HOST.');
 }
 if (REACT_APP_SERVER_PORT == null || REACT_APP_SERVER_PORT === '') {
   throw new Error('Failed to read REACT_APP_SERVER_PORT.');
@@ -32,10 +32,10 @@ type Config = {
 const config: Config = {
   nodeEnv: NODE_ENV,
   githubURL: 'https://github.com/Hongbo-Miao/hongbomiao.com',
-  devGraphQLURL: `http://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
-  prodGraphQLURL: `https://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
-  devWebSocketGraphQLURL: `ws://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
-  prodWebSocketGraphQLURL: `wss://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
+  devGraphQLURL: `http://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}/graphql`,
+  prodGraphQLURL: `https://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}/graphql`,
+  devWebSocketGraphQLURL: `ws://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}/graphql`,
+  prodWebSocketGraphQLURL: `wss://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}/graphql`,
   googleTagManagerOptions: {
     containerId: 'GTM-MKMQ55P',
   },
