@@ -15,8 +15,10 @@ if (REACT_APP_SERVER_PORT == null || REACT_APP_SERVER_PORT === '') {
 type Config = {
   nodeEnv: 'development' | 'production' | 'test';
   githubURL: string;
-  graphQLURL: string;
-  webSocketGraphQLURL: string;
+  devGraphQLURL: string;
+  prodGraphQLURL: string;
+  devWebSocketGraphQLURL: string;
+  prodWebSocketGraphQLURL: string;
   googleTagManagerOptions: {
     containerId: string;
   };
@@ -30,8 +32,10 @@ type Config = {
 const config: Config = {
   nodeEnv: NODE_ENV,
   githubURL: 'https://github.com/Hongbo-Miao/hongbomiao.com',
-  graphQLURL: `https://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
-  webSocketGraphQLURL: `wss://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
+  devGraphQLURL: `http://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
+  prodGraphQLURL: `https://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
+  devWebSocketGraphQLURL: `ws://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
+  prodWebSocketGraphQLURL: `wss://${REACT_APP_SERVER_DOMAIN}:${REACT_APP_SERVER_PORT}/graphql`,
   googleTagManagerOptions: {
     containerId: 'GTM-MKMQ55P',
   },

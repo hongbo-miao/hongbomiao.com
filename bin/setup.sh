@@ -2,13 +2,6 @@
 
 set -e
 
-# SSL
-cp -n web/private/ssl/hongbomiao.crt.example web/private/ssl/hongbomiao.crt || true
-cp -n web/private/ssl/hongbomiao.key.example web/private/ssl/hongbomiao.key || true
-
-cp -n server/private/ssl/hongbomiao.crt.example server/private/ssl/hongbomiao.crt || true
-cp -n server/private/ssl/hongbomiao.key.example server/private/ssl/hongbomiao.key || true
-
 # .env
 cp -n web/.env.development.local.example web/.env.development.local || true
 cp -n web/.env.production.local.example web/.env.production.local || true

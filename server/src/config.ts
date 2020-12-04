@@ -133,19 +133,14 @@ const config: Config = {
   nodeEnv: NODE_ENV,
   domain: DOMAIN,
   port: Number(PORT),
-  devCORSAllowList: [
-    ...sharedCORSAllowList,
-    'https://localhost:443',
-    'https://localhost:5000',
-    'https://localhost:8080',
-  ],
+  devCORSAllowList: [...sharedCORSAllowList, 'http://localhost:80', 'http://localhost:5000', 'http://localhost:8080'],
   prodCORSAllowList: [...sharedCORSAllowList, 'https://www.hongbomiao.com'],
   devCSPConnectSrc: [
     ...sharedCSPConnectSrc,
 
     // For Safari, "'self'" is not enough for WebSocket.
-    'wss://localhost:443',
-    'wss://localhost:5000',
+    'ws://localhost:80',
+    'ws://localhost:5000',
   ],
   prodCSPConnectSrc: [
     ...sharedCSPConnectSrc,
