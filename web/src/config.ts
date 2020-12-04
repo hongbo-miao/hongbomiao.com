@@ -1,6 +1,13 @@
 import * as Sentry from '@sentry/react';
 
-const { REACT_APP_LIGHTSTEP_TOKEN, REACT_APP_SERVER_HOST, REACT_APP_SERVER_PORT, NODE_ENV } = process.env;
+const {
+  NODE_ENV,
+  REACT_APP_LIGHTSTEP_TOKEN,
+  REACT_APP_SERVER_HOST,
+  REACT_APP_SERVER_HTTP_PROTOCOL,
+  REACT_APP_SERVER_PORT,
+  REACT_APP_SERVER_WS_PROTOCOL,
+} = process.env;
 
 if (NODE_ENV !== 'development' && NODE_ENV !== 'production' && NODE_ENV !== 'test') {
   throw new Error('Failed to read NODE_ENV.');
@@ -8,17 +15,21 @@ if (NODE_ENV !== 'development' && NODE_ENV !== 'production' && NODE_ENV !== 'tes
 if (REACT_APP_SERVER_HOST == null || REACT_APP_SERVER_HOST === '') {
   throw new Error('Failed to read REACT_APP_SERVER_HOST.');
 }
+if (REACT_APP_SERVER_HTTP_PROTOCOL == null || REACT_APP_SERVER_HTTP_PROTOCOL === '') {
+  throw new Error('Failed to read REACT_APP_SERVER_HTTP_PROTOCOL.');
+}
 if (REACT_APP_SERVER_PORT == null || REACT_APP_SERVER_PORT === '') {
   throw new Error('Failed to read REACT_APP_SERVER_PORT.');
+}
+if (REACT_APP_SERVER_WS_PROTOCOL == null || REACT_APP_SERVER_WS_PROTOCOL === '') {
+  throw new Error('Failed to read REACT_APP_SERVER_WS_PROTOCOL.');
 }
 
 type Config = {
   nodeEnv: 'development' | 'production' | 'test';
   githubURL: string;
-  devGraphQLURL: string;
-  prodGraphQLURL: string;
-  devWebSocketGraphQLURL: string;
-  prodWebSocketGraphQLURL: string;
+  graphQLURL: string;
+  webSocketGraphQLURL: string;
   googleTagManagerOptions: {
     containerId: string;
   };
@@ -32,10 +43,8 @@ type Config = {
 const config: Config = {
   nodeEnv: NODE_ENV,
   githubURL: 'https://github.com/Hongbo-Miao/hongbomiao.com',
-  devGraphQLURL: `http://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}/graphql`,
-  prodGraphQLURL: `https://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}/graphql`,
-  devWebSocketGraphQLURL: `ws://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}/graphql`,
-  prodWebSocketGraphQLURL: `wss://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}/graphql`,
+  graphQLURL: `${REACT_APP_SERVER_HTTP_PROTOCOL}://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}/graphql`,
+  webSocketGraphQLURL: `${REACT_APP_SERVER_WS_PROTOCOL}://${REACT_APP_SERVER_HOST}:${REACT_APP_SERVER_PORT}/graphql`,
   googleTagManagerOptions: {
     containerId: 'GTM-MKMQ55P',
   },

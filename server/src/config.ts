@@ -18,6 +18,7 @@ if (prettifyLog != null && typeof prettifyLog !== 'boolean') {
 
 const {
   HOST,
+  HTTP_PROTOCOL,
   JWT_SECRET,
   LIGHTSTEP_TOKEN,
   NODE_ENV,
@@ -35,10 +36,14 @@ const {
   SEED_USER_FIRST_NAME,
   SEED_USER_LAST_NAME,
   SEED_USER_PASSWORD,
+  WS_PROTOCOL,
 } = process.env;
 
 if (HOST == null || HOST === '') {
   throw new Error('Failed to read HOST.');
+}
+if (HTTP_PROTOCOL == null || HTTP_PROTOCOL === '') {
+  throw new Error('Failed to read HTTP_PROTOCOL.');
 }
 if (JWT_SECRET == null || JWT_SECRET === '') {
   throw new Error('Failed to read JWT_SECRET.');
@@ -91,11 +96,16 @@ if (SEED_USER_LAST_NAME == null || SEED_USER_LAST_NAME === '') {
 if (SEED_USER_PASSWORD == null || SEED_USER_PASSWORD === '') {
   throw new Error('Failed to read SEED_USER_PASSWORD.');
 }
+if (WS_PROTOCOL == null || WS_PROTOCOL === '') {
+  throw new Error('Failed to read WS_PROTOCOL.');
+}
 
 const sharedCSPConnectSrc = [
+  `${WS_PROTOCOL}://${HOST}:${PORT}`, // For Safari, "'self'" is not enough for WebSocket.
   'https://ingest.lightstep.com', // Lightstep
 ];
 const sharedCORSAllowList = [
+  `${HTTP_PROTOCOL}://${HOST}:${PORT}`,
   'electron://altair', // Altair GraphQL Client
   'null', // Safari reports CSP violation
 ];
@@ -104,6 +114,7 @@ type Config = {
   shouldHideHTTPLog: boolean;
   shouldPrettifyLog: boolean;
   nodeEnv: 'development' | 'production' | 'test';
+  httpProtocol: string;
   host: string;
   port: number;
   devCORSAllowList: ReadonlyArray<string>;
@@ -131,23 +142,13 @@ const config: Config = {
   shouldHideHTTPLog: hideHTTPLog === true,
   shouldPrettifyLog: prettifyLog === true,
   nodeEnv: NODE_ENV,
+  httpProtocol: HTTP_PROTOCOL,
   host: HOST,
   port: Number(PORT),
-  devCORSAllowList: [...sharedCORSAllowList, 'http://localhost:80', 'http://localhost:5000', 'http://localhost:8080'],
-  prodCORSAllowList: [...sharedCORSAllowList, 'https://www.hongbomiao.com'],
-  devCSPConnectSrc: [
-    ...sharedCSPConnectSrc,
-
-    // For Safari, "'self'" is not enough for WebSocket.
-    'ws://localhost:80',
-    'ws://localhost:5000',
-  ],
-  prodCSPConnectSrc: [
-    ...sharedCSPConnectSrc,
-
-    // For Safari, "'self'" is not enough for WebSocket.
-    'wss://www.hongbomiao.com',
-  ],
+  devCORSAllowList: [...sharedCORSAllowList, `${HTTP_PROTOCOL}://${HOST}:80`, `${HTTP_PROTOCOL}://${HOST}:8080`],
+  prodCORSAllowList: [...sharedCORSAllowList],
+  devCSPConnectSrc: [...sharedCSPConnectSrc, `${WS_PROTOCOL}://${HOST}:80`],
+  prodCSPConnectSrc: [...sharedCSPConnectSrc],
   reportURI: {
     cspReportURI: 'https://hongbomiao.report-uri.com/r/d/csp/enforce',
     exceptCTReportURI: 'https://hongbomiao.report-uri.com/r/d/ct/enforce',
