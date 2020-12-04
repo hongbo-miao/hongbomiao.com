@@ -1,7 +1,7 @@
 import opentelemetry, { Span, Tracer } from '@opentelemetry/api';
 
-const startSpan = (tracer: Tracer, parentSpan: Span | null): Span => {
-  return tracer.startSpan('fibonacci', { parent: parentSpan });
+const startSpan = (tracer: Tracer): Span => {
+  return tracer.startSpan('fibonacci');
 };
 
 const updateAndEndSpan = (span: Span, n: number, val: number): void => {
@@ -10,23 +10,23 @@ const updateAndEndSpan = (span: Span, n: number, val: number): void => {
   span.end();
 };
 
-const fibonacci = (n: number, tracer: Tracer, parentSpan: Span | null): number => {
+const fibonacci = (n: number, tracer: Tracer): number => {
   if (n <= 1) {
-    const span = startSpan(tracer, parentSpan);
+    const span = startSpan(tracer);
     const val = 1;
     updateAndEndSpan(span, n, val);
     return val;
   }
 
-  const span = startSpan(tracer, parentSpan);
-  const val = fibonacci(n - 1, tracer, span) + fibonacci(n - 2, tracer, span);
+  const span = startSpan(tracer);
+  const val = fibonacci(n - 1, tracer) + fibonacci(n - 2, tracer);
   updateAndEndSpan(span, n, val);
   return val;
 };
 
 const calcFibonacci = (n: number): number => {
   const tracer = opentelemetry.trace.getTracer('fibonacci-tracer');
-  return fibonacci(n, tracer, null);
+  return fibonacci(n, tracer);
 };
 
 export default calcFibonacci;
