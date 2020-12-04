@@ -7,6 +7,7 @@ const isAuthenticated = rule()(async (parentValue, args, context) => {
 
 const permissions = shield({
   Query: {
+    fibonacci: isAuthenticated,
     user: isAuthenticated,
     users: isAuthenticated,
     planet: isAuthenticated,
