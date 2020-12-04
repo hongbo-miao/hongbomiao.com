@@ -23,6 +23,8 @@ describe('Home', () => {
             data: {
               me: {
                 name: 'Hongbo Miao',
+                firstName: 'Hongbo',
+                lastName: 'Miao',
                 bio: 'Making magic happen',
               },
             },
