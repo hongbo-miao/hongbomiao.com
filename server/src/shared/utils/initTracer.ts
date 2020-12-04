@@ -56,6 +56,9 @@ const initTracer = (): void => {
   });
 
   const graphQLInstrumentation = new GraphQLInstrumentation();
+  // https://github.com/open-telemetry/opentelemetry-js/issues/1724
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   graphQLInstrumentation.setTracerProvider(tracerProvider);
   graphQLInstrumentation.enable();
 
