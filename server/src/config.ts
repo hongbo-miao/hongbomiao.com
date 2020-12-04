@@ -17,7 +17,7 @@ if (prettifyLog != null && typeof prettifyLog !== 'boolean') {
 }
 
 const {
-  DOMAIN,
+  HOST,
   JWT_SECRET,
   LIGHTSTEP_TOKEN,
   NODE_ENV,
@@ -37,8 +37,8 @@ const {
   SEED_USER_PASSWORD,
 } = process.env;
 
-if (DOMAIN == null || DOMAIN === '') {
-  throw new Error('Failed to read DOMAIN.');
+if (HOST == null || HOST === '') {
+  throw new Error('Failed to read HOST.');
 }
 if (JWT_SECRET == null || JWT_SECRET === '') {
   throw new Error('Failed to read JWT_SECRET.');
@@ -104,7 +104,7 @@ type Config = {
   shouldHideHTTPLog: boolean;
   shouldPrettifyLog: boolean;
   nodeEnv: 'development' | 'production' | 'test';
-  domain: string;
+  host: string;
   port: number;
   devCORSAllowList: ReadonlyArray<string>;
   prodCORSAllowList: ReadonlyArray<string>;
@@ -131,7 +131,7 @@ const config: Config = {
   shouldHideHTTPLog: hideHTTPLog === true,
   shouldPrettifyLog: prettifyLog === true,
   nodeEnv: NODE_ENV,
-  domain: DOMAIN,
+  host: HOST,
   port: Number(PORT),
   devCORSAllowList: [...sharedCORSAllowList, 'http://localhost:80', 'http://localhost:5000', 'http://localhost:8080'],
   prodCORSAllowList: [...sharedCORSAllowList, 'https://www.hongbomiao.com'],
