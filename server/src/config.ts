@@ -115,7 +115,6 @@ type Config = {
   shouldPrettifyLog: boolean;
   nodeEnv: 'development' | 'production' | 'test';
   httpProtocol: string;
-  host: string;
   port: number;
   devCORSAllowList: ReadonlyArray<string>;
   prodCORSAllowList: ReadonlyArray<string>;
@@ -143,7 +142,6 @@ const config: Config = {
   shouldPrettifyLog: prettifyLog === true,
   nodeEnv: NODE_ENV,
   httpProtocol: HTTP_PROTOCOL,
-  host: HOST,
   port: Number(PORT),
   devCORSAllowList: [...sharedCORSAllowList, `${HTTP_PROTOCOL}://${HOST}:80`, `${HTTP_PROTOCOL}://${HOST}:8080`],
   prodCORSAllowList: [...sharedCORSAllowList],
