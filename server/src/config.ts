@@ -144,9 +144,14 @@ const config: Config = {
   httpProtocol: HTTP_PROTOCOL,
   port: Number(PORT),
   devCORSAllowList: [...sharedCORSAllowList, `${HTTP_PROTOCOL}://${HOST}:80`, `${HTTP_PROTOCOL}://${HOST}:8080`],
-  prodCORSAllowList: [...sharedCORSAllowList, `${HTTP_PROTOCOL}://${HOST}:443`],
+  prodCORSAllowList: [...sharedCORSAllowList, 'https://www.hongbomiao.com'],
   devCSPConnectSrc: [...sharedCSPConnectSrc, `${WS_PROTOCOL}://${HOST}:80`],
-  prodCSPConnectSrc: [...sharedCSPConnectSrc],
+  prodCSPConnectSrc: [
+    ...sharedCSPConnectSrc,
+
+    // For Safari, "'self'" is not enough for WebSocket.
+    'wss://www.hongbomiao.com',
+  ],
   reportURI: {
     cspReportURI: 'https://hongbomiao.report-uri.com/r/d/csp/enforce',
     exceptCTReportURI: 'https://hongbomiao.report-uri.com/r/d/ct/enforce',
