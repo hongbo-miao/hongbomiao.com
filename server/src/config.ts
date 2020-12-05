@@ -143,9 +143,14 @@ const config: Config = {
   nodeEnv: NODE_ENV,
   httpProtocol: HTTP_PROTOCOL,
   port: Number(PORT),
-  devCORSAllowList: [...sharedCORSAllowList, `${HTTP_PROTOCOL}://${HOST}:80`, `${HTTP_PROTOCOL}://${HOST}:8080`],
+  devCORSAllowList: [
+    ...sharedCORSAllowList,
+    `${HTTP_PROTOCOL}://${HOST}:80`,
+    `${HTTP_PROTOCOL}://${HOST}:8080`,
+    'https://www.k8s-hongbomiao.com',
+  ],
   prodCORSAllowList: [...sharedCORSAllowList, 'https://www.hongbomiao.com'],
-  devCSPConnectSrc: [...sharedCSPConnectSrc, `${WS_PROTOCOL}://${HOST}:80`],
+  devCSPConnectSrc: [...sharedCSPConnectSrc, `${WS_PROTOCOL}://${HOST}:80`, 'wss://www.k8s-hongbomiao.com'],
   prodCSPConnectSrc: [
     ...sharedCSPConnectSrc,
 
