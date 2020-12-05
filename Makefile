@@ -1,3 +1,4 @@
+# Docker
 docker-build:
 	docker-compose -f docker-compose.development.yml build
 
@@ -13,5 +14,10 @@ docker-down:
 docker-delete:
 	docker system prune
 
+# Kubernetes
+k8s-apply:
+	kubectl apply -f k8s
+
+# Prometheus
 prometheus:
 	curl http://localhost:9464/metrics
