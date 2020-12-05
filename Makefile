@@ -16,7 +16,7 @@ docker-delete:
 
 # Kubernetes
 k8s-apply:
-	kubectl apply -f k8s
+	kubectl apply -f kubernetes
 
 k8s-ip:
 	minikube ip
