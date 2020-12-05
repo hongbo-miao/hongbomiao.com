@@ -144,7 +144,7 @@ const config: Config = {
   httpProtocol: HTTP_PROTOCOL,
   port: Number(PORT),
   devCORSAllowList: [...sharedCORSAllowList, `${HTTP_PROTOCOL}://${HOST}:80`, `${HTTP_PROTOCOL}://${HOST}:8080`],
-  prodCORSAllowList: [...sharedCORSAllowList],
+  prodCORSAllowList: [...sharedCORSAllowList, `${HTTP_PROTOCOL}://${HOST}:443`],
   devCSPConnectSrc: [...sharedCSPConnectSrc, `${WS_PROTOCOL}://${HOST}:80`],
   prodCSPConnectSrc: [...sharedCSPConnectSrc],
   reportURI: {
