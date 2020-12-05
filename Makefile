@@ -18,6 +18,9 @@ docker-delete:
 k8s-apply:
 	kubectl apply -f k8s
 
+k8s-ip:
+	minikube ip
+
 # Prometheus
 prometheus:
 	curl http://localhost:9464/metrics
