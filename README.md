@@ -124,8 +124,9 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Grafana** - Monitoring and observability platform
 - **Prometheus** - Monitoring system
 - **PM2** - Node.js application production process manager
-- **Docker**, **Docker Compose** - Container
 - **Locust** - Load testing
+- **Docker** - Container
+- **Kubernetes** - Container-orchestration system
 
 #### Code
 
