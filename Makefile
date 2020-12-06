@@ -15,6 +15,9 @@ docker-delete:
 	docker system prune
 
 # Kubernetes
+k8s-start:
+	minikube start
+
 k8s-apply:
 	kubectl apply -f kubernetes
 
