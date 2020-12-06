@@ -27,6 +27,9 @@ k8s-dashboard:
 k8s-ip:
 	minikube ip
 
+k8s-dev:
+	skaffold dev
+
 # Prometheus
 prometheus:
 	curl http://localhost:9464/metrics
