@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta10
+kind: Config
+metadata:
+  name: hongbomiao.com
+build:
+  artifacts:
+  - image: hongbomiao/hongbomiao-server
+    docker:
+      dockerfile: Dockerfile.server.development
+deploy:
+  kubectl:
+    manifests:
+    - kubernetes/ingress-service.yaml
+    - kubernetes/server-cluster-ip-service.yaml
+    - kubernetes/server-deployment.yaml
