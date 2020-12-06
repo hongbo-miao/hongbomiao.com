@@ -238,12 +238,6 @@ After it processes, Elasticsearch saves the data. You can analyze them using Jae
 
 ![Grafana screenshot](https://user-images.githubusercontent.com/3375461/90973255-eaf19000-e552-11ea-819c-b098bbadea1b.jpg)
 
-### Cluster
-
-Eight clusters are running as PM2 shows.
-
-![PM2 screenshot](https://user-images.githubusercontent.com/3375461/92335017-80e5f880-f0c5-11ea-907b-2dc15e55db8a.jpg)
-
 ### Automation
 
 This [pull request](https://github.com/Hongbo-Miao/hongbomiao.com/pull/342) shows how these technologies work together from different aspects to achieve automation.
