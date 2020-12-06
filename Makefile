@@ -18,6 +18,9 @@ docker-delete:
 k8s-apply:
 	kubectl apply -f kubernetes
 
+k8s-pods:
+	kubectl get pods
+
 k8s-dashboard:
 	minikube dashboard
 
