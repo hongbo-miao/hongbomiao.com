@@ -127,6 +127,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Locust** - Load testing
 - **Docker** - Container
 - **Kubernetes** - Container-orchestration system
+- **Skaffold** - Continuous development for Kubernetes applications
 
 #### Code
 
