@@ -14,6 +14,7 @@ cp -n docker/postgres/.env.production.local.example docker/postgres/.env.product
 
 # Install dependencies
 yarn install
+yarn husky install
 cd web && yarn install
 cd mobile && yarn install
 cd ../server && yarn install
