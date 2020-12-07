@@ -18,6 +18,9 @@ docker-delete:
 k8s-start:
 	minikube start
 
+k8s-ingress:
+	minikube addons enable ingress
+
 k8s-apply:
 	kubectl apply -f kubernetes
 
