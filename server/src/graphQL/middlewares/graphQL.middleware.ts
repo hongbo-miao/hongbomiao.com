@@ -1,4 +1,5 @@
 import { graphqlHTTP } from 'express-graphql';
+import depthLimit from 'graphql-depth-limit';
 import { applyMiddleware } from 'graphql-middleware';
 import verifyJWTToken from '../../security/utils/verifyJWTToken';
 import isDevelopment from '../../shared/utils/isDevelopment';
@@ -27,6 +28,7 @@ const graphQLMiddleware = graphqlHTTP((req) => ({
     return err;
   },
   schema: applyMiddleware(schema, permissions),
+  validationRules: [depthLimit(5)],
 }));
 
 export default graphQLMiddleware;

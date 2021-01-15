@@ -91,6 +91,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **GraphQL** - Query language for the API, and the server-side runtime
 - **graphql-ws**, **graphql-subscriptions** - GraphQL subscriptions
 - **graphql-shield** - GraphQL permissions
+- **graphql-depth-limit** - GraphQL depth limit
 - **DataLoader** - Batching and caching
 - **Knex.js** - SQL query builder
 - **PostgreSQL** - Relational database management system
