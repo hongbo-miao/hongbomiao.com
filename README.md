@@ -92,6 +92,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **graphql-ws**, **graphql-subscriptions** - GraphQL subscriptions
 - **graphql-shield** - GraphQL permissions
 - **graphql-depth-limit** - GraphQL depth limit
+- **graphql-query-complexity** - GraphQL query complexity analysis
 - **DataLoader** - Batching and caching
 - **Knex.js** - SQL query builder
 - **PostgreSQL** - Relational database management system
