@@ -1,7 +1,9 @@
 import { GraphQLID, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
+import { GraphQLUpload } from 'graphql-upload';
 import formatUser from '../../database/postgres/utils/formatUser';
 import updateName from '../../database/postgres/utils/updateName';
 import getJWTToken from '../../security/utils/getJWTToken';
+import FileGraphQLType from '../graphQLTypes/File.graphQLType';
 import SignInGraphQLType from '../graphQLTypes/SignIn.graphQLType';
 import UserGraphQLType from '../graphQLTypes/User.graphQLType';
 
@@ -31,6 +33,17 @@ const mutation = new GraphQLObjectType({
         return {
           jwtToken: getJWTToken(email, password),
         };
+      },
+    },
+    uploadFile: {
+      type: FileGraphQLType,
+      args: {
+        file: { type: new GraphQLNonNull(GraphQLUpload) },
+      },
+      resolve: async (parentValue, args) => {
+        const { file } = args;
+        const { filename } = await file;
+        return { name: filename };
       },
     },
   },
