@@ -34,7 +34,7 @@
   <a href="https://github.com/prettier/prettier"><img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://codecov.io/gh/Hongbo-Miao/hongbomiao.com"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/Hongbo-Miao/hongbomiao.com" /></a>
-  <a href="https://github.com/Hongbo-Miao/hongbomiao.com/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/github/license/Hongbo-Miao/hongbomiao.com" /></a>
+  <a href="https://github.com/Hongbo-Miao/hongbomiao.com/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/Hongbo-Miao/hongbomiao.com" /></a>
 </p>
 
 <p align="center">
