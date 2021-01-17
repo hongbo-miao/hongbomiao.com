@@ -31,7 +31,7 @@ const mutation = new GraphQLObjectType({
       resolve: async (parentValue, args) => {
         const { email, password } = args;
         return {
-          jwtToken: getJWTToken(email, password),
+          jwtToken: await getJWTToken(email, password),
         };
       },
     },
