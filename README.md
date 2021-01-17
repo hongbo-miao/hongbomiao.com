@@ -90,6 +90,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Express** - Node.js web application framework
 - **GraphQL** - Query language for the API, and the server-side runtime
 - **graphql-ws**, **graphql-subscriptions** - GraphQL subscriptions
+- **graphql-upload** - GraphQL upload
 - **graphql-shield** - GraphQL permissions
 - **graphql-depth-limit** - GraphQL depth limit
 - **graphql-query-complexity** - GraphQL query complexity analysis
