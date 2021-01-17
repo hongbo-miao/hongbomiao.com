@@ -10,12 +10,6 @@ import getMe from '../utils/getMe';
 const query = new GraphQLObjectType({
   name: 'Query',
   fields: {
-    me: {
-      type: MeGraphQLType,
-      resolve: async () => {
-        return getMe();
-      },
-    },
     fibonacci: {
       type: FibonacciGraphQLType,
       args: {
@@ -24,6 +18,12 @@ const query = new GraphQLObjectType({
       resolve: (parentValue, args) => {
         const { n } = args;
         return getFibonacci(n);
+      },
+    },
+    me: {
+      type: MeGraphQLType,
+      resolve: async () => {
+        return getMe();
       },
     },
     user: {
