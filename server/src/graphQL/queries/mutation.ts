@@ -10,18 +10,6 @@ import UserGraphQLType from '../graphQLTypes/User.graphQLType';
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    updateName: {
-      type: UserGraphQLType,
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
-        firstName: { type: new GraphQLNonNull(GraphQLString) },
-        lastName: { type: new GraphQLNonNull(GraphQLString) },
-      },
-      resolve: async (parentValue, args) => {
-        const { id, firstName, lastName } = args;
-        return formatUser(await updateName(id, firstName, lastName));
-      },
-    },
     signIn: {
       type: SignInGraphQLType,
       args: {
@@ -33,6 +21,18 @@ const mutation = new GraphQLObjectType({
         return {
           jwtToken: await getJWTToken(email, password),
         };
+      },
+    },
+    updateName: {
+      type: UserGraphQLType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        firstName: { type: new GraphQLNonNull(GraphQLString) },
+        lastName: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve: async (parentValue, args) => {
+        const { id, firstName, lastName } = args;
+        return formatUser(await updateName(id, firstName, lastName));
       },
     },
     uploadFile: {
