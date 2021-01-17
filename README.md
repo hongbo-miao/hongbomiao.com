@@ -88,7 +88,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 #### Back End
 
 - **Express** - Node.js web application framework
-- **GraphQL** - Query language for the API, and the server-side runtime
+- **GraphQL.js**, **express-graphql** - GraphQL
 - **graphql-ws**, **graphql-subscriptions** - GraphQL subscriptions
 - **graphql-upload** - GraphQL upload
 - **graphql-shield** - GraphQL permissions
