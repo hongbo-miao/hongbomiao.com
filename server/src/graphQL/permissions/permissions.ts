@@ -17,6 +17,7 @@ const permissions = shield({
   },
   Mutation: {
     updateName: isAuthenticated,
+    uploadFile: isAuthenticated,
   },
 });
 

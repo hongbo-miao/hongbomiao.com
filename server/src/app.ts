@@ -10,6 +10,7 @@ import favicon from 'serve-favicon';
 import config from './config';
 import handleError from './error/controllers/handleError';
 import graphQLMiddleware from './graphQL/middlewares/graphQL.middleware';
+import graphQLUploadMiddleware from './graphQL/middlewares/graphQLUpload.middleware';
 import incomingRequestCounterMiddleware from './log/middlewares/incomingRequestCounter.middleware';
 import networkErrorLoggingMiddleware from './log/middlewares/networkErrorLogging.middleware';
 import pinoMiddleware from './log/middlewares/pino.middleware';
@@ -38,7 +39,7 @@ const app = express()
   .use(favicon(path.join(__dirname, '../../dist/favicon.ico')))
   .use(express.static(path.join(__dirname, '../../dist'), { maxAge: '1y' }))
   .use(rateLimitMiddleware(redis))
-  .use('/graphql', graphQLMiddleware)
+  .use('/graphql', graphQLUploadMiddleware, graphQLMiddleware)
   .use('/api', apiRouter)
   .use(Sentry.Handlers.errorHandler()) // Must be before any other error middleware and after all controllers
   .use(handleError);
