@@ -1,0 +1,18 @@
+{
+  "name": "cypress",
+  "private": true,
+  "engines": {
+    "node": "14.x"
+  },
+  "scripts": {
+    "test:cypress:gui": "cypress open --config-file ./cypress/cypress.json",
+    "test:cypress:headless": "cypress run --config-file ./cypress/cypress.json",
+    "test:cypress:headless:ci": "sh ./bin/testCypressHeadlessCI.sh"
+  },
+  "devDependencies": {
+    "@cypress/skip-test": "2.6.0",
+    "cypress": "6.3.0",
+    "start-server-and-test": "1.11.7",
+    "typescript": "4.1.3"
+  }
+}
