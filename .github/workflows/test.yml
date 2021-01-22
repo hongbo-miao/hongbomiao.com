@@ -36,6 +36,7 @@ jobs:
           cd web && yarn install --frozen-lockfile
           cd ../mobile && yarn install --frozen-lockfile
           cd ../server && yarn install --frozen-lockfile
+          cd ../cypress && yarn install --frozen-lockfile
       - name: Lint
         run: |
           yarn lint:js
@@ -251,6 +252,7 @@ jobs:
           yarn install --frozen-lockfile
           cd web && yarn install --frozen-lockfile
           cd ../server && yarn install --frozen-lockfile
+          cd ../cypress && yarn install --frozen-lockfile
       - name: Build
         run: |
           cd web && yarn build
@@ -258,4 +260,4 @@ jobs:
           cd server && yarn build
       - name: Cypress
         run: |
-          yarn test:cypress:headless:ci
+          cd cypress && yarn test:cypress:headless:ci
