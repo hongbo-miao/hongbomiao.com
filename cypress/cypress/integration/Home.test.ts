@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { skipOn } from '@cypress/skip-test';
-import meQuery from '../../web/src/Home/queries/me.query';
+import meQuery from '../../../web/src/Home/queries/me.query';
 
 describe('Home', () => {
   const { ci, domain, serverPort, webPort } = Cypress.env();
