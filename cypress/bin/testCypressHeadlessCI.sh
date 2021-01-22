@@ -10,4 +10,4 @@ cd ..
 # to avoid sending data to production server
 cp -n web/.env.production.local.example web/.env.production.local || true
 
-start-server-and-test 'cd server && yarn dev:cypress' http://localhost:5000 'cd cypress && cypress run --config-file ./cypress/cypress.ci.json'
+start-server-and-test 'cd server && yarn dev:cypress' http://localhost:5000 'cd cypress && cypress run --config-file ./cypress.ci.json'
