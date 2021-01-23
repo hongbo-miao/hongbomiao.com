@@ -7,7 +7,7 @@ on:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -44,7 +44,7 @@ jobs:
 
   web-test:
     name: Web - Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -78,7 +78,7 @@ jobs:
 
   server-test:
     name: Server - Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -112,7 +112,7 @@ jobs:
 
   coverage:
     name: Coverage
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -147,7 +147,7 @@ jobs:
 
   web-lighthouse:
     name: Web - Lighthouse
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -180,10 +180,10 @@ jobs:
           yarn build
           yarn run lighthouse
 
-   # https://www.chromatic.com/docs/github-actions
+  # https://www.chromatic.com/docs/github-actions
   web-storybook:
     name: Web - Storybook
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -224,7 +224,7 @@ jobs:
 
   cypress:
     name: Cypress
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -250,14 +250,11 @@ jobs:
       - name: Install dependencies
         run: |
           yarn install --frozen-lockfile
-          cd web && yarn install --frozen-lockfile
-          cd ../server && yarn install --frozen-lockfile
-          cd ../cypress && yarn install --frozen-lockfile
-      - name: Build
+          cd cypress && yarn install --frozen-lockfile
+      - name: Build and run containers
         run: |
-          cd web && yarn build
-          cd .. && cp -r web/build/ server/dist/
-          cd server && yarn build
+          cp docker/postgres/.env.development.local.example docker/postgres/.env.development.local
+          docker-compose -f docker-compose.ci.yml up -d
       - name: Cypress
         run: |
           cd cypress && yarn test:cypress:headless:ci
