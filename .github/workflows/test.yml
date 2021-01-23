@@ -180,7 +180,7 @@ jobs:
           yarn build
           yarn run lighthouse
 
-   # https://www.chromatic.com/docs/github-actions
+  # https://www.chromatic.com/docs/github-actions
   web-storybook:
     name: Web - Storybook
     runs-on: ubuntu-latest
@@ -250,14 +250,11 @@ jobs:
       - name: Install dependencies
         run: |
           yarn install --frozen-lockfile
-          cd web && yarn install --frozen-lockfile
-          cd ../server && yarn install --frozen-lockfile
-          cd ../cypress && yarn install --frozen-lockfile
-      - name: Build
+          cd cypress && yarn install --frozen-lockfile
+      - name: Build and run containers
         run: |
-          cd web && yarn build
-          cd .. && cp -r web/build/ server/dist/
-          cd server && yarn build
+          cp docker/postgres/.env.development.local.example docker/postgres/.env.development.local
+          docker-compose -f docker-compose.ci.yml up -d
       - name: Cypress
         run: |
-          cd cypress && yarn test:cypress:headless:ci
+          yarn test:cypress:headless:ci
