@@ -7,7 +7,7 @@ on:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -44,7 +44,7 @@ jobs:
 
   web-test:
     name: Web - Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -78,7 +78,7 @@ jobs:
 
   server-test:
     name: Server - Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -112,7 +112,7 @@ jobs:
 
   coverage:
     name: Coverage
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -147,7 +147,7 @@ jobs:
 
   web-lighthouse:
     name: Web - Lighthouse
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -183,7 +183,7 @@ jobs:
   # https://www.chromatic.com/docs/github-actions
   web-storybook:
     name: Web - Storybook
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -224,7 +224,7 @@ jobs:
 
   cypress:
     name: Cypress
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.7.0
@@ -257,4 +257,4 @@ jobs:
           docker-compose -f docker-compose.ci.yml up -d
       - name: Cypress
         run: |
-          yarn test:cypress:headless:ci
+          cd cypress && yarn test:cypress:headless:ci
