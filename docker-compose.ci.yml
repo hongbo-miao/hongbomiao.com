@@ -7,9 +7,9 @@ services:
     container_name: hm_nginx
     build:
       context: .
-      dockerfile: Dockerfile.nginx.production
+      dockerfile: Dockerfile.nginx.development
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     restart: always
     ports:
       - "80:80"
@@ -21,9 +21,9 @@ services:
     container_name: hm_server
     build:
       context: .
-      dockerfile: Dockerfile.server.production
+      dockerfile: Dockerfile.server.development
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     logging:
       driver: fluentd
       options:
@@ -54,7 +54,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
-      - ./docker/postgres/.env.production.local
+      - ./docker/postgres/.env.development.local
     restart: always
     ports:
       - "5432:5432"
@@ -175,7 +175,7 @@ services:
     container_name: hm_prometheus
     image: prom/prometheus:v2.24.1
     volumes:
-      - ./docker/prometheus/prometheus.production.yaml:/etc/prometheus/prometheus.yml
+      - ./docker/prometheus/prometheus.development.yaml:/etc/prometheus/prometheus.yml
     restart: always
     ports:
       - "9090:9090"

@@ -5,14 +5,13 @@
     "node": "14.x"
   },
   "scripts": {
-    "test:cypress:gui": "cypress open --config-file ./cypress.json",
-    "test:cypress:headless": "cypress run --config-file ./cypress.json",
-    "test:cypress:headless:ci": "sh ./bin/testCypressHeadlessCI.sh"
+    "test:cypress:gui": "cypress open --config-file cypress.8080.json",
+    "test:cypress:headless": "cypress run --config-file cypress.8080.json",
+    "test:cypress:headless:ci": "wait-on http://localhost:5000 && cypress run --config-file cypress.5000.json"
   },
   "devDependencies": {
-    "@cypress/skip-test": "2.6.0",
     "cypress": "6.3.0",
-    "start-server-and-test": "1.11.7",
-    "typescript": "4.1.3"
+    "typescript": "4.1.3",
+    "wait-on": "5.2.1"
   }
 }
