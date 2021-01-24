@@ -30,7 +30,7 @@
 </p>
 
 <p align="center">
-  <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com"><img alt="Code Climate technical debt" src="https://img.shields.io/codeclimate/tech-debt/Hongbo-Miao/hongbomiao.com" /></a>
+  <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/trends/technical_debt"><img alt="Code Climate technical debt" src="https://img.shields.io/codeclimate/tech-debt/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://codecov.io/gh/Hongbo-Miao/hongbomiao.com"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://snyk.io/test/github/Hongbo-Miao/hongbomiao.com"><img alt="Snyk vulnerabilities" src="https://img.shields.io/snyk/vulnerabilities/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/Hongbo-Miao/hongbomiao.com" /></a>
