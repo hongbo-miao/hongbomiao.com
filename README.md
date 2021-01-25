@@ -136,6 +136,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Docker** - Container
 - **Kubernetes** - Container-orchestration system
 - **Skaffold** - Continuous development for Kubernetes applications
+- **CodeQL** - Variant analysis
 
 #### Code
 
