@@ -7,10 +7,10 @@ ENV PATH /app/node_modules/.bin:$PATH
 # Install dependencies
 COPY ["package.json", "yarn.lock", "./"]
 COPY ["web/package.json", "web/yarn.lock", "./web/"]
-COPY ["server/package.json", "server/yarn.lock", "./server/"]
+COPY ["api/package.json", "api/yarn.lock", "./api/"]
 RUN yarn install
 RUN cd web && yarn install
-RUN cd server && yarn install
+RUN cd api && yarn install
 
 # Build web
 # https://create-react-app.dev/docs/adding-custom-environment-variables/
@@ -22,10 +22,10 @@ COPY web web
 RUN rm -f web/.eslintrc.js
 RUN cd web && cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" yarn build
 
-# Build server
-COPY server/.env.development.local.example.docker server/.env.development.local
-COPY server server
-RUN cp -r web/build/ server/dist/
+# Build API
+COPY api/.env.development.local.example.docker api/.env.development.local
+COPY api api
+RUN cp -r web/build/ api/dist/
 
 EXPOSE 5000
 CMD ["yarn", "dev"]

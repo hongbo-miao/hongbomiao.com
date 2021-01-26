@@ -7,10 +7,10 @@ ENV PATH /app/node_modules/.bin:$PATH
 # Install dependencies
 COPY ["package.json", "yarn.lock", "./"]
 COPY ["web/package.json", "web/yarn.lock", "./web/"]
-COPY ["server/package.json", "server/yarn.lock", "./server/"]
+COPY ["api/package.json", "api/yarn.lock", "./api/"]
 RUN yarn install
 RUN cd web && yarn install
-RUN cd server && yarn install
+RUN cd api && yarn install
 
 # Build web
 COPY web/.env.production.local.example web/.env.production.local
@@ -19,11 +19,11 @@ COPY web web
 RUN rm -f web/.eslintrc.js
 RUN cd web && cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" yarn build
 
-# Build server
-COPY server/.env.production.local.example server/.env.production.local
-COPY server server
-RUN cp -r web/build/ server/dist/
-RUN cd server && yarn build
+# Build API
+COPY api/.env.production.local.example api/.env.production.local
+COPY api api
+RUN cp -r web/build/ api/dist/
+RUN cd api && yarn build
 
 EXPOSE 5000
 CMD ["yarn", "start"]
