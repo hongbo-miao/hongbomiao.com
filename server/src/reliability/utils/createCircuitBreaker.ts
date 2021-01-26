@@ -1,6 +1,6 @@
 import CircuitBreaker from 'opossum';
 import logger from '../../log/utils/logger';
-import meter from '../../log/utils/meter';
+import meter from './meter';
 
 const createCircuitBreaker = <FuncReturnType>(
   asyncFunc: (...args: string[]) => Promise<FuncReturnType>
