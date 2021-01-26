@@ -1,5 +1,5 @@
 // OpenTelemetry need to be setup before importing other modules
-import './shared/utils/initTracer';
+import './reliability/utils/initTracer';
 import http from 'http';
 import { execute, subscribe } from 'graphql';
 import { applyMiddleware } from 'graphql-middleware';

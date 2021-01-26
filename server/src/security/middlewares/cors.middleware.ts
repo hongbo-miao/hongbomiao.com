@@ -2,7 +2,7 @@ import cors from 'cors';
 import { RequestHandler } from 'express';
 import config from '../../config';
 import logger from '../../log/utils/logger';
-import meter from '../../log/utils/meter';
+import meter from '../../reliability/utils/meter';
 import isProduction from '../../shared/utils/isProduction';
 
 const ALLOW_LIST = isProduction() ? config.prodCORSAllowList : config.devCORSAllowList;
