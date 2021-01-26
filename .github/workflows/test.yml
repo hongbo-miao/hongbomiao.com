@@ -35,7 +35,7 @@ jobs:
           yarn install --frozen-lockfile
           cd web && yarn install --frozen-lockfile
           cd ../mobile && yarn install --frozen-lockfile
-          cd ../server && yarn install --frozen-lockfile
+          cd ../api && yarn install --frozen-lockfile
           cd ../cypress && yarn install --frozen-lockfile
       - name: Lint
         run: |
@@ -76,8 +76,8 @@ jobs:
         run: |
           yarn test
 
-  server-test:
-    name: Server - Test
+  api-test:
+    name: API - Test
     runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
@@ -104,9 +104,9 @@ jobs:
       - name: Install dependencies
         run: |
           yarn install --frozen-lockfile
-          cd server && yarn install --frozen-lockfile
+          cd api && yarn install --frozen-lockfile
       - name: Test
-        working-directory: server
+        working-directory: api
         run: |
           yarn test
 
@@ -139,7 +139,7 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           cd web && yarn install --frozen-lockfile
-          cd ../server && yarn install --frozen-lockfile
+          cd ../api && yarn install --frozen-lockfile
       - name: Coverage
         run: |
           yarn test:coverage

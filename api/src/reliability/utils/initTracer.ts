@@ -7,7 +7,7 @@ import isDevelopment from '../../shared/utils/isDevelopment';
 import isProduction from '../../shared/utils/isProduction';
 
 const initTracer = (): void => {
-  const serviceName = 'hm-server-trace-service';
+  const serviceName = 'hm-api-trace-service';
   const tracerProvider = new NodeTracerProvider({
     plugins: {
       dns: {

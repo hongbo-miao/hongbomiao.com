@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: server-deployment
+  name: api-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: server
+      component: api
   template:
     metadata:
       labels:
-        component: server
+        component: api
     spec:
       containers:
-        - name: server
-          image: hongbomiao/hongbomiao-server:latest
+        - name: api
+          image: hongbomiao/hongbomiao-api:latest
           ports:
             - containerPort: 5000

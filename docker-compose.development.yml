@@ -14,19 +14,19 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - server
+      - api
 
-  # Server
-  server:
-    container_name: hm_server
+  # API
+  api:
+    container_name: hm_api
     build:
       context: .
-      dockerfile: Dockerfile.server.development
+      dockerfile: Dockerfile.api.development
     environment:
       - NODE_ENV=development
     volumes:
-      - "./server:/app/server"
-      - "/app/server/node_modules"
+      - "./api:/app/api"
+      - "/app/api/node_modules"
     logging:
       driver: fluentd
       options:

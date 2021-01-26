@@ -18,8 +18,8 @@ rm -f public/sitemap.xml
 cd ../mobile
 rm -rf node_modules
 
-# Server
-cd ../server
+# API
+cd ../api
 rm -rf .clinic
 rm -rf build
 rm -rf dist
