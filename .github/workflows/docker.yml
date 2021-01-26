@@ -23,8 +23,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile.server.production
+          file: ./Dockerfile.api.production
           push: true
-          tags: hongbomiao/hongbomiao-server:latest
+          tags: hongbomiao/hongbomiao-api:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

@@ -4,12 +4,12 @@ metadata:
   name: hongbomiao.com
 build:
   artifacts:
-  - image: hongbomiao/hongbomiao-server
+  - image: hongbomiao/hongbomiao-api
     docker:
-      dockerfile: Dockerfile.server.development
+      dockerfile: Dockerfile.api.development
 deploy:
   kubectl:
     manifests:
     - kubernetes/ingress-service.yaml
-    - kubernetes/server-cluster-ip-service.yaml
-    - kubernetes/server-deployment.yaml
+    - kubernetes/api-cluster-ip-service.yaml
+    - kubernetes/api-deployment.yaml

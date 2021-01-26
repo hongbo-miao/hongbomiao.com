@@ -14,14 +14,14 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - server
+      - api
 
-  # Server
-  server:
-    container_name: hm_server
+  # API
+  api:
+    container_name: hm_api
     build:
       context: .
-      dockerfile: Dockerfile.server.production
+      dockerfile: Dockerfile.api.production
     environment:
       - NODE_ENV=production
     logging:
