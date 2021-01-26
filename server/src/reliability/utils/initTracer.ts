@@ -3,8 +3,8 @@ import { GraphQLInstrumentation } from '@opentelemetry/instrumentation-graphql';
 import { NodeTracerProvider } from '@opentelemetry/node';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import config from '../../config';
-import isDevelopment from './isDevelopment';
-import isProduction from './isProduction';
+import isDevelopment from '../../shared/utils/isDevelopment';
+import isProduction from '../../shared/utils/isProduction';
 
 const initTracer = (): void => {
   const serviceName = 'hm-server-trace-service';
