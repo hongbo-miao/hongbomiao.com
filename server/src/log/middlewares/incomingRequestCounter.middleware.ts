@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import meter from '../utils/meter';
+import meter from '../../reliability/utils/meter';
 
 const incomingRequestCounterMiddleware = (): RequestHandler => {
   const incomingRequestCounter = meter.createCounter('incomingRequestCounter', {
