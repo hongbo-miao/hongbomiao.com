@@ -9,8 +9,8 @@ yarn install
 cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" yarn build
 
 cd ..
-cp -r web/build/ server/dist/
+cp -r web/build/ api/dist/
 
-cd server
+cd api
 yarn install
 yarn build

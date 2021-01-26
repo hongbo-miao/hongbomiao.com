@@ -1,9 +1,9 @@
 type Health = {
-  server: string;
+  api: string;
 };
 
 const checkHealth = async (): Promise<Health> => {
-  return Promise.resolve({ server: 'ok' });
+  return Promise.resolve({ api: 'ok' });
 };
 
 export default checkHealth;

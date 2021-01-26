@@ -179,7 +179,7 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 
 ## URLs
 
-- Server: http://localhost:5000
+- API: http://localhost:5000
 - Web: http://localhost:8080
 - Expo: http://localhost:19002
 - React Native Debugger: http://localhost:19001
