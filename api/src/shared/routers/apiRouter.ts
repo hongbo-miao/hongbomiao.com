@@ -3,8 +3,8 @@ import timeout from 'connect-timeout';
 import csrf from 'csurf';
 import { Router } from 'express';
 import multer from 'multer';
-import authMiddleware from '../../security/middlewares/auth.middleware';
-import violationRouter from '../../security/routers/violation.router';
+import authMiddleware from '../../security/middlewares/authMiddleware';
+import violationRouter from '../../security/routers/violationRouter';
 import uploadFile from '../../storage/controllers/uploadFile';
 
 const csrfProtection = csrf({ cookie: { key: '__Host-csrf' } });

@@ -1,9 +1,9 @@
 import GraphQLPlanet from '../../../graphQL/types/GraphQLPlanet.type';
-import SWAPIPlanetType from '../types/SWAPIPlanet.type';
+import SWAPIPlanet from '../types/SWAPIPlanet.type';
 import convertToNumber from './convertToNumber';
 import splitStringToArray from './splitStringToArray';
 
-const formatPlanet = (id: string, planet: SWAPIPlanetType): GraphQLPlanet | null => {
+const formatPlanet = (id: string, planet: SWAPIPlanet): GraphQLPlanet | null => {
   if (planet == null) return null;
 
   const {

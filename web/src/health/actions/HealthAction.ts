@@ -1,5 +1,5 @@
 import GraphQLResponse from '../../shared/types/GraphQLResponse.type';
-import HealthActionType from '../actionTypes/Health.actionType';
+import HealthActionType from '../actionTypes/HealthActionType';
 import GraphQLPing from '../types/GraphQLPing.type';
 
 type SubscribePing = {

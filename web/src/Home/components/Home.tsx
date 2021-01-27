@@ -1,12 +1,12 @@
 import React, { lazy, useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import config from '../../config';
-import HealthAction from '../../health/actions/Health.action';
-import pingSubscription from '../../health/queries/ping.subscription';
+import HealthAction from '../../health/actions/HealthAction';
+import pingSubscription from '../../health/queries/pingSubscription';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import RootState from '../../shared/types/RootState.type';
 import analytics from '../../shared/utils/analytics';
-import MeAction from '../actions/Me.action';
+import MeAction from '../actions/MeAction';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import springWaltzMP3 from '../audio/spring-waltz.mp3';
@@ -14,7 +14,7 @@ import hatAVIF from '../images/hat.avif';
 import hatPNG from '../images/hat.png';
 import magicAVIF from '../images/magic.avif';
 import magicPNG from '../images/magic.png';
-import meQuery from '../queries/me.query';
+import meQuery from '../queries/meQuery';
 import styles from './Home.module.css';
 
 const HmAudioPlayer = lazy(() => import('../../shared/components/AudioPlayer'));

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import meReducer from '../../Home/reducers/me.reducer';
-import healthReducer from '../../health/reducers/health.reducer';
+import meReducer from '../../Home/reducers/meReducer';
+import healthReducer from '../../health/reducers/healthReducer';
 
 const rootReducer = combineReducers({
   health: healthReducer,

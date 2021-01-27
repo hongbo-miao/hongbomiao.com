@@ -1,9 +1,9 @@
 import { GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLObjectType } from 'graphql';
-import FibonacciGraphQLType from '../graphQLTypes/Fibonacci.graphQLType';
-import MeGraphQLType from '../graphQLTypes/Me.graphQLType';
-import PlanetGraphQLType from '../graphQLTypes/Planet.graphQLType';
-import StarshipGraphQLType from '../graphQLTypes/Starship.graphQLType';
-import UserGraphQLType from '../graphQLTypes/User.graphQLType';
+import FibonacciGraphQLType from '../graphQLTypes/FibonacciGraphQLType';
+import MeGraphQLType from '../graphQLTypes/MeGraphQLType';
+import PlanetGraphQLType from '../graphQLTypes/PlanetGraphQLType';
+import StarshipGraphQLType from '../graphQLTypes/StarshipGraphQLType';
+import UserGraphQLType from '../graphQLTypes/UserGraphQLType';
 import getFibonacci from '../utils/getFibonacci';
 import getMe from '../utils/getMe';
 

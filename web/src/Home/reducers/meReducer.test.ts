@@ -1,6 +1,6 @@
 import { Action } from 'redux';
-import MeActionType from '../actionTypes/Me.actionType';
-import meReducer from './me.reducer';
+import MeActionType from '../actionTypes/MeActionType';
+import meReducer from './meReducer';
 
 describe('meReducer', () => {
   test('initial state', () => {

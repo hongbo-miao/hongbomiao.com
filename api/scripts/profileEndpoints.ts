@@ -1,5 +1,5 @@
 import listEndpoints from 'express-list-endpoints';
-import apiRouter from '../src/shared/routers/api.router';
+import apiRouter from '../src/shared/routers/apiRouter';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
