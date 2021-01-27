@@ -15,7 +15,7 @@
 <p align="center">
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com/actions"><img alt="GitHub Actions" src="https://img.shields.io/github/workflow/status/Hongbo-Miao/hongbomiao.com/Deploy" /></a>
   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com"><img alt="FOSSA Status" src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com.svg?type=shield" /></a>
-  <a href="https://depfu.com/github/Hongbo-Miao/hongbomiao.com"><img alt="Depfu" src="https://badges.depfu.com/badges/99b1d5970eb895164b0b0914bd65eb71/overview.svg" /></a>
+  <a href="https://depfu.com/github/Hongbo-Miao/hongbomiao.com"><img alt="Depfu" src="https://img.shields.io/depfu/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements"><img alt="Requires.io requirements status" src="https://img.shields.io/requires/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://stats.uptimerobot.com/RoOoGTvyWN"><img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m783305207-c7842815153e530df85633fe" /></a>
   <a href="https://github.com/commitizen/cz-cli"><img alt="Commitizen friendly" src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" /></a>
