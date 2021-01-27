@@ -35,8 +35,7 @@ describe('queryMeEpic', () => {
     scheduler.run(({ hot, cold, expectObservable }) => {
       const action$ = hot(marbles.i, {
         i: MeAction.queryMe(meQuery),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      }) as any;
+      });
       const state$ = {} as StateObservable<RootState>;
       const dependencies = {
         fetchData: (): ColdObservable<AjaxResponse> =>
@@ -44,6 +43,8 @@ describe('queryMeEpic', () => {
             r: res,
           }),
       };
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       const output$ = queryMeEpic(action$, state$, dependencies);
 
       expectObservable(output$).toBe(marbles.o, {
@@ -66,13 +67,14 @@ describe('queryMeEpic', () => {
     scheduler.run(({ hot, expectObservable }) => {
       const action$ = hot(marbles.i, {
         i: MeAction.queryMe(meQuery),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      }) as any;
+      });
       const state$ = {} as StateObservable<RootState>;
       const duration = scheduler.createTime(marbles.d);
       const dependencies = {
         fetchData: (): Observable<never> => timer(duration).pipe(switchMap(() => throwError(err))),
       };
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       const output$ = queryMeEpic(action$, state$, dependencies);
 
       expectObservable(output$).toBe(marbles.o, {
