@@ -5,9 +5,9 @@ import queryComplexity, { simpleEstimator } from 'graphql-query-complexity';
 import logger from '../../log/utils/logger';
 import verifyJWTToken from '../../security/utils/verifyJWTToken';
 import isDevelopment from '../../shared/utils/isDevelopment';
-import planetDataLoader from '../dataLoaders/planet.dataLoader';
-import starshipDataLoader from '../dataLoaders/starship.dataLoader';
-import userDataLoader from '../dataLoaders/user.dataLoader';
+import planetDataLoader from '../dataLoaders/planetDataLoader';
+import starshipDataLoader from '../dataLoaders/starshipDataLoader';
+import userDataLoader from '../dataLoaders/userDataLoader';
 import permissions from '../permissions/permissions';
 import schema from '../schemas/schema';
 

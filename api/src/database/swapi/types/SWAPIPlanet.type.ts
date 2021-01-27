@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-type SWAPIPlanetType = {
+type SWAPIPlanet = {
   name: string;
   rotation_period: string;
   orbital_period: string;
@@ -12,4 +12,4 @@ type SWAPIPlanetType = {
   population: string;
 };
 
-export default SWAPIPlanetType;
+export default SWAPIPlanet;

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-type SWAPIStarshipType = {
+type SWAPIStarship = {
   name: string;
   model: string;
   manufacturer: string;
@@ -11,4 +11,4 @@ type SWAPIStarshipType = {
   starship_class: string;
 };
 
-export default SWAPIStarshipType;
+export default SWAPIStarship;

@@ -1,5 +1,5 @@
 import { AjaxError, AjaxResponse } from 'rxjs/ajax';
-import MeActionType from '../actionTypes/Me.actionType';
+import MeActionType from '../actionTypes/MeActionType';
 
 type QueryMe = {
   type: typeof MeActionType.QUERY_ME;
