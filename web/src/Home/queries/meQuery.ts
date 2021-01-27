@@ -1,6 +1,6 @@
 import { print } from 'graphql';
 import gql from 'graphql-tag';
-import meNamesFragment from './meNames.fragment';
+import meNamesFragment from './meNamesFragment';
 
 const meQuery = print(gql`
   query Me {

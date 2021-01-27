@@ -1,8 +1,8 @@
 import { Reducer } from 'redux';
-import HealthActionType from '../actionTypes/Health.actionType';
-import ReducerPing from '../types/ReducerHealth.type';
+import HealthActionType from '../actionTypes/HealthActionType';
+import HealthState from '../types/HealthState.type';
 
-const initialState: ReducerPing = {};
+const initialState: HealthState = {};
 
 const healthReducer: Reducer = (state = initialState, action) => {
   switch (action.type) {

@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'supertest';
-import helmetMiddleware from './helmet.middleware';
+import helmetMiddleware from './helmetMiddleware';
 
 describe('helmetMiddleware', () => {
   const app = express()

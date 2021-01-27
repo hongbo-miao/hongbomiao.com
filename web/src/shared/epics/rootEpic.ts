@@ -1,6 +1,6 @@
 import { combineEpics } from 'redux-observable';
-import queryMeEpic from '../../Home/epics/queryMe.epic';
-import pingEpic from '../../health/epics/ping.epic';
+import queryMeEpic from '../../Home/epics/queryMeEpic';
+import pingEpic from '../../health/epics/pingEpic';
 
 const epics = [queryMeEpic, pingEpic];
 const rootEpic = combineEpics(...epics);
