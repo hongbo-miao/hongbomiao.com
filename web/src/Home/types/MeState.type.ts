@@ -1,8 +1,8 @@
-type ReducerMe = {
+type MeState = {
   name?: string;
   firstName?: string;
   lastName?: string;
   bio?: string;
 };
 
-export default ReducerMe;
+export default MeState;

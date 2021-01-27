@@ -4,7 +4,7 @@ import express from 'express';
 // @ts-ignore
 import MockedRedis from 'ioredis-mock';
 import request from 'supertest';
-import rateLimitMiddleware from './rateLimit.middleware';
+import rateLimitMiddleware from './rateLimitMiddleware';
 
 describe('rateLimitMiddleware', () => {
   const points = 2; // Number of points
