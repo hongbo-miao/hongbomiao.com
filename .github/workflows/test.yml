@@ -174,11 +174,14 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           cd web && yarn install --frozen-lockfile
+      - name: Build
+        working-directory: web
+        run: yarn build
       - name: Lighthouse
         working-directory: web
-        run: |
-          yarn build
-          yarn run lighthouse
+        run: yarn run lighthouse
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
   # https://www.chromatic.com/docs/github-actions
   web-storybook:
