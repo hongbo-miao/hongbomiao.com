@@ -117,9 +117,9 @@ A minimalist website. A cutting-edge technology playground. An automation experi
 - **Terminus** - Health check and graceful shutdown
 - **Opossum** - Circuit breaker
 - **pino** - Logger
-- **Clinic.js** - Performance profiling
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
+- **Clinic.js** - Performance profiling
 
 #### Site Reliability
 
