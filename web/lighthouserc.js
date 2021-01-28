@@ -17,5 +17,8 @@ module.exports = {
         'valid-source-maps': ['warn', { minScore: 0 }],
       },
     },
+    upload: {
+      target: 'temporary-public-storage',
+    },
   },
 };
