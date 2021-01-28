@@ -18,3 +18,4 @@ yarn husky install
 cd web && yarn install
 cd ../mobile && yarn install
 cd ../api && yarn install
+cd ../cypress && yarn install
