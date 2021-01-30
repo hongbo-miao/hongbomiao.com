@@ -14,6 +14,7 @@ import networkErrorLoggingMiddleware from './log/middlewares/networkErrorLogging
 import pinoMiddleware from './log/middlewares/pinoMiddleware';
 import reportToMiddleware from './log/middlewares/reportToMiddleware';
 import indexRouter from './page/routers/indexRouter';
+import redirectToIndexRouter from './page/routers/redirectToIndexRouter';
 import corsMiddleware from './security/middlewares/corsMiddleware';
 import helmetMiddleware from './security/middlewares/helmetMiddleware';
 import rateLimitMiddleware from './security/middlewares/rateLimitMiddleware';
@@ -38,6 +39,7 @@ const app = express()
   .use(rateLimitMiddleware(redis))
   .use('/graphql', graphQLUploadMiddleware, graphQLMiddleware)
   .use('/api', apiRouter)
+  .use(redirectToIndexRouter)
   .use(Sentry.Handlers.errorHandler()) // Must be before any other error middleware and after all controllers
   .use(handleError);
 
