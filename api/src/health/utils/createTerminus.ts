@@ -8,8 +8,8 @@ const createTerminus = (server: http.Server | spdy.Server): void => {
   terminus.createTerminus(server, {
     signals: ['SIGINT', 'SIGBREAK', 'SIGHUP', 'SIGTERM'],
     healthChecks: {
-      verbatim: true,
       '/health': checkHealth,
+      verbatim: true,
     },
     onSignal: cleanup,
   });
