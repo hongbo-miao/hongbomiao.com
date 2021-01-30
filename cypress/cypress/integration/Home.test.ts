@@ -3,7 +3,7 @@ describe('Home', () => {
 
   it('render Home', () => {
     cy.visit(`${domain}:${webPort}`);
-    cy.contains('Making magic happen');
+    cy.get('.container').contains('Making magic happen');
   });
 
   it('receive GraphQL meQuery data', () => {

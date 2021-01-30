@@ -5,9 +5,10 @@
     "node": "14.x"
   },
   "scripts": {
-    "test:cypress:gui": "cypress open --config-file cypress.8080.json",
-    "test:cypress:headless": "cypress run --config-file cypress.8080.json",
-    "test:cypress:headless:ci": "wait-on http://localhost:5000 && cypress run --config-file cypress.5000.json"
+    "test:cypress:gui:8080": "cypress open --config-file cypress.8080.json",
+    "test:cypress:gui:5000": "cypress open --config-file cypress.5000.json",
+    "test:cypress:headless:8080": "wait-on http://localhost:8080 && cypress run --config-file cypress.8080.json",
+    "test:cypress:headless:5000": "wait-on http://localhost:5000 && cypress run --config-file cypress.5000.json"
   },
   "devDependencies": {
     "cypress": "6.3.0",
