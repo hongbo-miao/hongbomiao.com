@@ -1,8 +1,7 @@
 import pg from '../../database/postgres/pg';
 
 const checkPostgresHealth = async (): Promise<boolean> => {
-  const hasUsers = await pg.schema.hasTable('users');
-  return hasUsers != null;
+  return pg.schema.hasTable('users');
 };
 
 export default checkPostgresHealth;

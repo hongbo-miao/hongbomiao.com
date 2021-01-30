@@ -4,10 +4,8 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import requestId from 'express-request-id';
-import Redis from 'ioredis';
 import responseTime from 'response-time';
 import favicon from 'serve-favicon';
-import config from './config';
 import handleError from './error/controllers/handleError';
 import graphQLMiddleware from './graphQL/middlewares/graphQLMiddleware';
 import graphQLUploadMiddleware from './graphQL/middlewares/graphQLUploadMiddleware';
@@ -19,9 +17,8 @@ import indexRouter from './page/routers/indexRouter';
 import corsMiddleware from './security/middlewares/corsMiddleware';
 import helmetMiddleware from './security/middlewares/helmetMiddleware';
 import rateLimitMiddleware from './security/middlewares/rateLimitMiddleware';
+import redis from './security/utils/redis';
 import apiRouter from './shared/routers/apiRouter';
-
-const redis = new Redis(config.redisOptions);
 
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
