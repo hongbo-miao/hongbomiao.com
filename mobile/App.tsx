@@ -1,6 +1,6 @@
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import React from 'react';
 import HmHome from './Home/components/Home';
