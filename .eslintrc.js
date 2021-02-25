@@ -24,8 +24,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended', // @typescript-eslint/eslint-plugin
     'plugin:security/recommended', // eslint-plugin-security
     'prettier', // eslint-plugin-prettier. Make sure to put it last in the extends array, so it gets the chance to override other configs
-    'prettier/@typescript-eslint', // eslint-config-prettier. Disables ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-    'prettier/babel', // eslint-config-prettier
     'plugin:prettier/recommended', // eslint-plugin-prettier. Exposes a "recommended" configuration that configures both eslint-plugin-prettier and eslint-config-prettier in a single step. Make sure this is always the last configuration in the extends array
   ],
   settings: {
