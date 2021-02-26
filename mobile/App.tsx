@@ -3,7 +3,7 @@ import { ApplicationProvider } from '@ui-kitten/components';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import React from 'react';
-import HmHome from './Home/components/Home';
+import HmHome from './src/Home/components/Home';
 
 const App: React.FC = () => {
   const [isFontLoaded, setIsFontLoaded] = React.useState(() => false);
