@@ -1,6 +1,5 @@
 import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
 import { DocumentLoad } from '@opentelemetry/plugin-document-load';
-import { XMLHttpRequestPlugin } from '@opentelemetry/plugin-xml-http-request';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import { WebTracerProvider } from '@opentelemetry/web';
 import config from '../../config';
@@ -13,7 +12,7 @@ const initTracer = (): void => {
     // https://github.com/open-telemetry/opentelemetry-js-contrib/issues/193
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    plugins: [new DocumentLoad(), new XMLHttpRequestPlugin()],
+    plugins: [new DocumentLoad()],
   });
 
   if (isDevelopment()) {
