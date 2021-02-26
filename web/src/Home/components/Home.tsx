@@ -1,4 +1,4 @@
-import React, { lazy, useEffect } from 'react';
+import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import config from '../../config';
 import HealthAction from '../../health/actions/HealthAction';
@@ -17,9 +17,9 @@ import magicPNG from '../images/magic.png';
 import meQuery from '../queries/meQuery';
 import styles from './Home.module.css';
 
-const HmAudioPlayer = lazy(() => import('../../shared/components/AudioPlayer'));
-const HmImage = lazy(() => import('../../shared/components/Image'));
-const HmSparkles = lazy(() => import('../../shared/components/Sparkles'));
+const HmAudioPlayer = React.lazy(() => import('../../shared/components/AudioPlayer'));
+const HmImage = React.lazy(() => import('../../shared/components/Image'));
+const HmSparkles = React.lazy(() => import('../../shared/components/Sparkles'));
 
 const connector = connect(
   (state: RootState) => ({
@@ -36,7 +36,7 @@ type Props = ConnectedProps<typeof connector>;
 const Home: React.FC<Props> = (props) => {
   const { me, queryMe, subscribePing } = props;
 
-  useEffect(() => {
+  React.useEffect(() => {
     queryMe(meQuery);
     subscribePing(pingSubscription);
 
