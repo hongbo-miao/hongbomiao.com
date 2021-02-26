@@ -1,5 +1,7 @@
 import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
+import { registerInstrumentations } from '@opentelemetry/instrumentation';
 import { GraphQLInstrumentation } from '@opentelemetry/instrumentation-graphql';
+import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { NodeTracerProvider } from '@opentelemetry/node';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import config from '../../config';
@@ -8,58 +10,42 @@ import isProduction from '../../shared/utils/isProduction';
 
 const initTracer = (): void => {
   const serviceName = 'hm-api-trace-service';
-  const tracerProvider = new NodeTracerProvider({
-    plugins: {
-      dns: {
-        enabled: true,
-        path: '@opentelemetry/plugin-dns',
+  const tracerProvider = new NodeTracerProvider();
+
+  registerInstrumentations({
+    instrumentations: [
+      {
+        plugins: {
+          dns: {
+            enabled: true,
+            path: '@opentelemetry/plugin-dns',
+          },
+          express: {
+            enabled: true,
+            path: '@opentelemetry/plugin-express',
+          },
+          ioredis: {
+            enabled: true,
+            path: '@opentelemetry/plugin-ioredis',
+          },
+          pg: {
+            enabled: true,
+            path: '@opentelemetry/plugin-pg',
+          },
+          'pg-pool': {
+            enabled: true,
+            path: '@opentelemetry/plugin-pg-pool',
+          },
+        },
       },
-      express: {
-        enabled: true,
-        path: '@opentelemetry/plugin-express',
-      },
-      http: {
-        enabled: true,
-        // https://github.com/open-telemetry/opentelemetry-js/issues/585
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        ignoreOutgoingUrls: [
-          /\/v1\/trace/, // OpenTelemetry tracing
-          /\/v1\/metrics/, // OpenTelemetry metrics
-        ],
-        path: '@opentelemetry/plugin-http',
-      },
-      https: {
-        enabled: true,
-        // https://github.com/open-telemetry/opentelemetry-js/issues/585
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        ignoreOutgoingUrls: [
-          /\/v1\/trace/, // OpenTelemetry tracing
-          /\/v1\/metrics/, // OpenTelemetry metrics
-        ],
-        path: '@opentelemetry/plugin-https',
-      },
-      ioredis: {
-        enabled: true,
-        path: '@opentelemetry/plugin-ioredis',
-      },
-      pg: {
-        enabled: true,
-        path: '@opentelemetry/plugin-pg',
-      },
-      'pg-pool': {
-        enabled: true,
-        path: '@opentelemetry/plugin-pg-pool',
-      },
-    },
+    ],
+    tracerProvider,
   });
 
+  const httpInstrumentation = new HttpInstrumentation();
+  httpInstrumentation.enable();
+
   const graphQLInstrumentation = new GraphQLInstrumentation();
-  // https://github.com/open-telemetry/opentelemetry-js/issues/1724
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  graphQLInstrumentation.setTracerProvider(tracerProvider);
   graphQLInstrumentation.enable();
 
   if (isDevelopment()) {
