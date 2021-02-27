@@ -5,12 +5,16 @@ set -e
 cd web
 yarn test:coverage
 
+cd ../mobile
+yarn test:coverage
+
 cd ../api
 yarn test:coverage
 
 cd ..
 mkdir -p tmp
 cp web/coverage/coverage-final.json tmp/coverage-final-web.json
+cp mobile/coverage/coverage-final.json tmp/coverage-final-mobile.json
 cp api/coverage/coverage-final.json tmp/coverage-final-api.json
 
 mkdir -p coverage
