@@ -182,7 +182,7 @@ A minimalist website. A cutting-edge technology lab. An automation experiment.
 - API: http://localhost:5000
 - Web: http://localhost:8080
 - Expo: http://localhost:19002
-- React Native Debugger: http://localhost:19001
+- React Native Debugger: http://localhost:19000
 - NGINX: http://localhost:80
 - Jaeger: http://localhost:16686
 - Kibana: http://localhost:5601
