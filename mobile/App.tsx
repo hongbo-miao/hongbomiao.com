@@ -3,7 +3,9 @@ import { ApplicationProvider } from '@ui-kitten/components';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import React from 'react';
+import { Provider } from 'react-redux';
 import HmHome from './src/Home/components/Home';
+import store from './src/shared/utils/store';
 
 const App: React.FC = () => {
   const [isFontLoaded, setIsFontLoaded] = React.useState(() => false);
@@ -27,10 +29,12 @@ const App: React.FC = () => {
   }
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <ApplicationProvider {...eva} theme={eva.light}>
-      <HmHome />
-    </ApplicationProvider>
+    <Provider store={store}>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <HmHome />
+      </ApplicationProvider>
+    </Provider>
   );
 };
 
