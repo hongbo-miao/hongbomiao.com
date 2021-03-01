@@ -1,6 +1,19 @@
 import { Layout, Text } from '@ui-kitten/components';
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { connect, ConnectedProps } from 'react-redux';
+import RootState from '../../shared/types/RootState.type';
+import MeAction from '../actions/MeAction';
+import meQuery from '../queries/meQuery';
+
+const connector = connect(
+  (state: RootState) => ({
+    me: state.me,
+  }),
+  {
+    queryMe: MeAction.queryMe,
+  }
+);
 
 const styles = StyleSheet.create({
   hmHome: {
@@ -21,11 +34,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const Home: React.FC = () => (
-  <Layout style={styles.hmHome}>
-    <Text style={styles.hmName}>Hongbo Miao</Text>
-    <Text style={styles.hmBio}>Making magic happen</Text>
-  </Layout>
-);
+type Props = ConnectedProps<typeof connector>;
 
-export default Home;
+const Home: React.FC<Props> = (props) => {
+  const { me, queryMe } = props;
+
+  React.useEffect(() => {
+    queryMe(meQuery);
+  }, [queryMe]);
+
+  const { bio, name } = me;
+
+  return (
+    <Layout style={styles.hmHome}>
+      <Text style={styles.hmName}>{name}</Text>
+      <Text style={styles.hmBio}>{bio}</Text>
+    </Layout>
+  );
+};
+
+export default connector(Home);
