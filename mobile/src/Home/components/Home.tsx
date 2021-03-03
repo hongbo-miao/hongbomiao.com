@@ -47,8 +47,12 @@ const Home: React.FC<Props> = (props) => {
 
   return (
     <Layout style={styles.hmHome}>
-      <Text style={styles.hmName}>{name}</Text>
-      <Text style={styles.hmBio}>{bio}</Text>
+      <Text style={styles.hmName} testID="name">
+        {name}
+      </Text>
+      <Text style={styles.hmBio} testID="bio">
+        {bio}
+      </Text>
     </Layout>
   );
 };
