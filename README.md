@@ -89,6 +89,7 @@ A minimalist website. A cutting-edge technology lab. An automation experiment.
 
 - **React Native** - Mobile application framework
 - **UI Kitten** - UI library
+- **React Native Testing Library** - React Native component testing
 
 #### Back End
 
