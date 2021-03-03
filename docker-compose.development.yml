@@ -183,6 +183,14 @@ services:
     ports:
       - "9090:9090"
 
+  # Node Exporter
+  node:
+    container_name: hm_node_exporter
+    image: prom/node-exporter:v1.1.1
+    restart: always
+    ports:
+      - "9100:9100"
+
   # Grafana
   grafana:
     container_name: hm_grafana
