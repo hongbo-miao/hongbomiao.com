@@ -2,6 +2,9 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
+rule_files:
+  - 'alerting-rules.yml'
+
 scrape_configs:
   - job_name: 'opentelemetry-collector'
     scrape_interval: 5s
