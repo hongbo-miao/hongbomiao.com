@@ -170,13 +170,22 @@ services:
     ports:
       - "5601:5601"
 
+  # Node Exporter
+  node:
+    container_name: hm_node_exporter
+    image: prom/node-exporter:v1.1.1
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+
   # Prometheus
   prometheus:
     container_name: hm_prometheus
     image: prom/prometheus:v2.25.0
     volumes:
-      - ./docker/prometheus/prometheus.development.yaml:/etc/prometheus/prometheus.yml
-    restart: always
+      - ./docker/prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    restart: unless-stopped
     ports:
       - "9090:9090"
 
@@ -195,5 +204,6 @@ services:
 
 # For persistence between restarts
 volumes:
-  redis_data:
-  postgres_data:
+  redis_data: { }
+  postgres_data: { }
+  prometheus_data: { }
