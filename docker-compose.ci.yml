@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile.nginx.development
     environment:
       - NODE_ENV=development
-    restart: always
+    restart: unless-stopped
     ports:
       - "80:80"
     depends_on:
@@ -28,7 +28,7 @@ services:
       driver: fluentd
       options:
         fluentd-address: 0.0.0.0:24224
-    restart: always
+    restart: unless-stopped
     ports:
       - "5000:5000"
     depends_on:
@@ -42,7 +42,7 @@ services:
     image: redis:6.2.1-alpine
     volumes:
       - redis_data:/data
-    restart: always
+    restart: unless-stopped
     ports:
       - "6379:6379"
 
@@ -55,7 +55,7 @@ services:
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - ./docker/postgres/.env.development.local
-    restart: always
+    restart: unless-stopped
     ports:
       - "5432:5432"
 
@@ -70,7 +70,7 @@ services:
       options:
         max-size: "100m"
         max-file: "5"
-    restart: always
+    restart: unless-stopped
     ports:
       - "24224:24224"
       - "5140:5140/udp"
@@ -88,7 +88,7 @@ services:
     ]
     volumes:
       - ./docker/opentelemetry-collector/otel-collector.config.yaml:/conf/otel-collector.config.yaml
-    restart: always
+    restart: unless-stopped
     ports:
       - "9464:9464"
       - "55680:55680"
@@ -108,7 +108,7 @@ services:
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - LOG_LEVEL=debug
-    restart: always
+    restart: unless-stopped
     ports:
       - "14250"
       - "14268"
@@ -128,7 +128,7 @@ services:
       - "6831/udp"
       - "6832/udp"
       - "5778"
-    restart: always
+    restart: unless-stopped
     depends_on:
       - jaeger-collector
 
@@ -143,7 +143,7 @@ services:
     environment:
       - SPAN_STORAGE_TYPE=elasticsearch
       - LOG_LEVEL=debug
-    restart: always
+    restart: unless-stopped
     ports:
       - "16686:16686"
       - "16687"
@@ -157,7 +157,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
     environment:
       - discovery.type=single-node
-    restart: always
+    restart: unless-stopped
     ports:
       - "9200/tcp"
 
@@ -166,17 +166,26 @@ services:
     container_name: hm_kibana
     # https://www.docker.elastic.co/r/kibana/kibana-oss
     image: docker.elastic.co/kibana/kibana-oss:7.10.2
-    restart: always
+    restart: unless-stopped
     ports:
-      - 5601:5601
+      - "5601:5601"
+
+  # Node Exporter
+  node:
+    container_name: hm_node_exporter
+    image: prom/node-exporter:v1.1.1
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
 
   # Prometheus
   prometheus:
     container_name: hm_prometheus
     image: prom/prometheus:v2.25.0
     volumes:
-      - ./docker/prometheus/prometheus.development.yaml:/etc/prometheus/prometheus.yml
-    restart: always
+      - ./docker/prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    restart: unless-stopped
     ports:
       - "9090:9090"
 
@@ -187,7 +196,7 @@ services:
     environment:
       # https://grafana.com/grafana/plugins
       - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel
-    restart: always
+    restart: unless-stopped
     ports:
       - "3000:3000"
     depends_on:
@@ -195,5 +204,6 @@ services:
 
 # For persistence between restarts
 volumes:
-  redis_data:
-  postgres_data:
+  redis_data: { }
+  postgres_data: { }
+  prometheus_data: { }
