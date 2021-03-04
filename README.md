@@ -132,6 +132,7 @@ A minimalist website. A cutting-edge technology lab. An automation experiment.
 - **Kibana** - Data visualization dashboard for Elasticsearch
 - **Grafana** - Monitoring and observability platform
 - **Prometheus** - Monitoring system
+- **Node Exporter** - Monitoring Linux host metrics
 - **PM2** - Node.js application production process manager
 - **Docker** - Container
 - **Kubernetes** - Container-orchestration system
