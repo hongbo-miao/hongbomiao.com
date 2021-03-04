@@ -78,7 +78,7 @@ A minimalist website. A cutting-edge technology lab. An automation experiment.
 - **graphql-tag** - GraphQL query parsing
 - **Bulma** - CSS framework
 - **PurgeCSS** - Unused CSS removing
-- **Jest** - JavaScript testing framework
+- **Jest** - Unit testing, snapshot Testing
 - **React Testing Library** - React component testing
 - **Storybook** - Visual testing
 - **rxjs/testing** - Marble testing
