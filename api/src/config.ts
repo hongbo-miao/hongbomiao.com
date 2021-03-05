@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/node';
 import dotenvFlow from 'dotenv-flow';
 import Redis from 'ioredis';
-import knex from 'knex';
+import { Knex } from 'knex';
 import { argv } from 'yargs';
 import PostgresInputUser from './database/postgres/types/PostgresInputUser.type';
 
@@ -127,7 +127,7 @@ type Config = {
   };
   jwtSecret: string;
   redisOptions: Redis.RedisOptions;
-  postgresConnection: knex.StaticConnectionConfig;
+  postgresConnection: Knex.StaticConnectionConfig;
   seedUser: PostgresInputUser;
   lightstep: {
     token: string | undefined;
