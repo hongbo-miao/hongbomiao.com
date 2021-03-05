@@ -1,4 +1,4 @@
-import knex from 'knex';
+import { knex } from 'knex';
 import config from '../../config';
 
 const pg = knex({
