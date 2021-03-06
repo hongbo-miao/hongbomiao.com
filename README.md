@@ -59,7 +59,7 @@
 
 ## Introduction
 
-A minimalist website. A cutting-edge technology lab. An automation experiment.
+A minimalist app. A cutting-edge technology lab. An automation experiment.
 
 ## Preview
 
