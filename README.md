@@ -91,7 +91,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **UI Kitten** - UI library
 - **React Native Testing Library** - React Native component testing
 
-#### Back End
+#### API Server
 
 - **Express** - Node.js web application framework
 - **GraphQL.js**, **express-graphql** - GraphQL
