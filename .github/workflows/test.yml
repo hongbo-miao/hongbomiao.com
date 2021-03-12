@@ -19,28 +19,29 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - name: Get cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache
         uses: actions/cache@v2
-        id: yarn-cache
+        id: npm-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile
-          cd web && yarn install --frozen-lockfile
-          cd ../mobile && yarn install --frozen-lockfile
-          cd ../api && yarn install --frozen-lockfile
-          cd ../cypress && yarn install --frozen-lockfile
+          npm ci
+          cd web && npm ci
+          cd ../mobile && npm ci
+          cd ../api && npm ci
+          cd ../cypress && npm ci
       - name: Lint
         run: |
-          yarn lint:js
-          yarn lint:css
+          npm run lint:js
+          npm run lint:css
 
   web-test:
     name: Web - Test
@@ -56,25 +57,26 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - name: Get cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache
         uses: actions/cache@v2
-        id: yarn-cache
+        id: npm-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile
-          cd web && yarn install --frozen-lockfile
+          npm ci
+          cd web && npm ci
       - name: Test
         working-directory: web
         run: |
-          yarn test
+          npm test
 
   mobile-test:
     name: Mobile - Test
@@ -90,25 +92,26 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - name: Get cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache
         uses: actions/cache@v2
-        id: yarn-cache
+        id: npm-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile
-          cd mobile && yarn install --frozen-lockfile
+          npm ci
+          cd mobile && npm ci
       - name: Test
         working-directory: mobile
         run: |
-          yarn test
+          npm test
 
   api-test:
     name: API - Test
@@ -124,25 +127,26 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - name: Get cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache
         uses: actions/cache@v2
-        id: yarn-cache
+        id: npm-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile
-          cd api && yarn install --frozen-lockfile
+          npm ci
+          cd api && npm ci
       - name: Test
         working-directory: api
         run: |
-          yarn test
+          npm test
 
   coverage:
     name: Coverage
@@ -158,27 +162,28 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - name: Get cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache
         uses: actions/cache@v2
-        id: yarn-cache
+        id: npm-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile
-          cd web && yarn install --frozen-lockfile
-          cd ../mobile && yarn install --frozen-lockfile
-          cd ../api && yarn install --frozen-lockfile
+          npm ci
+          cd web && npm ci
+          cd ../mobile && npm ci
+          cd ../api && npm ci
       - name: Coverage
         run: |
-          yarn test:coverage
-          yarn test:coverage:publish
+          npm run test:coverage
+          npm run test:coverage:publish
 
   web-lighthouse:
     name: Web - Lighthouse
@@ -194,27 +199,28 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - name: Get cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache
         uses: actions/cache@v2
-        id: yarn-cache
+        id: npm-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile
-          cd web && yarn install --frozen-lockfile
+          npm ci
+          cd web && npm ci
       - name: Build
         working-directory: web
-        run: yarn build
+        run: npm run build
       - name: Lighthouse
         working-directory: web
-        run: yarn run lighthouse
+        run: npm run lighthouse
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
@@ -235,30 +241,31 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - name: Get cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache
         uses: actions/cache@v2
-        id: yarn-cache
+        id: npm-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile
-          cd web && yarn install --frozen-lockfile
+          npm ci
+          cd web && npm ci
       - name: Build
         working-directory: web
         run: |
-          yarn build
-          yarn storybook:build
+          npm run build
+          npm run storybook:build
       - name: Publish storybook to Chromatic
         working-directory: web
         run: |
-          yarn storybook:publish --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
+          npm run storybook:publish --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
 
   cypress:
     name: Cypress
@@ -274,25 +281,26 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-      - name: Get cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
       - name: Cache
         uses: actions/cache@v2
-        id: yarn-cache
+        id: npm-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile
-          cd cypress && yarn install --frozen-lockfile
+          npm ci
+          cd cypress && npm ci
       - name: Build and run containers
         run: |
           cp docker/postgres/.env.development.local.example docker/postgres/.env.development.local
           docker-compose -f docker-compose.ci.yml up -d
       - name: Cypress
         run: |
-          cd cypress && yarn test:cypress:headless:5000
+          cd cypress && npm run test:cypress:headless:5000

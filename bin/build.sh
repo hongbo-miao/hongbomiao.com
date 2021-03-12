@@ -2,15 +2,15 @@
 
 set -e
 
-yarn install
+npm install
 
 cd web
-yarn install
-cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" yarn build
+npm install
+cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
 
 cd ..
 cp -r web/build/ api/dist/
 
 cd api
-yarn install
-yarn build
+npm install
+npm run build
