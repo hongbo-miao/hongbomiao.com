@@ -1,4 +1,4 @@
 module.exports = {
-  '*.css': 'yarn lint:css:fix',
-  '*.{js,ts,tsx}': 'yarn lint:js:fix',
+  '*.css': 'npm run lint:css:fix',
+  '*.{js,ts,tsx}': 'npm run lint:js:fix',
 };
