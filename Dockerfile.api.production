@@ -5,25 +5,25 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # Install dependencies
-COPY ["package.json", "yarn.lock", "./"]
-COPY ["web/package.json", "web/yarn.lock", "./web/"]
-COPY ["api/package.json", "api/yarn.lock", "./api/"]
-RUN yarn install
-RUN cd web && yarn install
-RUN cd api && yarn install
+COPY ["package.json", "package-lock.json", "./"]
+COPY ["web/package.json", "web/package-lock.json", "./web/"]
+COPY ["api/package.json", "api/package-lock.json", "./api/"]
+RUN npm install
+RUN cd web && npm install
+RUN cd api && npm install
 
 # Build web
 COPY web/.env.production.local.example web/.env.production.local
 COPY web web
 # Skip lint check during react-scripts build
 RUN rm -f web/.eslintrc.js
-RUN cd web && cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" yarn build
+RUN cd web && cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
 
 # Build API
 COPY api/.env.production.local.example api/.env.production.local
 COPY api api
 RUN cp -r web/build/ api/dist/
-RUN cd api && yarn build
+RUN cd api && npm run build
 
 EXPOSE 5000
-CMD ["yarn", "start"]
+CMD ["npm", "start"]

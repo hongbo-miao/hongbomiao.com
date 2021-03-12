@@ -13,9 +13,9 @@ cp -n docker/postgres/.env.development.local.example docker/postgres/.env.develo
 cp -n docker/postgres/.env.production.local.example docker/postgres/.env.production.local || true
 
 # Install dependencies
-yarn install
-yarn husky install
-cd web && yarn install
-cd ../mobile && yarn install
-cd ../api && yarn install
-cd ../cypress && yarn install
+npm install
+npx husky install
+cd web && npm install
+cd ../mobile && npm install
+cd ../api && npm install
+cd ../cypress && npm install

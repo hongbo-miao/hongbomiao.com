@@ -7,19 +7,19 @@
   },
   "scripts": {
     "build": "tsc && babel build --out-dir build",
-    "debug": "yarn build && cross-env NODE_ENV=development node --inspect-brk build/src/index.js",
-    "dev": "nodemon --ext ts --exec 'yarn build && cross-env NODE_ENV=development node build/src/index.js --hideHTTPLog --prettifyLog'",
-    "dev:log": "nodemon --ext ts --exec 'yarn build && cross-env NODE_ENV=development node build/src/index.js --prettifyLog'",
+    "debug": "npm run build && cross-env NODE_ENV=development node --inspect-brk build/src/index.js",
+    "dev": "nodemon --ext ts --exec 'npm run build && cross-env NODE_ENV=development node build/src/index.js --hideHTTPLog --prettifyLog'",
+    "dev:log": "nodemon --ext ts --exec 'npm run build && cross-env NODE_ENV=development node build/src/index.js --prettifyLog'",
     "serve:development": "cross-env NODE_ENV=development node build/src/index.js",
     "serve:production": "cross-env NODE_ENV=production node build/src/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "autocannon": "autocannon http://localhost:5000",
-    "profile:endpoints": "yarn build && NODE_ENV=production node build/scripts/profileEndpoints.js",
-    "profile:bubbleprof": "yarn build && cross-env NODE_ENV=production clinic bubbleprof --on-port 'sh bin/profile.sh' -- node build/src/index.js",
-    "profile:doctor": "yarn build && cross-env NODE_ENV=production clinic doctor --on-port 'sh bin/profile.sh' -- node build/src/index.js",
-    "profile:flame": "yarn build && cross-env NODE_ENV=production clinic flame --on-port 'sh bin/profile.sh' -- node build/src/index.js"
+    "profile:endpoints": "npm run build && NODE_ENV=production node build/scripts/profileEndpoints.js",
+    "profile:bubbleprof": "npm run build && cross-env NODE_ENV=production clinic bubbleprof --on-port 'sh bin/profile.sh' -- node build/src/index.js",
+    "profile:doctor": "npm run build && cross-env NODE_ENV=production clinic doctor --on-port 'sh bin/profile.sh' -- node build/src/index.js",
+    "profile:flame": "npm run build && cross-env NODE_ENV=production clinic flame --on-port 'sh bin/profile.sh' -- node build/src/index.js"
   },
   "dependencies": {
     "@godaddy/terminus": "4.6.0",
