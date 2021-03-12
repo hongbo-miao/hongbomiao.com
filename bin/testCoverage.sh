@@ -3,13 +3,13 @@
 set -e
 
 cd web
-yarn test:coverage
+npm run test:coverage
 
 cd ../mobile
-yarn test:coverage
+npm run test:coverage
 
 cd ../api
-yarn test:coverage
+npm run test:coverage
 
 cd ..
 mkdir -p tmp
