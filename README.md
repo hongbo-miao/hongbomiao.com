@@ -139,11 +139,17 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Locust** - Load testing
 - **CodeQL** - Variant analysis
 
+#### Neural Network
+
+- **PyTorch** - Machine learning
+- **PyTorch Geometric** - PyTorch geometric deep learning extension
+
 #### Code
 
 - **TypeScript** - Static type-checking
 - **ESLint**, **Stylelint** - Static code analysis
-- **Prettier** - Code formatting
+- **Prettier** - JavaScript code formatting
+- **Black** - Python code formatting
 - **commitlint** - Commit message linting
 - **Husky**, **lint-staged** - Bad git commit and push preventing
 
