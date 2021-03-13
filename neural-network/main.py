@@ -2,6 +2,7 @@ import argparse
 import numpy as np
 import torch
 import torch.optim as optim
+import wandb
 from ogb.graphproppred import PygGraphPropPredDataset, Evaluator
 from torch_geometric.data import DataLoader
 from tqdm import tqdm
@@ -65,6 +66,8 @@ def eval(model, device, loader, evaluator):
 
 
 def main():
+    wandb.init(project="hongbomiao.com", entity="hongbo-miao")
+
     # Training settings
     parser = argparse.ArgumentParser(
         description="GNN baselines on ogbgmol* data with Pytorch Geometrics"
@@ -202,6 +205,8 @@ def main():
     else:
         raise ValueError("Invalid GNN type")
 
+    wandb.watch(model)
+
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     valid_curve = []
@@ -219,6 +224,14 @@ def main():
         test_perf = eval(model, device, test_loader, evaluator)
 
         print({"Train": train_perf, "Validation": valid_perf, "Test": test_perf})
+
+        wandb.log(
+            {
+                "train_acc": train_perf,
+                "val_acc": valid_perf,
+                "test_acc": test_perf,
+            }
+        )
 
         train_curve.append(train_perf[dataset.eval_metric])
         valid_curve.append(valid_perf[dataset.eval_metric])
