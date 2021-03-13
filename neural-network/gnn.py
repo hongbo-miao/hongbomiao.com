@@ -90,7 +90,3 @@ class GNN(torch.nn.Module):
         h_node = self.gnn_node(batched_data)
         h_graph = self.pool(h_node, batched_data.batch)
         return self.graph_pred_linear(h_graph)
-
-
-if __name__ == "__main__":
-    GNN(num_tasks=10)

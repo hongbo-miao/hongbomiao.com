@@ -9,7 +9,7 @@ conda activate hm-neural-network
 sh install-torch-geometric.sh
 pip install -r requirements.txt
 
-python main_pyg.py --dataset ogbg-molhiv --gnn gcn
+python main.py --dataset ogbg-molhiv --gnn gcn
 ```
 
 ## Clean
