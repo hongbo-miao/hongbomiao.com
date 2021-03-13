@@ -282,7 +282,3 @@ class GNN_node_Virtualnode(torch.nn.Module):
                 node_representation += h_list[layer]
 
         return node_representation
-
-
-if __name__ == "__main__":
-    pass
