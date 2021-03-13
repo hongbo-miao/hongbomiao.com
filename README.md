@@ -176,6 +176,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **[Depfu](https://depfu.com/repos/github/Hongbo-Miao/hongbomiao.com)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** - Dependency monitoring
 - **[Uptime Robot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
+- **[Weights & Biases](https://wandb.ai/hongbo-miao/hongbomiao.com)** - Machine learning experiment tracking
 
 #### Bots
 
