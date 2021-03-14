@@ -15,6 +15,7 @@ reg_criterion = torch.nn.MSELoss()
 
 def train(model, device, loader, optimizer, task_type):
     model.train()
+    total_loss = 0
 
     for step, batch in enumerate(tqdm(loader, desc="Iteration")):
         batch = batch.to(device)
@@ -37,7 +38,10 @@ def train(model, device, loader, optimizer, task_type):
                     batch.y.to(torch.float32)[is_labeled],
                 )
             loss.backward()
+            total_loss += loss.item()
             optimizer.step()
+
+    return total_loss
 
 
 def evaluate(model, device, loader, evaluator):
@@ -136,7 +140,9 @@ def main():
         for epoch in range(1, args.epochs + 1):
             print(f"=====Epoch {epoch}")
             print("Training...")
-            train(model, device, train_loader, optimizer, dataset.task_type)
+            train_loss = train(
+                model, device, train_loader, optimizer, dataset.task_type
+            )
 
             print("Evaluating...")
             train_perf = evaluate(model, device, train_loader, evaluator)
@@ -146,6 +152,7 @@ def main():
             print({"Train": train_perf, "Validation": valid_perf, "Test": test_perf})
             wb.log(
                 {
+                    "train_loss": train_loss,
                     "train_acc": train_perf,
                     "val_acc": valid_perf,
                     "test_acc": test_perf,
