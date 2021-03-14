@@ -214,7 +214,7 @@ def main():
     train_curve = []
 
     for epoch in range(1, args.epochs + 1):
-        print("=====Epoch {}".format(epoch))
+        print(f"=====Epoch {epoch}")
         print("Training...")
         train(model, device, train_loader, optimizer, dataset.task_type)
 
@@ -224,7 +224,6 @@ def main():
         test_perf = eval(model, device, test_loader, evaluator)
 
         print({"Train": train_perf, "Validation": valid_perf, "Test": test_perf})
-
         wandb.log(
             {
                 "train_acc": train_perf,
@@ -245,8 +244,8 @@ def main():
         best_train = min(train_curve)
 
     print("Finished training!")
-    print("Best validation score: {}".format(valid_curve[best_val_epoch]))
-    print("Test score: {}".format(test_curve[best_val_epoch]))
+    print(f"Best validation score: {valid_curve[best_val_epoch]}")
+    print(f"Test score: {test_curve[best_val_epoch]}")
 
     if not args.filename == "":
         torch.save(
