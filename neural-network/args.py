@@ -15,7 +15,7 @@ def get_args():
         help="GNN gin, gin-virtual, or gcn, or gcn-virtual (default: gin-virtual)",
     )
     parser.add_argument(
-        "--lr", type=float, default=0.001, help="dropout ratio (default: 0.5)"
+        "--lr", type=float, default=0.001, help="Learning rate (default: 0.001)"
     )
     parser.add_argument(
         "--drop_ratio", type=float, default=0.5, help="dropout ratio (default: 0.5)"
