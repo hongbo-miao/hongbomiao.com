@@ -80,6 +80,9 @@ def main():
         help="GNN gin, gin-virtual, or gcn, or gcn-virtual (default: gin-virtual)",
     )
     parser.add_argument(
+        "--lr", type=float, default=0.001, help="dropout ratio (default: 0.5)"
+    )
+    parser.add_argument(
         "--drop_ratio", type=float, default=0.5, help="dropout ratio (default: 0.5)"
     )
     parser.add_argument(
@@ -206,7 +209,7 @@ def main():
     with wandb.init(project="hongbomiao.com", entity="hongbo-miao", config=args) as wb:
         wb.watch(model)
 
-        optimizer = optim.Adam(model.parameters(), lr=0.001)
+        optimizer = optim.Adam(model.parameters(), lr=args.lr)
 
         valid_curve = []
         test_curve = []
