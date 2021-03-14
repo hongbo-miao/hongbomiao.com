@@ -7,7 +7,7 @@ from torch_geometric.nn import (
     Set2Set,
 )
 
-from conv import GNN_node, GNN_node_Virtualnode
+from model.conv import GNN_node, GNN_node_Virtualnode
 
 
 class GNN(torch.nn.Module):
