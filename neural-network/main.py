@@ -66,8 +66,6 @@ def eval(model, device, loader, evaluator):
 
 
 def main():
-    wandb.init(project="hongbomiao.com", entity="hongbo-miao")
-
     # Training settings
     parser = argparse.ArgumentParser(
         description="GNN baselines on ogbgmol* data with Pytorch Geometrics"
@@ -205,59 +203,59 @@ def main():
     else:
         raise ValueError("Invalid GNN type")
 
-    wandb.watch(model)
+    with wandb.init(project="hongbomiao.com", entity="hongbo-miao", config=args) as wb:
+        wb.watch(model)
 
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+        optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-    valid_curve = []
-    test_curve = []
-    train_curve = []
+        valid_curve = []
+        test_curve = []
+        train_curve = []
 
-    for epoch in range(1, args.epochs + 1):
-        print("=====Epoch {}".format(epoch))
-        print("Training...")
-        train(model, device, train_loader, optimizer, dataset.task_type)
+        for epoch in range(1, args.epochs + 1):
+            print(f"=====Epoch {epoch}")
+            print("Training...")
+            train(model, device, train_loader, optimizer, dataset.task_type)
 
-        print("Evaluating...")
-        train_perf = eval(model, device, train_loader, evaluator)
-        valid_perf = eval(model, device, valid_loader, evaluator)
-        test_perf = eval(model, device, test_loader, evaluator)
+            print("Evaluating...")
+            train_perf = eval(model, device, train_loader, evaluator)
+            valid_perf = eval(model, device, valid_loader, evaluator)
+            test_perf = eval(model, device, test_loader, evaluator)
 
-        print({"Train": train_perf, "Validation": valid_perf, "Test": test_perf})
+            print({"Train": train_perf, "Validation": valid_perf, "Test": test_perf})
+            wb.log(
+                {
+                    "train_acc": train_perf,
+                    "val_acc": valid_perf,
+                    "test_acc": test_perf,
+                }
+            )
 
-        wandb.log(
-            {
-                "train_acc": train_perf,
-                "val_acc": valid_perf,
-                "test_acc": test_perf,
-            }
-        )
+            train_curve.append(train_perf[dataset.eval_metric])
+            valid_curve.append(valid_perf[dataset.eval_metric])
+            test_curve.append(test_perf[dataset.eval_metric])
 
-        train_curve.append(train_perf[dataset.eval_metric])
-        valid_curve.append(valid_perf[dataset.eval_metric])
-        test_curve.append(test_perf[dataset.eval_metric])
+        if "classification" in dataset.task_type:
+            best_val_epoch = np.argmax(np.array(valid_curve))
+            best_train = max(train_curve)
+        else:
+            best_val_epoch = np.argmin(np.array(valid_curve))
+            best_train = min(train_curve)
 
-    if "classification" in dataset.task_type:
-        best_val_epoch = np.argmax(np.array(valid_curve))
-        best_train = max(train_curve)
-    else:
-        best_val_epoch = np.argmin(np.array(valid_curve))
-        best_train = min(train_curve)
+        print("Finished training!")
+        print(f"Best validation score: {valid_curve[best_val_epoch]}")
+        print(f"Test score: {test_curve[best_val_epoch]}")
 
-    print("Finished training!")
-    print("Best validation score: {}".format(valid_curve[best_val_epoch]))
-    print("Test score: {}".format(test_curve[best_val_epoch]))
-
-    if not args.filename == "":
-        torch.save(
-            {
-                "Val": valid_curve[best_val_epoch],
-                "Test": test_curve[best_val_epoch],
-                "Train": train_curve[best_val_epoch],
-                "BestTrain": best_train,
-            },
-            args.filename,
-        )
+        if not args.filename == "":
+            torch.save(
+                {
+                    "Val": valid_curve[best_val_epoch],
+                    "Test": test_curve[best_val_epoch],
+                    "Train": train_curve[best_val_epoch],
+                    "BestTrain": best_train,
+                },
+                args.filename,
+            )
 
 
 if __name__ == "__main__":
