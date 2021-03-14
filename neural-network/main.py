@@ -2,11 +2,11 @@ import numpy as np
 import torch
 import torch.optim as optim
 import wandb
-from ogb.graphproppred import PygGraphPropPredDataset, Evaluator
-from torch_geometric.data import DataLoader
+from ogb.graphproppred import Evaluator
 from tqdm import tqdm
 
-from gnn import GNN
+from model.data_loader import fetch_dataset, get_dataloaders
+from model.gnn import GNN
 from args import get_args
 
 cls_criterion = torch.nn.BCEWithLogitsLoss()
@@ -40,7 +40,7 @@ def train(model, device, loader, optimizer, task_type):
             optimizer.step()
 
 
-def eval(model, device, loader, evaluator):
+def evaluate(model, device, loader, evaluator):
     model.eval()
     y_true = []
     y_pred = []
@@ -75,40 +75,15 @@ def main():
         else torch.device("cpu")
     )
 
-    # automatic dataloading and splitting
-    dataset = PygGraphPropPredDataset(name=args.dataset)
-
-    if args.feature == "full":
-        pass
-    elif args.feature == "simple":
-        print("using simple feature")
-        # only retain the top two node/edge features
-        dataset.data.x = dataset.data.x[:, :2]
-        dataset.data.edge_attr = dataset.data.edge_attr[:, :2]
-
-    split_idx = dataset.get_idx_split()
+    dataset, split_idx = fetch_dataset(args)
 
     # automatic evaluator. takes dataset name as input
     evaluator = Evaluator(args.dataset)
 
-    train_loader = DataLoader(
-        dataset[split_idx["train"]],
-        batch_size=args.batch_size,
-        shuffle=True,
-        num_workers=args.num_workers,
-    )
-    valid_loader = DataLoader(
-        dataset[split_idx["valid"]],
-        batch_size=args.batch_size,
-        shuffle=False,
-        num_workers=args.num_workers,
-    )
-    test_loader = DataLoader(
-        dataset[split_idx["test"]],
-        batch_size=args.batch_size,
-        shuffle=False,
-        num_workers=args.num_workers,
-    )
+    dataloaders = get_dataloaders(dataset, split_idx, args)
+    train_loader = dataloaders["train"]
+    valid_loader = dataloaders["valid"]
+    test_loader = dataloaders["test"]
 
     if args.gnn == "gin":
         model = GNN(
@@ -164,9 +139,9 @@ def main():
             train(model, device, train_loader, optimizer, dataset.task_type)
 
             print("Evaluating...")
-            train_perf = eval(model, device, train_loader, evaluator)
-            valid_perf = eval(model, device, valid_loader, evaluator)
-            test_perf = eval(model, device, test_loader, evaluator)
+            train_perf = evaluate(model, device, train_loader, evaluator)
+            valid_perf = evaluate(model, device, valid_loader, evaluator)
+            test_perf = evaluate(model, device, test_loader, evaluator)
 
             print({"Train": train_perf, "Validation": valid_perf, "Test": test_perf})
             wb.log(
