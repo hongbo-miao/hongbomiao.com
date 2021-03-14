@@ -82,7 +82,7 @@ class GNN_node(torch.nn.Module):
         num_layer,
         emb_dim,
         drop_ratio=0.5,
-        JK="last",
+        jk="last",
         residual=False,
         gnn_type="gin",
     ):
@@ -94,7 +94,7 @@ class GNN_node(torch.nn.Module):
         super(GNN_node, self).__init__()
         self.num_layer = num_layer
         self.drop_ratio = drop_ratio
-        self.JK = JK
+        self.jk = jk
         # add residual connection or not
         self.residual = residual
 
@@ -143,9 +143,9 @@ class GNN_node(torch.nn.Module):
             h_list.append(h)
 
         # Different implementations of Jk-concat
-        if self.JK == "last":
+        if self.jk == "last":
             node_representation = h_list[-1]
-        elif self.JK == "sum":
+        elif self.jk == "sum":
             node_representation = 0
             for layer in range(self.num_layer):
                 node_representation += h_list[layer]
@@ -165,7 +165,7 @@ class GNN_node_Virtualnode(torch.nn.Module):
         num_layer,
         emb_dim,
         drop_ratio=0.5,
-        JK="last",
+        jk="last",
         residual=False,
         gnn_type="gin",
     ):
@@ -176,7 +176,7 @@ class GNN_node_Virtualnode(torch.nn.Module):
         super(GNN_node_Virtualnode, self).__init__()
         self.num_layer = num_layer
         self.drop_ratio = drop_ratio
-        self.JK = JK
+        self.jk = jk
         # add residual connection or not
         self.residual = residual
 
@@ -273,10 +273,10 @@ class GNN_node_Virtualnode(torch.nn.Module):
                         training=self.training,
                     )
 
-        # Different implementations of Jk-concat
-        if self.JK == "last":
+        # Different implementations of JK-Concat
+        if self.jk == "last":
             node_representation = h_list[-1]
-        elif self.JK == "sum":
+        elif self.jk == "sum":
             node_representation = 0
             for layer in range(self.num_layer):
                 node_representation += h_list[layer]

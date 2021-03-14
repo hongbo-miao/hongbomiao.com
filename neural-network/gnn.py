@@ -20,7 +20,7 @@ class GNN(torch.nn.Module):
         virtual_node=True,
         residual=False,
         drop_ratio=0.5,
-        JK="last",
+        jk="last",
         graph_pooling="mean",
     ):
         """
@@ -32,7 +32,7 @@ class GNN(torch.nn.Module):
 
         self.num_layer = num_layer
         self.drop_ratio = drop_ratio
-        self.JK = JK
+        self.jk = jk
         self.emb_dim = emb_dim
         self.num_tasks = num_tasks
         self.graph_pooling = graph_pooling
@@ -45,7 +45,7 @@ class GNN(torch.nn.Module):
             self.gnn_node = GNN_node_Virtualnode(
                 num_layer,
                 emb_dim,
-                JK=JK,
+                jk=jk,
                 drop_ratio=drop_ratio,
                 residual=residual,
                 gnn_type=gnn_type,
@@ -54,7 +54,7 @@ class GNN(torch.nn.Module):
             self.gnn_node = GNN_node(
                 num_layer,
                 emb_dim,
-                JK=JK,
+                jk=jk,
                 drop_ratio=drop_ratio,
                 residual=residual,
                 gnn_type=gnn_type,
