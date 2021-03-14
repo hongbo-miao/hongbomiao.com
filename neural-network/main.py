@@ -203,7 +203,7 @@ def main():
     else:
         raise ValueError("Invalid GNN type")
 
-    with wandb.init(project="hongbomiao.com", entity="hongbo-miao") as wb:
+    with wandb.init(project="hongbomiao.com", entity="hongbo-miao", config=args) as wb:
         wb.watch(model)
 
         optimizer = optim.Adam(model.parameters(), lr=0.001)
