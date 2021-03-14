@@ -143,6 +143,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 
 - **PyTorch** - Machine learning
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
+- **OGB** - Open Graph Benchmark
 
 #### Code
 
