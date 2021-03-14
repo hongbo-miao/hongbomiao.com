@@ -26,7 +26,7 @@ def get_dataloaders(dataset, split_idx, config):
         shuffle=True,
         num_workers=config.num_workers,
     )
-    valid_loader = DataLoader(
+    val_loader = DataLoader(
         dataset[split_idx["valid"]],
         batch_size=config.batch_size,
         shuffle=False,
@@ -39,4 +39,4 @@ def get_dataloaders(dataset, split_idx, config):
         num_workers=config.num_workers,
     )
 
-    return {"train": train_loader, "valid": valid_loader, "test": test_loader}
+    return {"train": train_loader, "val": val_loader, "test": test_loader}
