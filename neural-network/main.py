@@ -152,6 +152,7 @@ def main():
             print({"Train": train_perf, "Validation": valid_perf, "Test": test_perf})
             wb.log(
                 {
+                    "epoch": epoch,
                     "train_loss": train_loss,
                     "train_acc": train_perf,
                     "val_acc": valid_perf,
