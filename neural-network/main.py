@@ -73,71 +73,73 @@ def main():
     # Training settings
     args = get_args()
 
-    device = (
-        torch.device("cuda:" + str(args.device))
-        if torch.cuda.is_available()
-        else torch.device("cpu")
-    )
-
-    dataset, split_idx = fetch_dataset(args)
-
-    # automatic evaluator. takes dataset name as input
-    evaluator = Evaluator(args.dataset)
-
-    dataloaders = get_dataloaders(dataset, split_idx, args)
-    train_loader = dataloaders["train"]
-    valid_loader = dataloaders["valid"]
-    test_loader = dataloaders["test"]
-
-    if args.gnn == "gin":
-        model = GNN(
-            gnn_type="gin",
-            num_tasks=dataset.num_tasks,
-            num_layer=args.num_layer,
-            emb_dim=args.emb_dim,
-            drop_ratio=args.drop_ratio,
-            virtual_node=False,
-        ).to(device)
-    elif args.gnn == "gin-virtual":
-        model = GNN(
-            gnn_type="gin",
-            num_tasks=dataset.num_tasks,
-            num_layer=args.num_layer,
-            emb_dim=args.emb_dim,
-            drop_ratio=args.drop_ratio,
-            virtual_node=True,
-        ).to(device)
-    elif args.gnn == "gcn":
-        model = GNN(
-            gnn_type="gcn",
-            num_tasks=dataset.num_tasks,
-            num_layer=args.num_layer,
-            emb_dim=args.emb_dim,
-            drop_ratio=args.drop_ratio,
-            virtual_node=False,
-        ).to(device)
-    elif args.gnn == "gcn-virtual":
-        model = GNN(
-            gnn_type="gcn",
-            num_tasks=dataset.num_tasks,
-            num_layer=args.num_layer,
-            emb_dim=args.emb_dim,
-            drop_ratio=args.drop_ratio,
-            virtual_node=True,
-        ).to(device)
-    else:
-        raise ValueError("Invalid GNN type")
-
     with wandb.init(project="hongbomiao.com", entity="hongbo-miao", config=args) as wb:
+        config = wb.config
+
+        device = (
+            torch.device("cuda:" + str(config.device))
+            if torch.cuda.is_available()
+            else torch.device("cpu")
+        )
+
+        dataset, split_idx = fetch_dataset(config)
+
+        # automatic evaluator. takes dataset name as input
+        evaluator = Evaluator(config.dataset)
+
+        dataloaders = get_dataloaders(dataset, split_idx, config)
+        train_loader = dataloaders["train"]
+        valid_loader = dataloaders["valid"]
+        test_loader = dataloaders["test"]
+
+        if config.gnn == "gin":
+            model = GNN(
+                gnn_type="gin",
+                num_tasks=dataset.num_tasks,
+                num_layer=config.num_layer,
+                emb_dim=config.emb_dim,
+                drop_ratio=config.drop_ratio,
+                virtual_node=False,
+            ).to(device)
+        elif config.gnn == "gin-virtual":
+            model = GNN(
+                gnn_type="gin",
+                num_tasks=dataset.num_tasks,
+                num_layer=config.num_layer,
+                emb_dim=config.emb_dim,
+                drop_ratio=config.drop_ratio,
+                virtual_node=True,
+            ).to(device)
+        elif config.gnn == "gcn":
+            model = GNN(
+                gnn_type="gcn",
+                num_tasks=dataset.num_tasks,
+                num_layer=config.num_layer,
+                emb_dim=config.emb_dim,
+                drop_ratio=config.drop_ratio,
+                virtual_node=False,
+            ).to(device)
+        elif config.gnn == "gcn-virtual":
+            model = GNN(
+                gnn_type="gcn",
+                num_tasks=dataset.num_tasks,
+                num_layer=config.num_layer,
+                emb_dim=config.emb_dim,
+                drop_ratio=config.drop_ratio,
+                virtual_node=True,
+            ).to(device)
+        else:
+            raise ValueError("Invalid GNN type")
+
         wb.watch(model)
 
-        optimizer = optim.Adam(model.parameters(), lr=args.lr)
+        optimizer = optim.Adam(model.parameters(), lr=config.lr)
 
         valid_curve = []
         test_curve = []
         train_curve = []
 
-        for epoch in range(1, args.epochs + 1):
+        for epoch in range(1, config.epochs + 1):
             print(f"=====Epoch {epoch}")
             print("Training...")
             train_loss = train(
@@ -175,7 +177,7 @@ def main():
         print(f"Best validation score: {valid_curve[best_val_epoch]}")
         print(f"Test score: {test_curve[best_val_epoch]}")
 
-        if not args.filename == "":
+        if not config.filename == "":
             torch.save(
                 {
                     "Val": valid_curve[best_val_epoch],
@@ -183,7 +185,7 @@ def main():
                     "Train": train_curve[best_val_epoch],
                     "BestTrain": best_train,
                 },
-                args.filename,
+                config.filename,
             )
 
 

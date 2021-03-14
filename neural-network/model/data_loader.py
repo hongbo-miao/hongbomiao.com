@@ -2,13 +2,13 @@ from ogb.graphproppred import PygGraphPropPredDataset
 from torch_geometric.data import DataLoader
 
 
-def fetch_dataset(args):
+def fetch_dataset(config):
     # automatic data loading and splitting
-    dataset = PygGraphPropPredDataset(name=args.dataset)
+    dataset = PygGraphPropPredDataset(name=config.dataset)
 
-    if args.feature == "full":
+    if config.feature == "full":
         pass
-    elif args.feature == "simple":
+    elif config.feature == "simple":
         print("using simple feature")
         # only retain the top two node/edge features
         dataset.data.x = dataset.data.x[:, :2]
@@ -19,24 +19,24 @@ def fetch_dataset(args):
     return dataset, split_idx
 
 
-def get_dataloaders(dataset, split_idx, args):
+def get_dataloaders(dataset, split_idx, config):
     train_loader = DataLoader(
         dataset[split_idx["train"]],
-        batch_size=args.batch_size,
+        batch_size=config.batch_size,
         shuffle=True,
-        num_workers=args.num_workers,
+        num_workers=config.num_workers,
     )
     valid_loader = DataLoader(
         dataset[split_idx["valid"]],
-        batch_size=args.batch_size,
+        batch_size=config.batch_size,
         shuffle=False,
-        num_workers=args.num_workers,
+        num_workers=config.num_workers,
     )
     test_loader = DataLoader(
         dataset[split_idx["test"]],
-        batch_size=args.batch_size,
+        batch_size=config.batch_size,
         shuffle=False,
-        num_workers=args.num_workers,
+        num_workers=config.num_workers,
     )
 
     return {"train": train_loader, "valid": valid_loader, "test": test_loader}
