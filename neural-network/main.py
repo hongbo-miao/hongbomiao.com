@@ -89,7 +89,7 @@ def main():
 
         dataloaders = get_dataloaders(dataset, split_idx, config)
         train_loader = dataloaders["train"]
-        valid_loader = dataloaders["valid"]
+        val_loader = dataloaders["val"]
         test_loader = dataloaders["test"]
 
         if config.gnn == "gin":
@@ -135,7 +135,7 @@ def main():
 
         optimizer = optim.Adam(model.parameters(), lr=config.lr)
 
-        valid_curve = []
+        val_curve = []
         test_curve = []
         train_curve = []
 
@@ -148,39 +148,39 @@ def main():
 
             print("Evaluating...")
             train_perf = evaluate(model, device, train_loader, evaluator)
-            valid_perf = evaluate(model, device, valid_loader, evaluator)
+            val_perf = evaluate(model, device, val_loader, evaluator)
             test_perf = evaluate(model, device, test_loader, evaluator)
 
-            print({"Train": train_perf, "Validation": valid_perf, "Test": test_perf})
+            print({"Train": train_perf, "Validation": val_perf, "Test": test_perf})
             wb.log(
                 {
                     "epoch": epoch,
                     "train_loss": train_loss,
                     "train_acc": train_perf,
-                    "val_acc": valid_perf,
+                    "val_acc": val_perf,
                     "test_acc": test_perf,
                 }
             )
 
             train_curve.append(train_perf[dataset.eval_metric])
-            valid_curve.append(valid_perf[dataset.eval_metric])
+            val_curve.append(val_perf[dataset.eval_metric])
             test_curve.append(test_perf[dataset.eval_metric])
 
         if "classification" in dataset.task_type:
-            best_val_epoch = np.argmax(np.array(valid_curve))
+            best_val_epoch = np.argmax(np.array(val_curve))
             best_train = max(train_curve)
         else:
-            best_val_epoch = np.argmin(np.array(valid_curve))
+            best_val_epoch = np.argmin(np.array(val_curve))
             best_train = min(train_curve)
 
         print("Finished training!")
-        print(f"Best validation score: {valid_curve[best_val_epoch]}")
+        print(f"Best validation score: {val_curve[best_val_epoch]}")
         print(f"Test score: {test_curve[best_val_epoch]}")
 
         if not config.filename == "":
             torch.save(
                 {
-                    "Val": valid_curve[best_val_epoch],
+                    "Val": val_curve[best_val_epoch],
                     "Test": test_curve[best_val_epoch],
                     "Train": train_curve[best_val_epoch],
                     "BestTrain": best_train,
