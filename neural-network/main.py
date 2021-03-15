@@ -6,6 +6,7 @@ from ogb.graphproppred import Evaluator
 from tqdm import tqdm
 
 from model.data_loader import fetch_dataset, get_dataloaders
+from model.deeper_gcn import DeeperGCN
 from model.gnn import GNN
 from args import get_args
 
@@ -127,6 +128,29 @@ def main():
                 emb_dim=config.emb_dim,
                 drop_ratio=config.drop_ratio,
                 virtual_node=True,
+            ).to(device)
+        elif config.gnn == "deeper-gcn":
+            model = DeeperGCN(
+                num_tasks=dataset.num_tasks,
+                num_layers=config.num_layers,
+                dropout=config.drop_ratio,
+                block=config.block,
+                conv_encode_edge=config.conv_encode_edge,
+                add_virtual_node=config.add_virtual_node,
+                hidden_channels=config.hidden_channels,
+                conv=config.conv,
+                gcn_aggr=config.gcn_aggr,
+                t=config.t,
+                learn_t=config.learn_t,
+                p=config.p,
+                learn_p=config.learn_p,
+                y=config.y,
+                learn_y=config.learn_y,
+                msg_norm=config.msg_norm,
+                learn_msg_scale=config.learn_msg_scale,
+                norm=config.norm,
+                mlp_layers=config.mlp_layers,
+                graph_pooling=config.graph_pooling,
             ).to(device)
         else:
             raise ValueError("Invalid GNN type")

@@ -1,44 +1,53 @@
 import torch
-from torch import nn
 import torch.nn.functional as F
 import torch_geometric as tg
-from .torch_nn import MLP, act_layer, norm_layer, BondEncoder
+from torch import nn
+from torch_geometric.utils import remove_self_loops, add_self_loops
+
 from .torch_edge import DilatedKnnGraph
 from .torch_message import GenMessagePassing, MsgNorm
-from torch_geometric.utils import remove_self_loops, add_self_loops
+from .torch_nn import MLP, act_layer, norm_layer, BondEncoder
 
 
 class GENConv(GenMessagePassing):
     """
-     GENeralized Graph Convolution (GENConv): https://arxiv.org/pdf/2006.07739.pdf
-     SoftMax  &  PowerMean Aggregation
+    GENeralized Graph Convolution (GENConv): https://arxiv.org/pdf/2006.07739.pdf
+    SoftMax  &  PowerMean Aggregation
     """
-    def __init__(self, in_dim, emb_dim,
-                 aggr='softmax',
-                 t=1.0, learn_t=False,
-                 p=1.0, learn_p=False,
-                 y=0.0, learn_y=False,
-                 msg_norm=False, learn_msg_scale=True,
-                 encode_edge=False, bond_encoder=False,
-                 edge_feat_dim=None,
-                 norm='batch', mlp_layers=2,
-                 eps=1e-7):
 
-        super(GENConv, self).__init__(aggr=aggr,
-                                      t=t, learn_t=learn_t,
-                                      p=p, learn_p=learn_p, 
-                                      y=y, learn_y=learn_y)
+    def __init__(
+        self,
+        in_dim,
+        emb_dim,
+        aggr="softmax",
+        t=1.0,
+        learn_t=False,
+        p=1.0,
+        learn_p=False,
+        y=0.0,
+        learn_y=False,
+        msg_norm=False,
+        learn_msg_scale=True,
+        encode_edge=False,
+        bond_encoder=False,
+        edge_feat_dim=None,
+        norm="batch",
+        mlp_layers=2,
+        eps=1e-7,
+    ):
+
+        super(GENConv, self).__init__(
+            aggr=aggr, t=t, learn_t=learn_t, p=p, learn_p=learn_p, y=y, learn_y=learn_y
+        )
 
         channels_list = [in_dim]
 
-        for i in range(mlp_layers-1):
-            channels_list.append(in_dim*2)
+        for i in range(mlp_layers - 1):
+            channels_list.append(in_dim * 2)
 
         channels_list.append(emb_dim)
 
-        self.mlp = MLP(channels=channels_list,
-                       norm=norm,
-                       last_lin=True)
+        self.mlp = MLP(channels=channels_list, norm=norm, last_lin=True)
 
         self.msg_encoder = torch.nn.ReLU()
         self.eps = eps
@@ -93,14 +102,23 @@ class MRConv(nn.Module):
     """
     Max-Relative Graph Convolution (Paper: https://arxiv.org/abs/1904.03751)
     """
-    def __init__(self, in_channels, out_channels, act='relu', norm=None, bias=True, aggr='max'):
+
+    def __init__(
+        self, in_channels, out_channels, act="relu", norm=None, bias=True, aggr="max"
+    ):
         super(MRConv, self).__init__()
-        self.nn = MLP([in_channels*2, out_channels], act, norm, bias)
+        self.nn = MLP([in_channels * 2, out_channels], act, norm, bias)
         self.aggr = aggr
 
     def forward(self, x, edge_index):
         """"""
-        x_j = tg.utils.scatter_(self.aggr, torch.index_select(x, 0, edge_index[0]) - torch.index_select(x, 0, edge_index[1]), edge_index[1], dim_size=x.shape[0])
+        x_j = tg.utils.scatter_(
+            self.aggr,
+            torch.index_select(x, 0, edge_index[0])
+            - torch.index_select(x, 0, edge_index[1]),
+            edge_index[1],
+            dim_size=x.shape[0],
+        )
         return self.nn(torch.cat([x, x_j], dim=1))
 
 
@@ -108,8 +126,13 @@ class EdgConv(tg.nn.EdgeConv):
     """
     Edge convolution layer (with activation, batch normalization)
     """
-    def __init__(self, in_channels, out_channels, act='relu', norm=None, bias=True, aggr='max'):
-        super(EdgConv, self).__init__(MLP([in_channels*2, out_channels], act, norm, bias), aggr)
+
+    def __init__(
+        self, in_channels, out_channels, act="relu", norm=None, bias=True, aggr="max"
+    ):
+        super(EdgConv, self).__init__(
+            MLP([in_channels * 2, out_channels], act, norm, bias), aggr
+        )
 
     def forward(self, x, edge_index):
         return super(EdgConv, self).forward(x, edge_index)
@@ -119,10 +142,13 @@ class GATConv(nn.Module):
     """
     Graph Attention Convolution layer (with activation, batch normalization)
     """
-    def __init__(self, in_channels, out_channels,  act='relu', norm=None, bias=True, heads=8):
+
+    def __init__(
+        self, in_channels, out_channels, act="relu", norm=None, bias=True, heads=8
+    ):
         super(GATConv, self).__init__()
         self.gconv = tg.nn.GATConv(in_channels, out_channels, heads, bias=bias)
-        m =[]
+        m = []
         if act:
             m.append(act_layer(act))
         if norm:
@@ -156,19 +182,25 @@ class SAGEConv(tg.nn.SAGEConv):
             :class:`torch_geometric.nn.conv.MessagePassing`.
     """
 
-    def __init__(self,
-                 in_channels,
-                 out_channels,
-                 nn,
-                 norm=True,
-                 bias=True,
-                 relative=False,
-                 **kwargs):
+    def __init__(
+        self,
+        in_channels,
+        out_channels,
+        nn,
+        norm=True,
+        bias=True,
+        relative=False,
+        **kwargs
+    ):
         self.relative = relative
         if norm is not None:
-            super(SAGEConv, self).__init__(in_channels, out_channels, True, bias, **kwargs)
+            super(SAGEConv, self).__init__(
+                in_channels, out_channels, True, bias, **kwargs
+            )
         else:
-            super(SAGEConv, self).__init__(in_channels, out_channels, False, bias, **kwargs)
+            super(SAGEConv, self).__init__(
+                in_channels, out_channels, False, bias, **kwargs
+            )
         self.nn = nn
 
     def forward(self, x, edge_index, size=None):
@@ -201,9 +233,19 @@ class RSAGEConv(SAGEConv):
     Residual SAGE convolution layer (with activation, batch normalization)
     """
 
-    def __init__(self, in_channels, out_channels, act='relu', norm=None, bias=True, relative=False):
+    def __init__(
+        self,
+        in_channels,
+        out_channels,
+        act="relu",
+        norm=None,
+        bias=True,
+        relative=False,
+    ):
         nn = MLP([out_channels + in_channels, out_channels], act, norm, bias)
-        super(RSAGEConv, self).__init__(in_channels, out_channels, nn, norm, bias, relative)
+        super(RSAGEConv, self).__init__(
+            in_channels, out_channels, nn, norm, bias, relative
+        )
 
 
 class SemiGCNConv(nn.Module):
@@ -211,7 +253,7 @@ class SemiGCNConv(nn.Module):
     SemiGCN convolution layer (with activation, batch normalization)
     """
 
-    def __init__(self, in_channels, out_channels, act='relu', norm=None, bias=True):
+    def __init__(self, in_channels, out_channels, act="relu", norm=None, bias=True):
         super(SemiGCNConv, self).__init__()
         self.gconv = tg.nn.GCNConv(in_channels, out_channels, bias=bias)
         m = []
@@ -230,7 +272,10 @@ class GinConv(tg.nn.GINConv):
     """
     GINConv layer (with activation, batch normalization)
     """
-    def __init__(self, in_channels, out_channels, act='relu', norm=None, bias=True, aggr='add'):
+
+    def __init__(
+        self, in_channels, out_channels, act="relu", norm=None, bias=True, aggr="add"
+    ):
         super(GinConv, self).__init__(MLP([in_channels, out_channels], act, norm, bias))
 
     def forward(self, x, edge_index):
@@ -241,25 +286,36 @@ class GraphConv(nn.Module):
     """
     Static graph convolution layer
     """
-    def __init__(self, in_channels, out_channels, conv='edge',
-                 act='relu', norm=None, bias=True, heads=8):
+
+    def __init__(
+        self,
+        in_channels,
+        out_channels,
+        conv="edge",
+        act="relu",
+        norm=None,
+        bias=True,
+        heads=8,
+    ):
         super(GraphConv, self).__init__()
-        if conv.lower() == 'edge':
+        if conv.lower() == "edge":
             self.gconv = EdgConv(in_channels, out_channels, act, norm, bias)
-        elif conv.lower() == 'mr':
+        elif conv.lower() == "mr":
             self.gconv = MRConv(in_channels, out_channels, act, norm, bias)
-        elif conv.lower() == 'gat':
-            self.gconv = GATConv(in_channels, out_channels//heads, act, norm, bias, heads)
-        elif conv.lower() == 'gcn':
+        elif conv.lower() == "gat":
+            self.gconv = GATConv(
+                in_channels, out_channels // heads, act, norm, bias, heads
+            )
+        elif conv.lower() == "gcn":
             self.gconv = SemiGCNConv(in_channels, out_channels, act, norm, bias)
-        elif conv.lower() == 'gin':
+        elif conv.lower() == "gin":
             self.gconv = GinConv(in_channels, out_channels, act, norm, bias)
-        elif conv.lower() == 'sage':
+        elif conv.lower() == "sage":
             self.gconv = RSAGEConv(in_channels, out_channels, act, norm, bias, False)
-        elif conv.lower() == 'rsage':
+        elif conv.lower() == "rsage":
             self.gconv = RSAGEConv(in_channels, out_channels, act, norm, bias, True)
         else:
-            raise NotImplementedError('conv {} is not implemented'.format(conv))
+            raise NotImplementedError("conv {} is not implemented".format(conv))
 
     def forward(self, x, edge_index):
         return self.gconv(x, edge_index)
@@ -269,9 +325,23 @@ class DynConv(GraphConv):
     """
     Dynamic graph convolution layer
     """
-    def __init__(self, in_channels, out_channels, kernel_size=9, dilation=1, conv='edge', act='relu',
-                 norm=None, bias=True, heads=8, **kwargs):
-        super(DynConv, self).__init__(in_channels, out_channels, conv, act, norm, bias, heads)
+
+    def __init__(
+        self,
+        in_channels,
+        out_channels,
+        kernel_size=9,
+        dilation=1,
+        conv="edge",
+        act="relu",
+        norm=None,
+        bias=True,
+        heads=8,
+        **kwargs
+    ):
+        super(DynConv, self).__init__(
+            in_channels, out_channels, conv, act, norm, bias, heads
+        )
         self.k = kernel_size
         self.d = dilation
         self.dilated_knn_graph = DilatedKnnGraph(kernel_size, dilation, **kwargs)
@@ -285,11 +355,23 @@ class PlainDynBlock(nn.Module):
     """
     Plain Dynamic graph convolution block
     """
-    def __init__(self, channels,  kernel_size=9, dilation=1, conv='edge', act='relu', norm=None,
-                 bias=True, res_scale=1, **kwargs):
+
+    def __init__(
+        self,
+        channels,
+        kernel_size=9,
+        dilation=1,
+        conv="edge",
+        act="relu",
+        norm=None,
+        bias=True,
+        res_scale=1,
+        **kwargs
+    ):
         super(PlainDynBlock, self).__init__()
-        self.body = DynConv(channels, channels, kernel_size, dilation, conv,
-                            act, norm, bias, **kwargs)
+        self.body = DynConv(
+            channels, channels, kernel_size, dilation, conv, act, norm, bias, **kwargs
+        )
         self.res_scale = res_scale
 
     def forward(self, x, batch=None):
@@ -300,25 +382,58 @@ class ResDynBlock(nn.Module):
     """
     Residual Dynamic graph convolution block
     """
-    def __init__(self, channels,  kernel_size=9, dilation=1, conv='edge', act='relu', norm=None,
-                 bias=True, res_scale=1, **kwargs):
+
+    def __init__(
+        self,
+        channels,
+        kernel_size=9,
+        dilation=1,
+        conv="edge",
+        act="relu",
+        norm=None,
+        bias=True,
+        res_scale=1,
+        **kwargs
+    ):
         super(ResDynBlock, self).__init__()
-        self.body = DynConv(channels, channels, kernel_size, dilation, conv,
-                            act, norm, bias, **kwargs)
+        self.body = DynConv(
+            channels, channels, kernel_size, dilation, conv, act, norm, bias, **kwargs
+        )
         self.res_scale = res_scale
 
     def forward(self, x, batch=None):
-        return self.body(x, batch) + x*self.res_scale, batch
+        return self.body(x, batch) + x * self.res_scale, batch
 
 
 class DenseDynBlock(nn.Module):
     """
     Dense Dynamic graph convolution block
     """
-    def __init__(self, in_channels, out_channels=64, kernel_size=9, dilation=1, conv='edge', act='relu', norm=None, bias=True, **kwargs):
+
+    def __init__(
+        self,
+        in_channels,
+        out_channels=64,
+        kernel_size=9,
+        dilation=1,
+        conv="edge",
+        act="relu",
+        norm=None,
+        bias=True,
+        **kwargs
+    ):
         super(DenseDynBlock, self).__init__()
-        self.body = DynConv(in_channels, out_channels, kernel_size, dilation, conv,
-                            act, norm, bias, **kwargs)
+        self.body = DynConv(
+            in_channels,
+            out_channels,
+            kernel_size,
+            dilation,
+            conv,
+            act,
+            norm,
+            bias,
+            **kwargs
+        )
 
     def forward(self, x, batch=None):
         dense = self.body(x, batch)
@@ -329,24 +444,43 @@ class ResGraphBlock(nn.Module):
     """
     Residual Static graph convolution block
     """
-    def __init__(self, channels,  conv='edge', act='relu', norm=None, bias=True, heads=8,  res_scale=1):
+
+    def __init__(
+        self,
+        channels,
+        conv="edge",
+        act="relu",
+        norm=None,
+        bias=True,
+        heads=8,
+        res_scale=1,
+    ):
         super(ResGraphBlock, self).__init__()
         self.body = GraphConv(channels, channels, conv, act, norm, bias, heads)
         self.res_scale = res_scale
 
     def forward(self, x, edge_index):
-        return self.body(x, edge_index) + x*self.res_scale, edge_index
+        return self.body(x, edge_index) + x * self.res_scale, edge_index
 
 
 class DenseGraphBlock(nn.Module):
     """
     Dense Static graph convolution block
     """
-    def __init__(self, in_channels,  out_channels, conv='edge', act='relu', norm=None, bias=True, heads=8):
+
+    def __init__(
+        self,
+        in_channels,
+        out_channels,
+        conv="edge",
+        act="relu",
+        norm=None,
+        bias=True,
+        heads=8,
+    ):
         super(DenseGraphBlock, self).__init__()
         self.body = GraphConv(in_channels, out_channels, conv, act, norm, bias, heads)
 
     def forward(self, x, edge_index):
         dense = self.body(x, edge_index)
         return torch.cat((x, dense), 1), edge_index
-
