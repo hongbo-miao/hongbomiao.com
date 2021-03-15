@@ -118,6 +118,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Terminus** - Health check and graceful shutdown
 - **Opossum** - Circuit breaker
 - **pino** - Logger
+- **Stryker** - Mutation testing
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
 - **Clinic.js** - Performance profiling
