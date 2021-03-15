@@ -148,6 +148,42 @@ jobs:
         run: |
           npm test
 
+  api-stryker:
+    name: API - Stryker
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache
+        uses: actions/cache@v2
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
+          npm ci
+          cd api && npm ci
+      - name: Stryker
+        working-directory: api
+        run: npm run test:stryker
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+
   coverage:
     name: Coverage
     runs-on: ubuntu-20.04
