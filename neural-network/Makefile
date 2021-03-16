@@ -1,3 +1,9 @@
+setup:
+	sh bin/setup.sh
+
+clean:
+	sh bin/clean.sh
+
 train:
 	python main.py --dataset ogbg-molhiv --gnn gcn
 
