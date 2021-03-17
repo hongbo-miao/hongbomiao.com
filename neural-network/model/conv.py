@@ -47,26 +47,32 @@ class GCNConv(MessagePassing):
         self.bond_encoder = BondEncoder(emb_dim=emb_dim)
 
     def forward(self, x, edge_index, edge_attr):
+        # x: [N, in_channels]
+        # edge_index: [2, E]
+        # edge_attr: [E, 2]
         x = self.linear(x)
-        edge_embedding = self.bond_encoder(edge_attr)
+        edge_embedding = self.bond_encoder(edge_attr)  # [E, out_channels]
 
-        row, col = edge_index
+        n1, n2 = edge_index  # [E], [E]
 
         # edge_weight = torch.ones((edge_index.size(1), ), device=edge_index.device)
-        deg = degree(row, x.size(0), dtype=x.dtype) + 1
-        deg_inv_sqrt = deg.pow(-0.5)
+        deg = degree(n1, x.size(0), dtype=x.dtype) + 1  # [N]
+        deg_inv_sqrt = deg.pow(-0.5)  # [N]
         deg_inv_sqrt[deg_inv_sqrt == float("inf")] = 0
 
-        norm = deg_inv_sqrt[row] * deg_inv_sqrt[col]
+        norm = deg_inv_sqrt[n1] * deg_inv_sqrt[n2]  # [N]
 
         return self.propagate(
             edge_index, x=x, edge_attr=edge_embedding, norm=norm
         ) + F.relu(x + self.root_emb.weight) * 1.0 / deg.view(-1, 1)
 
     def message(self, x_j, edge_attr, norm):
+        # x_j: [E, out_channels]
+        # edge_attr: [E, out_channels]
         return norm.view(-1, 1) * F.relu(x_j + edge_attr)
 
     def update(self, aggr_out):
+        # aggr_out: [N, out_channels]
         return aggr_out
 
 
@@ -128,6 +134,7 @@ class GNN_node(torch.nn.Module):
         # computing input node embedding
         h_list = [self.atom_encoder(x)]
         for layer in range(self.num_layer):
+            # h has shape [N, in_channels]
             h = self.convs[layer](h_list[layer], edge_index, edge_attr)
             h = self.batch_norms[layer](h)
 
@@ -142,7 +149,7 @@ class GNN_node(torch.nn.Module):
 
             h_list.append(h)
 
-        # Different implementations of Jk-concat
+        # Different implementations of JK-concat
         if self.jk == "last":
             node_representation = h_list[-1]
         elif self.jk == "sum":
