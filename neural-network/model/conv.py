@@ -119,7 +119,7 @@ class GNN_node(torch.nn.Module):
             elif gnn_type == "gcn":
                 self.convs.append(GCNConv(emb_dim))
             else:
-                ValueError(f"Undefined GNN type called {gnn_type}")
+                raise ValueError(f"Undefined GNN type called {gnn_type}")
 
             self.batch_norms.append(torch.nn.BatchNorm1d(emb_dim))
 
@@ -210,7 +210,7 @@ class GNN_node_Virtualnode(torch.nn.Module):
             elif gnn_type == "gcn":
                 self.convs.append(GCNConv(emb_dim))
             else:
-                ValueError(f"Undefined GNN type called {gnn_type}")
+                raise ValueError(f"Undefined GNN type called {gnn_type}")
 
             self.batch_norms.append(torch.nn.BatchNorm1d(emb_dim))
 
