@@ -180,9 +180,9 @@ def main():
                 {
                     "epoch": epoch,
                     "train_loss": train_loss,
-                    "train_acc": train_perf,
-                    "val_acc": val_perf,
-                    "test_acc": test_perf,
+                    "train_perf": train_perf,
+                    "val_perf": val_perf,
+                    "test_perf": test_perf,
                 }
             )
 
