@@ -162,6 +162,7 @@ def main():
         val_curve = []
         test_curve = []
         train_curve = []
+        max_perf_metric_val = 0.0
 
         for epoch in range(1, config.epochs + 1):
             print(f"=====Epoch {epoch}")
@@ -189,6 +190,13 @@ def main():
             train_curve.append(train_perf[dataset.eval_metric])
             val_curve.append(val_perf[dataset.eval_metric])
             test_curve.append(test_perf[dataset.eval_metric])
+
+            # Save model
+            if val_perf[dataset.eval_metric] > max_perf_metric_val:
+                print(f"Found better model.")
+                max_perf_metric_val = val_perf[dataset.eval_metric]
+                torch.save(model.state_dict(), "model.pt")
+                wb.save("model.pt")
 
         if "classification" in dataset.task_type:
             best_val_epoch = np.argmax(np.array(val_curve))
