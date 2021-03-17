@@ -5,10 +5,10 @@ import wandb
 from ogb.graphproppred import Evaluator
 from tqdm import tqdm
 
+from args import get_args
 from model.data_loader import fetch_dataset, get_dataloaders
 from model.deeper_gcn import DeeperGCN
 from model.gnn import GNN
-from args import get_args
 
 cls_criterion = torch.nn.BCEWithLogitsLoss()
 reg_criterion = torch.nn.MSELoss()
@@ -180,9 +180,9 @@ def main():
                 {
                     "epoch": epoch,
                     "train_loss": train_loss,
-                    "train_acc": train_perf,
-                    "val_acc": val_perf,
-                    "test_acc": test_perf,
+                    "train_perf": train_perf,
+                    "val_perf": val_perf,
+                    "test_perf": test_perf,
                 }
             )
 
