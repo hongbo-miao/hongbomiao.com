@@ -175,7 +175,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **[HTTP/3 Check](https://www.http3check.net/?host=www.hongbomiao.com)** - HTTP/3 checking
 - **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** - HSTS checking
 - **[Mozilla Observatory](https://observatory.mozilla.org/analyze/www.hongbomiao.com)**, **[Snyk](https://snyk.io/test/github/Hongbo-Miao/hongbomiao.com)** - Security monitoring
-- **[Depfu](https://depfu.com/repos/github/Hongbo-Miao/hongbomiao.com)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** - Dependency monitoring
+- **[Depfu](https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=23463)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** - Dependency monitoring
 - **[Uptime Robot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/hongbomiao.com)** - Machine learning experiment tracking
