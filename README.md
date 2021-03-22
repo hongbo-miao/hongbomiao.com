@@ -146,6 +146,11 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **OGB** - Open Graph Benchmark
 
+#### Ethereum
+
+- **Solidity** - Contract-oriented programming language
+- **solc-js** - JavaScript bindings for the Solidity compiler
+
 #### Code
 
 - **TypeScript** - Static type-checking
