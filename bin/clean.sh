@@ -32,3 +32,7 @@ rm -rf node_modules
 # Cypress
 cd ../cypress
 rm -rf node_modules
+
+# Ethereum
+cd ../ethereum
+rm -rf node_modules

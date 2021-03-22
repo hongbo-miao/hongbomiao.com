@@ -1,0 +1,21 @@
+{
+  "name": "ethereum",
+  "private": true,
+  "engines": {
+    "node": "14.x"
+  },
+  "scripts": {
+    "build": "tsc && babel build --out-dir build && copyfiles -u 1 src/**/*.sol build",
+    "compile": "node build/src/compile.js"
+  },
+  "dependencies": {
+    "solc": "0.8.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.13.10",
+    "@babel/core": "7.13.10",
+    "@babel/preset-env": "7.13.10",
+    "@babel/preset-typescript": "7.13.0",
+    "copyfiles": "2.4.1"
+  }
+}

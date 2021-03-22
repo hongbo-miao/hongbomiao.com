@@ -19,3 +19,4 @@ cd web && npm install
 cd ../mobile && npm install
 cd ../api && npm install
 cd ../cypress && npm install
+cd ../ethereum && npm install
