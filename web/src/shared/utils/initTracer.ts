@@ -22,8 +22,8 @@ const initTracer = (): void => {
       new BatchSpanProcessor(
         new CollectorTraceExporter({
           serviceName,
-        })
-      )
+        }),
+      ),
     );
   }
 
@@ -37,8 +37,8 @@ const initTracer = (): void => {
           headers: {
             'Lightstep-Access-Token': token,
           },
-        })
-      )
+        }),
+      ),
     );
   }
 

@@ -35,7 +35,7 @@ useServer(
     execute,
     subscribe,
   },
-  wsServer
+  wsServer,
 );
 
 createTerminus(httpServer);

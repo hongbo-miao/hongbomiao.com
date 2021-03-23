@@ -8,7 +8,7 @@ const graphQLFetch = (query: string): Observable<AjaxResponse> =>
     {
       query,
     },
-    { 'Content-Type': 'application/json' }
+    { 'Content-Type': 'application/json' },
   );
 
 export default graphQLFetch;

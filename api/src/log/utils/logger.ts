@@ -11,7 +11,7 @@ const logger = pino(
   pino.destination({
     minLength: 4096, // Bytes. Buffer before writing
     sync: false,
-  })
+  }),
 );
 
 /*

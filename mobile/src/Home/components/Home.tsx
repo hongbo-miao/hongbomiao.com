@@ -12,7 +12,7 @@ const connector = connect(
   }),
   {
     queryMe: MeAction.queryMe,
-  }
+  },
 );
 
 const styles = StyleSheet.create({

@@ -9,7 +9,7 @@ describe('Home', () => {
     render(
       <Provider store={mockedStore}>
         <HmHome />
-      </Provider>
+      </Provider>,
     );
   });
 });
