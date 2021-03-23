@@ -1,14 +1,15 @@
 # https://docs.docker.com/engine/reference/builder/#dockerignore-file
 
+# Anywhere
 **/.DS_Store
-**/.env.development.local
-**/.env.production.local
 **/__pycache__
 **/node_modules
 
-.idea
-coverage
+# Root
+/.idea
+/coverage
 
+# Directories
 api/.clinic
 api/.stryker-tmp
 api/build
@@ -31,3 +32,7 @@ web/coverage
 web/public/sitemap.xml
 web/storybook-static
 web/tmp
+
+# .dockerignore specific
+**/.env.development.local
+**/.env.production.local
