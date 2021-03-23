@@ -14,7 +14,7 @@ describe('<HmHome />', () => {
         <ApplicationProvider {...eva} theme={eva.light}>
           <HmHome />
         </ApplicationProvider>
-      </Provider>
+      </Provider>,
     );
     expect(getByTestId('bio').props.children).toBe('Making magic happen');
     expect(toJSON()).toMatchSnapshot();

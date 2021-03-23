@@ -22,7 +22,7 @@ const Sparkles: React.FC<Props> = (props) => {
       setSparkles([...sparkles.filter((sp) => now - sp.createdAt < 750), sparkle]);
     },
     50,
-    450
+    450,
   );
 
   const sparkleItems = sparkles.map((sparkle) => (

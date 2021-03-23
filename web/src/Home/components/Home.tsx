@@ -28,7 +28,7 @@ const connector = connect(
   {
     queryMe: MeAction.queryMe,
     subscribePing: HealthAction.subscribePing,
-  }
+  },
 );
 
 type Props = ConnectedProps<typeof connector>;

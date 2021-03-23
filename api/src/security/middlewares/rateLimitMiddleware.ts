@@ -17,7 +17,7 @@ const rateLimitMiddleware = (
   burstPointsRate: number = BURST_POINTS_RATE,
   burstDurationRate: number = BURST_DURATION_RATE,
   inmemoryBlockDuration: number = INMEMORY_BLOCK_DURATION,
-  processNum: number = PROCESS_NUM
+  processNum: number = PROCESS_NUM,
 ): RequestHandler => {
   const memoryRateLimiter = new RateLimiterMemory({
     keyPrefix: 'memory',
