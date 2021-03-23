@@ -84,6 +84,9 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **rxjs/testing** - Marble testing
 - **Cypress** - End-to-end testing
 - **Lighthouse CI** - Performance, accessibility, SEO, progressive web app (PWA) analysis
+- **ESLint** - JavaScript linter
+- **Stylelint** - CSS linter
+- **Prettier** - Code formatter
 
 #### Mobile
 
@@ -145,19 +148,18 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **PyTorch** - Machine learning
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **OGB** - Open Graph Benchmark
+- **Black** - Python code formatter
+- **[Weights & Biases](https://wandb.ai/hongbo-miao/hongbomiao.com)** - Machine learning experiment tracking
 
 #### Ethereum
 
 - **Solidity** - Contract-oriented programming language
 - **solc-js** - JavaScript bindings for the Solidity compiler
+- **solhint** - Solidity linter
 
 #### Code
 
-- **TypeScript** - Static type-checking
-- **ESLint**, **Stylelint** - Static code analysis
-- **Prettier** - JavaScript code formatting
-- **Black** - Python code formatting
-- **commitlint** - Commit message linting
+- **commitlint** - Commit message linter
 - **Husky**, **lint-staged** - Bad git commit and push preventing
 
 #### Services
@@ -172,7 +174,6 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Redis Enterprise Cloud** - Redis hosting
 - **Namecheap** - Domain
 - **Cloudflare** - CDN, DNS, DDoS protection
-- **ZenHub** - Agile project management
 - **[GitHub Actions](https://github.com/Hongbo-Miao/hongbomiao.com/actions)** - Continuous integration
 - **[SonarCloud](https://sonarcloud.io/dashboard?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
 - **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
@@ -183,7 +184,6 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **[Depfu](https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=23463)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** - Dependency monitoring
 - **[Uptime Robot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
-- **[Weights & Biases](https://wandb.ai/hongbo-miao/hongbomiao.com)** - Machine learning experiment tracking
 
 #### Bots
 
@@ -262,6 +262,12 @@ After it processes, Elasticsearch saves the data. You can analyze them using Jae
 #### Grafana
 
 ![Grafana screenshot](https://user-images.githubusercontent.com/3375461/90973255-eaf19000-e552-11ea-819c-b098bbadea1b.jpg)
+
+### Machine Learning
+
+[Distributed hyperparameter optimization result](https://wandb.ai/hongbo-miao/hongbomiao.com/sweeps/p0fgtvcf) by Weights & Biases.
+
+[![Weights & Biases screenshot](https://user-images.githubusercontent.com/3375461/112082183-dbf1bf80-8bbf-11eb-9c81-675cc0bd2763.png)](https://wandb.ai/hongbo-miao/hongbomiao.com/sweeps/p0fgtvcf)
 
 ### Automation
 
