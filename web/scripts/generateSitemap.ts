@@ -2,7 +2,7 @@ import { SitemapItemLoose, SitemapStream, SitemapStreamOptions, streamToPromise 
 
 const generateSitemap = async (
   options: SitemapStreamOptions,
-  links: ReadonlyArray<SitemapItemLoose>
+  links: ReadonlyArray<SitemapItemLoose>,
 ): Promise<string> => {
   const stream = new SitemapStream(options);
   links.forEach((link) => stream.write(link));

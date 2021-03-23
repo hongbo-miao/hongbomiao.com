@@ -3,7 +3,7 @@ import logger from '../../log/utils/logger';
 import meter from './meter';
 
 const createCircuitBreaker = <FuncReturnType>(
-  asyncFunc: (...args: string[]) => Promise<FuncReturnType>
+  asyncFunc: (...args: string[]) => Promise<FuncReturnType>,
 ): CircuitBreaker<string[], FuncReturnType> => {
   const breaker = new CircuitBreaker<string[], FuncReturnType>(asyncFunc, {
     timeout: 3000, // If our function takes longer than 3s, trigger a failure.

@@ -23,7 +23,7 @@ const subscribePing$ = (query: string): Observable<GraphQLResponse<GraphQLPing>>
         complete: () => {
           observer.complete();
         },
-      }
+      },
     );
   });
 };
@@ -34,9 +34,9 @@ const pingEpic: Epic = (action$) =>
     switchMap((action) =>
       subscribePing$(action.payload.query).pipe(
         map((res: GraphQLResponse<GraphQLPing>) => HealthAction.receivePingSucceed(res)),
-        catchError((err: Error) => of(HealthAction.receivePingFailed(err)))
-      )
-    )
+        catchError((err: Error) => of(HealthAction.receivePingFailed(err))),
+      ),
+    ),
   );
 
 export default pingEpic;

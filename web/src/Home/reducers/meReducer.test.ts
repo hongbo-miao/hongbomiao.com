@@ -26,7 +26,7 @@ describe('meReducer', () => {
             },
           },
         },
-      })
+      }),
     ).toEqual({
       name: 'Jack Dawson',
       bio: "I'm the king of the world!",
