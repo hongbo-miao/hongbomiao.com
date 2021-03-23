@@ -11,9 +11,9 @@ const queryMeEpic: Epic = (action$, state$, { fetchData }) =>
     switchMap((action) =>
       fetchData(action.payload.query).pipe(
         map((res: AjaxResponse) => MeAction.queryMeSucceed(res)),
-        catchError((err: AjaxError) => of(MeAction.queryMeFailed(err)))
-      )
-    )
+        catchError((err: AjaxError) => of(MeAction.queryMeFailed(err))),
+      ),
+    ),
   );
 
 export default queryMeEpic;

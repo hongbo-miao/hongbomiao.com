@@ -12,7 +12,7 @@ const indexRouter = Router().get(
       secure: true,
     },
   }),
-  sendIndexPage
+  sendIndexPage,
 );
 
 export default indexRouter;
