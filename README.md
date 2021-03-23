@@ -157,7 +157,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **solc-js** - JavaScript bindings for the Solidity compiler
 - **solhint** - Solidity linter
 
-#### Code
+#### Git
 
 - **commitlint** - Commit message linter
 - **Husky**, **lint-staged** - Bad git commit and push preventing
