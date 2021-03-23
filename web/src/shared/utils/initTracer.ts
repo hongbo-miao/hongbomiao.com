@@ -1,5 +1,6 @@
 import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
+import { DocumentLoadInstrumentation } from '@opentelemetry/instrumentation-document-load';
 import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xml-http-request';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import { WebTracerProvider } from '@opentelemetry/web';
@@ -12,7 +13,7 @@ const initTracer = (): void => {
   const tracerProvider = new WebTracerProvider();
 
   registerInstrumentations({
-    instrumentations: [new XMLHttpRequestInstrumentation()],
+    instrumentations: [new DocumentLoadInstrumentation(), new XMLHttpRequestInstrumentation()],
   });
 
   if (isDevelopment()) {
