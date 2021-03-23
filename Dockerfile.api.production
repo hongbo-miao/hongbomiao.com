@@ -8,9 +8,9 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY ["package.json", "package-lock.json", "./"]
 COPY ["web/package.json", "web/package-lock.json", "./web/"]
 COPY ["api/package.json", "api/package-lock.json", "./api/"]
-RUN npm install
-RUN cd web && npm install
-RUN cd api && npm install
+RUN npm ci
+RUN cd web && npm ci
+RUN cd api && npm ci
 
 # Build web
 COPY web/.env.production.local.example web/.env.production.local
