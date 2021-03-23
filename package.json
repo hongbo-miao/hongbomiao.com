@@ -27,6 +27,8 @@
     "lint:js:fix": "eslint . --ext .js,.ts,.tsx --fix",
     "lint:css": "stylelint \"**/*.css\" \"!**/build/**\" \"!**/dist/**\" \"!**/coverage/**\"",
     "lint:css:fix": "stylelint \"**/*.css\" \"!**/build/**\" \"!**/dist/**\" \"!**/coverage/**\" --fix",
+    "lint:sol": "solhint **/*.sol",
+    "lint:sol:fix": "solhint **/*.sol --fix",
     "test": "cd web && npm test && cd ../mobile && npm test && cd ../api && npm test",
     "test:coverage": "sh bin/testCoverage.sh",
     "test:coverage:publish": "cat coverage/lcov.info | codecov"
@@ -59,6 +61,7 @@
     "lint-staged": "10.5.4",
     "nyc": "15.1.0",
     "prettier": "2.2.1",
+    "solhint": "3.3.4",
     "stylelint": "13.12.0",
     "stylelint-a11y": "1.2.3",
     "stylelint-config-prettier": "8.0.2",
