@@ -1,6 +1,6 @@
 import config from '../../config';
-import findUserByEmail from '../../database/postgres/utils/findUserByEmail';
-import formatUser from '../../database/postgres/utils/formatUser';
+import findUserByEmail from '../../dataSources/postgres/utils/findUserByEmail';
+import formatUser from '../../dataSources/postgres/utils/formatUser';
 import GraphQLMe from '../types/GraphQLMe.type';
 
 const getMe = async (): Promise<GraphQLMe | null> => {

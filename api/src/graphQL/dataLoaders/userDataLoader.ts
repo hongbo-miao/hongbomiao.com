@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
-import findUserByID from '../../database/postgres/utils/findUserByID';
-import formatUser from '../../database/postgres/utils/formatUser';
+import findUserByID from '../../dataSources/postgres/utils/findUserByID';
+import formatUser from '../../dataSources/postgres/utils/formatUser';
 import GraphQLUser from '../types/GraphQLUser.type';
 
 const batchGetUsers = async (ids: ReadonlyArray<string>): Promise<(GraphQLUser | null)[]> => {
