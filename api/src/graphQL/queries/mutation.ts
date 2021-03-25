@@ -1,7 +1,7 @@
 import { GraphQLID, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { GraphQLUpload } from 'graphql-upload';
-import formatUser from '../../database/postgres/utils/formatUser';
-import updateName from '../../database/postgres/utils/updateName';
+import formatUser from '../../dataSources/postgres/utils/formatUser';
+import updateName from '../../dataSources/postgres/utils/updateName';
 import getJWTToken from '../../security/utils/getJWTToken';
 import FileGraphQLType from '../graphQLTypes/FileGraphQLType';
 import SignInGraphQLType from '../graphQLTypes/SignInGraphQLType';

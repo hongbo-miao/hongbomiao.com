@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
 import config from '../../config';
-import findUserByEmail from '../../database/postgres/utils/findUserByEmail';
+import findUserByEmail from '../../dataSources/postgres/utils/findUserByEmail';
 
 const getJWTToken = async (email: string, password: string): Promise<string> => {
   const user = await findUserByEmail(email);

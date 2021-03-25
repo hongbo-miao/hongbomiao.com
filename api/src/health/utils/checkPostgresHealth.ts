@@ -1,4 +1,4 @@
-import pg from '../../database/postgres/pg';
+import pg from '../../dataSources/postgres/pg';
 
 const checkPostgresHealth = async (): Promise<boolean> => {
   return pg.schema.hasTable('users');

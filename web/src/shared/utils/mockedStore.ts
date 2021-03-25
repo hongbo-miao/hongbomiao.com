@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store';
-import MeState from '../../Home/types/MeState.type';
-import HealthState from '../../health/types/HealthState.type';
-import RootState from '../types/RootState.type';
+import MeState from '../../Home/types/MeState';
+import HealthState from '../../health/types/HealthState';
+import RootState from '../types/RootState';
 
 const mockStore = configureStore();
 
