@@ -4,7 +4,7 @@ import config from '../../config';
 import HealthAction from '../../health/actions/HealthAction';
 import pingSubscription from '../../health/queries/pingSubscription';
 import HmLazyComponent from '../../shared/components/LazyComponent';
-import RootState from '../../shared/types/RootState.type';
+import RootState from '../../shared/types/RootState';
 import analytics from '../../shared/utils/analytics';
 import MeAction from '../actions/MeAction';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

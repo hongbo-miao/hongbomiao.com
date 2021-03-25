@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import HealthActionType from '../actionTypes/HealthActionType';
-import HealthState from '../types/HealthState.type';
+import HealthState from '../types/HealthState';
 
 const initialState: HealthState = {};
 

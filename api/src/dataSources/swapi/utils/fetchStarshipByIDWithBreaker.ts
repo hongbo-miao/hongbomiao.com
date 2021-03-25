@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../../../config';
 // eslint-disable-next-line import/no-cycle
 import starshipDataLoader from '../../../graphQL/dataLoaders/starshipDataLoader';
-import GraphQLStarship from '../../../graphQL/types/GraphQLStarship.type';
+import GraphQLStarship from '../../../graphQL/types/GraphQLStarship';
 import createCircuitBreaker from '../../../reliability/utils/createCircuitBreaker';
 import formatStarship from './formatStarship';
 
