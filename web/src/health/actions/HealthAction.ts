@@ -1,6 +1,6 @@
-import GraphQLResponse from '../../shared/types/GraphQLResponse.type';
+import GraphQLResponse from '../../shared/types/GraphQLResponse';
 import HealthActionType from '../actionTypes/HealthActionType';
-import GraphQLPing from '../types/GraphQLPing.type';
+import GraphQLPing from '../types/GraphQLPing';
 
 type SubscribePing = {
   type: typeof HealthActionType.SUBSCRIBE_PING;

@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../../../config';
 // eslint-disable-next-line import/no-cycle
 import planetDataLoader from '../../../graphQL/dataLoaders/planetDataLoader';
-import GraphQLPlanet from '../../../graphQL/types/GraphQLPlanet.type';
+import GraphQLPlanet from '../../../graphQL/types/GraphQLPlanet';
 import createCircuitBreaker from '../../../reliability/utils/createCircuitBreaker';
 import formatPlanet from './formatPlanet';
 

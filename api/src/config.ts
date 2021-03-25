@@ -3,7 +3,7 @@ import dotenvFlow from 'dotenv-flow';
 import Redis from 'ioredis';
 import { Knex } from 'knex';
 import { argv } from 'yargs';
-import PostgresInputUser from './dataSources/postgres/types/PostgresInputUser.type';
+import PostgresInputUser from './dataSources/postgres/types/PostgresInputUser';
 
 dotenvFlow.config();
 
