@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
 // eslint-disable-next-line import/no-cycle
-import fetchStarshipByIDWithBreaker from '../../database/swapi/utils/fetchStarshipByIDWithBreaker';
+import fetchStarshipByIDWithBreaker from '../../dataSources/swapi/utils/fetchStarshipByIDWithBreaker';
 import GraphQLStarship from '../types/GraphQLStarship.type';
 
 const batchGetStarships = async (ids: ReadonlyArray<string>): Promise<(GraphQLStarship | null)[]> => {
