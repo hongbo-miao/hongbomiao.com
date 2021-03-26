@@ -1,11 +1,11 @@
 import { Epic, ofType } from 'redux-observable';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import GraphQLResponse from '../../shared/types/GraphQLResponse.type';
+import GraphQLResponse from '../../shared/types/GraphQLResponse';
 import graphQLSubscriptionClient from '../../shared/utils/graphQLSubscriptionClient';
 import HealthActionType from '../actionTypes/HealthActionType';
 import HealthAction from '../actions/HealthAction';
-import GraphQLPing from '../types/GraphQLPing.type';
+import GraphQLPing from '../types/GraphQLPing';
 
 const subscribePing$ = (query: string): Observable<GraphQLResponse<GraphQLPing>> => {
   return new Observable((observer) => {

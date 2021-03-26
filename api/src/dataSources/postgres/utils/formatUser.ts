@@ -1,6 +1,6 @@
-import GraphQLMe from '../../../graphQL/types/GraphQLMe.type';
-import GraphQLUser from '../../../graphQL/types/GraphQLUser.type';
-import PostgresUser from '../types/PostgresUser.type';
+import GraphQLMe from '../../../graphQL/types/GraphQLMe';
+import GraphQLUser from '../../../graphQL/types/GraphQLUser';
+import PostgresUser from '../types/PostgresUser';
 
 const formatUser = (user: PostgresUser): GraphQLMe | GraphQLUser | null => {
   if (user == null) return null;

@@ -1,5 +1,5 @@
-import GraphQLPlanet from '../../../graphQL/types/GraphQLPlanet.type';
-import SWAPIPlanet from '../types/SWAPIPlanet.type';
+import GraphQLPlanet from '../../../graphQL/types/GraphQLPlanet';
+import SWAPIPlanet from '../types/SWAPIPlanet';
 import convertToNumber from './convertToNumber';
 import splitStringToArray from './splitStringToArray';
 

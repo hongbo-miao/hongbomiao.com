@@ -1,5 +1,5 @@
-import GraphQLStarship from '../../../graphQL/types/GraphQLStarship.type';
-import SWAPIStarship from '../types/SWAPIStarship.type';
+import GraphQLStarship from '../../../graphQL/types/GraphQLStarship';
+import SWAPIStarship from '../types/SWAPIStarship';
 import convertToNumber from './convertToNumber';
 
 const formatStarship = (id: string, starship: SWAPIStarship): GraphQLStarship | null => {

@@ -7,7 +7,7 @@ import { useServer } from 'graphql-ws/lib/use/ws';
 import WebSocket from 'ws';
 import app from './app';
 import config from './config';
-import initPostgres from './database/postgres/seeds/initPostgres';
+import initPostgres from './dataSources/postgres/seeds/initPostgres';
 import permissions from './graphQL/permissions/permissions';
 import subscriptionSchema from './graphQL/schemas/subscriptionSchema';
 import createTerminus from './health/utils/createTerminus';
