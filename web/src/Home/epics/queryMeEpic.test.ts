@@ -4,7 +4,7 @@ import { AjaxResponse, AjaxError } from 'rxjs/ajax';
 import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 import { switchMap } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
-import RootState from '../../shared/types/RootState.type';
+import RootState from '../../shared/types/RootState';
 import MeAction from '../actions/MeAction';
 import meQuery from '../queries/meQuery';
 import queryMeEpic from './queryMeEpic';
