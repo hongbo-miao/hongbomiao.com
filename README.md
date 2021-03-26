@@ -84,9 +84,6 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **rxjs/testing** - Marble testing
 - **Cypress** - End-to-end testing
 - **Lighthouse CI** - Performance, accessibility, SEO, progressive web app (PWA) analysis
-- **ESLint** - JavaScript linter
-- **Stylelint** - CSS linter
-- **Prettier** - Code formatter
 
 ### Mobile
 
@@ -148,17 +145,21 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **PyTorch** - Machine learning
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **OGB** - Open Graph Benchmark
-- **Black** - Python code formatter
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/hongbomiao.com)** - Machine learning experiment tracking
 
 ### Ethereum
 
 - **Solidity** - Contract-oriented programming language
 - **solc-js** - JavaScript bindings for the Solidity compiler
+
+### Code Style
+
+- **Prettier** - Code formatter
+- **Black** - Python code formatter
+- **ESLint** - JavaScript linter
+- **Stylelint** - CSS linter
 - **solhint** - Solidity linter
-
-### Git
-
+- **markdownlint-cli2** - Markdown linter
 - **commitlint** - Commit message linter
 - **Husky**, **lint-staged** - Bad git commit and push preventing
 
