@@ -86,11 +86,11 @@ services:
     container_name: hm_opentelemetry_collector
     image: otel/opentelemetry-collector:0.23.0
     command: [
-      "--config=/conf/otel-collector.config.yaml",
+      "--config=/conf/otel-collector-config.yaml",
       "--log-level=DEBUG"
     ]
     volumes:
-      - ./docker/opentelemetry-collector/otel-collector.config.yaml:/conf/otel-collector.config.yaml
+      - ./docker/opentelemetry-collector/otel-collector-config.yaml:/conf/otel-collector-config.yaml
     restart: unless-stopped
     ports:
       - "9464:9464"
@@ -122,11 +122,11 @@ services:
     container_name: hm_jaeger_agent
     image: jaegertracing/jaeger-opentelemetry-agent:latest
     command: [
-      "--config=./docker/jaeger-agent/otel-agent.config.yml",
+      "--config=/etc/otel-agent-config.yaml",
       "--reporter.grpc.host-port=jaeger-collector:14250"
     ]
     volumes:
-      - ./:/config/:ro
+      - ./docker/jaeger-agent/otel-agent-config.yaml:/etc/otel-agent-config.yaml
     ports:
       - "6831/udp"
       - "6832/udp"
