@@ -29,6 +29,8 @@
     "lint:css:fix": "stylelint **/*.css --fix",
     "lint:sol": "solhint **/*.sol",
     "lint:sol:fix": "solhint **/*.sol --fix",
+    "lint:md": "markdownlint-cli2 $(git ls-files '*.md')",
+    "lint:md:fix": "markdownlint-cli2-fix $(git ls-files '*.md')",
     "test": "cd web && npm test && cd ../mobile && npm test && cd ../api && npm test",
     "test:coverage": "sh bin/testCoverage.sh",
     "test:coverage:publish": "cat coverage/lcov.info | codecov"
@@ -59,6 +61,7 @@
     "husky": "5.2.0",
     "jest": "26.6.3",
     "lint-staged": "10.5.4",
+    "markdownlint-cli2": "0.0.15",
     "nyc": "15.1.0",
     "prettier": "2.2.1",
     "prettier-plugin-solidity": "1.0.0-beta.6",
