@@ -39,11 +39,17 @@ jobs:
           cd ../api && npm ci
           cd ../cypress && npm ci
           cd ../ethereum && npm ci
-      - name: Lint
+      - name: Lint JavaScript
         run: |
           npm run lint:js
-          npm run lint:css
+      - name: Lint CSS
+        run: |
+          npm run lint:js
+      - name: Lint Solidity
+        run: |
           npm run lint:sol
+      - name: Lint Markdown
+        run: |
           npm run lint:md
 
   web-test:
@@ -183,7 +189,8 @@ jobs:
           cd api && npm ci
       - name: Stryker
         working-directory: api
-        run: npm run test:stryker
+        run: |
+          npm run test:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
@@ -256,10 +263,12 @@ jobs:
           cd web && npm ci
       - name: Build
         working-directory: web
-        run: npm run build
+        run: |
+          npm run build
       - name: Lighthouse
         working-directory: web
-        run: npm run lighthouse
+        run: |
+          npm run lighthouse
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
