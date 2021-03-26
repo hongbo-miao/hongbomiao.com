@@ -69,7 +69,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 
 ## Tech Stack
 
-#### Web
+### Web
 
 - **React** - Web framework
 - **Redux** - State container
@@ -88,13 +88,13 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Stylelint** - CSS linter
 - **Prettier** - Code formatter
 
-#### Mobile
+### Mobile
 
 - **React Native** - Mobile application framework
 - **UI Kitten** - UI library
 - **React Native Testing Library** - React Native component testing
 
-#### API Server
+### API Server
 
 - **Express** - Node.js web application framework
 - **GraphQL.js**, **express-graphql** - GraphQL
@@ -126,7 +126,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **autocannon** - HTTP benchmarking
 - **Clinic.js** - Performance profiling
 
-#### Site Reliability
+### Site Reliability
 
 - **NGINX** - Reverse proxy, load balancer
 - **Fluent Bit** - Data collector for unified logging layer
@@ -143,7 +143,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Locust** - Load testing
 - **CodeQL** - Variant analysis
 
-#### Neural Network
+### Neural Network
 
 - **PyTorch** - Machine learning
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
@@ -151,18 +151,18 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Black** - Python code formatter
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/hongbomiao.com)** - Machine learning experiment tracking
 
-#### Ethereum
+### Ethereum
 
 - **Solidity** - Contract-oriented programming language
 - **solc-js** - JavaScript bindings for the Solidity compiler
 - **solhint** - Solidity linter
 
-#### Git
+### Git
 
 - **commitlint** - Commit message linter
 - **Husky**, **lint-staged** - Bad git commit and push preventing
 
-#### Services
+### Services
 
 - **Lightstep** - Distributed tracing
 - **Sentry** - Error tracking
@@ -185,7 +185,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **[Uptime Robot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
 
-#### Bots
+### Bots
 
 - **Renovate** - Dependency update
 - **ImgBot** - Image compression
@@ -194,16 +194,16 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 
 ## URLs
 
-- API: http://localhost:5000
-- Web: http://localhost:8080
-- Expo: http://localhost:19002
-- React Native Debugger: http://localhost:19000
-- NGINX: http://localhost:80
-- Jaeger: http://localhost:16686
-- Kibana: http://localhost:5601
-- Grafana: http://localhost:3000
-- Prometheus: http://localhost:9090
-- Locust: http://localhost:8089
+- API: <http://localhost:5000>
+- Web: <http://localhost:8080>
+- Expo: <http://localhost:19002>
+- React Native Debugger: <http://localhost:19000>
+- NGINX: <http://localhost:80>
+- Jaeger: <http://localhost:16686>
+- Kibana: <http://localhost:5601>
+- Grafana: <http://localhost:3000>
+- Prometheus: <http://localhost:9090>
+- Locust: <http://localhost:8089>
 
 ## Highlights
 
