@@ -6,13 +6,14 @@ pull_request_rules:
       - author=Hongbo-Miao
       - check-success=Lint
       - check-success=Web - Test
+      - check-success=Web - Lighthouse
+      - check-success=Web - Storybook
       - check-success=Mobile - Test
       - check-success=API - Test
       - check-success=API - Stryker
-      - check-success=Coverage
-      - check-success=Web - Lighthouse
-      - check-success=Web - Storybook
+      - check-success=Prometheus - Test
       - check-success=Cypress
+      - check-success=Coverage
       - base=main
       - label!=work in progress
     actions:
@@ -25,13 +26,14 @@ pull_request_rules:
       - author=renovate[bot]
       - check-success=Lint
       - check-success=Web - Test
+      - check-success=Web - Lighthouse
+      - check-success=Web - Storybook
       - check-success=Mobile - Test
       - check-success=API - Test
       - check-success=API - Stryker
-      - check-success=Coverage
-      - check-success=Web - Lighthouse
-      - check-success=Web - Storybook
+      - check-success=Prometheus - Test
       - check-success=Cypress
+      - check-success=Coverage
       - base=main
     actions:
       merge:
