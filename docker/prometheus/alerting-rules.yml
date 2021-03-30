@@ -9,3 +9,12 @@ groups:
         annotations:
           summary: "Instance {{ $labels.instance }} down"
           description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 10 seconds."
+
+      - alert: HostHighCPULoad
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[2m])) * 100) > 80
+        for: 10s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Host high CPU load (instance {{ $labels.instance }})"
+          description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
