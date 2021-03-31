@@ -1,15 +1,15 @@
 # Docker
 docker-build:
-	docker-compose -f docker-compose.development.yml build
+	docker-compose --file docker-compose.development.yml build
 
 docker-up:
-	docker-compose -f docker-compose.development.yml up -d
+	docker-compose --file docker-compose.development.yml up --detach
 
 docker-stop:
-	docker-compose -f docker-compose.development.yml stop
+	docker-compose --file docker-compose.development.yml stop
 
 docker-down:
-	docker-compose -f docker-compose.development.yml down --volumes
+	docker-compose --file docker-compose.development.yml down --volumes
 
 docker-delete:
 	docker system prune
@@ -22,7 +22,7 @@ k8s-ingress:
 	minikube addons enable ingress
 
 k8s-apply:
-	kubectl apply -f kubernetes
+	kubectl apply --file kubernetes
 
 k8s-pods:
 	kubectl get pods
@@ -44,4 +44,4 @@ prom-curl:
 	curl http://localhost:9464/metrics
 
 prom-test:
-	promtool test rules docker/prometheus/alerting-rules.test.yml
+	docker build --file Dockerfile.prometheus.test .
