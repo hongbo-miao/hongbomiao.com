@@ -329,7 +329,7 @@ jobs:
       - name: Build and run containers
         run: |
           cp docker/postgres/.env.development.local.example docker/postgres/.env.development.local
-          docker-compose -f docker-compose.ci.yml up -d
+          docker-compose --file docker-compose.ci.yml up --detach
       - name: Cypress
         run: |
           cd cypress && npm run test:cypress:headless:5000

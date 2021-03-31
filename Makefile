@@ -36,6 +36,12 @@ k8s-ip:
 k8s-dev:
 	skaffold dev
 
+k8s-delete:
+	minikube delete
+
 # Prometheus
-prometheus:
+prom-curl:
 	curl http://localhost:9464/metrics
+
+prom-test:
+	promtool test rules docker/prometheus/alerting-rules.test.yml
