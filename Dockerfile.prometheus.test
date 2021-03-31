@@ -1,0 +1,8 @@
+FROM prom/prometheus:v2.26.0
+
+WORKDIR /app
+
+COPY docker/prometheus/alerting-rules.yml .
+COPY docker/prometheus/alerting-rules.test.yml .
+
+RUN promtool test rules *.test.yml
