@@ -1,7 +1,5 @@
 import axios from 'axios';
 import config from '../../../config';
-// eslint-disable-next-line import/no-cycle
-import planetDataLoader from '../../../graphQL/dataLoaders/planetDataLoader';
 import GraphQLPlanet from '../../../graphQL/types/GraphQLPlanet';
 import createCircuitBreaker from '../../../reliability/utils/createCircuitBreaker';
 import formatPlanet from './formatPlanet';
@@ -14,13 +12,7 @@ const fetchPlanetByID = async (id: string): Promise<GraphQLPlanet | null> => {
 const breaker = createCircuitBreaker(fetchPlanetByID);
 
 const fetchPlanetByIDWithBreaker = async (id: string): Promise<GraphQLPlanet | null> => {
-  return breaker
-    .fire(id)
-    .then((res) => res)
-    .catch((err) => {
-      planetDataLoader.clear(id);
-      return err;
-    });
+  return breaker.fire(id);
 };
 
 export default fetchPlanetByIDWithBreaker;
