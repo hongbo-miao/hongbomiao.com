@@ -22,7 +22,7 @@ k8s-ingress:
 	minikube addons enable ingress
 
 k8s-apply:
-	kubectl apply --file kubernetes
+	kubectl apply -f kubernetes
 
 k8s-pods:
 	kubectl get pods
