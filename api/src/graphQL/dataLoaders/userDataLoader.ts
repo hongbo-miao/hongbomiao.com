@@ -3,10 +3,9 @@ import findUserByID from '../../dataSources/postgres/utils/findUserByID';
 import formatUser from '../../dataSources/postgres/utils/formatUser';
 import GraphQLUser from '../types/GraphQLUser';
 
-const batchGetUsers = async (ids: ReadonlyArray<string>): Promise<(GraphQLUser | null)[]> => {
-  return Promise.all(ids.map(async (id) => formatUser(await findUserByID(id))));
-};
-
-const userDataLoader = new DataLoader(batchGetUsers);
+const userDataLoader = (): DataLoader<string, GraphQLUser | null> =>
+  new DataLoader(async (ids: ReadonlyArray<string>) => {
+    return Promise.all(ids.map(async (id) => formatUser(await findUserByID(id))));
+  });
 
 export default userDataLoader;

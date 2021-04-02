@@ -5,9 +5,7 @@ import queryComplexity, { simpleEstimator } from 'graphql-query-complexity';
 import logger from '../../log/utils/logger';
 import verifyJWTToken from '../../security/utils/verifyJWTToken';
 import isDevelopment from '../../shared/utils/isDevelopment';
-import planetDataLoader from '../dataLoaders/planetDataLoader';
-import starshipDataLoader from '../dataLoaders/starshipDataLoader';
-import userDataLoader from '../dataLoaders/userDataLoader';
+import dataLoaders from '../dataLoaders/dataLoaders';
 import permissions from '../permissions/permissions';
 import schema from '../schemas/schema';
 
@@ -17,11 +15,7 @@ const graphQLMiddleware = graphqlHTTP((req, res, params) => {
   const { variables } = params;
   return {
     context: {
-      dataLoaders: {
-        planet: planetDataLoader,
-        starship: starshipDataLoader,
-        user: userDataLoader,
-      },
+      dataLoaders: dataLoaders(),
       myId: verifyJWTToken(req.headers.authorization),
     },
     customFormatErrorFn: (err) => {
