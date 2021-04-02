@@ -45,7 +45,7 @@ const query = new GraphQLObjectType({
       resolve: async (parentValue, args, context) => {
         const { ids } = args;
         const { dataLoaders } = context;
-        return Promise.all(ids.map((id: string) => dataLoaders.user.load(id)));
+        return dataLoaders.user.loadMany(ids);
       },
     },
     planet: {
@@ -67,7 +67,7 @@ const query = new GraphQLObjectType({
       resolve: async (parentValue, args, context) => {
         const { ids } = args;
         const { dataLoaders } = context;
-        return Promise.all(ids.map((id: string) => dataLoaders.planet.load(id)));
+        return dataLoaders.planet.loadMany(ids);
       },
     },
     starship: {
@@ -89,7 +89,7 @@ const query = new GraphQLObjectType({
       resolve: async (parentValue, args, context) => {
         const { ids } = args;
         const { dataLoaders } = context;
-        return Promise.all(ids.map((id: string) => dataLoaders.starship.load(id)));
+        return dataLoaders.starship.loadMany(ids);
       },
     },
   },
