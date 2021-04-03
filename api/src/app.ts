@@ -1,6 +1,5 @@
 import path from 'path';
 import * as Sentry from '@sentry/node';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import requestId from 'express-request-id';
@@ -23,7 +22,7 @@ import apiRouter from './shared/routers/apiRouter';
 
 const app = express()
   .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
-  .use(bodyParser.json())
+  .use(express.json())
   .use(cookieParser())
   .use(pinoMiddleware())
   .use(incomingRequestCounterMiddleware())
