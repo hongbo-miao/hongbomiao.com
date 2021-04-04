@@ -5,8 +5,8 @@ on:
     branches: [ main ]
 
 jobs:
-  lint:
-    name: Lint
+  lint-js-css-sol-md:
+    name: Lint (JavaScript, CSS, Solidity, Markdown)
     runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
@@ -51,6 +51,37 @@ jobs:
       - name: Lint Markdown
         run: |
           npm run lint:md
+
+  lint-py:
+    name: Lint (Python)
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install pipenv
+        run: |
+          pip install pipenv
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv-
+      - name: Install dependencies
+        run: |
+          pipenv install --dev
+      - name: Lint Python
+        run: |
+          pipenv run lint-py
 
   web-test:
     name: Web - Test
