@@ -17,4 +17,4 @@ pip install torch-spline-conv -f https://pytorch-geometric.com/whl/torch-${TORCH
 pip install torch-geometric
 
 # Install requirements
-pip install -r requirements.txt
+pip install --requirement requirements.txt

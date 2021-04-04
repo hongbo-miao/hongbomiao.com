@@ -4,7 +4,8 @@ pull_request_rules:
   - name: automatic merge on CI success and review
     conditions:
       - author=Hongbo-Miao
-      - check-success=Lint
+      - check-success=Lint (JavaScript, CSS, Solidity, Markdown)
+      - check-success=Lint (Python)
       - check-success=Web - Test
       - check-success=Web - Lighthouse
       - check-success=Web - Storybook
@@ -24,7 +25,8 @@ pull_request_rules:
   - name: automatic merge for Renovate pull requests
     conditions:
       - author=renovate[bot]
-      - check-success=Lint
+      - check-success=Lint (JavaScript, CSS, Solidity, Markdown)
+      - check-success=Lint (Python)
       - check-success=Web - Test
       - check-success=Web - Lighthouse
       - check-success=Web - Storybook
