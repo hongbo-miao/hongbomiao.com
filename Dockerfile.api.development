@@ -1,8 +1,5 @@
 FROM node:14.16.0-alpine
-
 WORKDIR /app
-
-ENV PATH /app/node_modules/.bin:$PATH
 
 # Install dependencies
 COPY ["package.json", "package-lock.json", "./"]
@@ -20,12 +17,13 @@ COPY web/.env.production.local.example web/.env.production.local
 COPY web web
 # Skip lint check during react-scripts build
 RUN rm -f web/.eslintrc.js
-RUN cd web && cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
+RUN cd web && REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
 
-# Build API
-COPY api/.env.development.local.example.docker api/.env.development.local
+# Build API Server
 COPY api api
 RUN cp -r web/build/ api/dist/
+
+COPY api/.env.development.local.example.docker api/.env.development.local
 
 EXPOSE 5000
 CMD ["npm", "run", "dev"]

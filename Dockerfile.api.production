@@ -1,10 +1,8 @@
-FROM node:14.16.0-alpine
-
+FROM node:14.16.0-alpine AS base
 WORKDIR /app
 
-ENV PATH /app/node_modules/.bin:$PATH
-
 # Install dependencies
+FROM base AS build
 COPY ["package.json", "package-lock.json", "./"]
 COPY ["web/package.json", "web/package-lock.json", "./web/"]
 COPY ["api/package.json", "api/package-lock.json", "./api/"]
@@ -17,13 +15,22 @@ COPY web/.env.production.local.example web/.env.production.local
 COPY web web
 # Skip lint check during react-scripts build
 RUN rm -f web/.eslintrc.js
-RUN cd web && cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
+RUN cd web && REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
 
-# Build API
-COPY api/.env.production.local.example api/.env.production.local
+# Build API Server
 COPY api api
 RUN cp -r web/build/ api/dist/
 RUN cd api && npm run build
 
+# Prune
+RUN npm prune --production
+
+FROM base AS run
+COPY --from=build /app/api/package.json package.json
+COPY --from=build /app/api/.env.production.local.example .env.production.local
+COPY --from=build /app/api/build ./build
+COPY --from=build /app/api/dist ./dist
+COPY --from=build /app/api/node_modules ./node_modules
+
 EXPOSE 5000
-CMD ["npm", "start"]
+CMD ["npm", "run", "serve:production"]
