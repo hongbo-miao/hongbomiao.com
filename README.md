@@ -152,17 +152,17 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Solidity** - Contract-oriented programming language
 - **solc-js** - JavaScript bindings for the Solidity compiler
 
-### Code Style
+### Code
 
 - **Prettier** - Code formatter
 - **Black** - Python code formatter
+- **Mypy** - Python static type checker
 - **ESLint** - JavaScript linter
 - **Stylelint** - CSS linter
 - **solhint** - Solidity linter
 - **markdownlint-cli2** - Markdown linter
 - **commitlint** - Commit message linter
 - **Husky**, **lint-staged** - Bad git commit and push preventing
-- **Mypy** - Python static type checker
 
 ### Services
 
