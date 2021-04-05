@@ -1,14 +1,13 @@
 FROM node:14.16.0-alpine AS base
 WORKDIR /app
 
+
+FROM base AS web
 # Install dependencies
-FROM base AS build
 COPY ["package.json", "package-lock.json", "./"]
 COPY ["web/package.json", "web/package-lock.json", "./web/"]
-COPY ["api/package.json", "api/package-lock.json", "./api/"]
 RUN npm ci
 RUN cd web && npm ci
-RUN cd api && npm ci
 
 # Build web
 COPY web/.env.production.local.example web/.env.production.local
@@ -17,20 +16,31 @@ COPY web web
 RUN rm -f web/.eslintrc.js
 RUN cd web && REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
 
-# Build API Server
+# Prune
+RUN npm prune --production
+
+
+FROM base AS api
+# Install dependencies
+COPY ["package.json", "package-lock.json", "./"]
+COPY ["api/package.json", "api/package-lock.json", "./api/"]
+RUN npm ci
+RUN cd api && npm ci
+
+# Build API server
 COPY api api
-RUN cp -r web/build/ api/dist/
 RUN cd api && npm run build
 
 # Prune
 RUN npm prune --production
 
+
 FROM base AS run
-COPY --from=build /app/api/package.json package.json
-COPY --from=build /app/api/.env.production.local.example .env.production.local
-COPY --from=build /app/api/build ./build
-COPY --from=build /app/api/dist ./dist
-COPY --from=build /app/api/node_modules ./node_modules
+COPY --from=api /app/api/.env.production.local.example .env.production.local
+COPY --from=api /app/api/build ./build
+COPY --from=api /app/api/node_modules ./node_modules
+COPY --from=api /app/api/package.json package.json
+COPY --from=web /app/web/build ./dist
 
 EXPOSE 5000
 CMD ["npm", "run", "serve:production"]
