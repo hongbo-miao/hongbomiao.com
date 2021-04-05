@@ -1,13 +1,14 @@
 # https://github.com/lightaime/deep_gcns_torch
 
 import logging
+from typing import Optional
+
 import torch
 import torch.nn.functional as F
 from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder
-from torch_geometric.nn import global_add_pool, global_mean_pool, global_max_pool
-from typing import Optional
+from torch_geometric.nn import global_add_pool, global_max_pool, global_mean_pool
 
-from .gcn_lib.sparse.torch_nn import norm_layer, MLP
+from .gcn_lib.sparse.torch_nn import MLP, norm_layer
 from .gcn_lib.sparse.torch_vertex import GENConv
 
 
