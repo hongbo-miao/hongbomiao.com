@@ -79,9 +79,12 @@ jobs:
       - name: Install dependencies
         run: |
           pipenv install --dev
-      - name: Lint Python
+      - name: Lint Python (Black)
         run: |
-          pipenv run lint-py
+          pipenv run lint-py-black
+      - name: Lint Python (Flake8)
+        run: |
+          pipenv run lint-py-flake8
 
   web-test:
     name: Web - Test
