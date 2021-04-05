@@ -1,7 +1,7 @@
 # allowable multiple choice node and edge features
 # code from https://github.com/snap-stanford/ogb/blob/master/ogb/utils/features.py
 allowable_features = {
-    "possible_atomic_num_list": list(range(1, 119)) + ["misc"],
+    "possible_atomic_num_list": list(range(1, 119)) + ["misc"],  # type: ignore
     "possible_chirality_list": [
         "CHI_UNSPECIFIED",
         "CHI_TETRAHEDRAL_CW",

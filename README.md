@@ -162,6 +162,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **markdownlint-cli2** - Markdown linter
 - **commitlint** - Commit message linter
 - **Husky**, **lint-staged** - Bad git commit and push preventing
+- **Mypy** - Python static type checker
 
 ### Services
 
