@@ -1,5 +1,6 @@
 from torch import nn
-from torch.nn import Sequential as Seq, Linear as Lin
+from torch.nn import Linear as Lin
+from torch.nn import Sequential as Seq
 
 from .data_util import get_atom_feature_dims, get_bond_feature_dims
 
