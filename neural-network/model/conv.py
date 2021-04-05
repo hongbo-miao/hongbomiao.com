@@ -113,7 +113,7 @@ class GNN_node(torch.nn.Module):
         self.convs = torch.nn.ModuleList()
         self.batch_norms = torch.nn.ModuleList()
 
-        for layer in range(num_layer):
+        for _ in range(num_layer):
             if gnn_type == "gin":
                 self.convs.append(GINConv(emb_dim))
             elif gnn_type == "gcn":
@@ -124,11 +124,10 @@ class GNN_node(torch.nn.Module):
             self.batch_norms.append(torch.nn.BatchNorm1d(emb_dim))
 
     def forward(self, batched_data):
-        x, edge_index, edge_attr, batch = (
+        x, edge_index, edge_attr = (
             batched_data.x,
             batched_data.edge_index,
             batched_data.edge_attr,
-            batched_data.batch,
         )
 
         # computing input node embedding
