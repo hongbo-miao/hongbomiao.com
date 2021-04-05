@@ -3,16 +3,19 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[requires]
+python_version = "3.9"
+
 [packages]
 
 [dev-packages]
 black = "==20.8b1"
 flake8 = "==3.9.0"
-
-[requires]
-python_version = "3.9"
+isort = "==5.8.0"
 
 [scripts]
-lint-py-black = "black --check ."
+lint-py-black = "black . --check"
 lint-py-black-fix = "black ."
 lint-py-flake8 = "flake8 ."
+lint-py-isort = "isort . --skip-gitignore --check-only"
+lint-py-isort-fix = "isort . --skip-gitignore"
