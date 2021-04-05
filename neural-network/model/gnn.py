@@ -1,10 +1,10 @@
 import torch
 from torch_geometric.nn import (
-    global_add_pool,
-    global_mean_pool,
-    global_max_pool,
     GlobalAttention,
     Set2Set,
+    global_add_pool,
+    global_max_pool,
+    global_mean_pool,
 )
 
 from .conv import GNN_node, GNN_node_Virtualnode
