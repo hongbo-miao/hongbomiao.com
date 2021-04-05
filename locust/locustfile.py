@@ -1,9 +1,10 @@
-from locust import HttpUser, between, task
 import json
-import magic
 import os
 
 import config
+import magic
+
+from locust import HttpUser, between, task
 
 
 class WebsiteUser(HttpUser):
