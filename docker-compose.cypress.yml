@@ -1,0 +1,81 @@
+# https://docs.docker.com/compose/compose-file/compose-versioning
+version: "3.8"
+
+services:
+  # API
+  api:
+    container_name: hm_api
+    build:
+      context: .
+      dockerfile: Dockerfile.api.development
+    environment:
+      - NODE_ENV=development
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 0.0.0.0:24224
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    depends_on:
+      - fluent-bit
+      - redis
+      - postgres
+
+  # Redis
+  redis:
+    container_name: hm_redis
+    image: redis:6.2.1-alpine
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  # PostgreSQL
+  postgres:
+    container_name: hm_postgres
+    image: postgres:13.2-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - ./docker/postgres/.env.development.local
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+
+  # Fluent Bit
+  fluent-bit:
+    container_name: hm_fluent_bit
+    image: fluent/fluent-bit:1.7.2
+    volumes:
+      - ./docker/fluent-bit/conf:/fluent-bit/etc
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+    restart: unless-stopped
+    ports:
+      - "24224:24224"
+      - "5140:5140/udp"
+      - "2020:2020"
+    depends_on:
+      - elasticsearch
+
+  # Elasticsearch
+  elasticsearch:
+    container_name: hm_elasticsearch
+    # https://www.docker.elastic.co/r/elasticsearch/elasticsearch-oss
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+    environment:
+      - discovery.type=single-node
+    restart: unless-stopped
+    ports:
+      - "9200/tcp"
+
+# For persistence between restarts
+volumes:
+  redis_data: { }
+  postgres_data: { }
