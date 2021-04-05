@@ -89,6 +89,37 @@ jobs:
         run: |
           pipenv run lint-py-isort
 
+  type-py:
+    name: Static Type Check (Python)
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.8.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install pipenv
+        run: |
+          pip install pipenv
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv-
+      - name: Install dependencies
+        run: |
+          pipenv install --dev
+      - name: Check static type
+        run: |
+          pipenv run mypy
+
   web-test:
     name: Web - Test
     runs-on: ubuntu-20.04
