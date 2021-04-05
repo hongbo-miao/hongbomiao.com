@@ -193,7 +193,7 @@ def main():
 
             # Save model
             if val_perf[dataset.eval_metric] > max_perf_metric_val:
-                print(f"Found better model.")
+                print("Found better model.")
                 max_perf_metric_val = val_perf[dataset.eval_metric]
                 torch.save(model.state_dict(), "model.pt")
                 wb.save("model.pt")
