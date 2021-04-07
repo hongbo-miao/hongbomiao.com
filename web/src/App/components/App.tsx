@@ -7,7 +7,7 @@ import styles from './App.module.css';
 const HmHome = React.lazy(() => import('../../Home/components/Home'));
 const HmFooter = React.lazy(() => import('./Footer'));
 
-const App: React.FC = () => (
+const App: React.VFC = () => (
   <div className={styles.hmApp}>
     <BrowserRouter>
       <HmLazyComponent>
