@@ -6,7 +6,7 @@ type Props = {
   websites: ReadonlyArray<Website>;
 };
 
-const SocialList: React.FC<Props> = (props) => {
+const SocialList: React.VFC<Props> = (props) => {
   const { websites } = props;
 
   const socialListItems = websites.map((website) => {

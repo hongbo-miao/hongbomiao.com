@@ -5,7 +5,7 @@ type Props = {
   children: ReactNode;
 };
 
-const LazyComponent: React.FC<Props> = (props) => {
+const LazyComponent: React.VFC<Props> = (props) => {
   const { children } = props;
   return <Suspense fallback={<HmLoading />}>{children}</Suspense>;
 };
