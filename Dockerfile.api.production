@@ -1,46 +1,41 @@
 FROM node:15.13.0-alpine AS base
-WORKDIR /app
+WORKDIR /usr/src/app
 
 
 FROM base AS web
-# Install dependencies
-COPY ["package.json", "package-lock.json", "./"]
 COPY ["web/package.json", "web/package-lock.json", "./web/"]
-RUN npm ci
 RUN cd web && npm ci
 
-# Build web
+# https://create-react-app.dev/docs/adding-custom-environment-variables/
+# In create-react-app, when you run 'npm run build' to make a production bundle, it is always equal to 'production'.
+# So using REACT_APP_SERVER_WS_PROTOCOL=ws in .env.production.local.example
 COPY web/.env.production.local.example web/.env.production.local
 COPY web web
 # Skip lint check during react-scripts build
 RUN rm -f web/.eslintrc.js
 RUN cd web && REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
-
-# Prune
 RUN npm prune --production
 
 
 FROM base AS api
 # Install dependencies
-COPY ["package.json", "package-lock.json", "./"]
 COPY ["api/package.json", "api/package-lock.json", "./api/"]
-RUN npm ci
 RUN cd api && npm ci
-
-# Build API server
 COPY api api
 RUN cd api && npm run build
-
-# Prune
 RUN npm prune --production
 
 
-FROM base AS run
-COPY --from=api /app/api/.env.production.local.example .env.production.local
-COPY --from=api /app/api/build ./build
-COPY --from=api /app/api/node_modules ./node_modules
-COPY --from=api /app/api/package.json package.json
-COPY --from=web /app/web/build ./dist
+FROM base AS release
+RUN apk add dumb-init
+ENV NODE_ENV production
+USER node
+
+COPY --from=api /usr/src/app/api/.env.production.local.example .env.production.local
+COPY --from=api /usr/src/app/api/build ./build
+COPY --from=api /usr/src/app/api/node_modules ./node_modules
+COPY --from=api /usr/src/app/api/package.json .
+COPY --from=web /usr/src/app/web/build ./dist
 
 EXPOSE 5000
-CMD ["npm", "run", "serve:production"]
+CMD ["dumb-init", "node", "build/src/index.js"]
