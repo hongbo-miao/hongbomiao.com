@@ -6,7 +6,7 @@ import styles from './Footer.module.css';
 const HmCopyright = React.lazy(() => import('./Copyright'));
 const HmSocialList = React.lazy(() => import('./SocialList'));
 
-const Footer: React.FC = () => {
+const Footer: React.VFC = () => {
   const year = new Date().getFullYear();
 
   return (

@@ -9,7 +9,7 @@ interface Props {
   audioSrc: string;
 }
 
-const AudioPlayer: React.FC<Props> = (props) => {
+const AudioPlayer: React.VFC<Props> = (props) => {
   const { audioSrc } = props;
   const [audioElement, audioState, audioControls] = useAudio({
     src: audioSrc,

@@ -8,7 +8,7 @@ type Props = {
   children: ReactNode;
 };
 
-const Sparkles: React.FC<Props> = (props) => {
+const Sparkles: React.VFC<Props> = (props) => {
   const { children } = props;
 
   const [sparkles, setSparkles] = React.useState(() => {

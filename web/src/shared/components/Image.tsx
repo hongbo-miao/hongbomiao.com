@@ -11,7 +11,7 @@ type Props = {
   };
 };
 
-const Image: React.FC<Props> = (props) => {
+const Image: React.VFC<Props> = (props) => {
   const { avifSrc, fallbackSrc, style, alt } = props;
   return (
     <picture className={styles.hmPicture}>
