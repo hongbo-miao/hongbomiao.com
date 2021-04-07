@@ -6,7 +6,8 @@
     "node": "15.x"
   },
   "scripts": {
-    "build": "tsc && babel build --out-dir build",
+    "build": "tsc && babel src --out-dir build/src --extensions .ts",
+    "build:scripts": "tsc && babel scripts --out-dir build/scripts --extensions .ts",
     "debug": "npm run build && cross-env NODE_ENV=development node --inspect-brk build/src/index.js",
     "dev": "nodemon --ext ts --exec 'npm run build && cross-env NODE_ENV=development node build/src/index.js --hideHTTPLog --prettifyLog'",
     "dev:log": "nodemon --ext ts --exec 'npm run build && cross-env NODE_ENV=development node build/src/index.js --prettifyLog'",
@@ -17,10 +18,10 @@
     "test:coverage": "jest --coverage",
     "test:stryker": "stryker run",
     "autocannon": "autocannon http://localhost:5000",
-    "profile:endpoints": "npm run build && NODE_ENV=production node build/scripts/profileEndpoints.js",
-    "profile:bubbleprof": "npm run build && cross-env NODE_ENV=production clinic bubbleprof --on-port 'sh bin/profile.sh' -- node build/src/index.js",
-    "profile:doctor": "npm run build && cross-env NODE_ENV=production clinic doctor --on-port 'sh bin/profile.sh' -- node build/src/index.js",
-    "profile:flame": "npm run build && cross-env NODE_ENV=production clinic flame --on-port 'sh bin/profile.sh' -- node build/src/index.js"
+    "profile:endpoints": "npm run build:scripts && NODE_ENV=production node build/scripts/profileEndpoints.js",
+    "profile:bubbleprof": "npm run build:scripts && cross-env NODE_ENV=production clinic bubbleprof --on-port 'sh bin/profile.sh' -- node build/src/index.js",
+    "profile:doctor": "npm run build:scripts && cross-env NODE_ENV=production clinic doctor --on-port 'sh bin/profile.sh' -- node build/src/index.js",
+    "profile:flame": "npm run build:scripts && cross-env NODE_ENV=production clinic flame --on-port 'sh bin/profile.sh' -- node build/src/index.js"
   },
   "dependencies": {
     "@godaddy/terminus": "4.7.1",
