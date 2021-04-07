@@ -1,15 +1,11 @@
-FROM node:15.13.0-alpine
-WORKDIR /app
+FROM node:15.13.0-alpine AS base
+WORKDIR /usr/src/app
 
-# Install dependencies
-COPY ["package.json", "package-lock.json", "./"]
+
+FROM base AS web
 COPY ["web/package.json", "web/package-lock.json", "./web/"]
-COPY ["api/package.json", "api/package-lock.json", "./api/"]
-RUN npm ci
 RUN cd web && npm ci
-RUN cd api && npm ci
 
-# Build web
 # https://create-react-app.dev/docs/adding-custom-environment-variables/
 # In create-react-app, when you run 'npm run build' to make a production bundle, it is always equal to 'production'.
 # So using REACT_APP_SERVER_WS_PROTOCOL=ws in .env.production.local.example
@@ -19,11 +15,14 @@ COPY web web
 RUN rm -f web/.eslintrc.js
 RUN cd web && REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
 
-# Build API Server
-COPY api api
-RUN cp -r web/build/ api/dist/
 
+FROM base AS api
+COPY ["api/package.json", "api/package-lock.json", "./api/"]
+RUN cd api && npm ci
+COPY --from=web /usr/src/app/web/build ./api/dist
+COPY api api
 COPY api/.env.development.local.example.docker api/.env.development.local
 
+WORKDIR /usr/src/app/api
 EXPOSE 5000
 CMD ["npm", "run", "dev"]
