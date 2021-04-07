@@ -5,7 +5,7 @@ type Props = {
   year: number;
 };
 
-const Copyright: React.FC<Props> = (props) => {
+const Copyright: React.VFC<Props> = (props) => {
   const { year } = props;
   const copyright = `© ${year} H.M.`;
   return <div className={styles.hmCopyright}>{copyright}</div>;

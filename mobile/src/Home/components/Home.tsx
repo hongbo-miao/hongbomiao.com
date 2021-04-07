@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 
 type Props = ConnectedProps<typeof connector>;
 
-const Home: React.FC<Props> = (props) => {
+const Home: React.VFC<Props> = (props) => {
   const { me, queryMe } = props;
 
   React.useEffect(() => {
