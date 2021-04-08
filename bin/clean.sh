@@ -26,7 +26,7 @@ cd ../api
 rm -rf .clinic
 rm -rf build
 rm -rf coverage
-rm -rf dist
+rm -rf public
 rm -rf node_modules
 
 # Cypress

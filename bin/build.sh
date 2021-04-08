@@ -9,7 +9,7 @@ npm install
 cross-env REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
 
 cd ..
-cp -r web/build/ api/dist/
+cp -r web/build/ api/public/
 
 cd api
 npm install
