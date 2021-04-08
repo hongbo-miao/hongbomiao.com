@@ -6,4 +6,6 @@ module.exports = {
   reporters: ['html', 'clear-text', 'progress', 'dashboard'],
   testRunner: 'jest',
   coverageAnalysis: 'perTest',
+  checkers: ['typescript'],
+  tsconfigFile: 'tsconfig.json',
 };
