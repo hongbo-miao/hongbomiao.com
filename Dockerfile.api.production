@@ -35,7 +35,7 @@ COPY --from=api /usr/src/app/api/.env.production.local.example .env.production.l
 COPY --from=api /usr/src/app/api/build ./build
 COPY --from=api /usr/src/app/api/node_modules ./node_modules
 COPY --from=api /usr/src/app/api/package.json .
-COPY --from=web /usr/src/app/web/build ./dist
+COPY --from=web /usr/src/app/web/build ./public
 
 EXPOSE 5000
 CMD ["dumb-init", "node", "build/src/index.js"]
