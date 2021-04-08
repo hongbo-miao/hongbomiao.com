@@ -19,7 +19,7 @@ RUN cd web && REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run bui
 FROM base AS api
 COPY ["api/package.json", "api/package-lock.json", "./api/"]
 RUN cd api && npm ci
-COPY --from=web /usr/src/app/web/build ./api/dist
+COPY --from=web /usr/src/app/web/build ./api/public
 COPY api api
 COPY api/.env.development.local.example.docker api/.env.development.local
 
