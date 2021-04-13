@@ -1,4 +1,5 @@
 module.exports = {
-  '*.css': 'npm run lint:css:fix',
-  '*.{js,ts,tsx}': 'npm run lint:js:fix',
+  '*.css': 'stylelint --fix',
+  '*.sol': 'solhint --fix',
+  '*.{js,ts,tsx}': 'eslint --fix',
 };
