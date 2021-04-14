@@ -1,7 +1,10 @@
 import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
+import { DnsInstrumentation } from '@opentelemetry/instrumentation-dns';
+import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
 import { GraphQLInstrumentation } from '@opentelemetry/instrumentation-graphql';
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
+import { IORedisInstrumentation } from '@opentelemetry/instrumentation-ioredis';
 import { NodeTracerProvider } from '@opentelemetry/node';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import config from '../../config';
@@ -14,39 +17,17 @@ const initTracer = (): void => {
 
   registerInstrumentations({
     instrumentations: [
-      {
-        plugins: {
-          dns: {
-            enabled: true,
-            path: '@opentelemetry/plugin-dns',
-          },
-          express: {
-            enabled: true,
-            path: '@opentelemetry/plugin-express',
-          },
-          ioredis: {
-            enabled: true,
-            path: '@opentelemetry/plugin-ioredis',
-          },
-          pg: {
-            enabled: true,
-            path: '@opentelemetry/plugin-pg',
-          },
-          'pg-pool': {
-            enabled: true,
-            path: '@opentelemetry/plugin-pg-pool',
-          },
-        },
-      },
+      new DnsInstrumentation(),
+      new ExpressInstrumentation(),
+      new GraphQLInstrumentation(),
+      new HttpInstrumentation(),
+      new IORedisInstrumentation(),
     ],
     tracerProvider,
   });
 
   const httpInstrumentation = new HttpInstrumentation();
   httpInstrumentation.enable();
-
-  const graphQLInstrumentation = new GraphQLInstrumentation();
-  graphQLInstrumentation.enable();
 
   if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
