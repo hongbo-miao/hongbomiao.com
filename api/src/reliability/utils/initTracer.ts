@@ -26,9 +26,6 @@ const initTracer = (): void => {
     tracerProvider,
   });
 
-  const httpInstrumentation = new HttpInstrumentation();
-  httpInstrumentation.enable();
-
   if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
     tracerProvider.addSpanProcessor(
