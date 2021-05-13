@@ -7,22 +7,21 @@
     "npm": "7.x"
   },
   "scripts": {
-    "build": "tsc && babel src --out-dir build/src --extensions .ts",
+    "build": "tsc && babel src --out-dir build --extensions .ts",
     "build:scripts": "tsc && babel scripts --out-dir build/scripts --extensions .ts",
-    "debug": "npm run build && NODE_ENV=development node --inspect-brk build/src/index.js",
-    "dev": "nodemon --ext ts --exec 'npm run build && NODE_ENV=development node build/src/index.js --hideHTTPLog --prettifyLog'",
-    "dev:log": "nodemon --ext ts --exec 'npm run build && NODE_ENV=development node build/src/index.js --prettifyLog'",
-    "serve:development": "NODE_ENV=development node build/src/index.js",
-    "serve:production": "NODE_ENV=production node build/src/index.js",
+    "debug": "npm run build && NODE_ENV=development node --inspect-brk build/index.js",
+    "dev": "nodemon --ext ts --exec 'NODE_ENV=development babel-node src/index.ts --extensions .ts --hideHTTPLog --prettifyLog'",
+    "dev:log": "nodemon --ext ts --exec 'NODE_ENV=development babel-node src/index.ts --extensions .ts --prettifyLog'",
+    "serve": "NODE_ENV=production node build/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:stryker": "stryker run",
     "autocannon": "autocannon http://localhost:5000",
     "profile:endpoints": "npm run build:scripts && NODE_ENV=production node build/scripts/profileEndpoints.js",
-    "profile:bubbleprof": "npm run build:scripts && NODE_ENV=production clinic bubbleprof --on-port 'sh bin/profile.sh' -- node build/src/index.js",
-    "profile:doctor": "npm run build:scripts && NODE_ENV=production clinic doctor --on-port 'sh bin/profile.sh' -- node build/src/index.js",
-    "profile:flame": "npm run build:scripts && NODE_ENV=production clinic flame --on-port 'sh bin/profile.sh' -- node build/src/index.js"
+    "profile:bubbleprof": "npm run build:scripts && NODE_ENV=production clinic bubbleprof --on-port 'sh bin/profile.sh' -- node build/index.js",
+    "profile:doctor": "npm run build:scripts && NODE_ENV=production clinic doctor --on-port 'sh bin/profile.sh' -- node build/index.js",
+    "profile:flame": "npm run build:scripts && NODE_ENV=production clinic flame --on-port 'sh bin/profile.sh' -- node build/index.js"
   },
   "dependencies": {
     "@godaddy/terminus": "4.7.2",
@@ -82,6 +81,7 @@
   "devDependencies": {
     "@babel/cli": "7.13.16",
     "@babel/core": "7.14.2",
+    "@babel/node": "7.14.2",
     "@babel/preset-env": "7.14.2",
     "@babel/preset-typescript": "7.13.0",
     "@stryker-mutator/core": "4.6.0",
