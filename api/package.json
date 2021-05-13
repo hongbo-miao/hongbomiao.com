@@ -19,7 +19,7 @@
     "test:coverage": "jest --coverage",
     "test:stryker": "stryker run",
     "autocannon": "autocannon http://localhost:5000",
-    "profile:endpoints": "npm run build:scripts && NODE_ENV=production node build/scripts/profileEndpoints.js",
+    "profile:endpoints": "npm run build:scripts && cross-env NODE_ENV=production node build/scripts/profileEndpoints.js",
     "profile:bubbleprof": "npm run build:scripts && cross-env NODE_ENV=production clinic bubbleprof --on-port 'sh bin/profile.sh' -- node build/src/index.js",
     "profile:doctor": "npm run build:scripts && cross-env NODE_ENV=production clinic doctor --on-port 'sh bin/profile.sh' -- node build/src/index.js",
     "profile:flame": "npm run build:scripts && cross-env NODE_ENV=production clinic flame --on-port 'sh bin/profile.sh' -- node build/src/index.js"
