@@ -10,8 +10,8 @@
     "build": "tsc && babel src --out-dir build --extensions .ts",
     "build:scripts": "tsc && babel scripts --out-dir build/scripts --extensions .ts",
     "debug": "npm run build && NODE_ENV=development node --inspect-brk build/index.js",
-    "dev": "nodemon --ext ts --exec 'npm run build && NODE_ENV=development node build/index.js --hideHTTPLog --prettifyLog'",
-    "dev:log": "nodemon --ext ts --exec 'npm run build && NODE_ENV=development node build/index.js --prettifyLog'",
+    "dev": "nodemon --ext ts --exec 'NODE_ENV=development babel-node src/index.ts --extensions .ts --hideHTTPLog --prettifyLog'",
+    "dev:log": "nodemon --ext ts --exec 'NODE_ENV=development babel-node src/index.ts --extensions .ts --prettifyLog'",
     "serve": "NODE_ENV=production node build/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -81,6 +81,7 @@
   "devDependencies": {
     "@babel/cli": "7.13.16",
     "@babel/core": "7.14.2",
+    "@babel/node": "7.14.2",
     "@babel/preset-env": "7.14.2",
     "@babel/preset-typescript": "7.13.0",
     "@stryker-mutator/core": "4.6.0",
