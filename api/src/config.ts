@@ -2,12 +2,17 @@ import * as Sentry from '@sentry/node';
 import dotenvFlow from 'dotenv-flow';
 import Redis from 'ioredis';
 import { Knex } from 'knex';
-import { argv } from 'yargs';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 import PostgresInputUser from './dataSources/postgres/types/PostgresInputUser';
 
 dotenvFlow.config();
 
-const { hideHTTPLog, prettifyLog } = argv;
+const {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  argv: { hideHTTPLog, prettifyLog },
+} = yargs(hideBin(process.argv));
 
 if (hideHTTPLog != null && typeof hideHTTPLog !== 'boolean') {
   throw new Error('Failed to read hideHTTPLog.');
