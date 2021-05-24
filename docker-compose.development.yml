@@ -8,8 +8,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.nginx.development
-    environment:
-      - NODE_ENV=development
     restart: unless-stopped
     ports:
       - "80:80"
@@ -22,8 +20,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api.development
-    environment:
-      - NODE_ENV=development
     volumes:
       - "./api:/usr/src/app/api"
       - "/usr/src/app/api/node_modules"
