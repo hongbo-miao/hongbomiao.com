@@ -5,6 +5,7 @@ import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
 import { GraphQLInstrumentation } from '@opentelemetry/instrumentation-graphql';
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { IORedisInstrumentation } from '@opentelemetry/instrumentation-ioredis';
+import { PinoInstrumentation } from '@opentelemetry/instrumentation-pino';
 import { NodeTracerProvider } from '@opentelemetry/node';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import config from '../../config';
@@ -14,17 +15,6 @@ import isProduction from '../../shared/utils/isProduction';
 const initTracer = (): void => {
   const serviceName = 'hm-api-trace-service';
   const tracerProvider = new NodeTracerProvider();
-
-  registerInstrumentations({
-    instrumentations: [
-      new DnsInstrumentation(),
-      new ExpressInstrumentation(),
-      new GraphQLInstrumentation(),
-      new HttpInstrumentation(),
-      new IORedisInstrumentation(),
-    ],
-    tracerProvider,
-  });
 
   if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
@@ -53,6 +43,17 @@ const initTracer = (): void => {
   }
 
   tracerProvider.register();
+
+  registerInstrumentations({
+    instrumentations: [
+      new DnsInstrumentation(),
+      new ExpressInstrumentation(),
+      new GraphQLInstrumentation(),
+      new HttpInstrumentation(),
+      new IORedisInstrumentation(),
+      new PinoInstrumentation(),
+    ],
+  });
 };
 
 initTracer();

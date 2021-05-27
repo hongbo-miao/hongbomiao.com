@@ -12,10 +12,6 @@ const initTracer = (): void => {
   const serviceName = 'hm-web-trace-service';
   const tracerProvider = new WebTracerProvider();
 
-  registerInstrumentations({
-    instrumentations: [new DocumentLoadInstrumentation(), new XMLHttpRequestInstrumentation()],
-  });
-
   if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
     tracerProvider.addSpanProcessor(
@@ -43,6 +39,10 @@ const initTracer = (): void => {
   }
 
   tracerProvider.register();
+
+  registerInstrumentations({
+    instrumentations: [new DocumentLoadInstrumentation(), new XMLHttpRequestInstrumentation()],
+  });
 };
 
 initTracer();
