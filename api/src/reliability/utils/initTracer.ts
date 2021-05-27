@@ -5,6 +5,7 @@ import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
 import { GraphQLInstrumentation } from '@opentelemetry/instrumentation-graphql';
 import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { IORedisInstrumentation } from '@opentelemetry/instrumentation-ioredis';
+import { PinoInstrumentation } from '@opentelemetry/instrumentation-pino';
 import { NodeTracerProvider } from '@opentelemetry/node';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import config from '../../config';
@@ -50,6 +51,7 @@ const initTracer = (): void => {
       new GraphQLInstrumentation(),
       new HttpInstrumentation(),
       new IORedisInstrumentation(),
+      new PinoInstrumentation(),
     ],
   });
 };
