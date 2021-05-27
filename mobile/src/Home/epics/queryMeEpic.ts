@@ -10,7 +10,7 @@ const queryMeEpic: Epic = (action$, state$, { fetchData }) =>
     ofType(MeActionType.QUERY_ME),
     switchMap((action) =>
       fetchData(action.payload.query).pipe(
-        map((res: AjaxResponse) => MeAction.queryMeSucceed(res)),
+        map((res: AjaxResponse<unknown>) => MeAction.queryMeSucceed(res)),
         catchError((err: AjaxError) => of(MeAction.queryMeFailed(err))),
       ),
     ),
