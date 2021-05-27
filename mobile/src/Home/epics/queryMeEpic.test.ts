@@ -17,7 +17,7 @@ describe('queryMeEpic', () => {
         bio: 'Making magic happen',
       },
     },
-  } as AjaxResponse;
+  } as AjaxResponse<unknown>;
   const err = new Error('Test error') as AjaxError;
 
   test('queryMeSucceed', () => {
@@ -38,7 +38,7 @@ describe('queryMeEpic', () => {
       });
       const state$ = {} as StateObservable<RootState>;
       const dependencies = {
-        fetchData: (): ColdObservable<AjaxResponse> =>
+        fetchData: (): ColdObservable<AjaxResponse<unknown>> =>
           cold(marbles.r, {
             r: res,
           }),
