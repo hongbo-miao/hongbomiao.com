@@ -15,17 +15,6 @@ const initTracer = (): void => {
   const serviceName = 'hm-api-trace-service';
   const tracerProvider = new NodeTracerProvider();
 
-  registerInstrumentations({
-    instrumentations: [
-      new DnsInstrumentation(),
-      new ExpressInstrumentation(),
-      new GraphQLInstrumentation(),
-      new HttpInstrumentation(),
-      new IORedisInstrumentation(),
-    ],
-    tracerProvider,
-  });
-
   if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
     tracerProvider.addSpanProcessor(
@@ -53,6 +42,16 @@ const initTracer = (): void => {
   }
 
   tracerProvider.register();
+
+  registerInstrumentations({
+    instrumentations: [
+      new DnsInstrumentation(),
+      new ExpressInstrumentation(),
+      new GraphQLInstrumentation(),
+      new HttpInstrumentation(),
+      new IORedisInstrumentation(),
+    ],
+  });
 };
 
 initTracer();
