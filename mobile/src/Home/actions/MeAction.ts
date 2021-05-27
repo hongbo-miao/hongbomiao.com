@@ -10,7 +10,7 @@ type QueryMe = {
 type QueryMeSucceed = {
   type: typeof MeActionType.QUERY_ME_SUCCEED;
   payload: {
-    res: AjaxResponse;
+    res: AjaxResponse<unknown>;
   };
 };
 type QueryMeFailed = {
@@ -19,7 +19,7 @@ type QueryMeFailed = {
 };
 
 const queryMe = (query: string): QueryMe => ({ type: MeActionType.QUERY_ME, payload: { query } });
-const queryMeSucceed = (res: AjaxResponse): QueryMeSucceed => ({
+const queryMeSucceed = (res: AjaxResponse<unknown>): QueryMeSucceed => ({
   type: MeActionType.QUERY_ME_SUCCEED,
   payload: { res },
 });
