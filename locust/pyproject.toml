@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "hm-locust"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.9.5"
+
+[tool.poetry.dev-dependencies]
+locust = "1.5.3"
+python-dotenv = "0.17.1"
+python-magic = "0.4.22"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+locust = "locust --config=locust.conf"
