@@ -65,29 +65,22 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
-      - name: Install pipenv
-        run: |
-          pip install pipenv
-      - name: Cache pipenv
-        uses: actions/cache@v2
-        with:
-          path: ~/.local/share/virtualenvs
-          key: ${{ runner.os }}-pipenv-${{ hashFiles('Pipfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pipenv-
+          python-version: '3.9.5'
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.1.6
       - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
-          pipenv install --dev
+          poetry install --no-interaction --no-root
       - name: Lint Python (Black)
         run: |
-          pipenv run lint-py-black
+          poetry run poe lint-py-black
       - name: Lint Python (Flake8)
         run: |
-          pipenv run lint-py-flake8
+          poetry run poe lint-py-flake8
       - name: Lint Python (isort)
         run: |
-          pipenv run lint-py-isort
+          poetry run poe lint-py-isort
 
   type-ts:
     name: Static Type Check (TypeScript)
@@ -144,23 +137,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
-      - name: Install pipenv
-        run: |
-          pip install pipenv
-      - name: Cache pipenv
-        uses: actions/cache@v2
-        with:
-          path: ~/.local/share/virtualenvs
-          key: ${{ runner.os }}-pipenv-${{ hashFiles('Pipfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pipenv-
+          python-version: '3.9.5'
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.1.6
       - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
-          pipenv install --dev
+          poetry install --no-interaction --no-root
       - name: Check static type
         run: |
-          pipenv run mypy
+          poetry run poe mypy
 
   web-test:
     name: Web - Test

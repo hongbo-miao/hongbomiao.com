@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "hongbomiao.com"
+version = "1.0.0"
+description = "Hongbo Miao – Making magic happen"
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.9.5"
+
+[tool.poetry.dev-dependencies]
+black = "21.5b1"
+flake8 = "3.9.2"
+isort = "5.8.0"
+mypy = "0.812"
+poethepoet = "0.10.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+lint-py-black = "black . --check"
+lint-py-black-fix = "black ."
+lint-py-flake8 = "flake8 ."
+lint-py-isort = "isort . --skip-gitignore --check-only"
+lint-py-isort-fix = "isort . --skip-gitignore"
+mypy = "mypy ."
