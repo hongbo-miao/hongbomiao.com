@@ -3,3 +3,6 @@ run:
 
 format:
 	go fmt main.go
+
+tidy:
+	go mod tidy
