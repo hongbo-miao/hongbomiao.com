@@ -108,7 +108,6 @@ class MRConv(nn.Module):
         self.aggr = aggr
 
     def forward(self, x, edge_index):
-        """"""
         x_j = tg.utils.scatter_(
             self.aggr,
             torch.index_select(x, 0, edge_index[0])
@@ -201,7 +200,6 @@ class SAGEConv(tg.nn.SAGEConv):
         self.nn = nn
 
     def forward(self, x, edge_index, size=None):
-        """"""
         if size is None:
             edge_index, _ = remove_self_loops(edge_index)
             edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))
