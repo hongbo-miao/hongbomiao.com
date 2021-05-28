@@ -21,7 +21,7 @@ class DeeperGCN(torch.nn.Module):
         conv_encode_edge: bool,
         add_virtual_node: bool,
         hidden_channels: int,
-        num_tasks: Optional[int],
+        num_tasks: int,
         conv: str,
         gcn_aggr: str,
         t: float,
