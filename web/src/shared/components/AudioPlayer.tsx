@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import React from 'react';
 import { useAudio } from 'react-use';
 import flashingMusicalNoteGIF from '../images/musical-note-flashing.gif';
@@ -24,7 +24,7 @@ const AudioPlayer: React.VFC<Props> = (props) => {
   };
 
   const musicalNoteGIF = audioState.paused ? flashingMusicalNoteGIF : playingMusicalNoteGIF;
-  const playButtonClassName = classNames('button', styles.hmPlayButton);
+  const playButtonClassName = clsx('button', styles.hmPlayButton);
 
   return (
     <>
