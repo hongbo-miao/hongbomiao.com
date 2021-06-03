@@ -99,6 +99,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **graphql-upload** - GraphQL upload
 - **graphql-shield** - GraphQL permissions
 - **graphql-depth-limit** - GraphQL depth limit
+- **graphql-disable-introspection** - Disable GraphQL introspection
 - **graphql-query-complexity** - GraphQL query complexity analysis
 - **DataLoader** - Batching and caching
 - **Knex.js** - SQL query builder
