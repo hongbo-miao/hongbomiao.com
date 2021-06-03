@@ -416,14 +416,14 @@ jobs:
       - name: Pull Docker images
         run: |
           cp docker/postgres/.env.development.local.example docker/postgres/.env.development.local
-          docker-compose --file docker-compose.cypress.yml pull
+          docker compose --file docker-compose.cypress.yml pull
       - name: Cache Docker images
         uses: satackey/action-docker-layer-caching@v0.0.11
         continue-on-error: true
       - name: Build and run containers
         run: |
           cp docker/postgres/.env.development.local.example docker/postgres/.env.development.local
-          docker-compose --file docker-compose.cypress.yml up --detach
+          docker compose --file docker-compose.cypress.yml up --detach
       - name: Cypress
         run: |
           cd cypress && npm run test:cypress:headless:5000

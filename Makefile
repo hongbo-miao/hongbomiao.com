@@ -1,15 +1,15 @@
 # Docker
 docker-build:
-	docker-compose --file docker-compose.development.yml build
+	docker compose --file docker-compose.development.yml build
 
 docker-up:
-	docker-compose --file docker-compose.development.yml up --detach
+	docker compose --file docker-compose.development.yml up --detach
 
 docker-stop:
-	docker-compose --file docker-compose.development.yml stop
+	docker compose --file docker-compose.development.yml stop
 
 docker-down:
-	docker-compose --file docker-compose.development.yml down --volumes
+	docker compose --file docker-compose.development.yml down --volumes
 
 docker-delete:
 	docker system prune
