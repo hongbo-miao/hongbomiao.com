@@ -22,16 +22,12 @@ const graphQLMiddleware = graphqlHTTP((req, res, params) => {
       myId: verifyJWTToken(req.headers.authorization),
     },
     customFormatErrorFn: (err) => {
-      if (isProduction()) {
-        logger.error(err, 'graphQLMiddleware');
-        return err;
-      }
       const stackErr = {
         ...err,
         stack: err.stack ? err.stack.split('\n') : [],
       };
       logger.error(stackErr, 'graphQLMiddleware');
-      return stackErr;
+      return isProduction() ? err : stackErr;
     },
     schema: applyMiddleware(schema, permissions),
     validationRules: [
