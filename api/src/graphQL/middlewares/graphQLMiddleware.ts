@@ -8,6 +8,7 @@ import queryComplexity, { simpleEstimator } from 'graphql-query-complexity';
 import logger from '../../log/utils/logger';
 import verifyJWTToken from '../../security/utils/verifyJWTToken';
 import isDevelopment from '../../shared/utils/isDevelopment';
+import isProduction from '../../shared/utils/isProduction';
 import dataLoaders from '../dataLoaders/dataLoaders';
 import permissions from '../permissions/permissions';
 import schema from '../schemas/schema';
@@ -32,7 +33,7 @@ const graphQLMiddleware = graphqlHTTP((req, res, params) => {
     },
     schema: applyMiddleware(schema, permissions),
     validationRules: [
-      NoIntrospection,
+      ...(isProduction() ? [NoIntrospection] : []),
       depthLimit(5),
       queryComplexity({
         estimators: [simpleEstimator({ defaultComplexity: 1 })],
