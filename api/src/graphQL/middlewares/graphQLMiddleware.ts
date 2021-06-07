@@ -24,11 +24,19 @@ const graphQLMiddleware = graphqlHTTP((req, res, params) => {
     },
     customFormatErrorFn: (err) => {
       if (isDevelopment()) {
+        logger.error(
+          {
+            ...err,
+            stack: err.stack ? err.stack.split('\n') : [],
+          },
+          'graphQLMiddleware',
+        );
         return {
           ...err,
           stack: err.stack ? err.stack.split('\n') : [],
         };
       }
+      logger.error(err, 'graphQLMiddleware');
       return err;
     },
     schema: applyMiddleware(schema, permissions),
