@@ -7,7 +7,6 @@ import { applyMiddleware } from 'graphql-middleware';
 import queryComplexity, { simpleEstimator } from 'graphql-query-complexity';
 import logger from '../../log/utils/logger';
 import verifyJWTToken from '../../security/utils/verifyJWTToken';
-import isDevelopment from '../../shared/utils/isDevelopment';
 import isProduction from '../../shared/utils/isProduction';
 import dataLoaders from '../dataLoaders/dataLoaders';
 import permissions from '../permissions/permissions';
@@ -23,21 +22,16 @@ const graphQLMiddleware = graphqlHTTP((req, res, params) => {
       myId: verifyJWTToken(req.headers.authorization),
     },
     customFormatErrorFn: (err) => {
-      if (isDevelopment()) {
-        logger.error(
-          {
-            ...err,
-            stack: err.stack ? err.stack.split('\n') : [],
-          },
-          'graphQLMiddleware',
-        );
-        return {
-          ...err,
-          stack: err.stack ? err.stack.split('\n') : [],
-        };
+      if (isProduction()) {
+        logger.error(err, 'graphQLMiddleware');
+        return err;
       }
-      logger.error(err, 'graphQLMiddleware');
-      return err;
+      const stackErr = {
+        ...err,
+        stack: err.stack ? err.stack.split('\n') : [],
+      };
+      logger.error(stackErr, 'graphQLMiddleware');
+      return stackErr;
     },
     schema: applyMiddleware(schema, permissions),
     validationRules: [
