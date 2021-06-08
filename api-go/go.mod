@@ -1,4 +1,4 @@
-module github.com/Hongbo-Miao/hongbomiao.com/gin
+module github.com/Hongbo-Miao/hongbomiao.com/api-go
 
 go 1.16
 
