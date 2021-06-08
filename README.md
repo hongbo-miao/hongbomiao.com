@@ -128,10 +128,10 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 
 - **Gin** - Web Framework
 - **graphql-go/graphql** - GraphQL
-- **Open Policy Agent (OPA)** - Policy-based control
 
 ### Site Reliability
 
+- **Open Policy Agent (OPA)** - Policy-based control
 - **NGINX** - Reverse proxy, load balancer
 - **Fluent Bit** - Data collector for unified logging layer
 - **OpenTelemetry** - Observability framework
