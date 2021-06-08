@@ -11,9 +11,9 @@ func GetUser(id string) (user User, err error) {
 		{"1", "Jack"},
 		{"2", "Rose"},
 	}
-	for _, v := range users {
-		if v.ID == id {
-			return v, nil
+	for _, u := range users {
+		if u.ID == id {
+			return u, nil
 		}
 	}
 	return
