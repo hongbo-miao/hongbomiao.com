@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/gin/handlers"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/handlers"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -15,5 +15,5 @@ func main() {
 		})
 	})
 	router.POST("/graphql", handlers.GraphQLHandler())
-	router.Run()
+	_ = router.Run(":8080")
 }
