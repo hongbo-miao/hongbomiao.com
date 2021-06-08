@@ -15,5 +15,5 @@ func main() {
 		})
 	})
 	router.POST("/graphql", handlers.GraphQLHandler())
-	router.Run()
+	_ = router.Run(":8080")
 }
