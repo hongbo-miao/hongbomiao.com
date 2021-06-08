@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Hongbo-Miao/hongbomiao.com/gin/handlers"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -13,5 +14,6 @@ func main() {
 			"message": "pong",
 		})
 	})
+	router.POST("/graphql", handlers.GraphQLHandler())
 	router.Run()
 }
