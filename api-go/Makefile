@@ -2,7 +2,13 @@ run:
 	go run main.go
 
 format:
-	go fmt main.go
+	go fmt ./...
 
 tidy:
 	go mod tidy
+
+test:
+	opa test **/*.rego -v
+
+test-coverage:
+	opa test **/*.rego --coverage --format=json
