@@ -1,12 +1,10 @@
-package controllers
+package utils
 
 import (
 	"context"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/policies"
-	"github.com/gin-gonic/gin"
 	"github.com/open-policy-agent/opa/rego"
 	"log"
-	"net/http"
 )
 
 var policyPath = "policy/rbac.authz.rego"
@@ -18,25 +16,30 @@ type input struct {
 	Object string `json:"object"`
 }
 
-func getResult(ctx context.Context, query rego.PreparedEvalQuery, input map[string]interface{}) (bool, error) {
+type OPA struct {
+	User     string `json:"user"`
+	Action   string `json:"action"`
+	Object   string `json:"object"`
+	Decision bool   `json:"decision"`
+}
+
+func getResult(ctx context.Context, query rego.PreparedEvalQuery, input map[string]interface{}) (decision bool, err error) {
 	results, err := query.Eval(ctx, rego.EvalInput(input))
 	if err != nil {
 		log.Fatalf("evaluation error: %v", err)
 	} else if len(results) == 0 {
 		log.Fatal("undefined result", err)
-		// Handle undefined result.
 	} else if result, ok := results[0].Bindings["x"].(bool); !ok {
 		log.Fatalf("unexpected result type: %v", result)
 	}
-
 	return results[0].Bindings["x"].(bool), nil
 }
 
-func GetOPA(c *gin.Context) {
+func GetDecision(user string, action string, object string) (opa OPA, err error) {
 	s := input{
-		User:   "jack",
-		Action: "read",
-		Object: "server123",
+		User:   user,
+		Action: action,
+		Object: object,
 	}
 
 	input := map[string]interface{}{
@@ -60,9 +63,11 @@ func GetOPA(c *gin.Context) {
 		log.Fatalf("initial rego error: %v", err)
 	}
 
-	ok, _ := getResult(ctx, query, input)
-	log.Println(ok)
-	c.JSON(http.StatusOK, gin.H{
-		"data": ok,
-	})
+	decision, _ := getResult(ctx, query, input)
+	return OPA{
+		User:     user,
+		Action:   action,
+		Object:   object,
+		Decision: decision,
+	}, nil
 }
