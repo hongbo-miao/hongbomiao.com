@@ -1,7 +1,7 @@
 package schemas
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/utils"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/pkg/utils"
 	"github.com/graphql-go/graphql"
 )
 

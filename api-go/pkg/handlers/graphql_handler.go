@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/schemas"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/pkg/schemas"
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/handler"
 )
