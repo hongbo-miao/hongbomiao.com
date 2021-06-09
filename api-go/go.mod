@@ -7,4 +7,5 @@ require (
 	github.com/gin-gonic/gin v1.7.2
 	github.com/graphql-go/graphql v0.7.9
 	github.com/graphql-go/handler v0.2.3
+	github.com/open-policy-agent/opa v0.29.4
 )
