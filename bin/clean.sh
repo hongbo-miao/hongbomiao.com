@@ -29,6 +29,10 @@ rm -rf coverage
 rm -rf public
 rm -rf node_modules
 
+# API - Go
+cd ../api-go
+rm -rf web
+
 # Cypress
 cd ../cypress
 rm -rf node_modules
