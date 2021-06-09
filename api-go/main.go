@@ -11,6 +11,7 @@ func main() {
 	router := gin.Default()
 	router.Use(static.Serve("/", static.LocalFile("./public", true)))
 	router.GET("/ping", controllers.Ping)
+	router.GET("/opa", controllers.GetOPA)
 	router.POST("/graphql", handlers.GraphQLHandler())
 	_ = router.Run(":8080")
 }
