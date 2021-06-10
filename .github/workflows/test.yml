@@ -52,6 +52,22 @@ jobs:
         run: |
           npm run lint:md
 
+  lint-go:
+    name: Lint (Go)
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Lint Go
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: latest
+          working-directory: api-go
+
   lint-py:
     name: Lint (Python)
     runs-on: ubuntu-20.04
