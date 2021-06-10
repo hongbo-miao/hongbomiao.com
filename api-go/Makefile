@@ -8,10 +8,10 @@ tidy:
 	go mod tidy
 
 opa-test:
-	opa test **/*.rego -v
+	opa test pkg/policies/*.rego -v
 
 opa-test-coverage:
-	opa test **/*.rego --coverage --format=json
+	opa test pkg/policies/*.rego --coverage --format=json
 
 opa-fmt:
 	opa fmt pkg/policies/*.rego -w
