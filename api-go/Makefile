@@ -7,6 +7,9 @@ fmt:
 tidy:
 	go mod tidy
 
+lint:
+	golangci-lint run ./...
+
 opa-test:
 	opa test pkg/policies/*.rego -v
 
