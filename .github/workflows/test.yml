@@ -370,6 +370,24 @@ jobs:
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
+  opa-test:
+    name: OPA - Test
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download OPA Binary
+        run: |
+          curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+          chmod 755 ./opa
+      - name: Test
+        run: |
+          ./opa test api-go/pkg/policies/*.rego -v
+
   prometheus-test:
     name: Prometheus - Test
     runs-on: ubuntu-20.04
