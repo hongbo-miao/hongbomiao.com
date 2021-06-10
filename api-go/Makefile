@@ -1,14 +1,17 @@
 run:
 	go run cmd/api/main.go
 
-format:
+fmt:
 	go fmt ./...
 
 tidy:
 	go mod tidy
 
-test:
+opa-test:
 	opa test **/*.rego -v
 
-test-coverage:
+opa-test-coverage:
 	opa test **/*.rego --coverage --format=json
+
+opa-fmt:
+	opa fmt pkg/policies/*.rego -w
