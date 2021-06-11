@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/greet/greetpb"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/proto/greet/v1"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -11,11 +11,11 @@ import (
 
 type server struct{}
 
-func (*server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.GreetResponse, error) {
+func (*server) Greet(ctx context.Context, req *v1.GreetRequest) (*v1.GreetResponse, error) {
 	fmt.Printf("Greet function was invoked with %v\n", req)
 	firstName := req.GetGreeting().GetFirstName()
 	result := "Hello " + firstName
-	res := &greetpb.GreetResponse{
+	res := &v1.GreetResponse{
 		Result: result,
 	}
 	return res, nil
@@ -30,7 +30,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	greetpb.RegisterGreetServiceServer(s, &server{})
+	v1.RegisterGreetServiceServer(s, &server{})
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
