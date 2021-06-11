@@ -68,6 +68,27 @@ jobs:
           version: v1.40.1
           working-directory: api-go
 
+  lint-proto:
+    name: Lint (Protocol Buffers)
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up buf
+        uses: bufbuild/buf-setup-action@v0.1.0
+        with:
+          version: '0.43.2'
+      - name: Lint Protocol Buffers
+        uses: bufbuild/buf-lint-action@v0.2.0
+        if: success()
+        with:
+          input: 'api-go'
+          github_token: ${{ github.token }}
+
   lint-py:
     name: Lint (Python)
     runs-on: ubuntu-20.04
