@@ -1,6 +1,9 @@
 run:
 	go run cmd/api/main.go
 
+run_grpc:
+	go run cmd/grpc/main.go
+
 fmt:
 	go fmt ./...
 
