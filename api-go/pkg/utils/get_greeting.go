@@ -2,7 +2,7 @@ package utils
 
 import (
 	"context"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/greet/greetpb"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/proto/greet/v1"
 	"google.golang.org/grpc"
 	"log"
 )
@@ -12,8 +12,8 @@ type Greeting struct {
 }
 
 func GetGreeting(firstName string, lastName string) (greeting Greeting, err error) {
-	req := &greetpb.GreetRequest{
-		Greeting: &greetpb.Greeting{
+	req := &v1.GreetRequest{
+		Greeting: &v1.Greeting{
 			FirstName: firstName,
 			LastName:  lastName,
 		},
@@ -25,7 +25,7 @@ func GetGreeting(firstName string, lastName string) (greeting Greeting, err erro
 	}
 	defer cc.Close()
 
-	c := greetpb.NewGreetServiceClient(cc)
+	c := v1.NewGreetServiceClient(cc)
 	res, err := c.Greet(context.Background(), req)
 	return Greeting{
 		Content: res.Result,
