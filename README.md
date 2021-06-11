@@ -128,6 +128,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 
 - **Gin** - Web Framework
 - **graphql-go/graphql** - GraphQL
+- **gRPC** - remote procedure call (RPC) framework
 
 ### Site Reliability
 
