@@ -1,6 +1,9 @@
 run:
 	go run cmd/api/main.go
 
+run_grpc:
+	go run cmd/grpc/main.go
+
 fmt:
 	go fmt ./...
 
@@ -18,3 +21,6 @@ opa-test-coverage:
 
 opa-fmt:
 	opa fmt pkg/policies/*.rego -w
+
+grpc:
+	protoc greet/greetpb/greet.proto --go_out=plugins=grpc:.
