@@ -18,3 +18,6 @@ opa-test-coverage:
 
 opa-fmt:
 	opa fmt pkg/policies/*.rego -w
+
+grpc:
+	protoc greet/greetpb/greet.proto --go_out=plugins=grpc:.
