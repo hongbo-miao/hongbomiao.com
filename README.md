@@ -167,6 +167,8 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Mypy** - Python static type checker
 - **ESLint** - JavaScript linter
 - **Stylelint** - CSS linter
+- **golangci-lint** - Go linter
+- **Buf** - Protocol Buffers linter
 - **solhint** - Solidity linter
 - **markdownlint-cli2** - Markdown linter
 - **commitlint** - Commit message linter
