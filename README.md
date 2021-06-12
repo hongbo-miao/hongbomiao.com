@@ -166,6 +166,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **go** - Go code formatter
 - **opa** - Rego code formatter
 - **Black** - Python code formatter
+- **tsc** - TypeScript static type checker
 - **Mypy** - Python static type checker
 - **ESLint** - JavaScript linter
 - **Stylelint** - CSS linter
