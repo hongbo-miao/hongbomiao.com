@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/pkg/controllers"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/pkg/handlers"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/pkg/utils"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/controllers"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/handlers"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
