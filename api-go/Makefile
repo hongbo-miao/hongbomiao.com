@@ -4,16 +4,20 @@ run:
 run_grpc:
 	go run cmd/grpc/main.go
 
-fmt:
-	go fmt ./...
 
 tidy:
 	go mod tidy
 
-lint-go:
+go-fmt:
+	gofmt .
+
+go-check:
+	gofmt -l .
+
+go-lint:
 	golangci-lint run ./...
 
-lint-proto:
+proto-lint:
 	buf lint
 
 opa-test:
@@ -24,6 +28,9 @@ opa-test-coverage:
 
 opa-fmt:
 	opa fmt internal/policies/*.rego -w
+
+opa-check:
+	opa check internal/policies/*.rego
 
 proto:
 	protoc api/proto/greet/v1/greet.proto --go_out=plugins=grpc:.
