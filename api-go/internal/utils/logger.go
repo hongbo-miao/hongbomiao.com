@@ -6,6 +6,13 @@ import (
 
 func InitLogger() *zap.Logger {
 	var logger, _ = zap.NewProduction()
-	defer logger.Sync()
+	defer func(logger *zap.Logger) {
+		err := logger.Sync()
+		if err != nil {
+			logger.Info("logger.Sync",
+				zap.NamedError("err", err),
+			)
+		}
+	}(logger)
 	return logger
 }
