@@ -2,7 +2,7 @@ package utils
 
 import (
 	"context"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/pkg/policies"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/policies"
 	"github.com/open-policy-agent/opa/rego"
 	"log"
 )
