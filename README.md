@@ -166,7 +166,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 ### Code
 
 - **Prettier** - Code formatter
-- **go** - Go code formatter
+- **gofmt** - Go code formatter
 - **opa** - Rego code formatter
 - **Black** - Python code formatter
 - **tsc** - TypeScript static type checker
