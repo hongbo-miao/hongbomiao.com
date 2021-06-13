@@ -118,7 +118,8 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **connect-timeout** - Request timeout
 - **Terminus** - Health check and graceful shutdown
 - **Opossum** - Circuit breaker
-- **pino** - Logger
+- **pino** - Logging
+- **dotenv-flow** - Environment variables loading
 - **Stryker** - Mutation testing
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
@@ -128,7 +129,9 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 
 - **Gin** - Web Framework
 - **graphql-go/graphql** - GraphQL
-- **gRPC** - remote procedure call (RPC) framework
+- **gRPC** - Remote procedure call (RPC) framework
+- **zap** - Logging
+- **GoDotEnv** - Environment variables loading
 
 ### Site Reliability
 
