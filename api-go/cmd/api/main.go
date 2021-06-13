@@ -10,18 +10,14 @@ import (
 )
 
 func main() {
-	const portNumber = ":8080"
-
 	var config = utils.InitConfig()
+	config.Logger.Info("env",
+		zap.String("port", config.Port),
+	)
 
 	r := gin.Default()
 	r.Use(static.Serve("/", static.LocalFile("./web", true)))
 	r.GET("/ping", controllers.Ping)
 	r.POST("/graphql", handlers.GraphQLHandler())
-	_ = r.Run(portNumber)
-
-	config.Logger.Info("portNumber",
-		// Structured context as strongly typed Field values.
-		zap.String("portNumber", portNumber),
-	)
+	_ = r.Run(":" + config.Port)
 }
