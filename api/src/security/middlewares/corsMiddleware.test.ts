@@ -3,10 +3,10 @@ import request from 'supertest';
 import corsMiddleware from './corsMiddleware';
 
 describe('corsMiddleware', () => {
-  const allowList = ['https://www.hongbomiao.com'];
+  const allowOrigins = ['https://www.hongbomiao.com'];
 
   const app = express()
-    .use(corsMiddleware(allowList))
+    .use(corsMiddleware(allowOrigins))
     .get('/', (req, res) => {
       res.send('Hello, World!');
     });
@@ -16,7 +16,7 @@ describe('corsMiddleware', () => {
   });
 
   test('should succeed if origin is in whitelist', async () => {
-    const allowOrigin = allowList[0];
+    const allowOrigin = allowOrigins[0];
     await request(app).get('/').set('Origin', allowOrigin).expect(200);
   });
 

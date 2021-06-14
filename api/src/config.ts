@@ -109,7 +109,7 @@ const sharedCSPConnectSrc = [
   `${WS_PROTOCOL}://${HOST}:${PORT}`, // For Safari, "'self'" is not enough for WebSocket.
   'https://ingest.lightstep.com', // Lightstep
 ];
-const sharedCORSAllowList = [
+const sharedCORSAllowOrigins = [
   `${HTTP_PROTOCOL}://${HOST}:${PORT}`,
   'electron://altair', // Altair GraphQL Client
   'null', // Safari reports CSP violation
@@ -121,8 +121,8 @@ type Config = {
   nodeEnv: 'development' | 'production' | 'test';
   httpProtocol: string;
   port: number;
-  devCORSAllowList: ReadonlyArray<string>;
-  prodCORSAllowList: ReadonlyArray<string>;
+  devCORSAllowOrigins: ReadonlyArray<string>;
+  prodCORSAllowOrigins: ReadonlyArray<string>;
   devCSPConnectSrc: ReadonlyArray<string>;
   prodCSPConnectSrc: ReadonlyArray<string>;
   reportURI: {
@@ -148,13 +148,13 @@ const config: Config = {
   nodeEnv: NODE_ENV,
   httpProtocol: HTTP_PROTOCOL,
   port: Number(PORT),
-  devCORSAllowList: [
-    ...sharedCORSAllowList,
+  devCORSAllowOrigins: [
+    ...sharedCORSAllowOrigins,
     `${HTTP_PROTOCOL}://${HOST}:80`,
     `${HTTP_PROTOCOL}://${HOST}:8080`,
     'https://www.k8s-hongbomiao.com',
   ],
-  prodCORSAllowList: [...sharedCORSAllowList, 'https://www.hongbomiao.com'],
+  prodCORSAllowOrigins: [...sharedCORSAllowOrigins, 'https://www.hongbomiao.com'],
   devCSPConnectSrc: [...sharedCSPConnectSrc, `${WS_PROTOCOL}://${HOST}:80`, 'wss://www.k8s-hongbomiao.com'],
   prodCSPConnectSrc: [
     ...sharedCSPConnectSrc,
