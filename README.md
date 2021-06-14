@@ -106,7 +106,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **PostgreSQL** - Relational database management system
 - **Redis** - In-memory database
 - **rate-limiter-flexible** - Rate limiting
-- **CORS** - Cross-Origin Resource Sharing
+- **expressjs/cors** - CORS
 - **csurf** - CSRF protection
 - **jsonwebtoken**, **express-jwt** - JSON Web Tokens (JWT)
 - **bcrypt** - Password hashing
@@ -130,7 +130,8 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Gin** - Web Framework
 - **graphql-go/graphql** - GraphQL
 - **gRPC** - Remote procedure call (RPC) framework
-- **zap** - Logging
+- **gin-contrib/cors** - CORS
+- **zerolog** - Logging
 - **GoDotEnv** - Environment variables loading
 
 ### Site Reliability
