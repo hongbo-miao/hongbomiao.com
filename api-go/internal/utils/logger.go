@@ -1,18 +1,9 @@
 package utils
 
 import (
-	"go.uber.org/zap"
+	"github.com/rs/zerolog"
 )
 
-func InitLogger() *zap.Logger {
-	var logger, _ = zap.NewProduction()
-	defer func(logger *zap.Logger) {
-		err := logger.Sync()
-		if err != nil {
-			logger.Info("logger.Sync",
-				zap.NamedError("err", err),
-			)
-		}
-	}(logger)
-	return logger
+func InitLogger() {
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 }

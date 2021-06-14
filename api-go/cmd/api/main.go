@@ -6,14 +6,14 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
+	"github.com/rs/zerolog/log"
 )
 
 func main() {
+	utils.InitLogger()
+
 	var config = utils.InitConfig()
-	config.Logger.Info("env",
-		zap.String("port", config.Port),
-	)
+	log.Info().Str("port", config.Port).Send()
 
 	r := gin.Default()
 	r.Use(static.Serve("/", static.LocalFile("./web", true)))
