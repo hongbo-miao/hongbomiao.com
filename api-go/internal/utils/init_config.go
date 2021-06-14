@@ -8,16 +8,23 @@ import (
 
 type Config struct {
 	Port string
+	Env  string
 }
 
 func InitConfig() *Config {
-	var config Config
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal().Msg("Error loading .env file.")
+	env := os.Getenv("APP_ENV")
+	if env == "" {
+		env = "development"
 	}
 
-	config.Port = os.Getenv("PORT")
+	_ = godotenv.Load(".env." + env + ".local")
+	_ = godotenv.Load(".env." + env)
+	_ = godotenv.Load() // .env
+
+	var config = Config{
+		Env:  env,
+		Port: os.Getenv("PORT"),
+	}
+	log.Info().Interface("config", config).Send()
 	return &config
 }
