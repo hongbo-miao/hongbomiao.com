@@ -6,11 +6,13 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog/log"
 )
 
 func main() {
 	utils.InitLogger()
 	var config = utils.InitConfig()
+	log.Info().Str("env", config.Env).Str("port", config.Port).Send()
 
 	r := gin.Default()
 	r.Use(handlers.CORSHandler())

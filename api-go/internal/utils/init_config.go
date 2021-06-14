@@ -2,7 +2,6 @@ package utils
 
 import (
 	"github.com/joho/godotenv"
-	"github.com/rs/zerolog/log"
 	"os"
 )
 
@@ -21,10 +20,8 @@ func InitConfig() *Config {
 	_ = godotenv.Load(".env." + env)
 	_ = godotenv.Load() // .env
 
-	var config = Config{
+	return &Config{
 		Env:  env,
 		Port: os.Getenv("PORT"),
 	}
-	log.Info().Interface("config", config).Send()
-	return &config
 }
