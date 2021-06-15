@@ -3,8 +3,8 @@ package utils
 import (
 	"context"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/proto/greet/v1"
+	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
-	"log"
 )
 
 type Greeting struct {
@@ -21,7 +21,7 @@ func GetGreeting(firstName string, lastName string) (greeting Greeting, err erro
 
 	cc, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 	if err != nil {
-		log.Fatalf("could not connect: %v", err)
+		log.Error().Err(err).Msg("grpc.Dial")
 	}
 	defer cc.Close()
 

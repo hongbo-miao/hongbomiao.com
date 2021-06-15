@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/policies"
 	"github.com/open-policy-agent/opa/rego"
-	"log"
+	"github.com/rs/zerolog/log"
 )
 
 var policyPath = "policy/rbac.authz.rego"
@@ -23,16 +23,12 @@ type OPA struct {
 	Decision bool   `json:"decision"`
 }
 
-func getResult(ctx context.Context, query rego.PreparedEvalQuery, input map[string]interface{}) (decision bool, err error) {
+func getResult(ctx context.Context, query rego.PreparedEvalQuery, input map[string]interface{}) bool {
 	results, err := query.Eval(ctx, rego.EvalInput(input))
 	if err != nil {
-		log.Fatalf("evaluation error: %v", err)
-	} else if len(results) == 0 {
-		log.Fatal("undefined result", err)
-	} else if result, ok := results[0].Bindings["x"].(bool); !ok {
-		log.Fatalf("unexpected result type: %v", result)
+		log.Error().Err(err).Msg("getResult")
 	}
-	return results[0].Bindings["x"].(bool), nil
+	return results[0].Bindings["x"].(bool)
 }
 
 func GetDecision(user string, action string, object string) (opa OPA, err error) {
@@ -50,7 +46,7 @@ func GetDecision(user string, action string, object string) (opa OPA, err error)
 
 	p, err := policies.ReadPolicy(policyPath)
 	if err != nil {
-		log.Fatal(err)
+		log.Error().Err(err).Msg("ReadPolicy")
 	}
 
 	ctx := context.TODO()
@@ -60,10 +56,10 @@ func GetDecision(user string, action string, object string) (opa OPA, err error)
 	).PrepareForEval(ctx)
 
 	if err != nil {
-		log.Fatalf("initial rego error: %v", err)
+		log.Error().Err(err).Msg("PrepareForEval")
 	}
 
-	decision, _ := getResult(ctx, query, input)
+	decision := getResult(ctx, query, input)
 	return OPA{
 		User:     user,
 		Action:   action,
