@@ -27,6 +27,12 @@ k8s-apply:
 k8s-pods:
 	kubectl get pods
 
+k8s-services:
+	kubectl get services
+
+k8s-namespaces:
+	kubectl get namespaces
+
 k8s-dashboard:
 	minikube dashboard
 
