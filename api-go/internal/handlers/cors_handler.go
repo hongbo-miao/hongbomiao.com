@@ -15,7 +15,7 @@ func CORSHandler(allowOrigins map[string]bool) gin.HandlerFunc {
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
 			if !allowOrigins[origin] {
-				log.Warn().Str("origin", origin).Send()
+				log.Warn().Str("origin", origin).Msg("AllowOriginFunc")
 			}
 			return allowOrigins[origin]
 		},
