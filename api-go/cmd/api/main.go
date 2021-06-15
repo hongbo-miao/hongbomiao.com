@@ -6,14 +6,16 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog/log"
 )
 
 func main() {
 	utils.InitLogger()
-	var config = utils.InitConfig()
+	var config = utils.GetConfig()
+	log.Info().Str("env", config.Env).Str("port", config.Port).Msg("main")
 
 	r := gin.Default()
-	r.Use(handlers.CORSHandler())
+	r.Use(handlers.CORSHandler(*config.CORSAllowOrigins))
 	r.Use(static.Serve("/", static.LocalFile("./web", true)))
 	r.GET("/ping", controllers.Ping)
 	r.POST("/graphql", handlers.GraphQLHandler())
