@@ -1,9 +1,8 @@
 run:
 	go run cmd/api/main.go
 
-run_grpc:
+run-grpc:
 	go run cmd/grpc/main.go
-
 
 tidy:
 	go mod tidy

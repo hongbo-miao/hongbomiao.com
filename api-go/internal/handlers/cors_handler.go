@@ -7,16 +7,17 @@ import (
 	"time"
 )
 
-func CORSHandler() gin.HandlerFunc {
+func CORSHandler(allowOrigins map[string]bool) gin.HandlerFunc {
 	return cors.New(cors.Config{
-		AllowOrigins:     []string{"https://www.hongbomiao.com"},
 		AllowMethods:     []string{"GET", "POST"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			log.Warn().Str("origin", origin).Send()
-			return origin == "electron://altair"
+			if !allowOrigins[origin] {
+				log.Warn().Str("origin", origin).Send()
+			}
+			return allowOrigins[origin]
 		},
 		MaxAge: 12 * time.Hour,
 	})

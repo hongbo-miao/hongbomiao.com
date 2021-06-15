@@ -11,11 +11,11 @@ import (
 
 func main() {
 	utils.InitLogger()
-	var config = utils.InitConfig()
+	var config = utils.GetConfig()
 	log.Info().Str("env", config.Env).Str("port", config.Port).Send()
 
 	r := gin.Default()
-	r.Use(handlers.CORSHandler())
+	r.Use(handlers.CORSHandler(*config.CORSAllowOrigins))
 	r.Use(static.Serve("/", static.LocalFile("./web", true)))
 	r.GET("/ping", controllers.Ping)
 	r.POST("/graphql", handlers.GraphQLHandler())
