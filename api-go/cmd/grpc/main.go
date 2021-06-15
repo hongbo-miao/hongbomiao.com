@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/proto/greet/v1"
+	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
-	"log"
 	"net"
 )
 
@@ -26,13 +26,13 @@ func main() {
 
 	lis, err := net.Listen("tcp", "0.0.0.0:50051")
 	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
+		log.Error().Err(err).Msg("net.Listen")
 	}
 
 	s := grpc.NewServer()
 	v1.RegisterGreetServiceServer(s, &server{})
 
 	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		log.Error().Err(err).Msg("s.Serve")
 	}
 }

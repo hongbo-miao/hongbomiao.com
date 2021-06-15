@@ -12,7 +12,7 @@ import (
 func main() {
 	utils.InitLogger()
 	var config = utils.GetConfig()
-	log.Info().Str("env", config.Env).Str("port", config.Port).Send()
+	log.Info().Str("env", config.Env).Str("port", config.Port).Msg("main")
 
 	r := gin.Default()
 	r.Use(handlers.CORSHandler(*config.CORSAllowOrigins))
