@@ -3,7 +3,6 @@
 set -e
 
 # .env
-cp -n web/.env.development.local.example web/.env.development.local || true
 cp -n web/.env.production.local.example web/.env.production.local || true
 
 cp -n api/.env.development.local.example.0.0.0.0 api/.env.development.local || true

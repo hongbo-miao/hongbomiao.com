@@ -13,7 +13,7 @@ RUN npm ci
 COPY web/.env.production.local.example ./.env.production.local
 COPY web ./
 # Skip lint check during react-scripts build
-RUN rm -f .eslintrc.js
+RUN rm -f ./.eslintrc.js
 RUN npm run build
 
 
