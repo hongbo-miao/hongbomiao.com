@@ -20,9 +20,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api.development
+    env_file:
+      - ./api/.env.development.local.example.docker
     volumes:
-      - "./api:/usr/src/app/api"
-      - "/usr/src/app/api/node_modules"
+      - ./api:/usr/src/app/api
+      - /usr/src/app/api/node_modules
     logging:
       driver: fluentd
       options:
