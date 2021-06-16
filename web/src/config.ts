@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 
-const { NODE_ENV, REACT_APP_LIGHTSTEP_TOKEN, REACT_APP_SERVER_WS_PROTOCOL } = process.env;
+const { NODE_ENV, REACT_APP_SERVER_WS_PROTOCOL } = process.env;
 
 if (NODE_ENV !== 'development' && NODE_ENV !== 'production' && NODE_ENV !== 'test') {
   throw new Error('Failed to read NODE_ENV.');
@@ -33,7 +33,7 @@ const config: Config = {
     containerId: 'GTM-MKMQ55P',
   },
   lightstep: {
-    token: REACT_APP_LIGHTSTEP_TOKEN,
+    token: 'W2sFPG0uCgnCAjr/d0NfngMArOSUEb1SN/5UlOLnZxQ3/4hWndgg/J3jZX74b/c0AF4+o+h0lRGY2vHHFWJBuMh4CKMyILo3pMznB4xd',
     traceURL: 'https://ingest.lightstep.com/api/v2/otel/trace',
   },
   sentryOptions: {
