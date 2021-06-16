@@ -21,7 +21,6 @@ COPY ["api/package.json", "api/package-lock.json", "./"]
 RUN npm ci
 COPY --from=web /usr/src/app/build ./public
 COPY api ./
-COPY api/.env.development.local.example.docker ./.env.development.local
 
 WORKDIR /usr/src/app/api
 EXPOSE 5000

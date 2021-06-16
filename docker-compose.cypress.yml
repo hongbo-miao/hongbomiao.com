@@ -8,6 +8,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api.development
+    env_file:
+      - ./api/.env.development.local.example.docker
     logging:
       driver: fluentd
       options:
