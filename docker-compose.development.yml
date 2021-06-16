@@ -20,9 +20,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api.development
+    env_file:
+      - ./api/.env.development.local.example.docker
     volumes:
-      - "./api:/usr/src/app/api"
-      - "/usr/src/app/api/node_modules"
+      - ./api:/usr/src/app/api
+      - /usr/src/app/api/node_modules
     logging:
       driver: fluentd
       options:
@@ -53,7 +55,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
-      - ./docker/postgres/.env.development.local
+      - ./docker/postgres/.env.development.local.example
     restart: unless-stopped
     ports:
       - "5432:5432"
