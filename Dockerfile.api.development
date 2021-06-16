@@ -13,7 +13,7 @@ COPY web/.env.production.local.example ./.env.production.local
 COPY web ./
 # Skip lint check during react-scripts build
 RUN rm -f ./.eslintrc.js
-RUN REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
+RUN npm run build
 
 
 FROM base AS api

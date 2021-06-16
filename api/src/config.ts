@@ -25,7 +25,6 @@ const {
   HOST,
   HTTP_PROTOCOL,
   JWT_SECRET,
-  LIGHTSTEP_TOKEN,
   NODE_ENV,
   PORT,
   POSTGRES_DATABASE,
@@ -52,9 +51,6 @@ if (HTTP_PROTOCOL == null || HTTP_PROTOCOL === '') {
 }
 if (JWT_SECRET == null || JWT_SECRET === '') {
   throw new Error('Failed to read JWT_SECRET.');
-}
-if (LIGHTSTEP_TOKEN == null || LIGHTSTEP_TOKEN === '') {
-  throw new Error('Failed to read LIGHTSTEP_TOKEN.');
 }
 if (NODE_ENV !== 'development' && NODE_ENV !== 'production' && NODE_ENV !== 'test') {
   throw new Error('Failed to read NODE_ENV.');
@@ -189,7 +185,7 @@ const config: Config = {
     bio: SEED_USER_BIO,
   },
   lightstep: {
-    token: LIGHTSTEP_TOKEN,
+    token: '+vWuQYt3zPOA+eurdLSoF5ksPKxwso69BKMecNlBUj+JkdAts+nwEOOVYHMG0AWIUUPbFX3JM/Z3MkaA9bWU/+16mluwwryRtmIz3Gnx',
     traceURL: 'https://ingest.lightstep.com/api/v2/otel/trace',
   },
   sentryOptions: {
