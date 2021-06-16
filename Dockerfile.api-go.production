@@ -1,0 +1,28 @@
+FROM golang:1.16.5-alpine AS base
+WORKDIR /usr/src/app
+
+
+FROM node:16.1.0-alpine AS web
+WORKDIR /usr/src/app
+COPY ["web/package.json", "web/package-lock.json", "./"]
+RUN npm ci
+
+COPY web ./
+# Skip lint check during react-scripts build
+RUN rm -f ./.eslintrc.js
+RUN npm run build
+RUN npm prune --production
+
+
+FROM base AS api-go
+ENV GIN_MODE=release
+
+COPY ["api-go/go.mod", "api-go/go.sum", "./"]
+RUN go mod download
+COPY --from=web /usr/src/app/build ./web
+
+COPY api-go ./
+RUN go build -o ./out/cmd/api/ ./cmd/api/main.go
+
+EXPOSE 5000
+CMD ["./out/cmd/api/main"]
