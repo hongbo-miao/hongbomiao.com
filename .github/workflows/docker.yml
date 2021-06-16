@@ -6,7 +6,7 @@ on:
 
 jobs:
   push-api:
-    name: Push to Docker Hub
+    name: Push api to Docker Hub
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -31,7 +31,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-api-go:
-    name: Push to Docker Hub
+    name: Push api-go to Docker Hub
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
