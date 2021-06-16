@@ -7,17 +7,16 @@ WORKDIR /usr/src/app
 COPY ["web/package.json", "web/package-lock.json", "./"]
 RUN npm ci
 
-# https://create-react-app.dev/docs/adding-custom-environment-variables/
-# In create-react-app, when you run 'npm run build' to make a production bundle, it is always equal to 'production'.
-# So using REACT_APP_SERVER_WS_PROTOCOL=ws in .env.production.local.example for development
-COPY web/.env.production.local.example ./.env.production.local
 COPY web ./
 # Skip lint check during react-scripts build
 RUN rm -f ./.eslintrc.js
 RUN npm run build
+RUN npm prune --production
 
 
 FROM base AS api-go
+ENV GIN_MODE=release
+
 COPY ["api-go/go.mod", "api-go/go.sum", "./"]
 RUN go mod download
 COPY --from=web /usr/src/app/build ./web
