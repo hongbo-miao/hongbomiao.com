@@ -8,6 +8,9 @@ d-build-no-cache:
 d-run-api-go-dev:
 	docker run -p 5000:5000 api-go-dev
 
+d-run-api-go:
+	docker run -p 5000:5000 api-go
+
 d-run-api-dev:
 	docker run -p 5000:5000 --env-file ./api/.env.development.local.example.docker api-dev
 
