@@ -3,25 +3,25 @@ WORKDIR /usr/src/app
 
 
 FROM base AS web
-COPY ["web/package.json", "web/package-lock.json", "./web/"]
-RUN cd web && npm ci
+COPY ["web/package.json", "web/package-lock.json", "./"]
+RUN npm ci
 
 # https://create-react-app.dev/docs/adding-custom-environment-variables/
 # In create-react-app, when you run 'npm run build' to make a production bundle, it is always equal to 'production'.
 # So using REACT_APP_SERVER_WS_PROTOCOL=ws in .env.production.local.example
-COPY web/.env.production.local.example web/.env.production.local
-COPY web web
+COPY web/.env.production.local.example ./.env.production.local
+COPY web ./
 # Skip lint check during react-scripts build
-RUN rm -f web/.eslintrc.js
-RUN cd web && REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
+RUN rm -f ./.eslintrc.js
+RUN REACT_APP_LIGHTSTEP_TOKEN="$REACT_APP_LIGHTSTEP_TOKEN" npm run build
 
 
 FROM base AS api
-COPY ["api/package.json", "api/package-lock.json", "./api/"]
-RUN cd api && npm ci
-COPY --from=web /usr/src/app/web/build ./api/public
-COPY api api
-COPY api/.env.development.local.example.docker api/.env.development.local
+COPY ["api/package.json", "api/package-lock.json", "./"]
+RUN npm ci
+COPY --from=web /usr/src/app/build ./public
+COPY api ./
+COPY api/.env.development.local.example.docker ./.env.development.local
 
 WORKDIR /usr/src/app/api
 EXPOSE 5000
