@@ -2,18 +2,6 @@
 version: "3.8"
 
 services:
-  # NGINX
-  nginx:
-    container_name: hm_nginx
-    build:
-      context: .
-      dockerfile: Dockerfile.nginx.development
-    restart: unless-stopped
-    ports:
-      - "80:80"
-    depends_on:
-      - api
-
   # API
   api:
     container_name: hm_api
