@@ -1,21 +1,22 @@
 # Docker
 d-build:
+	docker build --file Dockerfile.api.development --tag api-dev .
+	docker build --file Dockerfile.api.production --tag api .
 	docker build --file Dockerfile.api-go.development --tag api-go-dev .
+	docker build --file Dockerfile.api-go.production --tag api-go .
+	docker build --file Dockerfile.api-go-grpc.development --tag api-go-grpc-dev .
+	docker build --file Dockerfile.api-go-grpc.production --tag api-go-grpc .
 
 d-build-no-cache:
 	docker build --file Dockerfile.api-go.development --tag api-go-dev --no-cache .
 
-d-run-api-go-dev:
-	docker run -p 5000:5000 api-go-dev
-
-d-run-api-go:
-	docker run -p 5000:5000 api-go
-
-d-run-api-dev:
+d-run:
 	docker run -p 5000:5000 --env-file ./api/.env.development.local.example.docker api-dev
-
-d-run-api:
 	docker run -p 5000:5000 --env-file ./api/.env.production.local.example api
+	docker run -p 5000:5000 api-go-dev
+	docker run -p 5000:5000 api-go
+	docker run -p 5000:5000 api-go-grpc-dev
+	docker run -p 5000:5000 api-go-grpc
 
 d-sh:
 	docker run -it api-go sh
