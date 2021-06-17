@@ -41,35 +41,38 @@ dc-down:
 	docker-compose --file=docker-compose.development.yml down --volumes
 
 # Kubernetes
-k8s-start:
+m-start:
 	minikube start
 
-k8s-apply:
-	kubectl apply -f kubernetes
-
-k8s-pods:
-	kubectl get pods
-
-k8s-services:
-	kubectl get services
-
-k8s-namespaces:
-	kubectl get namespaces
-
-k8s-service-api-go:
+m-service-api-go:
 	minikube service api-go-service
 
-k8s-dashboard:
+m-dashboard:
 	minikube dashboard
 
-k8s-ip:
+m-delete:
+	minikube delete
+
+m-ip:
 	minikube ip
 
-k8s-dev:
-	skaffold dev
+k-apply:
+	kubectl apply -f kubernetes
 
-k8s-delete:
-	minikube delete
+k-delete:
+	kubectl delete -f kubernetes
+
+k-pods:
+	kubectl get pods
+
+k-services:
+	kubectl get services
+
+k-namespaces:
+	kubectl get namespaces
+
+k-dev:
+	skaffold dev
 
 # Prometheus
 prom-curl:
