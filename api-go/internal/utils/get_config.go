@@ -9,6 +9,8 @@ type Config struct {
 	CORSAllowOrigins *map[string]bool
 	Port             string
 	Env              string
+	GRPCHost         string
+	GRPCPort         string
 }
 
 func getCORSAllowOrigins(env string) *map[string]bool {
@@ -41,5 +43,7 @@ func GetConfig() *Config {
 		CORSAllowOrigins: getCORSAllowOrigins(env),
 		Env:              env,
 		Port:             os.Getenv("PORT"),
+		GRPCHost:         os.Getenv("GRPC_HOST"),
+		GRPCPort:         os.Getenv("GRPC_PORT"),
 	}
 }

@@ -15,6 +15,9 @@ spec:
       containers:
         - name: api-go
           image: hongbomiao/hongbomiao-api-go:latest
+          env:
+            - name: GRPC_HOST
+              value: "api-go-grpc-service.default"
 #          imagePullPolicy: Always
 #          ports:
 #            - containerPort: 5000
