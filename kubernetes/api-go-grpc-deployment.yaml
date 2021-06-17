@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-go-grpc-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: api-go-grpc
+  template:
+    metadata:
+      labels:
+        component: api-go-grpc
+    spec:
+      containers:
+        - name: api-go-grpc
+          image: hongbomiao/hongbomiao-api-go-grpc:latest
+

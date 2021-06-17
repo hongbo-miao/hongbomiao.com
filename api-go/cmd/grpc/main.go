@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/proto/greet/v1"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"net"
@@ -22,9 +23,11 @@ func (*server) Greet(ctx context.Context, req *v1.GreetRequest) (*v1.GreetRespon
 }
 
 func main() {
-	fmt.Println("GRPC server has started.")
+	var config = utils.GetConfig()
 
-	lis, err := net.Listen("tcp", "0.0.0.0:50051")
+	log.Info().Str("env", config.Env).Str("grpcHost", config.GRPCHost).Str("grpcPort", config.GRPCPort).Msg("main")
+
+	lis, err := net.Listen("tcp", config.GRPCHost+":"+config.GRPCPort)
 	if err != nil {
 		log.Error().Err(err).Msg("net.Listen")
 	}
