@@ -57,8 +57,7 @@ k8s-namespaces:
 	kubectl get namespaces
 
 k8s-service-api-go:
-	minikube service api-go-cluster-ip-service
-	minikube service api-go-grpc-cluster-ip-service
+	minikube service api-go-service
 
 k8s-dashboard:
 	minikube dashboard
