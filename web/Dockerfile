@@ -3,9 +3,9 @@ WORKDIR /usr/src/app
 
 
 FROM base AS builder
-COPY ["package.json", "package-lock.json", "./"]
+COPY ["web/package.json", "web/package-lock.json", "./"]
 RUN npm ci
-COPY . .
+COPY web/ ./
 # Skip lint check during react-scripts build
 RUN rm -f ./.eslintrc.js
 RUN npm run build
@@ -13,7 +13,7 @@ RUN npm run build
 
 FROM nginx:1.21.0-alpine AS release
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
-COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY web/conf/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 CMD [ "nginx", "-g", "daemon off;" ]

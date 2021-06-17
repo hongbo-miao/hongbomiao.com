@@ -1,7 +1,8 @@
 # Docker
 d-build:
-	docker build --file=Dockerfile.api.development --tag=api-dev .
-	docker build --file=Dockerfile.api.production --tag=api .
+	docker build --file=web/Dockerfile --tag=web .
+	docker build --file=api/Dockerfile.development --tag=api-dev .
+	docker build --file=api/Dockerfile --tag=api .
 	docker build --file=Dockerfile.api-go.development --tag=api-go-dev .
 	docker build --file=Dockerfile.api-go.production --tag=api-go .
 	docker build --file=Dockerfile.api-go-grpc.development --tag=api-go-grpc-dev .
@@ -11,6 +12,7 @@ d-build-no-cache:
 	docker build --file=Dockerfile.api-go.development --tag=api-go-dev --no-cache .
 
 d-run:
+	docker run -p 80:80 web
 	docker run -p 5000:5000 --env-file=./api/.env.development.local.example.docker api-dev
 	docker run -p 5000:5000 --env-file=./api/.env.production.local.example api
 	docker run -p 5000:5000 api-go-dev
@@ -30,15 +32,19 @@ d-prune:
 # Docker Compose
 dc-build:
 	docker-compose --file=docker-compose.development.yml build
+	docker-compose --file=docker-compose.cypress.yml build
 
 dc-up:
 	docker-compose --file=docker-compose.development.yml up --detach
+	docker-compose --file=docker-compose.cypress.yml up --detach
 
 dc-stop:
 	docker-compose --file=docker-compose.development.yml stop
+	docker-compose --file=docker-compose.cypress.yml stop
 
 dc-down:
 	docker-compose --file=docker-compose.development.yml down --volumes
+	docker-compose --file=docker-compose.cypress.yml down --volumes
 
 # Kubernetes
 m-start:
