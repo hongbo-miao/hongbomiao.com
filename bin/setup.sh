@@ -5,7 +5,7 @@ set -e
 # .env
 cp -n web/.env.production.local.example web/.env.production.local || true
 
-cp -n api/.env.development.local.example.0.0.0.0 api/.env.development.local || true
+cp -n api/.env.development.local.example api/.env.development.local || true
 cp -n api/.env.production.local.example api/.env.production.local || true
 
 cp -n docker/postgres/.env.development.local.example docker/postgres/.env.development.local || true
