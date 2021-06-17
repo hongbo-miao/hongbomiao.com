@@ -43,9 +43,6 @@ dc-down:
 k8s-start:
 	minikube start
 
-k8s-ingress:
-	minikube addons enable ingress
-
 k8s-apply:
 	kubectl apply -f kubernetes
 
@@ -57,6 +54,9 @@ k8s-services:
 
 k8s-namespaces:
 	kubectl get namespaces
+
+k8s-service-api-go:
+	minikube service api-go-cluster-ip-service
 
 k8s-dashboard:
 	minikube dashboard

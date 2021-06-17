@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-go-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: api-go
+  template:
+    metadata:
+      labels:
+        component: api-go
+    spec:
+      containers:
+        - name: api-go
+          image: hongbomiao/hongbomiao-api-go:latest
+#          imagePullPolicy: Always
+#          ports:
+#            - containerPort: 5000
