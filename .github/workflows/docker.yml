@@ -23,8 +23,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: web
-          file: Dockerfile
+          context: .
+          file: web/Dockerfile
           push: true
           tags: hongbomiao/hongbomiao-web:latest
       - name: Print image digest
