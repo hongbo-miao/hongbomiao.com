@@ -25,7 +25,7 @@ func (*server) Greet(ctx context.Context, req *v1.GreetRequest) (*v1.GreetRespon
 func main() {
 	var config = utils.GetConfig()
 
-	log.Info().Msg("GRPC server has started.")
+	log.Info().Str("env", config.Env).Str("grpcHost", config.GRPCHost).Str("grpcPort", config.GRPCPort).Msg("main")
 
 	lis, err := net.Listen("tcp", config.GRPCHost+":"+config.GRPCPort)
 	if err != nil {
