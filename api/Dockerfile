@@ -16,7 +16,7 @@ RUN npm prune --production
 FROM base AS api
 COPY ["api/package.json", "api/package-lock.json", "./"]
 RUN npm ci
-COPY api ./
+COPY . ./
 RUN npm run build
 RUN npm prune --production
 
