@@ -15,5 +15,6 @@ spec:
       containers:
         - name: api-go-grpc
           image: hongbomiao/hongbomiao-api-go-grpc:latest
-#          imagePullPolicy: Always
-
+          env:
+            - name: GRPC_PORT
+              value: "50051"
