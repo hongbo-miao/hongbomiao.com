@@ -19,7 +19,8 @@ func GetGreeting(firstName string, lastName string) (greeting Greeting, err erro
 		},
 	}
 
-	cc, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	var config = GetConfig()
+	cc, err := grpc.Dial(config.GRPCHost+":"+config.GRPCPort, grpc.WithInsecure())
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
 	}
