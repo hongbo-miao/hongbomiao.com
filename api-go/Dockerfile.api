@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 COPY ["web/package.json", "web/package-lock.json", "./"]
 RUN npm ci
 
-COPY web ./
+COPY ../web ./
 # Skip lint check during react-scripts build
 RUN rm -f ./.eslintrc.js
 RUN npm run build
