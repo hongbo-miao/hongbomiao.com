@@ -13,14 +13,15 @@ type Config struct {
 	GRPCPort         string
 }
 
-func getCORSAllowOrigins(env string) *map[string]bool {
+func getCORSAllowOrigins(env string, webHost string) *map[string]bool {
 	var devCORSAllowOrigins = map[string]bool{
-		"electron://altair":     true,
-		"http://localhost:5000": true,
+		"electron://altair": true,
+		webHost:             true,
 	}
 	var prodCORSAllowOrigins = map[string]bool{
 		"electron://altair":          true,
 		"https://www.hongbomiao.com": true,
+		webHost:                      true,
 	}
 
 	if env == "production" {
@@ -40,7 +41,7 @@ func GetConfig() *Config {
 	_ = godotenv.Load() // .env
 
 	return &Config{
-		CORSAllowOrigins: getCORSAllowOrigins(env),
+		CORSAllowOrigins: getCORSAllowOrigins(env, os.Getenv("WEB_HOST")),
 		Env:              env,
 		Port:             os.Getenv("PORT"),
 		GRPCHost:         os.Getenv("GRPC_HOST"),
