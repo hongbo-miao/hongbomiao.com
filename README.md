@@ -22,23 +22,23 @@
 </p>
 
 <p align="center">
-  <a href="https://www.http3check.net/?host=hongbomiao.com"><img alt="HTTP/3" src="https://img.shields.io/badge/http%2F3-supported-brightgreen" /></a>
-  <a href="https://hstspreload.org/?domain=www.hongbomiao.com"><img alt="Chromium HSTS preload" src="https://img.shields.io/hsts/preload/www.hongbomiao.com" /></a>
+  <a href="https://goreportcard.com/report/github.com/Hongbo-Miao/hongbomiao.com"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://observatory.mozilla.org/analyze/www.hongbomiao.com"><img alt="Mozilla Observatory grade" src="https://img.shields.io/mozilla-observatory/grade/www.hongbomiao.com" /></a>
   <a href="https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
   <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/Hongbo-Miao/hongbomiao.com" /></a>
+  <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/trends/technical_debt"><img alt="Code Climate technical debt" src="https://img.shields.io/codeclimate/tech-debt/Hongbo-Miao/hongbomiao.com" /></a>
 </p>
 
 <p align="center">
-  <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/trends/technical_debt"><img alt="Code Climate technical debt" src="https://img.shields.io/codeclimate/tech-debt/Hongbo-Miao/hongbomiao.com" /></a>
-  <a href="https://codecov.io/gh/Hongbo-Miao/hongbomiao.com"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/Hongbo-Miao/hongbomiao.com" /></a>
+  <a href="https://www.http3check.net/?host=hongbomiao.com"><img alt="HTTP/3" src="https://img.shields.io/badge/http%2F3-supported-brightgreen" /></a>
+  <a href="https://hstspreload.org/?domain=www.hongbomiao.com"><img alt="Chromium HSTS preload" src="https://img.shields.io/hsts/preload/www.hongbomiao.com" /></a>
   <a href="https://github.com/prettier/prettier"><img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" /></a>
   <a href="https://github.com/psf/black"><img alt="Code style" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
 </p>
 
 <p align="center">
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/Hongbo-Miao/hongbomiao.com" /></a>
-  <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/Hongbo-Miao/hongbomiao.com" /></a>
+  <a href="https://codecov.io/gh/Hongbo-Miao/hongbomiao.com"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/Hongbo-Miao/hongbomiao.com" /></a>
 </p>
 
