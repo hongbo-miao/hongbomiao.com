@@ -52,6 +52,7 @@ m-start:
 	minikube start
 
 m-service-api-go:
+	minikube service web-service
 	minikube service api-go-service
 
 m-dashboard:

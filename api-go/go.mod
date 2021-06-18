@@ -5,7 +5,6 @@ go 1.16
 require (
 	github.com/bytecodealliance/wasmtime-go v0.28.0 // indirect
 	github.com/gin-contrib/cors v1.3.1
-	github.com/gin-contrib/static v0.0.1
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-playground/validator/v10 v10.6.1 // indirect
 	github.com/google/go-cmp v0.5.6 // indirect
