@@ -1,11 +1,9 @@
-import jsonwebtoken from 'jsonwebtoken';
+import jsonwebtoken, { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
 
-type DecodedToken = {
+type DecodedToken = JwtPayload & {
   id: string;
   email: string;
-  iat: string;
-  exp: string;
 };
 
 const verifyJWTToken = (authorization: string | undefined): string | null => {
