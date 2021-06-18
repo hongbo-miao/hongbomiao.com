@@ -1,15 +1,24 @@
-apiVersion: skaffold/v2beta10
+# https://skaffold.dev/docs/references/yaml/
+
+apiVersion: skaffold/v2beta17
 kind: Config
 metadata:
   name: hongbomiao.com
 build:
   artifacts:
-  - image: hongbomiao/hongbomiao-api
+  - image: hongbomiao/web
+    context: .
     docker:
-      dockerfile: Dockerfile.api.development
+      dockerfile: web/Dockerfile
+  - image: hongbomiao/hongbomiao-api-go
+    context: .
+    docker:
+      dockerfile: api-go/Dockerfile.api
+  - image: hongbomiao/hongbomiao-api-go-grpc
+    context: .
+    docker:
+      dockerfile: api-go/Dockerfile.grpc
 deploy:
   kubectl:
     manifests:
-    - kubernetes/ingress-service.yaml
-    - kubernetes/api-cluster-ip-service.yaml
-    - kubernetes/api-deployment.yaml
+    - kubernetes/*.yaml
