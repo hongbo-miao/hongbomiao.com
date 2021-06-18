@@ -14,7 +14,6 @@ func main() {
 	log.Info().Str("env", config.Env).Str("port", config.Port).Msg("main")
 
 	r := gin.Default()
-	r.Use(handlers.CORSHandler(*config.CORSAllowOrigins))
 	r.GET("/ping", controllers.Ping)
 	r.POST("/graphql", handlers.GraphQLHandler())
 	_ = r.Run(":" + config.Port)
