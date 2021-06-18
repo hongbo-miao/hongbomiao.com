@@ -130,7 +130,6 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Gin** - Web Framework
 - **graphql-go/graphql** - GraphQL
 - **gRPC** - Remote procedure call (RPC) framework
-- **gin-contrib/cors** - CORS
 - **zerolog** - Logging
 - **GoDotEnv** - Environment variables loading
 
