@@ -14,10 +14,18 @@ build:
     context: .
     docker:
       dockerfile: api-go/Dockerfile.api
+    sync:
+      manual:
+        - src: "*.go"
+          dest: .
   - image: hongbomiao/hongbomiao-api-go-grpc
     context: .
     docker:
       dockerfile: api-go/Dockerfile.grpc
+    sync:
+      manual:
+        - src: "*.go"
+          dest: .
 deploy:
   kubectl:
     manifests:
