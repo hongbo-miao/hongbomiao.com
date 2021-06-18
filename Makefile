@@ -24,6 +24,9 @@ d-ps:
 	docker ps
 	docker ps --all
 
+d-push:
+	docker system prune
+
 d-prune:
 	docker system prune
 
@@ -68,6 +71,9 @@ k-delete:
 
 k-pods:
 	kubectl get pods
+
+k-logs:
+	kubectl logs pod_name
 
 k-services:
 	kubectl get services
