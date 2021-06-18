@@ -1,30 +1,28 @@
 # Docker
 d-build:
-	docker build --file=web/Dockerfile --tag=web .
-	docker build --file=api/Dockerfile.development --tag=api-dev .
-	docker build --file=api/Dockerfile --tag=api .
-	docker build --file=Dockerfile.api-go.development --tag=api-go-dev .
-	docker build --file=Dockerfile.api-go.production --tag=api-go .
-	docker build --file=Dockerfile.api-go-grpc.development --tag=api-go-grpc-dev .
-	docker build --file=Dockerfile.api-go-grpc.production --tag=api-go-grpc .
-
-d-build-no-cache:
-	docker build --file=Dockerfile.api-go.development --tag=api-go-dev --no-cache .
+	docker build --file=web/Dockerfile --tag=hm-web .
+	docker build --file=api/Dockerfile.development --tag=hm-api-dev .
+	docker build --file=api/Dockerfile --tag=hm-api .
+	docker build --file=api-go/Dockerfile.api.development --tag=hm-api-go-dev .
+	docker build --file=api-go/Dockerfile.api --tag=hm-api-go .
+	docker build --file=api-go/Dockerfile.grpc.development --tag=hm-api-go-grpc-dev .
+	docker build --file=api-go/Dockerfile.grpc --tag=hm-api-go-grpc .
 
 d-run:
 	docker run -p 80:80 web
-	docker run -p 5000:5000 --env-file=./api/.env.development.local.example.docker api-dev
-	docker run -p 5000:5000 --env-file=./api/.env.production.local.example api
-	docker run -p 5000:5000 api-go-dev
-	docker run -p 5000:5000 --env=APP_ENV=production api-go
-	docker run -p 5000:5000 api-go-grpc-dev
-	docker run -p 5000:5000 --env=APP_ENV=production --env=GRPC_HOST=0.0.0.0 api-go-grpc
+	docker run -p 5000:5000 --name=hm_api_dev --rm --env-file=./api/.env.development.local.example.docker hm-api-dev
+	docker run -p 5000:5000 --name=hm_api --rm --env-file=./api/.env.production.local.example hm-api
+	docker run -p 5000:5000 --name=hm_api_go_dev --rm hm-api-go-dev
+	docker run -p 5000:5000 --name=hm_api_go --rm --env=APP_ENV=production hm-api-go
+	docker run -p 5000:5000 --name=hm_api_go_grpc_dev --rm hm-api-go-grpc-dev
+	docker run -p 5000:5000 --name=hm_api_go_grpc --rm --env=APP_ENV=production --env=GRPC_HOST=0.0.0.0 hm-api-go-grpc
 
 d-sh:
-	docker run -it api-go sh
+	docker run  --rm -it hm-api-go-grpc sh
 
 d-ps:
 	docker ps
+	docker ps --all
 
 d-prune:
 	docker system prune
