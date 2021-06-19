@@ -135,6 +135,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 
 ### Site Reliability
 
+- **Linkerd** - Service mesh
 - **Open Policy Agent (OPA)** - Policy-based control
 - **NGINX** - Reverse proxy, load balancer
 - **Fluent Bit** - Data collector for unified logging layer
