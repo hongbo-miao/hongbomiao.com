@@ -67,6 +67,7 @@ minikube-ip:
 	minikube ip
 
 kubectl-apply:
+	kubectl apply -f kubernetes/*namespace.yaml
 	kubectl apply -f kubernetes
 
 kubectl-apply-with-linkerd:
