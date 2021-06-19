@@ -1,9 +1,5 @@
-FROM golang:1.16.5-alpine AS base
+FROM golang:1.16.5-alpine AS builder
 WORKDIR /usr/src/app
-
-
-FROM base AS release
-ENV GIN_MODE=release
 
 COPY ["api-go/go.mod", "api-go/go.sum", "./"]
 RUN go mod download
@@ -11,5 +7,13 @@ RUN go mod download
 COPY api-go ./
 RUN go build -o ./out/cmd/api/ ./cmd/api/main.go
 
+
+FROM alpine:3.14.0 AS release
+WORKDIR /usr/src/app
+ENV GIN_MODE=release
+
+COPY --from=builder /usr/src/app/.env.production ./.env.production
+COPY --from=builder /usr/src/app/out/cmd/api/main ./main
+
 EXPOSE 5000
-CMD ["./out/cmd/api/main"]
+CMD ["./main"]
