@@ -18,14 +18,11 @@ docker-run:
 	docker run -p 5000:5000 --name=hm_api_go_grpc --rm --env=APP_ENV=production --env=GRPC_HOST=0.0.0.0 hm-api-go-grpc
 
 docker-sh:
-	docker run  --rm -it hm-api-go-grpc sh
+	docker run  --rm -it hm-api-go sh
 
 docker-ps:
 	docker ps
 	docker ps --all
-
-docker-push:
-	docker system prune
 
 docker-prune:
 	docker system prune
@@ -48,6 +45,10 @@ docker-compose-down:
 	docker-compose --file=docker-compose.cypress.yml down --volumes
 
 # Kubernetes
+minikube-config:
+	minikube config set cpus 4
+	minikube config set memory 8192
+
 minikube-start:
 	minikube start
 
@@ -73,19 +74,44 @@ kubectl-delete:
 	kubectl delete -f kubernetes
 
 kubectl-pods:
-	kubectl get pods
-
-kubectl-logs:
-	kubectl logs pod_name --follow
+	kubectl get pods --namespace hm
 
 kubectl-services:
-	kubectl get services
+	kubectl get services --namespace hm
 
 kubectl-namespaces:
 	kubectl get namespaces
 
+kubectl-logs:
+	kubectl logs pod_name --follow
+
+# Skaffold:
 skaffold:
 	skaffold dev
+
+# Linkerd
+linkerd-install-control-plane:
+	linkerd install | kubectl apply -f -
+
+linkerd-install-viz:
+	linkerd viz install | kubectl apply -f -
+
+linkerd-install-jaeger:
+	linkerd jaeger install | kubectl apply -f -
+
+linkerd-dashboard:
+	linkerd viz dashboard &
+
+linkerd-inject:
+	kubectl get -n hm deploy -o yaml \
+      | linkerd inject - \
+      | kubectl apply -f -
+
+linkerd-check-pre:
+	linkerd check --pre
+
+linkerd-check:
+	linkerd check
 
 # Prometheus
 prom-curl:
