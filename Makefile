@@ -55,17 +55,17 @@ minikube-start:
 minikube-start-hyperkit:
 	minikube start --driver=hyperkit
 
+minikube-delete:
+	minikube delete
+
 minikube-service-web:
-	minikube service web-service
+	minikube service --namespace=hm web-service
 
 minikube-service-api-go:
-	minikube service api-go-service
+	minikube service --namespace=hm api-go-service
 
 minikube-dashboard:
 	minikube dashboard
-
-minikube-delete:
-	minikube delete
 
 minikube-ip:
 	minikube ip
@@ -73,23 +73,35 @@ minikube-ip:
 kubectl-apply:
 	kubectl apply -f kubernetes
 
+kubectl-apply-with-linkerd:
+	linkerd inject - | kubectl apply -f kubernetes
+
 kubectl-delete:
 	kubectl delete -f kubernetes
 
-kubectl-pods:
+kubectl-get-pods:
 	kubectl get pods --namespace=hm
 
-kubectl-services:
+kubectl-get-services:
 	kubectl get services --namespace=hm
 
-kubectl-namespaces:
+kubectl-get-services-yaml:
+	kubectl get services --namespace=hm api-go-service -o yaml
+
+kubectl-get-deployments:
+	kubectl get deployments --namespace=hm
+
+kubectl-get-deployments-yaml:
+	kubectl get deployments --namespace=hm api-go-deployment -o yaml
+
+kubectl-get-namespaces:
 	kubectl get namespaces
+
+kubectl-get-endpoints:
+	kubectl get endpoints --namespace=hm api-go-service
 
 kubectl-logs:
 	kubectl logs --namespace=hm --follow pod_name
-
-kubectl-endpoints:
-	kubectl get endpoints --namespace=hm api-go-service
 
 # Skaffold:
 skaffold:
@@ -104,6 +116,9 @@ linkerd-install-viz:
 
 linkerd-install-jaeger:
 	linkerd jaeger install | kubectl apply -f -
+
+linkerd-get-yaml:
+	linkerd install > linkerd.yaml
 
 linkerd-dashboard:
 	linkerd viz dashboard &
