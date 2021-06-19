@@ -7,8 +7,8 @@ COPY ["web/package.json", "web/package-lock.json", "./"]
 RUN npm ci
 COPY web/ ./
 # Skip lint check during react-scripts build
-RUN rm -f ./.eslintrc.js
-RUN npm run build
+RUN rm -f ./.eslintrc.js \
+  && npm run build
 
 
 FROM nginx:1.21.0-alpine AS release
