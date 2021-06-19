@@ -52,6 +52,9 @@ minikube-config:
 minikube-start:
 	minikube start
 
+minikube-start-hyperkit:
+	minikube start --driver=hyperkit
+
 minikube-service-web:
 	minikube service web-service
 
@@ -74,16 +77,19 @@ kubectl-delete:
 	kubectl delete -f kubernetes
 
 kubectl-pods:
-	kubectl get pods --namespace hm
+	kubectl get pods --namespace=hm
 
 kubectl-services:
-	kubectl get services --namespace hm
+	kubectl get services --namespace=hm
 
 kubectl-namespaces:
 	kubectl get namespaces
 
 kubectl-logs:
-	kubectl logs pod_name --follow
+	kubectl logs --namespace=hm --follow pod_name
+
+kubectl-endpoints:
+	kubectl get endpoints --namespace=hm api-go-service
 
 # Skaffold:
 skaffold:
