@@ -18,7 +18,7 @@ docker-run:
 	docker run -p 5000:5000 --name=hm_api_go_grpc --rm --env=APP_ENV=production --env=GRPC_HOST=0.0.0.0 hm-api-go-grpc
 
 docker-sh:
-	docker run  --rm -it hm-api-go sh
+	docker run --rm -it hm-api-go sh
 
 docker-ps:
 	docker ps
@@ -138,3 +138,15 @@ prom-curl:
 
 prom-test:
 	docker build --file=Dockerfile.prometheus.test .
+
+# hadolint
+hadolint:
+	hadolint \
+ 		Dockerfile.prometheus.test \
+ 		web/Dockerfile \
+ 		api/Dockerfile \
+		api/Dockerfile.development \
+		api-go/Dockerfile.api \
+		api-go/Dockerfile.api.development \
+		api-go/Dockerfile.grpc \
+		api-go/Dockerfile.grpc.development \
