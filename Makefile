@@ -86,22 +86,22 @@ kubectl-get-services:
 	kubectl get services --namespace=hm
 
 kubectl-get-services-yaml:
-	kubectl get services --namespace=hm api-go-service -o yaml
+	kubectl get services api-go-service --namespace=hm --output=yaml
 
 kubectl-get-deployments:
 	kubectl get deployments --namespace=hm
 
 kubectl-get-deployments-yaml:
-	kubectl get deployments --namespace=hm api-go-deployment -o yaml
+	kubectl get deployments api-go-deployment --namespace=hm --output=yaml
 
 kubectl-get-namespaces:
 	kubectl get namespaces
 
 kubectl-get-endpoints:
-	kubectl get endpoints --namespace=hm api-go-service
+	kubectl get endpoints api-go-service --namespace=hm
 
 kubectl-logs:
-	kubectl logs --namespace=hm --follow pod_name
+	kubectl logs --follow pod_name --namespace=hm
 
 # Skaffold:
 skaffold:
@@ -124,9 +124,7 @@ linkerd-dashboard:
 	linkerd viz dashboard &
 
 linkerd-inject:
-	kubectl get -n hm deploy -o yaml \
-      | linkerd inject - \
-      | kubectl apply -f -
+	kubectl get deployments --namespace=hm --output=yaml | linkerd inject - | kubectl apply -f -
 
 linkerd-check-pre:
 	linkerd check --pre
