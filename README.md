@@ -178,6 +178,7 @@ A minimalist app. A cutting-edge technology lab. An automation experiment.
 - **Buf** - Protocol Buffers linter
 - **solhint** - Solidity linter
 - **markdownlint-cli2** - Markdown linter
+- **hadolint** - Dockerfile linter
 - **commitlint** - Commit message linter
 - **Husky**, **lint-staged** - Bad git commit and push preventing
 
