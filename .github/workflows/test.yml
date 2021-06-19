@@ -123,6 +123,23 @@ jobs:
         run: |
           poetry run poe lint-py-isort
 
+  lint-dockerfile:
+    name: Lint (Dockerfile)
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Lint Dockerfile
+        uses: jbergstroem/hadolint-gh-action@v1
+        with:
+          dockerfile: '**/Dockerfile'
+          error_level: 2
+
   type-ts:
     name: Static Type Check (TypeScript)
     runs-on: ubuntu-20.04
