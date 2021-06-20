@@ -21,7 +21,7 @@ default allow = false
 
 allow {
 	# lookup the list of roles for the user
-	roles := user_roles[input.user[_]]
+	roles := user_roles[input.user]
 
 	# for each role in that list
 	r := roles[_]
