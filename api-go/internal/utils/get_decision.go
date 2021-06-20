@@ -39,7 +39,7 @@ func GetDecision(user string, action string, object string) (opa OPA, err error)
 	}
 
 	input := map[string]interface{}{
-		"user":   []string{s.User},
+		"user":   s.User,
 		"action": s.Action,
 		"object": s.Object,
 	}
