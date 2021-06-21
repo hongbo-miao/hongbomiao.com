@@ -59,7 +59,7 @@
 
 ## Introduction
 
-A minimalist app. A cutting-edge technology lab. An automation experiment.
+A cutting-edge technology lab powered by automation.
 
 ## Preview
 
