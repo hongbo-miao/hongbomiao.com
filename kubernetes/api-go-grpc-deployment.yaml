@@ -18,4 +18,7 @@ spec:
           image: hongbomiao/hongbomiao-api-go-grpc:latest
           env:
             - name: GRPC_PORT
-              value: "50051"
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-grpc-configmap
+                  key: grpc_port
