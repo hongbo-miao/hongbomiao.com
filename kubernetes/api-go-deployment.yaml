@@ -18,10 +18,22 @@ spec:
           image: hongbomiao/hongbomiao-api-go:latest
           env:
             - name: APP_ENV
-              value: "production"
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-configmap
+                  key: app_env
             - name: PORT
-              value: "5000"
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-configmap
+                  key: port
             - name: GRPC_HOST
-              value: "api-go-grpc-service.hm"
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-configmap
+                  key: grpc_host
             - name: GRPC_PORT
-              value: "50051"
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-configmap
+                  key: grpc_port
