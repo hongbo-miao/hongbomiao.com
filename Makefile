@@ -1,3 +1,19 @@
+# bin
+setup:
+	sh bin/setup.sh
+
+build:
+	sh bin/build.sh
+
+clean:
+	sh bin/clean.sh
+
+setup-kubernetes:
+	sh bin/setup-kubernetes.sh
+
+clean-kubernetes:
+	sh bin/clean-kubernetes.sh
+
 # Docker
 docker-build:
 	docker build --file=web/Dockerfile --tag=hm-web .
@@ -96,6 +112,9 @@ kubectl-get-namespaces:
 
 kubectl-get-endpoints:
 	kubectl get endpoints api-go-service --namespace=hm
+
+kubectl-get-configmap:
+	kubectl get configmap --namespace=hm
 
 kubectl-logs:
 	kubectl logs --follow pod_name --namespace=hm
