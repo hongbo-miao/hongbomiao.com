@@ -136,6 +136,7 @@ A cutting-edge technology lab powered by automation.
 ### Site Reliability
 
 - **Linkerd** - Service mesh
+- **Helm** - Kubernetes package manager
 - **Open Policy Agent (OPA)** - Policy-based control
 - **NGINX** - Reverse proxy, load balancer
 - **Fluent Bit** - Data collector for unified logging layer
@@ -178,7 +179,10 @@ A cutting-edge technology lab powered by automation.
 - **Buf** - Protocol Buffers linter
 - **solhint** - Solidity linter
 - **markdownlint-cli2** - Markdown linter
+- **ShellCheck** - Shell linter
 - **hadolint** - Dockerfile linter
+- **Kubeval** - Kubernetes configuration file linter
+- **Helm** - Helm chart linter
 - **commitlint** - Commit message linter
 - **Husky**, **lint-staged** - Bad git commit and push preventing
 
