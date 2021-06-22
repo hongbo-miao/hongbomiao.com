@@ -48,7 +48,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   echo "macOS"
   exp=$(date -v+8760H +"%Y-%m-%dT%H:%M:%SZ")
 else
-  echo "Not supported system."
+  echo "System $OSTYPE is not supported."
+  exit 1;
 fi
 
 helm install hm-linkerd \
