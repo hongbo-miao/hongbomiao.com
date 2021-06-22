@@ -117,7 +117,7 @@ kubectl-get-configmap:
 	kubectl get configmap --namespace=hm
 
 kubectl-logs:
-	kubectl logs --follow pod_name --namespace=hm
+	kubectl logs --follow POD_NAME --namespace=hm
 
 # Skaffold:
 skaffold:
@@ -147,6 +147,22 @@ linkerd-check-pre:
 
 linkerd-check:
 	linkerd check
+
+# Helm
+helm-install:
+	helm install helm-chart/hm-chart --generate-name
+
+helm-install-dry-run:
+	helm install helm-chart/hm-chart --generate-name --dry-run
+
+helm-uninstall:
+	helm uninstall RELEASE_NAME
+
+helm-uninstall-dry-run:
+	helm uninstall RELEASE_NAME --dry-run
+
+helm-list:
+	helm list
 
 # Prometheus
 prom-curl:
