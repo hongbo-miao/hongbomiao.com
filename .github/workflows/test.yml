@@ -156,7 +156,7 @@ jobs:
       - name: Lint Kubernetes
         run: |
           helm template helm-chart/hm-chart > k8s.yaml
-          docker run -v `pwd`/k8s.yaml:/k8s.yaml garethr/kubeval k8s.yaml
+          docker run --rm --volume `pwd`/k8s.yaml:/k8s.yaml garethr/kubeval k8s.yaml
 
   lint-helm:
     name: Lint (Helm)
