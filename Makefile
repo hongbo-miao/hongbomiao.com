@@ -136,8 +136,11 @@ linkerd-install-jaeger:
 linkerd-get-yaml:
 	linkerd install > linkerd.yaml
 
-linkerd-dashboard:
-	linkerd viz dashboard &
+linkerd-viz-dashboard:
+	linkerd viz dashboard
+
+linkerd-jaeger-dashboard:
+	linkerd jaeger dashboard
 
 linkerd-inject:
 	kubectl get deployments --namespace=hm --output=yaml | linkerd inject - | kubectl apply -f -
@@ -150,16 +153,19 @@ linkerd-check:
 
 # Helm
 helm-install:
-	helm install helm-chart/hm-chart --generate-name
+	helm install hm-chart helm-chart/hm-chart
 
 helm-install-dry-run:
-	helm install helm-chart/hm-chart --generate-name --dry-run
+	helm install hm-chart helm-chart/hm-chart --dry-run
 
 helm-uninstall:
 	helm uninstall RELEASE_NAME
 
 helm-uninstall-dry-run:
 	helm uninstall RELEASE_NAME --dry-run
+
+helm-uninstall-all:
+	helm ls --all --short | xargs -L1 helm delete
 
 helm-list:
 	helm list
