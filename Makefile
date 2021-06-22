@@ -179,12 +179,8 @@ prom-test:
 
 # hadolint
 hadolint:
-	hadolint \
- 		Dockerfile.prometheus.test \
- 		web/Dockerfile \
- 		api/Dockerfile \
-		api/Dockerfile.development \
-		api-go/Dockerfile.api \
-		api-go/Dockerfile.api.development \
-		api-go/Dockerfile.grpc \
-		api-go/Dockerfile.grpc.development \
+	hadolint $(git ls-files '**/Dockerfile*')
+
+# shellcheck
+shellcheck:
+	shellcheck $(git ls-files '**/*.sh')
