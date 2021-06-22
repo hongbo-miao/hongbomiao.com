@@ -184,3 +184,7 @@ hadolint:
 # shellcheck
 shellcheck:
 	shellcheck $(git ls-files '**/*.sh')
+
+# kubeval
+kubeval:
+	helm template helm-chart/hm-chart | kubeval

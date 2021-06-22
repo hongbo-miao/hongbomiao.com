@@ -140,6 +140,24 @@ jobs:
           dockerfile: '**/Dockerfile*'
           error_level: 2
 
+  lint-kubernetes:
+    name: Lint (Kubernetes)
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+      - name: Lint Kubernetes
+        run: |
+          helm template helm-chart/hm-chart > k8s.yaml
+          docker run -v `pwd`/k8s.yaml:/k8s.yaml garethr/kubeval k8s.yaml
+
   lint-shell:
     name: Lint (Shell)
     runs-on: ubuntu-20.04
