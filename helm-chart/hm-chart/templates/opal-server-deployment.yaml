@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opal-server
+  namespace: hm
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      component: opal-server
+  template:
+    metadata:
+      labels:
+        component: opal-server
+    spec:
+      containers:
+        - name: opal-server
+          image: authorizon/opal-server:latest
+          env:
+            - name: OPAL_BROADCAST_URI
+              value: postgres://postgres:postgres@broadcast-channel.hm:5432/postgres
+            - name: OPAL_DATA_CONFIG_SOURCES
+              value: '{"config":{"entries":[]}}'
+            - name: OPAL_POLICY_REPO_POLLING_INTERVAL
+              value: "30"
+            - name: OPAL_POLICY_REPO_URL
+              value: https://github.com/Hongbo-Miao/opal-example-policy-repo
+            - name: UVICORN_NUM_WORKERS
+              value: "4"
+            - name: OPAL_LOG_MODULE_EXCLUDE_LIST
+              value: "[]"
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 7002
