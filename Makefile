@@ -70,6 +70,9 @@ minikube-start-hyperkit:
 minikube-delete:
 	minikube delete
 
+minikube-service-opal-client:
+	minikube service --namespace=hm opal-client
+
 minikube-service-web:
 	minikube service --namespace=hm web-service
 
@@ -83,14 +86,14 @@ minikube-ip:
 	minikube ip
 
 kubectl-apply:
-	kubectl apply -f kubernetes/*namespace.yaml
-	kubectl apply -f kubernetes
+	kubectl apply -f helm-chart/hm-chart/templates/*-namespace.yaml
+	kubectl apply -f helm-chart/hm-chart/templates/*.yaml
 
 kubectl-apply-with-linkerd:
 	linkerd inject - | kubectl apply -f kubernetes
 
 kubectl-delete:
-	kubectl delete -f kubernetes
+	kubectl delete -f helm-chart/hm-chart/templates/*.yaml
 
 kubectl-get-pods:
 	kubectl get pods --namespace=hm
@@ -159,13 +162,13 @@ helm-install-dry-run:
 	helm install hm-chart helm-chart/hm-chart --dry-run
 
 helm-uninstall:
-	helm uninstall RELEASE_NAME
+	helm uninstall hm-chart
 
 helm-uninstall-dry-run:
-	helm uninstall RELEASE_NAME --dry-run
+	helm uninstall hm-chart --dry-run
 
 helm-uninstall-all:
-	helm ls --all --short | xargs -L1 helm delete
+	helm list --all --short | xargs -L1 helm delete
 
 helm-list:
 	helm list
