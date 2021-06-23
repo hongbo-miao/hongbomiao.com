@@ -26,7 +26,7 @@ if [ -f "$CA_CRT" ] && [ -f "$CA_KEY" ]; then
   echo "Both ca.crt and ca.key exist."
 else
   step certificate create root.linkerd.cluster.local ca.crt ca.key \
-    --profile root-ca --no-password --insecure
+    --profile=root-ca --no-password --insecure
 fi
 
 # Generate issuer certificate and key
@@ -36,8 +36,8 @@ if [ -f "$ISSUER_CRT" ] && [ -f "$ISSUER_KEY" ]; then
   echo "Both issuer.crt and issuer.key exist."
 else
   step certificate create identity.linkerd.cluster.local issuer.crt issuer.key \
-    --profile intermediate-ca --not-after 8760h --no-password --insecure \
-    --ca ca.crt --ca-key ca.key
+    --profile=intermediate-ca --not-after=8760h --no-password --insecure \
+    --ca=ca.crt --ca-key=ca.key
 fi
 
 # Set expiry date one year from now
