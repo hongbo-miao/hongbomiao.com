@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: api-go-grpc-deployment
   namespace: hm
+  annotations:
+    linkerd.io/inject: enabled
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -14,6 +16,8 @@ spec:
     metadata:
       labels:
         component: api-go-grpc
+      annotations:
+        linkerd.io/inject: enabled
     spec:
       containers:
         - name: api-go-grpc
