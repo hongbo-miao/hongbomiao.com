@@ -70,7 +70,3 @@ linkerd jaeger check
 # 3. Install hm-chart
 helm install hm-chart hm-chart
 linkerd check
-
-
-# 4. Mesh
-kubectl get deployments --namespace=hm --output=yaml | linkerd inject - | kubectl apply -f -

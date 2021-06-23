@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: web-deployment
   namespace: hm
+  annotations:
+    linkerd.io/inject: enabled
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -14,6 +16,8 @@ spec:
     metadata:
       labels:
         app: web
+      annotations:
+        linkerd.io/inject: enabled
     spec:
       containers:
         - name: web
