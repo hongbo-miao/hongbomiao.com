@@ -179,11 +179,11 @@ prom-test:
 
 # hadolint
 hadolint:
-	hadolint $(git ls-files '**/Dockerfile*')
+	hadolint $$(git ls-files '**/Dockerfile*')
 
 # shellcheck
 shellcheck:
-	shellcheck $(git ls-files '**/*.sh')
+	shellcheck $$(git ls-files '**/*.sh')
 
 # kubeval
 kubeval:
