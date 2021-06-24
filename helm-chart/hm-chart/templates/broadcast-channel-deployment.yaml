@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broadcast-channel
+  namespace: hm
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      component: broadcast-channel
+  template:
+    metadata:
+      labels:
+        component: broadcast-channel
+    spec:
+      containers:
+        - name: broadcast-channel
+          image: postgres:alpine
+          env:
+            - name: POSTGRES_DB
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+          ports:
+            - name: pgsql
+              protocol: TCP
+              containerPort: 5432

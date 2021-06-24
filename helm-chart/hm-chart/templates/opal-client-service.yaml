@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: opal-client
+  namespace: hm
+spec:
+  type: LoadBalancer
+  selector:
+    component: opal-client
+  ports:
+    - name: http
+      protocol: TCP
+      port: 7000
+      targetPort: http
+    - name: opa
+      protocol: TCP
+      port: 8181
+      targetPort: opa
