@@ -8,15 +8,6 @@ import (
 var opaGraphQLType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "OPA",
 	Fields: graphql.Fields{
-		"user": &graphql.Field{
-			Type: graphql.String,
-		},
-		"action": &graphql.Field{
-			Type: graphql.String,
-		},
-		"object": &graphql.Field{
-			Type: graphql.String,
-		},
 		"decision": &graphql.Field{
 			Type: graphql.String,
 		},
