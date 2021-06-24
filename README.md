@@ -138,6 +138,7 @@ A cutting-edge technology lab powered by automation.
 - **Linkerd** - Service mesh
 - **Helm** - Kubernetes package manager
 - **Open Policy Agent (OPA)** - Policy-based control
+- **OPAL** - Open-policy administration layer
 - **NGINX** - Reverse proxy, load balancer
 - **Fluent Bit** - Data collector for unified logging layer
 - **OpenTelemetry** - Observability framework
@@ -235,7 +236,7 @@ A cutting-edge technology lab powered by automation.
 
 #### Linkerd
 
-![Linkerd](https://user-images.githubusercontent.com/3375461/122650415-5c936e00-d165-11eb-9b8c-2df64edff3a3.jpg)
+![Linkerd](https://user-images.githubusercontent.com/3375461/123330943-3a3c8e80-d571-11eb-8aad-0ac9a1e503ca.png)
 
 ### Distributed Tracing
 
