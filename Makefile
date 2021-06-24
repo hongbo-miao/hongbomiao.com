@@ -76,6 +76,9 @@ minikube-service-opal-client:
 minikube-service-web:
 	minikube service --namespace=hm web-service
 
+minikube-service-opal-client:
+	minikube service --namespace=hm opal-client
+
 minikube-service-api-go:
 	minikube service --namespace=hm api-go-service
 
@@ -122,6 +125,9 @@ kubectl-get-configmap:
 kubectl-logs:
 	kubectl logs --follow POD_NAME --namespace=hm
 
+kubectl-sh:
+	kubectl exec --stdin --tty POD_NAME --namespace=hm -- sh
+
 # Skaffold:
 skaffold:
 	skaffold dev
@@ -160,6 +166,12 @@ helm-install:
 
 helm-install-dry-run:
 	helm install hm-chart helm-chart/hm-chart --dry-run
+
+helm-upgrade:
+	helm upgrade hm-chart helm-chart/hm-chart
+
+helm-upgrade-dry-run:
+	helm upgrade hm-chart helm-chart/hm-chart --dry-run
 
 helm-uninstall:
 	helm uninstall hm-chart
