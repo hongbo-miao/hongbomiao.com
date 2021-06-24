@@ -10,6 +10,8 @@ type Config struct {
 	Env      string
 	GRPCHost string
 	GRPCPort string
+	OPAHost  string
+	OPAPort  string
 }
 
 func GetConfig() *Config {
@@ -27,5 +29,7 @@ func GetConfig() *Config {
 		Port:     os.Getenv("PORT"),
 		GRPCHost: os.Getenv("GRPC_HOST"),
 		GRPCPort: os.Getenv("GRPC_PORT"),
+		OPAHost:  os.Getenv("OPA_HOST"),
+		OPAPort:  os.Getenv("OPA_PORT"),
 	}
 }

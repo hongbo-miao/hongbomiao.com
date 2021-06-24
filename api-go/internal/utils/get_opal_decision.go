@@ -11,6 +11,7 @@ type OPAL struct {
 }
 
 func GetOPALDecision(user string, action string, object string, resourceType string) (opal OPAL, err error) {
+	var config = GetConfig()
 	restyClient := resty.New()
 
 	body := map[string]interface{}{
@@ -24,7 +25,7 @@ func GetOPALDecision(user string, action string, object string, resourceType str
 	res, err := restyClient.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post("http://localhost:8181/v1/data/app/rbac/allow")
+		Post("http://" + config.OPAHost + ":" + config.OPAPort + "/v1/data/app/rbac/allow")
 	if err != nil {
 		log.Error().Err(err).Msg("GetOPALDecision")
 	}
