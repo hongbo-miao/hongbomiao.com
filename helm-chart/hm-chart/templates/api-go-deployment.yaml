@@ -20,7 +20,7 @@ spec:
       containers:
         - name: api-go
           image: hongbomiao/hongbomiao-api-go:latest
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicyForMyImage }}
           env:
             - name: APP_ENV
               valueFrom:
@@ -43,12 +43,19 @@ spec:
                   name: api-go-configmap
                   key: grpc_port
         - name: opal-client
-          image: authorizon/opal-client:latest
+          image: authorizon/opal-client:0.1.8
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: OPAL_SERVER_URL
-              value: http://opal-server.hm:7002
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-configmap
+                  key: opal_server_url
             - name: OPAL_LOG_MODULE_EXCLUDE_LIST
-              value: "[]"
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-configmap
+                  key: opal_log_module_exclude_list
           ports:
             - name: http
               protocol: TCP
