@@ -73,9 +73,6 @@ minikube-delete:
 minikube-service-web:
 	minikube service --namespace=hm web-service
 
-minikube-service-opal-client:
-	minikube service --namespace=hm opal-client
-
 minikube-service-api-go:
 	minikube service --namespace=hm api-go-service
 
