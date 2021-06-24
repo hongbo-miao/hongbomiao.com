@@ -70,9 +70,6 @@ minikube-start-hyperkit:
 minikube-delete:
 	minikube delete
 
-minikube-service-opal-client:
-	minikube service --namespace=hm opal-client
-
 minikube-service-web:
 	minikube service --namespace=hm web-service
 
