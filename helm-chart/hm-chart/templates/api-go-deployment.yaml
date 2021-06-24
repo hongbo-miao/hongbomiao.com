@@ -42,3 +42,17 @@ spec:
                 configMapKeyRef:
                   name: api-go-configmap
                   key: grpc_port
+        - name: opal-client
+          image: authorizon/opal-client:latest
+          env:
+            - name: OPAL_SERVER_URL
+              value: http://opal-server.hm:7002
+            - name: OPAL_LOG_MODULE_EXCLUDE_LIST
+              value: "[]"
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 7000
+            - name: opa
+              protocol: TCP
+              containerPort: 8181
