@@ -19,14 +19,24 @@ spec:
     spec:
       containers:
         - name: broadcast-channel
-          image: postgres:alpine
+          image: postgres:13.3-alpine
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: POSTGRES_DB
-              value: postgres
-            - name: POSTGRES_PASSWORD
-              value: postgres
+              valueFrom:
+                configMapKeyRef:
+                  name: broadcast-channel-configmap
+                  key: postgres_db
             - name: POSTGRES_USER
-              value: postgres
+              valueFrom:
+                configMapKeyRef:
+                  name: broadcast-channel-configmap
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: broadcast-channel-configmap
+                  key: postgres_password
           ports:
             - name: pgsql
               protocol: TCP

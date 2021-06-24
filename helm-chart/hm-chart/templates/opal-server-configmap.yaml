@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opal-server-configmap
+  namespace: hm
+data:
+  opal_broadcast_uri: "postgres://postgres:postgres@broadcast-channel.hm:5432/postgres"
+  opal_data_config_sources: '{"config":{"entries":[]}}'
+  opal_policy_repo_polling_interval: "30"
+  opal_policy_repo_url: "https://github.com/Hongbo-Miao/opal-example-policy-repo"
+  uvicorn_num_workers: "4"
+  opal_log_module_exclude_list: "[]"
