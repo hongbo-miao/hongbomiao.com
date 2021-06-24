@@ -10,17 +10,8 @@ import (
 var policyPath = "policy/rbac.authz.rego"
 var defaultQuery = "x = data.rbac.authz.allow"
 
-type input struct {
-	User   string `json:"user"`
-	Action string `json:"action"`
-	Object string `json:"object"`
-}
-
 type OPA struct {
-	User     string `json:"user"`
-	Action   string `json:"action"`
-	Object   string `json:"object"`
-	Decision bool   `json:"decision"`
+	Decision bool `json:"decision"`
 }
 
 func getResult(ctx context.Context, query rego.PreparedEvalQuery, input map[string]interface{}) bool {
@@ -31,17 +22,11 @@ func getResult(ctx context.Context, query rego.PreparedEvalQuery, input map[stri
 	return results[0].Bindings["x"].(bool)
 }
 
-func GetDecision(user string, action string, object string) (opa OPA, err error) {
-	s := input{
-		User:   user,
-		Action: action,
-		Object: object,
-	}
-
+func GetOPADecision(user string, action string, object string) (opa OPA, err error) {
 	input := map[string]interface{}{
-		"user":   s.User,
-		"action": s.Action,
-		"object": s.Object,
+		"user":   user,
+		"action": action,
+		"object": object,
 	}
 
 	p, err := policies.ReadPolicy(policyPath)
