@@ -230,6 +230,10 @@ A cutting-edge technology lab powered by automation.
 - Prometheus: <http://localhost:9090>
 - Locust: <http://localhost:8089>
 
+## Architecture
+
+![Architecture](https://docs.google.com/drawings/d/e/2PACX-1vQBehFA0r7QnSBUtAe9kplicXd6i7u5dmi8wchSJZFFEmcRaPqmD0GQ0FFx4zF7Vhkfi9fbO_rBsTh2/pub?w=1471&amp;h=743)
+
 ## Highlights
 
 ### Service Mesh
