@@ -46,9 +46,15 @@ spec:
           image: authorizon/opal-client:latest
           env:
             - name: OPAL_SERVER_URL
-              value: http://opal-server.hm:7002
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-configmap
+                  key: opal_server_url
             - name: OPAL_LOG_MODULE_EXCLUDE_LIST
-              value: "[]"
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-configmap
+                  key: opal_log_module_exclude_list
           ports:
             - name: http
               protocol: TCP

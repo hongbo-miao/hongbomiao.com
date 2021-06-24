@@ -22,17 +22,35 @@ spec:
           image: authorizon/opal-server:latest
           env:
             - name: OPAL_BROADCAST_URI
-              value: postgres://postgres:postgres@broadcast-channel.hm:5432/postgres
+              valueFrom:
+                configMapKeyRef:
+                  name: opal-server-configmap
+                  key: opal_broadcast_uri
             - name: OPAL_DATA_CONFIG_SOURCES
-              value: '{"config":{"entries":[]}}'
+              valueFrom:
+                configMapKeyRef:
+                  name: opal-server-configmap
+                  key: opal_data_config_sources
             - name: OPAL_POLICY_REPO_POLLING_INTERVAL
-              value: "30"
+              valueFrom:
+                configMapKeyRef:
+                  name: opal-server-configmap
+                  key: opal_policy_repo_polling_interval
             - name: OPAL_POLICY_REPO_URL
-              value: https://github.com/Hongbo-Miao/opal-example-policy-repo
+              valueFrom:
+                configMapKeyRef:
+                  name: opal-server-configmap
+                  key: opal_policy_repo_url
             - name: UVICORN_NUM_WORKERS
-              value: "4"
+              valueFrom:
+                configMapKeyRef:
+                  name: opal-server-configmap
+                  key: uvicorn_num_workers
             - name: OPAL_LOG_MODULE_EXCLUDE_LIST
-              value: "[]"
+              valueFrom:
+                configMapKeyRef:
+                  name: opal-server-configmap
+                  key: opal_log_module_exclude_list
           ports:
             - name: http
               protocol: TCP
