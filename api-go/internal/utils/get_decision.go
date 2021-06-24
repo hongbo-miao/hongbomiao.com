@@ -61,9 +61,6 @@ func GetDecision(user string, action string, object string) (opa OPA, err error)
 
 	decision := getResult(ctx, query, input)
 	return OPA{
-		User:     user,
-		Action:   action,
-		Object:   object,
 		Decision: decision,
 	}, nil
 }
