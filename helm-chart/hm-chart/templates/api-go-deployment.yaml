@@ -20,7 +20,7 @@ spec:
       containers:
         - name: api-go
           image: hongbomiao/hongbomiao-api-go:latest
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicyForMyImage }}
           env:
             - name: APP_ENV
               valueFrom:
@@ -44,6 +44,7 @@ spec:
                   key: grpc_port
         - name: opal-client
           image: authorizon/opal-client:0.1.8
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: OPAL_SERVER_URL
               valueFrom:

@@ -20,6 +20,7 @@ spec:
       containers:
         - name: broadcast-channel
           image: postgres:13.3-alpine
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: POSTGRES_DB
               valueFrom:
