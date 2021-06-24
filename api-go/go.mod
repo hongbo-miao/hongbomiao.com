@@ -3,9 +3,11 @@ module github.com/Hongbo-Miao/hongbomiao.com/api-go
 go 1.16
 
 require (
+	github.com/buger/jsonparser v1.1.1
 	github.com/bytecodealliance/wasmtime-go v0.28.0 // indirect
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-playground/validator/v10 v10.6.1 // indirect
+	github.com/go-resty/resty/v2 v2.6.0
 	github.com/google/go-cmp v0.5.6 // indirect
 	github.com/graphql-go/graphql v0.7.9
 	github.com/graphql-go/handler v0.2.3
@@ -18,7 +20,7 @@ require (
 	github.com/rs/zerolog v1.23.0
 	github.com/ugorji/go v1.2.6 // indirect
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a // indirect
-	golang.org/x/net v0.0.0-20210610132358-84b48f89b13b // indirect
+	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
 	golang.org/x/sys v0.0.0-20210611083646-a4fc73990273 // indirect
 	google.golang.org/genproto v0.0.0-20210611144927-798beca9d670 // indirect
 	google.golang.org/grpc v1.38.0

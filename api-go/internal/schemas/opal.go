@@ -5,8 +5,8 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-var opaGraphQLType = graphql.NewObject(graphql.ObjectConfig{
-	Name: "OPA",
+var opalGraphQLType = graphql.NewObject(graphql.ObjectConfig{
+	Name: "OPAL",
 	Fields: graphql.Fields{
 		"decision": &graphql.Field{
 			Type: graphql.String,
@@ -14,8 +14,8 @@ var opaGraphQLType = graphql.NewObject(graphql.ObjectConfig{
 	},
 })
 
-var opaGraphQLField = graphql.Field{
-	Type: opaGraphQLType,
+var opalGraphQLField = graphql.Field{
+	Type: opalGraphQLType,
 	Args: graphql.FieldConfigArgument{
 		"user": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
@@ -26,11 +26,15 @@ var opaGraphQLField = graphql.Field{
 		"object": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
+		"resourceType": &graphql.ArgumentConfig{
+			Type: graphql.NewNonNull(graphql.String),
+		},
 	},
 	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
 		user := p.Args["user"].(string)
 		action := p.Args["action"].(string)
 		object := p.Args["object"].(string)
-		return utils.GetOPADecision(user, action, object)
+		resourceType := p.Args["resourceType"].(string)
+		return utils.GetOPALDecision(user, action, object, resourceType)
 	},
 }

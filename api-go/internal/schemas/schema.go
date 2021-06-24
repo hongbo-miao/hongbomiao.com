@@ -10,6 +10,7 @@ var Query = graphql.NewObject(graphql.ObjectConfig{
 		"me":       &meGraphQLField,
 		"user":     &userGraphQLField,
 		"opa":      &opaGraphQLField,
+		"opal":     &opalGraphQLField,
 		"greeting": &greetingGraphQLField,
 	},
 })
