@@ -20,7 +20,7 @@ spec:
       containers:
         - name: api-go-grpc
           image: hongbomiao/hongbomiao-api-go-grpc:latest
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicyForMyImage }}
           env:
             - name: GRPC_PORT
               valueFrom:
