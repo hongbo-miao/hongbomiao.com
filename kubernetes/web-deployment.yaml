@@ -4,9 +4,7 @@ metadata:
   name: web-deployment
   namespace: hm
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: 1
   selector:
     matchLabels:
       app: web
@@ -20,4 +18,3 @@ spec:
       containers:
         - name: web
           image: hongbomiao/hongbomiao-web:latest
-          imagePullPolicy: {{ .Values.image.pullPolicyForMyImage }}
