@@ -83,14 +83,14 @@ minikube-ip:
 	minikube ip
 
 kubectl-apply:
-	kubectl apply -f helm-chart/hm-chart/templates/*-namespace.yaml
-	kubectl apply -f helm-chart/hm-chart/templates/*.yaml
+	kubectl apply -f kubernetes/*-namespace.yaml
+	kubectl apply -f kubernetes
 
 kubectl-apply-with-linkerd:
 	linkerd inject - | kubectl apply -f kubernetes
 
 kubectl-delete:
-	kubectl delete -f helm-chart/hm-chart/templates/*.yaml
+	kubectl delete -f kubernetes/*.yaml
 
 kubectl-get-pods:
 	kubectl get pods --namespace=hm
@@ -154,31 +154,6 @@ linkerd-check-pre:
 linkerd-check:
 	linkerd check
 
-# Helm
-helm-install:
-	helm install hm-chart helm-chart/hm-chart
-
-helm-install-dry-run:
-	helm install hm-chart helm-chart/hm-chart --dry-run
-
-helm-upgrade:
-	helm upgrade hm-chart helm-chart/hm-chart
-
-helm-upgrade-dry-run:
-	helm upgrade hm-chart helm-chart/hm-chart --dry-run
-
-helm-uninstall:
-	helm uninstall hm-chart
-
-helm-uninstall-dry-run:
-	helm uninstall hm-chart --dry-run
-
-helm-uninstall-all:
-	helm list --all --short | xargs -L1 helm delete
-
-helm-list:
-	helm list
-
 # Prometheus
 prom-curl:
 	curl http://localhost:9464/metrics
@@ -196,4 +171,4 @@ shellcheck:
 
 # kubeval
 kubeval:
-	helm template helm-chart/hm-chart | kubeval
+	kubeval $$(git ls-files 'kubernetes/*.yaml')

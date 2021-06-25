@@ -4,9 +4,7 @@ metadata:
   name: api-go-deployment
   namespace: hm
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: 1
   selector:
     matchLabels:
       component: api-go
@@ -20,7 +18,6 @@ spec:
       containers:
         - name: api-go
           image: hongbomiao/hongbomiao-api-go:latest
-          imagePullPolicy: {{ .Values.image.pullPolicyForMyImage }}
           env:
             - name: APP_ENV
               valueFrom:
@@ -44,7 +41,6 @@ spec:
                   key: grpc_port
         - name: opal-client
           image: authorizon/opal-client:0.1.8
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: OPAL_SERVER_URL
               valueFrom:
