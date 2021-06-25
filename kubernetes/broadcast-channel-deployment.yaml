@@ -4,9 +4,7 @@ metadata:
   name: broadcast-channel
   namespace: hm
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: 1
   selector:
     matchLabels:
       component: broadcast-channel
@@ -20,7 +18,6 @@ spec:
       containers:
         - name: broadcast-channel
           image: postgres:13.3-alpine
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: POSTGRES_DB
               valueFrom:
