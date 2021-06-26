@@ -229,6 +229,10 @@ A cutting-edge technology lab powered by automation.
 
 ![Linkerd](https://user-images.githubusercontent.com/3375461/123330943-3a3c8e80-d571-11eb-8aad-0ac9a1e503ca.png)
 
+### Argo CD
+
+![Argo CD](https://user-images.githubusercontent.com/3375461/123496359-4e0fef80-d65a-11eb-8782-6b6dcd312b79.png)
+
 ### Distributed Tracing
 
 #### OpenTelemetry
