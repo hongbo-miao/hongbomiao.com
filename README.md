@@ -183,7 +183,6 @@ A cutting-edge technology lab powered by automation.
 - **ShellCheck** - Shell linter
 - **hadolint** - Dockerfile linter
 - **Kubeval** - Kubernetes configuration file linter
-- **Helm** - Helm chart linter
 - **commitlint** - Commit message linter
 - **Husky**, **lint-staged** - Bad git commit and push preventing
 
