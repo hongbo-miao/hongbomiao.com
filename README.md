@@ -136,7 +136,7 @@ A cutting-edge technology lab powered by automation.
 ### Site Reliability
 
 - **Linkerd** - Service mesh
-- **Helm** - Kubernetes package manager
+- **Argo CD** - Declarative GitOps CD for Kubernetes
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
 - **NGINX** - Reverse proxy, load balancer
