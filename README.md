@@ -133,7 +133,7 @@ A cutting-edge technology lab powered by automation.
 - **zerolog** - Logging
 - **GoDotEnv** - Environment variables loading
 
-### Site Reliability
+### Cloud Native
 
 - **Linkerd** - Service mesh
 - **Argo CD** - Declarative GitOps CD for Kubernetes
@@ -222,19 +222,17 @@ A cutting-edge technology lab powered by automation.
 
 ## Highlights
 
-### Service Mesh
+### Cloud Native
 
-#### Linkerd
+#### Service Mesh - Linkerd
 
 ![Linkerd](https://user-images.githubusercontent.com/3375461/123330943-3a3c8e80-d571-11eb-8aad-0ac9a1e503ca.png)
 
-### Argo CD
+#### GitOps - Argo CD
 
 ![Argo CD](https://user-images.githubusercontent.com/3375461/123496359-4e0fef80-d65a-11eb-8782-6b6dcd312b79.png)
 
-### Distributed Tracing
-
-#### OpenTelemetry
+#### Distributed Tracing - OpenTelemetry
 
 The website is using [OpenTelemetry](https://opentelemetry.io/), a [Cloud Native Computing Foundation (CNCF)](https://www.cncf.io/) project, as an open specification to standardize collecting and sending telemetry data.
 
@@ -247,8 +245,6 @@ After it processes, Elasticsearch saves the data. You can analyze them using Jae
 #### Prometheus
 
 ![Prometheus screenshot](https://user-images.githubusercontent.com/3375461/90955864-d14d3b80-e4b3-11ea-926b-8012cadb4f70.jpg)
-
-### Site Reliability
 
 #### Kibana
 
