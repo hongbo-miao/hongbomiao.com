@@ -11,9 +11,6 @@ clean:
 setup-kubernetes:
 	sh bin/setup-kubernetes.sh
 
-clean-kubernetes:
-	sh bin/clean-kubernetes.sh
-
 # Docker
 docker-build:
 	docker build --file=web/Dockerfile --tag=hm-web .
@@ -71,10 +68,10 @@ minikube-delete:
 	minikube delete
 
 minikube-service-web:
-	minikube service --namespace=hm web-service
+	minikube service web-service --namespace=hm
 
 minikube-service-api-go:
-	minikube service --namespace=hm api-go-service
+	minikube service api-go-service --namespace=hm
 
 minikube-dashboard:
 	minikube dashboard
@@ -94,6 +91,9 @@ kubectl-delete:
 
 kubectl-get-pods:
 	kubectl get pods --namespace=hm
+
+kubectl-get-pods-argocd:
+	kubectl get pods --namespace=argocd
 
 kubectl-get-services:
 	kubectl get services --namespace=hm
@@ -153,6 +153,30 @@ linkerd-check-pre:
 
 linkerd-check:
 	linkerd check
+
+argocd-install:
+	kubectl create namespace argocd
+	kubectl apply --namespace=argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+argocd-check:
+	for deploy in "dex-server" "redis" "repo-server" "server"; \
+	  do kubectl --namespace=argocd rollout status deploy/argocd-$${deploy}; \
+	done
+
+argocd-open:
+	kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+argocd-get-password:
+	kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
+
+argocd-login:
+	argocd login localhost:8080
+
+argocd-sync:
+	argocd app sync hm-application
+
+argocd-list:
+	argocd app list
 
 # Prometheus
 prom-curl:
