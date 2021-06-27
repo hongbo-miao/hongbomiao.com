@@ -70,7 +70,6 @@ kubectl-apply-with-linkerd:
 	linkerd inject - | kubectl apply -f kubernetes
 kubectl-delete:
 	kubectl delete -f kubernetes/*.yaml
-
 kubectl-get-pods:
 	kubectl get pods --namespace=hm
 kubectl-get-services:
@@ -91,11 +90,6 @@ kubectl-logs:
 	kubectl logs --follow POD_NAME --namespace=hm
 kubectl-sh:
 	kubectl exec --stdin --tty POD_NAME --namespace=hm -- sh
-
-kubectl-get-pods-argocd:
-	kubectl get pods --namespace=argocd
-kubectl-get-rolebindings-argocd:
-	kubectl get rolebindings --namespace=argocd
 
 # Skaffold:
 skaffold:
@@ -139,6 +133,17 @@ argocd-sync:
 	argocd app sync hm-application
 argocd-list:
 	argocd app list
+
+kubectl-get-pods-argocd:
+	kubectl get pods --namespace=argocd
+kubectl-get-rolebindings-argocd:
+	kubectl get rolebindings --namespace=argocd
+kubectl-describe-rolebinding-argocd:
+	kubectl describe rolebinding argocd-application-controller --namespace=argocd
+kubectl-get-roles-argocd:
+	kubectl get roles --namespace=argocd
+kubectl-describe-role-argocd:
+	kubectl describe role argocd-application-controller --namespace=argocd
 
 # Prometheus
 prom-curl:
