@@ -86,6 +86,18 @@ python-versions = "*"
 Flask = "*"
 
 [[package]]
+name = "flask-cors"
+version = "3.0.10"
+description = "A Flask extension adding a decorator for CORS support"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Flask = ">=0.9"
+Six = "*"
+
+[[package]]
 name = "gevent"
 version = "21.1.2"
 description = "Coroutine-based network library"
@@ -162,7 +174,7 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "locust"
-version = "1.5.3"
+version = "1.6.0"
 description = "Developer friendly load testing framework"
 category = "dev"
 optional = false
@@ -172,6 +184,7 @@ python-versions = ">=3.6"
 ConfigArgParse = ">=1.0"
 flask = "1.1.2"
 Flask-BasicAuth = ">=0.2.0"
+Flask-Cors = ">=3.0.10"
 gevent = ">=20.9.0"
 geventhttpclient = ">=1.4.4"
 msgpack = ">=0.6.2"
@@ -341,7 +354,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.5"
-content-hash = "519f7b75d4564736dab083cf4d71c94437a21c0593c376040e7b34aedcc9bc24"
+content-hash = "6dd66dc378b65e17ec649ef83d53bdfa13717a30c9d449002e0827dbb00ba047"
 
 [metadata.files]
 certifi = [
@@ -421,6 +434,10 @@ flask = [
 ]
 flask-basicauth = [
     {file = "Flask-BasicAuth-0.2.0.tar.gz", hash = "sha256:df5ebd489dc0914c224419da059d991eb72988a01cdd4b956d52932ce7d501ff"},
+]
+flask-cors = [
+    {file = "Flask-Cors-3.0.10.tar.gz", hash = "sha256:b60839393f3b84a0f3746f6cdca56c1ad7426aa738b70d6c61375857823181de"},
+    {file = "Flask_Cors-3.0.10-py2.py3-none-any.whl", hash = "sha256:74efc975af1194fc7891ff5cd85b0f7478be4f7f59fe158102e91abb72bb4438"},
 ]
 gevent = [
     {file = "gevent-21.1.2-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:2a9ae0a0fd956cbbc9c326b8f290dcad2b58acfb2e2732855fe1155fb110a04d"},
@@ -569,8 +586,8 @@ jinja2 = [
     {file = "Jinja2-3.0.1.tar.gz", hash = "sha256:703f484b47a6af502e743c9122595cc812b0271f661722403114f71a79d0f5a4"},
 ]
 locust = [
-    {file = "locust-1.5.3-py3-none-any.whl", hash = "sha256:c701c411e7e49905baf7d0a56cb8eb91f72e3494ddc61c18fefeb593b204f789"},
-    {file = "locust-1.5.3.tar.gz", hash = "sha256:0b96e668a51ca6806dfd02edb7f1f5e72151b290a3f8adfcde30e8d6fbc8457f"},
+    {file = "locust-1.6.0-py3-none-any.whl", hash = "sha256:28e4846d1ac14b88a4f29641d7306108dc652964331bdb57cd2991a6140b0515"},
+    {file = "locust-1.6.0.tar.gz", hash = "sha256:95715ed82173d77a338bd91af01814ad2a199ed076880a720c3bc95462b796b3"},
 ]
 markupsafe = [
     {file = "MarkupSafe-2.0.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:f9081981fe268bd86831e5c75f7de206ef275defcb82bc70740ae6dc507aee51"},
