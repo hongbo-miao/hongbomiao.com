@@ -14,7 +14,7 @@ func main() {
 	log.Info().Str("env", config.Env).Str("port", config.Port).Msg("main")
 
 	r := gin.Default()
-	r.GET("/ping", controllers.Ping)
 	r.POST("/graphql", handlers.GraphQLHandler())
+	r.GET("/", controllers.Health)
 	_ = r.Run(":" + config.Port)
 }
