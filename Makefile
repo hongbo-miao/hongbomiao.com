@@ -64,12 +64,12 @@ minikube-ip:
 
 # Kubernetes
 kubectl-apply:
-	kubectl apply -f kubernetes/*-namespace.yaml
-	kubectl apply -f kubernetes
+	kubectl apply --filename=kubernetes/*-namespace.yaml
+	kubectl apply --filename=kubernetes
 kubectl-apply-with-linkerd:
-	linkerd inject - | kubectl apply -f kubernetes
+	linkerd inject - | kubectl apply --filename=kubernetes
 kubectl-delete:
-	kubectl delete -f kubernetes/*.yaml
+	kubectl delete --filename=kubernetes/*.yaml
 kubectl-get-pods:
 	kubectl get pods --namespace=hm
 kubectl-get-services:
@@ -97,11 +97,11 @@ skaffold:
 
 # Linkerd
 linkerd-install-control-plane:
-	linkerd install | kubectl apply -f -
+	linkerd install | kubectl apply --filename=-
 linkerd-install-viz:
-	linkerd viz install | kubectl apply -f -
+	linkerd viz install | kubectl apply --filename=-
 linkerd-install-jaeger:
-	linkerd jaeger install | kubectl apply -f -
+	linkerd jaeger install | kubectl apply --filename=-
 linkerd-get-yaml:
 	linkerd install > linkerd.yaml
 linkerd-viz-dashboard:
@@ -109,7 +109,7 @@ linkerd-viz-dashboard:
 linkerd-jaeger-dashboard:
 	linkerd jaeger dashboard
 linkerd-inject:
-	kubectl get deployments --namespace=hm --output=yaml | linkerd inject - | kubectl apply -f -
+	kubectl get deployments --namespace=hm --output=yaml | linkerd inject - | kubectl apply --filename=-
 linkerd-check-pre:
 	linkerd check --pre
 linkerd-check:
@@ -118,7 +118,7 @@ linkerd-check:
 # Argo CD
 argocd-install:
 	kubectl create namespace argocd
-	kubectl apply --namespace=argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+	kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 argocd-check:
 	for deploy in "dex-server" "redis" "repo-server" "server"; \
 	  do kubectl --namespace=argocd rollout status deploy/argocd-$${deploy}; \
