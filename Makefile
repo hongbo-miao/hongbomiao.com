@@ -131,6 +131,10 @@ argocd-login:
 	argocd login localhost:8080
 argocd-sync:
 	argocd app sync hm-application
+argocd-diff:
+	argocd app diff hm-application --local=kubernetes
+argocd-sync-local:
+	argocd app sync hm-application --local=kubernetes
 argocd-list:
 	argocd app list
 
