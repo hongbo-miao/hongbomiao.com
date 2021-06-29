@@ -64,7 +64,7 @@ minikube-ip:
 
 # Kubernetes
 kubectl-apply:
-	kubectl apply --filename=kubernetes/*-namespace.yaml
+	kubectl apply --filename=kubernetes/hm-namespace.yaml
 	kubectl apply --filename=kubernetes
 kubectl-apply-with-linkerd:
 	linkerd inject - | kubectl apply --filename=kubernetes
