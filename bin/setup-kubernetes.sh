@@ -38,5 +38,5 @@ argocd app sync hm-application
 
 
 # Install the app by Kubernetes files
-# kubectl apply --filename=kubernetes/*-namespace.yaml
+# kubectl apply --filename=kubernetes/hm-namespace.yaml
 # kubectl apply --filename=kubernetes
