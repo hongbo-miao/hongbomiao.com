@@ -69,7 +69,7 @@ kubectl-apply:
 kubectl-apply-with-linkerd:
 	linkerd inject - | kubectl apply --filename=kubernetes
 kubectl-delete:
-	kubectl delete --filename=kubernetes/*.yaml
+	kubectl delete --filename=kubernetes
 kubectl-get-pods:
 	kubectl get pods --namespace=hm
 kubectl-get-services:
@@ -129,10 +129,14 @@ argocd-get-password:
 	kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
 argocd-login:
 	argocd login localhost:8080
-argocd-sync:
-	argocd app sync hm-application
+argocd-enable-auth-sync:
+	argocd app set hm-application --sync-policy=automated
+argocd-disable-auth-sync:
+	argocd app set hm-application --sync-policy=none
 argocd-diff:
 	argocd app diff hm-application --local=kubernetes
+argocd-sync:
+	argocd app sync hm-application
 argocd-sync-local:
 	argocd app sync hm-application --local=kubernetes
 argocd-list:
