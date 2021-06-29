@@ -230,7 +230,7 @@ A cutting-edge technology lab powered by automation.
 
 #### GitOps - Argo CD
 
-![Argo CD](https://user-images.githubusercontent.com/3375461/123496359-4e0fef80-d65a-11eb-8782-6b6dcd312b79.png)
+![Argo CD](https://user-images.githubusercontent.com/3375461/123851796-341e2780-d94e-11eb-861e-8de31c910da0.png)
 
 #### Distributed Tracing - OpenTelemetry
 
