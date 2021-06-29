@@ -466,6 +466,26 @@ jobs:
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
+  api-go-test:
+    name: API Go - Test
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.16.5'
+      - name: Test
+        working-directory: api-go
+        run: |
+          go test ./...
+
   opa-test:
     name: OPA - Test
     runs-on: ubuntu-20.04

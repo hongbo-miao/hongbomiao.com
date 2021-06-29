@@ -7,6 +7,9 @@ run-grpc:
 tidy:
 	go mod tidy
 
+test:
+	go test ./...
+
 go-fmt:
 	gofmt .
 
