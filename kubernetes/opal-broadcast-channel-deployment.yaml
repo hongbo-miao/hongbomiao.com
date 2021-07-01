@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: broadcast-channel
+  name: opal-broadcast-channel
   namespace: hm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: broadcast-channel
+      component: opal-broadcast-channel
   template:
     metadata:
       labels:
-        component: broadcast-channel
+        component: opal-broadcast-channel
       annotations:
         linkerd.io/inject: enabled
     spec:
       containers:
-        - name: broadcast-channel
+        - name: opal-broadcast-channel
           image: postgres:13.3-alpine
           env:
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: broadcast-channel-configmap
+                  name: opal-broadcast-channel-configmap
                   key: postgres_db
             - name: POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
-                  name: broadcast-channel-configmap
+                  name: opal-broadcast-channel-configmap
                   key: postgres_user
             - name: POSTGRES_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  name: broadcast-channel-configmap
+                  name: opal-broadcast-channel-configmap
                   key: postgres_password
           ports:
             - name: pgsql
