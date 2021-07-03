@@ -39,6 +39,10 @@ spec:
                 configMapKeyRef:
                   name: api-go-configmap
                   key: grpc_port
+          ports:
+            - name: api-go
+              protocol: TCP
+              containerPort: 5000
         - name: opal-client
           image: authorizon/opal-client:0.1.9
           env:
@@ -58,7 +62,7 @@ spec:
                   name: api-go-configmap
                   key: opal_inline_opa_log_format
           ports:
-            - name: http
+            - name: opal-client
               protocol: TCP
               containerPort: 7000
             - name: opa

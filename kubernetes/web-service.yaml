@@ -8,6 +8,7 @@ spec:
     app: web
   type: LoadBalancer
   ports:
-    - protocol: TCP
+    - name: web
+      protocol: TCP
+      targetPort: web
       port: 80
-      targetPort: 80
