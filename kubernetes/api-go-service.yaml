@@ -8,6 +8,15 @@ spec:
   selector:
     component: api-go
   ports:
-    - protocol: TCP
+    - name: api
+      protocol: TCP
       port: 5000
       targetPort: 5000
+    - name: http
+      protocol: TCP
+      port: 7000
+      targetPort: 7000
+    - name: opa
+      protocol: TCP
+      port: 8181
+      targetPort: 8181
