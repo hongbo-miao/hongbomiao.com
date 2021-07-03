@@ -56,7 +56,12 @@ minikube-delete:
 minikube-service-web:
 	minikube service web-service --namespace=hm
 minikube-service-api-go:
-	minikube service api-go-service --namespace=hm
+	kubectl port-forward service/api-go-service --namespace=hm 5000:5000
+minikube-service-opa:
+	kubectl port-forward service/api-go-service --namespace=hm 8181:8181
+minikube-service-opal-server:
+	kubectl port-forward service/opal-server --namespace=hm 7002:7002
+
 minikube-dashboard:
 	minikube dashboard
 minikube-ip:
