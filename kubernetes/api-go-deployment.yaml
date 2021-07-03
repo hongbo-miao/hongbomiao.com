@@ -52,6 +52,11 @@ spec:
                 configMapKeyRef:
                   name: api-go-configmap
                   key: opal_log_module_exclude_list
+            - name: OPAL_INLINE_OPA_LOG_FORMAT
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-configmap
+                  key: opal_inline_opa_log_format
           ports:
             - name: http
               protocol: TCP
