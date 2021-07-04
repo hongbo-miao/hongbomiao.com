@@ -14,7 +14,12 @@ import (
 func main() {
 	utils.InitLogger()
 	var config = utils.GetConfig()
-	log.Info().Str("env", config.Env).Str("port", config.Port).Msg("main")
+	log.Info().
+		Str("env", config.Env).
+		Str("port", config.Port).
+		Str("openCensusAgentHost", config.OpenCensusAgentHost).
+		Str("openCensusAgentPort", config.OpenCensusAgentPort).
+		Msg("main")
 
 	oce, err := ocagent.NewExporter(
 		ocagent.WithInsecure(),
