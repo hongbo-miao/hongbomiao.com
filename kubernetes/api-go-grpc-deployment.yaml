@@ -24,6 +24,16 @@ spec:
                 configMapKeyRef:
                   name: api-go-grpc-configmap
                   key: grpc_port
+            - name: OPEN_CENSUS_AGENT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-grpc-configmap
+                  key: open_census_agent_host
+            - name: OPEN_CENSUS_AGENT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-grpc-configmap
+                  key: open_census_agent_port
           ports:
             - name: api-go-grpc
               protocol: TCP
