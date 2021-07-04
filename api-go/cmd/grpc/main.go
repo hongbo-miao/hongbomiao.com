@@ -39,7 +39,7 @@ func main() {
 		ocagent.WithInsecure(),
 		ocagent.WithReconnectionPeriod(5*time.Second),
 		ocagent.WithAddress(config.OpenCensusAgentHost+":"+config.OpenCensusAgentPort),
-		ocagent.WithServiceName("voting"))
+		ocagent.WithServiceName("api-go-grpc"))
 	if err != nil {
 		log.Error().Err(err).Msg("ocagent.NewExporter")
 	}
