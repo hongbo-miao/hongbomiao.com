@@ -121,6 +121,15 @@ linkerd-check-pre:
 	linkerd check --pre
 linkerd-check:
 	linkerd check
+linkerd-viz-tap:
+	linkerd viz tap deployments/api-go-deployment --namespace=hm
+linkerd-viz-tap-verbose:
+	linkerd viz tap deployments/api-go-deployment --namespace=hm --output=json
+linkerd-viz-tap-filter:
+	linkerd viz tap deployments/api-go-deployment --namespace=hm --to=deployment/api-go-grpc-deployment
+	linkerd viz tap deployments/api-go-deployment --namespace=hm --to=deployment/api-go-grpc-deployment --path=/api.proto.greet.v1.GreetService/Greet
+linkerd-viz-top: # shows traffic routes sorted by the most popular paths
+	linkerd viz top deployments/api-go-deployment --namespace=hm
 
 # Argo CD
 argocd-install:
@@ -128,11 +137,11 @@ argocd-install:
 	kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 argocd-check:
 	for deploy in "dex-server" "redis" "repo-server" "server"; \
-	  do kubectl --namespace=argocd rollout status deploy/argocd-$${deploy}; \
+	  do kubectl --namespace=argocd rollout status deployments/argocd-$${deploy}; \
 	done
 argocd-ui:
-	kubectl port-forward svc/argocd-server -n argocd 8080:443
-argocd-get-password:
+	kubectl port-forward service/argocd-server --namespace=argocd 8080:443
+argocd-get-password: # username: admin
 	kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
 argocd-login:
 	argocd login localhost:8080
