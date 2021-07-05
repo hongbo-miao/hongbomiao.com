@@ -13,7 +13,9 @@ minikube start
 linkerd check --pre
 
 echo "linkerd install"
-linkerd install | kubectl apply --filename=-
+linkerd install --disable-heartbeat | kubectl apply --filename=-
+# In production, use
+# linkerd install --disable-heartbeat --ha | kubectl apply --filename=-
 linkerd check
 
 echo "linkerd viz install"
