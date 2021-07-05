@@ -91,6 +91,8 @@ kubectl-get-endpoints:
 	kubectl get endpoints api-go-service --namespace=hm
 kubectl-get-configmap:
 	kubectl get configmap --namespace=hm
+kubectl-get-serviceaccounts:
+	kubectl get serviceaccounts
 kubectl-logs:
 	kubectl logs --follow POD_NAME --namespace=hm
 kubectl-sh:
@@ -117,19 +119,49 @@ linkerd-jaeger-dashboard:
 	linkerd jaeger dashboard
 linkerd-inject:
 	kubectl get deployments --namespace=hm --output=yaml | linkerd inject - | kubectl apply --filename=-
-linkerd-check-pre:
-	linkerd check --pre
 linkerd-check:
 	linkerd check
+linkerd-check-pre:
+	linkerd check --pre
+linkerd-check-proxy: # includes linkerd-identity-data-plane
+	linkerd check --proxy
+
 linkerd-viz-tap:
 	linkerd viz tap deployments/api-go-deployment --namespace=hm
-linkerd-viz-tap-verbose:
+linkerd-viz-tap-json:
 	linkerd viz tap deployments/api-go-deployment --namespace=hm --output=json
-linkerd-viz-tap-filter:
+linkerd-viz-tap-to:
 	linkerd viz tap deployments/api-go-deployment --namespace=hm --to=deployment/api-go-grpc-deployment
+linkerd-viz-tap-to-path:
 	linkerd viz tap deployments/api-go-deployment --namespace=hm --to=deployment/api-go-grpc-deployment --path=/api.proto.greet.v1.GreetService/Greet
 linkerd-viz-top: # shows traffic routes sorted by the most popular paths
 	linkerd viz top deployments/api-go-deployment --namespace=hm
+linkerd-viz-stat:
+	linkerd viz stat deployments --namespace=hm
+linkerd-viz-stat-wide: # includes extra READ_BYTES/SEC and WRITE_BYTES/SEC
+	linkerd viz stat deployments --namespace=hm --output=wide
+linkerd-viz-stat-from-to:
+	linkerd viz stat --namespace=hm deployments/api-go-deployment --to deployments/api-go-grpc-deployment
+linkerd-viz-stat-all-from: # views the metrics for traffic to all deployments that comes from api-go-deployment
+	linkerd viz stat --namespace=hm deployments --from deployments/api-go-deployment
+linkerd-viz-edges-deployments:
+	linkerd viz edges deployments --namespace=hm
+linkerd-viz-edges-deployments-json:
+	linkerd viz edges deployments --namespace=hm --output=json
+linkerd-viz-edges-pods:
+	linkerd viz edges pods --namespace=hm
+linkerd-viz-edges-pods-json:
+	linkerd viz edges pods --namespace=hm --output=json
+linkerd-viz-routes:
+	linkerd viz routes deployments/api-go-deployment --namespace=hm
+linkerd-viz-routes-wide: # includes EFFECTIVE_SUCCESS, EFFECTIVE_RPS, ACTUAL_SUCCESS, ACTUAL_RPS
+	linkerd viz routes deployments/api-go-deployment --namespace=hm --to deployments/api-go-grpc-deployment --output=wide
+linkerd-viz-routes-json:
+	linkerd viz routes deployments/api-go-deployment --namespace=hm --output=json
+linkerd-get-secrets:
+	kubectl get secrets --namespace=linkerd
+linkerd-get-secret-yaml:
+	kubectl get secrets --namespace=linkerd linkerd-identity-issuer --output=yaml
 
 # Argo CD
 argocd-install:
