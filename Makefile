@@ -102,13 +102,15 @@ skaffold:
 
 # Linkerd
 linkerd-install-control-plane:
-	linkerd install | kubectl apply --filename=-
+	linkerd install --disable-heartbeat | kubectl apply --filename=-
+linkerd-install-control-plane-prod:
+	linkerd install --disable-heartbeat --ha | kubectl apply --filename=-
 linkerd-install-viz:
 	linkerd viz install | kubectl apply --filename=-
 linkerd-install-jaeger:
 	linkerd jaeger install | kubectl apply --filename=-
 linkerd-get-yaml:
-	linkerd install > linkerd.yaml
+	linkerd install --disable-heartbeat > linkerd.yaml
 linkerd-viz-dashboard:
 	linkerd viz dashboard
 linkerd-jaeger-dashboard:
