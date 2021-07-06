@@ -3,26 +3,27 @@
 set -e
 
 # Start minikube
+echo "Start minikube"
 minikube config set cpus 4
 minikube config set memory 8192
-echo "minikube start"
 minikube start
+minikube addons enable ingress
 
 
 # Install Linkerd
 linkerd check --pre
 
-echo "linkerd install"
+echo "Install Linkerd"
 linkerd install --disable-heartbeat | kubectl apply --filename=-
 # In production, use
 # linkerd install --disable-heartbeat --ha | kubectl apply --filename=-
 linkerd check
 
-echo "linkerd viz install"
+echo "Install Linkerd Viz"
 linkerd viz install | kubectl apply --filename=-
 linkerd viz check
 
-echo "linkerd jaeger install"
+echo "Install Linkerd Jaeger"
 linkerd jaeger install | kubectl apply --filename=-
 linkerd jaeger check
 
