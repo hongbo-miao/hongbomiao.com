@@ -75,7 +75,7 @@ multipass-launch:
 	multipass launch --name=k3s --mem=4G --disk=10G
 multipass-shell:
 	multipass shell k3s
-multipass-shell:
+multipass-stop:
 	multipass stop
 k3s-get-nodes:
 	sudo kubectl get nodes
@@ -92,6 +92,8 @@ kubectl-get-pods-all:
 	kubectl get pods --all-namespaces
 kubectl-get-pods:
 	kubectl get pods --namespace=hm
+kubectl-get-services-all:
+	kubectl get services --all-namespaces
 kubectl-get-services:
 	kubectl get services --namespace=hm
 kubectl-get-services-yaml:
