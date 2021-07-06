@@ -140,6 +140,10 @@ linkerd-get-yaml:
 	linkerd install --disable-heartbeat > linkerd.yaml
 linkerd-inject:
 	kubectl get deployments --namespace=hm --output=yaml | linkerd inject - | kubectl apply --filename=-
+linkerd-inject-nginx-controller:
+	kubectl get deployment ingress-nginx-controller --namespace=ingress-nginx --output=yaml | linkerd inject --ingress - | kubectl apply --filename=-
+linkerd-verify-inject-nginx-controller:
+	kubectl describe pods/ingress-nginx-controller-7c56cf7f5-tctm4 --namespace=ingress-nginx | grep "linkerd.io/inject: ingress"
 linkerd-check:
 	linkerd check
 linkerd-check-pre:
