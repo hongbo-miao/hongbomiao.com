@@ -51,21 +51,34 @@ minikube-start:
 	minikube start
 minikube-start-hyperkit:
 	minikube start --driver=hyperkit
+minikube-start-virtualbox:
+	minikube start --driver=virtualbox
+minikube-enable-ingress:
+	minikube addons enable ingress
 minikube-delete:
 	minikube delete
 minikube-service-web:
 	minikube service web-service --namespace=hm
-minikube-service-api-go:
-	kubectl port-forward service/api-go-service --namespace=hm 5000:5000
-minikube-service-opa:
-	kubectl port-forward service/api-go-service --namespace=hm 8181:8181
-minikube-service-opal-server:
-	kubectl port-forward service/opal-server --namespace=hm 7002:7002
-
 minikube-dashboard:
 	minikube dashboard
 minikube-ip:
 	minikube ip
+
+# kind
+kind-create:
+	kind create cluster
+kind-delete:
+	kind delete cluster
+
+# k3s
+multipass-launch:
+	multipass launch --name=k3s --mem=4G --disk=10G
+multipass-shell:
+	multipass shell k3s
+multipass-shell:
+	multipass stop
+k3s-get-nodes:
+	sudo kubectl get nodes
 
 # Kubernetes
 kubectl-apply:
@@ -75,6 +88,8 @@ kubectl-apply-with-linkerd:
 	linkerd inject - | kubectl apply --filename=kubernetes
 kubectl-delete:
 	kubectl delete --filename=kubernetes
+kubectl-get-pods-all:
+	kubectl get pods --all-namespaces
 kubectl-get-pods:
 	kubectl get pods --namespace=hm
 kubectl-get-services:
@@ -97,6 +112,12 @@ kubectl-logs:
 	kubectl logs --follow POD_NAME --namespace=hm
 kubectl-sh:
 	kubectl exec --stdin --tty POD_NAME --namespace=hm -- sh
+kubectl-port-forward-api-go:
+	kubectl port-forward service/api-go-service --namespace=hm 5000:5000
+kubectl-port-forward-opa:
+	kubectl port-forward service/api-go-service --namespace=hm 8181:8181
+kubectl-port-forward-opal-server:
+	kubectl port-forward service/opal-server --namespace=hm 7002:7002
 
 # Skaffold:
 skaffold:
