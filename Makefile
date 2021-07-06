@@ -117,7 +117,7 @@ kubectl-port-forward-api-go:
 kubectl-port-forward-opa:
 	kubectl port-forward service/api-go-service --namespace=hm 8181:8181
 kubectl-port-forward-opal-server:
-	kubectl port-forward service/opal-server --namespace=hm 7002:7002
+	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
 
 # Skaffold:
 skaffold:
