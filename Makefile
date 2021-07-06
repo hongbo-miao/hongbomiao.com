@@ -57,8 +57,6 @@ minikube-enable-ingress:
 	minikube addons enable ingress
 minikube-delete:
 	minikube delete
-minikube-service-web:
-	minikube service web-service --namespace=hm
 minikube-dashboard:
 	minikube dashboard
 minikube-ip:
@@ -134,12 +132,12 @@ linkerd-install-viz:
 	linkerd viz install | kubectl apply --filename=-
 linkerd-install-jaeger:
 	linkerd jaeger install | kubectl apply --filename=-
-linkerd-get-yaml:
-	linkerd install --disable-heartbeat > linkerd.yaml
 linkerd-viz-dashboard:
 	linkerd viz dashboard
 linkerd-jaeger-dashboard:
 	linkerd jaeger dashboard
+linkerd-get-yaml:
+	linkerd install --disable-heartbeat > linkerd.yaml
 linkerd-inject:
 	kubectl get deployments --namespace=hm --output=yaml | linkerd inject - | kubectl apply --filename=-
 linkerd-check:
@@ -148,7 +146,6 @@ linkerd-check-pre:
 	linkerd check --pre
 linkerd-check-proxy: # includes linkerd-identity-data-plane
 	linkerd check --proxy
-
 linkerd-viz-tap:
 	linkerd viz tap deployments/api-go-deployment --namespace=hm
 linkerd-viz-tap-json:
