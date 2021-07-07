@@ -275,4 +275,8 @@ hadolint:
 shellcheck:
 	shellcheck $$(git ls-files '**/*.sh')
 kubeval:
-	kubeval $$(git ls-files 'kubernetes/*.yaml')
+	kubeval $$(git ls-files 'kubernetes/*-configmap.yaml')
+	kubeval $$(git ls-files 'kubernetes/*-deployment.yaml')
+	kubeval $$(git ls-files 'kubernetes/*-namespace.yaml')
+	kubeval $$(git ls-files 'kubernetes/*-service.yaml')
+
