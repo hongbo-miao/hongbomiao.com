@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+data:
+  enable-opentracing: "true"
+  jaeger-collector-host: collector.linkerd-jaeger.svc.cluster.local
