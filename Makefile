@@ -104,8 +104,12 @@ kubectl-get-namespaces:
 	kubectl get namespaces
 kubectl-get-endpoints:
 	kubectl get endpoints api-go-service --namespace=hm
-kubectl-get-configmap:
-	kubectl get configmap --namespace=hm
+kubectl-get-configmaps-all:
+	kubectl get configmaps --all-namespaces
+kubectl-get-configmaps:
+	kubectl get configmaps --namespace=hm
+kubectl-get-configmaps-yaml:
+	kubectl get configmaps ingress-nginx-controller --namespace=ingress-nginx --output=yaml
 kubectl-get-serviceaccounts:
 	kubectl get serviceaccounts
 kubectl-logs:
@@ -143,7 +147,7 @@ linkerd-inject:
 linkerd-inject-nginx-controller:
 	kubectl get deployment ingress-nginx-controller --namespace=ingress-nginx --output=yaml | linkerd inject --ingress - | kubectl apply --filename=-
 linkerd-verify-inject-nginx-controller:
-	kubectl describe pods/ingress-nginx-controller-7c56cf7f5-tctm4 --namespace=ingress-nginx | grep "linkerd.io/inject: ingress"
+	kubectl describe pods/ingress-nginx-controller-xxx --namespace=ingress-nginx | grep "linkerd.io/inject: ingress"
 linkerd-check:
 	linkerd check
 linkerd-check-pre:
