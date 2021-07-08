@@ -27,10 +27,9 @@ echo "Install Linkerd Jaeger"
 linkerd jaeger install | kubectl apply --filename=-
 linkerd jaeger check
 
-# Patch
+# Patch Ingress
 kubectl patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes-patch/ingress-nginx-controller-configmap-patch.yaml)"
 kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes-patch/ingress-nginx-controller-deployment-patch.yaml)"
-
 
 # Install Argo CD
 echo "Install Argo CD"

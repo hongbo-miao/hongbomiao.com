@@ -262,7 +262,6 @@ kafka-consumer-group-reset-offset-to-earliest:
 kafka-consumer-group-reset-offset-shift-by:
 	kafka-consumer-groups --bootstrap-server=localhost:9092 --group=my-group --topic=my-topic --reset-offsets --shift-by=-1 --execute
 
-
 # Prometheus
 prom-curl:
 	curl http://localhost:9464/metrics
@@ -279,4 +278,3 @@ kubeval:
 	kubeval $$(git ls-files 'kubernetes/*-deployment.yaml')
 	kubeval $$(git ls-files 'kubernetes/*-namespace.yaml')
 	kubeval $$(git ls-files 'kubernetes/*-service.yaml')
-
