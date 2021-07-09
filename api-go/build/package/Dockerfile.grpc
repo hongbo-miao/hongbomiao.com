@@ -15,5 +15,5 @@ ENV GIN_MODE=release
 COPY --from=builder /usr/src/app/.env.production ./.env.production
 COPY --from=builder /usr/src/app/out/cmd/grpc/main ./main
 
-EXPOSE 5000
+EXPOSE 50051
 CMD ["./main"]
