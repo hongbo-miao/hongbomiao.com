@@ -26,7 +26,7 @@ jobs:
           context: .
           file: ./web/Dockerfile
           push: true
-          tags: hongbomiao/hongbomiao-web:latest
+          tags: hongbomiao/hm-web:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -51,7 +51,7 @@ jobs:
           context: .
           file: ./api/Dockerfile
           push: true
-          tags: hongbomiao/hongbomiao-api:latest
+          tags: hongbomiao/hm-api:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -76,7 +76,7 @@ jobs:
           context: .
           file: ./api-go/build/package/Dockerfile.api
           push: true
-          tags: hongbomiao/hongbomiao-api-go:latest
+          tags: hongbomiao/hm-api-go:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -101,7 +101,7 @@ jobs:
           context: .
           file: ./api-go/build/package/Dockerfile.grpc
           push: true
-          tags: hongbomiao/hongbomiao-api-go-grpc:latest
+          tags: hongbomiao/hm-api-go-grpc:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -126,6 +126,6 @@ jobs:
           context: .
           file: ./api-go/build/package/Dockerfile.grpc
           push: true
-          tags: hongbomiao/hongbomiao-decision-log-receiver:latest
+          tags: hongbomiao/hm-decision-log-receiver:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
