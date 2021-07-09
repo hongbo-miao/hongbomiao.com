@@ -15,6 +15,8 @@ type Config struct {
 	OpenCensusAgentHost string
 	OpenCensusAgentPort string
 	JaegerURL           string
+
+	DecisionLogReceiverPort string
 }
 
 func GetConfig() *Config {
@@ -37,5 +39,7 @@ func GetConfig() *Config {
 		OpenCensusAgentHost: os.Getenv("OPEN_CENSUS_AGENT_HOST"),
 		OpenCensusAgentPort: os.Getenv("OPEN_CENSUS_AGENT_PORT"),
 		JaegerURL:           os.Getenv("JAEGER_URL"),
+
+		DecisionLogReceiverPort: os.Getenv("DECISION_LOG_RECEIVER_PORT"),
 	}
 }

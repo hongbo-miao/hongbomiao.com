@@ -4,6 +4,9 @@ run:
 run-grpc:
 	go run cmd/grpc/main.go
 
+run-decision-log-receiver:
+	go run cmd/decision-log-receiver/main.go
+
 tidy:
 	go mod tidy
 
