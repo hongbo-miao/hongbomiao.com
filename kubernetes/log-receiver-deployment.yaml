@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-receiver-deployment
+  namespace: hm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: log-receiver
+  template:
+    metadata:
+      labels:
+        component: log-receiver
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+        - name: log-receiver
+          image: hongbomiao/hm-log-receiver:latest
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: log-receiver-configmap
+                  key: app_env
+            - name: DECISION_LOG_RECEIVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: log-receiver-configmap
+                  key: decision_log_receiver_port
+          ports:
+            - name: log-receiver
+              protocol: TCP
+              containerPort: 8000
