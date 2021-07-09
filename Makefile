@@ -13,8 +13,8 @@ docker-build:
 	docker build --file=web/Dockerfile --tag=hm-web .
 	docker build --file=api/Dockerfile.development --tag=hm-api-dev .
 	docker build --file=api/Dockerfile --tag=hm-api .
-	docker build --file=api-go/Dockerfile.api --tag=hm-api-go .
-	docker build --file=api-go/Dockerfile.grpc --tag=hm-api-go-grpc .
+	docker build --file=api-go/build/package/Dockerfile.api --tag=hm-api-go .
+	docker build --file=api-go/build/package/Dockerfile.grpc --tag=hm-api-go-grpc .
 docker-run:
 	docker run -p 80:80 web
 	docker run -p 5000:5000 --name=hm_api_dev --rm --env-file=./api/.env.development.local.example.docker hm-api-dev
