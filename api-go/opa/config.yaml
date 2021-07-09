@@ -1,0 +1,9 @@
+services:
+  hm_service:
+    url: http://log-receiver-service.hm:8000
+
+decision_logs:
+  service: hm_service
+  reporting:
+    min_delay_seconds: 1
+    max_delay_seconds: 10
