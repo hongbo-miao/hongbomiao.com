@@ -13,7 +13,7 @@ build:
   - image: hongbomiao/hongbomiao-api-go
     context: .
     docker:
-      dockerfile: api-go/Dockerfile.api
+      dockerfile: api-go/build/package/Dockerfile.api
     sync:
       manual:
         - src: "*.go"
@@ -21,7 +21,7 @@ build:
   - image: hongbomiao/hongbomiao-api-go-grpc
     context: .
     docker:
-      dockerfile: api-go/Dockerfile.grpc
+      dockerfile: api-go/build/package/Dockerfile.grpc
     sync:
       manual:
         - src: "*.go"
