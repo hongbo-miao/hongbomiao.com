@@ -105,8 +105,8 @@ jobs:
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-decision-log-receiver:
-    name: Push decision-log-receiver to Docker Hub
+  push-log-receiver:
+    name: Push log-receiver to Docker Hub
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -126,6 +126,6 @@ jobs:
           context: .
           file: ./api-go/build/package/Dockerfile.grpc
           push: true
-          tags: hongbomiao/hm-decision-log-receiver:latest
+          tags: hongbomiao/hm-log-receiver:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

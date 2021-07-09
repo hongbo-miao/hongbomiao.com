@@ -71,6 +71,11 @@ spec:
                 configMapKeyRef:
                   name: api-go-configmap
                   key: opal_log_module_exclude_list
+            - name: OPAL_INLINE_OPA_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-configmap
+                  key: opal_inline_opa_config
             - name: OPAL_INLINE_OPA_LOG_FORMAT
               valueFrom:
                 configMapKeyRef:
@@ -83,3 +88,12 @@ spec:
             - name: opa
               protocol: TCP
               containerPort: 8181
+          volumeMounts:
+            - mountPath: /home/opa
+              name: opal-client-volume
+              readOnly: true
+      volumes:
+        - name: opal-client-volume
+          persistentVolumeClaim:
+            claimName: opal-client-pvc
+            readOnly: true

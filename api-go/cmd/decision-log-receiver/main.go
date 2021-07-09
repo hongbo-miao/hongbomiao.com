@@ -22,7 +22,7 @@ func main() {
 	var config = utils.GetConfig()
 	log.Info().
 		Str("env", config.Env).
-		Str("port", config.DecisionLogReceiverPort).
+		Str("decisionLogReceiverPort", config.DecisionLogReceiverPort).
 		Msg("main")
 
 	r := gin.Default()

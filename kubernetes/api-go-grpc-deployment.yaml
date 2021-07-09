@@ -19,6 +19,11 @@ spec:
         - name: api-go-grpc
           image: hongbomiao/hm-api-go-grpc:latest
           env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: api-go-grpc-configmap
+                  key: app_env
             - name: GRPC_PORT
               valueFrom:
                 configMapKeyRef:
