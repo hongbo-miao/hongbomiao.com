@@ -1,12 +1,13 @@
 package main
 
 import (
+	"context"
 	"contrib.go.opencensus.io/exporter/ocagent"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/routes"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/rs/zerolog/log"
 	"go.opencensus.io/plugin/ochttp"
-	"go.opencensus.io/trace"
+	opencensustrace "go.opencensus.io/trace"
 	"net/http"
 	"time"
 )
@@ -19,7 +20,15 @@ func main() {
 		Str("port", config.Port).
 		Str("openCensusAgentHost", config.OpenCensusAgentHost).
 		Str("openCensusAgentPort", config.OpenCensusAgentPort).
+		Str("JaegerURL", config.JaegerURL).
 		Msg("main")
+
+	tp := utils.InitTracer(config.JaegerURL)
+	defer func() {
+		if err := tp.Shutdown(context.Background()); err != nil {
+			log.Printf("Error shutting down tracer provider: %v", err)
+		}
+	}()
 
 	oce, err := ocagent.NewExporter(
 		ocagent.WithInsecure(),
@@ -29,7 +38,7 @@ func main() {
 	if err != nil {
 		log.Error().Err(err).Msg("ocagent.NewExporter")
 	}
-	trace.RegisterExporter(oce)
+	opencensustrace.RegisterExporter(oce)
 
 	r := routes.SetupRouter()
 	_ = http.ListenAndServe(
