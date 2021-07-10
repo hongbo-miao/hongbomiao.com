@@ -56,7 +56,7 @@ minikube-start-virtualbox:
 minikube-enable-ingress:
 	minikube addons enable ingress
 minikube-mount:
-	minikube mount $HOME/Clouds/Git/hongbomiao.com/kubernetes/data:/data
+	minikube mount "$$HOME/Clouds/Git/hongbomiao.com/kubernetes/data:/data"
 minikube-delete:
 	minikube delete
 minikube-dashboard:
