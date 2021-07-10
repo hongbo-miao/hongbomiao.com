@@ -55,6 +55,8 @@ minikube-start-virtualbox:
 	minikube start --driver=virtualbox
 minikube-enable-ingress:
 	minikube addons enable ingress
+minikube-mount:
+	minikube mount $HOME/Clouds/Git/hongbomiao.com/kubernetes/data:/data
 minikube-delete:
 	minikube delete
 minikube-dashboard:
@@ -102,6 +104,10 @@ kubectl-get-deployments-yaml:
 	kubectl get deployments api-go-deployment --namespace=hm --output=yaml
 kubectl-get-namespaces:
 	kubectl get namespaces
+kubectl-get-storageclass:
+	kubectl get storageclass --all-namespaces
+kubectl-get-persistentvolumeclaim:
+	kubectl get persistentvolumeclaim --all-namespaces
 kubectl-get-endpoints:
 	kubectl get endpoints api-go-service --namespace=hm
 kubectl-get-configmaps-all:
@@ -217,6 +223,10 @@ argocd-sync-local:
 	argocd app sync hm-application --local=kubernetes
 argocd-list:
 	argocd app list
+argocd-apply:
+	kubectl apply --filename=argocd/hm-application.yaml
+argocd-delete:
+	argocd app delete hm-application
 
 kubectl-get-pods-argocd:
 	kubectl get pods --namespace=argocd
