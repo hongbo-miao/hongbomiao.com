@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: opal-client-pvc
+  name: host-pvc
 spec:
+  volumeName: host-pv
   accessModes:
-    - ReadOnlyMany
+    - ReadWriteOnce
   storageClassName: standard
   resources:
     requests:

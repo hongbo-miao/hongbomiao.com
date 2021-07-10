@@ -94,11 +94,9 @@ spec:
               protocol: TCP
               containerPort: 8181
           volumeMounts:
-            - mountPath: /home/opa
-              name: opal-client-volume
-              readOnly: true
+            - mountPath: /data
+              name: opa-volume
       volumes:
-        - name: opal-client-volume
+        - name: opa-volume
           persistentVolumeClaim:
-            claimName: opal-client-pvc
-            readOnly: true
+            claimName: host-pvc

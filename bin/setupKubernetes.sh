@@ -6,8 +6,9 @@ set -e
 echo "Start minikube"
 minikube config set cpus 4
 minikube config set memory 8192
-minikube start
+minikube start --driver=hyperkit
 minikube addons enable ingress
+minikube mount $HOME/Clouds/Git/hongbomiao.com/kubernetes/data:/data
 
 
 # Install Linkerd
@@ -27,9 +28,11 @@ echo "Install Linkerd Jaeger"
 linkerd jaeger install | kubectl apply --filename=-
 linkerd jaeger check
 
+
 # Patch Ingress
 kubectl patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes-patch/ingress-nginx-controller-configmap-patch.yaml)"
 kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes-patch/ingress-nginx-controller-deployment-patch.yaml)"
+
 
 # Install Argo CD
 echo "Install Argo CD"
@@ -46,7 +49,7 @@ echo "Install the app"
 kubectl apply --filename=argocd/hm-application.yaml
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 argocd login localhost:8080
-argocd app sync hm-application
+argocd app sync hm-application --local=kubernetes
 
 
 # Install the app by Kubernetes files
