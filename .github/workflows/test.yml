@@ -153,10 +153,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Lint Kubernetes
         run: |
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes garethr/kubeval kubernetes/*-configmap.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes garethr/kubeval kubernetes/*-deployment.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes garethr/kubeval kubernetes/*-namespace.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes garethr/kubeval kubernetes/*-service.yaml
+          docker run --rm --volume `pwd`/kubernetes:/kubernetes garethr/kubeval kubernetes/config/*-configmap.yaml
+          docker run --rm --volume `pwd`/kubernetes:/kubernetes garethr/kubeval kubernetes/config/*-deployment.yaml
+          docker run --rm --volume `pwd`/kubernetes:/kubernetes garethr/kubeval kubernetes/config/*-namespace.yaml
+          docker run --rm --volume `pwd`/kubernetes:/kubernetes garethr/kubeval kubernetes/config/*-service.yaml
 
   lint-shell:
     name: Lint (Shell)

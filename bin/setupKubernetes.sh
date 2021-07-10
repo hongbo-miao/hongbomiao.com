@@ -49,10 +49,10 @@ echo "Install the app"
 kubectl apply --filename=argocd/hm-application.yaml
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 argocd login localhost:8080
-argocd app sync hm-application --local=kubernetes
+argocd app sync hm-application --local=kubernetes/config
 
 
 # Install the app by Kubernetes files
 # echo "Install the app"
-# kubectl apply --filename=kubernetes/hm-namespace.yaml
-# kubectl apply --filename=kubernetes
+# kubectl apply --filename=kubernetes/config/hm-namespace.yaml
+# kubectl apply --filename=kubernetes/config
