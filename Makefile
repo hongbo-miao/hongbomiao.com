@@ -217,14 +217,14 @@ argocd-disable-auth-sync:
 	argocd app set hm-application --sync-policy=none
 argocd-diff:
 	argocd app diff hm-application --local=kubernetes
+argocd-apply:
+	kubectl apply --filename=argocd/hm-application.yaml
 argocd-sync:
 	argocd app sync hm-application
 argocd-sync-local:
 	argocd app sync hm-application --local=kubernetes
 argocd-list:
 	argocd app list
-argocd-apply:
-	kubectl apply --filename=argocd/hm-application.yaml
 argocd-delete:
 	argocd app delete hm-application
 
