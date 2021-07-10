@@ -30,8 +30,8 @@ linkerd jaeger check
 
 
 # Patch Ingress
-kubectl patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes-patch/ingress-nginx-controller-configmap-patch.yaml)"
-kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes-patch/ingress-nginx-controller-deployment-patch.yaml)"
+kubectl patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patch/ingress-nginx-controller-configmap-patch.yaml)"
+kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patch/ingress-nginx-controller-deployment-patch.yaml)"
 
 
 # Install Argo CD
