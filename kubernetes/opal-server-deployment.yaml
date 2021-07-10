@@ -49,6 +49,11 @@ spec:
                 configMapKeyRef:
                   name: opal-server-configmap
                   key: opal_log_module_exclude_list
+            - name: OPAL_LOG_COLORIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: opal-server-configmap
+                  key: opal_log_colorize
           ports:
             - name: opal-server
               protocol: TCP
