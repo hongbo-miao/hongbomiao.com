@@ -283,8 +283,5 @@ hadolint:
 	hadolint $$(git ls-files '**/Dockerfile*')
 shellcheck:
 	shellcheck $$(git ls-files '**/*.sh')
-kubeval:
-	kubeval $$(git ls-files 'kubernetes/config/*-configmap.yaml')
-	kubeval $$(git ls-files 'kubernetes/config/*-deployment.yaml')
-	kubeval $$(git ls-files 'kubernetes/config/*-namespace.yaml')
-	kubeval $$(git ls-files 'kubernetes/config/*-service.yaml')
+kubeconform:
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/*.yaml')
