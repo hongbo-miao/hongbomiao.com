@@ -82,12 +82,12 @@ k3s-get-nodes:
 
 # Kubernetes
 kubectl-apply:
-	kubectl apply --filename=kubernetes/hm-namespace.yaml
-	kubectl apply --filename=kubernetes
+	kubectl apply --filename=kubernetes/config/hm-namespace.yaml
+	kubectl apply --filename=kubernetes/config
 kubectl-apply-with-linkerd:
-	linkerd inject - | kubectl apply --filename=kubernetes
+	linkerd inject - | kubectl apply --filename=kubernetes/config
 kubectl-delete:
-	kubectl delete --filename=kubernetes
+	kubectl delete --filename=kubernetes/config
 kubectl-get-pods-all:
 	kubectl get pods --all-namespaces
 kubectl-get-pods:
@@ -216,13 +216,13 @@ argocd-enable-auth-sync:
 argocd-disable-auth-sync:
 	argocd app set hm-application --sync-policy=none
 argocd-diff:
-	argocd app diff hm-application --local=kubernetes
+	argocd app diff hm-application --local=kubernetes/config
 argocd-apply:
 	kubectl apply --filename=argocd/hm-application.yaml
 argocd-sync:
 	argocd app sync hm-application
 argocd-sync-local:
-	argocd app sync hm-application --local=kubernetes
+	argocd app sync hm-application --local=kubernetes/config
 argocd-list:
 	argocd app list
 argocd-delete:
@@ -284,7 +284,7 @@ hadolint:
 shellcheck:
 	shellcheck $$(git ls-files '**/*.sh')
 kubeval:
-	kubeval $$(git ls-files 'kubernetes/*-configmap.yaml')
-	kubeval $$(git ls-files 'kubernetes/*-deployment.yaml')
-	kubeval $$(git ls-files 'kubernetes/*-namespace.yaml')
-	kubeval $$(git ls-files 'kubernetes/*-service.yaml')
+	kubeval $$(git ls-files 'kubernetes/config/*-configmap.yaml')
+	kubeval $$(git ls-files 'kubernetes/config/*-deployment.yaml')
+	kubeval $$(git ls-files 'kubernetes/config/*-namespace.yaml')
+	kubeval $$(git ls-files 'kubernetes/config/*-service.yaml')
