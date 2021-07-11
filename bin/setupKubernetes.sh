@@ -2,15 +2,6 @@
 
 set -e
 
-# Start minikube
-echo "Start minikube"
-minikube config set cpus 4
-minikube config set memory 8192
-minikube start --driver=hyperkit
-minikube addons enable ingress
-minikube mount "$HOME/Clouds/Git/hongbomiao.com/kubernetes/data:/data"
-
-
 # Install Linkerd
 linkerd check --pre
 
