@@ -132,6 +132,7 @@ A cutting-edge technology lab powered by automation.
 - **gRPC** - Remote procedure call (RPC) framework
 - **zerolog** - Logging
 - **GoDotEnv** - Environment variables loading
+- **Testify** - Unit testing
 
 ### Cloud Native
 
