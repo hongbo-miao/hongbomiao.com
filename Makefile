@@ -56,7 +56,7 @@ minikube-start-virtualbox:
 minikube-enable-ingress:
 	minikube addons enable ingress
 minikube-mount:
-	minikube mount "$$HOME/Clouds/Git/hongbomiao.com/kubernetes/data:/data"
+	minikube mount ./kubernetes/data:/data
 minikube-delete:
 	minikube delete
 minikube-dashboard:
@@ -66,9 +66,23 @@ minikube-ip:
 
 # kind
 kind-create:
-	kind create cluster
+	kind create cluster --name=west --config=kubernetes/kind/west-cluster-config.yaml
+	kind create cluster --name=east --config=kubernetes/kind/east-cluster-config.yaml
 kind-delete:
-	kind delete cluster
+	kind delete cluster --name=west
+	kind delete cluster --name=east
+kind-list-clusters:
+	kind get clusters
+kubectl-get-context-info:
+	kubectl cluster-info --context kind-west
+	kubectl cluster-info --context kind-east
+kubectl-get-contexts:
+	kubectl config get-contexts
+kubectl-get-current-context:
+	kubectl config current-context
+kubectl-use-context:
+	kubectl config use-context kind-west
+	kubectl config use-context kind-east
 
 # k3s
 multipass-launch:
@@ -104,10 +118,10 @@ kubectl-get-deployments-yaml:
 	kubectl get deployments api-go-deployment --namespace=hm --output=yaml
 kubectl-get-namespaces:
 	kubectl get namespaces
-kubectl-get-storageclass:
-	kubectl get storageclass --all-namespaces
-kubectl-get-persistentvolumeclaim:
-	kubectl get persistentvolumeclaim --all-namespaces
+kubectl-get-storageclasses:
+	kubectl get storageclasses --all-namespaces
+kubectl-get-persistentvolumeclaims:
+	kubectl get persistentvolumeclaims --all-namespaces
 kubectl-get-endpoints:
 	kubectl get endpoints api-go-service --namespace=hm
 kubectl-get-configmaps-all:
@@ -122,6 +136,7 @@ kubectl-logs:
 	kubectl logs --follow POD_NAME --namespace=hm
 kubectl-sh:
 	kubectl exec --stdin --tty POD_NAME --namespace=hm -- sh
+
 kubectl-port-forward-api-go:
 	kubectl port-forward service/api-go-service --namespace=hm 5000:5000
 kubectl-port-forward-opa:
@@ -135,9 +150,9 @@ skaffold:
 
 # Linkerd
 linkerd-install-control-plane:
-	linkerd install --disable-heartbeat | kubectl apply --filename=-
+	linkerd install --values=kubernetes/linkerd/config.yaml --disable-heartbeat | kubectl apply --filename=-
 linkerd-install-control-plane-prod:
-	linkerd install --disable-heartbeat --ha | kubectl apply --filename=-
+	linkerd install --values=kubernetes/linkerd/config.yaml --disable-heartbeat --ha | kubectl apply --filename=-
 linkerd-install-viz:
 	linkerd viz install | kubectl apply --filename=-
 linkerd-install-jaeger:
