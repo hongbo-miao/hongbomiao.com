@@ -36,8 +36,8 @@ done
 # Patch Ingress
 for ctx in kind-west kind-east; do
   echo "Patching Ingress on ${ctx}"
-  kubectl patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patch/ingress-nginx-controller-configmap-patch.yaml)"
-  kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patch/ingress-nginx-controller-deployment-patch.yaml)"
+  kubectl patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-configmap-patch.yaml)"
+  kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-deployment-patch.yaml)"
   echo "-------------"
 done
 
@@ -52,8 +52,8 @@ done
 for ctx in kind-west kind-east; do
   echo "Installing on cluster: ${ctx}"
   linkerd --context=${ctx} multicluster install |
-    kubectl --context=${ctx} apply -f - || break
-  # linkerd multicluster uninstall | kubectl delete -f -
+    kubectl --context=${ctx} apply --filename=- || break
+  # linkerd multicluster uninstall | kubectl delete --filename=-
   echo "-------------"
 done
 
@@ -79,4 +79,4 @@ done
 
 # Link the cluster
 linkerd --context=kind-east multicluster link --cluster-name=kind-east |
-  kubectl --context=kind-west apply -f -
+  kubectl --context=kind-west apply --filename=-
