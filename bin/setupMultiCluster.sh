@@ -20,61 +20,62 @@ kind create cluster --name=east --config=kubernetes/kind/east-cluster-config.yam
 linkerd install \
   --identity-trust-anchors-file=kubernetes/certificates/root.crt \
   --identity-issuer-certificate-file=kubernetes/certificates/issuer.crt \
-  --identity-issuer-key-file=kubernetes/certificates/issuer.key \
-  | tee \
+  --identity-issuer-key-file=kubernetes/certificates/issuer.key |
+  tee \
     >(kubectl --context=kind-west apply --filename=-) \
     >(kubectl --context=kind-east apply --filename=-)
 
 # Install Ingress
 for ctx in kind-west kind-east; do
-  echo "Installing Ingress on ${ctx} .........\n"
+  echo "Installing Ingress on ${ctx}"
   VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
   kubectl apply --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${VERSION}/deploy/static/provider/kind/deploy.yaml"
-  echo "-------------\n"
+  echo "-------------"
 done
 
 # Patch Ingress
 for ctx in kind-west kind-east; do
-  echo "Patching Ingress on ${ctx} .........\n"
+  echo "Patching Ingress on ${ctx}"
   kubectl patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patch/ingress-nginx-controller-configmap-patch.yaml)"
   kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patch/ingress-nginx-controller-deployment-patch.yaml)"
-  echo "-------------\n"
+  echo "-------------"
 done
 
 # Check Linkerd
 for ctx in kind-west kind-east; do
-  echo "Checking cluster: ${ctx} .........\n"
+  echo "Checking cluster: ${ctx}"
   linkerd --context=${ctx} check || break
-  echo "-------------\n"
+  echo "-------------"
 done
 
 # Install Linkerd multicluster
 for ctx in kind-west kind-east; do
-  echo "Installing on cluster: ${ctx} ........."
-  linkerd --context=${ctx} multicluster install | \
+  echo "Installing on cluster: ${ctx}"
+  linkerd --context=${ctx} multicluster install |
     kubectl --context=${ctx} apply -f - || break
   # linkerd multicluster uninstall | kubectl delete -f -
-  echo "-------------\n"
+  echo "-------------"
 done
 
 # Check Linkerd multicluster
 for ctx in kind-west kind-east; do
-  echo "Checking gateway on cluster: ${ctx} ........."
+  echo "Checking gateway on cluster: ${ctx}"
   kubectl --context=${ctx} -n linkerd-multicluster \
     rollout status deploy/linkerd-gateway || break
-  echo "-------------\n"
+  echo "-------------"
 done
 
 for ctx in kind-west kind-east; do
-  printf "Checking cluster: ${ctx} ........."
+  echo "Checking cluster: ${ctx}"
   while [ "$(kubectl --context=${ctx} -n linkerd-multicluster get service \
     -o 'custom-columns=:.status.loadBalancer.ingress[0].ip' \
     --no-headers)" = "<none>" ]; do
-      printf '.'
-      sleep 1
+    printf '.'
+    sleep 1
   done
-  printf "-------------\n"
+  echo "-------------"
 done
 
+# Link the cluster
 linkerd --context=kind-east multicluster link --cluster-name=kind-east |
   kubectl --context=kind-west apply -f -
