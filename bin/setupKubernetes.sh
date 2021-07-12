@@ -12,7 +12,7 @@ linkerd install --disable-heartbeat | kubectl apply --filename=-
 linkerd check
 
 echo "Install Linkerd Viz"
-linkerd viz install | kubectl apply --filename=-
+linkerd viz install --set=jaegerUrl=jaeger.linkerd-jaeger:16686 | kubectl apply --filename=-
 linkerd viz check
 
 echo "Install Linkerd Jaeger"

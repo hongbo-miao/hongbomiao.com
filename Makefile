@@ -154,7 +154,7 @@ linkerd-install-control-plane:
 linkerd-install-control-plane-prod:
 	linkerd install --values=kubernetes/linkerd/config.yaml --disable-heartbeat --ha | kubectl apply --filename=-
 linkerd-install-viz:
-	linkerd viz install | kubectl apply --filename=-
+	linkerd viz install --set=jaegerUrl=jaeger.linkerd-jaeger:16686 | kubectl apply --filename=-
 linkerd-install-jaeger:
 	linkerd jaeger install | kubectl apply --filename=-
 linkerd-viz-dashboard:
