@@ -65,8 +65,9 @@ for ctx in kind-west kind-east; do
   echo "-------------"
 done
 
+# Check load balancer
 for ctx in kind-west kind-east; do
-  echo "Checking cluster: ${ctx}"
+  echo "Checking load balancer on cluster: ${ctx}"
   while [ "$(kubectl --context=${ctx} -n linkerd-multicluster get service \
     -o 'custom-columns=:.status.loadBalancer.ingress[0].ip' \
     --no-headers)" = "<none>" ]; do
