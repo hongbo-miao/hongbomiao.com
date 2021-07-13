@@ -1,0 +1,11 @@
+# https://k3d.io/usage/configfile
+
+apiVersion: k3d.io/v1alpha2
+kind: Simple
+volumes:
+  - volume: "/Users/homiao/Clouds/Git/hongbomiao.com/kubernetes/k3d/ingress-nginx-helm-chart.yaml:/var/lib/rancher/k3s/server/manifests/ingress-nginx-helm-chart.yaml"
+  - volume: "/Users/homiao/Clouds/Git/hongbomiao.com/kubernetes/data:/data"
+options:
+  k3s:
+    extraServerArgs:
+      - --no-deploy=traefik
