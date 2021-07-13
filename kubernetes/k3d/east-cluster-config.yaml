@@ -3,8 +3,11 @@
 apiVersion: k3d.io/v1alpha2
 kind: Simple
 volumes:
-  - volume: "/Users/homiao/Clouds/Git/hongbomiao.com/kubernetes/k3d/ingress-nginx-helm-chart.yaml:/var/lib/rancher/k3s/server/manifests/ingress-nginx-helm-chart.yaml"
   - volume: "/Users/homiao/Clouds/Git/hongbomiao.com/kubernetes/data:/data"
+ports:
+  - port: 8081:80
+    nodeFilters:
+      - loadbalancer
 options:
   k3s:
     extraServerArgs:

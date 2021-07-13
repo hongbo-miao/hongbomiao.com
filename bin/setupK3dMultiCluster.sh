@@ -25,13 +25,13 @@ linkerd install \
     >(kubectl --context=k3d-west apply --filename=-) \
     >(kubectl --context=k3d-east apply --filename=-)
 
-## Install Ingress
-#for ctx in k3d-west k3d-east; do
-#  echo "Installing Ingress on ${ctx}"
-#  VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
-#  kubectl apply --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${VERSION}/deploy/static/provider/kind/deploy.yaml"
-#  echo "-------------"
-#done
+# Install Ingress
+for ctx in k3d-west k3d-east; do
+  echo "Installing Ingress on ${ctx}"
+  VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
+  kubectl apply --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${VERSION}/deploy/static/provider/cloud/deploy.yaml"
+  echo "-------------"
+done
 
 # Patch Ingress
 for ctx in k3d-west k3d-east; do
