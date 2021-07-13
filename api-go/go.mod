@@ -5,7 +5,7 @@ go 1.16
 require (
 	contrib.go.opencensus.io/exporter/ocagent v0.7.0
 	github.com/buger/jsonparser v1.1.1
-	github.com/gin-contrib/gzip v0.0.3 // indirect
+	github.com/gin-contrib/gzip v0.0.3
 	github.com/gin-gonic/gin v1.7.2
 	github.com/go-playground/validator/v10 v10.7.0 // indirect
 	github.com/go-resty/resty/v2 v2.6.0
@@ -16,7 +16,7 @@ require (
 	github.com/json-iterator/go v1.1.11 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect
-	github.com/open-policy-agent/opa v0.30.1
+	github.com/open-policy-agent/opa v0.30.2
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rs/zerolog v1.23.0
 	github.com/stretchr/testify v1.7.0
