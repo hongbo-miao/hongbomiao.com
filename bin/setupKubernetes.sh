@@ -42,8 +42,8 @@ done
 # Install the app by Argo CD
 echo "Install the app"
 kubectl apply --filename=argocd/hm-application.yaml
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-argocd login localhost:8080
+kubectl port-forward service/argocd-server --namespace=argocd 31026:443
+argocd login localhost:31026
 argocd app sync hm-application --local=kubernetes/config
 
 

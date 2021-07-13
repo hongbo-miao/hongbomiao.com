@@ -220,11 +220,11 @@ argocd-check:
 	  do kubectl --namespace=argocd rollout status deployments/argocd-$${deploy}; \
 	done
 argocd-ui:
-	kubectl port-forward service/argocd-server --namespace=argocd 8080:443
+	kubectl port-forward service/argocd-server --namespace=argocd 31026:443
 argocd-get-password: # username: admin
 	kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
 argocd-login:
-	argocd login localhost:8080
+	argocd login localhost:31026
 argocd-enable-auth-sync:
 	argocd app set hm-application --sync-policy=automated
 argocd-disable-auth-sync:
