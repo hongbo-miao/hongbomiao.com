@@ -75,24 +75,23 @@ kind-list-clusters:
 	kind get clusters
 kubectl-get-context-info:
 	kubectl cluster-info --context kind-west
-	kubectl cluster-info --context kind-east
 kubectl-get-contexts:
 	kubectl config get-contexts
 kubectl-get-current-context:
 	kubectl config current-context
 kubectl-use-context:
-	kubectl config use-context kind-west
-	kubectl config use-context kind-east
+	kubectl config use-context k3d-west
+	kubectl config use-context k3d-east
 
-# k3s
-multipass-launch:
-	multipass launch --name=k3s --mem=4G --disk=10G
-multipass-shell:
-	multipass shell k3s
-multipass-stop:
-	multipass stop
-k3s-get-nodes:
-	sudo kubectl get nodes
+# k3d
+k3d-create:
+	k3d cluster create west --config=kubernetes/k3d/west-cluster-config.yaml
+	k3d cluster create east --config=kubernetes/k3d/west-cluster-config.yaml
+k3d-list:
+	k3d cluster list
+k3d-delete:
+	k3d cluster delete west
+	k3d cluster delete east
 
 # Kubernetes
 kubectl-apply:

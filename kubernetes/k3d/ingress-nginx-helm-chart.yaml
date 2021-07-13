@@ -1,0 +1,13 @@
+# https://rancher.com/docs/k3s/latest/en/helm/
+# https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx
+
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: ingress-controller-nginx
+  namespace: kube-system
+spec:
+  repo: https://kubernetes.github.io/ingress-nginx
+  chart: ingress-nginx
+  version: 3.34.0 # https://github.com/kubernetes/ingress-nginx/releases
+  targetNamespace: kube-system
