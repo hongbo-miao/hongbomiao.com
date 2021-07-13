@@ -20,13 +20,9 @@ linkerd jaeger install | kubectl apply --filename=-
 linkerd jaeger check
 
 
-# Patch Ingress (k3d)
-kubectl patch configmap ingress-controller-nginx-ingress-nginx-controller --namespace=kube-system --patch "$(cat kubernetes/patches/ingress-nginx-controller-configmap-patch.yaml)"
-kubectl patch deployment ingress-controller-nginx-ingress-nginx-controller --namespace=kube-system --patch "$(cat kubernetes/patches/ingress-nginx-controller-deployment-patch.yaml)"
-
-# Patch Ingress (kind, minikube)
-# kubectl patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-configmap-patch.yaml)"
-# kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-deployment-patch.yaml)"
+# Patch Ingress
+kubectl patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-configmap-patch.yaml)"
+kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-deployment-patch.yaml)"
 
 
 # Install Argo CD
