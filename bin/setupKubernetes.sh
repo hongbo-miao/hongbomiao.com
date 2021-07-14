@@ -28,6 +28,7 @@ kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --pa
 # Install Argo CD
 echo "Install Argo CD"
 kubectl create namespace argocd
+# kubectl apply --namespace=argocd --filename=kubernetes/manifests/argocd.yaml
 kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 for deploy in "dex-server" "redis" "repo-server" "server"; \
