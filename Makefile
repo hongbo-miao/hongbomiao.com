@@ -140,6 +140,8 @@ kubectl-port-forward-api-go:
 	kubectl port-forward service/api-go-service --namespace=hm 5000:5000
 kubectl-port-forward-opa:
 	kubectl port-forward service/api-go-service --namespace=hm 8181:8181
+kubectl-port-forward-opal-client:
+	kubectl port-forward service/api-go-service --namespace=hm 7000:7000
 kubectl-port-forward-opal-server:
 	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
 
