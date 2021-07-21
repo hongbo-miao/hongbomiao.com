@@ -1,11 +1,11 @@
 package utils
 
 import (
-	"bytes"
 	"context"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/policies"
 	"github.com/open-policy-agent/opa/rego"
 	"github.com/open-policy-agent/opa/storage/inmem"
+	"github.com/open-policy-agent/opa/util"
 	"github.com/rs/zerolog/log"
 )
 
@@ -31,72 +31,17 @@ func GetOPADecision(user string, action string, resourceType string, object stri
 		"type":   resourceType,
 		"object": object,
 	}
-	store := inmem.NewFromReader(bytes.NewBufferString(`{
-		"user_roles": {
-			"alice": [
-				"admin"
-			],
-			"bob": [
-				"employee",
-				"billing"
-			],
-			"eve": [
-				"customer"
-			]
-		},
-		"role_grants": {
-			"customer": [
-				{
-					"action": "read",
-					"type": "dog"
-				},
-				{
-					"action": "read",
-					"type": "cat"
-				},
-				{
-					"action": "adopt",
-					"type": "dog"
-				},
-				{
-					"action": "adopt",
-					"type": "cat"
-				}
-			],
-			"employee": [
-				{
-					"action": "read",
-					"type": "dog"
-				},
-				{
-					"action": "read",
-					"type": "cat"
-				},
-				{
-					"action": "update",
-					"type": "dog"
-				},
-				{
-					"action": "update",
-					"type": "cat"
-				}
-			],
-			"billing": [
-				{
-					"action": "read",
-					"type": "finance"
-				},
-				{
-					"action": "update",
-					"type": "finance"
-				}
-			]
-		}
-	}`))
 
+	data := policies.ReadData()
+	var json map[string]interface{}
+	err = util.UnmarshalJSON(data, &json)
+	if err != nil {
+		log.Error().Err(err).Msg("UnmarshalJSON")
+	}
+	store := inmem.NewFromObject(json)
 	policy := policies.ReadPolicy()
-
 	ctx := context.TODO()
+
 	query, err := rego.New(
 		rego.Query(defaultQuery),
 		rego.Store(store),
