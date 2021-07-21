@@ -23,6 +23,9 @@ var opaGraphQLField = graphql.Field{
 		"action": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
+		"resourceType": &graphql.ArgumentConfig{
+			Type: graphql.NewNonNull(graphql.String),
+		},
 		"object": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
@@ -30,7 +33,8 @@ var opaGraphQLField = graphql.Field{
 	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
 		user := p.Args["user"].(string)
 		action := p.Args["action"].(string)
+		resourceType := p.Args["resourceType"].(string)
 		object := p.Args["object"].(string)
-		return utils.GetOPADecision(user, action, object)
+		return utils.GetOPADecision(user, action, resourceType, object)
 	},
 }
