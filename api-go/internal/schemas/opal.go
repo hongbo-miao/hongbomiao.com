@@ -23,18 +23,18 @@ var opalGraphQLField = graphql.Field{
 		"action": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
-		"object": &graphql.ArgumentConfig{
+		"resourceType": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
-		"resourceType": &graphql.ArgumentConfig{
+		"object": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
 	},
 	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
 		user := p.Args["user"].(string)
 		action := p.Args["action"].(string)
-		object := p.Args["object"].(string)
 		resourceType := p.Args["resourceType"].(string)
-		return utils.GetOPALDecision(user, action, object, resourceType)
+		object := p.Args["object"].(string)
+		return utils.GetOPALDecision(user, action, resourceType, object)
 	},
 }
