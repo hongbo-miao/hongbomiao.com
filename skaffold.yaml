@@ -10,18 +10,18 @@ build:
     context: .
     docker:
       dockerfile: web/Dockerfile
-  - image: hongbomiao/hm-api-go:latest
+  - image: hongbomiao/hm-api-server:latest
     context: .
     docker:
-      dockerfile: api-go/build/package/Dockerfile.api
+      dockerfile: api-go/build/package/Dockerfile.api-server
     sync:
       manual:
         - src: "*.go"
           dest: .
-  - image: hongbomiao/hm-api-go-grpc:latest
+  - image: hongbomiao/hm-grpc-server:latest
     context: .
     docker:
-      dockerfile: api-go/build/package/Dockerfile.grpc
+      dockerfile: api-go/build/package/Dockerfile.grpc-server
     sync:
       manual:
         - src: "*.go"

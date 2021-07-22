@@ -21,7 +21,7 @@ rm -rf .expo
 rm -rf coverage
 rm -rf node_modules
 
-# API
+# API (Node.js)
 cd ../api-node
 rm -rf .clinic
 rm -rf build
@@ -29,7 +29,7 @@ rm -rf coverage
 rm -rf public
 rm -rf node_modules
 
-# API - Go
+# API (Go)
 cd ../api-go
 rm -rf web
 
