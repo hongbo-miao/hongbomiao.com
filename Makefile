@@ -25,6 +25,7 @@ docker-sh:
 	docker run --rm -it hm-api-server sh
 docker-ps:
 	docker ps
+docker-ps-all:
 	docker ps --all
 docker-prune:
 	docker system prune
