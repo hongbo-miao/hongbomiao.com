@@ -55,8 +55,8 @@ jobs:
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-api-go:
-    name: Push api-go to Docker Hub
+  push-api-server:
+    name: Push api-server to Docker Hub
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -74,14 +74,14 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./api-go/build/package/Dockerfile.api
+          file: ./api-go/build/package/Dockerfile.api-server
           push: true
-          tags: hongbomiao/hm-api-go:latest
+          tags: hongbomiao/hm-api-server:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-api-go-grpc:
-    name: Push api-go-grpc to Docker Hub
+  push-grpc-server:
+    name: Push grpc-server to Docker Hub
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -99,9 +99,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./api-go/build/package/Dockerfile.grpc
+          file: ./api-go/build/package/Dockerfile.grpc-server
           push: true
-          tags: hongbomiao/hm-api-go-grpc:latest
+          tags: hongbomiao/hm-grpc-server:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 

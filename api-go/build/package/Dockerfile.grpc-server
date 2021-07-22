@@ -5,7 +5,7 @@ COPY ["api-go/go.mod", "api-go/go.sum", "./"]
 RUN go mod download
 
 COPY api-go ./
-RUN go build -o ./out/cmd/api/ ./cmd/api/main.go
+RUN go build -o ./out/cmd/grpc-server/ ./cmd/grpc-server/main.go
 
 
 FROM alpine:3.14.0 AS release
@@ -13,7 +13,7 @@ WORKDIR /usr/src/app
 ENV GIN_MODE=release
 
 COPY --from=builder /usr/src/app/.env.production ./.env.production
-COPY --from=builder /usr/src/app/out/cmd/api/main ./main
+COPY --from=builder /usr/src/app/out/cmd/grpc-server/main ./main
 
-EXPOSE 5000
+EXPOSE 50051
 CMD ["./main"]
