@@ -9,7 +9,7 @@ import (
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
-	r.Use(otelgin.Middleware("hm-api-go"))
+	r.Use(otelgin.Middleware("hm-api-server"))
 	r.POST("/graphql", handlers.GraphQLHandler())
 	r.GET("/", controllers.Health)
 	return r

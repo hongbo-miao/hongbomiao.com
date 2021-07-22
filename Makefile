@@ -13,16 +13,16 @@ docker-build:
 	docker build --file=web/Dockerfile --tag=hm-web .
 	docker build --file=api-node/Dockerfile.development --tag=hm-api-node-dev .
 	docker build --file=api-node/Dockerfile --tag=hm-api-node .
-	docker build --file=api-go/build/package/Dockerfile.api --tag=hm-api-go .
-	docker build --file=api-go/build/package/Dockerfile.grpc --tag=hm-api-go-grpc .
+	docker build --file=api-go/build/package/Dockerfile.api-server --tag=hm-api-server .
+	docker build --file=api-go/build/package/Dockerfile.grpc-server --tag=hm-grpc-server .
 docker-run:
 	docker run -p 80:80 web
 	docker run -p 5000:5000 --name=hm_api_node_dev --rm --env-file=./api/.env.development.local.example.docker hm-api-node-dev
 	docker run -p 5000:5000 --name=hm_api_node --rm --env-file=./api/.env.production.local.example hm-api-node
-	docker run -p 5000:5000 --name=hm_api_go --rm --env=APP_ENV=production hm-api-go
-	docker run -p 5000:5000 --name=hm_api_go_grpc --rm --env=APP_ENV=production --env=GRPC_HOST=0.0.0.0 hm-api-go-grpc
+	docker run -p 5000:5000 --name=hm_api_go --rm --env=APP_ENV=production hm-api-server
+	docker run -p 5000:5000 --name=hm_api_go_grpc --rm --env=APP_ENV=production --env=GRPC_HOST=0.0.0.0 hm-grpc-server
 docker-sh:
-	docker run --rm -it hm-api-go sh
+	docker run --rm -it hm-api-server sh
 docker-ps:
 	docker ps
 	docker ps --all
@@ -110,11 +110,11 @@ kubectl-get-services-all:
 kubectl-get-services:
 	kubectl get services --namespace=hm
 kubectl-get-services-yaml:
-	kubectl get services api-go-service --namespace=hm --output=yaml
+	kubectl get services api-server-service --namespace=hm --output=yaml
 kubectl-get-deployments:
 	kubectl get deployments --namespace=hm
 kubectl-get-deployments-yaml:
-	kubectl get deployments api-go-deployment --namespace=hm --output=yaml
+	kubectl get deployments api-server-deployment --namespace=hm --output=yaml
 kubectl-get-namespaces:
 	kubectl get namespaces
 kubectl-get-storageclasses:
@@ -122,7 +122,7 @@ kubectl-get-storageclasses:
 kubectl-get-persistentvolumeclaims:
 	kubectl get persistentvolumeclaims --all-namespaces
 kubectl-get-endpoints:
-	kubectl get endpoints api-go-service --namespace=hm
+	kubectl get endpoints api-server-service --namespace=hm
 kubectl-get-configmaps-all:
 	kubectl get configmaps --all-namespaces
 kubectl-get-configmaps:
@@ -137,11 +137,11 @@ kubectl-sh:
 	kubectl exec --stdin --tty POD_NAME --namespace=hm -- sh
 
 kubectl-port-forward-api-go:
-	kubectl port-forward service/api-go-service --namespace=hm 5000:5000
+	kubectl port-forward service/api-server-service --namespace=hm 5000:5000
 kubectl-port-forward-opa:
-	kubectl port-forward service/api-go-service --namespace=hm 8181:8181
+	kubectl port-forward service/api-server-service --namespace=hm 8181:8181
 kubectl-port-forward-opal-client:
-	kubectl port-forward service/api-go-service --namespace=hm 7000:7000
+	kubectl port-forward service/api-server-service --namespace=hm 7000:7000
 kubectl-port-forward-opal-server:
 	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
 
@@ -182,23 +182,23 @@ linkerd-check-pre:
 linkerd-check-proxy: # includes linkerd-identity-data-plane
 	linkerd check --proxy
 linkerd-viz-tap:
-	linkerd viz tap deployments/api-go-deployment --namespace=hm
+	linkerd viz tap deployments/api-server-deployment --namespace=hm
 linkerd-viz-tap-json:
-	linkerd viz tap deployments/api-go-deployment --namespace=hm --output=json
+	linkerd viz tap deployments/api-server-deployment --namespace=hm --output=json
 linkerd-viz-tap-to:
-	linkerd viz tap deployments/api-go-deployment --namespace=hm --to=deployment/api-go-grpc-deployment
+	linkerd viz tap deployments/api-server-deployment --namespace=hm --to=deployment/grpc-server-deployment
 linkerd-viz-tap-to-path:
-	linkerd viz tap deployments/api-go-deployment --namespace=hm --to=deployment/api-go-grpc-deployment --path=/api.proto.greet.v1.GreetService/Greet
+	linkerd viz tap deployments/api-server-deployment --namespace=hm --to=deployment/grpc-server-deployment --path=/api.proto.greet.v1.GreetService/Greet
 linkerd-viz-top: # shows traffic routes sorted by the most popular paths
-	linkerd viz top deployments/api-go-deployment --namespace=hm
+	linkerd viz top deployments/api-server-deployment --namespace=hm
 linkerd-viz-stat:
 	linkerd viz stat deployments --namespace=hm
 linkerd-viz-stat-wide: # includes extra READ_BYTES/SEC and WRITE_BYTES/SEC
 	linkerd viz stat deployments --namespace=hm --output=wide
 linkerd-viz-stat-from-to:
-	linkerd viz stat --namespace=hm deployments/api-go-deployment --to deployments/api-go-grpc-deployment
-linkerd-viz-stat-all-from: # views the metrics for traffic to all deployments that comes from api-go-deployment
-	linkerd viz stat --namespace=hm deployments --from deployments/api-go-deployment
+	linkerd viz stat --namespace=hm deployments/api-server-deployment --to deployments/grpc-server-deployment
+linkerd-viz-stat-all-from: # views the metrics for traffic to all deployments that comes from api-server-deployment
+	linkerd viz stat --namespace=hm deployments --from deployments/api-server-deployment
 linkerd-viz-edges-deployments:
 	linkerd viz edges deployments --namespace=hm
 linkerd-viz-edges-deployments-json:
@@ -208,11 +208,11 @@ linkerd-viz-edges-pods:
 linkerd-viz-edges-pods-json:
 	linkerd viz edges pods --namespace=hm --output=json
 linkerd-viz-routes:
-	linkerd viz routes deployments/api-go-deployment --namespace=hm
+	linkerd viz routes deployments/api-server-deployment --namespace=hm
 linkerd-viz-routes-wide: # includes EFFECTIVE_SUCCESS, EFFECTIVE_RPS, ACTUAL_SUCCESS, ACTUAL_RPS
-	linkerd viz routes deployments/api-go-deployment --namespace=hm --to deployments/api-go-grpc-deployment --output=wide
+	linkerd viz routes deployments/api-server-deployment --namespace=hm --to deployments/grpc-server-deployment --output=wide
 linkerd-viz-routes-json:
-	linkerd viz routes deployments/api-go-deployment --namespace=hm --output=json
+	linkerd viz routes deployments/api-server-deployment --namespace=hm --output=json
 linkerd-get-secrets:
 	kubectl get secrets --namespace=linkerd
 linkerd-get-secret-yaml:

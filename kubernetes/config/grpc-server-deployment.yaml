@@ -1,45 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-go-grpc-deployment
+  name: grpc-server-deployment
   namespace: hm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: api-go-grpc
+      component: grpc-server
   template:
     metadata:
       labels:
-        component: api-go-grpc
+        component: grpc-server
       annotations:
         linkerd.io/inject: enabled
     spec:
       containers:
-        - name: api-go-grpc
-          image: hongbomiao/hm-api-go-grpc:latest
+        - name: grpc-server
+          image: hongbomiao/hm-grpc-server:latest
           env:
             - name: APP_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-grpc-configmap
+                  name: grpc-server-configmap
                   key: app_env
             - name: GRPC_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-grpc-configmap
+                  name: grpc-server-configmap
                   key: grpc_port
             - name: OPEN_CENSUS_AGENT_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-grpc-configmap
+                  name: grpc-server-configmap
                   key: open_census_agent_host
             - name: OPEN_CENSUS_AGENT_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-grpc-configmap
+                  name: grpc-server-configmap
                   key: open_census_agent_port
           ports:
-            - name: api-go-grpc
+            - name: grpc-server
               protocol: TCP
               containerPort: 50051

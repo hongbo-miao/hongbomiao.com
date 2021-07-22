@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: api-go-configmap
+  name: api-server-configmap
   namespace: hm
 data:
   app_env: "production"
   port: "5000"
-  grpc_host: "api-go-grpc-service.hm"
+  grpc_host: "grpc-server-service.hm"
   grpc_port: "50051"
   open_census_agent_host: "collector.linkerd-jaeger"
   jaeger_url: "http://collector.linkerd-jaeger:14268/api/traces"

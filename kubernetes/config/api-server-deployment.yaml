@@ -1,61 +1,61 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-go-deployment
+  name: api-server-deployment
   namespace: hm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: api-go
+      component: api-server
   template:
     metadata:
       labels:
-        component: api-go
+        component: api-server
       annotations:
         linkerd.io/inject: enabled
     spec:
       containers:
-        - name: api-go
-          image: hongbomiao/hm-api-go:latest
+        - name: api-server
+          image: hongbomiao/hm-api-server:latest
           env:
             - name: APP_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: app_env
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: port
             - name: GRPC_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: grpc_host
             - name: GRPC_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: grpc_port
             - name: OPEN_CENSUS_AGENT_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: open_census_agent_host
             - name: OPEN_CENSUS_AGENT_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: open_census_agent_port
             - name: JAEGER_URL
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: jaeger_url
           ports:
-            - name: api-go
+            - name: api-server
               protocol: TCP
               containerPort: 5000
         - name: opal-client
@@ -64,27 +64,27 @@ spec:
             - name: OPAL_SERVER_URL
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: opal_server_url
             - name: OPAL_INLINE_OPA_CONFIG
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: opal_inline_opa_config
             - name: OPAL_INLINE_OPA_LOG_FORMAT
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: opal_inline_opa_log_format
             - name: OPAL_LOG_MODULE_EXCLUDE_LIST
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: opal_log_module_exclude_list
             - name: OPAL_LOG_COLORIZE
               valueFrom:
                 configMapKeyRef:
-                  name: api-go-configmap
+                  name: api-server-configmap
                   key: opal_log_colorize
           ports:
             - name: opal-client
