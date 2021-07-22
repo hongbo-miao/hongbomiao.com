@@ -145,6 +145,10 @@ kubectl-port-forward-opal-client:
 	kubectl port-forward service/api-server-service --namespace=hm 7000:7000
 kubectl-port-forward-opal-server:
 	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
+kubectl-port-forward-dgraph-0:
+	kubectl port-forward pod/dgraph-0 --namespace=dgraph 8080:8080
+kubectl-port-forward-dgraph-public:
+	kubectl port-forward service/dgraph-public --namespace=dgraph 6080:6080
 
 list-port-forward:
 	ps -ef | grep port-forward
@@ -252,7 +256,6 @@ argocd-list:
 	argocd app list
 argocd-delete:
 	argocd app delete hm-application --yes
-
 kubectl-get-pods-argocd:
 	kubectl get pods --namespace=argocd
 kubectl-get-rolebindings-argocd:
@@ -263,6 +266,19 @@ kubectl-get-roles-argocd:
 	kubectl get roles --namespace=argocd
 kubectl-describe-role-argocd:
 	kubectl describe role argocd-application-controller --namespace=argocd
+
+# Dgraph
+dgraph-install-standalone:
+	mkdir -p ~/dgraph
+	docker run -it -p 5080:5080 -p 6080:6080 -p 8080:8080 \
+      -p 9080:9080 -p 8000:8000 -v ~/dgraph:/dgraph --name dgraph \
+      dgraph/standalone
+dgraph-install:
+	kubectl create namespace dgraph
+	kubectl apply --namespace=dgraph --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
+dgraph-delete:
+	kubectl delete --namespace=dgraph --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
+	kubectl delete persistentvolumeclaims --namespace=dgraph --selector=app=dgraph
 
 # Kafka
 zookeeper-start:

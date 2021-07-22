@@ -32,7 +32,7 @@ func GetOPALDecision(user string, action string, resourceType string, object str
 
 	decision, err := jsonparser.GetBoolean(res.Body(), "result")
 	if err != nil {
-		log.Error().Err(err).Msg("GetBoolean")
+		log.Error().Err(err).Msg("jsonparser.GetBoolean")
 	}
 
 	return OPAL{

@@ -30,6 +30,7 @@ for ctx in k3d-west k3d-east; do
   echo "Installing Ingress on ${ctx}"
   VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
   kubectl apply --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${VERSION}/deploy/static/provider/cloud/deploy.yaml"
+  # Local: kubectl apply --filename=kubernetes/manifests/ingress-nginx.yaml
   echo "-------------"
 done
 
