@@ -3,16 +3,16 @@ version: "3.8"
 
 services:
   # API
-  api:
-    container_name: hm_api
+  api-node:
+    container_name: hm_api_node
     build:
       context: .
-      dockerfile: api/Dockerfile.development
+      dockerfile: api-node/Dockerfile.development
     env_file:
-      - ./api/.env.development.local.example.docker
+      - api-node/.env.development.local.example.docker
     volumes:
-      - ./api:/usr/src/app/api
-      - /usr/src/app/api/node_modules
+      - ./api-node:/usr/src/app/api-node
+      - /usr/src/app/api-node/node_modules
     logging:
       driver: fluentd
       options:

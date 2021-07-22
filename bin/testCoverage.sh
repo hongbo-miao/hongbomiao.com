@@ -8,14 +8,14 @@ npm run test:coverage
 cd ../mobile
 npm run test:coverage
 
-cd ../api
+cd ../api-node
 npm run test:coverage
 
 cd ..
 mkdir -p tmp
 cp web/coverage/coverage-final.json tmp/coverage-final-web.json
 cp mobile/coverage/coverage-final.json tmp/coverage-final-mobile.json
-cp api/coverage/coverage-final.json tmp/coverage-final-api.json
+cp api-node/coverage/coverage-final.json tmp/coverage-final-api.json
 
 mkdir -p coverage
 nyc merge tmp coverage/coverage-final.json

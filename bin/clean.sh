@@ -22,7 +22,7 @@ rm -rf coverage
 rm -rf node_modules
 
 # API
-cd ../api
+cd ../api-node
 rm -rf .clinic
 rm -rf build
 rm -rf coverage

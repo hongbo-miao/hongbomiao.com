@@ -13,10 +13,10 @@ RUN rm -f ./.eslintrc.js \
   && npm prune --production
 
 
-FROM base AS api
-COPY ["api/package.json", "api/package-lock.json", "./"]
+FROM base AS api-node
+COPY ["api-node/package.json", "api-node/package-lock.json", "./"]
 RUN npm ci
-COPY api ./
+COPY api-node ./
 RUN npm run build \
   && npm prune --production
 
@@ -27,9 +27,9 @@ ENV NODE_ENV production
 USER node
 
 COPY --from=web /usr/src/app/build ./public
-COPY --from=api /usr/src/app/build ./build
-COPY --from=api /usr/src/app/node_modules ./node_modules
-COPY --from=api /usr/src/app/package.json ./
+COPY --from=api-node /usr/src/app/build ./build
+COPY --from=api-node /usr/src/app/node_modules ./node_modules
+COPY --from=api-node /usr/src/app/package.json ./
 
 EXPOSE 5000
 CMD ["dumb-init", "node", "build/index.js"]

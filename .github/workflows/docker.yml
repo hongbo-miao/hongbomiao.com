@@ -30,8 +30,8 @@ jobs:
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-api:
-    name: Push api to Docker Hub
+  push-api-node:
+    name: Push api-node to Docker Hub
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -49,9 +49,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./api/Dockerfile
+          file: ./api-node/Dockerfile
           push: true
-          tags: hongbomiao/hm-api:latest
+          tags: hongbomiao/hm-api-node:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 

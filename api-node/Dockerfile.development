@@ -16,11 +16,11 @@ RUN rm -f ./.eslintrc.js \
   && npm run build
 
 
-FROM base AS api
-COPY ["api/package.json", "api/package-lock.json", "./"]
+FROM base AS api-node
+COPY ["api-node/package.json", "api-node/package-lock.json", "./"]
 RUN npm ci
 COPY --from=web /usr/src/app/build ./public
-COPY api ./
+COPY api-node ./
 
 EXPOSE 5000
 CMD ["npm", "run", "dev"]
