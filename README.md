@@ -227,15 +227,15 @@ A cutting-edge technology lab powered by automation.
 
 #### Service Mesh - Linkerd
 
-![Linkerd](https://user-images.githubusercontent.com/3375461/125179755-02497280-e224-11eb-8ba2-9ae07c803dfd.png)
+![Linkerd](https://user-images.githubusercontent.com/3375461/126631387-f80b7263-28cb-442c-8699-2b0c753bed36.png)
 
 #### GitOps - Argo CD
 
-![Argo CD](https://user-images.githubusercontent.com/3375461/125179758-04abcc80-e224-11eb-807a-0715a6dcd24a.png)
+![Argo CD](https://user-images.githubusercontent.com/3375461/126631373-541fe215-2d29-4eb9-bee5-b51ca29fc611.png)
 
 #### Distributed Tracing - OpenTelemetry
 
-The website is using [OpenTelemetry](https://opentelemetry.io/), a [Cloud Native Computing Foundation (CNCF)](https://www.cncf.io/) project, as an open specification to standardize collecting and sending telemetry data.
+The website is using [OpenTelemetry](https://opentelemetry.io/) as an open specification to standardize collecting and sending telemetry data.
 
 After it processes, Elasticsearch saves the data. You can analyze them using Jaeger, Prometheus, and other observability tools.
 
