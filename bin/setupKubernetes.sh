@@ -38,9 +38,10 @@ done
 
 # Install the app by Argo CD
 echo "Install the app"
+kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
+ARGOCD_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo)
+argocd login localhost:31026 --username=admin --password=${ARGOCD_PASSWORD} --insecure
 kubectl apply --filename=argocd/hm-application.yaml
-kubectl port-forward service/argocd-server --namespace=argocd 31026:443
-argocd login localhost:31026
 argocd app sync hm-application --local=kubernetes/config
 
 
