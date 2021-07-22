@@ -9,7 +9,7 @@ npm install
 npm run build
 
 cd ..
-cp -r web/build/ api/public/
+cp -r web/build/ api-node/public/
 
 cd api-node
 npm install
