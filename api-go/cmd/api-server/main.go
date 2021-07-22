@@ -34,7 +34,7 @@ func main() {
 		ocagent.WithInsecure(),
 		ocagent.WithReconnectionPeriod(5*time.Second),
 		ocagent.WithAddress(config.OpenCensusAgentHost+":"+config.OpenCensusAgentPort),
-		ocagent.WithServiceName("api-go"))
+		ocagent.WithServiceName("api-server"))
 	if err != nil {
 		log.Error().Err(err).Msg("ocagent.NewExporter")
 	}
