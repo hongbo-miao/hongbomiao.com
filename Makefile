@@ -145,6 +145,11 @@ kubectl-port-forward-opal-client:
 kubectl-port-forward-opal-server:
 	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
 
+list-port-forward:
+	ps -ef | grep port-forward
+kill-port:
+	kill -9 PID
+
 # Skaffold:
 skaffold:
 	skaffold dev
@@ -159,9 +164,9 @@ linkerd-install-viz:
 linkerd-install-jaeger:
 	linkerd jaeger install | kubectl apply --filename=-
 linkerd-viz-dashboard:
-	linkerd viz dashboard
+	linkerd viz dashboard &
 linkerd-jaeger-dashboard:
-	linkerd jaeger dashboard
+	linkerd jaeger dashboard &
 linkerd-get-yaml:
 	linkerd install --disable-heartbeat > linkerd.yaml
 linkerd-inject:
@@ -222,11 +227,12 @@ argocd-check:
 	  do kubectl --namespace=argocd rollout status deployments/argocd-$${deploy}; \
 	done
 argocd-ui:
-	kubectl port-forward service/argocd-server --namespace=argocd 31026:443
+	kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
 argocd-get-password: # username: admin
 	kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
 argocd-login:
-	argocd login localhost:31026
+	$(eval ARGOCD_PASSWORD := $(shell kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo))
+	argocd login localhost:31026 --username=admin --password=$(ARGOCD_PASSWORD) --insecure
 argocd-enable-auth-sync:
 	argocd app set hm-application --sync-policy=automated
 argocd-disable-auth-sync:
@@ -236,13 +242,15 @@ argocd-diff:
 argocd-apply:
 	kubectl apply --filename=argocd/hm-application.yaml
 argocd-sync:
+	kubectl apply --filename=argocd/hm-application.yaml
 	argocd app sync hm-application
 argocd-sync-local:
+	kubectl apply --filename=argocd/hm-application.yaml
 	argocd app sync hm-application --local=kubernetes/config
 argocd-list:
 	argocd app list
 argocd-delete:
-	argocd app delete hm-application
+	argocd app delete hm-application --yes
 
 kubectl-get-pods-argocd:
 	kubectl get pods --namespace=argocd
