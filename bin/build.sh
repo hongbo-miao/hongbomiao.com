@@ -11,6 +11,6 @@ npm run build
 cd ..
 cp -r web/build/ api/public/
 
-cd api
+cd api-node
 npm install
 npm run build
