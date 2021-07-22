@@ -26,7 +26,7 @@ func main() {
 	tp := utils.InitTracer(config.JaegerURL)
 	defer func() {
 		if err := tp.Shutdown(context.Background()); err != nil {
-			log.Printf("Error shutting down tracer provider: %v", err)
+			log.Error().Err(err).Msg("tp.Shutdown")
 		}
 	}()
 

@@ -2,13 +2,13 @@
 
 set -e
 
+
 # Install Linkerd
 linkerd check --pre
 
 echo "Install Linkerd"
 linkerd install --disable-heartbeat | kubectl apply --filename=-
-# In production, use
-# linkerd install --disable-heartbeat --ha | kubectl apply --filename=-
+# Production: linkerd install --disable-heartbeat --ha | kubectl apply --filename=-
 linkerd check
 
 echo "Install Linkerd Viz"
@@ -28,12 +28,21 @@ kubectl patch deployment ingress-nginx-controller --namespace=ingress-nginx --pa
 # Install Argo CD
 echo "Install Argo CD"
 kubectl create namespace argocd
-# kubectl apply --namespace=argocd --filename=kubernetes/manifests/argocd.yaml
 kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+# Local: kubectl apply --namespace=argocd --filename=kubernetes/manifests/argocd.yaml
 
-for deploy in "dex-server" "redis" "repo-server" "server"; \
-  do kubectl --namespace=argocd rollout status deploy/argocd-${deploy}; \
+for deploy in "dex-server" "redis" "repo-server" "server"; do
+  kubectl --namespace=argocd rollout status deploy/argocd-${deploy}
 done
+
+
+# Install Dgraph (https://dgraph.io/docs/deploy/kubernetes)
+kubectl create namespace dgraph
+kubectl apply --namespace=dgraph --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
+# Delete: kubectl delete --namespace=dgraph --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
+#         kubectl delete persistentvolumeclaims --namespace=dgraph --selector=app=dgraph
+# Local: kubectl apply --namespace=dgraph --filename=kubernetes/manifests/dgraph-single.yaml
+# Production: kubectl apply --namespace=dgraph --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml
 
 
 # Install the app by Argo CD

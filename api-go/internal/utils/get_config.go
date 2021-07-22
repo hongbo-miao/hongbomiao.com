@@ -12,6 +12,8 @@ type Config struct {
 	GRPCPort            string
 	OPAHost             string
 	OPAPort             string
+	DgraphHost          string
+	DgraphGRPCPort      string
 	OpenCensusAgentHost string
 	OpenCensusAgentPort string
 	JaegerURL           string
@@ -36,6 +38,8 @@ func GetConfig() *Config {
 		GRPCPort:            os.Getenv("GRPC_PORT"),
 		OPAHost:             os.Getenv("OPA_HOST"),
 		OPAPort:             os.Getenv("OPA_PORT"),
+		DgraphHost:          os.Getenv("DGRAPH_HOST"),
+		DgraphGRPCPort:      os.Getenv("DGRAPH_GRPC_PORT"),
 		OpenCensusAgentHost: os.Getenv("OPEN_CENSUS_AGENT_HOST"),
 		OpenCensusAgentPort: os.Getenv("OPEN_CENSUS_AGENT_PORT"),
 		JaegerURL:           os.Getenv("JAEGER_URL"),
