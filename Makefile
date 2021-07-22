@@ -11,14 +11,14 @@ setup-kubernetes:
 # Docker
 docker-build:
 	docker build --file=web/Dockerfile --tag=hm-web .
-	docker build --file=api/Dockerfile.development --tag=hm-api-dev .
-	docker build --file=api/Dockerfile --tag=hm-api .
+	docker build --file=api-node/Dockerfile.development --tag=hm-api-node-dev .
+	docker build --file=api-node/Dockerfile --tag=hm-api-node .
 	docker build --file=api-go/build/package/Dockerfile.api --tag=hm-api-go .
 	docker build --file=api-go/build/package/Dockerfile.grpc --tag=hm-api-go-grpc .
 docker-run:
 	docker run -p 80:80 web
-	docker run -p 5000:5000 --name=hm_api_dev --rm --env-file=./api/.env.development.local.example.docker hm-api-dev
-	docker run -p 5000:5000 --name=hm_api --rm --env-file=./api/.env.production.local.example hm-api
+	docker run -p 5000:5000 --name=hm_api_node_dev --rm --env-file=./api/.env.development.local.example.docker hm-api-node-dev
+	docker run -p 5000:5000 --name=hm_api_node --rm --env-file=./api/.env.production.local.example hm-api-node
 	docker run -p 5000:5000 --name=hm_api_go --rm --env=APP_ENV=production hm-api-go
 	docker run -p 5000:5000 --name=hm_api_go_grpc --rm --env=APP_ENV=production --env=GRPC_HOST=0.0.0.0 hm-api-go-grpc
 docker-sh:

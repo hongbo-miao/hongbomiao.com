@@ -37,7 +37,7 @@ jobs:
           npm ci
           cd web && npm ci
           cd ../mobile && npm ci
-          cd ../api && npm ci
+          cd ../api-node && npm ci
           cd ../cypress && npm ci
           cd ../ethereum && npm ci
       - name: Lint JavaScript
@@ -202,14 +202,14 @@ jobs:
           npm ci
           cd web && npm ci
           cd ../mobile && npm ci
-          cd ../api && npm ci
+          cd ../api-node && npm ci
           cd ../cypress && npm ci
           cd ../ethereum && npm ci
       - name: Check static type
         run: |
           cd web && npm run tsc
           cd ../mobile && npm run tsc
-          cd ../api && npm run tsc
+          cd ../api-node && npm run tsc
           cd ../cypress && npm run tsc
           cd ../ethereum && npm run tsc
 
@@ -394,80 +394,8 @@ jobs:
         run: |
           npm test
 
-  api-test:
-    name: API - Test
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.9.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.5.0'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v2
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        run: |
-          cd api && npm ci
-      - name: Test
-        working-directory: api
-        run: |
-          npm test
-
-  api-stryker:
-    name: API - Stryker
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.9.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.5.0'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v2
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        run: |
-          cd api && npm ci
-      - name: Stryker
-        working-directory: api
-        run: |
-          npm run test:stryker
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-
   api-go-test:
-    name: API Go - Test
+    name: API (Go) - Test
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -485,6 +413,78 @@ jobs:
         working-directory: api-go
         run: |
           go test ./...
+
+  api-node-test:
+    name: API (Node.js) - Test
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.5.0'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v2
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
+          cd api-node && npm ci
+      - name: Test
+        working-directory: api-node
+        run: |
+          npm test
+
+  api-node-stryker:
+    name: API (Node.js) - Stryker
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.5.0'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v2
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
+          cd api-node && npm ci
+      - name: Stryker
+        working-directory: api-node
+        run: |
+          npm run test:stryker
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
   opa-test:
     name: OPA - Test
@@ -595,7 +595,7 @@ jobs:
           npm ci
           cd web && npm ci
           cd ../mobile && npm ci
-          cd ../api && npm ci
+          cd ../api-node && npm ci
       - name: Coverage
         run: |
           npm run test:coverage
