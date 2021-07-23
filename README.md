@@ -67,6 +67,10 @@ A cutting-edge technology lab powered by automation.
 
 [![hongbomiao.com record](https://user-images.githubusercontent.com/3375461/100162554-deccf400-2eee-11eb-89b4-49cd6c23026d.gif)](https://www.hongbomiao.com)
 
+## Architecture
+
+![Architecture](https://docs.google.com/drawings/d/e/2PACX-1vQBehFA0r7QnSBUtAe9kplicXd6i7u5dmi8wchSJZFFEmcRaPqmD0GQ0FFx4zF7Vhkfi9fbO_rBsTh2/pub?w=2622&amp;h=1044)
+
 ## Tech Stack
 
 ### Web
@@ -217,10 +221,6 @@ A cutting-edge technology lab powered by automation.
 - **Mergify** - Automatically merging
 - **Stale** - Stale issues and pull requests closing
 
-## Architecture
-
-![Architecture](https://docs.google.com/drawings/d/e/2PACX-1vQBehFA0r7QnSBUtAe9kplicXd6i7u5dmi8wchSJZFFEmcRaPqmD0GQ0FFx4zF7Vhkfi9fbO_rBsTh2/pub?w=2622&amp;h=1044)
-
 ## Highlights
 
 ### Cloud Native
@@ -231,7 +231,7 @@ A cutting-edge technology lab powered by automation.
 
 #### GitOps - Argo CD
 
-![Argo CD](https://user-images.githubusercontent.com/3375461/126731139-a09d23e6-f4c5-4b79-bf04-01904bebf6e0.png)
+![Argo CD](https://user-images.githubusercontent.com/3375461/126804994-78f72da5-80ec-4531-82c1-ca52dee05f85.png)
 
 #### Distributed Tracing - OpenTelemetry
 
