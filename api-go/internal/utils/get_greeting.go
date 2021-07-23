@@ -21,14 +21,19 @@ func GetGreeting(firstName string, lastName string) (greeting Greeting, err erro
 	}
 
 	var config = GetConfig()
-	cc, err := grpc.Dial(config.GRPCHost+":"+config.GRPCPort, grpc.WithInsecure(),
+	conn, err := grpc.Dial(config.GRPCHost+":"+config.GRPCPort, grpc.WithInsecure(),
 		grpc.WithStatsHandler(new(ocgrpc.ClientHandler)))
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
 	}
-	defer cc.Close()
+	defer func(conn *grpc.ClientConn) {
+		err := conn.Close()
+		if err != nil {
+			log.Error().Err(err).Msg("conn.Close")
+		}
+	}(conn)
 
-	c := v1.NewGreetServiceClient(cc)
+	c := v1.NewGreetServiceClient(conn)
 	res, err := c.Greet(context.Background(), req)
 	return Greeting{
 		Content: res.Result,
