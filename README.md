@@ -107,7 +107,7 @@ A cutting-edge technology lab powered by automation.
 - **graphql-query-complexity** - GraphQL query complexity analysis
 - **DataLoader** - Batching and caching
 - **Knex.js** - SQL query builder
-- **PostgreSQL** - Relational database management system
+- **PostgreSQL** - Relational database
 - **Redis** - In-memory database
 - **rate-limiter-flexible** - Rate limiting
 - **expressjs/cors** - CORS
@@ -137,6 +137,7 @@ A cutting-edge technology lab powered by automation.
 - **zerolog** - Logging
 - **GoDotEnv** - Environment variables loading
 - **Testify** - Unit testing
+- **Dgraph** - Distributed graph database
 
 ### Cloud Native
 
@@ -254,6 +255,12 @@ After it processes, Elasticsearch saves the data. You can analyze them using Jae
 #### Grafana
 
 ![Grafana screenshot](https://user-images.githubusercontent.com/3375461/90973255-eaf19000-e552-11ea-819c-b098bbadea1b.jpg)
+
+### Graph Database
+
+#### Dgraph
+
+![Dgraph screenshot](https://user-images.githubusercontent.com/3375461/126815004-925b6be5-6e44-44be-9193-46b018ec4bf7.png)
 
 ### Machine Learning
 
