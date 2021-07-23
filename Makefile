@@ -146,9 +146,9 @@ kubectl-port-forward-opal-client:
 kubectl-port-forward-opal-server:
 	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
 kubectl-port-forward-dgraph-0:
-	kubectl port-forward pod/dgraph-0 --namespace=dgraph 8080:8080
+	kubectl port-forward pod/dgraph-0 --namespace=hm 8080:8080
 kubectl-port-forward-dgraph-public:
-	kubectl port-forward service/dgraph-public --namespace=dgraph 6080:6080
+	kubectl port-forward service/dgraph-public --namespace=hm 6080:6080
 
 list-port-forward:
 	ps -ef | grep port-forward
@@ -275,10 +275,10 @@ dgraph-install-standalone:
       dgraph/standalone
 dgraph-install:
 	kubectl create namespace dgraph
-	kubectl apply --namespace=dgraph --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
+	kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
 dgraph-delete:
-	kubectl delete --namespace=dgraph --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
-	kubectl delete persistentvolumeclaims --namespace=dgraph --selector=app=dgraph
+	kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
+	kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph
 
 # Kafka
 zookeeper-start:
