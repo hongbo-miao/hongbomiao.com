@@ -52,8 +52,7 @@ argocd app sync hm-application --local=kubernetes/config
 
 
 # Install Dgraph (https://dgraph.io/docs/deploy/kubernetes)
-# linkerd inject https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml | kubectl apply --namespace=hm --filename=-
-# Delete: kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
+# linkerd inject https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml | kubectl apply --namespace=hm --filename=-
+# Delete: kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml
 #         kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph
-# Local: kubectl apply --namespace=hm --filename=kubernetes/manifests/dgraph-single.yaml
-# Production: kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml
+# Local: kubectl apply --namespace=hm --filename=kubernetes/manifests/dgraph-ha.yaml
