@@ -20,12 +20,22 @@ func GetUser(id string) (user User, err error) {
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
 	}
-	defer conn.Close()
+	defer func(conn *grpc.ClientConn) {
+		err := conn.Close()
+		if err != nil {
+			log.Error().Err(err).Msg("conn.Close")
+		}
+	}(conn)
 
 	dgraphClient := dgo.NewDgraphClient(api.NewDgraphClient(conn))
 	ctx := context.Background()
 	txn := dgraphClient.NewTxn()
-	defer txn.Discard(ctx)
+	defer func(txn *dgo.Txn, ctx context.Context) {
+		err := txn.Discard(ctx)
+		if err != nil {
+			log.Error().Err(err).Msg("txn.Discard")
+		}
+	}(txn, ctx)
 
 	q := `query user($uid: string) {
 	  user(func: uid($uid)) {
