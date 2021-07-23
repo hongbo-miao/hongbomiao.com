@@ -190,7 +190,7 @@ A cutting-edge technology lab powered by automation.
 - **hadolint** - Dockerfile linter
 - **Kubeval** - Kubernetes configuration file linter
 - **commitlint** - Commit message linter
-- **Husky**, **lint-staged** - Bad git commit and push preventing
+- **Husky** - Bad git commit and push preventing
 
 ### Services
 
