@@ -36,15 +36,6 @@ for deploy in "dex-server" "redis" "repo-server" "server"; do
 done
 
 
-# Install Dgraph (https://dgraph.io/docs/deploy/kubernetes)
-kubectl create namespace dgraph
-kubectl apply --namespace=dgraph --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
-# Delete: kubectl delete --namespace=dgraph --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
-#         kubectl delete persistentvolumeclaims --namespace=dgraph --selector=app=dgraph
-# Local: kubectl apply --namespace=dgraph --filename=kubernetes/manifests/dgraph-single.yaml
-# Production: kubectl apply --namespace=dgraph --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml
-
-
 # Install the app by Argo CD
 echo "Install the app"
 kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
@@ -58,3 +49,11 @@ argocd app sync hm-application --local=kubernetes/config
 # echo "Install the app"
 # kubectl apply --filename=kubernetes/config/hm-namespace.yaml
 # kubectl apply --filename=kubernetes/config
+
+
+# Install Dgraph (https://dgraph.io/docs/deploy/kubernetes)
+# linkerd inject https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml | kubectl apply --namespace=hm --filename=-
+# Delete: kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
+#         kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph
+# Local: kubectl apply --namespace=hm --filename=kubernetes/manifests/dgraph-single.yaml
+# Production: kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml
