@@ -39,6 +39,16 @@ spec:
                 configMapKeyRef:
                   name: api-server-configmap
                   key: grpc_port
+            - name: OPA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: api-server-configmap
+                  key: opa_host
+            - name: OPA_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: api-server-configmap
+                  key: opa_port
             - name: DGRAPH_HOST
               valueFrom:
                 configMapKeyRef:
@@ -49,11 +59,6 @@ spec:
                 configMapKeyRef:
                   name: api-server-configmap
                   key: dgraph_grpc_port
-            - name: GRPC_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: api-server-configmap
-                  key: grpc_port
             - name: OPEN_CENSUS_AGENT_HOST
               valueFrom:
                 configMapKeyRef:
