@@ -23,7 +23,7 @@ func main() {
 		Str("JaegerURL", config.JaegerURL).
 		Msg("main")
 
-	tp := utils.InitTracer(config.JaegerURL)
+	tp := utils.InitTracer(config.EnableOpenTelemetryStdoutLog, config.JaegerURL)
 	defer func() {
 		if err := tp.Shutdown(context.Background()); err != nil {
 			log.Error().Err(err).Msg("tp.Shutdown")
