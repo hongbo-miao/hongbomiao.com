@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
@@ -8,7 +9,8 @@ import (
 )
 
 func TestHealthRoute(t *testing.T) {
-	r := SetupRouter()
+	var config = utils.GetConfig()
+	r := SetupRouter(config.Env)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/", nil)

@@ -40,7 +40,7 @@ func main() {
 	}
 	opencensustrace.RegisterExporter(oce)
 
-	r := routes.SetupRouter()
+	r := routes.SetupRouter(config.Env)
 	_ = http.ListenAndServe(
 		":"+config.Port,
 		&ochttp.Handler{
