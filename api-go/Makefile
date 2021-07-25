@@ -1,8 +1,8 @@
-run:
-	go run cmd/api/main.go
+run-api-server:
+	go run cmd/api-server/main.go
 
-run-grpc:
-	go run cmd/grpc/main.go
+run-grpc-server:
+	go run cmd/grpc-server/main.go
 
 run-log-receiver:
 	go run cmd/log-receiver/main.go

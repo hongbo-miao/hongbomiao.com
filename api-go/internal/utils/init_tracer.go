@@ -9,7 +9,7 @@ import (
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
-func InitTracer(jaegerURL string) *sdktrace.TracerProvider {
+func InitTracer(enableOpenTelemetryStdoutLog string, jaegerURL string) *sdktrace.TracerProvider {
 	stdoutExporter, err := stdouttrace.New(stdouttrace.WithPrettyPrint())
 	if err != nil {
 		log.Error().Err(err).Msg("stdouttrace.New")
@@ -18,11 +18,13 @@ func InitTracer(jaegerURL string) *sdktrace.TracerProvider {
 	if err != nil {
 		log.Error().Err(err).Msg("jaeger.New")
 	}
-	tp := sdktrace.NewTracerProvider(
-		sdktrace.WithSampler(sdktrace.AlwaysSample()),
-		sdktrace.WithBatcher(stdoutExporter),
-		sdktrace.WithBatcher(jaegerExporter),
-	)
+
+	opts := []sdktrace.TracerProviderOption{sdktrace.WithSampler(sdktrace.AlwaysSample()), sdktrace.WithBatcher(jaegerExporter)}
+	if enableOpenTelemetryStdoutLog == "true" {
+		opts = append(opts, sdktrace.WithBatcher(stdoutExporter))
+	}
+	tp := sdktrace.NewTracerProvider(opts...)
+
 	otel.SetTracerProvider(tp)
 	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
 	return tp
