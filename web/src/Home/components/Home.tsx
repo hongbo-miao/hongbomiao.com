@@ -14,7 +14,6 @@ import hatAVIF from '../images/hat.avif';
 import hatPNG from '../images/hat.png';
 import magicAVIF from '../images/magic.avif';
 import magicPNG from '../images/magic.png';
-import meQuery from '../queries/meQuery';
 import styles from './Home.module.css';
 
 const HmAudioPlayer = React.lazy(() => import('../../shared/components/AudioPlayer'));
@@ -37,7 +36,7 @@ const Home: React.VFC<Props> = (props) => {
   const { me, queryMe, subscribePing } = props;
 
   React.useEffect(() => {
-    queryMe(meQuery);
+    // queryMe(meQuery);
     subscribePing(pingSubscription);
 
     analytics.page();
