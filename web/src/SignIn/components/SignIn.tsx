@@ -3,11 +3,14 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
+import { Redirect } from 'react-router-dom';
 import useAuth from '../../auth/hooks/useAuth';
+import useMe from '../../auth/hooks/useMe';
 import styles from './SignIn.module.css';
 
 const SignIn: React.VFC = () => {
   const { signIn } = useAuth();
+  const { me } = useMe();
 
   const mutation = useMutation((data: { email: string; password: string }) => {
     const { email, password } = data;
@@ -20,24 +23,26 @@ const SignIn: React.VFC = () => {
     formState: { errors },
   } = useForm();
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const onSubmit = (data) => {
+  const onSubmit = (data: { email: string; password: string }) => {
     mutation.mutate(data);
   };
+
+  if (me != null) {
+    return <Redirect to="/lab" />;
+  }
 
   return (
     <div className={styles.hmSignIn}>
       <div className={`container is-max-desktop ${styles.hmContainer}`}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="field">
-            <p className="control">
+            <div className="control">
               <input className="input" type="email" placeholder="Email" {...register('email', { required: true })} />
               {errors.email && <p className="help is-danger">Email is required.</p>}
-            </p>
+            </div>
           </div>
           <div className="field">
-            <p className="control">
+            <div className="control">
               <input
                 {...register('password', { required: true })}
                 className="input"
@@ -45,11 +50,11 @@ const SignIn: React.VFC = () => {
                 placeholder="Password"
               />
               {errors.password && <p className="help is-danger">Password is required.</p>}
-            </p>
+            </div>
           </div>
           <div className="field">
             <div className="control">
-              <button className="button is-link" type="submit">
+              <button className="button is-primary" type="submit">
                 Sign In
               </button>
             </div>

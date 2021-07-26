@@ -4,8 +4,8 @@ interface JWTHeader {
   Authorization?: string;
 }
 
-const getJWTHeader = (user: LocalStorageMe): JWTHeader => {
-  return { Authorization: `Bearer ${user.jwtToken}` };
+const getJWTHeader = (me: LocalStorageMe): JWTHeader => {
+  return { Authorization: `Bearer ${me.jwtToken}` };
 };
 
 export default getJWTHeader;

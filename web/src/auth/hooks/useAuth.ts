@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import axiosInstance from '../utils/axiosInstance';
 import useMe from './useMe';
 
@@ -12,7 +10,7 @@ interface UseAuth {
 const useAuth = (): UseAuth => {
   const { clearMe, updateMe } = useMe();
 
-  async function signIn(email: string, password: string): Promise<void> {
+  const signIn = async (email: string, password: string): Promise<void> => {
     try {
       const res = await axiosInstance({
         data: {
@@ -39,8 +37,8 @@ const useAuth = (): UseAuth => {
     } catch (err) {
       console.error('signIn', err);
     }
-  }
-  async function signUp(email: string, password: string): Promise<void> {
+  };
+  const signUp = async (email: string, password: string): Promise<void> => {
     try {
       const res = await axiosInstance({
         data: {
@@ -59,19 +57,21 @@ const useAuth = (): UseAuth => {
       });
 
       if (res?.data?.data?.signUp?.jwtToken === null || res?.data?.data?.signUp?.jwtToken === '') {
+        // eslint-disable-next-line no-console
         console.log('Failed to sign up.');
         return;
       }
 
       updateMe(res?.data?.data?.signUp);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
     }
-  }
+  };
 
-  function signOut(): void {
+  const signOut = (): void => {
     clearMe();
-  }
+  };
 
   return {
     signIn,

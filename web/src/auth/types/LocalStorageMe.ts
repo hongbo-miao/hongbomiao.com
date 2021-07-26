@@ -1,5 +1,4 @@
 interface LocalStorageMe {
-  id: number;
   jwtToken: string;
 }
 
