@@ -77,6 +77,7 @@ A cutting-edge technology lab powered by automation.
 
 - **React** - Web framework
 - **Redux** - State container
+- **React Query** - Hooks for fetching, caching and updating asynchronous data
 - **redux-observable** - Side effects
 - **RxJS** - Asynchronous programming with observable streams
 - **graphql-tag** - GraphQL query parsing
@@ -132,7 +133,10 @@ A cutting-edge technology lab powered by automation.
 ### API Server - Go
 
 - **Gin** - Web Framework
-- **graphql-go/graphql** - GraphQL
+- **graphql-go** - GraphQL
+- **jwt-go** - JWT
+- **gin-contrib/cors** - CORS
+- **opentelemetry-go** - OpenTelemetry
 - **gRPC** - Remote procedure call (RPC) framework
 - **zerolog** - Logging
 - **GoDotEnv** - Environment variables loading

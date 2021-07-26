@@ -25,6 +25,11 @@ var userGraphQLField = graphql.Field{
 		},
 	},
 	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
+		err = utils.CheckGraphQLContextMyID(p)
+		if err != nil {
+			return nil, err
+		}
+
 		id := p.Args["id"].(string)
 		return utils.GetUser(id)
 	},

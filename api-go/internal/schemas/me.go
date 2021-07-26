@@ -11,16 +11,13 @@ var meGraphQLType = graphql.NewObject(graphql.ObjectConfig{
 		"id": &graphql.Field{
 			Type: graphql.ID,
 		},
-		"firstName": &graphql.Field{
-			Type: graphql.String,
-		},
-		"lastName": &graphql.Field{
-			Type: graphql.String,
-		},
 		"name": &graphql.Field{
 			Type: graphql.String,
 		},
-		"bio": &graphql.Field{
+		"age": &graphql.Field{
+			Type: graphql.Int,
+		},
+		"email": &graphql.Field{
 			Type: graphql.String,
 		},
 	},
@@ -29,6 +26,12 @@ var meGraphQLType = graphql.NewObject(graphql.ObjectConfig{
 var meGraphQLField = graphql.Field{
 	Type: meGraphQLType,
 	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
-		return utils.GetMe()
+		err = utils.CheckGraphQLContextMyID(p)
+		if err != nil {
+			return nil, err
+		}
+
+		myID := p.Context.Value("myID").(string)
+		return utils.GetMe(myID)
 	},
 }

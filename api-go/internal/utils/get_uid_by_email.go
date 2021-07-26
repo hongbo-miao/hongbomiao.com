@@ -9,12 +9,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-}
-
-func GetUser(id string) (user User, err error) {
+func GetUIDByEmail(email string) string {
 	var config = GetConfig()
 	conn, err := grpc.Dial(config.DgraphHost+":"+config.DgraphGRPCPort, grpc.WithInsecure())
 	if err != nil {
@@ -37,21 +32,21 @@ func GetUser(id string) (user User, err error) {
 		}
 	}(txn, ctx)
 
-	q := `query User($uid: string) {
-	  user(func: uid($uid)) {
-		name
+	q := `query user($email: string) {
+	  user(func: eq(email, $email)) {
+		uid
 	  }
     }`
 	req := &api.Request{
 		Query: q,
-		Vars:  map[string]string{"$uid": id},
+		Vars:  map[string]string{"$email": email},
 	}
 	res, err := txn.Do(ctx, req)
 	if err != nil {
 		log.Error().Err(err).Msg("txn.Do")
 	}
 
-	name, err := jsonparser.GetString(res.Json, "user", "[0]", "name")
+	uid, err := jsonparser.GetString(res.Json, "user", "[0]", "uid")
 	if err != nil {
 		log.Error().
 			Err(err).
@@ -59,5 +54,5 @@ func GetUser(id string) (user User, err error) {
 			Msg("jsonparser.GetString")
 	}
 
-	return User{ID: id, Name: name}, nil
+	return uid
 }
