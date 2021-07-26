@@ -3,8 +3,8 @@ import LocalStorageMe from '../types/LocalStorageMe';
 const ME_LOCALSTORAGE_KEY = 'me';
 
 const getMe = (): LocalStorageMe | null => {
-  const storedUser = localStorage.getItem(ME_LOCALSTORAGE_KEY);
-  return storedUser ? JSON.parse(storedUser) : null;
+  const storedMe = localStorage.getItem(ME_LOCALSTORAGE_KEY);
+  return storedMe ? JSON.parse(storedMe) : null;
 };
 
 const setMe = (user: LocalStorageMe): void => {
