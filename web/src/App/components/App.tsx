@@ -5,6 +5,7 @@ import Paths from '../../shared/utils/paths';
 import styles from './App.module.css';
 
 const HmHome = React.lazy(() => import('../../Home/components/Home'));
+const HmSignIn = React.lazy(() => import('../../SignIn/components/SignIn'));
 const HmFooter = React.lazy(() => import('./Footer'));
 
 const App: React.VFC = () => (
@@ -13,6 +14,7 @@ const App: React.VFC = () => (
       <HmLazyComponent>
         <Switch>
           <Route exact path={Paths.appRootPath} component={HmHome} />
+          <Route exact path={Paths.signInPath} component={HmSignIn} />
           <Redirect to={Paths.appRootPath} />
         </Switch>
       </HmLazyComponent>

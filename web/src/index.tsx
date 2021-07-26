@@ -4,11 +4,14 @@ import './index.css';
 import * as Sentry from '@sentry/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
 import HmApp from './App/components/App';
 import reportWebVitals from './shared/libs/reportWebVitals';
 import * as serviceWorkerRegistration from './shared/libs/serviceWorkerRegistration';
 import initSentry from './shared/utils/initSentry';
+import queryClient from './shared/utils/queryClient';
 import store from './shared/utils/store';
 
 initSentry();
@@ -17,7 +20,10 @@ ReactDOM.render(
   <React.StrictMode>
     <Sentry.ErrorBoundary fallback="An error has occurred">
       <Provider store={store}>
-        <HmApp />
+        <QueryClientProvider client={queryClient}>
+          <HmApp />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
       </Provider>
     </Sentry.ErrorBoundary>
   </React.StrictMode>,

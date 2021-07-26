@@ -74,6 +74,11 @@ spec:
                 configMapKeyRef:
                   name: api-server-configmap
                   key: jaeger_url
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: api-server-configmap
+                  key: jwt_secret
           ports:
             - name: api-server
               protocol: TCP
