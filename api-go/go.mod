@@ -25,10 +25,10 @@ require (
 	github.com/ugorji/go v1.2.6 // indirect
 	go.opencensus.io v0.23.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.21.0
-	go.opentelemetry.io/otel v1.0.0-RC1
+	go.opentelemetry.io/otel v1.0.0-RC2
 	go.opentelemetry.io/otel/exporters/jaeger v1.0.0-RC1
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.0.0-RC1
-	go.opentelemetry.io/otel/sdk v1.0.0-RC1
+	go.opentelemetry.io/otel/sdk v1.0.0-RC2
 	golang.org/x/net v0.0.0-20210716203947-853a461950ff // indirect
 	google.golang.org/genproto v0.0.0-20210722135532-667f2b7c528f // indirect
 	google.golang.org/grpc v1.39.0
