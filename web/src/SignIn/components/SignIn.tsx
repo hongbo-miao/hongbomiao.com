@@ -54,7 +54,7 @@ const SignIn: React.VFC = () => {
           </div>
           <div className="field">
             <div className="control">
-              <button className="button is-primary" type="submit">
+              <button className="button is-primary is-fullwidth" type="submit">
                 Sign In
               </button>
             </div>
