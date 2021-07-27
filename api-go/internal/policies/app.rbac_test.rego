@@ -1,12 +1,12 @@
 package app.rbac
 
 user_roles = {
-	"alice": ["admin"],
-	"bob": [
+	"0x1": ["admin"],
+	"0x2": [
 		"employee",
 		"billing",
 	],
-	"eve": ["customer"],
+	"0x3": ["customer"],
 }
 
 role_grants = {
@@ -59,20 +59,20 @@ role_grants = {
 }
 
 test_alice {
-	allow with input as {"user": "alice", "action": "read", "type": "dog", "object": "id123"}
+	allow with input as {"uid": "0x1", "action": "read", "type": "dog", "object": "id123"}
 		 with data.user_roles as user_roles
 		 with data.role_grants as role_grants
 
-	allow with input as {"user": "alice", "action": "adopt", "type": "dog", "object": "id123"}
+	allow with input as {"uid": "0x1", "action": "adopt", "type": "dog", "object": "id123"}
 		 with data.user_roles as user_roles
 		 with data.role_grants as role_grants
 }
 
 test_bob {
-	allow with input as {"user": "bob", "action": "read", "type": "dog", "object": "id123"}
+	allow with input as {"uid": "0x2", "action": "read", "type": "dog", "object": "id123"}
 		 with data.user_roles as user_roles with data.role_grants as role_grants
 
-	not allow with input as {"user": "bob", "action": "adopt", "type": "dog", "object": "id123"}
+	not allow with input as {"uid": "0x2", "action": "adopt", "type": "dog", "object": "id123"}
 		 with data.user_roles as user_roles
 		 with data.role_grants as role_grants
 }

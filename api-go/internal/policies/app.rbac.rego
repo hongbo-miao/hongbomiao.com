@@ -44,7 +44,7 @@ user_is_admin {
 	some i
 
 	# "admin" is the `i`-th element in the user->role mappings for the identified user.
-	data.user_roles[input.user][i] == "admin"
+	data.user_roles[input.uid][i] == "admin"
 }
 
 # user_is_granted is a set of grants for the user identified in the request.
@@ -53,7 +53,7 @@ user_is_granted[grant] {
 	some i, j
 
 	# `role` assigned an element of the user_roles for this user...
-	role := data.user_roles[input.user][i]
+	role := data.user_roles[input.uid][i]
 
 	# `grant` assigned a single grant from the grants list for 'role'...
 	grant := data.role_grants[role][j]
