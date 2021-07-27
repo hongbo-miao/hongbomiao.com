@@ -96,7 +96,20 @@ A cutting-edge technology lab powered by automation.
 - **UI Kitten** - UI library
 - **React Native Testing Library** - React Native component testing
 
-### API Server
+### API Server - Go
+
+- **Gin** - Web Framework
+- **graphql-go** - GraphQL
+- **jwt-go** - JWT
+- **gin-contrib/cors** - CORS
+- **opentelemetry-go** - OpenTelemetry
+- **gRPC** - Remote procedure call (RPC) framework
+- **zerolog** - Logging
+- **GoDotEnv** - Environment variables loading
+- **Testify** - Unit testing
+- **Dgraph** - Distributed graph database
+
+### API Server - Node.js
 
 - **Express** - Node.js web application framework
 - **GraphQL.js**, **express-graphql** - GraphQL
@@ -129,19 +142,6 @@ A cutting-edge technology lab powered by automation.
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
 - **Clinic.js** - Performance profiling
-
-### API Server - Go
-
-- **Gin** - Web Framework
-- **graphql-go** - GraphQL
-- **jwt-go** - JWT
-- **gin-contrib/cors** - CORS
-- **opentelemetry-go** - OpenTelemetry
-- **gRPC** - Remote procedure call (RPC) framework
-- **zerolog** - Logging
-- **GoDotEnv** - Environment variables loading
-- **Testify** - Unit testing
-- **Dgraph** - Distributed graph database
 
 ### Cloud Native
 
