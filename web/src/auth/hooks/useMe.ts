@@ -23,13 +23,13 @@ const getMe = async (me: LocalStorageMe | null): Promise<AxiosResponse | null> =
   });
 };
 
-interface useMe {
+interface UseMe {
   me: LocalStorageMe | null;
   updateMe: (me: LocalStorageMe) => void;
   clearMe: () => void;
 }
 
-const useMe = (): useMe => {
+const useMe = (): UseMe => {
   const [me, setMe] = React.useState<LocalStorageMe | null>(LocalStorage.getMe());
   const queryClient = useQueryClient();
 

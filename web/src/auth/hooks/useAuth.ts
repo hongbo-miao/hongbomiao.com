@@ -29,15 +29,18 @@ const useAuth = (): UseAuth => {
       });
 
       if (res?.data?.data?.signIn?.jwtToken === null || res?.data?.data?.signIn?.jwtToken === '') {
+        // eslint-disable-next-line no-console
         console.log('Failed to sign in.');
         return;
       }
 
       updateMe(res?.data?.data?.signIn);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error('signIn', err);
     }
   };
+
   const signUp = async (email: string, password: string): Promise<void> => {
     try {
       const res = await axiosInstance({

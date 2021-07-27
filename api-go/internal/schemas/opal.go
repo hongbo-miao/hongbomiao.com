@@ -9,7 +9,7 @@ var opalGraphQLType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "OPAL",
 	Fields: graphql.Fields{
 		"decision": &graphql.Field{
-			Type: graphql.String,
+			Type: graphql.Boolean,
 		},
 	},
 })
@@ -26,15 +26,11 @@ var opalGraphQLField = graphql.Field{
 		"resourceType": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
-		"object": &graphql.ArgumentConfig{
-			Type: graphql.NewNonNull(graphql.String),
-		},
 	},
 	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
 		user := p.Args["user"].(string)
 		action := p.Args["action"].(string)
 		resourceType := p.Args["resourceType"].(string)
-		object := p.Args["object"].(string)
-		return utils.GetOPALDecision(user, action, resourceType, object)
+		return utils.GetOPALDecision(user, action, resourceType)
 	},
 }

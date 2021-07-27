@@ -4,6 +4,7 @@ import useMe from '../../auth/hooks/useMe';
 import styles from './Lab.module.css';
 
 const HmNavbar = React.lazy(() => import('./Navbar'));
+const HmOPAExperiment = React.lazy(() => import('./OPAExperiment'));
 
 const Lab: React.VFC = () => {
   const { me } = useMe();
@@ -16,7 +17,9 @@ const Lab: React.VFC = () => {
     <>
       <HmNavbar />
       <div className={styles.hmLab}>
-        <div className={`container is-max-desktop ${styles.hmContainer}`}>Lab</div>
+        <div className={`container is-max-desktop ${styles.hmContainer}`}>
+          <HmOPAExperiment />
+        </div>
       </div>
     </>
   );

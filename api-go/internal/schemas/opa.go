@@ -1,6 +1,7 @@
 package schemas
 
 import (
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/types"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/graphql-go/graphql"
 )
@@ -9,7 +10,7 @@ var opaGraphQLType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "OPA",
 	Fields: graphql.Fields{
 		"decision": &graphql.Field{
-			Type: graphql.String,
+			Type: graphql.Boolean,
 		},
 	},
 })
@@ -17,24 +18,21 @@ var opaGraphQLType = graphql.NewObject(graphql.ObjectConfig{
 var opaGraphQLField = graphql.Field{
 	Type: opaGraphQLType,
 	Args: graphql.FieldConfigArgument{
-		"user": &graphql.ArgumentConfig{
-			Type: graphql.NewNonNull(graphql.String),
-		},
 		"action": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
 		"resourceType": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
-		"object": &graphql.ArgumentConfig{
-			Type: graphql.NewNonNull(graphql.String),
-		},
 	},
 	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
-		user := p.Args["user"].(string)
+		err = utils.CheckGraphQLContextMyID(p)
+		if err != nil {
+			return nil, err
+		}
+		myID := p.Context.Value(types.ContextMyIDKey("myID")).(string)
 		action := p.Args["action"].(string)
 		resourceType := p.Args["resourceType"].(string)
-		object := p.Args["object"].(string)
-		return utils.GetOPADecision(user, action, resourceType, object)
+		return utils.GetOPADecision(myID, action, resourceType)
 	},
 }
