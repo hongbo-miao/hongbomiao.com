@@ -10,13 +10,13 @@ type OPAL struct {
 	Decision bool `json:"decision"`
 }
 
-func GetOPALDecision(user string, action string, resourceType string) (opal OPAL, err error) {
+func GetOPALDecision(uid string, action string, resourceType string) (opal OPAL, err error) {
 	var config = GetConfig()
 	restyClient := resty.New()
 
 	body := map[string]interface{}{
 		"input": map[string]interface{}{
-			"user":   user,
+			"uid":    uid,
 			"action": action,
 			"type":   resourceType,
 		},
