@@ -1,6 +1,7 @@
 package schemas
 
 import (
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/types"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/graphql-go/graphql"
 )
@@ -31,7 +32,7 @@ var meGraphQLField = graphql.Field{
 			return nil, err
 		}
 
-		myID := p.Context.Value("myID").(string)
+		myID := p.Context.Value(types.ContextMyIDKey("myID")).(string)
 		return utils.GetMe(myID)
 	},
 }
