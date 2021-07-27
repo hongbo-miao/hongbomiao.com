@@ -15,12 +15,12 @@ const OPALExperiment: React.VFC = () => {
       <div className={`container is-max-desktop ${styles.hmContainer}`}>
         <div className="buttons">
           <HmPreAuth action="read" resourceType="dog" getDecision={getOPALDecision} setData={setReadDogData}>
-            <button className="button is-link" type="button" disabled={!readDogData?.data?.opal?.decision}>
+            <button className="button is-primary" type="button" disabled={!readDogData?.data?.opal?.decision}>
               Read Dog
             </button>
           </HmPreAuth>
           <HmPreAuth action="adopt" resourceType="dog" getDecision={getOPALDecision} setData={setAdoptDogData}>
-            <button className="button is-link" type="button" disabled={!adoptDogData?.data?.opal?.decision}>
+            <button className="button is-primary" type="button" disabled={!adoptDogData?.data?.opal?.decision}>
               Adopt Dog
             </button>
           </HmPreAuth>
