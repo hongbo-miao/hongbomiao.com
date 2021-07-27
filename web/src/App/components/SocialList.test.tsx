@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import WEBSITES from '../fixtures/WEBSITES';
+import WEBSITES from '../../Home/fixtures/WEBSITES';
 import HmSocialList from './SocialList';
 
 describe('SocialList', () => {
