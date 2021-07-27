@@ -1,8 +1,8 @@
-import githubLogo from '../images/github.svg';
-import linkedinLogo from '../images/linkedin.svg';
-import pinterestLogo from '../images/pinterest.svg';
-import twitterLogo from '../images/twitter.svg';
-import Website from '../types/Website';
+import githubLogo from '../../App/images/github.svg';
+import linkedinLogo from '../../App/images/linkedin.svg';
+import pinterestLogo from '../../App/images/pinterest.svg';
+import twitterLogo from '../../App/images/twitter.svg';
+import Website from '../../App/types/Website';
 
 const WEBSITES: ReadonlyArray<Website> = [
   {
