@@ -7,16 +7,16 @@ type Props = {
   action: string;
   resourceType: string;
   getDecision: (action: string, resourceType: string) => Promise<AxiosResponse | null>;
-  setIsDisabled: Dispatch<SetStateAction<boolean>>;
+  setData: Dispatch<SetStateAction<unknown>>;
 };
 
 const PreAuth: React.VFC<Props> = (props) => {
-  const { children, action, resourceType, getDecision, setIsDisabled } = props;
-  const query = useQuery([action, resourceType], () => getDecision(action, resourceType));
+  const { children, action, resourceType, getDecision, setData } = props;
+  const { data } = useQuery([action, resourceType], () => getDecision(action, resourceType));
 
   React.useEffect(() => {
-    setIsDisabled(query?.data?.data?.data?.opa?.decision);
-  }, [query]);
+    setData(data?.data);
+  }, [data, setData]);
 
   return <>{children}</>;
 };
