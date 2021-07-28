@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/types"
 	"github.com/buger/jsonparser"
 	"github.com/dgraph-io/dgo/v200"
 	"github.com/dgraph-io/dgo/v200/protos/api"
@@ -9,7 +10,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func GetUIDByEmail(email string) string {
+func GetUserByEmail(email string) (*types.User, error) {
 	var config = GetConfig()
 	conn, err := grpc.Dial(config.DgraphHost+":"+config.DgraphGRPCPort, grpc.WithInsecure())
 	if err != nil {
@@ -35,6 +36,7 @@ func GetUIDByEmail(email string) string {
 	q := `query user($email: string) {
 	  user(func: eq(email, $email)) {
 		uid
+		name
 	  }
     }`
 	req := &api.Request{
@@ -44,6 +46,7 @@ func GetUIDByEmail(email string) string {
 	res, err := txn.Do(ctx, req)
 	if err != nil {
 		log.Error().Err(err).Msg("txn.Do")
+		return nil, err
 	}
 
 	uid, err := jsonparser.GetString(res.Json, "user", "[0]", "uid")
@@ -51,8 +54,20 @@ func GetUIDByEmail(email string) string {
 		log.Error().
 			Err(err).
 			Bytes("res.Json", res.Json).
-			Msg("jsonparser.GetString")
+			Msg("jsonparser.GetString uid")
+		return nil, err
+	}
+	name, err := jsonparser.GetString(res.Json, "user", "[0]", "name")
+	if err != nil {
+		log.Error().
+			Err(err).
+			Bytes("res.Json", res.Json).
+			Msg("jsonparser.GetString name")
+		return nil, err
 	}
 
-	return uid
+	return &types.User{
+		ID:   uid,
+		Name: name,
+	}, nil
 }

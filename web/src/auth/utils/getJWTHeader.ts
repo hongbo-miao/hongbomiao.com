@@ -1,10 +1,10 @@
-import LocalStorageMe from '../types/LocalStorageMe';
+import Me from '../types/Me';
 
 interface JWTHeader {
   Authorization?: string;
 }
 
-const getJWTHeader = (me: LocalStorageMe): JWTHeader => {
+const getJWTHeader = (me: Me): JWTHeader => {
   return { Authorization: `Bearer ${me.jwtToken}` };
 };
 
