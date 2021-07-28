@@ -145,6 +145,7 @@ A cutting-edge technology lab powered by automation.
 
 ### Cloud Native
 
+- **Flink** - Stream processing framework
 - **Linkerd** - Service mesh
 - **Argo CD** - Declarative GitOps CD for Kubernetes
 - **Open Policy Agent (OPA)** - Policy-based control
