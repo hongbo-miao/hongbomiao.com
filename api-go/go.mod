@@ -18,7 +18,7 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/json-iterator/go v1.1.11 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect
-	github.com/open-policy-agent/opa v0.30.2
+	github.com/open-policy-agent/opa v0.31.0
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rs/zerolog v1.23.0
 	github.com/stretchr/testify v1.7.0
