@@ -24,7 +24,7 @@ var greetingGraphQLField = graphql.Field{
 			Type: graphql.NewNonNull(graphql.String),
 		},
 	},
-	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
+	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		firstName := p.Args["firstName"].(string)
 		lastName := p.Args["lastName"].(string)
 		return utils.GetGreeting(firstName, lastName)

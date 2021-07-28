@@ -4,6 +4,7 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/types"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/graphql-go/graphql"
+	"github.com/rs/zerolog/log"
 )
 
 var meGraphQLType = graphql.NewObject(graphql.ObjectConfig{
@@ -26,9 +27,10 @@ var meGraphQLType = graphql.NewObject(graphql.ObjectConfig{
 
 var meGraphQLField = graphql.Field{
 	Type: meGraphQLType,
-	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
-		err = utils.CheckGraphQLContextMyID(p)
+	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+		err := utils.CheckGraphQLContextMyID(p)
 		if err != nil {
+			log.Error().Err(err).Msg("CheckGraphQLContextMyID")
 			return nil, err
 		}
 

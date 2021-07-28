@@ -15,6 +15,7 @@ func GetUserByEmail(email string) (*types.User, error) {
 	conn, err := grpc.Dial(config.DgraphHost+":"+config.DgraphGRPCPort, grpc.WithInsecure())
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
+		return nil, err
 	}
 	defer func(conn *grpc.ClientConn) {
 		err := conn.Close()

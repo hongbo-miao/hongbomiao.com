@@ -30,7 +30,7 @@ var signInGraphQLField = graphql.Field{
 			Type: graphql.NewNonNull(graphql.String),
 		},
 	},
-	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
+	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		email := p.Args["email"].(string)
 		password := p.Args["password"].(string)
 		return utils.SignIn(email, password)
