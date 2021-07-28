@@ -6,7 +6,7 @@ import NoIntrospection from 'graphql-disable-introspection';
 import { applyMiddleware } from 'graphql-middleware';
 import queryComplexity, { simpleEstimator } from 'graphql-query-complexity';
 import logger from '../../log/utils/logger';
-import verifyJWTToken from '../../security/utils/verifyJWTToken';
+import verifyJWTTokenAndExtractMyID from '../../security/utils/verifyJWTTokenAndExtractMyID';
 import isProduction from '../../shared/utils/isProduction';
 import dataLoaders from '../dataLoaders/dataLoaders';
 import permissions from '../permissions/permissions';
@@ -19,7 +19,7 @@ const graphQLMiddleware = graphqlHTTP((req, res, params) => {
   return {
     context: {
       dataLoaders: dataLoaders(),
-      myId: verifyJWTToken(req.headers.authorization),
+      myId: verifyJWTTokenAndExtractMyID(req.headers.authorization),
     },
     customFormatErrorFn: (err) => {
       const stackErr = {

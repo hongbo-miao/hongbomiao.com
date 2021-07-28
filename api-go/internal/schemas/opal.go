@@ -4,6 +4,7 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/types"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/graphql-go/graphql"
+	"github.com/rs/zerolog/log"
 )
 
 var opalGraphQLType = graphql.NewObject(graphql.ObjectConfig{
@@ -25,11 +26,13 @@ var opalGraphQLField = graphql.Field{
 			Type: graphql.NewNonNull(graphql.String),
 		},
 	},
-	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
-		err = utils.CheckGraphQLContextMyID(p)
+	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+		err := utils.CheckGraphQLContextMyID(p)
 		if err != nil {
+			log.Error().Err(err).Msg("CheckGraphQLContextMyID")
 			return nil, err
 		}
+
 		myID := p.Context.Value(types.ContextMyIDKey("myID")).(string)
 		action := p.Args["action"].(string)
 		resourceType := p.Args["resourceType"].(string)

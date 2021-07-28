@@ -7,8 +7,8 @@ import (
 )
 
 func CheckGraphQLContextMyID(p graphql.ResolveParams) error {
-	if p.Context.Value(types.ContextMyIDKey("myID")).(string) != "" {
-		return nil
+	if p.Context.Value(types.ContextMyIDKey("myID")).(string) == "" {
+		return errors.New("no myID")
 	}
-	return errors.New("not authorized")
+	return nil
 }
