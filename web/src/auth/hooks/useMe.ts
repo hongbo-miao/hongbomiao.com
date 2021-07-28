@@ -37,7 +37,6 @@ const useMe = (): UseMe => {
     enabled: me != null,
     onSuccess: (axiosResponse) => {
       const newMe = { ...me, ...axiosResponse?.data?.data?.me };
-      // updateMe(newMe)
       return setMe(newMe);
     },
   });
