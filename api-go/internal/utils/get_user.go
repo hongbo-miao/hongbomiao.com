@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/types"
 	"github.com/buger/jsonparser"
 	"github.com/dgraph-io/dgo/v200"
 	"github.com/dgraph-io/dgo/v200/protos/api"
@@ -9,16 +10,12 @@ import (
 	"google.golang.org/grpc"
 )
 
-type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-}
-
-func GetUser(id string) (user User, err error) {
+func GetUser(id string) (*types.User, error) {
 	var config = GetConfig()
 	conn, err := grpc.Dial(config.DgraphHost+":"+config.DgraphGRPCPort, grpc.WithInsecure())
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
+		return nil, err
 	}
 	defer func(conn *grpc.ClientConn) {
 		err := conn.Close()
@@ -49,6 +46,7 @@ func GetUser(id string) (user User, err error) {
 	res, err := txn.Do(ctx, req)
 	if err != nil {
 		log.Error().Err(err).Msg("txn.Do")
+		return nil, err
 	}
 
 	name, err := jsonparser.GetString(res.Json, "user", "[0]", "name")
@@ -57,7 +55,8 @@ func GetUser(id string) (user User, err error) {
 			Err(err).
 			Bytes("res.Json", res.Json).
 			Msg("jsonparser.GetString")
+		return nil, err
 	}
 
-	return User{ID: id, Name: name}, nil
+	return &types.User{ID: id, Name: name}, nil
 }

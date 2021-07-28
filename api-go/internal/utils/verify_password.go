@@ -9,11 +9,12 @@ import (
 	"google.golang.org/grpc"
 )
 
-func VerifyPassword(uid string, password string) bool {
+func VerifyPassword(uid string, password string) (bool, error) {
 	var config = GetConfig()
 	conn, err := grpc.Dial(config.DgraphHost+":"+config.DgraphGRPCPort, grpc.WithInsecure())
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
+		return false, err
 	}
 	defer func(conn *grpc.ClientConn) {
 		err := conn.Close()
@@ -47,6 +48,7 @@ func VerifyPassword(uid string, password string) bool {
 	res, err := txn.Do(ctx, req)
 	if err != nil {
 		log.Error().Err(err).Msg("txn.Do")
+		return false, err
 	}
 
 	isPasswordValid, err := jsonparser.GetBoolean(res.Json, "verifyPassword", "[0]", "checkpwd(password)")
@@ -55,7 +57,8 @@ func VerifyPassword(uid string, password string) bool {
 			Err(err).
 			Bytes("res.Json", res.Json).
 			Msg("jsonparser.GetString")
+		return false, err
 	}
 
-	return isPasswordValid
+	return isPasswordValid, nil
 }

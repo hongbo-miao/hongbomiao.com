@@ -2,12 +2,12 @@ import { AxiosResponse } from 'axios';
 import React from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import queryKeys from '../../shared/reactQuery/queryKeys';
-import LocalStorageMe from '../types/LocalStorageMe';
+import Me from '../types/Me';
 import LocalStorage from '../utils/LocalStorage';
 import axiosInstance from '../utils/axiosInstance';
 import getJWTHeader from '../utils/getJWTHeader';
 
-const getMe = async (me: LocalStorageMe | null): Promise<AxiosResponse | null> => {
+const getMe = async (me: Me | null): Promise<AxiosResponse | null> => {
   if (me == null) return null;
   return axiosInstance({
     headers: getJWTHeader(me),
@@ -24,23 +24,26 @@ const getMe = async (me: LocalStorageMe | null): Promise<AxiosResponse | null> =
 };
 
 interface UseMe {
-  me: LocalStorageMe | null;
-  updateMe: (me: LocalStorageMe) => void;
+  me: Me | null;
+  updateMe: (me: Me) => void;
   clearMe: () => void;
 }
 
 const useMe = (): UseMe => {
-  const [me, setMe] = React.useState<LocalStorageMe | null>(LocalStorage.getMe());
+  const [me, setMe] = React.useState<Me | null>(LocalStorage.getMe());
   const queryClient = useQueryClient();
 
   useQuery(queryKeys.me, () => getMe(me), {
     enabled: me != null,
     onSuccess: (axiosResponse) => {
-      return setMe(axiosResponse?.data?.data?.me);
+      const newMe = { ...me, ...axiosResponse?.data?.data?.me };
+      // updateMe(newMe)
+      return setMe(newMe);
     },
   });
 
-  const updateMe = (newMe: LocalStorageMe): void => {
+  const updateMe = (deltaMe: Me): void => {
+    const newMe = { ...me, ...deltaMe };
     setMe(newMe);
     LocalStorage.setMe(newMe);
     queryClient.setQueryData(queryKeys.me, newMe);

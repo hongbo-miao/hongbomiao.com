@@ -6,21 +6,8 @@ import (
 	"time"
 )
 
-type JWT struct {
-	JWTToken string `json:"jwtToken"`
-}
-
-func GetJWTToken(email string, password string) (JWT, error) {
+func GenerateJWTToken(uid string) (string, error) {
 	var config = GetConfig()
-
-	uid := GetUIDByEmail(email)
-	if uid == "" {
-		return JWT{}, nil
-	}
-	isPasswordValid := VerifyPassword(uid, password)
-	if !isPasswordValid {
-		return JWT{}, nil
-	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":  uid,
@@ -30,9 +17,8 @@ func GetJWTToken(email string, password string) (JWT, error) {
 	tokenString, err := token.SignedString([]byte(config.JWTSecret))
 	if err != nil {
 		log.Error().Err(err).Msg("token.SignedString")
+		return "", err
 	}
 
-	return JWT{
-		JWTToken: tokenString,
-	}, nil
+	return tokenString, nil
 }
