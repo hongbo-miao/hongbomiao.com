@@ -10,7 +10,7 @@ type OPAL struct {
 	Decision bool `json:"decision"`
 }
 
-func GetOPALDecision(uid string, action string, resourceType string) (opal OPAL, err error) {
+func GetOPALDecision(uid string, action string, resourceType string) (*OPAL, error) {
 	var config = GetConfig()
 	restyClient := resty.New()
 
@@ -27,14 +27,16 @@ func GetOPALDecision(uid string, action string, resourceType string) (opal OPAL,
 		Post("http://" + config.OPAHost + ":" + config.OPAPort + "/v1/data/app/rbac/allow")
 	if err != nil {
 		log.Error().Err(err).Msg("GetOPALDecision")
+		return nil, err
 	}
 
 	decision, err := jsonparser.GetBoolean(res.Body(), "result")
 	if err != nil {
 		log.Error().Err(err).Msg("jsonparser.GetBoolean")
+		return nil, err
 	}
 
-	return OPAL{
+	return &OPAL{
 		Decision: decision,
 	}, nil
 }

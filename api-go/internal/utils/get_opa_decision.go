@@ -24,7 +24,7 @@ func getResult(ctx context.Context, query rego.PreparedEvalQuery, input map[stri
 	return results[0].Bindings["x"].(bool)
 }
 
-func GetOPADecision(uid string, action string, resourceType string) (opa OPA, err error) {
+func GetOPADecision(uid string, action string, resourceType string) (*OPA, error) {
 	input := map[string]interface{}{
 		"uid":    uid,
 		"action": action,
@@ -33,9 +33,10 @@ func GetOPADecision(uid string, action string, resourceType string) (opa OPA, er
 
 	data := policies.ReadData()
 	var json map[string]interface{}
-	err = util.UnmarshalJSON(data, &json)
+	err := util.UnmarshalJSON(data, &json)
 	if err != nil {
 		log.Error().Err(err).Msg("UnmarshalJSON")
+		return nil, err
 	}
 	store := inmem.NewFromObject(json)
 	policy := policies.ReadPolicy()
@@ -49,10 +50,11 @@ func GetOPADecision(uid string, action string, resourceType string) (opa OPA, er
 
 	if err != nil {
 		log.Error().Err(err).Msg("PrepareForEval")
+		return nil, err
 	}
 
 	decision := getResult(ctx, query, input)
-	return OPA{
+	return &OPA{
 		Decision: decision,
 	}, nil
 }

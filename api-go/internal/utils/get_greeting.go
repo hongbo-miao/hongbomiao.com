@@ -12,7 +12,7 @@ type Greeting struct {
 	Content string `json:"content"`
 }
 
-func GetGreeting(firstName string, lastName string) (greeting Greeting, err error) {
+func GetGreeting(firstName string, lastName string) (*Greeting, error) {
 	req := &v1.GreetRequest{
 		Greeting: &v1.Greeting{
 			FirstName: firstName,
@@ -25,6 +25,7 @@ func GetGreeting(firstName string, lastName string) (greeting Greeting, err erro
 		grpc.WithStatsHandler(new(ocgrpc.ClientHandler)))
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
+		return nil, err
 	}
 	defer func(conn *grpc.ClientConn) {
 		err := conn.Close()
@@ -35,7 +36,7 @@ func GetGreeting(firstName string, lastName string) (greeting Greeting, err erro
 
 	c := v1.NewGreetServiceClient(conn)
 	res, err := c.Greet(context.Background(), req)
-	return Greeting{
+	return &Greeting{
 		Content: res.Result,
 	}, err
 }
