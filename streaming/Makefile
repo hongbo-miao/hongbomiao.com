@@ -1,0 +1,2 @@
+maven-install:
+	mvn install
