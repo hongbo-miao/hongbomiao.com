@@ -1,18 +1,18 @@
-import LocalStorageMe from '../types/LocalStorageMe';
+import Me from '../types/Me';
 
-const ME_LOCALSTORAGE_KEY = 'me';
+const LOCAL_STORAGE_ME_KEY = 'me';
 
-const getMe = (): LocalStorageMe | null => {
-  const storedMe = localStorage.getItem(ME_LOCALSTORAGE_KEY);
+const getMe = (): Me | null => {
+  const storedMe = localStorage.getItem(LOCAL_STORAGE_ME_KEY);
   return storedMe ? JSON.parse(storedMe) : null;
 };
 
-const setMe = (user: LocalStorageMe): void => {
-  localStorage.setItem(ME_LOCALSTORAGE_KEY, JSON.stringify(user));
+const setMe = (user: Me): void => {
+  localStorage.setItem(LOCAL_STORAGE_ME_KEY, JSON.stringify(user));
 };
 
 const clearMe = (): void => {
-  localStorage.removeItem(ME_LOCALSTORAGE_KEY);
+  localStorage.removeItem(LOCAL_STORAGE_ME_KEY);
 };
 
 const LocalStorage = {
