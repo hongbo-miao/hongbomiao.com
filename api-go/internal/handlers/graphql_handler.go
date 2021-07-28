@@ -7,12 +7,16 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/handler"
+	"github.com/rs/zerolog/log"
 	"net/http"
 )
 
 func addContext(next *handler.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		myID := utils.VerifyToken(r)
+		myID, err := utils.VerifyJWTTokenAndExtractMyID(r)
+		if err != nil {
+			log.Error().Err(err).Msg("VerifyJWTTokenAndExtractMyID")
+		}
 		ctx := context.WithValue(r.Context(), types.ContextMyIDKey("myID"), myID)
 		next.ContextHandler(ctx, w, r)
 	})

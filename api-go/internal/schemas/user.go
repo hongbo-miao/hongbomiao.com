@@ -3,6 +3,7 @@ package schemas
 import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/utils"
 	"github.com/graphql-go/graphql"
+	"github.com/rs/zerolog/log"
 )
 
 var userGraphQLType = graphql.NewObject(graphql.ObjectConfig{
@@ -24,9 +25,10 @@ var userGraphQLField = graphql.Field{
 			Type: graphql.NewNonNull(graphql.ID),
 		},
 	},
-	Resolve: func(p graphql.ResolveParams) (res interface{}, err error) {
-		err = utils.CheckGraphQLContextMyID(p)
+	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+		err := utils.CheckGraphQLContextMyID(p)
 		if err != nil {
+			log.Error().Err(err).Msg("CheckGraphQLContextMyID")
 			return nil, err
 		}
 
