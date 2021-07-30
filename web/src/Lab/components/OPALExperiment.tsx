@@ -1,26 +1,49 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-console */
+
 import React from 'react';
+import adoptDog from '../queries/adoptDog';
+import getDog from '../queries/getDog';
 import getOPALDecision from '../queries/getOPALDecision';
 import styles from './OPALExperiment.module.css';
 
 const HmPreAuth = React.lazy(() => import('./PreAuth'));
 
 const OPALExperiment: React.VFC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [readDogData, setReadDogData] = React.useState<any>(undefined);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [adoptDogData, setAdoptDogData] = React.useState<any>(undefined);
+
+  const onReadDog = async () => {
+    const res = await getDog('1');
+    console.log('dog', res?.data?.data?.dog);
+  };
+
+  const onAdoptDog = async () => {
+    const res = await adoptDog('1');
+    console.log('adoptDog', res?.data?.data?.adoptDog);
+  };
 
   return (
     <div className={styles.hmOPALExperiment}>
       <div className={`container is-max-desktop ${styles.hmContainer}`}>
         <div className="buttons">
           <HmPreAuth action="read" resourceType="dog" getDecision={getOPALDecision} setData={setReadDogData}>
-            <button className="button is-primary" type="button" disabled={!readDogData?.data?.opal?.decision}>
+            <button
+              className="button is-primary"
+              type="button"
+              disabled={!readDogData?.data?.opal?.decision}
+              onClick={onReadDog}
+            >
               Read Dog
             </button>
           </HmPreAuth>
           <HmPreAuth action="adopt" resourceType="dog" getDecision={getOPALDecision} setData={setAdoptDogData}>
-            <button className="button is-primary" type="button" disabled={!adoptDogData?.data?.opal?.decision}>
+            <button
+              className="button is-primary"
+              type="button"
+              disabled={!adoptDogData?.data?.opal?.decision}
+              onClick={onAdoptDog}
+            >
               Adopt Dog
             </button>
           </HmPreAuth>
