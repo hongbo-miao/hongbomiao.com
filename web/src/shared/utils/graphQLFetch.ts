@@ -4,7 +4,7 @@ import config from '../../config';
 
 const graphQLFetch = (query: string): Observable<AjaxResponse<unknown>> =>
   ajax.post(
-    config.graphQLURL,
+    config.apiServerGraphQLURL,
     {
       query,
     },

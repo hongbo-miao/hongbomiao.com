@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pre-auth-deployment
+  namespace: hm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: pre-auth
+  template:
+    metadata:
+      labels:
+        component: pre-auth
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+        - name: pre-auth
+          image: hongbomiao/hm-pre-auth:latest
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: app_env
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: port
+            - name: OPA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: opa_host
+            - name: OPA_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: opa_port
+            - name: DGRAPH_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: dgraph_host
+            - name: DGRAPH_GRPC_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: dgraph_grpc_port
+            - name: OPEN_CENSUS_AGENT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: open_census_agent_host
+            - name: OPEN_CENSUS_AGENT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: open_census_agent_port
+            - name: JAEGER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: jaeger_url
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: jwt_secret
+          ports:
+            - name: pre-auth
+              protocol: TCP
+              containerPort: 29930
+        - name: opal-client
+          image: authorizon/opal-client:0.1.11
+          env:
+            - name: OPAL_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: opal_server_url
+            - name: OPAL_INLINE_OPA_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: opal_inline_opa_config
+            - name: OPAL_INLINE_OPA_LOG_FORMAT
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: opal_inline_opa_log_format
+            - name: OPAL_LOG_MODULE_EXCLUDE_LIST
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: opal_log_module_exclude_list
+            - name: OPAL_LOG_COLORIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: opal_log_colorize
+          ports:
+            - name: opal-client
+              protocol: TCP
+              containerPort: 7000
+            - name: opa
+              protocol: TCP
+              containerPort: 8181
+          volumeMounts:
+            - mountPath: /data
+              name: opa-volume
+      volumes:
+        - name: opa-volume
+          persistentVolumeClaim:
+            claimName: host-pvc
