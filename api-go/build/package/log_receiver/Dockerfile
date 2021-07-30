@@ -14,5 +14,5 @@ ENV GIN_MODE=release
 
 COPY --from=builder /usr/src/app/out/cmd/log_receiver/main ./main
 
-EXPOSE 8000
+EXPOSE 41797
 CMD ["./main"]
