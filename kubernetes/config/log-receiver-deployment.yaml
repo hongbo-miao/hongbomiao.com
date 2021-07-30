@@ -24,11 +24,11 @@ spec:
                 configMapKeyRef:
                   name: log-receiver-configmap
                   key: app_env
-            - name: DECISION_LOG_RECEIVER_PORT
+            - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: log-receiver-configmap
-                  key: decision_log_receiver_port
+                  key: port
           ports:
             - name: log-receiver
               protocol: TCP

@@ -29,16 +29,16 @@ spec:
                 configMapKeyRef:
                   name: api-server-configmap
                   key: port
-            - name: GRPC_HOST
+            - name: GRPC_SERVER_HOST
               valueFrom:
                 configMapKeyRef:
                   name: api-server-configmap
-                  key: grpc_host
-            - name: GRPC_PORT
+                  key: grpc_server_host
+            - name: GRPC_SERVER_PORT
               valueFrom:
                 configMapKeyRef:
                   name: api-server-configmap
-                  key: grpc_port
+                  key: grpc_server_port
             - name: OPA_HOST
               valueFrom:
                 configMapKeyRef:

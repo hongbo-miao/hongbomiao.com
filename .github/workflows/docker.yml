@@ -74,7 +74,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./api-go/build/package/Dockerfile.api-server
+          file: ./api-go/build/package/api-server/Dockerfile
           push: true
           tags: hongbomiao/hm-api-server:latest
       - name: Print image digest
@@ -99,7 +99,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./api-go/build/package/Dockerfile.grpc-server
+          file: ./api-go/build/package/grpc-server/Dockerfile
           push: true
           tags: hongbomiao/hm-grpc-server:latest
       - name: Print image digest
@@ -124,7 +124,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./api-go/build/package/Dockerfile.log-receiver
+          file: ./api-go/build/package/log-receiver/Dockerfile
           push: true
           tags: hongbomiao/hm-log-receiver:latest
       - name: Print image digest
