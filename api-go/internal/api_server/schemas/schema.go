@@ -10,13 +10,15 @@ var query = graphql.NewObject(graphql.ObjectConfig{
 		"me":       &meGraphQLField,
 		"user":     &userGraphQLField,
 		"greeting": &greetingGraphQLField,
+		"dog":      &dogGraphQLField,
 	},
 })
 
 var mutation = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Mutation",
 	Fields: graphql.Fields{
-		"signIn": &signInGraphQLField,
+		"signIn":   &signInGraphQLField,
+		"adoptDog": &adoptDogGraphQLField,
 	},
 })
 
