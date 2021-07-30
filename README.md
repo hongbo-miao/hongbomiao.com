@@ -233,11 +233,11 @@ A cutting-edge technology lab powered by automation.
 
 #### Service Mesh - Linkerd
 
-![Linkerd](https://user-images.githubusercontent.com/3375461/126631387-f80b7263-28cb-442c-8699-2b0c753bed36.png)
+![Linkerd](https://user-images.githubusercontent.com/3375461/127684629-a0d9d76b-cbc6-465f-80ea-10c3e06f7eac.png)
 
 #### GitOps - Argo CD
 
-![Argo CD](https://user-images.githubusercontent.com/3375461/126804994-78f72da5-80ec-4531-82c1-ca52dee05f85.png)
+![Argo CD](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
 
 #### Distributed Tracing - OpenTelemetry
 
