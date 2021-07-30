@@ -12,7 +12,7 @@ FROM alpine:3.14.0 AS release
 WORKDIR /usr/src/app
 ENV GIN_MODE=release
 
-COPY --from=builder /usr/src/app/.env.production ./.env.production
+COPY --from=builder /usr/src/app/config/grpc_server/.env.production ./config/grpc_server/.env.production
 COPY --from=builder /usr/src/app/out/cmd/grpc_server/main ./main
 
 EXPOSE 45237
