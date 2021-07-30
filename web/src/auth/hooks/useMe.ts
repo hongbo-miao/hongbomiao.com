@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import React from 'react';
 import { useQuery, useQueryClient } from 'react-query';
+import config from '../../config';
 import queryKeys from '../../shared/reactQuery/queryKeys';
 import Me from '../types/Me';
 import LocalStorage from '../utils/LocalStorage';
@@ -10,6 +11,7 @@ import getJWTHeader from '../utils/getJWTHeader';
 const getMe = async (me: Me | null): Promise<AxiosResponse | null> => {
   if (me == null) return null;
   return axiosInstance({
+    baseURL: config.apiServerGraphQLURL,
     headers: getJWTHeader(me),
     data: {
       query: `

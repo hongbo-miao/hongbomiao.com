@@ -12,7 +12,8 @@ if (REACT_APP_SERVER_WS_PROTOCOL == null || REACT_APP_SERVER_WS_PROTOCOL === '')
 type Config = {
   nodeEnv: 'development' | 'production' | 'test';
   githubURL: string;
-  graphQLURL: string;
+  preAuthGraphQLURL: string;
+  apiServerGraphQLURL: string;
   webSocketGraphQLURL: string;
   googleTagManagerOptions: {
     containerId: string;
@@ -27,7 +28,8 @@ type Config = {
 const config: Config = {
   nodeEnv: NODE_ENV,
   githubURL: 'https://github.com/Hongbo-Miao/hongbomiao.com',
-  graphQLURL: NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/graphql',
+  preAuthGraphQLURL: NODE_ENV === 'development' ? 'http://localhost:29930/graphql' : '/pre-auth/graphql',
+  apiServerGraphQLURL: NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/api-server/graphql',
   webSocketGraphQLURL: `${REACT_APP_SERVER_WS_PROTOCOL}://${window.location.host}/graphql`,
   googleTagManagerOptions: {
     containerId: 'GTM-MKMQ55P',
