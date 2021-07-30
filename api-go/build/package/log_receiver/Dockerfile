@@ -12,7 +12,7 @@ FROM alpine:3.14.0 AS release
 WORKDIR /usr/src/app
 ENV GIN_MODE=release
 
-COPY --from=builder /usr/src/app/.env.production ./.env.production
+COPY --from=builder /usr/src/app/config/log_receiver/.env.production ./config/log_receiver/.env.production
 COPY --from=builder /usr/src/app/out/cmd/log_receiver/main ./main
 
 EXPOSE 8000
