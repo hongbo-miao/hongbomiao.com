@@ -30,3 +30,6 @@ opa-fmt:
 	opa fmt internal/policies/*.rego -w
 opa-check:
 	opa check internal/policies/*.rego
+
+gzip-call:
+	echo '{"foo": "bar"}' | gzip | curl -v -i --data-binary @- -H "Content-Encoding: gzip" http://localhost:41797/logs
