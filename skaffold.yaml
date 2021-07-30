@@ -13,7 +13,7 @@ build:
   - image: hongbomiao/hm-api-server:latest
     context: .
     docker:
-      dockerfile: api-go/build/package/Dockerfile.api-server
+      dockerfile: api-go/build/package/api-server/Dockerfile
     sync:
       manual:
         - src: "*.go"
@@ -21,7 +21,15 @@ build:
   - image: hongbomiao/hm-grpc-server:latest
     context: .
     docker:
-      dockerfile: api-go/build/package/Dockerfile.grpc-server
+      dockerfile: api-go/build/package/grpc-server/Dockerfile
+    sync:
+      manual:
+        - src: "*.go"
+          dest: .
+  - image: hongbomiao/hm-log-receiver:latest
+    context: .
+    docker:
+      dockerfile: api-go/build/package/log-receiver/Dockerfile
     sync:
       manual:
         - src: "*.go"

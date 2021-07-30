@@ -24,11 +24,11 @@ spec:
                 configMapKeyRef:
                   name: grpc-server-configmap
                   key: app_env
-            - name: GRPC_PORT
+            - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: grpc-server-configmap
-                  key: grpc_port
+                  key: port
             - name: OPEN_CENSUS_AGENT_HOST
               valueFrom:
                 configMapKeyRef:
@@ -42,4 +42,4 @@ spec:
           ports:
             - name: grpc-server
               protocol: TCP
-              containerPort: 50051
+              containerPort: 45237
