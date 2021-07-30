@@ -1,8 +1,8 @@
 package schemas
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/api_server/types"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/api_server/utils"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/pre_auth/types"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/pre_auth/utils"
 	"github.com/graphql-go/graphql"
 	"github.com/rs/zerolog/log"
 )

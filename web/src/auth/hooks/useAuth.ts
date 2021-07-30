@@ -1,3 +1,4 @@
+import config from '../../config';
 import axiosInstance from '../utils/axiosInstance';
 import useMe from './useMe';
 
@@ -13,6 +14,7 @@ const useAuth = (): UseAuth => {
   const signIn = async (email: string, password: string): Promise<void> => {
     try {
       const res = await axiosInstance({
+        baseURL: config.apiServerGraphQLURL,
         data: {
           query: `
             mutation SignIn($email: String!, $password: String!) {
@@ -44,6 +46,7 @@ const useAuth = (): UseAuth => {
   const signUp = async (email: string, password: string): Promise<void> => {
     try {
       const res = await axiosInstance({
+        baseURL: config.apiServerGraphQLURL,
         data: {
           query: `
             mutation SignUp($email: String!, $password: String!) {
