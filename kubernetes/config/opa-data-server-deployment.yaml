@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opa-data-server-deployment
+  namespace: hm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: opa-data-server
+  template:
+    metadata:
+      labels:
+        component: opa-data-server
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+        - name: opa-data-server
+          image: hongbomiao/hm-opa-data-server:latest
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-data-server-configmap
+                  key: app_env
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-data-server-configmap
+                  key: port
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-data-server-configmap
+                  key: postgres_host
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-data-server-configmap
+                  key: postgres_port
+            - name: POSTGRES_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-data-server-configmap
+                  key: postgres_database
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-data-server-configmap
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-data-server-configmap
+                  key: postgres_password
+          ports:
+            - name: opa-data-server
+              protocol: TCP
+              containerPort: 41797

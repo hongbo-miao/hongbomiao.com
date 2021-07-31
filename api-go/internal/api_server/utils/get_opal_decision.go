@@ -11,7 +11,7 @@ type OPAL struct {
 }
 
 func GetOPALDecision(uid string, action string, resourceType string) (*OPAL, error) {
-	var config = GetConfig()
+	config := GetConfig()
 	restyClient := resty.New()
 
 	body := map[string]interface{}{
