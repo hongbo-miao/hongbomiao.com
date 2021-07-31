@@ -20,7 +20,7 @@ func GetGreeting(firstName string, lastName string) (*Greeting, error) {
 		},
 	}
 
-	var config = GetConfig()
+	config := GetConfig()
 	conn, err := grpc.Dial(config.GRPCServerHost+":"+config.GRPCServerPort, grpc.WithInsecure(),
 		grpc.WithStatsHandler(new(ocgrpc.ClientHandler)))
 	if err != nil {

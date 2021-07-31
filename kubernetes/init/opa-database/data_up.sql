@@ -1,4 +1,5 @@
-{
+insert into opa (org, data)
+values ('hm', '{
   "user_roles": {
     "0x1": [
       "admin"
@@ -60,3 +61,4 @@
     ]
   }
 }
+'::json);

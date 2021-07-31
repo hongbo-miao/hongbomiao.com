@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: opa-database-statefulset
+  namespace: hm
+spec:
+  serviceName: "opa-database-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      component: opa-database
+  template:
+    metadata:
+      labels:
+        component: opa-database
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      containers:
+        - name: opa-database
+          image: postgres:13.3-alpine
+          env:
+            - name: PGDATA
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-database-configmap
+                  key: pgdata
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-database-configmap
+                  key: postgres_db
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-database-configmap
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-database-configmap
+                  key: postgres_password
+          ports:
+            - name: postgres
+              protocol: TCP
+              containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

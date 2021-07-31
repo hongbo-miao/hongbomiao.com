@@ -1,14 +1,13 @@
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+create extension if not exists pgcrypto;
 
-CREATE TABLE users
+create table users
 (
-    id         UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    email      TEXT UNIQUE NOT NULL,
-    password   TEXT        NOT NULL,
-    first_name TEXT        NOT NULL,
-    last_name  TEXT        NOT NULL,
-    bio        TEXT,
-    created_on TIMESTAMP        DEFAULT now(),
-    last_login TIMESTAMP
+  id         uuid primary key default gen_random_uuid(),
+  email      text unique not null,
+  password   text        not null,
+  first_name text        not null,
+  last_name  text        not null,
+  bio        text,
+  created_on timestamptz      default now(),
+  last_login timestamptz
 );
