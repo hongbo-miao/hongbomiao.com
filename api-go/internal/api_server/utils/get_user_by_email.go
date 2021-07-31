@@ -11,7 +11,7 @@ import (
 )
 
 func GetUserByEmail(email string) (*types.User, error) {
-	var config = GetConfig()
+	config := GetConfig()
 	conn, err := grpc.Dial(config.DgraphHost+":"+config.DgraphGRPCPort, grpc.WithInsecure())
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")

@@ -106,8 +106,10 @@ A cutting-edge technology lab powered by automation.
 - **gRPC** - Remote procedure call (RPC) framework
 - **zerolog** - Logging
 - **GoDotEnv** - Environment variables loading
-- **Testify** - Unit testing
+- **pgx** - PostgreSQL Driver
+- **Squirrel** - SQL query builder
 - **Dgraph** - Distributed graph database
+- **Testify** - Unit testing
 
 ### API Server - Node.js
 

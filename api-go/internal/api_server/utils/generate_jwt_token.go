@@ -7,7 +7,7 @@ import (
 )
 
 func GenerateJWTToken(uid string) (string, error) {
-	var config = GetConfig()
+	config := GetConfig()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":  uid,
