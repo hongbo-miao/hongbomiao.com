@@ -16,7 +16,7 @@ func main() {
 		Str("port", config.Port).
 		Str("postgresHost", config.PostgresHost).
 		Str("postgresPort", config.PostgresPort).
-		Str("postgresDatabase", config.PostgresDatabase).
+		Str("postgresDB", config.PostgresDB).
 		Str("postgresUser", config.PostgresUser).
 		Str("postgresPassword", config.PostgresPassword).
 		Msg("main")
@@ -24,7 +24,7 @@ func main() {
 	pg := utils.InitPostgres(
 		config.PostgresHost,
 		config.PostgresPort,
-		config.PostgresDatabase,
+		config.PostgresDB,
 		config.PostgresUser,
 		config.PostgresPassword)
 
