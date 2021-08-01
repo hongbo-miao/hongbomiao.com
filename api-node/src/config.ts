@@ -27,7 +27,7 @@ const {
   JWT_SECRET,
   NODE_ENV,
   PORT,
-  POSTGRES_DATABASE,
+  POSTGRES_DB,
   POSTGRES_HOST,
   POSTGRES_PASSWORD,
   POSTGRES_PORT,
@@ -58,8 +58,8 @@ if (NODE_ENV !== 'development' && NODE_ENV !== 'production' && NODE_ENV !== 'tes
 if (PORT == null || PORT === '') {
   throw new Error('Failed to read PORT.');
 }
-if (POSTGRES_DATABASE == null || POSTGRES_DATABASE === '') {
-  throw new Error('Failed to read POSTGRES_DATABASE.');
+if (POSTGRES_DB == null || POSTGRES_DB === '') {
+  throw new Error('Failed to read POSTGRES_DB.');
 }
 if (POSTGRES_HOST == null || POSTGRES_HOST === '') {
   throw new Error('Failed to read POSTGRES_HOST.');
@@ -173,7 +173,7 @@ const config: Config = {
   postgresConnection: {
     host: POSTGRES_HOST,
     port: Number(POSTGRES_PORT),
-    database: POSTGRES_DATABASE,
+    database: POSTGRES_DB,
     user: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
   },
