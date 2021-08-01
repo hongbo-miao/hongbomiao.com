@@ -20,5 +20,8 @@ func main() {
 	r := gin.Default()
 	r.Use(gzip.Gzip(gzip.DefaultCompression, gzip.WithDecompressFn(gzip.DefaultDecompressHandle)))
 	r.POST("/logs", controllers.Logs)
-	_ = r.Run(":" + config.Port)
+	err := r.Run(":" + config.Port)
+	if err != nil {
+		log.Error().Err(err).Msg("r.Run")
+	}
 }

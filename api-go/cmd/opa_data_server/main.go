@@ -31,5 +31,8 @@ func main() {
 	r := gin.Default()
 	r.GET("/", controllers.Health)
 	r.GET("/data", controllers.Data(pg))
-	_ = r.Run(":" + config.Port)
+	err := r.Run(":" + config.Port)
+	if err != nil {
+		log.Error().Err(err).Msg("r.Run")
+	}
 }
