@@ -10,7 +10,7 @@ type Config struct {
 	Port             string
 	PostgresHost     string
 	PostgresPort     string
-	PostgresDatabase string
+	PostgresDB       string
 	PostgresUser     string
 	PostgresPassword string
 }
@@ -31,7 +31,7 @@ func GetConfig() *Config {
 		Port:             os.Getenv("PORT"),
 		PostgresHost:     os.Getenv("POSTGRES_HOST"),
 		PostgresPort:     os.Getenv("POSTGRES_PORT"),
-		PostgresDatabase: os.Getenv("POSTGRES_DATABASE"),
+		PostgresDB:       os.Getenv("POSTGRES_DB"),
 		PostgresUser:     os.Getenv("POSTGRES_USER"),
 		PostgresPassword: os.Getenv("POSTGRES_PASSWORD"),
 	}
