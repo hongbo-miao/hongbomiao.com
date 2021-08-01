@@ -18,6 +18,6 @@ func InitPostgres(
 		log.Error().Err(err).Msg("conn.Close")
 		return nil
 	}
-	//defer pg.Close()
+	// defer pg.Close()
 	return pg
 }

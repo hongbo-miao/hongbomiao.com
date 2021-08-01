@@ -278,6 +278,10 @@ dgraph-delete:
 	kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
 	kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph
 
+# PostgreSQL
+postgres-connect:
+	psql --host=localhost --port=40072 --dbname=opa_db --username=admin --password
+
 # Kafka
 zookeeper-start:
 	zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties
