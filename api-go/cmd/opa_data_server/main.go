@@ -27,6 +27,7 @@ func main() {
 		config.PostgresDB,
 		config.PostgresUser,
 		config.PostgresPassword)
+	defer pg.Close()
 
 	r := gin.Default()
 	r.GET("/", controllers.Health)

@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/rs/zerolog/log"
+	"os"
 )
 
 func InitPostgres(
@@ -16,8 +17,7 @@ func InitPostgres(
 	pg, err := pgxpool.Connect(context.Background(), databaseURL)
 	if err != nil {
 		log.Error().Err(err).Msg("conn.Close")
-		return nil
+		os.Exit(1)
 	}
-	// defer pg.Close()
 	return pg
 }
