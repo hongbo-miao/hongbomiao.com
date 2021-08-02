@@ -8,6 +8,10 @@ clean:
 setup-kubernetes:
 	sh bin/setup-kubernetes.sh
 
+# Kubernetes
+k8s-debug:
+	nslookup api-server-service.hm.svc.cluster.local
+
 # Docker
 docker-build:
 	docker build --file=web/Dockerfile --tag=hm-web .
