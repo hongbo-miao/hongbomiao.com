@@ -4,8 +4,11 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/opa_data_server/controllers"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/opa_data_server/utils"
 	sharedUtils "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/utils"
+	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
+	"github.com/vearne/gin-timeout"
+	"time"
 )
 
 func main() {
@@ -30,6 +33,8 @@ func main() {
 	defer pg.Close()
 
 	r := gin.Default()
+	r.Use(logger.SetLogger())
+	r.Use(timeout.Timeout(timeout.WithTimeout(10 * time.Second)))
 	r.GET("/", controllers.Health)
 	r.GET("/data", controllers.Data(pg))
 	err := r.Run(":" + config.Port)
