@@ -60,9 +60,7 @@ func Data(pg *pgxpool.Pool) gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{
-			"status": opa.Data,
-		})
+		c.JSON(http.StatusOK, opa.Data)
 	}
 	return fn
 }
