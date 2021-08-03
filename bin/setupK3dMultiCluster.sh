@@ -19,7 +19,7 @@ k3d cluster create east --config=kubernetes/k3d/east-cluster-config.yaml
 #	k3d cluster delete west
 #	k3d cluster delete east
 
-# kubectl config use-context k3d-west
+ kubectl config use-context k3d-west
 # kubectl config use-context k3d-east
 
 
@@ -91,7 +91,10 @@ done
 
 
 # Link the cluster
-linkerd --context=k3d-east multicluster link --cluster-name=k3d-east --api-server-address | kubectl --context=k3d-west apply --filename=-
+EAST_IP=$(kubectl --context="k3d-east" get service --namespace=ingress-nginx ingress-nginx-controller --output='go-template={{ (index .status.loadBalancer.ingress 0).ip }}')
+linkerd --context=k3d-east multicluster link \
+  --cluster-name=k3d-east \
+  --api-server-address="https://${EAST_IP}:6441" | kubectl --context=k3d-west apply --filename=-
 
 
 # Check multicluster
