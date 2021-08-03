@@ -2,6 +2,11 @@
 
 apiVersion: k3d.io/v1alpha2
 kind: Simple
+kubeAPI:
+#  host: "k3d.hongbomiao.com"
+  hostIP: "127.0.0.1"
+  hostPort: "6440"
+network: hm-network
 volumes:
   - volume: "/Users/homiao/Clouds/Git/hongbomiao.com/kubernetes/data:/data"
 ports:
