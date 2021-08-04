@@ -6,11 +6,17 @@ build:
 clean:
 	sh bin/clean.sh
 setup-k3d:
-	sh bin/setupK3d.sh
+	sh kubernetes/bin/setupK3d.sh
 setup-k3d-multi-cluster:
-	sh bin/setupK3dMultiCluster.sh
+	sh kubernetes/bin/setupK3dMultiCluster.sh
+clean-k3d:
+	sh kubernetes/bin/cleanK3d.sh
+setup-kind:
+	sh kubernetes/bin/setupKind.sh
+setup-minikube:
+	sh kubernetes/bin/setupMinikube.sh
 setup-kubernetes:
-	sh bin/setupKubernetes.sh
+	sh kubernetes/bin/setupKubernetes.sh
 
 # Kubernetes
 k8s-debug:
