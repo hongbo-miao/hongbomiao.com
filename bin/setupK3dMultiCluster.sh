@@ -41,21 +41,22 @@ kubectl config use-context k3d-west
 # Install Linkerd
 for cluster in west east; do
   # Wait the cluster is ready to install Linkerd
-  while ! linkerd --context="k3d-${cluster}" check --pre ; do :; done
+  while ! linkerd check --context="k3d-${cluster}" --pre ; do :; done
 
   domain="${cluster}.${ORG_DOMAIN}"
   crt="${CA_DIR}/${cluster}-issuer.crt"
   key="${CA_DIR}/${cluster}-issuer.key"
 
   echo "Install Linkerd on k3d-${cluster}"
-  linkerd --context="k3d-${cluster}" install \
+  linkerd install \
+    --context="k3d-${cluster}" \
     --cluster-domain=${domain} \
     --identity-trust-domain=${domain} \
     --identity-trust-anchors-file="${CA_DIR}/ca.crt" \
     --identity-issuer-certificate-file=${crt} \
     --identity-issuer-key-file=${key} \
     --disable-heartbeat | \
-    kubectl --context="k3d-${cluster}" apply --filename=-
+    kubectl apply --context="k3d-${cluster}" --filename=-
   echo "-------------"
 done
 
@@ -63,17 +64,17 @@ done
 # Install Ingress
 for cluster in west east; do
   # Wait the Linkerd is ready
-  while ! linkerd --context="k3d-${cluster}" check ; do :; done
+  while ! linkerd check --context="k3d-${cluster}" ; do :; done
 
   echo "Install Ingress on k3d-${cluster}"
   VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
-  kubectl --context="k3d-${cluster}" apply --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${VERSION}/deploy/static/provider/cloud/deploy.yaml"
-  # Local: kubectl --context="k3d-${cluster}" apply --filename=kubernetes/manifests/ingress-nginx.yaml
+  kubectl apply --context="k3d-${cluster}" --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${VERSION}/deploy/static/provider/cloud/deploy.yaml"
+  # Local: kubectl apply --context="k3d-${cluster}" --filename=kubernetes/manifests/ingress-nginx.yaml
   echo "-------------"
 
   echo "Patch Ingress on k3d-${cluster}"
-  kubectl --context="k3d-${cluster}" patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-configmap-patch.yaml)"
-  kubectl --context="k3d-${cluster}" patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-deployment-patch.yaml)"
+  kubectl patch configmap ingress-nginx-controller --context="k3d-${cluster}" --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-configmap-patch.yaml)"
+  kubectl patch deployment ingress-nginx-controller --context="k3d-${cluster}" --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-deployment-patch.yaml)"
   echo "-------------"
 done
 
@@ -81,10 +82,10 @@ done
 # Install Linkerd multicluster
 for cluster in west east; do
   # Wait the Linkerd is ready
-  while ! linkerd --context="k3d-${cluster}" check ; do :; done
+  while ! linkerd check --context="k3d-${cluster}" ; do :; done
 
   echo "Install on cluster: k3d-${cluster}"
-  linkerd --context="k3d-${cluster}" multicluster install | kubectl --context="k3d-${cluster}" apply --filename=- || break
+  linkerd multicluster install --context="k3d-${cluster}" | kubectl apply --context="k3d-${cluster}" --filename=-
   # linkerd multicluster uninstall | kubectl delete --filename=-
   echo "-------------"
 done
@@ -93,7 +94,7 @@ done
 # Check Linkerd multicluster
 for cluster in west east; do
   echo "Check gateway on cluster: k3d-${cluster}"
-  kubectl --context="k3d-${cluster}" --namespace=linkerd-multicluster rollout status deploy/linkerd-gateway || break
+  kubectl rollout status deploy/linkerd-gateway --context="k3d-${cluster}" --namespace=linkerd-multicluster
   echo "-------------"
 done
 
@@ -101,8 +102,8 @@ done
 # Check load balancer
 for cluster in west east; do
   echo "Check load balancer on cluster: k3d-${cluster}"
-  while [ "$(kubectl --context="k3d-${cluster}" --namespace=linkerd-multicluster get service \
-    -o 'custom-columns=:.status.loadBalancer.ingress[0].ip' \
+  while [ "$(kubectl get service --context="k3d-${cluster}" --namespace=linkerd-multicluster \
+    --output='custom-columns=:.status.loadBalancer.ingress[0].ip' \
     --no-headers)" = "<none>" ]; do
     printf '.'
     sleep 1
@@ -112,21 +113,24 @@ done
 
 
 # Link the cluster
-EAST_IP=$(kubectl --context="k3d-east" get service --namespace=ingress-nginx ingress-nginx-controller --output='go-template={{ (index .status.loadBalancer.ingress 0).ip }}')
-linkerd --context=k3d-east multicluster link \
+EAST_IP=$(kubectl get service --context="k3d-east" --namespace=ingress-nginx ingress-nginx-controller --output='go-template={{ (index .status.loadBalancer.ingress 0).ip }}')
+linkerd multicluster link \
+  --context=k3d-east \
   --cluster-name=k3d-east \
   --api-server-address="https://${EAST_IP}:6443" | \
-  kubectl --context=k3d-west apply --filename=-
+  kubectl apply --context=k3d-west --filename=-
 
-WEST_IP=$(kubectl --context="k3d-west" get service --namespace=ingress-nginx ingress-nginx-controller --output='go-template={{ (index .status.loadBalancer.ingress 0).ip }}')
-linkerd --context=k3d-west multicluster link \
+WEST_IP=$(kubectl get service --context="k3d-west" --namespace=ingress-nginx ingress-nginx-controller --output='go-template={{ (index .status.loadBalancer.ingress 0).ip }}')
+linkerd link \
+  --context=k3d-west multicluster \
   --cluster-name=k3d-west \
   --api-server-address="https://${WEST_IP}:6443" | \
-  kubectl --context=k3d-east apply --filename=-
+  kubectl apply --context=k3d-east --filename=-
 
 
 # Check multicluster
-linkerd --context=k3d-west multicluster check
+linkerd multicluster check --context=k3d-west
+linkerd multicluster check --context=k3d-east
 
 
 # Install Linkerd Viz
