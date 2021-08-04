@@ -3,10 +3,10 @@
 set -e
 
 
+# Generate certificates
 ORG_DOMAIN="k3d.hongbomiao.com"
 CA_DIR="kubernetes/certificates"
 
-# Generate certificates
 step certificate create "identity.linkerd.${ORG_DOMAIN}" \
   "${CA_DIR}/ca.crt" "${CA_DIR}/ca.key" \
   --profile=root-ca \
@@ -38,22 +38,16 @@ kubectl config use-context k3d-west
 # kubectl config use-context k3d-east
 
 
-# Install Ingress
-for cluster in west east; do
-  echo "Installing Ingress on k3d-${cluster}"
-  VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
-  kubectl --context="k3d-${cluster}" apply --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${VERSION}/deploy/static/provider/cloud/deploy.yaml"
-  # Local: kubectl --context="k3d-${cluster}" apply --filename=kubernetes/manifests/ingress-nginx.yaml
-  echo "-------------"
-done
-
-
 # Install Linkerd
 for cluster in west east; do
+  # Wait the cluster is ready to install Linkerd
+  while ! linkerd --context="k3d-${cluster}" check --pre ; do :; done
+
   domain="${cluster}.${ORG_DOMAIN}"
   crt="${CA_DIR}/${cluster}-issuer.crt"
   key="${CA_DIR}/${cluster}-issuer.key"
 
+  echo "Install Linkerd on k3d-${cluster}"
   linkerd --context="k3d-${cluster}" install \
     --cluster-domain=${domain} \
     --identity-trust-domain=${domain} \
@@ -66,17 +60,18 @@ for cluster in west east; do
 done
 
 
-# Check Linkerd
+# Install Ingress
 for cluster in west east; do
-  echo "Checking cluster: k3d-${cluster}"
-  linkerd --context="k3d-${cluster}" check || break
+  # Wait the Linkerd is ready
+  while ! linkerd --context="k3d-${cluster}" check ; do :; done
+
+  echo "Install Ingress on k3d-${cluster}"
+  VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
+  kubectl --context="k3d-${cluster}" apply --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${VERSION}/deploy/static/provider/cloud/deploy.yaml"
+  # Local: kubectl --context="k3d-${cluster}" apply --filename=kubernetes/manifests/ingress-nginx.yaml
   echo "-------------"
-done
 
-
-# Patch Ingress
-for cluster in west east; do
-  echo "Patching Ingress on k3d-${cluster}"
+  echo "Patch Ingress on k3d-${cluster}"
   kubectl --context="k3d-${cluster}" patch configmap ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-configmap-patch.yaml)"
   kubectl --context="k3d-${cluster}" patch deployment ingress-nginx-controller --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-deployment-patch.yaml)"
   echo "-------------"
@@ -85,7 +80,10 @@ done
 
 # Install Linkerd multicluster
 for cluster in west east; do
-  echo "Installing on cluster: k3d-${cluster}"
+  # Wait the Linkerd is ready
+  while ! linkerd --context="k3d-${cluster}" check ; do :; done
+
+  echo "Install on cluster: k3d-${cluster}"
   linkerd --context="k3d-${cluster}" multicluster install | kubectl --context="k3d-${cluster}" apply --filename=- || break
   # linkerd multicluster uninstall | kubectl delete --filename=-
   echo "-------------"
@@ -94,7 +92,7 @@ done
 
 # Check Linkerd multicluster
 for cluster in west east; do
-  echo "Checking gateway on cluster: k3d-${cluster}"
+  echo "Check gateway on cluster: k3d-${cluster}"
   kubectl --context="k3d-${cluster}" --namespace=linkerd-multicluster rollout status deploy/linkerd-gateway || break
   echo "-------------"
 done
@@ -102,7 +100,7 @@ done
 
 # Check load balancer
 for cluster in west east; do
-  echo "Checking load balancer on cluster: k3d-${cluster}"
+  echo "Check load balancer on cluster: k3d-${cluster}"
   while [ "$(kubectl --context="k3d-${cluster}" --namespace=linkerd-multicluster get service \
     -o 'custom-columns=:.status.loadBalancer.ingress[0].ip' \
     --no-headers)" = "<none>" ]; do
@@ -133,11 +131,20 @@ linkerd --context=k3d-west multicluster check
 
 # Install Linkerd Viz
 for cluster in west east; do
-  echo "Installing Linkerd Viz on k3d-${cluster}"
-  linkerd viz install --context="k3d-${cluster}" --set=jaegerUrl=jaeger.linkerd-jaeger:16686 | kubectl apply --filename=-
+  echo "Install Linkerd Viz on k3d-${cluster}"
+  kubectl config use-context "k3d-${cluster}"
+
+  domain="${cluster}.${ORG_DOMAIN}"
+  linkerd viz install \
+    --context="k3d-${cluster}" \
+    --set=jaegerUrl=jaeger.linkerd-jaeger:16686,clusterDomain=${domain} | \
+    kubectl apply --filename=-
   echo "-------------"
 done
 
+# linkerd viz dashboard --context=k3d-west
+# linkerd viz dashboard --context=k3d-east
 
 # List gateways
 linkerd --context=k3d-west multicluster gateways
+linkerd --context=k3d-east multicluster gateways
