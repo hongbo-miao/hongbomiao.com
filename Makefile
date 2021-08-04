@@ -5,8 +5,12 @@ build:
 	sh bin/build.sh
 clean:
 	sh bin/clean.sh
+setup-k3d:
+	sh bin/setupK3d.sh
+setup-k3d-multi-cluster:
+	sh bin/setupK3dMultiCluster.sh
 setup-kubernetes:
-	sh bin/setup-kubernetes.sh
+	sh bin/setupKubernetes.sh
 
 # Kubernetes
 k8s-debug:
