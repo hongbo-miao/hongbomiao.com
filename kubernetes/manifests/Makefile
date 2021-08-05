@@ -1,6 +1,8 @@
 download-argocd-yaml:
 	curl https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml > argocd.yaml
 
+download-dgraph-yaml:
+	curl https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml > dgraph.yaml
 download-dgraph-ha-yaml:
 	curl https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml > dgraph-ha.yaml
 
