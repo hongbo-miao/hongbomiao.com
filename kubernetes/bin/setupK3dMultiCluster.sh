@@ -4,7 +4,7 @@ set -e
 
 
 # Generate certificates
-ORG_DOMAIN="k3d.hongbomiao.com"
+ORG_DOMAIN="k8s-hongbomiao.com"
 CA_DIR="kubernetes/certificates"
 
 step certificate create "identity.linkerd.${ORG_DOMAIN}" \
@@ -103,9 +103,9 @@ for cluster in west east; do
 done
 
 
-# Install Linkerd Multicluster
+# Install Linkerd multicluster
 for cluster in west east; do
-  echo "# Install Linkerd Multicluster on: k3d-${cluster}"
+  echo "# Install Linkerd multicluster on: k3d-${cluster}"
   linkerd multicluster install --context="k3d-${cluster}" | kubectl apply --context="k3d-${cluster}" --filename=-
   # linkerd multicluster uninstall | kubectl delete --filename=-
   echo "=================================================="
@@ -114,7 +114,7 @@ done
 sleep 30
 
 
-# Check gateway
+# Check Linkerd gateway
 for cluster in west east; do
   echo "# Check gateway on: k3d-${cluster}"
   kubectl rollout status deploy/linkerd-gateway --context="k3d-${cluster}" --namespace=linkerd-multicluster
@@ -156,16 +156,16 @@ linkerd multicluster link \
 sleep 30
 
 
-# Check Linkerd Multicluster
+# Check Linkerd multicluster
 for cluster in west east; do
-  echo "# Check Linkerd Multicluster on: k3d-${cluster}"
+  echo "# Check Linkerd multicluster on: k3d-${cluster}"
   # Add `continue` here because of https://github.com/olix0r/l2-k3d-multi/issues/5
   linkerd multicluster check --context="k3d-${cluster}" || continue
   echo "=================================================="
 done
 
 
-# Install Linkerd Viz
+# Install Linkerd viz
 for cluster in west east; do
   echo "# Install Linkerd viz on: k3d-${cluster}"
   domain="${cluster}.${ORG_DOMAIN}"
@@ -181,7 +181,7 @@ sleep 30
 # linkerd viz dashboard --context=k3d-east
 
 
-# Check Linkerd Viz
+# Check Linkerd viz
 for cluster in west east; do
   echo "# Check Linkerd viz on: k3d-${cluster}"
   while ! linkerd viz check --context="k3d-${cluster}" ; do :; done
@@ -217,3 +217,51 @@ for cluster in west east; do
   while ! linkerd jaeger check --context="k3d-${cluster}" ; do :; done
   echo "=================================================="
 done
+
+
+# West cluster
+echo "# West cluster"
+kubectl config use-context k3d-west
+
+
+# Install Argo CD
+echo "# Install Argo CD"
+kubectl create namespace argocd
+kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+# Local: kubectl apply --namespace=argocd --filename=kubernetes/manifests/argocd.yaml
+# Delete: kubectl delete --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+sleep 30
+
+echo "# Check Argo CD"
+for deploy in "dex-server" "redis" "repo-server" "server"; do
+  kubectl --namespace=argocd rollout status deploy/argocd-${deploy}
+done
+
+
+# Install the app by Argo CD
+echo "# Install the app"
+kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
+ARGOCD_PASSWORD=$(kubectl --namespace=argocd get secret argocd-initial-admin-secret --output=jsonpath="{.data.password}" | base64 -d && echo)
+argocd login localhost:31026 --username=admin --password="${ARGOCD_PASSWORD}" --insecure
+kubectl apply --filename=argocd/hm-application.yaml
+argocd app sync hm-application --local=kubernetes/config/west
+
+sleep 60
+
+
+# East cluster
+echo "# East cluster"
+kubectl config use-context k3d-east
+
+
+# Install the app by Argo CD
+echo "# Install the app"
+kubectl apply --filename=kubernetes/config/east/hm-namespace.yaml
+kubectl apply --filename=kubernetes/config/east
+# Delete: kubectl delete --filename=kubernetes/config/east
+
+
+# Verify Linkerd multicluster setup correctly by checking the endpoints in west and verify that they match the gateway’s public IP address in east
+# kubectl get endpoint grpc-server-service-k3d-east --context=k3d-west --namespace=hm --output="custom-columns=ENDPOINT_IP:.subsets[*].addresses[*].ip"
+# kubectl linkerd-multicluster get service linkerd-gateway --context=k3d-east --namespace=hm --output="custom-columns=GATEWAY_IP:.status.loadBalancer.ingress[*].ip"
