@@ -15,13 +15,12 @@ func main() {
 	sharedUtils.InitLogger()
 	var config = utils.GetConfig()
 	log.Info().
-		Str("appEnv", config.AppEnv).
-		Str("port", config.Port).
-		Str("postgresHost", config.PostgresHost).
-		Str("postgresPort", config.PostgresPort).
-		Str("postgresDB", config.PostgresDB).
-		Str("postgresUser", config.PostgresUser).
-		Str("postgresPassword", config.PostgresPassword).
+		Str("AppEnv", config.AppEnv).
+		Str("Port", config.Port).
+		Str("PostgresHost", config.PostgresHost).
+		Str("PostgresPort", config.PostgresPort).
+		Str("PostgresDB", config.PostgresDB).
+		Str("PostgresUser", config.PostgresUser).
 		Msg("main")
 
 	pg := utils.InitPostgres(
