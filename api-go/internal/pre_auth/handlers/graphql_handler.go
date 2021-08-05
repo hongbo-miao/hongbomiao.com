@@ -6,6 +6,7 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/pre_auth/types"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/pre_auth/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/graphql-go/graphql/gqlerrors"
 	"github.com/graphql-go/handler"
 	"github.com/rs/zerolog/log"
 	"net/http"
@@ -27,6 +28,10 @@ func GraphQLHandler() gin.HandlerFunc {
 		Schema:   &schemas.Schema,
 		Pretty:   true,
 		GraphiQL: false,
+		FormatErrorFn: func(err error) gqlerrors.FormattedError {
+			log.Error().Err(err).Msg("FormatErrorFn")
+			return gqlerrors.FormatError(err)
+		},
 	})
 	return gin.WrapH(addContext(h))
 }

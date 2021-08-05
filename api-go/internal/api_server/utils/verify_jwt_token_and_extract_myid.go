@@ -14,6 +14,9 @@ type JWTTokenContent struct {
 
 func extractBearerToken(r *http.Request) (string, error) {
 	bearerToken := r.Header.Get("Authorization")
+	if bearerToken == "" {
+		return "", nil
+	}
 	strArr := strings.Split(bearerToken, " ")
 	if len(strArr) != 2 {
 		return "", errors.New("no bearer token")
@@ -27,6 +30,8 @@ func VerifyJWTTokenAndExtractMyID(r *http.Request) (string, error) {
 	if err != nil {
 		log.Error().Err(err).Msg("extractBearerToken")
 		return "", err
+	} else if tokenString == "" {
+		return "", nil
 	}
 
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
