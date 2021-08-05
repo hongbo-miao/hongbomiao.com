@@ -14,8 +14,8 @@ func main() {
 	sharedUtils.InitLogger()
 	var config = utils.GetConfig()
 	log.Info().
-		Str("appEnv", config.AppEnv).
-		Str("port", config.Port).
+		Str("AppEnv", config.AppEnv).
+		Str("Port", config.Port).
 		Msg("main")
 
 	r := gin.Default()

@@ -17,8 +17,9 @@ type Config struct {
 	OpenCensusAgentHost          string
 	OpenCensusAgentPort          string
 	JaegerURL                    string
-	JWTSecret                    string
 	EnableOpenTelemetryStdoutLog string
+
+	JWTSecret string
 }
 
 func GetConfig() *Config {

@@ -14,10 +14,14 @@ func main() {
 	sharedUtils.InitLogger()
 	var config = utils.GetConfig()
 	log.Info().
-		Str("appEnv", config.AppEnv).
-		Str("port", config.Port).
-		Str("openCensusAgentHost", config.OpenCensusAgentHost).
-		Str("openCensusAgentPort", config.OpenCensusAgentPort).
+		Str("AppEnv", config.AppEnv).
+		Str("Port", config.Port).
+		Str("OPAHost", config.OPAHost).
+		Str("OPAPort", config.OPAPort).
+		Str("DgraphHost", config.DgraphHost).
+		Str("DgraphGRPCPort", config.DgraphGRPCPort).
+		Str("OpenCensusAgentHost", config.OpenCensusAgentHost).
+		Str("OpenCensusAgentPort", config.OpenCensusAgentPort).
 		Str("JaegerURL", config.JaegerURL).
 		Msg("main")
 

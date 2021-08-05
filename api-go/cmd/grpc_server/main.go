@@ -25,10 +25,10 @@ func (*server) Greet(ctx context.Context, req *v1.GreetRequest) (*v1.GreetRespon
 func main() {
 	var config = utils.GetConfig()
 	log.Info().
-		Str("appEnv", config.AppEnv).
-		Str("port", config.Port).
-		Str("openCensusAgentHost", config.OpenCensusAgentHost).
-		Str("openCensusAgentPort", config.OpenCensusAgentPort).
+		Str("AppEnv", config.AppEnv).
+		Str("Port", config.Port).
+		Str("OpenCensusAgentHost", config.OpenCensusAgentHost).
+		Str("OpenCensusAgentPort", config.OpenCensusAgentPort).
 		Msg("main")
 
 	sharedUtils.InitOpenCensusTracer(config.OpenCensusAgentHost, config.OpenCensusAgentPort, "grpc_server")
