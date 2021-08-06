@@ -211,8 +211,10 @@ linkerd-viz-tap-to-path:
 	linkerd viz tap deployments/api-server-deployment --namespace=hm --to=deployment/grpc-server-deployment --path=/api.proto.greet.v1.GreetService/Greet
 linkerd-viz-top: # shows traffic routes sorted by the most popular paths
 	linkerd viz top deployments/api-server-deployment --namespace=hm
-linkerd-viz-stat:
+linkerd-viz-stat-deployments:
 	linkerd viz stat deployments --namespace=hm
+linkerd-viz-stat-trafficsplit:
+	linkerd viz stat trafficsplit --context=k3d-west --namespace=hm
 linkerd-viz-stat-wide: # includes extra READ_BYTES/SEC and WRITE_BYTES/SEC
 	linkerd viz stat deployments --namespace=hm --output=wide
 linkerd-viz-stat-from-to:
@@ -266,7 +268,7 @@ argocd-sync:
 	argocd app sync hm-application
 argocd-sync-local:
 	kubectl apply --filename=argocd/hm-application.yaml
-	argocd app sync hm-application --local=kubernetes/config
+	argocd app sync hm-application --local=kubernetes/config/west
 argocd-list:
 	argocd app list
 argocd-delete:
@@ -355,4 +357,12 @@ hadolint:
 shellcheck:
 	shellcheck $$(git ls-files '**/*.sh')
 kubeconform:
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/*.yaml')
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/east/*.yaml')
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-configmap.yaml')
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-deployment.yaml')
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-ingress.yaml')
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-namespace.yaml')
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-pv.yaml')
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-pvc.yaml')
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-service.yaml')
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-statefulset.yaml')
