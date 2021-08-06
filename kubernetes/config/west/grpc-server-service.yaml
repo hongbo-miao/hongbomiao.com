@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-server-service
+  namespace: hm
+  labels:
+    mirror.linkerd.io/exported: "true"
+spec:
+  type: ClusterIP
+  selector:
+    component: grpc-server
+  ports:
+    - name: grpc-server
+      protocol: TCP
+      targetPort: grpc-server
+      port: 45237

@@ -1,0 +1,12 @@
+apiVersion: split.smi-spec.io/v1alpha1
+kind: TrafficSplit
+metadata:
+  name: grpc-server-service-traffic-split
+  namespace: hm
+spec:
+  service: grpc-server-service
+  backends:
+    - service: grpc-server-service
+      weight: 50
+    - service: grpc-server-service-k3d-east
+      weight: 50
