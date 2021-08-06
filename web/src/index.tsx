@@ -18,7 +18,7 @@ initSentry();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Sentry.ErrorBoundary fallback="An error has occurred">
+    <Sentry.ErrorBoundary fallback={<p>An error has occurred</p>}>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
           <HmApp />
