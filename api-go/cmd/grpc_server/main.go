@@ -4,11 +4,16 @@ import (
 	"context"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/api_server/proto/greet/v1"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/grpc_server/utils"
-	sharedUtils "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/utils"
+	grpczerolog "github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2"
+	middleware "github.com/grpc-ecosystem/go-grpc-middleware/v2"
+	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
+	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery"
+	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/tags"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"go.opencensus.io/plugin/ocgrpc"
 	"google.golang.org/grpc"
 	"net"
+	"os"
 )
 
 type server struct{}
@@ -31,14 +36,25 @@ func main() {
 		Str("OpenCensusAgentPort", config.OpenCensusAgentPort).
 		Msg("main")
 
-	sharedUtils.InitOpenCensusTracer(config.OpenCensusAgentHost, config.OpenCensusAgentPort, "grpc_server")
-
 	lis, err := net.Listen("tcp", ":"+config.Port)
 	if err != nil {
 		log.Error().Err(err).Msg("net.Listen")
 	}
 
-	s := grpc.NewServer(grpc.StatsHandler(&ocgrpc.ServerHandler{}))
+	logger := zerolog.New(os.Stderr)
+
+	s := grpc.NewServer(
+		middleware.WithUnaryServerChain(
+			tags.UnaryServerInterceptor(),
+			logging.UnaryServerInterceptor(grpczerolog.InterceptorLogger(logger)),
+			recovery.UnaryServerInterceptor(),
+		),
+		middleware.WithStreamServerChain(
+			tags.StreamServerInterceptor(),
+			logging.StreamServerInterceptor(grpczerolog.InterceptorLogger(logger)),
+			recovery.StreamServerInterceptor(),
+		),
+	)
 	v1.RegisterGreetServiceServer(s, &server{})
 
 	if err := s.Serve(lis); err != nil {
