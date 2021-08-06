@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-server-deployment
+  namespace: hm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: grpc-server
+  template:
+    metadata:
+      labels:
+        component: grpc-server
+    spec:
+      containers:
+        - name: grpc-server
+          image: hongbomiao/hm-grpc-server:latest
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: grpc-server-configmap
+                  key: app_env
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: grpc-server-configmap
+                  key: port
+            - name: OPEN_CENSUS_AGENT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: grpc-server-configmap
+                  key: open_census_agent_host
+            - name: OPEN_CENSUS_AGENT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: grpc-server-configmap
+                  key: open_census_agent_port
+          ports:
+            - name: grpc-server
+              protocol: TCP
+              containerPort: 45237

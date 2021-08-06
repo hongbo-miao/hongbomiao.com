@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: grpc-server-service
   namespace: hm
+  labels:
+    mirror.linkerd.io/exported: "true"
 spec:
   type: ClusterIP
   selector:
