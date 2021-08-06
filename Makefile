@@ -95,16 +95,19 @@ kubectl-get-current-context:
 kubectl-use-context:
 	kubectl config use-context k3d-west
 	kubectl config use-context k3d-east
+	kubectl config use-context k3d-dev
 
 # k3d
 k3d-create:
 	k3d cluster create west --config=kubernetes/k3d/west-cluster-config.yaml
 	k3d cluster create east --config=kubernetes/k3d/west-cluster-config.yaml
+	k3d cluster create dev --config=kubernetes/k3d/dev-cluster-config.yaml
 k3d-list:
 	k3d cluster list
 k3d-delete:
 	k3d cluster delete west
 	k3d cluster delete east
+	k3d cluster delete dev
 
 # Kubernetes
 kubectl-apply:
@@ -286,11 +289,16 @@ dgraph-install-standalone:
       -p 9080:9080 -p 8000:8000 -v ~/dgraph:/dgraph --name dgraph \
       dgraph/standalone
 dgraph-install:
-	kubectl create namespace dgraph
 	kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
 dgraph-delete:
 	kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
 	kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph
+dgraph-install-ha:
+	kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml
+dgraph-delete-ha:
+	kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml
+	kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph-zero
+	kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph-alpha
 
 # PostgreSQL
 postgres-connect:

@@ -5,16 +5,14 @@ kind: Simple
 kubeAPI:
   host: "k8s-hongbomiao.com"
   hostIP: "127.0.0.1"
-  hostPort: "6440"
+  hostPort: "6442"
 network: hm-network
-volumes:
-  - volume: "/Users/homiao/Clouds/Git/hongbomiao.com/kubernetes/data:/data"
 ports:
-  - port: 40000:80
+  - port: 40002:80
     nodeFilters:
       - loadbalancer
 options:
   k3s:
     extraServerArgs:
       - --no-deploy=traefik
-      - --cluster-domain=west.k8s-hongbomiao.com
+      - --cluster-domain=dev.k8s-hongbomiao.com
