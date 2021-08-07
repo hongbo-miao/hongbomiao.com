@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 	"github.com/vearne/gin-timeout"
+	"go.elastic.co/apm/module/apmgin"
 	"time"
 )
 
@@ -21,6 +22,8 @@ func main() {
 		Str("PostgresPort", config.PostgresPort).
 		Str("PostgresDB", config.PostgresDB).
 		Str("PostgresUser", config.PostgresUser).
+		Str("ElasticAPMServiceName", config.ElasticAPMServiceName).
+		Str("ElasticAPMServerURL", config.ElasticAPMServerURL).
 		Msg("main")
 
 	pg := utils.InitPostgres(
@@ -31,7 +34,8 @@ func main() {
 		config.PostgresPassword)
 	defer pg.Close()
 
-	r := gin.Default()
+	r := gin.New()
+	r.Use(apmgin.Middleware(r))
 	r.Use(logger.SetLogger())
 	r.Use(timeout.Timeout(timeout.WithTimeout(10 * time.Second)))
 	r.GET("/", controllers.Health)
