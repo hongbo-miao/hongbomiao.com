@@ -251,7 +251,7 @@ argocd-check:
 argocd-ui:
 	kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
 argocd-get-password: # username: admin
-	kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
+	kubectl get secret argocd-initial-admin-secret --namespace=argocd --output=jsonpath="{.data.password}" | base64 -d && echo
 argocd-login:
 	$(eval ARGOCD_PASSWORD := $(shell kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo))
 	argocd login localhost:31026 --username=admin --password=$(ARGOCD_PASSWORD) --insecure
@@ -262,12 +262,12 @@ argocd-disable-auth-sync:
 argocd-diff:
 	argocd app diff hm-application --local=kubernetes/config
 argocd-apply:
-	kubectl apply --filename=argocd/hm-application.yaml
+	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 argocd-sync:
-	kubectl apply --filename=argocd/hm-application.yaml
+	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 	argocd app sync hm-application
 argocd-sync-local:
-	kubectl apply --filename=argocd/hm-application.yaml
+	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 	argocd app sync hm-application --local=kubernetes/config/west
 argocd-list:
 	argocd app list
