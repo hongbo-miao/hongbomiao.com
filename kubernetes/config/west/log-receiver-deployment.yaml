@@ -27,6 +27,16 @@ spec:
                 configMapKeyRef:
                   name: log-receiver-configmap
                   key: port
+            - name: ELASTIC_APM_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: log-receiver-configmap
+                  key: elastic_apm_service_name
+            - name: ELASTIC_APM_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: log-receiver-configmap
+                  key: elastic_apm_server_url
           ports:
             - name: log-receiver
               protocol: TCP

@@ -8,6 +8,7 @@ import (
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
+	"go.elastic.co/apm/module/apmgin"
 )
 
 func main() {
@@ -16,9 +17,12 @@ func main() {
 	log.Info().
 		Str("AppEnv", config.AppEnv).
 		Str("Port", config.Port).
+		Str("ElasticAPMServiceName", config.ElasticAPMServiceName).
+		Str("ElasticAPMServerURL", config.ElasticAPMServerURL).
 		Msg("main")
 
-	r := gin.Default()
+	r := gin.New()
+	r.Use(apmgin.Middleware(r))
 	r.Use(logger.SetLogger())
 	r.Use(gzip.Gzip(gzip.DefaultCompression, gzip.WithDecompressFn(gzip.DefaultDecompressHandle)))
 	r.POST("/logs", controllers.Logs)

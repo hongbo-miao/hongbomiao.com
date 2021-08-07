@@ -52,6 +52,16 @@ spec:
                 configMapKeyRef:
                   name: opa-data-server-configmap
                   key: postgres_password
+            - name: ELASTIC_APM_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-data-server-configmap
+                  key: elastic_apm_service_name
+            - name: ELASTIC_APM_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: opa-data-server-configmap
+                  key: elastic_apm_server_url
           ports:
             - name: opa-data-server
               protocol: TCP

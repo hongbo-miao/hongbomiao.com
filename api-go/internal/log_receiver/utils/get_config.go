@@ -6,8 +6,10 @@ import (
 )
 
 type Config struct {
-	AppEnv string
-	Port   string
+	AppEnv                string
+	Port                  string
+	ElasticAPMServiceName string
+	ElasticAPMServerURL   string
 }
 
 func GetConfig() *Config {
@@ -22,7 +24,9 @@ func GetConfig() *Config {
 	_ = godotenv.Load(path + ".env." + appEnv)
 
 	return &Config{
-		AppEnv: appEnv,
-		Port:   os.Getenv("PORT"),
+		AppEnv:                appEnv,
+		Port:                  os.Getenv("PORT"),
+		ElasticAPMServiceName: os.Getenv("ELASTIC_APM_SERVICE_NAME"),
+		ElasticAPMServerURL:   os.Getenv("ELASTIC_APM_SERVER_URL"),
 	}
 }

@@ -57,6 +57,16 @@ spec:
                 configMapKeyRef:
                   name: api-server-configmap
                   key: dgraph_grpc_port
+            - name: ELASTIC_APM_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: api-server-configmap
+                  key: elastic_apm_service_name
+            - name: ELASTIC_APM_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: api-server-configmap
+                  key: elastic_apm_server_url
             - name: OPEN_CENSUS_AGENT_HOST
               valueFrom:
                 configMapKeyRef:

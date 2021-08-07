@@ -224,6 +224,39 @@ echo "# West cluster"
 kubectl config use-context k3d-west
 
 
+# Install custom resource definitions and the Elasticsearch operator with its RBAC rules
+echo "# Install custom resource definitions and the Elasticsearch operator with its RBAC rules"
+kubectl apply --filename=https://download.elastic.co/downloads/eck/1.7.0/crds.yaml
+kubectl apply --filename=https://download.elastic.co/downloads/eck/1.7.0/operator.yaml
+echo "=================================================="
+
+# Monitor the Elasticsearch operator logs
+#kubectl logs --namespace=elastic-system --filename=statefulset.apps/elastic-operator
+
+
+# Deploy Elasticsearch
+echo "# Deploy Elasticsearch, Kibana, AMP"
+kubectl create namespace elastic
+kubectl apply --filename=kubernetes/config/elastic
+# Delete: kubectl delete --filename=kubernetes/config/elastic/hm-elasticsearch.yaml
+
+# Elasticsearch
+# kubectl port-forward service/hm-es-http --namespace=elastic 9200:9200
+# ELASTIC_PASSWORD=$(kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=go-template='{{.data.elastic | base64decode}}')
+# curl -u "elastic:${ELASTIC_PASSWORD}" -k "https://localhost:9200"
+
+# Kibana
+kubectl port-forward service/hm-kb-http --namespace=elastic 5601:5601 &
+# Username: elastic
+# Password: kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=jsonpath='{.data.elastic}' | base64 --decode; echo
+echo "=================================================="
+
+
+# Deploy Kibana
+echo "# Deploy Kibana"
+kubectl apply --filename=kubernetes/config/elastic/hm-amp.yaml
+
+
 # Install Argo CD
 echo "# Install Argo CD"
 kubectl create namespace argocd
@@ -242,9 +275,9 @@ done
 # Install the app by Argo CD
 echo "# Install the app"
 kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
-ARGOCD_PASSWORD=$(kubectl --namespace=argocd get secret argocd-initial-admin-secret --output=jsonpath="{.data.password}" | base64 -d && echo)
+ARGOCD_PASSWORD=$(kubectl get secret argocd-initial-admin-secret --namespace=argocd --output=jsonpath="{.data.password}" | base64 -d && echo)
 argocd login localhost:31026 --username=admin --password="${ARGOCD_PASSWORD}" --insecure
-kubectl apply --filename=argocd/hm-application.yaml
+kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 argocd app sync hm-application --local=kubernetes/config/west
 
 sleep 60
