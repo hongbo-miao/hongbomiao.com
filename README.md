@@ -153,16 +153,17 @@ A cutting-edge technology lab powered by automation.
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
 - **NGINX** - Reverse proxy, load balancer
+- **Elasticsearch** - Distributed search and analytics engine
+- **Kibana** - Data visualization dashboard for Elasticsearch
+- **Elastic APM** - Application performance monitoring
 - **Fluent Bit** - Data collector for unified logging layer
 - **OpenTelemetry** - Observability framework
 - **Jaeger** - Distributed tracing system
-- **Elasticsearch** - Distributed search and analytics engine
-- **Kibana** - Data visualization dashboard for Elasticsearch
 - **Grafana** - Monitoring and observability platform
 - **Prometheus** - Monitoring system
-- **Node Exporter** - Monitoring Linux host metrics
 - **Docker** - Container
 - **Kubernetes** - Container-orchestration system
+- **K3s** - Lightweight Kubernetes
 - **Skaffold** - Continuous development for Kubernetes applications
 - **Locust** - Load testing
 - **CodeQL** - Variant analysis
@@ -241,11 +242,9 @@ A cutting-edge technology lab powered by automation.
 
 ![Argo CD](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
 
-#### Distributed Tracing - OpenTelemetry
+#### Elastic APM
 
-The website is using [OpenTelemetry](https://opentelemetry.io/) as an open specification to standardize collecting and sending telemetry data.
-
-After it processes, Elasticsearch saves the data. You can analyze them using Jaeger, Prometheus, and other observability tools.
+![Elastic screenshot](https://user-images.githubusercontent.com/3375461/128647400-7377f888-6c76-4b13-8bce-50ad7afdb3c3.png)
 
 #### Jaeger
 

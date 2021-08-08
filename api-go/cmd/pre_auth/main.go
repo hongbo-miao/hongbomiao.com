@@ -20,8 +20,6 @@ func main() {
 		Str("OPAPort", config.OPAPort).
 		Str("DgraphHost", config.DgraphHost).
 		Str("DgraphGRPCPort", config.DgraphGRPCPort).
-		Str("ElasticAPMServiceName", config.ElasticAPMServiceName).
-		Str("ElasticAPMServerURL", config.ElasticAPMServerURL).
 		Str("OpenCensusAgentHost", config.OpenCensusAgentHost).
 		Str("OpenCensusAgentPort", config.OpenCensusAgentPort).
 		Str("JaegerURL", config.JaegerURL).
