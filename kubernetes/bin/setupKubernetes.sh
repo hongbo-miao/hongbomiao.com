@@ -31,8 +31,8 @@ kubectl create namespace argocd
 kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 # Local: kubectl apply --namespace=argocd --filename=kubernetes/manifests/argocd.yaml
 
-for deploy in "dex-server" "redis" "repo-server" "server"; do
-  kubectl --namespace=argocd rollout status deploy/argocd-${deploy}
+for d in dex-server redis repo-server server; do
+  kubectl --namespace=argocd rollout status deployment/argocd-${d}
 done
 
 

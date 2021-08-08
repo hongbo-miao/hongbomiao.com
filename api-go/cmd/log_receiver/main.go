@@ -17,8 +17,6 @@ func main() {
 	log.Info().
 		Str("AppEnv", config.AppEnv).
 		Str("Port", config.Port).
-		Str("ElasticAPMServiceName", config.ElasticAPMServiceName).
-		Str("ElasticAPMServerURL", config.ElasticAPMServerURL).
 		Msg("main")
 
 	r := gin.New()

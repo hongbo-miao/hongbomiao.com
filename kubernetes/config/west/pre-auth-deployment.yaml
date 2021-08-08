@@ -47,16 +47,6 @@ spec:
                 configMapKeyRef:
                   name: pre-auth-configmap
                   key: dgraph_grpc_port
-            - name: ELASTIC_APM_SERVICE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: pre-auth-configmap
-                  key: elastic_apm_service_name
-            - name: ELASTIC_APM_SERVER_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: pre-auth-configmap
-                  key: elastic_apm_server_url
             - name: OPEN_CENSUS_AGENT_HOST
               valueFrom:
                 configMapKeyRef:
@@ -77,10 +67,53 @@ spec:
                 configMapKeyRef:
                   name: pre-auth-configmap
                   key: jwt_secret
+            - name: ELASTIC_APM_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: pre-auth-configmap
+                  key: elastic_apm_service_name
+            - name: ELASTIC_APM_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_server_url
+            - name: ELASTIC_APM_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_environment
+            - name: ELASTIC_APM_SECRET_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hm-elastic-apm
+                  key: token
+            - name: ELASTIC_APM_VERIFY_SERVER_CERT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_verify_server_cert
+            - name: ELASTIC_APM_SERVER_CERT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_server_cert
+            - name: ELASTIC_APM_LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_log_level
+            - name: ELASTIC_APM_LOG_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_log_file
           ports:
             - name: pre-auth
               protocol: TCP
               containerPort: 29930
+          volumeMounts:
+            - mountPath: /data/elastic-apm
+              name: elastic-apm-volume
         - name: opal-client
           image: authorizon/opal-client:0.1.11
           env:
@@ -117,9 +150,12 @@ spec:
               protocol: TCP
               containerPort: 8181
           volumeMounts:
-            - mountPath: /data
+            - mountPath: /data/opa
               name: opa-volume
       volumes:
+        - name: elastic-apm-volume
+          persistentVolumeClaim:
+            claimName: elastic-apm-pvc
         - name: opa-volume
           persistentVolumeClaim:
-            claimName: host-pvc
+            claimName: opa-pvc

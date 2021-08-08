@@ -3,7 +3,19 @@
 set -e
 
 
+# Clean
+echo "# Clean"
+rm -f kubernetes/certificates/ca.crt
+rm -f kubernetes/certificates/ca.key
+rm -f kubernetes/certificates/east-issuer.crt
+rm -f kubernetes/certificates/east-issuer.key
+rm -f kubernetes/certificates/west-issuer.crt
+rm -f kubernetes/certificates/west-issuer.key
+rm -f kubernetes/data/elastic-apm/tls.crt
+
+
 # Generate certificates
+echo "# Generate certificates"
 ORG_DOMAIN="k8s-hongbomiao.com"
 CA_DIR="kubernetes/certificates"
 
@@ -231,30 +243,44 @@ kubectl apply --filename=https://download.elastic.co/downloads/eck/1.7.0/operato
 echo "=================================================="
 
 # Monitor the Elasticsearch operator logs
-#kubectl logs --namespace=elastic-system --filename=statefulset.apps/elastic-operator
+# kubectl logs --namespace=elastic-system --filename=statefulset.apps/elastic-operator
 
 
 # Deploy Elasticsearch
 echo "# Deploy Elasticsearch, Kibana, AMP"
-kubectl create namespace elastic
 kubectl apply --filename=kubernetes/config/elastic
-# Delete: kubectl delete --filename=kubernetes/config/elastic/hm-elasticsearch.yaml
+# Delete: kubectl delete --filename=kubernetes/config/elastic
+echo "=================================================="
+
+sleep 60
+
+
+echo "# Check Elastic"
+for d in hm-apm-apm-server hm-kibana-kb; do
+  kubectl --namespace=elastic rollout status deployment/${d}
+done
+echo "=================================================="
+
 
 # Elasticsearch
-# kubectl port-forward service/hm-es-http --namespace=elastic 9200:9200
+# kubectl port-forward service/hm-elasticsearch-es-http --namespace=elastic 9200:9200
 # ELASTIC_PASSWORD=$(kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=go-template='{{.data.elastic | base64decode}}')
 # curl -u "elastic:${ELASTIC_PASSWORD}" -k "https://localhost:9200"
 
 # Kibana
-kubectl port-forward service/hm-kb-http --namespace=elastic 5601:5601 &
+# kubectl port-forward service/hm-kb-http --namespace=elastic 5601:5601
 # Username: elastic
 # Password: kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=jsonpath='{.data.elastic}' | base64 --decode; echo
+
+# APM
+echo "# Save Elastic APM tls.crt locally"
+kubectl get secret hm-apm-apm-http-certs-public --namespace=elastic --output=go-template='{{index .data "tls.crt" | base64decode }}' > kubernetes/data/elastic-apm/tls.crt
+
+echo "# Save Elastic APM token in Kubernetes secret"
+kubectl create namespace hm
+ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token --namespace=elastic --output=go-template='{{index .data "secret-token" | base64decode}}')
+kubectl create secret generic hm-elastic-apm --namespace=hm --from-literal="token=${ELASTIC_APM_TOKEN}"
 echo "=================================================="
-
-
-# Deploy Kibana
-echo "# Deploy Kibana"
-kubectl apply --filename=kubernetes/config/elastic/hm-amp.yaml
 
 
 # Install Argo CD
@@ -267,8 +293,8 @@ kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/ar
 sleep 30
 
 echo "# Check Argo CD"
-for deploy in "dex-server" "redis" "repo-server" "server"; do
-  kubectl --namespace=argocd rollout status deploy/argocd-${deploy}
+for d in dex-server redis repo-server server; do
+  kubectl --namespace=argocd rollout status deployment/argocd-${d}
 done
 
 

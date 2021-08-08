@@ -60,9 +60,46 @@ spec:
             - name: ELASTIC_APM_SERVER_URL
               valueFrom:
                 configMapKeyRef:
-                  name: opa-data-server-configmap
+                  name: elastic-apm-configmap
                   key: elastic_apm_server_url
+            - name: ELASTIC_APM_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_environment
+            - name: ELASTIC_APM_SECRET_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hm-elastic-apm
+                  key: token
+            - name: ELASTIC_APM_VERIFY_SERVER_CERT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_verify_server_cert
+            - name: ELASTIC_APM_SERVER_CERT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_server_cert
+            - name: ELASTIC_APM_LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_log_level
+            - name: ELASTIC_APM_LOG_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_log_file
           ports:
             - name: opa-data-server
               protocol: TCP
               containerPort: 25336
+          volumeMounts:
+            - mountPath: /data/elastic-apm
+              name: elastic-apm-volume
+      volumes:
+        - name: elastic-apm-volume
+          persistentVolumeClaim:
+            claimName: elastic-apm-pvc

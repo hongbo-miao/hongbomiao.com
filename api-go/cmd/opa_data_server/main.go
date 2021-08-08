@@ -22,8 +22,6 @@ func main() {
 		Str("PostgresPort", config.PostgresPort).
 		Str("PostgresDB", config.PostgresDB).
 		Str("PostgresUser", config.PostgresUser).
-		Str("ElasticAPMServiceName", config.ElasticAPMServiceName).
-		Str("ElasticAPMServerURL", config.ElasticAPMServerURL).
 		Msg("main")
 
 	pg := utils.InitPostgres(
