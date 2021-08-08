@@ -7,12 +7,16 @@ import (
 	"github.com/dgraph-io/dgo/v200"
 	"github.com/dgraph-io/dgo/v200/protos/api"
 	"github.com/rs/zerolog/log"
+	"go.elastic.co/apm/module/apmgrpc"
 	"google.golang.org/grpc"
 )
 
 func GetUserByEmail(email string) (*types.User, error) {
 	config := GetConfig()
-	conn, err := grpc.Dial(config.DgraphHost+":"+config.DgraphGRPCPort, grpc.WithInsecure())
+	conn, err := grpc.Dial(
+		config.DgraphHost+":"+config.DgraphGRPCPort,
+		grpc.WithUnaryInterceptor(apmgrpc.NewUnaryClientInterceptor()),
+		grpc.WithInsecure())
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
 		return nil, err

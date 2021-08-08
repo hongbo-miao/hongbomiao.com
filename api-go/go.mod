@@ -32,6 +32,7 @@ require (
 	github.com/ugorji/go v1.2.6 // indirect
 	github.com/vearne/gin-timeout v0.0.6
 	go.elastic.co/apm/module/apmgin v1.13.1
+	go.elastic.co/apm/module/apmgrpc v1.13.1
 	go.opencensus.io v0.23.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.21.0
 	go.opentelemetry.io/otel v1.0.0-RC2
@@ -42,6 +43,7 @@ require (
 	golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069 // indirect
 	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect
 	google.golang.org/grpc v1.39.1
+	google.golang.org/grpc/examples v0.0.0-20210806175644-574137db7de3 // indirect
 	google.golang.org/protobuf v1.27.1
 	howett.net/plist v0.0.0-20201203080718-1454fab16a06 // indirect
 )
