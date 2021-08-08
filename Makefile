@@ -240,14 +240,16 @@ linkerd-get-secrets:
 linkerd-get-secret-yaml:
 	kubectl get secrets --namespace=linkerd linkerd-identity-issuer --output=yaml
 
+# Kibana
+kibana-ui:
+	kubectl port-forward service/hm-kb-http --namespace=elastic 5601:5601 &
+kibana-get-password: # username: elastic
+	kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=jsonpath='{.data.elastic}' | base64 --decode; echo
+
 # Argo CD
 argocd-install:
 	kubectl create namespace argocd
 	kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-argocd-check:
-	for deploy in "dex-server" "redis" "repo-server" "server"; \
-	  do kubectl --namespace=argocd rollout status deployments/argocd-$${deploy}; \
-	done
 argocd-ui:
 	kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
 argocd-get-password: # username: admin

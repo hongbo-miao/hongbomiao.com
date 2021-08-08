@@ -6,15 +6,13 @@ import (
 )
 
 type Config struct {
-	AppEnv                string
-	Port                  string
-	PostgresHost          string
-	PostgresPort          string
-	PostgresDB            string
-	PostgresUser          string
-	PostgresPassword      string
-	ElasticAPMServiceName string
-	ElasticAPMServerURL   string
+	AppEnv           string
+	Port             string
+	PostgresHost     string
+	PostgresPort     string
+	PostgresDB       string
+	PostgresUser     string
+	PostgresPassword string
 }
 
 func GetConfig() *Config {
@@ -29,14 +27,12 @@ func GetConfig() *Config {
 	_ = godotenv.Load(path + ".env." + appEnv)
 
 	return &Config{
-		AppEnv:                appEnv,
-		Port:                  os.Getenv("PORT"),
-		PostgresHost:          os.Getenv("POSTGRES_HOST"),
-		PostgresPort:          os.Getenv("POSTGRES_PORT"),
-		PostgresDB:            os.Getenv("POSTGRES_DB"),
-		PostgresUser:          os.Getenv("POSTGRES_USER"),
-		PostgresPassword:      os.Getenv("POSTGRES_PASSWORD"),
-		ElasticAPMServiceName: os.Getenv("ELASTIC_APM_SERVICE_NAME"),
-		ElasticAPMServerURL:   os.Getenv("ELASTIC_APM_SERVER_URL"),
+		AppEnv:           appEnv,
+		Port:             os.Getenv("PORT"),
+		PostgresHost:     os.Getenv("POSTGRES_HOST"),
+		PostgresPort:     os.Getenv("POSTGRES_PORT"),
+		PostgresDB:       os.Getenv("POSTGRES_DB"),
+		PostgresUser:     os.Getenv("POSTGRES_USER"),
+		PostgresPassword: os.Getenv("POSTGRES_PASSWORD"),
 	}
 }
