@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/api_server/proto/greet/v1"
 	"github.com/rs/zerolog/log"
+	"go.elastic.co/apm/module/apmgrpc"
 	"go.opencensus.io/plugin/ocgrpc"
 	"google.golang.org/grpc"
 )
@@ -21,8 +22,11 @@ func GetGreeting(firstName string, lastName string) (*Greeting, error) {
 	}
 
 	config := GetConfig()
-	conn, err := grpc.Dial(config.GRPCServerHost+":"+config.GRPCServerPort, grpc.WithInsecure(),
-		grpc.WithStatsHandler(new(ocgrpc.ClientHandler)))
+	conn, err := grpc.Dial(
+		config.GRPCServerHost+":"+config.GRPCServerPort,
+		grpc.WithUnaryInterceptor(apmgrpc.NewUnaryClientInterceptor()),
+		grpc.WithStatsHandler(new(ocgrpc.ClientHandler)),
+		grpc.WithInsecure())
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
 		return nil, err

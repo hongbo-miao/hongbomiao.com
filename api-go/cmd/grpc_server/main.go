@@ -7,10 +7,10 @@ import (
 	grpczerolog "github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2"
 	middleware "github.com/grpc-ecosystem/go-grpc-middleware/v2"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
-	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/recovery"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/tags"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"go.elastic.co/apm/module/apmgrpc"
 	"google.golang.org/grpc"
 	"net"
 	"os"
@@ -45,14 +45,14 @@ func main() {
 
 	s := grpc.NewServer(
 		middleware.WithUnaryServerChain(
+			apmgrpc.NewUnaryServerInterceptor(apmgrpc.WithRecovery()),
 			tags.UnaryServerInterceptor(),
 			logging.UnaryServerInterceptor(grpczerolog.InterceptorLogger(logger)),
-			recovery.UnaryServerInterceptor(),
 		),
 		middleware.WithStreamServerChain(
+			apmgrpc.NewStreamServerInterceptor(apmgrpc.WithRecovery()),
 			tags.StreamServerInterceptor(),
 			logging.StreamServerInterceptor(grpczerolog.InterceptorLogger(logger)),
-			recovery.StreamServerInterceptor(),
 		),
 	)
 	v1.RegisterGreetServiceServer(s, &server{})
