@@ -59,9 +59,7 @@
 
 ## Introduction
 
-A cutting-edge technology lab powered by automation.
-
-## Preview
+Personal cutting-edge technology lab.
 
 [https://www.hongbomiao.com](https://www.hongbomiao.com)
 
@@ -70,6 +68,18 @@ A cutting-edge technology lab powered by automation.
 ## Architecture
 
 ![Architecture](https://docs.google.com/drawings/d/e/2PACX-1vQBehFA0r7QnSBUtAe9kplicXd6i7u5dmi8wchSJZFFEmcRaPqmD0GQ0FFx4zF7Vhkfi9fbO_rBsTh2/pub?w=2622&amp;h=1044)
+
+## Setup
+
+```shell
+make setup
+```
+
+### Clean
+
+```shell
+make clean
+```
 
 ## Tech Stack
 
