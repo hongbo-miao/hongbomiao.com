@@ -231,6 +231,18 @@ for cluster in west east; do
 done
 
 
+# Install Linkerd buoyant
+# curl -sL buoyant.cloud/install | sh
+# for cluster in west east; do
+#   echo "# Install Linkerd buoyant on: k3d-${cluster}"
+#   linkerd buoyant install | \
+#     kubectl apply --context="k3d-${cluster}" --filename=-
+#   echo "=================================================="
+# done
+#
+# sleep 30
+
+
 # West cluster
 echo "# West cluster"
 kubectl config use-context k3d-west
