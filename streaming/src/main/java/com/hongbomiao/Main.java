@@ -5,7 +5,7 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         DataStream<Person> flintstones = env.fromElements(
@@ -21,12 +21,7 @@ public class Main {
         });
 
         adults.print();
-
-        try {
-            env.execute();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        env.execute("My Streaming Job");
     }
 
     public static class Person {
