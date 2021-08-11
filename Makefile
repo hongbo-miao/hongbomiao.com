@@ -340,12 +340,6 @@ kafka-consumer-group-reset-offset-to-earliest:
 kafka-consumer-group-reset-offset-shift-by:
 	kafka-consumer-groups --bootstrap-server=localhost:9092 --group=my-group --topic=my-topic --reset-offsets --shift-by=-1 --execute
 
-# Flink
-flink-start:
-	/usr/local/Cellar/apache-flink/1.13.1/libexec/bin/start-cluster.sh
-flink-stop:
-	/usr/local/Cellar/apache-flink/1.13.1/libexec/bin/stop-cluster.sh
-
 # Prometheus
 prom-curl:
 	curl http://localhost:9464/metrics

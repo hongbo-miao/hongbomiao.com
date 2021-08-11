@@ -9,9 +9,9 @@ public class Main {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         DataStream<Person> flintstones = env.fromElements(
-                new Person("Hongbo", 30),
-                new Person("Wilma", 35),
-                new Person("Pebbles", 2));
+            new Person("Hongbo", 30),
+            new Person("Wilma", 35),
+            new Person("Pebbles", 2));
 
         DataStream<Person> adults = flintstones.filter(new FilterFunction<Person>() {
             @Override
