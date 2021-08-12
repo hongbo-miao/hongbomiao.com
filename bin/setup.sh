@@ -8,6 +8,8 @@ cp -n web/.env.production.local.example web/.env.production.local || true
 cp -n api-node/.env.development.local.example api-node/.env.development.local || true
 cp -n api-node/.env.production.local.example api-node/.env.production.local || true
 
+cp -n streaming/src/main/resources/application.template.properties streaming/src/main/resources/application.properties || true
+
 cp -n docker/postgres/.env.development.local.example docker/postgres/.env.development.local || true
 cp -n docker/postgres/.env.production.local.example docker/postgres/.env.production.local || true
 
