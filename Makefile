@@ -22,16 +22,21 @@ k8s-debug:
 	nslookup api-server-service.hm.svc.cluster.local
 
 # Docker
+docker-login:
+	docker login
 docker-build:
 	docker build --file=web/Dockerfile --tag=hm-web .
 	docker build --file=api-node/Dockerfile.development --tag=hm-api-node-dev .
 	docker build --file=api-node/Dockerfile --tag=hm-api-node .
 	docker build --file=api-go/build/package/api_server/Dockerfile --tag=hm-api-server .
+	docker build --file=streaming/Dockerfile --tag=hongbomiao/hm-streaming:latest .
 docker-run:
 	docker run -p 80:80 web
 	docker run -p 5000:5000 --name=hm_api_node_dev --rm --env-file=./api/.env.development.local.example.docker hm-api-node-dev
 	docker run -p 5000:5000 --name=hm_api_node --rm --env-file=./api/.env.production.local.example hm-api-node
 	docker run -p 5000:5000 --name=hm_api_server --rm --env=APP_ENV=production hm-api-server
+docker-push:
+	docker push hongbomiao/hm-streaming:latest
 docker-sh:
 	docker run --rm -it hm-api-server sh
 docker-ps:
