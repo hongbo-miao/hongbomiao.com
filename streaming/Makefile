@@ -10,29 +10,51 @@ maven-verify:
 maven-package:
 	mvn clean package
 
-# Flink
+# Flink Local
 flink-local-start:
 	/usr/local/Cellar/apache-flink/1.13.1/libexec/bin/start-cluster.sh
 flink-local-stop:
 	/usr/local/Cellar/apache-flink/1.13.1/libexec/bin/stop-cluster.sh
 
+# Flink Kubernetes
+flink-init:
+	cd .. && \
+    kubectl apply --filename=kubernetes/config/flink/hm-flink-namespace.yaml && \
+    kubectl apply --filename=kubernetes/config/flink
+flink-delete:
+	kubectl delete deployment/hm-flink-cluster
+
+# Flink Session
+# https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/config/
 flink-session-start:
 	/usr/local/Cellar/apache-flink/1.13.1/libexec/bin/kubernetes-session.sh \
-        -Dkubernetes.cluster-id=hm-streaming-cluster
-flink-session-ui:
-	minikube tunnel
+        -Dkubernetes.namespace=hm-flink \
+        -Dkubernetes.cluster-id=hm-flink-cluster \
+        -Dkubernetes.container.image=flink:1.13.2-scala_2.12-java11 \
+        -Dkubernetes.jobmanager.service-account=flink-serviceaccount \
+        -Dkubernetes.taskmanager.cpu=2 \
+        -Dtaskmanager.numberOfTaskSlots=4 \
+        -Dtaskmanager.memory.process.size=4096m
 flink-session-submit-job:
 	flink run \
         --target kubernetes-session \
-        -Dkubernetes.cluster-id=hm-streaming-cluster \
+        -Dkubernetes.cluster-id=hm-flink-cluster \
+        -Dkubernetes.jobmanager.service-account=flink-serviceaccount \
         ./target/streaming-0.1.jar
 
+# Flink Application
+docker-build:
+	cd .. && \
+    docker build --file=streaming/Dockerfile --tag=hongbomiao/hm-streaming:latest .
+docker-push:
+	cd .. && \
+    docker push hongbomiao/hm-streaming:latest
 flink-application-start:
 	flink run-application \
-		--target kubernetes-application \
-		-Dkubernetes.cluster-id=hm-streaming-cluster \
-		-Dkubernetes.container.image=hongbomiao/hm-streaming:latest \
-		local:///opt/flink/usrlib/streaming-0.1.jar
-
-flink-delete:
-	kubectl delete deployment/hm-streaming-cluster
+        --target kubernetes-application \
+        -Dkubernetes.namespace=hm-flink \
+        -Dkubernetes.cluster-id=hm-flink-cluster \
+        -Dkubernetes.container.image=hongbomiao/hm-streaming:latest \
+        -Dkubernetes.jobmanager.service-account=flink-serviceaccount \
+        local:///opt/flink/usrlib/streaming-0.1.jar
+#        -Dkubernetes.container.image.pull-policy=Always

@@ -284,7 +284,7 @@ echo "=================================================="
 # Username: elastic
 # Password: kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=jsonpath='{.data.elastic}' | base64 --decode; echo
 
-# APM
+# Elastic APM
 echo "# Save Elastic APM tls.crt locally"
 kubectl get secret hm-apm-apm-http-certs-public --namespace=elastic --output=go-template='{{index .data "tls.crt" | base64decode }}' > kubernetes/data/elastic-apm/tls.crt
 
