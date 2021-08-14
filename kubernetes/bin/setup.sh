@@ -93,8 +93,8 @@ done
 # Install Ingress with patch
 for cluster in west east; do
   echo "# Install Ingress on: k3d-${cluster}"
-  VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
-  kubectl apply --context="k3d-${cluster}" --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${VERSION}/deploy/static/provider/cloud/deploy.yaml"
+  INGRESS_VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
+  kubectl apply --context="k3d-${cluster}" --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${INGRESS_VERSION}/deploy/static/provider/cloud/deploy.yaml"
   # Local: kubectl apply --context="k3d-${cluster}" --filename=kubernetes/manifests/ingress-nginx.yaml
   echo "=================================================="
 
