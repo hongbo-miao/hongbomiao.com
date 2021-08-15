@@ -7,10 +7,12 @@ import (
 var query = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Query",
 	Fields: graphql.Fields{
-		"me":       &meGraphQLField,
-		"user":     &userGraphQLField,
-		"greeting": &greetingGraphQLField,
-		"dog":      &dogGraphQLField,
+		"me":                      &meGraphQLField,
+		"user":                    &userGraphQLField,
+		"greeting":                &greetingGraphQLField,
+		"dog":                     &dogGraphQLField,
+		"twitterHashtag":          &twitterHashtagGraphQLField,
+		"trendingTwitterHashtags": &trendingTwitterHashtagsGraphQLField,
 	},
 })
 

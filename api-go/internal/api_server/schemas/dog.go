@@ -33,7 +33,7 @@ var dogGraphQLField = graphql.Field{
 			return nil, err
 		}
 
-		myID := p.Context.Value(types.ContextMyIDKey("myID")).(string)
+		myID := p.Context.Value(types.ContextKey("myID")).(string)
 		dogID := p.Args["id"].(string)
 		return utils.GetDog(myID, dogID)
 	},

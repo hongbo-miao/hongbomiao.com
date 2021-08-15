@@ -57,6 +57,21 @@ spec:
                 configMapKeyRef:
                   name: api-server-configmap
                   key: dgraph_grpc_port
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: api-server-configmap
+                  key: redis_host
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: api-server-configmap
+                  key: redis_port
+            - name: REDIS_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: api-server-configmap
+                  key: redis_db
             - name: OPEN_CENSUS_AGENT_HOST
               valueFrom:
                 configMapKeyRef:
