@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/api_server/utils"
+	"github.com/go-redis/redismock/v8"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
@@ -10,7 +11,8 @@ import (
 
 func TestHealthRoute(t *testing.T) {
 	var config = utils.GetConfig()
-	r := SetupRouter(config.AppEnv)
+	rdb, _ := redismock.NewClientMock()
+	r := SetupRouter(config.AppEnv, rdb)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/", nil)

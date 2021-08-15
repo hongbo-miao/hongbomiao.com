@@ -5,11 +5,10 @@ run-grpc-server:
 run-log-receiver:
 	go run cmd/log_receiver/main.go
 
-tidy:
+go-tidy:
 	go mod tidy
-test:
+go-test:
 	go test ./...
-
 go-fmt:
 	gofmt .
 go-check:

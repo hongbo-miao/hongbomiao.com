@@ -6,24 +6,26 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/api_server/types"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/api_server/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 	"github.com/graphql-go/graphql/gqlerrors"
 	"github.com/graphql-go/handler"
 	"github.com/rs/zerolog/log"
 	"net/http"
 )
 
-func addContext(next *handler.Handler) http.Handler {
+func addContext(next *handler.Handler, rdb *redis.Client) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		myID, err := utils.VerifyJWTTokenAndExtractMyID(r)
 		if err != nil {
 			log.Error().Err(err).Msg("VerifyJWTTokenAndExtractMyID")
 		}
-		ctx := context.WithValue(r.Context(), types.ContextMyIDKey("myID"), myID)
+		ctx := context.WithValue(r.Context(), types.ContextKey("myID"), myID)
+		ctx = context.WithValue(ctx, types.ContextKey("rdb"), rdb)
 		next.ContextHandler(ctx, w, r)
 	})
 }
 
-func GraphQLHandler() gin.HandlerFunc {
+func GraphQLHandler(rdb *redis.Client) gin.HandlerFunc {
 	h := handler.New(&handler.Config{
 		Schema:   &schemas.Schema,
 		Pretty:   true,
@@ -33,5 +35,5 @@ func GraphQLHandler() gin.HandlerFunc {
 			return gqlerrors.FormatError(err)
 		},
 	})
-	return gin.WrapH(addContext(h))
+	return gin.WrapH(addContext(h, rdb))
 }

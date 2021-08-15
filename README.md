@@ -116,7 +116,8 @@ make clean
 - **gRPC** - Remote procedure call (RPC) framework
 - **zerolog** - Logging
 - **GoDotEnv** - Environment variables loading
-- **pgx** - PostgreSQL Driver
+- **pgx** - PostgreSQL driver
+- **go-redis** - Redis client
 - **Squirrel** - SQL query builder
 - **Dgraph** - Distributed graph database
 - **Testify** - Unit testing
@@ -132,8 +133,8 @@ make clean
 - **graphql-query-complexity** - GraphQL query complexity analysis
 - **DataLoader** - Batching and caching
 - **Knex.js** - SQL query builder
-- **PostgreSQL** - Relational database
-- **Redis** - In-memory database
+- **node-postgres** - PostgreSQL client
+- **ioredis** - Redis client
 - **rate-limiter-flexible** - Rate limiting
 - **expressjs/cors** - CORS
 - **csurf** - CSRF protection
