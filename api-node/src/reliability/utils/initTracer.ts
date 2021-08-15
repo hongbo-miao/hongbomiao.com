@@ -7,24 +7,23 @@ import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { IORedisInstrumentation } from '@opentelemetry/instrumentation-ioredis';
 import { PinoInstrumentation } from '@opentelemetry/instrumentation-pino';
 import { NodeTracerProvider } from '@opentelemetry/node';
+import { Resource } from '@opentelemetry/resources';
+import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/tracing';
 import config from '../../config';
 import isDevelopment from '../../shared/utils/isDevelopment';
 import isProduction from '../../shared/utils/isProduction';
 
 const initTracer = (): void => {
-  const serviceName = 'hm-api-trace-service';
-  const tracerProvider = new NodeTracerProvider();
+  const tracerProvider = new NodeTracerProvider({
+    resource: new Resource({
+      [SemanticResourceAttributes.SERVICE_NAME]: 'hm-api-trace-service',
+    }),
+  });
 
   if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
-    tracerProvider.addSpanProcessor(
-      new BatchSpanProcessor(
-        new CollectorTraceExporter({
-          serviceName,
-        }),
-      ),
-    );
+    tracerProvider.addSpanProcessor(new BatchSpanProcessor(new CollectorTraceExporter()));
   }
 
   if (isProduction()) {
@@ -32,7 +31,6 @@ const initTracer = (): void => {
     tracerProvider.addSpanProcessor(
       new BatchSpanProcessor(
         new CollectorTraceExporter({
-          serviceName,
           url: traceURL,
           headers: {
             'Lightstep-Access-Token': token,
