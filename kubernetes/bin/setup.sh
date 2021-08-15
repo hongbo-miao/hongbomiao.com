@@ -248,6 +248,13 @@ echo "# West cluster"
 kubectl config use-context k3d-west
 
 
+# Flink
+echo "# Initialize Flink"
+kubectl apply --filename=kubernetes/config/flink/hm-flink-namespace.yaml
+kubectl apply --filename=kubernetes/config/flink
+
+
+# Elastic
 # Install custom resource definitions and the Elasticsearch operator with its RBAC rules
 echo "# Install custom resource definitions and the Elasticsearch operator with its RBAC rules"
 kubectl apply --filename=https://download.elastic.co/downloads/eck/1.7.0/crds.yaml
