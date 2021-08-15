@@ -10,15 +10,10 @@ services:
       dockerfile: api-node/Dockerfile.development
     env_file:
       - api-node/.env.development.local.example.docker
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: 0.0.0.0:24224
     restart: unless-stopped
     ports:
       - "5000:5000"
     depends_on:
-      - fluent-bit
       - redis
       - postgres
 
@@ -44,36 +39,6 @@ services:
     restart: unless-stopped
     ports:
       - "5432:5432"
-
-  # Fluent Bit
-  fluent-bit:
-    container_name: hm_fluent_bit
-    image: fluent/fluent-bit:1.7.4
-    volumes:
-      - ./docker/fluent-bit/conf:/fluent-bit/etc
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "100m"
-        max-file: "5"
-    restart: unless-stopped
-    ports:
-      - "24224:24224"
-      - "5140:5140/udp"
-      - "2020:2020"
-    depends_on:
-      - elasticsearch
-
-  # Elasticsearch
-  elasticsearch:
-    container_name: hm_elasticsearch
-    # https://www.docker.elastic.co/r/elasticsearch/elasticsearch-oss
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
-    environment:
-      - discovery.type=single-node
-    restart: unless-stopped
-    ports:
-      - "9200/tcp"
 
 # For persistence between restarts
 volumes:
