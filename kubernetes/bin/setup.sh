@@ -140,9 +140,9 @@ for cluster in west east; do
   while [ "$(kubectl get service \
     --context="k3d-${cluster}" \
     --namespace=linkerd-multicluster \
-    --output='custom-columns=:.status.loadBalancer.ingress[0].ip' \
+    --output="custom-columns=:.status.loadBalancer.ingress[0].ip" \
     --no-headers)" = "<none>" ]; do
-    printf '.'
+    printf "."
     sleep 1
   done
   echo "=================================================="
@@ -153,13 +153,13 @@ done
 echo "# Link the cluster"
 # https://github.com/olix0r/l2-k3d-multi/blob/4cb5e6994671a5f6f507b7ad281b8c008927c9d0/link.sh#L12-L22
 # Unfortunately, the credentials have the API server IP as addressed from localhost and not the docker network, so we have to patch that up.
-EAST_IP=$(kubectl get service --context="k3d-east" --namespace=ingress-nginx ingress-nginx-controller --output='go-template={{ (index .status.loadBalancer.ingress 0).ip }}')
+EAST_IP=$(kubectl get service --context="k3d-east" --namespace=ingress-nginx ingress-nginx-controller --output="go-template={{ (index .status.loadBalancer.ingress 0).ip }}")
 linkerd multicluster link \
   --cluster-name=k3d-east \
   --api-server-address="https://${EAST_IP}:6443" | \
   kubectl apply --context=k3d-west --filename=-
 
-WEST_IP=$(kubectl get service --context="k3d-west" --namespace=ingress-nginx ingress-nginx-controller --output='go-template={{ (index .status.loadBalancer.ingress 0).ip }}')
+WEST_IP=$(kubectl get service --context="k3d-west" --namespace=ingress-nginx ingress-nginx-controller --output="go-template={{ (index .status.loadBalancer.ingress 0).ip }}")
 linkerd multicluster link \
   --cluster-name=k3d-west \
   --api-server-address="https://${WEST_IP}:6443" | \
@@ -283,13 +283,13 @@ echo "=================================================="
 
 # Elasticsearch
 # kubectl port-forward service/hm-elasticsearch-es-http --namespace=elastic 9200:9200
-# ELASTIC_PASSWORD=$(kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=go-template='{{.data.elastic | base64decode}}')
+# ELASTIC_PASSWORD=$(kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=go-template="{{.data.elastic | base64decode}}")
 # curl -u "elastic:${ELASTIC_PASSWORD}" -k "https://localhost:9200"
 
 # Kibana
 # kubectl port-forward service/hm-kb-http --namespace=elastic 5601:5601
 # Username: elastic
-# Password: kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=jsonpath='{.data.elastic}' | base64 --decode; echo
+# Password: kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=jsonpath="{.data.elastic}" | base64 --decode; echo
 
 # Elastic APM
 echo "# Save Elastic APM tls.crt locally"

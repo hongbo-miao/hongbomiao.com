@@ -245,7 +245,7 @@ linkerd-get-secret-yaml:
 kibana-ui:
 	kubectl port-forward service/hm-kb-http --namespace=elastic 5601:5601 &
 kibana-get-password: # username: elastic
-	kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=jsonpath='{.data.elastic}' | base64 --decode; echo
+	kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=jsonpath="{.data.elastic}" | base64 --decode; echo
 
 # Argo CD
 argocd-install:
@@ -350,16 +350,16 @@ prom-test:
 
 # Lint
 hadolint:
-	hadolint $$(git ls-files '**/Dockerfile*')
+	hadolint $$(git ls-files "**/Dockerfile*")
 shellcheck:
-	shellcheck $$(git ls-files '**/*.sh')
+	shellcheck $$(git ls-files "**/*.sh")
 kubeconform:
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/east/*.yaml')
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-configmap.yaml')
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-deployment.yaml')
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-ingress.yaml')
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-namespace.yaml')
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-pv.yaml')
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-pvc.yaml')
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-service.yaml')
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files 'kubernetes/config/west/*-statefulset.yaml')
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/east/*.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-configmap.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-deployment.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-ingress.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-namespace.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-pv.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-pvc.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-service.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-statefulset.yaml")
