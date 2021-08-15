@@ -165,7 +165,6 @@ make clean
 - **Elasticsearch** - Distributed search and analytics engine
 - **Kibana** - Data visualization dashboard for Elasticsearch
 - **Elastic APM** - Application performance monitoring
-- **Fluent Bit** - Data collector for unified logging layer
 - **OpenTelemetry** - Observability framework
 - **Jaeger** - Distributed tracing system
 - **Grafana** - Monitoring and observability platform
