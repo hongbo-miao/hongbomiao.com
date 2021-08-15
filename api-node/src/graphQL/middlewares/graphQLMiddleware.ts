@@ -1,8 +1,6 @@
 import { graphqlHTTP } from 'express-graphql';
+import { NoSchemaIntrospectionCustomRule } from 'graphql';
 import depthLimit from 'graphql-depth-limit';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import NoIntrospection from 'graphql-disable-introspection';
 import { applyMiddleware } from 'graphql-middleware';
 import queryComplexity, { simpleEstimator } from 'graphql-query-complexity';
 import logger from '../../log/utils/logger';
@@ -31,7 +29,7 @@ const graphQLMiddleware = graphqlHTTP((req, res, params) => {
     },
     schema: applyMiddleware(schema, permissions),
     validationRules: [
-      ...(isProduction() ? [NoIntrospection] : []),
+      ...(isProduction() ? [NoSchemaIntrospectionCustomRule] : []),
       depthLimit(5),
       queryComplexity({
         estimators: [simpleEstimator({ defaultComplexity: 1 })],
