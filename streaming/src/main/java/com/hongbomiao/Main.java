@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Properties;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.FlatMapFunction;
+import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.JsonNode;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,11 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
+import org.apache.flink.streaming.connectors.redis.RedisSink;
+import org.apache.flink.streaming.connectors.redis.common.config.FlinkJedisPoolConfig;
+import org.apache.flink.streaming.connectors.redis.common.mapper.RedisCommand;
+import org.apache.flink.streaming.connectors.redis.common.mapper.RedisCommandDescription;
+import org.apache.flink.streaming.connectors.redis.common.mapper.RedisMapper;
 import org.apache.flink.streaming.connectors.twitter.TwitterSource;
 import org.apache.flink.util.Collector;
 
@@ -69,7 +75,19 @@ public class Main {
             .sum(1);
 
     tweetsPerWindow.print();
-    env.execute("Find trending Twitter hashtags");
+
+    FlinkJedisPoolConfig conf = new FlinkJedisPoolConfig.Builder().setHost("localhost").setPort(6379).build();
+    tweetsPerWindow
+        .map(
+            new MapFunction<Tuple2<String, Integer>, Tuple2<String, String>>() {
+              @Override
+              public Tuple2<String, String> map(Tuple2<String, Integer> value) throws Exception {
+                return (new Tuple2<String, String>(value.f0, String.valueOf(value.f1)));
+              }
+            })
+        .addSink(new RedisSink<Tuple2<String, String>>(conf, new MyRedisMapper()));
+
+    env.execute("Get trending Twitter hashtags");
   }
 
   public static class Splitter implements FlatMapFunction<JsonNode, Tuple2<String, Integer>> {
@@ -78,6 +96,23 @@ public class Main {
       for (JsonNode hashtag : value.get("entities").get("hashtags")) {
         out.collect(new Tuple2<String, Integer>(hashtag.get("text").asText(), 1));
       }
+    }
+  }
+
+  public static class MyRedisMapper implements RedisMapper<Tuple2<String, String>> {
+    @Override
+    public RedisCommandDescription getCommandDescription() {
+      return new RedisCommandDescription(RedisCommand.HSET, "trending-twitter-hashtags");
+    }
+
+    @Override
+    public String getKeyFromData(Tuple2<String, String> data) {
+      return data.f0;
+    }
+
+    @Override
+    public String getValueFromData(Tuple2<String, String> data) {
+      return data.f1;
     }
   }
 }
