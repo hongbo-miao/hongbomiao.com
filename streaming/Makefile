@@ -58,11 +58,3 @@ flink-application-start:
         -Dkubernetes.jobmanager.service-account=flink-serviceaccount \
         local:///opt/flink/usrlib/streaming-0.1.jar
 #        -Dkubernetes.container.image.pull-policy=Always
-
-# Redis
-redis-start:
-	redis-server
-redis-keys:
-	redis-cli KEYS "*"
-redis-get:
-	redis-cli HMGET trending-twitter-hashtags field1 field2

@@ -34,7 +34,7 @@ var meGraphQLField = graphql.Field{
 			return nil, err
 		}
 
-		myID := p.Context.Value(types.ContextMyIDKey("myID")).(string)
+		myID := p.Context.Value(types.ContextKey("myID")).(string)
 		return utils.GetMe(myID)
 	},
 }
