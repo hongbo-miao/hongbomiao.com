@@ -32,7 +32,7 @@ require (
 	github.com/rs/zerolog v1.23.0
 	github.com/stretchr/testify v1.7.0
 	github.com/ugorji/go v1.2.6 // indirect
-	github.com/vearne/gin-timeout v0.0.6
+	github.com/vearne/gin-timeout v0.0.7
 	go.elastic.co/apm/module/apmgin v1.13.1
 	go.elastic.co/apm/module/apmgrpc v1.13.1
 	go.opencensus.io v0.23.0
