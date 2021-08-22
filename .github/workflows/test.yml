@@ -245,7 +245,9 @@ jobs:
           poetry install --no-interaction --no-root
       - name: Check static type
         run: |
-          poetry run poe mypy
+          poetry run poe mypy convolutional-neural-network
+          poetry run poe mypy graph-neural-network
+          poetry run poe mypy locust
 
   web-test:
     name: Web - Test

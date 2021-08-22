@@ -1,3 +1,4 @@
+import wandb
 from args import get_args
 from evaluate import evaluate
 from model.data_loader import train_data_loader, val_data_loader
@@ -6,7 +7,6 @@ from torch import nn, optim
 from train import train
 from utils.device import device
 from utils.writer import write_args
-import wandb
 
 
 def main():
