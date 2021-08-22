@@ -22,12 +22,13 @@ def evaluate(
             _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
-    print(
-        "Accuracy of the network on the 10000 validation images: %d %%"
-        % (100 * correct / total)
-    )
+    return correct / total
 
 
 if __name__ == "__main__":
     net.to(device)
-    evaluate(net, val_data_loader)
+    val_acc = evaluate(net, val_data_loader)
+    print(
+        "Accuracy of the network on the 10000 validation images: %d %%"
+        % (100 * val_acc)
+    )

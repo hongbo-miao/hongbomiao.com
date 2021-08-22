@@ -3,8 +3,8 @@
 set -e
 
 # Creating an environment
-conda create --name hm-neural-network python=3.8
-conda activate hm-neural-network
+conda create --name hm-gnn python=3.8
+conda activate hm-gnn
 
 # Install PyTorch Geometric
 # https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html
