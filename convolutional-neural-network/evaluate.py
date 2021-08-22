@@ -9,6 +9,7 @@ def evaluate(
     net,
     val_data_loader,
 ):
+    net.eval()
     correct = 0
     total = 0
     # since we're not training, we don't need to calculate the gradients for our outputs
