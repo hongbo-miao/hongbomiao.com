@@ -182,6 +182,7 @@ make clean
 - **PyTorch** - Machine learning
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **OGB** - Open Graph Benchmark
+- **CML** - Continuous Machine Learning
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/hongbomiao.com)** - Machine learning experiment tracking
 
 ### Ethereum
