@@ -73,7 +73,9 @@ def main():
     # Training settings
     args = get_args()
 
-    with wandb.init(project="hongbomiao.com", entity="hongbo-miao", config=args) as wb:
+    with wandb.init(
+        entity="hongbo-miao", project="graph-neural-network", config=args
+    ) as wb:
         config = wb.config
 
         device = (
