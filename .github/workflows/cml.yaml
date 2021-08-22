@@ -41,6 +41,7 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "# Args" >> report.md
+          echo "# Convolutional Neural Network Report" >> report.md
+          echo "## Args" >> report.md
           cat reports/args.txt >> report.md
           cml-send-comment report.md
