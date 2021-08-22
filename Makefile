@@ -356,6 +356,18 @@ prom-curl:
 prom-test:
 	docker build --file=Dockerfile.prometheus.test .
 
+# Python
+python-static-type-check:
+	poetry run poe mypy convolutional-neural-network
+	poetry run poe mypy graph-neural-network
+	poetry run poe mypy locust
+python-lint-black:
+	poetry run poe lint-py-black
+python-lint-flake8:
+	poetry run poe lint-py-flake8
+python-lint-isort:
+	poetry run poe lint-py-isort
+
 # Lint
 hadolint:
 	hadolint $$(git ls-files "**/Dockerfile*")
