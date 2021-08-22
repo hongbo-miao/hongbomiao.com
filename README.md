@@ -183,7 +183,7 @@ make clean
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **OGB** - Open Graph Benchmark
 - **CML** - Continuous Machine Learning
-- **[Weights & Biases](https://wandb.ai/hongbo-miao/hongbomiao.com)** - Machine learning experiment tracking
+- **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
 ### Ethereum
 
@@ -284,9 +284,9 @@ make clean
 
 ### Machine Learning
 
-[Distributed hyperparameter optimization result](https://wandb.ai/hongbo-miao/hongbomiao.com/sweeps/p0fgtvcf) by Weights & Biases.
+[Distributed hyperparameter optimization result](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf) by Weights & Biases.
 
-[![Weights & Biases screenshot](https://user-images.githubusercontent.com/3375461/112082183-dbf1bf80-8bbf-11eb-9c81-675cc0bd2763.png)](https://wandb.ai/hongbo-miao/hongbomiao.com/sweeps/p0fgtvcf)
+[![Weights & Biases screenshot](https://user-images.githubusercontent.com/3375461/112082183-dbf1bf80-8bbf-11eb-9c81-675cc0bd2763.png)](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)
 
 ### HTTP/3
 
