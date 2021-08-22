@@ -1,0 +1,41 @@
+name: CML
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  cml:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up CML
+        uses: iterative/setup-cml@v1
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: hm-cnn
+      - name: Install requirements
+        working-directory: convolutional-neural-network
+        shell: bash -l {0}
+        run: |
+          conda install pytorch torchvision torchaudio -c pytorch
+          pip install -r requirements.txt
+      - name: Train model
+        working-directory: convolutional-neural-network
+        shell: bash -l {0}
+        run: |
+          python main.py --lr=0.001 --num_epochs=2
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+      - name: Write CML report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat results.txt >> report.md
+          cml-send-comment report.md
