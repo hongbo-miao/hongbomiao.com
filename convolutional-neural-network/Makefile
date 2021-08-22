@@ -17,4 +17,4 @@ pip-list-packages:
 	/usr/local/anaconda3/envs/hm-cnn/bin/pip list
 
 run:
-	python main.py --lr=0.001 --num_epochs=2
+	/usr/local/anaconda3/envs/hm-cnn/bin/python main.py --lr=0.001 --num_epochs=2
