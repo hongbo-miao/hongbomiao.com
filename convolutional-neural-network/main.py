@@ -5,11 +5,13 @@ from model.net import net
 from torch import nn, optim
 from train import train
 from utils.device import device
+from utils.writer import write_args
 import wandb
 
 
 def main():
     args = get_args()
+    write_args(args)
 
     with wandb.init(
         entity="hongbo-miao", project="convolutional-neural-network", config=args
