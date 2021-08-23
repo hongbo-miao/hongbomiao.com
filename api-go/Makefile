@@ -1,5 +1,5 @@
-run-api-server:
-	go run cmd/api_server/main.go
+run-graphql-server:
+	go run cmd/graphql_server/main.go
 run-grpc-server:
 	go run cmd/grpc_server/main.go
 run-log-receiver:
@@ -17,7 +17,7 @@ go-lint:
 	golangci-lint run ./...
 
 proto-generate:
-	protoc api/api_server/proto/greet/v1/greet.proto --go_out=plugins=grpc:.
+	protoc api/graphql_server/proto/greet/v1/greet.proto --go_out=plugins=grpc:.
 proto-lint:
 	buf lint
 

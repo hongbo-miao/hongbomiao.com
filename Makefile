@@ -19,7 +19,7 @@ clean-local:
 
 # Kubernetes
 k8s-debug:
-	nslookup api-server-service.hm.svc.cluster.local
+	nslookup graphql-server-service.hm.svc.cluster.local
 
 # Docker
 docker-login:
@@ -28,14 +28,14 @@ docker-build:
 	docker build --file=web/Dockerfile --tag=hm-web .
 	docker build --file=api-node/Dockerfile.development --tag=hm-api-node-dev .
 	docker build --file=api-node/Dockerfile --tag=hm-api-node .
-	docker build --file=api-go/build/package/api_server/Dockerfile --tag=hm-api-server .
+	docker build --file=api-go/build/package/graphql_server/Dockerfile --tag=hm-graphql-server .
 docker-run:
 	docker run -p 80:80 web
 	docker run -p 5000:5000 --name=hm_api_node_dev --rm --env-file=./api/.env.development.local.example.docker hm-api-node-dev
 	docker run -p 5000:5000 --name=hm_api_node --rm --env-file=./api/.env.production.local.example hm-api-node
-	docker run -p 31800:31800 --name=hm_api_server --rm --env=APP_ENV=production hm-api-server
+	docker run -p 31800:31800 --name=hm_graphql_server --rm --env=APP_ENV=production hm-graphql-server
 docker-sh:
-	docker run --rm -it hm-api-server sh
+	docker run --rm -it hm-graphql-server sh
 docker-ps:
 	docker ps
 docker-ps-all:
@@ -127,11 +127,11 @@ kubectl-get-services-all:
 kubectl-get-services:
 	kubectl get services --namespace=hm
 kubectl-get-services-yaml:
-	kubectl get services api-server-service --namespace=hm --output=yaml
+	kubectl get services graphql-server-service --namespace=hm --output=yaml
 kubectl-get-deployments:
 	kubectl get deployments --namespace=hm
 kubectl-get-deployments-yaml:
-	kubectl get deployments api-server-deployment --namespace=hm --output=yaml
+	kubectl get deployments graphql-server-deployment --namespace=hm --output=yaml
 kubectl-get-namespaces:
 	kubectl get namespaces
 kubectl-get-storageclasses:
@@ -139,7 +139,7 @@ kubectl-get-storageclasses:
 kubectl-get-persistentvolumeclaims:
 	kubectl get persistentvolumeclaims --all-namespaces
 kubectl-get-endpoints:
-	kubectl get endpoints api-server-service --namespace=hm
+	kubectl get endpoints graphql-server-service --namespace=hm
 kubectl-get-configmaps-all:
 	kubectl get configmaps --all-namespaces
 kubectl-get-configmaps:
@@ -154,11 +154,11 @@ kubectl-sh:
 	kubectl exec --stdin --tty POD_NAME --namespace=hm -- sh
 
 kubectl-port-forward-api-go:
-	kubectl port-forward service/api-server-service --namespace=hm 31800:31800
+	kubectl port-forward service/graphql-server-service --namespace=hm 31800:31800
 kubectl-port-forward-opa:
-	kubectl port-forward service/api-server-service --namespace=hm 8181:8181
+	kubectl port-forward service/graphql-server-service --namespace=hm 8181:8181
 kubectl-port-forward-opal-client:
-	kubectl port-forward service/api-server-service --namespace=hm 7000:7000
+	kubectl port-forward service/graphql-server-service --namespace=hm 7000:7000
 kubectl-port-forward-opal-server:
 	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
 kubectl-port-forward-dgraph-0:
@@ -203,15 +203,15 @@ linkerd-check-pre:
 linkerd-check-proxy: # includes linkerd-identity-data-plane
 	linkerd check --proxy
 linkerd-viz-tap:
-	linkerd viz tap deployments/api-server-deployment --namespace=hm
+	linkerd viz tap deployments/graphql-server-deployment --namespace=hm
 linkerd-viz-tap-json:
-	linkerd viz tap deployments/api-server-deployment --namespace=hm --output=json
+	linkerd viz tap deployments/graphql-server-deployment --namespace=hm --output=json
 linkerd-viz-tap-to:
-	linkerd viz tap deployments/api-server-deployment --namespace=hm --to=deployment/grpc-server-deployment
+	linkerd viz tap deployments/graphql-server-deployment --namespace=hm --to=deployment/grpc-server-deployment
 linkerd-viz-tap-to-path:
-	linkerd viz tap deployments/api-server-deployment --namespace=hm --to=deployment/grpc-server-deployment --path=/api.proto.greet.v1.GreetService/Greet
+	linkerd viz tap deployments/graphql-server-deployment --namespace=hm --to=deployment/grpc-server-deployment --path=/api.proto.greet.v1.GreetService/Greet
 linkerd-viz-top: # shows traffic routes sorted by the most popular paths
-	linkerd viz top deployments/api-server-deployment --namespace=hm
+	linkerd viz top deployments/graphql-server-deployment --namespace=hm
 linkerd-viz-stat-deployments:
 	linkerd viz stat deployments --namespace=hm
 linkerd-viz-stat-trafficsplit:
@@ -219,9 +219,9 @@ linkerd-viz-stat-trafficsplit:
 linkerd-viz-stat-wide: # includes extra READ_BYTES/SEC and WRITE_BYTES/SEC
 	linkerd viz stat deployments --namespace=hm --output=wide
 linkerd-viz-stat-from-to:
-	linkerd viz stat --namespace=hm deployments/api-server-deployment --to deployments/grpc-server-deployment
-linkerd-viz-stat-all-from: # views the metrics for traffic to all deployments that comes from api-server-deployment
-	linkerd viz stat --namespace=hm deployments --from deployments/api-server-deployment
+	linkerd viz stat --namespace=hm deployments/graphql-server-deployment --to deployments/grpc-server-deployment
+linkerd-viz-stat-all-from: # views the metrics for traffic to all deployments that comes from graphql-server-deployment
+	linkerd viz stat --namespace=hm deployments --from deployments/graphql-server-deployment
 linkerd-viz-edges-deployments:
 	linkerd viz edges deployments --namespace=hm
 linkerd-viz-edges-deployments-json:
@@ -231,11 +231,11 @@ linkerd-viz-edges-pods:
 linkerd-viz-edges-pods-json:
 	linkerd viz edges pods --namespace=hm --output=json
 linkerd-viz-routes:
-	linkerd viz routes deployments/api-server-deployment --namespace=hm
+	linkerd viz routes deployments/graphql-server-deployment --namespace=hm
 linkerd-viz-routes-wide: # includes EFFECTIVE_SUCCESS, EFFECTIVE_RPS, ACTUAL_SUCCESS, ACTUAL_RPS
-	linkerd viz routes deployments/api-server-deployment --namespace=hm --to deployments/grpc-server-deployment --output=wide
+	linkerd viz routes deployments/graphql-server-deployment --namespace=hm --to deployments/grpc-server-deployment --output=wide
 linkerd-viz-routes-json:
-	linkerd viz routes deployments/api-server-deployment --namespace=hm --output=json
+	linkerd viz routes deployments/graphql-server-deployment --namespace=hm --output=json
 linkerd-get-secrets:
 	kubectl get secrets --namespace=linkerd
 linkerd-get-secret-yaml:
