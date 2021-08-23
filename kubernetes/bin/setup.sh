@@ -177,75 +177,59 @@ for cluster in west east; do
 done
 
 
+# West cluster
+echo "# West cluster"
+kubectl config use-context k3d-west
+
+
 # Install Linkerd viz
-for cluster in west east; do
-  echo "# Install Linkerd viz on: k3d-${cluster}"
-  domain="${cluster}.${ORG_DOMAIN}"
+echo "# Install Linkerd viz"
+linkerd viz install --set=jaegerUrl=jaeger.linkerd-jaeger:16686,clusterDomain="west.${ORG_DOMAIN}" | \
+  kubectl apply --filename=-
+echo "=================================================="
 
-  linkerd viz install --set=jaegerUrl=jaeger.linkerd-jaeger:16686,clusterDomain=${domain} | \
-    kubectl apply --context="k3d-${cluster}" --filename=-
-  echo "=================================================="
-done
-
-sleep 30
+sleep 60
 
 # linkerd viz dashboard --context=k3d-west
-# linkerd viz dashboard --context=k3d-east
 
 
 # Check Linkerd viz
-for cluster in west east; do
-  echo "# Check Linkerd viz on: k3d-${cluster}"
-  while ! linkerd viz check --context="k3d-${cluster}" ; do :; done
-  echo "=================================================="
-done
+echo "# Check Linkerd viz"
+linkerd viz check
+echo "=================================================="
 
 
 # List gateways
-for cluster in west east; do
-  echo "# List gateways: k3d-${cluster}"
-  linkerd multicluster gateways --context="k3d-${cluster}"
-  echo "=================================================="
-done
+echo "# List gateways"
+linkerd multicluster gateways
+echo "=================================================="
 
 
 # Install Linkerd Jaeger
-for cluster in west east; do
-  echo "# Install Linkerd Jaeger on: k3d-${cluster}"
-  linkerd jaeger install | \
-    kubectl apply --context="k3d-${cluster}" --filename=-
-  echo "=================================================="
-done
+echo "# Install Linkerd Jaeger"
+linkerd jaeger install | \
+  kubectl apply --filename=-
+echo "=================================================="
 
 sleep 30
 
 # linkerd jaeger dashboard --context=k3d-west
-# linkerd jaeger dashboard --context=k3d-east
 
 
 # Check Linkerd Jaeger
-for cluster in west east; do
-  echo "# Check Linkerd Jaeger on: k3d-${cluster}"
-  while ! linkerd jaeger check --context="k3d-${cluster}" ; do :; done
-  echo "=================================================="
-done
+echo "# Check Linkerd Jaeger"
+linkerd jaeger check
+echo "=================================================="
 
 
 # Install Linkerd buoyant
+# echo "# Install Linkerd buoyant"
 # curl -sL buoyant.cloud/install | sh
-# for cluster in west east; do
-#   echo "# Install Linkerd buoyant on: k3d-${cluster}"
-#   linkerd buoyant install | \
-#     kubectl apply --context="k3d-${cluster}" --filename=-
-#   echo "=================================================="
-# done
+# linkerd buoyant install | \
+#   kubectl apply --filename=-
+# echo "=================================================="
 #
 # sleep 30
-
-
-# West cluster
-echo "# West cluster"
-kubectl config use-context k3d-west
 
 
 # Elastic
