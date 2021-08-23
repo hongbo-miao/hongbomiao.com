@@ -22,7 +22,7 @@ proto-lint:
 	buf lint
 
 opa-test:
-	opa test internal/pre_auth/policies/*.rego -v
+	opa test internal/graphql_server/policies/*.rego -v
 opa-test-coverage:
 	opa test internal/policies/*.rego --coverage --format=json
 opa-fmt:
