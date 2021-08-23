@@ -118,7 +118,9 @@ done
 # Install Linkerd multicluster
 for cluster in west east; do
   echo "# Install Linkerd multicluster on: k3d-${cluster}"
-  linkerd multicluster install --context="k3d-${cluster}" | kubectl apply --context="k3d-${cluster}" --filename=-
+  domain="${cluster}.${ORG_DOMAIN}"
+  linkerd multicluster install --context="k3d-${cluster}" --set=identityTrustDomain=${domain} | \
+    kubectl apply --context="k3d-${cluster}" --filename=-
   # linkerd multicluster uninstall | kubectl delete --filename=-
   echo "=================================================="
 done
@@ -157,13 +159,13 @@ EAST_IP=$(kubectl get service --context="k3d-east" --namespace=ingress-nginx ing
 linkerd multicluster link \
   --cluster-name=k3d-east \
   --api-server-address="https://${EAST_IP}:6443" | \
-  kubectl apply --context=k3d-west --filename=-
+    kubectl apply --context=k3d-west --filename=-
 
 WEST_IP=$(kubectl get service --context="k3d-west" --namespace=ingress-nginx ingress-nginx-controller --output="go-template={{ (index .status.loadBalancer.ingress 0).ip }}")
 linkerd multicluster link \
   --cluster-name=k3d-west \
   --api-server-address="https://${WEST_IP}:6443" | \
-  kubectl apply --context=k3d-east --filename=-
+    kubectl apply --context=k3d-east --filename=-
 
 sleep 30
 
@@ -238,6 +240,9 @@ echo "# Install custom resource definitions and the Elasticsearch operator with 
 kubectl apply --filename=https://download.elastic.co/downloads/eck/1.7.0/crds.yaml
 kubectl apply --filename=https://download.elastic.co/downloads/eck/1.7.0/operator.yaml
 echo "=================================================="
+
+sleep 30
+
 
 # Monitor the Elasticsearch operator logs
 # kubectl logs --namespace=elastic-system --filename=statefulset.apps/elastic-operator
