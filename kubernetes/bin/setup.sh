@@ -307,6 +307,7 @@ ARGOCD_PASSWORD=$(kubectl get secret argocd-initial-admin-secret --namespace=arg
 argocd login localhost:31026 --username=admin --password="${ARGOCD_PASSWORD}" --insecure
 kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 argocd app sync hm-application --local=kubernetes/config/west
+# Delete: argocd app delete hm-application --yes
 
 sleep 60
 
