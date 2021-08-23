@@ -307,8 +307,6 @@ ARGOCD_PASSWORD=$(kubectl get secret argocd-initial-admin-secret --namespace=arg
 argocd login localhost:31026 --username=admin --password="${ARGOCD_PASSWORD}" --insecure
 kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 argocd app sync hm-application --local=kubernetes/config/west
-argocd app sync hm-application --local=kubernetes/config/flink
-argocd app sync hm-application --local=kubernetes/config/redis
 
 sleep 60
 
@@ -328,3 +326,19 @@ kubectl apply --filename=kubernetes/config/east
 # Verify Linkerd multicluster setup correctly by checking the endpoints in west and verify that they match the gateway’s public IP address in east
 # kubectl get endpoint grpc-server-service-k3d-east --context=k3d-west --namespace=hm --output="custom-columns=ENDPOINT_IP:.subsets[*].addresses[*].ip"
 # kubectl linkerd-multicluster get service linkerd-gateway --context=k3d-east --namespace=hm --output="custom-columns=GATEWAY_IP:.status.loadBalancer.ingress[*].ip"
+
+
+# West cluster
+echo "# West cluster"
+kubectl config use-context k3d-west
+
+flink run-application \
+  --target kubernetes-application \
+  -Dkubernetes.namespace=hm-flink \
+  -Dkubernetes.cluster-id=hm-flink-cluster \
+  -Dkubernetes.container.image=hongbomiao/hm-streaming:latest \
+  -Dkubernetes.jobmanager.service-account=flink-serviceaccount \
+  local:///opt/flink/usrlib/streaming-0.1.jar
+#  -Dkubernetes.container.image.pull-policy=Always \
+
+# Delete: kubectl delete deployment/hm-flink-cluster --namespace=hm-flink
