@@ -9,7 +9,7 @@ const getOPADecision = async (action: string, resourceType: string): Promise<Axi
   if (localStorageMe == null) return null;
 
   return axiosInstance({
-    baseURL: config.preAuthGraphQLURL,
+    baseURL: config.graphqlServerGraphQLURL,
     headers: getJWTHeader(localStorageMe),
     data: {
       query: `

@@ -1,8 +1,8 @@
 package schemas
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/pre_auth/types"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/pre_auth/utils"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/types"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/utils"
 	"github.com/graphql-go/graphql"
 	"github.com/rs/zerolog/log"
 )
@@ -33,7 +33,7 @@ var opaGraphQLField = graphql.Field{
 			return nil, err
 		}
 
-		myID := p.Context.Value(types.ContextMyIDKey("myID")).(string)
+		myID := p.Context.Value(types.ContextKey("myID")).(string)
 		action := p.Args["action"].(string)
 		resourceType := p.Args["resourceType"].(string)
 		return utils.GetOPADecision(myID, action, resourceType)
