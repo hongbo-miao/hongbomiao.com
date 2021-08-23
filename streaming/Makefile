@@ -19,10 +19,11 @@ flink-local-stop:
 # Flink Kubernetes
 flink-init:
 	cd .. && \
-    kubectl apply --filename=kubernetes/config/flink/hm-flink-namespace.yaml && \
-    kubectl apply --filename=kubernetes/config/flink
+    kubectl apply --filename=kubernetes/config/west/hm-flink-namespace.yaml && \
+    kubectl apply --filename=kubernetes/config/west/flink-serviceaccount.yaml && \
+    kubectl apply --filename=kubernetes/config/west/flink-clusterrolebinding.yaml
 flink-delete:
-	kubectl delete deployment/hm-flink-cluster
+	kubectl delete deployment/hm-flink-cluster --namespace=hm-flink
 
 # Flink Session
 # https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/config/
@@ -44,6 +45,7 @@ flink-session-submit-job:
 
 # Flink Application
 docker-build:
+	mvn clean package && \
 	cd .. && \
     docker build --file=streaming/Dockerfile --tag=hongbomiao/hm-streaming:latest .
 docker-push:
