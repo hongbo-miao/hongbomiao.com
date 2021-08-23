@@ -55,8 +55,8 @@ jobs:
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-api-server:
-    name: Push api-server to Docker Hub
+  push-graphql-server:
+    name: Push graphql-server to Docker Hub
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -74,9 +74,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./api-go/build/package/api_server/Dockerfile
+          file: ./api-go/build/package/graphql_server/Dockerfile
           push: true
-          tags: hongbomiao/hm-api-server:latest
+          tags: hongbomiao/hm-graphql-server:latest
       - name: Print image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 

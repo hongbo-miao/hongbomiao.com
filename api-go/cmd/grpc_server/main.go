@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/api_server/proto/greet/v1"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/graphql_server/proto/greet/v1"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/grpc_server/utils"
 	grpczerolog "github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2"
 	middleware "github.com/grpc-ecosystem/go-grpc-middleware/v2"
