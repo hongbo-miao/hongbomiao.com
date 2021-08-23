@@ -57,6 +57,6 @@ flink-application-start:
         -Dkubernetes.namespace=hm-flink \
         -Dkubernetes.cluster-id=hm-flink-cluster \
         -Dkubernetes.container.image=hongbomiao/hm-streaming:latest \
+		-Dkubernetes.container.image.pull-policy=Always \
         -Dkubernetes.jobmanager.service-account=flink-serviceaccount \
         local:///opt/flink/usrlib/streaming-0.1.jar
-#        -Dkubernetes.container.image.pull-policy=Always
