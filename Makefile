@@ -33,7 +33,7 @@ docker-run:
 	docker run -p 80:80 web
 	docker run -p 5000:5000 --name=hm_api_node_dev --rm --env-file=./api/.env.development.local.example.docker hm-api-node-dev
 	docker run -p 5000:5000 --name=hm_api_node --rm --env-file=./api/.env.production.local.example hm-api-node
-	docker run -p 5000:5000 --name=hm_api_server --rm --env=APP_ENV=production hm-api-server
+	docker run -p 31800:31800 --name=hm_api_server --rm --env=APP_ENV=production hm-api-server
 docker-sh:
 	docker run --rm -it hm-api-server sh
 docker-ps:
@@ -154,7 +154,7 @@ kubectl-sh:
 	kubectl exec --stdin --tty POD_NAME --namespace=hm -- sh
 
 kubectl-port-forward-api-go:
-	kubectl port-forward service/api-server-service --namespace=hm 5000:5000
+	kubectl port-forward service/api-server-service --namespace=hm 31800:31800
 kubectl-port-forward-opa:
 	kubectl port-forward service/api-server-service --namespace=hm 8181:8181
 kubectl-port-forward-opal-client:
