@@ -14,7 +14,7 @@ const useAuth = (): UseAuth => {
   const signIn = async (email: string, password: string): Promise<void> => {
     try {
       const res = await axiosInstance({
-        baseURL: config.apiServerGraphQLURL,
+        baseURL: config.graphqlServerGraphQLURL,
         data: {
           query: `
             mutation SignIn($email: String!, $password: String!) {
@@ -46,7 +46,7 @@ const useAuth = (): UseAuth => {
   const signUp = async (email: string, password: string): Promise<void> => {
     try {
       const res = await axiosInstance({
-        baseURL: config.apiServerGraphQLURL,
+        baseURL: config.graphqlServerGraphQLURL,
         data: {
           query: `
             mutation SignUp($email: String!, $password: String!) {

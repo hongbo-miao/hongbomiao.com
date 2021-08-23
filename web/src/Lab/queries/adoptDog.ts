@@ -9,7 +9,7 @@ const adoptDog = async (id: string): Promise<AxiosResponse | null> => {
   if (localStorageMe == null) return null;
 
   return axiosInstance({
-    baseURL: config.apiServerGraphQLURL,
+    baseURL: config.graphqlServerGraphQLURL,
     headers: getJWTHeader(localStorageMe),
     data: {
       query: `

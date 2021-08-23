@@ -11,7 +11,7 @@ import getJWTHeader from '../utils/getJWTHeader';
 const getMe = async (me: Me | null): Promise<AxiosResponse | null> => {
   if (me == null) return null;
   return axiosInstance({
-    baseURL: config.apiServerGraphQLURL,
+    baseURL: config.graphqlServerGraphQLURL,
     headers: getJWTHeader(me),
     data: {
       query: `
