@@ -10,10 +10,10 @@ build:
     context: .
     docker:
       dockerfile: web/Dockerfile
-  - image: hongbomiao/hm-api-server:latest
+  - image: hongbomiao/hm-graphql-server:latest
     context: .
     docker:
-      dockerfile: api-go/build/package/api-server/Dockerfile
+      dockerfile: api-go/build/package/graphql-server/Dockerfile
     sync:
       manual:
         - src: "*.go"

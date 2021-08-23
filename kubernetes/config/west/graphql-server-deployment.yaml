@@ -1,0 +1,186 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graphql-server-deployment
+  namespace: hm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: graphql-server
+  template:
+    metadata:
+      labels:
+        component: graphql-server
+    spec:
+      containers:
+        - name: graphql-server
+          image: hongbomiao/hm-graphql-server:latest
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: app_env
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: port
+            - name: GRPC_SERVER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: grpc_server_host
+            - name: GRPC_SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: grpc_server_port
+            - name: OPA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: opa_host
+            - name: OPA_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: opa_port
+            - name: DGRAPH_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: dgraph_host
+            - name: DGRAPH_GRPC_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: dgraph_grpc_port
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: redis_host
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: redis_port
+            - name: REDIS_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: redis_db
+            - name: OPEN_CENSUS_AGENT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: open_census_agent_host
+            - name: OPEN_CENSUS_AGENT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: open_census_agent_port
+            - name: JAEGER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: jaeger_url
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: jwt_secret
+            - name: ELASTIC_APM_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: elastic_apm_service_name
+            - name: ELASTIC_APM_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_server_url
+            - name: ELASTIC_APM_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_environment
+            - name: ELASTIC_APM_SECRET_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hm-elastic-apm
+                  key: token
+            - name: ELASTIC_APM_VERIFY_SERVER_CERT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_verify_server_cert
+            - name: ELASTIC_APM_SERVER_CERT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_server_cert
+            - name: ELASTIC_APM_LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_log_level
+            - name: ELASTIC_APM_LOG_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_log_file
+          ports:
+            - name: graphql-server
+              protocol: TCP
+              containerPort: 31800
+          volumeMounts:
+            - mountPath: /data/elastic-apm
+              name: elastic-apm-volume
+        - name: opal-client
+          image: authorizon/opal-client:0.1.11
+          env:
+            - name: OPAL_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: opal_server_url
+            - name: OPAL_INLINE_OPA_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: opal_inline_opa_config
+            - name: OPAL_INLINE_OPA_LOG_FORMAT
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: opal_inline_opa_log_format
+            - name: OPAL_LOG_MODULE_EXCLUDE_LIST
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: opal_log_module_exclude_list
+            - name: OPAL_LOG_COLORIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: opal_log_colorize
+          ports:
+            - name: opal-client
+              protocol: TCP
+              containerPort: 7000
+            - name: opa
+              protocol: TCP
+              containerPort: 8181
+          volumeMounts:
+            - mountPath: /data/opa
+              name: opa-volume
+      volumes:
+        - name: elastic-apm-volume
+          persistentVolumeClaim:
+            claimName: elastic-apm-pvc
+        - name: opa-volume
+          persistentVolumeClaim:
+            claimName: opa-pvc
