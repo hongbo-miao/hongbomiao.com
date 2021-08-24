@@ -15,6 +15,8 @@ pip-install:
 	/usr/local/anaconda3/envs/hm-cnn/bin/pip install wandb
 pip-list-packages:
 	/usr/local/anaconda3/envs/hm-cnn/bin/pip list
+pip-freeze:
+	pip freeze > requirements.txt
 
 run:
 	/usr/local/anaconda3/envs/hm-cnn/bin/python main.py --lr=0.001 --num_epochs=2

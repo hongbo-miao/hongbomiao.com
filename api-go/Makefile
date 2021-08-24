@@ -24,11 +24,11 @@ proto-lint:
 opa-test:
 	opa test internal/graphql_server/policies/*.rego -v
 opa-test-coverage:
-	opa test internal/policies/*.rego --coverage --format=json
+	opa test internal/graphql_server/policies/*.rego --coverage --format=json
 opa-fmt:
-	opa fmt internal/policies/*.rego -w
+	opa fmt internal/graphql_server/policies/*.rego -w
 opa-check:
-	opa check internal/policies/*.rego
+	opa check internal/graphql_server/policies/*.rego
 
 gzip-call:
 	echo '{"foo": "bar"}' | gzip | curl -v -i --data-binary @- -H "Content-Encoding: gzip" http://localhost:41797/logs
