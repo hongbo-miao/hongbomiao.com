@@ -22,7 +22,7 @@ var opaGraphQLField = graphql.Field{
 		"action": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
-		"resourceType": &graphql.ArgumentConfig{
+		"resource": &graphql.ArgumentConfig{
 			Type: graphql.NewNonNull(graphql.String),
 		},
 	},
@@ -35,7 +35,7 @@ var opaGraphQLField = graphql.Field{
 
 		myID := p.Context.Value(types.ContextKey("myID")).(string)
 		action := p.Args["action"].(string)
-		resourceType := p.Args["resourceType"].(string)
-		return utils.GetOPADecision(myID, action, resourceType)
+		resource := p.Args["resource"].(string)
+		return utils.GetOPADecision(myID, action, resource)
 	},
 }
