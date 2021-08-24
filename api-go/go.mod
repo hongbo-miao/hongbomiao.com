@@ -4,7 +4,6 @@ go 1.16
 
 require (
 	contrib.go.opencensus.io/exporter/ocagent v0.7.0
-	github.com/Masterminds/squirrel v1.5.0
 	github.com/buger/jsonparser v1.1.1
 	github.com/dgraph-io/dgo/v200 v200.0.0-20210401091508-95bfd74de60e
 	github.com/elastic/go-sysinfo v1.7.0 // indirect
@@ -23,16 +22,15 @@ require (
 	github.com/graphql-go/handler v0.2.3
 	github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2 v2.0.0-rc.2
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.2
-	github.com/jackc/pgx/v4 v4.13.0
 	github.com/joho/godotenv v1.3.0
 	github.com/mattn/go-isatty v0.0.13 // indirect
 	github.com/open-policy-agent/opa v0.31.0
 	github.com/prometheus/procfs v0.7.2 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rs/zerolog v1.23.0
+	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/ugorji/go v1.2.6 // indirect
-	github.com/vearne/gin-timeout v0.0.7
 	go.elastic.co/apm/module/apmgin v1.13.1
 	go.elastic.co/apm/module/apmgrpc v1.13.1
 	go.opencensus.io v0.23.0

@@ -1,78 +1,70 @@
 package app.rbac
 
-user_roles = {
-	"0x1": ["admin"],
-	"0x2": [
-		"employee",
-		"billing",
-	],
-	"0x3": ["customer"],
-}
-
-role_grants = {
-	"customer": [
-		{
-			"action": "read",
-			"type": "dog",
-		},
-		{
-			"action": "read",
-			"type": "cat",
-		},
-		{
-			"action": "adopt",
-			"type": "dog",
-		},
-		{
-			"action": "adopt",
-			"type": "cat",
-		},
-	],
-	"employee": [
-		{
-			"action": "read",
-			"type": "dog",
-		},
-		{
-			"action": "read",
-			"type": "cat",
-		},
-		{
-			"action": "update",
-			"type": "dog",
-		},
-		{
-			"action": "update",
-			"type": "cat",
-		},
-	],
-	"billing": [
-		{
-			"action": "read",
-			"type": "finance",
-		},
-		{
-			"action": "update",
-			"type": "finance",
-		},
-	],
+roles = {
+	"billing": {
+		"allow": [
+			{
+				"action": "read",
+				"resource": "finance",
+			},
+			{
+				"action": "update",
+				"resource": "finance",
+			},
+		],
+		"role": "billing",
+	},
+	"customer": {
+		"allow": [
+			{
+				"action": "read",
+				"resource": "dog",
+			},
+			{
+				"action": "read",
+				"resource": "cat",
+			},
+			{
+				"action": "adopt",
+				"resource": "dog",
+			},
+			{
+				"action": "adopt",
+				"resource": "cat",
+			},
+		],
+		"role": "customer",
+	},
+	"employee": {
+		"allow": [
+			{
+				"action": "read",
+				"resource": "dog",
+			},
+			{
+				"action": "read",
+				"resource": "cat",
+			},
+		],
+		"role": "employee",
+	},
 }
 
 test_alice {
-	allow with input as {"uid": "0x1", "action": "read", "type": "dog", "object": "id123"}
-		 with data.user_roles as user_roles
-		 with data.role_grants as role_grants
+	allow with input as {"roles": ["admin"], "action": "read", "resource": "dog"}
+		 with data.roles as roles
+		 with data.roles as roles
 
-	allow with input as {"uid": "0x1", "action": "adopt", "type": "dog", "object": "id123"}
-		 with data.user_roles as user_roles
-		 with data.role_grants as role_grants
+	allow with input as {"roles": ["admin"], "action": "adopt", "resource": "dog"}
+		 with data.roles as roles
+		 with data.roles as roles
 }
 
 test_bob {
-	allow with input as {"uid": "0x2", "action": "read", "type": "dog", "object": "id123"}
-		 with data.user_roles as user_roles with data.role_grants as role_grants
+	allow with input as {"roles": ["employee", "billing"], "action": "read", "resource": "dog"}
+		 with data.roles as roles with data.roles as roles
 
-	not allow with input as {"uid": "0x2", "action": "adopt", "type": "dog", "object": "id123"}
-		 with data.user_roles as user_roles
-		 with data.role_grants as role_grants
+	not allow with input as {"roles": ["employee", "billing"], "action": "adopt", "resource": "dog"}
+		 with data.roles as roles
+		 with data.roles as roles
 }
