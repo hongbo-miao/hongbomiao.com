@@ -25,15 +25,20 @@ func getResult(ctx context.Context, query rego.PreparedEvalQuery, input map[stri
 }
 
 func GetOPADecision(uid string, action string, resource string) (*OPA, error) {
+	me, err := GetMe(uid)
+	if err != nil {
+		log.Error().Err(err).Msg("GetMe")
+	}
+
 	input := map[string]interface{}{
-		"uid":      uid,
+		"roles":    me.Roles,
 		"action":   action,
 		"resource": resource,
 	}
 
 	data := policies.ReadData()
 	var json map[string]interface{}
-	err := util.UnmarshalJSON(data, &json)
+	err = util.UnmarshalJSON(data, &json)
 	if err != nil {
 		log.Error().Err(err).Msg("UnmarshalJSON")
 		return nil, err

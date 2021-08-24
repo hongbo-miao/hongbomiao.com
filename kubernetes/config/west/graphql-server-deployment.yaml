@@ -140,13 +140,18 @@ spec:
             - mountPath: /data/elastic-apm
               name: elastic-apm-volume
         - name: opal-client
-          image: authorizon/opal-client:0.1.11
+          image: hongbomiao/hm-opal-client:latest
           env:
             - name: OPAL_SERVER_URL
               valueFrom:
                 configMapKeyRef:
                   name: graphql-server-configmap
                   key: opal_server_url
+            - name: OPAL_FETCH_PROVIDER_MODULES
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: opal_fetch_provider_modules
             - name: OPAL_INLINE_OPA_CONFIG
               valueFrom:
                 configMapKeyRef:

@@ -290,8 +290,8 @@ kubectl-describe-role-argocd:
 # Dgraph
 dgraph-install-standalone:
 	mkdir -p ~/dgraph
-	docker run -it -p 5080:5080 -p 6080:6080 -p 8080:8080 \
-      -p 9080:9080 -p 8000:8000 -v ~/dgraph:/dgraph --name dgraph \
+	docker run -it -p=5080:5080 -p=6080:6080 -p 8080:8080 \
+      -p=9080:9080 -p=8000:8000 -v=~/dgraph:/dgraph --name=dgraph \
       dgraph/standalone
 dgraph-install:
 	kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
@@ -361,12 +361,17 @@ python-static-type-check:
 	poetry run poe mypy convolutional-neural-network
 	poetry run poe mypy graph-neural-network
 	poetry run poe mypy locust
+	poetry run poe mypy opal-client
 python-lint-black:
 	poetry run poe lint-py-black
+python-lint-black-fix:
+	poetry run poe lint-py-black-fix
 python-lint-flake8:
 	poetry run poe lint-py-flake8
 python-lint-isort:
 	poetry run poe lint-py-isort
+python-lint-isort-fix:
+	poetry run poe lint-py-isort-fix
 
 # Lint
 hadolint:

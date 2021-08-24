@@ -22,6 +22,9 @@ var meGraphQLType = graphql.NewObject(graphql.ObjectConfig{
 		"email": &graphql.Field{
 			Type: graphql.String,
 		},
+		"roles": &graphql.Field{
+			Type: graphql.NewList(graphql.String),
+		},
 	},
 })
 

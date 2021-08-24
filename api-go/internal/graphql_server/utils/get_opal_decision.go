@@ -14,9 +14,14 @@ func GetOPALDecision(uid string, action string, resource string) (*OPAL, error) 
 	config := GetConfig()
 	restyClient := resty.New()
 
+	me, err := GetMe(uid)
+	if err != nil {
+		log.Error().Err(err).Msg("GetMe")
+	}
+
 	body := map[string]interface{}{
 		"input": map[string]interface{}{
-			"uid":      uid,
+			"roles":    me.Roles,
 			"action":   action,
 			"resource": resource,
 		},

@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+	"fmt"
 	"github.com/buger/jsonparser"
 	"github.com/dgraph-io/dgo/v200"
 	"github.com/dgraph-io/dgo/v200/protos/api"
@@ -11,11 +12,12 @@ import (
 )
 
 type Me struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	Age      int    `json:"age"`
-	Email    string `json:"email"`
-	JWTToken string `json:"jwtToken"`
+	ID       string   `json:"id"`
+	Name     string   `json:"name"`
+	Age      int      `json:"age"`
+	Email    string   `json:"email"`
+	Roles    []string `json:"roles"`
+	JWTToken string   `json:"jwtToken"`
 }
 
 func GetMe(id string) (*Me, error) {
@@ -50,6 +52,7 @@ func GetMe(id string) (*Me, error) {
 		name
 		age
 		email
+		roles
 	  }
     }`
 	req := &api.Request{
@@ -64,17 +67,29 @@ func GetMe(id string) (*Me, error) {
 
 	name, err := jsonparser.GetString(res.Json, "me", "[0]", "name")
 	if err != nil {
-		log.Error().Err(err).Bytes("res.Json", res.Json).Msg("jsonparser.GetString")
+		log.Error().Err(err).Bytes("res.Json", res.Json).Msg("jsonparser.GetString name")
 		return nil, err
 	}
+
 	age, err := jsonparser.GetInt(res.Json, "me", "[0]", "age")
 	if err != nil {
-		log.Error().Err(err).Bytes("res.Json", res.Json).Msg("jsonparser.GetString")
+		log.Error().Err(err).Bytes("res.Json", res.Json).Msg("jsonparser.GetInt age")
 		return nil, err
 	}
+
 	email, err := jsonparser.GetString(res.Json, "me", "[0]", "email")
 	if err != nil {
-		log.Error().Err(err).Bytes("res.Json", res.Json).Msg("jsonparser.GetString")
+		log.Error().Err(err).Bytes("res.Json", res.Json).Msg("jsonparser.GetString email")
+		return nil, err
+	}
+
+	var roles []string
+	_, err = jsonparser.ArrayEach(res.Json, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
+		fmt.Println(string(value))
+		roles = append(roles, string(value))
+	}, "me", "[0]", "roles")
+	if err != nil {
+		log.Error().Err(err).Bytes("res.Json", res.Json).Msg("jsonparser.ArrayEach")
 		return nil, err
 	}
 
@@ -83,5 +98,6 @@ func GetMe(id string) (*Me, error) {
 		Name:  name,
 		Age:   int(age),
 		Email: email,
+		Roles: roles,
 	}, nil
 }
