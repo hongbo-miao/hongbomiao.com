@@ -14,12 +14,12 @@ const OPAExperiment: React.VFC = () => {
     <div className={styles.hmOPAExperiment}>
       <div className={`container is-max-desktop ${styles.hmContainer}`}>
         <div className="buttons">
-          <HmPreAuth action="read" resourceType="dog" getDecision={getOPADecision} setData={setReadDogData}>
+          <HmPreAuth action="read" resource="dog" getDecision={getOPADecision} setData={setReadDogData}>
             <button className="button is-primary" type="button" disabled={!readDogData?.data?.opa?.decision}>
               Read Dog
             </button>
           </HmPreAuth>
-          <HmPreAuth action="adopt" resourceType="dog" getDecision={getOPADecision} setData={setAdoptDogData}>
+          <HmPreAuth action="adopt" resource="dog" getDecision={getOPADecision} setData={setAdoptDogData}>
             <button className="button is-primary" type="button" disabled={!adoptDogData?.data?.opa?.decision}>
               Adopt Dog
             </button>

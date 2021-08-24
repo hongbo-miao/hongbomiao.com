@@ -4,7 +4,7 @@ import axiosInstance from '../../auth/utils/axiosInstance';
 import getJWTHeader from '../../auth/utils/getJWTHeader';
 import config from '../../config';
 
-const getOPADecision = async (action: string, resourceType: string): Promise<AxiosResponse | null> => {
+const getOPADecision = async (action: string, resource: string): Promise<AxiosResponse | null> => {
   const localStorageMe = LocalStorage.getMe();
   if (localStorageMe == null) return null;
 
@@ -15,11 +15,11 @@ const getOPADecision = async (action: string, resourceType: string): Promise<Axi
       query: `
         query OPA(
           $action: String!
-          $resourceType: String!
+          $resource: String!
         ) {
           opa(
             action: $action
-            resourceType: $resourceType
+            resource: $resource
           ) {
             decision
           }
@@ -27,7 +27,7 @@ const getOPADecision = async (action: string, resourceType: string): Promise<Axi
       `,
       variables: {
         action,
-        resourceType,
+        resource,
       },
     },
   });
