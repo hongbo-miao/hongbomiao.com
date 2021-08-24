@@ -4,7 +4,7 @@ import axiosInstance from '../../auth/utils/axiosInstance';
 import getJWTHeader from '../../auth/utils/getJWTHeader';
 import config from '../../config';
 
-const getOPALDecision = async (action: string, resourceType: string): Promise<AxiosResponse | null> => {
+const getOPALDecision = async (action: string, resource: string): Promise<AxiosResponse | null> => {
   const localStorageMe = LocalStorage.getMe();
   if (localStorageMe == null) return null;
 
@@ -15,11 +15,11 @@ const getOPALDecision = async (action: string, resourceType: string): Promise<Ax
       query: `
         query OPAL(
           $action: String!
-          $resourceType: String!
+          $resource: String!
         ) {
           opal(
             action: $action
-            resourceType: $resourceType
+            resource: $resource
           ) {
             decision
           }
@@ -27,7 +27,7 @@ const getOPALDecision = async (action: string, resourceType: string): Promise<Ax
       `,
       variables: {
         action,
-        resourceType,
+        resource,
       },
     },
   });

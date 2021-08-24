@@ -27,7 +27,7 @@ const OPALExperiment: React.VFC = () => {
     <div className={styles.hmOPALExperiment}>
       <div className={`container is-max-desktop ${styles.hmContainer}`}>
         <div className="buttons">
-          <HmPreAuth action="read" resourceType="dog" getDecision={getOPALDecision} setData={setReadDogData}>
+          <HmPreAuth action="read" resource="dog" getDecision={getOPALDecision} setData={setReadDogData}>
             <button
               className="button is-primary"
               type="button"
@@ -37,7 +37,7 @@ const OPALExperiment: React.VFC = () => {
               Read Dog
             </button>
           </HmPreAuth>
-          <HmPreAuth action="adopt" resourceType="dog" getDecision={getOPALDecision} setData={setAdoptDogData}>
+          <HmPreAuth action="adopt" resource="dog" getDecision={getOPALDecision} setData={setAdoptDogData}>
             <button
               className="button is-primary"
               type="button"

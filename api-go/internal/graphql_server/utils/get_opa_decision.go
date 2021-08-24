@@ -24,11 +24,11 @@ func getResult(ctx context.Context, query rego.PreparedEvalQuery, input map[stri
 	return results[0].Bindings["x"].(bool)
 }
 
-func GetOPADecision(uid string, action string, resourceType string) (*OPA, error) {
+func GetOPADecision(uid string, action string, resource string) (*OPA, error) {
 	input := map[string]interface{}{
-		"uid":    uid,
-		"action": action,
-		"type":   resourceType,
+		"uid":      uid,
+		"action":   action,
+		"resource": resource,
 	}
 
 	data := policies.ReadData()
