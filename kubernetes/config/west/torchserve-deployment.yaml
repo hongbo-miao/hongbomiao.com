@@ -1,0 +1,47 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: torchserve-deployment
+  namespace: hm-cnn
+  labels:
+    app: torchserve
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: torchserve
+  template:
+    metadata:
+      labels:
+        app: torchserve
+    spec:
+      containers:
+        - name: torchserve
+#          image: pytorch/torchserve:0.4.2-gpu
+          image: pytorch/torchserve:0.4.2-cpu
+          args: ["torchserve", "--start", "--ts-config", "/data/model-server/config/config.properties"]
+          ports:
+            - name: ts
+              protocol: TCP
+              containerPort: 8080
+            - name: ts-management
+              protocol: TCP
+              containerPort: 8081
+            - name: ts-metrics
+              protocol: TCP
+              containerPort: 8082
+          volumeMounts:
+            - mountPath: /data/model-server
+              name: model-server-volume
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+              nvidia.com/gpu: "0"
+            requests:
+              cpu: "1"
+              memory: 1Gi
+      volumes:
+        - name: model-server-volume
+          persistentVolumeClaim:
+            claimName: model-server-pvc
