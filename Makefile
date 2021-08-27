@@ -356,6 +356,22 @@ prom-curl:
 prom-test:
 	docker build --file=Dockerfile.prometheus.test .
 
+# TorchServe
+torchserve-init:
+	conda install pytorch torchvision torchaudio --channel=pytorch
+	conda install torchserve torch-model-archiver torch-workflow-archiver --channel=pytorch
+	pip install captum
+torchserve-start:
+	torchserve --start --model-store=kubernetes/data/model-server/model-store --models=densenet161=densenet161.mar
+torchserve-stop:
+	torchserve --stop
+curl-list-models:
+	curl http://localhost:8081/models
+curl-download-cat:
+	curl -O https://raw.githubusercontent.com/pytorch/serve/master/docs/images/kitten_small.jpg
+curl-cat:
+	curl http://127.0.0.1:8080/predictions/densenet161 --upload-file kitten_small.jpg
+
 # Python
 python-static-type-check:
 	poetry run poe mypy convolutional-neural-network

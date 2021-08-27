@@ -1,0 +1,27 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: torchserve-service
+  namespace: hm-cnn
+  labels:
+    app: torchserve
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '8082'
+spec:
+  type: ClusterIP
+  selector:
+    app: torchserve
+  ports:
+    - name: preds
+      protocol: TCP
+      targetPort: ts
+      port: 8080
+    - name: mdl
+      protocol: TCP
+      targetPort: ts-management
+      port: 8081
+    - name: metrics
+      protocol: TCP
+      targetPort: ts-metrics
+      port: 8082
