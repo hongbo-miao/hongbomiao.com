@@ -497,6 +497,21 @@ jobs:
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
+  prometheus-test:
+    name: Prometheus - Test
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        run: |
+          docker build --file=Dockerfile.prometheus.test .
+
   opa-test:
     name: OPA - Test
     runs-on: ubuntu-20.04
@@ -516,8 +531,8 @@ jobs:
         run: |
           ./opa test api-go/internal/graphql_server/policies/*.rego -v
 
-  prometheus-test:
-    name: Prometheus - Test
+  hm-opal-client-build:
+    name: HM OPAL Client - Build
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -527,9 +542,9 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Test
+      - name: Build Docker image
         run: |
-          docker build --file=Dockerfile.prometheus.test .
+          docker build --file=hm-opal-client/Dockerfile --tag=hongbomiao/hm-opal-client:latest .
 
   cypress:
     name: Cypress
