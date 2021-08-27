@@ -157,6 +157,7 @@ make clean
 
 ### Cloud Native
 
+- **TorchServe** - PyTorch models serving
 - **Flink** - Stream processing framework
 - **Linkerd** - Service mesh
 - **Argo CD** - Declarative GitOps CD for Kubernetes
