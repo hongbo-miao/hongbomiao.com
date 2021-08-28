@@ -186,6 +186,18 @@ make clean
 - **CML** - Continuous Machine Learning
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
+### Streaming
+
+- **flink-streaming-java** - Flink Streaming
+- **flink-connector-twitter** - Flink Twitter Connector
+- **flink-connector-redis** - Flink Redis Connector
+
+### HM OPAL Client
+
+- **asyncpg** - PostgreSQL client
+- **pydantic** - Data validation
+- **Tenacity** - General-purpose retrying library
+
 ### Ethereum
 
 - **Solidity** - Contract-oriented programming language
