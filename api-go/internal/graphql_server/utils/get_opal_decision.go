@@ -17,6 +17,7 @@ func GetOPALDecision(uid string, action string, resource string) (*OPAL, error) 
 	me, err := GetMe(uid)
 	if err != nil {
 		log.Error().Err(err).Msg("GetMe")
+		return nil, err
 	}
 
 	body := map[string]interface{}{
