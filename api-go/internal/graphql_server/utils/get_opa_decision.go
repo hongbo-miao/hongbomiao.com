@@ -28,6 +28,7 @@ func GetOPADecision(uid string, action string, resource string) (*OPA, error) {
 	me, err := GetMe(uid)
 	if err != nil {
 		log.Error().Err(err).Msg("GetMe")
+		return nil, err
 	}
 
 	input := map[string]interface{}{

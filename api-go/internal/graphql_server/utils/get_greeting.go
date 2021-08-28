@@ -2,7 +2,7 @@ package utils
 
 import (
 	"context"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/graphql_server/proto/greet/v1"
+	greet "github.com/Hongbo-Miao/hongbomiao.com/api-go/api/graphql_server/proto/greet/v1"
 	"github.com/rs/zerolog/log"
 	"go.elastic.co/apm/module/apmgrpc"
 	"go.opencensus.io/plugin/ocgrpc"
@@ -14,11 +14,9 @@ type Greeting struct {
 }
 
 func GetGreeting(firstName string, lastName string) (*Greeting, error) {
-	req := &v1.GreetRequest{
-		Greeting: &v1.Greeting{
-			FirstName: firstName,
-			LastName:  lastName,
-		},
+	req := &greet.GreetRequest{
+		FirstName: firstName,
+		LastName:  lastName,
 	}
 
 	config := GetConfig()
@@ -38,9 +36,14 @@ func GetGreeting(firstName string, lastName string) (*Greeting, error) {
 		}
 	}(conn)
 
-	c := v1.NewGreetServiceClient(conn)
+	c := greet.NewGreetServiceClient(conn)
 	res, err := c.Greet(context.Background(), req)
+	if err != nil {
+		log.Error().Err(err).Msg("c.Greet")
+		return nil, err
+	}
+
 	return &Greeting{
 		Content: res.Result,
-	}, err
+	}, nil
 }

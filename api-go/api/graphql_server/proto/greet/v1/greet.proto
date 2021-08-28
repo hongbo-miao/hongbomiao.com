@@ -3,13 +3,9 @@ syntax = "proto3";
 package api.graphql_server.proto.greet.v1;
 option go_package="./api/graphql_server/proto/greet/v1";
 
-message Greeting {
-    string first_name = 1;
-    string last_name = 2;
-}
-
 message GreetRequest {
-    Greeting greeting = 1;
+  string first_name = 1;
+  string last_name = 2;
 }
 
 message GreetResponse {

@@ -19,7 +19,7 @@ import (
 type server struct{}
 
 func (*server) Greet(ctx context.Context, req *v1.GreetRequest) (*v1.GreetResponse, error) {
-	firstName := req.GetGreeting().GetFirstName()
+	firstName := req.GetFirstName()
 	result := "Hello " + firstName
 	res := &v1.GreetResponse{
 		Result: result,
