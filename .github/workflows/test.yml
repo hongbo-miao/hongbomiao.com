@@ -82,16 +82,10 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up buf
-        uses: bufbuild/buf-setup-action@v0.1.0
-        with:
-          version: '0.43.2'
       - name: Lint Protocol Buffers
-        uses: bufbuild/buf-lint-action@v0.2.0
-        if: success()
-        with:
-          input: 'api-go'
-          github_token: ${{ github.token }}
+        working-directory: api-go
+        run: |
+          docker run --rm --volume="$(pwd):/workspace" --workdir=/workspace bufbuild/buf lint
 
   lint-py:
     name: Lint (Python)
@@ -154,15 +148,15 @@ jobs:
         uses: actions/checkout@v2
       - name: Lint Kubernetes
         run: |
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/east/*.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-configmap.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-deployment.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-ingress.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-namespace.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-pv.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-pvc.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-service.yaml
-          docker run --rm --volume `pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-statefulset.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/east/*.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-configmap.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-deployment.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-ingress.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-namespace.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-pv.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-pvc.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-service.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-statefulset.yaml
 
   lint-shell:
     name: Lint (Shell)
