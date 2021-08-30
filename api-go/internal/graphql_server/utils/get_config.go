@@ -17,6 +17,8 @@ type Config struct {
 	RedisHost                    string
 	RedisPort                    string
 	RedisDB                      string
+	TorchServeGRPCHost           string
+	TorchServeGRPCPort           string
 	OpenCensusAgentHost          string
 	OpenCensusAgentPort          string
 	JaegerURL                    string
@@ -48,6 +50,8 @@ func GetConfig() *Config {
 		RedisHost:                    os.Getenv("REDIS_HOST"),
 		RedisPort:                    os.Getenv("REDIS_PORT"),
 		RedisDB:                      os.Getenv("REDIS_DB"),
+		TorchServeGRPCHost:           os.Getenv("TORCH_SERVE_GRPC_HOST"),
+		TorchServeGRPCPort:           os.Getenv("TORCH_SERVE_GRPC_PORT"),
 		OpenCensusAgentHost:          os.Getenv("OPEN_CENSUS_AGENT_HOST"),
 		OpenCensusAgentPort:          os.Getenv("OPEN_CENSUS_AGENT_PORT"),
 		JaegerURL:                    os.Getenv("JAEGER_URL"),

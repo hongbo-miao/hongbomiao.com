@@ -1,0 +1,13 @@
+# https://docs.buf.build/lint/configuration
+
+version: v1
+lint:
+  use:
+    - DEFAULT
+  ignore:
+    - api/graphql_server/proto/torchserve
+  enum_zero_value_suffix: _UNSPECIFIED
+  rpc_allow_same_request_response: false
+  rpc_allow_google_protobuf_empty_requests: false
+  rpc_allow_google_protobuf_empty_responses: false
+  service_suffix: Service

@@ -21,13 +21,19 @@ spec:
           image: pytorch/torchserve:0.4.2-cpu
           args: ["torchserve", "--start", "--ts-config", "/data/model-server/config/config.properties"]
           ports:
-            - name: ts
+            - name: inference
               protocol: TCP
               containerPort: 8080
-            - name: ts-management
+            - name: inference-grpc
+              protocol: TCP
+              containerPort: 7070
+            - name: management
               protocol: TCP
               containerPort: 8081
-            - name: ts-metrics
+            - name: management-grpc
+              protocol: TCP
+              containerPort: 7071
+            - name: metrics
               protocol: TCP
               containerPort: 8082
           volumeMounts:

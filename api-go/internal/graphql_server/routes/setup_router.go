@@ -18,7 +18,8 @@ func SetupRouter(env string, rdb *redis.Client) *gin.Engine {
 	}
 	r.Use(logger.SetLogger())
 	r.Use(otelgin.Middleware("hm-graphql-server"))
-	r.POST("/graphql", handlers.GraphQLHandler(rdb))
 	r.GET("/", controllers.Health)
+	r.POST("/predict", controllers.Predict)
+	r.POST("/graphql", handlers.GraphQLHandler(rdb))
 	return r
 }
