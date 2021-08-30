@@ -72,6 +72,16 @@ spec:
                 configMapKeyRef:
                   name: graphql-server-configmap
                   key: redis_db
+            - name: TORCH_SERVE_GRPC_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: torch_serve_grpc_host
+            - name: TORCH_SERVE_GRPC_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: torch_serve_grpc_port
             - name: OPEN_CENSUS_AGENT_HOST
               valueFrom:
                 configMapKeyRef:
