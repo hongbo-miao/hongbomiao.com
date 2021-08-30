@@ -13,15 +13,23 @@ spec:
   selector:
     app: torchserve
   ports:
-    - name: preds
+    - name: inference
       protocol: TCP
-      targetPort: ts
+      targetPort: inference
       port: 8080
-    - name: mdl
+    - name: inference-grpc
       protocol: TCP
-      targetPort: ts-management
+      targetPort: inference-grpc
+      port: 7070
+    - name: management
+      protocol: TCP
+      targetPort: management
       port: 8081
+    - name: management-grpc
+      protocol: TCP
+      targetPort: management-grpc
+      port: 7071
     - name: metrics
       protocol: TCP
-      targetPort: ts-metrics
+      targetPort: metrics
       port: 8082

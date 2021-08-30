@@ -18,6 +18,10 @@ go-lint:
 
 proto-generate:
 	protoc api/graphql_server/proto/greet/v1/greet.proto --go_out=plugins=grpc:.
+	protoc api/graphql_server/proto/torchserve/v1/inference.proto --go_out=plugins=grpc:.
+	protoc api/graphql_server/proto/torchserve/v1/management.proto --go_out=plugins=grpc:.
+proto-lint:
+	buf lint
 
 opa-test:
 	opa test internal/graphql_server/policies/*.rego -v
