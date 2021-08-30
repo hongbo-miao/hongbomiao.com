@@ -14,6 +14,11 @@ rm -f kubernetes/certificates/west-issuer.key
 rm -f kubernetes/data/elastic-apm/tls.crt
 
 
+# Generate OPAL SSH key
+ssh-keygen -t rsa -b 4096 -m pem
+# /Users/homiao/Clouds/Git/hongbomiao.com/kubernetes/data/opal-server/id_rsa
+
+
 # Generate certificates
 echo "# Generate certificates"
 ORG_DOMAIN="k8s-hongbomiao.com"
@@ -37,20 +42,23 @@ for cluster in west east; do
     --not-after=8760h \
     --no-password \
     --insecure
-  echo "=================================================="
 done
+echo "=================================================="
+
 
 # Create clusters
+echo "# Create clusters"
 k3d cluster create west --config=kubernetes/k3d/west-cluster-config.yaml
 k3d cluster create east --config=kubernetes/k3d/east-cluster-config.yaml
-
-sleep 30
 
 # k3d cluster delete west
 # k3d cluster delete east
 
 # kubectl config use-context k3d-west
 # kubectl config use-context k3d-east
+
+sleep 30
+echo "=================================================="
 
 
 # Check Linkerd installation environment
@@ -78,7 +86,6 @@ for cluster in west east; do
     kubectl apply --context="k3d-${cluster}" --filename=-
   echo "=================================================="
 done
-
 sleep 30
 
 
@@ -103,7 +110,6 @@ for cluster in west east; do
   kubectl patch deployment ingress-nginx-controller --context="k3d-${cluster}" --namespace=ingress-nginx --patch "$(cat kubernetes/patches/ingress-nginx-controller-deployment-patch.yaml)"
   echo "=================================================="
 done
-
 sleep 30
 
 
@@ -124,7 +130,6 @@ for cluster in west east; do
   # linkerd multicluster uninstall | kubectl delete --filename=-
   echo "=================================================="
 done
-
 sleep 30
 
 
@@ -166,7 +171,7 @@ linkerd multicluster link \
   --cluster-name=k3d-west \
   --api-server-address="https://${WEST_IP}:6443" | \
     kubectl apply --context=k3d-east --filename=-
-
+echo "=================================================="
 sleep 30
 
 
@@ -182,6 +187,7 @@ done
 # West cluster
 echo "# West cluster"
 kubectl config use-context k3d-west
+echo "=================================================="
 
 
 # Install Linkerd viz
@@ -189,10 +195,8 @@ echo "# Install Linkerd viz"
 linkerd viz install --set=jaegerUrl=jaeger.linkerd-jaeger:16686,clusterDomain="west.${ORG_DOMAIN}" | \
   kubectl apply --filename=-
 echo "=================================================="
-
-sleep 60
-
 # linkerd viz dashboard --context=k3d-west
+sleep 60
 
 
 # Check Linkerd viz
@@ -212,7 +216,6 @@ echo "# Install Linkerd Jaeger"
 linkerd jaeger install | \
   kubectl apply --filename=-
 echo "=================================================="
-
 sleep 30
 
 # linkerd jaeger dashboard --context=k3d-west
@@ -230,7 +233,6 @@ echo "=================================================="
 # linkerd buoyant install | \
 #   kubectl apply --filename=-
 # echo "=================================================="
-#
 # sleep 30
 
 
@@ -240,7 +242,6 @@ echo "# Install custom resource definitions and the Elasticsearch operator with 
 kubectl apply --filename=https://download.elastic.co/downloads/eck/1.7.0/crds.yaml
 kubectl apply --filename=https://download.elastic.co/downloads/eck/1.7.0/operator.yaml
 echo "=================================================="
-
 sleep 30
 
 
@@ -253,7 +254,6 @@ echo "# Deploy Elasticsearch, Kibana, AMP"
 kubectl apply --filename=kubernetes/config/elastic
 # Delete: kubectl delete --filename=kubernetes/config/elastic
 echo "=================================================="
-
 sleep 60
 
 
@@ -277,6 +277,7 @@ echo "=================================================="
 # Elastic APM
 echo "# Save Elastic APM tls.crt locally"
 kubectl get secret hm-apm-apm-http-certs-public --namespace=elastic --output=go-template='{{index .data "tls.crt" | base64decode }}' > kubernetes/data/elastic-apm/tls.crt
+echo "=================================================="
 
 echo "# Save Elastic APM token in Kubernetes secret"
 kubectl create namespace hm
@@ -291,13 +292,15 @@ kubectl create namespace argocd
 kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 # Local: kubectl apply --namespace=argocd --filename=kubernetes/manifests/argocd.yaml
 # Delete: kubectl delete --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
+echo "=================================================="
 sleep 30
+
 
 echo "# Check Argo CD"
 for d in dex-server redis repo-server server; do
-  kubectl --namespace=argocd rollout status deployment/argocd-${d}
+  kubectl rollout status deployment/argocd-${d} --namespace=argocd
 done
+echo "=================================================="
 
 
 # Install the app by Argo CD
@@ -308,13 +311,35 @@ argocd login localhost:31026 --username=admin --password="${ARGOCD_PASSWORD}" --
 kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 argocd app sync hm-application --local=kubernetes/config/west
 # Delete: argocd app delete hm-application --yes
+echo "=================================================="
 
+echo "# Create OPAL server secret"
+OPAL_SERVER_MASTER_TOKEN=IWjW0bYcTIfm6Y5JNjp4DdgopC6rYSxT4yrPbtLiTU0
+kubectl create secret generic hm-opal-server-secret \
+  --namespace=hm-opa \
+  --from-file=id_rsa=kubernetes/data/opal-server/id_rsa \
+  --from-file=id_rsa.pub=kubernetes/data/opal-server/id_rsa.pub \
+  --from-literal=opal_auth_master_token="${OPAL_SERVER_MASTER_TOKEN}"
+echo "=================================================="
+
+echo "# Check OPAL server"
+kubectl rollout status deployment/opal-server-deployment --namespace=hm-opa
+kubectl port-forward service/opal-server-service --namespace=hm-opa 7002:7002 &
+echo "=================================================="
+
+echo "# Create OPAL client secret"
+OPAL_CLIENT_TOKEN=$(opal-client obtain-token "${OPAL_SERVER_MASTER_TOKEN}" --server-url=http://localhost:7002)
+kubectl create secret generic hm-opal-client-secret \
+  --namespace=hm \
+  --from-literal=opal_client_token="${OPAL_CLIENT_TOKEN}"
+echo "=================================================="
 sleep 120
 
 
 # East cluster
 echo "# East cluster"
 kubectl config use-context k3d-east
+echo "=================================================="
 
 
 # Install the app by Argo CD
@@ -322,7 +347,8 @@ echo "# Install the app"
 kubectl apply --filename=kubernetes/config/east/hm-namespace.yaml
 kubectl apply --filename=kubernetes/config/east
 # Delete: kubectl delete --filename=kubernetes/config/east
-
+echo "=================================================="
+sleep 30
 
 # Verify Linkerd multicluster setup correctly by checking the endpoints in west and verify that they match the gateway’s public IP address in east
 # kubectl get endpoint grpc-server-service-k3d-east --context=k3d-west --namespace=hm --output="custom-columns=ENDPOINT_IP:.subsets[*].addresses[*].ip"
@@ -332,8 +358,10 @@ kubectl apply --filename=kubernetes/config/east
 # West cluster
 echo "# West cluster"
 kubectl config use-context k3d-west
+echo "=================================================="
 
 
+# echo "# Install hm-streaming"
 # flink run-application \
 #   --target kubernetes-application \
 #   -Dkubernetes.namespace=hm-flink \
@@ -343,3 +371,4 @@ kubectl config use-context k3d-west
 #   -Dkubernetes.jobmanager.service-account=flink-serviceaccount \
 #   local:///opt/flink/usrlib/streaming-0.1.jar
 # Delete: kubectl delete deployment/hm-flink-cluster --namespace=hm-flink
+# echo "=================================================="

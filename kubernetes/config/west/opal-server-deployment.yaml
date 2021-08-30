@@ -37,6 +37,21 @@ spec:
                 configMapKeyRef:
                   name: opal-server-configmap
                   key: opal_policy_repo_url
+            - name: OPAL_AUTH_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hm-opal-server-secret
+                  key: id_rsa
+            - name: OPAL_AUTH_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hm-opal-server-secret
+                  key: id_rsa.pub
+            - name: OPAL_AUTH_MASTER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hm-opal-server-secret
+                  key: opal_auth_master_token
             - name: UVICORN_NUM_WORKERS
               valueFrom:
                 configMapKeyRef:
