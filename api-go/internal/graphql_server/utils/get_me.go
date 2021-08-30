@@ -2,7 +2,6 @@ package utils
 
 import (
 	"context"
-	"fmt"
 	"github.com/buger/jsonparser"
 	"github.com/dgraph-io/dgo/v200"
 	"github.com/dgraph-io/dgo/v200/protos/api"
@@ -85,7 +84,6 @@ func GetMe(id string) (*Me, error) {
 
 	var roles []string
 	_, err = jsonparser.ArrayEach(res.Json, func(value []byte, dataType jsonparser.ValueType, offset int, err error) {
-		fmt.Println(string(value))
 		roles = append(roles, string(value))
 	}, "me", "[0]", "roles")
 	if err != nil {

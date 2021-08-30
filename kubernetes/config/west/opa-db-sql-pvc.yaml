@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: opa-pvc
-  namespace: hm
+  name: opa-db-sql-pvc
+  namespace: hm-opa
 spec:
-  volumeName: opa-pv
+  volumeName: opa-db-sql-pv
   accessModes:
     - ReadWriteOnce
-  storageClassName: standard
+  storageClassName: opa-db-sql-storageclass
   resources:
     requests:
       storage: 10Mi

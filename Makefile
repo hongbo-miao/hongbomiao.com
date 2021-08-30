@@ -99,16 +99,18 @@ kubectl-use-context:
 	kubectl config use-context k3d-dev
 
 # k3d
-k3d-create:
+k3d-cluster-create:
 	k3d cluster create west --config=kubernetes/k3d/west-cluster-config.yaml
 	k3d cluster create east --config=kubernetes/k3d/west-cluster-config.yaml
 	k3d cluster create dev --config=kubernetes/k3d/dev-cluster-config.yaml
-k3d-list:
-	k3d cluster list
-k3d-delete:
+k3d-cluster-delete:
 	k3d cluster delete west
 	k3d cluster delete east
 	k3d cluster delete dev
+k3d-cluster-list:
+	k3d cluster list
+k3d-node-list:
+	k3d node list
 
 # Kubernetes
 kubectl-apply:
@@ -270,6 +272,9 @@ argocd-sync:
 	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 	argocd app sync hm-application
 argocd-sync-local:
+	kubectl create namespace hm
+	ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token --namespace=elastic --output=go-template='{{index .data "secret-token" | base64decode}}')
+	kubectl create secret generic hm-elastic-apm --namespace=hm --from-literal="token=${ELASTIC_APM_TOKEN}"
 	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 	argocd app sync hm-application --local=kubernetes/config/west
 argocd-list:
