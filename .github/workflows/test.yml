@@ -87,11 +87,8 @@ jobs:
         with:
           version: '0.43.2'
       - name: Lint Protocol Buffers
-        uses: bufbuild/buf-lint-action@v0.2.0
-        if: success()
-        with:
-          input: 'api-go'
-          github_token: ${{ github.token }}
+        run: |
+          buf lint
 
   lint-py:
     name: Lint (Python)

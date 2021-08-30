@@ -404,3 +404,5 @@ kubeconform:
 	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-pvc.yaml")
 	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-service.yaml")
 	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-statefulset.yaml")
+proto-lint:
+	buf lint
