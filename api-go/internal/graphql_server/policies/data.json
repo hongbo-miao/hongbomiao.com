@@ -1,42 +1,51 @@
 {
   "roles": {
-    "customer": [
-      {
-        "action": "read",
-        "resource": "dog"
-      },
-      {
-        "action": "read",
-        "resource": "cat"
-      },
-      {
-        "action": "adopt",
-        "resource": "dog"
-      },
-      {
-        "action": "adopt",
-        "resource": "cat"
-      }
-    ],
-    "employee": [
-      {
-        "action": "read",
-        "resource": "dog"
-      },
-      {
-        "action": "read",
-        "resource": "cat"
-      }
-    ],
-    "billing": [
-      {
-        "action": "read",
-        "resource": "finance"
-      },
-      {
-        "action": "update",
-        "resource": "finance"
-      }
-    ]
+    "billing": {
+      "allow": [
+        {
+          "action": "read",
+          "resource": "finance"
+        },
+        {
+          "action": "update",
+          "resource": "finance"
+        }
+      ],
+      "role": "billing"
+    },
+    "customer": {
+      "allow": [
+        {
+          "action": "read",
+          "resource": "dog"
+        },
+        {
+          "action": "read",
+          "resource": "cat"
+        },
+        {
+          "action": "adopt",
+          "resource": "dog"
+        },
+        {
+          "action": "adopt",
+          "resource": "cat"
+        }
+      ],
+      "role": "customer"
+    },
+    "employee": {
+      "allow": [
+        {
+          "action": "read",
+          "resource": "dog"
+        },
+        {
+          "action": "read",
+          "resource": "cat"
+        }
+      ],
+      "role": "employee"
+    }
   }
 }
