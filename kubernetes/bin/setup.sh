@@ -309,7 +309,7 @@ kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 argocd app sync hm-application --local=kubernetes/config/west
 # Delete: argocd app delete hm-application --yes
 
-sleep 60
+sleep 120
 
 
 # East cluster
