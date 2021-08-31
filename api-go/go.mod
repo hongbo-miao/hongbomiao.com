@@ -24,7 +24,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.2
 	github.com/joho/godotenv v1.3.0
 	github.com/mattn/go-isatty v0.0.13 // indirect
-	github.com/open-policy-agent/opa v0.31.0
+	github.com/open-policy-agent/opa v0.32.0
 	github.com/prometheus/procfs v0.7.2 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rs/zerolog v1.24.0
@@ -39,8 +39,6 @@ require (
 	go.opentelemetry.io/otel/exporters/jaeger v1.0.0-RC1
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.0.0-RC1
 	go.opentelemetry.io/otel/sdk v1.0.0-RC2
-	golang.org/x/net v0.0.0-20210805182204-aaa1db679c0d // indirect
-	golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069 // indirect
 	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect
 	google.golang.org/grpc v1.40.0
 	google.golang.org/grpc/examples v0.0.0-20210806175644-574137db7de3 // indirect
