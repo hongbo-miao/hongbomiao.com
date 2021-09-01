@@ -16,7 +16,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.3
 	github.com/go-redis/redismock/v8 v8.0.6
 	github.com/go-resty/resty/v2 v2.6.0
-	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/golang-jwt/jwt/v4 v4.0.0
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/graphql-go/graphql v0.8.0
 	github.com/graphql-go/handler v0.2.3
