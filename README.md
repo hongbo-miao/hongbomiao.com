@@ -157,6 +157,7 @@ make clean
 
 ### Cloud Native
 
+- **Terraform** - Infrastructure as Code
 - **TorchServe** - PyTorch models serving
 - **Flink** - Stream processing framework
 - **Linkerd** - Service mesh
