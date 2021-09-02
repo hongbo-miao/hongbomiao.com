@@ -585,6 +585,7 @@ jobs:
 
   coverage:
     name: Coverage
+    needs: [web-test, mobile-test, api-node-test]
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
