@@ -5,8 +5,8 @@ on:
     branches: [ main ]
 
 jobs:
-  cml:
-    name: CML
+  cml-local:
+    name: CML (Local)
     runs-on: ubuntu-20.04
     steps:
       - name: Cancel previous runs
@@ -41,7 +41,74 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "# Convolutional Neural Network Report" >> report.md
+          echo "# CML (Local) Report" >> report.md
+          echo "## Args" >> report.md
+          cat reports/args.txt >> report.md
+          cml-send-comment report.md
+
+  cml-cloud-set-up-cloud:
+    name: CML (Cloud) - Set up cloud
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up CML
+        uses: iterative/setup-cml@v1
+      - name: Set up cloud
+        shell: bash
+        env:
+          REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cml-runner \
+          --cloud aws \
+          --cloud-region us-west-2 \
+          --cloud-type=t2.small \
+          --labels=cml-runner
+
+  cml-cloud-train:
+    name: CML (Cloud) - Train
+    needs: cml-cloud-set-up-cloud
+    runs-on: [self-hosted, cml-runner]
+    container: docker://dvcorg/cml
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniconda-version: "latest"
+          activate-environment: hm-cnn
+      - name: Install requirements
+        working-directory: convolutional-neural-network
+        shell: bash -l {0}
+        run: |
+          conda install pytorch torchvision torchaudio -c pytorch
+          conda install pandas
+          conda install tabulate
+          pip install -r requirements.txt
+      - name: Train model
+        working-directory: convolutional-neural-network
+        shell: bash -l {0}
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+        run: |
+          python main.py --lr=0.001 --num_epochs=2
+      - name: Write CML report
+        working-directory: convolutional-neural-network
+        env:
+          REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
+        run: |
+          echo "# CML (Cloud) Report" >> report.md
           echo "## Args" >> report.md
           cat reports/args.txt >> report.md
           cml-send-comment report.md
