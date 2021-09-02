@@ -20,7 +20,7 @@ provider "aws" {
   region  = "us-west-2"
 }
 
-resource "aws_instance" "hm_cnn" {
+resource "aws_instance" "hm_cnn_instance" {
   ami           = "ami-08d70e59c07c61a3a"
   instance_type = "t2.micro"
 
