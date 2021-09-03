@@ -243,8 +243,8 @@ jobs:
           poetry run poe mypy graph-neural-network
           poetry run poe mypy locust
 
-  web-test:
-    name: Web - Test
+  web-build:
+    name: Web - Build
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -273,6 +273,29 @@ jobs:
       - name: Install dependencies
         run: |
           cd web && npm ci
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: web-artifact
+          path: web/node_modules
+
+  web-test:
+    name: Web - Test
+    needs: web-build
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: web-artifact
+          path: web/node_modules
       - name: Test
         working-directory: web
         run: |
