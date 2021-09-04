@@ -9,14 +9,14 @@ transform = transforms.Compose(
 batch_size = 4
 
 train_set = torchvision.datasets.CIFAR10(
-    root="./data", train=True, download=True, transform=transform
+    root="./data", train=True, download=False, transform=transform
 )
 train_data_loader = torch.utils.data.DataLoader(
     train_set, batch_size=batch_size, shuffle=True, num_workers=2
 )
 
 val_set = torchvision.datasets.CIFAR10(
-    root="./data", train=False, download=True, transform=transform
+    root="./data", train=False, download=False, transform=transform
 )
 val_data_loader = torch.utils.data.DataLoader(
     val_set, batch_size=batch_size, shuffle=False, num_workers=2
