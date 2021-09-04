@@ -381,10 +381,10 @@ curl-cat:
 
 # Python
 python-static-type-check:
-	poetry run poe mypy convolutional-neural-network
-	poetry run poe mypy graph-neural-network
-	poetry run poe mypy locust
-	poetry run poe mypy opal-client
+	poetry run poe mypy convolutional-neural-network --install-types --non-interactive
+	poetry run poe mypy graph-neural-network --install-types --non-interactive
+	poetry run poe mypy locust --install-types --non-interactive
+	poetry run poe mypy hm-opal-client --install-types --non-interactive
 python-lint-black:
 	poetry run poe lint-py-black
 python-lint-black-fix:

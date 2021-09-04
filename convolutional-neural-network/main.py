@@ -45,7 +45,7 @@ def main():
                 print("Found better model.")
                 max_val_acc = val_acc
 
-                filename = "model.pt"
+                filename = "output/models/model.pt"
                 torch.save(net.state_dict(), filename)
                 wb.save(filename)
 
