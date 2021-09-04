@@ -7,7 +7,8 @@ conda create --name hm-cnn python=3.9.6
 conda activate hm-cnn
 
 # Install requirements
-conda install pytorch torchvision torchaudio -c pytorch
+conda install pytorch torchvision torchaudio --channel=pytorch
+conda install dvc dvc-s3 --channel=conda-forge
 conda install pandas
 conda install tabulate
 
