@@ -1,0 +1,41 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: tar -xf data/raw/cifar-10-python.tar.gz --dir=data/processed
+    deps:
+    - path: data/raw/cifar-10-python.tar.gz
+      md5: c58f30108f718f92721af3b95e74349a
+      size: 170498071
+    outs:
+    - path: data/processed/cifar-10-batches-py/
+      md5: 2c2c368a819f1df18fd0afa1c052c6c4.dir
+      size: 186214114
+      nfiles: 8
+  main:
+    cmd: python main.py
+    deps:
+    - path: data/processed/cifar-10-batches-py/
+      md5: 2c2c368a819f1df18fd0afa1c052c6c4.dir
+      size: 186214114
+      nfiles: 8
+    - path: evaluate.py
+      md5: 5efab5d3a1e93da28fa782dfa0901b4a
+      size: 485
+    - path: main.py
+      md5: 065a06b863a828c2d9badfadeda39259
+      size: 1635
+    - path: model/
+      md5: e30a59caeedaa861b307cc13591e3eab.dir
+      size: 3376
+      nfiles: 4
+    - path: train.py
+      md5: ac7e4cd9586b3b66fc6d46f5b3b93504
+      size: 383
+    params:
+      params.yaml:
+        lr: 0.001
+        train.epochs: 2
+    outs:
+    - path: output/models/model.pt
+      md5: f62f625546c67ac666a05183a63003a7
+      size: 250887
