@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def write_args(args):
-    df = pd.DataFrame.from_dict(vars(args), orient="index", columns=["Value"])
-    with open("reports/args.txt", "w") as outfile:
-        outfile.write(df.to_markdown())
+def write_params(params):
+    df = pd.DataFrame.from_dict(params, orient="index", columns=["Value"])
+    with open("reports/params.txt", "w") as f:
+        f.write(df.to_markdown())

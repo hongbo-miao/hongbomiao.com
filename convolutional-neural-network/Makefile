@@ -22,20 +22,38 @@ dvc-init:
 	dvc init --subdir
 dvc-add:
 	dvc add data/cifar-10-python.tar.gz
-dvc-repro:
-	dvc repro data/cifar-10-python.tar.gz.dvc
 dvc-run-prepare:
 	dvc run \
 		--name=prepare \
 		--deps=data/cifar-10-python.tar.gz \
  		--outs=data/cifar-10-batches-py/ \
 		tar -xf data/cifar-10-python.tar.gz --dir=data
-dvc-run-train:
+dvc-run-main:
 	dvc run \
-		--name=train \
+		--name=main \
 		--deps=data/cifar-10-batches-py/ \
-		python main.py --lr=0.001 --num_epochs=2
+		--deps=model/ \
+		--deps=main.py \
+		--deps=train.py \
+		--deps=evaluate.py \
+		--params=lr,train.epochs \
+		python main.py
+dvc-run-main-no-exec:
+	dvc run \
+		--no-exec \
+		--name=main \
+		--deps=data/cifar-10-batches-py/ \
+		--deps=model/ \
+		--deps=main.py \
+		--deps=train.py \
+		--deps=evaluate.py \
+		--params=lr,train.epochs \
+		python main.py
+dvc-repro:
+	dvc repro data/cifar-10-python.tar.gz.dvc
 
+dvc-remove-stage:
+	dvc remove STAGE_NAME
 dvc-dag:
 	dvc dag
 
