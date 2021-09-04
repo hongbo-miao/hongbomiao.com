@@ -357,12 +357,12 @@ argocd app sync hm-application --local=kubernetes/config/west
 echo "=================================================="
 
 echo "# Create OPAL server secret"
-OPAL_SERVER_MASTER_TOKEN=IWjW0bYcTIfm6Y5JNjp4DdgopC6rYSxT4yrPbtLiTU0
+OPAL_AUTH_MASTER_TOKEN=IWjW0bYcTIfm6Y5JNjp4DdgopC6rYSxT4yrPbtLiTU0
 kubectl create secret generic hm-opal-server-secret \
   --namespace=hm-opa \
   --from-file=id_rsa=kubernetes/data/opal-server/id_rsa \
   --from-file=id_rsa.pub=kubernetes/data/opal-server/id_rsa.pub \
-  --from-literal=opal_auth_master_token="${OPAL_SERVER_MASTER_TOKEN}"
+  --from-literal=opal_auth_master_token="${OPAL_AUTH_MASTER_TOKEN}"
 echo "=================================================="
 
 echo "# Check OPAL server"
@@ -371,7 +371,7 @@ kubectl port-forward service/opal-server-service --namespace=hm-opa 7002:7002 &
 echo "=================================================="
 
 echo "# Create OPAL client secret"
-OPAL_CLIENT_TOKEN=$(opal-client obtain-token "${OPAL_SERVER_MASTER_TOKEN}" \
+OPAL_CLIENT_TOKEN=$(opal-client obtain-token "${OPAL_AUTH_MASTER_TOKEN}" \
   --server-url=http://localhost:7002)
 kubectl create secret generic hm-opal-client-secret \
   --namespace=hm \
