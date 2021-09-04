@@ -40,6 +40,8 @@ docker-ps:
 	docker ps
 docker-ps-all:
 	docker ps --all
+docker-rmi:
+	docker rmi --force IMAGE_ID
 docker-prune:
 	docker system prune
 
