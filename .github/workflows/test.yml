@@ -240,9 +240,10 @@ jobs:
           poetry install --no-interaction --no-root
       - name: Check static type
         run: |
-          poetry run poe mypy convolutional-neural-network
-          poetry run poe mypy graph-neural-network
-          poetry run poe mypy locust
+          poetry run poe mypy convolutional-neural-network --install-types --non-interactive
+          poetry run poe mypy graph-neural-network --install-types --non-interactive
+          poetry run poe mypy locust --install-types --non-interactive
+          poetry run poe mypy hm-opal-client --install-types --non-interactive
 
   web-test:
     name: Web - Test

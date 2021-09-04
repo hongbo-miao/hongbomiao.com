@@ -21,22 +21,23 @@ pip-freeze:
 dvc-init:
 	dvc init --subdir
 dvc-add:
-	dvc add data/cifar-10-python.tar.gz
+	dvc add data/raw/cifar-10-python.tar.gz
 dvc-run-prepare:
 	dvc run \
 		--name=prepare \
-		--deps=data/cifar-10-python.tar.gz \
- 		--outs=data/cifar-10-batches-py/ \
-		tar -xf data/cifar-10-python.tar.gz --dir=data
+		--deps=data/raw/cifar-10-python.tar.gz \
+ 		--outs=data/processed/cifar-10-batches-py/ \
+		tar -xf data/raw/cifar-10-python.tar.gz --dir=data/processed
 dvc-run-main:
 	dvc run \
 		--name=main \
-		--deps=data/cifar-10-batches-py/ \
+		--deps=data/processed/cifar-10-batches-py/ \
 		--deps=model/ \
 		--deps=main.py \
 		--deps=train.py \
 		--deps=evaluate.py \
 		--params=lr,train.epochs \
+ 		--outs=output/models/model.pt \
 		python main.py
 dvc-run-main-no-exec:
 	dvc run \
@@ -50,7 +51,7 @@ dvc-run-main-no-exec:
 		--params=lr,train.epochs \
 		python main.py
 dvc-repro:
-	dvc repro data/cifar-10-python.tar.gz.dvc
+	dvc repro data_raw/cifar-10-python.tar.gz.dvc
 
 dvc-remove-stage:
 	dvc remove STAGE_NAME
@@ -69,4 +70,4 @@ dvc-pull:
 	dvc pull
 
 run:
-	/usr/local/anaconda3/envs/hm-cnn/bin/python main.py --lr=0.001 --num_epochs=2
+	/usr/local/anaconda3/envs/hm-cnn/bin/python main.py --should_download_original_data=True

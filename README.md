@@ -185,6 +185,7 @@ make clean
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **OGB** - Open Graph Benchmark
 - **CML** - Continuous Machine Learning
+- **DVC** - Data Version Control
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
 ### Streaming
