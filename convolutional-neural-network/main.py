@@ -23,8 +23,7 @@ def main():
         net.to(device)
 
         criterion = nn.CrossEntropyLoss()
-        optimizer = optim.SGD(net.parameters(), lr=config["lr"], momentum=0.9)
-        # optimizer = optim.Adam(net.parameters(), lr=config.learning_rate)
+        optimizer = optim.Adam(net.parameters(), lr=config["lr"])
 
         max_val_acc = 0.0
         for epoch in range(config["train"]["epochs"]):
