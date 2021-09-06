@@ -1,3 +1,4 @@
+import torch
 import wandb
 import yaml
 from evaluate import evaluate
@@ -25,6 +26,7 @@ def main():
         optimizer = optim.SGD(net.parameters(), lr=config["lr"], momentum=0.9)
         # optimizer = optim.Adam(net.parameters(), lr=config.learning_rate)
 
+        max_val_acc = 0.0
         for epoch in range(config["train"]["epochs"]):
             train_loss = train(net, train_data_loader, optimizer, criterion)
             train_acc = evaluate(net, train_data_loader)
@@ -39,6 +41,13 @@ def main():
                     "val_acc": val_acc,
                 }
             )
+            if val_acc > max_val_acc:
+                print("Found better model.")
+                max_val_acc = val_acc
+
+                filename = "model.pt"
+                torch.save(net.state_dict(), filename)
+                wb.save(filename)
 
 
 if __name__ == "__main__":
