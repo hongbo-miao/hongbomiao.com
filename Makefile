@@ -379,6 +379,15 @@ curl-download-cat:
 curl-cat:
 	curl http://127.0.0.1:8080/predictions/densenet161 --upload-file kitten_small.jpg
 
+migrate-creat:
+	migrate create -ext sql -dir kubernetes/data/opa-db-sql/init -seq create_roles_table
+migrate-up:
+	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public")
+	migrate -database ${POSTGRESQL_URL} -path kubernetes/data/opa-db-sql/migrations up
+migrate-down:
+	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public")
+	migrate -database ${POSTGRESQL_URL} -path kubernetes/data/opa-db-sql/migrations down
+
 # Python
 python-static-type-check:
 	poetry run poe mypy convolutional-neural-network --install-types --non-interactive
