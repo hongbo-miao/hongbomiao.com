@@ -119,7 +119,6 @@ make clean
 - **pgx** - PostgreSQL driver
 - **go-redis** - Redis client
 - **Squirrel** - SQL query builder
-- **Dgraph** - Distributed graph database
 - **Testify** - Unit testing
 
 ### API Server - Node.js
@@ -154,6 +153,13 @@ make clean
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
 - **Clinic.js** - Performance profiling
+
+### Database
+
+- **Dgraph** - Distributed graph database
+- **YugabyteDB** - Distributed SQL database
+- **PostgreSQL** - Object-relational database
+- **golang-migrate/migrate** - Database migrations
 
 ### Cloud Native
 
