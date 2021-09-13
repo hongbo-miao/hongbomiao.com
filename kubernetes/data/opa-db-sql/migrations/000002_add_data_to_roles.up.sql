@@ -1,3 +1,5 @@
+begin;
+
 insert into roles (role, allow)
 values
   ('customer', '[
@@ -38,3 +40,5 @@ values
       "resource": "finance"
     }
   ]'::json);
+
+commit;

@@ -9,3 +9,9 @@ download-dgraph-ha-yaml:
 download-ingress-nginx-yaml:
 	$(eval VERSION := $(shell curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt))
 	curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/$(VERSION)/deploy/static/provider/cloud/deploy.yaml > ingress-nginx.yaml
+
+download-yugabyte-yaml:
+	curl https://raw.githubusercontent.com/yugabyte/yugabyte-db/master/cloud/kubernetes/yugabyte-statefulset-rf-1.yaml > yugabyte-statefulset-rf-1.yaml
+
+# https://docs.yugabyte.com/latest/deploy/kubernetes/single-zone/oss/yugabyte-operator/#deploy-a-yugabytedb-cluster-with-this-operator
+# https://github.com/yugabyte/yugabyte-operator/tree/master/deploy
