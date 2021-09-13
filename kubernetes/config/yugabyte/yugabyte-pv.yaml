@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: yugabyte-master-0-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/yugabyte/master-0
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: yugabyte-master-1-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/yugabyte/master-1
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: yugabyte-master-2-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/yugabyte/master-2
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: yugabyte-tserver-0-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/yugabyte/tserver-0
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: yugabyte-tserver-1-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/yugabyte/tserver-1
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: yugabyte-tserver-2-pv
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/yugabyte/tserver-2
+    type: Directory

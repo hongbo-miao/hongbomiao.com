@@ -7,7 +7,7 @@ begin
 end;
 $$ language plpgsql;
 
-create table roles
+create table if not exists roles
 (
   role_id    uuid                 default gen_random_uuid(),
   role       text        not null,

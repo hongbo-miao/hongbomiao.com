@@ -318,6 +318,41 @@ kubectl create secret generic hm-elastic-apm \
 echo "=================================================="
 
 
+# Yugabyte
+echo "# Deploy Yugabyte"
+YUGABYTE_PATH="kubernetes/data/yugabyte"
+YUGABYTE_REPLICA=3
+for ((i = 0; i < YUGABYTE_REPLICA; i++)); do
+  rm -rf "${YUGABYTE_PATH}/master-${i}"
+  rm -rf "${YUGABYTE_PATH}/tserver-${i}"
+  mkdir "${YUGABYTE_PATH}/master-${i}"
+  mkdir "${YUGABYTE_PATH}/tserver-${i}"
+done
+kubectl apply --filename=kubernetes/manifests/yugabyte/crds/yugabyte.com_ybclusters_crd.yaml
+kubectl apply --filename=kubernetes/manifests/yugabyte/operator.yaml
+kubectl apply --filename=kubernetes/config/yugabyte
+echo "=================================================="
+
+echo "# Check Yugabyte"
+kubectl wait --for=condition=ready pod -l app=yb-master --namespace=yb-operator
+kubectl wait --for=condition=ready pod -l app=yb-tserver --namespace=yb-operator
+echo "=================================================="
+
+echo "# Create opa_db in Yugabyte"
+psql --host=localhost --port=5433 --dbname=yugabyte --username=yugabyte --command="create database opa_db;"
+psql --host=localhost --port=5433 --dbname=yugabyte --username=yugabyte --command="create role admin with login password 'passw0rd';"
+psql --host=localhost --port=5433 --dbname=yugabyte --username=yugabyte --command="grant all privileges on database opa_db to admin;"
+psql --host=localhost --port=5433 --dbname=opa_db --username=yugabyte --command="create extension if not exists pgcrypto;"
+echo "=================================================="
+
+echo "# Initialize OPA Data in Yugabyte"
+kubectl port-forward service/yb-tservers --namespace=yb-operator 5433:5433 &
+POSTGRESQL_URL="postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public"
+migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/opa-db-sql/migrations up
+pkill kubectl
+echo "=================================================="
+
+
 # Install Argo CD
 echo "# Install Argo CD"
 kubectl create namespace argocd
@@ -353,6 +388,7 @@ ARGOCD_PASSWORD=$(kubectl get secret argocd-initial-admin-secret \
 argocd login localhost:31026 --username=admin --password="${ARGOCD_PASSWORD}" --insecure
 kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 argocd app sync hm-application --local=kubernetes/config/west
+pkill kubectl
 # Delete: argocd app delete hm-application --yes
 echo "=================================================="
 
@@ -367,15 +403,16 @@ echo "=================================================="
 
 echo "# Check OPAL server"
 kubectl rollout status deployment/opal-server-deployment --namespace=hm-opa
-kubectl port-forward service/opal-server-service --namespace=hm-opa 7002:7002 &
 echo "=================================================="
 
 echo "# Create OPAL client secret"
+kubectl port-forward service/opal-server-service --namespace=hm-opa 7002:7002 &
 OPAL_CLIENT_TOKEN=$(opal-client obtain-token "${OPAL_AUTH_MASTER_TOKEN}" \
   --server-url=http://localhost:7002)
 kubectl create secret generic hm-opal-client-secret \
   --namespace=hm \
   --from-literal=opal_client_token="${OPAL_CLIENT_TOKEN}"
+pkill kubectl
 echo "=================================================="
 sleep 120
 
