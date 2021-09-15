@@ -3,7 +3,7 @@
 set -e
 
 # Creating an environment
-conda create --name hm-cnn python=3.9.6
+conda create --name=hm-cnn python=3.9
 conda activate hm-cnn
 
 # Install requirements
@@ -12,4 +12,4 @@ conda install dvc dvc-s3 --channel=conda-forge
 conda install pandas
 conda install tabulate
 
-pip install --requirement requirements.txt
+pip install --requirement=requirements.txt

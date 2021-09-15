@@ -1,5 +1,5 @@
 conda-create:
-	conda create --name=hm-cnn python=3.9.6
+	conda create --name=hm-cnn python=3.9
 conda-env-remove:
 	conda env remove --name=hm-cnn
 conda-activate:

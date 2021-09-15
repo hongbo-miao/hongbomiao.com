@@ -3,4 +3,4 @@
 set -e
 
 conda deactivate
-conda env remove --name hm-neural-network
+conda env remove --name=hm-cnn

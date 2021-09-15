@@ -1,5 +1,5 @@
 conda-create:
-	conda create --name=hm-opal-client python=3.9.6
+	conda create --name=hm-opal-client python=3.9
 conda-env-remove:
 	conda env remove --name=hm-opal-client
 conda-activate:
