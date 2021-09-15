@@ -29,7 +29,7 @@ jobs:
           conda install pytorch torchvision torchaudio --channel=pytorch
           conda install pandas
           conda install tabulate
-          pip install -r requirements.txt
+          pip install --requirement=requirements.txt
       - name: Train model
         working-directory: convolutional-neural-network
         shell: bash -l {0}
@@ -100,7 +100,7 @@ jobs:
           conda install pytorch torchvision torchaudio --channel=pytorch
           conda install pandas
           conda install tabulate
-          pip install -r requirements.txt
+          pip install --requirement=requirements.txt
       - name: Pull Data
         working-directory: convolutional-neural-network
         env:

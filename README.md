@@ -187,7 +187,7 @@ make clean
 
 ### Neural Network
 
-- **PyTorch** - Machine learning
+- **PyTorch** - Machine learning framework
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **OGB** - Open Graph Benchmark
 - **CML** - Continuous Machine Learning
