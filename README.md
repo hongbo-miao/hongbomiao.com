@@ -194,6 +194,10 @@ make clean
 - **DVC** - Data Version Control
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
+### Quantum Computing
+
+- **Qiskit** - Quantum computing SDK
+
 ### Streaming
 
 - **flink-streaming-java** - Flink Streaming
