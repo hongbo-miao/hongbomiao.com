@@ -16,8 +16,7 @@ echo "=================================================="
 
 
 # Generate OPAL SSH key
-ssh-keygen -t rsa -b 4096 -m pem
-# /Users/homiao/Clouds/Git/hongbomiao.com/kubernetes/data/opal-server/id_rsa
+ssh-keygen -t rsa -b 4096 -m pem -f "$PWD/kubernetes/data/opal-server/id_rsa" -N ""
 
 
 # Generate certificates
@@ -331,14 +330,18 @@ done
 kubectl apply --filename=kubernetes/manifests/yugabyte/crds/yugabyte.com_ybclusters_crd.yaml
 kubectl apply --filename=kubernetes/manifests/yugabyte/operator.yaml
 kubectl apply --filename=kubernetes/config/yugabyte
+sleep 60
 echo "=================================================="
 
 echo "# Check Yugabyte"
-kubectl wait --for=condition=ready pod -l app=yb-master --namespace=yb-operator
-kubectl wait --for=condition=ready pod -l app=yb-tserver --namespace=yb-operator
+kubectl rollout status deployment/yugabyte-operator --namespace=yb-operator
+kubectl wait --for=condition=ready pod --selector=app=yb-master --namespace=yb-operator
+kubectl wait --for=condition=ready pod --selector=app=yb-tserver --namespace=yb-operator
 echo "=================================================="
 
 echo "# Create opa_db in Yugabyte"
+kubectl port-forward service/yb-tservers --namespace=yb-operator 5433:5433 &
+sleep 5
 psql --host=localhost --port=5433 --dbname=yugabyte --username=yugabyte --command="create database opa_db;"
 psql --host=localhost --port=5433 --dbname=yugabyte --username=yugabyte --command="create role admin with login password 'passw0rd';"
 psql --host=localhost --port=5433 --dbname=yugabyte --username=yugabyte --command="grant all privileges on database opa_db to admin;"
@@ -346,10 +349,9 @@ psql --host=localhost --port=5433 --dbname=opa_db --username=yugabyte --command=
 echo "=================================================="
 
 echo "# Initialize OPA Data in Yugabyte"
-kubectl port-forward service/yb-tservers --namespace=yb-operator 5433:5433 &
 POSTGRESQL_URL="postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public"
 migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/opa-db-sql/migrations up
-pkill kubectl
+pgrep kubectl | xargs kill -9
 echo "=================================================="
 
 
@@ -388,7 +390,7 @@ ARGOCD_PASSWORD=$(kubectl get secret argocd-initial-admin-secret \
 argocd login localhost:31026 --username=admin --password="${ARGOCD_PASSWORD}" --insecure
 kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 argocd app sync hm-application --local=kubernetes/config/west
-pkill kubectl
+pgrep kubectl | xargs kill -9
 # Delete: argocd app delete hm-application --yes
 echo "=================================================="
 
@@ -407,12 +409,17 @@ echo "=================================================="
 
 echo "# Create OPAL client secret"
 kubectl port-forward service/opal-server-service --namespace=hm-opa 7002:7002 &
-OPAL_CLIENT_TOKEN=$(opal-client obtain-token "${OPAL_AUTH_MASTER_TOKEN}" \
-  --server-url=http://localhost:7002)
+OPAL_CLIENT_TOKEN=$(curl --location --request POST "http://localhost:7002/token" \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer ${OPAL_AUTH_MASTER_TOKEN}" \
+  --data-raw '{
+    "type": "client"
+  }' | \
+  jq '.token' --raw-output)
 kubectl create secret generic hm-opal-client-secret \
   --namespace=hm \
   --from-literal=opal_client_token="${OPAL_CLIENT_TOKEN}"
-pkill kubectl
+pgrep kubectl | xargs kill -9
 echo "=================================================="
 sleep 120
 
