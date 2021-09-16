@@ -104,7 +104,7 @@ for cluster in west east; do
   kubectl apply \
     --context="k3d-${cluster}" \
     --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${INGRESS_VERSION}/deploy/static/provider/cloud/deploy.yaml"
-  # Local: kubectl apply --context="k3d-${cluster}" --filename=kubernetes/manifests/ingress-nginx.yaml
+  # Local: kubectl apply --context="k3d-${cluster}" --filename=kubernetes/manifests/ingress/ingress-nginx.yaml
   echo "=================================================="
 
   echo "# Patch Ingress on: k3d-${cluster}"
@@ -389,7 +389,7 @@ kubectl apply \
 # Local:
 # kubectl apply \
 #   --namespace=argocd \
-#   --filename=kubernetes/manifests/argocd.yaml
+#   --filename=kubernetes/manifests/argocd/argocd.yaml
 # Delete:
 # kubectl delete \
 #   --namespace=argocd \
