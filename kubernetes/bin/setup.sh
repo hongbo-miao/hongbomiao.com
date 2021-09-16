@@ -324,7 +324,7 @@ rm -rf "${MINIO_PATH}/log"
 rm -rf "${MINIO_PATH}/prometheus"
 mkdir "${MINIO_PATH}/log"
 mkdir "${MINIO_PATH}/prometheus"
-kubectl minio init
+kubectl minio init --cluster-domain="west.k8s-hongbomiao.com"
 echo "=================================================="
 
 echo "# Check MinIO operator"
