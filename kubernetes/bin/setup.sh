@@ -338,6 +338,10 @@ kubectl minio proxy --namespace=minio-operator &
 
 kubectl apply --filename=kubernetes/config/minio
 kubectl apply --kustomize=kubernetes/manifests/minio/tenant-tiny
+# kubectl port-forward service/storage-tiny-console --namespace=tenant-tiny 9443:9443
+# https://localhost:9443
+# Username: minio123
+# Password: minio
 echo "=================================================="
 sleep 30
 
