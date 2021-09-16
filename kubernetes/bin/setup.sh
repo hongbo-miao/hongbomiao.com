@@ -317,6 +317,31 @@ kubectl create secret generic hm-elastic-apm \
 echo "=================================================="
 
 
+# MinIO
+echo "# Initialize MinIO operator"
+MINIO_PATH="kubernetes/data/minio"
+rm -rf "${MINIO_PATH}/log"
+rm -rf "${MINIO_PATH}/prometheus"
+mkdir "${MINIO_PATH}/log"
+mkdir "${MINIO_PATH}/prometheus"
+kubectl minio init
+echo "=================================================="
+
+echo "# Check MinIO operator"
+kubectl rollout status deployment/minio-operator --namespace=minio-operator
+kubectl rollout status deployment/console --namespace=minio-operator
+echo "=================================================="
+
+echo "# Deploy MinIO tenant"
+kubectl minio proxy --namespace=minio-operator &
+# http://localhost:9090
+
+kubectl apply --filename=kubernetes/config/minio
+kubectl apply --kustomize=kubernetes/manifests/minio/tenant-tiny
+echo "=================================================="
+sleep 30
+
+
 # Yugabyte
 echo "# Deploy Yugabyte"
 YUGABYTE_PATH="kubernetes/data/yugabyte"
