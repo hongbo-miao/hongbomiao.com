@@ -158,8 +158,8 @@ make clean
 
 - **Dgraph** - Distributed graph database
 - **YugabyteDB** - Distributed SQL database
+- **Elasticsearch** - Distributed document-oriented search engine
 - **MinIO** - High performance object storage
-- **Elasticsearch** - Document oriented database
 - **PostgreSQL** - Object-relational database
 - **golang-migrate/migrate** - Database migrations
 
