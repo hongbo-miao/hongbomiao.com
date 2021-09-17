@@ -316,10 +316,18 @@ dgraph-delete-ha:
 # https://docs.min.io/docs/minio-client-complete-guide.html
 mc-ls:
 	mc ls
+mc-alias-set:
+	mc alias set hm https://localhost:9000 minio minio123
+mc-alias-ls:
+	mc alias list
+mc-make-bucket:
+	mc mb play/hm-bucket
 mc-cp:
-	mc cp README.md play/mybucket
+	mc cp README.md play/hm-bucket
 minio-console-ui:
 	kubectl port-forward service/storage-tiny-console --namespace=tenant-tiny 9443:9443
+minio-headless:
+	kubectl port-forward service/storage-tiny-hl --namespace=tenant-tiny 9000:9000
 
 # PostgreSQL
 postgres-connect:

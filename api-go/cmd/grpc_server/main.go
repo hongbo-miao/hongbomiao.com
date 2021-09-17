@@ -28,7 +28,7 @@ func (*server) Greet(ctx context.Context, req *v1.GreetRequest) (*v1.GreetRespon
 }
 
 func main() {
-	var config = utils.GetConfig()
+	config := utils.GetConfig()
 	log.Info().
 		Str("AppEnv", config.AppEnv).
 		Str("Port", config.Port).

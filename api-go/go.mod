@@ -18,12 +18,18 @@ require (
 	github.com/go-resty/resty/v2 v2.6.0
 	github.com/golang-jwt/jwt/v4 v4.0.0
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/graphql-go/graphql v0.8.0
 	github.com/graphql-go/handler v0.2.3
 	github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2 v2.0.0-rc.2
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.2
 	github.com/joho/godotenv v1.3.0
+	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect
+	github.com/minio/md5-simd v1.1.2 // indirect
+	github.com/minio/minio-go/v7 v7.0.14
+	github.com/minio/sha256-simd v1.0.0 // indirect
 	github.com/open-policy-agent/opa v0.32.0
 	github.com/prometheus/procfs v0.7.2 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
@@ -39,9 +45,14 @@ require (
 	go.opentelemetry.io/otel/exporters/jaeger v1.0.0-RC1
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.0.0-RC1
 	go.opentelemetry.io/otel/sdk v1.0.0-RC3
+	golang.org/x/crypto v0.0.0-20210915214749-c084706c2272 // indirect
+	golang.org/x/net v0.0.0-20210916014120-12bc252f5db8 // indirect
+	golang.org/x/sys v0.0.0-20210915083310-ed5796bab164 // indirect
+	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect
 	google.golang.org/grpc v1.40.0
 	google.golang.org/grpc/examples v0.0.0-20210806175644-574137db7de3 // indirect
 	google.golang.org/protobuf v1.27.1
+	gopkg.in/ini.v1 v1.63.2 // indirect
 	howett.net/plist v0.0.0-20201203080718-1454fab16a06 // indirect
 )
