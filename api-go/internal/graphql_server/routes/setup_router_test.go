@@ -10,9 +10,9 @@ import (
 )
 
 func TestHealthRoute(t *testing.T) {
-	var config = utils.GetConfig()
+	config := utils.GetConfig()
 	rdb, _ := redismock.NewClientMock()
-	r := SetupRouter(config.AppEnv, rdb)
+	r := SetupRouter(config.AppEnv, rdb, nil)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/", nil)

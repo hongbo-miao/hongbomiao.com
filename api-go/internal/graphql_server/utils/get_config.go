@@ -17,14 +17,16 @@ type Config struct {
 	RedisHost                    string
 	RedisPort                    string
 	RedisDB                      string
+	MinIOEndpoint                string
+	MinIOAccessKeyID             string
+	MinIOSecretAccessKey         string
 	TorchServeGRPCHost           string
 	TorchServeGRPCPort           string
 	OpenCensusAgentHost          string
 	OpenCensusAgentPort          string
 	JaegerURL                    string
+	JWTSecret                    string
 	EnableOpenTelemetryStdoutLog string
-
-	JWTSecret string
 }
 
 func GetConfig() *Config {
@@ -50,6 +52,9 @@ func GetConfig() *Config {
 		RedisHost:                    os.Getenv("REDIS_HOST"),
 		RedisPort:                    os.Getenv("REDIS_PORT"),
 		RedisDB:                      os.Getenv("REDIS_DB"),
+		MinIOEndpoint:                os.Getenv("MINIO_ENDPOINT"),
+		MinIOAccessKeyID:             os.Getenv("MINIO_ACCESS_KEY_ID"),
+		MinIOSecretAccessKey:         os.Getenv("MINIO_SECRET_ACCESS_KEY"),
 		TorchServeGRPCHost:           os.Getenv("TORCH_SERVE_GRPC_HOST"),
 		TorchServeGRPCPort:           os.Getenv("TORCH_SERVE_GRPC_PORT"),
 		OpenCensusAgentHost:          os.Getenv("OPEN_CENSUS_AGENT_HOST"),

@@ -13,7 +13,7 @@ import (
 
 func main() {
 	sharedUtils.InitLogger()
-	var config = utils.GetConfig()
+	config := utils.GetConfig()
 	log.Info().
 		Str("AppEnv", config.AppEnv).
 		Str("Port", config.Port).
