@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: log-receiver-deployment
+  name: decision-logger-deployment
   namespace: hm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: log-receiver
+      component: decision-logger
   template:
     metadata:
       labels:
-        component: log-receiver
+        component: decision-logger
     spec:
       containers:
-        - name: log-receiver
-          image: hongbomiao/hm-log-receiver:latest
+        - name: decision-logger
+          image: hongbomiao/hm-decision-logger:latest
           env:
             - name: APP_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: log-receiver-configmap
+                  name: decision-logger-configmap
                   key: app_env
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: log-receiver-configmap
+                  name: decision-logger-configmap
                   key: port
             - name: ELASTIC_APM_SERVICE_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: log-receiver-configmap
+                  name: decision-logger-configmap
                   key: elastic_apm_service_name
             - name: ELASTIC_APM_SERVER_URL
               valueFrom:
@@ -68,7 +68,7 @@ spec:
                   name: elastic-apm-configmap
                   key: elastic_apm_log_file
           ports:
-            - name: log-receiver
+            - name: decision-logger
               protocol: TCP
               containerPort: 41797
           volumeMounts:

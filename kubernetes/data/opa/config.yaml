@@ -1,11 +1,11 @@
 # https://www.openpolicyagent.org/docs/latest/configuration/
 
 services:
-  log_receiver:
-    url: http://log-receiver-service.hm:41797
+  decision_logger:
+    url: http://decision-logger-service.hm:41797
 
 decision_logs:
-  service: log_receiver
+  service: decision_logger
   console: true
   reporting:
     min_delay_seconds: 1
