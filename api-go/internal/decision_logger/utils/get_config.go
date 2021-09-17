@@ -11,7 +11,7 @@ type Config struct {
 }
 
 func GetConfig() *Config {
-	path := "config/log_receiver/"
+	path := "config/decision_logger/"
 
 	appEnv := os.Getenv("APP_ENV")
 	if appEnv == "" {

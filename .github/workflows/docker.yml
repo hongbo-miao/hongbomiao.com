@@ -106,8 +106,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-log-receiver:
-    name: Push log-receiver to Docker Hub
+  push-decision-logger:
+    name: Push decision-logger to Docker Hub
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -125,9 +125,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./api-go/build/package/log_receiver/Dockerfile
+          file: ./api-go/build/package/decision_logger/Dockerfile
           push: true
-          tags: hongbomiao/hm-log-receiver:latest
+          tags: hongbomiao/hm-decision-logger:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
