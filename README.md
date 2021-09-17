@@ -109,17 +109,22 @@ make clean
 ### API Server - Go
 
 - **Gin** - Web Framework
+- **gRPC** - Remote procedure call (RPC) framework
 - **graphql-go** - GraphQL
 - **jwt-go** - JWT
 - **gin-contrib/cors** - CORS
-- **opentelemetry-go** - OpenTelemetry
-- **gRPC** - Remote procedure call (RPC) framework
-- **zerolog** - Logging
-- **GoDotEnv** - Environment variables loading
-- **pgx** - PostgreSQL driver
+- **opa** - Open Policy Agent
+- **dgo** - Dgraph client
+- **minio-go** - MinIO client
 - **go-redis** - Redis client
+- **pgx** - PostgreSQL driver
 - **Squirrel** - SQL query builder
+- **apm-agent-go** - APM agent
+- **OpenTelemetry-Go** - OpenTelemetry
 - **Testify** - Unit testing
+- **GoDotEnv** - Environment variables loading
+- **jsonparser** - JSON parser
+- **zerolog** - Logging
 
 ### API Server - Node.js
 
