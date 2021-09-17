@@ -2,8 +2,8 @@ run-graphql-server:
 	go run cmd/graphql_server/main.go
 run-grpc-server:
 	go run cmd/grpc_server/main.go
-run-log-receiver:
-	go run cmd/log_receiver/main.go
+run-decision-logger:
+	go run cmd/decision_logger/main.go
 
 go-tidy:
 	go mod tidy

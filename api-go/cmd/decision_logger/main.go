@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/log_receiver/controllers"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/log_receiver/utils"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/decision_logger/controllers"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/decision_logger/utils"
 	sharedUtils "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/utils"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/logger"
