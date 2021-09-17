@@ -72,6 +72,21 @@ spec:
                 configMapKeyRef:
                   name: graphql-server-configmap
                   key: redis_db
+            - name: MINIO_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: minio_endpoint
+            - name: MINIO_ACCESS_KEY_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: minio_access_key_id
+            - name: MINIO_SECRET_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: minio_secret_access_key
             - name: TORCH_SERVE_GRPC_HOST
               valueFrom:
                 configMapKeyRef:
