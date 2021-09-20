@@ -41,13 +41,13 @@ require (
 	go.elastic.co/apm/module/apmgrpc v1.13.1
 	go.opencensus.io v0.23.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.21.0
-	go.opentelemetry.io/otel v1.0.0-RC3
-	go.opentelemetry.io/otel/exporters/jaeger v1.0.0-RC1
-	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.0.0-RC1
-	go.opentelemetry.io/otel/sdk v1.0.0-RC3
+	go.opentelemetry.io/otel v1.0.0
+	go.opentelemetry.io/otel/exporters/jaeger v1.0.0
+	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.0.0
+	go.opentelemetry.io/otel/sdk v1.0.0
 	golang.org/x/crypto v0.0.0-20210915214749-c084706c2272 // indirect
 	golang.org/x/net v0.0.0-20210916014120-12bc252f5db8 // indirect
-	golang.org/x/sys v0.0.0-20210915083310-ed5796bab164 // indirect
+	golang.org/x/sys v0.0.0-20211001092434-39dca1131b70 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect
 	google.golang.org/grpc v1.41.0
