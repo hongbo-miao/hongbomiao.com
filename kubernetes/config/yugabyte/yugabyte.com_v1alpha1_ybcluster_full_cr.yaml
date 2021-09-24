@@ -10,8 +10,8 @@ spec:
     repository: yugabytedb/yugabyte
     tag: 2.7.0.0-b17
     pullPolicy: IfNotPresent
-
   replicationFactor: 3
+  domain: west.k8s-hongbomiao.com
   master:
     replicas: 3
     masterUIPort: 7000
@@ -36,7 +36,6 @@ spec:
         value: "0.0.0.0"
       - key: pgsql_proxy_bind_address
         value: "0.0.0.0"
-
   tserver:
     replicas: 3
     tserverUIPort: 9000
@@ -61,6 +60,4 @@ spec:
       - key: default_memory_limit_to_ram_ratio
         value: "0.85"
       - key: webserver_interface
-        value: "0.0.0.0"
-      - key: pgsql_proxy_bind_address
         value: "0.0.0.0"
