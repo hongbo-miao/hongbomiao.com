@@ -67,7 +67,7 @@ Personal cutting-edge technology lab.
 
 ## Architecture
 
-![Architecture](https://docs.google.com/drawings/d/e/2PACX-1vQBehFA0r7QnSBUtAe9kplicXd6i7u5dmi8wchSJZFFEmcRaPqmD0GQ0FFx4zF7Vhkfi9fbO_rBsTh2/pub?w=2424&amp;h=3131)
+![Architecture](https://docs.google.com/drawings/d/e/2PACX-1vQBehFA0r7QnSBUtAe9kplicXd6i7u5dmi8wchSJZFFEmcRaPqmD0GQ0FFx4zF7Vhkfi9fbO_rBsTh2/pub?w=2501&h=3159)
 
 ## Setup
 
@@ -164,6 +164,7 @@ make clean
 - **Dgraph** - Distributed graph database
 - **YugabyteDB** - Distributed SQL database
 - **Elasticsearch** - Distributed document-oriented search engine
+- **Kafka** - Distributed event streaming platform
 - **MinIO** - High performance object storage
 - **PostgreSQL** - Object-relational database
 - **golang-migrate/migrate** - Database migrations
@@ -253,6 +254,7 @@ make clean
 - **Redis Enterprise Cloud** - Redis hosting
 - **Namecheap** - Domain
 - **Cloudflare** - CDN, DNS, DDoS protection
+- **Discord** - ChatOps
 - **[GitHub Actions](https://github.com/Hongbo-Miao/hongbomiao.com/actions)** - Continuous integration
 - **[SonarCloud](https://sonarcloud.io/dashboard?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
 - **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
