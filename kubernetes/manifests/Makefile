@@ -1,8 +1,3 @@
-# Ingress
-download-ingress-nginx-yaml:
-	$(eval INGRESS_VERSION := $(shell curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt))
-	curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/$(INGRESS_VERSION)/deploy/static/provider/cloud/deploy.yaml > ingress/ingress-nginx.yaml
-
 # Argo CD
 download-argocd-yaml:
 	curl https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml > argocd/argocd.yaml
@@ -13,9 +8,20 @@ download-dgraph-yaml:
 download-dgraph-ha-yaml:
 	curl https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml > dgraph/dgraph-ha.yaml
 
-# Yugabyte
-# Docs: https://docs.yugabyte.com/latest/deploy/kubernetes/single-zone/oss/yugabyte-operator/#deploy-a-yugabytedb-cluster-with-this-operator
-# Manifests: https://github.com/yugabyte/yugabyte-operator/tree/master/deploy
+# Ingress
+download-ingress-nginx-yaml:
+	$(eval INGRESS_VERSION := $(shell curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt))
+	curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/$(INGRESS_VERSION)/deploy/static/provider/cloud/deploy.yaml > ingress/ingress-nginx.yaml
+
+# Kafka
+download-strimzi-cluster-operator-yaml:
+	curl https://strimzi.io/install/latest?namespace=kafka > kafka/strimzi-cluster-operator.yaml
+download-kafka-persistent-single-yaml:
+	curl https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml > kafka/kafka-persistent-single.yaml
 
 # MinIO
 # Manifests: https://github.com/minio/operator/tree/master/examples/kustomization
+
+# Yugabyte
+# Docs: https://docs.yugabyte.com/latest/deploy/kubernetes/single-zone/oss/yugabyte-operator/#deploy-a-yugabytedb-cluster-with-this-operator
+# Manifests: https://github.com/yugabyte/yugabyte-operator/tree/master/deploy
