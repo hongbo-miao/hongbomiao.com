@@ -185,6 +185,7 @@ make clean
 - **Jaeger** - Distributed tracing system
 - **Grafana** - Monitoring and observability platform
 - **Prometheus** - Monitoring system
+- **Fluent Bit** - Log processor and forwarder
 - **Docker** - Container
 - **Kubernetes** - Container-orchestration system
 - **K3s** - Lightweight Kubernetes
