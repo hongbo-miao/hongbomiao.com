@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import LocalStorage from '../../auth/utils/LocalStorage';
 import axiosInstance from '../../auth/utils/axiosInstance';
-import getJWTHeader from '../../auth/utils/getJWTHeader';
+import getAuthHeaders from '../../auth/utils/getAuthHeaders';
 import config from '../../config';
 
 const getOPADecision = async (action: string, resource: string): Promise<AxiosResponse | null> => {
@@ -10,7 +10,7 @@ const getOPADecision = async (action: string, resource: string): Promise<AxiosRe
 
   return axiosInstance({
     baseURL: config.graphqlServerGraphQLURL,
-    headers: getJWTHeader(localStorageMe),
+    headers: getAuthHeaders(localStorageMe),
     data: {
       query: `
         query OPA(
