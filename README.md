@@ -275,15 +275,21 @@ make clean
 
 ## Highlights
 
+### Ops
+
+#### GitOps - Argo CD
+
+![Argo CD](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
+
+#### ChatOps - Discord
+
+![Discord](https://user-images.githubusercontent.com/3375461/135687134-aaad261c-dee9-4a70-b8b2-2da393e114cb.png)
+
 ### Cloud Native
 
 #### Service Mesh - Linkerd
 
 ![Linkerd](https://user-images.githubusercontent.com/3375461/127684629-a0d9d76b-cbc6-465f-80ea-10c3e06f7eac.png)
-
-#### GitOps - Argo CD
-
-![Argo CD](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
 
 #### Elastic APM
 
