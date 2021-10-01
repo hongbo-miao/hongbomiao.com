@@ -1,5 +1,5 @@
 import { CollectorMetricExporter } from '@opentelemetry/exporter-collector';
-import { MeterProvider } from '@opentelemetry/metrics';
+import { MeterProvider } from '@opentelemetry/sdk-metrics-base';
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
 import isDevelopment from '../../shared/utils/isDevelopment';
 
