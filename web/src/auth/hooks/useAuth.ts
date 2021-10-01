@@ -1,4 +1,6 @@
+import { AxiosResponse } from 'axios';
 import config from '../../config';
+import Me from '../types/Me';
 import axiosInstance from '../utils/axiosInstance';
 import useMe from './useMe';
 
@@ -13,7 +15,7 @@ const useAuth = (): UseAuth => {
 
   const signIn = async (email: string, password: string): Promise<void> => {
     try {
-      const res = await axiosInstance({
+      const res: AxiosResponse<{ data: { signIn: Me } }> = await axiosInstance({
         baseURL: config.graphqlServerGraphQLURL,
         data: {
           query: `
@@ -45,7 +47,7 @@ const useAuth = (): UseAuth => {
 
   const signUp = async (email: string, password: string): Promise<void> => {
     try {
-      const res = await axiosInstance({
+      const res: AxiosResponse<{ data: { signUp: Me } }> = await axiosInstance({
         baseURL: config.graphqlServerGraphQLURL,
         data: {
           query: `

@@ -6,13 +6,13 @@ import queryKeys from '../../shared/reactQuery/queryKeys';
 import Me from '../types/Me';
 import LocalStorage from '../utils/LocalStorage';
 import axiosInstance from '../utils/axiosInstance';
-import getJWTHeader from '../utils/getJWTHeader';
+import getAuthHeaders from '../utils/getAuthHeaders';
 
-const getMe = async (me: Me | null): Promise<AxiosResponse | null> => {
+const getMe = async (me: Me | null): Promise<AxiosResponse<{ data: { me: Me } }> | null> => {
   if (me == null) return null;
   return axiosInstance({
     baseURL: config.graphqlServerGraphQLURL,
-    headers: getJWTHeader(me),
+    headers: getAuthHeaders(me),
     data: {
       query: `
         query Me {
