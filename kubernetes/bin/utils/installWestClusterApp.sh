@@ -3,7 +3,6 @@
 set -e
 
 
-# Install the app by Argo CD
 echo "# Install the app"
 kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
 ARGOCD_PASSWORD=$(kubectl get secret argocd-initial-admin-secret \

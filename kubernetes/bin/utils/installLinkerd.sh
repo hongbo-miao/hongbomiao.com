@@ -32,7 +32,7 @@ for cluster in "${CLUSTERS[@]}"; do
   crt="${CA_DIR}/${cluster}-issuer.crt"
   key="${CA_DIR}/${cluster}-issuer.key"
 
-  step certificate create "identity.linkerd.${domain}" ${crt} ${key} \
+  step certificate create "identity.linkerd.${domain}" "${crt}" "${key}" \
     --ca="${CA_DIR}/ca.crt" \
     --ca-key="${CA_DIR}/ca.key" \
     --profile=intermediate-ca \

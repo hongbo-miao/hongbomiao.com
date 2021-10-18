@@ -117,6 +117,8 @@ spec:
                 configMapKeyRef:
                   name: graphql-server-configmap
                   key: jwt_secret
+
+            # ---- ELASTIC APM BEGIN ----
             - name: ELASTIC_APM_SERVICE_NAME
               valueFrom:
                 configMapKeyRef:
@@ -157,13 +159,19 @@ spec:
                 configMapKeyRef:
                   name: elastic-apm-configmap
                   key: elastic_apm_log_file
+            # ---- ELASTIC APM END ----
+
           ports:
             - name: graphql-server
               protocol: TCP
               containerPort: 31800
+
+          # ---- ELASTIC APM BEGIN ----
           volumeMounts:
             - mountPath: /data/elastic-apm
               name: elastic-apm-volume
+          # ---- ELASTIC APM END ----
+
         - name: opal-client
           image: hongbomiao/hm-opal-client:latest
           env:
@@ -213,9 +221,13 @@ spec:
             - mountPath: /data/opa
               name: opa-volume
       volumes:
+
+        # ---- ELASTIC APM BEGIN ----
         - name: elastic-apm-volume
           persistentVolumeClaim:
             claimName: elastic-apm-pvc
+        # ---- ELASTIC APM END ----
+
         - name: opa-volume
           persistentVolumeClaim:
             claimName: opa-pvc
