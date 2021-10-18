@@ -3,8 +3,11 @@
 set -e
 
 
+CLUSTERS=("$@")
+
+
 # Patch Ingress
-for cluster in west east; do
+for cluster in "${CLUSTERS[@]}"; do
   echo "# Patch Ingress on: k3d-${cluster}"
   kubectl patch configmap ingress-nginx-controller \
     --context="k3d-${cluster}" \
