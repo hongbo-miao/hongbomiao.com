@@ -5,8 +5,14 @@ set -e
 
 # Install the app by Argo CD
 echo "# Install the app"
-kubectl apply --filename=kubernetes/config/east/hm-namespace.yaml
-kubectl apply --filename=kubernetes/config/east
-# Delete: kubectl delete --filename=kubernetes/config/east
+kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
+ARGOCD_PASSWORD=$(kubectl get secret argocd-initial-admin-secret \
+  --namespace=argocd \
+  --output=jsonpath="{.data.password}" | \
+  base64 -d && echo)
+argocd login localhost:31026 --username=admin --password="${ARGOCD_PASSWORD}" --insecure
+kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
+argocd app sync hm-application --local=kubernetes/config/west
+pgrep kubectl | xargs kill -9
+# Delete: argocd app delete hm-application --yes
 echo "=================================================="
-sleep 30
