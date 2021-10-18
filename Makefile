@@ -10,6 +10,9 @@ setup-kind:
 setup-minikube:
 	sh kubernetes/bin/setupMinikube.sh
 
+focus-opa-debug:
+	sh kubernetes/bin/utils/focusOPADebug.sh
+
 setup-local:
 	sh bin/setup.sh
 build-local:

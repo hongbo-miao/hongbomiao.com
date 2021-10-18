@@ -3,9 +3,11 @@
 set -e
 
 
-# Generate OPAL SSH key
+echo "# Generate OPAL SSH key"
+rm -f kubernetes/data/opal-server/id_rsa
+rm -f kubernetes/data/opal-server/id_rsa.pub
 ssh-keygen -t rsa -b 4096 -m pem -f "$PWD/kubernetes/data/opal-server/id_rsa" -N ""
-
+echo "=================================================="
 
 echo "# Create OPAL server secret"
 OPAL_AUTH_MASTER_TOKEN=IWjW0bYcTIfm6Y5JNjp4DdgopC6rYSxT4yrPbtLiTU0

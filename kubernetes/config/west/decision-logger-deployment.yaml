@@ -27,6 +27,8 @@ spec:
                 configMapKeyRef:
                   name: decision-logger-configmap
                   key: port
+
+            # ---- ELASTIC APM BEGIN ----
             - name: ELASTIC_APM_SERVICE_NAME
               valueFrom:
                 configMapKeyRef:
@@ -67,14 +69,22 @@ spec:
                 configMapKeyRef:
                   name: elastic-apm-configmap
                   key: elastic_apm_log_file
+            # ---- ELASTIC APM END ----
+
           ports:
             - name: decision-logger
               protocol: TCP
               containerPort: 41797
+
+          # ---- ELASTIC APM BEGIN ----
           volumeMounts:
             - mountPath: /data/elastic-apm
               name: elastic-apm-volume
+          # ---- ELASTIC APM END ----
+
+      # ---- ELASTIC APM BEGIN ----
       volumes:
         - name: elastic-apm-volume
           persistentVolumeClaim:
             claimName: elastic-apm-pvc
+      # ---- ELASTIC APM END ----
