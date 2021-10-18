@@ -3,8 +3,11 @@
 set -e
 
 
+CLUSTERS=("$@")
+
+
 # Install Ingress with patch
-for cluster in west east; do
+for cluster in "${CLUSTERS[@]}"; do
   echo "# Install Ingress on: k3d-${cluster}"
   INGRESS_VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
   kubectl apply \
