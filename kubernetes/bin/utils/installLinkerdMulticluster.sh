@@ -3,8 +3,11 @@
 set -e
 
 
+CLUSTERS=("$@")
+
+
 # Install Linkerd multicluster
-for cluster in west east; do
+for cluster in "${CLUSTERS[@]}"; do
   echo "# Install Linkerd multicluster on: k3d-${cluster}"
   domain="${cluster}.${ORG_DOMAIN}"
   linkerd multicluster install \
@@ -18,7 +21,7 @@ sleep 30
 
 
 # Check Linkerd gateway
-for cluster in west east; do
+for cluster in "${CLUSTERS[@]}"; do
   echo "# Check gateway on: k3d-${cluster}"
   kubectl rollout status deploy/linkerd-gateway \
     --context="k3d-${cluster}" \
@@ -28,7 +31,7 @@ done
 
 
 # Check load balancer
-for cluster in west east; do
+for cluster in "${CLUSTERS[@]}"; do
   echo "# Check load balancer on: k3d-${cluster}"
   while [ "$(kubectl get service \
     --context="k3d-${cluster}" \
@@ -68,7 +71,7 @@ sleep 30
 
 
 # Check Linkerd multicluster
-for cluster in west east; do
+for cluster in "${CLUSTERS[@]}"; do
   echo "# Check Linkerd multicluster on: k3d-${cluster}"
   # Add `continue` here because of https://github.com/olix0r/l2-k3d-multi/issues/5
   linkerd multicluster check --context="k3d-${cluster}" || continue

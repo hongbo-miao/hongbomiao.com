@@ -4,15 +4,16 @@ set -e
 
 
 export ORG_DOMAIN="k8s-hongbomiao.com"
+CLUSTERS=("west" "east")
 
-source kubernetes/bin/utils/setupK3d.sh
-source kubernetes/bin/utils/installLinkerd.sh
+source kubernetes/bin/utils/setupK3d.sh "${CLUSTERS[@]}"
+source kubernetes/bin/utils/installLinkerd.sh "${CLUSTERS[@]}"
 
-source kubernetes/bin/utils/installIngress.sh
-source kubernetes/bin/utils/patchIngress.sh
+source kubernetes/bin/utils/installIngress.sh "${CLUSTERS[@]}"
+source kubernetes/bin/utils/patchIngress.sh "${CLUSTERS[@]}"
 sleep 30
 
-source kubernetes/bin/utils/installLinkerdMulticluster.sh
+source kubernetes/bin/utils/installLinkerdMulticluster.sh "${CLUSTERS[@]}"
 
 
 # West cluster
