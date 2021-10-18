@@ -331,7 +331,7 @@ minio-headless:
 
 # PostgreSQL
 postgres-connect:
-	psql --host=localhost --port=5433 --dbname=opa_db --username=admin --password
+	psql --host=localhost --port=40072 --dbname=opa_db --username=admin --password
 
 # Kafka
 zookeeper-start:
