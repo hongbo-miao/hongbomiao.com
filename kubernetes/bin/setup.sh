@@ -61,10 +61,10 @@ source kubernetes/bin/utils/installArgoCD.sh
 
 source kubernetes/bin/utils/installWestClusterApp.sh
 source kubernetes/bin/utils/secureOPALServer.sh
-sleep 120
-
 
 if [ $is_debug = false ]; then
+  sleep 120
+
   echo "# East cluster"
   kubectl config use-context k3d-east
   echo "=================================================="
