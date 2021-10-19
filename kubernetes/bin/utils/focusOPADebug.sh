@@ -2,7 +2,17 @@
 
 set -e
 
+# Turn on debug mode
+perl -p0i -e 's/is_debug=false/is_debug=true/s' kubernetes/bin/setup.sh
 
+# Update opal-server replicas from 3 to 1
+perl -p0i -e 's/replicas: 3/replicas: 1/s' kubernetes/config/west/opal-server-deployment.yaml
+
+# Remove Elastic APM
+perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/config/west/decision-logger-deployment.yaml
+perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/config/west/graphql-server-deployment.yaml
+
+# Remove Kubernetes yaml
 rm -f kubernetes/config/west/elastic-apm-configmap.yaml
 rm -f kubernetes/config/west/elastic-apm-pv.yaml
 rm -f kubernetes/config/west/elastic-apm-pvc.yaml
@@ -21,6 +31,3 @@ rm -f kubernetes/config/west/torchserve-deployment.yaml
 rm -f kubernetes/config/west/torchserve-service.yaml
 rm -f kubernetes/config/west/redis-leader-service.yaml
 rm -f kubernetes/config/west/redis-leader-deployment.yaml
-
-perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/config/west/decision-logger-deployment.yaml
-perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/config/west/graphql-server-deployment.yaml
