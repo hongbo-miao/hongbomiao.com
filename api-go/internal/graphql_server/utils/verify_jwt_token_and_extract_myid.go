@@ -26,6 +26,7 @@ func extractBearerToken(r *http.Request) (string, error) {
 
 func VerifyJWTTokenAndExtractMyID(r *http.Request) (string, error) {
 	config := GetConfig()
+
 	tokenString, err := extractBearerToken(r)
 	if err != nil {
 		log.Error().Err(err).Msg("extractBearerToken")
