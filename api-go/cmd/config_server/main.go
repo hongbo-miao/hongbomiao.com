@@ -1,11 +1,10 @@
 package main
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/decision_logger/controllers"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/decision_logger/utils"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_server/controllers"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_server/utils"
 	sharedControllers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/controllers"
 	sharedUtils "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/utils"
-	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -24,8 +23,7 @@ func main() {
 	r.Use(apmgin.Middleware(r))
 	r.Use(logger.SetLogger())
 	r.GET("/", sharedControllers.Health)
-	r.Use(gzip.Gzip(gzip.DefaultCompression, gzip.WithDecompressFn(gzip.DefaultDecompressHandle)))
-	r.POST("/logs", controllers.Logs)
+	r.GET("/config", controllers.Config)
 	err := r.Run(":" + config.Port)
 	if err != nil {
 		log.Error().Err(err).Msg("r.Run")
