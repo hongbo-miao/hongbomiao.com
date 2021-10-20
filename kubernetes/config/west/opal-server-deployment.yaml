@@ -4,7 +4,7 @@ metadata:
   name: opal-server-deployment
   namespace: hm-opa
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       component: opal-server
@@ -37,21 +37,6 @@ spec:
                 configMapKeyRef:
                   name: opal-server-configmap
                   key: opal_policy_repo_url
-            - name: OPAL_AUTH_PRIVATE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: hm-opal-server-secret
-                  key: id_rsa
-            - name: OPAL_AUTH_PUBLIC_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: hm-opal-server-secret
-                  key: id_rsa.pub
-            - name: OPAL_AUTH_MASTER_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: hm-opal-server-secret
-                  key: opal_auth_master_token
             - name: UVICORN_NUM_WORKERS
               valueFrom:
                 configMapKeyRef:
@@ -67,6 +52,36 @@ spec:
                 configMapKeyRef:
                   name: opal-server-configmap
                   key: opal_log_colorize
+            - name: OPAL_AUTH_PRIVATE_KEY_FORMAT
+              valueFrom:
+                configMapKeyRef:
+                  name: opal-server-configmap
+                  key: opal_auth_private_key_format
+            - name: OPAL_AUTH_PUBLIC_KEY_FORMAT
+              valueFrom:
+                configMapKeyRef:
+                  name: opal-server-configmap
+                  key: opal_auth_public_key_format
+            - name: OPAL_AUTH_PRIVATE_KEY_PASSPHRASE
+              valueFrom:
+                secretKeyRef:
+                  name: hm-opal-server-secret
+                  key: opal_auth_private_key_passphrase
+            - name: OPAL_AUTH_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hm-opal-server-secret
+                  key: opal_auth_private_key
+            - name: OPAL_AUTH_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hm-opal-server-secret
+                  key: opal_auth_public_key
+            - name: OPAL_AUTH_MASTER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hm-opal-server-secret
+                  key: opal_auth_master_token
           ports:
             - name: opal-server
               protocol: TCP
