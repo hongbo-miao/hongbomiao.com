@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: opa-db
-          image: postgres:13.3-alpine
+          image: debezium/postgres:14
           env:
             - name: PGDATA
               valueFrom:
@@ -38,6 +38,7 @@ spec:
                 configMapKeyRef:
                   name: opa-db-configmap
                   key: postgres_password
+          args: ["-c", "wal_level=logical"]
           ports:
             - name: postgres
               protocol: TCP
