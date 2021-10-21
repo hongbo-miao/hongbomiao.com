@@ -165,6 +165,7 @@ make clean
 - **YugabyteDB** - Distributed SQL database
 - **Elasticsearch** - Distributed document-oriented search engine
 - **Kafka** - Distributed event streaming platform
+- **Debezium** - Distributed change-data-capture platform
 - **MinIO** - High performance object storage
 - **PostgreSQL** - Object-relational database
 - **golang-migrate/migrate** - Database migrations

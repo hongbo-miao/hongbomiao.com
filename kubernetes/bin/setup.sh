@@ -55,6 +55,7 @@ if [ $is_debug = false ]; then
   source kubernetes/bin/utils/installMinIO.sh
   source kubernetes/bin/utils/installYugabyte.sh
   source kubernetes/bin/utils/installKafka.sh
+  source kubernetes/bin/utils/installDebezium.sh
 fi
 
 source kubernetes/bin/utils/installArgoCD.sh
