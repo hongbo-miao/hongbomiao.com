@@ -9,8 +9,9 @@ perl -p0i -e 's/is_debug=false/is_debug=true/s' kubernetes/bin/setup.sh
 perl -p0i -e 's/replicas: 3/replicas: 1/s' kubernetes/config/west/opal-server-deployment.yaml
 
 # Remove Elastic APM
-perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/config/west/decision-logger-deployment.yaml
-perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/config/west/graphql-server-deployment.yaml
+# perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/config/west/config-server-deployment.yaml
+# perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/config/west/decision-logger-deployment.yaml
+# perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/config/west/graphql-server-deployment.yaml
 
 # Remove Kubernetes yaml
 rm -f kubernetes/config/west/elastic-apm-configmap.yaml
