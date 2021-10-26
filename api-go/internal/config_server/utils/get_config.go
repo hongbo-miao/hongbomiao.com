@@ -6,9 +6,9 @@ import (
 )
 
 type Config struct {
-	AppEnv            string
-	Port              string
-	OPALAuthPublicKey string
+	AppEnv                string
+	Port                  string
+	OPALAuthPublicKeyPath string
 }
 
 func GetConfig() *Config {
@@ -23,8 +23,8 @@ func GetConfig() *Config {
 	_ = godotenv.Load(path + ".env." + appEnv)
 
 	return &Config{
-		AppEnv:            appEnv,
-		Port:              os.Getenv("PORT"),
-		OPALAuthPublicKey: os.Getenv("OPAL_AUTH_PUBLIC_KEY"),
+		AppEnv:                appEnv,
+		Port:                  os.Getenv("PORT"),
+		OPALAuthPublicKeyPath: os.Getenv("OPAL_AUTH_PUBLIC_KEY_PATH"),
 	}
 }

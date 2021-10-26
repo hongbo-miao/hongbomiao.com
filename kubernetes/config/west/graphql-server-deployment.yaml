@@ -236,13 +236,12 @@ spec:
             - mountPath: /data/opa
               name: opa-volume
       volumes:
+        - name: opa-volume
+          persistentVolumeClaim:
+            claimName: opa-pvc
 
         # ---- ELASTIC APM BEGIN ----
         - name: elastic-apm-volume
           persistentVolumeClaim:
             claimName: elastic-apm-pvc
         # ---- ELASTIC APM END ----
-
-        - name: opa-volume
-          persistentVolumeClaim:
-            claimName: opa-pvc

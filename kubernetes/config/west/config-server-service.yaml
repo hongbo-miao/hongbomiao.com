@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-server-service
+  namespace: hm
+spec:
+  type: ClusterIP
+  selector:
+    component: config-server
+  ports:
+    - name: config-server
+      protocol: TCP
+      targetPort: config-server
+      port: 26660
