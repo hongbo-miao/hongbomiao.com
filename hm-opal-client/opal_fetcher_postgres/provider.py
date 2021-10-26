@@ -28,8 +28,8 @@ class PostgresFetcherConfig(FetcherConfig):
     )
     query: str = Field(..., description="the query")
     fetch_one: bool = Field(False, description="fetch only one row")
-    dictKey: Optional[str] = Field(
-        None, description="array of dict will map to dict with provided dictKey"
+    dict_key: Optional[str] = Field(
+        None, description="array of dict will map to dict with provided dict_key"
     )
 
 
@@ -110,9 +110,9 @@ class PostgresFetchProvider(BaseFetchProvider):
                 return dict(records[0])
             return {}
         else:
-            if self._event.config.dictKey is None:
+            if self._event.config.dict_key is None:
                 return [dict(record) for record in records]
             return {
-                dict(record)[self._event.config.dictKey]: dict(record)
+                dict(record)[self._event.config.dict_key]: dict(record)
                 for record in records
             }

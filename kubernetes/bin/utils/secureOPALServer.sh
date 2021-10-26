@@ -7,15 +7,16 @@ opal_data_path="kubernetes/data/opal-server"
 
 
 echo "# Clean OPAL SSH key"
-rm -f kubernetes/data/opal-server/opal_auth_private_key.pem
-rm -f kubernetes/data/opal-server/opal_auth_public_key.pem
-
+rm -f "${opal_data_path}/opal_auth_private_key.pem"
+rm -f "${opal_data_path}/opal_auth_public_key.pem"
+rm -f kubernetes/data/config-server/opal_auth_public_key.pem
 
 echo "# Generate OPAL SSH key"
 OPAL_AUTH_PRIVATE_KEY_PASSPHRASE="ds6l3qYYx9UsYcgshmlbsMJTXs1lVH9ndf13Xp1xNKxbqjFdxFvdkJxpm0DfjAhh"
 ssh-keygen -t rsa -b 4096 -m pem -f "${opal_data_path}/opal_auth_private_key.pem" -N="${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}"
 rm -f "${opal_data_path}/opal_auth_private_key.pem.pub"
-ssh-keygen -e -m pkcs8 -f ${opal_data_path}/opal_auth_private_key.pem -P=${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE} > ${opal_data_path}/opal_auth_public_key.pem
+ssh-keygen -e -m pkcs8 -f "${opal_data_path}/opal_auth_private_key.pem" -P="${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}" > "${opal_data_path}/opal_auth_public_key.pem"
+cp "${opal_data_path}/opal_auth_public_key.pem" kubernetes/data/config-server/opal_auth_public_key.pem
 echo "=================================================="
 
 echo "# Create OPAL server secret"
@@ -38,7 +39,10 @@ OPAL_CLIENT_TOKEN=$(curl --location --request POST "http://localhost:7002/token"
   --header "Content-Type: application/json" \
   --header "Authorization: Bearer ${OPAL_AUTH_MASTER_TOKEN}" \
   --data-raw '{
-    "type": "client"
+    "type": "client",
+    "claims": {
+        "client_id": "hm-opal-client"
+    }
   }' | \
   jq '.token' --raw-output)
 kubectl create secret generic hm-opal-client-secret \

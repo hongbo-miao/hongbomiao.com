@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-server-deployment
+  namespace: hm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: config-server
+  template:
+    metadata:
+      labels:
+        component: config-server
+    spec:
+      containers:
+        - name: config-server
+          image: hongbomiao/hm-config-server:latest
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: app_env
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: port
+            - name: OPAL_AUTH_PUBLIC_KEY_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: opal_auth_public_key_path
+
+            # ---- ELASTIC APM BEGIN ----
+            - name: ELASTIC_APM_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: elastic_apm_service_name
+            - name: ELASTIC_APM_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_server_url
+            - name: ELASTIC_APM_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_environment
+            - name: ELASTIC_APM_SECRET_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hm-elastic-apm
+                  key: token
+            - name: ELASTIC_APM_VERIFY_SERVER_CERT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_verify_server_cert
+            - name: ELASTIC_APM_SERVER_CERT
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_server_cert
+            - name: ELASTIC_APM_LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_log_level
+            - name: ELASTIC_APM_LOG_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-apm-configmap
+                  key: elastic_apm_log_file
+            # ---- ELASTIC APM END ----
+
+          ports:
+            - name: config-server
+              protocol: TCP
+              containerPort: 41797
+
+          volumeMounts:
+            - mountPath: /data/config-server
+              name: config-server-volume
+
+            # ---- ELASTIC APM BEGIN ----
+            - mountPath: /data/elastic-apm
+              name: elastic-apm-volume
+            # ---- ELASTIC APM END ----
+
+      volumes:
+        - name: config-server-volume
+          persistentVolumeClaim:
+            claimName: config-server-pvc
+
+        # ---- ELASTIC APM BEGIN ----
+        - name: elastic-apm-volume
+          persistentVolumeClaim:
+            claimName: elastic-apm-pvc
+        # ---- ELASTIC APM END ----
