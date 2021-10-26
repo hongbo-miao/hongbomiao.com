@@ -5,7 +5,7 @@ metadata:
   namespace: hm-opa
 data:
   opal_broadcast_uri: "postgres://admin:passw0rd@opal-broadcast-channel-service.hm-opa:34876/opal_server_db"
-  opal_data_config_sources: '{"config":{"entries":[{"url":"postgresql://admin@opa-db-service.hm-opa:40072/opa_db","config":{"fetcher":"PostgresFetchProvider","query":"select role, allow from roles;","connection_params":{"password":"passw0rd"},"dictKey":"role"},"topics":["policy_data"],"dst_path":"roles"}]}}'
+  opal_data_config_sources: '{"external_source_url":"http://config-server-service.hm:26660"}'
   opal_policy_repo_polling_interval: "30"
   opal_policy_repo_url: "https://github.com/Hongbo-Miao/opal-example-policy-repo"
   uvicorn_num_workers: "4"
