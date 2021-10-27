@@ -62,6 +62,7 @@ source kubernetes/bin/utils/installArgoCD.sh
 
 source kubernetes/bin/utils/installWestClusterApp.sh
 source kubernetes/bin/utils/secureOPALServer.sh
+source kubernetes/bin/utils/secureConfigServer.sh
 
 if [ $is_debug = false ]; then
   sleep 120

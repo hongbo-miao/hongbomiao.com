@@ -3,30 +3,31 @@
 set -e
 
 
-opal_data_path="kubernetes/data/opal-server"
+opal_server_data_path="kubernetes/data/opal-server"
 
 
 echo "# Clean OPAL SSH key"
-rm -f "${opal_data_path}/opal_auth_private_key.pem"
-rm -f "${opal_data_path}/opal_auth_public_key.pem"
+rm -f "${opal_server_data_path}/opal_auth_private_key.pem"
+rm -f "${opal_server_data_path}/opal_auth_public_key.pem"
 rm -f kubernetes/data/config-server/opal_auth_public_key.pem
+echo "=================================================="
 
 echo "# Generate OPAL SSH key"
 OPAL_AUTH_PRIVATE_KEY_PASSPHRASE="ds6l3qYYx9UsYcgshmlbsMJTXs1lVH9ndf13Xp1xNKxbqjFdxFvdkJxpm0DfjAhh"
-ssh-keygen -t rsa -b 4096 -m pem -f "${opal_data_path}/opal_auth_private_key.pem" -N="${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}"
-rm -f "${opal_data_path}/opal_auth_private_key.pem.pub"
-ssh-keygen -e -m pkcs8 -f "${opal_data_path}/opal_auth_private_key.pem" -P="${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}" > "${opal_data_path}/opal_auth_public_key.pem"
-cp "${opal_data_path}/opal_auth_public_key.pem" api-go/config/config_server/opal_auth_public_key.pem
-cp "${opal_data_path}/opal_auth_public_key.pem" kubernetes/data/config-server/opal_auth_public_key.pem
+ssh-keygen -t rsa -b 4096 -m pem -f "${opal_server_data_path}/opal_auth_private_key.pem" -N="${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}"
+rm -f "${opal_server_data_path}/opal_auth_private_key.pem.pub"
+ssh-keygen -e -m pkcs8 -f "${opal_server_data_path}/opal_auth_private_key.pem" -P="${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}" > "${opal_server_data_path}/opal_auth_public_key.pem"
+cp "${opal_server_data_path}/opal_auth_public_key.pem" api-go/config/config_server/opal_auth_public_key.pem
+cp "${opal_server_data_path}/opal_auth_public_key.pem" kubernetes/data/config-server/opal_auth_public_key.pem
 echo "=================================================="
 
 echo "# Create OPAL server secret"
 OPAL_AUTH_MASTER_TOKEN=IWjW0bYcTIfm6Y5JNjp4DdgopC6rYSxT4yrPbtLiTU0
 kubectl create secret generic hm-opal-server-secret \
   --namespace=hm-opa \
-  --from-file="opal_auth_private_key=${opal_data_path}/opal_auth_private_key.pem" \
+  --from-file="opal_auth_private_key=${opal_server_data_path}/opal_auth_private_key.pem" \
   --from-literal="opal_auth_private_key_passphrase=${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}" \
-  --from-file="opal_auth_public_key=${opal_data_path}/opal_auth_public_key.pem" \
+  --from-file="opal_auth_public_key=${opal_server_data_path}/opal_auth_public_key.pem" \
   --from-literal="opal_auth_master_token=${OPAL_AUTH_MASTER_TOKEN}"
 echo "=================================================="
 
