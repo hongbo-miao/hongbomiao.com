@@ -26,6 +26,6 @@ func main() {
 	r.GET("/config", controllers.Config)
 	err := r.RunTLS(":"+config.Port, config.ConfigServerCertPath, config.ConfigServerKeyPath)
 	if err != nil {
-		log.Error().Err(err).Msg("r.Run")
+		log.Error().Err(err).Msg("r.RunTLS")
 	}
 }
