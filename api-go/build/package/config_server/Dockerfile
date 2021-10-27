@@ -14,5 +14,5 @@ ENV GIN_MODE=release
 
 COPY --from=builder /usr/src/app/out/cmd/config_server/main ./main
 
-EXPOSE 41797
+EXPOSE 26660
 CMD ["./main"]
