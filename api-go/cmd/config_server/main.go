@@ -24,7 +24,7 @@ func main() {
 	r.Use(logger.SetLogger())
 	r.GET("/", sharedControllers.Health)
 	r.GET("/config", controllers.Config)
-	err := r.Run(":" + config.Port)
+	err := r.RunTLS(":"+config.Port, config.ConfigServerCertPath, config.ConfigServerKeyPath)
 	if err != nil {
 		log.Error().Err(err).Msg("r.Run")
 	}
