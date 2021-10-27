@@ -22,6 +22,9 @@ type Entry struct {
 	Topics  []string    `json:"topics"`
 	DstPath string      `json:"dst_path"`
 }
+type OPALClientConfig struct {
+	Entries []Entry `json:"entries"`
+}
 
 func Config(c *gin.Context) {
 	token := c.Request.URL.Query().Get("token")
@@ -29,20 +32,24 @@ func Config(c *gin.Context) {
 	if err != nil {
 		log.Error().Err(err).Msg("VerifyJWTTokenAndExtractMyID")
 	}
-	entries := map[string]Entry{
-		"hm-opal-client": Entry{
-			// URL: "postgresql://admin@yb-tservers.yb-operator:5433/opa_db",
-			URL: "postgresql://admin@opa-db-service.hm-opa:40072/opa_db",
-			Config: EntryConfig{
-				Fetcher: "PostgresFetchProvider",
-				Query:   "select role, allow from roles;",
-				ConnectionParams: EntryConfigConnectionParams{
-					Password: "passw0rd",
+	entries := map[string]OPALClientConfig{
+		"hm-opal-client": {
+			Entries: []Entry{
+				{
+					// URL: "postgresql://admin@yb-tservers.yb-operator:5433/opa_db",
+					URL: "postgresql://admin@opa-db-service.hm-opa:40072/opa_db",
+					Config: EntryConfig{
+						Fetcher: "PostgresFetchProvider",
+						Query:   "select role, allow from roles;",
+						ConnectionParams: EntryConfigConnectionParams{
+							Password: "passw0rd",
+						},
+						DictKey: "role",
+					},
+					Topics:  []string{"policy_data"},
+					DstPath: "roles",
 				},
-				DictKey: "role",
 			},
-			Topics:  []string{"policy_data"},
-			DstPath: "roles",
 		},
 	}
 	c.JSON(http.StatusOK, entries[clientID])
