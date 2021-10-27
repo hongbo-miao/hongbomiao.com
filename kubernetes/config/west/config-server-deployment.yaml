@@ -27,6 +27,16 @@ spec:
                 configMapKeyRef:
                   name: config-server-configmap
                   key: port
+            - name: SERVER_CERT_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: server_cert_path
+            - name: SERVER_KEY_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: server_key_path
             - name: OPAL_AUTH_PUBLIC_KEY_PATH
               valueFrom:
                 configMapKeyRef:
