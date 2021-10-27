@@ -4,6 +4,8 @@ conda-env-remove:
 	conda env remove --name=hm-cnn
 conda-activate:
 	conda activate hm-cnn
+conda-deactivate:
+	conda deactivate
 conda-env-list:
 	conda env list
 conda-install:
