@@ -190,16 +190,16 @@ spec:
                 configMapKeyRef:
                   name: graphql-server-configmap
                   key: opal_fetch_provider_modules
-            - name: OPAL_SHOULD_REPORT_ON_DATA_UPDATES
-              valueFrom:
-                configMapKeyRef:
-                  name: graphql-server-configmap
-                  key: opal_should_report_on_data_updates
-            - name: OPAL_DEFAULT_UPDATE_CALLBACKS
-              valueFrom:
-                secretKeyRef:
-                  name: hm-opal-client-secret
-                  key: opal_default_update_callbacks
+#            - name: OPAL_SHOULD_REPORT_ON_DATA_UPDATES
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: graphql-server-configmap
+#                  key: opal_should_report_on_data_updates
+#            - name: OPAL_DEFAULT_UPDATE_CALLBACKS
+#              valueFrom:
+#                secretKeyRef:
+#                  name: hm-opal-client-secret
+#                  key: opal_default_update_callbacks
             - name: OPAL_OPA_HEALTH_CHECK_POLICY_ENABLED
               valueFrom:
                 configMapKeyRef:
