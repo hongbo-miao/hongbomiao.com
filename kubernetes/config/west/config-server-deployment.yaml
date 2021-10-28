@@ -27,6 +27,11 @@ spec:
                 configMapKeyRef:
                   name: config-server-configmap
                   key: port
+            - name: SHOULD_ENABLE_SERVER_TLS
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: should_enable_server_tls
             - name: SERVER_CERT_PATH
               valueFrom:
                 configMapKeyRef:
