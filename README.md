@@ -198,9 +198,9 @@ make clean
 
 - **PyTorch** - Machine learning framework
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
-- **OGB** - Open Graph Benchmark
-- **CML** - Continuous Machine Learning
-- **DVC** - Data Version Control
+- **OGB** - Open graph benchmark
+- **CML** - Continuous machine learning
+- **DVC** - Data version control
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
 ### Quantum Computing
@@ -257,6 +257,7 @@ make clean
 - **Namecheap** - Domain
 - **Cloudflare** - CDN, DNS, DDoS protection
 - **Discord** - ChatOps
+- **Opsgenie** - Incident management platform
 - **[GitHub Actions](https://github.com/Hongbo-Miao/hongbomiao.com/actions)** - Continuous integration
 - **[SonarCloud](https://sonarcloud.io/dashboard?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
 - **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
