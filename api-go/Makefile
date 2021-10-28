@@ -32,8 +32,15 @@ opa-fmt:
 opa-check:
 	opa check internal/graphql_server/policies/*.rego
 
+# Decision Logger
 decision-logger-gzip-call:
 	echo '{"foo": "bar"}' | gzip | curl -v -i --data-binary @- -H "Content-Encoding: gzip" http://localhost:41797/logs
 
+# Config Server
 config-server-generate-cert-and-key:
 	openssl req -x509 -newkey=rsa:4096 -nodes -out=config/config_server/server.crt -keyout=config/config_server/server.key -days=3650 -subj="/C=US/ST=CA/CN=hongbomiao.com"
+docker-build:
+	cd .. && \
+	docker build --file=api-go/build/package/config_server/Dockerfile --tag=hongbomiao/hm-config-server:latest .
+docker-push:
+	docker push hongbomiao/hm-config-server:latest
