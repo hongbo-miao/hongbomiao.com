@@ -67,7 +67,7 @@ Personal cutting-edge technology lab.
 
 ## Architecture
 
-![Architecture](https://docs.google.com/drawings/d/e/2PACX-1vQBehFA0r7QnSBUtAe9kplicXd6i7u5dmi8wchSJZFFEmcRaPqmD0GQ0FFx4zF7Vhkfi9fbO_rBsTh2/pub?w=2597&amp;h=4060)
+![Architecture](https://docs.google.com/drawings/d/e/2PACX-1vQBehFA0r7QnSBUtAe9kplicXd6i7u5dmi8wchSJZFFEmcRaPqmD0GQ0FFx4zF7Vhkfi9fbO_rBsTh2/pub?w=3042&amp;h=4100)
 
 ## Setup
 
@@ -180,6 +180,7 @@ make clean
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
 - **NGINX** - Reverse proxy, load balancer
+- **Cloudflare Tunnel** - Tunneling
 - **Kibana** - Data visualization dashboard for Elasticsearch
 - **Elastic APM** - Application performance monitoring
 - **OpenTelemetry** - Observability framework
