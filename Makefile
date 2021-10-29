@@ -337,6 +337,14 @@ minio-headless:
 # PostgreSQL
 postgres-connect:
 	psql --host=localhost --port=40072 --dbname=opa_db --username=admin --password
+migrate-creat:
+	migrate create -ext sql -dir kubernetes/data/opa-db-sql/init -seq create_roles_table
+migrate-up:
+	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public")
+	migrate -database ${POSTGRESQL_URL} -path kubernetes/data/opa-db-sql/migrations up
+migrate-down:
+	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public")
+	migrate -database ${POSTGRESQL_URL} -path kubernetes/data/opa-db-sql/migrations down
 
 # Kafka
 zookeeper-start:
@@ -401,14 +409,15 @@ curl-download-cat:
 curl-cat:
 	curl http://127.0.0.1:8080/predictions/densenet161 --upload-file kitten_small.jpg
 
-migrate-creat:
-	migrate create -ext sql -dir kubernetes/data/opa-db-sql/init -seq create_roles_table
-migrate-up:
-	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public")
-	migrate -database ${POSTGRESQL_URL} -path kubernetes/data/opa-db-sql/migrations up
-migrate-down:
-	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public")
-	migrate -database ${POSTGRESQL_URL} -path kubernetes/data/opa-db-sql/migrations down
+# Cloudflare
+cloudflare-tunnel-login:
+	cloudflared tunnel login
+cloudflare-tunnel-create:
+	cloudflared tunnel create hm-tunnel
+cloudflare-k8s-create-secret:
+	kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/homiao/.cloudflared/7aca8dbc-634c-43b8-9a5d-51d84370ed02.json
+cloudflare-tunnel-dns:
+	cloudflared tunnel route dns hm-tunnel tunnel.hongbomiao.com
 
 # Python
 python-static-type-check:
