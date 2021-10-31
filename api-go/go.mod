@@ -42,7 +42,7 @@ require (
 	go.opencensus.io v0.23.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.26.0
 	go.opentelemetry.io/otel v1.1.0
-	go.opentelemetry.io/otel/exporters/jaeger v1.0.0
+	go.opentelemetry.io/otel/exporters/jaeger v1.1.0
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.0.0
 	go.opentelemetry.io/otel/sdk v1.1.0
 	golang.org/x/crypto v0.0.0-20210915214749-c084706c2272 // indirect
