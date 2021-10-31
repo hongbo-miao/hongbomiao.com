@@ -67,7 +67,7 @@ Personal cutting-edge technology lab.
 
 ## Architecture
 
-![Architecture](https://docs.google.com/drawings/d/e/2PACX-1vQBehFA0r7QnSBUtAe9kplicXd6i7u5dmi8wchSJZFFEmcRaPqmD0GQ0FFx4zF7Vhkfi9fbO_rBsTh2/pub?w=3042&amp;h=4100)
+![Architecture](https://docs.google.com/drawings/d/e/2PACX-1vQBehFA0r7QnSBUtAe9kplicXd6i7u5dmi8wchSJZFFEmcRaPqmD0GQ0FFx4zF7Vhkfi9fbO_rBsTh2/pub?w=2918&amp;h=4280)
 
 ## Setup
 
@@ -188,6 +188,7 @@ make clean
 - **Grafana** - Monitoring and observability platform
 - **Prometheus** - Monitoring system
 - **Fluent Bit** - Log processor and forwarder
+- **Pixie** - Observability tool for Kubernetes applications
 - **Docker** - Container
 - **Kubernetes** - Container-orchestration system
 - **K3s** - Lightweight Kubernetes
