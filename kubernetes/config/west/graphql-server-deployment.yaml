@@ -172,6 +172,7 @@ spec:
               name: elastic-apm-volume
           # ---- ELASTIC APM END ----
 
+        # ---- OPA BEGIN ----
         - name: opal-client
           image: hongbomiao/hm-opal-client:latest
           env:
@@ -235,6 +236,9 @@ spec:
           volumeMounts:
             - mountPath: /data/opa
               name: opa-volume
+        # ---- OPA END ----
+
+      # ---- OPA BEGIN ----
       volumes:
         - name: opa-volume
           persistentVolumeClaim:
@@ -245,3 +249,4 @@ spec:
           persistentVolumeClaim:
             claimName: elastic-apm-pvc
         # ---- ELASTIC APM END ----
+      # ---- OPA END ----
