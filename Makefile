@@ -12,6 +12,8 @@ setup-minikube:
 
 focus-opa-debug:
 	sh kubernetes/bin/utils/focusOPADebug.sh
+focus-pixie-debug:
+	sh kubernetes/bin/utils/focusPixie.sh
 
 setup-local:
 	sh bin/setup.sh
@@ -244,6 +246,14 @@ linkerd-get-secrets:
 	kubectl get secrets --namespace=linkerd
 linkerd-get-secret-yaml:
 	kubectl get secrets --namespace=linkerd linkerd-identity-issuer --output=yaml
+
+# Pixie
+pixie-login:
+	px auth login
+pixie-deploy:
+	px deploy --y
+pixie-delete:
+	px delete
 
 # Kibana
 kibana-ui:
