@@ -63,15 +63,12 @@ docker-compose-down:
 	docker-compose --file=docker-compose.cypress.yml down --volumes
 
 # minikube
-minikube-config:
-	minikube config set cpus 4
-	minikube config set memory 8192
-minikube-start:
-	minikube start
+minikube-start-docker:
+	minikube start --driver=docker --cpus=2 --memory=8g
 minikube-start-hyperkit:
-	minikube start --driver=hyperkit
+	minikube start --driver=hyperkit --cpus=2 --memory=8g
 minikube-start-virtualbox:
-	minikube start --driver=virtualbox
+	minikube start --driver=virtualbox --cpus=2 --memory=8g
 minikube-enable-ingress:
 	minikube addons enable ingress
 minikube-mount:

@@ -2,10 +2,7 @@
 
 set -e
 
-minikube config set cpus 4
-minikube config set memory 8192
-
-minikube start --driver=hyperkit
+minikube start --driver=hyperkit --cpus=2 --memory=8g
 # minikube delete
 
 minikube addons enable ingress
