@@ -1,1 +1,1 @@
-delete from opal_client;
+delete from opal_clients;

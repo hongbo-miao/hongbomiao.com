@@ -46,12 +46,6 @@ spec:
           volumeMounts:
             - name: opa-db-volume
               mountPath: /var/lib/postgresql/data
-            - name: opa-db-sql-volume
-              mountPath: /docker-entrypoint-initdb.d
-      volumes:
-        - name: opa-db-sql-volume
-          persistentVolumeClaim:
-            claimName: opa-db-sql-pvc
   volumeClaimTemplates:
     - metadata:
         name: opa-db-volume
