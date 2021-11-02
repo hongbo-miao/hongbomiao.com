@@ -47,6 +47,31 @@ spec:
                 configMapKeyRef:
                   name: config-server-configmap
                   key: opal_auth_public_key_path
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: postgres_host
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: postgres_port
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: postgres_db
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: postgres_password
 
             # ---- ELASTIC APM BEGIN ----
             - name: ELASTIC_APM_SERVICE_NAME
