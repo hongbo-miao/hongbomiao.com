@@ -43,9 +43,6 @@ rm -f kubernetes/config/west/model-server-pv.yaml
 rm -f kubernetes/config/west/model-server-pvc.yaml
 rm -f kubernetes/config/west/opa-db-configmap.yaml
 rm -f kubernetes/config/west/opa-db-service.yaml
-rm -f kubernetes/config/west/opa-db-sql-pv.yaml
-rm -f kubernetes/config/west/opa-db-sql-pvc.yaml
-rm -f kubernetes/config/west/opa-db-sql-storageclass.yaml
 rm -f kubernetes/config/west/opa-db-statefulset.yaml
 rm -f kubernetes/config/west/opa-pv.yaml
 rm -f kubernetes/config/west/opa-pvc.yaml
