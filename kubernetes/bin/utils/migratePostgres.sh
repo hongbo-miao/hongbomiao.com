@@ -2,7 +2,7 @@
 
 set -e
 
-kubectl port-forward service/opa-db-service --namespace=hm-opa 40072:40072 &
+kubectl port-forward service/postgres-service --namespace=hm-opa 40072:40072 &
 sleep 5
 
 echo "# Create databases in Postgres"
