@@ -17,13 +17,29 @@ func main() {
 	log.Info().
 		Str("AppEnv", config.AppEnv).
 		Str("Port", config.Port).
+		Str("ShouldEnableServerTLS", config.ShouldEnableServerTLS).
+		Str("ConfigServerCertPath", config.ConfigServerCertPath).
+		Str("ConfigServerKeyPath", config.ConfigServerKeyPath).
+		Str("OPALAuthPublicKeyPath", config.OPALAuthPublicKeyPath).
+		Str("PostgresHost", config.PostgresHost).
+		Str("PostgresPort", config.PostgresPort).
+		Str("PostgresDB", config.PostgresDB).
+		Str("PostgresUser", config.PostgresUser).
 		Msg("main")
+
+	pg := utils.InitPostgres(
+		config.PostgresHost,
+		config.PostgresPort,
+		config.PostgresDB,
+		config.PostgresUser,
+		config.PostgresPassword)
+	defer pg.Close()
 
 	r := gin.New()
 	r.Use(apmgin.Middleware(r))
 	r.Use(logger.SetLogger())
 	r.GET("/", sharedControllers.Health)
-	r.GET("/config", controllers.Config)
+	r.GET("/config", controllers.Config(pg))
 	if config.ShouldEnableServerTLS == "true" {
 		err := r.RunTLS(":"+config.Port, config.ConfigServerCertPath, config.ConfigServerKeyPath)
 		if err != nil {

@@ -344,7 +344,7 @@ minio-headless:
 # PostgreSQL
 postgres-connect:
 	psql --host=localhost --port=40072 --dbname=opa_db --username=admin --password
-migrate-creat:
+migrate-create:
 	migrate create -ext sql -dir kubernetes/data/opa-db-sql/init -seq create_roles_table
 migrate-up:
 	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public")

@@ -53,7 +53,7 @@ if [ $is_debug = false ]; then
   source kubernetes/bin/utils/installElastic.sh
   source kubernetes/bin/utils/installFluentBit.sh
   source kubernetes/bin/utils/installMinIO.sh
-  source kubernetes/bin/utils/installYugabyte.sh
+  # source kubernetes/bin/utils/installYugabyte.sh
   source kubernetes/bin/utils/installKafka.sh
   source kubernetes/bin/utils/installDebezium.sh
 fi
@@ -63,6 +63,7 @@ source kubernetes/bin/utils/installArgoCD.sh
 source kubernetes/bin/utils/installWestClusterApp.sh
 source kubernetes/bin/utils/secureOPALServer.sh
 source kubernetes/bin/utils/secureConfigServer.sh
+source kubernetes/bin/utils/migratePostgres.sh
 
 if [ $is_debug = false ]; then
   sleep 120
