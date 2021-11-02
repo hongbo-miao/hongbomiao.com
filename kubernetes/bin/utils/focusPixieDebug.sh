@@ -41,9 +41,9 @@ rm -f kubernetes/config/west/hm-opa-namespace.yaml
 rm -f kubernetes/config/west/hm-redis-namespace.yaml
 rm -f kubernetes/config/west/model-server-pv.yaml
 rm -f kubernetes/config/west/model-server-pvc.yaml
-rm -f kubernetes/config/west/opa-db-configmap.yaml
-rm -f kubernetes/config/west/opa-db-service.yaml
-rm -f kubernetes/config/west/opa-db-statefulset.yaml
+rm -f kubernetes/config/west/postgres-configmap.yaml
+rm -f kubernetes/config/west/postgres-service.yaml
+rm -f kubernetes/config/west/postgres-statefulset.yaml
 rm -f kubernetes/config/west/opa-pv.yaml
 rm -f kubernetes/config/west/opa-pvc.yaml
 rm -f kubernetes/config/west/opal-broadcast-channel-configmap.yaml

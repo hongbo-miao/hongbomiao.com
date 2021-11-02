@@ -1,42 +1,42 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: opa-db-statefulset
-  namespace: hm-opa
+  name: postgres-statefulset
+  namespace: hm-postgres
 spec:
-  serviceName: "opa-db-service"
+  serviceName: "postgres-service"
   replicas: 1
   selector:
     matchLabels:
-      component: opa-db
+      component: postgres
   template:
     metadata:
       labels:
-        component: opa-db
+        component: postgres
     spec:
       containers:
-        - name: opa-db
+        - name: postgres
           image: debezium/postgres:14-alpine
           env:
             - name: PGDATA
               valueFrom:
                 configMapKeyRef:
-                  name: opa-db-configmap
+                  name: postgres-configmap
                   key: pgdata
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: opa-db-configmap
+                  name: postgres-configmap
                   key: postgres_db
             - name: POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
-                  name: opa-db-configmap
+                  name: postgres-configmap
                   key: postgres_user
             - name: POSTGRES_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  name: opa-db-configmap
+                  name: postgres-configmap
                   key: postgres_password
           args: ["-c", "wal_level=logical"]
           ports:
@@ -44,11 +44,11 @@ spec:
               protocol: TCP
               containerPort: 5432
           volumeMounts:
-            - name: opa-db-volume
+            - name: postgres-volume
               mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
     - metadata:
-        name: opa-db-volume
+        name: postgres-volume
       spec:
         accessModes: ["ReadWriteOnce"]
         resources:
