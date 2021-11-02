@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	contrib.go.opencensus.io/exporter/ocagent v0.7.0
+	github.com/Masterminds/squirrel v1.5.1
 	github.com/buger/jsonparser v1.1.1
 	github.com/dgraph-io/dgo/v200 v200.0.0-20210401091508-95bfd74de60e
 	github.com/elastic/go-sysinfo v1.7.0 // indirect
@@ -23,6 +24,7 @@ require (
 	github.com/graphql-go/handler v0.2.3
 	github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2 v2.0.0-rc.2
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.2
+	github.com/jackc/pgx/v4 v4.13.0
 	github.com/joho/godotenv v1.4.0
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
@@ -34,7 +36,6 @@ require (
 	github.com/prometheus/procfs v0.7.2 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rs/zerolog v1.26.0
-	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/ugorji/go v1.2.6 // indirect
 	go.elastic.co/apm/module/apmgin v1.14.0
@@ -45,7 +46,7 @@ require (
 	go.opentelemetry.io/otel/exporters/jaeger v1.1.0
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.1.0
 	go.opentelemetry.io/otel/sdk v1.1.0
-	golang.org/x/crypto v0.0.0-20210915214749-c084706c2272 // indirect
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
 	golang.org/x/net v0.0.0-20210916014120-12bc252f5db8 // indirect
 	golang.org/x/sys v0.0.0-20211001092434-39dca1131b70 // indirect
 	golang.org/x/text v0.3.7 // indirect
