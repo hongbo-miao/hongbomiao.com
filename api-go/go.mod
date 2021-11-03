@@ -32,7 +32,7 @@ require (
 	github.com/minio/md5-simd v1.1.2 // indirect
 	github.com/minio/minio-go/v7 v7.0.15
 	github.com/minio/sha256-simd v1.0.0 // indirect
-	github.com/open-policy-agent/opa v0.34.0
+	github.com/open-policy-agent/opa v0.34.1
 	github.com/prometheus/procfs v0.7.2 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rs/zerolog v1.26.0
