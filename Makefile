@@ -432,23 +432,23 @@ python-static-type-check:
 	poetry run poe mypy graph-neural-network --install-types --non-interactive
 	poetry run poe mypy locust --install-types --non-interactive
 	poetry run poe mypy hm-opal-client --install-types --non-interactive
-python-lint-black:
+lint-python-black:
 	poetry run poe lint-py-black
-python-lint-black-fix:
+lint-python-black-fix:
 	poetry run poe lint-py-black-fix
-python-lint-flake8:
+lint-python-flake8:
 	poetry run poe lint-py-flake8
-python-lint-isort:
+lint-python-isort:
 	poetry run poe lint-py-isort
-python-lint-isort-fix:
+lint-python-isort-fix:
 	poetry run poe lint-py-isort-fix
 
 # Lint
-hadolint:
+lint-dockerfile:
 	hadolint $$(git ls-files "**/Dockerfile*")
-shellcheck:
+lint-shell:
 	shellcheck $$(git ls-files "**/*.sh")
-kubeconform:
+lint-kubernetes:
 	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/east/*.yaml")
 	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-configmap.yaml")
 	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-deployment.yaml")
@@ -458,5 +458,5 @@ kubeconform:
 	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-pvc.yaml")
 	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-service.yaml")
 	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-statefulset.yaml")
-proto-lint:
+lint-protocol-buffers:
 	buf lint
