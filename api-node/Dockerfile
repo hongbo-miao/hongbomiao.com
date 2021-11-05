@@ -22,7 +22,7 @@ RUN npm run build \
 
 
 FROM base AS release
-RUN apk add --no-cache dumb-init=1.2.5-r0
+RUN apk add --no-cache dumb-init
 ENV NODE_ENV production
 USER node
 

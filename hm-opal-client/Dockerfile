@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 COPY ["hm-opal-client/", "./"]
 
 RUN apk update \
-  && apk add --no-cache gcc=9.3.0-r0 libc-dev=0.7.2-r0 \
+  && apk add --no-cache gcc libc-dev \
   && python setup.py install \
   && apk del gcc libc-dev \
   && rm -rf /var/cache/apk
