@@ -3,7 +3,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import useAuth from '../../auth/hooks/useAuth';
 import useMe from '../../auth/hooks/useMe';
 import styles from './SignIn.module.css';
@@ -28,7 +28,7 @@ const SignIn: React.VFC = () => {
   };
 
   if (me != null) {
-    return <Redirect to="/lab" />;
+    return <Navigate to="/lab" />;
   }
 
   return (
