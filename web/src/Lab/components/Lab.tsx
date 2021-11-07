@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import useMe from '../../auth/hooks/useMe';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import Paths from '../../shared/utils/paths';
@@ -15,7 +15,7 @@ const Lab: React.VFC = () => {
   const { me } = useMe();
 
   if (me == null) {
-    return <Redirect to="/signin" />;
+    return <Navigate to="/signin" />;
   }
 
   return (
@@ -28,11 +28,11 @@ const Lab: React.VFC = () => {
           <HmMenu />
         </HmLazyComponent>
         <HmLazyComponent>
-          <Switch>
-            <Route exact path={Paths.welcomePath} component={HmWelcome} />
-            <Route exact path={Paths.opaPath} component={HmOPAExperiment} />
-            <Route exact path={Paths.opalPath} component={HmOPALExperiment} />
-          </Switch>
+          <Routes>
+            <Route path={Paths.welcomePath} element={<HmWelcome />} />
+            <Route path={Paths.opaPath} element={<HmOPAExperiment />} />
+            <Route path={Paths.opalPath} element={<HmOPALExperiment />} />
+          </Routes>
         </HmLazyComponent>
       </div>
     </div>
