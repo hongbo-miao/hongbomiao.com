@@ -8,7 +8,7 @@ COPY api-go ./
 RUN go build -o ./out/cmd/config_server/ ./cmd/config_server/main.go
 
 
-FROM alpine:3.14.2 AS release
+FROM alpine:3.14.3 AS release
 WORKDIR /usr/src/app
 ENV GIN_MODE=release
 
