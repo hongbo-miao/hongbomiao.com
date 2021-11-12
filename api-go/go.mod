@@ -44,8 +44,8 @@ require (
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.26.1
 	go.opentelemetry.io/otel v1.2.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.1.0
-	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.1.0
-	go.opentelemetry.io/otel/sdk v1.1.0
+	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.2.0
+	go.opentelemetry.io/otel/sdk v1.2.0
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
 	golang.org/x/sys v0.0.0-20211001092434-39dca1131b70 // indirect
 	golang.org/x/text v0.3.7 // indirect
