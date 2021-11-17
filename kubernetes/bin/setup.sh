@@ -50,7 +50,6 @@ if [ $is_debug = false ]; then
   source kubernetes/bin/utils/installLinkerdJaeger.sh
   # source kubernetes/bin/utils/installLinkerdBuoyant.sh
 
-  source kubernetes/bin/utils/installElastic.sh
   source kubernetes/bin/utils/installFluentBit.sh
   source kubernetes/bin/utils/installMinIO.sh
   # source kubernetes/bin/utils/installYugabyte.sh
@@ -58,6 +57,7 @@ if [ $is_debug = false ]; then
   source kubernetes/bin/utils/installDebezium.sh
 fi
 
+source kubernetes/bin/utils/installElastic.sh
 source kubernetes/bin/utils/installArgoCD.sh
 
 source kubernetes/bin/utils/installWestClusterApp.sh
