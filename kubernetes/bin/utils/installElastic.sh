@@ -56,7 +56,7 @@ kubectl get secret hm-apm-apm-http-certs-public \
 echo "=================================================="
 
 echo "# Save Elastic APM token in Kubernetes secret"
-kubectl create namespace hm
+kubectl apply --filename=kubernetes/config/west/hm-namespace.yaml
 ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token \
   --namespace=elastic \
   --output=go-template='{{index .data "secret-token" | base64decode}}')
