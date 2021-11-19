@@ -29,9 +29,9 @@ const Lab: React.VFC = () => {
         </HmLazyComponent>
         <HmLazyComponent>
           <Routes>
-            <Route path={Paths.welcomePath} element={<HmWelcome />} />
-            <Route path={Paths.opaPath} element={<HmOPAExperiment />} />
-            <Route path={Paths.opalPath} element={<HmOPALExperiment />} />
+            <Route index element={<HmWelcome />} />
+            <Route path={Paths.Lab.opaPath} element={<HmOPAExperiment />} />
+            <Route path={Paths.Lab.opalPath} element={<HmOPALExperiment />} />
           </Routes>
         </HmLazyComponent>
       </div>
