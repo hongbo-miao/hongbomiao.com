@@ -282,15 +282,15 @@ argocd-apply:
 	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
 argocd-sync:
 	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
-	argocd app sync hm-application
+	argocd app sync hm-application --grpc-web
 argocd-sync-local:
-	argocd app sync hm-application --local=kubernetes/config/west
+	argocd app sync hm-application --grpc-web --local=kubernetes/config/west
 argocd-sync-local-full:
 	kubectl create namespace hm
 	ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token --namespace=elastic --output=go-template='{{index .data "secret-token" | base64decode}}')
 	kubectl create secret generic hm-elastic-apm --namespace=hm --from-literal="token=${ELASTIC_APM_TOKEN}"
 	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
-	argocd app sync hm-application --local=kubernetes/config/west
+	argocd app sync hm-application --grpc-web --local=kubernetes/config/west
 argocd-list:
 	argocd app list
 argocd-delete:
