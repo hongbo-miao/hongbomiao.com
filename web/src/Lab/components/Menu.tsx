@@ -8,7 +8,7 @@ const Menu: React.VFC = () => {
       <p className="menu-label">GENERAL</p>
       <ul className="menu-list">
         <li>
-          <NavLink end className={({ isActive }) => (isActive ? ' is-active' : '')} to={Paths.welcomePath}>
+          <NavLink end className={({ isActive }) => (isActive ? ' is-active' : '')} to={Paths.Lab.welcomePath}>
             Welcome
           </NavLink>
         </li>
@@ -16,12 +16,12 @@ const Menu: React.VFC = () => {
       <p className="menu-label">EXPERIMENTS</p>
       <ul className="menu-list">
         <li>
-          <NavLink className={({ isActive }) => (isActive ? ' is-active' : '')} to={Paths.opaPath}>
+          <NavLink className={({ isActive }) => (isActive ? ' is-active' : '')} to={Paths.Lab.opaPath}>
             OPA
           </NavLink>
         </li>
         <li>
-          <NavLink className={({ isActive }) => (isActive ? ' is-active' : '')} to={Paths.opalPath}>
+          <NavLink className={({ isActive }) => (isActive ? ' is-active' : '')} to={Paths.Lab.opalPath}>
             OPAL
           </NavLink>
         </li>
