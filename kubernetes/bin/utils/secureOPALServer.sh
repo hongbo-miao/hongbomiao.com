@@ -14,9 +14,9 @@ echo "=================================================="
 
 echo "# Generate OPAL SSH key"
 OPAL_AUTH_PRIVATE_KEY_PASSPHRASE="ds6l3qYYx9UsYcgshmlbsMJTXs1lVH9ndf13Xp1xNKxbqjFdxFvdkJxpm0DfjAhh"
-ssh-keygen -t rsa -b 4096 -m pem -f "${opal_server_data_path}/opal_auth_private_key.pem" -N="${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}"
+ssh-keygen -t rsa -b 4096 -m pem -f "${opal_server_data_path}/opal_auth_private_key.pem" -N "${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}"
 rm -f "${opal_server_data_path}/opal_auth_private_key.pem.pub"
-ssh-keygen -e -m pkcs8 -f "${opal_server_data_path}/opal_auth_private_key.pem" -P="${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}" > "${opal_server_data_path}/opal_auth_public_key.pem"
+ssh-keygen -e -m pkcs8 -f "${opal_server_data_path}/opal_auth_private_key.pem" -P "${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}" > "${opal_server_data_path}/opal_auth_public_key.pem"
 cp "${opal_server_data_path}/opal_auth_public_key.pem" api-go/config/config_server/opal_auth_public_key.pem
 cp "${opal_server_data_path}/opal_auth_public_key.pem" kubernetes/data/config-server/opal_auth_public_key.pem
 echo "=================================================="
