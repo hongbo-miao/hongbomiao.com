@@ -30,7 +30,7 @@ require (
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
-	github.com/minio/minio-go/v7 v7.0.15
+	github.com/minio/minio-go/v7 v7.0.16
 	github.com/minio/sha256-simd v1.0.0 // indirect
 	github.com/open-policy-agent/opa v0.34.2
 	github.com/prometheus/procfs v0.7.2 // indirect
