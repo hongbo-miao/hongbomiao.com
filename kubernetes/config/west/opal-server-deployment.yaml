@@ -42,6 +42,11 @@ spec:
                 configMapKeyRef:
                   name: opal-server-configmap
                   key: uvicorn_num_workers
+            - name: OPAL_STATISTICS_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: opal-server-configmap
+                  key: opal_statistics_enabled
             - name: OPAL_LOG_MODULE_EXCLUDE_LIST
               valueFrom:
                 configMapKeyRef:
