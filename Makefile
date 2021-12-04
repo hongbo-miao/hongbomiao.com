@@ -13,7 +13,7 @@ setup-minikube:
 focus-opa-debug:
 	sh kubernetes/bin/utils/focusOPADebug.sh
 focus-pixie-debug:
-	sh kubernetes/bin/utils/focusPixie.sh
+	sh kubernetes/bin/utils/focusPixieDebug.sh
 
 setup-local:
 	sh bin/setup.sh
