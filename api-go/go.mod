@@ -38,7 +38,7 @@ require (
 	github.com/rs/zerolog v1.26.0
 	github.com/stretchr/testify v1.7.0
 	github.com/ugorji/go v1.2.6 // indirect
-	go.elastic.co/apm/module/apmgin v1.14.0
+	go.elastic.co/apm/module/apmgin v1.15.0
 	go.elastic.co/apm/module/apmgrpc v1.14.0
 	go.opencensus.io v0.23.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.27.0
