@@ -6,8 +6,8 @@ set -e
 # Elastic
 # Install custom resource definitions and the Elasticsearch operator with its RBAC rules
 echo "# Install custom resource definitions and the Elasticsearch operator with its RBAC rules"
-kubectl apply --filename=https://download.elastic.co/downloads/eck/1.7.0/crds.yaml
-kubectl apply --filename=https://download.elastic.co/downloads/eck/1.7.0/operator.yaml
+kubectl apply --filename=https://download.elastic.co/downloads/eck/1.9.0/crds.yaml
+kubectl apply --filename=https://download.elastic.co/downloads/eck/1.9.0/operator.yaml
 echo "=================================================="
 sleep 30
 
