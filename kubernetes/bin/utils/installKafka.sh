@@ -14,6 +14,6 @@ kubectl apply --filename=https://strimzi.io/examples/latest/kafka/kafka-persiste
 
 echo "# Check Kafka"
 kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s --namespace=kafka
-# kubectl run kafka-producer --stdin --tty --namespace=kafka --image=quay.io/strimzi/kafka:0.25.0-kafka-2.8.0 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list=my-cluster-kafka-bootstrap:9092 --topic=my-topic
-# kubectl run kafka-consumer --stdin --tty --namespace=kafka --image=quay.io/strimzi/kafka:0.25.0-kafka-2.8.0 --rm=true --restart=Never -- bin/kafka-console-consumer.sh --bootstrap-server=my-cluster-kafka-bootstrap:9092 --topic=my-topic --from-beginning
+# kubectl run kafka-producer --stdin --tty --namespace=kafka --image=quay.io/strimzi/kafka:0.26.0-kafka-3.0.0 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list=my-cluster-kafka-bootstrap:9092 --topic=my-topic
+# kubectl run kafka-consumer --stdin --tty --namespace=kafka --image=quay.io/strimzi/kafka:0.26.0-kafka-3.0.0 --rm=true --restart=Never -- bin/kafka-console-consumer.sh --bootstrap-server=my-cluster-kafka-bootstrap:9092 --topic=my-topic --from-beginning
 echo "=================================================="
