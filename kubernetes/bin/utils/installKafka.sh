@@ -7,7 +7,7 @@ set -e
 # https://strimzi.io/quickstarts
 echo "# Install Strimzi"
 kubectl create namespace kafka
-kubectl apply --filename=https://strimzi.io/install/latest?namespace=kafka --namespace=kafka
+kubectl apply --filename="https://strimzi.io/install/latest?namespace=kafka" --namespace=kafka
 
 echo "# Install Kafka"
 kubectl apply --filename=https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml --namespace=kafka
