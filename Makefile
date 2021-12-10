@@ -15,6 +15,9 @@ focus-opa-debug:
 focus-pixie-debug:
 	sh kubernetes/bin/utils/focusPixieDebug.sh
 
+install-alpine:
+	sh kubernetes/bin/utils/installAlpine.sh
+
 setup-local:
 	sh bin/setup.sh
 build-local:
