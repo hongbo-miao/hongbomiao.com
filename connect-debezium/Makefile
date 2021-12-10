@@ -6,6 +6,8 @@ docker-push:
 	docker push hongbomiao/hm-connect-debezium:latest
 
 # Kafka
+kafka-get-hm-connect-cluster:
+	kubectl get kafkaconnects hm-connect-cluster --namespace=kafka --output=yaml
 kafka-get-roles-connector:
 	kubectl get kafkaconnectors roles-connector --namespace=kafka --output=yaml
 kafka-list-topics:
