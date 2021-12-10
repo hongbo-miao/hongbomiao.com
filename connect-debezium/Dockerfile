@@ -1,4 +1,4 @@
-FROM strimzi/kafka:0.26.0-kafka-3.0.0 AS builder
+FROM quay.io/strimzi/kafka:0.26.0-kafka-3.0.0 AS builder
 USER root:root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN yum install wget unzip -y \
@@ -19,5 +19,5 @@ RUN yum install wget unzip -y \
 USER 1001
 
 
-FROM strimzi/kafka:0.26.0-kafka-3.0.0
+FROM quay.io/strimzi/kafka:0.26.0-kafka-3.0.0
 COPY --from=builder /opt/kafka/plugins/ /opt/kafka/plugins/
