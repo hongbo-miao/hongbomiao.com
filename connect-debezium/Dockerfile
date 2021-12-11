@@ -1,9 +1,6 @@
-FROM quay.io/strimzi/kafka:0.26.0-kafka-3.0.0 AS builder
+FROM alpine:latest AS builder
 USER root:root
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN yum install wget unzip -y \
-  && mkdir -p /opt/kafka/plugins/ \
-
+RUN mkdir -p /opt/kafka/plugins/ \
   # debezium-connector-postgres
   # https://mvnrepository.com/artifact/io.debezium/debezium-connector-postgres
   && wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.7.1.Final/debezium-connector-postgres-1.7.1.Final-plugin.tar.gz --quiet --output-document=debezium-connector-postgres.tar.gz \
@@ -14,8 +11,7 @@ RUN yum install wget unzip -y \
   # https://www.confluent.io/hub/confluentinc/kafka-connect-elasticsearch
   && wget https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-elasticsearch/versions/11.1.6/confluentinc-kafka-connect-elasticsearch-11.1.6.zip --quiet --output-document=kafka-connect-elasticsearch.zip \
   && unzip kafka-connect-elasticsearch.zip -d /opt/kafka/plugins/ \
-  && rm -f kafka-connect-elasticsearch.zip \
-  && yum clean all
+  && rm -f kafka-connect-elasticsearch.zip
 USER 1001
 
 
