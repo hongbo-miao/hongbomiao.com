@@ -12,6 +12,8 @@ kafka-get-hm-connect-cluster:
 	kubectl get kafkaconnects hm-connect-cluster --namespace=kafka --output=yaml
 kafka-get-roles-connector:
 	kubectl get kafkaconnectors roles-connector --namespace=kafka --output=yaml
+kafka-get-elasticsearch-sink-connector:
+	kubectl get kafkaconnectors elasticsearch-sink-connector --namespace=kafka --output=yaml
 kafka-list-topics:
 	kubectl exec my-cluster-kafka-0 --namespace=kafka --container=kafka --stdin --tty -- \
 	  bin/kafka-topics.sh \
