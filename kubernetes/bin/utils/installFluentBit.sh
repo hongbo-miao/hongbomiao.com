@@ -10,5 +10,5 @@ kubectl apply --filename=https://raw.githubusercontent.com/fluent/fluent-bit-kub
 kubectl apply --filename=https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-1.22.yaml
 kubectl apply --filename=https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-binding-1.22.yaml
 kubectl apply --filename=https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml
-kubectl apply --filename=kubernetes/config/fluentbit
+kubectl apply --filename=kubernetes/config/fluent-bit
 echo "=================================================="
