@@ -1,4 +1,4 @@
-FROM alpine:latest AS builder
+FROM alpine:3.15.0 AS builder
 USER root:root
 RUN mkdir -p /opt/kafka/plugins/ \
   # debezium-connector-postgres
