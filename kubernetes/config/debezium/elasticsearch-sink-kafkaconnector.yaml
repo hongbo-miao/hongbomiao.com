@@ -1,0 +1,34 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: elasticsearch-sink-connector
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: hm-connect-cluster
+spec:
+  class: io.confluent.connect.elasticsearch.ElasticsearchSinkConnector
+  tasksMax: 1
+  # https://docs.confluent.io/kafka-connect-elasticsearch/current/configuration_options.html
+  config:
+    connector.class: "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector"
+    tasks.max: "1"
+    topics: "opa_db_server.public.roles"
+    connection.url: "https://hm-elasticsearch-es-http.elastic:9200"
+    connection.username: "${file:/opt/kafka/external-configuration/hm-elasticsearch-credentials-volume/elasticsearch-credentials.properties:elasticsearch_username}"
+    connection.password: "${file:/opt/kafka/external-configuration/hm-elasticsearch-credentials-volume/elasticsearch-credentials.properties:elasticsearch_password}"
+    transforms: "unwrap,key"
+    transforms.unwrap.type: "io.debezium.transforms.ExtractNewRecordState"
+    transforms.unwrap.drop.tombstones: "false"
+    transforms.key.type: "org.apache.kafka.connect.transforms.ExtractField$Key"
+    transforms.key.field: "role_id"
+    key.ignore: "false"
+    behavior.on.null.values: "delete"
+    elastic.security.protocol: "SSL"
+    elastic.https.ssl.keystore.location: "/opt/kafka/external-configuration/hm-elasticsearch-keystore-volume/elasticsearch-keystore.jks"
+    elastic.https.ssl.keystore.password: "${file:/opt/kafka/external-configuration/hm-elasticsearch-credentials-volume/elasticsearch-credentials.properties:elasticsearch_keystore_password}"
+    elastic.https.ssl.key.password: "${file:/opt/kafka/external-configuration/hm-elasticsearch-credentials-volume/elasticsearch-credentials.properties:elasticsearch_keystore_password}"
+    elastic.https.ssl.keystore.type: "JKS"
+    elastic.https.ssl.truststore.location: "/opt/kafka/external-configuration/hm-elasticsearch-keystore-volume/elasticsearch-keystore.jks"
+    elastic.https.ssl.truststore.password: "${file:/opt/kafka/external-configuration/hm-elasticsearch-credentials-volume/elasticsearch-credentials.properties:elasticsearch_keystore_password}"
+    elastic.https.ssl.truststore.type: "JKS"
+    elastic.https.ssl.protocol: "TLSv1.3"
