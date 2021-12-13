@@ -15,5 +15,5 @@ RUN mkdir -p /opt/kafka/plugins/ \
 USER 1001
 
 
-FROM quay.io/strimzi/kafka:0.26.0-kafka-3.0.0
+FROM quay.io/strimzi/kafka:0.26.1-kafka-3.0.0
 COPY --from=builder /opt/kafka/plugins/ /opt/kafka/plugins/
