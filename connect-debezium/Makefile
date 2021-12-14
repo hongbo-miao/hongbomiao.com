@@ -14,6 +14,8 @@ kafka-get-postgres-kafkaconnector:
 	kubectl get kafkaconnectors postgres-kafkaconnector --namespace=kafka --output=yaml
 kafka-get-elasticsearch-sink-kafkaconnector:
 	kubectl get kafkaconnectors elasticsearch-sink-kafkaconnector --namespace=kafka --output=yaml
+kafka-get-http-sink-kafkaconnector:
+	kubectl get kafkaconnectors http-sink-kafkaconnector --namespace=kafka --output=yaml
 kafka-list-topics:
 	kubectl exec my-cluster-kafka-0 --namespace=kafka --container=kafka --stdin --tty -- \
 	  bin/kafka-topics.sh \

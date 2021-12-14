@@ -1,0 +1,17 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: http-sink-kafkaconnector
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: hm-kafkaconnect
+spec:
+  class: io.aiven.kafka.connect.http.HttpSinkConnector
+  tasksMax: 1
+  # https://github.com/aiven/http-connector-for-apache-kafka/blob/main/docs/sink-connector-config-options.rst
+  config:
+    connector.class: "io.aiven.kafka.connect.http.HttpSinkConnector"
+    tasks.max: "1"
+    topics: "opa_db_server.public.roles"
+    http.url: "http://config-server-service.hm:26660/opa-db-cdc"
+    http.authorization.type: "none"
