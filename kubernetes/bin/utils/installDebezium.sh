@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 
@@ -9,10 +8,10 @@ kubectl create secret generic hm-opa-db-credentials \
   --namespace=kafka
 echo "=================================================="
 
-
 echo "# Clean elasticsearch-keystore.jks"
 KAFKACONNECT_DATA_PATH="kubernetes/data/kafkaconnect"
 rm -f "${KAFKACONNECT_DATA_PATH}/elasticsearch-keystore.jks"
+echo "=================================================="
 
 echo "# Create elasticsearch-keystore.jks"
 KEYSTORE_P12_PASSWORD="SFLzyT8DPkGGjDtn"
@@ -55,6 +54,7 @@ rm -f "${KAFKACONNECT_DATA_PATH}/tls.key"
 rm -f "${KAFKACONNECT_DATA_PATH}/tls.crt"
 rm -f "${KAFKACONNECT_DATA_PATH}/ca.crt"
 rm -f "${KAFKACONNECT_DATA_PATH}/elasticsearch-keystore.p12"
+echo "=================================================="
 
 echo "# Create secret hm-elasticsearch-keystore"
 kubectl create secret generic hm-elasticsearch-keystore \
@@ -62,13 +62,11 @@ kubectl create secret generic hm-elasticsearch-keystore \
   --namespace=kafka
 echo "=================================================="
 
-
 echo "# Create secret hm-elasticsearch-credentials"
 kubectl create secret generic hm-elasticsearch-credentials \
   --from-file=kubernetes/config/debezium/elasticsearch-credentials.properties \
   --namespace=kafka
 echo "=================================================="
-
 
 echo "# Install Debezium"
 kubectl apply --filename=kubernetes/config/debezium

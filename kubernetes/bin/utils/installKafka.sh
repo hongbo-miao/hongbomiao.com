@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
-
 set -e
-
 
 # Kafka
 # https://strimzi.io/quickstarts
 echo "# Install Strimzi"
 kubectl create namespace kafka
 kubectl apply --filename="https://strimzi.io/install/latest?namespace=kafka" --namespace=kafka
+# kubectl delete --filename="https://strimzi.io/install/latest?namespace=kafka" --namespace=kafka
+echo "=================================================="
 
 echo "# Install Kafka"
 kubectl apply --filename=https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml --namespace=kafka
+# kubectl delete --filename=https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml --namespace=kafka
+echo "=================================================="
 
 echo "# Check Kafka"
 kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s --namespace=kafka
