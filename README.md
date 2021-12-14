@@ -130,11 +130,11 @@ make clean
 
 - **Express** - Node.js web application framework
 - **GraphQL.js**, **express-graphql** - GraphQL
-- **graphql-ws**, **graphql-subscriptions** - GraphQL subscriptions
-- **graphql-upload** - GraphQL upload
-- **graphql-shield** - GraphQL permissions
-- **graphql-depth-limit** - GraphQL depth limit
-- **graphql-query-complexity** - GraphQL query complexity analysis
+  - **graphql-ws**, **graphql-subscriptions** - GraphQL subscriptions
+  - **graphql-upload** - GraphQL upload
+  - **graphql-shield** - GraphQL permissions
+  - **graphql-depth-limit** - GraphQL depth limit
+  - **graphql-query-complexity** - GraphQL query complexity analysis
 - **DataLoader** - Batching and caching
 - **Knex.js** - SQL query builder
 - **node-postgres** - PostgreSQL client
@@ -159,22 +159,28 @@ make clean
 - **autocannon** - HTTP benchmarking
 - **Clinic.js** - Performance profiling
 
-### Database
+### Data
 
 - **Dgraph** - Distributed graph database
 - **YugabyteDB** - Distributed SQL database
 - **Elasticsearch** - Distributed document-oriented search engine
-- **Kafka** - Distributed event streaming platform
-- **Debezium** - Distributed change-data-capture platform
 - **MinIO** - High performance object storage
 - **PostgreSQL** - Object-relational database
+- **Flink** - Stream processing framework
+  - **flink-streaming-java** - Flink
+  - **flink-connector-twitter** - Flink Twitter connector
+  - **flink-connector-redis** - Flink Redis connector
+- **Kafka** - Distributed event streaming platform
+- **Debezium** - Distributed change-data-capture platform
+  - **debezium-connector-postgres** - PostgreSQL connector
+  - **kafka-connect-elasticsearchkafka-connect-elasticsearch** - Elasticsearch sink connector
+  - **http-connector-for-apache-kafka** - HTTP sink connector
 - **golang-migrate/migrate** - Database migrations
 
 ### Cloud Native
 
 - **Terraform** - Infrastructure as code
 - **TorchServe** - PyTorch models serving
-- **Flink** - Stream processing framework
 - **Linkerd** - Service mesh
 - **Argo CD** - Declarative GitOps CD for Kubernetes
 - **Open Policy Agent (OPA)** - Policy-based control
@@ -208,12 +214,6 @@ make clean
 ### Quantum Computing
 
 - **Qiskit** - Quantum computing SDK
-
-### Streaming
-
-- **flink-streaming-java** - Flink Streaming
-- **flink-connector-twitter** - Flink Twitter Connector
-- **flink-connector-redis** - Flink Redis Connector
 
 ### HM OPAL Client
 
