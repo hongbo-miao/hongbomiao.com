@@ -4,7 +4,7 @@ set -e
 
 echo "# Create secret hm-opa-db-credentials"
 kubectl create secret generic hm-opa-db-credentials \
-  --from-file=kubernetes/config/debezium/roles-kafkaconnector/opa-db-credentials.properties \
+  --from-file=kubernetes/config/debezium/postgres-kafkaconnector/opa-db-credentials.properties \
   --namespace=kafka
 echo "=================================================="
 
