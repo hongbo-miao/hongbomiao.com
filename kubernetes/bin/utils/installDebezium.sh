@@ -4,7 +4,7 @@ set -e
 
 echo "# Create secret hm-opa-db-credentials"
 kubectl create secret generic hm-opa-db-credentials \
-  --from-file=kubernetes/config/debezium/opa-db-credentials.properties \
+  --from-file=kubernetes/config/debezium/roles-kafkaconnector/opa-db-credentials.properties \
   --namespace=kafka
 echo "=================================================="
 
@@ -64,7 +64,7 @@ echo "=================================================="
 
 echo "# Create secret hm-elasticsearch-credentials"
 kubectl create secret generic hm-elasticsearch-credentials \
-  --from-file=kubernetes/config/debezium/elasticsearch-credentials.properties \
+  --from-file=kubernetes/config/debezium/elasticsearch-sink-kafkaconnector/elasticsearch-credentials.properties \
   --namespace=kafka
 echo "=================================================="
 
