@@ -1,10 +1,10 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
-  name: roles-connector
+  name: postgres-kafkaconnector
   namespace: kafka
   labels:
-    strimzi.io/cluster: hm-connect-cluster
+    strimzi.io/cluster: hm-kafkaconnect
 spec:
   class: io.debezium.connector.postgresql.PostgresConnector
   tasksMax: 1

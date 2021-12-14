@@ -8,12 +8,12 @@ docker-sh:
 	docker run -it hongbomiao/hm-connect-debezium:latest sh
 
 # Kafka
-kafka-get-hm-connect-cluster:
-	kubectl get kafkaconnects hm-connect-cluster --namespace=kafka --output=yaml
-kafka-get-roles-connector:
-	kubectl get kafkaconnectors roles-connector --namespace=kafka --output=yaml
-kafka-get-elasticsearch-sink-connector:
-	kubectl get kafkaconnectors elasticsearch-sink-connector --namespace=kafka --output=yaml
+kafka-get-hm-kafkaconnect:
+	kubectl get kafkaconnects hm-kafkaconnect --namespace=kafka --output=yaml
+kafka-get-postgres-kafkaconnector:
+	kubectl get kafkaconnectors postgres-kafkaconnector --namespace=kafka --output=yaml
+kafka-get-elasticsearch-sink-kafkaconnector:
+	kubectl get kafkaconnectors elasticsearch-sink-kafkaconnector --namespace=kafka --output=yaml
 kafka-list-topics:
 	kubectl exec my-cluster-kafka-0 --namespace=kafka --container=kafka --stdin --tty -- \
 	  bin/kafka-topics.sh \

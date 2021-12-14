@@ -1,10 +1,10 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
-  name: elasticsearch-sink-connector
+  name: elasticsearch-sink-kafkaconnector
   namespace: kafka
   labels:
-    strimzi.io/cluster: hm-connect-cluster
+    strimzi.io/cluster: hm-kafkaconnect
 spec:
   class: io.confluent.connect.elasticsearch.ElasticsearchSinkConnector
   tasksMax: 1
