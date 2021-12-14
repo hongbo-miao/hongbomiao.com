@@ -40,6 +40,7 @@ func main() {
 	r.Use(logger.SetLogger())
 	r.GET("/", sharedControllers.Health)
 	r.GET("/config", controllers.Config(pg))
+	r.POST("/opa-db-cdc", controllers.OPADBCDC)
 	if config.ShouldEnableServerTLS == "true" {
 		err := r.RunTLS(":"+config.Port, config.ConfigServerCertPath, config.ConfigServerKeyPath)
 		if err != nil {
