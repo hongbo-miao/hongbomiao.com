@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
 set -e
-
 
 echo "# Install hm-streaming"
 flink run-application \

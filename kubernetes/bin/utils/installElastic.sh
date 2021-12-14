@@ -1,35 +1,29 @@
 #!/usr/bin/env bash
-
 set -e
-
 
 # Elastic
 # Install custom resource definitions and the Elasticsearch operator with its RBAC rules
 echo "# Install custom resource definitions and the Elasticsearch operator with its RBAC rules"
 kubectl apply --filename=https://download.elastic.co/downloads/eck/1.9.0/crds.yaml
 kubectl apply --filename=https://download.elastic.co/downloads/eck/1.9.0/operator.yaml
-echo "=================================================="
 sleep 30
-
+echo "=================================================="
 
 # Monitor the Elasticsearch operator logs
 # kubectl logs --namespace=elastic-system --filename=statefulset.apps/elastic-operator
-
 
 # Deploy Elasticsearch
 echo "# Deploy Elasticsearch, Kibana, AMP"
 kubectl apply --filename=kubernetes/config/elastic
 # Delete: kubectl delete --filename=kubernetes/config/elastic
-echo "=================================================="
 sleep 60
-
+echo "=================================================="
 
 echo "# Check Elastic"
 for d in hm-apm-apm-server hm-kibana-kb; do
   kubectl --namespace=elastic rollout status deployment/${d}
 done
 echo "=================================================="
-
 
 # Elasticsearch
 # kubectl port-forward service/hm-elasticsearch-es-http --namespace=elastic 9200:9200

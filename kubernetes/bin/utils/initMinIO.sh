@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
 set -e
-
 
 echo "# kubectl-minio"
 # Docs: https://github.com/minio/operator

@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
-
 set -e
 
-
 CLUSTERS=("$@")
-
 
 # Install Ingress with patch
 for cluster in "${CLUSTERS[@]}"; do

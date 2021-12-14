@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
-
 set -e
-
 
 CLUSTERS=("$@")
 
-
-# Patch Ingress
 for cluster in "${CLUSTERS[@]}"; do
   echo "# Patch Ingress on: k3d-${cluster}"
   kubectl patch configmap ingress-nginx-controller \

@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
-
 set -e
 
-
-# Argo CD
 echo "# Install Argo CD"
 kubectl create namespace argocd
 kubectl apply \
@@ -19,7 +16,6 @@ kubectl apply \
 #   --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 echo "=================================================="
 sleep 30
-
 
 echo "# Check Argo CD"
 for d in dex-server redis repo-server server; do

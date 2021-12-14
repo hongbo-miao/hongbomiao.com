@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
-
 set -e
-
 
 CLUSTERS=("$@")
 
-
-# Clean cluster certificates
 echo "# Clean cluster certificates"
 rm -f kubernetes/certificates/ca.crt
 rm -f kubernetes/certificates/ca.key
@@ -16,8 +12,6 @@ for cluster in "${CLUSTERS[@]}"; do
 done
 echo "=================================================="
 
-
-# Generate cluster certificates
 echo "# Generate cluster certificates"
 CA_DIR="kubernetes/certificates"
 
@@ -42,16 +36,12 @@ for cluster in "${CLUSTERS[@]}"; do
 done
 echo "=================================================="
 
-
-# Check Linkerd installation environment
 for cluster in "${CLUSTERS[@]}"; do
   echo "# Check Linkerd installation environment on: k3d-${cluster}"
   while ! linkerd check --context="k3d-${cluster}" --pre ; do :; done
   echo "=================================================="
 done
 
-
-# Install Linkerd
 for cluster in "${CLUSTERS[@]}"; do
   domain="${cluster}.${ORG_DOMAIN}"
   crt="${CA_DIR}/${cluster}-issuer.crt"
@@ -70,8 +60,6 @@ for cluster in "${CLUSTERS[@]}"; do
 done
 sleep 30
 
-
-# Check Linkerd
 for cluster in "${CLUSTERS[@]}"; do
   echo "# Check Linkerd on: k3d-${cluster}"
   while ! linkerd check --context="k3d-${cluster}" ; do :; done

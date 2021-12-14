@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
 set -e
-
 
 # Verify Linkerd multicluster setup correctly by checking the endpoints in west
 # and verify that they match the gateway’s public IP address in east

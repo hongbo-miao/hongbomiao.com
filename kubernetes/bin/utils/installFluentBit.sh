@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
 set -e
-
 
 echo "# Install Fluent Bit"
 # https://docs.fluentbit.io/manual/installation/kubernetes

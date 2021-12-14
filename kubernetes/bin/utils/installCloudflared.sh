@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
 set -e
-
 
 echo "# Install cloudflared"
 kubectl apply --filename=kubernetes/config/cloudflared/hm-clouflared-namespace.yaml
