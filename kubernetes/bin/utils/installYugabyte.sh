@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
-
 set -e
 
-
-# Yugabyte
 echo "# Deploy Yugabyte"
 YUGABYTE_PATH="kubernetes/data/yugabyte"
 YUGABYTE_REPLICA=3

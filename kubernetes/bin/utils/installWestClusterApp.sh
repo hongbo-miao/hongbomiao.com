@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
 set -e
-
 
 echo "# Install the app"
 kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &

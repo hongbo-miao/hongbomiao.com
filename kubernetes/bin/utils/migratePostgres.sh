@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:40072 &

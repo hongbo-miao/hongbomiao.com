@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 kind create cluster --name=west --config=kubernetes/kind/west-cluster-config.yaml

@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
-
 set -e
 
-
-# MinIO
 echo "# Initialize MinIO operator"
 MINIO_PATH="kubernetes/data/minio"
 rm -rf "${MINIO_PATH}/log"

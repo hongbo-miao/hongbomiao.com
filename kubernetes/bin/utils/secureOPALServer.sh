@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
-
 set -e
 
-
 OPAL_SERVER_DATA_PATH="kubernetes/data/opal-server"
-
 
 echo "# Clean OPAL SSH key"
 rm -f "${OPAL_SERVER_DATA_PATH}/opal_auth_private_key.pem"

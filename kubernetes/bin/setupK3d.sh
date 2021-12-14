@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 k3d cluster create west --config=kubernetes/k3d/west-cluster-config.yaml
