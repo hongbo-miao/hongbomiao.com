@@ -347,14 +347,12 @@ minio-headless:
 # PostgreSQL
 postgres-connect:
 	psql --host=localhost --port=40072 --dbname=opa_db --username=admin --password
-migrate-create:
-	migrate create -ext sql -dir kubernetes/data/opa-db-sql/init -seq create_roles_table
 migrate-up:
-	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public")
-	migrate -database ${POSTGRESQL_URL} -path kubernetes/data/opa-db-sql/migrations up
+	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:40072/opa_db?sslmode=disable&search_path=public")
+	migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/postgres/opa_db/migrations up
 migrate-down:
-	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public")
-	migrate -database ${POSTGRESQL_URL} -path kubernetes/data/opa-db-sql/migrations down
+	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:40072/opa_db?sslmode=disable&search_path=public")
+	migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/postgres/opa_db/migrations down
 
 # Kafka
 zookeeper-start:

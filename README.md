@@ -118,6 +118,7 @@ make clean
 - **minio-go** - MinIO client
 - **go-redis** - Redis client
 - **pgx** - PostgreSQL driver
+- **Resty** - HTTP client
 - **Squirrel** - SQL query builder
 - **apm-agent-go** - APM agent
 - **OpenTelemetry-Go** - OpenTelemetry
@@ -144,6 +145,7 @@ make clean
 - **csurf** - CSRF protection
 - **jsonwebtoken**, **express-jwt** - JSON Web Tokens (JWT)
 - **bcrypt** - Password hashing
+- **axios** - HTTP client
 - **Helmet** - HTTP header `Content-Security-Policy`, `Expect-CT`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
 - **Report To** - HTTP header `Report-To`
 - **Network Error Logging** - HTTP header `NEL`

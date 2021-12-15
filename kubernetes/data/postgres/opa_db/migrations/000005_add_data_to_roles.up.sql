@@ -1,4 +1,4 @@
-with ins (client_name, role, allow) as
+with ins (opal_client_name, role, allow) as
        (values ('hm-opal-client',
                 'customer',
                 '[
@@ -45,7 +45,7 @@ with ins (client_name, role, allow) as
                 ]'::json)
        )
 insert
-into roles (client_id, role, allow)
-select clients.client_id, ins.role, ins.allow
-from clients
-       join ins on ins.client_name = clients.client_name;
+into roles (opal_client_id, role, allow)
+select opal_clients.id, ins.role, ins.allow
+from opal_clients
+       join ins on ins.opal_client_name = opal_clients.name;

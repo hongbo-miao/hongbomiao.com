@@ -8,8 +8,8 @@ import (
 )
 
 func Logs(c *gin.Context) {
-	body, _ := ioutil.ReadAll(c.Request.Body)
-	log.Info().Bytes("body", body).Msg("Logs")
+	bodyBytes, _ := ioutil.ReadAll(c.Request.Body)
+	log.Info().Bytes("bodyBytes", bodyBytes).Msg("Logs")
 	c.JSON(http.StatusOK, gin.H{
 		"status": "ok",
 	})
