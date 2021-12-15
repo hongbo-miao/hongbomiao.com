@@ -9,7 +9,7 @@ import (
 func AdoptDog(myID string, dogID string) (*types.Dog, error) {
 	res, err := GetOPALDecision(myID, "adopt", "dog")
 	if err != nil {
-		log.Error().Err(err).Msg("GetOPALDecision")
+		log.Error().Err(err).Msg("AdoptDog")
 		return nil, err
 	}
 	if !res.Decision {

@@ -9,16 +9,16 @@ $$ language plpgsql;
 
 create table if not exists roles
 (
-  role_id    uuid                 default gen_random_uuid(),
-  client_id  uuid        not null,
-  role       text        not null,
-  allow      jsonb       not null,
-  created_on timestamptz not null default now(),
-  updated_at timestamptz not null default now(),
-  primary key (role_id),
+  id        uuid                 default gen_random_uuid(),
+  opal_client_id uuid        not null,
+  role           text        not null,
+  allow          jsonb       not null,
+  created_on     timestamptz not null default now(),
+  updated_at     timestamptz not null default now(),
+  primary key (id),
   constraint fk_space
-    foreign key (client_id)
-      references clients (client_id)
+    foreign key (opal_client_id)
+      references opal_clients (id)
 );
 
 create trigger update_updated_at

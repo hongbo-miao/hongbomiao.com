@@ -11,7 +11,7 @@ type JWTTokenContent struct {
 	ID string
 }
 
-func VerifyJWTTokenAndExtractClientID(tokenString string) (string, error) {
+func VerifyJWTTokenAndExtractOPALClientID(tokenString string) (string, error) {
 	config := GetConfig()
 	publicKey, err := ioutil.ReadFile(config.OPALAuthPublicKeyPath)
 	if err != nil {
@@ -36,6 +36,6 @@ func VerifyJWTTokenAndExtractClientID(tokenString string) (string, error) {
 		return "", errors.New("token.Claims")
 	}
 
-	clientID := claims["client_id"].(string)
-	return clientID, nil
+	opalClientID := claims["opal_client_id"].(string)
+	return opalClientID, nil
 }

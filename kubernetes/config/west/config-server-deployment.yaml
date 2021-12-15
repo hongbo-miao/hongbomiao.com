@@ -47,6 +47,21 @@ spec:
                 configMapKeyRef:
                   name: config-server-configmap
                   key: opal_auth_public_key_path
+            - name: OPAL_SERVER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: opal_server_host
+            - name: OPAL_SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config-server-configmap
+                  key: opal_server_port
+            - name: OPAL_CLIENT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: config-server-secret
+                  key: opal_client_token
             - name: POSTGRES_HOST
               valueFrom:
                 configMapKeyRef:
