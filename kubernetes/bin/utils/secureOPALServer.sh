@@ -38,7 +38,7 @@ OPAL_CLIENT_TOKEN=$(curl --location --request POST "http://localhost:7002/token"
   --header "Content-Type: application/json" \
   --header "Authorization: Bearer ${OPAL_AUTH_MASTER_TOKEN}" \
   --data-raw '{
-    "type": "client",
+    "type": "datasource",
     "claims": {
         "client_id": "hm-opal-client"
     }
