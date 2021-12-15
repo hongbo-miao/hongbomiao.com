@@ -2,6 +2,9 @@
 set -e
 
 OPAL_SERVER_DATA_PATH="kubernetes/data/opal-server"
+OPAL_AUTH_MASTER_TOKEN=IWjW0bYcTIfm6Y5JNjp4DdgopC6rYSxT4yrPbtLiTU0
+
+kubectl port-forward service/opal-server-service --namespace=hm-opa 7002:7002 &
 
 echo "# Clean OPAL SSH key"
 rm -f "${OPAL_SERVER_DATA_PATH}/opal_auth_private_key.pem"
@@ -19,7 +22,6 @@ cp "${OPAL_SERVER_DATA_PATH}/opal_auth_public_key.pem" kubernetes/data/config-se
 echo "=================================================="
 
 echo "# Create OPAL server secret"
-OPAL_AUTH_MASTER_TOKEN=IWjW0bYcTIfm6Y5JNjp4DdgopC6rYSxT4yrPbtLiTU0
 kubectl create secret generic hm-opal-server-secret \
   --namespace=hm-opa \
   --from-file="opal_auth_private_key=${OPAL_SERVER_DATA_PATH}/opal_auth_private_key.pem" \
@@ -32,21 +34,37 @@ echo "# Check OPAL server"
 kubectl rollout status deployment/opal-server-deployment --namespace=hm-opa
 echo "=================================================="
 
-echo "# Create OPAL client secret"
-kubectl port-forward service/opal-server-service --namespace=hm-opa 7002:7002 &
-OPAL_CLIENT_TOKEN=$(curl --location --request POST "http://localhost:7002/token" \
+echo "# Create HM OPAL client secret"
+HM_OPAL_CLIENT_TOKEN=$(curl --location --request POST "http://localhost:7002/token" \
   --header "Content-Type: application/json" \
   --header "Authorization: Bearer ${OPAL_AUTH_MASTER_TOKEN}" \
   --data-raw '{
     "type": "datasource",
     "claims": {
-        "client_id": "hm-opal-client"
+        "opal_client_id": "0bdaa0c2-43fd-4f3a-b1e0-64bde83e9774"
     }
   }' | \
   jq '.token' --raw-output)
 kubectl create secret generic hm-opal-client-secret \
   --namespace=hm \
-  --from-literal="opal_client_token=${OPAL_CLIENT_TOKEN}" \
+  --from-literal="opal_client_token=${HM_OPAL_CLIENT_TOKEN}" \
   --from-literal="opal_default_update_callbacks={\"callbacks\":[(\"http://opal-server-service.hm-opa:7002/data/callback_report\",{\"headers\":{\"Authorization\":\"Bearer ${OPAL_CLIENT_TOKEN}\"}})]}"
-pgrep kubectl | xargs kill -9
 echo "=================================================="
+
+echo "# Create config server OPAL client secret"
+CONFIG_SERVER_OPAL_CLIENT_TOKEN=$(curl --location --request POST "http://localhost:7002/token" \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer ${OPAL_AUTH_MASTER_TOKEN}" \
+  --data-raw '{
+    "type": "datasource",
+    "claims": {
+        "opal_client_id": "9b2ad6b8-555d-4d62-a644-2a96d0c0dbe5"
+    }
+  }' | \
+  jq '.token' --raw-output)
+kubectl create secret generic config-server-secret \
+  --namespace=hm \
+  --from-literal="opal_client_token=${CONFIG_SERVER_OPAL_CLIENT_TOKEN}"
+echo "=================================================="
+
+pgrep kubectl | xargs kill -9

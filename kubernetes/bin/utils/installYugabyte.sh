@@ -33,6 +33,6 @@ echo "=================================================="
 
 echo "# Initialize OPA Data in Yugabyte"
 POSTGRESQL_URL="postgres://admin:passw0rd@localhost:5433/opa_db?sslmode=disable&search_path=public"
-migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/opa-db-sql/migrations up
+migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/postgres/opa_db/migrations up
 pgrep kubectl | xargs kill -9
 echo "=================================================="

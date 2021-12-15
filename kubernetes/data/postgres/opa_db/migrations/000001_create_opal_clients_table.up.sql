@@ -7,18 +7,18 @@ begin
 end;
 $$ language plpgsql;
 
-create table if not exists roles
+create table if not exists opal_clients
 (
-  role_id    uuid                 default gen_random_uuid(),
-  role       text        not null,
-  allow      jsonb       not null,
+  id         uuid                 default gen_random_uuid(),
+  name       text        not null,
+  config     text,
   created_on timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  primary key (role_id)
+  primary key (id)
 );
 
 create trigger update_updated_at
   before update
-  on roles
+  on opal_clients
   for each row
 execute procedure trigger_update_updated_at();
