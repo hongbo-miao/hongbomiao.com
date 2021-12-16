@@ -1,11 +1,11 @@
 # Docker
 docker-build:
 	cd .. && \
-	docker build --file=connect-debezium/Dockerfile --tag=hongbomiao/hm-connect-debezium:latest .
+	docker build --file=kafka-connect/Dockerfile --tag=hongbomiao/hm-kafka-connect:latest .
 docker-push:
-	docker push hongbomiao/hm-connect-debezium:latest
+	docker push hongbomiao/hm-kafka-connect:latest
 docker-sh:
-	docker run -it hongbomiao/hm-connect-debezium:latest sh
+	docker run -it hongbomiao/hm-kafka-connect:latest sh
 
 # Kafka
 kafka-get-hm-kafkaconnect:

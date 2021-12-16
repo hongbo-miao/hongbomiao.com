@@ -181,8 +181,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-connect-debezium:
-    name: Push connect-debezium to Docker Hub
+  push-kafka-connect:
+    name: Push kafka-connect to Docker Hub
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -200,8 +200,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./connect-debezium/Dockerfile
+          file: ./kafka-connect/Dockerfile
           push: true
-          tags: hongbomiao/hm-connect-debezium:latest
+          tags: hongbomiao/hm-kafka-connect:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
