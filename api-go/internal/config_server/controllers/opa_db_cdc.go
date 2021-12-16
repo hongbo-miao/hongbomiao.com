@@ -13,7 +13,7 @@ import (
 func OPADBCDC(pg *pgxpool.Pool) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
 		bodyBytes, _ := ioutil.ReadAll(c.Request.Body)
-		clientID, err := jsonparser.GetString(bodyBytes, "after", "opal_client_id")
+		opalClientID, err := jsonparser.GetString(bodyBytes, "after", "opal_client_id")
 		if err != nil {
 			log.Error().Err(err).Bytes("bodyBytes", bodyBytes).Msg("jsonparser.GetString opal_client_id")
 			c.JSON(http.StatusInternalServerError, gin.H{
@@ -22,7 +22,7 @@ func OPADBCDC(pg *pgxpool.Pool) gin.HandlerFunc {
 			return
 		}
 
-		opalClientConfig, err := utils.FetchOPALClientConfig(pg, clientID)
+		opalClientConfig, err := utils.FetchOPALClientConfig(pg, opalClientID)
 		if err != nil {
 			log.Error().Err(err).Msg("FetchOPALClientConfig")
 			c.JSON(http.StatusInternalServerError, gin.H{
