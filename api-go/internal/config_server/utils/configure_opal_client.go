@@ -10,6 +10,7 @@ func ConfigureOPALClient(opalClientConfig *OPALClientConfig) ([]byte, error) {
 	restyClient := resty.New()
 	res, err := restyClient.R().
 		SetHeader("Content-Type", "application/json").
+		SetAuthToken(config.OPALClientToken).
 		SetBody(opalClientConfig).
 		Post("http://" + config.OPALServerHost + ":" + config.OPALServerPort + "/data/config")
 	if err != nil {

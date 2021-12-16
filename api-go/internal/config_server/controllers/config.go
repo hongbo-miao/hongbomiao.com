@@ -11,12 +11,12 @@ import (
 func Config(pg *pgxpool.Pool) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
 		token := c.Request.URL.Query().Get("token")
-		clientID, err := utils.VerifyJWTTokenAndExtractOPALClientID(token)
+		opalClientID, err := utils.VerifyJWTTokenAndExtractOPALClientID(token)
 		if err != nil {
 			log.Error().Err(err).Msg("VerifyJWTTokenAndExtractMyID")
 		}
 
-		opalClientConfig, err := utils.FetchOPALClientConfig(pg, clientID)
+		opalClientConfig, err := utils.FetchOPALClientConfig(pg, opalClientID)
 		if err != nil {
 			log.Error().Err(err).Msg("FetchOPALClientConfig")
 			c.JSON(http.StatusInternalServerError, gin.H{

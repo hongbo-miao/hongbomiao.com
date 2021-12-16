@@ -31,14 +31,14 @@ type OPALClient struct {
 	Config       string
 }
 
-func FetchOPALClientConfig(pg *pgxpool.Pool, clientID string) (*OPALClientConfig, error) {
-	log.Info().Str("clientID", clientID).Msg("FetchOPALClientConfig")
+func FetchOPALClientConfig(pg *pgxpool.Pool, opalClientID string) (*OPALClientConfig, error) {
+	log.Info().Str("opalClientID", opalClientID).Msg("FetchOPALClientConfig")
 
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 	sql, args, err := psql.
 		Select("config").
 		From("opal_clients").
-		Where("id = ?", clientID).
+		Where("id = ?", opalClientID).
 		ToSql()
 	if err != nil {
 		log.Error().
