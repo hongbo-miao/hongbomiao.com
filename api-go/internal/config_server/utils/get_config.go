@@ -14,6 +14,7 @@ type Config struct {
 	OPALAuthPublicKeyPath string
 	OPALServerHost        string
 	OPALServerPort        string
+	OPALClientToken       string
 	PostgresHost          string
 	PostgresPort          string
 	PostgresDB            string
@@ -41,6 +42,7 @@ func GetConfig() *Config {
 		OPALAuthPublicKeyPath: os.Getenv("OPAL_AUTH_PUBLIC_KEY_PATH"),
 		OPALServerHost:        os.Getenv("OPAL_SERVER_HOST"),
 		OPALServerPort:        os.Getenv("OPAL_SERVER_PORT"),
+		OPALClientToken:       os.Getenv("OPAL_CLIENT_TOKEN"),
 		PostgresHost:          os.Getenv("POSTGRES_HOST"),
 		PostgresPort:          os.Getenv("POSTGRES_PORT"),
 		PostgresDB:            os.Getenv("POSTGRES_DB"),
