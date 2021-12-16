@@ -173,7 +173,7 @@ make clean
   - **flink-connector-twitter** - Flink Twitter connector
   - **flink-connector-redis** - Flink Redis connector
 - **Kafka** - Distributed event streaming platform
-- **Debezium** - Distributed change-data-capture platform
+  - **Debezium** - Distributed change-data-capture platform
   - **debezium-connector-postgres** - PostgreSQL connector
   - **kafka-connect-elasticsearchkafka-connect-elasticsearch** - Elasticsearch sink connector
   - **http-connector-for-apache-kafka** - HTTP sink connector
