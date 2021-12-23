@@ -1,0 +1,652 @@
+# https://github.com/RasaHQ/helm-charts/blob/main/charts/rasa/values.yaml
+
+# Default values for rasa.
+# This is a YAML-formatted file.
+
+# -- (string) Override name of app
+nameOverride:  # ""
+
+# -- (string) Override the full qualified app name
+fullnameOverride:  # ""
+
+# -- Registry to use for all Rasa images (default docker.io)
+## DockerHub - use docker.io/rasa
+registry: docker.io/rasa
+
+applicationSettings:
+  # -- Enable debug mode
+  debugMode: false
+
+  # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
+  initialModel: "https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"
+
+  # -- Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined
+  trainInitialModel: false
+
+  # -- Port on which Rasa runs
+  port: 5005
+
+  # -- Scheme by which the service are accessible
+  scheme: http
+
+  # -- Token Rasa accepts as authentication token from other Rasa services
+  token: "rasaToken"
+
+  # -- CORS for the passed origin. Default is * to allow all origins
+  cors: '*'
+
+  # -- Start the web server API in addition to the input channel
+  enableAPI: true
+
+  ## Note: this credentials configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
+  credentials:
+    # -- Enable credentials configuration for channel connectors
+    enabled: true
+
+    # -- Additional channel credentials which should be used by Rasa to connect to various
+    # input channels
+    ## See: https://rasa.com/docs/rasa/messaging-and-voice-channels
+    additionalChannelCredentials: {}
+    #  rest:
+    #  facebook:
+    #    verify: "rasa"
+    #    secret: "<SECRET>"
+    #    page-access-token: "<PAGE-ACCESS-TOKEN>"
+
+  telemetry:
+    # -- Enable telemetry
+    # See: https://rasa.com/docs/rasa/telemetry/telemetry/
+    enabled: true
+
+  ## Note: this endpoints configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
+  endpoints:
+    ## Fetch the model from your own HTTP server
+    ## See: https://rasa.com/docs/rasa/model-storage#load-model-from-server
+    models:
+      # -- Enable endpoint for a model server
+      enabled: false
+
+      # -- URL address that models will be pulled from
+      url: http://my-server.com/models/default
+
+      # -- Token used as a authentication token
+      token: "token"
+
+      # -- Time in seconds how often the the model server will be querying
+      waitTimeBetweenPulls: 20
+
+      useRasaXasModelServer:
+        # -- Use Rasa X (Enterprise) as a model server
+        enabled: false
+
+        # -- The model with a given tag that should be pulled from the model server
+        tag: "production"
+
+    ## You can use an Tracker Store to store your assistant's conversation history.
+    ## See: https://rasa.com/docs/rasa/tracker-stores
+    ##
+    ## All environment variables used as values are added to the rasa-oss container automatically if `postgresql.install=true`.
+    trackerStore:
+      # -- Enable endpoint for Tracker Store
+      enabled: true
+
+      # -- Tracker Store type
+      type: sql
+
+      # -- The dialect used to communicate with your SQL backend
+      dialect: "postgresql"
+
+      # -- URL of your SQL server
+      url: ${DB_HOST}
+
+      # -- Port of your SQL server
+      port: ${DB_PORT}
+
+      # -- The username which is used for authentication
+      username: ${DB_USER}
+
+      # -- The password which is used for authentication
+      password: ${DB_PASSWORD}
+
+      # -- The path to the database to be used
+      db: ${DB_DATABASE}
+
+      # -- Create the database for the tracker store.
+      # If `false` the tracker store database must have been created previously.
+      login_db: ${DB_DATABASE}
+
+    ## Rasa uses a ticket lock mechanism to ensure that incoming messages for a given conversation ID
+    ## are processed in the right order, and locks conversations while messages are actively processed.
+    ## See: https://rasa.com/docs/rasa/lock-stores
+    ##
+    ## All environment variables used as values are added to the rasa-oss container automatically if `redis.install=true`.
+    lockStore:
+      # -- Enable endpoint for Lock Store
+      enabled: false
+
+      # -- Lock Store type
+      type: "redis"
+
+      # -- The url of your redis instance
+      url: ${REDIS_HOST}
+
+      # -- The port which redis is running on
+      port: ${REDIS_PORT}
+
+      # -- Password used for authentication
+      password: ${REDIS_PASSWORD}
+
+      # -- The database in redis which Rasa uses to store the conversation locks
+      db: "1"
+
+    ## An event broker allows you to connect your running assistant to other
+    ## services that process the data coming in from conversations.
+    ## See: https://rasa.com/docs/rasa/event-brokers
+    ##
+    ## All environment variables used as values are added to the rasa-oss container automatically if `rabbitmq.install=true`.
+    eventBroker:
+      # -- Enable endpoint for Event Broker
+      enabled: false
+
+      # -- Event Broker
+      type: "pika"
+
+      # -- The url of an event broker
+      url: ${RABBITMQ_HOST}
+
+      # -- Username used for authentication
+      username: ${RABBITMQ_USERNAME}
+
+      # -- Password used for authentication
+      password: ${RABBITMQ_PASSWORD}
+
+      # -- The port which an event broker is listening on
+      port: ${RABBITMQ_PORT}
+
+      # -- Send all messages to a given queue
+      queues:
+        - rasa_production_events
+
+    action:
+      # -- the URL which Rasa Open Source calls to execute custom actions
+      endpointURL: /webhook
+
+    # -- Additional endpoints
+    additionalEndpoints: {}
+
+  # Rasa X / Enterprise settings
+  rasaX:
+    # -- Run Rasa X / Enterprise server
+    enabled: false
+
+    # -- Token Rasa X / Enterprise accepts as authentication token from other Rasa services
+    token: "rasaXToken"
+
+    # -- URL to Rasa X / Enterprise, e.g. http://rasa-x.mydomain.com:5002
+    url: ""
+
+    # -- Rasa X / Enterprise endpoint URL from which to pull the runtime config
+    useConfigEndpoint: false
+
+# -- Specify the number of Rasa Open Source replicas
+replicaCount: 1
+
+networkPolicy:
+  # -- Enable Kubernetes Network Policy
+  enabled: false
+
+  # -- Create a network policy that deny all traffic
+  denyAll: false
+
+# -- Override the default arguments for the container
+args: []
+
+# -- Add additional arguments to the default one
+extraArgs: []
+
+# -- Override the default command for the container
+command: []
+
+# -- Add extra environment variables
+extraEnv: []
+  # - name: SOME_CUSTOM_ENV_VAR
+#   value: "custom value"
+
+## Define the rasa image to work with
+image:
+  # -- Rasa Open Source image name to use (relative to `registry`)
+  name: rasa
+
+  # -- Rasa Open Source image tag to use
+  tag: "3.0.2"
+  # -- Override default registry + image.name for Rasa Open Source
+  repository: ""
+
+  # -- Rasa Open Source image pullPolicy
+  pullPolicy: IfNotPresent
+
+  # -- Rasa Open Source repository pullSecret
+  ## See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
+  pullSecrets: []
+  #   - name: "<SECRET>"
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: false
+
+  # -- Annotations to add to the service account
+  annotations: {}
+
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# -- Annotations to add to the rasa-oss's pod(s)
+podAnnotations: {}
+#  key: "value"
+
+# -- Labels to add to the rasa-oss's pod(s)
+podLabels: {}
+#  key: "value"
+
+# -- Annotations to add to the rasa-oss deployment
+deploymentAnnotations: {}
+#  key: "value"
+
+# -- Labels to add to the rasa-oss deployment
+deploymentLabels: {}
+
+# -- Defines pod-level security attributes and common container settings
+## See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+podSecurityContext: {}
+# fsGroup: 2000
+
+# -- Allows you to overwrite the pod-level security context
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+# runAsUser: 1000
+
+## Configuration for the service for the rasa-oss
+service:
+  # -- Set type of rasa service
+  type: ClusterIP
+
+  # -- Set port of rasa service (Kubernetes >= 1.15)
+  port: 5005
+
+  # -- Annotations to add to the service
+  annotations: {}
+
+  # -- Specify the nodePort(s) value(s) for the LoadBalancer and NodePort service types
+  ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
+  nodePort:
+
+  # -- Exposes the Service externally using a cloud provider's load balancer
+  ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
+  loadBalancerIP:
+
+  # -- Enable client source IP preservation
+  ## Ref: http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  externalTrafficPolicy: Cluster
+
+## Configure the ingress resource that allows you to access the
+## deployment installation. Set up the URL
+## ref: http://kubernetes.io/docs/user-guide/ingress/
+ingress:
+  # -- Set to true to enable ingress
+  enabled: false
+
+  # -- Ingress annotations
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+
+  # -- Labels to add to the ingress
+  labels: {}
+
+  # -- Ingress Path type
+  ## Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
+  pathType: ImplementationSpecific
+
+  # -- Ingress path
+  path: /
+
+  # -- Hostname used for the ingress
+  hostname: chart-example.local
+
+  # -- TLS configuration for ingress
+  ## See: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+  # -- Any additional arbitrary paths that may need to be added to the ingress under the main host
+  extraPaths: {}
+  # - path: /*
+  #   backend:
+  #     serviceName: ssl-redirect
+  #     servicePort: https
+
+# -- Resource requests and limits
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+#   memory: 128Mi
+
+##  Autoscaling parameters for the Rasa Open Source Deployment
+## See: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+autoscaling:
+  # -- Enable autoscaling
+  enabled: false
+
+  # -- Lower limit for the number of pods that can be set by the autoscaler
+  minReplicas: 1
+
+  # -- Upper limit for the number of pods that can be set by the autoscaler.
+  # It cannot be smaller than minReplicas.
+  maxReplicas: 20
+
+  # -- Fraction of the requested CPU that should be utilized/used,
+  # e.g. 70 means that 70% of the requested CPU should be in use.
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Allow the Rasa Open Source Deployment to be scheduled on selected nodes
+## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
+## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+nodeSelector: {}
+
+# -- Tolerations for pod assignment
+## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+# -- Allow the Rasa Open Source Deployment to schedule using affinity rules
+## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+affinity: {}
+
+# -- Allow the deployment to perform a rolling update
+## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+
+# -- Override default liveness probe settings
+# @default -- Every 15s / 6 KO / 1 OK
+## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+livenessProbe:
+  httpGet:
+    path: /
+    ## The 'http' port value is defined in the rasa-oss container spec and can be controlled by the `applicationSettings.port` parameter
+    port: http
+    scheme: HTTP
+  initialDelaySeconds: 15
+  periodSeconds: 15
+  successThreshold: 1
+  timeoutSeconds: 5
+  failureThreshold: 6
+
+# -- Override default readiness probe settings
+# @default -- Every 15s / 6 KO / 1 OK
+## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+readinessProbe:
+  httpGet:
+    path: /
+    ## The 'http' port value is defined in the rasa-oss container spec and can be controlled by the `applicationSettings.port` parameter
+    port: http
+    scheme: HTTP
+  initialDelaySeconds: 15
+  periodSeconds: 15
+  successThreshold: 1
+  timeoutSeconds: 5
+  failureThreshold: 6
+
+# -- Allow to specify init containers for the Rasa Open Source Deployment
+## Ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+initContainers: []
+#  - name: init
+#    image: "busybox"
+#    command: ["bash", "-c"]
+#    args:
+#      - echo "init container"
+
+# -- Allow to specify additional containers for the Rasa Open Source Deployment
+extraContainers: []
+#  - name: extra
+#    image: "busybox"
+#    command: ["bash", "-c"]
+#    args:
+#      - echo "init container"
+
+# -- Specify additional volumes to mount in the rasa-oss container
+## Ref: https://kubernetes.io/docs/concepts/storage/volumes/
+volumes: []
+#   - hostPath:
+#       path: <HOST_PATH>
+#     name: <VOLUME_NAME>
+
+# -- Specify additional volumes to mount in the rasa-oss container
+volumeMounts: []
+#   - name: <VOLUME_NAME>
+#     mountPath: <CONTAINER_PATH>
+#     readOnly: true
+
+
+## Global settings of the used subcharts
+global:
+  postgresql:
+    # -- postgresqlUsername which should be used by Rasa to connect to Postgres
+    postgresqlUsername: "postgres"
+
+    # -- postgresqlPassword is the password which is used when the postgresqlUsername equals "postgres"
+    postgresqlPassword: "password"
+
+    # -- existingSecret which should be used for the password instead of putting it in the values file
+    existingSecret: ""
+
+    # -- postgresDatabase which should be used by Rasa
+    postgresqlDatabase: "rasa"
+
+    # -- servicePort which is used to expose postgres to the other components
+    servicePort: 5432
+
+  # -- global settings of the redis subchart
+  redis:
+    # -- password to use in case there no external secret was provided
+    password: "redis-password"
+
+
+## PostgreSQL specific settings (https://hub.helm.sh/charts/bitnami/postgresql/10.3.18)
+postgresql:
+  # -- Install PostgreSQL
+  install: true
+
+  ## Use external PostgreSQL installation
+  ## This section is not a part of the PostgreSQL subchart
+  external:
+    # -- Determine if use an external PostgreSQL host
+    enabled: false
+
+    # -- External PostgreSQL hostname
+    ## The host value is accessible via the `${DB_HOST}` environment variable
+    host: "external-postgresql"
+
+## Redis(TM) specific settings (https://artifacthub.io/packages/helm/bitnami/redis/14.1.0)
+redis:
+  # -- Install Redis(TM)
+  install: false
+
+  ## Redis(TM) replicas configuration parameters
+  ## See: https://artifacthub.io/packages/helm/bitnami/redis/14.1.0#redis-tm-replicas-configuration-parameters
+  replica:
+    # -- Number of Redis(TM) replicas to deploy
+    replicaCount: 0
+
+  ## Redis(TM) common configuration parameters
+  ## See: https://artifacthub.io/packages/helm/bitnami/redis/14.1.0#redis-tm-common-configuration-parameters
+  auth:
+    # -- Redis(TM) password
+    password: "redis-password"
+
+  ## Use external Redis installation
+  ## This section is not a part of the Redis subchart
+  external:
+    # -- Determine if use an external Redis host
+    enabled: false
+
+    # -- External Redis hostname
+    ## The host value is accessible via the `${REDIS_HOST}` environment variable
+    host: "external-redis"
+
+
+# RabbitMQ specific settings (https://artifacthub.io/packages/helm/bitnami/rabbitmq/8.12.1)
+rabbitmq:
+  # -- Install RabbitMQ
+  install: false
+
+  ## See: https://artifacthub.io/packages/helm/bitnami/rabbitmq/8.12.0#rabbitmq-parameters
+  auth:
+    # -- RabbitMQ application username
+    username: "user"
+
+    # -- RabbitMQ application password
+    password: "password"
+
+    # -- Existing secret with RabbitMQ credentials (must contain a value for `rabbitmq-password` key)
+    existingPasswordSecret: ""
+
+    # -- Erlang cookie
+    erlangCookie: "erlangCookie"
+
+  ## Use external RabbitMQ installation
+  ## This section is not a part of the RabbitMQ subchart
+  external:
+    # -- Determine if use an external RabbitMQ host
+    enabled: false
+
+    # -- External RabbitMQ hostname
+    ## The host value is accessible via the `${RABBITMQ_HOST}` environment variable
+    host: "external-rabbitmq"
+
+nginx:
+  # -- Enabled Nginx as a sidecar container
+  ## If you use ingress-nginx as an ingress controller you should disable NGINX.
+  enabled: true
+
+  image:
+    # -- Image name to use
+    name: "nginx"
+
+    # -- Image tag to use
+    tag: "1.20"
+
+  # -- Override default liveness probe settings
+  # @default -- Every 15s / 6 KO / 1 OK
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http-nginx
+      scheme: HTTP
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    successThreshold: 1
+    timeoutSeconds: 5
+    failureThreshold: 6
+
+  # -- Override default readiness probe settings
+  # @default -- Every 15s / 6 KO / 1 OK
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http-nginx
+      scheme: HTTP
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    successThreshold: 1
+    timeoutSeconds: 5
+    failureThreshold: 6
+
+  # -- Port number that Nginx listen on
+  port: 80
+
+  # -- Resource requests and limits
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+  #   memory: 128Mi
+
+  # -- Allows you to overwrite the pod-level security context
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+  # runAsUser: 1000
+
+  tls:
+    # -- Enable TLS for Nginx sidecar
+    enabled: false
+
+    # TLS port number that Nginx listen on
+    port: 443
+
+    # -- Generate self-signed certificates
+    generateSelfSignedCert: false
+
+    # -- Use a secret with TLS certificates.
+    # The secret has to include `cert.pem` and `key.pem` keys
+    certificateSecret: ""
+
+  # -- Custom configuration for Nginx sidecar
+  customConfiguration: {}
+  #  nginx.conf: |
+  #    # Custom configuration
+  #  rasa.nginx.conf: |
+  #    # Custom configuration for Rasa Open Source upstream
+
+## Settings for Rasa Action Server
+## See: https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa-action-server
+rasa-action-server:
+  # -- Install Rasa Action Server
+  install: false
+
+  external:
+    # -- Determine if external URL is used
+    enabled: false
+    # -- External URL to Rasa Action Server
+    url: ""
+
+## Settings for Duckling
+## See: https://github.com/RasaHQ/helm-charts/tree/main/charts/duckling
+duckling:
+  # -- Install Duckling
+  install: false
+
+  external:
+    # -- Determine if external URL is used
+    enabled: false
+    # -- External URL to Duckling
+    url: ""
