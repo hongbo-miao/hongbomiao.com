@@ -209,6 +209,7 @@ make clean
 - **PyTorch** - Machine learning framework
 - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **OGB** - Open graph benchmark
+- **Rasa** - Machine learning framework for automated text and voice-based conversations
 - **CML** - Continuous machine learning
 - **DVC** - Data version control
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
