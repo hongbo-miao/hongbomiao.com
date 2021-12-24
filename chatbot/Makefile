@@ -21,10 +21,14 @@ rasa-train:
 	rasa train
 rasa-test:
 	rasa test
+rasa-shell:
+	rasa shell
+rasa-start-rasa-server:
+	rasa run
+rasa-start-action-server:
+	rasa run actions
 rasa-visualize:
 	rasa visualize
-rasa-run:
-	rasa run
 rasa-help:
 	rasa --help
 rasa-telemetry-disable:
