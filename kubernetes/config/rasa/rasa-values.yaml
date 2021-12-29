@@ -18,7 +18,7 @@ applicationSettings:
   debugMode: false
 
   # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
-  initialModel: "https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"
+  initialModel: "https://github.com/Hongbo-Miao/rasa-model/blob/main/model.tar.gz?raw=true"
 
   # -- Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined
   trainInitialModel: false
@@ -46,17 +46,17 @@ applicationSettings:
     # -- Additional channel credentials which should be used by Rasa to connect to various
     # input channels
     ## See: https://rasa.com/docs/rasa/messaging-and-voice-channels
-    additionalChannelCredentials: {}
+    additionalChannelCredentials:
     #  rest:
-    #  facebook:
-    #    verify: "rasa"
-    #    secret: "<SECRET>"
-    #    page-access-token: "<PAGE-ACCESS-TOKEN>"
+      telegram:
+        access_token: "5049323071:AAHfn_8k72nupZpq_pFYlwBfiJlZp60e65M"
+        verify: "hongbomiao_bot"
+        webhook_url: "https://tunnel.hongbomiao.com/rasa-service/webhooks/telegram/webhook"
 
   telemetry:
     # -- Enable telemetry
     # See: https://rasa.com/docs/rasa/telemetry/telemetry/
-    enabled: true
+    enabled: false
 
   ## Note: this endpoints configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
   endpoints:
