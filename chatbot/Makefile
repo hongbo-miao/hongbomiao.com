@@ -24,7 +24,7 @@ rasa-test:
 rasa-shell:
 	rasa shell
 rasa-start-rasa-server:
-	rasa run
+	rasa run --enable-api --port=39143
 rasa-start-action-server:
 	rasa run actions
 rasa-visualize:
