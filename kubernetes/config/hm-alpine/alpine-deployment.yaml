@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alpine-deployment
+  name: hm-alpine-deployment
   namespace: hm-alpine
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: alpine
+      app: hm-alpine
   template:
     metadata:
       labels:
-        app: alpine
+        app: hm-alpine
     spec:
       containers:
-        - name: alpine
-          image: alpine:latest
+        - name: hm-alpine
+          image: hongbomiao/hm-alpine:latest
           command:
             - sleep
             - "31536000"
           volumeMounts:
             - mountPath: /data/alpine
-              name: alpine-volume
+              name: hm-alpine-volume
       volumes:
-        - name: alpine-volume
+        - name: hm-alpine-volume
           persistentVolumeClaim:
-            claimName: alpine-pvc
+            claimName: hm-alpine-pvc
