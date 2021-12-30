@@ -28,6 +28,10 @@ download-kafka:
 # MinIO
 # Manifests: https://github.com/minio/operator/tree/master/examples/kustomization
 
+# Rasa
+download-rasa:
+	curl https://github.com/RasaHQ/helm-charts/blob/main/charts/rasa/values.yaml > rasa/rasa-values.yaml
+
 # Yugabyte
 # Docs: https://docs.yugabyte.com/latest/deploy/kubernetes/single-zone/oss/yugabyte-operator/#deploy-a-yugabytedb-cluster-with-this-operator
 # Manifests: https://github.com/yugabyte/yugabyte-operator/tree/master/deploy
