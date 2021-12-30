@@ -14,6 +14,8 @@ focus-opa-debug:
 	sh kubernetes/bin/utils/focusOPADebug.sh
 focus-pixie-debug:
 	sh kubernetes/bin/utils/focusPixieDebug.sh
+focus-rasa-debug:
+	sh kubernetes/bin/utils/focusRasaDebug.sh
 
 install-alpine:
 	sh kubernetes/bin/utils/installAlpine.sh
@@ -420,10 +422,14 @@ curl-cat:
 # Cloudflare
 cloudflare-tunnel-login:
 	cloudflared tunnel login
+cloudflare-tunnel-list:
+	cloudflared tunnel list
 cloudflare-tunnel-create:
 	cloudflared tunnel create hm-tunnel
+cloudflare-tunnel-delete:
+	cloudflared tunnel delete hm-tunnel
 cloudflare-k8s-create-secret:
-	kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/homiao/.cloudflared/7aca8dbc-634c-43b8-9a5d-51d84370ed02.json
+	kubectl create secret generic tunnel-credentials --from-file=credentials.json=/Users/homiao/.cloudflared/afccc94c-0065-4e40-832a-a00b1940faaf.json
 cloudflare-tunnel-dns:
 	cloudflared tunnel route dns hm-tunnel tunnel.hongbomiao.com
 
