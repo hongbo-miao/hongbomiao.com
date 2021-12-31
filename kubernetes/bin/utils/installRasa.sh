@@ -10,4 +10,4 @@ helm install \
   --values=kubernetes/config/rasa/rasa-values.yaml \
   hm-release \
   rasa/rasa
-# helm uninstall --namespace=hm-rasa hm-release
+# Delete: helm uninstall --namespace=hm-rasa hm-release
