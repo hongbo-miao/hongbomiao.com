@@ -35,3 +35,20 @@ stories:
   - action: utter_greet
   - intent: give_time
   - action: action_show_time
+
+- story: my shirt size path
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: get_my_shirt_size
+    - action: action_get_shirt_size
+    - intent: set_my_shirt_size
+      entities:
+        - shirt_size: large
+    - slot_was_set:
+        - shirt_size: large
+    - action: utter_remember
+    - intent: get_my_shirt_size
+    - action: action_get_shirt_size
+    - intent: goodbye
+    - action: utter_goodbye
