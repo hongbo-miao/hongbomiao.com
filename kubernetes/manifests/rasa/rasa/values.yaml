@@ -1,5 +1,3 @@
-# https://github.com/RasaHQ/helm-charts/blob/main/charts/rasa/values.yaml
-
 # Default values for rasa.
 # This is a YAML-formatted file.
 
@@ -18,7 +16,7 @@ applicationSettings:
   debugMode: false
 
   # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
-  initialModel: "https://github.com/Hongbo-Miao/rasa-model/blob/main/model.tar.gz?raw=true"
+  initialModel: "https://github.com/RasaHQ/rasa-x-demo/blob/master/models/model.tar.gz?raw=true"
 
   # -- Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined
   trainInitialModel: false
@@ -46,17 +44,17 @@ applicationSettings:
     # -- Additional channel credentials which should be used by Rasa to connect to various
     # input channels
     ## See: https://rasa.com/docs/rasa/messaging-and-voice-channels
-    additionalChannelCredentials:
+    additionalChannelCredentials: {}
     #  rest:
-      telegram:
-        access_token: "5049323071:AAHfn_8k72nupZpq_pFYlwBfiJlZp60e65M"
-        verify: "hongbomiao_bot"
-        webhook_url: "https://tunnel.hongbomiao.com/rasa-service/webhooks/telegram/webhook"
+    #  facebook:
+    #    verify: "rasa"
+    #    secret: "<SECRET>"
+    #    page-access-token: "<PAGE-ACCESS-TOKEN>"
 
   telemetry:
     # -- Enable telemetry
     # See: https://rasa.com/docs/rasa/telemetry/telemetry/
-    enabled: false
+    enabled: true
 
   ## Note: this endpoints configuration is ignored if `applicationSettings.rasaX.useConfigEndpoint=true`
   endpoints:
@@ -210,7 +208,7 @@ command: []
 # -- Add extra environment variables
 extraEnv: []
   # - name: SOME_CUSTOM_ENV_VAR
-#   value: "custom value"
+  #   value: "custom value"
 
 ## Define the rasa image to work with
 image:
@@ -259,7 +257,7 @@ deploymentLabels: {}
 # -- Defines pod-level security attributes and common container settings
 ## See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 podSecurityContext: {}
-# fsGroup: 2000
+  # fsGroup: 2000
 
 # -- Allows you to overwrite the pod-level security context
 securityContext: {}
@@ -268,7 +266,7 @@ securityContext: {}
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-# runAsUser: 1000
+  # runAsUser: 1000
 
 ## Configuration for the service for the rasa-oss
 service:
@@ -303,7 +301,7 @@ ingress:
   # -- Ingress annotations
   annotations: {}
     # kubernetes.io/ingress.class: nginx
-  # kubernetes.io/tls-acme: "true"
+    # kubernetes.io/tls-acme: "true"
 
   # -- Labels to add to the ingress
   labels: {}
@@ -343,7 +341,7 @@ resources: {}
   #   memory: 128Mi
   # requests:
   #   cpu: 100m
-#   memory: 128Mi
+  #   memory: 128Mi
 
 ##  Autoscaling parameters for the Rasa Open Source Deployment
 ## See: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
@@ -544,7 +542,7 @@ rabbitmq:
 nginx:
   # -- Enabled Nginx as a sidecar container
   ## If you use ingress-nginx as an ingress controller you should disable NGINX.
-  enabled: false
+  enabled: true
 
   image:
     # -- Image name to use
@@ -595,7 +593,7 @@ nginx:
     #   memory: 128Mi
     # requests:
     #   cpu: 100m
-  #   memory: 128Mi
+    #   memory: 128Mi
 
   # -- Allows you to overwrite the pod-level security context
   securityContext: {}
@@ -604,7 +602,7 @@ nginx:
     #   - ALL
     # readOnlyRootFilesystem: true
     # runAsNonRoot: true
-  # runAsUser: 1000
+    # runAsUser: 1000
 
   tls:
     # -- Enable TLS for Nginx sidecar
