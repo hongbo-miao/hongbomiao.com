@@ -30,7 +30,7 @@ download-kafka:
 
 # Rasa
 download-rasa:
-	curl https://github.com/RasaHQ/helm-charts/blob/main/charts/rasa/values.yaml > rasa/rasa-values.yaml
+	curl https://raw.githubusercontent.com/RasaHQ/helm-charts/main/charts/rasa/values.yaml > rasa/rasa/values.yaml
 
 # Yugabyte
 # Docs: https://docs.yugabyte.com/latest/deploy/kubernetes/single-zone/oss/yugabyte-operator/#deploy-a-yugabytedb-cluster-with-this-operator
