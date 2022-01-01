@@ -8,6 +8,7 @@ import (
 	"go.elastic.co/apm/module/apmgrpc"
 	"go.opencensus.io/plugin/ocgrpc"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"io/ioutil"
 	"mime/multipart"
 )
@@ -40,7 +41,7 @@ func GetPrediction(fileHeader *multipart.FileHeader) (*Prediction, error) {
 		config.TorchServeGRPCHost+":"+config.TorchServeGRPCPort,
 		grpc.WithUnaryInterceptor(apmgrpc.NewUnaryClientInterceptor()),
 		grpc.WithStatsHandler(new(ocgrpc.ClientHandler)),
-		grpc.WithInsecure())
+		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
 		return nil, err

@@ -9,6 +9,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"go.elastic.co/apm/module/apmgrpc"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func GetUser(id string) (*types.User, error) {
@@ -16,7 +17,7 @@ func GetUser(id string) (*types.User, error) {
 	conn, err := grpc.Dial(
 		config.DgraphHost+":"+config.DgraphGRPCPort,
 		grpc.WithUnaryInterceptor(apmgrpc.NewUnaryClientInterceptor()),
-		grpc.WithInsecure())
+		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Error().Err(err).Msg("grpc.Dial")
 		return nil, err
