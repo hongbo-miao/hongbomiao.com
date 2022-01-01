@@ -277,9 +277,9 @@ make clean
 ### Bots
 
 - **Renovate** - Dependency update
-- **ImgBot** - Image compression
 - **Mergify** - Automatically merging
 - **Stale** - Stale issues and pull requests closing
+- **ImgBot** - Image compression
 
 ## Highlights
 
@@ -330,6 +330,14 @@ make clean
 ![Dgraph screenshot](https://user-images.githubusercontent.com/3375461/126815004-925b6be5-6e44-44be-9193-46b018ec4bf7.png)
 
 ### Machine Learning
+
+#### Contextual AI assistant
+
+Chatbot on Telegram powered by Rasa.
+
+![Telegram screenshot](https://user-images.githubusercontent.com/3375461/147845562-a3892ae9-d5b1-43df-b1d2-eea71289d240.jpg)
+
+#### Machine learning experiment tracking
 
 [Distributed hyperparameter optimization result](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf) by Weights & Biases.
 
