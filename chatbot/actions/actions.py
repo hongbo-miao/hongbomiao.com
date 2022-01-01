@@ -7,7 +7,7 @@ from rasa_sdk.executor import CollectingDispatcher
 
 class ActionShowTime(Action):
     def name(self) -> Text:
-        return "action_show_time"
+        return "action_get_current_time"
 
     def run(
         self,
@@ -16,8 +16,7 @@ class ActionShowTime(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         now = datetime.now()
-        time = now.strftime("%H:%M:%S")
-        dispatcher.utter_message(text=f"{time}")
+        dispatcher.utter_message(text=f"{now}")
         return []
 
 
