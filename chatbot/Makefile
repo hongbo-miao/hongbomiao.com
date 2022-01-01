@@ -35,3 +35,9 @@ rasa-telemetry-disable:
 	rasa telemetry disable
 rasa-x:
 	rasa x
+
+docker-build:
+	cd .. && \
+	docker build --file=chatbot/Dockerfile --tag=hongbomiao/hm-chatbot:latest .
+docker-push:
+	docker push hongbomiao/hm-chatbot:latest
