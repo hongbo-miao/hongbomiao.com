@@ -13,7 +13,7 @@ helm install \
 # helm upgrade \
 #   --namespace=hm-rasa-action-server \
 #   --reuse-values \
-#   --values=kubernetes/config/rasa/values/values.yaml \
+#   --values=kubernetes/config/rasa/rasa-action-server/values.yaml \
 #   hm-release \
 #   rasa/rasa-action-server
 
