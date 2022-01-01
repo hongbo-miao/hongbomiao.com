@@ -206,8 +206,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-chatbot:
-    name: Push chatbot to Docker Hub
+  push-rasa-action-server:
+    name: Push rasa-action-server to Docker Hub
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -227,7 +227,7 @@ jobs:
           context: .
           file: ./chatbot/Dockerfile
           push: true
-          tags: hongbomiao/hm-chatbot:latest
+          tags: hongbomiao/hm-rasa-action-server:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 

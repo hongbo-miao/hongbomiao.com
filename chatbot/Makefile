@@ -38,6 +38,6 @@ rasa-x:
 
 docker-build:
 	cd .. && \
-	docker build --file=chatbot/Dockerfile --tag=hongbomiao/hm-chatbot:latest .
+	docker build --file=chatbot/Dockerfile --tag=hongbomiao/hm-rasa-action-server:latest .
 docker-push:
-	docker push hongbomiao/hm-chatbot:latest
+	docker push hongbomiao/hm-rasa-action-server:latest
