@@ -3,6 +3,8 @@ set -e
 
 echo "# Install Rasa Action Server"
 kubectl apply --filename=kubernetes/config/rasa/hm-rasa-action-server-namespace.yaml
+helm repo add rasa https://helm.rasa.com
+
 helm install \
   --namespace=hm-rasa-action-server \
   --values=kubernetes/config/rasa/rasa-action-server/values.yaml \
@@ -23,7 +25,6 @@ echo "=================================================="
 
 echo "# Install Rasa Open Source"
 kubectl apply --filename=kubernetes/config/rasa/hm-rasa-namespace.yaml
-helm repo add rasa https://helm.rasa.com
 
 helm install \
   --namespace=hm-rasa \
