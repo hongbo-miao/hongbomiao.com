@@ -1,0 +1,17 @@
+stories:
+  - story: my favorite color path
+    steps:
+      - user: |
+          What is my favorite color?
+        intent: get_my_favorite_color
+      - action: action_get_favorite_color
+      - user: |
+          It is [blue](favorite_color)!
+        intent: set_my_favorite_color
+      - action: utter_remember
+      - slot_was_set:
+          - favorite_color: blue
+      - user: |
+          What is my favorite color?
+        intent: get_my_favorite_color
+      - action: action_get_favorite_color
