@@ -2,14 +2,14 @@ version: "3.0"
 
 stories:
 
-- story: happy path
+- story: happy story
   steps:
   - intent: greet
   - action: utter_greet
   - intent: mood_great
   - action: utter_happy
 
-- story: sad path 1
+- story: sad story 1
   steps:
   - intent: greet
   - action: utter_greet
@@ -19,7 +19,7 @@ stories:
   - intent: affirm
   - action: utter_happy
 
-- story: sad path 2
+- story: sad story 2
   steps:
   - intent: greet
   - action: utter_greet
@@ -29,12 +29,12 @@ stories:
   - intent: deny
   - action: utter_goodbye
 
-- story: time path
+- story: time story
   steps:
   - intent: get_current_time
   - action: action_get_current_time
 
-- story: my favorite color path
+- story: my favorite color story
   steps:
     - intent: get_my_favorite_color
     - action: action_get_favorite_color
@@ -47,7 +47,7 @@ stories:
     - intent: get_my_favorite_color
     - action: action_get_favorite_color
 
-- story: buy pizza path
+- story: buy pizza story
   steps:
     - intent: buy_pizza
     - action: simple_pizza_form
@@ -67,10 +67,9 @@ stories:
     - slot_was_set:
         - requested_slot: null
     - active_loop: null
-    - action: utter_submit
-    - action: utter_pizza_slots
+    - action: utter_order_pizza
 
-- story: buy pizza path (typo)
+- story: buy pizza story (typo)
   steps:
     - intent: buy_pizza
     - action: simple_pizza_form
@@ -102,10 +101,9 @@ stories:
     - slot_was_set:
         - requested_slot: null
     - active_loop: null
-    - action: utter_submit
-    - action: utter_pizza_slots
+    - action: utter_order_pizza
 
-- story: buy pizza path (user interrupts the form 1)
+- story: buy pizza story (user interrupts the form 1)
   steps:
     - intent: buy_pizza
     - action: simple_pizza_form
@@ -118,7 +116,7 @@ stories:
     - action: action_deactivate_loop
     - active_loop: null
 
-- story: buy pizza path (user interrupts the form 2)
+- story: buy pizza story (user interrupts the form 2)
   steps:
     - intent: buy_pizza
     - action: simple_pizza_form
@@ -133,7 +131,7 @@ stories:
     - slot_was_set:
         - requested_slot: null
 
-- story: buy pizza path (user interrupts the form 3)
+- story: buy pizza story (user interrupts the form 3)
   steps:
     - intent: buy_pizza
     - action: simple_pizza_form

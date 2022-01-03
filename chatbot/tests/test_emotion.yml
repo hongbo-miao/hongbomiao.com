@@ -1,8 +1,5 @@
-#### This file contains tests to evaluate that your bot behaves as expected.
-#### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
-
 stories:
-  - story: happy path 1
+  - story: happy story 1
     steps:
       - user: |
           hello there!
@@ -13,7 +10,7 @@ stories:
         intent: mood_great
       - action: utter_happy
 
-  - story: happy path 2
+  - story: happy story 2
     steps:
       - user: |
           hello there!
@@ -28,7 +25,7 @@ stories:
         intent: goodbye
       - action: utter_goodbye
 
-  - story: sad path 1
+  - story: sad story 1
     steps:
       - user: |
           hello
@@ -44,7 +41,7 @@ stories:
         intent: affirm
       - action: utter_happy
 
-  - story: sad path 2
+  - story: sad story 2
     steps:
       - user: |
           hello
@@ -60,7 +57,7 @@ stories:
         intent: deny
       - action: utter_goodbye
 
-  - story: sad path 3
+  - story: sad story 3
     steps:
       - user: |
           hi
@@ -75,17 +72,3 @@ stories:
           no
         intent: deny
       - action: utter_goodbye
-
-  - story: say goodbye
-    steps:
-      - user: |
-          bye-bye!
-        intent: goodbye
-      - action: utter_goodbye
-
-  - story: bot challenge
-    steps:
-      - user: |
-          are you a bot?
-        intent: bot_challenge
-      - action: utter_iamabot
