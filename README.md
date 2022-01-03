@@ -335,7 +335,7 @@ make clean
 
 Chatbot on Telegram powered by Rasa.
 
-![Telegram screenshot](https://user-images.githubusercontent.com/3375461/147845562-a3892ae9-d5b1-43df-b1d2-eea71289d240.jpg)
+![Telegram screenshot](https://user-images.githubusercontent.com/3375461/147900691-aef7e088-e5a9-4116-a66c-0447f0b7c18e.png)
 
 #### Machine learning experiment tracking
 
