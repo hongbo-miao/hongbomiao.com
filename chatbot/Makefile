@@ -23,6 +23,8 @@ rasa-train:
 	rasa train
 rasa-test:
 	rasa test
+rasa-test-story:
+	rasa test --stories tests/test_stories.yml
 rasa-shell:
 	rasa shell
 rasa-interactive:
