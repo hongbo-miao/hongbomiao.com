@@ -1,0 +1,25 @@
+stories:
+  - story: my shirt size path
+    steps:
+      - user: |
+          Hello!
+        intent: greet
+      - action: utter_greet
+      - user: |
+          What is my shirt size?
+        intent: get_my_shirt_size
+      - action: action_get_shirt_size
+      - user: |
+          It is [large](shirt_size)!
+        intent: set_my_shirt_size
+      - action: utter_remember
+      - slot_was_set:
+          - shirt_size: large
+      - user: |
+          What is my shirt size?
+        intent: get_my_shirt_size
+      - action: action_get_shirt_size
+      - user: |
+          Bye!
+        intent: goodbye
+      - action: utter_goodbye
