@@ -20,7 +20,7 @@ applicationSettings:
   # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
   initialModel: "https://github.com/Hongbo-Miao/rasa-model/blob/main/model.tar.gz?raw=true"
 
-  # -- Train a model if a initial model is not defined. This parameter is ignored if the `appplication.Settings.initialModel` is defined
+  # -- Train a model if an initial model is not defined. This parameter is ignored if the `applicationSettings.initialModel` is defined
   trainInitialModel: false
 
   # -- Port on which Rasa runs
@@ -72,7 +72,7 @@ applicationSettings:
       # -- Token used as a authentication token
       token: "token"
 
-      # -- Time in seconds how often the the model server will be querying
+      # -- Time in seconds how often the model server will be querying
       waitTimeBetweenPulls: 20
 
       useRasaXasModelServer:
@@ -82,7 +82,7 @@ applicationSettings:
         # -- The model with a given tag that should be pulled from the model server
         tag: "production"
 
-    ## You can use an Tracker Store to store your assistant's conversation history.
+    ## You can use a Tracker Store to store your assistant's conversation history.
     ## See: https://rasa.com/docs/rasa/tracker-stores
     ##
     ## All environment variables used as values are added to the rasa-oss container automatically if `postgresql.install=true`.
