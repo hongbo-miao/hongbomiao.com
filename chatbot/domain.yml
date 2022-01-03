@@ -9,8 +9,8 @@ intents:
   - mood_unhappy
   - bot_challenge
   - get_current_time
-  - set_my_shirt_size
-  - get_my_shirt_size
+  - set_my_favorite_color
+  - get_my_favorite_color
   - buy_pizza
   - set_pizza_size
   - set_pizza_type
@@ -23,17 +23,17 @@ forms:
       - pizza_type
 
 entities:
-  - shirt_size
+  - favorite_color
   - pizza_size
   - pizza_type
 
 slots:
-  shirt_size:
+  favorite_color:
     type: text
     influence_conversation: true
     mappings:
       - type: from_entity
-        entity: shirt_size
+        entity: favorite_color
   pizza_size:
     type: text
     influence_conversation: true
@@ -49,7 +49,7 @@ slots:
 
 actions:
   - action_get_current_time
-  - action_get_shirt_size
+  - action_get_favorite_color
   - validate_simple_pizza_form
 
 responses:

@@ -23,7 +23,7 @@ class ActionShowTime(Action):
 
 class ActionGetShirtSize(Action):
     def name(self) -> Text:
-        return "action_get_shirt_size"
+        return "action_get_favorite_color"
 
     def run(
         self,
@@ -31,11 +31,11 @@ class ActionGetShirtSize(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        shirt_size = tracker.get_slot("shirt_size")
-        if not shirt_size:
-            dispatcher.utter_message(text="I don't know your shirt size.")
+        favorite_color = tracker.get_slot("favorite_color")
+        if not favorite_color:
+            dispatcher.utter_message(text="I don't know your favorite color.")
         else:
-            dispatcher.utter_message(text=f"Your shirt size is {shirt_size}!")
+            dispatcher.utter_message(text=f"Your favorite color is {favorite_color}!")
         return []
 
 
@@ -71,7 +71,7 @@ class ValidateSimplePizzaForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         if slot_value not in ALLOWED_PIZZA_TYPES:
             dispatcher.utter_message(
-                text=f"I don't recognize that pizza. We serve {'/'.join(ALLOWED_PIZZA_TYPES)}."
+                text=f"We only serve {'/'.join(ALLOWED_PIZZA_TYPES)}."
             )
             return {"pizza_type": None}
         dispatcher.utter_message(text=f"OK! You want to have a {slot_value} pizza.")
