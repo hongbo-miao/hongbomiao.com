@@ -20,7 +20,7 @@ pip-install:
 rasa-init:
 	rasa init
 rasa-train:
-	rasa train
+	rasa train --num-threads=8
 rasa-test:
 	rasa test
 rasa-test-story:
