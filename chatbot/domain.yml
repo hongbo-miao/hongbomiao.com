@@ -11,9 +11,21 @@ intents:
   - get_current_time
   - set_my_shirt_size
   - get_my_shirt_size
+  - buy_pizza
+  - set_pizza_size
+  - set_pizza_type
+  - stop
+
+forms:
+  simple_pizza_form:
+    required_slots:
+      - pizza_size
+      - pizza_type
 
 entities:
   - shirt_size
+  - pizza_size
+  - pizza_type
 
 slots:
   shirt_size:
@@ -22,10 +34,23 @@ slots:
     mappings:
       - type: from_entity
         entity: shirt_size
+  pizza_size:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: pizza_size
+  pizza_type:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: pizza_type
 
 actions:
   - action_get_current_time
   - action_get_shirt_size
+  - validate_simple_pizza_form
 
 responses:
   utter_greet:
@@ -43,6 +68,17 @@ responses:
   - text: "I am a bot, powered by Rasa."
   utter_remember:
     - text: Thanks. I'll remember that.
+
+  utter_submit:
+    - text: I will now order a pizza for you!
+  utter_pizza_slots:
+    - text: I will order a {pizza_size} {pizza_type} pizza.
+  utter_ask_continue:
+    - text: Are you sure you want to stop the form?
+  utter_ask_pizza_size:
+    - text: What size would you like your pizza to be?
+  utter_ask_pizza_type:
+    - text: What kind of pizza would you like to buy?
 
 session_config:
   session_expiration_time: 60
