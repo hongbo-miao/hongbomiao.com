@@ -25,15 +25,14 @@ rules:
     - active_loop: null
     - slot_was_set:
         - requested_slot: null
-    - action: utter_submit
-    - action: utter_pizza_slots
+    - action: utter_order_pizza
 
 - rule: Interruption in Pizza Form
   condition:
     # Condition that form is active.
     - active_loop: simple_pizza_form
   steps:
-    # This unhappy path handles the case of an intent `bot_challenge`.
+    # This unhappy story handles the case of an intent `bot_challenge`.
     - intent: bot_challenge
     - action: utter_iamabot
     # Return to form after handling the `bot_challenge` intent
