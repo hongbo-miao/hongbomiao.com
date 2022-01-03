@@ -207,7 +207,7 @@ make clean
 ### Neural Network
 
 - **PyTorch** - Machine learning framework
-- **PyTorch Geometric** - PyTorch geometric deep learning extension
+  - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **OGB** - Open graph benchmark
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
 - **CML** - Continuous machine learning

@@ -40,7 +40,7 @@ class ActionGetShirtSize(Action):
 
 
 ALLOWED_PIZZA_SIZES = ["small", "medium", "large"]
-ALLOWED_PIZZA_TYPES = ["hawaii", "pepperoni", "veggie"]
+ALLOWED_PIZZA_TYPES = ["cheese", "hawaiian", "pepperoni"]
 
 
 class ValidateSimplePizzaForm(FormValidationAction):
