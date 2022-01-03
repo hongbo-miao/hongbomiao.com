@@ -31,27 +31,21 @@ stories:
 
 - story: time path
   steps:
-  - intent: greet
-  - action: utter_greet
   - intent: get_current_time
   - action: action_get_current_time
 
-- story: my shirt size path
+- story: my favorite color path
   steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: get_my_shirt_size
-    - action: action_get_shirt_size
-    - intent: set_my_shirt_size
+    - intent: get_my_favorite_color
+    - action: action_get_favorite_color
+    - intent: set_my_favorite_color
       entities:
-        - shirt_size: large
+        - favorite_color: blue
     - slot_was_set:
-        - shirt_size: large
+        - favorite_color: blue
     - action: utter_remember
-    - intent: get_my_shirt_size
-    - action: action_get_shirt_size
-    - intent: goodbye
-    - action: utter_goodbye
+    - intent: get_my_favorite_color
+    - action: action_get_favorite_color
 
 - story: buy pizza path
   steps:
