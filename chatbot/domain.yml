@@ -1,5 +1,9 @@
 version: "3.0"
 
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
 intents:
   - greet
   - goodbye
@@ -16,24 +20,18 @@ intents:
   - set_pizza_type
   - stop
 
-forms:
-  simple_pizza_form:
-    required_slots:
-      - pizza_size
-      - pizza_type
-
 entities:
-  - favorite_color
+  - my_favorite_color
   - pizza_size
   - pizza_type
 
 slots:
-  favorite_color:
+  my_favorite_color:
     type: text
     influence_conversation: true
     mappings:
       - type: from_entity
-        entity: favorite_color
+        entity: my_favorite_color
   pizza_size:
     type: text
     influence_conversation: true
@@ -47,26 +45,21 @@ slots:
       - type: from_entity
         entity: pizza_type
 
-actions:
-  - action_get_current_time
-  - action_get_favorite_color
-  - validate_simple_pizza_form
-
 responses:
   utter_greet:
-  - text: Hey! How are you?
+    - text: Hey! How are you?
   utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: https://i.imgur.com/nGF1K8f.jpg
+    - text: "Here is something to cheer you up:"
+      image: https://i.imgur.com/nGF1K8f.jpg
   utter_did_that_help:
-  - text: Did that help you?
+    - text: Did that help you?
   utter_happy:
-  - text: Great, carry on!
+    - text: Great, carry on!
   utter_goodbye:
-  - text: Bye!
+    - text: Bye!
 
   utter_iamabot:
-  - text: Yes, I am a bot!
+    - text: Yes, I am a bot!
 
   utter_remember:
     - text: Thanks. I'll remember that.
@@ -80,6 +73,13 @@ responses:
   utter_ask_pizza_type:
     - text: What kind of pizza would you like to buy?
 
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+actions:
+  - action_get_current_time
+  - action_get_my_favorite_color
+  - validate_simple_pizza_form
+
+forms:
+  simple_pizza_form:
+    required_slots:
+      - pizza_size
+      - pizza_type

@@ -23,7 +23,7 @@ class ActionShowTime(Action):
 
 class ActionGetShirtSize(Action):
     def name(self) -> Text:
-        return "action_get_favorite_color"
+        return "action_get_my_favorite_color"
 
     def run(
         self,
@@ -31,11 +31,11 @@ class ActionGetShirtSize(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        favorite_color = tracker.get_slot("favorite_color")
-        if not favorite_color:
+        my_favorite_color = tracker.get_slot("my_favorite_color")
+        if not my_favorite_color:
             dispatcher.utter_message(text="I don't know your favorite color.")
         else:
-            dispatcher.utter_message(text=f"Your favorite color is {favorite_color}!")
+            dispatcher.utter_message(text=f"Your favorite color is {my_favorite_color}!")
         return []
 
 
