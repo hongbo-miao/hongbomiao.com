@@ -35,7 +35,9 @@ class ActionGetShirtSize(Action):
         if not my_favorite_color:
             dispatcher.utter_message(text="I don't know your favorite color.")
         else:
-            dispatcher.utter_message(text=f"Your favorite color is {my_favorite_color}!")
+            dispatcher.utter_message(
+                text=f"Your favorite color is {my_favorite_color}!"
+            )
         return []
 
 
@@ -45,7 +47,7 @@ ALLOWED_PIZZA_TYPES = ["cheese", "hawaiian", "pepperoni"]
 
 class ValidateSimplePizzaForm(FormValidationAction):
     def name(self) -> Text:
-        return "validate_simple_pizza_form"
+        return "validate_pizza_form"
 
     def validate_pizza_size(
         self,
