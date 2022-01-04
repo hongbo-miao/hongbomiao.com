@@ -28,11 +28,10 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
-	github.com/mattn/go-isatty v0.0.13 // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
 	github.com/minio/minio-go/v7 v7.0.20
 	github.com/minio/sha256-simd v1.0.0 // indirect
-	github.com/open-policy-agent/opa v0.35.0
+	github.com/open-policy-agent/opa v0.36.0
 	github.com/prometheus/procfs v0.7.2 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rs/zerolog v1.26.1
@@ -47,10 +46,8 @@ require (
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.3.0
 	go.opentelemetry.io/otel/sdk v1.3.0
 	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect
 	google.golang.org/grpc v1.43.0
 	google.golang.org/grpc/examples v0.0.0-20210806175644-574137db7de3 // indirect
 	google.golang.org/protobuf v1.27.1
-	gopkg.in/ini.v1 v1.63.2 // indirect
 	howett.net/plist v0.0.0-20201203080718-1454fab16a06 // indirect
 )
