@@ -49,8 +49,8 @@ stories:
   - story: buy pizza story
     steps:
       - intent: buy_pizza
-      - action: simple_pizza_form
-      - active_loop: simple_pizza_form
+      - action: pizza_form
+      - active_loop: pizza_form
       - slot_was_set:
           - requested_slot: pizza_size
       - slot_was_set:
@@ -71,8 +71,8 @@ stories:
   - story: buy pizza story (typo)
     steps:
       - intent: buy_pizza
-      - action: simple_pizza_form
-      - active_loop: simple_pizza_form
+      - action: pizza_form
+      - active_loop: pizza_form
       - slot_was_set:
           - requested_slot: pizza_size
       - slot_was_set:
@@ -105,8 +105,8 @@ stories:
   - story: buy pizza story (user interrupts the form 1)
     steps:
       - intent: buy_pizza
-      - action: simple_pizza_form
-      - active_loop: simple_pizza_form
+      - action: pizza_form
+      - active_loop: pizza_form
       - intent: stop
       - action: utter_ask_continue
       - or:
@@ -118,8 +118,8 @@ stories:
   - story: buy pizza story (user interrupts the form 2)
     steps:
       - intent: buy_pizza
-      - action: simple_pizza_form
-      - active_loop: simple_pizza_form
+      - action: pizza_form
+      - active_loop: pizza_form
       - slot_was_set:
           - requested_slot: pizza_size
       - intent: stop
@@ -133,8 +133,8 @@ stories:
   - story: buy pizza story (user interrupts the form 3)
     steps:
       - intent: buy_pizza
-      - action: simple_pizza_form
-      - active_loop: simple_pizza_form
+      - action: pizza_form
+      - active_loop: pizza_form
       - slot_was_set:
           - requested_slot: pizza_size
       - slot_was_set:
