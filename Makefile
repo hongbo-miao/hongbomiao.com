@@ -180,7 +180,43 @@ list-port-forward:
 kill-port:
 	kill -9 PID
 
-# Skaffold:
+# Vagrant
+vagrant-init:
+	vagrant init hashicorp/bionic64
+vagrant-up:
+	vagrant up
+vagrant-suspend:
+	vagrant suspend
+vagrant-halt:
+	vagrant halt
+vagrant-destroy:
+	vagrant destroy
+vagrant-status:
+	vagrant status
+vagrant-ssh:
+	vagrant ssh
+vagrant-help:
+	vagrant help
+vagrant-box-list:
+	vagrant box list
+vagrant-box-outdated:
+	vagrant box outdated
+vagrant-box-update:
+	vagrant box update
+vagrant-box-remove:
+	vagrant box remove hashicorp/bionic64
+vagrant-box-help:
+	vagrant help box
+vagrant-plugin-list:
+	vagrant plugin list
+vagrant-plugin-install:
+	vagrant plugin install vagrant-vbguest
+vagrant-plugin-uninstall:
+	vagrant plugin uninstall vagrant-vbguest
+vagrant-plugin-help:
+	vagrant help plugin
+
+# Skaffold
 skaffold:
 	skaffold dev
 
