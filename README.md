@@ -202,6 +202,10 @@ make clean
 - **K3s** - Lightweight Kubernetes
 - **Skaffold** - Continuous development for Kubernetes applications
 - **Locust** - Load testing
+
+### Ops
+
+- **Ansible** - IT automation system
 - **CodeQL** - Variant analysis
 
 ### Neural Network
