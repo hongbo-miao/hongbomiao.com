@@ -1,0 +1,28 @@
+---
+- name: Test reachability
+  hosts: localhost
+  remote_user: root
+  tasks:
+    - name: Ping
+      ansible.builtin.ping:
+
+- name: Install Homebrew packages
+  hosts: localhost
+  remote_user: root
+  tasks:
+    - name: Install jq
+      community.general.homebrew:
+        name: jq
+        state: present
+    - name: Install hyperkit
+      community.general.homebrew:
+        name: hyperkit
+        state: present
+    - name: Install minio/stable/mc
+      community.general.homebrew:
+        name: minio/stable/mc
+        state: present
+    - name: Install cloudflare/cloudflare/cloudflared
+      community.general.homebrew:
+        name: cloudflare/cloudflare/cloudflared
+        state: present
