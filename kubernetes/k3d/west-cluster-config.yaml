@@ -1,6 +1,6 @@
 # https://k3d.io/usage/configfile
 
-apiVersion: k3d.io/v1alpha2
+apiVersion: k3d.io/v1alpha3
 kind: Simple
 kubeAPI:
   host: "k8s-hongbomiao.com"
@@ -15,6 +15,10 @@ ports:
       - loadbalancer
 options:
   k3s:
-    extraServerArgs:
-      - --no-deploy=traefik
-      - --cluster-domain=west.k8s-hongbomiao.com
+    extraArgs:
+      - arg: --tls-san=my.host.domain
+        nodeFilters:
+          - server:*
+      - arg: --cluster-domain=west.k8s-hongbomiao.com
+        nodeFilters:
+          - server:*
