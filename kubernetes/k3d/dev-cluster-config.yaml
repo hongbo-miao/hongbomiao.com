@@ -16,9 +16,9 @@ ports:
 options:
   k3s:
     extraArgs:
-      - arg: --tls-san=my.host.domain
+      - arg: --no-deploy=traefik
         nodeFilters:
           - server:*
-      - arg: --cluster-domain=west.k8s-hongbomiao.com
+      - arg: --cluster-domain=dev.k8s-hongbomiao.com
         nodeFilters:
           - server:*
