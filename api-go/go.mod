@@ -40,10 +40,10 @@ require (
 	go.elastic.co/apm/module/apmgrpc v1.15.0
 	go.opencensus.io v0.23.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.29.0
-	go.opentelemetry.io/otel v1.4.0
-	go.opentelemetry.io/otel/exporters/jaeger v1.4.0
-	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.4.0
-	go.opentelemetry.io/otel/sdk v1.4.0
+	go.opentelemetry.io/otel v1.4.1
+	go.opentelemetry.io/otel/exporters/jaeger v1.4.1
+	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.4.1
+	go.opentelemetry.io/otel/sdk v1.4.1
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/grpc v1.44.0
 	google.golang.org/grpc/examples v0.0.0-20210806175644-574137db7de3 // indirect
