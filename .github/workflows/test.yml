@@ -16,7 +16,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -64,7 +64,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Lint Go
         uses: golangci/golangci-lint-action@v3
         with:
@@ -82,7 +82,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Lint Protocol Buffers
         working-directory: api-go
         run: |
@@ -98,7 +98,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -129,7 +129,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Lint Dockerfile
         uses: jbergstroem/hadolint-gh-action@v1
         with:
@@ -146,7 +146,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Lint Kubernetes
         run: |
           docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/east/*.yaml
@@ -169,7 +169,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Lint Shell
         run: |
           shellcheck $(git ls-files '**/*.sh')
@@ -184,7 +184,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -227,7 +227,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -255,7 +255,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -290,7 +290,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -333,7 +333,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Required to retrieve git history
       - name: Set up Node.js
@@ -376,7 +376,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -411,7 +411,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
@@ -431,7 +431,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -466,7 +466,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -503,7 +503,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Test
         run: |
           docker build --file=Dockerfile.prometheus.test .
@@ -518,7 +518,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download OPA Binary
         run: |
           curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
@@ -532,7 +532,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Train and test
         uses: RasaHQ/rasa-train-test-gha@main
         with:
@@ -549,7 +549,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Build Docker image
         run: |
           docker build --file=hm-opal-client/Dockerfile --tag=hongbomiao/hm-opal-client:latest .
@@ -564,7 +564,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -608,7 +608,7 @@ jobs:
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
