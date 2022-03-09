@@ -168,6 +168,7 @@ make clean
 - **Elasticsearch** - Distributed document-oriented search engine
 - **MinIO** - High performance object storage
 - **PostgreSQL** - Object-relational database
+- **KeyDB** - High performance fork of Redis
 - **Flink** - Stream processing framework
   - **flink-streaming-java** - Flink
   - **flink-connector-twitter** - Flink Twitter connector
