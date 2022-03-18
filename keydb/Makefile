@@ -14,6 +14,12 @@ redis-cli-set:
 redis-cli-get:
 	redis-cli GET hm-name
 
+# Redis - publish/subscribe
+redis-cli-subscribe:
+	redis-cli SUBSCRIBE hm-channel
+redis-cli-publish:
+	redis-cli PUBLISH hm-channel "foo"
+
 # Redis - Lua
 redis-cli-lua:
 	redis-cli EVAL 'return ARGV[1].." "..redis.call("GET",KEYS[1])' 1 hm-name "Hello"
@@ -22,7 +28,7 @@ redis-cli-lua-script-run:
 
 redis-cli-lua-script-load:
 	redis-cli SCRIPT LOAD "$$(cat greet.lua)"
-redis-cli-lua-script-run-hash:
+redis-cli-lua-script-run-by-hash:
 	redis-cli EVALSHA c72b1fc2261c116957bbc839b558190a23d1cbb3 1 hm-name "Hello"
 redis-cli-lua-script-exists:
 	redis-cli SCRIPT EXISTS c72b1fc2261c116957bbc839b558190a23d1cbb3
@@ -45,7 +51,7 @@ keydb-cli-set:
 keydb-cli-get:
 	keydb-cli GET hm-name
 
-# KeyDB (multi-master)
+# KeyDB - multi-master
 keydb-start-multi-master:
 	keydb-server --multi-master yes --active-replica yes --replicaof 192.168.2.58 6379 --requirepass passw0rd --masterauth passw0rd
 	keydb-server --multi-master yes --active-replica yes --replicaof 192.168.2.117 6379 --requirepass passw0rd --masterauth passw0rd
