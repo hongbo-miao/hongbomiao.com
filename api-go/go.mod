@@ -47,6 +47,6 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/grpc v1.45.0
 	google.golang.org/grpc/examples v0.0.0-20210806175644-574137db7de3 // indirect
-	google.golang.org/protobuf v1.27.1
+	google.golang.org/protobuf v1.28.0
 	howett.net/plist v0.0.0-20201203080718-1454fab16a06 // indirect
 )
