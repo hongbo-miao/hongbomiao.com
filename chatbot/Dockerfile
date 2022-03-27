@@ -1,4 +1,4 @@
-FROM rasa/rasa-sdk:3.0.6
+FROM rasa/rasa-sdk:3.1.1
 WORKDIR /app
 
 # COPY actions/requirements-actions.txt ./
