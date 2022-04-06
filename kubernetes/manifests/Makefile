@@ -15,6 +15,11 @@ download-fluent-bit:
 	curl https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml > fluentbit/fluent-bit-configmap.yaml
 	curl https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds.yaml > fluentbit/fluent-bit-ds.yaml
 
+# Hasura
+download-hasura:
+	curl https://raw.githubusercontent.com/hasura/graphql-engine/stable/install-manifests/kubernetes/deployment.yaml > hasura/hasura-deployment.yaml
+	curl https://raw.githubusercontent.com/hasura/graphql-engine/stable/install-manifests/kubernetes/svc.yaml > hasura/hasura-service.yaml
+
 # Ingress
 download-ingress-nginx:
 	$(eval INGRESS_VERSION := $(shell curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt))

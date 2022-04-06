@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hasura-configmap
+  namespace: hm-hasura
+data:
+  hasura_graphql_database_url: "postgres://admin:passw0rd@postgres-service.hm-postgres:40072/opa_db"
+  hasura_graphql_metadata_database_url: "postgres://admin:passw0rd@postgres-service.hm-postgres:40072/opa_db"
+  hasura_graphql_admin_secret: "passw0rd"
+  hasura_graphql_enabled_log_types: "startup, http-log, webhook-log, websocket-log, query-log"
+  hasura_graphql_enable_console: "true"
+  hasura_graphql_dev_mode: "true"
