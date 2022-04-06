@@ -178,6 +178,7 @@ make clean
   - **debezium-connector-postgres** - PostgreSQL connector
   - **kafka-connect-elasticsearchkafka-connect-elasticsearch** - Elasticsearch sink connector
   - **http-connector-for-apache-kafka** - HTTP sink connector
+- **Hasura GraphQL Engine** - GraphQL server
 - **golang-migrate/migrate** - Database migrations
 
 ### Cloud Native
