@@ -59,10 +59,11 @@ fi
 source kubernetes/bin/utils/installElastic.sh
 source kubernetes/bin/utils/installArgoCD.sh
 
+source kubernetes/bin/utils/installPostgres.sh
+source kubernetes/bin/utils/migratePostgres.sh
 source kubernetes/bin/utils/installWestClusterApp.sh
 source kubernetes/bin/utils/secureOPALServer.sh
 source kubernetes/bin/utils/secureConfigServer.sh
-source kubernetes/bin/utils/migratePostgres.sh
 
 if [ $is_debug = false ]; then
   sleep 120
