@@ -27,6 +27,11 @@ spec:
                 configMapKeyRef:
                   name: hasura-configmap
                   key: hasura_graphql_database_url
+            - name: HASURA_GRAPHQL_ADMIN_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: hasura-configmap
+                  key: hasura_graphql_admin_secret
             - name: HASURA_GRAPHQL_ENABLE_CONSOLE
               valueFrom:
                 configMapKeyRef:
