@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: hasura
+  namespace: hm-hasura
   labels:
     app: hasura
-  name: hasura
-  namespace: default
 spec:
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 8080
+  type: ClusterIP
   selector:
     app: hasura
-  type: LoadBalancer
+  ports:
+    - name: hasura
+      protocol: TCP
+      targetPort: hasura
+      port: 16023
