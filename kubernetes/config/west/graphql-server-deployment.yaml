@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: graphql-server-deployment
   namespace: hm
+  labels:
+    app.kubernetes.io/name: graphql-server
 spec:
   replicas: 1
   selector:
