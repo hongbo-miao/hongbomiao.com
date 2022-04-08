@@ -10,17 +10,21 @@
   hosts: localhost
   remote_user: root
   tasks:
-    - name: Install jq
+    - name: Install cloudflare/cloudflare/cloudflared
       community.general.homebrew:
-        name: jq
+        name: cloudflare/cloudflare/cloudflared
+        state: present
+    - name: Install hasura-cli
+      community.general.homebrew:
+        name: hasura-cli
         state: present
     - name: Install hyperkit
       community.general.homebrew:
         name: hyperkit
         state: present
-    - name: Install redis
+    - name: Install jq
       community.general.homebrew:
-        name: redis
+        name: jq
         state: present
     - name: Install keydb
       community.general.homebrew:
@@ -30,7 +34,7 @@
       community.general.homebrew:
         name: minio/stable/mc
         state: present
-    - name: Install cloudflare/cloudflare/cloudflared
+    - name: Install redis
       community.general.homebrew:
-        name: cloudflare/cloudflare/cloudflared
-        state: present
+        name: redis
+        state: presentx
