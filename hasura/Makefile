@@ -2,3 +2,32 @@
 
 hasura-init:
 	hasura init .
+hasura-console:
+	hasura console
+
+hasura-migrate-create:
+	hasura migrate create init --from-server
+hasura-migrate-status:
+	hasura migrate status
+hasura-migrate-apply:
+	hasura migrate apply
+hasura-migrate-apply-skip-execution:
+	hasura migrate apply --skip-execution --version=xxxxxxxxxxxxx
+hasura-migrate-apply-goto:
+	hasura migrate apply --goto --version=xxxxxxxxxxxxx
+hasura-migrate-squash:
+	hasura migrate squash --name=xxx --from=xxxxxxxxxxxxx
+
+hasura-metadata-export:
+	hasura metadata export
+hasura-metadata-diff:
+	hasura metadata diff
+hasura-metadata-apply:
+	hasura metadata apply
+
+hasura-seed-create:
+	hasura seed create roles_seed
+hasura-seed-create-from-table:
+	hasura seed create roles_seed --from-table=roles
+hasura-seed-apply:
+	hasura seed apply
