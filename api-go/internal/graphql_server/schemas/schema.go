@@ -7,6 +7,7 @@ import (
 var query = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Query",
 	Fields: graphql.Fields{
+		"currentTime":             &currentTimeGraphQLField,
 		"opa":                     &opaGraphQLField,
 		"opal":                    &opalGraphQLField,
 		"me":                      &meGraphQLField,
