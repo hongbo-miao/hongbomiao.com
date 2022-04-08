@@ -54,9 +54,6 @@ rm -f kubernetes/config/west/opal-broadcast-channel-service.yaml
 rm -f kubernetes/config/west/opal-server-configmap.yaml
 rm -f kubernetes/config/west/opal-server-deployment.yaml
 rm -f kubernetes/config/west/opal-server-service.yaml
-rm -f kubernetes/config/west/postgres-configmap.yaml
-rm -f kubernetes/config/west/postgres-service.yaml
-rm -f kubernetes/config/west/postgres-statefulset.yaml
 rm -f kubernetes/config/west/redis-leader-deployment.yaml
 rm -f kubernetes/config/west/redis-leader-service.yaml
 rm -f kubernetes/config/west/torchserve-deployment.yaml
