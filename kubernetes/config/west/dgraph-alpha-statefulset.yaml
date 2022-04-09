@@ -6,6 +6,8 @@ kind: StatefulSet
 metadata:
   name: dgraph-alpha
   namespace: hm-dgraph
+  labels:
+    app.kubernetes.io/name: dgraph-alpha
 spec:
   serviceName: "dgraph-alpha"
   replicas: 3

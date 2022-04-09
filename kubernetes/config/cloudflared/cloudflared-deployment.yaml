@@ -5,6 +5,8 @@ kind: Deployment
 metadata:
   name: cloudflared
   namespace: hm-cloudflared
+  labels:
+    app.kubernetes.io/name: cloudflared
 spec:
   selector:
     matchLabels:

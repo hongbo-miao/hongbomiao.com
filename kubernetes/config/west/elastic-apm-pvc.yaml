@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: elastic-apm-pvc
   namespace: hm
+  labels:
+    app.kubernetes.io/name: elastic-apm
 spec:
   volumeName: elastic-apm-pv
   accessModes:

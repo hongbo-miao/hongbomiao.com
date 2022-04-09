@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: hm-alpine-deployment
   namespace: hm-alpine
+  labels:
+    app.kubernetes.io/name: alpine
 spec:
   replicas: 1
   selector:

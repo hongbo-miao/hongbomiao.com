@@ -5,6 +5,8 @@ kind: ConfigMap
 metadata:
   name: cloudflared
   namespace: hm-cloudflared
+  labels:
+    app.kubernetes.io/name: cloudflared
 data:
   config.yaml: |
     # Name of the tunnel you want to run
