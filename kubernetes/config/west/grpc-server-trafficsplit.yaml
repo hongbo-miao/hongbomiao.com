@@ -3,6 +3,8 @@ kind: TrafficSplit
 metadata:
   name: grpc-server-service-traffic-split
   namespace: hm
+  labels:
+    app.kubernetes.io/name: grpc-server
 spec:
   service: grpc-server-service
   backends:

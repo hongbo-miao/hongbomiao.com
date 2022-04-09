@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: opa-pvc
   namespace: hm
+  labels:
+    app.kubernetes.io/name: opa
 spec:
   volumeName: opa-pv
   accessModes:

@@ -3,6 +3,8 @@ kind: StatefulSet
 metadata:
   name: postgres-statefulset
   namespace: hm-postgres
+  labels:
+    app.kubernetes.io/name: postgres
 spec:
   serviceName: "postgres-service"
   replicas: 1

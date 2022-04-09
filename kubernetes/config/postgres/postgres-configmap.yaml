@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: postgres-configmap
   namespace: hm-postgres
+  labels:
+    app.kubernetes.io/name: postgres
 data:
   pgdata: "/var/lib/postgresql/data/pgdata"
   postgres_db: "postgres"

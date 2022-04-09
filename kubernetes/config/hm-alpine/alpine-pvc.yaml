@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: hm-alpine-pvc
   namespace: hm-alpine
+  labels:
+    app.kubernetes.io/name: alpine
 spec:
   volumeName: hm-alpine-pv
   accessModes:

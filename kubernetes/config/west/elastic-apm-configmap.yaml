@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: elastic-apm-configmap
   namespace: hm
+  labels:
+    app.kubernetes.io/name: elastic-apm
 data:
   elastic_apm_server_url: "https://hm-apm-apm-http.elastic:8200"
   elastic_apm_environment: "production"
