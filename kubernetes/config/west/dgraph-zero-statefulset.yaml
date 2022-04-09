@@ -6,6 +6,8 @@ kind: StatefulSet
 metadata:
   name: dgraph-zero
   namespace: hm-dgraph
+  labels:
+    app.kubernetes.io/name: dgraph-zero
 spec:
   serviceName: "dgraph-zero"
   replicas: 3

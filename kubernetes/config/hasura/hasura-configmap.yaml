@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: hasura-configmap
   namespace: hm-hasura
+  labels:
+    app.kubernetes.io/name: hasura
 data:
   hasura_graphql_database_url: "postgres://admin:passw0rd@postgres-service.hm-postgres:40072/opa_db"
   hasura_graphql_metadata_database_url: "postgres://admin:passw0rd@postgres-service.hm-postgres:40072/opa_db"

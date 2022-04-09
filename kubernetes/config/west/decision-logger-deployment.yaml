@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: decision-logger-deployment
   namespace: hm
+  labels:
+    app.kubernetes.io/name: decision-logger
 spec:
   replicas: 1
   selector:

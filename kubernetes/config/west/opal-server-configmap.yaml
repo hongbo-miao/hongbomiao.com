@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: opal-server-configmap
   namespace: hm-opa
+  labels:
+    app.kubernetes.io/name: opal-server
 data:
   opal_broadcast_uri: "postgres://admin:passw0rd@opal-broadcast-channel-service.hm-opa:34876/opal_server_db"
   opal_data_config_sources: '{"external_source_url":"http://config-server-service.hm:26660/config"}'

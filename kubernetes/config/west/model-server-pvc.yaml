@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: model-server-pvc
   namespace: hm-cnn
+  labels:
+    app.kubernetes.io/name: model-server
 spec:
   volumeName: model-server-pv
   accessModes:

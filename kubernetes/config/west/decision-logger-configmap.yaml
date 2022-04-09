@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: decision-logger-configmap
   namespace: hm
+  labels:
+    app.kubernetes.io/name: decision-logger
 data:
   app_env: "production"
   port: "41797"
