@@ -7,6 +7,7 @@ import (
 var query = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Query",
 	Fields: graphql.Fields{
+		"seed":                    &seedGraphQLField,
 		"currentTime":             &currentTimeGraphQLField,
 		"opa":                     &opaGraphQLField,
 		"opal":                    &opalGraphQLField,
@@ -22,6 +23,7 @@ var query = graphql.NewObject(graphql.ObjectConfig{
 var mutation = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Mutation",
 	Fields: graphql.Fields{
+		"setSeed":  &setSeedGraphQLField,
 		"signIn":   &signInGraphQLField,
 		"adoptDog": &adoptDogGraphQLField,
 	},
