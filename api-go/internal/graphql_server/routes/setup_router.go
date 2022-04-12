@@ -21,6 +21,8 @@ func SetupRouter(env string, rdb *redis.Client, minioClient *minio.Client) *gin.
 	r.Use(logger.SetLogger())
 	r.Use(otelgin.Middleware("hm-graphql-server"))
 	r.GET("/", sharedControllers.Health)
+	r.GET("/seed", controllers.GetSeed)
+	r.POST("/seed", controllers.SetSeed)
 	r.POST("/predict", controllers.Predict)
 	r.POST("/upload", controllers.Upload(minioClient))
 	r.POST("/graphql", handlers.GraphQLHandler(rdb))
