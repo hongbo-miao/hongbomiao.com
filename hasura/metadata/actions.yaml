@@ -1,6 +1,12 @@
-actions: []
+actions:
+- name: updateSeed
+  definition:
+    kind: synchronous
+    handler: http://graphql-server-service.hm:31800/hasura/update-seed
+    forward_client_headers: true
 custom_types:
   enums: []
   input_objects: []
-  objects: []
+  objects:
+  - name: SeedOutput
   scalars: []
