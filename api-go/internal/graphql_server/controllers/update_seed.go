@@ -9,21 +9,9 @@ import (
 	"net/http"
 )
 
-func GetSeed(c *gin.Context) {
-	seed, err := utils.GetSeed()
-	if err != nil {
-		log.Error().Err(err).Msg("utils.GetSeed")
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-	c.JSON(http.StatusOK, seed)
-}
-
-func SetSeed(c *gin.Context) {
+func UpdateSeed(c *gin.Context) {
 	bodyBytes, _ := ioutil.ReadAll(c.Request.Body)
-	n, err := jsonparser.GetInt(bodyBytes, "n")
+	n, err := jsonparser.GetInt(bodyBytes, "input", "n")
 	if err != nil {
 		log.Error().Err(err).Bytes("bodyBytes", bodyBytes).Msg("jsonparser.GetInt n")
 		c.JSON(http.StatusInternalServerError, gin.H{
