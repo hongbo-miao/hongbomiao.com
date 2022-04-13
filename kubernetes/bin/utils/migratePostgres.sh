@@ -6,7 +6,9 @@ sleep 5
 
 echo "# Create database in Postgres"
 psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="create database opa_db;"
+psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="create database ory_hydra_db;"
 psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="grant all privileges on database opa_db to admin;"
+psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="grant all privileges on database ory_hydra_db to admin;"
 echo "=================================================="
 
 echo "# Initialize opa_db in Postgres"
