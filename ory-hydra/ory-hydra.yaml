@@ -1,0 +1,13 @@
+hydra:
+  autoMigrate: true
+  dangerousForceHttp: true
+  config:
+    dsn: "postgres://admin:passw0rd@postgres-service.hm-postgres:40072/ory_hydra_db"
+    secrets:
+      system:
+        - "RGRmdGE5QU1STnZSSnE0Z0FCV"
+    urls:
+      consent: https://my-idp/consent
+      login: https://my-idp/login
+      self:
+        issuer: https://my-hydra/
