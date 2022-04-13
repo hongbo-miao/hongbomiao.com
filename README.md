@@ -183,6 +183,7 @@ make clean
 
 ### Cloud Native
 
+- **Ory Hydra** - OAuth 2.0 and OpenID Connect server
 - **Terraform** - Infrastructure as code
 - **TorchServe** - PyTorch models serving
 - **Linkerd** - Service mesh
