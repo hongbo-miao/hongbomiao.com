@@ -16,4 +16,4 @@ hydra-generate-token:
 hydra-introspect-token:
 	hydra token introspect \
 		--endpoint http://localhost:4445/ \
-		JEVbK47mqINg1p_ZIJSsVc_umqe5Byfi2bMMyG3NXtQ.Ac9QUsXZTt97b6OAp7MioDZx3zI4iy1fM4WzixFHbMc
+		xxx
