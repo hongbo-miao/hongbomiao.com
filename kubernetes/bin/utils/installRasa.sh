@@ -5,18 +5,16 @@ echo "# Install Rasa Action Server"
 kubectl apply --filename=kubernetes/config/rasa/hm-rasa-action-server-namespace.yaml
 helm repo add rasa https://helm.rasa.com
 
-helm install \
+helm install hm-release \
   --namespace=hm-rasa-action-server \
   --values=kubernetes/config/rasa/rasa-action-server/values.yaml \
-  hm-release \
   rasa/rasa-action-server
 
 # Upgrade:
-# helm upgrade \
+# helm upgrade hm-release \
 #   --namespace=hm-rasa-action-server \
 #   --reuse-values \
 #   --values=kubernetes/config/rasa/rasa-action-server/values.yaml \
-#   hm-release \
 #   rasa/rasa-action-server
 
 # Delete:
@@ -26,18 +24,16 @@ echo "=================================================="
 echo "# Install Rasa Open Source"
 kubectl apply --filename=kubernetes/config/rasa/hm-rasa-namespace.yaml
 
-helm install \
+helm install hm-release \
   --namespace=hm-rasa \
   --values=kubernetes/config/rasa/rasa/values.yaml \
-  hm-release \
   rasa/rasa
 
 # Upgrade:
-# helm upgrade \
+# helm upgrade hm-release \
 #   --namespace=hm-rasa \
 #   --reuse-values \
 #   --values=kubernetes/config/rasa/rasa/values.yaml \
-#   hm-release \
 #   rasa/rasa
 
 # Delete:
