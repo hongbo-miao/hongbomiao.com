@@ -1,15 +1,17 @@
+# https://www.ory.sh/docs/hydra/reference/configuration
+
 hydra:
   autoMigrate: true
   dangerousForceHttp: true
   config:
-    dsn: "postgres://admin:passw0rd@postgres-service.hm-postgres:40072/ory_hydra_db"
+    dsn: postgres://admin:passw0rd@postgres-service.hm-postgres:40072/ory_hydra_db
     secrets:
       system:
-        - "RGRmdGE5QU1STnZSSnE0Z0FCV"
+        - mbYWAuWmMzW8supY4WSMR3vQ3TtFXfFF
     strategies:
       access_token: jwt
     urls:
-      consent: https://my-idp/consent
-      login: https://my-idp/login
+      consent: https://hm-idp/consent
+      login: https://hm-idp/login
       self:
-        issuer: https://my-hydra/
+        issuer: https://hm-hydra/
