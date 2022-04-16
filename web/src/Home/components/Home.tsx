@@ -34,14 +34,14 @@ const connector = connect(
 type Props = ConnectedProps<typeof connector>;
 
 const Home: React.VFC<Props> = (props) => {
-  const { me, queryMe, subscribePing } = props;
+  const { me, subscribePing } = props;
 
   React.useEffect(() => {
     // queryMe(meQuery);
     subscribePing(pingSubscription);
 
     analytics.page();
-  }, [queryMe]);
+  }, [subscribePing]);
 
   const { bio, name } = me;
 
