@@ -38,6 +38,10 @@ download-rasa:
 	curl https://raw.githubusercontent.com/RasaHQ/helm-charts/main/charts/rasa/values.yaml > rasa/rasa/values.yaml
 	curl https://raw.githubusercontent.com/RasaHQ/helm-charts/main/charts/rasa-action-server/values.yaml > rasa/rasa-action-server/values.yaml
 
+# Superset
+download-superset:
+	curl https://raw.githubusercontent.com/apache/superset/master/helm/superset/values.yaml > superset/helm/values.yaml
+
 # Yugabyte
 # Docs: https://docs.yugabyte.com/latest/deploy/kubernetes/single-zone/oss/yugabyte-operator/#deploy-a-yugabytedb-cluster-with-this-operator
 # Manifests: https://github.com/yugabyte/yugabyte-operator/tree/master/deploy
