@@ -3,7 +3,7 @@ import './shared/utils/initTracer';
 import './index.css';
 import * as Sentry from '@sentry/react';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
@@ -16,18 +16,22 @@ import store from './shared/utils/store';
 
 initSentry();
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Sentry.ErrorBoundary fallback={<p>An error has occurred</p>}>
-      <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <HmApp />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </Provider>
-    </Sentry.ErrorBoundary>
-  </React.StrictMode>,
-  document.getElementById('root'),
+const container = document.getElementById('root');
+
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container!);
+
+root.render(
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  <Sentry.ErrorBoundary fallback={<p>An error has occurred</p>}>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <HmApp />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </Provider>
+  </Sentry.ErrorBoundary>,
 );
 
 /*
