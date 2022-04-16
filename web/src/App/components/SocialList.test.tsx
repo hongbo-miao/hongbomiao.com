@@ -12,6 +12,7 @@ describe('SocialList', () => {
 
   test('render .level-item', () => {
     const { container } = render(component);
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     expect(container.getElementsByTagName('img')).toHaveLength(WEBSITES.length);
   });
 });

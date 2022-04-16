@@ -33,7 +33,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended', // @typescript-eslint/eslint-plugin
     'plugin:jest/recommended', // eslint-plugin-jest
     'plugin:jest-dom/recommended', // eslint-plugin-jest-dom
-    'plugin:testing-library/recommended', // eslint-plugin-testing-library
+    'plugin:testing-library/react', // eslint-plugin-testing-library
     'plugin:react/recommended', // eslint-plugin-react
     'plugin:jsx-a11y/recommended', // eslint-plugin-jsx-a11y
     'plugin:security/recommended', // eslint-plugin-security
