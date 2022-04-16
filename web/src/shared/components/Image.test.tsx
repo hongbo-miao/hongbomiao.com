@@ -15,11 +15,13 @@ describe('Image', () => {
 
   test('picture contains avif', () => {
     const { container } = render(component);
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     expect(container.getElementsByTagName('source')).toHaveLength(1);
   });
 
   test('picture contains fallback img', () => {
     const { container } = render(component);
+    // eslint-disable-next-line testing-library/no-container,testing-library/no-node-access
     expect(container.getElementsByTagName('img')).toHaveLength(1);
   });
 });
