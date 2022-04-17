@@ -31,7 +31,7 @@ const connector = connect(
 
 type Props = ConnectedProps<typeof connector>;
 
-const Home: React.VFC<Props> = (props) => {
+const Home: React.FC<Props> = (props) => {
   const { me, subscribePing } = props;
 
   React.useEffect(() => {

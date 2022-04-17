@@ -8,7 +8,7 @@ import getOPALDecision from '../queries/getOPALDecision';
 import styles from './OPALExperiment.module.css';
 import HmPreAuth from './PreAuth';
 
-const OPALExperiment: React.VFC = () => {
+const OPALExperiment: React.FC = () => {
   const [readDogData, setReadDogData] = React.useState<any>(undefined);
   const [adoptDogData, setAdoptDogData] = React.useState<any>(undefined);
 

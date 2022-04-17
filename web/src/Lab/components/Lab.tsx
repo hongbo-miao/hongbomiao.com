@@ -11,7 +11,7 @@ const HmOPAExperiment = React.lazy(() => import('./OPAExperiment'));
 const HmOPALExperiment = React.lazy(() => import('./OPALExperiment'));
 const HmWelcome = React.lazy(() => import('./Welcome'));
 
-const Lab: React.VFC = () => {
+const Lab: React.FC = () => {
   const { me } = useMe();
 
   if (me == null) {
