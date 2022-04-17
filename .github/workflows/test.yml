@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  lint-js-css-sol-md:
-    name: Lint (JavaScript, CSS, Solidity, Markdown)
+  lint-css-sol-md:
+    name: Lint (CSS, Solidity, Markdown)
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -36,6 +36,45 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
+      - name: Lint CSS
+        run: |
+          npm run lint:css
+      - name: Lint Solidity
+        run: |
+          npm run lint:sol
+      - name: Lint Markdown
+        run: |
+          npm run lint:md
+
+  lint-js:
+    name: Lint (JavaScript)
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
           cd web && npm ci
           cd ../mobile && npm ci
           cd ../api-node && npm ci
@@ -44,15 +83,6 @@ jobs:
       - name: Lint JavaScript
         run: |
           npm run lint:js
-      - name: Lint CSS
-        run: |
-          npm run lint:js
-      - name: Lint Solidity
-        run: |
-          npm run lint:sol
-      - name: Lint Markdown
-        run: |
-          npm run lint:md
 
   lint-go:
     name: Lint (Go)
@@ -203,7 +233,6 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          npm ci
           cd web && npm ci
           cd ../mobile && npm ci
           cd ../api-node && npm ci
@@ -584,8 +613,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
+        working-directory: cypress
         run: |
-          cd cypress && npm ci
+          npm ci
       - name: Pull Docker images
         run: |
           docker-compose --file=docker-compose.cypress.yml pull
@@ -596,8 +626,9 @@ jobs:
         run: |
           docker-compose --file=docker-compose.cypress.yml up --detach
       - name: Cypress
+        working-directory: cypress
         run: |
-          cd cypress && npm run test:cypress:headless:5000
+          npm run test:cypress:headless:5000
 
   coverage:
     name: Coverage
@@ -629,7 +660,6 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          npm ci
           cd web && npm ci
           cd ../mobile && npm ci
           cd ../api-node && npm ci
