@@ -2,7 +2,7 @@
 set -e
 
 echo "# Install Prometheus"
-# https://prometheus-operator.dev/docs/prologue/quick-start/
+# https://prometheus-operator.dev/docs/prologue/quick-start
 kubectl create --filename=kubernetes/config/prometheus/setup
 kubectl create --filename=kubernetes/config/prometheus
 

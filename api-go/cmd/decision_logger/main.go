@@ -4,6 +4,7 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/decision_logger/controllers"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/decision_logger/utils"
 	sharedControllers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/controllers"
+	sharedHandlers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/handlers"
 	sharedUtils "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/utils"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/logger"
@@ -24,6 +25,7 @@ func main() {
 	r.Use(apmgin.Middleware(r))
 	r.Use(logger.SetLogger())
 	r.GET("/", sharedControllers.Health)
+	r.GET("/metrics", sharedHandlers.PrometheusHandler())
 	r.Use(gzip.Gzip(gzip.DefaultCompression, gzip.WithDecompressFn(gzip.DefaultDecompressHandle)))
 	r.POST("/logs", controllers.Logs)
 	err := r.Run(":" + config.Port)
