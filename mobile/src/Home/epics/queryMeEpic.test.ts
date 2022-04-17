@@ -1,6 +1,7 @@
 import { StateObservable } from 'redux-observable';
 import { Observable, throwError, timer } from 'rxjs';
 import { AjaxResponse, AjaxError } from 'rxjs/ajax';
+// eslint-disable-next-line import/no-unresolved
 import { ColdObservable } from 'rxjs/internal/testing/ColdObservable';
 import { switchMap } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
