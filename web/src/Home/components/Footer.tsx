@@ -1,10 +1,8 @@
 import React from 'react';
-import HmLazyComponent from '../../shared/components/LazyComponent';
+import HmCopyright from '../../App/components/Copyright';
+import HmSocialList from '../../App/components/SocialList';
 import WEBSITES from '../fixtures/WEBSITES';
 import styles from './Footer.module.css';
-
-const HmCopyright = React.lazy(() => import('../../App/components/Copyright'));
-const HmSocialList = React.lazy(() => import('../../App/components/SocialList'));
 
 const Footer: React.VFC = () => {
   const year = new Date().getFullYear();
@@ -14,15 +12,11 @@ const Footer: React.VFC = () => {
       <div className={`container is-max-desktop ${styles.hmContainer}`}>
         <nav className="level">
           <div className="level-left">
-            <HmLazyComponent>
-              <HmSocialList websites={WEBSITES} />
-            </HmLazyComponent>
+            <HmSocialList websites={WEBSITES} />
           </div>
           <div className="level-right">
             <div className="level-item">
-              <HmLazyComponent>
-                <HmCopyright year={year} />
-              </HmLazyComponent>
+              <HmCopyright year={year} />
             </div>
           </div>
         </nav>

@@ -4,9 +4,9 @@ import useMe from '../../auth/hooks/useMe';
 import HmLazyComponent from '../../shared/components/LazyComponent';
 import Paths from '../../shared/utils/paths';
 import styles from './Lab.module.css';
+import HmMenu from './Menu';
+import HmNavbar from './Navbar';
 
-const HmMenu = React.lazy(() => import('./Menu'));
-const HmNavbar = React.lazy(() => import('./Navbar'));
 const HmOPAExperiment = React.lazy(() => import('./OPAExperiment'));
 const HmOPALExperiment = React.lazy(() => import('./OPALExperiment'));
 const HmWelcome = React.lazy(() => import('./Welcome'));
@@ -20,13 +20,9 @@ const Lab: React.VFC = () => {
 
   return (
     <div className="container is-max-desktop">
-      <HmLazyComponent>
-        <HmNavbar />
-      </HmLazyComponent>
+      <HmNavbar />
       <div className={styles.hmBody}>
-        <HmLazyComponent>
-          <HmMenu />
-        </HmLazyComponent>
+        <HmMenu />
         <HmLazyComponent>
           <Routes>
             <Route index element={<HmWelcome />} />
