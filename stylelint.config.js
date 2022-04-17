@@ -9,6 +9,11 @@ module.exports = {
   ],
   plugins: ['stylelint-high-performance-animation'], // stylelint-high-performance-animation
   rules: {
-    'plugin/no-low-performance-animation-properties': true, // stylelint-high-performance-animation
+    // stylelint-config-standard
+    'keyframes-name-pattern': null,
+    'selector-class-pattern': null,
+
+    // stylelint-high-performance-animation
+    'plugin/no-low-performance-animation-properties': true,
   },
 };
