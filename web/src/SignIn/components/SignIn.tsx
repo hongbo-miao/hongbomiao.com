@@ -8,7 +8,7 @@ import useAuth from '../../auth/hooks/useAuth';
 import useMe from '../../auth/hooks/useMe';
 import styles from './SignIn.module.css';
 
-const SignIn: React.VFC = () => {
+const SignIn: React.FC = () => {
   const { signIn } = useAuth();
   const { me } = useMe();
 

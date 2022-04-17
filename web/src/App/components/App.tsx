@@ -7,7 +7,7 @@ const HmHome = React.lazy(() => import('../../Home/components/Home'));
 const HmSignIn = React.lazy(() => import('../../SignIn/components/SignIn'));
 const HmLab = React.lazy(() => import('../../Lab/components/Lab'));
 
-const App: React.VFC = () => (
+const App: React.FC = () => (
   <BrowserRouter>
     <HmLazyComponent>
       <Routes>

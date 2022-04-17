@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Paths from '../../shared/utils/paths';
 
-const Menu: React.VFC = () => {
+const Menu: React.FC = () => {
   return (
     <aside className="menu">
       <p className="menu-label">GENERAL</p>
