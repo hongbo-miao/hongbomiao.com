@@ -343,7 +343,6 @@ jobs:
       - name: Build
         working-directory: web
         run: |
-          rm -f ./.eslintrc.js # Skip lint check during react-scripts build
           npm run build
       - name: Lighthouse
         working-directory: web
@@ -389,7 +388,6 @@ jobs:
       - name: Build
         working-directory: web
         run: |
-          rm -f ./.eslintrc.js # Skip lint check during react-scripts build
           npm run build
           npm run storybook:build
       - name: Publish storybook to Chromatic
