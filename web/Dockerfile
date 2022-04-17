@@ -6,9 +6,7 @@ FROM base AS builder
 COPY ["web/package.json", "web/package-lock.json", "./"]
 RUN npm ci
 COPY web/ ./
-# Skip lint check during react-scripts build
-RUN rm -f ./.eslintrc.js \
-  && npm run build
+RUN npm run build
 
 
 FROM nginx:1.21.6-alpine AS release
