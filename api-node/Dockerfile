@@ -6,8 +6,10 @@ FROM base AS web
 COPY ["web/package.json", "web/package-lock.json", "./"]
 RUN npm ci
 
-COPY web .
-RUN npm run build \
+COPY web ./
+# Skip lint check during react-scripts build
+RUN rm -f ./.eslintrc.js \
+  && npm run build \
   && npm prune --production
 
 
