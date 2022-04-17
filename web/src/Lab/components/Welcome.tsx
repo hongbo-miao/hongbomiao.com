@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Welcome.module.css';
 
-const Welcome: React.VFC = () => {
+const Welcome: React.FC = () => {
   return (
     <div className={styles.hmWelcome}>
       <div className={`container is-max-desktop ${styles.hmContainer}`}>

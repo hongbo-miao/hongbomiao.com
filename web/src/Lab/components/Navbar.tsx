@@ -4,7 +4,7 @@ import useAuth from '../../auth/hooks/useAuth';
 import useMe from '../../auth/hooks/useMe';
 import Paths from '../../shared/utils/paths';
 
-const Navbar: React.VFC = () => {
+const Navbar: React.FC = () => {
   const { signOut } = useAuth();
   const { me } = useMe();
 

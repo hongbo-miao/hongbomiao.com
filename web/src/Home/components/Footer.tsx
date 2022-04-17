@@ -4,7 +4,7 @@ import HmSocialList from '../../App/components/SocialList';
 import WEBSITES from '../fixtures/WEBSITES';
 import styles from './Footer.module.css';
 
-const Footer: React.VFC = () => {
+const Footer: React.FC = () => {
   const year = new Date().getFullYear();
 
   return (
