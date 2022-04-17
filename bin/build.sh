@@ -5,6 +5,7 @@ npm install
 
 cd web
 npm install
+rm -f ./.eslintrc.js # Skip lint check during react-scripts build
 npm run build
 
 cd ..
