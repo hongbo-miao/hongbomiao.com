@@ -121,7 +121,8 @@ make clean
 - **Resty** - HTTP client
 - **Squirrel** - SQL query builder
 - **apm-agent-go** - APM agent
-- **OpenTelemetry-Go** - OpenTelemetry
+- **OpenTelemetry Go** - OpenTelemetry
+- **Prometheus Go** - Prometheus
 - **Testify** - Unit testing
 - **GoDotEnv** - Environment variables loading
 - **jsonparser** - JSON parser
