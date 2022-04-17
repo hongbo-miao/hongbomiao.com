@@ -1,8 +1,7 @@
 import React from 'react';
 import getOPADecision from '../queries/getOPADecision';
 import styles from './OPAExperiment.module.css';
-
-const HmPreAuth = React.lazy(() => import('./PreAuth'));
+import HmPreAuth from './PreAuth';
 
 const OPAExperiment: React.VFC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

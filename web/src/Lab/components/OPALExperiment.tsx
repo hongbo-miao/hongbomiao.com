@@ -6,8 +6,7 @@ import adoptDog from '../queries/adoptDog';
 import getDog from '../queries/getDog';
 import getOPALDecision from '../queries/getOPALDecision';
 import styles from './OPALExperiment.module.css';
-
-const HmPreAuth = React.lazy(() => import('./PreAuth'));
+import HmPreAuth from './PreAuth';
 
 const OPALExperiment: React.VFC = () => {
   const [readDogData, setReadDogData] = React.useState<any>(undefined);
