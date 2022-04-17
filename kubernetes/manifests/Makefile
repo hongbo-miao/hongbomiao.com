@@ -33,6 +33,9 @@ download-kafka:
 # MinIO
 # Manifests: https://github.com/minio/operator/tree/master/examples/kustomization
 
+# Prometheus
+# Manifests: https://github.com/prometheus-operator/kube-prometheus/tree/main/manifests
+
 # Rasa
 download-rasa:
 	curl https://raw.githubusercontent.com/RasaHQ/helm-charts/main/charts/rasa/values.yaml > rasa/rasa/values.yaml
