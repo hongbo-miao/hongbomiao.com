@@ -4,6 +4,7 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_server/controllers"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_server/utils"
 	sharedControllers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/controllers"
+	sharedHandlers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/handlers"
 	sharedUtils "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/utils"
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
@@ -39,6 +40,7 @@ func main() {
 	r.Use(apmgin.Middleware(r))
 	r.Use(logger.SetLogger())
 	r.GET("/", sharedControllers.Health)
+	r.GET("/metrics", sharedHandlers.PrometheusHandler())
 	r.GET("/config", controllers.Config(pg))
 	r.POST("/opa-db-cdc", controllers.OPADBCDC(pg))
 	if config.ShouldEnableServerTLS == "true" {
