@@ -315,6 +315,10 @@ make clean
 
 ![Jaeger screenshot](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
 
+#### Grafana
+
+![Grafana screenshot](https://user-images.githubusercontent.com/3375461/163708604-89ce4617-8fb7-463f-86a0-11a3c5c73bd9.png)
+
 #### Prometheus
 
 ![Prometheus screenshot](https://user-images.githubusercontent.com/3375461/90955864-d14d3b80-e4b3-11ea-926b-8012cadb4f70.jpg)
@@ -322,10 +326,6 @@ make clean
 #### Kibana
 
 ![Kibana screenshot](https://user-images.githubusercontent.com/3375461/90955224-50d80c00-e4ae-11ea-9345-dfa8e97ed41a.jpg)
-
-#### Grafana
-
-![Grafana screenshot](https://user-images.githubusercontent.com/3375461/90973255-eaf19000-e552-11ea-819c-b098bbadea1b.jpg)
 
 ### Data
 
