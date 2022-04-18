@@ -6,7 +6,9 @@ hasura-console:
 	hasura console
 
 hasura-migrate-create:
-	hasura migrate create init --from-server
+	hasura migrate create xxx
+hasura-migrate-create-from-server:
+	hasura migrate create xxx --from-server
 hasura-migrate-status:
 	hasura migrate status
 hasura-migrate-apply:

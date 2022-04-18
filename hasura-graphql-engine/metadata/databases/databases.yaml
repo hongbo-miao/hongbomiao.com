@@ -1,4 +1,4 @@
-- name: default
+- name: opa_db
   kind: postgres
   configuration:
     connection_info:
@@ -11,4 +11,4 @@
         retries: 1
         idle_timeout: 180
         max_connections: 50
-  tables: "!include default/tables/tables.yaml"
+  tables: "!include opa_db/tables/tables.yaml"
