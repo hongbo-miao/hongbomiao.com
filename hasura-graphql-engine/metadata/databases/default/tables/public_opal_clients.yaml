@@ -1,11 +1,11 @@
 table:
-  name: opal_clients
   schema: public
+  name: opal_clients
 array_relationships:
-- name: roles
-  using:
-    foreign_key_constraint_on:
-      column: opal_client_id
-      table:
-        name: roles
-        schema: public
+  - name: roles
+    using:
+      foreign_key_constraint_on:
+        column: opal_client_id
+        table:
+          schema: public
+          name: roles
