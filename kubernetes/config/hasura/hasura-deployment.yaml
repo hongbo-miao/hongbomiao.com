@@ -53,7 +53,24 @@ spec:
                 configMapKeyRef:
                   name: hasura-configmap
                   key: hasura_graphql_dev_mode
+            - name: HASURA_GRAPHQL_MIGRATIONS_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: hasura-configmap
+                  key: hasura_graphql_migrations_dir
+            - name: HASURA_GRAPHQL_METADATA_DIR
+              valueFrom:
+                configMapKeyRef:
+                  name: hasura-configmap
+                  key: hasura_graphql_metadata_dir
           ports:
             - name: hasura
               protocol: TCP
               containerPort: 8080
+          volumeMounts:
+            - mountPath: /data/hasura
+              name: hasura-volume
+      volumes:
+        - name: hasura-volume
+          persistentVolumeClaim:
+            claimName: hasura-pvc

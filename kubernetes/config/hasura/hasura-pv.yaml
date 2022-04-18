@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: hasura-pv
+  labels:
+    app.kubernetes.io/name: hasura
+spec:
+  capacity:
+    storage: 10Mi
+  volumeMode: Filesystem
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/hasura
+    type: Directory
