@@ -11,7 +11,7 @@ psql --host=localhost --port=40072 --dbname=postgres --username=admin --command=
 psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="grant all privileges on database ory_hydra_db to admin;"
 echo "=================================================="
 
-echo "# Initialize opa_db in Postgres"
+echo "# Migrate opa_db in Postgres"
 POSTGRESQL_URL="postgres://admin:passw0rd@localhost:40072/opa_db?sslmode=disable&search_path=public"
 migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/postgres/opa_db/migrations up
 echo "=================================================="

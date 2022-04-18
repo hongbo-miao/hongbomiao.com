@@ -33,3 +33,8 @@ hasura-seed-create-from-table:
 	hasura seed create "roles_seed" --from-table=roles
 hasura-seed-apply:
 	hasura seed apply
+
+copy-migrations-metadada-to-k8s-data-folder:
+	cd .. && \
+	cp -r hasura-graphql-engine/migrations/ kubernetes/data/hasura/migrations/ && \
+	cp -r hasura-graphql-engine/metadata/ kubernetes/data/hasura/metadata/
