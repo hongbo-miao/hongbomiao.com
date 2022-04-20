@@ -192,8 +192,6 @@ make clean
 - **Argo CD** - Declarative GitOps CD for Kubernetes
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
-- **NGINX** - Reverse proxy, load balancer
-- **Cloudflare Tunnel** - Tunneling
 - **Kibana** - Data visualization dashboard for Elasticsearch
 - **Elastic APM** - Application performance monitoring
 - **OpenTelemetry** - Observability framework
@@ -203,10 +201,13 @@ make clean
 - **Fluent Bit** - Log processor and forwarder
 - **Pixie** - Observability tool for Kubernetes applications
 - **Docker** - Container
-- **Kubernetes** - Container-orchestration system
-- **K3s** - Lightweight Kubernetes
 - **Skaffold** - Continuous development for Kubernetes applications
 - **Locust** - Load testing
+- **NGINX** - Reverse proxy, load balancer
+- **Cloudflare Tunnel** - Tunneling
+- **Kubernetes** - Container-orchestration system
+- **K3s** - Lightweight Kubernetes
+- **Goldilocks** - Kubernetes resource requests recommending
 
 ### Ops
 
