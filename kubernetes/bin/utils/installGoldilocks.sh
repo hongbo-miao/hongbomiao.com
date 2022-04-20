@@ -20,13 +20,18 @@ echo "=================================================="
 
 echo "# Install Goldilocks"
 # https://goldilocks.docs.fairwinds.com/installation/#installation-2
+# https://artifacthub.io/packages/helm/fairwinds-stable/goldilocks
 helm repo add fairwinds-stable https://charts.fairwinds.com/stable
-kubectl create namespace goldilocks
-helm install goldilocks --namespace=goldilocks fairwinds-stable/goldilocks --set=dashboard.service.port=34617
+kubectl create namespace hm-goldilocks
+helm install goldilocks \
+  --namespace=hm-goldilocks \
+  --set=dashboard.service.port=34617 \
+  --set=dashboard.replicaCount=1 \
+  fairwinds-stable/goldilocks
 # helm uninstall goldilocks --namespace=goldilocks
 echo "=================================================="
 
 echo "# Label namespaces for Goldilocks"
-kubectl label namespace goldilocks goldilocks.fairwinds.com/enabled=true
+kubectl label namespace hm-goldilocks goldilocks.fairwinds.com/enabled=true
 kubectl label namespace hm goldilocks.fairwinds.com/enabled=true
 echo "=================================================="
