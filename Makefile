@@ -123,6 +123,7 @@ k3d-node-list:
 kubectl-apply:
 	kubectl apply --filename=kubernetes/manifests/west/hm-namespace.yaml
 	kubectl apply --filename=kubernetes/manifests/west
+	kubectl apply --filename=kubernetes/manifests/west --selector=app.kubernetes.io/name=graphql-server
 kubectl-apply-with-linkerd:
 	linkerd inject - | kubectl apply --filename=kubernetes/manifests
 kubectl-delete:

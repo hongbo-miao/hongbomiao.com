@@ -167,6 +167,13 @@ spec:
             - name: graphql-server
               protocol: TCP
               containerPort: 31800
+          resources:
+            limits:
+              cpu: 50m
+              memory: 512M
+            requests:
+              cpu: 25m
+              memory: 256M
 
           # ---- ELASTIC APM BEGIN ----
           volumeMounts:
