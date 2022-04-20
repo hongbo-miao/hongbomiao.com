@@ -5,8 +5,8 @@ echo "# Install Hasura"
 cp -r hasura-graphql-engine/migrations/ kubernetes/data/hasura/migrations/
 cp -r hasura-graphql-engine/metadata/ kubernetes/data/hasura/metadata/
 
-kubectl apply --filename=kubernetes/config/hasura/hm-hasura-namespace.yaml
-kubectl apply --filename=kubernetes/config/hasura
+kubectl apply --filename=kubernetes/manifests/hasura/hm-hasura-namespace.yaml
+kubectl apply --filename=kubernetes/manifests/hasura
 echo "=================================================="
 
 echo "# Add seed data in opa_db"

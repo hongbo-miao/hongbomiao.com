@@ -2,5 +2,5 @@
 set -e
 
 echo "# Install Postgres"
-kubectl apply --filename=kubernetes/config/postgres
+kubectl apply --filename=kubernetes/manifests/postgres
 echo "=================================================="
