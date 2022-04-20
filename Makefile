@@ -157,6 +157,8 @@ kubectl-get-configmaps-yaml:
 	kubectl get configmaps ingress-nginx-controller --namespace=ingress-nginx --output=yaml
 kubectl-get-serviceaccounts:
 	kubectl get serviceaccounts
+kubectl-get-apiservices:
+	kubectl get apiservices
 kubectl-logs:
 	kubectl logs --follow POD_NAME --namespace=hm
 kubectl-sh:
