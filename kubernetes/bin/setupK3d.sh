@@ -14,4 +14,4 @@ kubectl config use-context k3d-west
 
 INGRESS_VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
 kubectl apply --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${INGRESS_VERSION}/deploy/static/provider/cloud/deploy.yaml"
-# Local: kubectl apply --filename=kubernetes/manifests/ingress-nginx.yaml
+# Local: kubectl apply --filename=kubernetes/manifests-raw/ingress-nginx.yaml

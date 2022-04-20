@@ -19,8 +19,8 @@ echo "# Deploy MinIO tenant"
 kubectl minio proxy --namespace=minio-operator &
 # http://localhost:9090
 
-kubectl apply --filename=kubernetes/config/minio
-kubectl apply --kustomize=kubernetes/manifests/minio/tenant-tiny
+kubectl apply --filename=kubernetes/manifests/minio
+kubectl apply --kustomize=kubernetes/manifests-raw/minio/tenant-tiny
 # kubectl port-forward service/storage-tiny-console --namespace=tenant-tiny 9443:9443
 # https://localhost:9443
 # Username: minio123

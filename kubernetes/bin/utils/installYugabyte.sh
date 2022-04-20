@@ -10,9 +10,9 @@ for ((i = 0; i < YUGABYTE_REPLICA; i++)); do
   mkdir "${YUGABYTE_PATH}/master-${i}"
   mkdir "${YUGABYTE_PATH}/tserver-${i}"
 done
-kubectl apply --filename=kubernetes/manifests/yugabyte/crds/yugabyte.com_ybclusters_crd.yaml
-kubectl apply --filename=kubernetes/manifests/yugabyte/operator.yaml
-kubectl apply --filename=kubernetes/config/yugabyte
+kubectl apply --filename=kubernetes/manifests-raw/yugabyte/crds/yugabyte.com_ybclusters_crd.yaml
+kubectl apply --filename=kubernetes/manifests-raw/yugabyte/operator.yaml
+kubectl apply --filename=kubernetes/manifests/yugabyte
 sleep 60
 echo "=================================================="
 

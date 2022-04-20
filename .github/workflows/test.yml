@@ -179,15 +179,15 @@ jobs:
         uses: actions/checkout@v3
       - name: Lint Kubernetes
         run: |
-          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/east/*.yaml
-          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-configmap.yaml
-          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-deployment.yaml
-          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-ingress.yaml
-          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-namespace.yaml
-          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-pv.yaml
-          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-pvc.yaml
-          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-service.yaml
-          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/config/west/*-statefulset.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/manifests/east/*.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/manifests/west/*-configmap.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/manifests/west/*-deployment.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/manifests/west/*-ingress.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/manifests/west/*-namespace.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/manifests/west/*-pv.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/manifests/west/*-pvc.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/manifests/west/*-service.yaml
+          docker run --rm --volume=`pwd`/kubernetes:/kubernetes ghcr.io/yannh/kubeconform:latest -kubernetes-version=1.21.0 kubernetes/manifests/west/*-statefulset.yaml
 
   lint-shell:
     name: Lint (Shell)
