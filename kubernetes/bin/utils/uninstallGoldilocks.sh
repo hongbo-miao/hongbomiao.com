@@ -8,8 +8,8 @@ echo "=================================================="
 
 echo "# Uninstall Goldilocks"
 # https://goldilocks.docs.fairwinds.com/installation/#installation-2
-helm uninstall goldilocks --namespace=goldilocks
-kubectl delete namespace goldilocks
+helm uninstall goldilocks --namespace=hm-goldilocks
+kubectl delete namespace hm-goldilocks
 echo "=================================================="
 
 echo "# Uninstall Kubernetes Vertical Pod Autoscaler"
