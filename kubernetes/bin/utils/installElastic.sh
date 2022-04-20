@@ -14,8 +14,8 @@ echo "=================================================="
 
 # Deploy Elasticsearch
 echo "# Deploy Elasticsearch, Kibana, AMP"
-kubectl apply --filename=kubernetes/config/elastic
-# Delete: kubectl delete --filename=kubernetes/config/elastic
+kubectl apply --filename=kubernetes/manifests/elastic
+# Delete: kubectl delete --filename=kubernetes/manifests/elastic
 sleep 60
 echo "=================================================="
 
@@ -50,7 +50,7 @@ kubectl get secret hm-apm-apm-http-certs-public \
 echo "=================================================="
 
 echo "# Save Elastic APM token in Kubernetes secret"
-kubectl apply --filename=kubernetes/config/west/hm-namespace.yaml
+kubectl apply --filename=kubernetes/manifests/west/hm-namespace.yaml
 ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token \
   --namespace=elastic \
   --output=go-template='{{index .data "secret-token" | base64decode}}')

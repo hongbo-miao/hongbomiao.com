@@ -10,7 +10,7 @@ pgrep kubectl | xargs kill -9
 echo "=================================================="
 
 echo "# Install ORY Hydra"
-kubectl apply --filename=kubernetes/config/ory-hydra/hm-ory-hydra-namespace.yaml
+kubectl apply --filename=kubernetes/manifests/ory-hydra/hm-ory-hydra-namespace.yaml
 helm repo add ory https://k8s.ory.sh/helm/charts
 helm repo update
 helm install ory-hydra \

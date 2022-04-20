@@ -1,3 +1,5 @@
+# https://github.com/RasaHQ/helm-charts/blob/main/charts/rasa-action-server/values.yaml
+
 # Default values for rasa-action-server.
 # This is a YAML-formatted file.
 
@@ -9,7 +11,7 @@ fullnameOverride:  # ""
 
 # -- Registry to use for all Rasa images (default docker.io)
 ## DockerHub - use docker.io/rasa
-registry: docker.io/rasa
+registry: docker.io/hongbomiao
 
 applicationSettings:
   # -- Port on which Rasa Action Server runs
@@ -35,16 +37,16 @@ extraEnv: []
 ## Define the rasa image to work with
 image:
   # -- Action Server image name to use (relative to `registry`)
-  name: rasa-x-demo
+  name: hm-rasa-action-server
 
   # -- Action Server image tag to use
-  tag: "0.40.0"
+  tag: "latest"
 
   # -- Override default registry + image.name for Action Server
   repository: ""
 
   # -- Action Server image pullPolicy
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
   # -- Action Server repository pullSecret
   ## See https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
@@ -64,15 +66,15 @@ serviceAccount:
 
 # -- Annotations to add to the action-server's pod(s)
 podAnnotations: {}
-  # key: "value"
+# key: "value"
 
 # -- Labels to add to the action-server's pod(s)
 podLabels: {}
-  # key: "value"
+# key: "value"
 
 # -- Annotations to add to the action-server deployment
 deploymentAnnotations: {}
-  # key: "value"
+# key: "value"
 
 # -- Labels to add to the action-server deployment
 deploymentLabels: {}
@@ -80,7 +82,7 @@ deploymentLabels: {}
 # -- Defines pod-level security attributes and common container settings
 ## See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 podSecurityContext: {}
-  # fsGroup: 2000
+# fsGroup: 2000
 
 # -- Allows you to overwrite the pod-level security context
 securityContext: {}
@@ -89,7 +91,7 @@ securityContext: {}
   #    - ALL
   #  readOnlyRootFilesystem: true
   #  runAsNonRoot: true
-  #  runAsUser: 1000
+#  runAsUser: 1000
 
 ## Configuration for the service for the action-server
 service:
@@ -97,7 +99,7 @@ service:
   type: ClusterIP
 
   # -- Set port of action-server service (Kubernetes >= 1.15)
-  port: 80
+  port: 5055
 
   # -- Annotations to add to the service
   annotations: {}

@@ -121,12 +121,12 @@ k3d-node-list:
 
 # Kubernetes
 kubectl-apply:
-	kubectl apply --filename=kubernetes/config/west/hm-namespace.yaml
-	kubectl apply --filename=kubernetes/config/west
+	kubectl apply --filename=kubernetes/manifests/west/hm-namespace.yaml
+	kubectl apply --filename=kubernetes/manifests/west
 kubectl-apply-with-linkerd:
-	linkerd inject - | kubectl apply --filename=kubernetes/config
+	linkerd inject - | kubectl apply --filename=kubernetes/manifests
 kubectl-delete:
-	kubectl delete --filename=kubernetes/config
+	kubectl delete --filename=kubernetes/manifests
 kubectl-get-pods-all:
 	kubectl get pods --all-namespaces
 kubectl-get-pods:
@@ -318,20 +318,20 @@ argocd-enable-auth-sync:
 argocd-disable-auth-sync:
 	argocd app set hm-application --sync-policy=none
 argocd-diff:
-	argocd app diff hm-application --local=kubernetes/config
+	argocd app diff hm-application --local=kubernetes/manifests
 argocd-apply:
-	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
+	kubectl apply --filename=kubernetes/manifests/argocd/hm-application.yaml
 argocd-sync:
-	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
+	kubectl apply --filename=kubernetes/manifests/argocd/hm-application.yaml
 	argocd app sync hm-application --grpc-web
 argocd-sync-local:
-	argocd app sync hm-application --grpc-web --local=kubernetes/config/west
+	argocd app sync hm-application --grpc-web --local=kubernetes/manifests/west
 argocd-sync-local-full:
 	kubectl create namespace hm
 	ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token --namespace=elastic --output=go-template='{{index .data "secret-token" | base64decode}}')
 	kubectl create secret generic hm-elastic-apm --namespace=hm --from-literal="token=${ELASTIC_APM_TOKEN}"
-	kubectl apply --filename=kubernetes/config/argocd/hm-application.yaml
-	argocd app sync hm-application --grpc-web --local=kubernetes/config/west
+	kubectl apply --filename=kubernetes/manifests/argocd/hm-application.yaml
+	argocd app sync hm-application --grpc-web --local=kubernetes/manifests/west
 argocd-list:
 	argocd app list
 argocd-delete:
@@ -492,14 +492,14 @@ lint-dockerfile:
 lint-shell:
 	shellcheck $$(git ls-files "**/*.sh")
 lint-kubernetes:
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/east/*.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-configmap.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-deployment.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-ingress.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-namespace.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-pv.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-pvc.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-service.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/config/west/*-statefulset.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/east/*.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-configmap.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-deployment.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-ingress.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-namespace.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-pv.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-pvc.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-service.yaml")
+	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-statefulset.yaml")
 lint-protocol-buffers:
 	buf lint

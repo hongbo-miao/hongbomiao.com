@@ -3,7 +3,7 @@ set -e
 
 echo "# Uninstall ORY Hydra"
 helm uninstall ory-hydra --namespace=hm-ory-hydra
-kubectl delete --filename=kubernetes/config/ory-hydra/hm-ory-hydra-namespace.yaml
+kubectl delete --filename=kubernetes/manifests/ory-hydra/hm-ory-hydra-namespace.yaml
 echo "=================================================="
 
 echo "# Drop ory_hydra_db in Postgres"

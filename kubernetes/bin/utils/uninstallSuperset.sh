@@ -4,7 +4,7 @@ set -e
 echo "# Uninstall Superset"
 helm uninstall --namespace=hm-superset superset
 kubectl delete jobs superset-init-db --namespace=hm-superset
-kubectl delete --filename=kubernetes/config/superset/hm-superset-namespace.yaml
+kubectl delete --filename=kubernetes/manifests/superset/hm-superset-namespace.yaml
 echo "=================================================="
 
 echo "# Drop superset_db in Postgres"

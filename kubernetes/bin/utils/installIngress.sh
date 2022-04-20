@@ -10,6 +10,6 @@ for cluster in "${CLUSTERS[@]}"; do
   kubectl apply \
     --context="k3d-${cluster}" \
     --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${INGRESS_VERSION}/deploy/static/provider/cloud/deploy.yaml"
-  # Local: kubectl apply --context="k3d-${cluster}" --filename=kubernetes/manifests/ingress/ingress-nginx.yaml
+  # Local: kubectl apply --context="k3d-${cluster}" --filename=kubernetes/manifests-raw/ingress/ingress-nginx.yaml
   echo "=================================================="
 done

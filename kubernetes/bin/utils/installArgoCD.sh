@@ -9,7 +9,7 @@ kubectl apply \
 # Local:
 # kubectl apply \
 #   --namespace=argocd \
-#   --filename=kubernetes/manifests/argocd/argocd.yaml
+#   --filename=kubernetes/manifests-raw/argocd/argocd.yaml
 # Delete:
 # kubectl delete \
 #   --namespace=argocd \
