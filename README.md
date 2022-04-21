@@ -174,6 +174,7 @@ make clean
 - **Flink** - Stream processing framework
   - **flink-streaming-java** - Flink
   - **flink-connector-twitter** - Flink Twitter connector
+  - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
 - **Kafka** - Distributed event streaming platform
   - **Debezium** - Distributed change-data-capture platform
