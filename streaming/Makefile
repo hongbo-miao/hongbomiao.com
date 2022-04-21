@@ -59,3 +59,14 @@ flink-application-start:
 		-Dkubernetes.container.image.pull-policy=Always \
 		-Dkubernetes.jobmanager.service-account=flink-serviceaccount \
 		local:///opt/flink/usrlib/streaming-0.1.jar
+
+# TimescaleDB
+docker-run-timescaledb:
+	docker run \
+		--detach \
+		--name=timescaledb \
+		--publish=25495:5432 \
+		--env=POSTGRES_DB=postgres \
+		--env=POSTGRES_USER=admin \
+		--env=POSTGRES_PASSWORD=passw0rd \
+		timescale/timescaledb:latest-pg14
