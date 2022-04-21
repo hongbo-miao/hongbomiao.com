@@ -13,16 +13,18 @@ echo "# Install ORY Hydra"
 kubectl apply --filename=kubernetes/manifests/ory-hydra/hm-ory-hydra-namespace.yaml
 helm repo add ory https://k8s.ory.sh/helm/charts
 helm repo update
-helm install ory-hydra \
+helm install \
+  ory-hydra \
+  ory/hydra \
   --namespace=hm-ory-hydra \
-  --values=ory-hydra/ory-hydra.yaml \
-  ory/hydra
+  --values=ory-hydra/ory-hydra.yaml
 
 # Upgrade:
-# helm upgrade ory-hydra \
+# helm upgrade \
+#   ory-hydra \
+#   ory/hydra \
 #   --namespace=hm-ory-hydra \
-#   --values=ory-hydra/ory-hydra.yaml \
-#   ory/hydra
+#   --values=ory-hydra/ory-hydra.yaml
 
 # Delete:
 # helm uninstall ory-hydra --namespace=hm-ory-hydra
