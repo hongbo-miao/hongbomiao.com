@@ -5,10 +5,10 @@ kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:4007
 sleep 5
 
 echo "# Create database in Postgres"
-psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="create database opa_db;"
-psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="create database ory_hydra_db;"
-psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="grant all privileges on database opa_db to admin;"
-psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="grant all privileges on database ory_hydra_db to admin;"
+psql postgresql://admin@localhost:40072/postgres --command="create database opa_db;"
+psql postgresql://admin@localhost:40072/postgres --command="create database ory_hydra_db;"
+psql postgresql://admin@localhost:40072/postgres --command="grant all privileges on database opa_db to admin;"
+psql postgresql://admin@localhost:40072/postgres --command="grant all privileges on database ory_hydra_db to admin;"
 echo "=================================================="
 
 echo "# Migrate opa_db in Postgres"
