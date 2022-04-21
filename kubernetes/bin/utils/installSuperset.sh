@@ -14,18 +14,18 @@ kubectl apply --filename=kubernetes/manifests/superset/hm-superset-namespace.yam
 helm repo add superset https://apache.github.io/superset
 helm install \
   superset \
+  superset/superset \
   --namespace=hm-superset \
   --values=kubernetes/manifests/superset/helm/values.yaml \
-  --values=kubernetes/manifests/superset/helm/my-values.yaml \
-  superset/superset
-
+  --values=kubernetes/manifests/superset/helm/my-values.yaml
 
 # Upgrade:
-# helm upgrade superset \
+# helm upgrade \
+#   superset \
+#   superset/superset \
 #   --namespace=hm-superset \
 #   --values=kubernetes/manifests/superset/helm/values.yaml \
-#   --values=kubernetes/manifests/superset/helm/my-values.yaml \
-#   superset/superset
+#   --values=kubernetes/manifests/superset/helm/my-values.yaml
 
 # Delete:
 # helm uninstall --namespace=hm-superset superset
