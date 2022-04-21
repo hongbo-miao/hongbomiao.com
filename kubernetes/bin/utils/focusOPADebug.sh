@@ -19,19 +19,13 @@ echo "=================================================="
 # echo "=================================================="
 
 echo "# Remove services"
-rm -f kubernetes/manifests/west/flink-clusterrolebinding.yaml
-rm -f kubernetes/manifests/west/flink-serviceaccount.yaml
 rm -f kubernetes/manifests/west/grpc-server-configmap.yaml
 rm -f kubernetes/manifests/west/grpc-server-deployment.yaml
 rm -f kubernetes/manifests/west/grpc-server-service.yaml
 rm -f kubernetes/manifests/west/grpc-server-trafficsplit.yaml
 rm -f kubernetes/manifests/west/hm-cnn-namespace.yaml
-rm -f kubernetes/manifests/west/hm-flink-namespace.yaml
-rm -f kubernetes/manifests/west/hm-redis-namespace.yaml
 rm -f kubernetes/manifests/west/model-server-pv.yaml
 rm -f kubernetes/manifests/west/model-server-pvc.yaml
 rm -f kubernetes/manifests/west/torchserve-deployment.yaml
 rm -f kubernetes/manifests/west/torchserve-service.yaml
-rm -f kubernetes/manifests/west/redis-leader-service.yaml
-rm -f kubernetes/manifests/west/redis-leader-deployment.yaml
 echo "=================================================="

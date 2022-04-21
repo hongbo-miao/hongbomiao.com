@@ -28,8 +28,8 @@ public class Main {
   public static void main(String[] args) throws Exception {
     final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-    // application-development.properties, application-production.properties
-    String paramsFilePath = "streaming/src/main/resources/application-production.properties";
+    // String paramsFilePath = "streaming/src/main/resources/application-development.properties";
+    String paramsFilePath = "application-production.properties";
     Config config = new Config(paramsFilePath);
 
     Properties props = new Properties();
