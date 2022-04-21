@@ -9,6 +9,6 @@ echo "=================================================="
 echo "# Drop ory_hydra_db in Postgres"
 kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:40072 &
 sleep 3
-psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="drop database if exists ory_hydra_db with (force);"
+psql postgresql://admin@localhost:40072/postgres --command="drop database if exists ory_hydra_db with (force);"
 pgrep kubectl | xargs kill -9
 echo "=================================================="

@@ -386,7 +386,7 @@ minio-headless:
 
 # PostgreSQL
 postgres-connect:
-	psql --host=localhost --port=40072 --dbname=opa_db --username=admin --password
+	psql postgresql://admin@localhost:40072/postgres
 migrate-up:
 	$(eval POSTGRESQL_URL := "postgres://admin:passw0rd@localhost:40072/opa_db?sslmode=disable&search_path=public")
 	migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/postgres/opa_db/migrations up

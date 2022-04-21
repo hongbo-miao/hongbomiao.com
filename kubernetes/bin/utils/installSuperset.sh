@@ -4,8 +4,8 @@ set -e
 echo "# Create superset_db in Postgres"
 kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:40072 &
 sleep 5
-psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="create database superset_db;"
-psql --host=localhost --port=40072 --dbname=postgres --username=admin --command="grant all privileges on database superset_db to admin;"
+psql postgresql://admin@localhost:40072/postgres --command="create database superset_db;"
+psql postgresql://admin@localhost:40072/postgres --command="grant all privileges on database superset_db to admin;"
 pgrep kubectl | xargs kill -9
 echo "=================================================="
 
