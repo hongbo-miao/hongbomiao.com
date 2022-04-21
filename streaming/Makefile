@@ -16,16 +16,7 @@ flink-local-start:
 flink-local-stop:
 	/usr/local/Cellar/apache-flink/1.13.1/libexec/bin/stop-cluster.sh
 
-# Flink Kubernetes
-flink-init:
-	cd .. && \
-    kubectl apply --filename=kubernetes/config/west/hm-flink-namespace.yaml && \
-    kubectl apply --filename=kubernetes/config/west/flink-serviceaccount.yaml && \
-    kubectl apply --filename=kubernetes/config/west/flink-clusterrolebinding.yaml
-flink-delete:
-	kubectl delete deployment/hm-flink-cluster --namespace=hm-flink
-
-# Flink Session
+# Flink Session Mode
 # https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/config/
 flink-session-start:
 	/usr/local/Cellar/apache-flink/1.13.1/libexec/bin/kubernetes-session.sh \
@@ -43,14 +34,19 @@ flink-session-submit-job:
 		-Dkubernetes.jobmanager.service-account=flink-serviceaccount \
 		./target/streaming-0.1.jar
 
-# Flink Application
+# Flink Application Mode
 docker-build:
 	mvn clean package && \
 	cd .. && \
 	docker build --file=streaming/Dockerfile --tag=hongbomiao/hm-streaming:latest .
 docker-push:
 	docker push hongbomiao/hm-streaming:latest
+flink-application-init:
+	cd .. && \
+    kubectl apply --filename=kubernetes/manifests/flink
 flink-application-start:
+	cd .. && \
+	kubectl apply --filename=kubernetes/manifests/flink/hm-flink-namespace.yaml && \
 	flink run-application \
 		--target kubernetes-application \
 		-Dkubernetes.namespace=hm-flink \
@@ -59,6 +55,8 @@ flink-application-start:
 		-Dkubernetes.container.image.pull-policy=Always \
 		-Dkubernetes.jobmanager.service-account=flink-serviceaccount \
 		local:///opt/flink/usrlib/streaming-0.1.jar
+flink-application-delete:
+	kubectl delete deployment/hm-flink-cluster --namespace=hm-flink
 
 # TimescaleDB
 docker-run-timescaledb:

@@ -10,6 +10,10 @@
   hosts: localhost
   remote_user: root
   tasks:
+    - name: Install apache-flink
+      community.general.homebrew:
+        name: apache-flink
+        state: present
     - name: Install cloudflare/cloudflare/cloudflared
       community.general.homebrew:
         name: cloudflare/cloudflare/cloudflared

@@ -32,18 +32,14 @@ rm -f kubernetes/manifests/west/dgraph-zero-statefulset.yaml
 rm -f kubernetes/manifests/west/elastic-apm-configmap.yaml
 rm -f kubernetes/manifests/west/elastic-apm-pv.yaml
 rm -f kubernetes/manifests/west/elastic-apm-pvc.yaml
-rm -f kubernetes/manifests/west/flink-clusterrolebinding.yaml
-rm -f kubernetes/manifests/west/flink-serviceaccount.yaml
 rm -f kubernetes/manifests/west/grpc-server-configmap.yaml
 rm -f kubernetes/manifests/west/grpc-server-deployment.yaml
 rm -f kubernetes/manifests/west/grpc-server-service.yaml
 rm -f kubernetes/manifests/west/grpc-server-trafficsplit.yaml
 rm -f kubernetes/manifests/west/hm-cnn-namespace.yaml
 rm -f kubernetes/manifests/west/hm-dgraph-namespace.yaml
-rm -f kubernetes/manifests/west/hm-flink-namespace.yaml
 rm -f kubernetes/manifests/west/hm-opa-namespace.yaml
 rm -f kubernetes/manifests/west/hm-postgres-namespace.yaml
-rm -f kubernetes/manifests/west/hm-redis-namespace.yaml
 rm -f kubernetes/manifests/west/model-server-pv.yaml
 rm -f kubernetes/manifests/west/model-server-pvc.yaml
 rm -f kubernetes/manifests/west/opa-pv.yaml
@@ -54,8 +50,6 @@ rm -f kubernetes/manifests/west/opal-broadcast-channel-service.yaml
 rm -f kubernetes/manifests/west/opal-server-configmap.yaml
 rm -f kubernetes/manifests/west/opal-server-deployment.yaml
 rm -f kubernetes/manifests/west/opal-server-service.yaml
-rm -f kubernetes/manifests/west/redis-leader-deployment.yaml
-rm -f kubernetes/manifests/west/redis-leader-service.yaml
 rm -f kubernetes/manifests/west/torchserve-deployment.yaml
 rm -f kubernetes/manifests/west/torchserve-service.yaml
 echo "=================================================="
