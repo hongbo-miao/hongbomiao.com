@@ -12,3 +12,11 @@
         idle_timeout: 180
         max_connections: 50
   tables: "!include opa_db/tables/tables.yaml"
+- name: twitter_db
+  kind: postgres
+  configuration:
+    connection_info:
+      use_prepared_statements: false
+      database_url: postgresql://admin:passw0rd@timescale.hm-timescale:25495/twitter_db
+      isolation_level: read-committed
+  tables: "!include twitter_db/tables/tables.yaml"
