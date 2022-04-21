@@ -165,11 +165,12 @@ make clean
 ### Data
 
 - **Dgraph** - Distributed graph database
-- **YugabyteDB** - Distributed SQL database
 - **Elasticsearch** - Distributed document-oriented search engine
-- **MinIO** - High performance object storage
+- **YugabyteDB** - Distributed SQL database
+- **TimescaleDB** - Time-series SQL database
 - **PostgreSQL** - Object-relational database
 - **KeyDB** - High performance fork of Redis
+- **MinIO** - High performance object storage
 - **Flink** - Stream processing framework
   - **flink-streaming-java** - Flink
   - **flink-connector-twitter** - Flink Twitter connector
