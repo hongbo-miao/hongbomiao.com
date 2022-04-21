@@ -50,6 +50,8 @@ keydb-cli-set:
 	keydb-cli SET hm-name Hongbo
 keydb-cli-get:
 	keydb-cli GET hm-name
+keydb-cli-hmget:
+	keydb-cli HMGET trending-twitter-hashtags field1 field2
 
 # KeyDB - multi-master
 keydb-start-multi-master:
