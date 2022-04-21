@@ -427,14 +427,6 @@ kafka-consumer-group-reset-offset-to-earliest:
 kafka-consumer-group-reset-offset-shift-by:
 	kafka-consumer-groups --bootstrap-server=localhost:9092 --group=my-group --topic=my-topic --reset-offsets --shift-by=-1 --execute
 
-# Redis
-redis-start:
-	redis-server
-redis-keys:
-	redis-cli KEYS "*"
-redis-get:
-	redis-cli HMGET trending-twitter-hashtags field1 field2
-
 # Prometheus
 prom-curl:
 	curl http://localhost:9464/metrics
