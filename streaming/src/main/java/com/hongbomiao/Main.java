@@ -76,6 +76,7 @@ public class Main {
 
     tweetsPerWindow.print();
 
+    // FlinkJedisPoolConfig conf = new FlinkJedisPoolConfig.Builder().setHost("localhost").setPort(6379).build();
     FlinkJedisPoolConfig conf = new FlinkJedisPoolConfig.Builder().setHost("redis-leader-service.hm-redis").setPort(6379).build();
     tweetsPerWindow
         .map(
