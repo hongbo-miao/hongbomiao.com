@@ -67,7 +67,7 @@ Personal cutting-edge technology lab.
 
 ## Architecture
 
-![Architecture](https://user-images.githubusercontent.com/3375461/164308623-f6f89fcf-e7fb-4d14-84d8-5d837741f4e0.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/164569171-da26430c-ad81-4053-b481-07245af25d22.png)
 
 ## Setup
 
