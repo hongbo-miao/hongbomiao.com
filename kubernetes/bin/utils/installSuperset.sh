@@ -16,7 +16,6 @@ helm install \
   superset \
   superset/superset \
   --namespace=hm-superset \
-  --values=kubernetes/manifests/superset/helm/values.yaml \
   --values=kubernetes/manifests/superset/helm/my-values.yaml
 
 # Upgrade:
@@ -24,7 +23,6 @@ helm install \
 #   superset \
 #   superset/superset \
 #   --namespace=hm-superset \
-#   --values=kubernetes/manifests/superset/helm/values.yaml \
 #   --values=kubernetes/manifests/superset/helm/my-values.yaml
 
 # Delete:
