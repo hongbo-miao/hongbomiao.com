@@ -10,7 +10,7 @@ psql postgresql://admin:passw0rd@localhost:25495/postgres --command="grant all p
 echo "=================================================="
 
 echo "# Migrate twitter_db in TimescaleDB"
-TIMESCALEDB_URL="postgres://admin:passw0rd@localhost:25495/twitter_db?sslmode=disable&search_path=public"
+TIMESCALEDB_URL="postgres://admin:passw0rd@localhost:25495/twitter_db?search_path=public"
 migrate -database "${TIMESCALEDB_URL}" -path kubernetes/data/timescaledb/twitter_db/migrations up
 echo "=================================================="
 
