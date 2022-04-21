@@ -10,5 +10,7 @@ flink run-application \
   -Dkubernetes.container.image.pull-policy=Always \
   -Dkubernetes.jobmanager.service-account=flink-serviceaccount \
   local:///opt/flink/usrlib/streaming-0.1.jar
-Delete: kubectl delete deployment/hm-flink-cluster --namespace=hm-flink
+
+# Delete:
+# kubectl delete deployment/hm-flink-cluster --namespace=hm-flink
 echo "=================================================="
