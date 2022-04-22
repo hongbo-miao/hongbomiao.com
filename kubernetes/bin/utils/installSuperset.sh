@@ -26,5 +26,5 @@ helm install \
 #   --values=kubernetes/manifests/superset/helm/my-values.yaml
 
 # Delete:
-# helm uninstall --namespace=hm-superset superset
+# helm uninstall superset --namespace=hm-superset
 echo "=================================================="
