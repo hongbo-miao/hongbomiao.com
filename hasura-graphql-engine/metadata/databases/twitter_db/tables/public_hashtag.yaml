@@ -1,0 +1,11 @@
+table:
+  schema: public
+  name: hashtag
+array_relationships:
+  - name: tweet_hashtags
+    using:
+      foreign_key_constraint_on:
+        column: hashtag_id
+        table:
+          schema: public
+          name: tweet_hashtag

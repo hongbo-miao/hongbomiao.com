@@ -71,7 +71,6 @@ public class Main {
               public Tweet map(JsonNode value) throws Exception {
                 return (new Tweet(
                     new Timestamp(Long.parseLong(value.get("timestamp_ms").asText())),
-                    value.get("id").asText(),
                     value.get("id_str").asText(),
                     value.get("text").asText(),
                     value.get("lang").asText()));
@@ -79,13 +78,12 @@ public class Main {
             })
         .addSink(
             JdbcSink.sink(
-                "insert into tweets (timestamp, id, id_str, text, lang) values (?, ?, ?, ?, ?)",
+                "insert into tweets (timestamp, id, text, lang) values (?, ?, ?, ?, ?)",
                 (statement, tweet) -> {
                   statement.setTimestamp(1, tweet.timestamp);
                   statement.setString(2, tweet.id);
-                  statement.setString(3, tweet.idStr);
-                  statement.setString(4, tweet.text);
-                  statement.setString(5, tweet.lang);
+                  statement.setString(3, tweet.text);
+                  statement.setString(4, tweet.lang);
                 },
                 JdbcExecutionOptions.builder()
                     .withBatchSize(1000)
