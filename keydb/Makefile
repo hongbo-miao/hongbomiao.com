@@ -65,3 +65,7 @@ keydb-cli-password:
 	keydb-cli --pass passw0rd
 keydb-cli-lua-script-load:
 	keydb-cli --pass passw0rd SCRIPT LOAD "$$(cat greet.lua)"
+
+#
+redis-benchmark:
+	redis-benchmark -a passw0rd

@@ -2,7 +2,7 @@
 set -e
 
 echo "# Uninstall Superset"
-helm uninstall --namespace=hm-superset superset
+helm uninstall superset --namespace=hm-superset
 kubectl delete jobs superset-init-db --namespace=hm-superset
 kubectl delete --filename=kubernetes/manifests/superset/hm-superset-namespace.yaml
 echo "=================================================="

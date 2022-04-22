@@ -71,3 +71,7 @@ timescaledb-start:
 timescaledb-migrate:
 	cd .. && \
 	sh kubernetes/bin/utils/migrateTimescaleDBDocker.sh
+
+# Redis
+redis-cli:
+	redis-cli -h localhost -p 6379 --pass passw0rd
