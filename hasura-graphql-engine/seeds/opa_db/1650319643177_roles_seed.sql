@@ -45,7 +45,7 @@ with ins (opal_client_name, role, allow) as
                 ]'::json)
        )
 insert
-into roles (opal_client_id, role, allow)
-select opal_clients.id, ins.role, ins.allow
-from opal_clients
-       join ins on ins.opal_client_name = opal_clients.name;
+into role (opal_client_id, role, allow)
+select opal_client.id, ins.role, ins.allow
+from opal_client
+       join ins on ins.opal_client_name = opal_client.name;
