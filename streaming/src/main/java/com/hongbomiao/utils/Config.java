@@ -16,6 +16,7 @@ public final class Config {
     this.timescaleDBPassword = params.getRequired("timescaledb.password");
     this.redisHost = params.getRequired("redis.host");
     this.redisPort = Integer.parseInt(params.getRequired("redis.port"));
+    this.redisPassword = params.getRequired("redis.password");
   }
 
   public final String twitterAPIKey;
@@ -27,4 +28,5 @@ public final class Config {
   public final String timescaleDBPassword;
   public final String redisHost;
   public final int redisPort;
+  public final String redisPassword;
 }
