@@ -25,10 +25,10 @@ kafka-consume:
 	kubectl exec my-cluster-kafka-0 --namespace=kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
-			--topic=opa_db_server.public.roles
+			--topic=opa_db_server.public.role
 kafka-consume-from-beginning:
 	kubectl exec my-cluster-kafka-0 --namespace=kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
-			--topic=opa_db_server.public.roles \
+			--topic=opa_db_server.public.role \
 			--from-beginning

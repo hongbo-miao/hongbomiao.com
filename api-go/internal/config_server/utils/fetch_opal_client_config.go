@@ -37,7 +37,7 @@ func FetchOPALClientConfig(pg *pgxpool.Pool, opalClientID string) (*OPALClientCo
 	psql := sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 	sql, args, err := psql.
 		Select("config").
-		From("opal_clients").
+		From("opal_client").
 		Where("id = ?", opalClientID).
 		ToSql()
 	if err != nil {

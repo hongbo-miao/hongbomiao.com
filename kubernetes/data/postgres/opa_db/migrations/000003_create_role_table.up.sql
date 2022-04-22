@@ -7,7 +7,7 @@ begin
 end;
 $$ language plpgsql;
 
-create table if not exists roles
+create table if not exists role
 (
   id        uuid                 default gen_random_uuid(),
   opal_client_id uuid        not null,
@@ -18,11 +18,11 @@ create table if not exists roles
   primary key (id),
   constraint fk_space
     foreign key (opal_client_id)
-      references opal_clients (id)
+      references opal_client (id)
 );
 
 create trigger update_updated_at
   before update
-  on roles
+  on role
   for each row
 execute procedure trigger_update_updated_at();

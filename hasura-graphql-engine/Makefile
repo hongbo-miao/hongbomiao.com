@@ -6,7 +6,7 @@ hasura-console:
 	hasura console
 
 hasura-migrate-create:
-	hasura migrate create "create_roles_table"
+	hasura migrate create "create_role_table"
 hasura-migrate-create-from-server:
 	hasura migrate create "init" --from-server
 hasura-migrate-status:
@@ -30,7 +30,7 @@ hasura-metadata-apply:
 hasura-seed-create:
 	hasura seed create "xxx_seed"
 hasura-seed-create-from-table:
-	hasura seed create "roles_seed" --from-table=roles
+	hasura seed create "role_seed" --from-table=role
 hasura-seed-apply:
 	hasura seed apply
 
