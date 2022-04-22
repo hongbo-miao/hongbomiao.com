@@ -1,10 +1,14 @@
 # Redis
 redis-start:
 	redis-server
+redis-start-password:
+	redis-server --requirepass passw0rd --masterauth passw0rd
 redis-stop:
 	redis-cli SHUTDOWN
 redis-cli:
 	redis-cli
+redis-cli-password:
+	redis-cli --pass passw0rd
 redis-cli-ping:
 	redis-cli PING
 redis-cli-keys:
@@ -57,7 +61,7 @@ keydb-cli-hmget:
 keydb-start-multi-master:
 	keydb-server --multi-master yes --active-replica yes --replicaof 192.168.2.58 6379 --requirepass passw0rd --masterauth passw0rd
 	keydb-server --multi-master yes --active-replica yes --replicaof 192.168.2.117 6379 --requirepass passw0rd --masterauth passw0rd
-keydb-cli-pass:
+keydb-cli-password:
 	keydb-cli --pass passw0rd
 keydb-cli-lua-script-load:
 	keydb-cli --pass passw0rd SCRIPT LOAD "$$(cat greet.lua)"
