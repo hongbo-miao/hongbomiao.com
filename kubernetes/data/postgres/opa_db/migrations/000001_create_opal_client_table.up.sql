@@ -7,7 +7,7 @@ begin
 end;
 $$ language plpgsql;
 
-create table if not exists opal_clients
+create table if not exists opal_client
 (
   id         uuid                 default gen_random_uuid(),
   name       text        not null,
@@ -19,6 +19,6 @@ create table if not exists opal_clients
 
 create trigger update_updated_at
   before update
-  on opal_clients
+  on opal_client
   for each row
 execute procedure trigger_update_updated_at();

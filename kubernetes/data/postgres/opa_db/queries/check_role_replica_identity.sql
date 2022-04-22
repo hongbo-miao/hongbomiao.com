@@ -5,4 +5,4 @@ select case relreplident
          when 'i' then 'index'
          end as replica_identity
 from pg_class
-where oid = 'roles'::regclass;
+where oid = 'role'::regclass;
