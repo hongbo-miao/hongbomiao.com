@@ -4,7 +4,7 @@
     connection_info:
       use_prepared_statements: true
       database_url:
-        from_env: HASURA_GRAPHQL_DATABASE_URL
+        from_env: HASURA_GRAPHQL_OPA_DB_URL
       isolation_level: read-committed
       pool_settings:
         connection_lifetime: 600
@@ -17,6 +17,7 @@
   configuration:
     connection_info:
       use_prepared_statements: false
-      database_url: postgresql://admin:passw0rd@timescale.hm-timescale:25495/twitter_db
+      database_url:
+        from_env: HASURA_GRAPHQL_TWITTER_DB_URL
       isolation_level: read-committed
   tables: "!include twitter_db/tables/tables.yaml"

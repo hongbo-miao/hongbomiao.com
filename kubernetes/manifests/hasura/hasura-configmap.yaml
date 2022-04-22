@@ -6,8 +6,9 @@ metadata:
   labels:
     app.kubernetes.io/name: hasura
 data:
-  hasura_graphql_database_url: "postgres://admin:passw0rd@postgres-service.hm-postgres:40072/opa_db"
-  hasura_graphql_metadata_database_url: "postgres://admin:passw0rd@postgres-service.hm-postgres:40072/opa_db"
+  hasura_graphql_opa_db_url: "postgresql://admin:passw0rd@postgres-service.hm-postgres:40072/opa_db"
+  hasura_graphql_twitter_db_url: "postgresql://admin:passw0rd@timescale.hm-timescale:25495/twitter_db"
+  hasura_graphql_metadata_database_url: "postgresql://admin:passw0rd@postgres-service.hm-postgres:40072/opa_db"
   hasura_graphql_admin_secret: "passw0rd"
   hasura_graphql_enabled_log_types: "startup, http-log, webhook-log, websocket-log, query-log"
   hasura_graphql_enable_console: "true"
