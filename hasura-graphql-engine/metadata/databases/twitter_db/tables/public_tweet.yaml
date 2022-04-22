@@ -1,3 +1,13 @@
 table:
   schema: public
   name: tweet
+object_relationships:
+  - name: tweet_user
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: twitter_user
+        insertion_order: null
+        column_mapping:
+          twitter_user_id: id
