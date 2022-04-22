@@ -59,12 +59,15 @@ flink-application-delete:
 	kubectl delete deployment/hm-flink-cluster --namespace=hm-flink
 
 # TimescaleDB
-docker-run-timescaledb:
+run-docker-timescaledb:
 	docker run \
 		--detach \
 		--name=timescaledb \
-		--publish=25495:5432 \
+		--publish=16863:5432 \
 		--env=POSTGRES_DB=postgres \
 		--env=POSTGRES_USER=admin \
 		--env=POSTGRES_PASSWORD=passw0rd \
 		timescale/timescaledb:latest-pg14
+migrate-docker-timescaledb:
+	cd .. && \
+	sh kubernetes/bin/utils/migrateTimescaleDBDocker.sh
