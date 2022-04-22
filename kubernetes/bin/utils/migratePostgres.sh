@@ -12,7 +12,7 @@ psql postgresql://admin@localhost:40072/postgres --command="grant all privileges
 echo "=================================================="
 
 echo "# Migrate opa_db in Postgres"
-POSTGRESQL_URL="postgres://admin:passw0rd@localhost:40072/opa_db?sslmode=disable&search_path=public"
+POSTGRESQL_URL="postgresql://admin:passw0rd@localhost:40072/opa_db?sslmode=disable&search_path=public"
 migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/postgres/opa_db/migrations up
 echo "=================================================="
 

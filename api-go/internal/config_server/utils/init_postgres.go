@@ -13,7 +13,7 @@ func InitPostgres(
 	postgresDB string,
 	postgresUser string,
 	postgresPassword string) *pgxpool.Pool {
-	databaseURL := "postgres://" + postgresUser + ":" + postgresPassword + "@" + postgresHost + ":" + postgresPort + "/" + postgresDB
+	databaseURL := "postgresql://" + postgresUser + ":" + postgresPassword + "@" + postgresHost + ":" + postgresPort + "/" + postgresDB
 	pg, err := pgxpool.Connect(context.Background(), databaseURL)
 	if err != nil {
 		log.Error().Err(err).Msg("conn.Close")
