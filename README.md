@@ -67,7 +67,7 @@ Personal cutting-edge technology lab.
 
 ## Architecture
 
-![Architecture](https://user-images.githubusercontent.com/3375461/164569171-da26430c-ad81-4053-b481-07245af25d22.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/164974432-edb5c75b-afaa-4896-b7bc-9882e57b241b.png)
 
 ## Setup
 
@@ -210,6 +210,7 @@ make clean
 - **Kubernetes** - Container-orchestration system
 - **K3s** - Lightweight Kubernetes
 - **Goldilocks** - Kubernetes resource requests recommending
+- **Polaris** - Kubernetes best practices validating
 - **Kubecost** - Kubernetes cost monitoring and management
 
 ### Ops
