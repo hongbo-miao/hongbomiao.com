@@ -6,3 +6,14 @@
       root_fields_namespace: hm_graphql_server
     forward_client_headers: true
   comment: ""
+  permissions:
+    - role: anonymous
+      definition:
+        schema: |-
+          schema  { query: Query }
+
+          type CurrentTime { now: String
+          }
+
+          type Query { currentTime: CurrentTime
+          }
