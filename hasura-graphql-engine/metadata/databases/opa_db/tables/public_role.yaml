@@ -5,3 +5,18 @@ object_relationships:
   - name: opal_client
     using:
       foreign_key_constraint_on: opal_client_id
+event_triggers:
+  - name: role_event_trigger
+    definition:
+      enable_manual: true
+      insert:
+        columns: '*'
+      delete:
+        columns: '*'
+      update:
+        columns: '*'
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook: http://graphql-server-service.hm:31800/hasura/role-event-trigger
