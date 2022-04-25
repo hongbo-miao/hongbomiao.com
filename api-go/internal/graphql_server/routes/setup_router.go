@@ -25,6 +25,7 @@ func SetupRouter(env string, rdb *redis.Client, minioClient *minio.Client) *gin.
 	r.GET("/metrics", sharedHandlers.PrometheusHandler())
 	r.POST("/graphql", handlers.GraphQLHandler(rdb))
 	r.POST("/hasura/update-seed", controllers.UpdateSeed)
+	r.POST("/hasura/role-event-trigger", controllers.RoleEventTrigger)
 	r.POST("/predict", controllers.Predict)
 	r.POST("/upload", controllers.Upload(minioClient))
 	return r
