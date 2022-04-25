@@ -49,6 +49,11 @@ spec:
                 configMapKeyRef:
                   name: hasura-configmap
                   key: hasura_graphql_unauthorized_role
+            - name: HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: hasura-configmap
+                  key: hasura_graphql_enable_remote_schema_permissions
             - name: HASURA_GRAPHQL_ENABLED_LOG_TYPES
               valueFrom:
                 configMapKeyRef:
