@@ -22,6 +22,7 @@ spec:
         - image: hasura/graphql-engine:v2.5.0.cli-migrations-v3
           imagePullPolicy: IfNotPresent
           name: hasura
+          # https://hasura.io/docs/latest/graphql/core/deployment/graphql-engine-flags/reference/
           env:
             - name: HASURA_GRAPHQL_OPA_DB_URL
               valueFrom:
@@ -43,6 +44,11 @@ spec:
                 configMapKeyRef:
                   name: hasura-configmap
                   key: hasura_graphql_admin_secret
+            - name: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
+              valueFrom:
+                configMapKeyRef:
+                  name: hasura-configmap
+                  key: hasura_graphql_unauthorized_role
             - name: HASURA_GRAPHQL_ENABLED_LOG_TYPES
               valueFrom:
                 configMapKeyRef:
