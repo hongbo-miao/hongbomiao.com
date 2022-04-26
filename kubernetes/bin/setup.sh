@@ -58,7 +58,7 @@ fi
 
 source kubernetes/bin/utils/installElastic.sh
 source kubernetes/bin/utils/installArgoCD.sh
-
+source kubernetes/bin/utils/installDgraph.sh
 source kubernetes/bin/utils/installPostgres.sh
 source kubernetes/bin/utils/migratePostgres.sh
 source kubernetes/bin/utils/installWestClusterApp.sh
