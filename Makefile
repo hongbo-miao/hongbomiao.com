@@ -486,14 +486,15 @@ lint-dockerfile:
 lint-shell:
 	shellcheck $$(git ls-files "**/*.sh")
 lint-kubernetes:
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/east/*.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-configmap.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-deployment.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-ingress.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-namespace.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-pv.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-pvc.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-service.yaml")
-	kubeconform -kubernetes-version=1.21.0 $$(git ls-files "kubernetes/manifests/west/*-statefulset.yaml")
+	kubeconform \
+		-kubernetes-version=1.23.4 \
+		-ignore-filename-pattern=".*trafficsplit.yaml" \
+		-ignore-filename-pattern=".*my-values.yaml" \
+		-ignore-filename-pattern="kubernetes/manifests/argocd/" \
+		-ignore-filename-pattern="kubernetes/manifests/elastic/" \
+		-ignore-filename-pattern="kubernetes/manifests/kafka/" \
+		-ignore-filename-pattern="kubernetes/manifests/prometheus/" \
+		-ignore-filename-pattern="kubernetes/manifests/yugabyte/" \
+		$$(git ls-files "kubernetes/manifests/")
 lint-protocol-buffers:
 	buf lint
