@@ -1,19 +1,31 @@
+- name: hm-dgraph-schema
+  definition:
+    url: http://dgraph-dgraph-alpha.hm-dgraph:8080/graphql
+    timeout_seconds: 60
+    forward_client_headers: true
+  comment: ""
 - name: hm-graphql-server-schema
   definition:
     url: http://graphql-server-service.hm:31800/graphql
     timeout_seconds: 60
-    customization:
-      root_fields_namespace: hm_graphql_server
     forward_client_headers: true
   comment: ""
   permissions:
     - role: anonymous
       definition:
         schema: |-
-          schema  { query: Query }
+          schema  { query: Query mutation: Mutation }
 
           type CurrentTime { now: String
           }
 
+          type Mutation { signIn(email: String!, password: String!): SignIn
+          }
+
           type Query { currentTime: CurrentTime
+          }
+
+          type SignIn { id: ID
+            jwtToken: String
+            name: String
           }
