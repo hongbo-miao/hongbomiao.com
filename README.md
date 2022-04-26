@@ -164,10 +164,11 @@ make clean
 
 ### Data
 
-- **Dgraph** - Distributed graph database
-- **Elasticsearch** - Distributed document-oriented search engine
+- **Trino** - Distributed SQL query engine
 - **YugabyteDB** - Distributed SQL database
 - **TimescaleDB** - Time-series SQL database
+- **Dgraph** - Distributed graph database
+- **Elasticsearch** - Distributed document-oriented search engine
 - **PostgreSQL** - Object-relational database
 - **KeyDB** - High performance fork of Redis
 - **MinIO** - High performance object storage
