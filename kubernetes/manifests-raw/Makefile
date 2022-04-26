@@ -36,11 +36,6 @@ download-kafka:
 # Prometheus
 # Manifests: https://github.com/prometheus-operator/kube-prometheus/tree/main/manifests
 
-# Rasa
-download-rasa:
-	curl https://raw.githubusercontent.com/RasaHQ/helm-charts/main/charts/rasa/values.yaml > rasa/rasa/values.yaml
-	curl https://raw.githubusercontent.com/RasaHQ/helm-charts/main/charts/rasa-action-server/values.yaml > rasa/rasa-action-server/values.yaml
-
 # Superset
 download-superset:
 	curl https://raw.githubusercontent.com/apache/superset/master/helm/superset/values.yaml > superset/helm/values.yaml
