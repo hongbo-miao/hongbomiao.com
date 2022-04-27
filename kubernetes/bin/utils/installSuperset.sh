@@ -27,4 +27,7 @@ helm install \
 
 # Delete:
 # helm uninstall superset --namespace=hm-superset
+
+# Install database drivers:
+# https://superset.apache.org/docs/databases/installing-database-drivers
 echo "=================================================="
