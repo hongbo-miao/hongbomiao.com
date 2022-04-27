@@ -9,3 +9,14 @@ array_relationships:
         table:
           schema: public
           name: role
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - config
+        - name
+        - created_on
+        - updated_at
+        - id
+      filter: {}
+      allow_aggregations: true

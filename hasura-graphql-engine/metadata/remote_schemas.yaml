@@ -19,10 +19,18 @@
           type CurrentTime { now: String
           }
 
-          type Mutation { signIn(email: String!, password: String!): SignIn
+          type Mutation { setSeed(n: Int!): SetSeed
+            signIn(email: String!, password: String!): SignIn
           }
 
           type Query { currentTime: CurrentTime
+            seed: Seed
+          }
+
+          type Seed { seedNumber: Int
+          }
+
+          type SetSeed { seedNumber: Int
           }
 
           type SignIn { id: ID
