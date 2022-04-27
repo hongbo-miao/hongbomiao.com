@@ -11,6 +11,23 @@ helm install \
   --namespace=hm-trino \
   --values=kubernetes/manifests/trino/helm/my-values.yaml
 
+# Username: admin
+
+# Dry run:
+# helm install \
+#   trino \
+#   trino/trino \
+#   --namespace=hm-trino \
+#   --values=kubernetes/manifests/trino/helm/my-values.yaml \
+#   --dry-run
+
+# Upgrade:
+# helm upgrade \
+#   trino \
+#   trino/trino \
+#   --namespace=hm-trino \
+#   --values=kubernetes/manifests/trino/helm/my-values.yaml
+
 # Delete:
 # helm uninstall trino --namespace=hm-trino
 echo "=================================================="
