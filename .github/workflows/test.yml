@@ -526,20 +526,23 @@ jobs:
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
-  prometheus-test:
-    name: Prometheus - Test
+  streaming-test:
+    name: Streaming - Test
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'maven'
       - name: Test
+        working-directory: streaming
         run: |
-          docker build --file=Dockerfile.prometheus.test .
+          mvn test
 
   opa-test:
     name: OPA - Test
@@ -562,7 +565,8 @@ jobs:
 
   rasa-test:
     name: Rasa - Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -571,6 +575,21 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workspace: ${{ github.workspace }}/chatbot
+
+  prometheus-test:
+    name: Prometheus - Test
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Test
+        run: |
+          docker build --file=Dockerfile.prometheus.test .
 
   hm-opal-client-build:
     name: HM OPAL Client - Build
