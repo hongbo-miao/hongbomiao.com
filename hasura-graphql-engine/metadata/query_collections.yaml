@@ -1,1 +1,43 @@
-[]
+- name: allowed-queries
+  definition:
+    queries:
+      - name: OPALClient
+        query: |-
+          query OPALClient {
+            opal_client {
+              id
+              name
+              created_on
+              updated_at
+            }
+          }
+      - name: OPALClientCount
+        query: |-
+          query OPALClientCount {
+            opal_client_aggregate {
+              aggregate {
+                count
+              }
+            }
+          }
+      - name: CurrentTime
+        query: |-
+          query CurrentTime {
+            currentTime {
+              now
+            }
+          }
+      - name: Seed
+        query: |-
+          query Seed {
+            seed {
+              seedNumber
+            }
+          }
+      - name: SetSeed
+        query: |-
+          mutation SetSeed {
+            setSeed(n: 520) {
+              seedNumber
+            }
+          }

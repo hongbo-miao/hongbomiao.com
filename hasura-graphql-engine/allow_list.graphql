@@ -1,0 +1,37 @@
+# hm-postgres - opa_db
+query OPALClient {
+  opal_client {
+    id
+    name
+    created_on
+    updated_at
+  }
+}
+
+query OPALClientCount {
+  opal_client_aggregate {
+    aggregate {
+      count
+    }
+  }
+}
+
+# hm-graphql-server
+query CurrentTime {
+  currentTime {
+    now
+  }
+}
+
+query Seed {
+  seed {
+    seedNumber
+  }
+}
+
+mutation SetSeed {
+  setSeed(n: 520) {
+    seedNumber
+  }
+}
+
