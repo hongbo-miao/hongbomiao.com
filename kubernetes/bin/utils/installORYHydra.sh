@@ -17,14 +17,14 @@ helm install \
   ory-hydra \
   ory/hydra \
   --namespace=hm-ory-hydra \
-  --values=ory-hydra/ory-hydra.yaml
+  --values=kubernetes/manifests/ory-hydra/helm/my-values.yaml
 
 # Upgrade:
 # helm upgrade \
 #   ory-hydra \
 #   ory/hydra \
 #   --namespace=hm-ory-hydra \
-#   --values=ory-hydra/ory-hydra.yaml
+#   --values=kubernetes/manifests/ory-hydra/helm/my-values.yaml
 
 # Delete:
 # helm uninstall ory-hydra --namespace=hm-ory-hydra
