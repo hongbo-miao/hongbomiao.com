@@ -43,7 +43,7 @@ func main() {
 	}
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     config.RedisHost + ":" + config.RedisPort,
-		Password: "",
+		Password: config.RedisPassword,
 		DB:       redisDB,
 	})
 	defer func(rdb *redis.Client) {
