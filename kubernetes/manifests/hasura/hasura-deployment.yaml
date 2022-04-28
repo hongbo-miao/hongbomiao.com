@@ -20,7 +20,6 @@ spec:
     spec:
       containers:
         - image: hasura/graphql-engine:v2.5.0.cli-migrations-v3
-          imagePullPolicy: IfNotPresent
           name: hasura
           # https://hasura.io/docs/latest/graphql/core/deployment/graphql-engine-flags/reference/
           env:
@@ -94,8 +93,8 @@ spec:
               protocol: TCP
               containerPort: 8080
           volumeMounts:
-            - mountPath: /data/hasura
-              name: hasura-volume
+            - name: hasura-volume
+              mountPath: /data/hasura
       volumes:
         - name: hasura-volume
           persistentVolumeClaim:

@@ -177,8 +177,8 @@ spec:
 
           # ---- ELASTIC APM BEGIN ----
           volumeMounts:
-            - mountPath: /data/elastic-apm
-              name: elastic-apm-volume
+            - name: elastic-apm-volume
+              mountPath: /data/elastic-apm
           # ---- ELASTIC APM END ----
 
         # ---- OPA BEGIN ----
@@ -248,8 +248,8 @@ spec:
               protocol: TCP
               containerPort: 8181
           volumeMounts:
-            - mountPath: /data/opa
-              name: opa-volume
+            - name: opa-volume
+              mountPath: /data/opa
         # ---- OPA END ----
 
       # ---- OPA BEGIN ----

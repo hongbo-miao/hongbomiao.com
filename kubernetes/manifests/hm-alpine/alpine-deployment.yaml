@@ -22,8 +22,8 @@ spec:
             - sleep
             - "31536000"
           volumeMounts:
-            - mountPath: /data/alpine
-              name: hm-alpine-volume
+            - name: hm-alpine-volume
+              mountPath: /data/alpine
       volumes:
         - name: hm-alpine-volume
           persistentVolumeClaim:

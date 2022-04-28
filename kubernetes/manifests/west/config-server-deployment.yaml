@@ -139,12 +139,12 @@ spec:
               containerPort: 26660
 
           volumeMounts:
-            - mountPath: /data/config-server
-              name: config-server-volume
+            - name: config-server-volume
+              mountPath: /data/config-server
 
             # ---- ELASTIC APM BEGIN ----
-            - mountPath: /data/elastic-apm
-              name: elastic-apm-volume
+            - name: elastic-apm-volume
+              mountPath: /data/elastic-apm
             # ---- ELASTIC APM END ----
 
       volumes:
