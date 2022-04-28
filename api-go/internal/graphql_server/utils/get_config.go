@@ -17,6 +17,7 @@ type Config struct {
 	RedisHost                    string
 	RedisPort                    string
 	RedisDB                      string
+	RedisPassword                string
 	MinIOEndpoint                string
 	MinIOAccessKeyID             string
 	MinIOSecretAccessKey         string
@@ -52,6 +53,7 @@ func GetConfig() *Config {
 		RedisHost:                    os.Getenv("REDIS_HOST"),
 		RedisPort:                    os.Getenv("REDIS_PORT"),
 		RedisDB:                      os.Getenv("REDIS_DB"),
+		RedisPassword:                os.Getenv("REDIS_PASSWORD"),
 		MinIOEndpoint:                os.Getenv("MINIO_ENDPOINT"),
 		MinIOAccessKeyID:             os.Getenv("MINIO_ACCESS_KEY_ID"),
 		MinIOSecretAccessKey:         os.Getenv("MINIO_SECRET_ACCESS_KEY"),

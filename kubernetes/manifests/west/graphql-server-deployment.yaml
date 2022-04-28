@@ -74,6 +74,11 @@ spec:
                 configMapKeyRef:
                   name: graphql-server-configmap
                   key: redis_db
+            - name: REDIS_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: graphql-server-configmap
+                  key: redis_password
             - name: MINIO_ENDPOINT
               valueFrom:
                 configMapKeyRef:
