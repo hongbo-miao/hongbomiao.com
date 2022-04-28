@@ -29,9 +29,8 @@ query Seed {
   }
 }
 
-mutation SetSeed {
-  setSeed(n: 520) {
+mutation SetSeed($n: Int!) {
+  setSeed(n: $n) {
     seedNumber
   }
 }
-
