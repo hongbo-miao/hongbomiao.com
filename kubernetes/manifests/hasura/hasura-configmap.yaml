@@ -6,6 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: hasura
 data:
+  # hasura
   hasura_graphql_opa_db_url: "postgresql://admin:passw0rd@postgres-service.hm-postgres:40072/opa_db"
   hasura_graphql_twitter_db_url: "postgresql://admin:passw0rd@timescale.hm-timescale:25495/twitter_db"
   hasura_graphql_metadata_database_url: "postgresql://admin:passw0rd@postgres-service.hm-postgres:40072/opa_db"
@@ -19,3 +20,8 @@ data:
   hasura_graphql_enable_telemetry: "false"
   hasura_graphql_migrations_dir: "/data/hasura/migrations"
   hasura_graphql_metadata_dir: "/data/hasura/metadata"
+
+  # hasura-metric-adapter
+  log_file: "/tmp/log/stdout.log"
+  listen_addr: "localhost:9999"
+  hasura_graphql_endpoint: "http://localhost:8080"
