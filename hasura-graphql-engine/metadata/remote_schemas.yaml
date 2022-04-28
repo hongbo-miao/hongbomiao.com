@@ -13,27 +13,26 @@
   permissions:
     - role: anonymous
       definition:
-        schema: |-
-          schema  { query: Query mutation: Mutation }
-
-          type CurrentTime { now: String
+        schema: |
+          type CurrentTime {
+          	now: String
           }
-
-          type Mutation { setSeed(n: Int!): SetSeed
-            signIn(email: String!, password: String!): SignIn
+          type Mutation {
+          	setSeed(n: Int!): SetSeed
+          	signIn(email: String!, password: String!): SignIn
           }
-
-          type Query { currentTime: CurrentTime
-            seed: Seed
+          type Query {
+          	currentTime: CurrentTime
+          	seed: Seed
           }
-
-          type Seed { seedNumber: Int
+          type Seed {
+          	seedNumber: Int
           }
-
-          type SetSeed { seedNumber: Int
+          type SetSeed {
+          	seedNumber: Int
           }
-
-          type SignIn { id: ID
-            jwtToken: String
-            name: String
+          type SignIn {
+          	id: ID
+          	jwtToken: String
+          	name: String
           }
