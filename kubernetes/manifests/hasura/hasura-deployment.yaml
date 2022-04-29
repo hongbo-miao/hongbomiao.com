@@ -18,6 +18,7 @@ spec:
       labels:
         app: hasura
     spec:
+      shareProcessNamespace: true
       containers:
         - image: hasura/graphql-engine:v2.6.0.cli-migrations-v3
           name: hasura
@@ -93,7 +94,7 @@ spec:
               protocol: TCP
               containerPort: 8080
           command: [
-            "/bin/sh", "-c", ": > /tmp/log/stdout.log && /bin/graphql-engine serve | tee /tmp/log/stdout.log"
+            "/bin/sh", "-c", "rm -rf /tmp/log/stdout.log && mkfifo /tmp/log/stdout.log && /bin/graphql-engine serve | tee /tmp/log/stdout.log"
           ]
           volumeMounts:
             - name: hasura-volume
