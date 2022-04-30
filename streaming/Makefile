@@ -35,8 +35,12 @@ flink-session-submit-job:
 		./target/streaming-0.1.jar
 
 # Flink Application Mode
+set-secret-base64-in-github:
+	cd src/main/resources && \
+	base64 --input=application-production.properties --output=application-production.properties.base64 && \
+	gh secret set HM_STEAMING_APPLICATION_PROPERTIES_BASE64 < application-production.properties.base64 && \
+	rm -f application-production.properties.base64
 docker-build:
-	mvn clean package && \
 	cd .. && \
 	docker build --file=streaming/Dockerfile --tag=ghcr.io/hongbo-miao/hm-streaming:latest .
 docker-push:
@@ -51,7 +55,7 @@ flink-application-start:
 		--target kubernetes-application \
 		-Dkubernetes.namespace=hm-flink \
 		-Dkubernetes.cluster-id=hm-flink-cluster \
-		-Dkubernetes.container.image=hongbomiao/hm-streaming:latest \
+		-Dkubernetes.container.image=ghcr.io/hongbo-miao/hm-streaming:latest \
 		-Dkubernetes.container.image.pull-policy=Always \
 		-Dkubernetes.jobmanager.service-account=flink-serviceaccount \
 		local:///opt/flink/usrlib/streaming-0.1.jar

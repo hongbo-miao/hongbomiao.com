@@ -1,5 +1,9 @@
-FROM flink:1.15.0-scala_2.12-java11
+FROM maven:3.8.5-amazoncorretto-11 AS builder
+WORKDIR /usr/src/app
+COPY ["streaming/src", "streaming/pom.xml", "./"]
+RUN mvn clean package
 
+FROM flink:1.15.0-scala_2.12-java11
 RUN mkdir -p "${FLINK_HOME}/usrlib"
 COPY ["streaming/src/main/resources/application-production.properties", "${FLINK_HOME}/application-production.properties"]
-COPY ["streaming/target/streaming-0.1.jar", "${FLINK_HOME}/usrlib/streaming-0.1.jar"]
+COPY --from=builder /usr/src/app/target/streaming-0.1.jar "${FLINK_HOME}/usrlib/streaming-0.1.jar"
