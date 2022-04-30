@@ -15,11 +15,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -27,7 +28,7 @@ jobs:
           context: .
           file: ./web/Dockerfile
           push: true
-          tags: hongbomiao/hm-web:latest
+          tags: ghcr.io/hongbo-miao/hm-web:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -40,11 +41,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -52,7 +54,7 @@ jobs:
           context: .
           file: ./api-node/Dockerfile
           push: true
-          tags: hongbomiao/hm-api-node:latest
+          tags: ghcr.io/hongbo-miao/hm-api-node:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -65,11 +67,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -77,7 +80,7 @@ jobs:
           context: .
           file: ./api-go/build/package/graphql_server/Dockerfile
           push: true
-          tags: hongbomiao/hm-graphql-server:latest
+          tags: ghcr.io/hongbo-miao/hm-graphql-server:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -90,11 +93,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -102,7 +106,7 @@ jobs:
           context: .
           file: ./api-go/build/package/grpc_server/Dockerfile
           push: true
-          tags: hongbomiao/hm-grpc-server:latest
+          tags: ghcr.io/hongbo-miao/hm-grpc-server:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -115,11 +119,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -127,7 +132,7 @@ jobs:
           context: .
           file: ./api-go/build/package/config_server/Dockerfile
           push: true
-          tags: hongbomiao/hm-config-server:latest
+          tags: ghcr.io/hongbo-miao/hm-config-server:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -140,11 +145,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -152,7 +158,7 @@ jobs:
           context: .
           file: ./api-go/build/package/decision_logger/Dockerfile
           push: true
-          tags: hongbomiao/hm-decision-logger:latest
+          tags: ghcr.io/hongbo-miao/hm-decision-logger:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -165,11 +171,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -177,7 +184,7 @@ jobs:
           context: .
           file: ./hm-opal-client/Dockerfile
           push: true
-          tags: hongbomiao/hm-opal-client:latest
+          tags: ghcr.io/hongbo-miao/hm-opal-client:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -190,11 +197,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -202,7 +210,7 @@ jobs:
           context: .
           file: ./kafka-connect/Dockerfile
           push: true
-          tags: hongbomiao/hm-kafka-connect:latest
+          tags: ghcr.io/hongbo-miao/hm-kafka-connect:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -215,11 +223,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -227,7 +236,7 @@ jobs:
           context: .
           file: ./chatbot/Dockerfile
           push: true
-          tags: hongbomiao/hm-rasa-action-server:latest
+          tags: ghcr.io/hongbo-miao/hm-rasa-action-server:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
@@ -240,11 +249,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Hub
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_ID }}
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -252,6 +262,6 @@ jobs:
           context: .
           file: ./hm-alpine/Dockerfile
           push: true
-          tags: hongbomiao/hm-alpine:latest
+          tags: ghcr.io/hongbo-miao/hm-alpine:latest
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
