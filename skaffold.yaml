@@ -6,11 +6,11 @@ metadata:
   name: hongbomiao.com
 build:
   artifacts:
-  - image: hongbomiao/web
+  - image: ghcr.io/hongbo-miao/hm-web:latest
     context: .
     docker:
       dockerfile: web/Dockerfile
-  - image: hongbomiao/hm-graphql-server:latest
+  - image: ghcr.io/hongbo-miao/hm-graphql-server:latest
     context: .
     docker:
       dockerfile: api-go/build/package/graphql-server/Dockerfile
@@ -18,7 +18,7 @@ build:
       manual:
         - src: "*.go"
           dest: .
-  - image: hongbomiao/hm-grpc-server:latest
+  - image: ghcr.io/hongbo-miao/hm-grpc-server:latest
     context: .
     docker:
       dockerfile: api-go/build/package/grpc-server/Dockerfile
@@ -26,7 +26,7 @@ build:
       manual:
         - src: "*.go"
           dest: .
-  - image: hongbomiao/hm-decision-logger:latest
+  - image: ghcr.io/hongbo-miao/hm-decision-logger:latest
     context: .
     docker:
       dockerfile: api-go/build/package/decision-logger/Dockerfile
