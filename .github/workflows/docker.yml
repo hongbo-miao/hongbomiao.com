@@ -240,7 +240,7 @@ jobs:
           PROPERTIES_BASE64: ${{ secrets.STEAMING_APPLICATION_PROPERTIES_BASE64 }}
         working-directory: streaming/src/main/resources
         run: |
-          echo HM_STEAMING_APPLICATION_PROPERTIES_BASE64 | base64 --decode > application-production.properties
+          echo $HM_STEAMING_APPLICATION_PROPERTIES_BASE64 | base64 --decode > application-production.properties
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2
