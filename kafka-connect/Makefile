@@ -5,7 +5,7 @@ docker-build:
 docker-push:
 	docker push ghcr.io/hongbo-miao/hm-kafka-connect:latest
 docker-sh:
-	docker run -it hongbomiao/hm-kafka-connect:latest sh
+	docker run -it ghcr.io/hongbo-miao/hm-kafka-connect:latest sh
 
 # Kafka
 kafka-get-hm-kafkaconnect:
