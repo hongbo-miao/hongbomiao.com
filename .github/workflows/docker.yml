@@ -7,7 +7,7 @@ on:
 
 jobs:
   push-web:
-    name: Push web to Docker Hub
+    name: Push web to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -31,7 +31,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-api-node:
-    name: Push api-node to Docker Hub
+    name: Push api-node to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -55,7 +55,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-graphql-server:
-    name: Push graphql-server to Docker Hub
+    name: Push graphql-server to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -79,7 +79,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-grpc-server:
-    name: Push grpc-server to Docker Hub
+    name: Push grpc-server to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -103,7 +103,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-config-server:
-    name: Push config-server to Docker Hub
+    name: Push config-server to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -127,7 +127,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-decision-logger:
-    name: Push decision-logger to Docker Hub
+    name: Push decision-logger to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -151,7 +151,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-hm-opal-client:
-    name: Push opal-client to Docker Hub
+    name: Push opal-client to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -175,7 +175,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-kafka-connect:
-    name: Push kafka-connect to Docker Hub
+    name: Push kafka-connect to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -199,7 +199,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-rasa-action-server:
-    name: Push rasa-action-server to Docker Hub
+    name: Push rasa-action-server to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -223,7 +223,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-hm-alpine:
-    name: Push hm-alpine to Docker Hub
+    name: Push hm-alpine to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
