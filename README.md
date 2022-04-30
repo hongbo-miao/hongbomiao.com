@@ -37,7 +37,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/Hongbo-Miao/hongbomiao.com" /></a>
+  <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Lines of code" src="https://tokei.ekzhang.com/b1/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com/graphs/contributors"><img alt="Commit activity" src="https://img.shields.io/github/commit-activity/y/Hongbo-Miao/hongbomiao.com"></a>
 </p>
