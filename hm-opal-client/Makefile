@@ -10,6 +10,6 @@ pip-freeze:
 
 docker-build:
 	cd .. && \
-	docker build --file=hm-opal-client/Dockerfile --tag=hongbomiao/hm-opal-client:latest .
+	docker build --file=hm-opal-client/Dockerfile --tag=ghcr.io/hongbo-miao/hm-opal-client:latest .
 docker-push:
-	docker push hongbomiao/hm-opal-client:latest
+	docker push ghcr.io/hongbo-miao/hm-opal-client:latest

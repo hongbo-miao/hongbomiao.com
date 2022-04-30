@@ -1,5 +1,5 @@
 docker-build:
 	cd .. && \
-	docker build --file=web/Dockerfile --tag=hongbomiao/hm-web:latest .
+	docker build --file=web/Dockerfile --tag=ghcr.io/hongbo-miao/hm-web:latest .
 docker-push:
-	docker push hongbomiao/hm-web:latest
+	docker push ghcr.io/hongbo-miao/hm-web:latest

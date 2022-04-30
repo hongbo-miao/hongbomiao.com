@@ -35,9 +35,9 @@ k8s-debug:
 docker-login:
 	docker login
 docker-build:
-	docker build --file=api-node/Dockerfile.development --tag=hm-api-node-dev .
-	docker build --file=api-node/Dockerfile --tag=hm-api-node .
-	docker build --file=api-go/build/package/graphql_server/Dockerfile --tag=hm-graphql-server .
+	docker build --file=api-node/Dockerfile.development --tag=ghcr.io/hongbo-miao/hm-api-node-dev .
+	docker build --file=api-node/Dockerfile --tag=ghcr.io/hongbo-miao/hm-api-node .
+	docker build --file=api-go/build/package/graphql_server/Dockerfile --tag=ghcr.io/hongbo-miao/hm-graphql-server .
 docker-run:
 	docker run -p 5000:5000 --name=hm_api_node_dev --rm --env-file=./api/.env.development.local.example.docker hm-api-node-dev
 	docker run -p 5000:5000 --name=hm_api_node --rm --env-file=./api/.env.production.local.example hm-api-node

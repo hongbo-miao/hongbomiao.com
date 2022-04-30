@@ -1,9 +1,9 @@
 # Docker
 docker-build:
 	cd .. && \
-	docker build --file=kafka-connect/Dockerfile --tag=hongbomiao/hm-kafka-connect:latest .
+	docker build --file=kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-kafka-connect:latest .
 docker-push:
-	docker push hongbomiao/hm-kafka-connect:latest
+	docker push ghcr.io/hongbo-miao/hm-kafka-connect:latest
 docker-sh:
 	docker run -it hongbomiao/hm-kafka-connect:latest sh
 

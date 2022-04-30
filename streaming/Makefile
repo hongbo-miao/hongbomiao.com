@@ -38,9 +38,9 @@ flink-session-submit-job:
 docker-build:
 	mvn clean package && \
 	cd .. && \
-	docker build --file=streaming/Dockerfile --tag=hongbomiao/hm-streaming:latest .
+	docker build --file=streaming/Dockerfile --tag=ghcr.io/hongbo-miao/hm-streaming:latest .
 docker-push:
-	docker push hongbomiao/hm-streaming:latest
+	docker push ghcr.io/hongbo-miao/hm-streaming:latest
 flink-application-init:
 	cd .. && \
     kubectl apply --filename=kubernetes/manifests/flink
