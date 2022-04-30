@@ -67,7 +67,7 @@ Personal cutting-edge technology lab.
 
 ## Architecture
 
-![Architecture](https://user-images.githubusercontent.com/3375461/166089698-747d756b-0c65-4f43-ad8b-f8f927207d87.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/166099571-e88d3c8f-a110-4d5d-8dec-633ad68371c8.png)
 
 ## Setup
 
@@ -295,6 +295,7 @@ make clean
 - **Mergify** - Automatically merging
 - **Stale** - Stale issues and pull requests closing
 - **ImgBot** - Image compression
+- **semantic-release** - Version management and package publishing
 
 ## Highlights
 
