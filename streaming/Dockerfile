@@ -1,6 +1,7 @@
 FROM maven:3.8.5-amazoncorretto-11 AS builder
 WORKDIR /usr/src/app
-COPY ["streaming/src", "streaming/pom.xml", "./"]
+COPY ["streaming/src/",  "./src/"]
+COPY ["streaming/pom.xml", "./"]
 RUN mvn clean package
 
 FROM flink:1.15.0-scala_2.12-java11
