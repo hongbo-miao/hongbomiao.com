@@ -350,10 +350,10 @@ jobs:
           npm run build
       - name: Lighthouse
         working-directory: web
-        run: |
-          npm run lighthouse
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        run: |
+          npm run lighthouse
 
   # https://www.chromatic.com/docs/github-actions
   web-storybook:
@@ -521,10 +521,10 @@ jobs:
           cd api-node && npm ci
       - name: Stryker
         working-directory: api-node
-        run: |
-          npm run test:stryker
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+        run: |
+          npm run test:stryker
 
   streaming-test:
     name: Streaming - Test
