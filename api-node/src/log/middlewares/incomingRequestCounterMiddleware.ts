@@ -8,7 +8,7 @@ const incomingRequestCounterMiddleware = (): RequestHandler => {
 
   return (req, res, next) => {
     const labels = { path: req.path };
-    incomingRequestCounter.bind(labels).add(1);
+    incomingRequestCounter.add(1, labels);
     next();
   };
 };
