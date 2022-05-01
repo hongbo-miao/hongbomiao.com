@@ -25,7 +25,7 @@ const corsMiddleware = (allowOrigins: ReadonlyArray<string> = ALLOW_LIST): Reque
         callback(null, true);
       } else {
         const labels = { origin };
-        corsViolationCounter.bind(labels).add(1);
+        corsViolationCounter.add(1, labels);
         const errMsg = `${origin} is not allowed by CORS.`;
         logger.warn({ errMsg }, 'cors');
         callback(new Error(errMsg));

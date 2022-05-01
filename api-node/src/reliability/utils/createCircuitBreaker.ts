@@ -18,7 +18,7 @@ const createCircuitBreaker = <FuncReturnType>(
     breaker.on(eventName, () => {
       logger.info({ breakerName: breaker.name, eventName }, 'createCircuitBreaker');
       const labels = { breakerName: breaker.name, eventName: String(eventName) };
-      beakerCounter.bind(labels).add(1);
+      beakerCounter.add(1, labels);
     });
   });
   return breaker;
