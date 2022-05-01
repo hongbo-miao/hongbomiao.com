@@ -39,7 +39,12 @@ const initTracer = (): void => {
   tracerProvider.register();
 
   registerInstrumentations({
-    instrumentations: [new DocumentLoadInstrumentation(), new XMLHttpRequestInstrumentation()],
+    instrumentations: [
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      new DocumentLoadInstrumentation(),
+      new XMLHttpRequestInstrumentation(),
+    ],
   });
 };
 
