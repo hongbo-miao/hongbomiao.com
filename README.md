@@ -37,7 +37,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Lines of code" src="https://tokei.ekzhang.com/b1/github/Hongbo-Miao/hongbomiao.com" /></a>
+  <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com/graphs/contributors"><img alt="Commit activity" src="https://img.shields.io/github/commit-activity/y/Hongbo-Miao/hongbomiao.com"></a>
 </p>
@@ -67,7 +67,7 @@ Personal cutting-edge technology lab.
 
 ## Architecture
 
-![Architecture](https://user-images.githubusercontent.com/3375461/166121743-891b3b5c-2016-4a8b-8c54-e6cb2ae567e2.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/166176829-e20fbf09-56e6-46be-8d08-798af4763ab4.png)
 
 ## Setup
 
