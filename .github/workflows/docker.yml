@@ -265,6 +265,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get redisgraph.so
+        working-directory: keydb
+        run: |
+          docker create --cidfile cid.txt redislabs/redisgraph:latest
+          docker cp $(cat cid.txt):/usr/lib/redis/modules/redisgraph.so .
+          docker container rm $(cat cid.txt)
+          rm -f cid.txt
       - name: Build and push Docker image
         id: docker_build
         uses: docker/build-push-action@v2

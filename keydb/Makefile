@@ -57,7 +57,7 @@ redis-cli-graph-create-relationships:
 	redis-cli GRAPH.QUERY movies "MATCH (a:Actor), (m:Movie) WHERE a.actor_id = 2 AND m.movie_id = 1 CREATE (a)-[r:ACTED_IN {role:'Han Solo'}]->(m) RETURN r"
 	# Carrie Fisher played Princess Leila
 	redis-cli GRAPH.QUERY movies "MATCH (a:Actor), (m:Movie) WHERE a.actor_id = 3 AND m.movie_id = 1 CREATE (a)-[r:ACTED_IN {role:'Princess Leila'}]->(m) RETURN r"
-redis-cli-graph-viz:
+redis-cli-graph-visualize:
 	redis-cli GRAPH.QUERY movies "MATCH (m:Movie) WHERE m.movie_id = 1 RETURN m"
 redis-cli-graph-del:
 	redis-cli DEL movies
@@ -106,7 +106,12 @@ keydb-cli-lua-script-load:
 # KeyDB - Docker
 keydb-docker-build:
 	cd .. && \
-	docker build --file=keydb/Dockerfile --tag=ghcr.io/hongbo-miao/hm-keydb:latest .
+	rm -f keydb/cid.txt && \
+	docker create --cidfile=keydb/cid.txt redislabs/redisgraph:latest && \
+	docker cp $$(cat keydb/cid.txt):/usr/lib/redis/modules/redisgraph.so ./keydb/modules/ && \
+	docker container rm $$(cat keydb/cid.txt) && \
+	rm -f keydb/cid.txt && \
+	docker build --file=keydb/Dockerfile --tag=ghcr.io/hongbo-miao/hm-keydb:test .
 keydb-docker-push:
 	docker push ghcr.io/hongbo-miao/hm-keydb:latest
 keydb-docker-run-multi-master:
