@@ -99,10 +99,16 @@ keydb-docker-build:
 	docker build --file=keydb/Dockerfile --tag=ghcr.io/hongbo-miao/hm-keydb:latest .
 keydb-docker-push:
 	docker push ghcr.io/hongbo-miao/hm-keydb:latest
-keydb-docker-run:
+keydb-docker-run-multi-master:
 	docker run \
 		--detach \
 		--name=hm-keydb \
 		--publish=6379:6379 \
 		ghcr.io/hongbo-miao/hm-keydb:latest \
 		keydb-server /etc/keydb/keydb.conf --multi-master yes --active-replica yes --replicaof 192.168.2.58 6379 --requirepass passw0rd --masterauth passw0rd
+	docker run \
+		--detach \
+		--name=hm-keydb \
+		--publish=6379:6379 \
+		ghcr.io/hongbo-miao/hm-keydb:latest \
+		keydb-server /etc/keydb/keydb.conf --multi-master yes --active-replica yes --replicaof 192.168.2.117 6379 --requirepass passw0rd --masterauth passw0rd
