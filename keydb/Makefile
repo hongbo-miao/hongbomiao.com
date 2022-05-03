@@ -18,6 +18,9 @@ redis-cli-set:
 redis-cli-get:
 	redis-cli GET hm-name
 
+redis-benchmark:
+	redis-benchmark -a passw0rd
+
 # Redis - publish/subscribe
 redis-cli-subscribe:
 	redis-cli SUBSCRIBE hm-channel
@@ -39,6 +42,30 @@ redis-cli-lua-script-exists:
 redis-cli-lua-script-flush:
 	redis-cli SCRIPT FLUSH
 
+# Redis - Graph
+redis-cli-module-list:
+	redis-cli MODULE LIST
+redis-cli-graph-create-nodes:
+	# Each node represents an actor
+	redis-cli GRAPH.QUERY movies "CREATE (:Actor {name:'Mark Hamill', actor_id:1}), (:Actor {name:'Harrison Ford', actor_id:2}), (:Actor {name:'Carrie Fisher', actor_id:3})"
+	# This node represent a movie
+	redis-cli GRAPH.QUERY movies "CREATE (:Movie {title:'Star Wars: Episode V - The Empire Strikes Back', release_year: 1980 , movie_id:1})"
+redis-cli-graph-create-relationships:
+	# Mark Hamill played Luke Skywalker in Star Wars: Episode V - The Empire Strikes Back'
+	redis-cli GRAPH.QUERY movies "MATCH (a:Actor),(m:Movie) WHERE a.actor_id = 1 AND m.movie_id = 1 CREATE (a)-[r:ACTED_IN {role:'Luke Skywalker'}]->(m) RETURN r"
+	# Harrison Ford played Han Solo
+	redis-cli GRAPH.QUERY movies "MATCH (a:Actor), (m:Movie) WHERE a.actor_id = 2 AND m.movie_id = 1 CREATE (a)-[r:ACTED_IN {role:'Han Solo'}]->(m) RETURN r"
+	# Carrie Fisher played Princess Leila
+	redis-cli GRAPH.QUERY movies "MATCH (a:Actor), (m:Movie) WHERE a.actor_id = 3 AND m.movie_id = 1 CREATE (a)-[r:ACTED_IN {role:'Princess Leila'}]->(m) RETURN r"
+redis-cli-graph-viz:
+	redis-cli GRAPH.QUERY movies "MATCH (m:Movie) WHERE m.movie_id = 1 RETURN m"
+redis-cli-graph-del:
+	redis-cli DEL movies
+
+# Redis Stack
+redis-stack-server:
+	redis-stack-server
+
 # KeyDB
 keydb-start:
 	keydb-server
@@ -46,6 +73,8 @@ keydb-stop:
 	keydb-cli SHUTDOWN
 keydb-cli:
 	keydb-cli
+keydb-cli-password:
+	keydb-cli --pass passw0rd
 keydb-cli-ping:
 	keydb-cli PING
 keydb-cli-keys:
@@ -61,11 +90,19 @@ keydb-cli-hmget:
 keydb-start-multi-master:
 	keydb-server --multi-master yes --active-replica yes --replicaof 192.168.2.58 6379 --requirepass passw0rd --masterauth passw0rd
 	keydb-server --multi-master yes --active-replica yes --replicaof 192.168.2.117 6379 --requirepass passw0rd --masterauth passw0rd
-keydb-cli-password:
-	keydb-cli --pass passw0rd
 keydb-cli-lua-script-load:
 	keydb-cli --pass passw0rd SCRIPT LOAD "$$(cat greet.lua)"
 
-#
-redis-benchmark:
-	redis-benchmark -a passw0rd
+# KeyDB - Docker
+keydb-docker-build:
+	cd .. && \
+	docker build --file=keydb/Dockerfile --tag=ghcr.io/hongbo-miao/hm-keydb:latest .
+keydb-docker-push:
+	docker push ghcr.io/hongbo-miao/hm-keydb:latest
+keydb-docker-run:
+	docker run \
+		--detach \
+		--name=hm-keydb \
+		--publish=6379:6379 \
+		ghcr.io/hongbo-miao/hm-keydb:latest \
+		keydb-server /etc/keydb/keydb.conf --multi-master yes --active-replica yes --replicaof 192.168.2.58 6379 --requirepass passw0rd --masterauth passw0rd
