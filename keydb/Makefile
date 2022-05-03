@@ -88,8 +88,18 @@ keydb-cli-hmget:
 
 # KeyDB - multi-master
 keydb-start-multi-master:
-	keydb-server --multi-master yes --active-replica yes --replicaof 192.168.2.58 6379 --requirepass passw0rd --masterauth passw0rd
-	keydb-server --multi-master yes --active-replica yes --replicaof 192.168.2.117 6379 --requirepass passw0rd --masterauth passw0rd
+	keydb-server \
+		--multi-master yes \
+		--active-replica yes \
+		--replicaof 192.168.2.58 6379 \
+		--requirepass passw0rd \
+		--masterauth passw0rd
+	keydb-server \
+		--multi-master yes \
+		--active-replica yes \
+		--replicaof 192.168.2.117 6379 \
+		--requirepass passw0rd \
+		--masterauth passw0rd
 keydb-cli-lua-script-load:
 	keydb-cli --pass passw0rd SCRIPT LOAD "$$(cat greet.lua)"
 
@@ -105,10 +115,24 @@ keydb-docker-run-multi-master:
 		--name=hm-keydb \
 		--publish=6379:6379 \
 		ghcr.io/hongbo-miao/hm-keydb:latest \
-		keydb-server /etc/keydb/keydb.conf --multi-master yes --active-replica yes --replicaof 192.168.2.58 6379 --requirepass passw0rd --masterauth passw0rd
+		keydb-server \
+			/etc/keydb/keydb.conf \
+			--loadmodule /usr/lib/keydb/modules/redisgraph.so \
+			--multi-master yes \
+			--active-replica yes \
+			--replicaof 192.168.2.58 6379 \
+			--requirepass passw0rd \
+			--masterauth passw0rd
 	docker run \
 		--detach \
 		--name=hm-keydb \
 		--publish=6379:6379 \
 		ghcr.io/hongbo-miao/hm-keydb:latest \
-		keydb-server /etc/keydb/keydb.conf --multi-master yes --active-replica yes --replicaof 192.168.2.117 6379 --requirepass passw0rd --masterauth passw0rd
+		keydb-server \
+			/etc/keydb/keydb.conf \
+			--loadmodule /usr/lib/keydb/modules/redisgraph.so \
+			--multi-master yes \
+			--active-replica yes \
+			--replicaof 192.168.2.117 6379 \
+			--requirepass passw0rd \
+			--masterauth passw0rd
