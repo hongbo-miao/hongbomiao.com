@@ -106,12 +106,12 @@ keydb-cli-lua-script-load:
 # KeyDB - Docker
 keydb-docker-build:
 	cd .. && \
-	rm -f keydb/cid.txt && \
-	docker create --cidfile=keydb/cid.txt redislabs/redisgraph:latest && \
-	docker cp $$(cat keydb/cid.txt):/usr/lib/redis/modules/redisgraph.so ./keydb/modules/ && \
-	docker container rm $$(cat keydb/cid.txt) && \
-	rm -f keydb/cid.txt && \
-	docker build --file=keydb/Dockerfile --tag=ghcr.io/hongbo-miao/hm-keydb:test .
+	rm -f /tmp/cid.txt && \
+	docker create --cidfile=/tmp/cid.txt redislabs/redisgraph:latest && \
+	docker cp $$(cat /tmp/cid.txt):/usr/lib/redis/modules/redisgraph.so ./keydb/modules/ && \
+	docker container rm $$(cat /tmp/cid.txt) && \
+	rm -f /tmp/cid.txt && \
+	docker build --file=keydb/Dockerfile --tag=ghcr.io/hongbo-miao/hm-keydb:latest .
 keydb-docker-push:
 	docker push ghcr.io/hongbo-miao/hm-keydb:latest
 keydb-docker-run-multi-master:
