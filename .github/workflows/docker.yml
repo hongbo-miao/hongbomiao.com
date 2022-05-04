@@ -288,9 +288,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Get redisgraph.so
+        working-directory: keydb
         run: |
           docker create --cidfile=/tmp/cid.txt redislabs/redisgraph:latest
-          docker cp $(cat /tmp/cid.txt):/usr/lib/redis/modules/redisgraph.so ./keydb/modules/
+          docker cp $(cat /tmp/cid.txt):/usr/lib/redis/modules/redisgraph.so ./modules/
           docker container rm $(cat /tmp/cid.txt)
           rm -f /tmp/cid.txt
       - name: Build and push Docker image
