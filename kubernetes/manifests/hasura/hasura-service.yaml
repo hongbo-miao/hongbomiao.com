@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hasura
+  name: hasura-service
   namespace: hm-hasura
   labels:
     app.kubernetes.io/name: hasura
@@ -11,10 +11,13 @@ spec:
   selector:
     app: hasura
   ports:
-    - name: hasura
+    # hasura-graphql-engine
+    - name: hasura-engine
       protocol: TCP
-      targetPort: hasura
+      targetPort: hasura-engine
       port: 16023
+
+    # hasura-metric-adapter
     - name: hasura-metrics
       protocol: TCP
       targetPort: hasura-metrics
