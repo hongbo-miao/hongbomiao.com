@@ -17,6 +17,13 @@ data:
     providers:
       file:
         filename: /etc/traefik/dynamic_conf.yaml
+    metrics:
+      prometheus:
+        buckets:
+          - 0.1
+          - 0.3
+          - 1.2
+          - 5.0
   dynamic_conf.yaml: |
     http:
       routers:
