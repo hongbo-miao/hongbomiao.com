@@ -32,8 +32,16 @@ data:
           entrypoints:
             - hasura-graphql-engine-entrypoint
           rule: Host(`localhost`)
+          middlewares:
+            - test-ratelimit
       services:
         hasura-graphql-engine-service:
           loadBalancer:
             servers:
               - url: http://localhost:16020/
+      # https://doc.traefik.io/traefik/middlewares/http/ratelimit
+      middlewares:
+        test-ratelimit:
+          rateLimit:
+            average: 100
+            burst: 50
