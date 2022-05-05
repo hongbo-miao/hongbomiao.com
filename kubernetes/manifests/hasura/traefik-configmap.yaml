@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-configmap
+  namespace: hm-hasura
+data:
+  traefik.yaml: |
+    entryPoints:
+      hasura-graphql-engine-entrypoint:
+        address: :16025
+    api:
+      insecure: true
+      dashboard: true
+      debug: true
+    log:
+      level: DEBUG
+    providers:
+      file:
+        filename: /etc/traefik/dynamic_conf.yaml
+  dynamic_conf.yaml: |
+    http:
+      routers:
+        hasura-graphql-engine-router:
+          service: hasura-graphql-engine-service
+          entrypoints:
+            - hasura-graphql-engine-entrypoint
+          rule: Host(`localhost`)
+      services:
+        hasura-graphql-engine-service:
+          loadBalancer:
+            servers:
+              - url: http://localhost:16023/
