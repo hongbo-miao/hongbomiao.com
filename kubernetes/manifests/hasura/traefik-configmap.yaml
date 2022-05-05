@@ -11,12 +11,12 @@ data:
     api:
       insecure: true
       dashboard: true
-      debug: true
-    log:
-      level: DEBUG
     providers:
       file:
         filename: /etc/traefik/dynamic_conf.yaml
+    log:
+      level: INFO
+    accessLog: {}
     metrics:
       prometheus:
         buckets:
@@ -24,6 +24,8 @@ data:
           - 0.3
           - 1.2
           - 5.0
+    ping: {}
+
   dynamic_conf.yaml: |
     http:
       routers:
