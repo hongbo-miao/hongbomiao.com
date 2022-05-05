@@ -136,6 +136,18 @@ spec:
           volumeMounts:
             - name: log-volume
               mountPath: /tmp/log
+        - image: traefik:v2.6.6
+          name: traefik
+          ports:
+            - name: traefik-hasura
+              protocol: TCP
+              containerPort: 16025
+            - name: traefik-admin
+              protocol: TCP
+              containerPort: 8080
+          volumeMounts:
+            - name: traefik-config-volume
+              mountPath: /etc/traefik/
       volumes:
         # hasura-graphql-engine
         - name: hasura-volume
@@ -145,3 +157,8 @@ spec:
         # hasura-metric-adapter
         - name: log-volume
           emptyDir: {}
+
+        # traefik
+        - name: traefik-config-volume
+          configMap:
+            name: traefik-config
