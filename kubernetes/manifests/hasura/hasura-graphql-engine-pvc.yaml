@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: hasura-pvc
+  name: hasura-graphql-engine-pvc
   namespace: hm-hasura
   labels:
     app.kubernetes.io/name: hasura
 spec:
-  volumeName: hasura-pv
+  volumeName: hasura-graphql-engine-pv
   accessModes:
     - ReadWriteOnce
   storageClassName: standard
