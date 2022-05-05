@@ -15,7 +15,7 @@ const Lab: React.FC = () => {
   const { me } = useMe();
 
   if (me == null) {
-    return <Navigate to="/signin" />;
+    return <Navigate to="/signin" replace />;
   }
 
   return (
