@@ -97,7 +97,7 @@ spec:
           ports:
             - name: hasura-engine
               protocol: TCP
-              containerPort: 16023
+              containerPort: 16020
           command: [
             "/bin/sh", "-c", "rm -rf /tmp/log/stdout.log && mkfifo /tmp/log/stdout.log && /bin/graphql-engine serve | tee /tmp/log/stdout.log"
           ]
@@ -141,7 +141,7 @@ spec:
           ports:
             - name: traefik-hasura
               protocol: TCP
-              containerPort: 16025
+              containerPort: 16022
             - name: traefik-admin
               protocol: TCP
               containerPort: 8080
