@@ -28,7 +28,7 @@ const SignIn: React.FC = () => {
   };
 
   if (me != null) {
-    return <Navigate to="/lab" />;
+    return <Navigate to="/lab" replace />;
   }
 
   return (
