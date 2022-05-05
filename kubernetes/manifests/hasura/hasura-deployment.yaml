@@ -102,8 +102,8 @@ spec:
             "/bin/sh", "-c", "rm -rf /tmp/log/stdout.log && mkfifo /tmp/log/stdout.log && /bin/graphql-engine serve | tee /tmp/log/stdout.log"
           ]
           volumeMounts:
-            - name: hasura-volume
-              mountPath: /data/hasura
+            - name: hasura-graphql-engine-volume
+              mountPath: /data/hasura/hasura-graphql-engine
             - name: log-volume
               mountPath: /tmp/log
         - image: ghcr.io/afitzek/hasura-metric-adapter:v0.1.4
@@ -146,19 +146,19 @@ spec:
               protocol: TCP
               containerPort: 8080
           volumeMounts:
-            - name: traefik-config-volume
+            - name: traefik-configmap-volume
               mountPath: /etc/traefik/
       volumes:
         # hasura-graphql-engine
-        - name: hasura-volume
+        - name: hasura-graphql-engine-volume
           persistentVolumeClaim:
-            claimName: hasura-pvc
+            claimName: hasura-graphql-engine-pvc
 
         # hasura-metric-adapter
         - name: log-volume
           emptyDir: {}
 
         # traefik
-        - name: traefik-config-volume
+        - name: traefik-configmap-volume
           configMap:
-            name: traefik-config
+            name: traefik-configmap

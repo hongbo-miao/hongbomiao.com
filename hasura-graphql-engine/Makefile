@@ -36,5 +36,5 @@ hasura-seed-apply:
 
 copy-migrations-metadada-to-k8s-data-folder:
 	cd .. && \
-	cp -r hasura-graphql-engine/migrations/ kubernetes/data/hasura/migrations/ && \
-	cp -r hasura-graphql-engine/metadata/ kubernetes/data/hasura/metadata/
+	cp -r hasura-graphql-engine/migrations/ kubernetes/data/hasura/hasura-graphql-engine/migrations/ && \
+	cp -r hasura-graphql-engine/metadata/ kubernetes/data/hasura/hasura-graphql-engine/metadata/
