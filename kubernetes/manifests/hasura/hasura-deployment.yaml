@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hasura
+  name: hasura-deployment
   namespace: hm-hasura
   labels:
     app.kubernetes.io/name: hasura
@@ -21,9 +21,14 @@ spec:
       shareProcessNamespace: true
       containers:
         - image: hasura/graphql-engine:v2.6.0.cli-migrations-v3
-          name: hasura
+          name: hasura-graphql-engine
           # https://hasura.io/docs/latest/graphql/core/deployment/graphql-engine-flags/reference/
           env:
+            - name: HASURA_GRAPHQL_METADATA_DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: hasura-configmap
+                  key: hasura_graphql_metadata_database_url
             - name: HASURA_GRAPHQL_OPA_DB_URL
               valueFrom:
                 configMapKeyRef:
@@ -34,11 +39,11 @@ spec:
                 configMapKeyRef:
                   name: hasura-configmap
                   key: hasura_graphql_twitter_db_url
-            - name: HASURA_GRAPHQL_METADATA_DATABASE_URL
+            - name: HASURA_GRAPHQL_SERVER_PORT
               valueFrom:
                 configMapKeyRef:
                   name: hasura-configmap
-                  key: hasura_graphql_metadata_database_url
+                  key: hasura_graphql_server_port
             - name: HASURA_GRAPHQL_ADMIN_SECRET
               valueFrom:
                 configMapKeyRef:
@@ -90,9 +95,9 @@ spec:
                   name: hasura-configmap
                   key: hasura_graphql_metadata_dir
           ports:
-            - name: hasura
+            - name: hasura-engine
               protocol: TCP
-              containerPort: 8080
+              containerPort: 16023
           command: [
             "/bin/sh", "-c", "rm -rf /tmp/log/stdout.log && mkfifo /tmp/log/stdout.log && /bin/graphql-engine serve | tee /tmp/log/stdout.log"
           ]
@@ -132,8 +137,11 @@ spec:
             - name: log-volume
               mountPath: /tmp/log
       volumes:
+        # hasura-graphql-engine
         - name: hasura-volume
           persistentVolumeClaim:
             claimName: hasura-pvc
+
+        # hasura-metric-adapter
         - name: log-volume
           emptyDir: {}
