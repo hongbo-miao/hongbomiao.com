@@ -34,11 +34,20 @@ data:
           rule: Host(`localhost`)
           middlewares:
             - test-ratelimit
+        hasura-metric-adapter-router:
+          service: hasura-metric-adapter-service
+          rule: Host(`localhost`) && PathPrefix(`/metrics`)
+          middlewares:
+            - test-ratelimit
       services:
         hasura-graphql-engine-service:
           loadBalancer:
             servers:
               - url: http://localhost:16020/
+        hasura-metric-adapter-service:
+          loadBalancer:
+            servers:
+              - url: http://localhost:16021/metrics
       # https://doc.traefik.io/traefik/middlewares/http/ratelimit
       middlewares:
         test-ratelimit:
