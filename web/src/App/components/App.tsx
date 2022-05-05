@@ -11,7 +11,7 @@ const App: React.FC = () => (
       <Route path={Paths.appRootPath} element={<HmHome />} />
       <Route path={Paths.signInPath} element={<HmSignIn />} />
       <Route path={Paths.labPath} element={<HmLab />} />
-      <Route path="*" element={<Navigate to={Paths.appRootPath} />} />
+      <Route path="*" element={<Navigate to={Paths.appRootPath} replace />} />
     </Routes>
   </BrowserRouter>
 );
