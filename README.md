@@ -188,6 +188,7 @@ make clean
   - **http-connector-for-apache-kafka** - HTTP sink connector
 - **Superset** - Data exploration and data visualization platform
 - **Hasura GraphQL Engine** - GraphQL server
+  - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
 - **golang-migrate/migrate** - Database migrations
 
 ### Cloud Native
@@ -196,6 +197,7 @@ make clean
 - **Terraform** - Infrastructure as code
 - **TorchServe** - PyTorch models serving
 - **Linkerd** - Service mesh
+- **Traefik** - HTTP reverse proxy and load balancer
 - **Argo CD** - Declarative GitOps CD for Kubernetes
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
