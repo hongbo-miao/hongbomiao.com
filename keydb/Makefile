@@ -17,7 +17,8 @@ redis-cli-set:
 	redis-cli SET hm-name Hongbo
 redis-cli-get:
 	redis-cli GET hm-name
-
+redis-cli-hmget:
+	redis-cli HMGET trending-twitter-hashtags field1 field2
 redis-benchmark:
 	redis-benchmark -a passw0rd
 
@@ -85,6 +86,8 @@ keydb-cli-get:
 	keydb-cli GET hm-name
 keydb-cli-hmget:
 	keydb-cli HMGET trending-twitter-hashtags field1 field2
+keydb-benchmark:
+	keydb-benchmark -a passw0rd
 
 # KeyDB - multi-master
 keydb-start-multi-master:
