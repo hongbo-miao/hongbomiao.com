@@ -187,12 +187,12 @@ make clean
   - **kafka-connect-elasticsearchkafka-connect-elasticsearch** - Elasticsearch sink connector
   - **http-connector-for-apache-kafka** - HTTP sink connector
 - **Superset** - Data exploration and data visualization platform
-- **Hasura GraphQL Engine** - GraphQL server
-  - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
 - **golang-migrate/migrate** - Database migrations
 
 ### Cloud Native
 
+- **Hasura** - GraphQL Engine
+  - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
 - **Ory Hydra** - OAuth 2.0 and OpenID Connect server
 - **Terraform** - Infrastructure as code
 - **TorchServe** - PyTorch models serving
@@ -310,11 +310,11 @@ make clean
 
 #### Argo CD - GitOps
 
-![Argo CD](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
+![Argo CD screenshot](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
 
 #### Discord - ChatOps
 
-![Discord](https://user-images.githubusercontent.com/3375461/135687134-aaad261c-dee9-4a70-b8b2-2da393e114cb.png)
+![Discord screenshot](https://user-images.githubusercontent.com/3375461/135687134-aaad261c-dee9-4a70-b8b2-2da393e114cb.png)
 
 #### Kubecost - K8s Cost Monitoring
 
@@ -336,7 +336,11 @@ make clean
 
 #### Linkerd - Service Mesh
 
-![Linkerd](https://user-images.githubusercontent.com/3375461/127684629-a0d9d76b-cbc6-465f-80ea-10c3e06f7eac.png)
+![Linkerd screenshot](https://user-images.githubusercontent.com/3375461/127684629-a0d9d76b-cbc6-465f-80ea-10c3e06f7eac.png)
+
+#### Hasura - GraphQL Engine
+
+![Hasura GraphQL Engine screenshot](https://user-images.githubusercontent.com/3375461/167373764-3fd97b12-034c-42bd-84d5-c65ecd068ae1.jpg)
 
 #### Traefik - Reverse Proxy and Load Balancer
 
