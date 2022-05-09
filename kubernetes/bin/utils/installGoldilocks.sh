@@ -29,7 +29,7 @@ helm install \
   --namespace=hm-goldilocks \
   --set=dashboard.service.port=34617 \
   --set=dashboard.replicaCount=1
-# helm uninstall goldilocks --namespace=goldilocks
+# helm uninstall goldilocks --namespace=hm-goldilocks
 echo "=================================================="
 
 echo "# Label namespaces for Goldilocks"
