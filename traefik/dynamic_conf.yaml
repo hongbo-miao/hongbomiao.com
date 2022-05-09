@@ -1,0 +1,19 @@
+http:
+  routers:
+    graphql-server-entrypoint:
+      service: graphql-server-service
+      entrypoints:
+        - graphql-server-entrypoint
+      rule: Host(`localhost`)
+      middlewares:
+        - my-traefik-plugin-disable-graphql-introspection
+  services:
+    graphql-server-service:
+      loadBalancer:
+        servers:
+          - url: http://localhost:16020/
+  middlewares:
+    my-traefik-plugin-disable-graphql-introspection:
+      plugin:
+        traefik-plugin-disable-graphql-introspection:
+          GraphQLPath: /v1/graphql

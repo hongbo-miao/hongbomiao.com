@@ -1,0 +1,15 @@
+entryPoints:
+  graphql-server-entrypoint:
+    address: :16022
+api:
+  insecure: true
+  dashboard: true
+providers:
+  file:
+    filename: dynamic_conf.yaml
+log:
+  level: DEBUG
+experimental:
+  localPlugins:
+    traefik-plugin-disable-graphql-introspection:
+      modulename: github.com/Hongbo-Miao/traefik-plugin-disable-graphql-introspection
