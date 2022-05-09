@@ -71,7 +71,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. So make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/167074724-f0b622cd-9f42-4801-82ee-fcd31ba6065f.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/167353801-7ef27cfd-00c6-4e38-aa11-fecdfad33cf5.png)
 
 ## Setup
 
@@ -219,6 +219,7 @@ make clean
 - **Goldilocks** - Kubernetes resource requests recommending
 - **Polaris** - Kubernetes best practices validating
 - **Kubecost** - Kubernetes cost monitoring and management
+- **Sloop** - Kubernetes history visualization
 
 ### Ops
 
@@ -340,6 +341,22 @@ make clean
 #### Kibana
 
 ![Kibana screenshot](https://user-images.githubusercontent.com/3375461/90955224-50d80c00-e4ae-11ea-9345-dfa8e97ed41a.jpg)
+
+#### Kubecost
+
+![Kubecost screenshot](https://user-images.githubusercontent.com/3375461/167351502-ee32bb31-3499-4a9c-9dcc-87b38099aa62.jpg)
+
+#### Polaris
+
+![Polaris screenshot](https://user-images.githubusercontent.com/3375461/167352130-75b7c8ee-d7e1-4731-9765-c4d05e22f684.jpg)
+
+#### Goldilocks
+
+![Goldilocks screenshot](https://user-images.githubusercontent.com/3375461/167352330-f2d99896-e99d-4e89-876c-91ea0741e1c2.jpg)
+
+#### Sloop
+
+![Sloop screenshot](https://user-images.githubusercontent.com/3375461/167351205-0f7e0921-07ff-4072-b5b9-c343d88f25c4.jpg)
 
 ### Data
 
