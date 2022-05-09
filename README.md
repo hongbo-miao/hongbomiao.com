@@ -308,33 +308,53 @@ make clean
 
 ### Ops
 
-#### GitOps - Argo CD
+#### Argo CD - GitOps
 
 ![Argo CD](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
 
-#### ChatOps - Discord
+#### Discord - ChatOps
 
 ![Discord](https://user-images.githubusercontent.com/3375461/135687134-aaad261c-dee9-4a70-b8b2-2da393e114cb.png)
 
+#### Kubecost - K8s Cost Monitoring
+
+![Kubecost screenshot](https://user-images.githubusercontent.com/3375461/167351502-ee32bb31-3499-4a9c-9dcc-87b38099aa62.jpg)
+
+#### Polaris - K8s Best Practices Validating
+
+![Polaris screenshot](https://user-images.githubusercontent.com/3375461/167352130-75b7c8ee-d7e1-4731-9765-c4d05e22f684.jpg)
+
+#### Goldilocks - K8s Resource Requests Recommending
+
+![Goldilocks screenshot](https://user-images.githubusercontent.com/3375461/167352330-f2d99896-e99d-4e89-876c-91ea0741e1c2.jpg)
+
+#### Sloop - K8s History Visualization
+
+![Sloop screenshot](https://user-images.githubusercontent.com/3375461/167351205-0f7e0921-07ff-4072-b5b9-c343d88f25c4.jpg)
+
 ### Cloud Native
 
-#### Service Mesh - Linkerd
+#### Linkerd - Service Mesh
 
 ![Linkerd](https://user-images.githubusercontent.com/3375461/127684629-a0d9d76b-cbc6-465f-80ea-10c3e06f7eac.png)
 
-#### Elastic APM
+#### Traefik - Reverse Proxy and Load Balancer
 
-![Elastic screenshot](https://user-images.githubusercontent.com/3375461/128647400-7377f888-6c76-4b13-8bce-50ad7afdb3c3.png)
+![Traefik screenshot](https://user-images.githubusercontent.com/3375461/167369464-3055f933-5fe2-4058-b4d1-3dfbd5678b97.jpg)
 
-#### Jaeger
+#### Elastic APM - Application Performance Management
+
+![Elastic APM screenshot](https://user-images.githubusercontent.com/3375461/128647400-7377f888-6c76-4b13-8bce-50ad7afdb3c3.png)
+
+#### Jaeger - Distributed Tracing
 
 ![Jaeger screenshot](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
 
-#### Grafana
+#### Grafana - Monitoring and Observability Platform
 
 ![Grafana screenshot](https://user-images.githubusercontent.com/3375461/163708604-89ce4617-8fb7-463f-86a0-11a3c5c73bd9.png)
 
-#### Prometheus
+#### Prometheus - Metrics
 
 ![Prometheus screenshot](https://user-images.githubusercontent.com/3375461/90955864-d14d3b80-e4b3-11ea-926b-8012cadb4f70.jpg)
 
@@ -342,31 +362,23 @@ make clean
 
 ![Kibana screenshot](https://user-images.githubusercontent.com/3375461/90955224-50d80c00-e4ae-11ea-9345-dfa8e97ed41a.jpg)
 
-#### Kubecost
+#### Locust - Load Testing
 
-![Kubecost screenshot](https://user-images.githubusercontent.com/3375461/167351502-ee32bb31-3499-4a9c-9dcc-87b38099aa62.jpg)
-
-#### Polaris
-
-![Polaris screenshot](https://user-images.githubusercontent.com/3375461/167352130-75b7c8ee-d7e1-4731-9765-c4d05e22f684.jpg)
-
-#### Goldilocks
-
-![Goldilocks screenshot](https://user-images.githubusercontent.com/3375461/167352330-f2d99896-e99d-4e89-876c-91ea0741e1c2.jpg)
-
-#### Sloop
-
-![Sloop screenshot](https://user-images.githubusercontent.com/3375461/167351205-0f7e0921-07ff-4072-b5b9-c343d88f25c4.jpg)
+![Locust screenshot](https://user-images.githubusercontent.com/3375461/98866512-0613d200-24a8-11eb-8275-d245efdc4727.jpg)
 
 ### Data
 
-#### Big Data Processing - Flink
+#### Flink - Stream Processing
 
 ![Flink screenshot](https://user-images.githubusercontent.com/3375461/129500704-9032b559-5dc5-4385-99eb-3f7d4a1f1086.png)
 
-#### Distributed Graph Database - Dgraph
+#### Dgraph - Distributed Graph Database
 
 ![Dgraph screenshot](https://user-images.githubusercontent.com/3375461/126815004-925b6be5-6e44-44be-9193-46b018ec4bf7.png)
+
+#### Redis with RedisGraph Module
+
+![Redis screenshot](https://user-images.githubusercontent.com/3375461/167368266-8f8d27b1-ec58-48c5-b6bd-030dc2970cc8.jpg)
 
 ### Machine Learning
 
@@ -376,7 +388,7 @@ Chatbot on Telegram powered by Rasa.
 
 ![Telegram screenshot](https://user-images.githubusercontent.com/3375461/148026649-70dca296-7813-4d58-bc82-d7a2c5b8576e.png)
 
-#### Machine learning experiment tracking
+#### Weights & Biases - Machine Learning Experiment Tracking
 
 [Distributed hyperparameter optimization result](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf) by Weights & Biases.
 
@@ -405,12 +417,6 @@ Below is the website [security report](https://observatory.mozilla.org/analyze/w
 Profiling result by Clinic.js and autocannon.
 
 ![Profiling screenshot](https://user-images.githubusercontent.com/3375461/94975997-100bf200-0546-11eb-9284-db40711a3052.jpg)
-
-### Load Testing
-
-Load testing result by Locust.
-
-![Load testing screenshot](https://user-images.githubusercontent.com/3375461/98866512-0613d200-24a8-11eb-8275-d245efdc4727.jpg)
 
 ### Automation
 
