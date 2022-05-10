@@ -1,4 +1,4 @@
-FROM golang:1.18.1-alpine AS builder
+FROM golang:1.18.2-alpine AS builder
 WORKDIR /usr/src/app
 
 COPY ["api-go/go.mod", "api-go/go.sum", "./"]
