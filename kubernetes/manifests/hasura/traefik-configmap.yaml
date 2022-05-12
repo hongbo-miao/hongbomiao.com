@@ -47,8 +47,6 @@ data:
         hasura-metric-adapter-router:
           service: hasura-metric-adapter-service
           rule: Host(`localhost`) && PathPrefix(`/metrics`)
-          middlewares:
-            - test-ratelimit
       services:
         hasura-graphql-engine-service:
           loadBalancer:
