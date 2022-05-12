@@ -5,6 +5,8 @@ metadata:
   namespace: hm-hasura
 data:
   traefik.yaml: |
+    pilot:
+      token: 44e5b50c-cfa9-4ff7-ab74-2c90fb8ec89f
     entryPoints:
       hasura-graphql-engine-entrypoint:
         address: :16022
@@ -25,6 +27,11 @@ data:
           - 1.2
           - 5.0
     ping: {}
+    experimental:
+      plugins:
+        traefik-plugin-disable-graphql-introspection:
+          moduleName: "github.com/Hongbo-Miao/traefik-plugin-disable-graphql-introspection"
+          version: "v0.1.0"
 
   dynamic_conf.yaml: |
     http:
@@ -36,6 +43,7 @@ data:
           rule: Host(`localhost`)
           middlewares:
             - test-ratelimit
+            - my-traefik-plugin-disable-graphql-introspection
         hasura-metric-adapter-router:
           service: hasura-metric-adapter-service
           rule: Host(`localhost`) && PathPrefix(`/metrics`)
@@ -56,3 +64,7 @@ data:
           rateLimit:
             average: 100
             burst: 50
+        my-traefik-plugin-disable-graphql-introspection:
+          plugin:
+            traefik-plugin-disable-graphql-introspection:
+              GraphQLPath: /v1/graphql
