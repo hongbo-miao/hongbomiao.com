@@ -69,11 +69,11 @@ docker-compose-down:
 
 # minikube
 minikube-start-docker:
-	minikube start --driver=docker --cpus=2 --memory=8g
+	minikube start --driver=docker --cpus=4 --memory=8g
 minikube-start-hyperkit:
-	minikube start --driver=hyperkit --cpus=2 --memory=8g
+	minikube start --driver=hyperkit --cpus=4 --memory=8g
 minikube-start-virtualbox:
-	minikube start --driver=virtualbox --cpus=2 --memory=8g
+	minikube start --driver=virtualbox --cpus=4 --memory=8g
 minikube-enable-ingress:
 	minikube addons enable ingress
 minikube-mount:
@@ -118,6 +118,20 @@ k3d-cluster-list:
 	k3d cluster list
 k3d-node-list:
 	k3d node list
+
+# Multipass
+multipass-launch-node:
+	multipass launch --name=west-master --cpus=6 --mem=16g --disk=128g
+multipass-exec:
+	multipass exec west-master -- bash
+multipass-list:
+	multipass list
+multipass-info:
+	multipass info west-master
+multipass-delete:
+	multipass delete west-master
+multipass-purge:
+	multipass purge
 
 # Kubernetes
 kubectl-apply:
