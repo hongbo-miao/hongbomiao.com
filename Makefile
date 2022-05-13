@@ -126,6 +126,8 @@ multipass-exec:
 	multipass exec west-master -- bash
 multipass-list:
 	multipass list
+multipass-mount:
+	multipass mount $HOME/Clouds/Git/hongbomiao.com/kubernetes/data west-master:/data
 multipass-info:
 	multipass info west-master
 multipass-delete:
