@@ -7,6 +7,7 @@ cp -r hasura-graphql-engine/metadata/ kubernetes/data/hasura/hasura-graphql-engi
 
 kubectl apply --filename=kubernetes/manifests/hasura/hm-hasura-namespace.yaml
 kubectl apply --filename=kubernetes/manifests/hasura
+# kubectl delete --filename=kubernetes/manifests/hasura
 echo "=================================================="
 
 echo "# Add seed data in opa_db"
