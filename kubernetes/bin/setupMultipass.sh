@@ -5,6 +5,7 @@ set -e
 multipass launch --name=west-master --cpus=6 --mem=16g --disk=128g
 multipass exec west-master -- \
   bash -c 'curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" sh -'
+multipass mount $HOME/Clouds/Git/hongbomiao.com/kubernetes/data west-master:/data
 
 multipass exec west-master -- \
   cat /etc/rancher/k3s/k3s.yaml > k3s.yaml

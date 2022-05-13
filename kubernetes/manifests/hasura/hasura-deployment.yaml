@@ -69,6 +69,11 @@ spec:
                 configMapKeyRef:
                   name: hasura-configmap
                   key: hasura_graphql_enabled_log_types
+            - name: HASURA_GRAPHQL_LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: hasura-configmap
+                  key: hasura_graphql_log_level
             - name: HASURA_GRAPHQL_ENABLE_CONSOLE
               valueFrom:
                 configMapKeyRef:
