@@ -69,9 +69,9 @@ Personal cutting-edge technology lab.
 
 This diagram shows the architecture of this repository.
 
-It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project!
+It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/167378081-c185f31c-4c48-413f-aabb-b85a765d2eb9.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/168262611-81cf5572-cdcb-403a-b5bd-a0b01fe4d7c8.png)
 
 ## Setup
 
@@ -337,6 +337,10 @@ make clean
 #### Linkerd - Service Mesh
 
 ![Linkerd screenshot](https://user-images.githubusercontent.com/3375461/127684629-a0d9d76b-cbc6-465f-80ea-10c3e06f7eac.png)
+
+#### Pixie - Kubernetes Application Observing
+
+![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168262670-d9df3e60-aa61-4656-a417-61ddda455ee1.jpg)
 
 #### Hasura - GraphQL Engine
 
