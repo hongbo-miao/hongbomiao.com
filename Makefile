@@ -161,6 +161,8 @@ kubectl-get-namespaces:
 	kubectl get namespaces
 kubectl-get-storageclasses:
 	kubectl get storageclasses --all-namespaces
+kubectl-get-persistentvolumes:
+	kubectl get persistentvolumes --all-namespaces
 kubectl-get-persistentvolumeclaims:
 	kubectl get persistentvolumeclaims --all-namespaces
 kubectl-get-endpoints:

@@ -20,7 +20,7 @@ kustomize build k8s/cloud/public/ | kubectl apply --filename=-
 kubectl get service cloud-proxy-service -n plc
 kubectl get service vzconn-service -n plc
 go build src/utils/dev_dns_updater/dev_dns_updater.go
-./dev_dns_updater --domain-name="dev.withpixie.dev"  --kubeconfig=$HOME/.kube/config --n=plc
+./dev_dns_updater --domain-name="dev.withpixie.dev"  --kubeconfig="$HOME/.kube/config" --n=plc
 echo "=================================================="
 
 echo "# Install the Pixie CLI"
