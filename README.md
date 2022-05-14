@@ -306,41 +306,18 @@ make clean
 
 ## Highlights
 
-### Ops
-
-#### Argo CD - GitOps
-
-![Argo CD screenshot](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
-
-#### Discord - ChatOps
-
-![Discord screenshot](https://user-images.githubusercontent.com/3375461/135687134-aaad261c-dee9-4a70-b8b2-2da393e114cb.png)
-
-#### Kubecost - K8s Cost Monitoring
-
-![Kubecost screenshot](https://user-images.githubusercontent.com/3375461/167351502-ee32bb31-3499-4a9c-9dcc-87b38099aa62.jpg)
-
-#### Polaris - K8s Best Practices Validating
-
-![Polaris screenshot](https://user-images.githubusercontent.com/3375461/167352130-75b7c8ee-d7e1-4731-9765-c4d05e22f684.jpg)
-
-#### Goldilocks - K8s Resource Requests Recommending
-
-![Goldilocks screenshot](https://user-images.githubusercontent.com/3375461/167352330-f2d99896-e99d-4e89-876c-91ea0741e1c2.jpg)
-
-#### Sloop - K8s History Visualization
-
-![Sloop screenshot](https://user-images.githubusercontent.com/3375461/167351205-0f7e0921-07ff-4072-b5b9-c343d88f25c4.jpg)
-
 ### Cloud Native
+
+#### Pixie - Kubernetes Application Observing
+
+![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168404534-18960440-3d91-4b03-9775-321364c3fcf8.jpg)
+![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168404530-cdc5fa7b-b9ec-4ce3-b573-5312badf2e7b.jpg)
+![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168404538-98a197d9-632e-4252-b7e5-d1b94961c3d1.jpg)
+![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168404542-2d43d21c-b6f4-4af6-93b7-b5e76c104268.jpg)
 
 #### Linkerd - Service Mesh
 
 ![Linkerd screenshot](https://user-images.githubusercontent.com/3375461/127684629-a0d9d76b-cbc6-465f-80ea-10c3e06f7eac.png)
-
-#### Pixie - Kubernetes Application Observing
-
-![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168262670-d9df3e60-aa61-4656-a417-61ddda455ee1.jpg)
 
 #### Hasura - GraphQL Engine
 
@@ -373,6 +350,32 @@ make clean
 #### Locust - Load Testing
 
 ![Locust screenshot](https://user-images.githubusercontent.com/3375461/98866512-0613d200-24a8-11eb-8275-d245efdc4727.jpg)
+
+### Ops
+
+#### Argo CD - GitOps
+
+![Argo CD screenshot](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
+
+#### Discord - ChatOps
+
+![Discord screenshot](https://user-images.githubusercontent.com/3375461/135687134-aaad261c-dee9-4a70-b8b2-2da393e114cb.png)
+
+#### Kubecost - K8s Cost Monitoring
+
+![Kubecost screenshot](https://user-images.githubusercontent.com/3375461/167351502-ee32bb31-3499-4a9c-9dcc-87b38099aa62.jpg)
+
+#### Polaris - K8s Best Practices Validating
+
+![Polaris screenshot](https://user-images.githubusercontent.com/3375461/167352130-75b7c8ee-d7e1-4731-9765-c4d05e22f684.jpg)
+
+#### Goldilocks - K8s Resource Requests Recommending
+
+![Goldilocks screenshot](https://user-images.githubusercontent.com/3375461/167352330-f2d99896-e99d-4e89-876c-91ea0741e1c2.jpg)
+
+#### Sloop - K8s History Visualization
+
+![Sloop screenshot](https://user-images.githubusercontent.com/3375461/167351205-0f7e0921-07ff-4072-b5b9-c343d88f25c4.jpg)
 
 ### Data
 
