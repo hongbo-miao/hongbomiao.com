@@ -273,14 +273,11 @@ make clean
 
 ### Services
 
-- **Lightstep** - Distributed tracing
 - **Sentry** - Error tracking
 - **Report URI** - Security reporting
 - **Google Tag Manager** - Tag management
 - **Google Analytics** - Web analytics
 - **FullStory** - Experience analytics, session replay, heatmaps
-- **Heroku** - Hosting
-- **Redis Enterprise Cloud** - Redis hosting
 - **Namecheap** - Domain
 - **Cloudflare** - CDN, DNS, DDoS protection
 - **Discord** - ChatOps
