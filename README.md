@@ -210,6 +210,7 @@ make clean
 - **Pixie** - Observability tool for Kubernetes applications
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
+- **Multipass** - VM manager
 - **Locust** - Load testing
 - **NGINX** - Reverse proxy, load balancer
 - **Cloudflare Tunnel** - Tunneling

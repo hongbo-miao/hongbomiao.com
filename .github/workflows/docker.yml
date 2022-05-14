@@ -308,7 +308,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Get redisgraph.so
-        working-directory: keydb
+        working-directory: hm-keydb
         run: |
           docker create --cidfile=/tmp/cid.txt redislabs/redisgraph:latest
           docker cp $(cat /tmp/cid.txt):/usr/lib/redis/modules/redisgraph.so ./modules/
@@ -319,7 +319,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./keydb/Dockerfile
+          file: ./hm-keydb/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-keydb:latest
           cache-from: type=gha
