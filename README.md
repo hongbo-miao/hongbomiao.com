@@ -48,7 +48,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.chromaticqa.com/library?appId=5d626a63a601530020759b10"><img alt="Storybook" src="https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg" /></a>
+  <a href="https://www.chromatic.com/builds?appId=5d626a63a601530020759b10"><img alt="Storybook" src="https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg" /></a>
 </p>
 
 <p align="center">
@@ -287,7 +287,7 @@ make clean
 - **[GitHub Actions](https://github.com/Hongbo-Miao/hongbomiao.com/actions)** - Continuous integration
 - **[SonarCloud](https://sonarcloud.io/dashboard?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
 - **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
-- **[Chromatic](https://www.chromaticqa.com/library?appId=5d626a63a601530020759b10)** - UI reviewing and feedback collecting
+- **[Chromatic](https://www.chromatic.com/builds?appId=5d626a63a601530020759b10)** - UI reviewing and feedback collecting
 - **[HTTP/3 Check](https://www.http3check.net/?host=www.hongbomiao.com)** - HTTP/3 checking
 - **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** - HSTS checking
 - **[Mozilla Observatory](https://observatory.mozilla.org/analyze/www.hongbomiao.com)**, **[Snyk](https://snyk.io/test/github/Hongbo-Miao/hongbomiao.com)** - Security monitoring
