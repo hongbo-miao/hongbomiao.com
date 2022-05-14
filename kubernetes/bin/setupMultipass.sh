@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
+echo "# Setup Multipass"
 # https://andreipope.github.io/tutorials/create-a-cluster-with-multipass-and-k3s
 multipass launch --name=west-master --cpus=6 --mem=16g --disk=128g
 multipass exec west-master -- \
@@ -19,3 +20,4 @@ export KUBECONFIG=${PWD}/west-master-k3s.yaml
 
 # multipass delete west-master
 # multipass purge
+echo "=================================================="
