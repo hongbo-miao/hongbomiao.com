@@ -130,6 +130,10 @@ multipass-mount:
 	multipass mount "${HOME}/Clouds/Git/hongbomiao.com/kubernetes/data" west-master:/data
 multipass-info:
 	multipass info west-master
+multipass-start:
+	multipass start west-master
+multipass-stop:
+	multipass stop west-master
 multipass-delete:
 	multipass delete west-master
 multipass-purge:
