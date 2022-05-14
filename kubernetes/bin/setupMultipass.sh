@@ -8,11 +8,11 @@ multipass exec west-master -- \
 multipass mount $HOME/Clouds/Git/hongbomiao.com/kubernetes/data west-master:/data
 
 multipass exec west-master -- \
-  cat /etc/rancher/k3s/k3s.yaml > k3s.yaml
+  cat /etc/rancher/k3s/k3s.yaml > west-master-k3s.yaml
 
 WEST_MASTER_IP=$(multipass info west-master | grep IPv4 | awk '{print $2}')
-sed -i '' "s/127.0.0.1/${WEST_MASTER_IP}/" k3s.yaml
-export KUBECONFIG=${PWD}/k3s.yaml
+sed -i '' "s/127.0.0.1/${WEST_MASTER_IP}/" west-master-k3s.yaml
+export KUBECONFIG=${PWD}/west-master-k3s.yaml
 
 # multipass info west-master
 # multipass exec west-master -- bash
