@@ -177,6 +177,14 @@ kubectl-logs:
 	kubectl logs --follow POD_NAME --namespace=hm
 kubectl-sh:
 	kubectl exec --stdin --tty POD_NAME --namespace=hm -- sh
+kubectl-rollout-restart:
+	kubectl rollout restart hasura-deployment --namespace=hm-hasura
+kubectl-list-prometheus-containers:
+	kubectl get pod prometheus-monitoring-kube-prometheus-prometheus-0 --namespace=hm-monitoring --output=jsonpath='{.spec.containers[*].name}'
+kubectl-list-alertmanager-containers:
+	kubectl get pod alertmanager-monitoring-kube-prometheus-alertmanager-0 --namespace=hm-monitoring --output=jsonpath='{.spec.containers[*].name}'
+kubectl-list-grafana-containers:
+	kubectl get pod monitoring-grafana-xxx --namespace=hm-monitoring --output=jsonpath='{.spec.containers[*].name}'
 
 kubectl-config-view:
 	kubectl config view
@@ -231,9 +239,9 @@ kubectl-port-forward-kafka:
 kubectl-port-forward-flink:
 	kubectl port-forward service/hm-flink-cluster-rest --namespace=hm-flink 8081:8081
 kubectl-port-forward-prometheus:
-	kubectl port-forward service/prometheus-k8s --namespace=monitoring 9090:9090
+	kubectl port-forward service/monitoring-kube-prometheus-prometheus --namespace=hm-monitoring 9090:9090
 kubectl-port-forward-grafana:
-	kubectl port-forward service/grafana --namespace=monitoring 3000:3000
+	kubectl port-forward service/monitoring-grafana --namespace=hm-monitoring 54976:80
 
 kubectl-port-forward-ory-hydra:
 	kubectl port-forward service/ory-hydra-public --namespace=hm-ory-hydra 4444:4444
