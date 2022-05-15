@@ -71,7 +71,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/168463817-be1c1e1f-2bad-4a87-8646-76c56bbaf749.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/168464738-2e49f1e0-8b8f-42e0-a7e0-8e69dd7e0eab.png)
 
 ## Setup
 
@@ -206,6 +206,7 @@ make clean
 - **Jaeger** - Distributed tracing system
 - **Grafana** - Monitoring and observability platform
 - **Prometheus** - Monitoring system
+- **Thanos** - Highly available Prometheus setup with long term storage capabilities
 - **Fluent Bit** - Log processor and forwarder
 - **Pixie** - Observability tool for Kubernetes applications
 - **Docker** - Container
