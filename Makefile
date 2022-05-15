@@ -189,18 +189,72 @@ kubectl-config-use-context:
 kubectl-context-info:
 	kubectl cluster-info --context k3d-west
 
-kubectl-port-forward-api-go:
+kubectl-port-forward-hasura:
+	# hasura-graphql-engine
+	kubectl port-forward service/hasura-service --namespace=hm-hasura 16020:16020
+	# hasura-metric-adapter
+	kubectl port-forward service/hasura-service --namespace=hm-hasura 16021:16021
+	# traefik-hasura
+	kubectl port-forward service/hasura-service --namespace=hm-hasura 16022:16022
+	# traefik
+	kubectl port-forward service/hasura-service --namespace=hm-hasura 16023:16023
+kubectl-port-forward-graphql-server:
+	# graphql-server
 	kubectl port-forward service/graphql-server-service --namespace=hm 31800:31800
-kubectl-port-forward-opa:
+	# opa:
 	kubectl port-forward service/graphql-server-service --namespace=hm 8181:8181
-kubectl-port-forward-opal-client:
+	# opal-client
 	kubectl port-forward service/graphql-server-service --namespace=hm 7000:7000
 kubectl-port-forward-opal-server:
 	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
-kubectl-port-forward-dgraph-0:
-	kubectl port-forward pod/dgraph-0 --namespace=hm 8080:8080
-kubectl-port-forward-dgraph-public:
-	kubectl port-forward service/dgraph-public --namespace=hm 6080:6080
+kubectl-port-forward-config-server:
+	kubectl port-forward service/config-server-service --namespace=hm 26660:26660
+
+kubectl-port-forward-postgres:
+	kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:40072
+kubectl-port-forward-timescale:
+	kubectl port-forward service/timescale --namespace=hm-timescale 25495:25495
+kubectl-port-forward-redis:
+	kubectl port-forward service/redis-headless --namespace=hm-redis 6379:6379
+kubectl-port-forward-trino:
+	kubectl port-forward service/trino --namespace=hm-trino 26869:26869
+kubectl-port-forward-superset:
+	kubectl port-forward service/superset --namespace=hm-superset 22357:22357
+kubectl-port-forward-dgraph:
+	kubectl port-forward service/dgraph-dgraph-alpha --namespace=hm-dgraph 8080:8080
+	kubectl port-forward service/dgraph-dgraph-zero --namespace=hm-dgraph 6080:6080
+kubectl-port-forward-elastic:
+	kubectl port-forward service/hm-kibana-kb-http --namespace=elastic 5601:5601
+	kubectl port-forward service/hm-elasticsearch-es-http --namespace=elastic 9200:9200
+kubectl-port-forward-kafka:
+	kubectl port-forward service/hm-kafkaconnect-connect-api --namespace=kafka 8083:8083
+kubectl-port-forward-flink:
+	kubectl port-forward service/hm-flink-cluster-rest --namespace=hm-flink 8081:8081
+kubectl-port-forward-prometheus:
+	kubectl port-forward service/prometheus-k8s --namespace=monitoring 9090:9090
+kubectl-port-forward-grafana:
+	kubectl port-forward service/grafana --namespace=monitoring 3000:3000
+
+kubectl-port-forward-ory-hydra:
+	kubectl port-forward service/ory-hydra-public --namespace=hm-ory-hydra 4444:4444
+	kubectl port-forward service/ory-hydra-admin --namespace=hm-ory-hydra 4445:4445
+kubectl-port-forward-rasa:
+	kubectl port-forward service/hm-release-rasa --namespace=hm-rasa 39143:5005
+	kubectl port-forward service/hm-release-postgresql-headless --namespace=hm-rasa 35785:5432
+	kubectl port-forward service/hm-release-redis-master --namespace=hm-rasa 6379:6379
+	kubectl port-forward service/hm-release-rasa-action-server --namespace=hm-rasa-action-server 5055:5055
+kubectl-port-forward-goldilocks:
+	kubectl port-forward service/goldilocks-dashboard --namespace=hm-goldilocks 34617:34617
+kubectl-port-forward-kubecost:
+	kubectl port-forward service/kubecost-cost-analyzer --namespace=hm-kubecost 9090:9090
+kubectl-port-forward-polaris:
+	kubectl port-forward service/polaris-dashboard --namespace=hm-polaris 31450:80
+kubectl-port-forward-sloop:
+	kubectl port-forward service/sloop --namespace=hm-sloop 16850:16850
+kubectl-port-forward-rancher:
+	kubectl port-forward service/rancher --namespace=cattle-system 46271:443
+kubectl-port-forward-argocd:
+	kubectl port-forward service/argocd-server --namespace=argocd 31026:443
 
 list-port-forward:
 	ps -ef | grep port-forward
