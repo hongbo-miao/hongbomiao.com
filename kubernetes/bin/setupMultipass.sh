@@ -3,7 +3,7 @@ set -e
 
 echo "# Setup Multipass"
 # https://andreipope.github.io/tutorials/create-a-cluster-with-multipass-and-k3s
-multipass launch --name=west-master --cpus=6 --mem=16g --disk=128g
+multipass launch --name=west-master --cpus=6 --mem=24g --disk=256g
 multipass exec west-master -- \
   bash -c 'curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" sh -'
 multipass mount "${HOME}/Clouds/Git/hongbomiao.com/kubernetes/data" west-master:/data
