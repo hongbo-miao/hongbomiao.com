@@ -327,7 +327,7 @@ make clean
 
 #### Traefik - Reverse Proxy and Load Balancer
 
-![Traefik screenshot](https://user-images.githubusercontent.com/3375461/167369464-3055f933-5fe2-4058-b4d1-3dfbd5678b97.jpg)
+![Traefik screenshot](https://user-images.githubusercontent.com/3375461/168451816-fee9aa54-d4b7-430d-bca3-a8f453931a35.jpg)
 
 #### Elastic APM - Application Performance Management
 

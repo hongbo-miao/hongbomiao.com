@@ -94,16 +94,6 @@ kind-delete:
 	kind delete cluster --name=east
 kind-list-clusters:
 	kind get clusters
-kubectl-get-context-info:
-	kubectl cluster-info --context kind-west
-kubectl-get-contexts:
-	kubectl config get-contexts
-kubectl-get-current-context:
-	kubectl config current-context
-kubectl-use-context:
-	kubectl config use-context k3d-west
-	kubectl config use-context k3d-east
-	kubectl config use-context k3d-dev
 
 # k3d
 k3d-cluster-create:
@@ -187,6 +177,17 @@ kubectl-logs:
 	kubectl logs --follow POD_NAME --namespace=hm
 kubectl-sh:
 	kubectl exec --stdin --tty POD_NAME --namespace=hm -- sh
+
+kubectl-config-view:
+	kubectl config view
+kubectl-config-get-contexts:
+	kubectl config get-contexts
+kubectl-config-current-context:
+	kubectl config current-context
+kubectl-config-use-context:
+	kubectl config use-context k3d-west
+kubectl-context-info:
+	kubectl cluster-info --context k3d-west
 
 kubectl-port-forward-api-go:
 	kubectl port-forward service/graphql-server-service --namespace=hm 31800:31800
