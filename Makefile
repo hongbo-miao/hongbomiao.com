@@ -111,7 +111,7 @@ k3d-node-list:
 
 # Multipass
 multipass-launch-node:
-	multipass launch --name=west-master --cpus=6 --mem=16g --disk=128g
+	multipass launch --name=west-master --cpus=6 --mem=24g --disk=256g
 multipass-exec:
 	multipass exec west-master -- bash
 multipass-list:
