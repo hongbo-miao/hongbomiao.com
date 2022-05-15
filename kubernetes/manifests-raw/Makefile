@@ -33,9 +33,6 @@ download-kafka:
 # MinIO
 # Manifests: https://github.com/minio/operator/tree/master/examples/kustomization
 
-# Prometheus
-# Manifests: https://github.com/prometheus-operator/kube-prometheus/tree/main/manifests
-
 # Superset
 download-superset:
 	curl https://raw.githubusercontent.com/apache/superset/master/helm/superset/values.yaml > superset/helm/values.yaml
