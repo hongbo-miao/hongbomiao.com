@@ -71,7 +71,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/168511442-35d7e3f8-b3de-425b-89cc-7e7c0c1a0cf7.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/168705164-c66a4999-1381-4392-8aad-fa80a288c026.png)
 
 ## Setup
 
@@ -176,6 +176,7 @@ make clean
 - **PostgreSQL** - Object-relational database
 - **KeyDB** - High performance fork of Redis
 - **MinIO** - High performance object storage
+- **Temporal** - Microservice orchestration platform
 - **Flink** - Stream processing framework
   - **flink-streaming-java** - Flink
   - **flink-connector-twitter** - Flink Twitter connector

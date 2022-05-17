@@ -263,6 +263,8 @@ kubectl-port-forward-rancher:
 	kubectl port-forward service/rancher --namespace=cattle-system 46271:443
 kubectl-port-forward-argocd:
 	kubectl port-forward service/argocd-server --namespace=argocd 31026:443
+kubectl-port-forward-temporal:
+	kubectl port-forward service/temporal-web --namespace=hm-temporal 48780:8080
 
 list-port-forward:
 	ps -ef | grep port-forward
