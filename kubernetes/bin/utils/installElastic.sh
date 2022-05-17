@@ -21,7 +21,7 @@ echo "=================================================="
 
 echo "# Check Elastic"
 for d in hm-apm-apm-server hm-kibana-kb; do
-  kubectl --namespace=elastic rollout status deployment/${d}
+  kubectl rollout status deployment/${d} --namespace=elastic
 done
 echo "=================================================="
 
