@@ -117,7 +117,7 @@ multipass-exec:
 multipass-list:
 	multipass list
 multipass-mount:
-	multipass mount "${HOME}/Clouds/Git/hongbomiao.com/kubernetes/data" west-master:/data
+	multipass mount "${PWD}/kubernetes/data" west-master:/data
 multipass-info:
 	multipass info west-master
 multipass-start:

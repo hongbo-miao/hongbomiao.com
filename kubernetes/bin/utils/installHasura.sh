@@ -11,8 +11,8 @@ kubectl apply --filename=kubernetes/manifests/hasura
 echo "=================================================="
 
 echo "# Add seed data in opa_db"
-kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:40072 &
-sleep 5
+kubectl rollout status deployment/hasura-deployment --namespace=hm-hasura
+kubectl port-forward service/hasura-service --namespace=hm-hasura 16020:16020 &
 cd hasura-graphql-engine
 hasura seed apply
 pgrep kubectl | xargs kill -9
