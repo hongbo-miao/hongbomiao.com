@@ -18,8 +18,8 @@ echo "=================================================="
 
 echo "# Check Yugabyte"
 kubectl rollout status deployment/yugabyte-operator --namespace=yb-operator
-kubectl wait --for=condition=ready pod --selector=app=yb-master --namespace=yb-operator
-kubectl wait --for=condition=ready pod --selector=app=yb-tserver --namespace=yb-operator
+kubectl wait pod --selector=app=yb-master --for=condition=ready --namespace=yb-operator
+kubectl wait pod --selector=app=yb-tserver --for=condition=ready --namespace=yb-operator
 echo "=================================================="
 
 echo "# Create opa_db in Yugabyte"
