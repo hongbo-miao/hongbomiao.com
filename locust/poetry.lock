@@ -203,11 +203,11 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "locust"
-version = "2.8.6"
+version = "2.9.0"
 description = "Developer friendly load testing framework"
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [package.dependencies]
 ConfigArgParse = ">=1.0"
@@ -216,11 +216,10 @@ Flask-BasicAuth = ">=0.2.0"
 Flask-Cors = ">=3.0.10"
 gevent = ">=20.12.1"
 geventhttpclient = ">=1.5.1"
-Jinja2 = "<3.1.0"
 msgpack = ">=0.6.2"
 psutil = ">=5.6.7"
-pywin32 = {version = "*", markers = "sys_platform == \"win32\""}
-pyzmq = ">=22.2.1"
+pywin32 = {version = "*", markers = "platform_system == \"Windows\""}
+pyzmq = ">=22.2.1,<23.0.0"
 requests = ">=2.23.0"
 roundrobin = ">=0.0.2"
 typing-extensions = ">=3.7.4.3"
@@ -445,7 +444,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.x"
-content-hash = "887ad45fca07d7e65f6f530a5e39c9f85755aecbe26fe2d672b161286ae597b1"
+content-hash = "0bb5cc0ceb03299a6ec8221e293f7bf2c423b04677732fc8480ce8774dcff7b9"
 
 [metadata.files]
 brotli = [
@@ -748,8 +747,8 @@ jinja2 = [
     {file = "Jinja2-3.0.3.tar.gz", hash = "sha256:611bb273cd68f3b993fabdc4064fc858c5b47a973cb5aa7999ec1ba405c87cd7"},
 ]
 locust = [
-    {file = "locust-2.8.6-py3-none-any.whl", hash = "sha256:30dd8be2b9518ec06f4f18e061b2b625851faccadc70ffbc146b38f9b377b3d3"},
-    {file = "locust-2.8.6.tar.gz", hash = "sha256:011b16b5cf8b8cafe51c74cf86234afc6660ec7bdefbc6a89d6648548e1cc1be"},
+    {file = "locust-2.9.0-py3-none-any.whl", hash = "sha256:c2355852b9bccef4d1cc4e587e3448a8b81c9622626248a5809a77c672f59757"},
+    {file = "locust-2.9.0.tar.gz", hash = "sha256:62b69109337c3e6542e35c40ad08ba57d3690b0d1468121ba613b3cc01a6340a"},
 ]
 markupsafe = [
     {file = "MarkupSafe-2.1.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:86b1f75c4e7c2ac2ccdaec2b9022845dbb81880ca318bb7a0a01fbf7813e3812"},
