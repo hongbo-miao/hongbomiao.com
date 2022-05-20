@@ -71,7 +71,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/169445567-3f053363-41f0-46ab-bf62-5e0c94512bbb.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/169474718-e11943dd-e5b0-4738-9ce4-775dcc16f519.png)
 
 ## Setup
 
@@ -198,7 +198,8 @@ make clean
 - **Terraform** - Infrastructure as code
 - **TorchServe** - PyTorch models serving
 - **Linkerd** - Service mesh
-- **Traefik** - HTTP reverse proxy and load balancer
+- **Traefik** - Reverse proxy and load balancer
+- **nginx** - Reverse proxy, load balancer
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
 - **Kibana** - Data visualization dashboard for Elasticsearch
@@ -214,7 +215,6 @@ make clean
 - **Skaffold** - Continuous development for Kubernetes applications
 - **Multipass** - VM manager
 - **Locust** - Load testing
-- **NGINX** - Reverse proxy, load balancer
 - **Cloudflare Tunnel** - Tunneling
 - **Kubernetes** - Container-orchestration system
 - **K3s** - Lightweight Kubernetes
