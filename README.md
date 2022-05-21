@@ -71,7 +71,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/169629870-20caf83a-2526-47e6-a90e-beb74187e020.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/169638580-021965a5-16dd-4ea8-984f-aa0e1c618c65.png)
 
 ## Setup
 
@@ -219,6 +219,7 @@ make clean
 - **Cloudflare Tunnel** - Tunneling
 - **Kubernetes** - Container-orchestration system
 - **K3s** - Lightweight Kubernetes
+- **containerd** - Container runtime
 
 ### Ops
 
