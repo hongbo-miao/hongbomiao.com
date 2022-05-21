@@ -10,7 +10,7 @@ perl -p0i -e 's/replicas: 3/replicas: 1/s' kubernetes/manifests/west/opal-server
 echo "=================================================="
 
 # echo "# Remove Elastic APM"
-# perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/manifests/west/config-server-deployment.yaml
+# perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/manifests/west/config-loader-deployment.yaml
 # perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/manifests/west/decision-logger-deployment.yaml
 # perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg' kubernetes/manifests/west/graphql-server-deployment.yaml
 # rm -f kubernetes/manifests/west/elastic-apm-configmap.yaml

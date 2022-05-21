@@ -62,7 +62,7 @@ source kubernetes/bin/utils/installDgraph.sh
 source kubernetes/bin/utils/installPostgres.sh
 source kubernetes/bin/utils/installWestClusterApp.sh
 source kubernetes/bin/utils/secureOPALServer.sh
-source kubernetes/bin/utils/secureConfigServer.sh
+source kubernetes/bin/utils/secureConfigLoader.sh
 
 if [ $is_debug = false ]; then
   sleep 120

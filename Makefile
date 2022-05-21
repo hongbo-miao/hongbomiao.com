@@ -215,8 +215,8 @@ kubectl-port-forward-graphql-server:
 	kubectl port-forward service/graphql-server-service --namespace=hm 7000:7000
 kubectl-port-forward-opal-server:
 	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
-kubectl-port-forward-config-server:
-	kubectl port-forward service/config-server-service --namespace=hm 26660:26660
+kubectl-port-forward-config-loader:
+	kubectl port-forward service/config-loader-service --namespace=hm 26660:26660
 
 kubectl-port-forward-postgres:
 	kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:40072
