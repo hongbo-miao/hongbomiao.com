@@ -139,6 +139,8 @@ kubectl-apply-with-linkerd:
 	linkerd inject - | kubectl apply --filename=kubernetes/manifests
 kubectl-delete:
 	kubectl delete --filename=kubernetes/manifests
+kubectl-get-node:
+	kubectl get node --output=wide
 kubectl-get-pods-all:
 	kubectl get pods --all-namespaces
 kubectl-get-pods:
