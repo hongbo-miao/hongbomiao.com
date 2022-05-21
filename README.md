@@ -71,7 +71,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/169474718-e11943dd-e5b0-4738-9ce4-775dcc16f519.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/169629870-20caf83a-2526-47e6-a90e-beb74187e020.png)
 
 ## Setup
 
@@ -171,6 +171,7 @@ make clean
 - **Trino** - Distributed SQL query engine
 - **YugabyteDB** - Distributed SQL database
 - **TimescaleDB** - Time-series SQL database
+- **Cassandra** - Distributed wide-column NoSQL database
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
 - **PostgreSQL** - Object-relational database
