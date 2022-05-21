@@ -2,6 +2,8 @@ run-graphql-server:
 	go run cmd/graphql_server/main.go
 run-grpc-server:
 	go run cmd/grpc_server/main.go
+run-config-loader:
+	go run cmd/config_loader/main.go
 run-decision-logger:
 	go run cmd/decision_logger/main.go
 
@@ -36,11 +38,11 @@ opa-check:
 decision-logger-gzip-call:
 	echo '{"foo": "bar"}' | gzip | curl -v -i --data-binary @- -H "Content-Encoding: gzip" http://localhost:41797/logs
 
-# Config Server
-config-server-generate-cert-and-key:
-	openssl req -x509 -newkey=rsa:4096 -nodes -out=config/config_server/server.crt -keyout=config/config_server/server.key -days=3650 -subj="/C=US/ST=CA/CN=hongbomiao.com"
+# Config loader
+config-loader-generate-cert-and-key:
+	openssl req -x509 -newkey=rsa:4096 -nodes -out=config/config_loader/server.crt -keyout=config/config_loader/server.key -days=3650 -subj="/C=US/ST=CA/CN=hongbomiao.com"
 docker-build:
 	cd .. && \
-	docker build --file=api-go/build/package/config_server/Dockerfile --tag=ghcr.io/hongbo-miao/hm-config-server:latest .
+	docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-config-loader:latest .
 docker-push:
-	docker push ghcr.io/hongbo-miao/hm-config-server:latest
+	docker push ghcr.io/hongbo-miao/hm-config-loader:latest

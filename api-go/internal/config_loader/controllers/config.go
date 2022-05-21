@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_server/utils"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_loader/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/rs/zerolog/log"

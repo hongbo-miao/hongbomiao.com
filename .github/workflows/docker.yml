@@ -118,8 +118,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-config-server:
-    name: Push config-server to GitHub Container Registry
+  push-config-loader:
+    name: Push config-loader to GitHub Container Registry
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -138,9 +138,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./api-go/build/package/config_server/Dockerfile
+          file: ./api-go/build/package/config_loader/Dockerfile
           push: true
-          tags: ghcr.io/hongbo-miao/hm-config-server:latest
+          tags: ghcr.io/hongbo-miao/hm-config-loader:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Print Docker image digest
