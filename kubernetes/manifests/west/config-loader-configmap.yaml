@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: config-server-configmap
+  name: config-loader-configmap
   namespace: hm
   labels:
-    app.kubernetes.io/name: config-server
+    app.kubernetes.io/name: config-loader
 data:
   app_env: "production"
   port: "26660"
   should_enable_server_tls: "false"
-  server_cert_path: "/data/config-server/server.crt"
-  server_key_path: "/data/config-server/server.key"
-  opal_auth_public_key_path: "/data/config-server/opal_auth_public_key.pem"
+  server_cert_path: "/data/config-loader/server.crt"
+  server_key_path: "/data/config-loader/server.key"
+  opal_auth_public_key_path: "/data/config-loader/opal_auth_public_key.pem"
   opal_server_host: "opal-server-service.hm-opa"
   opal_server_port: "7002"
   postgres_host: "postgres-service.hm-postgres"
@@ -19,4 +19,4 @@ data:
   postgres_db: "opa_db"
   postgres_user: "admin"
   postgres_password: "passw0rd"
-  elastic_apm_service_name: "hm-config-server"
+  elastic_apm_service_name: "hm-config-loader"

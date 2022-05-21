@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: config-server-pvc
+  name: config-loader-pvc
   namespace: hm
   labels:
-    app.kubernetes.io/name: config-server
+    app.kubernetes.io/name: config-loader
 spec:
-  volumeName: config-server-pv
+  volumeName: config-loader-pv
   accessModes:
     - ReadWriteOnce
   storageClassName: standard

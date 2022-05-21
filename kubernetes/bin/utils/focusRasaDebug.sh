@@ -15,11 +15,11 @@ perl -p0i -e 's/# ---- ELASTIC APM BEGIN ----.*?# ---- ELASTIC APM END ----//sg'
 echo "=================================================="
 
 echo "# Remove services"
-rm -f kubernetes/manifests/west/config-server-configmap.yaml
-rm -f kubernetes/manifests/west/config-server-deployment.yaml
-rm -f kubernetes/manifests/west/config-server-pv.yaml
-rm -f kubernetes/manifests/west/config-server-pvc.yaml
-rm -f kubernetes/manifests/west/config-server-service.yaml
+rm -f kubernetes/manifests/west/config-loader-configmap.yaml
+rm -f kubernetes/manifests/west/config-loader-deployment.yaml
+rm -f kubernetes/manifests/west/config-loader-pv.yaml
+rm -f kubernetes/manifests/west/config-loader-pvc.yaml
+rm -f kubernetes/manifests/west/config-loader-service.yaml
 rm -f kubernetes/manifests/west/decision-logger-configmap.yaml
 rm -f kubernetes/manifests/west/decision-logger-deployment.yaml
 rm -f kubernetes/manifests/west/decision-logger-service.yaml

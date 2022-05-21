@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_server/controllers"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_server/utils"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_loader/controllers"
+	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_loader/utils"
 	sharedControllers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/controllers"
 	sharedHandlers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/handlers"
 	sharedUtils "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/utils"
@@ -19,8 +19,8 @@ func main() {
 		Str("AppEnv", config.AppEnv).
 		Str("Port", config.Port).
 		Str("ShouldEnableServerTLS", config.ShouldEnableServerTLS).
-		Str("ConfigServerCertPath", config.ConfigServerCertPath).
-		Str("ConfigServerKeyPath", config.ConfigServerKeyPath).
+		Str("ConfigLoaderCertPath", config.ConfigLoaderCertPath).
+		Str("ConfigLoaderKeyPath", config.ConfigLoaderKeyPath).
 		Str("OPALAuthPublicKeyPath", config.OPALAuthPublicKeyPath).
 		Str("PostgresHost", config.PostgresHost).
 		Str("PostgresPort", config.PostgresPort).
@@ -44,7 +44,7 @@ func main() {
 	r.GET("/config", controllers.Config(pg))
 	r.POST("/opa-db-cdc", controllers.OPADBCDC(pg))
 	if config.ShouldEnableServerTLS == "true" {
-		err := r.RunTLS(":"+config.Port, config.ConfigServerCertPath, config.ConfigServerKeyPath)
+		err := r.RunTLS(":"+config.Port, config.ConfigLoaderCertPath, config.ConfigLoaderKeyPath)
 		if err != nil {
 			log.Error().Err(err).Msg("r.RunTLS")
 		}

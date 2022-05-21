@@ -1,100 +1,100 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: config-server-deployment
+  name: config-loader-deployment
   namespace: hm
   labels:
-    app.kubernetes.io/name: config-server
+    app.kubernetes.io/name: config-loader
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: config-server
+      app: config-loader
   template:
     metadata:
       labels:
-        app: config-server
+        app: config-loader
     spec:
       containers:
-        - name: config-server
-          image: ghcr.io/hongbo-miao/hm-config-server:latest
+        - name: config-loader
+          image: ghcr.io/hongbo-miao/hm-config-loader:latest
           env:
             - name: APP_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: app_env
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: port
             - name: SHOULD_ENABLE_SERVER_TLS
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: should_enable_server_tls
             - name: SERVER_CERT_PATH
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: server_cert_path
             - name: SERVER_KEY_PATH
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: server_key_path
             - name: OPAL_AUTH_PUBLIC_KEY_PATH
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: opal_auth_public_key_path
             - name: OPAL_SERVER_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: opal_server_host
             - name: OPAL_SERVER_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: opal_server_port
             - name: OPAL_CLIENT_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: config-server-secret
+                  name: config-loader-secret
                   key: opal_client_token
             - name: POSTGRES_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: postgres_host
             - name: POSTGRES_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: postgres_port
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: postgres_db
             - name: POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: postgres_user
             - name: POSTGRES_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: postgres_password
 
             # ---- ELASTIC APM BEGIN ----
             - name: ELASTIC_APM_SERVICE_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: config-server-configmap
+                  name: config-loader-configmap
                   key: elastic_apm_service_name
             - name: ELASTIC_APM_SERVER_URL
               valueFrom:
@@ -134,13 +134,13 @@ spec:
             # ---- ELASTIC APM END ----
 
           ports:
-            - name: config-server
+            - name: config-loader
               protocol: TCP
               containerPort: 26660
 
           volumeMounts:
-            - name: config-server-volume
-              mountPath: /data/config-server
+            - name: config-loader-volume
+              mountPath: /data/config-loader
 
             # ---- ELASTIC APM BEGIN ----
             - name: elastic-apm-volume
@@ -148,9 +148,9 @@ spec:
             # ---- ELASTIC APM END ----
 
       volumes:
-        - name: config-server-volume
+        - name: config-loader-volume
           persistentVolumeClaim:
-            claimName: config-server-pvc
+            claimName: config-loader-pvc
 
         # ---- ELASTIC APM BEGIN ----
         - name: elastic-apm-volume
