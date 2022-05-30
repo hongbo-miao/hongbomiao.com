@@ -12,8 +12,7 @@ require (
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-contrib/gzip v0.0.5
 	github.com/gin-contrib/logger v0.2.2
-	github.com/gin-gonic/gin v1.7.7
-	github.com/go-playground/validator/v10 v10.8.0 // indirect
+	github.com/gin-gonic/gin v1.8.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-redis/redismock/v8 v8.0.6
 	github.com/go-resty/resty/v2 v2.7.0
@@ -35,7 +34,6 @@ require (
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
 	github.com/rs/zerolog v1.26.1
 	github.com/stretchr/testify v1.7.1
-	github.com/ugorji/go v1.2.6 // indirect
 	go.elastic.co/apm/module/apmgin v1.15.0
 	go.elastic.co/apm/module/apmgrpc v1.15.0
 	go.opencensus.io v0.23.0
