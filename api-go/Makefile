@@ -7,13 +7,15 @@ run-config-loader:
 run-decision-logger:
 	go run cmd/decision_logger/main.go
 
-go-tidy:
+go-mod-init:
+	go mod init github.com/Hongbo-Miao/hongbomiao.com
+go-mod-tidy:
 	go mod tidy
 go-test:
 	go test ./...
 go-fmt:
 	gofmt .
-go-check:
+go-fmt-check:
 	gofmt -l .
 go-lint:
 	golangci-lint run ./...

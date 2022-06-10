@@ -8,6 +8,7 @@ var query = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Query",
 	Fields: graphql.Fields{
 		"seed":                    &seedGraphQLField,
+		"debouncedSeed":           &debouncedSeedGraphQLField,
 		"currentTime":             &currentTimeGraphQLField,
 		"opa":                     &opaGraphQLField,
 		"opal":                    &opalGraphQLField,
