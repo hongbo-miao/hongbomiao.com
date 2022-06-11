@@ -5,7 +5,7 @@ go 1.16
 require (
 	contrib.go.opencensus.io/exporter/ocagent v0.7.0
 	github.com/Masterminds/squirrel v1.5.3
-	github.com/bep/debounce v1.2.1 // indirect
+	github.com/bep/debounce v1.2.1
 	github.com/buger/jsonparser v1.1.1
 	github.com/dgraph-io/dgo/v200 v200.0.0-20210401091508-95bfd74de60e
 	github.com/elastic/go-sysinfo v1.7.0 // indirect
@@ -27,7 +27,7 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
-	github.com/minio/minio-go/v7 v7.0.27
+	github.com/minio/minio-go/v7 v7.0.28
 	github.com/minio/sha256-simd v1.0.0 // indirect
 	github.com/open-policy-agent/opa v0.41.0
 	github.com/prometheus/client_golang v1.12.2
@@ -43,7 +43,7 @@ require (
 	go.opentelemetry.io/otel/exporters/jaeger v1.7.0
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.7.0
 	go.opentelemetry.io/otel/sdk v1.7.0
-	go.uber.org/atomic v1.9.0 // indirect
+	go.uber.org/atomic v1.9.0
 	google.golang.org/grpc v1.47.0
 	google.golang.org/grpc/examples v0.0.0-20210806175644-574137db7de3 // indirect
 	google.golang.org/protobuf v1.28.0
