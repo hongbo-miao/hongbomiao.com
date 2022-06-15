@@ -1,4 +1,4 @@
-FROM maven:3.8.5-amazoncorretto-11 AS builder
+FROM maven:3.8.6-amazoncorretto-11 AS builder
 WORKDIR /usr/src/app
 COPY ["streaming/src/",  "./src/"]
 COPY ["streaming/pom.xml", "./"]
