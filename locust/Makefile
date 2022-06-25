@@ -9,6 +9,8 @@ conda-deactivate:
 
 poetry-install:
 	poetry install
+poetry-add:
+	poetry add xxx
 poetry-run-locust:
 	poetry run poe locust
 poetry-lock:
