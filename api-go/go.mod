@@ -44,7 +44,7 @@ require (
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.8.0
 	go.opentelemetry.io/otel/sdk v1.8.0
 	go.uber.org/atomic v1.9.0
-	google.golang.org/grpc v1.47.0
+	google.golang.org/grpc v1.48.0
 	google.golang.org/grpc/examples v0.0.0-20210806175644-574137db7de3 // indirect
 	google.golang.org/protobuf v1.28.0
 	howett.net/plist v0.0.0-20201203080718-1454fab16a06 // indirect
