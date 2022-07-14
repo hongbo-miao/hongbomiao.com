@@ -1,0 +1,22 @@
+# https://github.com/apache/airflow/blob/main/chart/values.yaml
+
+webserver:
+  defaultUser:
+    username: admin
+    password: passw0rd
+    email: admin@example.com
+    firstName: Airflow
+    lastName: Admin
+
+extraEnv: |
+  - name: AIRFLOW__CORE__LOAD_EXAMPLES
+    value: 'True'
+
+dags:
+  gitSync:
+    enabled: true
+    repo: https://github.com/Hongbo-Miao/hm-airflow-dags.git
+    branch: main
+    subPath: "dags"
+    # interval between git sync attempts in seconds
+    wait: 60

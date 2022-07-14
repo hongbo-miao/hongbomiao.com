@@ -3,6 +3,8 @@ setup:
 	sh kubernetes/bin/setup.sh
 clean:
 	sh kubernetes/bin/clean.sh
+setup-multipass:
+	sh kubernetes/bin/setupMultipass.sh
 setup-k3d:
 	sh kubernetes/bin/setupK3d.sh
 setup-kind:
@@ -240,6 +242,8 @@ kubectl-port-forward-kafka:
 	kubectl port-forward service/hm-kafkaconnect-connect-api --namespace=kafka 8083:8083
 kubectl-port-forward-flink:
 	kubectl port-forward service/hm-flink-cluster-rest --namespace=hm-flink 8081:8081
+kubectl-port-forward-airflow:
+	kubectl port-forward service/airflow-webserver --namespace=hm-airflow 45808:8080
 kubectl-port-forward-prometheus:
 	kubectl port-forward service/monitoring-kube-prometheus-prometheus --namespace=hm-monitoring 9090:9090
 kubectl-port-forward-grafana:
