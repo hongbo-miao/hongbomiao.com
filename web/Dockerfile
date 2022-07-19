@@ -11,7 +11,7 @@ RUN rm -f ./.eslintrc.js \
   && npm run build
 
 
-FROM nginx:1.23.0-alpine AS release
+FROM nginx:1.23.1-alpine AS release
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 COPY web/conf/nginx.conf /etc/nginx/conf.d/default.conf
 
