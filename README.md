@@ -71,7 +71,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/178966625-9fd8a621-c0c7-456a-bd0b-99ff35dede2e.png)
+![Architecture](https://user-images.githubusercontent.com/3375461/179937638-6ac4608d-1b60-4678-acc8-0bdd5cd8b339.png)
 
 ## Setup
 
@@ -179,7 +179,8 @@ make clean
 - **MinIO** - High performance object storage
 - **Temporal** - Microservice orchestration platform
 - **Airflow** - Workflow management platform
-- **Flink** - Stream processing framework
+- **Spark** - Data processing framework
+- **Flink** - Data processing framework
   - **flink-streaming-java** - Flink
   - **flink-connector-twitter** - Flink Twitter connector
   - **flink-connector-jdbc** - Flink JDBC Connector
@@ -391,7 +392,7 @@ make clean
 
 ### Data
 
-#### Flink - Stream Processing
+#### Flink - Data Processing
 
 ![Flink screenshot](https://user-images.githubusercontent.com/3375461/129500704-9032b559-5dc5-4385-99eb-3f7d4a1f1086.png)
 
