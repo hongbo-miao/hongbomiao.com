@@ -2,7 +2,7 @@ name := "Hello World"
 
 version := "0.1"
 
-scalaVersion := "2.13.0"
+scalaVersion := "2.13.8"
 
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % "3.3.0",
