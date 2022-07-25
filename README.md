@@ -245,6 +245,11 @@ make clean
 - **OGB** - Open graph benchmark
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
+### Embedded
+
+- **FreeRTOS** - Real-time operating system
+- **Arduino Uno** - Microcontroller board
+
 ### Quantum Computing
 
 - **Qiskit** - Quantum computing SDK
