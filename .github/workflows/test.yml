@@ -25,6 +25,22 @@ jobs:
           clangFormatVersion: 14
           style: file
 
+  lint-commit:
+    name: Lint (Commit)
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Lint Commit
+        uses: wagoid/commitlint-github-action@v5
+
   lint-css-sol-md:
     name: Lint (CSS, Solidity, Markdown)
     runs-on: ubuntu-20.04
