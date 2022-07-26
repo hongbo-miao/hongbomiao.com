@@ -6,6 +6,25 @@ on:
       - main
 
 jobs:
+  lint-c-cpp:
+    name: Lint (C, C++)
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Lint C, C++
+        uses: DoozyX/clang-format-lint-action@v0.14
+        with:
+          source: '.'
+          extensions: 'c,cpp,h,ino'
+          clangFormatVersion: 14
+          style: file
+
   lint-css-sol-md:
     name: Lint (CSS, Solidity, Markdown)
     runs-on: ubuntu-20.04
@@ -46,6 +65,41 @@ jobs:
         run: |
           npm run lint:md
 
+  lint-dockerfile:
+    name: Lint (Dockerfile)
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Lint Dockerfile
+        uses: jbergstroem/hadolint-gh-action@v1
+        with:
+          dockerfile: '**/Dockerfile*'
+          error_level: 2
+
+  lint-go:
+    name: Lint (Go)
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Lint Go
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.40.1
+          working-directory: api-go
+          args: --timeout=3m
+
   lint-js:
     name: Lint (JavaScript)
     runs-on: ubuntu-20.04
@@ -84,8 +138,8 @@ jobs:
         run: |
           npm run lint:js
 
-  lint-go:
-    name: Lint (Go)
+  lint-kubernetes:
+    name: Lint (Kubernetes)
     runs-on: ubuntu-20.04
     timeout-minutes: 10
     steps:
@@ -95,31 +149,21 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Lint Go
-        uses: golangci/golangci-lint-action@v3
-        with:
-          version: v1.40.1
-          working-directory: api-go
-          args: --timeout=3m
-
-  lint-c-cpp:
-    name: Lint (C, C++)
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.10.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Lint C, C++
-        uses: DoozyX/clang-format-lint-action@v0.14
-        with:
-          source: '.'
-          extensions: 'c,cpp,h,ino'
-          clangFormatVersion: 14
-          style: file
+      - name: Lint Kubernetes
+        run: |
+          docker run \
+            --rm \
+            --volume=`pwd`/kubernetes:/kubernetes \
+            ghcr.io/yannh/kubeconform:latest \
+              -kubernetes-version=1.23.4 \
+              -ignore-filename-pattern=".*trafficsplit.yaml" \
+              -ignore-filename-pattern=".*my-values.yaml" \
+              -ignore-filename-pattern="kubernetes/manifests/argocd/" \
+              -ignore-filename-pattern="kubernetes/manifests/elastic/" \
+              -ignore-filename-pattern="kubernetes/manifests/kafka/" \
+              -ignore-filename-pattern="kubernetes/manifests/prometheus/" \
+              -ignore-filename-pattern="kubernetes/manifests/yugabyte/" \
+              kubernetes/manifests/
 
   lint-proto:
     name: Lint (Protocol Buffers)
@@ -168,50 +212,6 @@ jobs:
         run: |
           poetry run poe lint-py-isort
 
-  lint-dockerfile:
-    name: Lint (Dockerfile)
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.10.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Lint Dockerfile
-        uses: jbergstroem/hadolint-gh-action@v1
-        with:
-          dockerfile: '**/Dockerfile*'
-          error_level: 2
-
-  lint-kubernetes:
-    name: Lint (Kubernetes)
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.10.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Lint Kubernetes
-        run: |
-          docker run \
-            --rm \
-            --volume=`pwd`/kubernetes:/kubernetes \
-            ghcr.io/yannh/kubeconform:latest \
-              -kubernetes-version=1.23.4 \
-              -ignore-filename-pattern=".*trafficsplit.yaml" \
-              -ignore-filename-pattern=".*my-values.yaml" \
-              -ignore-filename-pattern="kubernetes/manifests/argocd/" \
-              -ignore-filename-pattern="kubernetes/manifests/elastic/" \
-              -ignore-filename-pattern="kubernetes/manifests/kafka/" \
-              -ignore-filename-pattern="kubernetes/manifests/prometheus/" \
-              -ignore-filename-pattern="kubernetes/manifests/yugabyte/" \
-              kubernetes/manifests/
-
   lint-shell:
     name: Lint (Shell)
     runs-on: ubuntu-20.04
@@ -226,6 +226,34 @@ jobs:
       - name: Lint Shell
         run: |
           shellcheck $(git ls-files '**/*.sh')
+
+  type-py:
+    name: Static Type Check (Python)
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3.1
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: |
+          poetry install --no-interaction --no-root
+      - name: Check static type
+        run: |
+          poetry run poe mypy convolutional-neural-network --install-types --non-interactive
+          poetry run poe mypy graph-neural-network --install-types --non-interactive
+          poetry run poe mypy locust --install-types --non-interactive
+          poetry run poe mypy hm-opal-client --install-types --non-interactive
 
   type-ts:
     name: Static Type Check (TypeScript)
@@ -268,34 +296,6 @@ jobs:
           cd ../api-node && npm run tsc
           cd ../cypress && npm run tsc
           cd ../ethereum && npm run tsc
-
-  type-py:
-    name: Static Type Check (Python)
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.10.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-      - name: Install Poetry
-        uses: snok/install-poetry@v1.3.1
-      - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: |
-          poetry install --no-interaction --no-root
-      - name: Check static type
-        run: |
-          poetry run poe mypy convolutional-neural-network --install-types --non-interactive
-          poetry run poe mypy graph-neural-network --install-types --non-interactive
-          poetry run poe mypy locust --install-types --non-interactive
-          poetry run poe mypy hm-opal-client --install-types --non-interactive
 
   web-test:
     name: Web - Test
