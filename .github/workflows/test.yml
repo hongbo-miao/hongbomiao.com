@@ -102,6 +102,25 @@ jobs:
           working-directory: api-go
           args: --timeout=3m
 
+  lint-c-cpp:
+    name: Lint (C, C++)
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Lint C, C++
+        uses: DoozyX/clang-format-lint-action@v0.14
+        with:
+          source: '.'
+          extensions: 'c,cpp,h,ino'
+          clangFormatVersion: 14
+          style: file
+
   lint-proto:
     name: Lint (Protocol Buffers)
     runs-on: ubuntu-20.04
