@@ -268,20 +268,21 @@ make clean
 ### Code
 
 - **Prettier** - Code formatter
+- **ClangFormat** - C/C++ code formatter
 - **gofmt** - Go code formatter
-- **opa** - Rego code formatter
 - **Black** - Python code formatter
-- **tsc** - TypeScript static type checker
+- **opa** - Rego code formatter
 - **Mypy** - Python static type checker
-- **ESLint** - JavaScript linter
+- **tsc** - TypeScript static type checker
 - **Stylelint** - CSS linter
-- **golangci-lint** - Go linter
-- **Buf** - Protocol Buffers linter
-- **solhint** - Solidity linter
-- **markdownlint-cli2** - Markdown linter
-- **ShellCheck** - Shell linter
 - **hadolint** - Dockerfile linter
+- **golangci-lint** - Go linter
+- **ESLint** - JavaScript linter
 - **Kubeval** - Kubernetes configuration file linter
+- **markdownlint-cli2** - Markdown linter
+- **Buf** - Protocol Buffers linter
+- **ShellCheck** - Shell linter
+- **solhint** - Solidity linter
 - **commitlint** - Commit message linter
 - **Husky** - Bad git commit and push preventing
 
