@@ -594,3 +594,5 @@ lint-kubernetes:
 		$$(git ls-files "kubernetes/manifests/")
 lint-protocol-buffers:
 	buf lint
+lint-c-cpp:
+	clang-format -i -style=file **/*.c **/*.cpp **/*.h **/*.ino
