@@ -71,7 +71,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/181212536-96fe05b3-61fd-4658-b0b2-dca46c312745.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/182316722-a1dab562-a336-4b56-8448-2082b6a3b90a.svg)
 
 ## Setup
 
@@ -285,6 +285,11 @@ make clean
 - **solhint** - Solidity linter
 - **commitlint** - Commit message linter
 - **Husky** - Bad git commit and push preventing
+
+### Design
+
+- **Fusion 360** - Industrial design
+- **Figma** - UX design
 
 ### Services
 
