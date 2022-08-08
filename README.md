@@ -59,7 +59,7 @@
 
 ## Introduction
 
-Personal cutting-edge technology lab.
+Personal cutting-edge technology lab. Happy learning and exchanging!
 
 [https://www.hongbomiao.com](https://www.hongbomiao.com)
 
