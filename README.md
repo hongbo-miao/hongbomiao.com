@@ -331,6 +331,12 @@ make clean
 
 ## Highlights
 
+### Embedded
+
+#### MATLAB and Simulink
+
+![MATLAB and Simulink screenshot](https://user-images.githubusercontent.com/3375461/187293381-8693512b-5a65-4f89-8d87-beb3a703e17f.png)
+
 ### Cloud Native
 
 #### Pixie - Kubernetes Application Observing
