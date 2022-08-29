@@ -71,7 +71,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/187071994-847dcd1f-9bf4-4160-b485-5b2763987bf9.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/187287367-f9301f87-0fff-40db-9d77-6da9c75e33cd.svg)
 
 ## Setup
 
@@ -249,6 +249,14 @@ make clean
 
 - **FreeRTOS** - Real-time operating system
 - **Arduino Uno** - Microcontroller board
+- **MATLAB** - Programming and numeric computing platform
+- **Simulink** - Simulation and model-based design
+
+### Science
+
+- **NumPy** - Scientific computing library
+- **pandas** - Data analysis library
+- **Jupyter Notebook** - Web-based interactive computing platform
 
 ### Quantum Computing
 
