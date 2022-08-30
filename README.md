@@ -166,7 +166,7 @@ make clean
 - **autocannon** - HTTP benchmarking
 - **Clinic.js** - Performance profiling
 
-### Data
+### Database
 
 - **Trino** - Distributed SQL query engine
 - **YugabyteDB** - Distributed SQL database
@@ -192,6 +192,22 @@ make clean
   - **http-connector-for-apache-kafka** - HTTP sink connector
 - **Superset** - Data exploration and data visualization platform
 - **golang-migrate/migrate** - Database migrations
+
+### Data Science and Machine Learning
+
+- **NumPy** - Scientific computing library
+- **pandas** - Data analysis library
+- **Modin** - pandas workflows scaling
+- **Ray** - Unified framework for scaling AI and Python applications
+- **Jupyter Notebook** - Web-based interactive computing platform
+- **PyTorch** - Machine learning framework
+  - **PyTorch Geometric** - PyTorch geometric deep learning extension
+- **Rasa** - Machine learning framework for automated text and voice-based conversations
+- **CML** - Continuous machine learning
+- **DVC** - Data version control
+- **Feast** - Feature store
+- **OGB** - Open graph benchmark
+- **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
 ### Cloud Native
 
@@ -234,29 +250,12 @@ make clean
 - **Ansible** - IT automation system
 - **CodeQL** - Variant analysis
 
-### Machine Learning
-
-- **PyTorch** - Machine learning framework
-  - **PyTorch Geometric** - PyTorch geometric deep learning extension
-- **Rasa** - Machine learning framework for automated text and voice-based conversations
-- **CML** - Continuous machine learning
-- **DVC** - Data version control
-- **Feast** - Feature store
-- **OGB** - Open graph benchmark
-- **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
-
 ### Embedded
 
 - **FreeRTOS** - Real-time operating system
 - **Arduino Uno** - Microcontroller board
 - **MATLAB** - Programming and numeric computing platform
 - **Simulink** - Simulation and model-based design
-
-### Science
-
-- **NumPy** - Scientific computing library
-- **pandas** - Data analysis library
-- **Jupyter Notebook** - Web-based interactive computing platform
 
 ### Quantum Computing
 
