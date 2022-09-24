@@ -291,7 +291,6 @@ make clean
 - **ShellCheck** - Shell linter
 - **solhint** - Solidity linter
 - **commitlint** - Commit message linter
-- **Husky** - Bad git commit and push preventing
 
 ### Design
 
