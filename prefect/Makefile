@@ -3,7 +3,7 @@ conda-create:
 conda-env-remove:
 	conda env remove --name=hm-prefect
 conda-activate:
-	conda activate hm-airflow
+	conda activate hm-prefect
 conda-deactivate:
 	conda deactivate
 conda-env-list:
@@ -12,10 +12,14 @@ conda-list-packages:
 	conda list
 
 pip-install:
-	pip install --upgrade prefect
+	pip install --requirement=requirements.txt
 
-prefect-start:
+prefect-local:
 	prefect orion start
+prefect-cloud:
+	prefect cloud login --key=xxx
+	prefect cloud workspace set --workspace=hongbo-miao/hongbomiao
 
 workflow-start:
 	python greet.py
+	python s3_download.py
