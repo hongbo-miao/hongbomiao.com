@@ -22,26 +22,44 @@ def get_dataframe(data: bytes) -> pd.DataFrame:
     df["payment_type"] = df["payment_type"].astype("category")
     df["store_and_fwd_flag"] = df["store_and_fwd_flag"].astype("bool")
     mask = df["total_amount"] > 0
-    postive_df = df[mask]
-    return postive_df
+    return df[mask]
+
+
+@task
+def get_average_amount(df: pd.DataFrame) -> float:
+    return df["total_amount"].mean()
+
+
+@task
+def get_average_trip_distance(df: pd.DataFrame) -> float:
+    return df["trip_distance"].mean()
+
+
+@task
+def get_price_per_mile(trip_distance: float, amount: float) -> float:
+    return amount / trip_distance
 
 
 @flow
-async def fetch_taxi_data():
+async def get_taxi_statistics() -> None:
     logger = get_run_logger()
-    aws_credentials_block = await AwsCredentials.load("aws-credentials-block")
-    credentials = AwsCredentials(
-        aws_access_key_id=aws_credentials_block.aws_access_key_id,
-        aws_secret_access_key=aws_credentials_block.aws_secret_access_key,
-    )
+    credentials = await AwsCredentials.load("aws-credentials-block")
     data = await s3_download(
         bucket="hongbomiao-bucket",
         key="hm-airflow/taxi.csv",
         aws_credentials=credentials,
     )
     df = get_dataframe(data)
-    logger.info(df)
+
+    average_trip_distance = get_average_trip_distance(df)
+    logger.info(average_trip_distance)
+
+    average_amount = get_average_amount(df)
+    logger.info(average_amount)
+
+    price_per_mile = get_price_per_mile(average_trip_distance, average_amount)
+    logger.info(price_per_mile)
 
 
 if __name__ == "__main__":
-    asyncio.run(fetch_taxi_data())
+    asyncio.run(get_taxi_statistics())
