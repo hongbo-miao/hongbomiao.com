@@ -1,4 +1,11 @@
+from pydantic import BaseModel
+
 from prefect import flow, task
+
+
+class User(BaseModel):
+    first_name: str
+    last_name: str
 
 
 @task(name="Print Hello")
@@ -14,9 +21,11 @@ def my_subflow(msg: str):
 
 
 @flow(name="Greet")
-def greet(name: str) -> None:
-    message = print_hello(name)
+def greet(user: User) -> None:
+    message = print_hello(f"{user.first_name} {user.last_name}")
     my_subflow(message)
 
 
-greet("Hongbo")
+if __name__ == "__main__":
+    external_user = User(first_name="Hongbo", last_name="Miao")
+    greet(external_user)
