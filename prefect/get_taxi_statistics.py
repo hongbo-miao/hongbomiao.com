@@ -5,7 +5,7 @@ from enum import Enum
 import pandas as pd
 from prefect_aws.credentials import AwsCredentials
 from prefect_aws.s3 import s3_download
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 
 from prefect import flow, get_run_logger, task
 
@@ -18,6 +18,18 @@ class CalcMethod(Enum):
 class Model(BaseModel):
     calc_method: CalcMethod
     trip_id: int
+
+    @validator("calc_method")
+    def calc_method_must_be_in_enum(cls, v):
+        if v not in CalcMethod:
+            raise ValueError(f"calc_method must be in {CalcMethod}")
+        return v
+
+    @validator("trip_id")
+    def trip_id_must_be_in_range(cls, v):
+        if 0 <= v < 100:
+            return v
+        raise ValueError("trip_id must be in range [0, 100)")
 
 
 @task
