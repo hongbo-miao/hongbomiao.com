@@ -560,6 +560,10 @@ cloudflare-tunnel-dns:
 	cloudflared tunnel route dns hm-tunnel tunnel.hongbomiao.com
 
 # Python
+poetry-install:
+	poetry install
+poetry-lock:
+	poetry lock --no-update
 python-static-type-check:
 	poetry run poe mypy convolutional-neural-network --install-types --non-interactive
 	poetry run poe mypy graph-neural-network --install-types --non-interactive
