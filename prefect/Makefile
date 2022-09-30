@@ -22,4 +22,4 @@ prefect-cloud:
 
 workflow-start:
 	python greet.py
-	python s3_download.py
+	python taxi/get_taxi_statistics.py
