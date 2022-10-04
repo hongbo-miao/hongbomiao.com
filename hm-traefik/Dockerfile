@@ -1,2 +1,2 @@
-FROM traefik:v2.8.8
+FROM traefik:v2.9.1
 COPY ["hm-traefik/plugins-local/",  "/plugins-local/"]
