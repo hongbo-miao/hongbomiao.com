@@ -7,7 +7,7 @@ def power(a, b):
 
 
 @task
-def multipy(a, b):
+def multiply(a, b):
     return a * b
 
 
@@ -30,7 +30,7 @@ def print_nums(nums: list[int]) -> None:
 @flow
 def calculate(nums: list[int]) -> None:
     x = power.map(nums, 2)
-    x = multipy.map(x, 100)
+    x = multiply.map(x, 100)
     x = add.map(x, 9)
     x = minus.map(x, 4)
     print_nums(x)
