@@ -418,7 +418,7 @@ make clean
 
 #### Prefect - Orchestration Platform
 
-![Prefect screenshot](https://user-images.githubusercontent.com/3375461/193223399-6edd6e84-06c8-4acb-ae52-e3d4461d3e08.png)
+![Prefect screenshot](https://user-images.githubusercontent.com/3375461/194426252-5720d5ae-8507-4651-886f-4b584ce7f16d.png)
 
 #### Airflow - Orchestration Platform
 
