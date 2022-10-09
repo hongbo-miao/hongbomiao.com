@@ -1,21 +1,25 @@
-from pyspark.sql import SparkSession, dataframe
+import functools
+
+from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.functions import count, desc
 
 
-def get_trips(df: dataframe.DataFrame) -> dataframe.DataFrame:
+def unionAll(*dfs):
+    return functools.reduce(DataFrame.unionAll, dfs)
+
+
+def get_trips(df: DataFrame) -> DataFrame:
     column_names = list(map(lambda x: x.lower(), df.columns))
     return df.toDF(*column_names)
 
 
-def get_zones(df: dataframe.DataFrame) -> dataframe.DataFrame:
+def get_zones(df: DataFrame) -> DataFrame:
     column_names = list(map(lambda x: x.lower(), df.columns))
     df = df.toDF(*column_names)
     return df.drop("objectid")
 
 
-def get_top_routes(
-    trips: dataframe.DataFrame, zones: dataframe.DataFrame
-) -> dataframe.DataFrame:
+def get_top_routes(trips: DataFrame, zones: DataFrame) -> DataFrame:
     return (
         trips.select("pulocationid", "dolocationid")
         .groupBy("pulocationid", "dolocationid")
@@ -46,21 +50,22 @@ def get_top_routes(
     )
 
 
-def get_taxi_statistics(taxi_data_path: str, zone_data_path: str) -> None:
+def get_taxi_statistics(trip_data_paths: list[str], zone_data_path: str) -> None:
     spark = SparkSession.builder.appName("hm_spark_app").getOrCreate()
-    taxi_df = (
-        spark.read.format("csv")
-        .option("inferSchema", True)
-        .option("header", True)
-        .load(taxi_data_path)
-    )
+
+    # read from taxi_data_list and merge dataframes
+    trip_dfs = []
+    for path in trip_data_paths:
+        trip_dfs.append(spark.read.parquet(path))
+    trip_df = unionAll(*trip_dfs)
+
     zone_df = (
         spark.read.format("csv")
         .option("inferSchema", True)
         .option("header", True)
         .load(zone_data_path)
     )
-    trips = get_trips(taxi_df)
+    trips = get_trips(trip_df)
     zones = get_zones(zone_df)
 
     print((trips.count(), len(trips.columns)))
@@ -74,6 +79,19 @@ def get_taxi_statistics(taxi_data_path: str, zone_data_path: str) -> None:
 
 
 if __name__ == "__main__":
-    taxi_data_path = "data/2021_Yellow_Taxi_Trip_Data.csv"
+    trip_data_paths = [
+        "data/yellow_tripdata_2021-07.parquet",
+        "data/yellow_tripdata_2021-08.parquet",
+        "data/yellow_tripdata_2021-09.parquet",
+        "data/yellow_tripdata_2021-10.parquet",
+        "data/yellow_tripdata_2021-11.parquet",
+        "data/yellow_tripdata_2021-12.parquet",
+        "data/yellow_tripdata_2022-01.parquet",
+        "data/yellow_tripdata_2022-02.parquet",
+        "data/yellow_tripdata_2022-03.parquet",
+        "data/yellow_tripdata_2022-04.parquet",
+        "data/yellow_tripdata_2022-05.parquet",
+        "data/yellow_tripdata_2022-06.parquet",
+    ]
     zone_data_path = "data/taxi_zones.csv"
-    get_taxi_statistics(taxi_data_path, zone_data_path)
+    get_taxi_statistics(trip_data_paths, zone_data_path)
