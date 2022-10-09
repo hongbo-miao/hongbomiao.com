@@ -1,7 +1,6 @@
 import functools
 
 from pyspark.sql import DataFrame, SparkSession
-from pyspark.sql.functions import count, desc
 
 
 def unionAll(*dfs):
@@ -19,41 +18,48 @@ def get_zones(df: DataFrame) -> DataFrame:
     return df.drop("objectid")
 
 
-def get_top_routes(trips: DataFrame, zones: DataFrame) -> DataFrame:
-    return (
-        trips.select("pulocationid", "dolocationid")
-        .groupBy("pulocationid", "dolocationid")
-        .agg(count("*").alias("count"))
-        .join(zones, on=[trips.pulocationid == zones.locationid], how="inner")
-        .withColumnRenamed("zone", "pulocation_zone")
-        .withColumnRenamed("borough", "pulocation_borough")
-        .select(
-            "pulocationid",
-            "pulocation_zone",
-            "pulocation_borough",
-            "dolocationid",
-            "count",
+def get_top_routes(
+    spark: SparkSession, trips: DataFrame, zones: DataFrame
+) -> DataFrame:
+    trips.createOrReplaceTempView("trips")
+    zones.createOrReplaceTempView("zones")
+
+    return spark.sql(
+        """
+        WITH t2 AS (
+            WITH t1 AS (
+                SELECT pulocationid, dolocationid, count(*) AS count
+                FROM trips
+                GROUP BY pulocationid, dolocationid
+            )
+            SELECT
+                t1.pulocationid,
+                zones.zone AS pulocation_zone,
+                zones.borough AS pulocation_borough,
+                t1.dolocationid,
+                t1.count
+            FROM t1
+            INNER JOIN zones ON t1.pulocationid = zones.locationid
         )
-        .join(zones, on=[trips.dolocationid == zones.locationid], how="inner")
-        .withColumnRenamed("zone", "dolocation_zone")
-        .withColumnRenamed("borough", "dolocation_borough")
-        .select(
-            "pulocationid",
-            "pulocation_zone",
-            "pulocation_borough",
-            "dolocationid",
-            "dolocation_zone",
-            "dolocation_borough",
-            "count",
-        )
-        .orderBy(desc("count"))
+        SELECT
+            t2.pulocationid,
+            t2.pulocation_zone,
+            t2.pulocation_borough,
+            t2.dolocationid,
+            zones.zone AS dolocation_zone,
+            zones.borough AS dolocation_borough,
+            t2.count
+        FROM t2
+        INNER JOIN zones ON t2.dolocationid = zones.locationid
+        ORDER BY t2.count DESC
+        """
     )
 
 
 def get_taxi_statistics(trip_data_paths: list[str], zone_data_path: str) -> None:
     spark = (
         SparkSession.builder.master("local")
-        .appName("get_taxi_statistics")
+        .appName("get_taxi_statistics_sql")
         .getOrCreate()
     )
 
@@ -77,7 +83,7 @@ def get_taxi_statistics(trip_data_paths: list[str], zone_data_path: str) -> None
     print((zones.count(), len(zones.columns)))
     zones.show()
 
-    top_routes = get_top_routes(trips, zones)
+    top_routes = get_top_routes(spark, trips, zones)
     top_routes.show(truncate=False)
 
 
