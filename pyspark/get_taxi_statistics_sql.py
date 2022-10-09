@@ -1,21 +1,7 @@
-import functools
+from utils.trip import load_trips, preprocess_trips
+from utils.zone import load_zones, preprocess_zones
 
 from pyspark.sql import DataFrame, SparkSession
-
-
-def unionAll(*dfs):
-    return functools.reduce(DataFrame.unionAll, dfs)
-
-
-def get_trips(df: DataFrame) -> DataFrame:
-    column_names = list(map(lambda x: x.lower(), df.columns))
-    return df.toDF(*column_names)
-
-
-def get_zones(df: DataFrame) -> DataFrame:
-    column_names = list(map(lambda x: x.lower(), df.columns))
-    df = df.toDF(*column_names)
-    return df.drop("objectid")
 
 
 def get_top_routes(
@@ -63,23 +49,14 @@ def get_taxi_statistics(trip_data_paths: list[str], zone_data_path: str) -> None
         .getOrCreate()
     )
 
-    trip_dfs = []
-    for path in trip_data_paths:
-        trip_dfs.append(spark.read.parquet(path))
-    trip_df = unionAll(*trip_dfs)
+    trips = load_trips(spark, trip_data_paths)
+    zones = load_zones(spark, zone_data_path)
 
-    zone_df = (
-        spark.read.format("csv")
-        .option("inferSchema", True)
-        .option("header", True)
-        .load(zone_data_path)
-    )
-
-    trips = get_trips(trip_df)
+    trips = preprocess_trips(trips)
     print((trips.count(), len(trips.columns)))
     trips.show()
 
-    zones = get_zones(zone_df)
+    zones = preprocess_zones(zones)
     print((zones.count(), len(zones.columns)))
     zones.show()
 
