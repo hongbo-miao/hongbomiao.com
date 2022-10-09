@@ -16,3 +16,8 @@ brew-install:
 
 pip-install:
 	pip install --requirement=requirements.txt
+
+run-get-taxi-statistics:
+	python taxi/get_taxi_statistics.py
+run-get-taxi-statistics-sql:
+	python taxi/get_taxi_statistics_sql.py
