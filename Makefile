@@ -559,6 +559,10 @@ cloudflare-k8s-create-secret:
 cloudflare-tunnel-dns:
 	cloudflared tunnel route dns hm-tunnel tunnel.hongbomiao.com
 
+# JupterLab
+jupyter-lab:
+	jupyter-lab
+
 # Python
 poetry-install:
 	poetry install
