@@ -241,7 +241,7 @@ kubectl-port-forward-elastic:
 kubectl-port-forward-kafka:
 	kubectl port-forward service/hm-kafkaconnect-connect-api --namespace=kafka 8083:8083
 kubectl-port-forward-spark:
-	kubectl port-forward service/spark-master-svc --namespace=hm-spark 45421:80
+	kubectl port-forward service/spark-master-svc --namespace=hm-spark 4040:80
 	kubectl port-forward service/spark-master-svc --namespace=hm-spark 7077:7077
 kubectl-port-forward-flink:
 	kubectl port-forward service/hm-flink-cluster-rest --namespace=hm-flink 8081:8081
