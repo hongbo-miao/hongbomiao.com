@@ -226,6 +226,8 @@ kubectl-port-forward-postgres:
 	kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:40072
 kubectl-port-forward-timescale:
 	kubectl port-forward service/timescale --namespace=hm-timescale 25495:25495
+kubectl-port-forward-influxdb:
+	kubectl port-forward service/influxdb --namespace=hm-influxdb 20622:8086
 kubectl-port-forward-redis:
 	kubectl port-forward service/redis-headless --namespace=hm-redis 6379:6379
 kubectl-port-forward-trino:
