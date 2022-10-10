@@ -60,19 +60,24 @@ def get_taxi_statistics(trip_data_paths: list[str], zone_data_path: str) -> None
 
 
 if __name__ == "__main__":
-    trip_data_paths = [
-        "data/yellow_tripdata_2021-07.parquet",
-        "data/yellow_tripdata_2021-08.parquet",
-        "data/yellow_tripdata_2021-09.parquet",
-        "data/yellow_tripdata_2021-10.parquet",
-        "data/yellow_tripdata_2021-11.parquet",
-        "data/yellow_tripdata_2021-12.parquet",
-        "data/yellow_tripdata_2022-01.parquet",
-        "data/yellow_tripdata_2022-02.parquet",
-        "data/yellow_tripdata_2022-03.parquet",
-        "data/yellow_tripdata_2022-04.parquet",
-        "data/yellow_tripdata_2022-05.parquet",
-        "data/yellow_tripdata_2022-06.parquet",
+    dirname = "data"
+    trip_filenames = [
+        "yellow_tripdata_2021-07.parquet",
+        "yellow_tripdata_2021-08.parquet",
+        "yellow_tripdata_2021-09.parquet",
+        "yellow_tripdata_2021-10.parquet",
+        "yellow_tripdata_2021-11.parquet",
+        "yellow_tripdata_2021-12.parquet",
+        "yellow_tripdata_2022-01.parquet",
+        "yellow_tripdata_2022-02.parquet",
+        "yellow_tripdata_2022-03.parquet",
+        "yellow_tripdata_2022-04.parquet",
+        "yellow_tripdata_2022-05.parquet",
+        "yellow_tripdata_2022-06.parquet",
     ]
-    zone_data_path = "data/taxi_zones.csv"
+    zone_filename = "taxi_zones.csv"
+
+    trip_data_paths = [f"{dirname}/{f}" for f in trip_filenames]
+    zone_data_path = f"{dirname}/{zone_filename}"
+
     get_taxi_statistics(trip_data_paths, zone_data_path)
