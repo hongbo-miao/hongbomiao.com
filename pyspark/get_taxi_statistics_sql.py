@@ -44,8 +44,9 @@ def get_top_routes(
 
 def get_taxi_statistics(trip_data_paths: list[str], zone_data_path: str) -> None:
     spark = (
-        SparkSession.builder.master("local")
+        SparkSession.builder.master("local[*]")
         .appName("get_taxi_statistics_sql")
+        .config("spark.ui.port", "4040")
         .getOrCreate()
     )
 
