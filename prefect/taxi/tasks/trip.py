@@ -8,9 +8,7 @@ from prefect import task
 
 @task
 def get_trips(data: bytes) -> pd.DataFrame:
-    df = pd.read_csv(
-        io.BytesIO(data), parse_dates=["tpep_pickup_datetime", "tpep_dropoff_datetime"]
-    )
+    df = pd.read_parquet(io.BytesIO(data), engine="pyarrow")
     df = df.rename(str.lower, axis="columns")
     df["store_and_fwd_flag"] = df["store_and_fwd_flag"].astype("bool")
     mask = df["total_amount"] > 0

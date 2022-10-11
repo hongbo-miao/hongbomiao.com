@@ -3,7 +3,7 @@ import asyncio
 from prefect_aws.credentials import AwsCredentials
 from prefect_aws.s3 import s3_download
 from pydantic import BaseModel, validator
-from tasks.route import get_top_routes, print_routes
+from tasks.route import get_top_routes
 from tasks.trip import (
     get_average_amount,
     get_average_trip_distance,
@@ -21,7 +21,6 @@ from prefect import flow, get_run_logger
 class Model(BaseModel):
     calc_method: CalcMethod
     trip_id: int
-    top_count: int
 
     @validator("calc_method")
     def calc_method_must_be_in_enum(cls, v: CalcMethod) -> CalcMethod:
@@ -42,7 +41,7 @@ async def get_taxi_statistics(model: Model) -> None:
     credentials = await AwsCredentials.load("aws-credentials-block")
     trip_data = await s3_download(
         bucket="hongbomiao-bucket",
-        key="taxi/m6nq-qud6.csv",
+        key="taxi/yellow_tripdata_2022-06.parquet",
         aws_credentials=credentials,
     )
     trips = get_trips(trip_data)
@@ -67,12 +66,10 @@ async def get_taxi_statistics(model: Model) -> None:
     is_higher_than_average_amount = get_is_higher_than_unit_price(trip, average_amount)
     logger.info(is_higher_than_average_amount)
 
-    top_routes = get_top_routes(trips, model.top_count)
+    top_routes = get_top_routes(trips, zones)
     logger.info(top_routes)
-
-    print_routes(top_routes, zones)
 
 
 if __name__ == "__main__":
-    external_model = Model(calc_method=CalcMethod.MEDIAN, trip_id=42, top_count=10)
+    external_model = Model(calc_method=CalcMethod.MEDIAN, trip_id=42)
     asyncio.run(get_taxi_statistics(external_model))
