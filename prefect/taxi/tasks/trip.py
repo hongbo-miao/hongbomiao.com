@@ -1,18 +1,34 @@
 import io
 
 import pandas as pd
+from prefect_aws.s3 import s3_download
 from utils.enum import CalcMethod
 
 from prefect import task
 
 
 @task
-def get_trips(data: bytes) -> pd.DataFrame:
-    df = pd.read_parquet(io.BytesIO(data), engine="pyarrow")
-    df = df.rename(str.lower, axis="columns")
-    df["store_and_fwd_flag"] = df["store_and_fwd_flag"].astype("bool")
-    mask = df["total_amount"] > 0
-    return df[mask]
+def union_all(*dfs: pd.DataFrame) -> pd.DataFrame:
+    return pd.concat(dfs, ignore_index=True)
+
+
+async def load_trips(credentials, data_paths):
+    trip_dfs = []
+    for path in data_paths:
+        trip_data = await s3_download(
+            bucket="hongbomiao-bucket",
+            key=path,
+            aws_credentials=credentials,
+        )
+        df = pd.read_parquet(io.BytesIO(trip_data), engine="pyarrow")
+        trip_dfs.append(df)
+
+    return union_all(*trip_dfs)
+
+
+@task
+def preprocess_trips(df: pd.DataFrame) -> pd.DataFrame:
+    return df.rename(str.lower, axis="columns")
 
 
 @task
@@ -40,13 +56,3 @@ def get_average_trip_distance(trips: pd.DataFrame, calc_method: CalcMethod) -> f
 @task
 def get_price_per_mile(trip_distance: float, amount: float) -> float:
     return amount / trip_distance
-
-
-@task
-def get_trip(trip_id: int, trips: pd.DataFrame) -> pd.Series:
-    return trips.loc[trip_id, :]
-
-
-@task
-def get_is_higher_than_unit_price(trip: pd.Series, average_amount: float) -> bool:
-    return trip["total_amount"] / trip["trip_distance"] > average_amount
