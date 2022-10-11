@@ -1,3 +1,4 @@
+import asyncio
 import io
 
 import pandas as pd
@@ -13,16 +14,19 @@ def union_all(*dfs: pd.DataFrame) -> pd.DataFrame:
 
 
 async def load_trips(credentials, data_paths):
-    trip_dfs = []
-    for path in data_paths:
-        trip_data = await s3_download(
-            bucket="hongbomiao-bucket",
-            key=path,
-            aws_credentials=credentials,
-        )
-        df = pd.read_parquet(io.BytesIO(trip_data), engine="pyarrow")
-        trip_dfs.append(df)
-
+    data_list = await asyncio.gather(
+        *[
+            s3_download(
+                bucket="hongbomiao-bucket",
+                key=path,
+                aws_credentials=credentials,
+            )
+            for path in data_paths
+        ]
+    )
+    trip_dfs = [
+        pd.read_parquet(io.BytesIO(data), engine="pyarrow") for data in data_list
+    ]
     return union_all(*trip_dfs)
 
 
