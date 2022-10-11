@@ -21,19 +21,12 @@ from prefect import flow, get_run_logger
 
 class Model(BaseModel):
     calc_method: CalcMethod
-    trip_id: int
 
     @validator("calc_method")
     def calc_method_must_be_in_enum(cls, v: CalcMethod) -> CalcMethod:
         if v not in CalcMethod:
             raise ValueError(f"calc_method must be in {CalcMethod}")
         return v
-
-    @validator("trip_id")
-    def trip_id_must_be_in_range(cls, v: int) -> int:
-        if 0 <= v < 100:
-            return v
-        raise ValueError("trip_id must be in range [0, 100)")
 
 
 @flow
@@ -87,5 +80,5 @@ async def get_taxi_statistics(model: Model) -> None:
 
 
 if __name__ == "__main__":
-    external_model = Model(calc_method=CalcMethod.MEDIAN, trip_id=42)
+    external_model = Model(calc_method=CalcMethod.MEDIAN)
     asyncio.run(get_taxi_statistics(external_model))
