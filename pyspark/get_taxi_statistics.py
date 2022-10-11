@@ -13,25 +13,11 @@ def get_top_routes(trips: DataFrame, zones: DataFrame) -> DataFrame:
         .join(zones, on=[trips.pulocationid == zones.locationid], how="inner")
         .withColumnRenamed("zone", "pulocation_zone")
         .withColumnRenamed("borough", "pulocation_borough")
-        .select(
-            "pulocationid",
-            "pulocation_zone",
-            "pulocation_borough",
-            "dolocationid",
-            "count",
-        )
+        .drop("locationid", "shape_area", "shape_leng", "the_geom")
         .join(zones, on=[trips.dolocationid == zones.locationid], how="inner")
         .withColumnRenamed("zone", "dolocation_zone")
         .withColumnRenamed("borough", "dolocation_borough")
-        .select(
-            "pulocationid",
-            "pulocation_zone",
-            "pulocation_borough",
-            "dolocationid",
-            "dolocation_zone",
-            "dolocation_borough",
-            "count",
-        )
+        .drop("locationid", "shape_area", "shape_leng", "the_geom")
         .orderBy(desc("count"))
     )
 
