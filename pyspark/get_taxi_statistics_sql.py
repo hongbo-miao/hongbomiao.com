@@ -62,12 +62,43 @@ def get_taxi_statistics(trip_data_paths: list[str], zone_data_path: str) -> None
     zones.show()
 
     top_routes = get_top_routes(spark, trips, zones)
+    print((top_routes.count(), len(top_routes.columns)))
     top_routes.show(truncate=False)
 
 
 if __name__ == "__main__":
     dirname = "data"
     trip_filenames = [
+        "yellow_tripdata_2019-01.parquet",
+        "yellow_tripdata_2019-02.parquet",
+        "yellow_tripdata_2019-03.parquet",
+        "yellow_tripdata_2019-04.parquet",
+        "yellow_tripdata_2019-05.parquet",
+        "yellow_tripdata_2019-06.parquet",
+        "yellow_tripdata_2019-07.parquet",
+        "yellow_tripdata_2019-08.parquet",
+        "yellow_tripdata_2019-09.parquet",
+        "yellow_tripdata_2019-10.parquet",
+        "yellow_tripdata_2019-11.parquet",
+        "yellow_tripdata_2019-12.parquet",
+        "yellow_tripdata_2020-01.parquet",
+        "yellow_tripdata_2020-02.parquet",
+        "yellow_tripdata_2020-03.parquet",
+        "yellow_tripdata_2020-04.parquet",
+        "yellow_tripdata_2020-05.parquet",
+        "yellow_tripdata_2020-06.parquet",
+        "yellow_tripdata_2020-07.parquet",
+        "yellow_tripdata_2020-08.parquet",
+        "yellow_tripdata_2020-09.parquet",
+        "yellow_tripdata_2020-10.parquet",
+        "yellow_tripdata_2020-11.parquet",
+        "yellow_tripdata_2020-12.parquet",
+        "yellow_tripdata_2021-01.parquet",
+        "yellow_tripdata_2021-02.parquet",
+        "yellow_tripdata_2021-03.parquet",
+        "yellow_tripdata_2021-04.parquet",
+        "yellow_tripdata_2021-05.parquet",
+        "yellow_tripdata_2021-06.parquet",
         "yellow_tripdata_2021-07.parquet",
         "yellow_tripdata_2021-08.parquet",
         "yellow_tripdata_2021-09.parquet",
