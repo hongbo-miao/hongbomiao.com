@@ -78,8 +78,8 @@ async def get_taxi_statistics() -> None:
     trip_data_paths = [f"{dirname}/{f}" for f in trip_filenames]
 
     influxdb_token = ""
-    influxdb_org = "primary"
-    influxdb_bucket = "primary"
+    influxdb_org = "hongbomiao"
+    influxdb_bucket = "hm-taxi-bucket"
 
     with InfluxDBClient(
         url="http://localhost:20622", token=influxdb_token, org=influxdb_org
