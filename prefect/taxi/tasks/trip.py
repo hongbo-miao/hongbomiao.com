@@ -2,6 +2,7 @@ import asyncio
 import io
 
 import pandas as pd
+from prefect_aws import AwsCredentials
 from prefect_aws.s3 import s3_download
 from utils.enum import CalcMethod
 
@@ -13,7 +14,9 @@ def union_all(*dfs: pd.DataFrame) -> pd.DataFrame:
     return pd.concat(dfs, ignore_index=True)
 
 
-async def load_trips(credentials, data_paths):
+async def load_trips(
+    credentials: AwsCredentials, data_paths: list[str]
+) -> pd.DataFrame:
     data_list = await asyncio.gather(
         *[
             s3_download(
