@@ -1,9 +1,9 @@
 from utils.df import union_all
 
-from pyspark.sql import DataFrame
+from pyspark.sql import DataFrame, SparkSession
 
 
-def load_trips(spark, data_paths):
+def load_trips(spark: SparkSession, data_paths: list[str]):
     trip_dfs = []
     for path in data_paths:
         trip_dfs.append(spark.read.parquet(path))
