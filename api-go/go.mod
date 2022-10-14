@@ -22,7 +22,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.2.0.20201002093600-73cf2ae9d891
 	github.com/jackc/pgx/v4 v4.17.2
 	github.com/joho/godotenv v1.4.0
-	github.com/minio/minio-go/v7 v7.0.40
+	github.com/minio/minio-go/v7 v7.0.41
 	github.com/open-policy-agent/opa v0.45.0
 	github.com/prometheus/client_golang v1.13.0
 	github.com/rs/zerolog v1.28.0
