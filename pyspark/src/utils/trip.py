@@ -1,6 +1,5 @@
-from utils.df import union_all
-
 from pyspark.sql import DataFrame, SparkSession
+from utils.df import union_all
 
 
 def load_trips(spark: SparkSession, data_paths: list[str]):
