@@ -200,6 +200,7 @@ make clean
 - **pandas** - Data analysis library
 - **Modin** - pandas workflows scaling
 - **Ray** - Unified framework for scaling AI and Python applications
+- **pyspark** - Apache Spark Python API library
 - **Jupyter Notebook** - Web-based interactive computing platform
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
@@ -208,6 +209,10 @@ make clean
 - **DVC** - Data version control
 - **Feast** - Feature store
 - **OGB** - Open graph benchmark
+- **asyncpg** - PostgreSQL client
+- **Tenacity** - General-purpose retrying library
+- **pytest** - Unit testing
+- **pydantic** - Data validation
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
 ### Cloud Native
@@ -261,12 +266,6 @@ make clean
 ### Quantum Computing
 
 - **Qiskit** - Quantum computing SDK
-
-### OPAL Client
-
-- **asyncpg** - PostgreSQL client
-- **pydantic** - Data validation
-- **Tenacity** - General-purpose retrying library
 
 ### Ethereum
 
