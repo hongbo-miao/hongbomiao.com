@@ -218,7 +218,7 @@ jobs:
           python-version: '3.10'
       - name: Install Poetry
         uses: snok/install-poetry@v1.3.3
-      - name: Install dependencies
+      - name: Install requirements
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
           poetry install --no-interaction --no-root
@@ -264,7 +264,7 @@ jobs:
           python-version: '3.10'
       - name: Install Poetry
         uses: snok/install-poetry@v1.3.3
-      - name: Install dependencies
+      - name: Install requirements
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
           poetry install --no-interaction --no-root
@@ -345,8 +345,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
+        working-directory: web
         run: |
-          cd web && npm ci
+          npm ci
       - name: Test
         working-directory: web
         run: |
@@ -466,8 +467,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
+        working-directory: mobile
         run: |
-          cd mobile && npm ci
+          npm ci
       - name: Test
         working-directory: mobile
         run: |
@@ -521,8 +523,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
+        working-directory: api-node
         run: |
-          cd api-node && npm ci
+          npm ci
       - name: Test
         working-directory: api-node
         run: |
@@ -556,14 +559,40 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
+        working-directory: api-node
         run: |
-          cd api-node && npm ci
+          npm ci
       - name: Stryker
         working-directory: api-node
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: |
           npm run test:stryker
+
+  prefect-test:
+    name: Prefect - Test
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install requirements
+        working-directory: prefect
+        run: |
+          pip install --requirement=requirements.txt
+          pip install --requirement=requirements-dev.txt
+      - name: Test
+        working-directory: prefect
+        run: |
+          pytest
 
   streaming-test:
     name: Streaming - Test
