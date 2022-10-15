@@ -24,3 +24,6 @@ workflow-start:
 	python calculate.py
 	python greet.py
 	python taxi/get_taxi_statistics.py
+
+test:
+	pytest

@@ -35,17 +35,17 @@ async def get_taxi_statistics(model: Model) -> None:
 
     dirname = "taxi"
     trip_filenames = [
-        "yellow_tripdata_2021-07.parquet",
-        "yellow_tripdata_2021-08.parquet",
-        "yellow_tripdata_2021-09.parquet",
-        "yellow_tripdata_2021-10.parquet",
-        "yellow_tripdata_2021-11.parquet",
-        "yellow_tripdata_2021-12.parquet",
-        "yellow_tripdata_2022-01.parquet",
-        "yellow_tripdata_2022-02.parquet",
-        "yellow_tripdata_2022-03.parquet",
-        "yellow_tripdata_2022-04.parquet",
-        "yellow_tripdata_2022-05.parquet",
+        # "yellow_tripdata_2021-07.parquet",
+        # "yellow_tripdata_2021-08.parquet",
+        # "yellow_tripdata_2021-09.parquet",
+        # "yellow_tripdata_2021-10.parquet",
+        # "yellow_tripdata_2021-11.parquet",
+        # "yellow_tripdata_2021-12.parquet",
+        # "yellow_tripdata_2022-01.parquet",
+        # "yellow_tripdata_2022-02.parquet",
+        # "yellow_tripdata_2022-03.parquet",
+        # "yellow_tripdata_2022-04.parquet",
+        # "yellow_tripdata_2022-05.parquet",
         "yellow_tripdata_2022-06.parquet",
     ]
     zone_filename = "taxi_zones.csv"

@@ -1,8 +1,7 @@
-from utils.trip import load_trips, preprocess_trips
-from utils.zone import load_zones, preprocess_zones
-
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.functions import count, desc
+from utils.trip import load_trips, preprocess_trips
+from utils.zone import load_zones, preprocess_zones
 
 
 def get_top_routes(trips: DataFrame, zones: DataFrame) -> DataFrame:
