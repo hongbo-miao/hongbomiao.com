@@ -1,7 +1,7 @@
 # https://docs.mergify.com
 
 pull_request_rules:
-  - name: automatic merge on CI success and review
+  - name: Automatic merge for Hongbo-Miao pull requests
     conditions:
       - author=Hongbo-Miao
       - check-success=Lint (C, C++)
@@ -36,7 +36,7 @@ pull_request_rules:
       merge:
         method: rebase
 
-  - name: automatic merge for Renovate pull requests
+  - name: Automatic merge for Renovate pull requests
     conditions:
       - author=renovate[bot]
       - check-success=Lint (C, C++)
