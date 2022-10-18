@@ -1,9 +1,10 @@
 # https://docs.mergify.io
 
-pull_request_rules:
-  - name: automatic merge on CI success and review
+queue_rules:
+  - name: default
     conditions:
-      - author=Hongbo-Miao
+      - base=main
+      - label!=work in progress
       - check-success=Lint (C, C++)
       - check-success=Lint (Commit)
       - check-success=Lint (CSS, Solidity, Markdown)
@@ -30,14 +31,47 @@ pull_request_rules:
       - check-success=Prometheus - Test
       - check-success=HM OPAL Client - Build
       - check-success=Cypress
+      - check-failure!=renovate/artifacts
+
+pull_request_rules:
+  - name: automatic merge on CI success and review
+    conditions:
       - base=main
+      - author=Hongbo-Miao
       - label!=work in progress
+      - check-success=Lint (C, C++)
+      - check-success=Lint (Commit)
+      - check-success=Lint (CSS, Solidity, Markdown)
+      - check-success=Lint (Dockerfile)
+      - check-success=Lint (Go)
+      - check-success=Lint (JavaScript)
+      - check-success=Lint (Kubernetes)
+      - check-success=Lint (Protocol Buffers)
+      - check-success=Lint (Python)
+      - check-success=Lint (Shell)
+      - check-success=Static Type Check (Python)
+      - check-success=Static Type Check (TypeScript)
+      - check-success=Web - Test
+      - check-success=Web - Lighthouse
+      - check-success=Web - Storybook
+      - check-success=Mobile - Test
+      - check-success=API (Go) - Test
+      - check-success=API (Node.js) - Test
+      - check-success=API (Node.js) - Stryker
+      - check-success=Prefect - Test
+      - check-success=Streaming - Test
+      - check-success=OPA - Test
+      - check-success=Rasa - Test
+      - check-success=Prometheus - Test
+      - check-success=HM OPAL Client - Build
+      - check-success=Cypress
     actions:
-      merge:
-        method: rebase
+      queue:
+        name: default
 
   - name: automatic merge for Renovate pull requests
     conditions:
+      - base=main
       - author=renovate[bot]
       - check-success=Lint (C, C++)
       - check-success=Lint (Commit)
@@ -66,7 +100,6 @@ pull_request_rules:
       - check-success=HM OPAL Client - Build
       - check-success=Cypress
       - check-failure!=renovate/artifacts
-      - base=main
     actions:
-      merge:
-        method: rebase
+      queue:
+        name: default
