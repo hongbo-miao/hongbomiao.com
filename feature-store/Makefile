@@ -1,5 +1,5 @@
 conda-create:
-	conda create --name=hm-feature-store python=3.10
+	conda create --name=hm-feature-store python=3.10 --yes
 conda-env-remove:
 	conda env remove --name=hm-feature-store
 conda-activate:
