@@ -256,9 +256,10 @@ make clean
 - **Ansible** - IT automation system
 - **CodeQL** - Variant analysis
 
-### Embedded
+### IoT
 
 - **FreeRTOS** - Real-time operating system
+- **RTI Connext DDS** - Data Distribution Service (DDS)
 - **Arduino Uno** - Microcontroller board
 - **MATLAB** - Programming and numeric computing platform
 - **Simulink** - Simulation and model-based design
@@ -329,11 +330,15 @@ make clean
 
 ## Highlights
 
-### Embedded
+### IoT
 
 #### MATLAB and Simulink
 
 ![MATLAB and Simulink screenshot](https://user-images.githubusercontent.com/3375461/187293381-8693512b-5a65-4f89-8d87-beb3a703e17f.png)
+
+#### RTI Connext DDS
+
+![MATLAB and Simulink screenshot](https://user-images.githubusercontent.com/3375461/197075768-18b61ddf-57db-4d32-ae48-c7e77cea9c77.jpg)
 
 ### Cloud Native
 
