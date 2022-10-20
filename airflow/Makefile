@@ -1,5 +1,5 @@
 conda-create:
-	conda create --name=hm-airflow python=3.10
+	conda create --name=hm-airflow python=3.10 --yes
 conda-env-remove:
 	conda env remove --name=hm-airflow
 conda-activate:

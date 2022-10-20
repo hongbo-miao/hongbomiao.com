@@ -2,7 +2,7 @@
 set -e
 
 # Creating an environment
-conda create --name=hm-gnn python=3.8
+conda create --name=hm-gnn python=3.8 --yes
 conda activate hm-gnn
 
 # Install PyTorch Geometric

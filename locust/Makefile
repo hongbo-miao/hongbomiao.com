@@ -1,5 +1,5 @@
 conda-create:
-	conda create --name=hm-locust python=3.9
+	conda create --name=hm-locust python=3.9 --yes
 conda-env-remove:
 	conda env remove --name=hm-locust
 conda-activate:
