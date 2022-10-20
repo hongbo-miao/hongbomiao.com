@@ -1,6 +1,6 @@
 # Setup
 conda-create:
-	conda create --name=hm-chatbot python=3.8
+	conda create --name=hm-chatbot python=3.8 --yes
 conda-env-remove:
 	conda env remove --name=hm-chatbot
 conda-activate:
