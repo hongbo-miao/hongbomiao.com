@@ -19,3 +19,11 @@ pip-list-packages:
 	/usr/local/anaconda3/envs/hm-dds/bin/pip list
 pip-freeze:
 	pip freeze > requirements.txt
+
+rti-convert:
+	rtiddsgen -convertToXml hm_message.idl -d .
+
+python-publisher:
+	python publish.py
+python-subscribe:
+	python subscribe.py
