@@ -1,5 +1,5 @@
 conda-create:
-	conda create --name=hm-quantum python=3.9
+	conda create --name=hm-quantum python=3.9 --yes
 conda-env-remove:
 	conda env remove --name=hm-quantum
 conda-activate:

@@ -1,5 +1,5 @@
 conda-create:
-	conda create --name=hm-pyspark python=3.10
+	conda create --name=hm-pyspark python=3.10 --yes
 conda-env-remove:
 	conda env remove --name=hm-pyspark
 conda-activate:
