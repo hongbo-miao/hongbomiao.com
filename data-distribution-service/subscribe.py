@@ -3,7 +3,7 @@ import time
 import rti.connextdds as dds
 
 
-class CftListener(dds.DynamicData.NoOpDataReaderListener):
+class Listener(dds.DynamicData.NoOpDataReaderListener):
     def on_data_available(self, reader: dds.DynamicData.DataReader):
         with reader.take() as samples:
             for sample in samples:
@@ -17,7 +17,8 @@ def subscriber_main(domain_id: int):
     hm_type = dds.QosProvider("hm_message.xml").type("HMMessage")
     topic = dds.DynamicData.Topic(participant, "hm-topic", hm_type)
     reader = dds.DynamicData.DataReader(dds.Subscriber(participant), topic)
-    reader.bind_listener(CftListener(), dds.StatusMask.DATA_AVAILABLE)
+    listener = Listener()
+    reader.bind_listener(listener, dds.StatusMask.DATA_AVAILABLE)
 
     while True:
         time.sleep(1)
