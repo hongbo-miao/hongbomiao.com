@@ -13,6 +13,7 @@ conda-list-packages:
 
 pip-install:
 	pip install --requirement=requirements.txt
+	pip install --requirement=requirements-dev.txt
 
 prefect-local:
 	prefect orion start
@@ -27,3 +28,5 @@ workflow-start:
 
 test:
 	pytest
+test-coverage:
+	pytest --cov=. --cov-report=xml
