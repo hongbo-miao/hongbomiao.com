@@ -29,16 +29,11 @@
     "lint:sol": "solhint **/*.sol",
     "lint:sol:fix": "solhint **/*.sol --fix",
     "lint:md": "markdownlint-cli2 $(git ls-files '**/*.md')",
-    "lint:md:fix": "markdownlint-cli2-fix $(git ls-files '**/*.md')",
-    "test": "cd web && npm test && cd ../mobile && npm test && cd ../api-node && npm test",
-    "test:coverage": "sh bin/testCoverage.sh",
-    "test:coverage:publish": "cat coverage/lcov.info | codecov"
+    "lint:md:fix": "markdownlint-cli2-fix $(git ls-files '**/*.md')"
   },
   "devDependencies": {
-    "codecov": "3.8.3",
     "commitizen": "4.2.5",
     "markdownlint-cli2": "0.5.1",
-    "nyc": "15.1.0",
     "prettier": "2.7.1",
     "prettier-plugin-solidity": "1.0.0-dev.24",
     "solhint": "3.3.7",
