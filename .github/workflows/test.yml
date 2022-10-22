@@ -503,7 +503,12 @@ jobs:
       - name: Test
         working-directory: api-go
         run: |
-          go test ./...
+          go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: api-go
+          fail_ci_if_error: true
 
   api-node-test:
     name: API (Node.js) - Test

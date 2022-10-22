@@ -13,6 +13,8 @@ go-mod-tidy:
 	go mod tidy
 go-test:
 	go test ./...
+go-test-coverage:
+	go test ./... -race -coverprofile=coverage.txt -covermode=atomic
 go-fmt:
 	gofmt .
 go-fmt-check:
