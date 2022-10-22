@@ -636,6 +636,11 @@ jobs:
         working-directory: streaming
         run: |
           mvn test
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: streaming
+          fail_ci_if_error: true
 
   opa-test:
     name: OPA - Test
