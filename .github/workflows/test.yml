@@ -351,7 +351,12 @@ jobs:
       - name: Test
         working-directory: web
         run: |
-          npm test
+          npm run test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: web
+          fail_ci_if_error: true
 
   web-lighthouse:
     name: Web - Lighthouse
@@ -473,7 +478,12 @@ jobs:
       - name: Test
         working-directory: mobile
         run: |
-          npm test
+          npm run test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: mobile
+          fail_ci_if_error: true
 
   api-go-test:
     name: API (Go) - Test
@@ -529,7 +539,12 @@ jobs:
       - name: Test
         working-directory: api-node
         run: |
-          npm test
+          npm run test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: api-node
+          fail_ci_if_error: true
 
   api-node-stryker:
     name: API (Node.js) - Stryker
@@ -597,7 +612,6 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: prefect
-          files: coverage.xml
           fail_ci_if_error: true
 
   streaming-test:
@@ -724,42 +738,3 @@ jobs:
         working-directory: cypress
         run: |
           npm run test:cypress:headless:5000
-
-  coverage:
-    name: Coverage
-    needs: [web-test, mobile-test, api-node-test]
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        run: |
-          npm ci
-          cd web && npm ci
-          cd ../mobile && npm ci
-          cd ../api-node && npm ci
-      - name: Coverage
-        run: |
-          npm run test:coverage
-          npm run test:coverage:publish
