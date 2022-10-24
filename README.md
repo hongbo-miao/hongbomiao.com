@@ -71,7 +71,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/196010011-62691e27-6586-4e1b-b23a-f0da45020e7a.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/197431343-51cfecd7-cbe3-491b-ac51-de07be15e66d.svg)
 
 ## Setup
 
@@ -213,6 +213,9 @@ make clean
 - **Tenacity** - General-purpose retrying library
 - **pytest** - Unit testing
 - **pydantic** - Data validation
+- **Dataprep** - Data cleaning
+- **BigQuery** - Data warehouse
+- **Looker Studio** - Business insights visualizations
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
 ### Cloud Native
@@ -419,6 +422,10 @@ make clean
 ![Sloop screenshot](https://user-images.githubusercontent.com/3375461/167351205-0f7e0921-07ff-4072-b5b9-c343d88f25c4.jpg)
 
 ### Data
+
+#### Dataprep - Data Cleaning
+
+![Dataprep screenshot](https://user-images.githubusercontent.com/3375461/197430470-ae676c14-8dad-4cd7-9326-3df1856f242c.png)
 
 #### Prefect - Orchestration Platform
 
