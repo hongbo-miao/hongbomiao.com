@@ -26,7 +26,7 @@ require (
 	github.com/open-policy-agent/opa v0.45.0
 	github.com/prometheus/client_golang v1.13.0
 	github.com/rs/zerolog v1.28.0
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 	go.elastic.co/apm/module/apmgin v1.15.0
 	go.elastic.co/apm/module/apmgrpc v1.15.0
 	go.opencensus.io v0.23.0
