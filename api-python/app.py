@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sock import Sock
 from flask_wtf.csrf import CSRFProtect
+from simple_websocket import Server as WebSocketServer
 
 
 def create_app() -> Flask:
@@ -10,11 +11,11 @@ def create_app() -> Flask:
     csrf.init_app(app)
 
     @app.route("/")
-    def hello():
-        return "Hello World!"
+    def health() -> str:
+        return "ok"
 
     @sock.route("/echo")
-    def echo(ws):
+    def echo(ws: WebSocketServer) -> None:
         while True:
             data = ws.receive()
             ws.send(data)
