@@ -1,6 +1,6 @@
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import React from 'react';
-import { useQuery, useQueryClient } from 'react-query';
 import config from '../../config';
 import queryKeys from '../../shared/reactQuery/queryKeys';
 import Me from '../types/Me';
