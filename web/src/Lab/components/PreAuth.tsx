@@ -1,6 +1,6 @@
+import { useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
-import { useQuery } from 'react-query';
 
 type Props = {
   children: JSX.Element;
