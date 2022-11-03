@@ -8,6 +8,9 @@ exclude =
   # Anywhere
   **/*.iml
   **/.DS_Store
+  **/.env.development.local
+  **/.env.production.local
+  **/.gitkeep
   **/.idea
   **/.pytest_cache
   **/.vscode
@@ -15,10 +18,13 @@ exclude =
   **/node_modules
 
   # Root
+  /.git
+  /.github
   /.mypy_cache
   /dump.rdb
   /logs
   /logs.log
+  /submodules
   /west-master-k3s.yaml
 
   # Directories
@@ -44,6 +50,7 @@ exclude =
   cypress/cypress/screenshots
   ethereum/build
   feature-store/driver_features/data
+  grafana/hm-panel-plugin/.config
   graph-neural-network/dataset
   graph-neural-network/wandb
   hm-keydb/dump.rdb
@@ -79,8 +86,3 @@ exclude =
   web/public/sitemap.xml
   web/storybook-static
   web/tmp
-
-  # .flake8 specific
-  /submodules
-
-  grafana/hm-panel-plugin/.config
