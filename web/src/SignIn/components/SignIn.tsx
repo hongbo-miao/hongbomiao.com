@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
+import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
 import { Navigate } from 'react-router-dom';
 import useAuth from '../../auth/hooks/useAuth';
 import useMe from '../../auth/hooks/useMe';
