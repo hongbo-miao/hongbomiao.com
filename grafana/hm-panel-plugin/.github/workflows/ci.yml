@@ -10,10 +10,12 @@ on:
       - master
       - main
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  grafana-cypress:
+    name: Grafana - Cypress
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -31,17 +33,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
+        working-directory: grafana/hm-panel-plugin
         run: |
           npm ci
-
-      - name: Build and test frontend
-        run: npm run build
-
-      - name: Start grafana docker
-        run: npm run server -d
-
+      - name: Build
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          npm run build
+      - name: Start Grafana Docker
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          docker-compose up --detach
       - name: Run e2e tests
-        run: npm run e2e
-
-      - name: stop grafana docker
-        run: docker-compose down
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          npm run e2e
+      - name: Stop Grafana Docker
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          docker-compose down
