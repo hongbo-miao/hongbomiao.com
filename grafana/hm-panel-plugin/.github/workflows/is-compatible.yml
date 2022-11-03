@@ -10,8 +10,8 @@ jobs:
         with:
           node-version: '16'
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
       - name: Build plugin
-        run: yarn build
+        run: npm run build
       - name: Compatibility check
         run: npx @grafana/levitate@latest is-compatible --path src/module.ts --target @grafana/data,@grafana/ui,@grafana/runtime
