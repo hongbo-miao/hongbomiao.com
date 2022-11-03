@@ -1,0 +1,14 @@
+version: '3.0'
+
+services:
+  grafana:
+    container_name: 'hongbomiao-hmpanelplugin-panel'
+    build:
+      context: ./.config
+      args:
+        grafana_version: ${GRAFANA_VERSION:-9.1.2}
+    ports:
+      - 3000:3000/tcp
+    volumes:
+      - ./dist:/var/lib/grafana/plugins/hongbomiao-hmpanelplugin-panel
+      - ./provisioning:/etc/grafana/provisioning

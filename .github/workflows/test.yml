@@ -743,3 +743,81 @@ jobs:
         working-directory: cypress
         run: |
           npm run test:cypress:headless:5000
+
+  grafana-cypress:
+    name: Grafana - Cypress
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          npm ci
+      - name: Build
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          npm run build
+      - name: Start Grafana Docker
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          docker-compose up --detach
+      - name: Run e2e tests
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          npm run e2e
+      - name: Stop Grafana Docker
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          docker-compose down
+
+  grafana-check-compatibility:
+    name: Grafana - Check Compatibility
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          npm ci
+      - name: Build
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          npm run build
+      - name: Check compatibility
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          npx @grafana/levitate@latest is-compatible --path src/module.ts --target @grafana/data,@grafana/ui,@grafana/runtime
