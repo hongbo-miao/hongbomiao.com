@@ -1,14 +1,15 @@
-version: '3.0'
+# https://docs.docker.com/compose/compose-file/compose-versioning
+version: "3.8"
 
 services:
   grafana:
-    container_name: 'hongbomiao-hmpanelplugin-panel'
+    container_name: 'hm-panel-plugin'
     build:
       context: ./.config
       args:
         grafana_version: ${GRAFANA_VERSION:-9.1.2}
     ports:
-      - 3000:3000/tcp
+      - "3000:3000"
     volumes:
-      - ./dist:/var/lib/grafana/plugins/hongbomiao-hmpanelplugin-panel
+      - ./dist:/var/lib/grafana/plugins/hm-panel-plugin
       - ./provisioning:/etc/grafana/provisioning

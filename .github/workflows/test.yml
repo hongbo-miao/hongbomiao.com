@@ -444,6 +444,54 @@ jobs:
         run: |
           npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
 
+  web-cypress:
+    name: Web - Cypress
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        working-directory: cypress
+        run: |
+          npm ci
+      - name: Pull Docker images
+        run: |
+          docker-compose --file=docker-compose.cypress.yml pull
+      - name: Cache Docker images
+        uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+      - name: Start Docker
+        run: |
+          docker-compose --file=docker-compose.cypress.yml up --detach
+      - name: Cypress
+        working-directory: cypress
+        run: |
+          npm run test:cypress:headless:5000
+      - name: Stop Docker
+        run: |
+          docker-compose --file=docker-compose.cypress.yml down
+
   mobile-test:
     name: Mobile - Test
     runs-on: ubuntu-20.04
@@ -684,66 +732,6 @@ jobs:
         run: |
           docker build --file=Dockerfile.prometheus.test .
 
-  hm-opal-client-build:
-    name: HM OPAL Client - Build
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Build Docker image
-        run: |
-          docker build --file=hm-opal-client/Dockerfile --tag=ghcr.io/hongbo-miao/hm-opal-client:latest .
-
-  cypress:
-    name: Cypress
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: cypress
-        run: |
-          npm ci
-      - name: Pull Docker images
-        run: |
-          docker-compose --file=docker-compose.cypress.yml pull
-      - name: Cache Docker images
-        uses: satackey/action-docker-layer-caching@v0.0.11
-        continue-on-error: true
-      - name: Build and run containers
-        run: |
-          docker-compose --file=docker-compose.cypress.yml up --detach
-      - name: Cypress
-        working-directory: cypress
-        run: |
-          npm run test:cypress:headless:5000
-
   grafana-cypress:
     name: Grafana - Cypress
     runs-on: ubuntu-20.04
@@ -774,7 +762,14 @@ jobs:
         working-directory: grafana/hm-panel-plugin
         run: |
           npm run build
-      - name: Start Grafana Docker
+      - name: Pull Docker images
+        working-directory: grafana/hm-panel-plugin
+        run: |
+          docker-compose pull
+      - name: Cache Docker images
+        uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+      - name: Start Docker
         working-directory: grafana/hm-panel-plugin
         run: |
           docker-compose up --detach
@@ -782,7 +777,7 @@ jobs:
         working-directory: grafana/hm-panel-plugin
         run: |
           npm run e2e
-      - name: Stop Grafana Docker
+      - name: Stop Docker
         working-directory: grafana/hm-panel-plugin
         run: |
           docker-compose down
@@ -821,3 +816,18 @@ jobs:
         working-directory: grafana/hm-panel-plugin
         run: |
           npx @grafana/levitate@latest is-compatible --path src/module.ts --target @grafana/data,@grafana/ui,@grafana/runtime
+
+  hm-opal-client-build:
+    name: HM OPAL Client - Build
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build Docker image
+        run: |
+          docker build --file=hm-opal-client/Dockerfile --tag=ghcr.io/hongbo-miao/hm-opal-client:latest .
