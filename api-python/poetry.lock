@@ -36,6 +36,18 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "Flask-Cors"
+version = "3.0.10"
+description = "A Flask extension adding a decorator for CORS support"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Flask = ">=0.9"
+Six = "*"
+
+[[package]]
 name = "flask-sock"
 version = "0.5.2"
 description = "WebSocket support for Flask"
@@ -46,22 +58,6 @@ python-versions = ">=3.6"
 [package.dependencies]
 flask = ">=2"
 simple-websocket = ">=0.5.1"
-
-[[package]]
-name = "Flask-WTF"
-version = "1.0.1"
-description = "Form rendering, validation, and CSRF protection for Flask with WTForms."
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-Flask = "*"
-itsdangerous = "*"
-WTForms = "*"
-
-[package.extras]
-email = ["email-validator"]
 
 [[package]]
 name = "h11"
@@ -147,6 +143,14 @@ python-versions = ">=3.6"
 wsproto = "*"
 
 [[package]]
+name = "six"
+version = "1.16.0"
+description = "Python 2 and 3 compatibility utilities"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -179,24 +183,10 @@ python-versions = ">=3.7.0"
 [package.dependencies]
 h11 = ">=0.9.0,<1"
 
-[[package]]
-name = "WTForms"
-version = "3.0.1"
-description = "Form validation and rendering for Python web development."
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.dependencies]
-MarkupSafe = "*"
-
-[package.extras]
-email = ["email-validator"]
-
 [metadata]
 lock-version = "1.1"
 python-versions = "3.10.x"
-content-hash = "9a91e04351fcd2a4b00c17ffbd7a3c0e3cbd8e23952e6e20887f4c8a3b0860c1"
+content-hash = "76f4180fc8896763f38923cbbb88a6263cbf9357159c06027006b6007133ef5d"
 
 [metadata.files]
 click = [
@@ -211,13 +201,13 @@ Flask = [
     {file = "Flask-2.2.2-py3-none-any.whl", hash = "sha256:b9c46cc36662a7949f34b52d8ec7bb59c0d74ba08ba6cb9ce9adc1d8676d9526"},
     {file = "Flask-2.2.2.tar.gz", hash = "sha256:642c450d19c4ad482f96729bd2a8f6d32554aa1e231f4f6b4e7e5264b16cca2b"},
 ]
+Flask-Cors = [
+    {file = "Flask-Cors-3.0.10.tar.gz", hash = "sha256:b60839393f3b84a0f3746f6cdca56c1ad7426aa738b70d6c61375857823181de"},
+    {file = "Flask_Cors-3.0.10-py2.py3-none-any.whl", hash = "sha256:74efc975af1194fc7891ff5cd85b0f7478be4f7f59fe158102e91abb72bb4438"},
+]
 flask-sock = [
     {file = "flask-sock-0.5.2.tar.gz", hash = "sha256:c36e92813e897a325a48caee640509f88c465b8df642e40126c1b25fc38a2c30"},
     {file = "flask_sock-0.5.2-py3-none-any.whl", hash = "sha256:bdd60520d031eb92e6fa2dbd3deffbb6e71d3662e9d39bfe53d2eccf971d0fd0"},
-]
-Flask-WTF = [
-    {file = "Flask-WTF-1.0.1.tar.gz", hash = "sha256:34fe5c6fee0f69b50e30f81a3b7ea16aa1492a771fe9ad0974d164610c09a6c9"},
-    {file = "Flask_WTF-1.0.1-py3-none-any.whl", hash = "sha256:9d733658c80be551ce7d5bc13c7a7ac0d80df509be1e23827c847d9520f4359a"},
 ]
 h11 = [
     {file = "h11-0.14.0-py3-none-any.whl", hash = "sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761"},
@@ -289,6 +279,10 @@ simple-websocket = [
     {file = "simple-websocket-0.8.1.tar.gz", hash = "sha256:0abe874f6a0c6ddd197dbd4f0ce5708b47610a0d14fa2b0762e515659573d44a"},
     {file = "simple_websocket-0.8.1-py3-none-any.whl", hash = "sha256:bab2f34151d8b9abb1ea6d911e5edc8232fc203b6f814d179db0ba3f93e4e026"},
 ]
+six = [
+    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
+    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
 tomli = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
@@ -300,8 +294,4 @@ Werkzeug = [
 wsproto = [
     {file = "wsproto-1.2.0-py3-none-any.whl", hash = "sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736"},
     {file = "wsproto-1.2.0.tar.gz", hash = "sha256:ad565f26ecb92588a3e43bc3d96164de84cd9902482b130d0ddbaa9664a85065"},
-]
-WTForms = [
-    {file = "WTForms-3.0.1-py3-none-any.whl", hash = "sha256:837f2f0e0ca79481b92884962b914eba4e72b7a2daaf1f939c890ed0124b834b"},
-    {file = "WTForms-3.0.1.tar.gz", hash = "sha256:6b351bbb12dd58af57ffef05bc78425d08d1914e0fd68ee14143b7ade023c5bc"},
 ]
