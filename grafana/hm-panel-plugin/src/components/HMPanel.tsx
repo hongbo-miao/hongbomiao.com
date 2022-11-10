@@ -2,7 +2,10 @@ import React from 'react';
 import { PanelProps } from '@grafana/data';
 import { SimpleOptions } from 'types';
 import { css, cx } from '@emotion/css';
-import { Button, useStyles2, useTheme2 } from '@grafana/ui';
+import { Button, InlineLabel, useStyles2 } from '@grafana/ui';
+import useSeed from '../hooks/useSeed';
+import { QueryClientProvider } from '@tanstack/react-query';
+import queryClient from '../utils/queryClient';
 
 interface Props extends PanelProps<SimpleOptions> {}
 
@@ -11,11 +14,6 @@ const getStyles = () => {
     wrapper: css`
       font-family: Open Sans;
       position: relative;
-    `,
-    svg: css`
-      position: absolute;
-      top: 0;
-      left: 0;
     `,
     textBox: css`
       position: absolute;
@@ -26,23 +24,21 @@ const getStyles = () => {
   };
 };
 
-const SimplePanel: React.FC<Props> = ({ options, data, width, height }) => {
-  const theme = useTheme2();
+const HMPanel: React.FC<Props> = ({ options, data, width, height }) => {
   const styles = useStyles2(getStyles);
+  const { seed } = useSeed();
 
-  console.log('options', options);
-  console.log('data', data);
-  console.log('height', height);
-  console.log('width', width);
-
-  const onClick = () => {
+  const onIncreaseSeed = () => {
     console.log('Hi');
   };
 
   return (
     <div>
-      <Button variant="primary" type="button" onClick={onClick}>
-        Click me
+      <InlineLabel width="auto" tooltip="Seed Number">
+        {seed?.seedNumber}
+      </InlineLabel>
+      <Button variant="primary" type="button" onClick={onIncreaseSeed}>
+        Click seed
       </Button>
       <div
         className={cx(
@@ -53,19 +49,6 @@ const SimplePanel: React.FC<Props> = ({ options, data, width, height }) => {
           `
         )}
       >
-        <svg
-          className={styles.svg}
-          width={width}
-          height={height}
-          xmlns="http://www.w3.org/2000/svg"
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          viewBox={`-${width / 2} -${height / 2} ${width} ${height}`}
-        >
-          <g>
-            <circle style={{ fill: theme.colors.primary.main }} r={100} />
-          </g>
-        </svg>
-
         <div className={styles.textBox}>
           {options.showSeriesCount && <div>Number of series: {data.series.length}</div>}
           <div>Text option value: {options.text}</div>
@@ -75,4 +58,13 @@ const SimplePanel: React.FC<Props> = ({ options, data, width, height }) => {
   );
 };
 
-export default SimplePanel;
+const addQueryClientProvider = (Component: React.FC<Props>) => {
+  // eslint-disable-next-line react/display-name
+  return (props: Props) => (
+    <QueryClientProvider client={queryClient}>
+      <Component {...props} />
+    </QueryClientProvider>
+  );
+};
+
+export default addQueryClientProvider(HMPanel);
