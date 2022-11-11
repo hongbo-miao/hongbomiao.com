@@ -13,7 +13,7 @@ type FormValues = {
   password: string;
 };
 
-const SignIn: React.FC = () => {
+function SignIn() {
   const { signIn } = useAuth();
   const { me } = useMe();
 
@@ -68,6 +68,6 @@ const SignIn: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default SignIn;

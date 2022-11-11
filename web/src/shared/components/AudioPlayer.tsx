@@ -9,7 +9,7 @@ interface Props {
   audioSrc: string;
 }
 
-const AudioPlayer: React.FC<Props> = (props) => {
+function AudioPlayer(props: Props) {
   const { audioSrc } = props;
   const [audioElement, audioState, audioControls] = useAudio({
     src: audioSrc,
@@ -34,6 +34,6 @@ const AudioPlayer: React.FC<Props> = (props) => {
       </button>
     </>
   );
-};
+}
 
 export default AudioPlayer;

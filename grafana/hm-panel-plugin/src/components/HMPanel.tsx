@@ -24,7 +24,9 @@ const getStyles = () => {
   };
 };
 
-const HMPanel: React.FC<Props> = ({ options, data, width, height }) => {
+function HMPanel(props: Props) {
+  const { options, data, width, height } = props;
+
   const styles = useStyles2(getStyles);
   const { seed } = useSeed();
 
@@ -56,15 +58,15 @@ const HMPanel: React.FC<Props> = ({ options, data, width, height }) => {
       </div>
     </div>
   );
-};
+}
 
-const addQueryClientProvider = (Component: React.FC<Props>) => {
+function addQueryClientProvider(Component: React.FC<Props>) {
   // eslint-disable-next-line react/display-name
   return (props: Props) => (
     <QueryClientProvider client={queryClient}>
       <Component {...props} />
     </QueryClientProvider>
   );
-};
+}
 
 export default addQueryClientProvider(HMPanel);
