@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 
 
 FROM base AS web
-COPY ["web/package.json", "web/package-lock.json", "./"]
+COPY ["web/package.json", "web/package-lock.json", "web/.npmrc", "./"]
 RUN npm ci
 
 COPY web ./
@@ -14,7 +14,7 @@ RUN rm -f ./.eslintrc.js \
 
 
 FROM base AS api-node
-COPY ["api-node/package.json", "api-node/package-lock.json", "./"]
+COPY ["api-node/package.json", "api-node/package-lock.json", "api-node/.npmrc", "./"]
 RUN npm ci
 COPY api-node ./
 RUN npm run build \
