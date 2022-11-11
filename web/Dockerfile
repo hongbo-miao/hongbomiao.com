@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 
 
 FROM base AS builder
-COPY ["web/package.json", "web/package-lock.json", "./"]
+COPY ["web/package.json", "web/package-lock.json", "web/.npmrc", "./"]
 RUN npm ci
 COPY web ./
 # Skip lint check during react-scripts build
