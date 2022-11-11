@@ -571,10 +571,10 @@ poetry-install:
 poetry-lock:
 	poetry lock --no-update
 python-static-type-check:
-	poetry run poe mypy convolutional-neural-network --install-types --non-interactive
-	poetry run poe mypy graph-neural-network --install-types --non-interactive
-	poetry run poe mypy locust --install-types --non-interactive
-	poetry run poe mypy hm-opal-client --install-types --non-interactive
+	poetry run poe mypy --package=convolutional-neural-network --install-types --non-interactive
+	poetry run poe mypy --package=graph-neural-network --install-types --non-interactive
+	poetry run poe mypy --package=locust --install-types --non-interactive
+	poetry run poe mypy --package=hm-opal-client --install-types --non-interactive
 lint-python-black:
 	poetry run poe lint-py-black
 lint-python-black-fix:
