@@ -3,7 +3,6 @@ import os
 
 import config
 import magic
-
 from locust import HttpUser, between, task
 
 
@@ -55,7 +54,7 @@ class WebsiteUser(HttpUser):
 
     @task
     def upload_file(self):
-        file_path = "fixture/image.png"
+        file_path = "src/fixture/image.png"
         file_name = os.path.basename(file_path)
         file = open(file_path, "rb")
         mime = magic.Magic(mime=True)
