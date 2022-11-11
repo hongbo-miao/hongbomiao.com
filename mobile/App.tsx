@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import HmHome from './src/Home/components/Home';
 import store from './src/shared/utils/store';
 
-const App: React.FC = () => {
+function App() {
   const [isFontLoaded, setIsFontLoaded] = React.useState(() => false);
 
   const loadFonts = async () => {
@@ -36,6 +36,6 @@ const App: React.FC = () => {
       </ApplicationProvider>
     </Provider>
   );
-};
+}
 
 export default App;

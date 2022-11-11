@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Welcome.module.css';
 
-const Welcome: React.FC = () => {
+function Welcome() {
   return (
     <div className={styles.hmWelcome}>
       <div className={`container is-max-desktop ${styles.hmContainer}`}>
@@ -9,6 +9,6 @@ const Welcome: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Welcome;
