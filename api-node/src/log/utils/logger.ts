@@ -3,7 +3,7 @@ import config from '../../config';
 
 const logger = pino(
   {
-    prettyPrint: config.shouldPrettifyLog,
+    ...(config.shouldPrettifyLog && { target: 'pino-pretty' }),
 
     // https://getpino.io/#/docs/redaction
     redact: ['buffer'],
