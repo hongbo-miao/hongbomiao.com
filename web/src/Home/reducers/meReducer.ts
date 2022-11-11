@@ -7,6 +7,7 @@ const initialState: MeState = {
   bio: 'Making magic happen',
 };
 
+// eslint-disable-next-line default-param-last
 const meReducer: Reducer = (state = initialState, action) => {
   switch (action.type) {
     case MeActionType.QUERY_ME_SUCCEED: {
