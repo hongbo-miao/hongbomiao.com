@@ -39,3 +39,7 @@ rm -rf node_modules
 # Ethereum
 cd ../ethereum
 rm -rf node_modules
+
+# Grafana
+cd ../grafana/hm-panel-plugin
+rm -rf node_modules
