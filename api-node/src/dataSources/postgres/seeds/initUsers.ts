@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import config from '../../../config';
 import findUserByEmail from '../utils/findUserByEmail';
 import formatUser from '../utils/formatUser';
