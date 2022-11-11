@@ -31,7 +31,7 @@ const connector = connect(
 
 type Props = ConnectedProps<typeof connector>;
 
-const Home: React.FC<Props> = (props) => {
+function Home(props: Props) {
   const { me, subscribePing } = props;
 
   React.useEffect(() => {
@@ -73,6 +73,6 @@ const Home: React.FC<Props> = (props) => {
       <HmFooter />
     </div>
   );
-};
+}
 
 export default connector(Home);

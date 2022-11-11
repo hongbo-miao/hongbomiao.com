@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Paths from '../../shared/utils/paths';
 
-const Menu: React.FC = () => {
+function Menu() {
   return (
     <aside className="menu">
       <p className="menu-label">GENERAL</p>
@@ -28,6 +28,6 @@ const Menu: React.FC = () => {
       </ul>
     </aside>
   );
-};
+}
 
 export default Menu;

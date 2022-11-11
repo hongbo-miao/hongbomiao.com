@@ -6,12 +6,10 @@ type Props = {
   websites: ReadonlyArray<Website>;
 };
 
-const SocialList: React.FC<Props> = (props) => {
+function SocialList(props: Props) {
   const { websites } = props;
-
-  const socialListItems = websites.map((website) => {
+  return websites.map((website) => {
     const { name, src, url } = website;
-
     return (
       <div key={name} className="level-item">
         <a href={url} target="_blank" rel="noopener noreferrer">
@@ -20,8 +18,6 @@ const SocialList: React.FC<Props> = (props) => {
       </div>
     );
   });
-
-  return <>{socialListItems}</>;
-};
+}
 
 export default SocialList;

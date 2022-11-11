@@ -11,7 +11,7 @@ type Props = {
   };
 };
 
-const Image: React.FC<Props> = (props) => {
+function Image(props: Props) {
   const { avifSrc, fallbackSrc, style, alt } = props;
   return (
     <picture className={styles.hmPicture}>
@@ -19,6 +19,6 @@ const Image: React.FC<Props> = (props) => {
       <img src={fallbackSrc} style={style} alt={alt} />
     </picture>
   );
-};
+}
 
 export default Image;
