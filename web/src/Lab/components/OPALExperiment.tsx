@@ -8,7 +8,7 @@ import getOPALDecision from '../queries/getOPALDecision';
 import styles from './OPALExperiment.module.css';
 import HmPreAuth from './PreAuth';
 
-const OPALExperiment: React.FC = () => {
+function OPALExperiment() {
   const [readDogData, setReadDogData] = React.useState<any>(undefined);
   const [adoptDogData, setAdoptDogData] = React.useState<any>(undefined);
 
@@ -50,6 +50,6 @@ const OPALExperiment: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default OPALExperiment;

@@ -4,9 +4,8 @@ import HmSocialList from '../../App/components/SocialList';
 import WEBSITES from '../fixtures/WEBSITES';
 import styles from './Footer.module.css';
 
-const Footer: React.FC = () => {
+function Footer() {
   const year = new Date().getFullYear();
-
   return (
     <footer className={`footer ${styles.hmFooter}`}>
       <div className={`container is-max-desktop ${styles.hmContainer}`}>
@@ -23,6 +22,6 @@ const Footer: React.FC = () => {
       </div>
     </footer>
   );
-};
+}
 
 export default Footer;

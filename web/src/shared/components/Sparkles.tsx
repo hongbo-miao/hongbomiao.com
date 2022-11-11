@@ -8,7 +8,7 @@ type Props = {
   children: ReactNode;
 };
 
-const Sparkles: React.FC<Props> = (props) => {
+function Sparkles(props: Props) {
   const { children } = props;
 
   const [sparkles, setSparkles] = React.useState(() => {
@@ -35,6 +35,6 @@ const Sparkles: React.FC<Props> = (props) => {
       <div className={styles.hmChildrenWrapper}>{children}</div>
     </span>
   );
-};
+}
 
 export default Sparkles;
