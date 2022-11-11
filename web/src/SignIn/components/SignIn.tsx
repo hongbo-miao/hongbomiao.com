@@ -2,17 +2,22 @@
 
 import { useMutation } from '@tanstack/react-query';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import useAuth from '../../auth/hooks/useAuth';
 import useMe from '../../auth/hooks/useMe';
 import styles from './SignIn.module.css';
 
+type FormValues = {
+  email: string;
+  password: string;
+};
+
 const SignIn: React.FC = () => {
   const { signIn } = useAuth();
   const { me } = useMe();
 
-  const mutation = useMutation((data: { email: string; password: string }) => {
+  const mutation = useMutation((data: FormValues) => {
     const { email, password } = data;
     return signIn(email, password);
   });
@@ -21,9 +26,9 @@ const SignIn: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormValues>();
 
-  const onSubmit = (data: { email: string; password: string }) => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     mutation.mutate(data);
   };
 
