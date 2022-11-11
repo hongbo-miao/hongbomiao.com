@@ -3,7 +3,7 @@ import getOPADecision from '../queries/getOPADecision';
 import styles from './OPAExperiment.module.css';
 import HmPreAuth from './PreAuth';
 
-const OPAExperiment: React.FC = () => {
+function OPAExperiment() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [readDogData, setReadDogData] = React.useState<any>(undefined);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,6 +27,6 @@ const OPAExperiment: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default OPAExperiment;

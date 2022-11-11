@@ -11,7 +11,7 @@ const HmOPAExperiment = React.lazy(() => import('./OPAExperiment'));
 const HmOPALExperiment = React.lazy(() => import('./OPALExperiment'));
 const HmWelcome = React.lazy(() => import('./Welcome'));
 
-const Lab: React.FC = () => {
+function Lab() {
   const { me } = useMe();
 
   if (me == null) {
@@ -33,6 +33,6 @@ const Lab: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Lab;

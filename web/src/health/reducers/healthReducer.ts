@@ -4,6 +4,7 @@ import HealthState from '../types/HealthState';
 
 const initialState: HealthState = {};
 
+// eslint-disable-next-line default-param-last
 const healthReducer: Reducer = (state = initialState, action) => {
   switch (action.type) {
     case HealthActionType.RECEIVE_PING_SUCCEED: {

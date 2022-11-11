@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 
 type Props = ConnectedProps<typeof connector>;
 
-const Home: React.FC<Props> = (props) => {
+function Home(props: Props) {
   const { me, queryMe } = props;
 
   React.useEffect(() => {
@@ -55,6 +55,6 @@ const Home: React.FC<Props> = (props) => {
       </Text>
     </Layout>
   );
-};
+}
 
 export default connector(Home);
