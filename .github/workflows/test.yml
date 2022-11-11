@@ -270,10 +270,10 @@ jobs:
           poetry install --no-interaction --no-root
       - name: Check static type
         run: |
-          poetry run poe mypy convolutional-neural-network --install-types --non-interactive
-          poetry run poe mypy graph-neural-network --install-types --non-interactive
-          poetry run poe mypy locust --install-types --non-interactive
-          poetry run poe mypy hm-opal-client --install-types --non-interactive
+          poetry run poe mypy --package=convolutional-neural-network --install-types --non-interactive
+          poetry run poe mypy --package=graph-neural-network --install-types --non-interactive
+          poetry run poe mypy --package=locust --install-types --non-interactive
+          poetry run poe mypy --package=hm-opal-client --install-types --non-interactive
 
   type-ts:
     name: Static Type Check (TypeScript)
