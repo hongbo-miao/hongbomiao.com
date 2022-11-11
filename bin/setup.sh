@@ -20,3 +20,4 @@ cd ../mobile && npm install
 cd ../api-node && npm install
 cd ../cypress && npm install
 cd ../ethereum && npm install
+cd ../grafana/hm-panel-plugin && npm install
