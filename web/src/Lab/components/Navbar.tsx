@@ -4,7 +4,7 @@ import useAuth from '../../auth/hooks/useAuth';
 import useMe from '../../auth/hooks/useMe';
 import Paths from '../../shared/utils/paths';
 
-const Navbar: React.FC = () => {
+function Navbar() {
   const { signOut } = useAuth();
   const { me } = useMe();
 
@@ -25,6 +25,6 @@ const Navbar: React.FC = () => {
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

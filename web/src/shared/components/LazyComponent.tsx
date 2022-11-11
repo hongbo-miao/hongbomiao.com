@@ -5,9 +5,9 @@ type Props = {
   children: ReactNode;
 };
 
-const LazyComponent: React.FC<Props> = (props) => {
+function LazyComponent(props: Props) {
   const { children } = props;
   return <Suspense fallback={<HmLoading />}>{children}</Suspense>;
-};
+}
 
 export default LazyComponent;
