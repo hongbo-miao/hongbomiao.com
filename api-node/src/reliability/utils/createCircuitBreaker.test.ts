@@ -26,9 +26,9 @@ describe('createCircuitBreaker', () => {
   test('log when the circuit opens', () => {
     breaker.open();
     expect(loggerInfoSpy.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
+      [
+        [
+          {
             "breakerName": "mockConstructor",
             "eventName": "open",
           },
@@ -43,9 +43,9 @@ describe('createCircuitBreaker', () => {
     jest.clearAllMocks();
     breaker.close();
     expect(loggerInfoSpy.mock.calls).toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
+      [
+        [
+          {
             "breakerName": "mockConstructor",
             "eventName": "close",
           },
