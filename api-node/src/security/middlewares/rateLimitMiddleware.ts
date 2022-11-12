@@ -12,7 +12,7 @@ const INMEMORY_BLOCK_DURATION = 60; // If IP consume >= inmemoryBlockOnConsumed 
 const PROCESS_NUM = 1;
 
 const rateLimitMiddleware = (
-  redis: Redis.Redis | MockedRedis,
+  redis: Redis | MockedRedis,
   points: number = POINTS,
   duration: number = DURATION,
   burstPointsRate: number = BURST_POINTS_RATE,
