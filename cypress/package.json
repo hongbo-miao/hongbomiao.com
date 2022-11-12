@@ -9,10 +9,10 @@
     "tsc": "tsc --noEmit",
     "lint:js": "eslint . --ext .js,.ts,.tsx",
     "lint:js:fix": "eslint . --ext .js,.ts,.tsx --fix",
-    "test:cypress:gui:8080": "cypress open --config-file cypress.8080.json",
-    "test:cypress:gui:5000": "cypress open --config-file cypress.5000.json",
-    "test:cypress:headless:8080": "wait-on http://localhost:8080 && cypress run --config-file cypress.8080.json",
-    "test:cypress:headless:5000": "wait-on http://localhost:5000 && cypress run --config-file cypress.5000.json"
+    "test:cypress:gui:8080": "cypress open --config-file=cypress.8080.config.ts",
+    "test:cypress:gui:5000": "cypress open --config-file=cypress.5000.config.ts",
+    "test:cypress:headless:8080": "wait-on http://localhost:8080 && cypress run --config-file=cypress.8080.config.ts",
+    "test:cypress:headless:5000": "wait-on http://localhost:5000 && cypress run --config-file=cypress.5000.config.ts"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.42.1",
