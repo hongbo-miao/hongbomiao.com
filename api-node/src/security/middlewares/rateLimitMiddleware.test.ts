@@ -1,7 +1,4 @@
 import express from 'express';
-// https://github.com/stipsan/ioredis-mock/pull/849
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import MockedRedis from 'ioredis-mock';
 import request from 'supertest';
 import rateLimitMiddleware from './rateLimitMiddleware';
