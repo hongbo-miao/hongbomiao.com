@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 import dotenvFlow from 'dotenv-flow';
-import Redis from 'ioredis';
+import { RedisOptions } from 'ioredis';
 import { Knex } from 'knex';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
@@ -127,7 +127,7 @@ type Config = {
     reportToURL: string;
   };
   jwtSecret: string;
-  redisOptions: Redis.RedisOptions;
+  redisOptions: RedisOptions;
   postgresConnection: Knex.StaticConnectionConfig;
   seedUser: PostgresInputUser;
   lightstep: {
