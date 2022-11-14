@@ -41,9 +41,9 @@ docker-build:
 	docker build --file=api-node/Dockerfile --tag=ghcr.io/hongbo-miao/hm-api-node .
 	docker build --file=api-go/build/package/graphql_server/Dockerfile --tag=ghcr.io/hongbo-miao/hm-graphql-server .
 docker-run:
-	docker run -p 5000:5000 --name=hm_api_node_dev --rm --env-file=./api/.env.development.local.example.docker hm-api-node-dev
-	docker run -p 5000:5000 --name=hm_api_node --rm --env-file=./api/.env.production.local.example hm-api-node
-	docker run -p 31800:31800 --name=hm_graphql_server --rm --env=APP_ENV=production hm-graphql-server
+	docker run -p 5000:5000 --name=hm_api_node_dev --rm --env-file=./api-node/.env.development.local.example.docker ghcr.io/hongbo-miao/hm-api-node-dev
+	docker run -p 5000:5000 --name=hm_api_node --rm --env-file=./api-node/.env.production.local.example ghcr.io/hongbo-miao/hm-api-node
+	docker run -p 31800:31800 --name=hm_graphql_server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-graphql-server
 docker-sh:
 	docker run --rm -it hm-graphql-server sh
 docker-ps:
