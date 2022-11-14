@@ -6,24 +6,24 @@ terraform {
     }
   }
   required_providers {
+    # https://registry.terraform.io/providers/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.0"
+      version = "4.39"
     }
   }
-
-  required_version = ">= 0.14.9"
+  # https://app.terraform.io/app/hongbomiao/workspaces/hm-workspace/settings/general
+  required_version = "1.3.4"
 }
 
 provider "aws" {
-  profile = "default"
+  profile = "hm"
   region  = "us-west-2"
 }
 
 resource "aws_instance" "hm_cnn_instance" {
   ami           = "ami-08d70e59c07c61a3a"
-  instance_type = "t2.micro"
-
+  instance_type = "t2.nano"
   tags = {
     Name = var.instance_name
   }

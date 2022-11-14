@@ -1,8 +1,14 @@
-aws-install: # https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-mac.html
+# https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-mac.html
+aws-install:
 	curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
 	sudo installer -pkg AWSCLIV2.pkg -target /
-aws-configure: # https://console.aws.amazon.com/iam/home#/security_credentials
-	aws configure
+# https://console.aws.amazon.com/iam/home#/security_credentials
+aws-configure:
+	aws configure --profile=hm
+	# AWS Access Key ID: AKIAT627V7Q6L6R5DJBY
+	# AWS Secret Access Key: xxx
+	# Default region name: us-west-2
+	# Default output format:
 
 terraform-init:
 	terraform init
@@ -19,8 +25,6 @@ terraform-graph: # http://www.webgraphviz.com
 	terraform graph
 terraform-login:
 	terraform login
-terraform-fmt:
-	terraform fmt
 terraform-validate:
 	terraform validate
 terraform-show:
