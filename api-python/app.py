@@ -1,17 +1,27 @@
-import random
 import time
 
 from flask import Flask, request
+from flask_apscheduler import APScheduler
 from flask_cors import CORS
 from flask_sock import Sock
 from simple_websocket import Server as WebSocketServer
 
+lucky_number = 0
+
 
 def create_app() -> Flask:
     app = Flask(__name__)
-
-    sock = Sock(app)
     CORS(app)
+    sock = Sock(app)
+    scheduler = APScheduler(app)
+    scheduler.start()
+
+    @scheduler.task(
+        "interval", id="increase_lucky_number", seconds=1, misfire_grace_time=10
+    )
+    def increase_lucky_number():
+        global lucky_number
+        lucky_number += 1
 
     @app.route("/")
     def health() -> str:
@@ -38,8 +48,7 @@ def create_app() -> Flask:
     @sock.route("/lucky-number")
     def num(ws: WebSocketServer) -> None:
         while True:
-            n = random.random()
-            ws.send(n)
-            time.sleep(1)
+            ws.send(lucky_number)
+            time.sleep(3)
 
     return app
