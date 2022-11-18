@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 
 from flask import Flask, request
 from flask_apscheduler import APScheduler
@@ -13,22 +14,28 @@ def create_app() -> Flask:
     app = Flask(__name__)
     CORS(app)
     sock = Sock(app)
-    scheduler = APScheduler(app)
+    scheduler = APScheduler()
+    scheduler.init_app(app)
     scheduler.start()
 
     @scheduler.task(
-        "interval", id="increase_lucky_number", seconds=1, misfire_grace_time=10
+        "interval",
+        id="fetch_lucky_number",
+        seconds=5,
+        misfire_grace_time=10,
+        max_instances=1,
     )
-    def increase_lucky_number():
+    def fetch_lucky_number():
+        time.sleep(3)
         global lucky_number
         lucky_number += 1
 
     @app.route("/")
-    def health() -> str:
+    def get_health() -> str:
         return "ok"
 
     @app.get("/seed")
-    def seed() -> dict[str, int]:
+    def get_seed() -> dict[str, int]:
         return {
             "seedNumber": 42,
         }
@@ -45,10 +52,25 @@ def create_app() -> Flask:
             data = ws.receive()
             ws.send(data)
 
+    @app.post("/update_lucky_number")
+    def update_lucky_number() -> dict[str, int]:
+        scheduler.pause()
+        time.sleep(1)
+        global lucky_number
+        lucky_number = 0
+        scheduler.resume()
+
+        # Trigger a new status update immediately
+        for job in scheduler.get_jobs():
+            job.modify(next_run_time=datetime.now())
+        return {
+            "luckyNumber": lucky_number,
+        }
+
     @sock.route("/lucky-number")
-    def num(ws: WebSocketServer) -> None:
+    def get_lucky_number(ws: WebSocketServer) -> None:
         while True:
             ws.send(lucky_number)
-            time.sleep(3)
+            time.sleep(1)
 
     return app
