@@ -558,10 +558,20 @@ jupyter-lab:
 	jupyter-lab
 
 # Python
-poetry-install:
-	poetry install
+pyenv-versions:
+	pyenv versions
+pyenv-install:
+	pyenv install 3.11.0
+pyenv-local:
+	pyenv local 3.11.0
+
+poetry-self-update:
+	poetry self update
+poetry-env-use:
+	poetry env use 3.11.0
 poetry-lock:
 	poetry lock --no-update
+
 python-static-type-check:
 	poetry run poe mypy --package=convolutional-neural-network --install-types --non-interactive
 	poetry run poe mypy --package=graph-neural-network --install-types --non-interactive
