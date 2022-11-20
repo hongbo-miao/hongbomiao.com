@@ -13,6 +13,7 @@ flask-sock = "0.5.2"
 python-dotenv = "0.21.0"
 
 [tool.poetry.group.dev.dependencies]
+gunicorn = "20.1.0"
 poethepoet = "0.16.4"
 
 [build-system]
@@ -21,3 +22,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
 dev = "flask run"
+serve = "gunicorn 'app:create_app()' --bind=:35903 --workers=2"
