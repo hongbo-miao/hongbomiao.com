@@ -8,7 +8,7 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"go.elastic.co/apm/module/apmgrpc"
+	"go.elastic.co/apm/module/apmgrpc/v2"
 	"google.golang.org/grpc"
 	"net"
 	"os"
