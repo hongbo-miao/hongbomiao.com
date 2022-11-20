@@ -100,6 +100,23 @@ flask = ">=2"
 simple-websocket = ">=0.5.1"
 
 [[package]]
+name = "gunicorn"
+version = "20.1.0"
+description = "WSGI HTTP Server for UNIX"
+category = "dev"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+setuptools = ">=3.0"
+
+[package.extras]
+eventlet = ["eventlet (>=0.24.1)"]
+gevent = ["gevent (>=1.4.0)"]
+setproctitle = ["setproctitle"]
+tornado = ["tornado (>=0.2)"]
+
+[[package]]
 name = "h11"
 version = "0.14.0"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
@@ -293,7 +310,7 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "1.1"
 python-versions = "3.10.x"
-content-hash = "f0b17ff2972224347c89a1834cbb59a4b1e52ef7e63b731e9420812b3b7c468b"
+content-hash = "a2783af3e8d99d3583c3757180e88b31edf592779db9255c314b5960af2b8fe8"
 
 [metadata.files]
 apscheduler = [
@@ -322,6 +339,10 @@ flask-cors = [
 flask-sock = [
     {file = "flask-sock-0.5.2.tar.gz", hash = "sha256:c36e92813e897a325a48caee640509f88c465b8df642e40126c1b25fc38a2c30"},
     {file = "flask_sock-0.5.2-py3-none-any.whl", hash = "sha256:bdd60520d031eb92e6fa2dbd3deffbb6e71d3662e9d39bfe53d2eccf971d0fd0"},
+]
+gunicorn = [
+    {file = "gunicorn-20.1.0-py3-none-any.whl", hash = "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e"},
+    {file = "gunicorn-20.1.0.tar.gz", hash = "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"},
 ]
 h11 = [
     {file = "h11-0.14.0-py3-none-any.whl", hash = "sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761"},

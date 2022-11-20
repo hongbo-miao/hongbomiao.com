@@ -6,3 +6,5 @@ poetry-lock:
 	poetry lock --no-update
 poetry-run-dev:
 	poetry run poe dev
+poetry-run-serve:
+	poetry run poe serve
