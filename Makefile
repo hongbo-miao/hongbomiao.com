@@ -569,8 +569,14 @@ poetry-self-update:
 	poetry self update
 poetry-env-use:
 	poetry env use 3.11.0
+poetry-install:
+	poetry install
 poetry-lock:
 	poetry lock --no-update
+poetry-add:
+	poetry add xxx
+poetry-add-dev:
+	poetry add xxx --group=dev
 
 python-static-type-check:
 	poetry run poe mypy --package=convolutional-neural-network --install-types --non-interactive
