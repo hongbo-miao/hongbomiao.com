@@ -28,7 +28,7 @@ require (
 	github.com/rs/zerolog v1.28.0
 	github.com/stretchr/testify v1.8.1
 	go.elastic.co/apm/module/apmgin v1.15.0
-	go.elastic.co/apm/module/apmgrpc v1.15.0
+	go.elastic.co/apm/module/apmgrpc/v2 v2.2.0
 	go.opencensus.io v0.24.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.36.4
 	go.opentelemetry.io/otel v1.11.1
@@ -107,6 +107,8 @@ require (
 	github.com/yashtewari/glob-intersection v0.1.0 // indirect
 	go.elastic.co/apm v1.15.0 // indirect
 	go.elastic.co/apm/module/apmhttp v1.15.0 // indirect
+	go.elastic.co/apm/module/apmhttp/v2 v2.2.0 // indirect
+	go.elastic.co/apm/v2 v2.2.0 // indirect
 	go.elastic.co/fastjson v1.1.0 // indirect
 	go.opentelemetry.io/otel/trace v1.11.1 // indirect
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // indirect
