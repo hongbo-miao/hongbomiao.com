@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import jwt from 'express-jwt';
+import { expressjwt as jwt } from 'express-jwt';
 import config from '../../config';
 
 const authMiddleware = (): RequestHandler => {
