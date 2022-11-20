@@ -1,4 +1,4 @@
-FROM python:3.10-alpine AS base
+FROM python:3.11-alpine AS base
 WORKDIR /usr/src/app
 ENV PYTHONFAULTHANDLER=1 \
   PYTHONHASHSEED=random \
