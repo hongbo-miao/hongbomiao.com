@@ -22,6 +22,7 @@ go-fmt-check:
 go-lint:
 	golangci-lint run ./...
 
+# Protocol Buffers
 proto-generate:
 	protoc api/graphql_server/proto/greet/v1/greet.proto --go_out=plugins=grpc:.
 	protoc api/graphql_server/proto/torchserve/v1/inference.proto --go_out=plugins=grpc:.
@@ -29,6 +30,7 @@ proto-generate:
 proto-lint:
 	buf lint
 
+# OPA
 opa-test:
 	opa test internal/graphql_server/policies/*.rego -v
 opa-test-coverage:
@@ -37,6 +39,14 @@ opa-fmt:
 	opa fmt internal/graphql_server/policies/*.rego -w
 opa-check:
 	opa check internal/graphql_server/policies/*.rego
+
+# Decision Logger
+decision-logger-gzip-call:
+	echo '{"foo": "bar"}' | gzip | curl -v -i --data-binary @- -H "Content-Encoding: gzip" http://localhost:41797/logs
+
+# Config Loader
+config-loader-generate-cert-and-key:
+	openssl req -x509 -newkey=rsa:4096 -nodes -out=config/config_loader/server.crt -keyout=config/config_loader/server.key -days=3650 -subj="/C=US/ST=CA/CN=hongbomiao.com"
 
 # Docker
 docker-build-config-loader:
@@ -66,11 +76,3 @@ docker-push-grpc-server:
 	docker push ghcr.io/hongbo-miao/hm-grpc-server:latest
 docker-run-grpc-server:
 	docker run --publish=45237:45237 --name=hm-grpc-server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-grpc-server
-
-# Decision Logger
-decision-logger-gzip-call:
-	echo '{"foo": "bar"}' | gzip | curl -v -i --data-binary @- -H "Content-Encoding: gzip" http://localhost:41797/logs
-
-# Config loader
-config-loader-generate-cert-and-key:
-	openssl req -x509 -newkey=rsa:4096 -nodes -out=config/config_loader/server.crt -keyout=config/config_loader/server.key -days=3650 -subj="/C=US/ST=CA/CN=hongbomiao.com"
