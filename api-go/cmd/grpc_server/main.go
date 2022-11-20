@@ -5,9 +5,7 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/graphql_server/proto/greet/v1"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/grpc_server/utils"
 	grpczerolog "github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2"
-	middleware "github.com/grpc-ecosystem/go-grpc-middleware/v2"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
-	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/tags"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"go.elastic.co/apm/module/apmgrpc"
@@ -44,14 +42,12 @@ func main() {
 	logger := zerolog.New(os.Stderr)
 
 	s := grpc.NewServer(
-		middleware.WithUnaryServerChain(
+		grpc.ChainUnaryInterceptor(
 			apmgrpc.NewUnaryServerInterceptor(apmgrpc.WithRecovery()),
-			tags.UnaryServerInterceptor(),
 			logging.UnaryServerInterceptor(grpczerolog.InterceptorLogger(logger)),
 		),
-		middleware.WithStreamServerChain(
+		grpc.ChainStreamInterceptor(
 			apmgrpc.NewStreamServerInterceptor(apmgrpc.WithRecovery()),
-			tags.StreamServerInterceptor(),
 			logging.StreamServerInterceptor(grpczerolog.InterceptorLogger(logger)),
 		),
 	)
