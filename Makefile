@@ -561,14 +561,14 @@ jupyter-lab:
 pyenv-versions:
 	pyenv versions
 pyenv-install:
-	pyenv install 3.11.0
+	pyenv install 3.11
 pyenv-local:
-	pyenv local 3.11.0
+	pyenv local 3.11
 
 poetry-self-update:
 	poetry self update
 poetry-env-use:
-	poetry env use 3.11.0
+	poetry env use 3.11
 poetry-install:
 	poetry install
 poetry-lock:
