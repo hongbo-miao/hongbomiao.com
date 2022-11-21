@@ -1,7 +1,7 @@
-poetry-install:
-	poetry install
 poetry-lock:
 	poetry lock --no-update
+poetry-install:
+	poetry install
 poetry-add:
 	poetry add xxx
 poetry-add-dev:
