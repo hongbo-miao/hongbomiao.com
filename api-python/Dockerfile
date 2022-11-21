@@ -14,17 +14,17 @@ RUN apk add --no-cache gcc libffi-dev musl-dev \
   && python -m venv /venv/
 COPY ["api-python/pyproject.toml", "api-python/poetry.lock", "./"]
 RUN . /venv/bin/activate && \
-  poetry install --no-dev --no-root
+  poetry install --only=main --no-root
 COPY api-python ./
-RUN . /venv/bin/activate && \
-  poetry build
+RUN . /venv/bin/activate \
+  && poetry build
 
 
 FROM base AS release
 COPY --from=builder /venv/ /venv/
 COPY --from=builder /usr/src/app/dist/ ./
-RUN . /venv/bin/activate && \
-  pip install --no-cache-dir ./*.whl
+RUN . /venv/bin/activate \
+  && pip install --no-cache-dir ./*.whl
 COPY ["api-python/docker-entrypoint.sh", "./"]
 ENTRYPOINT ["./docker-entrypoint.sh"]
 EXPOSE 35903
