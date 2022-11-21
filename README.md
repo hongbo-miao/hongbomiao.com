@@ -132,9 +132,18 @@ make clean
 - **jsonparser** - JSON parser
 - **zerolog** - Logging
 
+### API Server - Python
+
+- **Flask** - Web Framework
+- **Flask-APScheduler** - APScheduler
+- **Flask-CORS** - CORS
+- **Flask-Sock** - WebSocket
+- **python-dotenv** - Environment variables loading
+- **Gunicorn** - Python WSGI HTTP server
+
 ### API Server - Node.js
 
-- **Express** - Node.js web application framework
+- **Express** - Web framework
 - **GraphQL.js**, **express-graphql** - GraphQL
   - **graphql-ws**, **graphql-subscriptions** - GraphQL subscriptions
   - **graphql-upload** - GraphQL upload
