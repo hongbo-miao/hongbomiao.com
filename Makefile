@@ -567,6 +567,10 @@ pyenv-local:
 
 poetry-self-update:
 	poetry self update
+poetry-env-list:
+	poetry env list
+poetry-env-use:
+	poetry env remove xxx
 poetry-env-use:
 	poetry env use 3.11
 poetry-install:
