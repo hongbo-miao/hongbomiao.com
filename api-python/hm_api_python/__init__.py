@@ -39,8 +39,10 @@ def create_app() -> Flask:
         lucky_number += 1
 
     @app.route("/")
-    def get_health() -> str:
-        return "ok"
+    def get_health() -> dict[str, str]:
+        return {
+            "api": "ok",
+        }
 
     @app.get("/seed")
     def get_seed() -> dict[str, int]:
