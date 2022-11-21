@@ -673,6 +673,40 @@ jobs:
         run: |
           npm run test:stryker
 
+  api-python-test:
+    name: API (Python) - Test
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3.3
+      - name: Install requirements
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: |
+          poetry install --no-interaction --no-root
+      - name: Install project requirements
+        working-directory: api-python
+        run: |
+          poetry install --no-interaction
+      - name: Test
+        working-directory: api-python
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: api-python
+
   prefect-test:
     name: Prefect - Test
     runs-on: ubuntu-20.04
