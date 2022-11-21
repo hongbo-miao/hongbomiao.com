@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
 
 const { NODE_ENV, REACT_APP_SERVER_WS_PROTOCOL } = process.env;
 
@@ -37,8 +38,10 @@ const config: Config = {
     traceURL: 'https://ingest.lightstep.com/api/v2/otel/trace',
   },
   sentryOptions: {
-    dsn: 'https://2f46725646834700b4c2675abbc2da6a@o379185.ingest.sentry.io/5375232',
+    dsn: 'https://a0ff55d9ee00403ca144425a33c318eb@o379185.ingest.sentry.io/4504195581018112',
     environment: NODE_ENV,
+    integrations: [new BrowserTracing()],
+    tracesSampleRate: 1.0,
   },
 };
 
