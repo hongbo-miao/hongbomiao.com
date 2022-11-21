@@ -573,10 +573,10 @@ poetry-env-use:
 	poetry env remove xxx
 poetry-env-use:
 	poetry env use 3.11
-poetry-install:
-	poetry install
 poetry-lock:
 	poetry lock --no-update
+poetry-install:
+	poetry install
 poetry-add:
 	poetry add xxx
 poetry-add-dev:
