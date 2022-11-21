@@ -112,7 +112,7 @@ make clean
 
 ### API Server - Go
 
-- **Gin** - Web Framework
+- **Gin** - Web framework
 - **gRPC** - Remote procedure call (RPC) framework
 - **graphql-go** - GraphQL
 - **jwt-go** - JWT
@@ -134,7 +134,7 @@ make clean
 
 ### API Server - Python
 
-- **Flask** - Web Framework
+- **Flask** - Web framework
 - **Flask-APScheduler** - APScheduler
 - **Flask-CORS** - CORS
 - **Flask-Sock** - WebSocket
