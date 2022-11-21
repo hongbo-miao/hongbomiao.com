@@ -1,16 +1,24 @@
 import time
 from datetime import datetime
 
+import sentry_sdk
 from flask import Flask, request
 from flask_apscheduler import APScheduler
 from flask_cors import CORS
 from flask_sock import Sock
+from sentry_sdk.integrations.flask import FlaskIntegration
 from simple_websocket import Server as WebSocketServer
 
 lucky_number = 0
 
 
 def create_app() -> Flask:
+    sentry_sdk.init(
+        dsn="https://a6fe08e6f20f4eb7929b85a513c39dfa@o379185.ingest.sentry.io/4504195631480832",
+        integrations=[FlaskIntegration()],
+        traces_sample_rate=1.0,
+    )
+
     app = Flask(__name__)
     CORS(app)
     sock = Sock(app)
