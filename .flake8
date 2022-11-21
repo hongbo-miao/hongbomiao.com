@@ -1,31 +1,31 @@
 # https://flake8.pycqa.org/en/latest/user/configuration.html
-# https://black.readthedocs.io/en/stable/compatible_configs.html#flake8
+# https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#flake8
 
 [flake8]
 max-line-length = 88
-extend-ignore = E203, W503
+extend-ignore = E203, E501
 exclude =
-  # Anywhere
-  **/*.iml
-  **/.DS_Store
-  **/.env.development.local
-  **/.env.production.local
-  **/.gitkeep
-  **/.idea
-  **/.pytest_cache
-  **/.vscode
-  **/__pycache__
-  **/node_modules
+  # Anywhere (Cannot have leading **/)
+  *.iml
+  .DS_Store
+  .env.development.local
+  .env.production.local
+  .gitkeep
+  .idea
+  .pytest_cache
+  .vscode
+  __pycache__
+  node_modules
 
-  # Root
-  /.git
-  /.github
-  /.mypy_cache
-  /dump.rdb
-  /logs
-  /logs.log
-  /submodules
-  /west-master-k3s.yaml
+  # Root (Must have leading ./)
+  ./.git
+  ./.github
+  ./.mypy_cache
+  ./dump.rdb
+  ./logs
+  ./logs.log
+  ./submodules
+  ./west-master-k3s.yaml
 
   # Directories
   api-go/config/config_loader/server.crt
