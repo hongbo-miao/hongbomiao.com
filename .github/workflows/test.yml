@@ -149,7 +149,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd web && npm ci
-          cd ../mobile && npm ci
+          cd ../mobile-react-native && npm ci
           cd ../api-node && npm ci
           cd ../cypress && npm ci
           cd ../ethereum && npm ci
@@ -345,14 +345,14 @@ jobs:
       - name: Install dependencies
         run: |
           cd web && npm ci
-          cd ../mobile && npm ci
+          cd ../mobile-react-native && npm ci
           cd ../api-node && npm ci
           cd ../cypress && npm ci
           cd ../ethereum && npm ci
       - name: Check static type
         run: |
           cd web && npm run tsc
-          cd ../mobile && npm run tsc
+          cd ../mobile-react-native && npm run tsc
           cd ../api-node && npm run tsc
           cd ../cypress && npm run tsc
           cd ../ethereum && npm run tsc
@@ -559,17 +559,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
-        working-directory: mobile
+        working-directory: mobile-react-native
         run: |
           npm ci
       - name: Test
-        working-directory: mobile
+        working-directory: mobile-react-native
         run: |
           npm run test:coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: mobile
+          directory: mobile-react-native
 
   mobile-ios-test:
     name: Mobile (iOS) - Test

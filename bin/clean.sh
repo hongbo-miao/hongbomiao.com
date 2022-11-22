@@ -14,8 +14,8 @@ rm -rf node_modules
 rm -rf tmp
 rm -f public/sitemap.xml
 
-# Mobile
-cd ../mobile
+# Mobile (React Native)
+cd ../mobile-react-native
 rm -rf .expo
 rm -rf coverage
 rm -rf node_modules
