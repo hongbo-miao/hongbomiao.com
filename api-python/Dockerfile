@@ -13,8 +13,8 @@ RUN apk add --no-cache gcc libffi-dev musl-dev \
   && pip install --no-cache-dir poetry \
   && python -m venv /venv/
 COPY ["api-python/pyproject.toml", "api-python/poetry.lock", "./"]
-RUN . /venv/bin/activate && \
-  poetry install --only=main --no-root
+RUN . /venv/bin/activate \
+  && poetry install --only=main --no-root
 COPY api-python ./
 RUN . /venv/bin/activate \
   && poetry build
