@@ -5,8 +5,8 @@ set -e
 cd web
 npm run lint:js
 
-# Mobile
-cd ../mobile
+# Mobile (React Native)
+cd ../mobile-react-native
 npm run lint:js
 
 # API (Node.js)
