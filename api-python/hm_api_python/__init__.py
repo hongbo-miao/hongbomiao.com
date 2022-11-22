@@ -71,8 +71,9 @@ def create_app() -> Flask:
         scheduler.resume()
 
         # Trigger a new status update immediately
+        now = datetime.now()
         for job in scheduler.get_jobs():
-            job.modify(next_run_time=datetime.now())
+            job.modify(next_run_time=now)
         return {
             "luckyNumber": lucky_number,
         }
