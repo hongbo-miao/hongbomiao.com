@@ -16,7 +16,7 @@ cp -n docker/postgres/.env.production.local.example docker/postgres/.env.product
 # Install dependencies
 npm install
 cd web && npm install
-cd ../mobile && npm install
+cd ../mobile-react-native && npm install
 cd ../api-node && npm install
 cd ../cypress && npm install
 cd ../ethereum && npm install
