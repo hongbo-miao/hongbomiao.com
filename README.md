@@ -104,8 +104,13 @@ make clean
 - **Cypress** - End-to-end testing
 - **Lighthouse CI** - Performance, accessibility, SEO, progressive web app (PWA) analysis
 
-### Mobile
+### Mobile - iOS
 
+- **SwiftUI** - UI framework
+
+### Mobile - React Native
+
+- **Expo** - Universal native apps making platform
 - **React Native** - Mobile application framework
 - **UI Kitten** - UI library
 - **React Native Testing Library** - React Native component testing
