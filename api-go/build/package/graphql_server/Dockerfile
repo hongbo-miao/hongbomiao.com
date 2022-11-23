@@ -8,7 +8,7 @@ COPY api-go ./
 RUN go build -o ./out/cmd/graphql_server/ ./cmd/graphql_server/main.go
 
 
-FROM alpine:3.16.3 AS release
+FROM alpine:3.17.0 AS release
 WORKDIR /usr/src/app
 ENV GIN_MODE=release
 
