@@ -57,7 +57,11 @@
 
 ---
 
-## Introduction
+## 🪴 Project Activity
+
+![Repobeats analytics](https://repobeats.axiom.co/api/embed/63c0e61d531eed7017c55a0d8cb706a46779c252.svg)
+
+## 👩‍🚀 Introduction
 
 Personal cutting-edge technology lab. Happy learning and exchanging!
 
@@ -65,7 +69,7 @@ Personal cutting-edge technology lab. Happy learning and exchanging!
 
 [![hongbomiao.com record](https://user-images.githubusercontent.com/3375461/100162554-deccf400-2eee-11eb-89b4-49cd6c23026d.gif)](https://www.hongbomiao.com)
 
-## Architecture
+## 🚀 Architecture
 
 This diagram shows the architecture of this repository.
 
@@ -73,19 +77,17 @@ It is way over-engineering. Please make sure to know the tradeoffs before onboar
 
 ![Architecture](https://user-images.githubusercontent.com/3375461/197431343-51cfecd7-cbe3-491b-ac51-de07be15e66d.svg)
 
-## Setup
+## 📦 Setup
 
 ```shell
 make setup
 ```
 
-### Clean
-
 ```shell
 make clean
 ```
 
-## Tech Stack
+## 🧱 Tech Stack
 
 ### Web
 
@@ -345,7 +347,7 @@ make clean
 - **ImgBot** - Image compression
 - **semantic-release** - Version management and package publishing
 
-## Highlights
+## 🏞️ Highlights
 
 ### IoT
 
