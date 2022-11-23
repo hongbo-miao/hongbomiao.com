@@ -915,18 +915,3 @@ jobs:
         working-directory: grafana/hm-panel-plugin
         run: |
           npx @grafana/levitate@latest is-compatible --path=src/module.ts --target=@grafana/data,@grafana/ui,@grafana/runtime
-
-  hm-opal-client-build:
-    name: HM OPAL Client - Build
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Build Docker image
-        run: |
-          docker build --file=hm-opal-client/Dockerfile --tag=ghcr.io/hongbo-miao/hm-opal-client:latest .
