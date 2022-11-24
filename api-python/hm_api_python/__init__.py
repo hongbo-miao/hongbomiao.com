@@ -9,6 +9,7 @@ from flask_sock import Sock
 from sentry_sdk.integrations.flask import FlaskIntegration
 from simple_websocket import Server as WebSocketServer
 
+seed_number = 42
 lucky_number = 0
 
 
@@ -40,21 +41,17 @@ def create_app() -> Flask:
 
     @app.route("/")
     def get_health() -> dict[str, str]:
-        return {
-            "api": "ok",
-        }
+        return {"api": "ok"}
 
     @app.get("/seed")
     def get_seed() -> dict[str, int]:
-        return {
-            "seedNumber": 42,
-        }
+        return {"seedNumber": seed_number}
 
     @app.post("/update-seed")
     def update_seed() -> dict[str, int]:
-        return {
-            "seedNumber": request.json["seedNumber"],
-        }
+        global seed_number
+        seed_number = request.json["seedNumber"]
+        return {"seedNumber": seed_number}
 
     @sock.route("/echo")
     def echo(ws: WebSocketServer) -> None:
@@ -74,9 +71,7 @@ def create_app() -> Flask:
         now = datetime.now()
         for job in scheduler.get_jobs():
             job.modify(next_run_time=now)
-        return {
-            "luckyNumber": lucky_number,
-        }
+        return {"luckyNumber": lucky_number}
 
     @sock.route("/lucky-number")
     def get_lucky_number(ws: WebSocketServer) -> None:
