@@ -22,8 +22,6 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 
 root.render(
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   <Sentry.ErrorBoundary fallback={<p>An error has occurred</p>}>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
