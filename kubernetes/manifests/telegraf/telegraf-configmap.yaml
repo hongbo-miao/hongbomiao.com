@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegraf-configmap
+  namespace: hm-telegraf
+  labels:
+    app.kubernetes.io/name: telegraf
+data:
+  telegraf.conf: |
+    [[inputs.kafka_consumer]]
+      brokers = ["my-cluster-kafka-bootstrap.kafka:9092"]
+      topics = ["garden_sensor_data"]
+      max_message_len = 1000000
+      data_format = "json"
+    [[outputs.influxdb_v2]]
+      urls = ["http://influxdb.hm-influxdb:8086"]
+      token = "${INFLUXDB_API_TOKEN}"
+      organization = "primary"
+      bucket = "primary"
