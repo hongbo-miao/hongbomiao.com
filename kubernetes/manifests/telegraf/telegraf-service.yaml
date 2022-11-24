@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: telegraf-service
+  namespace: hm-telegraf
+  labels:
+    app.kubernetes.io/name: telegraf
+spec:
+  type: ClusterIP
+  selector:
+    app: telegraf
+  ports:
+    - name: telegraf
+      protocol: TCP
+      targetPort: telegraf
+      port: 8094

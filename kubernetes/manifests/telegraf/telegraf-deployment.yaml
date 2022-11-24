@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegraf-deployment
+  namespace: hm-telegraf
+  labels:
+    app.kubernetes.io/name: telegraf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegraf
+  template:
+    metadata:
+      labels:
+        app: telegraf
+    spec:
+      containers:
+        - name: telegraf
+          image: telegraf:1.24.3
+          env:
+            - name: INFLUXDB_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hm-telegraf-secret
+                  key: influxdb_api_token
+          ports:
+            - name: telegraf
+              protocol: TCP
+              containerPort: 8094
+          volumeMounts:
+            - name: telegraf-configmap-volume
+              mountPath: /etc/telegraf/
+      volumes:
+        - name: telegraf-configmap-volume
+          configMap:
+            name: telegraf-configmap

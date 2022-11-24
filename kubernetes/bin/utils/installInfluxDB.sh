@@ -2,7 +2,7 @@
 set -e
 
 echo "# Install InfluxDB"
-# https://github.com/bitnami/charts/tree/master/bitnami/influxdb
+# https://github.com/bitnami/charts/tree/main/bitnami/influxdb
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 helm install \
