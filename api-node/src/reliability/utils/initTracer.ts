@@ -44,21 +44,11 @@ const initTracer = (): void => {
 
   registerInstrumentations({
     instrumentations: [
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       new DnsInstrumentation(),
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       new ExpressInstrumentation(),
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       new GraphQLInstrumentation(),
       new HttpInstrumentation(),
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       new IORedisInstrumentation(),
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       new PinoInstrumentation(),
     ],
   });
