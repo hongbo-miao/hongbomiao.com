@@ -44,10 +44,7 @@ describe('queryMeEpic', () => {
             r: res,
           }),
       };
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       const output$ = queryMeEpic(action$, state$, dependencies);
-
       expectObservable(output$).toBe(marbles.o, {
         o: MeAction.queryMeSucceed(res),
       });
@@ -74,10 +71,7 @@ describe('queryMeEpic', () => {
       const dependencies = {
         fetchData: (): Observable<never> => timer(duration).pipe(switchMap(() => throwError(err))),
       };
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       const output$ = queryMeEpic(action$, state$, dependencies);
-
       expectObservable(output$).toBe(marbles.o, {
         o: MeAction.queryMeFailed(err),
       });
