@@ -35,6 +35,15 @@ RUN . /venv/bin/activate \
 FROM base AS release
 COPY --from=builder /venv/ /venv/
 COPY --from=builder /usr/src/app/dist/ ./
+# librdkafka related files in /usr/local/lib/
+# - librdkafka++.a
+# - librdkafka++.so
+# - librdkafka++.so.1
+# - librdkafka-static.a
+# - librdkafka.a
+# - librdkafka.so
+# - librdkafka.so.1
+COPY --from=builder /usr/local/lib/ /usr/local/lib/
 RUN . /venv/bin/activate \
   && pip install --no-cache-dir ./*.whl
 COPY ["api-python/docker-entrypoint.sh", "./"]
