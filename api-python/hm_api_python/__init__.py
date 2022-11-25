@@ -1,7 +1,10 @@
+import json
+import random
 import time
 from datetime import datetime
 
 import sentry_sdk
+from confluent_kafka import Producer, cimpl
 from flask import Flask, request
 from flask_apscheduler import APScheduler
 from flask_cors import CORS
@@ -11,6 +14,16 @@ from simple_websocket import Server as WebSocketServer
 
 seed_number = 42
 lucky_number = 0
+
+
+def delivery_report(err: cimpl.KafkaError, msg: cimpl.Message):
+    if err is not None:
+        print(f"Message delivery failed: {err}")
+    else:
+        print(
+            "Message delivery succeed.",
+            {"topic": msg.topic(), "partition": msg.partition(), "value": msg.value()},
+        )
 
 
 def create_app() -> Flask:
@@ -52,6 +65,26 @@ def create_app() -> Flask:
         global seed_number
         seed_number = request.json["seedNumber"]
         return {"seedNumber": seed_number}
+
+    @app.post("/generate-garden-sensor-data")
+    def generate_garden_sensor_data() -> dict[str, bool]:
+        producer = Producer({"bootstrap.servers": "localhost:9092"})
+        for _ in range(5):
+            data = {
+                "temperature": round(random.uniform(-10, 50), 1),
+                "humidity": round(random.uniform(0, 100), 1),
+                "wind": round(random.uniform(0, 10), 1),
+                "soil": round(random.uniform(0, 100), 1),
+            }
+            producer.poll(0)
+            producer.produce(
+                "garden_sensor_data",
+                json.dumps(data).encode("utf-8"),
+                callback=delivery_report,
+            )
+            time.sleep(1)
+        producer.flush()
+        return {"body": True}
 
     @sock.route("/echo")
     def echo(ws: WebSocketServer) -> None:
