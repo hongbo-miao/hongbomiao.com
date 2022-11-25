@@ -211,16 +211,20 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Install Poetry
-        uses: snok/install-poetry@v1.3.3
-      - name: Install requirements
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+          cache: 'poetry'
+      - name: Set Poetry environment
         run: |
-          poetry install --no-interaction --no-root
+          poetry env use 3.11
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
       - name: Lint Python (Black)
         run: |
           poetry run poe lint-py-black
@@ -274,16 +278,20 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-      - name: Install Poetry
-        uses: snok/install-poetry@v1.3.3
-      - name: Install requirements
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+          cache: 'poetry'
+      - name: Set Poetry environment
         run: |
-          poetry install --no-interaction --no-root
+          poetry env use 3.11
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
       - name: Check static type
         run: |
           poetry run poe mypy --package=convolutional-neural-network --install-types --non-interactive
@@ -714,16 +722,6 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Install Poetry
-        uses: snok/install-poetry@v1.3.3
-      - name: Install requirements
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: |
-          poetry install --no-interaction --no-root
       # librdkafka is for confluent-kafka
       - name: Install librdkafka
         run: |
@@ -736,10 +734,22 @@ jobs:
           sudo make install
           sudo ldconfig
           rm -rf librdkafka-1.9.2
-      - name: Install project requirements
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'poetry'
+      - name: Set Poetry environment
         working-directory: api-python
         run: |
-          poetry install --no-interaction
+          poetry env use 3.11
+      - name: Install dependencies
+        working-directory: api-python
+        run: |
+          poetry install
       - name: Test
         working-directory: api-python
         run: |
@@ -764,7 +774,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: Install requirements
+          cache: 'pip'
+      - name: Install dependencies
         working-directory: prefect
         run: |
           pip install --requirement=requirements.txt
