@@ -4,11 +4,12 @@ import time
 from datetime import datetime
 
 import sentry_sdk
-from confluent_kafka import Producer, cimpl
+from confluent_kafka import Producer
 from flask import Flask, request
 from flask_apscheduler import APScheduler
 from flask_cors import CORS
 from flask_sock import Sock
+from hm_api_python.utils import kafka_util
 from sentry_sdk.integrations.flask import FlaskIntegration
 from simple_websocket import Server as WebSocketServer
 
@@ -16,24 +17,15 @@ seed_number = 42
 lucky_number = 0
 
 
-def delivery_report(err: cimpl.KafkaError, msg: cimpl.Message):
-    if err is not None:
-        print(f"Message delivery failed: {err}")
-    else:
-        print(
-            "Message delivery succeed.",
-            {"topic": msg.topic(), "partition": msg.partition(), "value": msg.value()},
-        )
-
-
 def create_app() -> Flask:
+    app = Flask(__name__)
+    app.config.from_pyfile("config.py")
     sentry_sdk.init(
-        dsn="https://a6fe08e6f20f4eb7929b85a513c39dfa@o379185.ingest.sentry.io/4504195631480832",
+        dsn=app.config.get("SENTRY_DSN"),
         integrations=[FlaskIntegration()],
         traces_sample_rate=1.0,
+        environment=app.config.get("ENV"),
     )
-
-    app = Flask(__name__)
     CORS(app)
     sock = Sock(app)
     scheduler = APScheduler()
@@ -68,7 +60,9 @@ def create_app() -> Flask:
 
     @app.post("/generate-garden-sensor-data")
     def generate_garden_sensor_data() -> dict[str, bool]:
-        producer = Producer({"bootstrap.servers": "localhost:9092"})
+        producer = Producer(
+            {"bootstrap.servers": app.config.get("KAFKA_BOOTSTRAP_SERVERS")}
+        )
         for _ in range(5):
             data = {
                 "temperature": round(random.uniform(-10, 50), 1),
@@ -80,7 +74,7 @@ def create_app() -> Flask:
             producer.produce(
                 "garden_sensor_data",
                 json.dumps(data).encode("utf-8"),
-                callback=delivery_report,
+                callback=kafka_util.delivery_report,
             )
             time.sleep(1)
         producer.flush()
