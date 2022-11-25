@@ -724,6 +724,18 @@ jobs:
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
           poetry install --no-interaction --no-root
+      # librdkafka is for confluent-kafka
+      - name: Install librdkafka
+        run: |
+          # https://github.com/edenhill/librdkafka#build-from-source
+          wget https://github.com/edenhill/librdkafka/archive/refs/tags/v1.9.2.tar.gz
+          tar xvzf v1.9.2.tar.gz
+          cd librdkafka-1.9.2
+          ./configure
+          make
+          sudo make install
+          sudo ldconfig
+          rm -rf librdkafka-1.9.2
       - name: Install project requirements
         working-directory: api-python
         run: |
