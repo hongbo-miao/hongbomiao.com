@@ -50,7 +50,7 @@ def create_app() -> Flask:
             "seedNumber": 42,
         }
 
-    @app.post("/update_seed")
+    @app.post("/update-seed")
     def update_seed() -> dict[str, int]:
         return {
             "seedNumber": request.json["seedNumber"],
@@ -62,7 +62,7 @@ def create_app() -> Flask:
             data = ws.receive()
             ws.send(data)
 
-    @app.post("/update_lucky_number")
+    @app.post("/update-lucky-number")
     def update_lucky_number() -> dict[str, int]:
         scheduler.pause()
         time.sleep(1)
