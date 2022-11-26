@@ -602,7 +602,7 @@ jobs:
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest-stable
+          xcode-version: 'latest-stable'
       - name: Build
         working-directory: mobile-ios
         run: |
@@ -617,6 +617,22 @@ jobs:
             -project HMMobile.xcodeproj \
             -scheme HMMobile \
             -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1.3'
+      - name: Install dependencies
+        working-directory: mobile-ios
+        run: |
+          bundle install
+      - name: Convert coverage to llvm-cov format
+        working-directory: mobile-ios
+        run: |
+          bundle exec slather
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: mobile-ios
 
   api-go-test:
     name: API (Go) - Test
