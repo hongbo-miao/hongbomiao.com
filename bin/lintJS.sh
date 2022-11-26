@@ -14,7 +14,7 @@ cd ../api-node
 npm run lint:js
 
 # Cypress
-cd ../cypress
+cd ../web-cypress
 npm run lint:js
 
 # Ethereum
