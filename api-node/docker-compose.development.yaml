@@ -6,10 +6,13 @@ services:
   api-node:
     container_name: hm_api_node
     build:
-      context: .
+      context: ..
       dockerfile: api-node/Dockerfile.development
     env_file:
-      - api-node/.env.development.local.example.docker
+      - .env.development.local.example.docker
+    volumes:
+      - ./:/usr/src/app/api-node/
+      - /usr/src/app/api-node/node_modules/
     restart: unless-stopped
     ports:
       - "5000:5000"
@@ -33,9 +36,9 @@ services:
     image: postgres:15.1-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./docker/postgres/init_up.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./postgres/init_up.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
-      - ./docker/postgres/.env.development.local.example
+      - ./postgres/.env.development.local.example
     restart: unless-stopped
     ports:
       - "5432:5432"
