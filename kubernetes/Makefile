@@ -1,21 +1,21 @@
 setup-multipass:
-	sh kubernetes/bin/setupMultipass.sh
+	sh bin/setupMultipass.sh
 setup-k3d:
-	sh kubernetes/bin/setupK3d.sh
+	sh bin/setupK3d.sh
 setup-kind:
-	sh kubernetes/bin/setupKind.sh
+	sh bin/setupKind.sh
 setup-minikube:
-	sh kubernetes/bin/setupMinikube.sh
+	sh bin/setupMinikube.sh
 
 focus-opa-debug:
-	sh kubernetes/bin/utils/focusOPADebug.sh
+	sh bin/utils/focusOPADebug.sh
 focus-pixie-debug:
-	sh kubernetes/bin/utils/focusPixieDebug.sh
+	sh bin/utils/focusPixieDebug.sh
 focus-rasa-debug:
-	sh kubernetes/bin/utils/focusRasaDebug.sh
+	sh bin/utils/focusRasaDebug.sh
 
 install-alpine:
-	sh kubernetes/bin/utils/installAlpine.sh
+	sh bin/utils/installAlpine.sh
 
 # minikube
 minikube-start-docker:
@@ -27,7 +27,7 @@ minikube-start-virtualbox:
 minikube-enable-ingress:
 	minikube addons enable ingress
 minikube-mount:
-	minikube mount ./kubernetes/data:/data
+	minikube mount ./data:/data
 minikube-delete:
 	minikube delete
 minikube-dashboard:
@@ -37,8 +37,8 @@ minikube-ip:
 
 # kind
 kind-create:
-	kind create cluster --name=west --config=kubernetes/kind/west-cluster-config.yaml
-	kind create cluster --name=east --config=kubernetes/kind/east-cluster-config.yaml
+	kind create cluster --name=west --config=kind/west-cluster-config.yaml
+	kind create cluster --name=east --config=kind/east-cluster-config.yaml
 kind-delete:
 	kind delete cluster --name=west
 	kind delete cluster --name=east
@@ -47,9 +47,9 @@ kind-list-clusters:
 
 # k3d
 k3d-cluster-create:
-	k3d cluster create west --config=kubernetes/k3d/west-cluster-config.yaml
-	k3d cluster create east --config=kubernetes/k3d/west-cluster-config.yaml
-	k3d cluster create dev --config=kubernetes/k3d/dev-cluster-config.yaml
+	k3d cluster create west --config=k3d/west-cluster-config.yaml
+	k3d cluster create east --config=k3d/west-cluster-config.yaml
+	k3d cluster create dev --config=k3d/dev-cluster-config.yaml
 k3d-cluster-delete:
 	k3d cluster delete west
 	k3d cluster delete east
@@ -67,7 +67,7 @@ multipass-exec:
 multipass-list:
 	multipass list
 multipass-mount:
-	multipass mount "${PWD}/kubernetes/data" west-master:/data
+	multipass mount "${PWD}/data" west-master:/data
 multipass-info:
 	multipass info west-master
 multipass-start:
@@ -85,14 +85,14 @@ k8s-debug:
 
 # Kubernetes
 kubectl-apply:
-	kubectl apply --filename=kubernetes/manifests/west/hm-namespace.yaml
-	kubectl apply --filename=kubernetes/manifests/west
-	kubectl apply --filename=kubernetes/manifests/west/hm-limitrange.yaml
-	kubectl apply --filename=kubernetes/manifests/west --selector=app.kubernetes.io/name=graphql-server
+	kubectl apply --filename=manifests/west/hm-namespace.yaml
+	kubectl apply --filename=manifests/west
+	kubectl apply --filename=manifests/west/hm-limitrange.yaml
+	kubectl apply --filename=manifests/west --selector=app.kubernetes.io/name=graphql-server
 kubectl-apply-with-linkerd:
-	linkerd inject - | kubectl apply --filename=kubernetes/manifests
+	linkerd inject - | kubectl apply --filename=manifests
 kubectl-delete:
-	kubectl delete --filename=kubernetes/manifests
+	kubectl delete --filename=manifests
 kubectl-get-node:
 	kubectl get node --output=wide
 kubectl-get-pods-all:
@@ -282,9 +282,9 @@ skaffold:
 
 # Linkerd
 linkerd-install-control-plane:
-	linkerd install --values=kubernetes/linkerd/config.yaml --disable-heartbeat | kubectl apply --filename=-
+	linkerd install --values=linkerd/config.yaml --disable-heartbeat | kubectl apply --filename=-
 linkerd-install-control-plane-prod:
-	linkerd install --values=kubernetes/linkerd/config.yaml --disable-heartbeat --ha | kubectl apply --filename=-
+	linkerd install --values=linkerd/config.yaml --disable-heartbeat --ha | kubectl apply --filename=-
 linkerd-install-viz:
 	linkerd viz install --set=jaegerUrl=jaeger.linkerd-jaeger:16686 | kubectl apply --filename=-
 linkerd-install-jaeger:
@@ -376,20 +376,20 @@ argocd-enable-auth-sync:
 argocd-disable-auth-sync:
 	argocd app set hm-application --sync-policy=none
 argocd-diff:
-	argocd app diff hm-application --local=kubernetes/manifests
+	argocd app diff hm-application --local=manifests
 argocd-apply:
-	kubectl apply --filename=kubernetes/manifests/argocd/hm-application.yaml
+	kubectl apply --filename=manifests/argocd/hm-application.yaml
 argocd-sync:
-	kubectl apply --filename=kubernetes/manifests/argocd/hm-application.yaml
+	kubectl apply --filename=manifests/argocd/hm-application.yaml
 	argocd app sync hm-application --grpc-web
 argocd-sync-local:
-	argocd app sync hm-application --grpc-web --local=kubernetes/manifests/west
+	argocd app sync hm-application --grpc-web --local=manifests/west
 argocd-sync-local-full:
 	kubectl create namespace hm
 	ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token --namespace=elastic --output=go-template='{{index .data "secret-token" | base64decode}}')
 	kubectl create secret generic hm-elastic-apm --namespace=hm --from-literal="token=${ELASTIC_APM_TOKEN}"
-	kubectl apply --filename=kubernetes/manifests/argocd/hm-application.yaml
-	argocd app sync hm-application --grpc-web --local=kubernetes/manifests/west
+	kubectl apply --filename=manifests/argocd/hm-application.yaml
+	argocd app sync hm-application --grpc-web --local=manifests/west
 argocd-list:
 	argocd app list
 argocd-delete:
@@ -412,14 +412,14 @@ dgraph-install-standalone:
       -p=9080:9080 -p=8000:8000 -v=~/dgraph:/dgraph --name=dgraph \
       dgraph/standalone
 dgraph-install:
-	kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
+	kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/dgraph-single/dgraph-single.yaml
 dgraph-delete:
-	kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml
+	kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/dgraph-single/dgraph-single.yaml
 	kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph
 dgraph-install-ha:
-	kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml
+	kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/dgraph-ha/dgraph-ha.yaml
 dgraph-delete-ha:
-	kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml
+	kubectl delete --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/dgraph-ha/dgraph-ha.yaml
 	kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph-zero
 	kubectl delete persistentvolumeclaims --namespace=hm --selector=app=dgraph-alpha
 
@@ -445,10 +445,10 @@ postgres-connect:
 	psql postgresql://admin@localhost:40072/postgres
 migrate-up:
 	$(eval POSTGRESQL_URL := "postgresql://admin:passw0rd@localhost:40072/opa_db?sslmode=disable&search_path=public")
-	migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/postgres/opa_db/migrations up
+	migrate -database "${POSTGRESQL_URL}" -path data/postgres/opa_db/migrations up
 migrate-down:
 	$(eval POSTGRESQL_URL := "postgresql://admin:passw0rd@localhost:40072/opa_db?sslmode=disable&search_path=public")
-	migrate -database "${POSTGRESQL_URL}" -path kubernetes/data/postgres/opa_db/migrations down
+	migrate -database "${POSTGRESQL_URL}" -path data/postgres/opa_db/migrations down
 
 # Prometheus
 prom-curl:
@@ -462,7 +462,7 @@ torchserve-init:
 	conda install torchserve torch-model-archiver torch-workflow-archiver --channel=pytorch
 	pip install captum
 torchserve-start:
-	torchserve --start --model-store=kubernetes/data/model-server/model-store --models=densenet161=densenet161.mar
+	torchserve --start --model-store=data/model-server/model-store --models=densenet161=densenet161.mar
 torchserve-stop:
 	torchserve --stop
 curl-list-models:

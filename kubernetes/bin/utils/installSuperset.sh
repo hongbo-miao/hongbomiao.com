@@ -10,7 +10,7 @@ pgrep kubectl | xargs kill -9
 echo "=================================================="
 
 echo "# Install Superset"
-kubectl apply --filename=kubernetes/manifests/superset/hm-superset-namespace.yaml
+kubectl apply --filename=manifests/superset/hm-superset-namespace.yaml
 helm repo add superset https://apache.github.io/superset
 helm install \
   superset \
