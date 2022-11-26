@@ -148,11 +148,11 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          cd web && npm ci
-          cd ../mobile-react-native && npm ci
-          cd ../api-node && npm ci
-          cd ../cypress && npm ci
+          cd api-node && npm ci
           cd ../ethereum && npm ci
+          cd ../mobile-react-native && npm ci
+          cd ../web && npm ci
+          cd ../web-cypress && npm ci
       - name: Lint JavaScript
         run: |
           npm run lint:js
@@ -356,18 +356,18 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
-          cd web && npm ci
-          cd ../mobile-react-native && npm ci
-          cd ../api-node && npm ci
-          cd ../cypress && npm ci
+          cd api-node && npm ci
           cd ../ethereum && npm ci
+          cd ../mobile-react-native && npm ci
+          cd ../web && npm ci
+          cd ../web-cypress && npm ci
       - name: Check static type
         run: |
-          cd web && npm run tsc
-          cd ../mobile-react-native && npm run tsc
-          cd ../api-node && npm run tsc
-          cd ../cypress && npm run tsc
+          cd api-node && npm run tsc
           cd ../ethereum && npm run tsc
+          cd ../mobile-react-native && npm run tsc
+          cd ../web && npm run tsc
+          cd ../web-cypress && npm run tsc
 
   web-test:
     name: Web - Test
@@ -523,7 +523,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
-        working-directory: cypress
+        working-directory: web-cypress
         run: |
           npm ci
       - name: Pull Docker images
@@ -536,7 +536,7 @@ jobs:
         run: |
           docker-compose --file=docker-compose.cypress.yml up --detach
       - name: Cypress
-        working-directory: cypress
+        working-directory: web-cypress
         run: |
           npm run test:cypress:headless:5000
       - name: Stop Docker
