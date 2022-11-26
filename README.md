@@ -75,7 +75,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/197431343-51cfecd7-cbe3-491b-ac51-de07be15e66d.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/204068211-d993814e-bb9c-43ae-9323-588b76b4f173.svg)
 
 ## 📦 Setup
 
@@ -145,7 +145,7 @@ make clean
 - **Flask-APScheduler** - APScheduler
 - **Flask-CORS** - CORS
 - **Flask-Sock** - WebSocket
-- **python-dotenv** - Environment variables loading
+- **confluent-kafka** - Kafka client
 - **Gunicorn** - Python WSGI HTTP server
 
 ### API Server - Node.js
@@ -252,6 +252,7 @@ make clean
 - **Jaeger** - Distributed tracing system
 - **Grafana** - Monitoring and observability platform
 - **Prometheus** - Monitoring system
+- **Telegraf** - Plugin-driven server agent
 - **Thanos** - Highly available Prometheus setup with long term storage capabilities
 - **Fluent Bit** - Log processor and forwarder
 - **Pixie** - Observability tool for Kubernetes applications
