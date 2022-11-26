@@ -205,7 +205,7 @@ kubectl-port-forward-hasura:
 kubectl-port-forward-graphql-server:
 	# graphql-server
 	kubectl port-forward service/graphql-server-service --namespace=hm 31800:31800
-	# opa:
+	# opa
 	kubectl port-forward service/graphql-server-service --namespace=hm 8181:8181
 	# opal-client
 	kubectl port-forward service/graphql-server-service --namespace=hm 7000:7000
@@ -213,6 +213,8 @@ kubectl-port-forward-opal-server:
 	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
 kubectl-port-forward-config-loader:
 	kubectl port-forward service/config-loader-service --namespace=hm 26660:26660
+kubectl-port-forward-api-python:
+	kubectl port-forward service/api-python-service --namespace=hm-api-python 35903:35903
 
 kubectl-port-forward-postgres:
 	kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:40072
@@ -232,7 +234,11 @@ kubectl-port-forward-dgraph:
 kubectl-port-forward-elastic:
 	kubectl port-forward service/hm-kibana-kb-http --namespace=elastic 5601:5601
 	kubectl port-forward service/hm-elasticsearch-es-http --namespace=elastic 9200:9200
-kubectl-port-forward-kafka:
+kubectl-port-forward-kafka-broker:
+	kubectl port-forward service/my-cluster-kafka-bootstrap --namespace=kafka 9092:9092
+kubectl-port-forward-kafka-zookeeper:
+	kubectl port-forward service/my-cluster-zookeeper-client --namespace=kafka 2181:2181
+kubectl-port-forward-kafka-connect:
 	kubectl port-forward service/hm-kafkaconnect-connect-api --namespace=kafka 8083:8083
 kubectl-port-forward-spark:
 	kubectl port-forward service/spark-master-svc --namespace=hm-spark 4040:80
