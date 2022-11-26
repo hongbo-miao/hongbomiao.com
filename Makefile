@@ -28,17 +28,17 @@ docker-prune:
 
 # Docker Compose
 docker-compose-build:
-	docker-compose --file=docker-compose.development.yml build
-	docker-compose --file=docker-compose.cypress.yml build
+	docker-compose --file=docker-compose.development.yaml build
+	docker-compose --file=docker-compose.cypress.yaml build
 docker-compose-up:
-	docker-compose --file=docker-compose.development.yml up --detach
-	docker-compose --file=docker-compose.cypress.yml up --detach
+	docker-compose --file=docker-compose.development.yaml up --detach
+	docker-compose --file=docker-compose.cypress.yaml up --detach
 docker-compose-stop:
-	docker-compose --file=docker-compose.development.yml stop
-	docker-compose --file=docker-compose.cypress.yml stop
+	docker-compose --file=docker-compose.development.yaml stop
+	docker-compose --file=docker-compose.cypress.yaml stop
 docker-compose-down:
-	docker-compose --file=docker-compose.development.yml down --volumes
-	docker-compose --file=docker-compose.cypress.yml down --volumes
+	docker-compose --file=docker-compose.development.yaml down --volumes
+	docker-compose --file=docker-compose.cypress.yaml down --volumes
 
 # JupterLab
 jupyter-lab:
