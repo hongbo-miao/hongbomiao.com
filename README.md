@@ -80,11 +80,11 @@ It is way over-engineering. Please make sure to know the tradeoffs before onboar
 ## 📦 Setup
 
 ```shell
-make setup
+make kubernetes-setup
 ```
 
 ```shell
-make clean
+make kubernetes-clean
 ```
 
 ## 🧱 Tech Stack
