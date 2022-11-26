@@ -2,7 +2,7 @@
 set -e
 
 echo "# Setup kind"
-kind create cluster --name=west --config=kubernetes/kind/west-cluster-config.yaml
+kind create cluster --name=west --config=kind/west-cluster-config.yaml
 kind create cluster --name=east --config=kubernetes/kind/east-cluster-config.yaml
 # Delete: kind delete cluster --name=west
 # Delete: kind delete cluster --name=east

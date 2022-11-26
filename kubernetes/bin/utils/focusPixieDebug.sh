@@ -6,7 +6,7 @@ set -e
 # echo "=================================================="
 
 echo "# Remove OPA"
-perl -p0i -e 's/# ---- OPA BEGIN ----.*?# ---- OPA END ----//sg' kubernetes/manifests/west/graphql-server-deployment.yaml
+perl -p0i -e 's/# ---- OPA BEGIN ----.*?# ---- OPA END ----//sg' manifests/west/graphql-server-deployment.yaml
 echo "=================================================="
 
 echo "# Remove Elastic APM"
