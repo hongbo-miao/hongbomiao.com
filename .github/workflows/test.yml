@@ -358,14 +358,16 @@ jobs:
         run: |
           cd api-node && npm ci
           cd ../ethereum && npm ci
-          cd ../mobile-react-native && npm ci
+          cd ../grafana/hm-panel-plugin && npm ci
+          cd ../../mobile-react-native && npm ci
           cd ../web && npm ci
           cd ../web-cypress && npm ci
       - name: Check static type
         run: |
           cd api-node && npm run tsc
           cd ../ethereum && npm run tsc
-          cd ../mobile-react-native && npm run tsc
+          cd ../grafana/hm-panel-plugin && npm run tsc
+          cd ../../mobile-react-native && npm run tsc
           cd ../web && npm run tsc
           cd ../web-cypress && npm run tsc
 
