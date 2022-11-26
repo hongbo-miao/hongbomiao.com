@@ -4,10 +4,9 @@ import io
 import pandas as pd
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS, WriteApi
+from prefect import flow, task
 from prefect_aws.credentials import AwsCredentials
 from prefect_aws.s3 import s3_download
-
-from prefect import flow, task
 
 
 @task
