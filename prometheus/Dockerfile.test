@@ -1,5 +1,5 @@
 FROM prom/prometheus:v2.40.3
 WORKDIR /usr/src/app
 
-COPY ["docker/prometheus/*.yml", "./"]
+COPY ["prometheus/alerting-rules/*.yml", "./"]
 RUN promtool test rules ./*.test.yml
