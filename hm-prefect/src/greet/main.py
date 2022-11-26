@@ -1,6 +1,5 @@
-from pydantic import BaseModel
-
 from prefect import flow, task
+from pydantic import BaseModel
 
 
 class User(BaseModel):
