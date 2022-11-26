@@ -3,7 +3,7 @@ set -e
 
 
 is_debug=false
-# source kubernetes/bin/utils/focusOPADebug.sh
+# source bin/utils/focusOPADebug.sh
 
 export ORG_DOMAIN="k8s-hongbomiao.com"
 
@@ -13,20 +13,20 @@ else
   CLUSTERS=("west")
 fi
 
-source kubernetes/bin/utils/setupK3d.sh "${CLUSTERS[@]}"
+source bin/utils/setupK3d.sh "${CLUSTERS[@]}"
 
 if [ $is_debug = false ]; then
-  source kubernetes/bin/utils/installLinkerd.sh "${CLUSTERS[@]}"
+  source bin/utils/installLinkerd.sh "${CLUSTERS[@]}"
 fi
 
-source kubernetes/bin/utils/installIngress.sh "${CLUSTERS[@]}"
+source bin/utils/installIngress.sh "${CLUSTERS[@]}"
 if [ $is_debug = false ]; then
-  source kubernetes/bin/utils/patchIngress.sh "${CLUSTERS[@]}"
+  source bin/utils/patchIngress.sh "${CLUSTERS[@]}"
 fi
 sleep 30
 
 if [ $is_debug = false ]; then
-  source kubernetes/bin/utils/installLinkerdMulticluster.sh "${CLUSTERS[@]}"
+  source bin/utils/installLinkerdMulticluster.sh "${CLUSTERS[@]}"
 fi
 
 
@@ -36,7 +36,7 @@ echo "=================================================="
 
 
 if [ $is_debug = false ]; then
-  source kubernetes/bin/utils/installLinkerdViz.sh
+  source bin/utils/installLinkerdViz.sh
 fi
 
 if [ $is_debug = false ]; then
@@ -46,12 +46,12 @@ if [ $is_debug = false ]; then
 fi
 
 if [ $is_debug = false ]; then
-  source kubernetes/bin/utils/installLinkerdJaeger.sh
-  # source kubernetes/bin/utils/installLinkerdBuoyant.sh
+  source bin/utils/installLinkerdJaeger.sh
+  # source bin/utils/installLinkerdBuoyant.sh
 
-  source kubernetes/bin/utils/installFluentBit.sh
-  source kubernetes/bin/utils/installMinIO.sh
-  # source kubernetes/bin/utils/installYugabyte.sh
+  source bin/utils/installFluentBit.sh
+  source bin/utils/installMinIO.sh
+  # source bin/utils/installYugabyte.sh
   source kubernetes/bin/utils/installKafka.sh
   source kubernetes/bin/utils/installDebezium.sh
 fi
