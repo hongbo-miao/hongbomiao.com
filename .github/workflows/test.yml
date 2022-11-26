@@ -411,94 +411,8 @@ jobs:
         with:
           directory: web
 
-  web-lighthouse:
-    name: Web - Lighthouse
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Build
-        working-directory: web
-        run: |
-          npm run build
-      - name: Lighthouse
-        working-directory: web
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-        run: |
-          npm run lighthouse
-
-  # https://www.chromatic.com/docs/github-actions
-  web-storybook:
-    name: Web - Storybook
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Required to retrieve git history
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Build
-        working-directory: web
-        run: |
-          npm run build
-          npm run storybook:build
-      - name: Publish storybook to Chromatic
-        working-directory: web
-        run: |
-          npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
-
-  web-cypress:
-    name: Web - Cypress
+  web-end-to-end-test:
+    name: Web - End-to-End Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -547,6 +461,92 @@ jobs:
         working-directory: api-node
         run: |
           docker-compose --file=docker-compose.cypress.yaml down
+
+  web-lighthouse:
+    name: Web - Lighthouse
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        working-directory: web
+        run: |
+          npm ci
+      - name: Build
+        working-directory: web
+        run: |
+          npm run build
+      - name: Lighthouse
+        working-directory: web
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        run: |
+          npm run lighthouse
+
+  # https://www.chromatic.com/docs/github-actions
+  web-visual-test:
+    name: Web - Visual Test
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Required to retrieve git history
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        working-directory: web
+        run: |
+          npm ci
+      - name: Build
+        working-directory: web
+        run: |
+          npm run build
+          npm run storybook:build
+      - name: Publish storybook to Chromatic
+        working-directory: web
+        run: |
+          npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
 
   mobile-react-native-test:
     name: Mobile (React Native) - Test
@@ -682,8 +682,8 @@ jobs:
         with:
           directory: api-node
 
-  api-node-stryker:
-    name: API (Node.js) - Stryker
+  api-node-mutation-test:
+    name: API (Node.js) - Mutation Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -863,8 +863,8 @@ jobs:
         run: |
           docker build --file=prometheus/Dockerfile.test .
 
-  grafana-cypress:
-    name: Grafana - Cypress
+  grafana-end-to-end-test:
+    name: Grafana - End-to-End Test
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -913,8 +913,8 @@ jobs:
         run: |
           docker-compose down
 
-  grafana-check-compatibility:
-    name: Grafana - Check Compatibility
+  grafana-compatibility-test:
+    name: Grafana - Compatibility Test
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
