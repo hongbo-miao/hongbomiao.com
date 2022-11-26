@@ -2,6 +2,7 @@ import asyncio
 import io
 
 import pandas as pd
+from prefect import flow, get_run_logger
 from prefect_aws.credentials import AwsCredentials
 from prefect_aws.s3 import s3_download
 from pydantic import BaseModel, validator
@@ -15,8 +16,6 @@ from tasks.trip import (
 )
 from tasks.zone import preprocess_zones
 from utils.enum import CalcMethod
-
-from prefect import flow, get_run_logger
 
 
 class Model(BaseModel):

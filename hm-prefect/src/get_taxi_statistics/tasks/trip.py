@@ -2,11 +2,10 @@ import asyncio
 import io
 
 import pandas as pd
+from prefect import task
 from prefect_aws import AwsCredentials
 from prefect_aws.s3 import s3_download
 from utils.enum import CalcMethod
-
-from prefect import task
 
 
 @task
