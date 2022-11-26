@@ -529,21 +529,24 @@ jobs:
         run: |
           npm ci
       - name: Pull Docker images
+        working-directory: api-node
         run: |
-          docker-compose --file=docker-compose.cypress.yml pull
+          docker-compose --file=docker-compose.cypress.yaml pull
       - name: Cache Docker images
         uses: satackey/action-docker-layer-caching@v0.0.11
         continue-on-error: true
       - name: Start Docker
+        working-directory: api-node
         run: |
-          docker-compose --file=docker-compose.cypress.yml up --detach
+          docker-compose --file=docker-compose.cypress.yaml up --detach
       - name: Cypress
         working-directory: web-cypress
         run: |
           npm run test:cypress:headless:5000
       - name: Stop Docker
+        working-directory: api-node
         run: |
-          docker-compose --file=docker-compose.cypress.yml down
+          docker-compose --file=docker-compose.cypress.yaml down
 
   mobile-react-native-test:
     name: Mobile (React Native) - Test
