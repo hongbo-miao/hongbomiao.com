@@ -450,12 +450,6 @@ migrate-down:
 	$(eval POSTGRESQL_URL := "postgresql://admin:passw0rd@localhost:40072/opa_db?sslmode=disable&search_path=public")
 	migrate -database "${POSTGRESQL_URL}" -path data/postgres/opa_db/migrations down
 
-# Prometheus
-prom-curl:
-	curl http://localhost:9464/metrics
-prom-test:
-	docker build --file=Dockerfile.prometheus.test .
-
 # TorchServe
 torchserve-init:
 	conda install pytorch torchvision torchaudio --channel=pytorch
