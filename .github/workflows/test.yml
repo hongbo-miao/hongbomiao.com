@@ -294,10 +294,14 @@ jobs:
           poetry install --no-root
       - name: Check static type
         run: |
+          poetry run poe mypy --package=api-python --install-types --non-interactive
           poetry run poe mypy --package=convolutional-neural-network --install-types --non-interactive
           poetry run poe mypy --package=graph-neural-network --install-types --non-interactive
           poetry run poe mypy --package=hm-locust --install-types --non-interactive
           poetry run poe mypy --package=hm-opal-client --install-types --non-interactive
+          poetry run poe mypy --package=hm-prefect --install-types --non-interactive
+          poetry run poe mypy --package=hm-pyspark --install-types --non-interactive
+          poetry run poe mypy --package=quantum-computing --install-types --non-interactive
 
   type-terraform:
     name: Static Type Check (Terraform)
@@ -776,18 +780,18 @@ jobs:
           python-version: '3.10'
           cache: 'pip'
       - name: Install dependencies
-        working-directory: prefect
+        working-directory: hm-prefect
         run: |
           pip install --requirement=requirements.txt
           pip install --requirement=requirements-dev.txt
       - name: Test
-        working-directory: prefect
+        working-directory: hm-prefect
         run: |
           pytest --cov=. --cov-report=xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: prefect
+          directory: hm-prefect
 
   streaming-test:
     name: Streaming - Test

@@ -583,10 +583,14 @@ poetry-add-dev:
 	poetry add xxx --group=dev
 
 python-static-type-check:
+	poetry run poe mypy --package=api-python --install-types --non-interactive
 	poetry run poe mypy --package=convolutional-neural-network --install-types --non-interactive
 	poetry run poe mypy --package=graph-neural-network --install-types --non-interactive
 	poetry run poe mypy --package=hm-locust --install-types --non-interactive
 	poetry run poe mypy --package=hm-opal-client --install-types --non-interactive
+	poetry run poe mypy --package=hm-prefect --install-types --non-interactive
+	poetry run poe mypy --package=hm-pyspark --install-types --non-interactive
+	poetry run poe mypy --package=quantum-computing --install-types --non-interactive
 lint-python-black:
 	poetry run poe lint-py-black
 lint-python-black-fix:
