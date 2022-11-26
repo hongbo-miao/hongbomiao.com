@@ -33,7 +33,7 @@ cd ../api-go
 rm -rf web
 
 # Cypress
-cd ../cypress
+cd ../web-cypress
 rm -rf node_modules
 
 # Ethereum
