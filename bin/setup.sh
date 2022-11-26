@@ -18,6 +18,6 @@ npm install
 cd api-node && npm install
 cd ../ethereum && npm install
 cd ../grafana/hm-panel-plugin && npm install
-cd ../mobile-react-native && npm install
+cd ../../mobile-react-native && npm install
 cd ../web && npm install
 cd ../web-cypress && npm install
