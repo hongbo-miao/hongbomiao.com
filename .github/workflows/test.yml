@@ -625,6 +625,15 @@ jobs:
             -project HMMobile.xcodeproj \
             -scheme HMMobile \
             -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
+      - name: Print
+        working-directory: mobile-ios
+        run: |
+          ls
+      - name: Print HMMobile.xcodeproj
+        working-directory: mobile-ios
+        run: |
+          cd HMMobile.xcodeproj
+          ls
       - name: Convert coverage to llvm-cov format
         working-directory: mobile-ios
         run: |
