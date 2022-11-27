@@ -1,13 +1,11 @@
 FROM python:3.11.0-alpine AS base
 WORKDIR /usr/src/app
 ENV PYTHONFAULTHANDLER=1 \
-  PYTHONHASHSEED=random \
   PYTHONUNBUFFERED=1
 
 
 FROM base AS builder
-ENV PIP_DEFAULT_TIMEOUT=100 \
-  PIP_DISABLE_PIP_VERSION_CHECK=1 \
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   PIP_NO_CACHE_DIR=1
 # bash, g++, make are for librdkafka, which is for confluent-kafka
 # gcc, libffi-dev, musl-dev are for Poetry
