@@ -50,6 +50,20 @@ rbenv-list-latest-stable-versions:
 rbenv-install:
 	rbenv install 3.1.3
 
+bundle-install:
+	bundle install
+bundle-add:
+	bundle add xxx
+bundle-update:
+	bundle update
+bundle-lock:
+	bundle lock --add-platform x86_64-darwin-19
+
+lint-ruby:
+	bundle exec rubocop
+lint-ruby-fix:
+	bundle exec rubocop --autocorrect-all
+
 # Python
 pyenv-list-versions:
 	pyenv versions
@@ -75,7 +89,7 @@ poetry-add:
 poetry-add-dev:
 	poetry add xxx --group=dev
 
-python-static-type-check:
+static-type-check-python:
 	poetry run poe mypy --package=api-python --install-types --non-interactive
 	poetry run poe mypy --package=convolutional-neural-network --install-types --non-interactive
 	poetry run poe mypy --package=graph-neural-network --install-types --non-interactive
