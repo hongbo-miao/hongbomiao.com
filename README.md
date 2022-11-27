@@ -109,6 +109,8 @@ make kubernetes-clean
 ### Mobile - iOS
 
 - **SwiftUI** - UI framework
+- **XCTest** - Unit testing
+- **Slather** - Code coverage reports generating
 
 ### Mobile - React Native
 
