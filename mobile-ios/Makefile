@@ -20,3 +20,7 @@ bundle-install:
 	bundle install
 bundle-exec-test-coverage:
 	bundle exec slather
+bundle-update:
+	bundle update
+bundle-lock:
+	bundle lock --add-platform x86_64-darwin-19
