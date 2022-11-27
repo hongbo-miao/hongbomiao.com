@@ -592,6 +592,9 @@ jobs:
     name: Mobile (iOS) - Test
     runs-on: macos-12
     timeout-minutes: 30
+    env:
+      # https://github.com/ruby/setup-ruby#matrix-of-gemfiles
+      BUNDLE_GEMFILE: ${{ github.workspace }}/mobile-ios/Gemfile
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.11.0
@@ -603,6 +606,11 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: 'latest-stable'
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 'head'
+          bundler-cache: true
       - name: Build
         working-directory: mobile-ios
         run: |
@@ -617,14 +625,6 @@ jobs:
             -project HMMobile.xcodeproj \
             -scheme HMMobile \
             -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 'head'
-      - name: Install dependencies
-        working-directory: mobile-ios
-        run: |
-          bundle install
       - name: Convert coverage to llvm-cov format
         working-directory: mobile-ios
         run: |
