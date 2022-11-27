@@ -44,8 +44,14 @@ docker-compose-down:
 jupyter-lab:
 	jupyter-lab
 
+# Ruby
+rbenv-list-latest-stable-versions:
+	rbenv install -l
+rbenv-install:
+	rbenv install 3.1.3
+
 # Python
-pyenv-versions:
+pyenv-list-versions:
 	pyenv versions
 pyenv-install:
 	pyenv install 3.11
