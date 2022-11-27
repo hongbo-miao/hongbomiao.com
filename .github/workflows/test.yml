@@ -517,7 +517,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Required to retrieve git history
+          # Required to retrieve git history
+          fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -593,7 +594,8 @@ jobs:
     runs-on: macos-12
     timeout-minutes: 30
     env:
-      # https://github.com/ruby/setup-ruby#matrix-of-gemfiles
+      # To use a Gemfile which is not at the root
+      # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
       BUNDLE_GEMFILE: ${{ github.workspace }}/mobile-ios/Gemfile
     steps:
       - name: Cancel previous runs
