@@ -625,10 +625,23 @@ jobs:
             -project HMMobile.xcodeproj \
             -scheme HMMobile \
             -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
+      - name: Print
+        working-directory: mobile-ios
+        run: |
+          ls
+      - name: Print HMMobile.xcodeproj
+        working-directory: mobile-ios
+        run: |
+          cd HMMobile.xcodeproj
+          ls
       - name: Convert coverage to llvm-cov format
         working-directory: mobile-ios
         run: |
           bundle exec slather
+      - name: Print
+        working-directory: mobile-ios
+        run: |
+          ls
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
