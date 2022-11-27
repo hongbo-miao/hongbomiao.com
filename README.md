@@ -307,6 +307,7 @@ make kubernetes-clean
 - **Stylelint** - CSS linter
 - **hadolint** - Dockerfile linter
 - **golangci-lint** - Go linter
+- **RuboCop** - Ruby linter
 - **ESLint** - JavaScript linter
 - **Kubeval** - Kubernetes configuration file linter
 - **markdownlint-cli2** - Markdown linter
