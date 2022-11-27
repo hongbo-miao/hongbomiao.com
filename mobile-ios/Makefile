@@ -14,13 +14,13 @@ build-test:
 		-scheme HMMobile \
 		-destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
 
-bundle-init:
-	bundle init
 bundle-install:
 	bundle install
-bundle-exec-test-coverage:
-	bundle exec slather
+bundle-add:
+	bundle add xxx
 bundle-update:
 	bundle update
 bundle-lock:
 	bundle lock --add-platform x86_64-darwin-19
+bundle-exec-test-coverage:
+	bundle exec slather
