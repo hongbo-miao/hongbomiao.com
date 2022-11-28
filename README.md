@@ -75,7 +75,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/204081466-7b027523-d242-412c-98c5-80298164e4a1.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/204170892-ea8cfa1f-8ed9-4d2d-b35b-0da37ea1d50c.svg)
 
 ## 📦 Setup
 
@@ -99,7 +99,7 @@ make kubernetes-clean
 - **graphql-tag** - GraphQL query parsing
 - **Bulma** - CSS framework
 - **PurgeCSS** - Unused CSS removing
-- **Jest** - Unit testing, snapshot Testing
+- **Jest** - Unit testing, snapshot testing
 - **React Testing Library** - React component testing
 - **Storybook** - Visual testing
 - **rxjs/testing** - Marble testing
@@ -109,7 +109,7 @@ make kubernetes-clean
 ### Mobile - iOS
 
 - **SwiftUI** - UI framework
-- **XCTest** - Unit testing
+- **XCTest** - Unit testing, performance testing
 - **Slather** - Code coverage reports generating
 
 ### Mobile - React Native
