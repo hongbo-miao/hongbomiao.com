@@ -1,4 +1,4 @@
-FROM node:18.12.1-alpine AS base
+FROM docker.io/node:18.12.1-alpine AS base
 WORKDIR /usr/src/app
 
 
@@ -11,9 +11,8 @@ RUN rm -f ./.eslintrc.js \
   && npm run build
 
 
-FROM nginx:1.23.2-alpine AS release
+FROM docker.io/nginx:1.23.2-alpine AS release
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 COPY web/conf/nginx.conf /etc/nginx/conf.d/default.conf
-
 EXPOSE 80
 CMD [ "nginx", "-g", "daemon off;" ]

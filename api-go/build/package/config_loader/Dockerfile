@@ -1,4 +1,4 @@
-FROM golang:1.19.3-alpine AS builder
+FROM docker.io/golang:1.19.3-alpine AS builder
 WORKDIR /usr/src/app
 
 COPY ["api-go/go.mod", "api-go/go.sum", "./"]
@@ -8,7 +8,7 @@ COPY api-go ./
 RUN go build -o ./out/cmd/config_loader/ ./cmd/config_loader/main.go
 
 
-FROM alpine:3.17.0 AS release
+FROM docker.io/alpine:3.17.0 AS release
 WORKDIR /usr/src/app
 ENV GIN_MODE=release
 
