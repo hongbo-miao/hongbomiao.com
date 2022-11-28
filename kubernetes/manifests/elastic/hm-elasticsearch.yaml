@@ -1,5 +1,6 @@
 # https://github.com/elastic/cloud-on-k8s/blob/1.7/config/samples/apm/apm_es_kibana.yaml
 
+---
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
@@ -14,7 +15,7 @@ spec:
         # Setting node.store.allow_mmap: false has performance implications and should be tuned for production workloads
         # as described in the Virtual memory section: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
         node.store.allow_mmap: false
-      # https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
+#      # https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
 #      volumeClaimTemplates:
 #        - metadata:
 #            name: elasticsearch-data

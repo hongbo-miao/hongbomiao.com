@@ -1,40 +1,41 @@
 # https://skaffold.dev/docs/references/yaml/
 
+---
 apiVersion: skaffold/v2beta17
 kind: Config
 metadata:
   name: hongbomiao.com
 build:
   artifacts:
-  - image: ghcr.io/hongbo-miao/hm-web:latest
-    context: .
-    docker:
-      dockerfile: web/Dockerfile
-  - image: ghcr.io/hongbo-miao/hm-graphql-server:latest
-    context: .
-    docker:
-      dockerfile: api-go/build/package/graphql-server/Dockerfile
-    sync:
-      manual:
-        - src: "*.go"
-          dest: .
-  - image: ghcr.io/hongbo-miao/hm-grpc-server:latest
-    context: .
-    docker:
-      dockerfile: api-go/build/package/grpc-server/Dockerfile
-    sync:
-      manual:
-        - src: "*.go"
-          dest: .
-  - image: ghcr.io/hongbo-miao/hm-decision-logger:latest
-    context: .
-    docker:
-      dockerfile: api-go/build/package/decision-logger/Dockerfile
-    sync:
-      manual:
-        - src: "*.go"
-          dest: .
+    - image: ghcr.io/hongbo-miao/hm-web:latest
+      context: .
+      docker:
+        dockerfile: web/Dockerfile
+    - image: ghcr.io/hongbo-miao/hm-graphql-server:latest
+      context: .
+      docker:
+        dockerfile: api-go/build/package/graphql-server/Dockerfile
+      sync:
+        manual:
+          - src: "*.go"
+            dest: .
+    - image: ghcr.io/hongbo-miao/hm-grpc-server:latest
+      context: .
+      docker:
+        dockerfile: api-go/build/package/grpc-server/Dockerfile
+      sync:
+        manual:
+          - src: "*.go"
+            dest: .
+    - image: ghcr.io/hongbo-miao/hm-decision-logger:latest
+      context: .
+      docker:
+        dockerfile: api-go/build/package/decision-logger/Dockerfile
+      sync:
+        manual:
+          - src: "*.go"
+            dest: .
 deploy:
   kubectl:
     manifests:
-    - manifests/*.yaml
+      - manifests/*.yaml

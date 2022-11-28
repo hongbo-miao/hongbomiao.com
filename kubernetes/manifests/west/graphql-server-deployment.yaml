@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -166,7 +167,7 @@ spec:
                 configMapKeyRef:
                   name: elastic-apm-configmap
                   key: elastic_apm_log_file
-            # ---- ELASTIC APM END ----
+                  # ---- ELASTIC APM END ----
 
           ports:
             - name: graphql-server
@@ -184,7 +185,7 @@ spec:
           volumeMounts:
             - name: elastic-apm-volume
               mountPath: /data/elastic-apm
-          # ---- ELASTIC APM END ----
+              # ---- ELASTIC APM END ----
 
         # ---- OPA BEGIN ----
         - name: opal-client
@@ -205,16 +206,16 @@ spec:
                 configMapKeyRef:
                   name: graphql-server-configmap
                   key: opal_fetch_provider_modules
-#            - name: OPAL_SHOULD_REPORT_ON_DATA_UPDATES
-#              valueFrom:
-#                configMapKeyRef:
-#                  name: graphql-server-configmap
-#                  key: opal_should_report_on_data_updates
-#            - name: OPAL_DEFAULT_UPDATE_CALLBACKS
-#              valueFrom:
-#                secretKeyRef:
-#                  name: hm-opal-client-secret
-#                  key: opal_default_update_callbacks
+            # - name: OPAL_SHOULD_REPORT_ON_DATA_UPDATES
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: graphql-server-configmap
+            #       key: opal_should_report_on_data_updates
+            # - name: OPAL_DEFAULT_UPDATE_CALLBACKS
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: hm-opal-client-secret
+            #       key: opal_default_update_callbacks
             - name: OPAL_OPA_HEALTH_CHECK_POLICY_ENABLED
               valueFrom:
                 configMapKeyRef:
@@ -255,7 +256,7 @@ spec:
           volumeMounts:
             - name: opa-volume
               mountPath: /data/opa
-        # ---- OPA END ----
+              # ---- OPA END ----
 
       # ---- OPA BEGIN ----
       volumes:
@@ -267,5 +268,5 @@ spec:
         - name: elastic-apm-volume
           persistentVolumeClaim:
             claimName: elastic-apm-pvc
-        # ---- ELASTIC APM END ----
-      # ---- OPA END ----
+            # ---- ELASTIC APM END ----
+            # ---- OPA END ----

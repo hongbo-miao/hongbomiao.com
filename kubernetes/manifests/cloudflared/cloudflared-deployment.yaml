@@ -1,5 +1,6 @@
 # https://github.com/cloudflare/argo-tunnel-examples/blob/master/named-tunnel-k8s/cloudflared.yaml
 
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -11,7 +12,7 @@ spec:
   selector:
     matchLabels:
       app: cloudflared
-  replicas: 1 # You could also consider elastic scaling for this deployment
+  replicas: 1  # You could also consider elastic scaling for this deployment
   template:
     metadata:
       labels:
