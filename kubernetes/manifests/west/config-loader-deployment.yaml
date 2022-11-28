@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -131,7 +132,7 @@ spec:
                 configMapKeyRef:
                   name: elastic-apm-configmap
                   key: elastic_apm_log_file
-            # ---- ELASTIC APM END ----
+                  # ---- ELASTIC APM END ----
 
           ports:
             - name: config-loader
@@ -145,7 +146,7 @@ spec:
             # ---- ELASTIC APM BEGIN ----
             - name: elastic-apm-volume
               mountPath: /data/elastic-apm
-            # ---- ELASTIC APM END ----
+              # ---- ELASTIC APM END ----
 
       volumes:
         - name: config-loader-volume
@@ -156,4 +157,4 @@ spec:
         - name: elastic-apm-volume
           persistentVolumeClaim:
             claimName: elastic-apm-pvc
-        # ---- ELASTIC APM END ----
+            # ---- ELASTIC APM END ----
