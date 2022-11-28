@@ -1,20 +1,21 @@
+---
 stages:
   prepare:
     cmd: tar -xf data/raw/cifar-10-python.tar.gz --dir=data/processed
     deps:
-    - data/raw/cifar-10-python.tar.gz
+      - data/raw/cifar-10-python.tar.gz
     outs:
-    - data/processed/cifar-10-batches-py/
+      - data/processed/cifar-10-batches-py/
   main:
     cmd: python main.py
     deps:
-    - data/processed/cifar-10-batches-py/
-    - evaluate.py
-    - main.py
-    - model/
-    - train.py
+      - data/processed/cifar-10-batches-py/
+      - evaluate.py
+      - main.py
+      - model/
+      - train.py
     params:
-    - lr
-    - train.epochs
+      - lr
+      - train.epochs
     outs:
-    - output/models/model.pt
+      - output/models/model.pt
