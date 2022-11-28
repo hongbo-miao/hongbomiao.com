@@ -8,12 +8,12 @@ metadata:
 data:
   telegraf.conf: |
     [[inputs.kafka_consumer]]
-      brokers = ["my-cluster-kafka-bootstrap.kafka:9092"]
+      brokers = ["my-cluster-kafka-bootstrap.kafka.svc:9092"]
       topics = ["garden_sensor_data"]
       max_message_len = 1000000
       data_format = "json"
     [[outputs.influxdb_v2]]
-      urls = ["http://influxdb.hm-influxdb:8086"]
+      urls = ["http://influxdb.hm-influxdb.svc:8086"]
       token = "${INFLUXDB_API_TOKEN}"
       organization = "primary"
       bucket = "primary"
