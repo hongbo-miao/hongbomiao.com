@@ -288,6 +288,35 @@ jobs:
         run: |
           terraform fmt -recursive -check
 
+  lint-yaml:
+    name: Lint (YAML)
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'poetry'
+      - name: Set Poetry environment
+        run: |
+          poetry env use 3.11
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
+      - name: Lint YAML
+        run: |
+          poetry run poe lint-yaml
+
   static-type-check-python:
     name: Static Type Check (Python)
     runs-on: ubuntu-22.04
