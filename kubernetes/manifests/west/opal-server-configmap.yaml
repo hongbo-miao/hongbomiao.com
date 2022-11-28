@@ -6,8 +6,8 @@ metadata:
   labels:
     app.kubernetes.io/name: opal-server
 data:
-  opal_broadcast_uri: "postgresql://admin:passw0rd@opal-broadcast-channel-service.hm-opa:34876/opal_server_db"
-  opal_data_config_sources: '{"external_source_url":"http://config-loader-service.hm:26660/config"}'
+  opal_broadcast_uri: "postgresql://admin:passw0rd@opal-broadcast-channel-service.hm-opa.svc:34876/opal_server_db"
+  opal_data_config_sources: '{"external_source_url":"http://config-loader-service.hm.svc:26660/config"}'
   opal_policy_repo_polling_interval: "30"
   opal_policy_repo_url: "https://github.com/Hongbo-Miao/opal-example-policy-repo"
   uvicorn_num_workers: "4"

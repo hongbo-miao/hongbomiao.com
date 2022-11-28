@@ -48,7 +48,7 @@ HM_OPAL_CLIENT_TOKEN=$(curl --location --request POST "http://localhost:7002/tok
 kubectl create secret generic hm-opal-client-secret \
   --namespace=hm \
   --from-literal="opal_client_token=${HM_OPAL_CLIENT_TOKEN}" \
-  --from-literal="opal_default_update_callbacks={\"callbacks\":[(\"http://opal-server-service.hm-opa:7002/data/callback_report\",{\"headers\":{\"Authorization\":\"Bearer ${OPAL_CLIENT_TOKEN}\"}})]}"
+  --from-literal="opal_default_update_callbacks={\"callbacks\":[(\"http://opal-server-service.hm-opa.svc:7002/data/callback_report\",{\"headers\":{\"Authorization\":\"Bearer ${OPAL_CLIENT_TOKEN}\"}})]}"
 echo "=================================================="
 
 echo "# Create config loader OPAL client secret"
