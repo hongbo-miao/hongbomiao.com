@@ -26,8 +26,8 @@ jobs:
           clangFormatVersion: 14
           style: file
 
-  lint-commit:
-    name: Lint (Commit)
+  lint-commit-message:
+    name: Lint (Commit Message)
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -120,7 +120,7 @@ jobs:
           working-directory: api-go
           args: --timeout=3m
 
-  lint-js:
+  lint-javascript:
     name: Lint (JavaScript)
     runs-on: ubuntu-22.04
     timeout-minutes: 10
@@ -158,8 +158,8 @@ jobs:
         run: |
           npm run lint:js
 
-  lint-kubernetes:
-    name: Lint (Kubernetes)
+  lint-kubernetes-manifest:
+    name: Lint (Kubernetes Manifest)
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -185,7 +185,7 @@ jobs:
               -ignore-filename-pattern="kubernetes/manifests/yugabyte/" \
               kubernetes/manifests/
 
-  lint-proto:
+  lint-protocol-buffers:
     name: Lint (Protocol Buffers)
     runs-on: ubuntu-22.04
     timeout-minutes: 10
@@ -201,7 +201,7 @@ jobs:
         run: |
           docker run --rm --volume="$(pwd):/workspace" --workdir=/workspace bufbuild/buf lint
 
-  lint-py:
+  lint-python:
     name: Lint (Python)
     runs-on: ubuntu-22.04
     timeout-minutes: 10
