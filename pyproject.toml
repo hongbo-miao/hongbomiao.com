@@ -19,9 +19,9 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
-lint-py-black = "black . --check"
-lint-py-black-fix = "black ."
-lint-py-flake8 = "flake8 ."
-lint-py-isort = "isort . --check-only"
-lint-py-isort-fix = "isort ."
-mypy = "mypy"
+check-static-type-python = "mypy --install-types --non-interactive"
+lint-python-black = "black . --check"
+lint-python-black-fix = "black ."
+lint-python-flake8 = "flake8 ."
+lint-python-isort = "isort . --check-only"
+lint-python-isort-fix = "isort ."

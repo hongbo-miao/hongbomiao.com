@@ -50,6 +50,8 @@ rbenv-list-latest-stable-versions:
 rbenv-install:
 	rbenv install 3.1.3
 
+bundle-init:
+	bundle init
 bundle-install:
 	bundle install
 bundle-add:
@@ -89,25 +91,25 @@ poetry-add:
 poetry-add-dev:
 	poetry add xxx --group=dev
 
-static-type-check-python:
-	poetry run poe mypy --package=api-python --install-types --non-interactive
-	poetry run poe mypy --package=convolutional-neural-network --install-types --non-interactive
-	poetry run poe mypy --package=graph-neural-network --install-types --non-interactive
-	poetry run poe mypy --package=hm-locust --install-types --non-interactive
-	poetry run poe mypy --package=hm-opal-client --install-types --non-interactive
-	poetry run poe mypy --package=hm-prefect --install-types --non-interactive
-	poetry run poe mypy --package=hm-pyspark --install-types --non-interactive
-	poetry run poe mypy --package=quantum-computing --install-types --non-interactive
+check-static-type-python:
+	poetry run poe check-static-type-python --package=api-python
+	poetry run poe check-static-type-python --package=convolutional-neural-network
+	poetry run poe check-static-type-python --package=graph-neural-network
+	poetry run poe check-static-type-python --package=hm-locust
+	poetry run poe check-static-type-python --package=hm-opal-client
+	poetry run poe check-static-type-python --package=hm-prefect
+	poetry run poe check-static-type-python --package=hm-pyspark
+	poetry run poe check-static-type-python --package=quantum-computing
 lint-python-black:
-	poetry run poe lint-py-black
+	poetry run poe lint-python-black
 lint-python-black-fix:
-	poetry run poe lint-py-black-fix
+	poetry run poe lint-python-black-fix
 lint-python-flake8:
-	poetry run poe lint-py-flake8
+	poetry run poe lint-python-flake8
 lint-python-isort:
-	poetry run poe lint-py-isort
+	poetry run poe lint-python-isort
 lint-python-isort-fix:
-	poetry run poe lint-py-isort-fix
+	poetry run poe lint-python-isort-fix
 
 # Lint
 lint-dockerfile:
