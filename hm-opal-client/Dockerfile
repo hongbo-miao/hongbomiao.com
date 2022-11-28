@@ -1,4 +1,4 @@
-FROM permitio/opal-client:0.3.1
+FROM docker.io/permitio/opal-client:0.3.1
 WORKDIR /usr/src/app
 
 COPY ["hm-opal-client/", "./"]

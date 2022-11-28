@@ -1,4 +1,4 @@
-FROM eqalpha/keydb:x86_64_v6.2.2
+FROM docker.io/eqalpha/keydb:x86_64_v6.2.2
 
 # Install libgomp1
 # https://github.com/RedisGraph/RedisGraph/blob/master/README.md#loading-redisgraph-into-redis
