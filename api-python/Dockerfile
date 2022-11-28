@@ -21,6 +21,7 @@ RUN apk add --no-cache gcc libffi-dev musl-dev bash g++ make \
   && ./configure \
   && make \
   && make install \
+  && cd .. \
   && rm -rf librdkafka-1.9.2
 COPY ["api-python/pyproject.toml", "api-python/poetry.lock", "./"]
 RUN . /venv/bin/activate \

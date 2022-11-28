@@ -43,7 +43,7 @@ jobs:
         uses: wagoid/commitlint-github-action@v5
 
   lint-css-sol-md:
-    name: Lint (CSS, Solidity, Markdown)
+    name: Lint (CSS, Markdown, Solidity)
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -810,6 +810,7 @@ jobs:
           make
           sudo make install
           sudo ldconfig
+          cd ..
           rm -rf librdkafka-1.9.2
       - name: Install Poetry
         run: |
