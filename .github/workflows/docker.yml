@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 jobs:
-  push-web:
-    name: Push web to GitHub Container Registry
+  push-hm-web:
+    name: Push hm-web to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -33,8 +33,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-api-node:
-    name: Push api-node to GitHub Container Registry
+  push-hm-api-node:
+    name: Push hm-api-node to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -61,8 +61,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-api-python:
-    name: Push api-python to GitHub Container Registry
+  push-hm-api-python:
+    name: Push hm-api-python to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -89,8 +89,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-graphql-server:
-    name: Push graphql-server to GitHub Container Registry
+  push-hm-graphql-server:
+    name: Push hm-graphql-server to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -117,8 +117,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-grpc-server:
-    name: Push grpc-server to GitHub Container Registry
+  push-hm-grpc-server:
+    name: Push hm-grpc-server to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -145,8 +145,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-config-loader:
-    name: Push config-loader to GitHub Container Registry
+  push-hm-config-loader:
+    name: Push hm-config-loader to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -173,8 +173,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-decision-logger:
-    name: Push decision-logger to GitHub Container Registry
+  push-hm-decision-logger:
+    name: Push hm-decision-logger to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -202,7 +202,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
 
   push-hm-opal-client:
-    name: Push opal-client to GitHub Container Registry
+    name: Push hm-opal-client to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -229,8 +229,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-kafka-connect:
-    name: Push kafka-connect to GitHub Container Registry
+  push-hm-kafka-connect:
+    name: Push hm-kafka-connect to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -257,8 +257,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-rasa-action-server:
-    name: Push rasa-action-server to GitHub Container Registry
+  push-hm-rasa-action-server:
+    name: Push hm-rasa-action-server to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
