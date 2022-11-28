@@ -40,7 +40,6 @@ def create_app() -> Flask:
         max_instances=1,
     )
     def fetch_lucky_number():
-        time.sleep(3)
         global lucky_number
         lucky_number += 1
 
@@ -88,17 +87,19 @@ def create_app() -> Flask:
 
     @app.post("/update-lucky-number")
     def update_lucky_number() -> dict[str, int]:
-        scheduler.pause()
-        time.sleep(1)
         global lucky_number
-        lucky_number = 0
-        scheduler.resume()
-
-        # Trigger a new status update immediately
-        now = datetime.now()
-        for job in scheduler.get_jobs():
-            job.modify(next_run_time=now)
-        return {"luckyNumber": lucky_number}
+        try:
+            scheduler.pause()
+            lucky_number = 0
+        except Exception as e:
+            app.logger.error(e)
+        else:
+            now = datetime.now()
+            for job in scheduler.get_jobs():
+                job.modify(next_run_time=now)
+        finally:
+            scheduler.resume()
+            return {"luckyNumber": lucky_number}
 
     @sock.route("/lucky-number")
     def get_lucky_number(ws: WebSocketServer) -> None:
