@@ -110,6 +110,8 @@ lint-python-isort:
 	poetry run poe lint-python-isort
 lint-python-isort-fix:
 	poetry run poe lint-python-isort-fix
+lint-yaml:
+	poetry run poe lint-yaml
 
 # Lint
 lint-dockerfile:
