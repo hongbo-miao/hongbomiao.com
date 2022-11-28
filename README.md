@@ -305,10 +305,11 @@ make kubernetes-clean
 - **Mypy** - Python static type checker
 - **tsc** - TypeScript static type checker
 - **Stylelint** - CSS linter
-- **hadolint** - Dockerfile linter
 - **golangci-lint** - Go linter
 - **RuboCop** - Ruby linter
 - **ESLint** - JavaScript linter
+- **hadolint** - Dockerfile linter
+- **yamllint** - YAML linter
 - **Kubeval** - Kubernetes configuration file linter
 - **markdownlint-cli2** - Markdown linter
 - **Buf** - Protocol Buffers linter
