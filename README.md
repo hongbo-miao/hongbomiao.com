@@ -310,7 +310,7 @@ make kubernetes-clean
 - **ESLint** - JavaScript linter
 - **hadolint** - Dockerfile linter
 - **yamllint** - YAML linter
-- **Kubeval** - Kubernetes configuration file linter
+- **Kubeconform** - Kubernetes manifest linter
 - **markdownlint-cli2** - Markdown linter
 - **Buf** - Protocol Buffers linter
 - **ShellCheck** - Shell linter
