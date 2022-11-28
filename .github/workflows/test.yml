@@ -228,13 +228,13 @@ jobs:
           poetry install --no-root
       - name: Lint Python (Black)
         run: |
-          poetry run poe lint-py-black
+          poetry run poe lint-python-black
       - name: Lint Python (Flake8)
         run: |
-          poetry run poe lint-py-flake8
+          poetry run poe lint-python-flake8
       - name: Lint Python (isort)
         run: |
-          poetry run poe lint-py-isort
+          poetry run poe lint-python-isort
 
   lint-ruby:
     name: Lint (Ruby)
@@ -315,14 +315,14 @@ jobs:
           poetry install --no-root
       - name: Check static type
         run: |
-          poetry run poe mypy --package=api-python --install-types --non-interactive
-          poetry run poe mypy --package=convolutional-neural-network --install-types --non-interactive
-          poetry run poe mypy --package=graph-neural-network --install-types --non-interactive
-          poetry run poe mypy --package=hm-locust --install-types --non-interactive
-          poetry run poe mypy --package=hm-opal-client --install-types --non-interactive
-          poetry run poe mypy --package=hm-prefect --install-types --non-interactive
-          poetry run poe mypy --package=hm-pyspark --install-types --non-interactive
-          poetry run poe mypy --package=quantum-computing --install-types --non-interactive
+          poetry run poe check-static-type-python --package=api-python
+          poetry run poe check-static-type-python --package=convolutional-neural-network
+          poetry run poe check-static-type-python --package=graph-neural-network
+          poetry run poe check-static-type-python --package=hm-locust
+          poetry run poe check-static-type-python --package=hm-opal-client
+          poetry run poe check-static-type-python --package=hm-prefect
+          poetry run poe check-static-type-python --package=hm-pyspark
+          poetry run poe check-static-type-python --package=quantum-computing
 
   type-terraform:
     name: Static Type Check (Terraform)
