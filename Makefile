@@ -91,15 +91,6 @@ poetry-add:
 poetry-add-dev:
 	poetry add xxx --group=dev
 
-static-type-check-python:
-	poetry run poe static-type-check-python --package=api-python
-	poetry run poe static-type-check-python --package=convolutional-neural-network
-	poetry run poe static-type-check-python --package=graph-neural-network
-	poetry run poe static-type-check-python --package=hm-locust
-	poetry run poe static-type-check-python --package=hm-opal-client
-	poetry run poe static-type-check-python --package=hm-prefect
-	poetry run poe static-type-check-python --package=hm-pyspark
-	poetry run poe static-type-check-python --package=quantum-computing
 lint-python-black:
 	poetry run poe lint-python-black
 lint-python-black-fix:
@@ -112,6 +103,15 @@ lint-python-isort-fix:
 	poetry run poe lint-python-isort-fix
 lint-yaml:
 	poetry run poe lint-yaml
+static-type-check-python:
+	poetry run poe static-type-check-python --package=api-python
+	poetry run poe static-type-check-python --package=convolutional-neural-network
+	poetry run poe static-type-check-python --package=graph-neural-network
+	poetry run poe static-type-check-python --package=hm-locust
+	poetry run poe static-type-check-python --package=hm-opal-client
+	poetry run poe static-type-check-python --package=hm-prefect
+	poetry run poe static-type-check-python --package=hm-pyspark
+	poetry run poe static-type-check-python --package=quantum-computing
 
 # Lint
 lint-dockerfile:
