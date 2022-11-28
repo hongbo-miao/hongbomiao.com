@@ -1,4 +1,4 @@
-FROM python:3.11.0-alpine AS base
+FROM docker.io/python:3.11.0-alpine AS base
 WORKDIR /usr/src/app
 ENV PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1
@@ -45,5 +45,5 @@ COPY --from=builder /usr/local/lib/ /usr/local/lib/
 RUN . /venv/bin/activate \
   && pip install --no-cache-dir ./*.whl
 COPY ["api-python/docker-entrypoint.sh", "./"]
-ENTRYPOINT ["./docker-entrypoint.sh"]
 EXPOSE 35903
+ENTRYPOINT ["./docker-entrypoint.sh"]
