@@ -20,7 +20,7 @@ spec:
     spec:
       shareProcessNamespace: true
       containers:
-        - image: hasura/graphql-engine:v2.6.1.cli-migrations-v3
+        - image: docker.io/hasura/graphql-engine:v2.6.1.cli-migrations-v3
           name: hasura-graphql-engine
           # https://hasura.io/docs/latest/graphql/core/deployment/graphql-engine-flags/reference/
           env:
@@ -142,7 +142,7 @@ spec:
             - name: log-volume
               mountPath: /tmp/log
         # - image: ghcr.io/hongbo-miao/hm-traefik:latest
-        - image: traefik:v2.6.6
+        - image: docker.io/traefik:v2.6.6
           name: traefik
           ports:
             - name: traefik-hasura
