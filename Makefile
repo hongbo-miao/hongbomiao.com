@@ -90,6 +90,12 @@ poetry-add:
 	poetry add xxx
 poetry-add-dev:
 	poetry add xxx --group=dev
+poetry-shell:
+	poetry shell
+poetry-check:
+	poetry check
+poetry-cache-clear:
+	poetry cache clear pypi --all
 
 lint-python-black:
 	poetry run poe lint-python-black
