@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "hm-dashboard"
+version = "0.1.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.11.x"
+grafanalib = "0.7.0"
+requests = "2.28.1"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.16.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+generate-dashboard = "generate-dashboard --output=frontend.json hm.dashboard.py"
+upload-dashboard = "python upload_dashboard.py"
