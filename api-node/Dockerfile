@@ -3,7 +3,6 @@ WORKDIR /usr/src/app
 
 
 FROM base AS web
-ENV NO_UPDATE_NOTIFIER=1
 COPY ["web/package.json", "web/package-lock.json", "web/.npmrc", "./"]
 RUN npm ci
 
@@ -15,7 +14,6 @@ RUN rm -f ./.eslintrc.js \
 
 
 FROM base AS api-node
-ENV NO_UPDATE_NOTIFIER=1
 COPY ["api-node/package.json", "api-node/package-lock.json", "api-node/.npmrc", "./"]
 RUN npm ci
 COPY api-node ./
