@@ -2,10 +2,9 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+from airflow import DAG
 from airflow.decorators import task
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
-
-from airflow import DAG
 
 with DAG(
     "s3_download",

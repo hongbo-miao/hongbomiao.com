@@ -1,10 +1,9 @@
 from datetime import datetime
 from typing import Dict
 
+from airflow import DAG
 from airflow.decorators import task, task_group
 from airflow.operators.bash import BashOperator
-
-from airflow import DAG
 
 with DAG(
     "greet",
