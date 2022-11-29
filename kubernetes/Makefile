@@ -452,8 +452,8 @@ migrate-down:
 
 # TorchServe
 torchserve-init:
-	conda install pytorch torchvision torchaudio --channel=pytorch
-	conda install torchserve torch-model-archiver torch-workflow-archiver --channel=pytorch
+	conda install pytorch torchvision torchaudio --channel=pytorch --yes
+	conda install torchserve torch-model-archiver torch-workflow-archiver --channel=pytorch --yes
 	pip install captum
 torchserve-start:
 	torchserve --start --model-store=data/model-server/model-store --models=densenet161=densenet161.mar

@@ -9,7 +9,7 @@ conda-deactivate:
 conda-env-list:
 	conda env list
 conda-install:
-	conda install pytorch torchvision torchaudio --channel=pytorch
+	conda install pytorch torchvision torchaudio --channel=pytorch --yes
 conda-list-packages:
 	conda list
 
@@ -53,7 +53,7 @@ dvc-run-main-no-exec:
 		--params=lr,train.epochs \
 		python main.py
 dvc-repro:
-	dvc repro data_raw/cifar-10-python.tar.gz.dvc
+	dvc repro data/raw/cifar-10-python.tar.gz.dvc
 
 dvc-remove-stage:
 	dvc remove STAGE_NAME
