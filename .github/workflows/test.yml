@@ -498,7 +498,7 @@ jobs:
         run: |
           docker-compose --file=docker-compose.cypress.yaml pull
       - name: Cache Docker images
-        uses: satackey/action-docker-layer-caching@v0.0.11
+        uses: jpribyl/action-docker-layer-caching@v0.1.0
         continue-on-error: true
       - name: Start Docker
         working-directory: api-node
@@ -969,7 +969,7 @@ jobs:
         run: |
           docker-compose pull
       - name: Cache Docker images
-        uses: satackey/action-docker-layer-caching@v0.0.11
+        uses: jpribyl/action-docker-layer-caching@v0.1.0
         continue-on-error: true
       - name: Start Docker
         working-directory: grafana/hm-panel-plugin
