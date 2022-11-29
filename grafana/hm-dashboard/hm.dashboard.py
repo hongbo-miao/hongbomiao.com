@@ -22,7 +22,7 @@ dashboard = Dashboard(
                     expr="example",
                 ),
             ],
-            gridPos=GridPos(h=8, w=16, x=0, y=0),
+            gridPos=GridPos(h=5, w=10, x=0, y=0),
         ),
         GaugePanel(
             title="Random Walk",
@@ -33,7 +33,7 @@ dashboard = Dashboard(
                     expr="example",
                 ),
             ],
-            gridPos=GridPos(h=4, w=4, x=17, y=0),
+            gridPos=GridPos(h=5, w=5, x=10, y=0),
         ),
         TimeSeries(
             title="Prometheus http requests",
@@ -46,7 +46,7 @@ dashboard = Dashboard(
                 ),
             ],
             unit=OPS_FORMAT,
-            gridPos=GridPos(h=8, w=16, x=0, y=10),
+            gridPos=GridPos(h=5, w=15, x=0, y=5),
         ),
     ],
 ).auto_panel_ids()
