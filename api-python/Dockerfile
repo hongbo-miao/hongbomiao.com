@@ -9,14 +9,16 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   PIP_NO_CACHE_DIR=1
 # bash, g++, make are for librdkafka, which is for confluent-kafka
 # gcc, libffi-dev, musl-dev are for Poetry
+# hadolint ignore=DL3003
 RUN apk add --no-cache gcc libffi-dev musl-dev bash g++ make \
   # Install Poetry
   && pip install --no-cache-dir poetry \
   && python -m venv /venv/ \
   # Install librdkafka
   # https://github.com/edenhill/librdkafka#build-from-source
-  && wget https://github.com/edenhill/librdkafka/archive/refs/tags/v1.9.2.tar.gz \
-  && tar xvzf v1.9.2.tar.gz \
+  && wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v1.9.2.tar.gz \
+  && tar -x -f librdkafka.tar.gz \
+  && rm -f librdkafka.tar.gz \
   && cd librdkafka-1.9.2 \
   && ./configure \
   && make \

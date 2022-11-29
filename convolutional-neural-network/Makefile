@@ -29,7 +29,7 @@ dvc-run-prepare:
 		--name=prepare \
 		--deps=data/raw/cifar-10-python.tar.gz \
  		--outs=data/processed/cifar-10-batches-py/ \
-		tar -xf data/raw/cifar-10-python.tar.gz --dir=data/processed
+		tar -x -f data/raw/cifar-10-python.tar.gz -C data/processed
 dvc-run-main:
 	dvc run \
 		--name=main \
