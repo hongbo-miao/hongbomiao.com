@@ -14,7 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'go', 'java', 'javascript', 'python' ]
+        # https://github.com/github/codeql-action/blob/main/src/languages.ts
+        language: [ 'go', 'java', 'javascript', 'python', 'ruby' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
