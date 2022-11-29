@@ -25,9 +25,9 @@ jobs:
         working-directory: convolutional-neural-network
         shell: bash -l {0}
         run: |
-          conda install pytorch torchvision torchaudio --channel=pytorch
-          conda install pandas
-          conda install tabulate
+          conda install pytorch torchvision torchaudio --channel=pytorch --yes
+          conda install pandas --yes
+          conda install tabulate --yes
           pip install --requirement=requirements.txt
       - name: Train model
         working-directory: convolutional-neural-network
@@ -97,9 +97,9 @@ jobs:
         working-directory: convolutional-neural-network
         shell: bash -l {0}
         run: |
-          conda install pytorch torchvision torchaudio --channel=pytorch
-          conda install pandas
-          conda install tabulate
+          conda install pytorch torchvision torchaudio --channel=pytorch --yes
+          conda install pandas --yes
+          conda install tabulate --yes
           pip install --requirement=requirements.txt
       - name: Pull Data
         working-directory: convolutional-neural-network

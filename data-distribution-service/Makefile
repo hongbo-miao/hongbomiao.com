@@ -9,7 +9,7 @@ conda-deactivate:
 conda-env-list:
 	conda env list
 conda-install:
-	conda install pytorch torchvision torchaudio --channel=pytorch
+	conda install pytorch torchvision torchaudio --channel=pytorch --yes
 conda-list-packages:
 	conda list
 
