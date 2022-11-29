@@ -3,7 +3,6 @@ WORKDIR /usr/src/app
 
 
 FROM base AS builder
-ENV NO_UPDATE_NOTIFIER=1
 COPY ["web/package.json", "web/package-lock.json", "web/.npmrc", "./"]
 RUN npm ci
 COPY web ./
