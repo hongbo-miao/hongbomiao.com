@@ -113,6 +113,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python --package=api-python
 	poetry run poe static-type-check-python --package=convolutional-neural-network
 	poetry run poe static-type-check-python --package=graph-neural-network
+	poetry run poe static-type-check-python --package=hm-airflow
 	poetry run poe static-type-check-python --package=hm-locust
 	poetry run poe static-type-check-python --package=hm-opal-client
 	poetry run poe static-type-check-python --package=hm-prefect
