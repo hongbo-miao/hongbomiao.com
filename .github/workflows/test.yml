@@ -682,19 +682,19 @@ jobs:
         uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'corretto'
           java-version: '17'
           cache: 'gradle'
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Instrumented Test
         uses: reactivecircus/android-emulator-runner@v2
         with:
           working-directory: mobile-android
-          api-level: 33
+          api-level: 29
           script: ./gradlew connectedAndroidTest
 
   mobile-react-native-test:
