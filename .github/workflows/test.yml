@@ -653,7 +653,7 @@ jobs:
 
   mobile-android-test:
     name: Mobile (Android) - Test
-    runs-on: macos-12
+    runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
       - name: Cancel previous runs
@@ -672,6 +672,30 @@ jobs:
         working-directory: mobile-android
         run: |
           ./gradlew test
+
+  mobile-android-instrumented-test:
+    name: Mobile (Android) - Instrumented Test
+    runs-on: macos-12
+    timeout-minutes: 30
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+          cache: 'gradle'
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Instrumented Test
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          working-directory: mobile-android
+          api-level: 33
+          script: ./gradlew connectedAndroidTest
 
   mobile-react-native-test:
     name: Mobile (React Native) - Test
