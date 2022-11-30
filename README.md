@@ -75,7 +75,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/204170892-ea8cfa1f-8ed9-4d2d-b35b-0da37ea1d50c.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/204751308-3ca47148-f5c4-4756-907b-c18306a33608.svg)
 
 ## 📦 Setup
 
@@ -111,6 +111,11 @@ make kubernetes-clean
 - **SwiftUI** - UI framework
 - **XCTest** - Unit testing, performance testing
 - **Slather** - Code coverage reports generating
+
+### Mobile - Android
+
+- **AndroidX** - Android Jetpack
+- **JUnit** - Unit testing, Instrumented testing
 
 ### Mobile - React Native
 
