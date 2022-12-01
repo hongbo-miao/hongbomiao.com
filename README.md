@@ -115,7 +115,7 @@ make kubernetes-clean
 ### Mobile - Android
 
 - **AndroidX** - Android Jetpack
-- **JUnit** - Unit testing, Instrumented testing
+- **JUnit** - Unit testing, instrumented testing
 
 ### Mobile - React Native
 
