@@ -311,6 +311,7 @@ make kubernetes-clean
 - **tsc** - TypeScript static type checker
 - **Stylelint** - CSS linter
 - **golangci-lint** - Go linter
+- **isort**, **Flake8**, **autoflake** - Python code linter
 - **RuboCop** - Ruby linter
 - **ESLint** - JavaScript linter
 - **hadolint** - Dockerfile linter
