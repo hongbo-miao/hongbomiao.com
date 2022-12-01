@@ -9,649 +9,649 @@ name: Test
     - cron: '0 9 * * 0-6'
 
 jobs:
-  lint-c-cpp:
-    name: Lint (C, C++)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Lint C, C++
-        uses: DoozyX/clang-format-lint-action@v0.15
-        with:
-          source: '.'
-          extensions: 'c,cpp,h,ino'
-          clangFormatVersion: 14
-          style: file
-
-  lint-commit-message:
-    name: Lint (Commit Message)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Lint Commit
-        uses: wagoid/commitlint-github-action@v5
-
-  lint-css-sol-md:
-    name: Lint (CSS, Markdown, Solidity)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        run: |
-          npm ci
-      - name: Lint CSS
-        run: |
-          npm run lint:css
-      - name: Lint Solidity
-        run: |
-          npm run lint:sol
-      - name: Lint Markdown
-        run: |
-          npm run lint:md
-
-  lint-dockerfile:
-    name: Lint (Dockerfile)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Lint Dockerfile
-        uses: jbergstroem/hadolint-gh-action@v1
-        with:
-          dockerfile: '**/Dockerfile*'
-
-  lint-go:
-    name: Lint (Go)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: '1.18.0'
-      - name: Lint Go
-        uses: golangci/golangci-lint-action@v3
-        with:
-          version: latest
-          working-directory: api-go
-          args: --timeout=3m
-
-  lint-javascript:
-    name: Lint (JavaScript)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        run: |
-          cd api-node && npm ci
-          cd ../ethereum && npm ci
-          cd ../mobile-react-native && npm ci
-          cd ../web && npm ci
-          cd ../web-cypress && npm ci
-      - name: Lint JavaScript
-        run: |
-          npm run lint:js
-
-  lint-kubernetes-manifest:
-    name: Lint (Kubernetes Manifest)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Lint Kubernetes
-        run: |
-          docker run \
-            --rm \
-            --volume=`pwd`/kubernetes:/kubernetes \
-            ghcr.io/yannh/kubeconform:latest \
-              -kubernetes-version=1.23.4 \
-              -ignore-filename-pattern=".*trafficsplit.yaml" \
-              -ignore-filename-pattern=".*my-values.yaml" \
-              -ignore-filename-pattern="kubernetes/manifests/argocd/" \
-              -ignore-filename-pattern="kubernetes/manifests/elastic/" \
-              -ignore-filename-pattern="kubernetes/manifests/kafka/" \
-              -ignore-filename-pattern="kubernetes/manifests/prometheus/" \
-              -ignore-filename-pattern="kubernetes/manifests/yugabyte/" \
-              kubernetes/manifests/
-
-  lint-protocol-buffers:
-    name: Lint (Protocol Buffers)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Lint Protocol Buffers
-        working-directory: api-go
-        run: |
-          docker run --rm --volume="$(pwd):/workspace" --workdir=/workspace bufbuild/buf lint
-
-  lint-python:
-    name: Lint (Python)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'poetry'
-      - name: Set Poetry environment
-        run: |
-          poetry env use 3.11
-      - name: Install dependencies
-        run: |
-          poetry install --no-root
-      - name: Lint Python (Black)
-        run: |
-          poetry run poe lint-python-black
-      - name: Lint Python (Flake8)
-        run: |
-          poetry run poe lint-python-flake8
-      - name: Lint Python (isort)
-        run: |
-          poetry run poe lint-python-isort
-
-  lint-ruby:
-    name: Lint (Ruby)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 30
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1.3'
-          bundler-cache: true
-      - name: Lint Ruby
-        run: |
-          bundle exec rubocop
-
-  lint-shell:
-    name: Lint (Shell)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Lint Shell
-        run: |
-          shellcheck $(git ls-files '**/*.sh')
-
-  lint-terraform:
-    name: Lint (Terraform)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-      - name: Lint Terraform
-        run: |
-          terraform fmt -recursive -check
-
-  lint-yaml:
-    name: Lint (YAML)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'poetry'
-      - name: Set Poetry environment
-        run: |
-          poetry env use 3.11
-      - name: Install dependencies
-        run: |
-          poetry install --no-root
-      - name: Lint YAML
-        run: |
-          poetry run poe lint-yaml
-
-  static-type-check-python:
-    name: Static Type Check (Python)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'poetry'
-      - name: Set Poetry environment
-        run: |
-          poetry env use 3.11
-      - name: Install dependencies
-        run: |
-          poetry install --no-root
-      - name: Static type check Python
-        run: |
-          poetry run poe static-type-check-python --package=api-python
-          poetry run poe static-type-check-python --package=chatbot
-          poetry run poe static-type-check-python --package=convolutional-neural-network
-          poetry run poe static-type-check-python --package=data-distribution-service
-          poetry run poe static-type-check-python --package=feature-store
-          poetry run poe static-type-check-python --package=grafana.hm-dashboard
-          poetry run poe static-type-check-python --package=graph-neural-network
-          poetry run poe static-type-check-python --package=hm-airflow
-          poetry run poe static-type-check-python --package=hm-locust
-          poetry run poe static-type-check-python --package=hm-opal-client
-          poetry run poe static-type-check-python --package=hm-prefect
-          poetry run poe static-type-check-python --package=hm-pyspark
-          poetry run poe static-type-check-python --package=quantum-computing
-
-  static-type-check-terraform:
-    name: Static Type Check (Terraform)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-      - name: Initialize Terraform
-        working-directory: terraform
-        run: |
-          terraform init
-      - name: Static type check Terraform
-        working-directory: terraform
-        run: |
-          terraform validate
-
-  static-type-check-typescript:
-    name: Static Type Check (TypeScript)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        run: |
-          cd api-node && npm ci
-          cd ../ethereum && npm ci
-          cd ../grafana/hm-panel-plugin && npm ci
-          cd ../../mobile-react-native && npm ci
-          cd ../web && npm ci
-          cd ../web-cypress && npm ci
-      - name: Static type check TypeScript
-        run: |
-          cd api-node && npm run tsc
-          cd ../ethereum && npm run tsc
-          cd ../grafana/hm-panel-plugin && npm run tsc
-          cd ../../mobile-react-native && npm run tsc
-          cd ../web && npm run tsc
-          cd ../web-cypress && npm run tsc
-
-  web-test:
-    name: Web - Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Test
-        working-directory: web
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: web
-
-  web-end-to-end-test:
-    name: Web - End-to-End Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: web-cypress
-        run: |
-          npm ci
-      - name: Pull Docker images
-        working-directory: api-node
-        run: |
-          docker-compose --file=docker-compose.cypress.yaml pull
-      - name: Cache Docker images
-        uses: jpribyl/action-docker-layer-caching@v0.1.0
-        continue-on-error: true
-      - name: Start Docker
-        working-directory: api-node
-        run: |
-          docker-compose --file=docker-compose.cypress.yaml up --detach
-      - name: Cypress
-        working-directory: web-cypress
-        run: |
-          npm run test:cypress:headless:5000
-      - name: Stop Docker
-        working-directory: api-node
-        run: |
-          docker-compose --file=docker-compose.cypress.yaml down
-
-  web-lighthouse:
-    name: Web - Lighthouse
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Build
-        working-directory: web
-        run: |
-          npm run build
-      - name: Lighthouse
-        working-directory: web
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-        run: |
-          npm run lighthouse
-
-  # https://www.chromatic.com/docs/github-actions
-  web-visual-test:
-    name: Web - Visual Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          # Required to retrieve git history
-          fetch-depth: 0
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Build
-        working-directory: web
-        run: |
-          npm run build
-          npm run storybook:build
-      - name: Publish storybook to Chromatic
-        working-directory: web
-        run: |
-          npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
-
-  mobile-ios-test:
-    name: Mobile (iOS) - Test
-    runs-on: macos-12
-    timeout-minutes: 30
-    env:
-      # To use a Gemfile which is not at the root
-      # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
-      BUNDLE_GEMFILE: ${{ github.workspace }}/mobile-ios/Gemfile
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: 'latest-stable'
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1.3'
-          bundler-cache: true
-      - name: Build
-        working-directory: mobile-ios
-        run: |
-          xcodebuild build-for-testing \
-            -project HMMobile.xcodeproj \
-            -scheme HMMobile \
-            -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
-      - name: Test
-        working-directory: mobile-ios
-        run: |
-          xcodebuild test-without-building \
-            -project HMMobile.xcodeproj \
-            -scheme HMMobile \
-            -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
-      - name: Convert coverage to Cobertura XML format
-        working-directory: mobile-ios
-        run: |
-          bundle exec slather
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: mobile-ios
+#  lint-c-cpp:
+#    name: Lint (C, C++)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Lint C, C++
+#        uses: DoozyX/clang-format-lint-action@v0.15
+#        with:
+#          source: '.'
+#          extensions: 'c,cpp,h,ino'
+#          clangFormatVersion: 14
+#          style: file
+#
+#  lint-commit-message:
+#    name: Lint (Commit Message)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#      - name: Lint Commit
+#        uses: wagoid/commitlint-github-action@v5
+#
+#  lint-css-sol-md:
+#    name: Lint (CSS, Markdown, Solidity)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        run: |
+#          npm ci
+#      - name: Lint CSS
+#        run: |
+#          npm run lint:css
+#      - name: Lint Solidity
+#        run: |
+#          npm run lint:sol
+#      - name: Lint Markdown
+#        run: |
+#          npm run lint:md
+#
+#  lint-dockerfile:
+#    name: Lint (Dockerfile)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Lint Dockerfile
+#        uses: jbergstroem/hadolint-gh-action@v1
+#        with:
+#          dockerfile: '**/Dockerfile*'
+#
+#  lint-go:
+#    name: Lint (Go)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Go
+#        uses: actions/setup-go@v3
+#        with:
+#          go-version: '1.18.0'
+#      - name: Lint Go
+#        uses: golangci/golangci-lint-action@v3
+#        with:
+#          version: latest
+#          working-directory: api-go
+#          args: --timeout=3m
+#
+#  lint-javascript:
+#    name: Lint (JavaScript)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        run: |
+#          cd api-node && npm ci
+#          cd ../ethereum && npm ci
+#          cd ../mobile-react-native && npm ci
+#          cd ../web && npm ci
+#          cd ../web-cypress && npm ci
+#      - name: Lint JavaScript
+#        run: |
+#          npm run lint:js
+#
+#  lint-kubernetes-manifest:
+#    name: Lint (Kubernetes Manifest)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Lint Kubernetes
+#        run: |
+#          docker run \
+#            --rm \
+#            --volume=`pwd`/kubernetes:/kubernetes \
+#            ghcr.io/yannh/kubeconform:latest \
+#              -kubernetes-version=1.23.4 \
+#              -ignore-filename-pattern=".*trafficsplit.yaml" \
+#              -ignore-filename-pattern=".*my-values.yaml" \
+#              -ignore-filename-pattern="kubernetes/manifests/argocd/" \
+#              -ignore-filename-pattern="kubernetes/manifests/elastic/" \
+#              -ignore-filename-pattern="kubernetes/manifests/kafka/" \
+#              -ignore-filename-pattern="kubernetes/manifests/prometheus/" \
+#              -ignore-filename-pattern="kubernetes/manifests/yugabyte/" \
+#              kubernetes/manifests/
+#
+#  lint-protocol-buffers:
+#    name: Lint (Protocol Buffers)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Lint Protocol Buffers
+#        working-directory: api-go
+#        run: |
+#          docker run --rm --volume="$(pwd):/workspace" --workdir=/workspace bufbuild/buf lint
+#
+#  lint-python:
+#    name: Lint (Python)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Install Poetry
+#        run: |
+#          pipx install poetry
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.11'
+#          cache: 'poetry'
+#      - name: Set Poetry environment
+#        run: |
+#          poetry env use 3.11
+#      - name: Install dependencies
+#        run: |
+#          poetry install --no-root
+#      - name: Lint Python (Black)
+#        run: |
+#          poetry run poe lint-python-black
+#      - name: Lint Python (Flake8)
+#        run: |
+#          poetry run poe lint-python-flake8
+#      - name: Lint Python (isort)
+#        run: |
+#          poetry run poe lint-python-isort
+#
+#  lint-ruby:
+#    name: Lint (Ruby)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 30
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: '3.1.3'
+#          bundler-cache: true
+#      - name: Lint Ruby
+#        run: |
+#          bundle exec rubocop
+#
+#  lint-shell:
+#    name: Lint (Shell)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Lint Shell
+#        run: |
+#          shellcheck $(git ls-files '**/*.sh')
+#
+#  lint-terraform:
+#    name: Lint (Terraform)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Terraform
+#        uses: hashicorp/setup-terraform@v2
+#      - name: Lint Terraform
+#        run: |
+#          terraform fmt -recursive -check
+#
+#  lint-yaml:
+#    name: Lint (YAML)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Install Poetry
+#        run: |
+#          pipx install poetry
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.11'
+#          cache: 'poetry'
+#      - name: Set Poetry environment
+#        run: |
+#          poetry env use 3.11
+#      - name: Install dependencies
+#        run: |
+#          poetry install --no-root
+#      - name: Lint YAML
+#        run: |
+#          poetry run poe lint-yaml
+#
+#  static-type-check-python:
+#    name: Static Type Check (Python)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Install Poetry
+#        run: |
+#          pipx install poetry
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.11'
+#          cache: 'poetry'
+#      - name: Set Poetry environment
+#        run: |
+#          poetry env use 3.11
+#      - name: Install dependencies
+#        run: |
+#          poetry install --no-root
+#      - name: Static type check Python
+#        run: |
+#          poetry run poe static-type-check-python --package=api-python
+#          poetry run poe static-type-check-python --package=chatbot
+#          poetry run poe static-type-check-python --package=convolutional-neural-network
+#          poetry run poe static-type-check-python --package=data-distribution-service
+#          poetry run poe static-type-check-python --package=feature-store
+#          poetry run poe static-type-check-python --package=grafana.hm-dashboard
+#          poetry run poe static-type-check-python --package=graph-neural-network
+#          poetry run poe static-type-check-python --package=hm-airflow
+#          poetry run poe static-type-check-python --package=hm-locust
+#          poetry run poe static-type-check-python --package=hm-opal-client
+#          poetry run poe static-type-check-python --package=hm-prefect
+#          poetry run poe static-type-check-python --package=hm-pyspark
+#          poetry run poe static-type-check-python --package=quantum-computing
+#
+#  static-type-check-terraform:
+#    name: Static Type Check (Terraform)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Terraform
+#        uses: hashicorp/setup-terraform@v2
+#        with:
+#          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+#      - name: Initialize Terraform
+#        working-directory: terraform
+#        run: |
+#          terraform init
+#      - name: Static type check Terraform
+#        working-directory: terraform
+#        run: |
+#          terraform validate
+#
+#  static-type-check-typescript:
+#    name: Static Type Check (TypeScript)
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        run: |
+#          cd api-node && npm ci
+#          cd ../ethereum && npm ci
+#          cd ../grafana/hm-panel-plugin && npm ci
+#          cd ../../mobile-react-native && npm ci
+#          cd ../web && npm ci
+#          cd ../web-cypress && npm ci
+#      - name: Static type check TypeScript
+#        run: |
+#          cd api-node && npm run tsc
+#          cd ../ethereum && npm run tsc
+#          cd ../grafana/hm-panel-plugin && npm run tsc
+#          cd ../../mobile-react-native && npm run tsc
+#          cd ../web && npm run tsc
+#          cd ../web-cypress && npm run tsc
+#
+#  web-test:
+#    name: Web - Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        working-directory: web
+#        run: |
+#          npm ci
+#      - name: Test
+#        working-directory: web
+#        run: |
+#          npm run test:coverage
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          directory: web
+#
+#  web-end-to-end-test:
+#    name: Web - End-to-End Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        working-directory: web-cypress
+#        run: |
+#          npm ci
+#      - name: Pull Docker images
+#        working-directory: api-node
+#        run: |
+#          docker-compose --file=docker-compose.cypress.yaml pull
+#      - name: Cache Docker images
+#        uses: jpribyl/action-docker-layer-caching@v0.1.0
+#        continue-on-error: true
+#      - name: Start Docker
+#        working-directory: api-node
+#        run: |
+#          docker-compose --file=docker-compose.cypress.yaml up --detach
+#      - name: Cypress
+#        working-directory: web-cypress
+#        run: |
+#          npm run test:cypress:headless:5000
+#      - name: Stop Docker
+#        working-directory: api-node
+#        run: |
+#          docker-compose --file=docker-compose.cypress.yaml down
+#
+#  web-lighthouse:
+#    name: Web - Lighthouse
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        working-directory: web
+#        run: |
+#          npm ci
+#      - name: Build
+#        working-directory: web
+#        run: |
+#          npm run build
+#      - name: Lighthouse
+#        working-directory: web
+#        env:
+#          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+#        run: |
+#          npm run lighthouse
+#
+#  # https://www.chromatic.com/docs/github-actions
+#  web-visual-test:
+#    name: Web - Visual Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          # Required to retrieve git history
+#          fetch-depth: 0
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        working-directory: web
+#        run: |
+#          npm ci
+#      - name: Build
+#        working-directory: web
+#        run: |
+#          npm run build
+#          npm run storybook:build
+#      - name: Publish storybook to Chromatic
+#        working-directory: web
+#        run: |
+#          npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
+#
+#  mobile-ios-test:
+#    name: Mobile (iOS) - Test
+#    runs-on: macos-12
+#    timeout-minutes: 30
+#    env:
+#      # To use a Gemfile which is not at the root
+#      # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
+#      BUNDLE_GEMFILE: ${{ github.workspace }}/mobile-ios/Gemfile
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Xcode
+#        uses: maxim-lobanov/setup-xcode@v1
+#        with:
+#          xcode-version: 'latest-stable'
+#      - name: Set up Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: '3.1.3'
+#          bundler-cache: true
+#      - name: Build
+#        working-directory: mobile-ios
+#        run: |
+#          xcodebuild build-for-testing \
+#            -project HMMobile.xcodeproj \
+#            -scheme HMMobile \
+#            -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
+#      - name: Test
+#        working-directory: mobile-ios
+#        run: |
+#          xcodebuild test-without-building \
+#            -project HMMobile.xcodeproj \
+#            -scheme HMMobile \
+#            -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
+#      - name: Convert coverage to Cobertura XML format
+#        working-directory: mobile-ios
+#        run: |
+#          bundle exec slather
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          directory: mobile-ios
 
   mobile-android-lint:
     name: Mobile (Android) - Lint
@@ -733,374 +733,374 @@ jobs:
         with:
           directory: mobile-android
 
-  mobile-react-native-test:
-    name: Mobile (React Native) - Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: mobile-react-native
-        run: |
-          npm ci
-      - name: Test
-        working-directory: mobile-react-native
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: mobile-react-native
-
-  api-go-test:
-    name: API (Go) - Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: '1.18.0'
-      - name: Test
-        working-directory: api-go
-        run: |
-          go test ./... -race -coverprofile=coverage.txt -covermode=atomic
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: api-go
-
-  api-node-test:
-    name: API (Node.js) - Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: api-node
-        run: |
-          npm ci
-      - name: Test
-        working-directory: api-node
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: api-node
-
-  api-node-mutation-test:
-    name: API (Node.js) - Mutation Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: api-node
-        run: |
-          npm ci
-      - name: Stryker
-        working-directory: api-node
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: |
-          npm run test:stryker
-
-  api-python-test:
-    name: API (Python) - Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      # librdkafka is for confluent-kafka
-      - name: Install librdkafka
-        run: |
-          # https://github.com/edenhill/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v1.9.2.tar.gz
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd librdkafka-1.9.2
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -rf librdkafka-1.9.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'poetry'
-      - name: Set Poetry environment
-        working-directory: api-python
-        run: |
-          poetry env use 3.11
-      - name: Install dependencies
-        working-directory: api-python
-        run: |
-          poetry install
-      - name: Test
-        working-directory: api-python
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: api-python
-
-  prefect-test:
-    name: Prefect - Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          cache: 'pip'
-      - name: Install dependencies
-        working-directory: hm-prefect
-        run: |
-          pip install --requirement=requirements.txt
-          pip install --requirement=requirements-dev.txt
-      - name: Test
-        working-directory: hm-prefect
-        run: |
-          pytest --cov=. --cov-report=xml
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: hm-prefect
-
-  streaming-test:
-    name: Streaming - Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'corretto'
-          java-version: '11'
-          cache: 'maven'
-      - name: Test
-        working-directory: streaming
-        run: |
-          mvn test
-
-  opa-test:
-    name: OPA - Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Download OPA Binary
-        run: |
-          curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
-          chmod 755 ./opa
-      - name: Test
-        run: |
-          ./opa test api-go/internal/graphql_server/policies/*.rego -v
-
-  rasa-test:
-    name: Rasa - Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Train and test
-        uses: RasaHQ/rasa-train-test-gha@main
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          workspace: ${{ github.workspace }}/chatbot
-
-  prometheus-test:
-    name: Prometheus - Test
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Test
-        run: |
-          docker build --file=prometheus/Dockerfile.test .
-
-  grafana-end-to-end-test:
-    name: Grafana - End-to-End Test
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npm ci
-      - name: Build
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npm run build
-      - name: Pull Docker images
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          docker-compose pull
-      - name: Cache Docker images
-        uses: jpribyl/action-docker-layer-caching@v0.1.0
-        continue-on-error: true
-      - name: Start Docker
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          docker-compose up --detach
-      - name: Run e2e tests
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npm run e2e
-      - name: Stop Docker
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          docker-compose down
-
-  grafana-compatibility-test:
-    name: Grafana - Compatibility Test
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npm ci
-      - name: Build
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npm run build
-      - name: Check compatibility
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npx @grafana/levitate@latest is-compatible --path=src/module.ts --target=@grafana/data,@grafana/ui,@grafana/runtime
+#  mobile-react-native-test:
+#    name: Mobile (React Native) - Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        working-directory: mobile-react-native
+#        run: |
+#          npm ci
+#      - name: Test
+#        working-directory: mobile-react-native
+#        run: |
+#          npm run test:coverage
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          directory: mobile-react-native
+#
+#  api-go-test:
+#    name: API (Go) - Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Go
+#        uses: actions/setup-go@v3
+#        with:
+#          go-version: '1.18.0'
+#      - name: Test
+#        working-directory: api-go
+#        run: |
+#          go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          directory: api-go
+#
+#  api-node-test:
+#    name: API (Node.js) - Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        working-directory: api-node
+#        run: |
+#          npm ci
+#      - name: Test
+#        working-directory: api-node
+#        run: |
+#          npm run test:coverage
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          directory: api-node
+#
+#  api-node-mutation-test:
+#    name: API (Node.js) - Mutation Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        working-directory: api-node
+#        run: |
+#          npm ci
+#      - name: Stryker
+#        working-directory: api-node
+#        env:
+#          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+#        run: |
+#          npm run test:stryker
+#
+#  api-python-test:
+#    name: API (Python) - Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      # librdkafka is for confluent-kafka
+#      - name: Install librdkafka
+#        run: |
+#          # https://github.com/edenhill/librdkafka#build-from-source
+#          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v1.9.2.tar.gz
+#          tar -x -f librdkafka.tar.gz
+#          rm -f librdkafka.tar.gz
+#          cd librdkafka-1.9.2
+#          ./configure
+#          make
+#          sudo make install
+#          sudo ldconfig
+#          cd ..
+#          rm -rf librdkafka-1.9.2
+#      - name: Install Poetry
+#        run: |
+#          pipx install poetry
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.11'
+#          cache: 'poetry'
+#      - name: Set Poetry environment
+#        working-directory: api-python
+#        run: |
+#          poetry env use 3.11
+#      - name: Install dependencies
+#        working-directory: api-python
+#        run: |
+#          poetry install
+#      - name: Test
+#        working-directory: api-python
+#        run: |
+#          poetry run poe test-coverage
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          directory: api-python
+#
+#  prefect-test:
+#    name: Prefect - Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.10'
+#          cache: 'pip'
+#      - name: Install dependencies
+#        working-directory: hm-prefect
+#        run: |
+#          pip install --requirement=requirements.txt
+#          pip install --requirement=requirements-dev.txt
+#      - name: Test
+#        working-directory: hm-prefect
+#        run: |
+#          pytest --cov=. --cov-report=xml
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v3
+#        with:
+#          directory: hm-prefect
+#
+#  streaming-test:
+#    name: Streaming - Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Java
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'corretto'
+#          java-version: '11'
+#          cache: 'maven'
+#      - name: Test
+#        working-directory: streaming
+#        run: |
+#          mvn test
+#
+#  opa-test:
+#    name: OPA - Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Download OPA Binary
+#        run: |
+#          curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+#          chmod 755 ./opa
+#      - name: Test
+#        run: |
+#          ./opa test api-go/internal/graphql_server/policies/*.rego -v
+#
+#  rasa-test:
+#    name: Rasa - Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Train and test
+#        uses: RasaHQ/rasa-train-test-gha@main
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          workspace: ${{ github.workspace }}/chatbot
+#
+#  prometheus-test:
+#    name: Prometheus - Test
+#    runs-on: ubuntu-22.04
+#    timeout-minutes: 10
+#    steps:
+#      - name: Cancel previous runs
+#        uses: styfle/cancel-workflow-action@0.11.0
+#        with:
+#          access_token: ${{ github.token }}
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Test
+#        run: |
+#          docker build --file=prometheus/Dockerfile.test .
+#
+#  grafana-end-to-end-test:
+#    name: Grafana - End-to-End Test
+#    runs-on: ubuntu-22.04
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        working-directory: grafana/hm-panel-plugin
+#        run: |
+#          npm ci
+#      - name: Build
+#        working-directory: grafana/hm-panel-plugin
+#        run: |
+#          npm run build
+#      - name: Pull Docker images
+#        working-directory: grafana/hm-panel-plugin
+#        run: |
+#          docker-compose pull
+#      - name: Cache Docker images
+#        uses: jpribyl/action-docker-layer-caching@v0.1.0
+#        continue-on-error: true
+#      - name: Start Docker
+#        working-directory: grafana/hm-panel-plugin
+#        run: |
+#          docker-compose up --detach
+#      - name: Run e2e tests
+#        working-directory: grafana/hm-panel-plugin
+#        run: |
+#          npm run e2e
+#      - name: Stop Docker
+#        working-directory: grafana/hm-panel-plugin
+#        run: |
+#          docker-compose down
+#
+#  grafana-compatibility-test:
+#    name: Grafana - Compatibility Test
+#    runs-on: ubuntu-22.04
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '18'
+#      - name: Get npm cache directory
+#        id: npm-cache-dir
+#        run: |
+#          echo "::set-output name=dir::$(npm config get cache)"
+#      - name: Cache npm
+#        uses: actions/cache@v3
+#        id: npm-cache
+#        with:
+#          path: ${{ steps.npm-cache-dir.outputs.dir }}
+#          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-node-
+#      - name: Install dependencies
+#        working-directory: grafana/hm-panel-plugin
+#        run: |
+#          npm ci
+#      - name: Build
+#        working-directory: grafana/hm-panel-plugin
+#        run: |
+#          npm run build
+#      - name: Check compatibility
+#        working-directory: grafana/hm-panel-plugin
+#        run: |
+#          npx @grafana/levitate@latest is-compatible --path=src/module.ts --target=@grafana/data,@grafana/ui,@grafana/runtime
