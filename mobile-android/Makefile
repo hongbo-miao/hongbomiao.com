@@ -2,6 +2,8 @@ gradlew-version:
 	./gradlew --version
 gradlew-build:
 	./gradlew build
+gradlew-lint:
+	./gradlew lint
 gradlew-unit-test:
 	./gradlew test
 gradlew-instrumented-test:
