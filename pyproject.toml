@@ -8,7 +8,8 @@ authors = ["Hongbo Miao"]
 python = "3.11.x"
 
 [tool.poetry.group.dev.dependencies]
-black = "22.10.0"
+autoflake = "2.0.0"
+black = {version = "22.10.0", extras = ["d"]}
 flake8 = "6.0.0"
 isort = "5.10.1"
 mypy = "0.991"
@@ -20,6 +21,8 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
+lint-python-autoflake = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --check --recursive ."
+lint-python-autoflake-fix = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --in-place --recursive ."
 lint-python-black = "black . --check"
 lint-python-black-fix = "black ."
 lint-python-flake8 = "flake8 ."
