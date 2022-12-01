@@ -674,6 +674,10 @@ jobs:
         working-directory: mobile-android
         run: |
           ./gradlew lint
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: mobile-android
 
   mobile-android-test:
     name: Mobile (Android) - Test
@@ -696,6 +700,10 @@ jobs:
         working-directory: mobile-android
         run: |
           ./gradlew test
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: mobile-android
 
   mobile-android-instrumented-test:
     name: Mobile (Android) - Instrumented Test
@@ -720,6 +728,10 @@ jobs:
           working-directory: mobile-android
           api-level: 29
           script: ./gradlew connectedAndroidTest
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: mobile-android
 
   mobile-react-native-test:
     name: Mobile (React Native) - Test
