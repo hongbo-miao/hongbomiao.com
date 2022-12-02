@@ -1,4 +1,5 @@
 import json
+import logging
 import random
 import time
 from datetime import datetime
@@ -20,6 +21,13 @@ lucky_number = 0
 def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_pyfile("config.py")
+
+    if __name__ != "__main__":
+        gunicorn_logger = logging.getLogger("gunicorn.error")
+        if gunicorn_logger.level != logging.NOTSET:
+            app.logger.handlers = gunicorn_logger.handlers
+            app.logger.setLevel(gunicorn_logger.level)
+
     sentry_sdk.init(
         dsn=app.config.get("SENTRY_DSN"),
         integrations=[FlaskIntegration()],
@@ -48,6 +56,7 @@ def create_app() -> Flask:
     def fetch_lucky_number():
         global lucky_number
         lucky_number += 1
+        app.logger.info(f"lucky_number: {lucky_number}")
 
     @app.route("/")
     def get_health() -> dict[str, str]:
