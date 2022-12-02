@@ -39,7 +39,7 @@ def create_app() -> Flask:
     sock = Sock(app)
     scheduler = APScheduler()
     scheduler.init_app(app)
-    scheduler.start()
+    scheduler.start(paused=True)
 
     @app.cli.command("greet")
     def greet():
@@ -121,6 +121,7 @@ def create_app() -> Flask:
     def get_lucky_number(ws: WebSocketServer) -> None:
         global lucky_number_client_count
         lucky_number_client_count += 1
+        scheduler.resume()
         app.logger.info(f"lucky_number_client_count: {lucky_number_client_count}")
         try:
             while True:
@@ -128,6 +129,7 @@ def create_app() -> Flask:
                 time.sleep(1)
         finally:
             lucky_number_client_count -= 1
+            scheduler.pause()
             app.logger.info(f"lucky_number_client_count: {lucky_number_client_count}")
 
     return app
