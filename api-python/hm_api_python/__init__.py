@@ -121,15 +121,17 @@ def create_app() -> Flask:
     def get_lucky_number(ws: WebSocketServer) -> None:
         global lucky_number_client_count
         lucky_number_client_count += 1
-        scheduler.resume()
         app.logger.info(f"lucky_number_client_count: {lucky_number_client_count}")
+        if lucky_number_client_count > 0:
+            scheduler.resume()
         try:
             while True:
                 ws.send(lucky_number)
                 time.sleep(1)
         finally:
             lucky_number_client_count -= 1
-            scheduler.pause()
             app.logger.info(f"lucky_number_client_count: {lucky_number_client_count}")
+            if lucky_number_client_count == 0:
+                scheduler.pause()
 
     return app
