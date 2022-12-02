@@ -16,6 +16,7 @@ from simple_websocket import Server as WebSocketServer
 
 seed_number = 42
 lucky_number = 0
+lucky_number_client_count = 0
 
 
 def create_app() -> Flask:
@@ -55,8 +56,8 @@ def create_app() -> Flask:
     )
     def fetch_lucky_number():
         global lucky_number
-        lucky_number += 1
         app.logger.info(f"lucky_number: {lucky_number}")
+        lucky_number += 1
 
     @app.route("/")
     def get_health() -> dict[str, str]:
@@ -118,8 +119,15 @@ def create_app() -> Flask:
 
     @sock.route("/lucky-number")
     def get_lucky_number(ws: WebSocketServer) -> None:
-        while True:
-            ws.send(lucky_number)
-            time.sleep(1)
+        global lucky_number_client_count
+        lucky_number_client_count += 1
+        app.logger.info(f"lucky_number_client_count: {lucky_number_client_count}")
+        try:
+            while True:
+                ws.send(lucky_number)
+                time.sleep(1)
+        finally:
+            lucky_number_client_count -= 1
+            app.logger.info(f"lucky_number_client_count: {lucky_number_client_count}")
 
     return app
