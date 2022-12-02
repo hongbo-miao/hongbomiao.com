@@ -14,6 +14,12 @@ poetry-run-test-coverage:
 	poetry run poe test-coverage
 poetry-run-serve:
 	poetry run poe serve
+poetry-run-flask-help:
+	poetry run poe flask-help
+poetry-run-flask-list-routes:
+	poetry run poe flask-list-routes
+poetry-run-flask-greet:
+	poetry run poe flask-greet
 
 docker-build:
 	cd .. && docker build --file=api-python/Dockerfile --tag=ghcr.io/hongbo-miao/hm-api-python:latest .
