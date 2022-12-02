@@ -32,6 +32,12 @@ def create_app() -> Flask:
     scheduler.init_app(app)
     scheduler.start()
 
+    @app.cli.command("greet")
+    def greet():
+        app.logger.info(f"{datetime.utcnow()} Hello")
+        time.sleep(3)
+        app.logger.info(f"{datetime.utcnow()} Bye")
+
     @scheduler.task(
         "interval",
         id="fetch_lucky_number",
