@@ -8,15 +8,38 @@ name: CodeQL
     branches: [main]
 
 jobs:
-  analyze:
-    name: Analyze
+  codeql-go-javascript-python-ruby:
+    name: CodeQL (Go, JavaScript, Python, Ruby)
     runs-on: ubuntu-22.04
     timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
-        # https://github.com/github/codeql-action/blob/main/src/languages.ts
-        language: ['go', 'java', 'javascript', 'python', 'ruby']
+        language: ['go', 'javascript', 'python', 'ruby']
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+  codeql-java:
+    name: CodeQL (Java)
+    runs-on: macos-12
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['java']
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.11.0
