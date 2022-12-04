@@ -12,11 +12,6 @@ jobs:
     name: CodeQL
     runs-on: ubuntu-22.04
     timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        # https://github.com/github/codeql-action/blob/main/src/languages.ts
-        language: [go, java, javascript, python, ruby]
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.11.0
@@ -27,7 +22,8 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: ${{ matrix.language }}
+          # https://github.com/github/codeql-action/blob/main/src/languages.ts
+          languages: go, java, javascript, python, ruby
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
       - name: CodeQL
