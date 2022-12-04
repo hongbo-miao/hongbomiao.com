@@ -309,6 +309,7 @@ make kubernetes-clean
 - **opa** - Rego code formatter
 - **Mypy** - Python static type checker
 - **tsc** - TypeScript static type checker
+- **detekt** - Kotlin static type checker
 - **Stylelint** - CSS linter
 - **golangci-lint** - Go linter
 - **isort**, **Flake8**, **autoflake** - Python code linter

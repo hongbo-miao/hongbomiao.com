@@ -346,6 +346,28 @@ jobs:
         run: |
           poetry run poe lint-yaml
 
+  static-type-check-kotlin:
+    name: Static Type Check | Kotlin
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: '19'
+          cache: gradle
+      - name: Static type check Kotlin
+        run: |
+          cd mobile-android
+          ./gradlew detekt
+
   static-type-check-python:
     name: Static Type Check | Python
     runs-on: ubuntu-22.04
