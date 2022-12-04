@@ -1,5 +1,4 @@
 ---
-
 name: Test
 
 "on":
@@ -668,8 +667,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'corretto'
-          java-version: '17'
           cache: 'gradle'
+          java-version: '19'
       - name: Lint
         working-directory: mobile-android
         run: |
@@ -690,8 +689,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'corretto'
-          java-version: '17'
           cache: 'gradle'
+          java-version: '19'
       - name: Test
         working-directory: mobile-android
         run: |
@@ -712,8 +711,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'corretto'
-          java-version: '17'
           cache: 'gradle'
+          java-version: '19'
       - name: Instrumented Test
         uses: reactivecircus/android-emulator-runner@v2
         with:
