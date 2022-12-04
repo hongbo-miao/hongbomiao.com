@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "HMMobile"
-include ':app'
+include(":app")
