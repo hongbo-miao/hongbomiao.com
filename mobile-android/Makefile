@@ -1,5 +1,7 @@
 gradlew-build:
 	./gradlew build
+gradlew-clean:
+	./gradlew clean
 gradlew-lint:
 	./gradlew lint
 gradlew-lint-fix:
@@ -17,6 +19,8 @@ lint-kotlin:
 	./gradlew ktlintCheck
 lint-kotlin-fix:
 	./gradlew ktlintFormat
+static-type-check-kotlin:
+	./gradlew detekt
 
 adb-list:
 	adb shell pm list instrumentation
