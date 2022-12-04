@@ -9,7 +9,7 @@ name: Test
 
 jobs:
   lint-c-cpp:
-    name: Lint (C, C++)
+    name: Lint | C, C++
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -28,7 +28,7 @@ jobs:
           style: file
 
   lint-commit-message:
-    name: Lint (Commit Message)
+    name: Lint | Commit Message
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -44,7 +44,7 @@ jobs:
         uses: wagoid/commitlint-github-action@v5
 
   lint-css-sol-md:
-    name: Lint (CSS, Markdown, Solidity)
+    name: Lint | CSS, Markdown, Solidity
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -84,7 +84,7 @@ jobs:
           npm run lint:md
 
   lint-dockerfile:
-    name: Lint (Dockerfile)
+    name: Lint | Dockerfile
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -100,7 +100,7 @@ jobs:
           dockerfile: '**/Dockerfile*'
 
   lint-go:
-    name: Lint (Go)
+    name: Lint | Go
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -122,7 +122,7 @@ jobs:
           args: --timeout=3m
 
   lint-javascript:
-    name: Lint (JavaScript)
+    name: Lint | JavaScript
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -166,7 +166,7 @@ jobs:
           cd ../web-cypress && npm run lint:js
 
   lint-kotlin:
-    name: Lint (Kotlin)
+    name: Lint | Kotlin
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
@@ -188,7 +188,7 @@ jobs:
           ./gradlew ktlintCheck
 
   lint-kubernetes-manifest:
-    name: Lint (Kubernetes Manifest)
+    name: Lint | Kubernetes Manifest
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -215,7 +215,7 @@ jobs:
               kubernetes/manifests/
 
   lint-protocol-buffers:
-    name: Lint (Protocol Buffers)
+    name: Lint | Protocol Buffers
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -231,7 +231,7 @@ jobs:
           docker run --rm --volume="$(pwd):/workspace" --workdir=/workspace bufbuild/buf lint
 
   lint-python:
-    name: Lint (Python)
+    name: Lint | Python
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -266,7 +266,7 @@ jobs:
           poetry run poe lint-python-isort
 
   lint-ruby:
-    name: Lint (Ruby)
+    name: Lint | Ruby
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
@@ -286,7 +286,7 @@ jobs:
           bundle exec rubocop
 
   lint-shell:
-    name: Lint (Shell)
+    name: Lint | Shell
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -301,7 +301,7 @@ jobs:
           shellcheck $(git ls-files '**/*.sh')
 
   lint-terraform:
-    name: Lint (Terraform)
+    name: Lint | Terraform
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -318,7 +318,7 @@ jobs:
           terraform fmt -recursive -check
 
   lint-yaml:
-    name: Lint (YAML)
+    name: Lint | YAML
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -347,7 +347,7 @@ jobs:
           poetry run poe lint-yaml
 
   static-type-check-python:
-    name: Static Type Check (Python)
+    name: Static Type Check | Python
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -388,7 +388,7 @@ jobs:
           poetry run poe static-type-check-python --package=quantum-computing
 
   static-type-check-terraform:
-    name: Static Type Check (Terraform)
+    name: Static Type Check | Terraform
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -412,7 +412,7 @@ jobs:
           terraform validate
 
   static-type-check-typescript:
-    name: Static Type Check (TypeScript)
+    name: Static Type Check | TypeScript
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -456,7 +456,7 @@ jobs:
           cd ../web-cypress && npm run tsc
 
   web-test:
-    name: Web - Test
+    name: Web | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -496,7 +496,7 @@ jobs:
           directory: web
 
   web-end-to-end-test:
-    name: Web - End-to-End Test
+    name: Web | End-to-End Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -547,7 +547,7 @@ jobs:
           docker-compose --file=docker-compose.cypress.yaml down
 
   web-lighthouse:
-    name: Web - Lighthouse
+    name: Web | Lighthouse
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -590,7 +590,7 @@ jobs:
 
   # https://www.chromatic.com/docs/github-actions
   web-visual-test:
-    name: Web - Visual Test
+    name: Web | Visual Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -634,7 +634,7 @@ jobs:
           npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
 
   mobile-ios-test:
-    name: Mobile (iOS) - Test
+    name: Mobile - iOS | Test
     runs-on: macos-12
     timeout-minutes: 30
     env:
@@ -681,7 +681,7 @@ jobs:
           directory: mobile-ios
 
   mobile-android-lint:
-    name: Mobile (Android) - Lint
+    name: Mobile - Android | Lint
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
@@ -703,7 +703,7 @@ jobs:
           ./gradlew lint
 
   mobile-android-test:
-    name: Mobile (Android) - Test
+    name: Mobile - Android | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
@@ -725,7 +725,7 @@ jobs:
           ./gradlew test
 
   mobile-android-instrumented-test:
-    name: Mobile (Android) - Instrumented Test
+    name: Mobile - Android | Instrumented Test
     runs-on: macos-12
     timeout-minutes: 30
     steps:
@@ -749,7 +749,7 @@ jobs:
           script: ./gradlew connectedAndroidTest
 
   mobile-react-native-test:
-    name: Mobile (React Native) - Test
+    name: Mobile - React Native | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -789,7 +789,7 @@ jobs:
           directory: mobile-react-native
 
   api-go-test:
-    name: API (Go) - Test
+    name: API - Go | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -813,7 +813,7 @@ jobs:
           directory: api-go
 
   api-node-test:
-    name: API (Node.js) - Test
+    name: API - Node.js | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -853,7 +853,7 @@ jobs:
           directory: api-node
 
   api-node-mutation-test:
-    name: API (Node.js) - Mutation Test
+    name: API - Node.js | Mutation Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -891,7 +891,7 @@ jobs:
           npm run test:stryker
 
   api-python-test:
-    name: API (Python) - Test
+    name: API - Python | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -941,7 +941,7 @@ jobs:
           directory: api-python
 
   prefect-test:
-    name: Prefect - Test
+    name: Prefect | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -971,7 +971,7 @@ jobs:
           directory: hm-prefect
 
   streaming-test:
-    name: Streaming - Test
+    name: Streaming | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -989,7 +989,7 @@ jobs:
           mvn test
 
   opa-test:
-    name: OPA - Test
+    name: OPA | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -1008,7 +1008,7 @@ jobs:
           ./opa test api-go/internal/graphql_server/policies/*.rego -v
 
   rasa-test:
-    name: Rasa - Test
+    name: Rasa | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -1021,7 +1021,7 @@ jobs:
           workspace: ${{ github.workspace }}/chatbot
 
   prometheus-test:
-    name: Prometheus - Test
+    name: Prometheus | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -1036,7 +1036,7 @@ jobs:
           docker build --file=prometheus/Dockerfile.test .
 
   grafana-end-to-end-test:
-    name: Grafana - End-to-End Test
+    name: Grafana | End-to-End Test
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -1086,7 +1086,7 @@ jobs:
           docker-compose down
 
   grafana-compatibility-test:
-    name: Grafana - Compatibility Test
+    name: Grafana | Compatibility Test
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
