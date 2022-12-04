@@ -152,12 +152,18 @@ jobs:
         run: |
           cd api-node && npm ci
           cd ../ethereum && npm ci
-          cd ../mobile-react-native && npm ci
+          cd ../grafana/hm-panel-plugin && npm ci
+          cd ../../mobile-react-native && npm ci
           cd ../web && npm ci
           cd ../web-cypress && npm ci
       - name: Lint JavaScript
         run: |
-          npm run lint:js
+          cd api-node && npm run lint:js
+          cd ../ethereum && npm run lint:js
+          cd ../grafana/hm-panel-plugin && npm run lint:js
+          cd ../../mobile-react-native && npm run lint:js
+          cd ../web && npm run lint:js
+          cd ../web-cypress && npm run lint:js
 
   lint-kotlin:
     name: Lint (Kotlin)
