@@ -5,7 +5,7 @@ name: Test
   pull_request:
     branches: [main]
   schedule:
-    - cron: '0 9 * * 0-6'
+    - cron: 0 9 * * 0-6
 
 jobs:
   lint-c-cpp:
@@ -22,8 +22,8 @@ jobs:
       - name: Lint C, C++
         uses: DoozyX/clang-format-lint-action@v0.15
         with:
-          source: '.'
-          extensions: 'c,cpp,h,ino'
+          source: .
+          extensions: c,cpp,h,ino
           clangFormatVersion: 14
           style: file
 
@@ -220,7 +220,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-          cache: 'poetry'
+          cache: poetry
       - name: Set Poetry environment
         run: |
           poetry env use 3.11
@@ -307,7 +307,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-          cache: 'poetry'
+          cache: poetry
       - name: Set Poetry environment
         run: |
           poetry env use 3.11
@@ -336,7 +336,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-          cache: 'poetry'
+          cache: poetry
       - name: Set Poetry environment
         run: |
           poetry env use 3.11
@@ -623,7 +623,7 @@ jobs:
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: 'latest-stable'
+          xcode-version: latest-stable
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -666,9 +666,9 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'corretto'
-          cache: 'gradle'
+          distribution: corretto
           java-version: '19'
+          cache: gradle
       - name: Lint
         working-directory: mobile-android
         run: |
@@ -688,9 +688,9 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'corretto'
-          cache: 'gradle'
+          distribution: corretto
           java-version: '19'
+          cache: gradle
       - name: Test
         working-directory: mobile-android
         run: |
@@ -710,9 +710,9 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'corretto'
-          cache: 'gradle'
+          distribution: corretto
           java-version: '19'
+          cache: gradle
       - name: Instrumented Test
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -894,7 +894,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-          cache: 'poetry'
+          cache: poetry
       - name: Set Poetry environment
         working-directory: api-python
         run: |
@@ -927,7 +927,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-          cache: 'pip'
+          cache: pip
       - name: Install dependencies
         working-directory: hm-prefect
         run: |
@@ -952,9 +952,9 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'corretto'
+          distribution: corretto
           java-version: '11'
-          cache: 'maven'
+          cache: maven
       - name: Test
         working-directory: streaming
         run: |
