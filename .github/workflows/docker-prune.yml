@@ -1,0 +1,38 @@
+---
+name: Docker | Prune
+
+"on":
+  schedule:
+    - cron: 0 9 * * 0-6
+
+jobs:
+  prune:
+    name: Prune
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        container: [
+          hm-web,
+          hm-api-node,
+          hm-api-python,
+          hm-graphql-server,
+          hm-grpc-server,
+          hm-config-loader,
+          hm-decision-logger,
+          hm-opal-client,
+          hm-kafka-connect,
+          hm-rasa-action-server,
+          hm-streaming,
+          hm-keydb,
+          hm-traefik,
+          hm-alpine,
+        ]
+    steps:
+      - name: Prune dangling Docker images
+        uses: vlaurin/action-ghcr-prune@v0.4.0
+        with:
+          token: ${{ secrets.GHCR_PRUNE_TOKEN }}
+          user: hongbo-miao
+          container: ${{ matrix.container }}
+          untagged: true
