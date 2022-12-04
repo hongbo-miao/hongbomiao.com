@@ -314,6 +314,7 @@ make kubernetes-clean
 - **isort**, **Flake8**, **autoflake** - Python code linter
 - **RuboCop** - Ruby linter
 - **ESLint** - JavaScript linter
+- **Ktlint** - Kotlin linter
 - **hadolint** - Dockerfile linter
 - **yamllint** - YAML linter
 - **Kubeconform** - Kubernetes manifest linter
