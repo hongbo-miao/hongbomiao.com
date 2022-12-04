@@ -14,13 +14,13 @@ rm -rf node_modules
 rm -rf tmp
 rm -f public/sitemap.xml
 
-# Mobile (React Native)
+# Mobile - React Native
 cd ../mobile-react-native
 rm -rf .expo
 rm -rf coverage
 rm -rf node_modules
 
-# API (Node.js)
+# API - Node.js
 cd ../api-node
 rm -rf .clinic
 rm -rf build
@@ -28,7 +28,7 @@ rm -rf coverage
 rm -rf public
 rm -rf node_modules
 
-# API (Go)
+# API - Go
 cd ../api-go
 rm -rf web
 
