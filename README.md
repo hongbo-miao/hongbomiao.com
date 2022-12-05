@@ -75,7 +75,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/204751308-3ca47148-f5c4-4756-907b-c18306a33608.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/205567420-fcfa9beb-99a7-4791-b835-781cfa106828.svg)
 
 ## 📦 Setup
 
@@ -350,7 +350,7 @@ make kubernetes-clean
 - **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** - HSTS checking
 - **[Mozilla Observatory](https://observatory.mozilla.org/analyze/www.hongbomiao.com)** - Security monitoring
 - **[Depfu](https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=23463)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** - Dependency monitoring
-- **[Uptime Robot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
+- **[UptimeRobot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
 
 ### Bots
