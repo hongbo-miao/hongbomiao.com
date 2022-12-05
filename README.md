@@ -302,28 +302,29 @@ make kubernetes-clean
 
 ### Code
 
+- **commitlint** - Commit message linter
+- **Stylelint** - CSS linter
+- **hadolint** - Dockerfile linter
+- **golangci-lint** - Go linter
+- **ESLint** - JavaScript linter
+- **markdownlint-cli2** - Markdown linter
+- **Ktlint** - Kotlin linter and code formatter
+- **Kubeconform** - Kubernetes manifest linter
+- **Buf** - Protocol Buffers linter
+- **autoflake**, **Flake8**, **isort** - Python code linter
+- **opa** - Rego code formatter
+- **RuboCop** - Ruby linter and code formatter
+- **ShellCheck** - Shell linter
+- **terraform** - Terraform code formatter
+- **yamllint** - YAML linter
+- **solhint** - Solidity linter
 - **Prettier** - Code formatter
 - **ClangFormat** - C/C++ code formatter
 - **gofmt** - Go code formatter
 - **Black** - Python code formatter
-- **opa** - Rego code formatter
 - **Mypy** - Python static type checker
 - **tsc** - TypeScript static type checker
 - **detekt** - Kotlin static type checker
-- **Stylelint** - CSS linter
-- **golangci-lint** - Go linter
-- **isort**, **Flake8**, **autoflake** - Python code linter
-- **RuboCop** - Ruby linter
-- **ESLint** - JavaScript linter
-- **Ktlint** - Kotlin linter
-- **hadolint** - Dockerfile linter
-- **yamllint** - YAML linter
-- **Kubeconform** - Kubernetes manifest linter
-- **markdownlint-cli2** - Markdown linter
-- **Buf** - Protocol Buffers linter
-- **ShellCheck** - Shell linter
-- **solhint** - Solidity linter
-- **commitlint** - Commit message linter
 
 ### Design
 
