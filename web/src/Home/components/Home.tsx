@@ -49,7 +49,9 @@ function Home(props: Props) {
         <div className={`container is-max-desktop ${styles.hmContainer}`}>
           <div className={styles.hmNameContainer}>
             <h1 className={styles.hmName}>{name}</h1>
-            <HmAudioPlayer audioSrc={springWaltzMP3} />
+            <div className={styles.hmAudioPlayerWrapper}>
+              <HmAudioPlayer audioSrc={springWaltzMP3} />
+            </div>
           </div>
           <HmSparkles>
             <a className={styles.hmBioContainer} href={config.githubURL} target="_blank" rel="noopener noreferrer">
