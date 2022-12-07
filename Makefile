@@ -12,6 +12,22 @@ local-build:
 local-clean:
 	sh bin/clean.sh
 
+# Git
+git-branch-create-and-checkout:
+	git checkout -b xx
+git-branch-checkout:
+	git checkout xx
+
+git-branch-list-local:
+	git branch
+git-branch-list-remote:
+	git branch -r
+
+git-fetch-branches:
+	git fetch --all
+git-pull-rebase:
+	git pull --rebase
+
 # Docker
 docker-login:
 	docker login
