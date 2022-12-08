@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
-echo "# Install HM API Python"
-kubectl apply --filename=kubernetes/manifests/hm-api-python/hm-api-python-namespace.yaml
-kubectl apply --filename=kubernetes/manifests/hm-api-python
+echo "# Install hm-api-python-flask"
+kubectl apply --filename=kubernetes/manifests/hm-api-python-flask/hm-api-python-flask-namespace.yaml
+kubectl apply --filename=kubernetes/manifests/hm-api-python-flask
 
 # Delete:
-# kubectl delete --filename=kubernetes/manifests/hm-api-python
+# kubectl delete --filename=kubernetes/manifests/hm-api-python-flask
 echo "=================================================="

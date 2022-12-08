@@ -126,7 +126,7 @@ lint-python-isort-fix:
 lint-yaml:
 	poetry run poe lint-yaml
 static-type-check-python:
-	poetry run poe static-type-check-python --package=api-python
+	poetry run poe static-type-check-python --package=api-python-flask
 	poetry run poe static-type-check-python --package=chatbot
 	poetry run poe static-type-check-python --package=convolutional-neural-network
 	poetry run poe static-type-check-python --package=data-distribution-service

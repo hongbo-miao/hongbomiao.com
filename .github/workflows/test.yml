@@ -395,7 +395,7 @@ jobs:
           poetry install --no-root
       - name: Static type check Python
         run: |
-          poetry run poe static-type-check-python --package=api-python
+          poetry run poe static-type-check-python --package=api-python-flask
           poetry run poe static-type-check-python --package=chatbot
           poetry run poe static-type-check-python --package=convolutional-neural-network
           poetry run poe static-type-check-python --package=data-distribution-service
@@ -912,8 +912,8 @@ jobs:
         run: |
           npm run test:stryker
 
-  api-python-test:
-    name: API - Python | Test
+  api-python-flask-test:
+    name: API - Python (Flask) | Test
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -946,21 +946,21 @@ jobs:
           python-version: '3.11'
           cache: poetry
       - name: Set Poetry environment
-        working-directory: api-python
+        working-directory: api-python-flask
         run: |
           poetry env use 3.11
       - name: Install dependencies
-        working-directory: api-python
+        working-directory: api-python-flask
         run: |
           poetry install
       - name: Test
-        working-directory: api-python
+        working-directory: api-python-flask
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: api-python
+          directory: api-python-flask
 
   prefect-test:
     name: Prefect | Test

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "hm-api-python"
+name = "hm-api-python-flask"
 version = "1.0.0"
 description = ""
 authors = ["Hongbo Miao"]
@@ -12,6 +12,7 @@ Flask-Cors = "3.0.10"
 confluent-kafka = "1.9.2"
 flask-sock = "0.5.2"
 gunicorn = "20.1.0"
+python-dotenv = "0.21.0"
 sentry-sdk = {version = "1.11.1", extras = ["flask"]}
 
 [tool.poetry.group.dev.dependencies]
@@ -27,7 +28,7 @@ build-backend = "poetry.core.masonry.api"
 dev = "flask run"
 test = "pytest"
 test-coverage = "pytest --cov=. --cov-report=xml"
-serve = "gunicorn 'hm_api_python:create_app()' --bind=:35903 --workers=5"
+serve = "gunicorn 'flaskr:create_app()' --bind=:35903 --workers=5"
 flask-help = "flask --help"
 flask-list-routes = "flask routes"
 flask-greet = "flask greet"

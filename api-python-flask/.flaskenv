@@ -1,3 +1,3 @@
-FLASK_APP=hm_api_python
+FLASK_APP=flaskr
 FLASK_DEBUG=1
 FLASK_RUN_PORT=35903
