@@ -62,8 +62,8 @@ jobs:
       - name: Print Docker image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  push-hm-api-python:
-    name: Push hm-api-python to GitHub Container Registry
+  push-hm-api-python-flask:
+    name: Push hm-api-python-flask to GitHub Container Registry
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -82,9 +82,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./api-python/Dockerfile
+          file: ./api-python-flask/Dockerfile
           push: true
-          tags: ghcr.io/hongbo-miao/hm-api-python:latest
+          tags: ghcr.io/hongbo-miao/hm-api-python-flask:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Print Docker image digest

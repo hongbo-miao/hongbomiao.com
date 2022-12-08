@@ -10,7 +10,7 @@ from flask import Flask, request
 from flask_apscheduler import APScheduler
 from flask_cors import CORS
 from flask_sock import Sock
-from hm_api_python.utils import kafka_util
+from flaskr.utils import kafka_util
 from sentry_sdk.integrations.flask import FlaskIntegration
 from simple_websocket import Server as WebSocketServer
 

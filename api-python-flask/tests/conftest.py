@@ -1,5 +1,5 @@
 import pytest
-from hm_api_python import create_app
+from flaskr import create_app
 
 
 @pytest.fixture()
