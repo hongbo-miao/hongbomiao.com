@@ -3,8 +3,8 @@ package utils
 import (
 	"context"
 	"github.com/buger/jsonparser"
-	"github.com/dgraph-io/dgo/v200"
-	"github.com/dgraph-io/dgo/v200/protos/api"
+	"github.com/dgraph-io/dgo/v210"
+	"github.com/dgraph-io/dgo/v210/protos/api"
 	"github.com/rs/zerolog/log"
 	"go.elastic.co/apm/module/apmgrpc/v2"
 	"google.golang.org/grpc"
