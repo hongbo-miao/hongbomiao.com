@@ -14,9 +14,9 @@ local-clean:
 
 # Git
 git-branch-create-and-checkout:
-	git checkout -b xx
+	git checkout -b xxx
 git-branch-checkout:
-	git checkout xx
+	git checkout xxx
 
 git-branch-list-local:
 	git branch
@@ -37,6 +37,8 @@ docker-ps:
 	docker ps
 docker-ps-all:
 	docker ps --all
+docker-stop:
+	docker stop xxx
 docker-rmi:
 	docker rmi --force IMAGE_ID
 docker-prune:
