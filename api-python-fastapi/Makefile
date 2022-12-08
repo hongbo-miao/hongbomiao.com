@@ -8,3 +8,5 @@ poetry-add-dev:
 	poetry add xxx --group=dev
 poetry-run-dev:
 	poetry run poe dev
+poetry-run-serve:
+	poetry run poe serve

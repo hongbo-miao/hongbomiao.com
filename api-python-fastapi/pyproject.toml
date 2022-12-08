@@ -17,4 +17,5 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
-dev = "uvicorn main:app --reload"
+dev = "uvicorn app:app --reload --port=64113"
+serve = "uvicorn app:app --port=64113 --workers=5"
