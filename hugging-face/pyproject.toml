@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "hugging-face"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.10.x"
+transformers = {version = "4.25.1", extras = ["sentencepiece"]}
+torch = {url = "https://download.pytorch.org/whl/cpu/torch-1.13.0-cp310-none-macosx_11_0_arm64.whl"}
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.16.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+sentiment-analysis = "python sentiment-analysis.py"
