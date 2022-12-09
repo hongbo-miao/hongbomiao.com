@@ -14,9 +14,9 @@ conda-list-packages:
 	conda list
 
 pip-install:
-	/usr/local/anaconda3/envs/hm-dds/bin/pip install wandb
+	pip install xxx
 pip-list-packages:
-	/usr/local/anaconda3/envs/hm-dds/bin/pip list
+	pip list
 pip-freeze:
 	pip freeze > requirements.txt
 

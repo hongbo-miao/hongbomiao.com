@@ -91,6 +91,8 @@ pyenv-install:
 	pyenv install 3.11
 pyenv-local:
 	pyenv local 3.11
+pyenv-deactivate:
+	pyenv shell system
 
 poetry-self-update:
 	poetry self update

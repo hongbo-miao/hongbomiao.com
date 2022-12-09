@@ -6,4 +6,4 @@ conda-activate:
 	conda activate hm-quantum
 
 run:
-	/usr/local/anaconda3/envs/hm-quantum/bin/python main.py
+	python main.py
