@@ -6,7 +6,7 @@ conda-activate:
 	conda activate hm-opal-client
 
 pip-freeze:
-	/usr/local/anaconda3/envs/hm-opal-client/bin/pip freeze > requirements.txt
+	pip freeze > requirements.txt
 
 docker-build:
 	cd .. && \
