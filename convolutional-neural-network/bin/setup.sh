@@ -2,7 +2,7 @@
 set -e
 
 # Creating an environment
-conda create --name=hm-cnn python=3.9 --yes
+conda create --name=hm-cnn python=3.10 --yes
 conda activate hm-cnn
 
 # Install requirements

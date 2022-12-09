@@ -1,5 +1,5 @@
 conda-create:
-	conda create --name=hm-cnn python=3.9 --yes
+	conda create --name=hm-cnn python=3.10 --yes
 conda-env-remove:
 	conda env remove --name=hm-cnn
 conda-activate:
@@ -14,9 +14,9 @@ conda-list-packages:
 	conda list
 
 pip-install:
-	/usr/local/anaconda3/envs/hm-cnn/bin/pip install wandb
+	pip install xxx
 pip-list-packages:
-	/usr/local/anaconda3/envs/hm-cnn/bin/pip list
+	pip list
 pip-freeze:
 	pip freeze > requirements.txt
 
@@ -72,4 +72,4 @@ dvc-pull:
 	dvc pull
 
 run:
-	/usr/local/anaconda3/envs/hm-cnn/bin/python main.py --should_download_original_data=True
+	python main.py --should_download_original_data=True
