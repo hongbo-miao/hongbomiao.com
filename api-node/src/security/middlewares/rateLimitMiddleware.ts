@@ -7,7 +7,7 @@ const BURST_DURATION_RATE = 10;
 
 const POINTS = 300; // Number of points
 const DURATION = 60; // Per 60 seconds
-const INMEMORY_BLOCK_DURATION = 60; // If IP consume >= inmemoryBlockOnConsumed points, block it for 60 seconds in memory, so no requests go to Redis
+const IN_MEMORY_BLOCK_DURATION = 60; // If IP consume >= inmemoryBlockOnConsumed points, block it for 60 seconds in memory, so no requests go to Redis
 const PROCESS_NUM = 1;
 
 const rateLimitMiddleware = (
@@ -16,7 +16,7 @@ const rateLimitMiddleware = (
   duration: number = DURATION,
   burstPointsRate: number = BURST_POINTS_RATE,
   burstDurationRate: number = BURST_DURATION_RATE,
-  inmemoryBlockDuration: number = INMEMORY_BLOCK_DURATION,
+  inMemoryBlockDuration: number = IN_MEMORY_BLOCK_DURATION,
   processNum: number = PROCESS_NUM,
 ): RequestHandler => {
   const memoryRateLimiter = new RateLimiterMemory({
@@ -30,8 +30,8 @@ const rateLimitMiddleware = (
     storeClient: redis,
     points,
     duration,
-    inmemoryBlockOnConsumed: points + 1,
-    inmemoryBlockDuration,
+    inMemoryBlockOnConsumed: points + 1,
+    inMemoryBlockDuration,
     insuranceLimiter: memoryRateLimiter,
   });
 
@@ -46,8 +46,8 @@ const rateLimitMiddleware = (
     storeClient: redis,
     points: points * burstPointsRate,
     duration: duration * burstDurationRate,
-    inmemoryBlockOnConsumed: points * burstPointsRate + 1,
-    inmemoryBlockDuration,
+    inMemoryBlockOnConsumed: points * burstPointsRate + 1,
+    inMemoryBlockDuration,
     insuranceLimiter: burstMemoryRateLimiter,
   });
 
