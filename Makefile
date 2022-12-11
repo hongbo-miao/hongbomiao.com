@@ -167,6 +167,8 @@ lint-protocol-buffers:
 	buf lint
 lint-c-cpp:
 	clang-format -i -style=file **/*.c **/*.cpp **/*.h **/*.ino
+lint-qml:
+	qmllint $$(git ls-files "**/*.qml")
 lint-terraform:
 	terraform fmt -recursive -check
 lint-terraform-fix:
