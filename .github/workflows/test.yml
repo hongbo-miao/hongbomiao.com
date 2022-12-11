@@ -265,6 +265,25 @@ jobs:
         run: |
           poetry run poe lint-python-isort
 
+  lint-qml:
+    name: Lint | QML
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.*'
+      - name: Lint QML
+        run: |
+          qmllint $(git ls-files "**/*.qml")
+
   lint-ruby:
     name: Lint | Ruby
     runs-on: ubuntu-22.04
