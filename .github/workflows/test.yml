@@ -280,6 +280,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.*'
+          cache: true
       - name: Lint QML
         run: |
           qmllint $(git ls-files "**/*.qml")
