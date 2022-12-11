@@ -124,6 +124,11 @@ make kubernetes-clean
 - **UI Kitten** - UI library
 - **React Native Testing Library** - React Native component testing
 
+### Desktop - Qt
+
+- **Qt** - cross-platform application development framework
+- **QML** - Qt modeling language
+
 ### API Server - Go
 
 - **Gin** - Web framework
