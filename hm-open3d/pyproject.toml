@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "hm-open3d"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.10.x"
+open3d = "0.16.1"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.16.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+dev = "python main.py"
+open3d-example = "open3d example visualization/draw"
