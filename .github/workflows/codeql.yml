@@ -24,6 +24,11 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.*'
+          cache: true
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
