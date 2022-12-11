@@ -75,7 +75,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/206114177-c66e02c2-d5fe-4f96-888d-90ef4aa83395.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/206895642-1cb217aa-23c3-4c2f-b45a-f04250afda9b.svg)
 
 ## 📦 Setup
 
@@ -126,7 +126,7 @@ make kubernetes-clean
 
 ### Desktop - Qt
 
-- **Qt** - cross-platform application development framework
+- **Qt Quick** - Cross-platform application development framework
 - **QML** - Qt modeling language
 
 ### API Server - Go
@@ -317,8 +317,8 @@ make kubernetes-clean
 - **Ktlint** - Kotlin linter and code formatter
 - **Kubeconform** - Kubernetes manifest linter
 - **Buf** - Protocol Buffers linter
-- **autoflake**, **Flake8**, **isort** - Python code linter
-- **opa** - Rego code formatter
+- **autoflake**, **Flake8**, **isort** - Python linter
+- **qmllint** - QML linter
 - **RuboCop** - Ruby linter and code formatter
 - **ShellCheck** - Shell linter
 - **terraform** - Terraform code formatter
@@ -327,6 +327,7 @@ make kubernetes-clean
 - **Prettier** - Code formatter
 - **ClangFormat** - C/C++ code formatter
 - **gofmt** - Go code formatter
+- **opa** - Rego code formatter
 - **Black** - Python code formatter
 - **Mypy** - Python static type checker
 - **tsc** - TypeScript static type checker
