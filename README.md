@@ -227,6 +227,7 @@ make kubernetes-clean
 - **Jupyter Notebook** - Web-based interactive computing platform
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
+- **Open3D** - 3D data processing
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
 - **CML** - Continuous machine learning
 - **DVC** - Data version control
