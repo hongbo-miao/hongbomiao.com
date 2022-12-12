@@ -14,7 +14,7 @@ qt_add_executable(appdesktop-qt
 qt_add_qml_module(appdesktop-qt
     URI desktop-qt
     VERSION 1.0
-    QML_FILES main.qml 
+    QML_FILES main.qml
 )
 
 set_target_properties(appdesktop-qt PROPERTIES
