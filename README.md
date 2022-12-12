@@ -311,6 +311,7 @@ make kubernetes-clean
 
 ### Code
 
+- **CMakeLint** - CMake linter
 - **commitlint** - Commit message linter
 - **Stylelint** - CSS linter
 - **hadolint** - Dockerfile linter
