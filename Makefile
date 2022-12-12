@@ -149,26 +149,26 @@ static-type-check-python:
 
 # Lint
 lint-dockerfile:
-	hadolint $$(git ls-files "**/Dockerfile*")
+	hadolint $$(git ls-files "*Dockerfile*")
 lint-shell:
-	shellcheck $$(git ls-files "**/*.sh")
+	shellcheck $$(git ls-files "*.sh")
 lint-kubernetes:
 	kubeconform \
-		-kubernetes-version=1.23.4 \
-		-ignore-filename-pattern=".*trafficsplit.yaml" \
-		-ignore-filename-pattern=".*my-values.yaml" \
-		-ignore-filename-pattern="kubernetes/manifests/argocd/" \
-		-ignore-filename-pattern="kubernetes/manifests/elastic/" \
-		-ignore-filename-pattern="kubernetes/manifests/kafka/" \
-		-ignore-filename-pattern="kubernetes/manifests/prometheus/" \
-		-ignore-filename-pattern="kubernetes/manifests/yugabyte/" \
-		$$(git ls-files "kubernetes/manifests/")
+		-kubernetes-version=1.26.0 \
+		-ignore-filename-pattern='.*trafficsplit.yaml' \
+		-ignore-filename-pattern='.*my-values.yaml' \
+		-ignore-filename-pattern=kubernetes/manifests/argocd/ \
+		-ignore-filename-pattern=kubernetes/manifests/elastic/ \
+		-ignore-filename-pattern=kubernetes/manifests/kafka/ \
+		-ignore-filename-pattern=kubernetes/manifests/prometheus/ \
+		-ignore-filename-pattern=kubernetes/manifests/yugabyte/ \
+		kubernetes/manifests/
 lint-protocol-buffers:
 	buf lint
 lint-c-cpp:
 	clang-format -i -style=file **/*.c **/*.cpp **/*.h **/*.ino
 lint-qml:
-	qmllint $$(git ls-files "**/*.qml")
+	qmllint $$(git ls-files "*.qml")
 lint-terraform:
 	terraform fmt -recursive -check
 lint-terraform-fix:

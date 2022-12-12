@@ -30,7 +30,7 @@ jobs:
           languages: cpp
       - name: Remove irrelevant Makefile
         run: |
-          rm -f $(git ls-files "**Makefile")
+          rm -f $(git ls-files "*Makefile")
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
       - name: CodeQL
