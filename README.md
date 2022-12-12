@@ -232,7 +232,6 @@ make kubernetes-clean
 - **Jupyter Notebook** - Web-based interactive computing platform
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
-- **Open3D** - 3D data processing
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
 - **CML** - Continuous machine learning
 - **DVC** - Data version control
@@ -246,6 +245,10 @@ make kubernetes-clean
 - **BigQuery** - Data warehouse
 - **Looker Studio** - Business insights visualizations
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
+
+### Computer Vision
+
+- **Open3D** - 3D data processing
 
 ### Cloud Native
 
@@ -379,6 +382,12 @@ make kubernetes-clean
 #### RTI Connext DDS
 
 ![MATLAB and Simulink screenshot](https://user-images.githubusercontent.com/3375461/197075768-18b61ddf-57db-4d32-ae48-c7e77cea9c77.jpg)
+
+### Computer Vision
+
+#### Open3D
+
+![Open3D screenshot](https://user-images.githubusercontent.com/3375461/206969208-a2e5ad6b-8541-4040-8737-24f198aee579.jpg)
 
 ### Cloud Native
 
