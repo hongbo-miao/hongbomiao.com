@@ -1,0 +1,13 @@
+caddy-adapt:
+	caddy adapt
+caddy-run:
+	caddy run
+caddy-run-watch:
+	caddy run --watch
+
+lint-caddy:
+	caddy fmt
+lint-caddy-fix:
+	caddy fmt --overwrite
+static-type-check-caddy:
+	caddy validate
