@@ -258,8 +258,9 @@ make kubernetes-clean
 - **Terraform** - Infrastructure as code
 - **TorchServe** - PyTorch models serving
 - **Linkerd** - Service mesh
-- **Traefik** - Reverse proxy and load balancer
-- **nginx** - Reverse proxy, load balancer
+- **Caddy** - Web server, reverse proxy, load balancer
+- **Traefik** - Web server, reverse proxy, load balancer
+- **nginx** - Web server, reverse proxy, load balancer
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
 - **Kibana** - Data visualization dashboard for Elasticsearch
