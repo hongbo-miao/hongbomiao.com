@@ -7,7 +7,11 @@ authors = ["Hongbo Miao"]
 [tool.poetry.dependencies]
 python = "3.10.x"
 # https://pypi.org/project/torch/#files
-torch = {url = "https://files.pythonhosted.org/packages/79/b3/eaea3fc35d0466b9dae1e3f9db08467939347b3aaa53c0fd81953032db33/torch-1.13.0-cp310-none-macosx_11_0_arm64.whl"}
+torch = [
+  {markers = "sys_platform == 'darwin' and platform_machine == 'arm64'", url = "https://files.pythonhosted.org/packages/79/b3/eaea3fc35d0466b9dae1e3f9db08467939347b3aaa53c0fd81953032db33/torch-1.13.0-cp310-none-macosx_11_0_arm64.whl"},
+  {markers = "sys_platform == 'darwin' and platform_machine == 'x86_64'", url = "https://files.pythonhosted.org/packages/b6/79/ead6840368f294497591af143980372ff956fc4c982c457a8b5610a5a1f3/torch-1.13.0-cp310-none-macosx_10_9_x86_64.whl"},
+  {markers = "sys_platform == 'linux'", url="https://files.pythonhosted.org/packages/5c/61/b0303b8810c1300e75e8e665d043f6c2b272a4da60e9cc33416cde8edb76/torch-1.13.0-cp310-cp310-manylinux2014_aarch64.whl"}
+]
 transformers = {version = "4.25.1", extras = ["sentencepiece"]}
 
 [tool.poetry.group.dev.dependencies]
