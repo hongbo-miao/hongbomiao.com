@@ -8,43 +8,10 @@ name: CodeQL
     branches: [main]
 
 jobs:
-  codeql-cpp:
-    name: CodeQL (cpp)
-    runs-on: ubuntu-22.04
-    timeout-minutes: 20
-    steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: '6.*'
-          cache: true
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: cpp
-      - name: Remove irrelevant Makefile
-        run: |
-          rm -f $(git ls-files "*Makefile")
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
-      - name: CodeQL
-        uses: github/codeql-action/analyze@v2
-
   codeql-go-java-javascript-python-ruby:
     name: CodeQL
     runs-on: ubuntu-22.04
     timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        # https://github.com/github/codeql-action/blob/main/src/languages.ts
-        language: [go, java, javascript, python, ruby]
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.11.0
@@ -55,7 +22,8 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: ${{ matrix.language }}
+          tools: https://github.com/dsp-testing/codeql-cli-nightlies/releases/download/codeql-bundle-20221216/codeql-bundle-linux64.tar.gz
+          languages: java
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
       - name: CodeQL
