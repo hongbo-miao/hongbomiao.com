@@ -75,7 +75,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/206895642-1cb217aa-23c3-4c2f-b45a-f04250afda9b.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/208062074-cebe33bd-bc9a-41da-a2af-47076811164e.svg)
 
 ## 📦 Setup
 
@@ -244,6 +244,7 @@ make kubernetes-clean
 - **Dataprep** - Data cleaning
 - **BigQuery** - Data warehouse
 - **Looker Studio** - Business insights visualizations
+- **Vertex AI** - AutoML
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
 ### Computer Vision
@@ -470,6 +471,12 @@ make kubernetes-clean
 ![Sloop screenshot](https://user-images.githubusercontent.com/3375461/167351205-0f7e0921-07ff-4072-b5b9-c343d88f25c4.jpg)
 
 ### Data
+
+#### Vertex AI - AutoML
+
+![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061661-c2530404-98af-4f8a-9749-30bbca952cd2.png)
+![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061692-bbbfebf2-ff56-4336-b109-f07282df56a3.png)
+![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061707-28510a32-65e2-413f-85e7-70d93dc44820.png)
 
 #### Dataprep - Data Cleaning
 
