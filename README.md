@@ -243,6 +243,7 @@ make kubernetes-clean
 - **pydantic** - Data validation
 - **Dataprep** - Data cleaning
 - **BigQuery** - Data warehouse
+  - **BigQuery ML** - BigQuery machine learning
 - **Looker Studio** - Business insights visualizations
 - **Vertex AI** - AutoML
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
