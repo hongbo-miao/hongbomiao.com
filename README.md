@@ -1,3 +1,4 @@
+
 <p align="center">
   <a href="https://www.hongbomiao.com"><img width="100" src="https://user-images.githubusercontent.com/3375461/93688946-821f1880-fafc-11ea-8918-374f21f4ac6e.png" alt="Flying" /></a>
 </p>
@@ -322,6 +323,7 @@ make kubernetes-clean
 - **ESLint** - JavaScript linter
 - **markdownlint-cli2** - Markdown linter
 - **Ktlint** - Kotlin linter and code formatter
+- **SQLFluff** - SQL linter and code formatter
 - **Kubeconform** - Kubernetes manifest linter
 - **Buf** - Protocol Buffers linter
 - **autoflake**, **Flake8**, **isort** - Python linter
