@@ -1,23 +1,16 @@
-conda-create:
-	conda create --name=hm-pyspark python=3.10 --yes
-conda-env-remove:
-	conda env remove --name=hm-pyspark
-conda-activate:
-	conda activate hm-pyspark
-conda-deactivate:
-	conda deactivate
-conda-env-list:
-	conda env list
-conda-list-packages:
-	conda list
-
 brew-install:
 	brew install openjdk@17
 
-pip-install:
-	pip install --requirement=requirements.txt
+poetry-lock:
+	poetry lock --no-update
+poetry-install:
+	poetry install
+poetry-add:
+	poetry add xxx
+poetry-add-dev:
+	poetry add xxx --group=dev
 
-run-get-taxi-statistics:
-	python src/get_taxi_statistics.py
-run-get-taxi-statistics-sql:
-	python src/get_taxi_statistics_sql.py
+poetry-run-get-taxi-statistics:
+	poetry run poe get-taxi-statistics
+poetry-run-dev-get-taxi-statistics-sql:
+	poetry run poe get-taxi-statistics-sql
