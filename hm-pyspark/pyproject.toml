@@ -1,13 +1,12 @@
 [tool.poetry]
-name = "hm-dashboard"
+name = "hm-pyspark"
 version = "1.0.0"
 description = ""
 authors = ["Hongbo Miao"]
 
 [tool.poetry.dependencies]
 python = "3.11.x"
-grafanalib = "0.7.0"
-requests = "2.28.1"
+pyspark = "3.3.1"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "0.16.5"
@@ -17,5 +16,5 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
-generate-dashboard = "generate-dashboard --output=frontend.json hm.dashboard.py"
-upload-dashboard = "python upload_dashboard.py"
+get-taxi-statistics = "python src/get_taxi_statistics.py"
+get-taxi-statistics-sql = "python src/get_taxi_statistics_sql.py"
