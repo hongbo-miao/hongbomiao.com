@@ -1,75 +1,44 @@
-conda-create:
-	conda create --name=hm-cnn python=3.10 --yes
-conda-env-remove:
-	conda env remove --name=hm-cnn
-conda-activate:
-	conda activate hm-cnn
-conda-deactivate:
-	conda deactivate
-conda-env-list:
-	conda env list
-conda-install:
-	conda install pytorch torchvision torchaudio --channel=pytorch --yes
-conda-list-packages:
-	conda list
+poetry-lock:
+	poetry lock --no-update
+poetry-install:
+	poetry install
+poetry-add:
+	poetry add xxx
+poetry-add-dev:
+	poetry add xxx --group=dev
 
-pip-install:
-	pip install xxx
-pip-list-packages:
-	pip list
-pip-freeze:
-	pip freeze > requirements.txt
+poetry-run-dev:
+	poetry run poe dev
+poetry-run-dev-download-original-data:
+	poetry run poe dev-download-original-data
 
-dvc-init:
-	dvc init --subdir
-dvc-add:
-	dvc add data/raw/cifar-10-python.tar.gz
-dvc-run-prepare:
-	dvc run \
-		--name=prepare \
-		--deps=data/raw/cifar-10-python.tar.gz \
- 		--outs=data/processed/cifar-10-batches-py/ \
-		tar -x -f data/raw/cifar-10-python.tar.gz -C data/processed
-dvc-run-main:
-	dvc run \
-		--name=main \
-		--deps=data/processed/cifar-10-batches-py/ \
-		--deps=model/ \
-		--deps=main.py \
-		--deps=train.py \
-		--deps=evaluate.py \
-		--params=lr,train.epochs \
- 		--outs=output/models/model.pt \
-		python main.py
-dvc-run-main-no-exec:
-	dvc run \
-		--no-exec \
-		--name=main \
-		--deps=data/cifar-10-batches-py/ \
-		--deps=model/ \
-		--deps=main.py \
-		--deps=train.py \
-		--deps=evaluate.py \
-		--params=lr,train.epochs \
-		python main.py
-dvc-repro:
-	dvc repro data/raw/cifar-10-python.tar.gz.dvc
 
-dvc-remove-stage:
-	dvc remove STAGE_NAME
-dvc-dag:
-	dvc dag
+poetry-dvc-init:
+	poetry run poe dvc-init
+poetry-dvc-add:
+	poetry run poe dvc-add
+poetry-dvc-run-prepare:
+	poetry run poe dvc-run-prepare
+poetry-dvc-run-main:
+	poetry run poe dvc-run-main
+poetry-dvc-run-main-no-exec:
+	poetry run poe dvc-run-main-no-exec
+poetry-dvc-repro:
+	poetry run poe dvc-repro
+
+poetry-dvc-remove-stage:
+	poetry run poe dvc-remove-stage
+poetry-dvc-dag:
+	poetry run poe dvc-dag
+
+poetry-dvc-remote-add:
+	poetry run poe dvc-remote-add
+poetry-dvc-push:
+	poetry run poe dvc-push
+poetry-dvc-pull:
+	poetry run poe dvc-pull
 
 aws-create-s3:
 	aws s3 mb s3://hongbomiao-bucket/hm-cnn-dvc-store --region us-west-2
 aws-ls:
 	aws s3 ls s3://hongbomiao-bucket/hm-cnn-dvc-store
-dvc-remote-add:
-	dvc remote add -d hm-remote s3://hongbomiao-bucket/hm-cnn-dvc-store
-dvc-push:
-	dvc push
-dvc-pull:
-	dvc pull
-
-run:
-	python main.py --should_download_original_data=True
