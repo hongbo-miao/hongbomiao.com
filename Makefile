@@ -130,11 +130,13 @@ lint-python-isort:
 lint-python-isort-fix:
 	poetry run poe lint-python-isort-fix
 lint-sql:
+	poetry run poe lint-sql --dialect=bigquery bigquery-ml
 	poetry run poe lint-sql --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql --dialect=postgres hasura-graphql-engine/seeds
 	poetry run poe lint-sql --dialect=postgres kubernetes/data/postgres/opa_db/migrations
 	poetry run poe lint-sql --dialect=postgres kubernetes/data/timescaledb/twitter_db/migrations
 lint-sql-fix:
+	poetry run poe lint-sql-fix --dialect=bigquery bigquery-ml
 	poetry run poe lint-sql-fix --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql-fix --dialect=postgres hasura-graphql-engine/seeds
 	poetry run poe lint-sql-fix --dialect=postgres kubernetes/data/postgres/opa_db/migrations

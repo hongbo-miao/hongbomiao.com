@@ -1,6 +1,6 @@
-select *
+select sqrt(mean_squared_error) as rmse
 from
-    ml.predict(model `taxi.taxifare_model`, (
+    ml.evaluate(model `taxi.taxifare_model`, (
         with
         params as (
             select
