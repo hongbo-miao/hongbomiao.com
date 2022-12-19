@@ -1,9 +1,11 @@
-conda-create:
-	conda create --name=hm-quantum python=3.9 --yes
-conda-env-remove:
-	conda env remove --name=hm-quantum
-conda-activate:
-	conda activate hm-quantum
+poetry-lock:
+	poetry lock --no-update
+poetry-install:
+	poetry install
+poetry-add:
+	poetry add xxx
+poetry-add-dev:
+	poetry add xxx --group=dev
 
-run:
-	python main.py
+poetry-run-dev:
+	poetry run poe dev
