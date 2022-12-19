@@ -9,6 +9,5 @@ conda activate hm-cnn
 conda install pytorch torchvision torchaudio --channel=pytorch --yes
 conda install dvc dvc-s3 --channel=conda-forge --yes
 conda install pandas --yes
-conda install tabulate --yes
 
 pip install --requirement=requirements.txt
