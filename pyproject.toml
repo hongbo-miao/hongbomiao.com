@@ -24,7 +24,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
 lint-cmake = {shell = "cmakelint $(git ls-files '*CMakeLists.txt')"}
-
 lint-python-autoflake = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --check --recursive ."
 lint-python-autoflake-fix = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --in-place --recursive ."
 lint-python-black = "black . --check"
@@ -32,15 +31,7 @@ lint-python-black-fix = "black ."
 lint-python-flake8 = "flake8 ."
 lint-python-isort = "isort . --check-only"
 lint-python-isort-fix = "isort ."
-
-sqlfluff-dialects = "sqlfluff dialects"
-lint-sql-bigquery = "sqlfluff lint --dialect=bigquery bigquery-ml"
-lint-sql-bigquery-fix = "sqlfluff fix --dialect=bigquery bigquery-ml"
-lint-sql-postgres = {shell = "sqlfluff lint --dialect=postgres kubernetes/data/timescaledb/twitter_db/migrations && sqlfluff lint --dialect=postgres hasura-graphql-engine/migrations"}
-lint-sql-postgres-fix = {shell = "sqlfluff fix --dialect=postgres kubernetes/data/timescaledb/twitter_db/migrations && sqlfluff fix --dialect=postgres hasura-graphql-engine/migrations"}
 lint-sql = "sqlfluff lint"
 lint-sql-fix = "sqlfluff fix --force"
-
 lint-yaml = "yamllint ."
-
 static-type-check-python = "mypy --install-types --non-interactive"
