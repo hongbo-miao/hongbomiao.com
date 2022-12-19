@@ -18,26 +18,29 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up CML
         uses: iterative/setup-cml@v1
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          activate-environment: hm-cnn
-          python-version: "3.10"
-      - name: Install requirements
-        working-directory: convolutional-neural-network
-        shell: bash -l {0}
+      - name: Install Poetry
         run: |
-          conda install pytorch torchvision torchaudio --channel=pytorch --yes
-          conda install pandas --yes
-          conda install tabulate --yes
-          pip install --requirement=requirements.txt
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: poetry
+      - name: Set Poetry environment
+        working-directory: convolutional-neural-network
+        run: |
+          poetry env use 3.10
+      - name: Install dependencies
+        working-directory: convolutional-neural-network
+        run: |
+          poetry install
       - name: Train model
         working-directory: convolutional-neural-network
         shell: bash -l {0}
         env:
           WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
         run: |
-          python main.py --should_download_original_data=True
+          poetry run poe dev-download-original-data
       - name: Write CML report
         working-directory: convolutional-neural-network
         shell: bash -l {0}
@@ -45,11 +48,9 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "# CML (Local) Report" >> report.md
-
           echo "## Params" >> report.md
           cat output/reports/params.txt >> report.md
-
-          cml-send-comment report.md
+          cml comment create report.md
 
   cml-cloud-set-up-cloud:
     name: CML (Cloud) - Set up cloud
@@ -90,33 +91,36 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          activate-environment: hm-cnn
-          python-version: "3.10"
-      - name: Install requirements
-        working-directory: convolutional-neural-network
-        shell: bash -l {0}
+      - name: Install Poetry
         run: |
-          conda install pytorch torchvision torchaudio --channel=pytorch --yes
-          conda install pandas --yes
-          conda install tabulate --yes
-          pip install --requirement=requirements.txt
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: poetry
+      - name: Set Poetry environment
+        working-directory: convolutional-neural-network
+        run: |
+          poetry env use 3.10
+      - name: Install dependencies
+        working-directory: convolutional-neural-network
+        run: |
+          poetry install
       - name: Pull Data
         working-directory: convolutional-neural-network
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          dvc pull
+          poetry run poe dvc-pull
       - name: Train model
         working-directory: convolutional-neural-network
         shell: bash -l {0}
         env:
           WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
         run: |
-          dvc repro
+          poetry run poe dvc-repro
       - name: Write CML report
         working-directory: convolutional-neural-network
         shell: bash -l {0}
@@ -124,8 +128,6 @@ jobs:
           REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
         run: |
           echo "# CML (Cloud) Report" >> report.md
-
           echo "## Params" >> report.md
           cat output/reports/params.txt >> report.md
-
-          cml-send-comment report.md
+          cml comment create report.md
