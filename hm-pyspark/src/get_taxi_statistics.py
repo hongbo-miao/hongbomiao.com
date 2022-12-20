@@ -21,31 +21,7 @@ def get_top_routes(trips: DataFrame, zones: DataFrame) -> DataFrame:
     )
 
 
-def get_taxi_statistics(trip_data_paths: list[str], zone_data_path: str) -> None:
-    spark = (
-        SparkSession.builder.master("local[*]")
-        .appName("get_taxi_statistics")
-        .config("spark.ui.port", "4040")
-        .getOrCreate()
-    )
-
-    trips = load_trips(spark, trip_data_paths)
-    zones = load_zones(spark, zone_data_path)
-
-    trips = preprocess_trips(trips)
-    print((trips.count(), len(trips.columns)))
-    trips.show()
-
-    zones = preprocess_zones(zones)
-    print((zones.count(), len(zones.columns)))
-    zones.show()
-
-    top_routes = get_top_routes(trips, zones)
-    print((top_routes.count(), len(top_routes.columns)))
-    top_routes.show(truncate=False)
-
-
-if __name__ == "__main__":
+def main():
     dirname = "data"
     trip_filenames = [
         "yellow_tripdata_2019-01.parquet",
@@ -96,4 +72,30 @@ if __name__ == "__main__":
     trip_data_paths = [f"{dirname}/{f}" for f in trip_filenames]
     zone_data_path = f"{dirname}/{zone_filename}"
 
-    get_taxi_statistics(trip_data_paths, zone_data_path)
+    spark = (
+        SparkSession.builder.master("local[*]")
+        .appName("get_taxi_statistics")
+        .config("spark.ui.port", "4040")
+        .getOrCreate()
+    )
+
+    trips = load_trips(spark, trip_data_paths)
+    zones = load_zones(spark, zone_data_path)
+
+    trips = preprocess_trips(trips)
+    print((trips.count(), len(trips.columns)))
+    trips.show()
+
+    zones = preprocess_zones(zones)
+    print((zones.count(), len(zones.columns)))
+    zones.show()
+
+    top_routes = get_top_routes(trips, zones)
+    print((top_routes.count(), len(top_routes.columns)))
+    top_routes.show(truncate=False)
+
+    spark.stop()
+
+
+if __name__ == "__main__":
+    main()
