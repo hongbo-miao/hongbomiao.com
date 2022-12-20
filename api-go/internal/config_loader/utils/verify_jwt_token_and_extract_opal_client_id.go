@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/rs/zerolog/log"
-	"io/ioutil"
+	"os"
 )
 
 type JWTTokenContent struct {
@@ -13,9 +13,9 @@ type JWTTokenContent struct {
 
 func VerifyJWTTokenAndExtractOPALClientID(tokenString string) (string, error) {
 	config := GetConfig()
-	publicKey, err := ioutil.ReadFile(config.OPALAuthPublicKeyPath)
+	publicKey, err := os.ReadFile(config.OPALAuthPublicKeyPath)
 	if err != nil {
-		log.Error().Err(err).Msg("ioutil.ReadFile")
+		log.Error().Err(err).Msg("os.ReadFile")
 		return "", err
 	}
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {

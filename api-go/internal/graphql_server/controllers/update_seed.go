@@ -5,12 +5,12 @@ import (
 	"github.com/buger/jsonparser"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
 func UpdateSeed(c *gin.Context) {
-	bodyBytes, _ := ioutil.ReadAll(c.Request.Body)
+	bodyBytes, _ := io.ReadAll(c.Request.Body)
 	n, err := jsonparser.GetInt(bodyBytes, "input", "n")
 	if err != nil {
 		log.Error().Err(err).Bytes("bodyBytes", bodyBytes).Msg("jsonparser.GetInt n")
