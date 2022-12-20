@@ -6,13 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/rs/zerolog/log"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
 func OPADBCDC(pg *pgxpool.Pool) gin.HandlerFunc {
 	fn := func(c *gin.Context) {
-		bodyBytes, _ := ioutil.ReadAll(c.Request.Body)
+		bodyBytes, _ := io.ReadAll(c.Request.Body)
 		opalClientID, err := jsonparser.GetString(bodyBytes, "after", "opal_client_id")
 		if err != nil {
 			log.Error().Err(err).Bytes("bodyBytes", bodyBytes).Msg("jsonparser.GetString opal_client_id")
