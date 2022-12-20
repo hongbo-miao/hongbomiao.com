@@ -9,7 +9,7 @@ import (
 	"go.opencensus.io/plugin/ocgrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"io/ioutil"
+	"io"
 	"mime/multipart"
 )
 
@@ -21,9 +21,9 @@ func GetPrediction(fileHeader *multipart.FileHeader) (*Prediction, error) {
 		log.Error().Err(err).Msg("file.Open")
 		return nil, err
 	}
-	bytes, err := ioutil.ReadAll(file)
+	bytes, err := io.ReadAll(file)
 	if err != nil {
-		log.Error().Err(err).Msg("ioutil.ReadAll")
+		log.Error().Err(err).Msg("io.ReadAll")
 		return nil, err
 	}
 
