@@ -43,4 +43,4 @@ from
         select *
         from
             taxitrips
-        ));
+    ));
