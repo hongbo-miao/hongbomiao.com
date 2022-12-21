@@ -1,6 +1,6 @@
 select *
 from
-    ml.predict(model `hm_taxi.taxifare_model`, (
+    ml.predict(model `taxi.hm_taxi_fare_model`, (
         with
         params as (
             select

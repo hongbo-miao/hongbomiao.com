@@ -1,11 +1,5 @@
-create or replace model `hm_sales.my_arima_plus_model`
-options(
-    model_type = 'arima_plus',
-    time_series_timestamp_col = 'date',
-    time_series_data_col = 'total_amount_sold',
-    time_series_id_col = 'item_name',
-    holiday_region = 'US'
-) as (
+with
+new_data as (
     select
         date,
         item_description as item_name,
@@ -16,7 +10,7 @@ options(
         date,
         item_name
     having
-        date between date('2018-01-01') and date('2020-12-31')
+        date between date('2021-01-01') and date('2021-12-31')
         and lower(item_name) in (
             'black velvet',
             'captain morgan spiced rum',
@@ -24,4 +18,15 @@ options(
             "five o'clock vodka",
             'fireball cinnamon whiskey'
         )
-);
+)
+
+select *
+from
+    ml.detect_anomalies(
+        model `sales.hm_sales_anomalies_model`,
+        struct(0.8 as anomaly_prob_threshold),
+        (
+            select *
+            from
+                new_data
+        ));
