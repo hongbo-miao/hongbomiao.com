@@ -1,6 +1,6 @@
 select *
 from
     ml.detect_anomalies(
-        model `hm_sales.my_arima_plus_model`,
+        model `sales.hm_sales_anomalies_model`,
         struct(0.8 as anomaly_prob_threshold)
     );

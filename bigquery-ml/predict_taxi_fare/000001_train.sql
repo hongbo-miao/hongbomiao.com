@@ -1,4 +1,4 @@
-create or replace model `hm_taxi.taxifare_model`
+create or replace model `taxi.hm_taxi_fare_model`
 options (model_type = 'linear_reg', labels = ['total_fare']) as (
     with
     params as (
