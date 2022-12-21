@@ -1,3 +1,3 @@
 select *
 from
-    ml.training_info(model `hm_taxi.taxifare_model`);
+    ml.training_info(model `taxi.hm_taxi_fare_model`);
