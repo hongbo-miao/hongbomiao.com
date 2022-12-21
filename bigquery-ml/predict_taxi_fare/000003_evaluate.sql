@@ -1,6 +1,6 @@
 select sqrt(mean_squared_error) as rmse
 from
-    ml.evaluate(model `taxi.taxifare_model`, (
+    ml.evaluate(model `hm_taxi.taxifare_model`, (
         with
         params as (
             select
@@ -43,4 +43,4 @@ from
         select *
         from
             taxitrips
-        ));
+    ));
