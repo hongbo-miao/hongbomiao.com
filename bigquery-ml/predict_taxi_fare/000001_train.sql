@@ -1,5 +1,5 @@
-create or replace model
-`taxi.taxifare_model` options (model_type = 'linear_reg', labels = ['total_fare']) as (
+create or replace model `hm_taxi.taxifare_model`
+options (model_type = 'linear_reg', labels = ['total_fare']) as (
     with
     params as (
         select
