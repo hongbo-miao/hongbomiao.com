@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "hm-prefect"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.11.x"
+greenlet = "2.0.1"
+influxdb-client = "1.35.0"
+pandas = "1.5.2"
+prefect = "2.7.4"
+prefect-aws = "0.2.1"
+pyarrow = "10.0.1"
+pydantic = "1.10.2"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.16.5"
+pytest = "7.1.3"
+pytest-cov = "4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+workflow-calculate = "python src/calculate/main.py"
+workflow-find-taxi-top-routes = "python src/find_taxi_top_routes/main.py"
+workflow-greet = "python src/greet/main.py"
+prefect-local = "prefect orion start"
+prefect-cloud = "prefect cloud login --key=xxx && prefect cloud workspace set --workspace=hongbo-miao/hongbomiao"
+test = "pytest"
+test-coverage = "pytest --cov=. --cov-report=xml"

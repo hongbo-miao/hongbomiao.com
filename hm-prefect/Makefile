@@ -1,32 +1,25 @@
-conda-create:
-	conda create --name=hm-prefect python=3.10 --yes
-conda-env-remove:
-	conda env remove --name=hm-prefect
-conda-activate:
-	conda activate hm-prefect
-conda-deactivate:
-	conda deactivate
-conda-env-list:
-	conda env list
-conda-list-packages:
-	conda list
+poetry-lock:
+	poetry lock --no-update
+poetry-install:
+	poetry install
+poetry-add:
+	poetry add xxx
+poetry-add-dev:
+	poetry add xxx --group=dev
 
-pip-install:
-	pip install --requirement=requirements.txt
-	pip install --requirement=requirements-dev.txt
+poetry-run-workflow-calculate:
+	poetry run poe workflow-calculate
+poetry-run-workflow-find-taxi-top-routes:
+	poetry run poe workflow-find-taxi-top-routes
+poetry-run-workflow-greet:
+	poetry run poe workflow-greet
 
-prefect-local:
-	prefect orion start
-prefect-cloud:
-	prefect cloud login --key=xxx
-	prefect cloud workspace set --workspace=hongbo-miao/hongbomiao
+poetry-run-prefect-local:
+	poetry run poe prefect-local
+poetry-run-prefect-cloud:
+	poetry run poe prefect-cloud
 
-workflow-start:
-	python src/calculate/main.py
-	python src/find_taxi_top_routes/main.py
-	python src/greet/main.py
-
-test:
-	pytest
-test-coverage:
-	pytest --cov=. --cov-report=xml
+poetry-run-test:
+	poetry run poe test
+poetry-run-test-coverage:
+	poetry run poe test-coverage
