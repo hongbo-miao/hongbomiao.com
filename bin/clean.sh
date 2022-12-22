@@ -2,44 +2,44 @@
 set -e
 
 # Root
-rm -rf coverage
-rm -rf node_modules
+rm -r -f coverage/
+rm -r -f node_modules/
 
 # Web
 cd web
-rm -rf .lighthouseci
-rm -rf build
-rm -rf coverage
-rm -rf node_modules
-rm -rf tmp
+rm -r -f .lighthouseci/
+rm -r -f build/
+rm -r -f coverage/
+rm -r -f node_modules/
+rm -r -f tmp/
 rm -f public/sitemap.xml
 
 # Mobile - React Native
 cd ../mobile-react-native
-rm -rf .expo
-rm -rf coverage
-rm -rf node_modules
+rm -r -f .expo/
+rm -r -f coverage/
+rm -r -f node_modules/
 
 # API - Node.js
 cd ../api-node
-rm -rf .clinic
-rm -rf build
-rm -rf coverage
-rm -rf public
-rm -rf node_modules
+rm -r -f .clinic/
+rm -r -f build/
+rm -r -f coverage/
+rm -r -f public/
+rm -r -f node_modules/
 
 # API - Go
 cd ../api-go
-rm -rf web
+rm -r -f web/
 
 # Cypress
 cd ../web-cypress
-rm -rf node_modules
+rm -r -f node_modules/
 
 # Ethereum
 cd ../ethereum
-rm -rf node_modules
+rm -r -f node_modules/
 
 # Grafana
 cd ../grafana/hm-panel-plugin
-rm -rf node_modules
+rm -r -f node_modules/
