@@ -34,7 +34,7 @@ serviceAccount:
 # For production clusters it's recommended to build own image with this step done in CI
 bootstrapScript: |
   #!/bin/bash
-  rm -rf /var/lib/apt/lists/* && \
+  rm -r -f /var/lib/apt/lists/ && \
   pip install \
     psycopg2-binary==2.9.1 \
     redis==3.5.3 && \
