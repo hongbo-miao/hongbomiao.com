@@ -105,7 +105,7 @@ spec:
               protocol: TCP
               containerPort: 16020
           command: [
-            "/bin/sh", "-c", "rm -rf /tmp/log/stdout.log && mkfifo /tmp/log/stdout.log && /bin/graphql-engine serve | tee /tmp/log/stdout.log"
+            "/bin/sh", "-c", "rm -f /tmp/log/stdout.log && mkfifo /tmp/log/stdout.log && /bin/graphql-engine serve | tee /tmp/log/stdout.log"
           ]
           volumeMounts:
             - name: hasura-graphql-engine-volume

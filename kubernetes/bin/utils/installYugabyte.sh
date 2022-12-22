@@ -5,8 +5,8 @@ echo "# Deploy Yugabyte"
 YUGABYTE_PATH="kubernetes/data/yugabyte"
 YUGABYTE_REPLICA=3
 for ((i = 0; i < YUGABYTE_REPLICA; i++)); do
-  rm -rf "${YUGABYTE_PATH}/master-${i}"
-  rm -rf "${YUGABYTE_PATH}/tserver-${i}"
+  rm -r -f "${YUGABYTE_PATH}/master-${i}/"
+  rm -r -f "${YUGABYTE_PATH}/tserver-${i}/"
   mkdir "${YUGABYTE_PATH}/master-${i}"
   mkdir "${YUGABYTE_PATH}/tserver-${i}"
 done

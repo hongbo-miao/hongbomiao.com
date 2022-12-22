@@ -6,7 +6,7 @@ RUN apt-get update \
   && apt-get upgrade -y \
   && apt-get install libgomp1 -y --no-install-recommends \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -r -f /var/lib/apt/lists/
 
 COPY ["hm-keydb/modules/", "/usr/lib/keydb/modules/"]
 CMD ["keydb-server", \
