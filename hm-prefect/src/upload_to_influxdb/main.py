@@ -57,7 +57,7 @@ async def process(
 
 
 @flow
-async def get_taxi_statistics() -> None:
+async def find_taxi_top_routes() -> None:
     dirname = "taxi"
     trip_filenames = [
         "yellow_tripdata_2021-07.parquet",
@@ -89,4 +89,4 @@ async def get_taxi_statistics() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(get_taxi_statistics())
+    asyncio.run(find_taxi_top_routes())

@@ -10,9 +10,9 @@ poetry-add:
 poetry-add-dev:
 	poetry add xxx --group=dev
 
-poetry-run-get-taxi-statistics:
-	poetry run poe get-taxi-statistics
-poetry-run-get-taxi-statistics-sql:
-	poetry run poe get-taxi-statistics-sql
+poetry-run-find-taxi-top-routes:
+	poetry run poe find-taxi-top-routes
+poetry-run-find-taxi-top-routes-sql:
+	poetry run poe find-taxi-top-routes-sql
 poetry-run-recommend-movie:
 	poetry run poe recommend-movie
