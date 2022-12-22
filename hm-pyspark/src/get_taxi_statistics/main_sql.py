@@ -1,28 +1,49 @@
 from pyspark.sql import DataFrame, SparkSession
-from pyspark.sql.functions import count, desc
 from utils.trip import load_trips, preprocess_trips
 from utils.zone import load_zones, preprocess_zones
 
 
-def get_top_routes(trips: DataFrame, zones: DataFrame) -> DataFrame:
-    return (
-        trips.select("pulocationid", "dolocationid")
-        .groupBy("pulocationid", "dolocationid")
-        .agg(count("*").alias("count"))
-        .join(zones, on=[trips.pulocationid == zones.locationid], how="inner")
-        .withColumnRenamed("zone", "pulocation_zone")
-        .withColumnRenamed("borough", "pulocation_borough")
-        .drop("locationid", "shape_area", "shape_leng", "the_geom")
-        .join(zones, on=[trips.dolocationid == zones.locationid], how="inner")
-        .withColumnRenamed("zone", "dolocation_zone")
-        .withColumnRenamed("borough", "dolocation_borough")
-        .drop("locationid", "shape_area", "shape_leng", "the_geom")
-        .orderBy(desc("count"))
+def get_top_routes(
+    spark: SparkSession, trips: DataFrame, zones: DataFrame
+) -> DataFrame:
+    trips.createOrReplaceTempView("trips")
+    zones.createOrReplaceTempView("zones")
+
+    return spark.sql(
+        """
+        WITH t2 AS (
+            WITH t1 AS (
+                SELECT pulocationid, dolocationid, count(*) AS count
+                FROM trips
+                GROUP BY pulocationid, dolocationid
+            )
+            SELECT
+                t1.pulocationid,
+                zones.zone AS pulocation_zone,
+                zones.borough AS pulocation_borough,
+                t1.dolocationid,
+                t1.count
+            FROM t1
+            INNER JOIN zones ON t1.pulocationid = zones.locationid
+        )
+        SELECT
+            t2.pulocationid,
+            t2.pulocation_zone,
+            t2.pulocation_borough,
+            t2.dolocationid,
+            zones.zone AS dolocation_zone,
+            zones.borough AS dolocation_borough,
+            t2.count
+        FROM t2
+        INNER JOIN zones ON t2.dolocationid = zones.locationid
+        ORDER BY t2.count DESC
+        """
     )
 
 
 def main():
-    dirname = "data"
+    # https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+    data_dirname = "data"
     trip_filenames = [
         "yellow_tripdata_2019-01.parquet",
         "yellow_tripdata_2019-02.parquet",
@@ -69,12 +90,12 @@ def main():
     ]
     zone_filename = "taxi_zones.csv"
 
-    trip_data_paths = [f"{dirname}/{f}" for f in trip_filenames]
-    zone_data_path = f"{dirname}/{zone_filename}"
+    trip_data_paths = [f"{data_dirname}/{f}" for f in trip_filenames]
+    zone_data_path = f"{data_dirname}/{zone_filename}"
 
     spark = (
         SparkSession.builder.master("local[*]")
-        .appName("get_taxi_statistics")
+        .appName("get_taxi_statistics_sql")
         .config("spark.ui.port", "4040")
         .getOrCreate()
     )
@@ -90,7 +111,7 @@ def main():
     print((zones.count(), len(zones.columns)))
     zones.show()
 
-    top_routes = get_top_routes(trips, zones)
+    top_routes = get_top_routes(spark, trips, zones)
     print((top_routes.count(), len(top_routes.columns)))
     top_routes.show(truncate=False)
 
