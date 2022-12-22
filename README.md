@@ -160,6 +160,10 @@ make kubernetes-clean
 - **Flask-Sock** - WebSocket
 - **confluent-kafka** - Kafka client
 - **Gunicorn** - Python WSGI HTTP server
+- **asyncpg** - PostgreSQL client
+- **Tenacity** - General-purpose retrying library
+- **pytest** - Unit testing
+- **pydantic** - Data validation
 
 ### API Server - Node.js
 
@@ -206,21 +210,11 @@ make kubernetes-clean
 - **PostgreSQL** - Object-relational database
 - **KeyDB** - High performance fork of Redis
 - **MinIO** - High performance object storage
-- **Temporal** - Microservice orchestration platform
-- **Prefect** - Orchestration platform
-- **Airflow** - Orchestration platform
-- **Spark** - Data processing framework
-- **Flink** - Data processing framework
-  - **flink-streaming-java** - Flink
-  - **flink-connector-twitter** - Flink Twitter connector
-  - **flink-connector-jdbc** - Flink JDBC Connector
-  - **flink-connector-redis** - Flink Redis connector
 - **Kafka** - Distributed event streaming platform
   - **Debezium** - Distributed change-data-capture platform
   - **debezium-connector-postgres** - PostgreSQL connector
-  - **kafka-connect-elasticsearchkafka-connect-elasticsearch** - Elasticsearch sink connector
+  - **kafka-connect-elasticsearch** - Elasticsearch sink connector
   - **http-connector-for-apache-kafka** - HTTP sink connector
-- **Superset** - Data exploration and data visualization platform
 - **golang-migrate/migrate** - Database migrations
 
 ### Data Science and Machine Learning
@@ -229,7 +223,6 @@ make kubernetes-clean
 - **pandas** - Data analysis library
 - **Modin** - pandas workflows scaling
 - **Ray** - Unified framework for scaling AI and Python applications
-- **pyspark** - Apache Spark Python API library
 - **Jupyter Notebook** - Web-based interactive computing platform
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
@@ -238,14 +231,22 @@ make kubernetes-clean
 - **DVC** - Data version control
 - **Feast** - Feature store
 - **OGB** - Open graph benchmark
-- **asyncpg** - PostgreSQL client
-- **Tenacity** - General-purpose retrying library
-- **pytest** - Unit testing
-- **pydantic** - Data validation
+- **Temporal** - Microservice orchestration platform
+- **Prefect** - Orchestration platform
+- **Airflow** - Orchestration platform
+- **Spark** - Data processing framework
+  - **Spark ML** - Spark machine learning
+  - **pyspark** - Spark Python API library
+- **Flink** - Data processing framework
+  - **flink-streaming-java** - Flink
+  - **flink-connector-twitter** - Flink Twitter connector
+  - **flink-connector-jdbc** - Flink JDBC Connector
+  - **flink-connector-redis** - Flink Redis connector
 - **Dataprep** - Data cleaning
 - **BigQuery** - Data warehouse
   - **BigQuery ML** - BigQuery machine learning
-- **Looker Studio** - Business insights visualizations
+- **Superset** - Data visualization
+- **Looker Studio** - Data visualization
 - **Vertex AI** - AutoML
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
