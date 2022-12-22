@@ -12,5 +12,5 @@ poetry-add-dev:
 
 poetry-run-get-taxi-statistics:
 	poetry run poe get-taxi-statistics
-poetry-run-dev-get-taxi-statistics-sql:
+poetry-run-get-taxi-statistics-sql:
 	poetry run poe get-taxi-statistics-sql
