@@ -22,9 +22,9 @@ prefect-cloud:
 	prefect cloud workspace set --workspace=hongbo-miao/hongbomiao
 
 workflow-start:
-	python calculate.py
-	python greet.py
-	python taxi/get_taxi_statistics.py
+	python src/calculate/main.py
+	python src/find_taxi_top_routes/main.py
+	python src/greet/main.py
 
 test:
 	pytest
