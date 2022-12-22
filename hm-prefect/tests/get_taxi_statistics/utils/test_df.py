@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from src.get_taxi_statistics.utils.df import union_all
+from src.find_taxi_top_routes.utils.df import union_all
 
 
 class TestGroup:

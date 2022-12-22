@@ -29,22 +29,24 @@ class Model(BaseModel):
 
 
 @flow
-async def get_taxi_statistics(model: Model) -> None:
+async def find_taxi_top_routes(model: Model) -> None:
     logger = get_run_logger()
 
+    # https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+    # https://s3.console.aws.amazon.com/s3/buckets/hongbomiao-bucket?region=us-west-2&prefix=taxi/&showversions=false
     dirname = "taxi"
     trip_filenames = [
-        # "yellow_tripdata_2021-07.parquet",
-        # "yellow_tripdata_2021-08.parquet",
-        # "yellow_tripdata_2021-09.parquet",
-        # "yellow_tripdata_2021-10.parquet",
-        # "yellow_tripdata_2021-11.parquet",
-        # "yellow_tripdata_2021-12.parquet",
-        # "yellow_tripdata_2022-01.parquet",
-        # "yellow_tripdata_2022-02.parquet",
-        # "yellow_tripdata_2022-03.parquet",
-        # "yellow_tripdata_2022-04.parquet",
-        # "yellow_tripdata_2022-05.parquet",
+        "yellow_tripdata_2021-07.parquet",
+        "yellow_tripdata_2021-08.parquet",
+        "yellow_tripdata_2021-09.parquet",
+        "yellow_tripdata_2021-10.parquet",
+        "yellow_tripdata_2021-11.parquet",
+        "yellow_tripdata_2021-12.parquet",
+        "yellow_tripdata_2022-01.parquet",
+        "yellow_tripdata_2022-02.parquet",
+        "yellow_tripdata_2022-03.parquet",
+        "yellow_tripdata_2022-04.parquet",
+        "yellow_tripdata_2022-05.parquet",
         "yellow_tripdata_2022-06.parquet",
     ]
     zone_filename = "taxi_zones.csv"
@@ -80,4 +82,4 @@ async def get_taxi_statistics(model: Model) -> None:
 
 if __name__ == "__main__":
     external_model = Model(calc_method=CalcMethod.MEDIAN)
-    asyncio.run(get_taxi_statistics(external_model))
+    asyncio.run(find_taxi_top_routes(external_model))
