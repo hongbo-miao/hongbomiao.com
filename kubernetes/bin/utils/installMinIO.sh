@@ -3,8 +3,8 @@ set -e
 
 echo "# Initialize MinIO operator"
 MINIO_PATH="kubernetes/data/minio"
-rm -rf "${MINIO_PATH}/log"
-rm -rf "${MINIO_PATH}/prometheus"
+rm -r -f "${MINIO_PATH}/log/"
+rm -r -f "${MINIO_PATH}/prometheus/"
 mkdir "${MINIO_PATH}/log"
 mkdir "${MINIO_PATH}/prometheus"
 kubectl minio init --cluster-domain="west.k8s-hongbomiao.com"
