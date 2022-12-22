@@ -85,6 +85,19 @@ lint-ruby-fix:
 	bundle exec rubocop --autocorrect-all
 
 # Python
+conda-create:
+	conda create --name=xxx python=3.10 --yes
+conda-env-remove:
+	conda env remove --name=xxx
+conda-activate:
+	conda activate xxx
+conda-deactivate:
+	conda deactivate
+conda-env-list:
+	conda env list
+conda-list-packages:
+	conda list
+
 pyenv-list-versions:
 	pyenv versions
 pyenv-install:
