@@ -95,7 +95,7 @@ def main():
 
     spark = (
         SparkSession.builder.master("local[*]")
-        .appName("get_taxi_statistics_sql")
+        .appName("find_taxi_top_routes_sql")
         .config("spark.ui.port", "4040")
         .getOrCreate()
     )
