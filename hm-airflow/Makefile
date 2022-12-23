@@ -1,18 +1,11 @@
-conda-create:
-	conda create --name=hm-airflow python=3.10 --yes
-conda-env-remove:
-	conda env remove --name=hm-airflow
-conda-activate:
-	conda activate hm-airflow
-conda-deactivate:
-	conda deactivate
-conda-env-list:
-	conda env list
-conda-list-packages:
-	conda list
-
-pip-install:
-	pip install "apache-airflow[celery]==2.3.3" --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.3.3/constraints-3.10.txt"
+poetry-update-lock-file:
+	poetry lock --no-update
+poetry-install:
+	poetry install
+poetry-add:
+	poetry add xxx
+poetry-add-dev:
+	poetry add xxx --group=dev
 
 helm-download-values:
 	helm show values apache-airflow/airflow > values.yaml
