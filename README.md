@@ -299,6 +299,7 @@ make kubernetes-clean
 
 ### IoT
 
+- **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
 - **RTI Connext DDS** - Data Distribution Service (DDS)
 - **Arduino Uno** - Microcontroller board
