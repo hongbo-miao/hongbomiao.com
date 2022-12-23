@@ -143,36 +143,36 @@ lint-python-isort:
 lint-python-isort-fix:
 	poetry run poe lint-python-isort-fix
 lint-sql:
-	poetry run poe lint-sql --dialect=bigquery bigquery-ml
-	poetry run poe lint-sql --dialect=postgres hasura-graphql-engine/migrations
-	poetry run poe lint-sql --dialect=postgres hasura-graphql-engine/seeds
-	poetry run poe lint-sql --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-	poetry run poe lint-sql --dialect=postgres kubernetes/data/timescaledb/twitter_db/migrations
+	poetry run poe lint-sql -- --dialect=bigquery bigquery-ml
+	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
+	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
+	poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
+	poetry run poe lint-sql -- --dialect=postgres kubernetes/data/timescaledb/twitter_db/migrations
 lint-sql-fix:
-	poetry run poe lint-sql-fix --dialect=bigquery bigquery-ml
-	poetry run poe lint-sql-fix --dialect=postgres hasura-graphql-engine/migrations
-	poetry run poe lint-sql-fix --dialect=postgres hasura-graphql-engine/seeds
-	poetry run poe lint-sql-fix --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-	poetry run poe lint-sql-fix --dialect=postgres kubernetes/data/timescaledb/twitter_db/migrations
+	poetry run poe lint-sql-fix -- --dialect=bigquery bigquery-ml
+	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/migrations
+	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/seeds
+	poetry run poe lint-sql-fix -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
+	poetry run poe lint-sql-fix -- --dialect=postgres kubernetes/data/timescaledb/twitter_db/migrations
 lint-yaml:
 	poetry run poe lint-yaml
 static-type-check-python:
-	poetry run poe static-type-check-python --package=api-python-fastapi
-	poetry run poe static-type-check-python --package=api-python-flask
-	poetry run poe static-type-check-python --package=chatbot
-	poetry run poe static-type-check-python --package=convolutional-neural-network
-	poetry run poe static-type-check-python --package=data-distribution-service
-	poetry run poe static-type-check-python --package=feature-store
-	poetry run poe static-type-check-python --package=grafana.hm-dashboard
-	poetry run poe static-type-check-python --package=graph-neural-network
-	poetry run poe static-type-check-python --package=hm-airflow
-	poetry run poe static-type-check-python --package=hm-locust
-	poetry run poe static-type-check-python --package=hm-opal-client
-	poetry run poe static-type-check-python --package=hm-open3d
-	poetry run poe static-type-check-python --package=hm-prefect
-	poetry run poe static-type-check-python --package=hm-pyspark
-	poetry run poe static-type-check-python --package=hugging-face
-	poetry run poe static-type-check-python --package=quantum-computing
+	poetry run poe static-type-check-python -- --package=api-python-fastapi
+	poetry run poe static-type-check-python -- --package=api-python-flask
+	poetry run poe static-type-check-python -- --package=chatbot
+	poetry run poe static-type-check-python -- --package=convolutional-neural-network
+	poetry run poe static-type-check-python -- --package=data-distribution-service
+	poetry run poe static-type-check-python -- --package=feature-store
+	poetry run poe static-type-check-python -- --package=grafana.hm-dashboard
+	poetry run poe static-type-check-python -- --package=graph-neural-network
+	poetry run poe static-type-check-python -- --package=hm-airflow
+	poetry run poe static-type-check-python -- --package=hm-locust
+	poetry run poe static-type-check-python -- --package=hm-opal-client
+	poetry run poe static-type-check-python -- --package=hm-open3d
+	poetry run poe static-type-check-python -- --package=hm-prefect
+	poetry run poe static-type-check-python -- --package=hm-pyspark
+	poetry run poe static-type-check-python -- --package=hugging-face
+	poetry run poe static-type-check-python -- --package=quantum-computing
 
 # Lint
 lint-dockerfile:
