@@ -115,7 +115,7 @@ poetry-env-remove:
 	poetry env remove xxx
 poetry-env-use:
 	poetry env use 3.11
-poetry-lock:
+poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
 	poetry install
