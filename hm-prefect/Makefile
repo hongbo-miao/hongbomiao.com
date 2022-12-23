@@ -16,8 +16,10 @@ poetry-run-workflow-greet:
 
 poetry-run-prefect-local:
 	poetry run poe prefect-local
-poetry-run-prefect-cloud:
-	poetry run poe prefect-cloud
+poetry-run-prefect-cloud-login:
+	poetry run poe prefect-cloud-login -- --key=xxx
+poetry-run-prefect-prefect-cloud-workspace-set:
+	poetry run poe prefect-cloud-workspace-set
 
 poetry-run-test:
 	poetry run poe test
