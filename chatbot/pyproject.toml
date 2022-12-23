@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "chatbot"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.9.x"
+rasa = "3.4.0"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.16.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+train = "rasa train --num-threads=8"
+test = "rasa test"
+visualize = "rasa visualize"
+start-rasa-server = "rasa run --enable-api --port=39143"
+start-action-server = "rasa run actions"
+telemetry-disable = "rasa telemetry disable"
+shell = "rasa shell"
+interactive = "rasa interactive"
