@@ -1,7 +1,7 @@
 brew-install:
 	brew install openjdk@17
 
-poetry-lock:
+poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
 	poetry install
