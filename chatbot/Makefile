@@ -1,46 +1,32 @@
-# Setup
-conda-create:
-	conda create --name=hm-chatbot python=3.8 --yes
-conda-env-remove:
-	conda env remove --name=hm-chatbot
-conda-activate:
-	conda activate hm-chatbot
-conda-deactivate:
-	conda deactivate
-conda-env-list:
-	conda env list
-conda-list-packages:
-	conda list
+poetry-lock:
+	poetry lock --no-update
+poetry-install:
+	poetry install
+poetry-add:
+	poetry add xxx
+poetry-add-dev:
+	poetry add xxx --group=dev
 
-pip-install:
-	pip install rasa
+poetry-run-train:
+	poetry run poe train
+poetry-run-test:
+	poetry run poe test
+poetry-run-test-story:
+	poetry run poe test -- --stories tests/test_stories.yml
+poetry-run-visualize:
+	poetry run poe visualize
 
-# Rasa
-# https://rasa.com/docs/rasa/command-line-interface
-rasa-init:
-	rasa init
-rasa-train:
-	rasa train --num-threads=8
-rasa-test:
-	rasa test
-rasa-test-story:
-	rasa test --stories tests/test_stories.yml
-rasa-shell:
-	rasa shell
-rasa-interactive:
-	rasa interactive
-rasa-start-rasa-server:
-	rasa run --enable-api --port=39143
-rasa-start-action-server:
-	rasa run actions
-rasa-visualize:
-	rasa visualize
-rasa-help:
-	rasa --help
-rasa-telemetry-disable:
-	rasa telemetry disable
-rasa-x:
-	rasa x
+poetry-run-start-rasa-server:
+	poetry run poe start-rasa-server
+poetry-run-start-action-server:
+	poetry run poe start-action-server
+
+poetry-run-telemetry-disable:
+	poetry run poe telemetry-disable
+poetry-run-shell:
+	poetry run poe shell
+poetry-run-interactive:
+	poetry run poe interactive
 
 # Docker
 docker-build:
