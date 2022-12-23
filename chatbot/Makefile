@@ -1,4 +1,4 @@
-poetry-lock:
+poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
 	poetry install
