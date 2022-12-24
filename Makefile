@@ -193,7 +193,7 @@ lint-kubernetes:
 lint-protocol-buffers:
 	buf lint
 lint-c-cpp:
-	clang-format -i -style=file **/*.c **/*.cpp **/*.h **/*.ino
+	clang-format -i -style=file $$(git ls-files "*.c") $$(git ls-files "*.cpp") $$(git ls-files "*.h") $$(git ls-files "*.ino")
 lint-qml:
 	qmllint $$(git ls-files "*.qml")
 lint-terraform:
