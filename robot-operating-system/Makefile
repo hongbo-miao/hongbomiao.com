@@ -8,15 +8,20 @@ ros-run-python-talker:
 ros-run-python-listener:
 	ros2 run demo_nodes_py listener
 
-ros2-pkg-create-python-package:
-	cd src && ros2 pkg create --build-type=ament_python --node-name=hm_python_node --dependencies=rclpy hm_python_package
 ros2-pkg-create-cpp-package:
 	cd src && ros2 pkg create --build-type=ament_cmake --node-name=hm_cpp_node --dependencies=rclcpp hm_cpp_package
+ros2-pkg-create-python-package:
+	cd src && ros2 pkg create --build-type=ament_python --node-name=hm_python_node --dependencies=rclpy hm_python_package
 colcon-build:
 	colcon build
 colcon-build-package:
-	colcon build --packages-select=hm_python_package
 	colcon build --packages-select=hm_cpp_package
+	colcon build --packages-select=hm_python_package
+colcon-test:
+	colcon test
+colcon-test-package:
+	colcon test --packages-select=hm_cpp_package
+	colcon test --packages-select=hm_python_package
 
 ros2-init:
 	source install/local_setup.bash
