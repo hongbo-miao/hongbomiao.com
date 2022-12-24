@@ -21,10 +21,9 @@ colcon-build-package:
 ros2-init:
 	source install/local_setup.bash
 ros2-run-hm-python-package:
-	ros2 run hm_python_package hm_python_node
+	colcon build --packages-select=hm_python_package && ros2 run hm_python_package hm_python_node
 ros2-run-hm-cpp-package:
-	ros2 run hm_cpp_package hm_cpp_node
-
+	colcon build --packages-select=hm_cpp_package && ros2 run hm_cpp_package hm_cpp_node
 
 poetry-update-lock-file:
 	poetry lock --no-update
