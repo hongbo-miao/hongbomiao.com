@@ -2,9 +2,9 @@ import rclpy
 from rclpy.node import Node
 
 
-class MyNode(Node):
+class HMNode(Node):
     def __init__(self):
-        super().__init__("py_test")
+        super().__init__("hm_python_node")
         self._count = 0
         self.create_timer(0.5, self.timer_callback)
 
@@ -15,7 +15,7 @@ class MyNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = MyNode()
+    node = HMNode()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
