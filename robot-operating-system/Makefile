@@ -1,34 +1,78 @@
-ros-run-cpp-talker:
+ros-run-cpp-talker-listener:
 	ros2 run demo_nodes_cpp talker
-ros-run-cpp-talker:
 	ros2 run demo_nodes_cpp listener
-
-ros-run-python-talker:
+ros-run-python-talker-listener:
 	ros2 run demo_nodes_py talker
-ros-run-python-listener:
 	ros2 run demo_nodes_py listener
+ros-run-turtlesim:
+	ros2 run turtlesim turtlesim_node
+	ros2 run turtlesim turtle_teleop_key
 
 ros2-pkg-create-cpp-package:
 	cd src && ros2 pkg create --build-type=ament_cmake --node-name=hm_cpp_node --dependencies=rclcpp hm_cpp_package
 ros2-pkg-create-python-package:
 	cd src && ros2 pkg create --build-type=ament_python --node-name=hm_python_node --dependencies=rclpy hm_python_package
+ros2-pkg-create-interface:
+	cd src && ros2 pkg create hm_python_package
+
+ros2-setup:
+	source install/setup.bash
+ros2-setup-local:
+	source install/local_setup.bash
+
 colcon-build:
 	colcon build
 colcon-build-package:
 	colcon build --packages-select=hm_cpp_package
 	colcon build --packages-select=hm_python_package
+colcon-build-package-python-debug:
+	# `--symlink-install` helps avoid rebuilding for Python, but not for C++
+	colcon build --packages-select=hm_python_package --symlink-install
+
+ros2-run:
+	ros2 run hm_cpp_package hm_cpp_node
+	ros2 run hm_python_package hm_python_node
+ros2-run-remap:
+	ros2 run xxx_package old_node --ros-args --remap __node:=new_node
+	ros2 run xxx_package old_node --ros-args --remap __node:=new_node --remap old_topic:=new_topic
+	ros2 run xxx_package old_node --ros-args --remap old_service:=new_service
+
 colcon-test:
 	colcon test
 colcon-test-package:
 	colcon test --packages-select=hm_cpp_package
 	colcon test --packages-select=hm_python_package
 
-ros2-init:
-	source install/local_setup.bash
-ros2-run-hm-python-package:
-	colcon build --packages-select=hm_python_package && ros2 run hm_python_package hm_python_node
-ros2-run-hm-cpp-package:
-	colcon build --packages-select=hm_cpp_package && ros2 run hm_cpp_package hm_cpp_node
+ros2-service-list:
+	ros2 service list
+ros2-service-type:
+	ros2 service type /clear
+ros2-service-call:
+	ros2 service call /clear std_srvs/srv/Empty
+	ros2 service call /spawn turtlesim/srv/Spawn "{x: 2.0, y: 2.0, theta: 0.0, name: 'turtle2'}"
+
+ros2-node-list:
+	ros2 node list
+ros2-node-info:
+	ros2 node info /turtlesim
+
+ros2-topic-list:
+	ros2 topic list
+ros2-topic-echo:
+	ros2 topic echo /turtle1/cmd_vel
+ros2-topic-info:
+	ros2 topic info /turtle1/cmd_vel
+ros2-topic-health:
+	ros2 topic hz /turtle1/cmd_vel
+ros2-topic-publish:
+	ros2 topic pub -r 10 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}"
+
+ros2-interface-list:
+	ros2 interface list
+ros2-interface-show:
+	ros2 interface show geometry_msgs/msg/Twist
+ros2-pkg-list:
+	ros2 pkg list
 
 poetry-update-lock-file:
 	poetry lock --no-update
