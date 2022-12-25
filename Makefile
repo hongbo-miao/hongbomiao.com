@@ -28,6 +28,9 @@ git-fetch-branches:
 git-pull-rebase:
 	git pull --rebase
 
+git-log:
+	git log
+
 # Docker
 docker-login:
 	docker login
