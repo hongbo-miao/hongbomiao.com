@@ -45,3 +45,11 @@ echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 # https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Colcon-Tutorial.html
 sudo apt install --yes python3-colcon-common-extensions
 echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
+
+# Install turtlesim
+sudo apt install --yes ros-humble-turtlesim
+
+
+# Setup
+echo "source /media/psf/Home/Clouds/Git/hongbomiao.com/robot-operating-system/install/setup.bash" >> ~/.bashrc
+# source ~/.bashrc
