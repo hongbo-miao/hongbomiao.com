@@ -33,9 +33,10 @@ ros2-run:
 	ros2 run hm_cpp_package hm_cpp_node
 	ros2 run hm_python_package hm_python_node
 ros2-run-remap:
-	ros2 run xxx_package old_node --ros-args --remap __node:=new_node
-	ros2 run xxx_package old_node --ros-args --remap __node:=new_node --remap old_topic:=new_topic
-	ros2 run xxx_package old_node --ros-args --remap old_service:=new_service
+	ros2 run xxx_package xxx_node --ros-args --remap __node:=new_node
+	ros2 run xxx_package xxx_node --ros-args --remap xxx_topic:=new_topic
+	ros2 run xxx_package xxx_node --ros-args --remap xxx_service:=new_service
+	ros2 run xxx_package xxx_node --ros-args --param xxx_param:=42
 
 colcon-test:
 	colcon test
@@ -69,10 +70,17 @@ ros2-topic-publish:
 
 ros2-interface-list:
 	ros2 interface list
+ros2-interface-package-list:
+	ros2 interface package turtlebot3_msgs
 ros2-interface-show:
 	ros2 interface show geometry_msgs/msg/Twist
+
 ros2-pkg-list:
 	ros2 pkg list
+ros2-param-list:
+	ros2 param list
+ros2-param-get:
+	ros2 param get /turtlesim use_sim_time
 
 poetry-update-lock-file:
 	poetry lock --no-update
