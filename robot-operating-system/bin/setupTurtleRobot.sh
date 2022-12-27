@@ -12,6 +12,7 @@ ros2 service call /spawn turtlesim/srv/Spawn "{x: 2.0, y: 2.0, theta: 0.0, name:
 
 # Build the turtle_robot
 colcon build --packages-select=turtle_robot --symlink-install
+ros2 run turtle_robot target_controller
 ros2 run turtle_robot turtle_robot_controller
 
 # Control the target turtle
