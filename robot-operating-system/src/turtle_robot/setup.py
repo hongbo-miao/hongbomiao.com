@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = "hm_turtle"
+package_name = "turtle_robot"
 
 setup(
     name=package_name,
@@ -14,10 +14,12 @@ setup(
     zip_safe=True,
     maintainer="Hongbo Miao",
     maintainer_email="Hongbo.Miao@outlook.com",
-    description="HM Turtle",
+    description="Turtle Robot",
     license="MIT",
     tests_require=["pytest"],
     entry_points={
-        "console_scripts": ["turtle_controller = hm_turtle.turtle_controller:main"],
+        "console_scripts": [
+            "turtle_robot_controller = turtle_robot.turtle_robot_controller:main"
+        ],
     },
 )

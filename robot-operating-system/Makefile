@@ -28,12 +28,12 @@ colcon-build-package:
 colcon-build-package-python-debug:
 	# `--symlink-install` helps avoid rebuilding for Python, but not for C++
 	colcon build --packages-select=hm_python_package --symlink-install
-	colcon build --packages-select=hm_turtle --symlink-install
+	colcon build --packages-select=turtle_robot --symlink-install
 
 ros2-run:
 	ros2 run hm_cpp_package hm_cpp_node
 	ros2 run hm_python_package hm_python_node
-	ros2 run hm_turtle turtle_controller
+	ros2 run turtle_robot turtle_robot_controller
 ros2-run-remap:
 	ros2 run xxx_package xxx_node --ros-args --remap __node:=new_node
 	ros2 run xxx_package xxx_node --ros-args --remap xxx_topic:=new_topic
@@ -45,7 +45,7 @@ colcon-test:
 colcon-test-package:
 	colcon test --packages-select=hm_cpp_package
 	colcon test --packages-select=hm_python_package
-	colcon test --packages-select=hm_turtle
+	colcon test --packages-select=turtle_robot
 
 ros2-service-list:
 	ros2 service list
@@ -53,7 +53,7 @@ ros2-service-type:
 	ros2 service type /clear
 ros2-service-call:
 	ros2 service call /clear std_srvs/srv/Empty
-	ros2 service call /spawn turtlesim/srv/Spawn "{x: 2.0, y: 2.0, theta: 0.0, name: 'robot_turtle'}"
+	ros2 service call /spawn turtlesim/srv/Spawn "{x: 2.0, y: 2.0, theta: 0.0, name: 'turtle_robot'}"
 
 ros2-node-list:
 	ros2 node list
