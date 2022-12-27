@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = "hm_python_package"
+package_name = "hm_turtle"
 
 setup(
     name=package_name,
@@ -14,10 +14,10 @@ setup(
     zip_safe=True,
     maintainer="Hongbo Miao",
     maintainer_email="Hongbo.Miao@outlook.com",
-    description="HM Python Package",
+    description="HM Turtle",
     license="MIT",
     tests_require=["pytest"],
     entry_points={
-        "console_scripts": ["hm_python_node = hm_python_package.hm_python_node:main"],
+        "console_scripts": ["turtle_controller = hm_turtle.turtle_controller:main"],
     },
 )
