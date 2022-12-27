@@ -6,20 +6,23 @@ module.exports = {
   singleQuote: true,
   printWidth: 120,
   tabWidth: 2,
+
   overrides: [
+    // Solidity
+    // https://github.com/prettier-solidity/prettier-plugin-solidity#configuration-file
     {
       files: '*.sol',
       options: {
-        printWidth: 120,
+        printWidth: 80,
         tabWidth: 4,
         useTabs: false,
         singleQuote: false,
         bracketSpacing: false,
-        explicitTypes: 'always',
       },
     },
   ],
 
+  // XML
   // https://github.com/prettier/plugin-xml#configuration
   xmlWhitespaceSensitivity: 'ignore',
 };
