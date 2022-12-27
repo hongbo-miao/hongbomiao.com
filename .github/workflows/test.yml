@@ -72,8 +72,8 @@ jobs:
       - name: Lint Commit
         uses: wagoid/commitlint-github-action@v5
 
-  lint-css-sol-md:
-    name: Lint | CSS, Markdown, Solidity
+  lint-css-markdown-sol-xml:
+    name: Lint | CSS, Markdown, Solidity, XML
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -105,12 +105,15 @@ jobs:
       - name: Lint CSS
         run: |
           npm run lint:css
-      - name: Lint Solidity
-        run: |
-          npm run lint:sol
       - name: Lint Markdown
         run: |
           npm run lint:md
+      - name: Lint Solidity
+        run: |
+          npm run lint:sol
+      - name: Lint XML
+        run: |
+          npm run lint:xml
 
   lint-dockerfile:
     name: Lint | Dockerfile
