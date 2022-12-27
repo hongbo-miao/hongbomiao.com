@@ -19,7 +19,8 @@ setup(
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
-            "turtle_robot_controller = turtle_robot.turtle_robot_controller:main"
+            "target_controller = turtle_robot.target_controller:main",
+            "turtle_robot_controller = turtle_robot.turtle_robot_controller:main",
         ],
     },
 )
