@@ -19,4 +19,7 @@ module.exports = {
       },
     },
   ],
+
+  // https://github.com/prettier/plugin-xml#configuration
+  xmlWhitespaceSensitivity: 'ignore',
 };
