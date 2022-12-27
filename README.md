@@ -323,23 +323,24 @@ make kubernetes-clean
 - **hadolint** - Dockerfile linter
 - **golangci-lint** - Go linter
 - **ESLint** - JavaScript linter
-- **markdownlint-cli2** - Markdown linter
 - **Ktlint** - Kotlin linter and code formatter
-- **SQLFluff** - SQL linter and code formatter
 - **Kubeconform** - Kubernetes manifest linter
+- **markdownlint-cli2** - Markdown linter
 - **Buf** - Protocol Buffers linter
 - **autoflake**, **Flake8**, **isort** - Python linter
 - **qmllint** - QML linter
 - **RuboCop** - Ruby linter and code formatter
 - **ShellCheck** - Shell linter
+- **solhint** - Solidity linter
+- **SQLFluff** - SQL linter and code formatter
 - **terraform** - Terraform code formatter
 - **yamllint** - YAML linter
-- **solhint** - Solidity linter
 - **Prettier** - Code formatter
 - **ClangFormat** - C/C++ code formatter
 - **gofmt** - Go code formatter
-- **opa** - Rego code formatter
 - **Black** - Python code formatter
+- **opa** - Rego code formatter
+- **@prettier/plugin-xml** - XML formatter
 - **Mypy** - Python static type checker
 - **tsc** - TypeScript static type checker
 - **detekt** - Kotlin static type checker

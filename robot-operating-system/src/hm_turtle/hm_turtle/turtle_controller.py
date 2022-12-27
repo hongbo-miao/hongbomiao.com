@@ -27,7 +27,7 @@ class TurtleControllerNode(Node):
 
         dist_x = self.target_x - self._pose.x
         dist_y = self.target_y - self._pose.y
-        distance = math.sqrt(dist_x * dist_x + dist_y * dist_y)
+        distance = math.sqrt(dist_x**2 + dist_y**2)
 
         msg = Twist()
 
