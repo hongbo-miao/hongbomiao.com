@@ -38,7 +38,7 @@ class TurtleRobotControllerNode(Node):
         msg = Twist()
         if distance > 1.0:
             # position
-            msg.linear.x = 0.8 * distance
+            msg.linear.x = 2.0 * distance
 
             # orientation
             goal_theta = math.atan2(dist_y, dist_x)
