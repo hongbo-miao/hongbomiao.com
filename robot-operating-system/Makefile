@@ -53,7 +53,7 @@ ros2-service-type:
 	ros2 service type /clear
 ros2-service-call:
 	ros2 service call /clear std_srvs/srv/Empty
-	ros2 service call /spawn turtlesim/srv/Spawn "{x: 2.0, y: 2.0, theta: 0.0, name: 'turtle2'}"
+	ros2 service call /spawn turtlesim/srv/Spawn "{x: 2.0, y: 2.0, theta: 0.0, name: 'robot_turtle'}"
 
 ros2-node-list:
 	ros2 node list
