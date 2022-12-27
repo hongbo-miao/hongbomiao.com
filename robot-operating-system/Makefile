@@ -68,6 +68,15 @@ ros2-topic-health:
 ros2-topic-publish:
 	ros2 topic pub -r 10 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}"
 
+ros2-bag-record:
+	ros2 bag record /turtle1/cmd_vel --output my_bag
+	ros2 bag record /turtle1/cmd_vel /turtle2/cmd_vel --output my_bag
+	ros2 bag record --all --output my_bag
+ros2-bag-info:
+	ros2 bag info my_bag
+ros2-bag-play:
+	ros2 bag play my_bag
+
 ros2-interface-list:
 	ros2 interface list
 ros2-interface-package-list:
