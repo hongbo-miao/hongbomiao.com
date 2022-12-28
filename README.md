@@ -305,6 +305,7 @@ make kubernetes-clean
 - **Arduino Uno** - Microcontroller board
 - **MATLAB** - Programming and numeric computing platform
 - **Simulink** - Simulation and model-based design
+- **restic** - Backup program
 
 ### Quantum Computing
 
