@@ -1061,20 +1061,26 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
-          cache: pip
+          python-version: '3.11'
+          cache: poetry
+      - name: Set Poetry environment
+        working-directory: hm-prefect
+        run: |
+          poetry env use 3.11
       - name: Install dependencies
         working-directory: hm-prefect
         run: |
-          pip install --requirement=requirements.txt
-          pip install --requirement=requirements-dev.txt
+          poetry install --no-root
       - name: Test
         working-directory: hm-prefect
         run: |
-          pytest --cov=. --cov-report=xml
+          poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
