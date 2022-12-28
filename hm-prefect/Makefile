@@ -9,6 +9,8 @@ poetry-add-dev:
 
 poetry-run-workflow-calculate:
 	poetry run poe workflow-calculate
+poetry-run-workflow-collect-data:
+	poetry run poe workflow-collect-data
 poetry-run-workflow-find-taxi-top-routes:
 	poetry run poe workflow-find-taxi-top-routes
 poetry-run-workflow-greet:
