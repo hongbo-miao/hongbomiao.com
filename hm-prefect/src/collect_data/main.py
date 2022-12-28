@@ -1,3 +1,5 @@
+import asyncio
+
 from prefect import flow
 from prefect_shell import shell_run_command
 from pydantic import BaseModel
@@ -9,15 +11,16 @@ class DataSource(BaseModel):
 
 
 @flow
-def collect_data(data_sources: list[DataSource]) -> None:
-    commands = []
-    for data_source in data_sources:
-        source = data_source.source
-        destination = data_source.destination
-        command = f"rclone copy --progress {source} {destination}"
-        commands.append(command)
-
-    shell_run_command.map(commands)
+async def collect_data(data_sources: list[DataSource]) -> None:
+    await asyncio.gather(
+        *[
+            shell_run_command(
+                command=f"rclone copy --progress {data_source.source} {data_source.destination}",
+                helper_command=f"rclone lsl {data_source.source}",
+            )
+            for data_source in data_sources
+        ]
+    )
 
 
 if __name__ == "__main__":
@@ -31,4 +34,4 @@ if __name__ == "__main__":
             "destination": "/tmp/rclone-backup/data2",
         },
     ]
-    collect_data(external_data_sources)
+    asyncio.run(collect_data(external_data_sources))
