@@ -11,6 +11,7 @@ influxdb-client = "1.35.0"
 pandas = "1.5.2"
 prefect = "2.7.4"
 prefect-aws = "0.2.1"
+prefect-shell = "0.1.3"
 pyarrow = "10.0.1"
 pydantic = "1.10.2"
 
@@ -25,6 +26,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
 workflow-calculate = "python src/calculate/main.py"
+workflow-collect-data = "python src/collect_data/main.py"
 workflow-find-taxi-top-routes = "python src/find_taxi_top_routes/main.py"
 workflow-greet = "python src/greet/main.py"
 prefect-local = "prefect orion start"
