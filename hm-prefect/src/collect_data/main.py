@@ -12,15 +12,19 @@ class DataSource(BaseModel):
 
 @flow
 async def collect_data(data_sources: list[DataSource]) -> None:
-    await asyncio.gather(
-        *[
-            shell_run_command(
-                command=f"rclone copy --progress {data_source.source} {data_source.destination}",
-                helper_command=f"rclone lsl {data_source.source}",
+    tasks = []
+    for data_source in data_sources:
+        src = data_source.source
+        dest = data_source.destination
+        copy = shell_run_command.with_options(name=f"copy | {src}")
+        task = asyncio.create_task(
+            copy(
+                command=f"rclone copy --progress {src} {dest}",
+                helper_command=f"rclone lsl {src}",
             )
-            for data_source in data_sources
-        ]
-    )
+        )
+        tasks.append(task)
+    await asyncio.gather(*tasks)
 
 
 if __name__ == "__main__":
