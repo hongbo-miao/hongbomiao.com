@@ -406,6 +406,52 @@ make kubernetes-clean
 
 ![Open3D screenshot](https://user-images.githubusercontent.com/3375461/206969208-a2e5ad6b-8541-4040-8737-24f198aee579.jpg)
 
+### Data
+
+#### Vertex AI - AutoML
+
+![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061661-c2530404-98af-4f8a-9749-30bbca952cd2.png)
+![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061692-bbbfebf2-ff56-4336-b109-f07282df56a3.png)
+![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061707-28510a32-65e2-413f-85e7-70d93dc44820.png)
+
+#### Dataprep - Data Cleaning
+
+![Dataprep screenshot](https://user-images.githubusercontent.com/3375461/197430470-ae676c14-8dad-4cd7-9326-3df1856f242c.png)
+
+#### Prefect - Orchestration Platform
+
+![Prefect screenshot](https://user-images.githubusercontent.com/3375461/194426252-5720d5ae-8507-4651-886f-4b584ce7f16d.png)
+
+#### Airflow - Orchestration Platform
+
+![Airflow screenshot](https://user-images.githubusercontent.com/3375461/178954051-929a42b3-667b-4075-bb1e-32306113251a.png)
+
+#### Flink - Data Processing
+
+![Flink screenshot](https://user-images.githubusercontent.com/3375461/129500704-9032b559-5dc5-4385-99eb-3f7d4a1f1086.png)
+
+#### Dgraph - Distributed Graph Database
+
+![Dgraph screenshot](https://user-images.githubusercontent.com/3375461/126815004-925b6be5-6e44-44be-9193-46b018ec4bf7.png)
+
+#### Redis with RedisGraph Module
+
+![Redis screenshot](https://user-images.githubusercontent.com/3375461/167368266-8f8d27b1-ec58-48c5-b6bd-030dc2970cc8.jpg)
+
+### Machine Learning
+
+#### Contextual AI assistant
+
+Chatbot on Telegram powered by Rasa.
+
+![Telegram screenshot](https://user-images.githubusercontent.com/3375461/148026649-70dca296-7813-4d58-bc82-d7a2c5b8576e.png)
+
+#### Weights & Biases - Machine Learning Experiment Tracking
+
+[Distributed hyperparameter optimization result](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf) by Weights & Biases.
+
+[![Weights & Biases screenshot](https://user-images.githubusercontent.com/3375461/112082183-dbf1bf80-8bbf-11eb-9c81-675cc0bd2763.png)](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)
+
 ### Cloud Native
 
 #### Pixie - Kubernetes Application Observing
@@ -484,78 +530,28 @@ make kubernetes-clean
 
 ![Sloop screenshot](https://user-images.githubusercontent.com/3375461/167351205-0f7e0921-07ff-4072-b5b9-c343d88f25c4.jpg)
 
-### Data
+### Web
 
-#### Vertex AI - AutoML
-
-![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061661-c2530404-98af-4f8a-9749-30bbca952cd2.png)
-![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061692-bbbfebf2-ff56-4336-b109-f07282df56a3.png)
-![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061707-28510a32-65e2-413f-85e7-70d93dc44820.png)
-
-#### Dataprep - Data Cleaning
-
-![Dataprep screenshot](https://user-images.githubusercontent.com/3375461/197430470-ae676c14-8dad-4cd7-9326-3df1856f242c.png)
-
-#### Prefect - Orchestration Platform
-
-![Prefect screenshot](https://user-images.githubusercontent.com/3375461/194426252-5720d5ae-8507-4651-886f-4b584ce7f16d.png)
-
-#### Airflow - Orchestration Platform
-
-![Airflow screenshot](https://user-images.githubusercontent.com/3375461/178954051-929a42b3-667b-4075-bb1e-32306113251a.png)
-
-#### Flink - Data Processing
-
-![Flink screenshot](https://user-images.githubusercontent.com/3375461/129500704-9032b559-5dc5-4385-99eb-3f7d4a1f1086.png)
-
-#### Dgraph - Distributed Graph Database
-
-![Dgraph screenshot](https://user-images.githubusercontent.com/3375461/126815004-925b6be5-6e44-44be-9193-46b018ec4bf7.png)
-
-#### Redis with RedisGraph Module
-
-![Redis screenshot](https://user-images.githubusercontent.com/3375461/167368266-8f8d27b1-ec58-48c5-b6bd-030dc2970cc8.jpg)
-
-### Machine Learning
-
-#### Contextual AI assistant
-
-Chatbot on Telegram powered by Rasa.
-
-![Telegram screenshot](https://user-images.githubusercontent.com/3375461/148026649-70dca296-7813-4d58-bc82-d7a2c5b8576e.png)
-
-#### Weights & Biases - Machine Learning Experiment Tracking
-
-[Distributed hyperparameter optimization result](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf) by Weights & Biases.
-
-[![Weights & Biases screenshot](https://user-images.githubusercontent.com/3375461/112082183-dbf1bf80-8bbf-11eb-9c81-675cc0bd2763.png)](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)
-
-### HTTP/3
+#### HTTP/3
 
 The website [supports HTTP/3](https://www.http3check.net/?host=hongbomiao.com).
 
 [![HTTP/3 screenshot](https://user-images.githubusercontent.com/3375461/92599407-cdefe780-f2dc-11ea-8bf9-dc153187287f.jpg)](https://www.http3check.net/?host=hongbomiao.com)
 
-### AVIF
+#### AVIF
 
 Images on the website are using AVIF format.
 
 > “Roughly speaking, at an acceptable quality, the WebP is almost half the size of JPEG, and AVIF is under half the size of WebP.” – [Jake Archibald, 2020](https://jakearchibald.com/2020/avif-has-landed/)
 
-### Security
+#### Security
 
 Below is the website [security report](https://observatory.mozilla.org/analyze/www.hongbomiao.com) generated by Mozilla Observatory.
 
 [![Mozilla Observatory screenshot](https://user-images.githubusercontent.com/3375461/148025144-57d3c888-7ddd-4242-90ab-9759642f393d.png)](https://observatory.mozilla.org/analyze/www.hongbomiao.com)
 
-### Profiling
+#### Profiling
 
 Profiling result by Clinic.js and autocannon.
 
 ![Profiling screenshot](https://user-images.githubusercontent.com/3375461/94975997-100bf200-0546-11eb-9284-db40711a3052.jpg)
-
-### Automation
-
-This [pull request](https://github.com/Hongbo-Miao/hongbomiao.com/pull/342) shows how these technologies work together from different aspects to achieve automation.
-
-[![Automation screenshot](https://user-images.githubusercontent.com/3375461/91974789-e5fdbf00-ed50-11ea-8540-5d429312d053.jpg)](https://github.com/Hongbo-Miao/hongbomiao.com/pull/342)
