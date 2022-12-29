@@ -1,4 +1,5 @@
 import asyncio
+import json
 
 from prefect import flow
 from prefect_shell import shell_run_command
@@ -28,14 +29,11 @@ async def collect_data(data_sources: list[DataSource]) -> None:
 
 
 if __name__ == "__main__":
-    external_data_sources = [
-        {
-            "source": "hm-ubuntu:/tmp/rclone-backup/data1",
-            "destination": "/tmp/rclone-backup/data1",
-        },
-        {
-            "source": "hm-ubuntu:/tmp/rclone-backup/data2",
-            "destination": "/tmp/rclone-backup/data2",
-        },
-    ]
-    asyncio.run(collect_data(external_data_sources))
+    with open("src/collect_data/params.json", "r") as f:
+        params = json.load(f)
+
+    asyncio.run(
+        collect_data(
+            data_sources=params["data_sources"],
+        )
+    )
