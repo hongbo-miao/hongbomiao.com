@@ -8,6 +8,8 @@ poetry-add-dev:
 	poetry add xxx --group=dev
 
 # Prefect
+prefect-config-view:
+	poetry run poe prefect-config-view
 prefect-local:
 	poetry run poe prefect-local
 prefect-cloud-login:
