@@ -25,10 +25,8 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
-prefect-config-view = "prefect config view"
-prefect-local = "prefect orion start"
-prefect-cloud-login = "prefect cloud login"
-prefect-cloud-workspace-set = "prefect cloud workspace set --workspace=hongbo-miao/hongbomiao"
+prefect-orion-start = "prefect orion start"
+prefect-agent-start = "prefect agent start --work-queue=hm-queue"
 
 dev-calculate = "python src/calculate/main.py"
 dev-find-taxi-top-routes = "python src/find_taxi_top_routes/main.py"
@@ -37,7 +35,6 @@ dev-collect-data = "python src/collect_data/main.py"
 build-collect-data = "prefect deployment build src/collect_data/main.py:collect_data --name=collect-data --work-queue=hm-queue"
 deploy-collect-data = "prefect deployment apply collect_data-deployment.yaml"
 run-collect-data = "prefect deployment run collect-data/collect-data"
-prefect-agent-start = "prefect agent start --work-queue=hm-queue"
 
 test = "pytest"
 test-coverage = "pytest --cov=. --cov-report=xml"
