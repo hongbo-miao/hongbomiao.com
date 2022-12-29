@@ -7,23 +7,32 @@ poetry-add:
 poetry-add-dev:
 	poetry add xxx --group=dev
 
-poetry-run-workflow-calculate:
-	poetry run poe workflow-calculate
-poetry-run-workflow-collect-data:
-	poetry run poe workflow-collect-data
-poetry-run-workflow-find-taxi-top-routes:
-	poetry run poe workflow-find-taxi-top-routes
-poetry-run-workflow-greet:
-	poetry run poe workflow-greet
-
-poetry-run-prefect-local:
+# Prefect
+prefect-local:
 	poetry run poe prefect-local
-poetry-run-prefect-cloud-login:
+prefect-cloud-login:
 	poetry run poe prefect-cloud-login -- --key=xxx
-poetry-run-prefect-prefect-cloud-workspace-set:
+prefect-prefect-cloud-workspace-set:
 	poetry run poe prefect-cloud-workspace-set
+prefect-agent-start:
+	poetry run poe prefect-agent-start
 
-poetry-run-test:
+dev-calculate:
+	poetry run poe dev-calculate
+dev-find-taxi-top-routes:
+	poetry run poe dev-find-taxi-top-routes
+dev-greet:
+	poetry run poe dev-greet
+dev-collect-data:
+	poetry run poe dev-collect-data
+build-collect-data:
+	poetry run poe build-collect-data -- --params=$$(cat src/collect_data/params.json | jq -c .)
+deploy-collect-data:
+	poetry run poe deploy-collect-data
+run-collect-data:
+	poetry run poe run-collect-data
+
+test:
 	poetry run poe test
-poetry-run-test-coverage:
+test-coverage:
 	poetry run poe test-coverage
