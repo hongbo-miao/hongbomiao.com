@@ -20,6 +20,7 @@ jobs:
       api-python-flask: ${{ steps.filter.outputs.api-python-flask }}
       grafana: ${{ steps.filter.outputs.grafana }}
       chatbot: ${{ steps.filter.outputs.chatbot }}
+      hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-prefect: ${{ steps.filter.outputs.hm-prefect }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
@@ -49,6 +50,8 @@ jobs:
               - 'grafana/**'
             chatbot:
               - 'chatbot/**'
+            hm-opal-client:
+              - 'hm-opal-client/**'
             hm-prefect:
               - 'hm-prefect/**'
             mobile-android:
@@ -1333,3 +1336,28 @@ jobs:
         working-directory: grafana/hm-panel-plugin
         run: |
           npx @grafana/levitate@latest is-compatible --path=src/module.ts --target=@grafana/data,@grafana/ui,@grafana/runtime
+
+  hm-opal-client-build:
+    name: HM OPAL Client | Build
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-opal-client == 'true' }}
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./hm-opal-client/Dockerfile
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

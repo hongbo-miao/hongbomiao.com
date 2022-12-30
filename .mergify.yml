@@ -89,6 +89,9 @@ pull_request_rules:
       - or:
           - check-success=Grafana | Compatibility Test
           - check-skipped=Grafana | Compatibility Test
+      - or:
+          - check-success=HM OPAL Client | Build
+          - check-skipped=HM OPAL Client | Build
       - check-failure!=renovate/artifacts
     actions:
       review:
