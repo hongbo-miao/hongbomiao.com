@@ -31,6 +31,6 @@ poetry-run-interactive:
 # Docker
 docker-build:
 	cd .. && \
-	docker build --file=chatbot/Dockerfile --tag=hongbomiao/hm-rasa-action-server:latest .
+	docker build --file=chatbot/Dockerfile --tag=ghcr.io/hongbo-miao/hm-rasa-action-server:latest .
 docker-push:
 	docker push hongbomiao/hm-rasa-action-server:latest
