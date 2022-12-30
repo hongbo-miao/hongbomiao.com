@@ -6,9 +6,33 @@ name: CML
     branches: [main]
 
 jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            convolutional-neural-network:
+              - 'convolutional-neural-network/**'
+
   cml-local:
     name: CML (Local)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
     runs-on: ubuntu-22.04
+    timeout-minutes: 20
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.11.0
@@ -55,6 +79,7 @@ jobs:
   cml-cloud-set-up-cloud:
     name: CML (Cloud) - Set up cloud
     runs-on: ubuntu-22.04
+    needs: detect-changes
     if: ${{ false }}
     steps:
       - name: Cancel previous runs
