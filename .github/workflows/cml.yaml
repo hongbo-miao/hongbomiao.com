@@ -4,6 +4,8 @@ name: CML
 "on":
   pull_request:
     branches: [main]
+  schedule:
+    - cron: 0 12 * * 0-6
 
 jobs:
   detect-changes:
@@ -19,6 +21,8 @@ jobs:
         uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v3
       - uses: dorny/paths-filter@v2
         id: filter
         with:
