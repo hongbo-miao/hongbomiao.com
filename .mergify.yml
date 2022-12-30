@@ -2,59 +2,13 @@
 
 ---
 pull_request_rules:
-  - name: Automatic merge for Hongbo-Miao pull requests
+  - name: Automatic merge pull requests
     conditions:
-      - author=Hongbo-Miao
-      - check-success=Lint | C, C++
-      - check-success=Lint | CMake
-      - check-success=Lint | Commit Message
-      - check-success=Lint | CSS, Markdown, Solidity, XML
-      - check-success=Lint | Dockerfile
-      - check-success=Lint | Go
-      - check-success=Lint | JavaScript
-      - check-success=Lint | Kotlin
-      - check-success=Lint | Kubernetes Manifest
-      - check-success=Lint | Protocol Buffers
-      - check-success=Lint | Python
-      - check-success=Lint | QML
-      - check-success=Lint | Ruby
-      - check-success=Lint | Shell
-      - check-success=Lint | SQL
-      - check-success=Lint | Terraform
-      - check-success=Lint | YAML
-      - check-success=Static Type Check | Kotlin
-      - check-success=Static Type Check | Python
-      - check-success=Static Type Check | Terraform
-      - check-success=Static Type Check | TypeScript
-      - check-success=Web | Test
-      - check-success=Web | End-to-End Test
-      - check-success=Web | Lighthouse
-      - check-success=Web | Visual Test
-      - check-success=Mobile - iOS | Test
-      - check-success=Mobile - Android | Lint
-      - check-success=Mobile - Android | Test
-      - check-success=Mobile - Android | Instrumented Test
-      - check-success=Mobile - React Native | Test
-      - check-success=API - Go | Test
-      - check-success=API - Node.js | Test
-      - check-success=API - Node.js | Mutation Test
-      - check-success=API - Python (Flask) | Test
-      - check-success=Prefect | Test
-      - check-success=Streaming | Test
-      - check-success=OPA | Test
-      - check-success=Rasa | Test
-      - check-success=Prometheus | Test
-      - check-success=Grafana | End-to-End Test
-      - check-success=Grafana | Compatibility Test
       - base=main
-      - label!=work in progress
-    actions:
-      review:
-        type: APPROVE
-
-  - name: Automatic merge for Renovate pull requests
-    conditions:
-      - author=renovate[bot]
+      - or:
+          - author=Hongbo-Miao
+          - author=renovate[bot]
+      - "#approved-reviews-by>=1"
       - check-success=Lint | C, C++
       - check-success=Lint | CMake
       - check-success=Lint | Commit Message
@@ -76,28 +30,67 @@ pull_request_rules:
       - check-success=Static Type Check | Python
       - check-success=Static Type Check | Terraform
       - check-success=Static Type Check | TypeScript
-      - check-success=Web | Test
-      - check-success=Web | End-to-End Test
-      - check-success=Web | Lighthouse
-      - check-success=Web | Visual Test
-      - check-success=Mobile - iOS | Test
-      - check-success=Mobile - Android | Lint
-      - check-success=Mobile - Android | Test
-      - check-success=Mobile - Android | Instrumented Test
-      - check-success=Mobile - React Native | Test
-      - check-success=API - Go | Test
-      - check-success=API - Node.js | Test
-      - check-success=API - Node.js | Mutation Test
-      - check-success=API - Python (Flask) | Test
-      - check-success=Prefect | Test
-      - check-success=Streaming | Test
-      - check-success=OPA | Test
-      - check-success=Rasa | Test
-      - check-success=Prometheus | Test
-      - check-success=Grafana | End-to-End Test
-      - check-success=Grafana | Compatibility Test
+      - or:
+          - check-success=Web | Test
+          - check-skipped=Web | Test
+      - or:
+          - check-success=Web | End-to-End Test
+          - check-skipped=Web | End-to-End Test
+      - or:
+          - check-success=Web | Lighthouse
+          - check-skipped=Web | Lighthouse
+      - or:
+          - check-success=Web | Visual Test
+          - check-skipped=Web | Visual Test
+      - or:
+          - check-success=Mobile - iOS | Test
+          - check-skipped=Mobile - iOS | Test
+      - or:
+          - check-success=Mobile - Android | Lint
+          - check-skipped=Mobile - Android | Lint
+      - or:
+          - check-success=Mobile - Android | Test
+          - check-skipped=Mobile - Android | Test
+      - or:
+          - check-success=Mobile - Android | Instrumented Test
+          - check-skipped=Mobile - Android | Instrumented Test
+      - or:
+          - check-success=Mobile - React Native | Test
+          - check-skipped=Mobile - React Native | Test
+      - or:
+          - check-success=API - Go | Test
+          - check-skipped=API - Go | Test
+      - or:
+          - check-success=API - Node.js | Test
+          - check-skipped=API - Node.js | Test
+      - or:
+          - check-success=API - Node.js | Mutation Test
+          - check-skipped=API - Node.js | Mutation Test
+      - or:
+          - check-success=API - Python (Flask) | Test
+          - check-skipped=API - Python (Flask) | Test
+      - or:
+          - check-success=Prefect | Test
+          - check-skipped=Prefect | Test
+      - or:
+          - check-success=Streaming | Test
+          - check-skipped=Streaming | Test
+      - or:
+          - check-success=OPA | Test
+          - check-skipped=OPA | Test
+      - or:
+          - check-success=Rasa | Test
+          - check-skipped=Rasa | Test
+      - or:
+          - check-success=Prometheus | Test
+          - check-skipped=Prometheus | Test
+      - or:
+          - check-success=Grafana | End-to-End Test
+          - check-skipped=Grafana | End-to-End Test
+      - or:
+          - check-success=Grafana | Compatibility Test
+          - check-skipped=Grafana | Compatibility Test
       - check-failure!=renovate/artifacts
-      - base=main
     actions:
       review:
         type: APPROVE
