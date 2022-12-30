@@ -1,5 +1,11 @@
 # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-agent/values.yaml
 
 ---
+namespaceOverride: hm-prefect
 agent:
   apiConfig: "orion"
+  config:
+    workQueues:
+      - hm-queue
+  orionApiConfig:
+    apiUrl: http://prefect-orion.hm-prefect:4200/api
