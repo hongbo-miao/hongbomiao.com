@@ -8,6 +8,51 @@ name: Test
     - cron: 0 9 * * 0-6
 
 jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            api-go:
+              - 'api-go/**'
+            api-node:
+              - 'api-node/**'
+            api-python-flask:
+              - 'api-python-flask/**'
+            grafana:
+              - 'grafana/**'
+            chatbot:
+              - 'chatbot/**'
+            hm-prefect:
+              - 'hm-prefect/**'
+            mobile-android:
+              - 'mobile-android/**'
+            mobile-ios:
+              - 'mobile-ios/**'
+            mobile-react-native:
+              - 'mobile-react-native/**'
+            prometheus:
+              - 'prometheus/**'
+            streaming:
+              - 'streaming/**'
+            web:
+              - 'web/**'
+            web-cypress:
+              - 'web-cypress/**'
+
   lint-c-cpp:
     name: Lint | C, C++
     runs-on: ubuntu-22.04
@@ -567,6 +612,8 @@ jobs:
 
   web-test:
     name: Web | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -607,6 +654,8 @@ jobs:
 
   web-end-to-end-test:
     name: Web | End-to-End Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.web-cypress == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -658,6 +707,8 @@ jobs:
 
   web-lighthouse:
     name: Web | Lighthouse
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -701,6 +752,8 @@ jobs:
   # https://www.chromatic.com/docs/github-actions
   web-visual-test:
     name: Web | Visual Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -745,6 +798,8 @@ jobs:
 
   mobile-ios-test:
     name: Mobile - iOS | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
     runs-on: macos-12
     timeout-minutes: 30
     env:
@@ -792,6 +847,8 @@ jobs:
 
   mobile-android-lint:
     name: Mobile - Android | Lint
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
@@ -814,6 +871,8 @@ jobs:
 
   mobile-android-test:
     name: Mobile - Android | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
@@ -836,6 +895,8 @@ jobs:
 
   mobile-android-instrumented-test:
     name: Mobile - Android | Instrumented Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
     runs-on: macos-12
     timeout-minutes: 30
     steps:
@@ -860,6 +921,8 @@ jobs:
 
   mobile-react-native-test:
     name: Mobile - React Native | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.react-native == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -900,6 +963,8 @@ jobs:
 
   api-go-test:
     name: API - Go | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -924,6 +989,8 @@ jobs:
 
   api-node-test:
     name: API - Node.js | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -964,6 +1031,8 @@ jobs:
 
   api-node-mutation-test:
     name: API - Node.js | Mutation Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -1002,6 +1071,8 @@ jobs:
 
   api-python-flask-test:
     name: API - Python (Flask) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-python-flask == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -1052,6 +1123,8 @@ jobs:
 
   prefect-test:
     name: Prefect | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-prefect == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -1088,6 +1161,8 @@ jobs:
 
   streaming-test:
     name: Streaming | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.streaming == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -1106,6 +1181,8 @@ jobs:
 
   opa-test:
     name: OPA | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -1125,6 +1202,8 @@ jobs:
 
   rasa-test:
     name: Rasa | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.chatbot == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -1138,6 +1217,8 @@ jobs:
 
   prometheus-test:
     name: Prometheus | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.prometheus == 'true' }}
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
@@ -1153,6 +1234,8 @@ jobs:
 
   grafana-end-to-end-test:
     name: Grafana | End-to-End Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.grafana == 'true' }}
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -1203,6 +1286,8 @@ jobs:
 
   grafana-compatibility-test:
     name: Grafana | Compatibility Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.grafana == 'true' }}
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
