@@ -22,17 +22,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./web/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-web:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./web/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-web:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-api-node:
     name: Push hm-api-node to GitHub Container Registry
@@ -50,17 +51,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./api-node/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-api-node:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./api-node/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-api-node:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-api-python-flask:
     name: Push hm-api-python-flask to GitHub Container Registry
@@ -78,17 +80,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./api-python-flask/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-api-python-flask:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./api-python-flask/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-api-python-flask:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-graphql-server:
     name: Push hm-graphql-server to GitHub Container Registry
@@ -106,17 +109,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./api-go/build/package/graphql_server/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-graphql-server:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./api-go/build/package/graphql_server/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-graphql-server:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-grpc-server:
     name: Push hm-grpc-server to GitHub Container Registry
@@ -134,17 +138,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./api-go/build/package/grpc_server/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-grpc-server:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./api-go/build/package/grpc_server/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-grpc-server:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-config-loader:
     name: Push hm-config-loader to GitHub Container Registry
@@ -162,17 +167,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./api-go/build/package/config_loader/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-config-loader:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./api-go/build/package/config_loader/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-config-loader:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-decision-logger:
     name: Push hm-decision-logger to GitHub Container Registry
@@ -190,17 +196,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./api-go/build/package/decision_logger/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-decision-logger:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./api-go/build/package/decision_logger/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-decision-logger:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-opal-client:
     name: Push hm-opal-client to GitHub Container Registry
@@ -218,17 +225,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./hm-opal-client/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-opal-client:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./hm-opal-client/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-opal-client:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-kafka-connect:
     name: Push hm-kafka-connect to GitHub Container Registry
@@ -246,17 +254,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./kafka-connect/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-kafka-connect:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./kafka-connect/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-kafka-connect:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-rasa-action-server:
     name: Push hm-rasa-action-server to GitHub Container Registry
@@ -274,17 +283,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./chatbot/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-rasa-action-server:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./chatbot/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-rasa-action-server:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-streaming:
     name: Push hm-streaming to GitHub Container Registry
@@ -308,17 +318,18 @@ jobs:
         run: |
           echo $HM_STEAMING_APPLICATION_PROPERTIES_BASE64 | base64 --decode > application-production.properties
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./streaming/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-streaming:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./streaming/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-streaming:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-keydb:
     name: Push hm-keydb to GitHub Container Registry
@@ -343,17 +354,18 @@ jobs:
           docker container rm $(cat /tmp/cid.txt)
           rm -f /tmp/cid.txt
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./hm-keydb/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-keydb:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./hm-keydb/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-keydb:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-traefik:
     name: Push hm-traefik to GitHub Container Registry
@@ -371,17 +383,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./hm-traefik/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-traefik:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./hm-traefik/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-traefik:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
 
   push-hm-alpine:
     name: Push hm-alpine to GitHub Container Registry
@@ -399,14 +412,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        id: docker_build
-        uses: docker/build-push-action@v3
+        uses: wandalen/wretry.action@v1.0.36
         with:
-          context: .
-          file: ./hm-alpine/Dockerfile
-          push: true
-          tags: ghcr.io/hongbo-miao/hm-alpine:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Print Docker image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./hm-alpine/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-alpine:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
