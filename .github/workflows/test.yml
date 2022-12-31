@@ -758,7 +758,7 @@ jobs:
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '14.1'
+          xcode-version: '14.2'
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -770,13 +770,13 @@ jobs:
           xcodebuild build-for-testing \
             -project HMMobile.xcodeproj \
             -scheme HMMobile \
-            -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
+            -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
       - name: Test
         uses: wandalen/wretry.action@v1.0.36
         with:
           current_path: mobile-ios
           command: |
-            xcodebuild test-without-building -project HMMobile.xcodeproj -scheme HMMobile -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
+            xcodebuild test-without-building -project HMMobile.xcodeproj -scheme HMMobile -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
           attempt_limit: 3
           attempt_delay: 2000
       - name: Convert coverage to Cobertura XML format
