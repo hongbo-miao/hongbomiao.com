@@ -1,0 +1,21 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-traefik-ingress
+  namespace: hm-prefect
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  labels:
+    app.kubernetes.io/name: ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prefect-orion
+                port:
+                  number: 4200
