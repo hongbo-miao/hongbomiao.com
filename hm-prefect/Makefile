@@ -12,13 +12,11 @@ poetry-run-prefect-orion-start:
 poetry-run-prefect-agent-start:
 	poetry run poe prefect-agent-start
 
+# calculate
 poetry-run-dev-calculate:
 	poetry run poe dev-calculate
-poetry-run-dev-find-taxi-top-routes:
-	poetry run poe dev-find-taxi-top-routes
-poetry-run-dev-greet:
-	poetry run poe dev-greet
 
+# collect-data
 poetry-run-dev-collect-data:
 	poetry run poe dev-collect-data
 poetry-run-build-collect-data:
@@ -26,13 +24,33 @@ poetry-run-build-collect-data:
 poetry-run-run-collect-data:
 	poetry run poe run-collect-data
 
+# find-taxi-top-routes
+poetry-run-dev-find-taxi-top-routes:
+	poetry run poe dev-find-taxi-top-routes
+
+# greet
+poetry-run-dev-greet:
+	poetry run poe dev-greet
+
+# print-platform
 poetry-run-dev-print-platform:
 	poetry run poe dev-print-platform
 poetry-run-build-print-platform:
 	poetry run poe build-print-platform
+
+docker-build-hm-prefect-print-platform:
+	cd .. && docker build --file=hm-prefect/build/print_platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
+docker-push-hm-prefect-print-platform:
+	docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
+poetry-run-add-kubernetes-job-block-print-platform:
+	poetry run poe add-kubernetes-job-block-print-platform
+poetry-run-build-kubernetes-print-platform:
+	poetry run poe build-kubernetes-print-platform
+
 poetry-run-run-print-platform:
 	poetry run poe run-print-platform
 
+# Test
 poetry-run-test:
 	poetry run poe test
 poetry-run-test-coverage:
