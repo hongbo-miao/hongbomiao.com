@@ -2,7 +2,7 @@
 name: Docker
 
 "on":
-  push:
+  pull_request:
     branches: [main]
 
 jobs:
@@ -21,6 +21,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -51,6 +54,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -81,6 +87,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -111,6 +120,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -141,6 +153,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -171,6 +186,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -201,6 +219,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -231,6 +252,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -261,6 +285,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -291,6 +318,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -321,6 +351,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -351,6 +384,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Retrieve the secret and decode it to a file
         working-directory: streaming/src/main/resources
         env:
@@ -387,6 +423,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Get redisgraph.so
         working-directory: hm-keydb
         run: |
@@ -424,6 +463,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
@@ -454,6 +496,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
       - name: Build and push Docker image
         uses: wandalen/wretry.action@v1.0.36
         with:
