@@ -6,7 +6,6 @@ name: Deploy
     branches: [main]
 
 jobs:
-  # https://github.com/marketplace/actions/deploy-to-heroku
   deploy:
     name: Deploy
     runs-on: ubuntu-22.04
@@ -21,5 +20,5 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: hongbomiao
+          heroku_app_name: hongbomiao-com
           heroku_email: hongbo.miao@outlook.com
