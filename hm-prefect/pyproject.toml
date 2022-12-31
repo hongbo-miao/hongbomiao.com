@@ -40,6 +40,8 @@ run-collect-data = "prefect deployment run collect-data/collect-data"
 dev-print-platform = "python src/print_platform/main.py"
 build-print-platform = "prefect deployment build src/print_platform/main.py:print_platform --name=print-platform --storage-block=s3/hm-prefect-s3-block --infra=kubernetes-job --override=env.EXTRA_PIP_PACKAGES=s3fs --work-queue=hm-queue --apply"
 run-print-platform = "prefect deployment run print-platform/print-platform"
+add-kubernetes-job-block-print-platform = "python build/print_platform/add_kubernetes_job_block.py"
+build-kubernetes-print-platform = "prefect deployment build src/print_platform/main.py:print_platform --name=print-platform --infra-block=kubernetes-job/print-platform-kubernetes-job-block --work-queue=hm-queue --apply"
 
 test = "pytest"
 test-coverage = "pytest --cov=. --cov-report=xml"

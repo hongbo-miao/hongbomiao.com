@@ -26,3 +26,22 @@ helm install \
 # Delete:
 # helm uninstall prefect-agent --namespace=hm-prefect
 echo "=================================================="
+
+echo "# Create hm-kubernetes profile"
+prefect profile create hm-kubernetes
+prefect profile use hm-kubernetes
+# prefect profile use default
+prefect config set PREFECT_API_URL=http://localhost:4200/api
+echo "=================================================="
+
+echo "# Build hm-prefect-print-platform"
+docker build --file=hm-prefect/build/print_platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
+docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
+echo "=================================================="
+
+echo "# Start hm-prefect-print-platform"
+poetry run poe add-kubernetes-job-block-print-platform
+poetry run poe build-kubernetes-print-platform
+poetry run poe run-print-platform
+poetry run poe prefect-agent-start
+echo "=================================================="
