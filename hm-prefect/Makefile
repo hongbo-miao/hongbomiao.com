@@ -39,7 +39,8 @@ poetry-run-build-print-platform:
 	poetry run poe build-print-platform
 
 docker-build-hm-prefect-print-platform:
-	cd .. && docker build --file=hm-prefect/build/print_platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
+	cd .. && \
+	docker build --file=hm-prefect/build/print_platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
 docker-push-hm-prefect-print-platform:
 	docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
 poetry-run-add-kubernetes-job-block-print-platform:

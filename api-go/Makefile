@@ -50,28 +50,32 @@ config-loader-generate-cert-and-key:
 
 # Docker
 docker-build-config-loader:
-	cd .. && docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-config-loader:latest .
+	cd .. && \
+	docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-config-loader:latest .
 docker-push-config-loader:
 	docker push ghcr.io/hongbo-miao/hm-config-loader:latest
 docker-run-config-loader:
 	docker run --publish=26660:26660 --name=hm-config-loader --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-config-loader
 
 docker-build-decision-logger:
-	cd .. && docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-decision-logger:latest .
+	cd .. && \
+	docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-decision-logger:latest .
 docker-push-decision-logger:
 	docker push ghcr.io/hongbo-miao/hm-decision-logger:latest
 docker-run-decision-logger:
 	docker run --publish=41797:41797 --name=hm-decision-logger --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-decision-logger
 
 docker-build-graphql-server:
-	cd .. && docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-graphql-server:latest .
+	cd .. && \
+	docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-graphql-server:latest .
 docker-push-graphql-server:
 	docker push ghcr.io/hongbo-miao/hm-graphql-server:latest
 docker-run-graphql-server:
 	docker run --publish=31800:31800 --name=hm-graphql-server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-graphql-server
 
 docker-build-grpc-server:
-	cd .. && docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-grpc-server:latest .
+	cd .. && \
+	docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-grpc-server:latest .
 docker-push-grpc-server:
 	docker push ghcr.io/hongbo-miao/hm-grpc-server:latest
 docker-run-grpc-server:
