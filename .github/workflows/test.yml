@@ -747,7 +747,7 @@ jobs:
     if: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
     runs-on: macos-12
     environment: test
-    timeout-minutes: 30
+    timeout-minutes: 90
     env:
       # To use a Gemfile which is not at the root
       # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
@@ -772,12 +772,13 @@ jobs:
             -scheme HMMobile \
             -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
       - name: Test
-        working-directory: mobile-ios
-        run: |
-          xcodebuild test-without-building \
-            -project HMMobile.xcodeproj \
-            -scheme HMMobile \
-            -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
+        uses: wandalen/wretry.action@v1.0.36
+        with:
+          current_path: mobile-ios
+          command: |
+            xcodebuild test-without-building -project HMMobile.xcodeproj -scheme HMMobile -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.1"
+          attempt_limit: 3
+          attempt_delay: 2000
       - name: Convert coverage to Cobertura XML format
         working-directory: mobile-ios
         run: |
