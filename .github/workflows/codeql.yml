@@ -7,16 +7,16 @@ name: CodeQL
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   codeql-cpp:
     name: CodeQL (cpp)
     runs-on: ubuntu-22.04
     timeout-minutes: 20
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install Qt
@@ -46,10 +46,6 @@ jobs:
         # https://github.com/github/codeql-action/blob/main/src/languages.ts
         language: [go, javascript, python, ruby]
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Initialize CodeQL

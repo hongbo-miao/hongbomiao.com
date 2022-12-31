@@ -7,6 +7,10 @@ name: Test
   schedule:
     - cron: 0 12 * * 0-6
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   detect-changes:
     name: Detect Changes
@@ -30,10 +34,6 @@ jobs:
       web: ${{ steps.filter.outputs.web }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - uses: dorny/paths-filter@v2
@@ -74,10 +74,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Lint C, C++
@@ -93,10 +89,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install Poetry
@@ -122,10 +114,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -138,10 +126,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node.js
@@ -181,10 +165,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Lint Dockerfile
@@ -197,10 +177,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Go
@@ -219,10 +195,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node.js
@@ -263,10 +235,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Java
@@ -285,10 +253,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Lint Kubernetes
@@ -312,10 +276,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Lint Protocol Buffers
@@ -328,10 +288,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install Poetry
@@ -363,10 +319,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install Qt
@@ -383,10 +335,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Ruby
@@ -403,10 +351,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Lint Shell
@@ -418,10 +362,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install Poetry
@@ -451,10 +391,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Terraform
@@ -468,10 +404,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install Poetry
@@ -497,10 +429,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Java
@@ -519,10 +447,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install Poetry
@@ -563,10 +487,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Terraform
@@ -587,10 +507,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node.js
@@ -633,10 +549,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node.js
@@ -675,10 +587,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node.js
@@ -728,10 +636,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node.js
@@ -773,10 +677,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -823,10 +723,6 @@ jobs:
       # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
       BUNDLE_GEMFILE: ${{ github.workspace }}/mobile-ios/Gemfile
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Xcode
@@ -868,10 +764,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Java
@@ -892,10 +784,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Java
@@ -916,10 +804,6 @@ jobs:
     runs-on: macos-12
     timeout-minutes: 30
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Java
@@ -942,10 +826,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node.js
@@ -984,10 +864,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Go
@@ -1010,10 +886,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node.js
@@ -1052,10 +924,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node.js
@@ -1092,10 +960,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       # librdkafka is for confluent-kafka
@@ -1144,10 +1008,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Install Poetry
@@ -1202,10 +1062,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Download OPA Binary
@@ -1238,10 +1094,6 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Test
