@@ -257,8 +257,7 @@ jobs:
           cache: gradle
       - name: Lint Kotlin
         run: |
-          cd mobile-android
-          ./gradlew ktlintCheck
+          cd mobile-android && ./gradlew ktlintCheck
 
   lint-kubernetes-manifest:
     name: Lint | Kubernetes Manifest
@@ -293,9 +292,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Lint Protocol Buffers
-        working-directory: api-go
         run: |
-          docker run --rm --volume="$(pwd):/workspace" --workdir=/workspace bufbuild/buf lint
+          cd api-go && docker run --rm --volume="$(pwd):/workspace" --workdir=/workspace bufbuild/buf lint
 
   lint-python:
     name: Lint | Python
