@@ -12,6 +12,8 @@ ros2-pkg-create-cpp-package:
 	cd src && ros2 pkg create --build-type=ament_cmake --node-name=hm_cpp_node --dependencies=rclcpp hm_cpp_package
 ros2-pkg-create-python-package:
 	cd src && ros2 pkg create --build-type=ament_python --node-name=hm_python_node --dependencies=rclpy hm_python_package
+ros2-pkg-create-launch-package:
+	cd src && ros2 pkg create turtle_robot_launch
 ros2-pkg-create-interface:
 	cd src && ros2 pkg create hm_python_package
 
@@ -25,6 +27,8 @@ colcon-build:
 colcon-build-package:
 	colcon build --packages-select=hm_cpp_package
 	colcon build --packages-select=hm_python_package
+	colcon build --packages-select=turtle_robot
+	colcon build --packages-select=turtle_robot_launch
 colcon-build-package-python-debug:
 	# `--symlink-install` helps avoid rebuilding for Python, but not for C++
 	colcon build --packages-select=hm_python_package --symlink-install
