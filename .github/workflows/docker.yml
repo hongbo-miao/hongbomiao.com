@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -30,9 +34,9 @@ jobs:
             file: ./web/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-web:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -43,6 +47,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -60,9 +68,9 @@ jobs:
             file: ./api-node/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-api-node:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -73,6 +81,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -90,9 +102,9 @@ jobs:
             file: ./api-python-flask/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-api-python-flask:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -103,6 +115,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -120,9 +136,9 @@ jobs:
             file: ./api-go/build/package/graphql_server/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-graphql-server:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -133,6 +149,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -150,9 +170,9 @@ jobs:
             file: ./api-go/build/package/grpc_server/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-grpc-server:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -163,6 +183,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -180,9 +204,9 @@ jobs:
             file: ./api-go/build/package/config_loader/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-config-loader:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -193,6 +217,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -210,9 +238,9 @@ jobs:
             file: ./api-go/build/package/decision_logger/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-decision-logger:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -223,6 +251,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -240,9 +272,9 @@ jobs:
             file: ./hm-prefect/build/print_platform/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -253,6 +285,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -270,9 +306,9 @@ jobs:
             file: ./hm-opal-client/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-opal-client:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -283,6 +319,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -300,9 +340,9 @@ jobs:
             file: ./kafka-connect/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-kafka-connect:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -313,6 +353,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -330,9 +374,9 @@ jobs:
             file: ./chatbot/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-rasa-action-server:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -343,6 +387,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -366,9 +414,9 @@ jobs:
             file: ./streaming/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-streaming:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -379,6 +427,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -403,9 +455,9 @@ jobs:
             file: ./hm-keydb/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-keydb:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -416,6 +468,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -433,9 +489,9 @@ jobs:
             file: ./hm-traefik/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-traefik:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
 
@@ -446,6 +502,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -463,8 +523,8 @@ jobs:
             file: ./hm-alpine/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-alpine:latest
-            platforms: linux/amd64, linux/arm64
+            platforms: linux/amd64,linux/arm64
             cache-from: type=gha
-            cache-to: type=gha, mode=max
+            cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
