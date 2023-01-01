@@ -6,8 +6,62 @@ name: Docker
     branches: [main]
 
 jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      api-go: ${{ steps.filter.outputs.api-go }}
+      api-node: ${{ steps.filter.outputs.api-node }}
+      api-python-flask: ${{ steps.filter.outputs.api-python-flask }}
+      chatbot: ${{ steps.filter.outputs.chatbot }}
+      hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
+      hm-keydb: ${{ steps.filter.outputs.hm-keydb }}
+      hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
+      hm-prefect: ${{ steps.filter.outputs.hm-prefect }}
+      hm-traefik: ${{ steps.filter.outputs.hm-traefik }}
+      kafka-connect: ${{ steps.filter.outputs.kafka-connect }}
+      streaming: ${{ steps.filter.outputs.streaming }}
+      web: ${{ steps.filter.outputs.web }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            api-go:
+              - 'api-go/**'
+            api-node:
+              - 'api-node/**'
+            api-python-flask:
+              - 'api-python-flask/**'
+            chatbot:
+              - 'chatbot/**'
+            hm-alpine:
+              - 'hm-alpine/**'
+            hm-keydb:
+              - 'hm-keydb/**'
+            hm-opal-client:
+              - 'hm-opal-client/**'
+            hm-prefect:
+              - 'hm-prefect/**'
+            hm-traefik:
+              - 'hm-traefik/**'
+            kafka-connect:
+              - 'kafka-connect/**'
+            streaming:
+              - 'streaming/**'
+            web:
+              - 'web/**'
+
   push-hm-web:
     name: Push hm-web to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -43,6 +97,8 @@ jobs:
 
   push-hm-api-node:
     name: Push hm-api-node to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -78,6 +134,8 @@ jobs:
 
   push-hm-api-python-flask:
     name: Push hm-api-python-flask to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-python-flask == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -113,6 +171,8 @@ jobs:
 
   push-hm-graphql-server:
     name: Push hm-graphql-server to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -148,6 +208,8 @@ jobs:
 
   push-hm-grpc-server:
     name: Push hm-grpc-server to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -183,6 +245,8 @@ jobs:
 
   push-hm-config-loader:
     name: Push hm-config-loader to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -218,6 +282,8 @@ jobs:
 
   push-hm-decision-logger:
     name: Push hm-decision-logger to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -253,6 +319,8 @@ jobs:
 
   push-hm-prefect-print-platform:
     name: Push hm-prefect-print-platform to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-prefect == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -288,6 +356,8 @@ jobs:
 
   push-hm-opal-client:
     name: Push hm-opal-client to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-opal-client == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -323,6 +393,8 @@ jobs:
 
   push-hm-kafka-connect:
     name: Push hm-kafka-connect to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.kafka-connect == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -358,6 +430,8 @@ jobs:
 
   push-hm-rasa-action-server:
     name: Push hm-rasa-action-server to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.chatbot == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -393,6 +467,8 @@ jobs:
 
   push-hm-streaming:
     name: Push hm-streaming to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.streaming == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -434,6 +510,8 @@ jobs:
 
   push-hm-keydb:
     name: Push hm-keydb to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-keydb == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -476,6 +554,8 @@ jobs:
 
   push-hm-traefik:
     name: Push hm-traefik to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-traefik == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -511,6 +591,8 @@ jobs:
 
   push-hm-alpine:
     name: Push hm-alpine to GitHub Container Registry
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-alpine == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
