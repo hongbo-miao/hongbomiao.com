@@ -44,6 +44,8 @@ ros2-run-remap:
 	ros2 run xxx_package xxx_node --ros-args --remap xxx_topic:=new_topic
 	ros2 run xxx_package xxx_node --ros-args --remap xxx_service:=new_service
 	ros2 run xxx_package xxx_node --ros-args --param xxx_param:=42
+ros2-launch:
+	ros2 launch turtle_robot_launch turtle_robot.launch.py
 
 colcon-test:
 	colcon test
