@@ -7,6 +7,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     hm_namespace = "hm"
+
     turtlesim_node = Node(
         package="turtlesim",
         namespace=hm_namespace,
@@ -26,6 +27,19 @@ def generate_launch_description():
         ],
         shell=True,
     )
+
+    target_control_node = Node(
+        package="turtle_robot",
+        namespace=hm_namespace,
+        executable="target_control_node",
+        name="target_control_node",
+    )
+    turtle_robot_control_node = Node(
+        package="turtle_robot",
+        namespace=hm_namespace,
+        executable="turtle_robot_control_node",
+        name="turtle_robot_control_node",
+    )
     return LaunchDescription(
         [
             turtlesim_node,
@@ -38,17 +52,7 @@ def generate_launch_description():
                     ],
                 )
             ),
-            Node(
-                package="turtle_robot",
-                namespace=hm_namespace,
-                executable="target_controller",
-                name="target_controller",
-            ),
-            Node(
-                package="turtle_robot",
-                namespace=hm_namespace,
-                executable="turtle_robot_controller",
-                name="turtle_robot_controller",
-            ),
+            target_control_node,
+            turtle_robot_control_node,
         ]
     )

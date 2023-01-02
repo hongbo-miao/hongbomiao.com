@@ -6,10 +6,10 @@ from rclpy.node import Node
 from turtlesim.msg import Pose
 
 
-class TurtleRobotControllerNode(Node):
+class TurtleRobotControlNode(Node):
     def __init__(self):
-        super().__init__("turtle_robot_controller")
-        self.get_logger().info("turtle_robot_controller")
+        super().__init__("turtle_robot_control_node")
+        self.get_logger().info("turtle_robot_control_node")
         self._turtle_robot_pose = None
         self._target_pose = None
         self._cmd_vel_publisher = self.create_publisher(
@@ -58,7 +58,7 @@ class TurtleRobotControllerNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = TurtleRobotControllerNode()
+    node = TurtleRobotControlNode()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
