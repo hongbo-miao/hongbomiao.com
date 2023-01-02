@@ -7,10 +7,10 @@ from rclpy.node import Node
 from turtlesim.msg import Pose
 
 
-class TargetControllerNode(Node):
+class TargetControlNode(Node):
     def __init__(self):
-        super().__init__("target_controller")
-        self.get_logger().info("target_controller")
+        super().__init__("target_control_node")
+        self.get_logger().info("target_control_node")
         self._target_pose = None
         self._cmd_vel_publisher = self.create_publisher(Twist, "turtle1/cmd_vel", 10)
         self.create_subscription(Pose, "turtle1/pose", self.subscribe_target_pose, 10)
@@ -49,7 +49,7 @@ class TargetControllerNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = TargetControllerNode()
+    node = TargetControlNode()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
