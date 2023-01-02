@@ -37,8 +37,8 @@ colcon-build-package-python-debug:
 ros2-run:
 	ros2 run hm_cpp_package hm_cpp_node
 	ros2 run hm_python_package hm_python_node
-	ros2 run turtle_robot target_controller
-	ros2 run turtle_robot turtle_robot_controller
+	ros2 run turtle_robot target_control_node
+	ros2 run turtle_robot turtle_robot_control_node
 ros2-run-remap:
 	ros2 run xxx_package xxx_node --ros-args --remap __node:=new_node
 	ros2 run xxx_package xxx_node --ros-args --remap xxx_topic:=new_topic
