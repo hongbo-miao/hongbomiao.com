@@ -47,12 +47,16 @@ ros2-run-remap:
 ros2-launch:
 	ros2 launch turtle_robot_launch turtle_robot.launch.py
 
+launch-test:
+	launch_test src/turtle_robot/test/test_target_control_node.py
+
 colcon-test:
-	colcon test
+	colcon test --return-code-on-test-failure
 colcon-test-package:
-	colcon test --packages-select=hm_cpp_package
-	colcon test --packages-select=hm_python_package
-	colcon test --packages-select=turtle_robot
+	colcon test --packages-select=hm_cpp_package --return-code-on-test-failure
+	colcon test --packages-select=hm_python_package --return-code-on-test-failure
+	# Log: robot-operating-system/log/latest_test/turtle_robot/stdout_stderr.log
+	colcon test --packages-select=turtle_robot --return-code-on-test-failure
 
 ros2-service-list:
 	ros2 service list
