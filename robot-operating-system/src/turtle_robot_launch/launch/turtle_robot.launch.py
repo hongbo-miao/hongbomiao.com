@@ -12,7 +12,7 @@ def generate_launch_description():
         package="turtlesim",
         namespace=hm_namespace,
         executable="turtlesim_node",
-        name="sim",
+        name="turtlesim_node",
     )
     spawn_turtle = ExecuteProcess(
         cmd=[
