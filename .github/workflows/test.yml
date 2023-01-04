@@ -92,6 +92,10 @@ jobs:
               - '.github/workflows/test.yml'
               - 'web-cypress/**'
 
+  codeql:
+    name: CodeQL
+    uses: ./.github/workflows/codeql.yml
+
   lint-c-cpp:
     name: Lint | C, C++
     runs-on: ubuntu-22.04
