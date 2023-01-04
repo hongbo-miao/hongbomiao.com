@@ -1,6 +1,3 @@
-setup:
-	brew install rclone
-
 # Config
 rclone-config:
 	rclone config
