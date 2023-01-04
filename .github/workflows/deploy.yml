@@ -10,7 +10,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-22.04
     environment:
-      name: production
+      name: production-web
       url: https://www.hongbomiao.com
     timeout-minutes: 10
     steps:
@@ -20,5 +20,5 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: hongbomiao-com
+          heroku_app_name: production-web
           heroku_email: hongbo.miao@outlook.com
