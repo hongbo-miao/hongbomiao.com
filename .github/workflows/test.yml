@@ -852,6 +852,7 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
     runs-on: macos-12
+    environment: test
     timeout-minutes: 30
     steps:
       - name: Checkout
