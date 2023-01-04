@@ -60,9 +60,9 @@ kubectl apply --filename=kubernetes/manifests/west
 echo "=================================================="
 
 echo "# Install Rasa"
-source kubernetes/bin/utils/installRasa.sh
+source kubernetes/bin/utils/install_rasa.sh
 echo "=================================================="
 
 echo "# Install cloudflared"
-source kubernetes/bin/utils/installCloudflared.sh
+source kubernetes/bin/utils/install_cloudflared.sh
 echo "=================================================="

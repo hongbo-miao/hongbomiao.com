@@ -7,7 +7,7 @@ kubectl apply --filename=kubernetes/manifests/flink
 echo "=================================================="
 
 echo "# Install Redis"
-source kubernetes/bin/utils/installRedis.sh
+source kubernetes/bin/utils/install_redis.sh
 echo "=================================================="
 
 echo "# Install hm-streaming"
