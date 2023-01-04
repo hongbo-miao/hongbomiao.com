@@ -3,7 +3,7 @@ set -e
 
 
 is_debug=false
-# source bin/utils/focusOPADebug.sh
+# source bin/utils/focus_opa_debug.sh
 
 export ORG_DOMAIN="k8s-hongbomiao.com"
 
@@ -13,20 +13,20 @@ else
   CLUSTERS=("west")
 fi
 
-source bin/utils/setupK3d.sh "${CLUSTERS[@]}"
+source bin/utils/setup_k3d.sh "${CLUSTERS[@]}"
 
 if [ $is_debug = false ]; then
-  source bin/utils/installLinkerd.sh "${CLUSTERS[@]}"
+  source bin/utils/install_linkerd.sh "${CLUSTERS[@]}"
 fi
 
-source bin/utils/installIngress.sh "${CLUSTERS[@]}"
+source bin/utils/install_ingress.sh "${CLUSTERS[@]}"
 if [ $is_debug = false ]; then
-  source bin/utils/patchIngress.sh "${CLUSTERS[@]}"
+  source bin/utils/patch_ingress.sh "${CLUSTERS[@]}"
 fi
 sleep 30
 
 if [ $is_debug = false ]; then
-  source bin/utils/installLinkerdMulticluster.sh "${CLUSTERS[@]}"
+  source bin/utils/install_linkerd_multicluster.sh "${CLUSTERS[@]}"
 fi
 
 
@@ -36,7 +36,7 @@ echo "=================================================="
 
 
 if [ $is_debug = false ]; then
-  source bin/utils/installLinkerdViz.sh
+  source bin/utils/install_linkerd_viz.sh
 fi
 
 if [ $is_debug = false ]; then
@@ -46,23 +46,23 @@ if [ $is_debug = false ]; then
 fi
 
 if [ $is_debug = false ]; then
-  source bin/utils/installLinkerdJaeger.sh
-  # source bin/utils/installLinkerdBuoyant.sh
+  source bin/utils/install_linkerd_jaeger.sh
+  # source bin/utils/install_linkerd_buoyant.sh
 
-  source bin/utils/installFluentBit.sh
-  source bin/utils/installMinIO.sh
-  # source bin/utils/installYugabyte.sh
-  source kubernetes/bin/utils/installKafka.sh
-  source kubernetes/bin/utils/installDebezium.sh
+  source bin/utils/install_fluent_bit.sh
+  source bin/utils/install_minio.sh
+  # source bin/utils/install_yugabyte.sh
+  source kubernetes/bin/utils/install_kafka.sh
+  source kubernetes/bin/utils/install_debezium.sh
 fi
 
-source kubernetes/bin/utils/installElastic.sh
-source kubernetes/bin/utils/installArgoCD.sh
-source kubernetes/bin/utils/installDgraph.sh
-source kubernetes/bin/utils/installPostgres.sh
-source kubernetes/bin/utils/installWestClusterApp.sh
-source kubernetes/bin/utils/secureOPALServer.sh
-source kubernetes/bin/utils/secureConfigLoader.sh
+source kubernetes/bin/utils/install_elastic.sh
+source kubernetes/bin/utils/install_argocd.sh
+source kubernetes/bin/utils/install_dgraph.sh
+source kubernetes/bin/utils/install_postgres.sh
+source kubernetes/bin/utils/install_west_cluster_apps.sh
+source kubernetes/bin/utils/secure_opal_server.sh
+source kubernetes/bin/utils/secure_config_loader.sh
 
 if [ $is_debug = false ]; then
   sleep 120
@@ -71,12 +71,12 @@ if [ $is_debug = false ]; then
   kubectl config use-context k3d-east
   echo "=================================================="
 
-  source kubernetes/bin/utils/installEastClusterApp.sh
-  # source kubernetes/bin/utils/verifyLinkerdMulticluster.sh
+  source kubernetes/bin/utils/install_east_cluster_apps.sh
+  # source kubernetes/bin/utils/verify_linkerd_multicluster.sh
 
   echo "# West cluster"
   kubectl config use-context k3d-west
   echo "=================================================="
 
-  # source kubernetes/bin/utils/InstallHMStreaming.sh
+  # source kubernetes/bin/utils/install_hm_streaming.sh
 fi
