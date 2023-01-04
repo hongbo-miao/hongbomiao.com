@@ -70,10 +70,6 @@ jobs:
               - '.github/workflows/docker.yml'
               - 'web/**'
 
-  codeql:
-    name: CodeQL
-    uses: ./.github/workflows/codeql.yml
-
   push-hm-web:
     name: Push hm-web to GitHub Container Registry
     needs: detect-changes
