@@ -14,7 +14,7 @@
 <br />
 
 <p align="center">
-  <a href="https://github.com/Hongbo-Miao/hongbomiao.com/actions"><img alt="GitHub Actions" src="https://img.shields.io/github/actions/workflow/status/Hongbo-Miao/hongbomiao.com/docker.yml?branch=main" /></a>
+  <a href="https://github.com/Hongbo-Miao/hongbomiao.com/actions"><img alt="GitHub Actions" src="https://img.shields.io/github/actions/workflow/status/Hongbo-Miao/hongbomiao.com/build.yml?branch=main" /></a>
   <a href="https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=29781"><img alt="Depfu" src="https://badges.depfu.com/badges/e337a1462a48dbcb803c98b5b2157aa7/overview.svg" /></a>
   <a href="https://stats.uptimerobot.com/RoOoGTvyWN"><img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m783305207-c7842815153e530df85633fe" /></a>
   <a href="https://www.http3check.net/?host=hongbomiao.com"><img alt="HTTP/3" src="https://img.shields.io/badge/http%2F3-supported-brightgreen" /></a>
