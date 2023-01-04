@@ -1,18 +1,18 @@
 setup-multipass:
 	sh bin/setupMultipass.sh
 setup-k3d:
-	sh bin/setupK3d.sh
+	sh bin/setup_k3d.sh
 setup-kind:
 	sh bin/setupKind.sh
 setup-minikube:
 	sh bin/setupMinikube.sh
 
 focus-opa-debug:
-	sh bin/utils/focusOPADebug.sh
+	sh bin/utils/focus_opa_debug.sh
 focus-pixie-debug:
-	sh bin/utils/focusPixieDebug.sh
+	sh bin/utils/focus_pixie_debug.sh
 focus-rasa-debug:
-	sh bin/utils/focusRasaDebug.sh
+	sh bin/utils/focus_rasa_debug.sh
 
 install-alpine:
 	sh bin/utils/installAlpine.sh

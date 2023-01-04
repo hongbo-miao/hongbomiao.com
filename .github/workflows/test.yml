@@ -151,7 +151,7 @@ jobs:
       - name: Lint Commit
         uses: wagoid/commitlint-github-action@v5
 
-  lint-css-markdown-sol-xml:
+  lint-css-markdown-solidity-xml:
     name: Lint | CSS, Markdown, Solidity, XML
     runs-on: ubuntu-22.04
     environment: test
@@ -183,10 +183,10 @@ jobs:
           npm run lint:css
       - name: Lint Markdown
         run: |
-          npm run lint:md
+          npm run lint:markdown
       - name: Lint Solidity
         run: |
-          npm run lint:sol
+          npm run lint:solidity
       - name: Lint XML
         run: |
           npm run lint:xml
@@ -257,12 +257,12 @@ jobs:
           cd ../web-cypress && npm ci
       - name: Lint JavaScript
         run: |
-          cd api-node && npm run lint:js
-          cd ../ethereum && npm run lint:js
-          cd ../grafana/hm-panel-plugin && npm run lint:js
-          cd ../../mobile-react-native && npm run lint:js
-          cd ../web && npm run lint:js
-          cd ../web-cypress && npm run lint:js
+          cd api-node && npm run lint:javascript
+          cd ../ethereum && npm run lint:javascript
+          cd ../grafana/hm-panel-plugin && npm run lint:javascript
+          cd ../../mobile-react-native && npm run lint:javascript
+          cd ../web && npm run lint:javascript
+          cd ../web-cypress && npm run lint:javascript
 
   lint-kotlin:
     name: Lint | Kotlin

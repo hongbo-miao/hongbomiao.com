@@ -74,7 +74,7 @@ timescaledb-start:
 		timescale/timescaledb:latest-pg14
 timescaledb-migrate:
 	cd .. && \
-	sh kubernetes/bin/utils/migrateTimescaleDBDocker.sh
+	sh kubernetes/bin/utils/migrate_timescaledb_docker.sh
 
 # Redis
 redis-cli:
