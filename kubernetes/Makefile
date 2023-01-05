@@ -1,11 +1,11 @@
 setup-multipass:
-	sh bin/setupMultipass.sh
+	sh bin/setup_multipass.sh
 setup-k3d:
 	sh bin/setup_k3d.sh
 setup-kind:
-	sh bin/setupKind.sh
+	sh bin/setup_kind.sh
 setup-minikube:
-	sh bin/setupMinikube.sh
+	sh bin/setup_minikube.sh
 
 focus-opa-debug:
 	sh bin/utils/focus_opa_debug.sh
@@ -15,7 +15,7 @@ focus-rasa-debug:
 	sh bin/utils/focus_rasa_debug.sh
 
 install-alpine:
-	sh bin/utils/installAlpine.sh
+	sh bin/utils/install_hm_alpine.sh
 
 # minikube
 minikube-start-docker:
