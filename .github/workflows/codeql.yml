@@ -6,7 +6,7 @@ name: CodeQL
 
 jobs:
   codeql-cpp:
-    name: CodeQL (cpp)
+    name: C++
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 20
@@ -30,23 +30,69 @@ jobs:
       - name: CodeQL
         uses: github/codeql-action/analyze@v2
 
-  codeql-go-java-javascript-python-ruby:
-    name: CodeQL
+  codeql-go:
+    name: Go
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        # https://github.com/github/codeql-action/blob/main/src/languages.ts
-        language: [go, javascript, python, ruby]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: ${{ matrix.language }}
+          languages: go
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: CodeQL
+        uses: github/codeql-action/analyze@v2
+
+  codeql-javascript:
+    name: JavaScript
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: CodeQL
+        uses: github/codeql-action/analyze@v2
+
+  codeql-python:
+    name: Python
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: python
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: CodeQL
+        uses: github/codeql-action/analyze@v2
+
+  codeql-ruby:
+    name: Ruby
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ruby
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
       - name: CodeQL

@@ -6,7 +6,7 @@ name: Lint
 
 jobs:
   lint-c-cpp:
-    name: Lint | C, C++
+    name: C, C++
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -22,7 +22,7 @@ jobs:
           style: file
 
   lint-cmake:
-    name: Lint | CMake
+    name: CMake
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -48,7 +48,7 @@ jobs:
           poetry run poe lint-cmake
 
   lint-commit-message:
-    name: Lint | Commit Message
+    name: Commit Message
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -61,7 +61,7 @@ jobs:
         uses: wagoid/commitlint-github-action@v5
 
   lint-css-markdown-solidity-xml:
-    name: Lint | CSS, Markdown, Solidity, XML
+    name: CSS, Markdown, Solidity, XML
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -101,7 +101,7 @@ jobs:
           npm run lint:xml
 
   lint-dockerfile:
-    name: Lint | Dockerfile
+    name: Dockerfile
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -114,7 +114,7 @@ jobs:
           dockerfile: '**/Dockerfile*'
 
   lint-go:
-    name: Lint | Go
+    name: Go
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -133,7 +133,7 @@ jobs:
           args: --timeout=3m
 
   lint-javascript:
-    name: Lint | JavaScript
+    name: JavaScript
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -174,7 +174,7 @@ jobs:
           cd ../web-cypress && npm run lint:javascript
 
   lint-kotlin:
-    name: Lint | Kotlin
+    name: Kotlin
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 30
@@ -192,7 +192,7 @@ jobs:
           cd mobile-android && ./gradlew ktlintCheck
 
   lint-kubernetes-manifest:
-    name: Lint | Kubernetes Manifest
+    name: Kubernetes Manifest
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -216,7 +216,7 @@ jobs:
               kubernetes/manifests/
 
   lint-protocol-buffers:
-    name: Lint | Protocol Buffers
+    name: Protocol Buffers
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -228,7 +228,7 @@ jobs:
           cd api-go && docker run --rm --volume="$(pwd):/workspace" --workdir=/workspace bufbuild/buf lint
 
   lint-python:
-    name: Lint | Python
+    name: Python
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -260,7 +260,7 @@ jobs:
           poetry run poe lint-python-isort
 
   lint-qml:
-    name: Lint | QML
+    name: QML
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 30
@@ -277,7 +277,7 @@ jobs:
           qmllint $(git ls-files "*.qml")
 
   lint-ruby:
-    name: Lint | Ruby
+    name: Ruby
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 30
@@ -294,7 +294,7 @@ jobs:
           bundle exec rubocop
 
   lint-shell:
-    name: Lint | Shell
+    name: Shell
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -306,7 +306,7 @@ jobs:
           shellcheck $(git ls-files '*.sh')
 
   lint-sql:
-    name: Lint | SQL
+    name: SQL
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -336,7 +336,7 @@ jobs:
           poetry run poe lint-sql -- --dialect=postgres kubernetes/data/timescaledb/twitter_db/migrations
 
   lint-terraform:
-    name: Lint | Terraform
+    name: Terraform
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -350,7 +350,7 @@ jobs:
           terraform fmt -recursive -check
 
   lint-yaml:
-    name: Lint | YAML
+    name: YAML
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
