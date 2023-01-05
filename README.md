@@ -64,7 +64,7 @@
 
 ## 👩‍🚀 Introduction
 
-Personal cutting-edge technology lab. Happy learning and exchanging!
+Personal cutting-edge technology lab. Happy exchanging!
 
 [https://www.hongbomiao.com](https://www.hongbomiao.com)
 
