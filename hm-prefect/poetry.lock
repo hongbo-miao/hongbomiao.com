@@ -1376,6 +1376,21 @@ files = [
 ]
 
 [[package]]
+name = "mypy-boto3-s3"
+version = "1.26.0.post1"
+description = "Type annotations for boto3.S3 1.26.0 service generated with mypy-boto3-builder 7.11.10"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "mypy-boto3-s3-1.26.0.post1.tar.gz", hash = "sha256:6d7079f8c739dc993cbedad0736299c413b297814b73795a3855a79169ecc938"},
+    {file = "mypy_boto3_s3-1.26.0.post1-py3-none-any.whl", hash = "sha256:7de2792ff0cc541b84cd46ff3a6aa2b6e5f267217f2203f27f6e4016bddc644d"},
+]
+
+[package.dependencies]
+typing-extensions = ">=4.1.0"
+
+[[package]]
 name = "numpy"
 version = "1.24.1"
 description = "Fundamental package for array computing in Python"
@@ -1692,20 +1707,21 @@ dev = ["autoflake8", "cairosvg", "flake8", "flaky", "ipython", "jinja2", "mkdocs
 
 [[package]]
 name = "prefect-aws"
-version = "0.2.1"
+version = "0.2.3"
 description = "Prefect collection of tasks and subflows to integrate with AWS"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "prefect-aws-0.2.1.tar.gz", hash = "sha256:066e7511d999ab657b7e402ffe6d8b97b33c0b94bce33002d00825f2b2852ae5"},
-    {file = "prefect_aws-0.2.1-py3-none-any.whl", hash = "sha256:9f3ebabf1ed6f19d2923625b5531cc6a5f743e4f47316f038cc6ba2ec289d57c"},
+    {file = "prefect-aws-0.2.3.tar.gz", hash = "sha256:0cf924fc84f46eb012827cab672b3369169ad882edc25ec480d6aa696d1e6e12"},
+    {file = "prefect_aws-0.2.3-py3-none-any.whl", hash = "sha256:65c618b7a3af959b49e742a33d9b5ff09fe915b6000305dcc870d9f735a2f20b"},
 ]
 
 [package.dependencies]
 boto3 = ">=1.24.53"
 botocore = ">=1.27.53"
-prefect = ">=2.6.7"
+mypy-boto3-s3 = ">=1.24.94"
+prefect = ">=2.7"
 
 [package.extras]
 dev = ["black", "boto3-stubs (>=1.24.39)", "coverage", "flake8", "interrogate", "isort", "mkdocs", "mkdocs-gen-files", "mkdocs-material", "mkdocstrings-python-legacy", "mock", "moto (>=3.1.16,<=4.0.6)", "mypy", "pillow", "pre-commit", "pytest", "pytest-asyncio", "pytest-lazy-fixture", "types-boto3 (>=1.0.2)"]
@@ -2773,4 +2789,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "36a18c6a28b6a747ea5c8e9fc105a45c1bed6fed381f5c5c6ad74cd7bd7df107"
+content-hash = "45a7a4725911a73c0bf6cff78df4b5eb423212e1dcf11a36447a01fdb0a60162"
