@@ -8,6 +8,7 @@ jobs:
   codeql-cpp:
     name: CodeQL (cpp)
     runs-on: ubuntu-22.04
+    environment: test
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -32,6 +33,7 @@ jobs:
   codeql-go-java-javascript-python-ruby:
     name: CodeQL
     runs-on: ubuntu-22.04
+    environment: test
     timeout-minutes: 20
     strategy:
       fail-fast: false
