@@ -60,8 +60,8 @@ jobs:
       - name: Lint Commit
         uses: wagoid/commitlint-github-action@v5
 
-  lint-css-markdown-solidity-xml:
-    name: CSS, Markdown, Solidity, XML
+  lint-css:
+    name: CSS
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -90,15 +90,6 @@ jobs:
       - name: Lint CSS
         run: |
           npm run lint:css
-      - name: Lint Markdown
-        run: |
-          npm run lint:markdown
-      - name: Lint Solidity
-        run: |
-          npm run lint:solidity
-      - name: Lint XML
-        run: |
-          npm run lint:xml
 
   lint-dockerfile:
     name: Dockerfile
@@ -215,6 +206,37 @@ jobs:
               -ignore-filename-pattern=kubernetes/manifests/yugabyte/ \
               kubernetes/manifests/
 
+  lint-markdown:
+    name: Markdown
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Lint Markdown
+        run: |
+          npm run lint:markdown
+
   lint-protocol-buffers:
     name: Protocol Buffers
     runs-on: ubuntu-22.04
@@ -305,6 +327,37 @@ jobs:
         run: |
           shellcheck $(git ls-files '*.sh')
 
+  lint-solidity:
+    name: Solidity
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Lint Solidity
+        run: |
+          npm run lint:solidity
+
   lint-sql:
     name: SQL
     runs-on: ubuntu-22.04
@@ -348,6 +401,37 @@ jobs:
       - name: Lint Terraform
         run: |
           terraform fmt -recursive -check
+
+  lint-xml:
+    name: XML
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Lint XML
+        run: |
+          npm run lint:xml
 
   lint-yaml:
     name: YAML
