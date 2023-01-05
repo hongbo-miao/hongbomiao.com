@@ -18,6 +18,7 @@ class TargetControlNode(Node):
 
     def subscribe_target_pose(self, msg):
         self._target_pose = msg
+        print(msg.x)
 
     def control_loop(self):
         if self._target_pose is None:

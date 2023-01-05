@@ -1,4 +1,5 @@
 import pathlib
+import random
 import sys
 import unittest
 
@@ -50,18 +51,17 @@ class TestTargetControlNodeLink(unittest.TestCase):
         pose_pub = self.node.create_publisher(Pose, "turtle1/pose", 10)
 
         try:
-            # msg = Pose()
-            # msg.x = random.uniform(0.0, 10.0)
-            # msg.y = random.uniform(0.0, 10.0)
-            # msg.theta = 0.0
-            # msg.linear_velocity = 0.0
-            # msg.angular_velocity = 0.0
-            #
-            # pose_pub.publish(msg)
-            # success = proc_output.waitFor(
-            #     expected_output=str(msg), process=target_control_node, timeout=1.0
-            # )
-            # assert success
-            assert True
+            msg = Pose()
+            msg.x = random.uniform(0.0, 10.0)
+            msg.y = random.uniform(0.0, 10.0)
+            msg.theta = 0.0
+            msg.linear_velocity = 0.0
+            msg.angular_velocity = 0.0
+
+            pose_pub.publish(msg)
+            success = proc_output.waitFor(
+                expected_output=str(msg.x), process=target_control_node, timeout=1.0
+            )
+            assert success
         finally:
             self.node.destroy_publisher(pose_pub)
