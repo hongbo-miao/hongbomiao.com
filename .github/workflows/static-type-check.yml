@@ -1,0 +1,131 @@
+---
+name: Static Type Check
+
+"on":
+  workflow_call:
+    secrets:
+      TF_API_TOKEN:
+        required: true
+
+jobs:
+  static-type-check-kotlin:
+    name: Static Type Check | Kotlin
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: '19'
+          cache: gradle
+      - name: Static type check Kotlin
+        run: |
+          cd mobile-android
+          ./gradlew detekt
+
+  static-type-check-python:
+    name: Static Type Check | Python
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: poetry
+      - name: Set Poetry environment
+        run: |
+          poetry env use 3.11
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
+      - name: Static type check Python
+        run: |
+          poetry run poe static-type-check-python -- --package=api-python-fastapi
+          poetry run poe static-type-check-python -- --package=api-python-flask
+          poetry run poe static-type-check-python -- --package=chatbot
+          poetry run poe static-type-check-python -- --package=convolutional-neural-network
+          poetry run poe static-type-check-python -- --package=data-distribution-service
+          poetry run poe static-type-check-python -- --package=feature-store
+          poetry run poe static-type-check-python -- --package=grafana.hm-dashboard
+          poetry run poe static-type-check-python -- --package=graph-neural-network
+          poetry run poe static-type-check-python -- --package=hm-airflow
+          poetry run poe static-type-check-python -- --package=hm-locust
+          poetry run poe static-type-check-python -- --package=hm-opal-client
+          poetry run poe static-type-check-python -- --package=hm-open3d
+          poetry run poe static-type-check-python -- --package=hm-prefect
+          poetry run poe static-type-check-python -- --package=hm-pyspark
+          poetry run poe static-type-check-python -- --package=hugging-face
+          poetry run poe static-type-check-python -- --package=quantum-computing
+
+  static-type-check-terraform:
+    name: Static Type Check | Terraform
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - name: Initialize Terraform
+        working-directory: terraform
+        run: |
+          terraform init
+      - name: Static type check Terraform
+        working-directory: terraform
+        run: |
+          terraform validate
+
+  static-type-check-typescript:
+    name: Static Type Check | TypeScript
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
+          cd api-node && npm ci
+          cd ../ethereum && npm ci
+          cd ../grafana/hm-panel-plugin && npm ci
+          cd ../../mobile-react-native && npm ci
+          cd ../web && npm ci
+          cd ../web-cypress && npm ci
+      - name: Static type check TypeScript
+        run: |
+          cd api-node && npm run tsc
+          cd ../ethereum && npm run tsc
+          cd ../grafana/hm-panel-plugin && npm run tsc
+          cd ../../mobile-react-native && npm run tsc
+          cd ../web && npm run tsc
+          cd ../web-cypress && npm run tsc
