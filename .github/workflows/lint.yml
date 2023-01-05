@@ -1,0 +1,376 @@
+---
+name: Lint
+
+"on":
+  workflow_call:
+
+jobs:
+  lint-c-cpp:
+    name: Lint | C, C++
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Lint C, C++
+        uses: DoozyX/clang-format-lint-action@v0.15
+        with:
+          source: .
+          extensions: c,cpp,h,ino
+          clangFormatVersion: 14
+          style: file
+
+  lint-cmake:
+    name: Lint | CMake
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: poetry
+      - name: Set Poetry environment
+        run: |
+          poetry env use 3.11
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
+      - name: Lint CMake
+        run: |
+          poetry run poe lint-cmake
+
+  lint-commit-message:
+    name: Lint | Commit Message
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Lint Commit
+        uses: wagoid/commitlint-github-action@v5
+
+  lint-css-markdown-solidity-xml:
+    name: Lint | CSS, Markdown, Solidity, XML
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Lint CSS
+        run: |
+          npm run lint:css
+      - name: Lint Markdown
+        run: |
+          npm run lint:markdown
+      - name: Lint Solidity
+        run: |
+          npm run lint:solidity
+      - name: Lint XML
+        run: |
+          npm run lint:xml
+
+  lint-dockerfile:
+    name: Lint | Dockerfile
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Lint Dockerfile
+        uses: jbergstroem/hadolint-gh-action@v1
+        with:
+          dockerfile: '**/Dockerfile*'
+
+  lint-go:
+    name: Lint | Go
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.18.0'
+      - name: Lint Go
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
+          working-directory: api-go
+          args: --timeout=3m
+
+  lint-javascript:
+    name: Lint | JavaScript
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache npm
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
+          cd api-node && npm ci
+          cd ../ethereum && npm ci
+          cd ../grafana/hm-panel-plugin && npm ci
+          cd ../../mobile-react-native && npm ci
+          cd ../web && npm ci
+          cd ../web-cypress && npm ci
+      - name: Lint JavaScript
+        run: |
+          cd api-node && npm run lint:javascript
+          cd ../ethereum && npm run lint:javascript
+          cd ../grafana/hm-panel-plugin && npm run lint:javascript
+          cd ../../mobile-react-native && npm run lint:javascript
+          cd ../web && npm run lint:javascript
+          cd ../web-cypress && npm run lint:javascript
+
+  lint-kotlin:
+    name: Lint | Kotlin
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: '19'
+          cache: gradle
+      - name: Lint Kotlin
+        run: |
+          cd mobile-android && ./gradlew ktlintCheck
+
+  lint-kubernetes-manifest:
+    name: Lint | Kubernetes Manifest
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Lint Kubernetes
+        run: |
+          docker run \
+            --rm \
+            --volume=`pwd`/kubernetes:/kubernetes \
+            ghcr.io/yannh/kubeconform:latest \
+              -kubernetes-version=1.26.0 \
+              -ignore-filename-pattern='.*trafficsplit.yaml' \
+              -ignore-filename-pattern='.*my-values.yaml' \
+              -ignore-filename-pattern=kubernetes/manifests/argocd/ \
+              -ignore-filename-pattern=kubernetes/manifests/elastic/ \
+              -ignore-filename-pattern=kubernetes/manifests/kafka/ \
+              -ignore-filename-pattern=kubernetes/manifests/prometheus/ \
+              -ignore-filename-pattern=kubernetes/manifests/yugabyte/ \
+              kubernetes/manifests/
+
+  lint-protocol-buffers:
+    name: Lint | Protocol Buffers
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Lint Protocol Buffers
+        run: |
+          cd api-go && docker run --rm --volume="$(pwd):/workspace" --workdir=/workspace bufbuild/buf lint
+
+  lint-python:
+    name: Lint | Python
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: poetry
+      - name: Set Poetry environment
+        run: |
+          poetry env use 3.11
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
+      - name: Lint Python (Black)
+        run: |
+          poetry run poe lint-python-black
+      - name: Lint Python (Flake8)
+        run: |
+          poetry run poe lint-python-flake8
+      - name: Lint Python (isort)
+        run: |
+          poetry run poe lint-python-isort
+
+  lint-qml:
+    name: Lint | QML
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.*'
+          cache: true
+      - name: Lint QML
+        run: |
+          qmllint $(git ls-files "*.qml")
+
+  lint-ruby:
+    name: Lint | Ruby
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1.3'
+          bundler-cache: true
+      - name: Lint Ruby
+        run: |
+          bundle exec rubocop
+
+  lint-shell:
+    name: Lint | Shell
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Lint Shell
+        run: |
+          shellcheck $(git ls-files '*.sh')
+
+  lint-sql:
+    name: Lint | SQL
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: poetry
+      - name: Set Poetry environment
+        run: |
+          poetry env use 3.11
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
+      - name: Lint SQL
+        run: |
+          # poetry run poe lint-sql -- --dialect=bigquery bigquery-ml
+          poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
+          poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
+          poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
+          poetry run poe lint-sql -- --dialect=postgres kubernetes/data/timescaledb/twitter_db/migrations
+
+  lint-terraform:
+    name: Lint | Terraform
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+      - name: Lint Terraform
+        run: |
+          terraform fmt -recursive -check
+
+  lint-yaml:
+    name: Lint | YAML
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: poetry
+      - name: Set Poetry environment
+        run: |
+          poetry env use 3.11
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
+      - name: Lint YAML
+        run: |
+          poetry run poe lint-yaml
