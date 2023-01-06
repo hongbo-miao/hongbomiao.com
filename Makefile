@@ -113,6 +113,7 @@ pyenv-deactivate:
 poetry-self-update:
 	poetry self update
 poetry-env-list:
+	# ~/Library/Caches/pypoetry/virtualenvs
 	poetry env list
 poetry-env-remove:
 	poetry env remove xxx
