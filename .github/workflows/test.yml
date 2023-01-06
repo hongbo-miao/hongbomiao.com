@@ -94,11 +94,11 @@ jobs:
 
   lint:
     name: Lint
-    uses: ./.github/workflows/lint.yml
+    uses: ./.github/workflows/.lint.yml
 
   static-type-check:
     name: Static Type Check
-    uses: ./.github/workflows/static-type-check.yml
+    uses: ./.github/workflows/.static-type-check.yml
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
@@ -940,4 +940,4 @@ jobs:
 
   codeql:
     name: CodeQL
-    uses: ./.github/workflows/codeql.yml
+    uses: ./.github/workflows/.codeql.yml
