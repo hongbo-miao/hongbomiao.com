@@ -26,8 +26,8 @@ poetry-run-flask-greet:
 
 docker-build:
 	cd .. && \
-	docker build --file=api-python-flask/Dockerfile --tag=ghcr.io/hongbo-miao/hm-api-python-flask:latest .
+	docker build --file=api-python/Dockerfile --tag=ghcr.io/hongbo-miao/hm-api-python:latest .
 docker-push:
-	docker push ghcr.io/hongbo-miao/hm-api-python-flask:latest
+	docker push ghcr.io/hongbo-miao/hm-api-python:latest
 docker-run:
-	docker run --publish=35903:35903 --name=hm-api-python-flask --rm ghcr.io/hongbo-miao/hm-api-python-flask:latest
+	docker run --publish=35903:35903 --name=hm-api-python --rm ghcr.io/hongbo-miao/hm-api-python:latest
