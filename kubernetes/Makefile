@@ -173,8 +173,8 @@ kubectl-port-forward-opal-server:
 	kubectl port-forward service/opal-server-service --namespace=hm 7002:7002
 kubectl-port-forward-config-loader:
 	kubectl port-forward service/config-loader-service --namespace=hm 26660:26660
-kubectl-port-forward-api-python-flask:
-	kubectl port-forward service/api-python-flask-service --namespace=hm-api-python-flask 35903:35903
+kubectl-port-forward-api-python:
+	kubectl port-forward service/api-python-service --namespace=hm-api-python 35903:35903
 
 kubectl-port-forward-postgres:
 	kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:40072
