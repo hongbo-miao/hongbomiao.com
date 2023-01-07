@@ -7,12 +7,12 @@ echo "# Install TimescaleDB"
 helm repo add timescale https://charts.timescale.com
 helm repo update
 
-kubectl apply --filename=kubernetes/manifests/timescale/hm-timescale-namespace.yaml
+kubectl apply --filename=kubernetes/manifests/timescaledb/hm-timescale-namespace.yaml
 helm install \
   timescale \
   timescale/timescaledb-single \
   --namespace=hm-timescale \
-  --values=kubernetes/manifests/timescale/helm/my-values.yaml
+  --values=kubernetes/manifests/timescaledb/helm/my-values.yaml
 
 # Delete:
 # helm uninstall timescale --namespace=hm-timescale
