@@ -1,53 +1,36 @@
-conda-create:
-	conda create --name=hm-feature-store python=3.10 --yes
-conda-env-remove:
-	conda env remove --name=hm-feature-store
-conda-activate:
-	conda activate hm-feature-store
-conda-deactivate:
-	conda deactivate
-conda-env-list:
-	conda env list
-conda-list-packages:
-	conda list
-
-pip-install:
-	pip install --requirement=requirements.txt
+poetry-update-lock-file:
+	poetry lock --no-update
+poetry-install:
+	poetry install
+poetry-add:
+	poetry add xxx
+poetry-add-dev:
+	poetry add xxx --group=dev
 
 feast-init:
 	feast init driver_features
-
 download-driver-stats:
 	curl https://raw.githubusercontent.com/Hongbo-Miao/hm-driver-stats/main/driver_stats.parquet > features/data/driver_stats.parquet
 
-python-inspect-raw-data:
-	python inspect_raw_data.py
-
+inspect-raw-data:
+	poetry run poe inspect-raw-data
 # Scan python files in the current directory for feature view/entity definitions, registers the objects, and deploys infrastructure.
 feast-apply:
-	cd driver_features && \
-	feast apply
-
+	poetry run poe feast-apply
 # Generate training data
-python-generate:
-	python generate_training_data.py
-
+generate-training-data:
+	poetry run poe generate-training-data
 # Load features into your online store
-feast-materialize-features:
-	cd driver_features && \
-	feast materialize-incremental $$(date -u +"%Y-%m-%dT%H:%M:%S")
-
+materialize-features:
+	poetry run poe materialize-features
 # Inspect materialized features
-python-inspect-features:
-	python inspect_materialized_features.py
-
+inspect-features:
+	poetry run poe inspect-features
 # Fetch feature vectors for inference
-python-fetch-features:
-	python fetch_features.py
+fetch-features:
+	poetry run poe fetch-features
 # Fetch feature vectors for inference by feature service
-python-fetch-features-by-service:
-	python fetch_features_by_service.py
-
+fetch-features-by-service:
+	poetry run poe fetch-features-by-service
 feast-ui:
-	cd driver_features && \
-	feast ui
+	poetry run poe feast-ui
