@@ -794,14 +794,14 @@ pgp = ["gpg"]
 
 [[package]]
 name = "dvc"
-version = "2.38.1"
+version = "2.39.0"
 description = "Git for data scientists - manage your code and data together"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-2.38.1-py3-none-any.whl", hash = "sha256:f14f0080d5e312eef27863cc2fe082e365bf34e1d1757195c3ca808e8f74fe66"},
-    {file = "dvc-2.38.1.tar.gz", hash = "sha256:88dffe61d4d376d28d5dbd2cb1193782ad640d610fae5169871927b54d828af5"},
+    {file = "dvc-2.39.0-py3-none-any.whl", hash = "sha256:e0765516c85efac36148804c01fadaf19f4b3a862675499814a96a127a2fa9c1"},
+    {file = "dvc-2.39.0.tar.gz", hash = "sha256:efb00f96b296446c951107d4d82a2fb0b5be4c457d3c9f2d285fbcbf1f7be266"},
 ]
 
 [package.dependencies]
@@ -810,10 +810,11 @@ colorama = ">=0.3.9"
 configobj = ">=5.0.6"
 distro = ">=1.3.0"
 dpath = ">=2.0.2,<3"
-dvc-data = "0.28.4"
-dvc-http = "2.27.2"
-dvc-render = "0.0.15"
-dvc-task = "0.1.8"
+dvc-data = "0.28.5"
+dvc-http = "*"
+dvc-render = "0.0.17"
+dvc-studio-client = ">=0.1.1"
+dvc-task = "0.1.9"
 dvclive = ">=1.2.2"
 flatten-dict = ">=0.4.1,<1"
 "flufl.lock" = ">=5"
@@ -831,7 +832,7 @@ pyparsing = ">=2.4.7"
 requests = ">=2.22.0"
 rich = ">=10.13.0"
 "ruamel.yaml" = ">=0.17.11"
-scmrepo = "0.1.4"
+scmrepo = "0.1.5"
 shortuuid = ">=0.5.0"
 shtab = ">=1.3.4,<2"
 tabulate = ">=0.8.7"
@@ -854,21 +855,21 @@ ssh = ["dvc-ssh (==2.20.0)"]
 ssh-gssapi = ["dvc-ssh[gssapi] (==2.20.0)"]
 terraform = ["tpi[ssh] (>=2.1.0)"]
 testing = ["pytest-test-utils (==0.0.8)"]
-tests = ["beautifulsoup4 (==4.11.1)", "dvc-ssh (==2.20.0)", "filelock (==3.8.2)", "flaky (==3.7.0)", "mypy (==0.990)", "pylint (==2.15.8)", "pylint-plugin-utils (==0.7)", "pylint-pytest (==1.1.2)", "pytest (==7.2.0)", "pytest-cov (==4.0.0)", "pytest-docker (==0.11.0)", "pytest-lazy-fixture (==0.6.3)", "pytest-mock (==3.10.0)", "pytest-test-utils (==0.0.8)", "pytest-timeout (==2.1.0)", "pytest-xdist (==3.1.0)", "pywin32 (>=225)", "tpi[ssh] (>=2.1.0)", "types-requests", "types-tabulate", "types-toml"]
+tests = ["beautifulsoup4 (==4.11.1)", "dvc-ssh (==2.20.0)", "filelock (==3.9.0)", "flaky (==3.7.0)", "mypy (==0.991)", "pylint (==2.15.9)", "pylint-plugin-utils (==0.7)", "pylint-pytest (==1.1.2)", "pytest (==7.2.0)", "pytest-cov (==4.0.0)", "pytest-docker (==0.11.0)", "pytest-lazy-fixture (==0.6.3)", "pytest-mock (==3.10.0)", "pytest-test-utils (==0.0.8)", "pytest-timeout (==2.1.0)", "pytest-xdist (==3.1.0)", "pywin32 (>=225)", "tpi[ssh] (>=2.1.0)", "types-requests", "types-tabulate", "types-toml"]
 webdav = ["dvc-webdav (==2.19.0)"]
 webhdfs = ["dvc-webhdfs (==2.19.0)"]
 webhdfs-kerberos = ["dvc-webhdfs[kerberos] (==2.19.0)"]
 
 [[package]]
 name = "dvc-data"
-version = "0.28.4"
+version = "0.28.5"
 description = "dvc data"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-data-0.28.4.tar.gz", hash = "sha256:81a508af473c0a407ef56e1c99caf3a7c37badb2d3d2396fa5b6d004b1208a35"},
-    {file = "dvc_data-0.28.4-py3-none-any.whl", hash = "sha256:ea4f6f5417bac7ba339c43e1abbee6fbd5bc799add457db959ffe5c69c7a339d"},
+    {file = "dvc-data-0.28.5.tar.gz", hash = "sha256:cf6ae7a7d9220fcd223504427829ef7e9b6088e94b83e7d2882a9846eafb85cb"},
+    {file = "dvc_data-0.28.5-py3-none-any.whl", hash = "sha256:dc5fc5e4d20e20f595a5b84bf1b623652e3d65804f37cb6c937a75e4fc1c0bad"},
 ]
 
 [package.dependencies]
@@ -932,14 +933,14 @@ tests = ["mypy (==0.971)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-cov 
 
 [[package]]
 name = "dvc-render"
-version = "0.0.15"
+version = "0.0.17"
 description = "DVC render"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-render-0.0.15.tar.gz", hash = "sha256:bc1a02a2690c9641113be6fb59fb78fea485c7203a9c75d57220ca1e60e99b60"},
-    {file = "dvc_render-0.0.15-py3-none-any.whl", hash = "sha256:269592638b466b1104753b3b8c3dcafe4db8174909d4e3dc2354f50a14eab1c3"},
+    {file = "dvc-render-0.0.17.tar.gz", hash = "sha256:3b119edd39610dff102a60f6735a9bbd4b68ecdb463a65838013a2782e7c7b51"},
+    {file = "dvc_render-0.0.17-py3-none-any.whl", hash = "sha256:73334fa4a6dca15c480bfd78d4bfe1d15d51b5b8296d9108d1fd1d00ba21dc81"},
 ]
 
 [package.dependencies]
@@ -974,15 +975,37 @@ s3fs = ">=2022.02.0"
 tests = ["Pygments (==2.10.0)", "collective.checkdocs (==0.2)", "dvc[testing]", "filelock (==3.3.2)", "flaky (==3.7.0)", "mock (==4.0.3)", "mypy (==0.910)", "pydocstyle (==6.1.1)", "pylint (==2.11.1)", "pylint-plugin-utils (==0.6)", "pylint-pytest (==1.1.2)", "pytest (==6.2.5)", "pytest-cov (==3.0.0)", "pytest-docker (==0.10.3)", "pytest-lazy-fixture (==0.6.3)", "pytest-mock (==3.6.1)", "pytest-xdist (==2.4.0)", "pywin32 (>=225)", "types-requests (==2.25.11)", "types-tabulate (==0.8.3)", "types-toml (==0.10.1)", "wget (==3.2)", "wheel (==0.37.0)", "xmltodict (==0.12.0)"]
 
 [[package]]
+name = "dvc-studio-client"
+version = "0.3.0"
+description = "Small library to post data from DVC/DVCLive to Iterative Studio"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "dvc-studio-client-0.3.0.tar.gz", hash = "sha256:dabe29fbf55795de82faf8157a35fa9c00fe0553867ef8013281503607a1f66b"},
+    {file = "dvc_studio_client-0.3.0-py3-none-any.whl", hash = "sha256:195a11f9340df4687fbc174ca7c38543dbc1fa07f36e4a4ded615a677828bebe"},
+]
+
+[package.dependencies]
+gitpython = "*"
+requests = "*"
+voluptuous = "*"
+
+[package.extras]
+dev = ["mkdocs (==1.3.1)", "mkdocs-gen-files (==0.3.5)", "mkdocs-material (==8.4.1)", "mkdocs-section-index (==0.3.4)", "mkdocstrings-python (==0.7.1)", "pytest (==7.2.0)", "pytest-cov (==3.0.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)"]
+docs = ["mkdocs (==1.3.1)", "mkdocs-gen-files (==0.3.5)", "mkdocs-material (==8.4.1)", "mkdocs-section-index (==0.3.4)", "mkdocstrings-python (==0.7.1)"]
+tests = ["pytest (==7.2.0)", "pytest-cov (==3.0.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)"]
+
+[[package]]
 name = "dvc-task"
-version = "0.1.8"
+version = "0.1.9"
 description = "Extensible task queue used in DVC."
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-task-0.1.8.tar.gz", hash = "sha256:98906a1bb54995798f5b997e8bf90f4bb525cb893045fdc0fc79f27e5d737dc5"},
-    {file = "dvc_task-0.1.8-py3-none-any.whl", hash = "sha256:bd9a4afd1c38e9c009763ae99768ed2d0f29180dafa63de0ef5e46f0426310a8"},
+    {file = "dvc-task-0.1.9.tar.gz", hash = "sha256:e2bc6e257fc363fa9e960d727e59cc5b0a40c4355f475bd8a0f1e22fb0ea2a8c"},
+    {file = "dvc_task-0.1.9-py3-none-any.whl", hash = "sha256:539b8e45e29d5c082edc917b19ab2937b48a551ea33966a4d3a1e906e2ecc262"},
 ]
 
 [package.dependencies]
@@ -1702,6 +1725,13 @@ category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
+    {file = "Pillow-9.4.0-1-cp310-cp310-macosx_10_10_x86_64.whl", hash = "sha256:1b4b4e9dda4f4e4c4e6896f93e84a8f0bcca3b059de9ddf67dac3c334b1195e1"},
+    {file = "Pillow-9.4.0-1-cp311-cp311-macosx_10_10_x86_64.whl", hash = "sha256:fb5c1ad6bad98c57482236a21bf985ab0ef42bd51f7ad4e4538e89a997624e12"},
+    {file = "Pillow-9.4.0-1-cp37-cp37m-macosx_10_10_x86_64.whl", hash = "sha256:f0caf4a5dcf610d96c3bd32932bfac8aee61c96e60481c2a0ea58da435e25acd"},
+    {file = "Pillow-9.4.0-1-cp38-cp38-macosx_10_10_x86_64.whl", hash = "sha256:3f4cc516e0b264c8d4ccd6b6cbc69a07c6d582d8337df79be1e15a5056b258c9"},
+    {file = "Pillow-9.4.0-1-cp39-cp39-macosx_10_10_x86_64.whl", hash = "sha256:b8c2f6eb0df979ee99433d8b3f6d193d9590f735cf12274c108bd954e30ca858"},
+    {file = "Pillow-9.4.0-1-pp38-pypy38_pp73-macosx_10_10_x86_64.whl", hash = "sha256:b70756ec9417c34e097f987b4d8c510975216ad26ba6e57ccb53bc758f490dab"},
+    {file = "Pillow-9.4.0-1-pp39-pypy39_pp73-macosx_10_10_x86_64.whl", hash = "sha256:43521ce2c4b865d385e78579a082b6ad1166ebed2b1a2293c3be1d68dd7ca3b9"},
     {file = "Pillow-9.4.0-cp310-cp310-macosx_10_10_x86_64.whl", hash = "sha256:2968c58feca624bb6c8502f9564dd187d0e1389964898f5e9e1fbc8533169157"},
     {file = "Pillow-9.4.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:c5c1362c14aee73f50143d74389b2c158707b4abce2cb055b7ad37ce60738d47"},
     {file = "Pillow-9.4.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:bd752c5ff1b4a870b7661234694f24b1d2b9076b8bf337321a814c612665f343"},
@@ -2232,14 +2262,14 @@ crt = ["botocore[crt] (>=1.20.29,<2.0a.0)"]
 
 [[package]]
 name = "scmrepo"
-version = "0.1.4"
+version = "0.1.5"
 description = "SCM wrapper and fsspec filesystem for Git for use in DVC"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "scmrepo-0.1.4-py3-none-any.whl", hash = "sha256:7feaf08511452051734829dda76911778b1f9691d792754765a84b09948a5a17"},
-    {file = "scmrepo-0.1.4.tar.gz", hash = "sha256:e552f85a31bb4afb065da3e29eaf7464e3bcf281fb2d22ad8ebccfc3ae673174"},
+    {file = "scmrepo-0.1.5-py3-none-any.whl", hash = "sha256:95d798e5ce248ad311c7b4fb71b18b47698e1c89111ccdc730e39fa2cc95b417"},
+    {file = "scmrepo-0.1.5.tar.gz", hash = "sha256:27cdbc3c5ead363a2ed6f9b0d7cd38d9df2c3225bf4044b3d56ec90fa437e095"},
 ]
 
 [package.dependencies]
@@ -2885,4 +2915,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "2865864c7963b74554c7b035ecf21af135c357ed7fb4e06962d307a17917ff9c"
+content-hash = "5f4d3661fe4cb14c58a676f1b7d6f3de2356a2321746ef9c45ff60664803a786"
