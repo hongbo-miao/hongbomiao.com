@@ -22,7 +22,7 @@ jobs:
     outputs:
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
-      api-python-flask: ${{ steps.filter.outputs.api-python-flask }}
+      api-python: ${{ steps.filter.outputs.api-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       grafana: ${{ steps.filter.outputs.grafana }}
       chatbot: ${{ steps.filter.outputs.chatbot }}
@@ -49,9 +49,9 @@ jobs:
             api-node:
               - '.github/workflows/test.yml'
               - 'api-node/**'
-            api-python-flask:
+            api-python:
               - '.github/workflows/test.yml'
-              - 'api-python-flask/**'
+              - 'api-python/**'
             convolutional-neural-network:
               - '.github/workflows/test.yml'
               - 'convolutional-neural-network/**'
@@ -526,10 +526,10 @@ jobs:
         run: |
           npm run test:stryker
 
-  api-python-flask-test:
+  api-python-test:
     name: API - Python (Flask) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-python-flask == 'true' }}
+    if: ${{ needs.detect-changes.outputs.api-python == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -559,21 +559,21 @@ jobs:
           python-version: '3.11'
           cache: poetry
       - name: Set Poetry environment
-        working-directory: api-python-flask
+        working-directory: api-python
         run: |
           poetry env use 3.11
       - name: Install dependencies
-        working-directory: api-python-flask
+        working-directory: api-python
         run: |
           poetry install
       - name: Test
-        working-directory: api-python-flask
+        working-directory: api-python
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: api-python-flask
+          directory: api-python
 
   prefect-test:
     name: Prefect | Test

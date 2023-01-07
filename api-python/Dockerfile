@@ -25,10 +25,10 @@ RUN apk add --no-cache gcc libffi-dev musl-dev bash g++ make \
   && make install \
   && cd .. \
   && rm -r -f librdkafka-1.9.2/
-COPY ["api-python-flask/pyproject.toml", "api-python-flask/poetry.lock", "./"]
+COPY ["api-python/pyproject.toml", "api-python/poetry.lock", "./"]
 RUN . /venv/bin/activate \
   && poetry install --only=main --no-root
-COPY api-python-flask ./
+COPY api-python ./
 RUN . /venv/bin/activate \
   && poetry build
 
@@ -47,6 +47,6 @@ COPY --from=builder /usr/src/app/dist/ ./
 COPY --from=builder /usr/local/lib/ /usr/local/lib/
 RUN . /venv/bin/activate \
   && pip install --no-cache-dir ./*.whl
-COPY ["api-python-flask/docker-entrypoint.sh", "./"]
+COPY ["api-python/docker-entrypoint.sh", "./"]
 EXPOSE 35903
 ENTRYPOINT ["./docker-entrypoint.sh"]
