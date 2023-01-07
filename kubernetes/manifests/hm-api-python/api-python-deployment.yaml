@@ -2,30 +2,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-python-flask-deployment
-  namespace: hm-api-python-flask
+  name: api-python-deployment
+  namespace: hm-api-python
   labels:
-    app.kubernetes.io/name: api-python-flask
+    app.kubernetes.io/name: api-python
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api-python-flask
+      app: api-python
   template:
     metadata:
       labels:
-        app: api-python-flask
+        app: api-python
     spec:
       containers:
-        - name: api-python-flask
-          image: ghcr.io/hongbo-miao/hm-api-python-flask:latest
+        - name: api-python
+          image: ghcr.io/hongbo-miao/hm-api-python:latest
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
               valueFrom:
                 configMapKeyRef:
-                  name: api-python-flask-configmap
+                  name: api-python-configmap
                   key: kafka_bootstrap_servers
           ports:
-            - name: api-python-flask
+            - name: api-python
               protocol: TCP
               containerPort: 35903

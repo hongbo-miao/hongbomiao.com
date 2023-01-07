@@ -16,7 +16,7 @@ jobs:
     outputs:
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
-      api-python-flask: ${{ steps.filter.outputs.api-python-flask }}
+      api-python: ${{ steps.filter.outputs.api-python }}
       chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
       hm-keydb: ${{ steps.filter.outputs.hm-keydb }}
@@ -39,9 +39,9 @@ jobs:
             api-node:
               - '.github/workflows/docker.yml'
               - 'api-node/**'
-            api-python-flask:
+            api-python:
               - '.github/workflows/docker.yml'
-              - 'api-python-flask/**'
+              - 'api-python/**'
             chatbot:
               - '.github/workflows/docker.yml'
               - 'chatbot/**'
@@ -148,10 +148,10 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-api-python-flask:
-    name: Push hm-api-python-flask to GitHub Container Registry
+  push-hm-api-python:
+    name: Push hm-api-python to GitHub Container Registry
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-python-flask == 'true' }}
+    if: ${{ needs.detect-changes.outputs.api-python == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -176,9 +176,9 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./api-python-flask/Dockerfile
+            file: ./api-python/Dockerfile
             push: true
-            tags: ghcr.io/hongbo-miao/hm-api-python-flask:latest
+            tags: ghcr.io/hongbo-miao/hm-api-python:latest
             platforms: linux/amd64,linux/arm64
             cache-from: type=gha
             cache-to: type=gha,mode=max
