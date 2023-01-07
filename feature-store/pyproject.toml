@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "feature-store"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.10.x"
+feast = "0.28.0"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.17.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+inspect-raw-data = "python inspect_raw_data.py"
+feast-apply = { shell = "cd driver_features && feast apply" }
+generate-training-data = "python generate_training_data.py"
+materialize-features = { shell = "cd driver_features && feast materialize-incremental $(date -u +\"%Y-%m-%dT%H:%M:%S\")" }
+inspect-features = "python inspect_materialized_features.py"
+fetch-features = "python fetch_features.py"
+fetch-features-by-service = "python fetch_features_by_service.py"
+feast-ui = { shell = "cd driver_features && feast ui" }
