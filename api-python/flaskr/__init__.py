@@ -6,17 +6,15 @@ from datetime import datetime
 
 import sentry_sdk
 from confluent_kafka import Producer
-from flask import Flask, request
-from flask_apscheduler import APScheduler
+from flask import Flask
 from flask_cors import CORS
-from flask_sock import Sock
+from flaskr.blueprints.health_blueprint import health_blueprint
+from flaskr.blueprints.lucky_number_blueprint import lucky_number_blueprint
+from flaskr.blueprints.seed_blueprint import seed_blueprint
 from flaskr.utils import kafka_util
+from flaskr.utils.scheduler import scheduler
+from flaskr.utils.sock import sock
 from sentry_sdk.integrations.flask import FlaskIntegration
-from simple_websocket import Server as WebSocketServer
-
-seed_number = 42
-lucky_number = 0
-lucky_number_client_count = 0
 
 
 def create_app() -> Flask:
@@ -35,43 +33,21 @@ def create_app() -> Flask:
         traces_sample_rate=1.0,
         environment=app.config.get("ENV"),
     )
+
     CORS(app)
-    sock = Sock(app)
-    scheduler = APScheduler()
+    sock.init_app(app)
     scheduler.init_app(app)
-    scheduler.start(paused=True)
+    app.register_blueprint(health_blueprint)
+    app.register_blueprint(seed_blueprint)
+    app.register_blueprint(lucky_number_blueprint)
+
+    scheduler.start()
 
     @app.cli.command("greet")
     def greet():
         app.logger.info(f"{datetime.utcnow()} Hello")
-        time.sleep(3)
+        time.sleep(2)
         app.logger.info(f"{datetime.utcnow()} Bye")
-
-    @scheduler.task(
-        "interval",
-        id="fetch_lucky_number",
-        seconds=5,
-        misfire_grace_time=10,
-        max_instances=1,
-    )
-    def fetch_lucky_number():
-        global lucky_number
-        app.logger.info(f"lucky_number: {lucky_number}")
-        lucky_number += 1
-
-    @app.route("/")
-    def get_health() -> dict[str, str]:
-        return {"api": "ok"}
-
-    @app.get("/seed")
-    def get_seed() -> dict[str, int]:
-        return {"seedNumber": seed_number}
-
-    @app.post("/update-seed")
-    def update_seed() -> dict[str, int]:
-        global seed_number
-        seed_number = request.json["seedNumber"]
-        return {"seedNumber": seed_number}
 
     @app.post("/generate-garden-sensor-data")
     def generate_garden_sensor_data() -> dict[str, bool]:
@@ -94,44 +70,5 @@ def create_app() -> Flask:
             time.sleep(1)
         producer.flush()
         return {"body": True}
-
-    @sock.route("/echo")
-    def echo(ws: WebSocketServer) -> None:
-        while True:
-            data = ws.receive()
-            ws.send(data)
-
-    @app.post("/update-lucky-number")
-    def update_lucky_number() -> dict[str, int]:
-        global lucky_number
-        try:
-            scheduler.pause()
-            lucky_number = 0
-        except Exception as e:
-            app.logger.error(e)
-        else:
-            now = datetime.now()
-            for job in scheduler.get_jobs():
-                job.modify(next_run_time=now)
-        finally:
-            scheduler.resume()
-            return {"luckyNumber": lucky_number}
-
-    @sock.route("/lucky-number")
-    def get_lucky_number(ws: WebSocketServer) -> None:
-        global lucky_number_client_count
-        lucky_number_client_count += 1
-        app.logger.info(f"lucky_number_client_count: {lucky_number_client_count}")
-        if lucky_number_client_count > 0:
-            scheduler.resume()
-        try:
-            while True:
-                ws.send(lucky_number)
-                time.sleep(1)
-        finally:
-            lucky_number_client_count -= 1
-            app.logger.info(f"lucky_number_client_count: {lucky_number_client_count}")
-            if lucky_number_client_count == 0:
-                scheduler.pause()
 
     return app
