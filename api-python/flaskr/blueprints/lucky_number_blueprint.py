@@ -1,7 +1,6 @@
 import time
-from datetime import datetime
 
-from flask import Blueprint, current_app
+from flask import Blueprint, abort, current_app
 from flaskr.utils.scheduler import scheduler
 from flaskr.utils.sock import sock
 from simple_websocket import Server as WebSocketServer
@@ -31,13 +30,10 @@ def update_lucky_number() -> dict[str, int]:
         lucky_number = 0
     except Exception as e:
         current_app.logger.error(e)
-    else:
-        now = datetime.now()
-        for job in scheduler.get_jobs():
-            job.modify(next_run_time=now)
+        abort(500, e)
     finally:
         scheduler.resume()
-        return {"luckyNumber": lucky_number}
+    return {"luckyNumber": lucky_number}
 
 
 @sock.route("/lucky-number")
