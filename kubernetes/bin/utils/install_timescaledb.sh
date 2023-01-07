@@ -3,7 +3,6 @@ set -e
 
 echo "# Install TimescaleDB"
 # https://docs.timescale.com/install/latest/installation-kubernetes/#install-timescaledb-on-kubernetes
-# https://github.com/FairwindsOps/charts/blob/master/stable/goldilocks/values.yaml
 helm repo add timescale https://charts.timescale.com
 helm repo update
 
@@ -18,7 +17,7 @@ helm install \
 # helm uninstall timescale --namespace=hm-timescale
 echo "=================================================="
 
-kubectl port-forward service/timescale --namespace=hm-timescale 25495:25495 &
+kubectl port-forward service/timescale --namespace=hm-timescale 25495:5432 &
 sleep 5
 
 echo "# Create database in TimescaleDB"

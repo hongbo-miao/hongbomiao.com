@@ -1,4 +1,4 @@
-# https://github.com/timescale/timescaledb-kubernetes/blob/master/charts/timescaledb-single/values.yaml
+# https://github.com/timescale/helm-charts/blob/main/charts/timescaledb-single/values.yaml
 
 ---
 replicaCount: 1
@@ -8,14 +8,3 @@ secrets:
     PATRONI_SUPERUSER_PASSWORD: passw0rd
     PATRONI_REPLICATION_PASSWORD: passw0rd
     PATRONI_admin_PASSWORD: passw0rd
-
-service:
-  primary:
-    port: 25495
-    spec:
-      selector:
-        app: timescale-timescaledb
-        role: master
-
-loadBalancer:
-  enabled: false
