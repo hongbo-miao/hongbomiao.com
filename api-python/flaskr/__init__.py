@@ -39,7 +39,7 @@ def create_app() -> Flask:
     app.register_blueprint(lucky_number_blueprint)
     app.register_blueprint(seed_blueprint)
 
-    scheduler.start()
+    scheduler.start(paused=True)
 
     @app.cli.command("greet")
     def greet():
