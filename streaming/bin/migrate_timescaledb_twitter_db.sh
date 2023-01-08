@@ -8,5 +8,5 @@ echo "=================================================="
 
 echo "# Migrate twitter_db in TimescaleDB"
 TIMESCALEDB_URL="postgresql://admin:passw0rd@localhost:16863/twitter_db?sslmode=disable&search_path=public"
-migrate -database "${TIMESCALEDB_URL}" -path kubernetes/data/timescaledb/twitter_db/migrations up
+migrate -database "${TIMESCALEDB_URL}" -path streaming/migrations up
 echo "=================================================="
