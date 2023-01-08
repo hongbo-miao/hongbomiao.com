@@ -27,7 +27,7 @@ echo "=================================================="
 
 # echo "# Migrate twitter_db in TimescaleDB"
 # TIMESCALEDB_URL="postgresql://admin:passw0rd@localhost:25495/twitter_db?search_path=public"
-# migrate -database "${TIMESCALEDB_URL}" -path kubernetes/data/timescaledb/twitter_db/migrations up
+# migrate -database "${TIMESCALEDB_URL}" -path streaming/migrations up
 # echo "=================================================="
 
 pgrep kubectl | xargs kill -9
