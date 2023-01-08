@@ -7,3 +7,6 @@ timescaledb-start:
 		--env=POSTGRES_USER=admin \
 		--env=POSTGRES_PASSWORD=passw0rd \
 		timescale/timescaledb:latest-pg15
+timescaledb-migrate:
+	cd .. && \
+	sh timescaledb/bin/migrate_timescaledb_iot_db.sh

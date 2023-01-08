@@ -74,7 +74,7 @@ timescaledb-start:
 		timescale/timescaledb:latest-pg15
 timescaledb-migrate:
 	cd .. && \
-	sh kubernetes/bin/utils/migrate_timescaledb_docker.sh
+	sh streaming/bin/migrate_timescaledb_twitter_db.sh
 
 # Redis
 redis-cli:
