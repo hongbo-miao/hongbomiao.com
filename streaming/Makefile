@@ -71,7 +71,7 @@ timescaledb-start:
 		--env=POSTGRES_DB=postgres \
 		--env=POSTGRES_USER=admin \
 		--env=POSTGRES_PASSWORD=passw0rd \
-		timescale/timescaledb:latest-pg14
+		timescale/timescaledb:latest-pg15
 timescaledb-migrate:
 	cd .. && \
 	sh kubernetes/bin/utils/migrate_timescaledb_docker.sh
