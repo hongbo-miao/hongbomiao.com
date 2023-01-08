@@ -387,6 +387,7 @@ jobs:
           poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
           poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
           poetry run poe lint-sql -- --dialect=postgres kubernetes/data/timescaledb/twitter_db/migrations
+          poetry run poe lint-sql -- --dialect=postgres timescaledb/generate_iot_data
 
   lint-terraform:
     name: Terraform
