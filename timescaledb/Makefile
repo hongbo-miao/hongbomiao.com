@@ -20,20 +20,8 @@ timescaledb-migrate-ubuntu:
 	cd .. && \
 	sh timescaledb/bin/migrate_timescaledb_iot_db_ubuntu.sh
 timescaledb-logical-backup:
-	/opt/homebrew/Cellar/postgresql@14/14.6/bin/pg_dump \
-		--host=localhost \
-		--port=5432 \
-		--username=postgres \
-		--format=c \
-		--file=iot_db.bak \
-		iot_db
-timescaledb-physical-backup:
-	/opt/homebrew/Cellar/postgresql@14/14.6/bin/pg_basebackup \
-		--host=localhost \
-		--port=5432 \
-		--username=postgres \
-		--pgdata=/tmp/timescaledb-backup \
-		--wal-method=stream \
-		--format=tar \
-		--gzip \
-		--progress
+	cd .. && \
+	sh timescaledb/bin/logical_backup_timescaledb_iot_db.sh
+
+sql-show-data-directory:
+	psql postgresql://postgres:passw0rd@localhost:5432/postgres --command="show data_directory;"
