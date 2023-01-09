@@ -1,4 +1,4 @@
-FROM docker.io/alpine:3.17.0 AS builder
+FROM docker.io/alpine:3.17.1 AS builder
 USER root:root
 RUN mkdir -p /opt/kafka/plugins/ \
   # debezium-connector-postgres
