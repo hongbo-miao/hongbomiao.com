@@ -35,7 +35,7 @@ git-log:
 docker-login:
 	docker login
 docker-sh:
-	docker run --rm -it hm-graphql-server sh
+	docker run --interactive --tty --rm hm-graphql-server sh
 docker-ps:
 	docker ps
 docker-ps-all:

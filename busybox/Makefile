@@ -1,0 +1,4 @@
+docker-run:
+	docker run --interactive --tty --name=busybox busybox
+docker-inspect:
+	docker inspect --format="{{ .NetworkSettings.IPAddress }}" busybox
