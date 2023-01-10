@@ -1,11 +1,16 @@
 # Host
-set-up-ssh:
+generate-ssh-key:
 	ssh-keygen -t ed25519
+copy-ssh-key-to-ubuntu:
+	ssh-copy-id -i ~/.ssh/id_ed25519.pub hongbo-miao@192.168.64.4
 	ssh-copy-id -i ~/.ssh/id_ed25519.pub parallels@10.211.55.4
+ssh:
+	ssh hongbo-miao@192.168.64.4
+	ssh parallels@10.211.55.4
 
 # Ubuntu
-ssh:
-	ssh parallels@10.211.55.4
+show-ip:
+	hostname --all-ip-addresses
 apt-update:
 	sudo apt update
 apt-install:
