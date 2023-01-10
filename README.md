@@ -76,7 +76,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/210035383-d5fbe50a-52f4-441e-b168-241f86face3a.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/211496942-6367708e-59f8-427f-ba0d-f38137e206c8.svg)
 
 ## 📦 Setup
 
@@ -299,6 +299,7 @@ make kubernetes-clean
 
 ### IoT
 
+- **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
 - **RTI Connext DDS** - Data Distribution Service (DDS)
