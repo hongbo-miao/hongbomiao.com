@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-# Install pyenv
+echo "# Install pyenv"
 # https://github.com/pyenv/pyenv-installer
 sudo apt install --yes git
 curl https://pyenv.run | bash
@@ -12,14 +12,16 @@ curl https://pyenv.run | bash
   eval "$(pyenv virtualenv-init -)"
 } >> ~/.bashrc
 pyenv install 3.11
+echo "=================================================="
 
-# Install Poetry
+echo "# Install Poetry"
 # https://python-poetry.org/docs/
 curl -sSL https://install.python-poetry.org | python3 -
 # shellcheck disable=SC2016
 echo 'export PATH="/home/parallels/.local/bin:$PATH"' >> ~/.bashrc
+echo "=================================================="
 
-# Install ROS
+echo "# Install ROS"
 # https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
 locale
 sudo apt update
@@ -40,16 +42,19 @@ sudo apt upgrade
 sudo apt install --yes ros-humble-desktop
 
 echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+echo "=================================================="
 
-# Install colcon
+echo "# Install colcon"
 # https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Colcon-Tutorial.html
 sudo apt install --yes python3-colcon-common-extensions
 echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
+echo "=================================================="
 
-# Install turtlesim
+echo "# Install turtlesim"
 sudo apt install --yes ros-humble-turtlesim
+echo "=================================================="
 
-
-# Setup
+echo "# Set up"
 echo "source /media/psf/Home/Clouds/Git/hongbomiao.com/robot-operating-system/install/setup.bash" >> ~/.bashrc
 # source ~/.bashrc
+echo "=================================================="
