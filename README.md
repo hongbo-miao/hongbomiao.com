@@ -401,6 +401,10 @@ make kubernetes-clean
 
 ![ROS screenshot](https://user-images.githubusercontent.com/3375461/209642038-fd588750-e1dd-410b-b5fa-e65d0460338a.png)
 
+#### Poky - Reference Linux Distribution of the Yocto Project
+
+![Poky screenshot](https://user-images.githubusercontent.com/3375461/211735676-db514f9f-aff7-4f9f-9f84-434b3192c709.png)
+
 ### Computer Vision
 
 #### Open3D

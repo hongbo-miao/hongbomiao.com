@@ -25,10 +25,16 @@ sudo apt install --yes gawk wget git diffstat unzip texinfo gcc build-essential 
 #   SSTATE_MIRRORS ?= "file://.* https://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH"
 nano build/conf/local.conf
 
+# GUI
+#   bitbake core-image-sato
+# No GUI
 bitbake core-image-minimal
-# bitbake core-image-sato
 echo "=================================================="
 
 echo "# Simulate the image"
-runqemu qemux86-64
+# GUI
+#   runqemu qemux86-64
+# No GUI
+runqemu qemux86-64 nographic
+# username: root
 echo "=================================================="
