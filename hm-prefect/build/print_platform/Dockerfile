@@ -1,4 +1,4 @@
-FROM docker.io/prefecthq/prefect:2.7.7-python3.11
+FROM docker.io/prefecthq/prefect:2.7.8-python3.11
 WORKDIR /usr/src/app
 
 COPY ["hm-prefect/src/print_platform/requirements.txt", "./"]
