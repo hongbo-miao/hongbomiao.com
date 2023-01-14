@@ -31,7 +31,7 @@ nano build/conf/local.conf
 bitbake core-image-minimal
 echo "=================================================="
 
-echo "# Simulate the image"
+echo "# Run the emulator"
 # GUI
 #   runqemu qemux86-64
 # No GUI
