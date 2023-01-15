@@ -8,7 +8,8 @@ RUN npm ci
 COPY web ./
 # Skip lint check during react-scripts build
 RUN rm -f ./.eslintrc.js \
-  && npm run build
+  && npm run build \
+  && npm prune --production
 
 
 FROM docker.io/nginx:1.23.3-alpine AS release
