@@ -34,48 +34,48 @@ jobs:
         with:
           filters: |
             api-go:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'api-go/**'
             api-node:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'api-node/**'
             api-python:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'api-python/**'
             chatbot:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'chatbot/**'
             hm-alpine:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'hm-alpine/**'
             hm-keydb:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'hm-keydb/**'
             hm-opal-client:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'hm-opal-client/**'
             hm-prefect:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'hm-prefect/**'
             hm-traefik:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'hm-traefik/**'
             kafka-connect:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'kafka-connect/**'
             streaming:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'streaming/**'
             web:
-              - '.github/workflows/docker.yml'
+              - '.github/workflows/build.yml'
               - 'web/**'
 
   codeql:
     name: CodeQL
     uses: ./.github/workflows/.codeql.yml
 
-  push-hm-web:
-    name: Push hm-web to GitHub Container Registry
+  build-hm-web:
+    name: Build hm-web
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-22.04
@@ -90,7 +90,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -111,8 +111,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-api-node:
-    name: Push hm-api-node to GitHub Container Registry
+  build-hm-api-node:
+    name: Build hm-api-node
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-22.04
@@ -127,7 +127,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -148,8 +148,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-api-python:
-    name: Push hm-api-python to GitHub Container Registry
+  build-hm-api-python:
+    name: Build hm-api-python
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-python == 'true' }}
     runs-on: ubuntu-22.04
@@ -164,7 +164,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -185,8 +185,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-graphql-server:
-    name: Push hm-graphql-server to GitHub Container Registry
+  build-hm-graphql-server:
+    name: Build hm-graphql-server
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
@@ -201,7 +201,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -222,8 +222,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-grpc-server:
-    name: Push hm-grpc-server to GitHub Container Registry
+  build-hm-grpc-server:
+    name: Build hm-grpc-server
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
@@ -238,7 +238,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -259,8 +259,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-config-loader:
-    name: Push hm-config-loader to GitHub Container Registry
+  build-hm-config-loader:
+    name: Build hm-config-loader
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
@@ -275,7 +275,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -296,8 +296,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-decision-logger:
-    name: Push hm-decision-logger to GitHub Container Registry
+  build-hm-decision-logger:
+    name: Build hm-decision-logger
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
@@ -312,7 +312,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -333,8 +333,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-prefect-print-platform:
-    name: Push hm-prefect-print-platform to GitHub Container Registry
+  build-hm-prefect-print-platform:
+    name: Build hm-prefect-print-platform
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect == 'true' }}
     runs-on: ubuntu-22.04
@@ -349,7 +349,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -370,8 +370,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-opal-client:
-    name: Push hm-opal-client to GitHub Container Registry
+  build-hm-opal-client:
+    name: Build hm-opal-client
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-opal-client == 'true' }}
     runs-on: ubuntu-22.04
@@ -386,7 +386,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -407,8 +407,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-kafka-connect:
-    name: Push hm-kafka-connect to GitHub Container Registry
+  build-hm-kafka-connect:
+    name: Build hm-kafka-connect
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kafka-connect == 'true' }}
     runs-on: ubuntu-22.04
@@ -423,7 +423,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -444,8 +444,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-rasa-action-server:
-    name: Push hm-rasa-action-server to GitHub Container Registry
+  build-hm-rasa-action-server:
+    name: Build hm-rasa-action-server
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.chatbot == 'true' }}
     runs-on: ubuntu-22.04
@@ -460,7 +460,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -481,8 +481,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-streaming:
-    name: Push hm-streaming to GitHub Container Registry
+  build-hm-streaming:
+    name: Build hm-streaming
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.streaming == 'true' }}
     runs-on: ubuntu-22.04
@@ -497,7 +497,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -524,8 +524,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-keydb:
-    name: Push hm-keydb to GitHub Container Registry
+  build-hm-keydb:
+    name: Build hm-keydb
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-keydb == 'true' }}
     runs-on: ubuntu-22.04
@@ -540,7 +540,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -568,8 +568,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-traefik:
-    name: Push hm-traefik to GitHub Container Registry
+  build-hm-traefik:
+    name: Build hm-traefik
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-traefik == 'true' }}
     runs-on: ubuntu-22.04
@@ -584,7 +584,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -605,8 +605,8 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  push-hm-alpine:
-    name: Push hm-alpine to GitHub Container Registry
+  build-hm-alpine:
+    name: Build hm-alpine
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-alpine == 'true' }}
     runs-on: ubuntu-22.04
@@ -621,7 +621,7 @@ jobs:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Login to GitHub Container Registry
+      - name: Log in GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -641,3 +641,21 @@ jobs:
             cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
+
+  deploy-hm-api-node:
+    name: Deploy hm-api-node
+    needs: build-hm-api-node
+    runs-on: ubuntu-22.04
+    environment:
+      name: production-web
+      url: https://www.hongbomiao.com
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: production-web
+          heroku_email: hongbo.miao@outlook.com
