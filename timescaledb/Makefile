@@ -1,7 +1,7 @@
+# macOS
 install-postgres:
 	brew install postgresql@14
 	brew install postgresql@15
-
 timescaledb-start:
 	docker run \
 		--detach \
@@ -13,15 +13,28 @@ timescaledb-start:
 		timescale/timescaledb:latest-pg15
 timescaledb-migrate:
 	cd .. && \
-	sh timescaledb/bin/migrate_timescaledb_iot_db.sh
+	sh timescaledb/bin/macos/migrate_timescaledb_iot_db.sh
 
 # Ubuntu
-timescaledb-migrate-ubuntu:
+ubuntu-timescaledb-migrate:
 	cd .. && \
-	sh timescaledb/bin/migrate_timescaledb_iot_db_ubuntu.sh
-timescaledb-logical-backup:
+	sh timescaledb/bin/ubuntu/migrate_timescaledb_iot_db.sh
+ubuntu-timescaledb-logical-backup:
 	cd .. && \
-	sh timescaledb/bin/logical_backup_timescaledb_iot_db.sh
+	sh timescaledb/bin/ubuntu/logical_backup_timescaledb_iot_db.sh
+ubuntu-timescaledb-physical-backup:
+	cd .. && \
+	sh timescaledb/bin/ubuntu/physical_backup_timescaledb.sh
+ubuntu-timescaledb-physical-restore:
+	cd .. && \
+	sh timescaledb/bin/ubuntu/physical_restore_timescaledb.sh
+
+systemctl-list-dependencies:
+	systemctl list-dependencies postgresql
 
 sql-show-data-directory:
 	psql postgresql://postgres:passw0rd@localhost:5432/postgres --command="show data_directory;"
+sql-show-archive-mode:
+	psql postgresql://postgres:passw0rd@localhost:5432/postgres --command="show archive_mode;"
+sql-show-wal-level:
+	psql postgresql://postgres:passw0rd@localhost:5432/postgres --command="show wal_level;"
