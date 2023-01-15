@@ -24,3 +24,6 @@ apt-update:
 	sudo apt update
 apt-install:
 	sudo apt --yes xxx
+
+ls-owner-group:
+	ls -l
