@@ -31,16 +31,17 @@
 </p>
 
 <p align="center">
+  <a href="https://hitsofcode.com/github/Hongbo-Miao/hongbomiao.com/view?branch=main"><img alt="Hits of code" src="https://img.shields.io/badge/hits%20of%20code-2.3M-blue" /></a>
+  <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Lines of code" src="https://tokei.ekzhang.com/b1/github/Hongbo-Miao/hongbomiao.com" /></a>
+  <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/Hongbo-Miao/hongbomiao.com" /></a>
+  <a href="https://github.com/Hongbo-Miao/hongbomiao.com/graphs/contributors"><img alt="Commit activity" src="https://img.shields.io/github/commit-activity/y/Hongbo-Miao/hongbomiao.com"></a>
+</p>
+
+<p align="center">
   <a href="https://codecov.io/gh/Hongbo-Miao/hongbomiao.com"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/Hongbo-Miao/hongbomiao.com" /></a>
   <a href="https://github.com/prettier/prettier"><img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" /></a>
   <a href="https://github.com/psf/black"><img alt="Code style" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
   <a href="https://github.com/Hongbo-Miao/hongbomiao.com/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/Hongbo-Miao/hongbomiao.com" /></a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Lines of code" src="https://tokei.ekzhang.com/b1/github/Hongbo-Miao/hongbomiao.com" /></a>
-  <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/Hongbo-Miao/hongbomiao.com" /></a>
-  <a href="https://github.com/Hongbo-Miao/hongbomiao.com/graphs/contributors"><img alt="Commit activity" src="https://img.shields.io/github/commit-activity/y/Hongbo-Miao/hongbomiao.com"></a>
 </p>
 
 <p align="center">
