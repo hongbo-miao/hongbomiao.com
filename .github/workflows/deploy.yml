@@ -6,8 +6,34 @@ name: Deploy
     branches: [main]
 
 jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      api-node: ${{ steps.filter.outputs.api-node }}
+      web: ${{ steps.filter.outputs.web }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            api-node:
+              - '.github/workflows/deploy.yml'
+              - 'api-node/**'
+            web:
+              - '.github/workflows/deploy.yml'
+              - 'web/**'
+
   deploy:
     name: Deploy
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-22.04
     environment:
       name: production-web
