@@ -1,4 +1,4 @@
-FROM docker.io/ubuntu:23.04
+FROM docker.io/ubuntu:jammy
 WORKDIR /usr/src/app
 RUN mkdir --parents /usr/src/app/build \
   && apt-get update \
