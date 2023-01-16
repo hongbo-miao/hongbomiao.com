@@ -1,4 +1,4 @@
-FROM docker.io/ubuntu:22.04
+FROM docker.io/ubuntu:22.10
 WORKDIR /usr/src/app
 RUN mkdir --parents /usr/src/app/build \
   && apt-get update \
