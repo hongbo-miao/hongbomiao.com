@@ -1,0 +1,9 @@
+FROM docker.io/ubuntu:22.04
+WORKDIR /usr/src/app
+RUN mkdir --parents /usr/src/app/build \
+  && apt-get update \
+  && apt-get install --yes wget make gcc libpq-dev libssl-dev libxml2-dev pkg-config liblz4-dev libzstd-dev libbz2-dev libz-dev libyaml-dev \
+  && wget --quiet --output-document=- https://github.com/pgbackrest/pgbackrest/archive/release/2.43.tar.gz | tar -x -z -C /usr/src/app/build \
+  && cd /usr/src/app/build/pgbackrest-release-2.43/src/ \
+  && ./configure \
+  && make
