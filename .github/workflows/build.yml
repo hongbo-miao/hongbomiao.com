@@ -656,7 +656,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Extract pgbackrest
+      - name: Build pgbackrest
         run: |
           docker build --file=hm-pgbackrest/Dockerfile --tag=ghcr.io/hongbo-miao/hm-pgbackrest:latest .
           docker create --name=hm-pgbackrest ghcr.io/hongbo-miao/hm-pgbackrest:latest
