@@ -21,6 +21,7 @@ jobs:
       hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
       hm-keydb: ${{ steps.filter.outputs.hm-keydb }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
+      hm-pgbackrest: ${{ steps.filter.outputs.hm-pgbackrest }}
       hm-prefect: ${{ steps.filter.outputs.hm-prefect }}
       hm-traefik: ${{ steps.filter.outputs.hm-traefik }}
       kafka-connect: ${{ steps.filter.outputs.kafka-connect }}
@@ -54,6 +55,9 @@ jobs:
             hm-opal-client:
               - '.github/workflows/build.yml'
               - 'hm-opal-client/**'
+            hm-pgbackrest:
+              - '.github/workflows/build.yml'
+              - 'hm-pgbackrest/**'
             hm-prefect:
               - '.github/workflows/build.yml'
               - 'hm-prefect/**'
@@ -641,6 +645,27 @@ jobs:
             cache-to: type=gha,mode=max
           attempt_limit: 3
           attempt_delay: 2000
+
+  upload-pgbackrest:
+    name: Upload pgbackrest
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-pgbackrest == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: production
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Extract pgbackrest
+        run: |
+          docker build --file=hm-pgbackrest/Dockerfile --tag=ghcr.io/hongbo-miao/hm-pgbackrest:latest .
+          docker create --name=hm-pgbackrest ghcr.io/hongbo-miao/hm-pgbackrest:latest
+          docker cp hm-pgbackrest:/usr/src/app/build/pgbackrest-release-2.43/src/pgbackrest pgbackrest
+      - name: Upload pgbackrest
+        uses: actions/upload-artifact@v3
+        with:
+          name: pgbackrest
+          path: pgbackrest
 
   deploy-hm-api-node:
     name: Deploy hm-api-node
