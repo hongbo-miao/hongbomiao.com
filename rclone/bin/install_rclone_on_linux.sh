@@ -14,6 +14,6 @@ sudo chown root:root /usr/bin/rclone
 sudo chmod 755 /usr/bin/rclone
 
 # Install manpage
-sudo mkdir -p /usr/local/share/man/man1
+sudo mkdir --parents /usr/local/share/man/man1
 sudo cp rclone.1 /usr/local/share/man/man1/
 sudo mandb
