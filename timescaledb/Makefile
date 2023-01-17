@@ -29,8 +29,28 @@ ubuntu-timescaledb-physical-restore:
 	cd .. && \
 	sh timescaledb/bin/ubuntu/physical_restore_timescaledb.sh
 
-systemctl-list-dependencies:
+psql:
+	sudo -u postgres psql
+    # Set password: \password postgres
+    # List users and roles: \du
+    # List databases: \l
+    # List schemas: \dt
+    # List functions: \df
+    # List views: \dv
+    # Quit: \q
+
+pg-list-dependencies:
 	systemctl list-dependencies postgresql
+pg-list-cluster:
+	pg_lsclusters
+pg-stop-cluster:
+	# Stopping the cluster using pg_ctlcluster will mark the systemd unit as failed. Using systemctl instead.
+	# Avoid: sudo pg_ctlcluster 14 main stop
+	sudo systemctl stop postgresql@14-main
+pg-drop-cluster:
+	sudo pg_dropcluster --stop 14 main
+pg-status-cluster:
+	sudo systemctl status postgresql@14-main
 
 sql-show-data-directory:
 	psql postgresql://postgres:passw0rd@localhost:5432/postgres --command="show data_directory;"

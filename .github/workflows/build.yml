@@ -659,6 +659,8 @@ jobs:
       - name: Build pgbackrest
         run: |
           docker build --file=hm-pgbackrest/Dockerfile --tag=ghcr.io/hongbo-miao/hm-pgbackrest:latest .
+      - name: Extract pgbackrest
+        run: |
           docker create --name=hm-pgbackrest ghcr.io/hongbo-miao/hm-pgbackrest:latest
           docker cp hm-pgbackrest:/usr/src/app/build/pgbackrest-release-2.43/src/pgbackrest pgbackrest
       - name: Upload pgbackrest
