@@ -13,10 +13,10 @@ local-clean:
 	sh bin/clean.sh
 
 # Git
-git-branch-create-and-checkout:
-	git checkout -b xxx
-git-branch-checkout:
-	git checkout xxx
+git-branch-switch:
+	git switch xxx
+git-branch-create-and-switch:
+	git switch -c xxx
 
 git-branch-list-local:
 	git branch
@@ -110,6 +110,10 @@ pyenv-local:
 pyenv-deactivate:
 	pyenv shell system
 
+poetry-install-on-macos:
+	brew install poetry
+poetry-install-on-linux:
+	curl -sSL https://install.python-poetry.org | python3 -
 poetry-self-update:
 	poetry self update
 poetry-env-list:
