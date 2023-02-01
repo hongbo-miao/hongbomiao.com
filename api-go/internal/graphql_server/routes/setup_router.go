@@ -7,8 +7,8 @@ import (
 	sharedHandlers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/handlers"
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v8"
 	"github.com/minio/minio-go/v7"
+	"github.com/redis/go-redis/v9"
 	"go.elastic.co/apm/module/apmgin/v2"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 )
