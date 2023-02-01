@@ -3,8 +3,8 @@ package schemas
 import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/types"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/utils"
-	"github.com/go-redis/redis/v8"
 	"github.com/graphql-go/graphql"
+	"github.com/redis/go-redis/v9"
 )
 
 var twitterHashtagGraphQLType = graphql.NewObject(graphql.ObjectConfig{

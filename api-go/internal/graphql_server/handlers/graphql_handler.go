@@ -6,9 +6,9 @@ import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/types"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/utils"
 	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v8"
 	"github.com/graphql-go/graphql/gqlerrors"
 	"github.com/graphql-go/handler"
+	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog/log"
 	"net/http"
 )
