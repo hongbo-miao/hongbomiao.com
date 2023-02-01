@@ -3,7 +3,7 @@ package utils
 import (
 	"context"
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/types"
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 	"github.com/rs/zerolog/log"
 	"strconv"
 )
