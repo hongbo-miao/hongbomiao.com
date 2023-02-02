@@ -5,7 +5,7 @@ aws-install:
 # https://console.aws.amazon.com/iam/home#/security_credentials
 aws-configure:
 	aws configure --profile=hm
-	# AWS Access Key ID: AKIAT627V7Q6L6R5DJBY
+	# AWS Access Key ID: xxx
 	# AWS Secret Access Key: xxx
 	# Default region name: us-west-2
 	# Default output format:
