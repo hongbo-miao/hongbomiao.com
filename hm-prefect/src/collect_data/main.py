@@ -1,5 +1,6 @@
 import asyncio
 import json
+from pathlib import Path
 
 from prefect import flow
 from prefect_shell import shell_run_command
@@ -31,9 +32,7 @@ async def collect_data(data_sources: list[DataSource]) -> None:
 
 
 if __name__ == "__main__":
-    with open("src/collect_data/params.json", "r") as f:
-        params = json.load(f)
-
+    params = json.loads(Path("src/collect_data/params.json").read_text())
     asyncio.run(
         collect_data(
             data_sources=params["dataSources"],
