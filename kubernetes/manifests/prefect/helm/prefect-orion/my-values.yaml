@@ -1,12 +1,12 @@
 # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-orion/values.yaml
 
 ---
-# orion:
-#   env:
-#     - name: PREFECT_API_URL
-#       value: http://localhost:48838/api
-# service:
-#   port: 48838
+orion:
+  env:
+    - name: PREFECT_API_URL
+      value: http://prefect-orion.hm-prefect.svc:4200/api
+    - name: PREFECT_ORION_UI_API_URL
+      value: http://localhost:4200/api
 postgresql:
   auth:
     # username: prefect
