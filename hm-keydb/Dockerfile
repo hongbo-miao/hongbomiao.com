@@ -3,8 +3,8 @@ FROM docker.io/eqalpha/keydb:x86_64_v6.2.2
 # Install libgomp1
 # https://github.com/RedisGraph/RedisGraph/blob/master/README.md#loading-redisgraph-into-redis
 RUN apt-get update \
-  && apt-get upgrade -y \
-  && apt-get install libgomp1 -y --no-install-recommends \
+  && apt-get upgrade --yes \
+  && apt-get install --yes --no-install-recommends libgomp1 \
   && apt-get clean \
   && rm -r -f /var/lib/apt/lists/*
 
