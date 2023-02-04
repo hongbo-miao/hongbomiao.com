@@ -83,7 +83,6 @@ class GENConv(GenMessagePassing):
         return out
 
     def message(self, x_j, edge_attr=None):
-
         if edge_attr is not None:
             msg = x_j + edge_attr
         else:
