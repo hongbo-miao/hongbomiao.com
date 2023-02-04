@@ -56,7 +56,6 @@ class MLP(Seq):
         m = []
 
         for i in range(1, len(channels)):
-
             m.append(Lin(channels[i - 1], channels[i], bias))
 
             if (i == len(channels) - 1) and last_lin:

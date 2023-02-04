@@ -17,7 +17,6 @@ class GenMessagePassing(MessagePassing):
         learn_y=False,
     ):
         if aggr in ["softmax_sg", "softmax", "softmax_sum"]:
-
             super(GenMessagePassing, self).__init__(aggr=None)
             self.aggr = aggr
 
@@ -32,7 +31,6 @@ class GenMessagePassing(MessagePassing):
                 self.y = torch.nn.Parameter(torch.Tensor([y]), requires_grad=learn_y)
 
         elif aggr in ["power", "power_sum"]:
-
             super(GenMessagePassing, self).__init__(aggr=None)
             self.aggr = aggr
 
@@ -47,14 +45,12 @@ class GenMessagePassing(MessagePassing):
             super(GenMessagePassing, self).__init__(aggr=aggr)
 
     def aggregate(self, inputs, index, ptr=None, dim_size=None):
-
         if self.aggr in ["add", "mean", "max", None]:
             return super(GenMessagePassing, self).aggregate(
                 inputs, index, ptr, dim_size
             )
 
         elif self.aggr in ["softmax_sg", "softmax", "softmax_sum"]:
-
             if self.learn_t:
                 out = scatter_softmax(inputs * self.t, index, dim=self.node_dim)
             else:
