@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/utils"
-	"github.com/go-redis/redismock/v8"
+	"github.com/go-redis/redismock/v9"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
