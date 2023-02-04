@@ -12,8 +12,6 @@ require (
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/logger v0.2.5
 	github.com/gin-gonic/gin v1.8.2
-	github.com/go-redis/redis/v8 v8.11.5
-	github.com/go-redis/redismock/v8 v8.11.5
 	github.com/go-redis/redismock/v9 v9.0.2
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/golang-jwt/jwt/v4 v4.4.3
@@ -26,6 +24,7 @@ require (
 	github.com/minio/minio-go/v7 v7.0.47
 	github.com/open-policy-agent/opa v0.48.0
 	github.com/prometheus/client_golang v1.14.0
+	github.com/redis/go-redis/v9 v9.0.2
 	github.com/rs/zerolog v1.29.0
 	github.com/stretchr/testify v1.8.1
 	go.elastic.co/apm/module/apmgin/v2 v2.2.0
