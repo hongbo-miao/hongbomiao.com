@@ -117,7 +117,6 @@ class DeeperGCN(torch.nn.Module):
         self.graph_pred_linear = torch.nn.Linear(hidden_channels, num_tasks)
 
     def forward(self, input_batch):
-
         x = input_batch.x
         edge_index = input_batch.edge_index
         edge_attr = input_batch.edge_attr
@@ -139,7 +138,6 @@ class DeeperGCN(torch.nn.Module):
             edge_emb = self.bond_encoder(edge_attr)
 
         if self.block == "res+":
-
             h = self.gcns[0](h, edge_index, edge_emb)
 
             for layer in range(1, self.num_layers):
@@ -167,7 +165,6 @@ class DeeperGCN(torch.nn.Module):
             h = F.dropout(h, p=self.dropout, training=self.training)
 
         elif self.block == "res":
-
             h = F.relu(self.norms[0](self.gcns[0](h, edge_index, edge_emb)))
             h = F.dropout(h, p=self.dropout, training=self.training)
 
@@ -181,7 +178,6 @@ class DeeperGCN(torch.nn.Module):
             raise NotImplementedError("To be implemented")
 
         elif self.block == "plain":
-
             h = F.relu(self.norms[0](self.gcns[0](h, edge_index, edge_emb)))
             h = F.dropout(h, p=self.dropout, training=self.training)
 
@@ -201,7 +197,6 @@ class DeeperGCN(torch.nn.Module):
         return self.graph_pred_linear(h_graph)
 
     def print_params(self, epoch=None, final=False):
-
         if self.learn_t:
             ts = []
             for gcn in self.gcns:
