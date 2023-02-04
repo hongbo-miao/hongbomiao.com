@@ -116,18 +116,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: web/.nvmrc
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: web/package-lock.json
       - name: Install dependencies
         working-directory: web
         run: |
@@ -155,18 +145,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: web/.nvmrc
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: web/package-lock.json
       - name: Install dependencies
         working-directory: web-cypress
         run: |
@@ -205,18 +185,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: web/.nvmrc
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: web/package-lock.json
       - name: Install dependencies
         working-directory: web
         run: |
@@ -250,18 +220,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: web/.nvmrc
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: web/package-lock.json
       - name: Install dependencies
         working-directory: web
         run: |
@@ -402,18 +362,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: mobile-react-native/.nvmrc
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: mobile-react-native/package-lock.json
       - name: Install dependencies
         working-directory: mobile-react-native
         run: |
@@ -464,18 +414,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: api-node/.nvmrc
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: api-node/package-lock.json
       - name: Install dependencies
         working-directory: api-node
         run: |
@@ -503,18 +443,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: api-node/.nvmrc
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: api-node/package-lock.json
       - name: Install dependencies
         working-directory: api-node
         run: |
@@ -713,18 +643,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: grafana/hm-panel-plugin/.nvmrc
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
       - name: Install dependencies
         working-directory: grafana/hm-panel-plugin
         run: |
@@ -766,18 +686,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: grafana/hm-panel-plugin/.nvmrc
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - name: Cache npm
-        uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
       - name: Install dependencies
         working-directory: grafana/hm-panel-plugin
         run: |
