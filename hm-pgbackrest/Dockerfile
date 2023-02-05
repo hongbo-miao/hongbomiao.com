@@ -1,5 +1,8 @@
 FROM docker.io/ubuntu:jammy
 WORKDIR /usr/src/app
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# https://pgbackrest.org/user-guide.html
+# hadolint ignore=DL3015
 RUN mkdir --parents /usr/src/app/build \
   && apt-get update --yes \
   && apt-get install --yes wget make gcc libpq-dev libssl-dev libxml2-dev pkg-config liblz4-dev libzstd-dev libbz2-dev libz-dev libyaml-dev \
