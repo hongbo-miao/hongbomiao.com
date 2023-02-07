@@ -62,10 +62,13 @@ prefect-profile-ls:
 	prefect profile ls
 prefect-profile-use:
 	prefect profile use default
+	prefect profile use xxx
 prefect-profile-create:
 	prefect profile create xxx
 prefect-profile-delete:
 	prefect profile delete xxx
+prefect-profile-inspect:
+	prefect profile inspect xxx
 
 prefect-queue-ls:
 	prefect work-queue ls
