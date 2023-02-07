@@ -13,6 +13,8 @@ helm install \
 
 # Delete:
 # helm uninstall prefect-orion --namespace=hm-prefect
+
+kubectl port-forward service/prefect-orion --namespace=hm-prefect 4200:4200 &
 echo "=================================================="
 
 echo "# Install Prefect Agent"
@@ -44,4 +46,5 @@ poetry run poe add-kubernetes-job-block-print-platform
 poetry run poe build-kubernetes-print-platform
 poetry run poe run-print-platform
 poetry run poe prefect-agent-start
+# kubectl delete jobs --all --namespace=hm-prefect
 echo "=================================================="
