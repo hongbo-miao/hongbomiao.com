@@ -14,4 +14,8 @@ helm install \
 
 # Delete:
 # helm uninstall influxdb --namespace=hm-influxdb
+
+# http://localhost:20622
+# admin
+# passw0rd
 echo "=================================================="

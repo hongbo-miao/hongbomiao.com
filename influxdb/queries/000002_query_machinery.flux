@@ -1,0 +1,5 @@
+from(bucket: "hm-iot-bucket")
+  |> range(start: 2021-08-01T00:00:00Z, stop: 2021-08-02T00:00:00Z)
+  |> filter(fn: (r) => r["_measurement"] == "machinery")
+  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
+  |> yield(name: "mean")
