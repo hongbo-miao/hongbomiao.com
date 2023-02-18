@@ -1,20 +1,22 @@
 #!/usr/bin/env bash
 set -e
 
-echo "# Install Prefect Orion"
+echo "# Install Prefect Server"
 helm repo add prefect https://prefecthq.github.io/prefect-helm
+# helm repo remove prefect
+# helm repo update prefect
 # helm search repo prefect
 helm install \
-  prefect-orion \
-  prefect/prefect-orion \
+  prefect-server \
+  prefect/prefect-server \
   --namespace=hm-prefect \
   --create-namespace \
-  --values=kubernetes/manifests/prefect/helm/prefect-orion/my-values.yaml
+  --values=kubernetes/manifests/prefect/helm/prefect-server/my-values.yaml
 
 # Delete:
-# helm uninstall prefect-orion --namespace=hm-prefect
+# helm uninstall prefect-server --namespace=hm-prefect
 
-kubectl port-forward service/prefect-orion --namespace=hm-prefect 4200:4200 &
+kubectl port-forward service/prefect-server --namespace=hm-prefect 4200:4200 &
 echo "=================================================="
 
 echo "# Install Prefect Agent"
