@@ -205,10 +205,10 @@ kubectl-port-forward-spark:
 	kubectl port-forward service/spark-master-svc --namespace=hm-spark 7077:7077
 kubectl-port-forward-flink:
 	kubectl port-forward service/hm-flink-cluster-rest --namespace=hm-flink 8081:8081
-kubectl-port-forward-prefect-orion:
-	kubectl port-forward service/prefect-orion --namespace=hm-prefect 4200:4200
-kubectl-port-forward-prefect-orion-postgresql:
-	kubectl port-forward service/prefect-orion-postgresql --namespace=hm-prefect 21945:5432
+kubectl-port-forward-prefect-server:
+	kubectl port-forward service/prefect-server --namespace=hm-prefect 4200:4200
+kubectl-port-forward-prefect-server-postgresql:
+	kubectl port-forward service/prefect-server-postgresql --namespace=hm-prefect 21945:5432
 kubectl-port-forward-airflow:
 	kubectl port-forward service/airflow-webserver --namespace=hm-airflow 45808:8080
 kubectl-port-forward-prometheus:
