@@ -7,8 +7,8 @@ poetry-add:
 poetry-add-dev:
 	poetry add xxx --group=dev
 
-poetry-run-prefect-orion-start:
-	poetry run poe prefect-orion-start
+poetry-run-prefect-server-start:
+	poetry run poe prefect-server-start
 poetry-run-prefect-agent-start:
 	poetry run poe prefect-agent-start
 
