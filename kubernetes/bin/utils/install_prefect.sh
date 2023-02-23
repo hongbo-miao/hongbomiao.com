@@ -35,6 +35,7 @@ echo "# Create hm-kubernetes profile"
 prefect profile create hm-kubernetes
 prefect profile use hm-kubernetes
 # prefect profile use default
+# prefect config view
 prefect config set PREFECT_API_URL=http://localhost:4200/api
 echo "=================================================="
 
