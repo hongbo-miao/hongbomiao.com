@@ -471,6 +471,8 @@ curl-cat:
 	curl http://127.0.0.1:8080/predictions/densenet161 --upload-file kitten_small.jpg
 
 # Cloudflare
+install-cloudflared:
+	brew install cloudflared
 cloudflare-tunnel-login:
 	cloudflared tunnel login
 cloudflare-tunnel-list:
