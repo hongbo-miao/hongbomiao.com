@@ -27,21 +27,21 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
 prefect-server-start = "prefect server start"
-prefect-agent-start = "prefect agent start --work-queue=hm-queue"
+prefect-agent-start = "prefect agent start"
 
 dev-calculate = "python src/calculate/main.py"
 dev-find-taxi-top-routes = "python src/find_taxi_top_routes/main.py"
 dev-greet = "python src/greet/main.py"
 
 dev-collect-data = "python src/collect_data/main.py"
-build-collect-data = "prefect deployment build src/collect_data/main.py:collect_data --name=collect-data --work-queue=hm-queue --apply"
+build-collect-data = "prefect deployment build src/collect_data/main.py:collect_data --name=collect-data --apply"
 run-collect-data = "prefect deployment run collect-data/collect-data"
 
 dev-print-platform = "python src/print_platform/main.py"
-build-print-platform = "prefect deployment build src/print_platform/main.py:print_platform --name=print-platform --storage-block=s3/hm-prefect-s3-block --infra=kubernetes-job --override=env.EXTRA_PIP_PACKAGES=s3fs --work-queue=hm-queue --apply"
+build-print-platform = "prefect deployment build src/print_platform/main.py:print_platform --name=print-platform --storage-block=s3/hm-prefect-s3-block --infra=kubernetes-job --override=env.EXTRA_PIP_PACKAGES=s3fs --apply"
 run-print-platform = "prefect deployment run print-platform/print-platform"
 add-kubernetes-job-block-print-platform = "python build/print_platform/add_kubernetes_job_block.py"
-build-kubernetes-print-platform = "prefect deployment build src/print_platform/main.py:print_platform --name=print-platform --infra-block=kubernetes-job/print-platform-kubernetes-job-block --work-queue=hm-queue --apply"
+build-kubernetes-print-platform = "prefect deployment build src/print_platform/main.py:print_platform --name=print-platform --infra-block=kubernetes-job/print-platform-kubernetes-job-block --apply"
 
 test = "pytest"
 test-coverage = "pytest --cov=. --cov-report=xml"
