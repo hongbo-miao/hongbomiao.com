@@ -33,7 +33,8 @@ data:
 
     # The first rule proxies traffic to the httpbin sample Service defined in app.yaml
     - hostname: tunnel.hongbomiao.com
-      service: http://web-service.hm.svc:80
+      # service: http://web-service.hm.svc:80
+      service: http://prefect-server.hm-prefect.svc:4200
 
     # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
     # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is

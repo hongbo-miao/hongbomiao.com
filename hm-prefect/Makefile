@@ -20,7 +20,7 @@ poetry-run-dev-calculate:
 poetry-run-dev-collect-data:
 	poetry run poe dev-collect-data
 poetry-run-build-collect-data:
-	poetry run poe build-collect-data -- --params=$$(cat src/collect_data/params.json | jq -c .)
+	poetry run poe build-collect-data -- --work-queue=hm-local-queue --params=$$(cat src/collect_data/params.json | jq -c .)
 poetry-run-run-collect-data:
 	poetry run poe run-collect-data
 
@@ -36,7 +36,7 @@ poetry-run-dev-greet:
 poetry-run-dev-print-platform:
 	poetry run poe dev-print-platform
 poetry-run-build-print-platform:
-	poetry run poe build-print-platform
+	poetry run poe build-print-platform -- --work-queue=hm-local-queue
 
 docker-build-hm-prefect-print-platform:
 	cd .. && \
@@ -46,7 +46,7 @@ docker-push-hm-prefect-print-platform:
 poetry-run-add-kubernetes-job-block-print-platform:
 	poetry run poe add-kubernetes-job-block-print-platform
 poetry-run-build-kubernetes-print-platform:
-	poetry run poe build-kubernetes-print-platform
+	poetry run poe build-kubernetes-print-platform -- --work-queue=hm-local-queue
 
 poetry-run-run-print-platform:
 	poetry run poe run-print-platform
@@ -73,9 +73,9 @@ prefect-profile-inspect:
 prefect-queue-ls:
 	prefect work-queue ls
 prefect-queue-create:
-	prefect work-queue create hm-queue
+	prefect work-queue create hm-local-queue
 prefect-queue-delete:
-	prefect work-queue delete hm-queue
+	prefect work-queue delete hm-local-queue
 
 prefect-config-view:
 	prefect config view
