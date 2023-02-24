@@ -17,8 +17,6 @@ helm install \
 
 # Delete:
 # helm uninstall prefect-server --namespace=hm-prefect
-
-kubectl port-forward service/prefect-server --namespace=hm-prefect 4200:4200 &
 echo "=================================================="
 
 echo "# Create hm-kubernetes profile"
