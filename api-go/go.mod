@@ -26,7 +26,7 @@ require (
 	github.com/prometheus/client_golang v1.14.0
 	github.com/redis/go-redis/v9 v9.0.2
 	github.com/rs/zerolog v1.29.0
-	github.com/stretchr/testify v1.8.1
+	github.com/stretchr/testify v1.8.2
 	go.elastic.co/apm/module/apmgin/v2 v2.2.0
 	go.elastic.co/apm/module/apmgrpc/v2 v2.2.0
 	go.opencensus.io v0.24.0
