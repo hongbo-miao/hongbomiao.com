@@ -28,15 +28,31 @@ prefect config set PREFECT_API_URL=https://tunnel.hongbomiao.com/api
 echo "=================================================="
 
 echo "# Build hm-prefect-print-platform"
-docker build --file=hm-prefect/build/print_platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
+docker build --file=hm-prefect/workflows/print_platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
 docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
 echo "=================================================="
 
-echo "# Option 1: Kubernetes job"
+cd hm-prefect/workflows/print_platform
+
+echo "# Option 1: local job"
+echo "# Start hm-prefect-print-platform workflow and add to hm-local-queue"
+poetry run poe add-kubernetes-job-block
+poetry run poe build -- --work-queue=hm-local-queue
+poetry run poe run
+
+# Delete:
+# kubectl delete jobs --all --namespace=hm-prefect
+echo "=================================================="
+
+echo "# Start Prefect Agent in local"
+poetry run poe prefect-agent-start -- --work-queue=hm-local-queue
+echo "=================================================="
+
+echo "# Option 2: Kubernetes job"
 echo "# Start hm-prefect-print-platform workflow and add to hm-kubernetes-queue"
-poetry run poe add-kubernetes-job-block-print-platform
-poetry run poe build-kubernetes-print-platform -- --work-queue=hm-kubernetes-queue
-poetry run poe run-print-platform
+poetry run poe add-kubernetes-job-block
+poetry run poe build -- --work-queue=hm-kubernetes-queue
+poetry run poe run
 
 # Delete:
 # kubectl delete jobs --all --namespace=hm-prefect
@@ -52,18 +68,4 @@ helm install \
 
 # Delete:
 # helm uninstall prefect-agent --namespace=hm-prefect
-echo "=================================================="
-
-echo "# Option 2: local job"
-echo "# Start hm-prefect-print-platform workflow and add to hm-local-queue"
-poetry run poe add-kubernetes-job-block-print-platform
-poetry run poe build-kubernetes-print-platform -- --work-queue=hm-local-queue
-poetry run poe run-print-platform
-
-# Delete:
-# kubectl delete jobs --all --namespace=hm-prefect
-echo "=================================================="
-
-echo "# Start Prefect Agent in local"
-poetry run poe prefect-agent-start -- --work-queue=hm-local-queue
 echo "=================================================="

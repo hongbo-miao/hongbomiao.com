@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "hm-prefect-collect-data"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.11.x"
+greenlet = "2.0.2"
+prefect = "2.8.3"
+prefect-shell = "0.1.5"
+pydantic = "1.10.5"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.18.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+prefect-server-start = "prefect server start"
+prefect-agent-start = "prefect agent start"
+
+dev = "python src/main.py"
+build = "prefect deployment build src/main.py:collect_data --name=collect-data --apply"
+run = "prefect deployment run collect-data/collect-data"

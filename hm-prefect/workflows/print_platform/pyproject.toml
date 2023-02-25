@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "hm-prefect-print-platform"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.11.x"
+greenlet = "2.0.2"
+prefect = "2.8.3"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.18.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+prefect-server-start = "prefect server start"
+prefect-agent-start = "prefect agent start"
+
+dev = "python src/main.py"
+build = "prefect deployment build src/main.py:print_platform --name=print-platform --infra-block=kubernetes-job/print-platform-kubernetes-job-block --apply"
+run = "prefect deployment run print-platform/print-platform"
+add-kubernetes-job-block = "python add_kubernetes_job_block.py"
