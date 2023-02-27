@@ -50,7 +50,7 @@ async def process(
         key=path,
         aws_credentials=credentials,
     )
-    df = pd.read_parquet(io.BytesIO(data))
+    df = pd.read_parquet(io.BytesIO(data), engine="pyarrow")
     df = df.rename(str.lower, axis="columns")
     for row in df.itertuples():
         write_to_influxdb(row, influxdb_org, influxdb_bucket, influxdb_write_api)

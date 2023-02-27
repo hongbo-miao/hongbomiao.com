@@ -32,7 +32,7 @@ async def collect_data(data_sources: list[DataSource]) -> None:
 
 
 if __name__ == "__main__":
-    params = json.loads(Path("src/collect_data/params.json").read_text())
+    params = json.loads(Path("params.json").read_text())
     asyncio.run(
         collect_data(
             data_sources=params["dataSources"],
