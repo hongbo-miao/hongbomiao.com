@@ -524,21 +524,21 @@ jobs:
           python-version: '3.11'
           cache: poetry
       - name: Set Poetry environment
-        working-directory: hm-prefect
+        working-directory: hm-prefect/workflows/find_taxi_top_routes
         run: |
           poetry env use 3.11
       - name: Install dependencies
-        working-directory: hm-prefect
+        working-directory: hm-prefect/workflows/find_taxi_top_routes
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-prefect
+        working-directory: hm-prefect/workflows/find_taxi_top_routes
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-prefect
+          directory: hm-prefect/workflows/find_taxi_top_routes
 
   streaming-test:
     name: Streaming | Test
