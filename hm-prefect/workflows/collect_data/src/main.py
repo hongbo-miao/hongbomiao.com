@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 
 class DataSource(BaseModel):
-    sourceName: str
+    source_same: str
     source: str
     destination: str
 
@@ -17,7 +17,7 @@ class DataSource(BaseModel):
 async def collect_data(data_sources: list[DataSource]) -> None:
     tasks = []
     for data_source in data_sources:
-        source_name = data_source.sourceName
+        source_name = data_source.source_same
         source = data_source.source
         destination = data_source.destination
         copy = shell_run_command.with_options(name=f"rclone-{source_name}")
@@ -35,6 +35,6 @@ if __name__ == "__main__":
     params = json.loads(Path("params.json").read_text())
     asyncio.run(
         collect_data(
-            data_sources=params["dataSources"],
+            data_sources=params["data_sources"],
         )
     )
