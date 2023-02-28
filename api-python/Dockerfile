@@ -16,15 +16,15 @@ RUN apk add --no-cache gcc libffi-dev musl-dev bash g++ make \
   && python -m venv /venv/ \
   # Install librdkafka
   # https://github.com/edenhill/librdkafka#build-from-source
-  && wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v1.9.2.tar.gz \
+  && wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/confluentinc/librdkafka/archive/refs/tags/v2.0.2.tar.gz \
   && tar -x -f librdkafka.tar.gz \
   && rm -f librdkafka.tar.gz \
-  && cd librdkafka-1.9.2 \
+  && cd librdkafka-2.0.2 \
   && ./configure \
   && make \
   && make install \
   && cd .. \
-  && rm -r -f librdkafka-1.9.2/
+  && rm -r -f librdkafka-2.0.2/
 COPY ["api-python/pyproject.toml", "api-python/poetry.lock", "./"]
 RUN . /venv/bin/activate \
   && poetry install --only=main --no-root
