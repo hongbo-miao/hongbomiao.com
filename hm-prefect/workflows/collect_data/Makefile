@@ -17,7 +17,7 @@ poetry-run-dev:
 poetry-run-add-kubernetes-job-block:
 	poetry run poe add-kubernetes-job-block
 poetry-run-build:
-	poetry run poe build -- --work-queue=hm-local-queue --params=$$(cat params.json | jq -c .)
+	poetry run poe build -- --params=$$(cat params.json | jq -c .) --work-queue=hm-local-queue
 poetry-run-run:
 	poetry run poe run
 
