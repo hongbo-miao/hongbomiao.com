@@ -32,12 +32,14 @@ docker build --file=hm-prefect/workflows/print_platform/Dockerfile --tag=ghcr.io
 docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
 echo "=================================================="
 
+# hm-prefect-print-platform
 cd hm-prefect/workflows/print_platform
 
-echo "# Option 1: local job"
-echo "# Start hm-prefect-print-platform workflow and add to hm-local-queue"
+echo "# Start the workflow"
 poetry run poe add-kubernetes-job-block
 poetry run poe build -- --work-queue=hm-local-queue
+# poetry run poe build -- --params=$(cat params.json | jq -c .) --work-queue=hm-local-queue
+# poetry run poe build -- --work-queue=hm-kubernetes-queue
 poetry run poe run
 
 # Delete:
@@ -46,16 +48,6 @@ echo "=================================================="
 
 echo "# Start Prefect Agent in local"
 poetry run poe prefect-agent-start -- --work-queue=hm-local-queue
-echo "=================================================="
-
-echo "# Option 2: Kubernetes job"
-echo "# Start hm-prefect-print-platform workflow and add to hm-kubernetes-queue"
-poetry run poe add-kubernetes-job-block
-poetry run poe build -- --work-queue=hm-kubernetes-queue
-poetry run poe run
-
-# Delete:
-# kubectl delete jobs --all --namespace=hm-prefect
 echo "=================================================="
 
 echo "# Start Prefect Agent in Kubernetes"
