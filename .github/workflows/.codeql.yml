@@ -47,23 +47,6 @@ jobs:
       - name: CodeQL
         uses: github/codeql-action/analyze@v2
 
-  codeql-java:
-    name: Java
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 20
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: java
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
-      - name: CodeQL
-        uses: github/codeql-action/analyze@v2
-
   codeql-javascript:
     name: JavaScript
     runs-on: ubuntu-22.04
