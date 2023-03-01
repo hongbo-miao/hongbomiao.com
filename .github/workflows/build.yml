@@ -22,7 +22,8 @@ jobs:
       hm-keydb: ${{ steps.filter.outputs.hm-keydb }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-pgbackrest: ${{ steps.filter.outputs.hm-pgbackrest }}
-      hm-prefect: ${{ steps.filter.outputs.hm-prefect }}
+      hm-prefect-collect-data: ${{ steps.filter.outputs.hm-prefect-collect-data }}
+      hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
       hm-traefik: ${{ steps.filter.outputs.hm-traefik }}
       kafka-connect: ${{ steps.filter.outputs.kafka-connect }}
       streaming: ${{ steps.filter.outputs.streaming }}
@@ -58,9 +59,12 @@ jobs:
             hm-pgbackrest:
               - '.github/workflows/build.yml'
               - 'hm-pgbackrest/**'
-            hm-prefect:
-              - '.github/workflows/build.yml'
-              - 'hm-prefect/**'
+            hm-prefect-collect-data:
+              - '.github/workflows/test.yml'
+              - 'hm-prefect/workflows/collect_data/**'
+            hm-prefect-print-platform:
+              - '.github/workflows/test.yml'
+              - 'hm-prefect/workflows/print_platform/**'
             hm-traefik:
               - '.github/workflows/build.yml'
               - 'hm-traefik/**'
@@ -340,7 +344,7 @@ jobs:
   build-hm-prefect-collect-data:
     name: Build hm-prefect-collect-data
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect == 'true' }}
+    if: ${{ needs.detect-changes.outputs.hm-prefect-collect-data == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -377,7 +381,7 @@ jobs:
   build-hm-prefect-print-platform:
     name: Build hm-prefect-print-platform
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect == 'true' }}
+    if: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60

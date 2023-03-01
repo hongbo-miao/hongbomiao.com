@@ -27,7 +27,7 @@ jobs:
       grafana: ${{ steps.filter.outputs.grafana }}
       chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
-      hm-prefect: ${{ steps.filter.outputs.hm-prefect }}
+      hm-prefect-find-taxi-top-routes: ${{ steps.filter.outputs.hm-prefect-find-taxi-top-routes }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
@@ -64,9 +64,9 @@ jobs:
             hm-opal-client:
               - '.github/workflows/test.yml'
               - 'hm-opal-client/**'
-            hm-prefect:
+            hm-prefect-find-taxi-top-routes:
               - '.github/workflows/test.yml'
-              - 'hm-prefect/**'
+              - 'hm-prefect/workflows/find_taxi_top_routes/**'
             mobile-android:
               - '.github/workflows/test.yml'
               - 'mobile-android/**'
@@ -505,10 +505,10 @@ jobs:
         with:
           directory: api-python
 
-  prefect-test:
-    name: Prefect | Test
+  prefect-find-taxi-top-routes-test:
+    name: Prefect (find-taxi-top-routes) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect == 'true' }}
+    if: ${{ needs.detect-changes.outputs.hm-prefect-find-taxi-top-routes == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
