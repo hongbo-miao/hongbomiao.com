@@ -63,10 +63,10 @@ jobs:
               - 'hm-pgbackrest/**'
             hm-prefect-collect-data:
               - '.github/workflows/build.yml'
-              - 'hm-prefect/workflows/collect_data/**'
+              - 'hm-prefect/workflows/collect-data/**'
             hm-prefect-print-platform:
               - '.github/workflows/build.yml'
-              - 'hm-prefect/workflows/print_platform/**'
+              - 'hm-prefect/workflows/print-platform/**'
             hm-traefik:
               - '.github/workflows/build.yml'
               - 'hm-traefik/**'
@@ -371,7 +371,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-prefect/workflows/collect_data/Dockerfile
+            file: ./hm-prefect/workflows/collect-data/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-collect-data:latest
             platforms: linux/amd64,linux/arm64
@@ -408,7 +408,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-prefect/workflows/print_platform/Dockerfile
+            file: ./hm-prefect/workflows/print-platform/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
             platforms: linux/amd64,linux/arm64
