@@ -17,12 +17,12 @@ poetry-run-dev:
 poetry-run-add-kubernetes-job-block:
 	poetry run poe add-kubernetes-job-block
 poetry-run-build:
-	poetry run poe build -- --params=$$(cat params.json | jq -c .) --work-queue=hm-local-queue
+	poetry run poe build -- --work-queue=hm-local-queue
 poetry-run-run:
 	poetry run poe run
 
 docker-build:
 	cd ../../.. && \
-	docker build --file=hm-prefect/workflows/collect_data/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-collect-data:latest .
+	docker build --file=hm-prefect/workflows/print-platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
 docker-push:
-	docker push ghcr.io/hongbo-miao/hm-prefect-collect-data:latest
+	docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest

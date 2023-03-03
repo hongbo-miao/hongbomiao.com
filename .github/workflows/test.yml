@@ -66,7 +66,7 @@ jobs:
               - 'hm-opal-client/**'
             hm-prefect-find-taxi-top-routes:
               - '.github/workflows/test.yml'
-              - 'hm-prefect/workflows/find_taxi_top_routes/**'
+              - 'hm-prefect/workflows/find-taxi-top-routes/**'
             mobile-android:
               - '.github/workflows/test.yml'
               - 'mobile-android/**'
@@ -524,21 +524,21 @@ jobs:
           python-version: '3.11'
           cache: poetry
       - name: Set Poetry environment
-        working-directory: hm-prefect/workflows/find_taxi_top_routes
+        working-directory: hm-prefect/workflows/find-taxi-top-routes
         run: |
           poetry env use 3.11
       - name: Install dependencies
-        working-directory: hm-prefect/workflows/find_taxi_top_routes
+        working-directory: hm-prefect/workflows/find-taxi-top-routes
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-prefect/workflows/find_taxi_top_routes
+        working-directory: hm-prefect/workflows/find-taxi-top-routes
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-prefect/workflows/find_taxi_top_routes
+          directory: hm-prefect/workflows/find-taxi-top-routes
 
   streaming-test:
     name: Streaming | Test
