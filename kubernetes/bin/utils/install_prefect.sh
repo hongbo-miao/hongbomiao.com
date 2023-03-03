@@ -28,12 +28,12 @@ prefect config set PREFECT_API_URL=https://tunnel.hongbomiao.com/api
 echo "=================================================="
 
 echo "# Build hm-prefect-print-platform"
-docker build --file=hm-prefect/workflows/print_platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
+docker build --file=hm-prefect/workflows/print-platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
 docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
 echo "=================================================="
 
 # hm-prefect-print-platform
-cd hm-prefect/workflows/print_platform
+cd hm-prefect/workflows/print-platform
 
 echo "# Start the workflow"
 poetry run poe add-kubernetes-job-block

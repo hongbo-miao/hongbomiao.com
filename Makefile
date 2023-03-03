@@ -179,11 +179,11 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-opal-client
 	poetry run poe static-type-check-python -- --package=hm-open3d
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.calculate
-	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.collect_data
-	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.find_taxi_top_routes
+	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.collect-data
+	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.find-taxi-top-routes
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.greet
-	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.print_platform
-	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.upload_to_influxdb
+	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.print-platform
+	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.upload-to-influxdb
 	poetry run poe static-type-check-python -- --package=hm-pyspark
 	poetry run poe static-type-check-python -- --package=hugging-face
 	poetry run poe static-type-check-python -- --package=quantum-computing
