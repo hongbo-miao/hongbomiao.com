@@ -1,4 +1,4 @@
-FROM docker.io/rasa/rasa-sdk:3.4.0
+FROM docker.io/rasa/rasa-sdk:3.4.1
 WORKDIR /app
 
 # COPY actions/requirements-actions.txt ./
