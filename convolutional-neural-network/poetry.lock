@@ -2789,21 +2789,21 @@ files = [
 
 [[package]]
 name = "wandb"
-version = "0.13.10"
+version = "0.13.11"
 description = "A CLI and library for interacting with the Weights and Biases API."
 category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "wandb-0.13.10-py3-none-any.whl", hash = "sha256:d4a3397aed2790d5fa8adc5336e3607813dc498a49b1a0a48297f78d89a71b0b"},
-    {file = "wandb-0.13.10.tar.gz", hash = "sha256:a2cde45dd6390ed1923ef3e1eca26487cb1e02e4732515856933c4494a975ad3"},
+    {file = "wandb-0.13.11-py3-none-any.whl", hash = "sha256:e584ac7fb0097fba8a030d5aedc5fea157286aba69a2e6e6e689b794155fcc8f"},
+    {file = "wandb-0.13.11.tar.gz", hash = "sha256:f2b065d1c732e8e1828fabe720dc82f12e6109d0d2bbfbcccc17eaefae0fd7c9"},
 ]
 
 [package.dependencies]
 appdirs = ">=1.4.3"
 Click = ">=7.0,<8.0.0 || >8.0.0"
 docker-pycreds = ">=0.4.0"
-GitPython = ">=1.0.0"
+GitPython = ">=1.0.0,<3.1.29 || >3.1.29"
 pathtools = "*"
 protobuf = {version = ">=3.19.0,<4.21.0 || >4.21.0,<5", markers = "python_version > \"3.9\" or sys_platform != \"linux\""}
 psutil = ">=5.0.0"
@@ -2819,7 +2819,7 @@ azure = ["azure-storage-blob"]
 gcp = ["google-cloud-storage"]
 grpc = ["grpcio (>=1.27.2)"]
 kubeflow = ["google-cloud-storage", "kubernetes", "minio", "sh"]
-launch = ["boto3", "botocore", "chardet", "google-cloud-storage", "iso8601", "kubernetes", "nbconvert", "nbformat", "typing-extensions"]
+launch = ["awscli", "boto3", "botocore", "chardet", "google-auth", "google-cloud-artifact-registry", "google-cloud-compute", "google-cloud-storage", "iso8601", "kubernetes", "nbconvert", "nbformat", "typing-extensions"]
 media = ["bokeh", "moviepy", "numpy", "pillow", "plotly", "rdkit-pypi", "soundfile"]
 models = ["cloudpickle"]
 sweeps = ["sweeps (>=0.2.0)"]
@@ -3045,4 +3045,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "13dcf1ff95cfe89113140d7c09edc31a53a6eebe593fd5140920ce7c827e9d90"
+content-hash = "1c53938edef41c586496677e021523161e1360a951425c3967f9aeb221d70bf0"
