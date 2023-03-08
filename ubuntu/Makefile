@@ -27,3 +27,9 @@ apt-install:
 
 ls-owner-group:
 	ls -l
+
+# htop
+htop-install:
+	sudo snap install htop
+htop:
+	htop

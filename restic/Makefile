@@ -1,5 +1,6 @@
-setup:
+restic-install-on-macos:
 	brew install restic
+restic-install-on-linux:
 	sudo apt install --yes restic
 
 # Local
