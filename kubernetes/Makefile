@@ -244,6 +244,11 @@ list-port-forward:
 kill-port:
 	kill -9 PID
 
+k9s-install:
+	brew install k9s
+k9s:
+	k9s
+
 # Vagrant
 vagrant-init:
 	vagrant init hashicorp/bionic64
@@ -471,7 +476,7 @@ curl-cat:
 	curl http://127.0.0.1:8080/predictions/densenet161 --upload-file kitten_small.jpg
 
 # Cloudflare
-install-cloudflared:
+cloudflared-install:
 	brew install cloudflared
 cloudflare-tunnel-login:
 	cloudflared tunnel login

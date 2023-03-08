@@ -1,5 +1,5 @@
 # InfluxDB
-install-influxdb-cli:
+influx-install:
 	brew install influxdb-cli
 
 influx-config-list:
