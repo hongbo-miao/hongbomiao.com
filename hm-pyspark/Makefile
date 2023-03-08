@@ -1,4 +1,4 @@
-brew-install:
+openjdk-install:
 	brew install openjdk@17
 
 poetry-update-lock-file:
