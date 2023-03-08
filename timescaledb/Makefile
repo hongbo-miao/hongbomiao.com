@@ -1,5 +1,5 @@
 # macOS
-install-postgres:
+postgres-install:
 	brew install postgresql@14
 	brew install postgresql@15
 timescaledb-start:
