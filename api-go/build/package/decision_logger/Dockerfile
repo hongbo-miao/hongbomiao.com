@@ -1,4 +1,4 @@
-FROM docker.io/golang:1.20.1-alpine AS builder
+FROM docker.io/golang:1.20.2-alpine AS builder
 WORKDIR /usr/src/app
 
 COPY ["api-go/go.mod", "api-go/go.sum", "./"]
