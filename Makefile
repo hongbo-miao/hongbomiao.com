@@ -13,6 +13,11 @@ local-clean:
 	sh bin/clean.sh
 
 # Git
+git-add:
+	git add .
+git-commit:
+	git commit --message="xxx"
+
 git-branch-switch:
 	git switch xxx
 git-branch-create-and-switch:
