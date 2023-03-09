@@ -32,8 +32,8 @@ docker build --file=hm-prefect/workflows/print-platform/Dockerfile --tag=ghcr.io
 docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
 echo "=================================================="
 
-# hm-prefect-print-platform
 cd hm-prefect/workflows/print-platform
+# cd hm-prefect/workflows/collect-data
 
 echo "# Start the workflow"
 poetry run poe add-kubernetes-job-block
