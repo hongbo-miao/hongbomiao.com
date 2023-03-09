@@ -22,12 +22,10 @@ git-branch-switch:
 	git switch xxx
 git-branch-create-and-switch:
 	git switch -c xxx
-
 git-branch-list-local:
 	git branch
 git-branch-list-remote:
 	git branch -r
-
 git-fetch-branches:
 	git fetch --all
 git-pull-rebase:
@@ -35,6 +33,8 @@ git-pull-rebase:
 
 git-log:
 	git log
+git-status:
+	git status
 
 # Docker
 docker-login:
