@@ -858,18 +858,17 @@ pgp = ["gpg"]
 
 [[package]]
 name = "dvc"
-version = "2.46.0"
+version = "2.47.0"
 description = "Git for data scientists - manage your code and data together"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-2.46.0-py3-none-any.whl", hash = "sha256:cb7d9e8289a1f043a1d69a61a8e9fdcd4e81df254db7b9c00dd190750b9f1700"},
-    {file = "dvc-2.46.0.tar.gz", hash = "sha256:2652679d2ab6803f4f4fe091278eef4bbf79b4e2e3e58fbf713522ada7ad6e78"},
+    {file = "dvc-2.47.0-py3-none-any.whl", hash = "sha256:1735175278f0c9875a7e215e164fa4051510b79791849258df42cb237f32082d"},
+    {file = "dvc-2.47.0.tar.gz", hash = "sha256:dd1bbae4ae2df56864d0d74f62da6aa1750a6c806705a1ca5586f924f77c3212"},
 ]
 
 [package.dependencies]
-appdirs = ">=1.4.3"
 colorama = ">=0.3.9"
 configobj = ">=5.0.6"
 distro = ">=1.3"
@@ -877,7 +876,7 @@ dpath = ">=2.1.0,<3"
 dvc-data = ">=0.42.1,<0.43"
 dvc-http = "*"
 dvc-render = ">=0.1.2"
-dvc-studio-client = ">=0.1.1"
+dvc-studio-client = ">=0.5.0,<1"
 dvc-task = ">=0.2.0,<1"
 flatten-dict = ">=0.4.1,<1"
 "flufl.lock" = ">=5"
@@ -888,6 +887,7 @@ iterative-telemetry = ">=0.0.7"
 networkx = ">=2.5"
 packaging = ">=19"
 pathspec = ">=0.10.3"
+platformdirs = ">=3,<4"
 psutil = ">=5.8"
 pydot = ">=1.2.4"
 pygtrie = ">=2.3.2"
@@ -911,7 +911,7 @@ dev = ["dvc[azure,gdrive,gs,hdfs,lint,oss,s3,ssh,terraform,tests,webdav,webhdfs]
 gdrive = ["dvc-gdrive (==2.19.1)"]
 gs = ["dvc-gs (==2.22.0)"]
 hdfs = ["dvc-hdfs (==2.19)"]
-lint = ["mypy (==1.0.1)", "pylint (==2.16.3)", "types-appdirs", "types-colorama", "types-psutil", "types-requests", "types-tabulate", "types-toml", "types-tqdm"]
+lint = ["mypy (==1.1.1)", "pylint (==2.17.0)", "types-colorama", "types-psutil", "types-requests", "types-tabulate", "types-toml", "types-tqdm"]
 oss = ["dvc-oss (==2.19)"]
 s3 = ["dvc-s3 (==2.21)"]
 ssh = ["dvc-ssh (==2.21)"]
@@ -1911,6 +1911,22 @@ files = [
 [package.extras]
 docs = ["furo", "olefile", "sphinx (>=2.4)", "sphinx-copybutton", "sphinx-inline-tabs", "sphinx-issues (>=3.0.1)", "sphinx-removed-in", "sphinxext-opengraph"]
 tests = ["check-manifest", "coverage", "defusedxml", "markdown2", "olefile", "packaging", "pyroma", "pytest", "pytest-cov", "pytest-timeout"]
+
+[[package]]
+name = "platformdirs"
+version = "3.1.0"
+description = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "platformdirs-3.1.0-py3-none-any.whl", hash = "sha256:13b08a53ed71021350c9e300d4ea8668438fb0046ab3937ac9a29913a1a1350a"},
+    {file = "platformdirs-3.1.0.tar.gz", hash = "sha256:accc3665857288317f32c7bebb5a8e482ba717b474f3fc1d18ca7f9214be0cef"},
+]
+
+[package.extras]
+docs = ["furo (>=2022.12.7)", "proselint (>=0.13)", "sphinx (>=6.1.3)", "sphinx-autodoc-typehints (>=1.22,!=1.23.4)"]
+test = ["appdirs (==1.4.4)", "covdefaults (>=2.2.2)", "pytest (>=7.2.1)", "pytest-cov (>=4)", "pytest-mock (>=3.10)"]
 
 [[package]]
 name = "poethepoet"
@@ -3045,4 +3061,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "1c53938edef41c586496677e021523161e1360a951425c3967f9aeb221d70bf0"
+content-hash = "1f14a99714d4cf61414ed121b7fe854a478b9aa906eecd4ebcf464af86a8a4e6"
