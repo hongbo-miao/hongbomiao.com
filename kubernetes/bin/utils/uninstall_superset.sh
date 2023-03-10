@@ -8,8 +8,8 @@ kubectl delete --filename=kubernetes/manifests/superset/hm-superset-namespace.ya
 echo "=================================================="
 
 echo "# Drop superset_db in Postgres"
-kubectl port-forward service/postgres-service --namespace=hm-postgres 40072:40072 &
+kubectl port-forward service/postgres-service --namespace=hm-postgres 5432:5432 &
 sleep 3
-psql postgresql://admin@localhost:40072/postgres --command="drop database if exists superset_db with (force);"
+psql postgresql://admin@localhost:5432/postgres --command="drop database if exists superset_db with (force);"
 pgrep kubectl | xargs kill -9
 echo "=================================================="
