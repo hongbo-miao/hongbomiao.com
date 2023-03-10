@@ -192,6 +192,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-pyspark
 	poetry run poe static-type-check-python -- --package=hugging-face
 	poetry run poe static-type-check-python -- --package=quantum-computing
+	poetry run poe static-type-check-python -- --package=tdms
 
 # Lint
 lint-dockerfile:

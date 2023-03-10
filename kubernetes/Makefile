@@ -471,7 +471,7 @@ torchserve-stop:
 curl-list-models:
 	curl http://localhost:8081/models
 curl-download-cat:
-	curl -O https://raw.githubusercontent.com/pytorch/serve/master/docs/images/kitten_small.jpg
+	curl https://raw.githubusercontent.com/pytorch/serve/master/docs/images/kitten_small.jpg > kitten_small.jpg
 curl-cat:
 	curl http://127.0.0.1:8080/predictions/densenet161 --upload-file kitten_small.jpg
 
