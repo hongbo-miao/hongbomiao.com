@@ -10,4 +10,4 @@ poetry-run-dev:
 	poetry run poe dev
 
 download-tdms-sample:
-	curl https://github.com/Hongbo-Miao/tdms-sample/raw/main/exampleMeasurements.tdms > data/exampleMeasurements.tdms
+	curl http://www-personal.acfr.usyd.edu.au/zubizarreta/f/exampleMeasurements.tdms > data/exampleMeasurements.tdms
