@@ -296,6 +296,7 @@ make kubernetes-clean
 - **Simulink** - Simulation and model-based design
 - **Rclone** - Sync program
 - **restic** - Backup program
+- **npTDMS** - TDMS files reading and writing
 
 ### Quantum Computing
 
