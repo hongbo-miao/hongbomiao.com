@@ -287,16 +287,17 @@ make kubernetes-clean
 
 ### IoT
 
+- **NI VeriStand** - Real-time testing and simulation
+- **MATLAB** - Programming and numeric computing platform
+- **Simulink** - Simulation and model-based designing
 - **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
 - **RTI Connext DDS** - Data Distribution Service (DDS)
+- **npTDMS** - TDMS files reading and writing
 - **Arduino Uno** - Microcontroller board
-- **MATLAB** - Programming and numeric computing platform
-- **Simulink** - Simulation and model-based design
 - **Rclone** - Sync program
 - **restic** - Backup program
-- **npTDMS** - TDMS files reading and writing
 
 ### Quantum Computing
 
