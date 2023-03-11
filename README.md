@@ -386,6 +386,10 @@ make kubernetes-clean
 
 ![RTI Connext DDS screenshot](https://user-images.githubusercontent.com/3375461/197075768-18b61ddf-57db-4d32-ae48-c7e77cea9c77.jpg)
 
+#### NI VeriStand
+
+![NI VeriStand screenshot](https://user-images.githubusercontent.com/3375461/224478748-118a1e44-ed1a-4570-87e8-e0c4aa2a90ad.png)
+
 #### ROS - Robot Operating System
 
 ![ROS screenshot](https://user-images.githubusercontent.com/3375461/209642451-94727634-8ce6-4bbf-bd2c-fa5dc1562f07.png)
