@@ -233,6 +233,7 @@ make kubernetes-clean
 - **Dataprep** - Data cleaning
 - **BigQuery** - Data warehouse
   - **BigQuery ML** - BigQuery machine learning
+- **Metabase** - Data visualization
 - **Superset** - Data visualization
 - **Looker Studio** - Data visualization
 - **Vertex AI** - AutoML

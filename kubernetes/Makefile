@@ -238,6 +238,8 @@ kubectl-port-forward-argocd:
 	kubectl port-forward service/argocd-server --namespace=argocd 31026:443
 kubectl-port-forward-temporal:
 	kubectl port-forward service/temporal-web --namespace=hm-temporal 48780:8080
+kubectl-port-forward-metabase:
+	kubectl port-forward service/metabase --namespace=hm-metabase 50399:80
 
 list-port-forward:
 	ps -ef | grep port-forward
