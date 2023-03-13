@@ -281,6 +281,7 @@ make kubernetes-clean
 - **Rancher** - Kubernetes container management platform
 - **Goldilocks** - Kubernetes resource requests recommending
 - **Polaris** - Kubernetes best practices validating
+- **OpenCost** - Kubernetes cost monitoring and management
 - **Kubecost** - Kubernetes cost monitoring and management
 - **Sloop** - Kubernetes history visualization
 - **Ansible** - IT automation system
