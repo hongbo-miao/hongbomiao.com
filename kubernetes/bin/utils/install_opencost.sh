@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
+echo "# Install Prometheus with Thanos Sidecar, Grafana"
+source kubernetes/bin/utils/install_prometheus_thanos_grafana.sh
+echo "=================================================="
+
 echo "# Install OpenCost"
 helm repo add opencost https://opencost.github.io/opencost-helm-chart
 helm install \
