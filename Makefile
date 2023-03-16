@@ -149,8 +149,10 @@ lint-python-black:
 	poetry run poe lint-python-black
 lint-python-black-fix:
 	poetry run poe lint-python-black-fix
-lint-python-flake8:
-	poetry run poe lint-python-flake8
+lint-python-ruff:
+	poetry run poe lint-python-ruff
+lint-python-ruff-fix:
+	poetry run poe lint-python-ruff-fix
 lint-python-isort:
 	poetry run poe lint-python-isort
 lint-python-isort-fix:
