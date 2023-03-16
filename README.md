@@ -284,6 +284,7 @@ make kubernetes-clean
 - **OpenCost** - Kubernetes cost monitoring and management
 - **Kubecost** - Kubernetes cost monitoring and management
 - **Sloop** - Kubernetes history visualization
+- **Diun** - Container image update notifier
 - **Ansible** - IT automation system
 - **CodeQL** - Variant analysis
 
