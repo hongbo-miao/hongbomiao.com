@@ -323,7 +323,7 @@ make kubernetes-clean
 - **Kubeconform** - Kubernetes manifest linter
 - **markdownlint-cli2** - Markdown linter
 - **Buf** - Protocol Buffers linter
-- **autoflake**, **Flake8**, **isort** - Python linter
+- **Ruff**, **autoflake**, **isort** - Python linter
 - **qmllint** - QML linter
 - **RuboCop** - Ruby linter and code formatter
 - **ShellCheck** - Shell linter
