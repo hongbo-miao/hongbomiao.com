@@ -33,13 +33,12 @@ def run_deterministic():
     print("Finished deterministic")
 
 
-def main():
-    realtimesequencetools.save_py_as_rtseq(
-        run_engine_demo, "d:\\hongbomiao.com\\hm-ni-veristand"
-    )
+def main(real_time_sequence_path: str):
+    realtimesequencetools.save_py_as_rtseq(run_engine_demo, real_time_sequence_path)
     run_non_deterministic()
     run_deterministic()
 
 
 if __name__ == "__main__":
-    main()
+    real_time_sequence_path = "c:\\hongbomiao.com\\hm-ni-veristand"
+    main(real_time_sequence_path)
