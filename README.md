@@ -64,7 +64,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/225521531-85141ef2-ea5d-48a7-bb4b-81f744a442bd.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/225780644-075060f4-1fe8-491c-ad32-6eec8f7e2826.svg)
 
 ## 📦 Setup
 
@@ -390,7 +390,7 @@ make kubernetes-clean
 
 #### NI VeriStand
 
-![NI VeriStand screenshot](https://user-images.githubusercontent.com/3375461/224478748-118a1e44-ed1a-4570-87e8-e0c4aa2a90ad.png)
+![NI VeriStand screenshot](https://user-images.githubusercontent.com/3375461/225783220-12621a41-f2f7-4b33-829c-f2de768e84e0.png)
 
 #### ROS - Robot Operating System
 
