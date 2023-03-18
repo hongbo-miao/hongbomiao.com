@@ -5,7 +5,7 @@ set -e
 
 echo "# Install Cert Manager"
 helm repo add jetstack https://charts.jetstack.io
-helm repo update
+helm repo update jetstack
 helm install \
   cert-manager \
   jetstack/cert-manager \
@@ -21,7 +21,7 @@ echo "=================================================="
 echo "# Install Rancher"
 # https://github.com/rancher/rancher/blob/release/v2.6/chart/values.yaml
 helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
-helm repo update
+helm repo update rancher-latest
 helm install \
   rancher \
   rancher-latest/rancher \
