@@ -4,7 +4,7 @@ set -e
 echo "# Install TimescaleDB"
 # https://docs.timescale.com/install/latest/installation-kubernetes/#install-timescaledb-on-kubernetes
 helm repo add timescale https://charts.timescale.com
-helm repo update
+helm repo update timescale
 
 kubectl apply --filename=kubernetes/manifests/timescaledb/hm-timescale-namespace.yaml
 helm install \
