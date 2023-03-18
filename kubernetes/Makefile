@@ -495,4 +495,4 @@ cloudflare-k8s-create-secret:
 		--from-file=credentials.json=/Users/hongbo-miao/.cloudflared/c9aa4140-fee8-4862-a479-3c1faacbd816.json \
 		--namespace=hm-cloudflared
 cloudflare-tunnel-dns:
-	cloudflared tunnel route dns hm-tunnel tunnel.hongbomiao.com
+	cloudflared tunnel route dns hm-tunnel prefect.hongbomiao.com
