@@ -19,6 +19,8 @@ show-ip:
 	hostname --all-ip-addresses
 show-usb-devices:
 	lsusb
+show-kernel-ring-buffer-messages:
+	sudo dmesg
 
 apt-update:
 	sudo apt update
