@@ -24,7 +24,7 @@ prefect profile create hm-kubernetes
 prefect profile use hm-kubernetes
 # prefect profile use default
 # prefect config view
-prefect config set PREFECT_API_URL=https://tunnel.hongbomiao.com/api
+prefect config set PREFECT_API_URL=https://prefect.hongbomiao.com/api
 echo "=================================================="
 
 echo "# Build hm-prefect-print-platform"
