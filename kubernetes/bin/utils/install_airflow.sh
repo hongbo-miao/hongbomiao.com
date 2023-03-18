@@ -4,7 +4,7 @@ set -e
 echo "# Install Airflow"
 # https://airflow.apache.org/docs/helm-chart/stable/index.html
 helm repo add apache-airflow https://airflow.apache.org
-helm repo update
+helm repo update apache-airflow
 helm install \
   airflow \
   apache-airflow/airflow \
