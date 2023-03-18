@@ -1,6 +1,6 @@
 module github.com/Hongbo-Miao/hongbomiao.com/api-go
 
-go 1.19
+go 1.20
 
 require (
 	contrib.go.opencensus.io/exporter/ocagent v0.7.0
@@ -19,7 +19,7 @@ require (
 	github.com/graphql-go/handler v0.2.3
 	github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2 v2.0.0-rc.3
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.3
-	github.com/jackc/pgx/v5 v5.2.0
+	github.com/jackc/pgx/v5 v5.3.1
 	github.com/joho/godotenv v1.5.1
 	github.com/minio/minio-go/v7 v7.0.49
 	github.com/open-policy-agent/opa v0.50.1
@@ -68,11 +68,11 @@ require (
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/uuid v1.3.0 // indirect
-	github.com/grpc-ecosystem/grpc-gateway v1.16.0 // indirect
+	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.3 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
-	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
-	github.com/jackc/puddle/v2 v2.1.2 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
+	github.com/jackc/puddle/v2 v2.2.0 // indirect
 	github.com/jcchavezs/porto v0.1.0 // indirect
 	github.com/joeshaw/multierror v0.0.0-20140124173710-69b34d4ec901 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -116,7 +116,7 @@ require (
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/text v0.8.0 // indirect
 	golang.org/x/tools v0.6.0 // indirect
-	google.golang.org/api v0.43.0 // indirect
+	google.golang.org/api v0.103.0 // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	google.golang.org/grpc/examples v0.0.0-20210806175644-574137db7de3 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
