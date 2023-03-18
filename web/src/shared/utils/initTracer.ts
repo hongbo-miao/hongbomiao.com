@@ -1,4 +1,4 @@
-import { CollectorTraceExporter } from '@opentelemetry/exporter-collector';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
 import { DocumentLoadInstrumentation } from '@opentelemetry/instrumentation-document-load';
 import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xml-http-request';
@@ -19,14 +19,14 @@ const initTracer = (): void => {
 
   if (isDevelopment()) {
     tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
-    tracerProvider.addSpanProcessor(new BatchSpanProcessor(new CollectorTraceExporter()));
+    tracerProvider.addSpanProcessor(new BatchSpanProcessor(new OTLPTraceExporter()));
   }
 
   if (isProduction()) {
     const { token, traceURL } = config.lightstep;
     tracerProvider.addSpanProcessor(
       new BatchSpanProcessor(
-        new CollectorTraceExporter({
+        new OTLPTraceExporter({
           url: traceURL,
           headers: {
             'Lightstep-Access-Token': token,
