@@ -12,7 +12,7 @@ echo "=================================================="
 echo "# Install ORY Hydra"
 kubectl apply --filename=kubernetes/manifests/ory-hydra/hm-ory-hydra-namespace.yaml
 helm repo add ory https://k8s.ory.sh/helm/charts
-helm repo update
+helm repo update ory
 helm install \
   ory-hydra \
   ory/hydra \
