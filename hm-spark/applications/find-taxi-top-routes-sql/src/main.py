@@ -4,46 +4,25 @@ from utils.zone import load_zones, preprocess_zones
 
 
 def get_top_routes(
-    spark: SparkSession, trips: DataFrame, zones: DataFrame
+    spark: SparkSession, trips: DataFrame, zones: DataFrame, sql_query: str
 ) -> DataFrame:
     trips.createOrReplaceTempView("trips")
     zones.createOrReplaceTempView("zones")
-
-    return spark.sql(
-        """
-        WITH t2 AS (
-            WITH t1 AS (
-                SELECT pulocationid, dolocationid, count(*) AS count
-                FROM trips
-                GROUP BY pulocationid, dolocationid
-            )
-            SELECT
-                t1.pulocationid,
-                zones.zone AS pulocation_zone,
-                zones.borough AS pulocation_borough,
-                t1.dolocationid,
-                t1.count
-            FROM t1
-            INNER JOIN zones ON t1.pulocationid = zones.locationid
-        )
-        SELECT
-            t2.pulocationid,
-            t2.pulocation_zone,
-            t2.pulocation_borough,
-            t2.dolocationid,
-            zones.zone AS dolocation_zone,
-            zones.borough AS dolocation_borough,
-            t2.count
-        FROM t2
-        INNER JOIN zones ON t2.dolocationid = zones.locationid
-        ORDER BY t2.count DESC
-        """
-    )
+    return spark.sql(sql_query)
 
 
-def main(data_dirname: str, trip_filenames: list[str], zone_filename: str) -> None:
+def main(
+    data_dirname: str,
+    query_dirname: str,
+    trip_filenames: list[str],
+    zone_filename: str,
+    query_filename: str,
+) -> None:
     trip_data_paths = [f"{data_dirname}/{f}" for f in trip_filenames]
     zone_data_path = f"{data_dirname}/{zone_filename}"
+
+    with open(f"{query_dirname}/{query_filename}", "r") as f:
+        sql_query = f.read()
 
     spark = (
         SparkSession.builder.master("local[*]")
@@ -63,7 +42,7 @@ def main(data_dirname: str, trip_filenames: list[str], zone_filename: str) -> No
     print((zones.count(), len(zones.columns)))
     zones.show()
 
-    top_routes = get_top_routes(spark, trips, zones)
+    top_routes = get_top_routes(spark, trips, zones, sql_query)
     print((top_routes.count(), len(top_routes.columns)))
     top_routes.show(truncate=False)
 
@@ -73,6 +52,7 @@ def main(data_dirname: str, trip_filenames: list[str], zone_filename: str) -> No
 if __name__ == "__main__":
     # https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
     data_dirname = "data"
+    query_dirname = "src/queries"
     trip_filenames = [
         "yellow_tripdata_2019-01.parquet",
         "yellow_tripdata_2019-02.parquet",
@@ -118,4 +98,5 @@ if __name__ == "__main__":
         "yellow_tripdata_2022-06.parquet",
     ]
     zone_filename = "taxi_zones.csv"
-    main(data_dirname, trip_filenames, zone_filename)
+    query_filename = "query.sql"
+    main(data_dirname, query_dirname, trip_filenames, zone_filename, query_filename)
