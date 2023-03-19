@@ -6,6 +6,7 @@ name: Release
     - cron: 0 13 * * 1
 
 jobs:
+  # https://semantic-release.gitbook.io/semantic-release/recipes/ci-configurations/github-actions
   release:
     name: Release
     runs-on: ubuntu-22.04
@@ -19,11 +20,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: .nvmrc
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies
-        run: |
-          npm ci
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
