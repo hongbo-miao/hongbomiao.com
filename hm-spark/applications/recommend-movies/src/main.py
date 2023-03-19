@@ -3,7 +3,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, explode
 
 
-def main():
+def main(data_dirname: str, ratings_filename: str, movies_filename: str):
     spark = (
         SparkSession.builder.master("local[*]")
         .appName("recommend_movie")
@@ -11,15 +11,13 @@ def main():
         .getOrCreate()
     )
 
-    # https://grouplens.org/datasets/movielens/latest/
-    data_dirname = "data"
     ratings_df = spark.read.csv(
-        f"{data_dirname}/ratings.csv",
+        f"{data_dirname}/{ratings_filename}",
         header=True,
         inferSchema=True,
     )
     movies_df = spark.read.csv(
-        f"{data_dirname}/movies.csv",
+        f"{data_dirname}/{movies_filename}",
         header=True,
         inferSchema=True,
     )
@@ -65,4 +63,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # https://grouplens.org/datasets/movielens/latest/
+    data_dirname = "data"
+    ratings_filename = "ratings.csv"
+    movies_filename = "movies.csv"
+    main(data_dirname, ratings_filename, movies_filename)
