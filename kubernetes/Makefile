@@ -187,7 +187,7 @@ kubectl-port-forward-redis:
 kubectl-port-forward-trino:
 	kubectl port-forward service/trino --namespace=hm-trino 26869:26869
 kubectl-port-forward-superset:
-	kubectl port-forward service/superset --namespace=hm-superset 22357:22357
+	kubectl port-forward service/superset --namespace=hm-superset 22357:8088
 kubectl-port-forward-dgraph:
 	kubectl port-forward service/dgraph-dgraph-alpha --namespace=hm-dgraph 8080:8080
 	kubectl port-forward service/dgraph-dgraph-zero --namespace=hm-dgraph 6080:6080
