@@ -4,15 +4,11 @@
 init:
   createAdmin: true
   adminUser:
-    firstname: Superset
-    lastname: Admin
-    email: admin@superset.com
+    firstname: Hongbo
+    lastname: Miao
+    email: me@me.com
     username: admin
     password: passw0rd
-
-service:
-  type: ClusterIP
-  port: 22357
 
 # Use own Postgres
 postgresql:
@@ -21,7 +17,7 @@ postgresql:
 supersetNode:
   connections:
     db_host: postgres-service.hm-postgres.svc
-    db_port: "5432"
+    db_port: 5432
     db_user: admin
     db_pass: passw0rd
-    db_name: superset_db
+    db_name: hm_superset_db
