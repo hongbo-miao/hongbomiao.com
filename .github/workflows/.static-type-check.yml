@@ -8,6 +8,31 @@ name: . Static Type Check
         required: true
 
 jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      static-type-check-typescript: ${{ steps.filter.outputs.static-type-check-typescript }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            static-type-check-typescript:
+              - '.github/workflows/.static-type-check.yml'
+              - 'api-node/**'
+              - 'ethereum/**'
+              - 'grafana/hm-panel-plugin/**'
+              - 'mobile-react-native/**'
+              - 'web/**'
+              - 'web-cypress/**'
+
   static-type-check-kotlin:
     name: Kotlin
     runs-on: ubuntu-22.04
@@ -100,6 +125,8 @@ jobs:
 
   static-type-check-typescript:
     name: TypeScript
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.static-type-check-typescript == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
