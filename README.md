@@ -64,7 +64,7 @@ This diagram shows the architecture of this repository.
 
 It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
 
-![Architecture](https://user-images.githubusercontent.com/3375461/225780644-075060f4-1fe8-491c-ad32-6eec8f7e2826.svg)
+![Architecture](https://user-images.githubusercontent.com/3375461/226168898-7e10aa5f-6f2c-4ec2-acac-50518963cd12.svg)
 
 ## 📦 Setup
 
