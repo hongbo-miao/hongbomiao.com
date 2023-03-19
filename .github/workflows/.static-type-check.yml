@@ -109,7 +109,13 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: |
+            api-node/package-lock.json
+            ethereum/package-lock.json
+            grafana/hm-panel-plugin/package-lock.json
+            mobile-react-native/package-lock.json
+            web/package-lock.json
+            web-cypress/package-lock.json
       - name: Install dependencies
         run: |
           cd api-node && npm ci
