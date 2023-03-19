@@ -30,6 +30,10 @@ apt-install:
 ls-owner-group:
 	ls -l
 
+# https://github.com/quic-go/quic-go/wiki/UDP-Receive-Buffer-Size#non-bsd
+increase-udp-receive-buffer:
+	sysctl -w net.core.rmem_max=2500000
+
 # htop
 htop-install:
 	sudo snap install htop
