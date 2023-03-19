@@ -8,30 +8,78 @@ pull_request_rules:
       - or:
           - author=Hongbo-Miao
           - author=renovate[bot]
-      - check-success=Lint / C, C++
-      - check-success=Lint / CMake
-      - check-success=Lint / Commit Message
-      - check-success=Lint / CSS
-      - check-success=Lint / Dockerfile
-      - check-success=Lint / Go
-      - check-success=Lint / JavaScript
-      - check-success=Lint / Kotlin
-      - check-success=Lint / Kubernetes Manifest
-      - check-success=Lint / Markdown
-      - check-success=Lint / Protocol Buffers
-      - check-success=Lint / Python
-      - check-success=Lint / QML
-      - check-success=Lint / Ruby
-      - check-success=Lint / Shell
-      - check-success=Lint / Solidity
-      - check-success=Lint / SQL
-      - check-success=Lint / Terraform
-      - check-success=Lint / XML
-      - check-success=Lint / YAML
-      - check-success=Static Type Check / Kotlin
-      - check-success=Static Type Check / Python
-      - check-success=Static Type Check / Terraform
-      - check-success=Static Type Check / TypeScript
+      - or:
+        - check-success=Lint / C, C++
+        - check-skipped=Lint / C, C++
+      - or:
+        - check-success=Lint / CMake
+        - check-skipped=Lint / CMake
+      - or:
+        - check-success=Lint / Commit Message
+        - check-skipped=Lint / Commit Message
+      - or:
+        - check-success=Lint / CSS
+        - check-skipped=Lint / CSS
+      - or:
+        - check-success=Lint / Dockerfile
+        - check-skipped=Lint / Dockerfile
+      - or:
+        - check-success=Lint / Go
+        - check-skipped=Lint / Go
+      - or:
+        - check-success=Lint / JavaScript
+        - check-skipped=Lint / JavaScript
+      - or:
+        - check-success=Lint / Kotlin
+        - check-skipped=Lint / Kotlin
+      - or:
+        - check-success=Lint / Kubernetes Manifest
+        - check-skipped=Lint / Kubernetes Manifest
+      - or:
+        - check-success=Lint / Markdown
+        - check-skipped=Lint / Markdown
+      - or:
+        - check-success=Lint / Protocol Buffers
+        - check-skipped=Lint / Protocol Buffers
+      - or:
+        - check-success=Lint / Python
+        - check-skipped=Lint / Python
+      - or:
+        - check-success=Lint / QML
+        - check-skipped=Lint / QML
+      - or:
+        - check-success=Lint / Ruby
+        - check-skipped=Lint / Ruby
+      - or:
+        - check-success=Lint / Shell
+        - check-skipped=Lint / Shell
+      - or:
+        - check-success=Lint / Solidity
+        - check-skipped=Lint / Solidity
+      - or:
+        - check-success=Lint / SQL
+        - check-skipped=Lint / SQL
+      - or:
+        - check-success=Lint / Terraform
+        - check-skipped=Lint / Terraform
+      - or:
+        - check-success=Lint / XML
+        - check-skipped=Lint / XML
+      - or:
+        - check-success=Lint / YAML
+        - check-skipped=Lint / YAML
+      - or:
+        - check-success=Static Type Check / Kotlin
+        - check-skipped=Static Type Check / Kotlin
+      - or:
+        - check-success=Static Type Check / Python
+        - check-skipped=Static Type Check / Python
+      - or:
+        - check-success=Static Type Check / Terraform
+        - check-skipped=Static Type Check / Terraform
+      - or:
+        - check-success=Static Type Check / TypeScript
+        - check-skipped=Static Type Check / TypeScript
       - or:
           - check-success=Web | Test
           - check-skipped=Web | Test
