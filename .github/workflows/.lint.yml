@@ -5,6 +5,43 @@ name: . Lint
   workflow_call:
 
 jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      lint-go: ${{ steps.filter.outputs.lint-go }}
+      lint-javascript: ${{ steps.filter.outputs.lint-javascript }}
+      lint-kubernetes-manifest: ${{ steps.filter.outputs.lint-kubernetes-manifest }}
+      lint-protocol-buffers: ${{ steps.filter.outputs.lint-protocol-buffers }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            lint-go:
+              - '.github/workflows/.lint.yml'
+              - 'api-go/**'
+            lint-javascript:
+              - '.github/workflows/.lint.yml'
+              - 'api-node/**'
+              - 'ethereum/**'
+              - 'grafana/hm-panel-plugin/**'
+              - 'mobile-react-native/**'
+              - 'web/**'
+              - 'web-cypress/**'
+            lint-kubernetes-manifest:
+              - '.github/workflows/.lint.yml'
+              - 'kubernetes/manifests/**'
+            lint-protocol-buffers:
+              - '.github/workflows/.lint.yml'
+              - 'api-go/**'
+
   lint-c-cpp:
     name: C, C++
     runs-on: ubuntu-22.04
@@ -97,6 +134,8 @@ jobs:
 
   lint-go:
     name: Go
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.lint-go == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -117,6 +156,8 @@ jobs:
 
   lint-javascript:
     name: JavaScript
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.lint-javascript == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -172,6 +213,8 @@ jobs:
 
   lint-kubernetes-manifest:
     name: Kubernetes Manifest
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.lint-kubernetes-manifest == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -217,6 +260,8 @@ jobs:
 
   lint-protocol-buffers:
     name: Protocol Buffers
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.lint-protocol-buffers == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
