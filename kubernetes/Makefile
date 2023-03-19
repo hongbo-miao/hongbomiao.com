@@ -248,10 +248,16 @@ list-port-forward:
 kill-port:
 	kill -9 PID
 
+# K9s
 k9s-install:
 	brew install k9s
 k9s:
 	k9s
+
+# kubectl-plugins
+# https://github.com/luksa/kubectl-plugins
+kubectl-ssh:
+	kubectl ssh node lima-rancher-desktop
 
 # Vagrant
 vagrant-init:
