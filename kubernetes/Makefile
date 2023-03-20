@@ -150,8 +150,12 @@ kubectl-config-current-context:
 	kubectl config current-context
 kubectl-config-use-context:
 	kubectl config use-context k3d-west
-kubectl-context-info:
+kubectl-cluster-info:
+	kubectl cluster-info
+kubectl-cluster-info-context:
 	kubectl cluster-info --context k3d-west
+kubectl-proxy:
+	kubectl proxy
 
 kubectl-port-forward-hasura:
 	# hasura-graphql-engine

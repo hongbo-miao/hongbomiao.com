@@ -2,7 +2,7 @@
 set -e
 
 echo "# Install Spark"
-# https://github.com/bitnami/charts/tree/master/bitnami/spark
+# https://github.com/bitnami/charts/tree/main/bitnami/spark
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update bitnami
 helm install \
