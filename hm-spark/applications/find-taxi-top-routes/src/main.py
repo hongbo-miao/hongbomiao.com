@@ -27,7 +27,7 @@ def main(data_dirname: str, trip_filenames: list[str], zone_filename: str) -> No
 
     spark = (
         SparkSession.builder.master("local[*]")
-        .appName("find_taxi_top_routes")
+        .appName("find-taxi-top-routes")
         .config("spark.ui.port", "4040")
         .getOrCreate()
     )
