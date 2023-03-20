@@ -6,7 +6,7 @@ from pyspark.sql.functions import col, explode
 def main(data_dirname: str, ratings_filename: str, movies_filename: str):
     spark = (
         SparkSession.builder.master("local[*]")
-        .appName("recommend_movie")
+        .appName("recommend-movie")
         .config("spark.ui.port", "4040")
         .getOrCreate()
     )
