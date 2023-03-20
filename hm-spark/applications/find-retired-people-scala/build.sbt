@@ -1,11 +1,12 @@
-name := "Hello World"
+name := "FindRetiredPeople"
 
-version := "0.1"
+version := "1.0"
 
-scalaVersion := "2.13.10"
+scalaVersion := "2.12.17"
 
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % "3.3.2",
   "org.apache.spark" %% "spark-sql" % "3.3.2",
   "org.apache.spark" %% "spark-streaming" % "3.3.2",
 )
+javaOptions += "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED"
