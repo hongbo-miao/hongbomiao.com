@@ -28,6 +28,7 @@ jobs:
       chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-prefect-find-taxi-top-routes: ${{ steps.filter.outputs.hm-prefect-find-taxi-top-routes }}
+      hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
@@ -67,6 +68,9 @@ jobs:
             hm-prefect-find-taxi-top-routes:
               - '.github/workflows/test.yml'
               - 'hm-prefect/workflows/find-taxi-top-routes/**'
+            hm-spark-find-retired-people-scala:
+              - '.github/workflows/test.yml'
+              - 'hm-spark/applications/find-retired-people-scala/**'
             mobile-android:
               - '.github/workflows/test.yml'
               - 'mobile-android/**'
@@ -542,6 +546,27 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: hm-prefect/workflows/find-taxi-top-routes
+
+  spark-find-retired-people-scala:
+    name: Spark (find-retired-people-scala) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: '17'
+          cache: sbt
+      - name: Test
+        working-directory: hm-spark/applications/find-retired-people-scala
+        run: |
+          sbt test
 
   streaming-test:
     name: Streaming | Test
