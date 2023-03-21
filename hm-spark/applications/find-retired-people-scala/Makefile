@@ -17,15 +17,16 @@ docker-build:
 docker-push:
 	docker push ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest
 
-kubectl-proxy:
-	kubectl proxy
+kubectl-cluster-info:
+	kubectl cluster-info
 
-spark-submit-local:
+local-spark-submit:
 	spark-submit \
 		--class=com.hongbomiao.FindRetiredPeople \
 		--master="local[*]" \
 		target/scala-2.12/findretiredpeople_2.12-1.0.jar
-spark-submit-kubernetes:
+
+kubernetes-spark-submit:
 	spark-submit \
         --master=k8s://https://127.0.0.1:6443 \
         --deploy-mode=cluster \
@@ -36,6 +37,8 @@ spark-submit-kubernetes:
         --conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest \
         --conf=spark.kubernetes.container.image.pullPolicy=Always \
         local:///opt/spark/work-dir/findretiredpeople_2.12-1.0.jar
+kubernetes-delete-spark-applications:
+	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=find-retired-people
 
 java-list-versions:
 	/usr/libexec/java_home -V
