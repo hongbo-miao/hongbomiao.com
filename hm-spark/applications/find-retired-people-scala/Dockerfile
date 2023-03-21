@@ -6,4 +6,4 @@ RUN sbt package
 
 FROM docker.io/apache/spark:v3.3.2
 WORKDIR /opt/spark/work-dir
-COPY --from=builder /usr/src/app/target/scala-2.13/findretiredpeople_2.13-1.0.jar /opt/spark/work-dir/
+COPY --from=builder /usr/src/app/target/scala-2.12/findretiredpeople_2.12-1.0.jar /opt/spark/work-dir/
