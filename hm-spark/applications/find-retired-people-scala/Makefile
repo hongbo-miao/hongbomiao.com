@@ -32,6 +32,7 @@ spark-submit-kubernetes:
         --conf=spark.executor.instances=5 \
         --conf=spark.kubernetes.namespace=hm-spark \
         --conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest \
+        --conf=spark.kubernetes.container.image.pullPolicy=Always \
         local:///opt/spark/work-dir/findretiredpeople_2.13-1.0.jar
 
 java-list-versions:
