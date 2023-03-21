@@ -24,7 +24,7 @@ spark-submit-local:
 	spark-submit \
 		--class=com.hongbomiao.FindRetiredPeople \
 		--master="local[*]" \
-		target/scala-2.13/findretiredpeople_2.13-1.0.jar
+		target/scala-2.12/findretiredpeople_2.12-1.0.jar
 spark-submit-kubernetes:
 	spark-submit \
         --master=k8s://https://127.0.0.1:6443 \
@@ -35,7 +35,7 @@ spark-submit-kubernetes:
         --conf=spark.kubernetes.namespace=hm-spark \
         --conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest \
         --conf=spark.kubernetes.container.image.pullPolicy=Always \
-        local:///opt/spark/work-dir/findretiredpeople_2.13-1.0.jar
+        local:///opt/spark/work-dir/findretiredpeople_2.12-1.0.jar
 
 java-list-versions:
 	/usr/libexec/java_home -V
