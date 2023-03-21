@@ -9,4 +9,3 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-sql" % "3.3.2",
   "org.apache.spark" %% "spark-streaming" % "3.3.2",
 )
-javaOptions += "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED"
