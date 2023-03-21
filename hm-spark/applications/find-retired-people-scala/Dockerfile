@@ -1,3 +1,8 @@
+FROM docker.io/sbtscala/scala-sbt:eclipse-temurin-jammy-17.0.5_8_1.8.2_2.13.10 AS builder
+WORKDIR /usr/src/app/
+COPY ["hm-spark/applications/find-retired-people-scala/src/", "hm-spark/applications/find-retired-people-scala/build.sbt", "./"]
+RUN sbt package
+
 FROM docker.io/apache/spark:v3.3.2
 WORKDIR /opt/spark/work-dir
-COPY hm-spark/applications/find-retired-people-scala/target/scala-2.13/findretiredpeople_2.13-1.0.jar ./
+COPY --from=builder /usr/src/app/target/scala-2.13/findretiredpeople_2.13-1.0.jar /opt/spark/work-dir/
