@@ -1,4 +1,5 @@
-package com.sundogsoftware.spark
+package com.hongbomiao
+
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 object FindRetiredPeople {
@@ -20,8 +21,10 @@ object FindRetiredPeople {
     import spark.implicits._
     val df: DataFrame = people.toDF("id", "name", "age")
     df.createOrReplaceTempView("people")
+
     val retiredPeople: DataFrame = spark.sql("SELECT name, age FROM people WHERE age >= 67")
     retiredPeople.show()
+
     spark.stop()
   }
 }
