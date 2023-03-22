@@ -12,7 +12,7 @@ def main() -> None:
 
     spark = (
         SparkSession.builder.master("local[*]")
-        .appName("find-retired-people")
+        .appName("find-retired-people-python")
         .config("spark.ui.port", "4040")
         .getOrCreate()
     )

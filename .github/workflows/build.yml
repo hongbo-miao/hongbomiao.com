@@ -26,7 +26,7 @@ jobs:
       hm-pgbackrest: ${{ steps.filter.outputs.hm-pgbackrest }}
       hm-prefect-collect-data: ${{ steps.filter.outputs.hm-prefect-collect-data }}
       hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
-      hm-spark-find-retired-people: ${{ steps.filter.outputs.hm-spark-find-retired-people }}
+      hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
       hm-traefik: ${{ steps.filter.outputs.hm-traefik }}
       kafka-connect: ${{ steps.filter.outputs.kafka-connect }}
@@ -69,9 +69,9 @@ jobs:
             hm-prefect-print-platform:
               - '.github/workflows/build.yml'
               - 'hm-prefect/workflows/print-platform/**'
-            hm-spark-find-retired-people:
+            hm-spark-find-retired-people-python:
               - '.github/workflows/build.yml'
-              - 'hm-spark/applications/find-retired-people/**'
+              - 'hm-spark/applications/find-retired-people-python/**'
             hm-spark-find-retired-people-scala:
               - '.github/workflows/build.yml'
               - 'hm-spark/applications/find-retired-people-scala/**'
@@ -421,10 +421,10 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  build-hm-spark-find-retired-people:
-    name: Build hm-spark-find-retired-people
+  build-hm-spark-find-retired-people-python:
+    name: Build hm-spark-find-retired-people-python
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people == 'true' }}
+    if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -449,9 +449,9 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-spark/applications/find-retired-people/Dockerfile
+            file: ./hm-spark/applications/find-retired-people-python/Dockerfile
             push: true
-            tags: ghcr.io/hongbo-miao/hm-spark-find-retired-people:latest
+            tags: ghcr.io/hongbo-miao/hm-spark-find-retired-people-python:latest
             platforms: linux/amd64,linux/arm64
             cache-from: type=gha
             cache-to: type=gha,mode=max
