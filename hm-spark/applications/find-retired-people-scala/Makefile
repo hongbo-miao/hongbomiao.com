@@ -11,12 +11,6 @@ sbt-test:
 sbt-run:
 	sbt run
 
-docker-build:
-	cd ../../.. && \
-	docker build --file=hm-spark/applications/find-retired-people-scala/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest .
-docker-push:
-	docker push ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest
-
 java-list-versions:
 	/usr/libexec/java_home -V
 java-current-version:
@@ -24,14 +18,19 @@ java-current-version:
 java-set-version:
 	export JAVA_HOME=`/usr/libexec/java_home -v 17.0.6`
 
-# 1) Submit application to local
+# 1 - Submit the application to local
 spark-submit-to-local:
 	spark-submit \
 		--class=com.hongbomiao.FindRetiredPeople \
 		--master="local[*]" \
 		target/scala-2.12/findretiredpeople_2.12-1.0.jar
 
-# 2) Submit application to Kubernetes cluster
+# 2 - Submit the application to the Kubernetes cluster
+docker-build:
+	cd ../../.. && \
+	docker build --file=hm-spark/applications/find-retired-people-scala/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest .
+docker-push:
+	docker push ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest
 kubectl-cluster-info:
 	kubectl cluster-info
 spark-submit-to-kubernetes-cluster:
@@ -48,19 +47,31 @@ spark-submit-to-kubernetes-cluster:
 kubectl-delete-spark-applications-in-kubernetes-cluster:
 	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=find-retired-people
 
-# 3) Submit application to Spark master node in Kubernetes cluster
+# 3 - Submit the application to Spark master node in the Kubernetes cluster
 serve-jar-file:
 	brew install codeskyblue/tap/gohttpserver
 	gohttpserver \
-		--root=./hm-spark/applications/find-retired-people-scala/target/scala-2.12 \
+		--root=hm-spark/applications/find-retired-people-scala/target/scala-2.12/ \
 		--port=32609 \
 		--upload
 	ngrok http 32609
-spark-submit-to-spark-master-node:
-	# Note: replace xxx with the ngrok URL
+
+# 3.1 - Spark standalone cluster in cluster deploy mode (the master node will assign to worker nodes)
+spark-submit-to-spark-master-node-cluster-mode:
+	# Note: update xxx
 	kubectl exec --stdin --tty --namespace=hm-spark spark-master-0 -- \
  		spark-submit \
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=cluster \
+			--class=com.hongbomiao.FindRetiredPeople \
+			https://xxx.ngrok.io/findretiredpeople_2.12-1.0.jar
+
+# 3.2 - Spark standalone cluster in client deploy mode (run in the master node)
+spark-submit-to-spark-master-node-client-mode:
+	# Note: update xxx
+	kubectl exec --stdin --tty --namespace=hm-spark spark-master-0 -- \
+ 		spark-submit \
+			--master=spark://spark-master-svc.hm-spark.svc:7077 \
+			--deploy-mode=client \
 			--class=com.hongbomiao.FindRetiredPeople \
 			https://xxx.ngrok.io/findretiredpeople_2.12-1.0.jar
