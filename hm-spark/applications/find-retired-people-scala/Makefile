@@ -25,7 +25,7 @@ spark-submit-to-local:
 		--master="local[*]" \
 		target/scala-2.12/findretiredpeople_2.12-1.0.jar
 
-# 2 - Submit the application to the Kubernetes cluster
+# 2 - Submit the application to the Kubernetes cluster (run in a pod)
 docker-build:
 	cd ../../.. && \
 	docker build --file=hm-spark/applications/find-retired-people-scala/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest .
@@ -37,7 +37,7 @@ spark-submit-to-kubernetes-cluster:
 	spark-submit \
         --master=k8s://https://127.0.0.1:6443 \
         --deploy-mode=cluster \
-        --name=find-retired-people \
+        --name=find-retired-people-scala \
 		--class=com.hongbomiao.FindRetiredPeople \
         --conf=spark.executor.instances=5 \
         --conf=spark.kubernetes.namespace=hm-spark \
@@ -48,7 +48,7 @@ kubectl-delete-spark-applications-in-kubernetes-cluster:
 	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=find-retired-people
 
 # 3 - Submit the application to Spark master node in the Kubernetes cluster
-serve-jar-file:
+serve-files:
 	brew install codeskyblue/tap/gohttpserver
 	gohttpserver \
 		--root=hm-spark/applications/find-retired-people-scala/target/scala-2.12/ \
