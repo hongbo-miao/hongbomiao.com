@@ -13,11 +13,11 @@ poetry-add-dev:
 poetry-run-dev:
 	poetry run poe dev
 
-# 2 - Submit the application to the Kubernetes cluster
-poetry-run-spark-submit-to-local:
+# 1 - Submit the application to local
+spark-submit-to-local:
 	poetry run poe spark-submit-to-local
 
-# 2 - Submit the application to the Kubernetes cluster
+# 2 - Submit the application to the Kubernetes cluster (run in a pod)
 docker-build:
 	cd ../../.. && \
 	docker build --file=hm-spark/applications/find-retired-people/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-find-retired-people:latest .
@@ -30,7 +30,6 @@ spark-submit-to-kubernetes-cluster:
         --master=k8s://https://127.0.0.1:6443 \
         --deploy-mode=cluster \
         --name=find-retired-people \
-		--class=com.hongbomiao.FindRetiredPeople \
         --conf=spark.executor.instances=5 \
         --conf=spark.kubernetes.namespace=hm-spark \
         --conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-find-retired-people:latest \
@@ -40,7 +39,7 @@ kubectl-delete-spark-applications-in-kubernetes-cluster:
 	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=find-retired-people
 
 # 3 - Submit the application to Spark master node in the Kubernetes cluster
-serve-jar-file:
+serve-files:
 	brew install codeskyblue/tap/gohttpserver
 	gohttpserver \
 		--root=src/ \
