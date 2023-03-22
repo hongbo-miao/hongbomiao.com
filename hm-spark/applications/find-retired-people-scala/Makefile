@@ -18,14 +18,14 @@ java-current-version:
 java-set-version:
 	export JAVA_HOME=`/usr/libexec/java_home -v 17.0.6`
 
-# 1 - Submit the application to local
+# 1 - Local mode
 spark-submit-to-local:
 	spark-submit \
 		--class=com.hongbomiao.FindRetiredPeople \
 		--master="local[*]" \
 		target/scala-2.12/findretiredpeople_2.12-1.0.jar
 
-# 2 - Submit the application to the Kubernetes cluster (run in a pod)
+# 2 - Run in a pod
 docker-build:
 	cd ../../.. && \
 	docker build --file=hm-spark/applications/find-retired-people-scala/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest .
@@ -45,9 +45,9 @@ spark-submit-to-kubernetes-cluster:
         --conf=spark.kubernetes.container.image.pullPolicy=Always \
         local:///opt/spark/work-dir/findretiredpeople_2.12-1.0.jar
 kubectl-delete-spark-applications-in-kubernetes-cluster:
-	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=find-retired-people
+	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=find-retired-people-scala
 
-# 3 - Submit the application to Spark master node in the Kubernetes cluster
+# 3 - Spark standalone mode
 serve-files:
 	brew install codeskyblue/tap/gohttpserver
 	gohttpserver \
@@ -56,7 +56,7 @@ serve-files:
 		--upload
 	ngrok http 32609
 
-# 3.1 - Spark standalone cluster in cluster deploy mode (the master node will assign to worker nodes)
+# 3.1 - Cluster mode (the master node will assign to worker nodes)
 spark-submit-to-spark-master-node-cluster-mode:
 	# Note: update xxx
 	kubectl exec --stdin --tty --namespace=hm-spark spark-master-0 -- \
@@ -66,7 +66,7 @@ spark-submit-to-spark-master-node-cluster-mode:
 			--class=com.hongbomiao.FindRetiredPeople \
 			https://xxx.ngrok.io/findretiredpeople_2.12-1.0.jar
 
-# 3.2 - Spark standalone cluster in client deploy mode (run in the master node)
+# 3.2 - Client mode
 spark-submit-to-spark-master-node-client-mode:
 	# Note: update xxx
 	kubectl exec --stdin --tty --namespace=hm-spark spark-master-0 -- \
