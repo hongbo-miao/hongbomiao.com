@@ -25,6 +25,7 @@ jobs:
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-pgbackrest: ${{ steps.filter.outputs.hm-pgbackrest }}
       hm-prefect-collect-data: ${{ steps.filter.outputs.hm-prefect-collect-data }}
+      hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
       hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
       hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
@@ -66,6 +67,9 @@ jobs:
             hm-prefect-collect-data:
               - '.github/workflows/build.yml'
               - 'hm-prefect/workflows/collect-data/**'
+            hm-prefect-greet:
+              - '.github/workflows/build.yml'
+              - 'hm-prefect/workflows/greet/**'
             hm-prefect-print-platform:
               - '.github/workflows/build.yml'
               - 'hm-prefect/workflows/print-platform/**'
@@ -378,6 +382,43 @@ jobs:
             file: ./hm-prefect/workflows/collect-data/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-collect-data:latest
+            platforms: linux/amd64,linux/arm64
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
+
+  build-hm-prefect-greet:
+    name: Build hm-prefect-greet
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: production
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Log in GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: wandalen/wretry.action@v1.0.36
+        with:
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./hm-prefect/workflows/greet/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-prefect-greet:latest
             platforms: linux/amd64,linux/arm64
             cache-from: type=gha
             cache-to: type=gha,mode=max
