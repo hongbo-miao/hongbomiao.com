@@ -14,3 +14,16 @@ poetry-run-prefect-agent-start:
 
 poetry-run-dev:
 	poetry run poe dev
+poetry-run-add-kubernetes-job-block:
+	poetry run poe add-kubernetes-job-block
+poetry-run-build:
+	poetry run poe build -- --work-queue=hm-local-queue
+poetry-run-run:
+	poetry run poe run
+
+docker-build:
+	cd ../../.. && \
+	docker build --file=hm-prefect/workflows/calculate/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-calculate:latest .
+docker-push:
+	docker push ghcr.io/hongbo-miao/hm-prefect-calculate:latest
+
