@@ -61,12 +61,19 @@ echo "# Start Prefect Agent in local"
 poetry run poe prefect-agent-start -- --work-queue=hm-local-queue
 echo "=================================================="
 
-echo "# Start Prefect Agent in Kubernetes"
+echo "# Start Prefect Agents in Kubernetes"
 helm install \
-  prefect-agent \
+  prefect-agent-1 \
   prefect/prefect-agent \
   --namespace=hm-prefect \
   --create-namespace \
   --values=kubernetes/manifests/prefect/helm/prefect-agent/my-values.yaml
-# helm uninstall prefect-agent --namespace=hm-prefect
+helm install \
+  prefect-agent-2 \
+  prefect/prefect-agent \
+  --namespace=hm-prefect \
+  --create-namespace \
+  --values=kubernetes/manifests/prefect/helm/prefect-agent/my-values.yaml
+# helm uninstall prefect-agent-1 --namespace=hm-prefect
+# helm uninstall prefect-agent-2 --namespace=hm-prefect
 echo "=================================================="
