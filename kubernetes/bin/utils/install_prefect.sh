@@ -45,14 +45,20 @@ cd hm-prefect/workflows/print-platform
 
 echo "# Start the workflow"
 poetry run poe add-kubernetes-job-block
-poetry run poe build -- --work-queue=hm-local-queue
-# poetry run poe build -- --work-queue=hm-kubernetes-queue
+
+# calculate
+# poetry run poe build -- --params='{"model":{"n":4}}' --work-queue=hm-kubernetes-queue
+
+# greet
+# poetry run poe build -- --params='{"user":{"first_name":"Hongbo","last_name":"Miao"}}' --work-queue=hm-kubernetes-queue
 
 # collect-data
 # poetry run poe build -- --params=$(cat params.json | jq -c .) --work-queue=hm-local-queue
 
-# greet
-# poetry run poe build -- --params='{"user":{"first_name":"Hongbo","last_name":"Miao"}}' --work-queue=hm-local-queue
+# print-platform
+# poetry run poe build -- --work-queue=hm-local-queue
+poetry run poe build -- --work-queue=hm-kubernetes-queue
+
 poetry run poe run
 # kubectl delete jobs --all --namespace=hm-prefect
 echo "=================================================="
