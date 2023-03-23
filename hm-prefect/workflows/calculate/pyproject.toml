@@ -20,3 +20,6 @@ prefect-server-start = "prefect server start"
 prefect-agent-start = "prefect agent start"
 
 dev = "python src/main.py"
+add-kubernetes-job-block = "python add_kubernetes_job_block.py"
+build = "prefect deployment build src/main.py:calculate --name=calculate --infra-block=kubernetes-job/calculate-kubernetes-job-block --apply"
+run = "prefect deployment run calculate/calculate"
