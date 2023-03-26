@@ -72,18 +72,6 @@ moreorless = ">=0.2.0"
 volatile = "*"
 
 [[package]]
-name = "cachetools"
-version = "5.3.0"
-description = "Extensible memoizing collections and decorators"
-category = "main"
-optional = false
-python-versions = "~=3.7"
-files = [
-    {file = "cachetools-5.3.0-py3-none-any.whl", hash = "sha256:429e1a1e845c008ea6c85aa35d4b98b65d6a9763eeef3e37e92728a12d1de9d4"},
-    {file = "cachetools-5.3.0.tar.gz", hash = "sha256:13dfddc7b8df938c21a940dfa6557ce6e94a2f1cdfa58eb90c805721d58f2c14"},
-]
-
-[[package]]
 name = "certifi"
 version = "2022.12.7"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -334,19 +322,14 @@ zstandard = ["zstandard"]
 
 [[package]]
 name = "feast"
-version = "0.29.0"
+version = "0.30.2"
 description = "Python SDK for Feast"
 category = "main"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "feast-0.29.0-cp310-cp310-macosx_10_15_x86_64.whl", hash = "sha256:0f51b7fd0aaca28b03df6260b888310fe0cf86d834f465edadee85505c3a3f16"},
-    {file = "feast-0.29.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:d967db229641d26a6f2d527fc8695a519f2f4e1e0a26aed65e687bc0d8bf6c88"},
-    {file = "feast-0.29.0-cp38-cp38-macosx_10_15_x86_64.whl", hash = "sha256:ad74b77cdd4849f4d355013031a3ebd672cc3f0d2a5384c641674b6817e05970"},
-    {file = "feast-0.29.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:71630c5d78be239f1023bfa8105c80a8afc5c720fe2a5df241d1eed2703be919"},
-    {file = "feast-0.29.0-cp39-cp39-macosx_10_15_x86_64.whl", hash = "sha256:bc64c17500a15bb0d8992cd16db0bd8ece7f8a9dcc17750e685377f448e33e17"},
-    {file = "feast-0.29.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:751a2750eefab754cab212a55b56bfd29485102f07c4976c9054255d1901a692"},
-    {file = "feast-0.29.0.tar.gz", hash = "sha256:f6263e18415fd56ad90b53619089465baaf8393cf80ecebdc71f0702cd6f53d4"},
+    {file = "feast-0.30.2-py2.py3-none-any.whl", hash = "sha256:0e7a32740d72fc8fe3251c1b7714fcab7c3b8a4559b1a0026dcf439850bbcdc3"},
+    {file = "feast-0.30.2.tar.gz", hash = "sha256:ef77554ed0ceafd59f186f385a24084d61cbed1f32f835f68baf972721c03525"},
 ]
 
 [package.dependencies]
@@ -357,8 +340,6 @@ dask = ">=2021.1.0"
 dill = ">=0.3.0,<0.4.0"
 fastapi = ">=0.68.0,<1"
 fastavro = ">=1.1.0,<2"
-google-api-core = ">=1.23.0,<3"
-googleapis-common-protos = ">=1.52.0,<2"
 grpcio = ">=1.47.0,<2"
 grpcio-reflection = ">=1.47.0,<2"
 httpx = ">=0.23.3"
@@ -369,37 +350,37 @@ numpy = ">=1.22,<3"
 pandas = ">=1.4.3,<2"
 pandavro = ">=1.5.0,<1.6.0"
 proto-plus = ">=1.20.0,<2"
-protobuf = ">3,<5"
-pyarrow = ">=4,<9"
+protobuf = ">3.20,<5"
+pyarrow = ">=4,<12"
 pydantic = ">=1,<2"
 pygments = ">=2.12.0,<3"
 PyYAML = ">=5.4.0,<7"
+requests = "*"
 SQLAlchemy = {version = ">1,<2", extras = ["mypy"]}
 tabulate = ">=0.8.0,<1"
 tenacity = ">=7,<9"
 toml = ">=0.10.0,<1"
 tqdm = ">=4,<5"
-typeguard = "*"
+typeguard = "2.13.3"
 uvicorn = {version = ">=0.14.0,<1", extras = ["standard"]}
 
 [package.extras]
 aws = ["boto3 (>=1.17.0,<=1.20.23)", "docker (>=5.0.2)", "s3fs (>=0.4.0,<=2022.01.0)"]
 azure = ["SQLAlchemy (>=1.4.19)", "azure-identity (>=1.6.1)", "azure-storage-blob (>=0.37.0)", "pymssql", "pyodbc (>=4.0.30)"]
-bytewax = ["bytewax (==0.13.1)", "docker (>=5.0.2)", "kubernetes (<=20.13.0)"]
+bytewax = ["bytewax (==0.15.1)", "docker (>=5.0.2)", "kubernetes (<=20.13.0)"]
 cassandra = ["cassandra-driver (>=3.24.0,<4)"]
-ci = ["SQLAlchemy (>=1.4.19)", "Sphinx (>4.0.0,<7)", "adlfs (==0.5.9)", "assertpy (==1.1)", "avro (==1.10.0)", "azure-identity (>=1.6.1)", "azure-storage-blob (>=0.37.0)", "black (>=22.6.0,<23)", "boto3 (>=1.17.0,<=1.20.23)", "build", "bytewax (==0.13.1)", "cassandra-driver (>=3.24.0,<4)", "cryptography (>=35.0,<36)", "docker (>=5.0.2)", "firebase-admin (>=5.2.0,<6)", "flake8", "gcsfs (>=0.4.0,<=2022.01.0)", "google-cloud-bigquery-storage (>=2.0.0,<3)", "google-cloud-bigquery[pandas] (>=2,<4)", "google-cloud-bigtable (>=2.11.0,<3)", "google-cloud-datastore (>=2.1.0,<3)", "google-cloud-storage (>=1.34.0,<3)", "great-expectations (>=0.14.0,<0.15.0)", "grpcio-testing (>=1.47.0)", "grpcio-tools (>=1.47.0)", "happybase (>=1.2.0,<3)", "hiredis (>=2.0.0,<3)", "isort (>=5,<6)", "kubernetes (<=20.13.0)", "minio (==7.1.0)", "mock (==2.0.0)", "moto (<4)", "mypy (>=0.981,<0.990)", "mypy-protobuf (==3.1)", "mysqlclient", "pip-tools", "pre-commit", "psutil (==5.9.0)", "psycopg2-binary (>=2.8.3,<3)", "py (>=1.11.0)", "pyOpenSSL (<22.1.0)", "pybindgen", "pymssql", "pymysql", "pyodbc (>=4.0.30)", "pyspark (>=3.0.0,<4)", "pytest (>=6.0.0,<8)", "pytest-benchmark (>=3.4.1,<4)", "pytest-cov", "pytest-lazy-fixture (==0.6.3)", "pytest-mock (==1.10.4)", "pytest-ordering (>=0.6.0,<0.7.0)", "pytest-timeout (==1.4.2)", "pytest-xdist", "redis (==4.2.2)", "s3fs (>=0.4.0,<=2022.01.0)", "snowflake-connector-python[pandas] (>=2.7.3,<3)", "testcontainers (>=3.5,<4)", "trino (>=0.305.0,<0.400.0)", "types-PyMySQL", "types-PyYAML", "types-protobuf (>=3.19.22,<3.20.0)", "types-python-dateutil", "types-pytz", "types-redis", "types-requests", "types-setuptools", "types-tabulate", "urllib3 (>=1.25.4,<2)"]
-dev = ["SQLAlchemy (>=1.4.19)", "Sphinx (>4.0.0,<7)", "adlfs (==0.5.9)", "assertpy (==1.1)", "avro (==1.10.0)", "azure-identity (>=1.6.1)", "azure-storage-blob (>=0.37.0)", "black (>=22.6.0,<23)", "boto3 (>=1.17.0,<=1.20.23)", "build", "bytewax (==0.13.1)", "cassandra-driver (>=3.24.0,<4)", "cryptography (>=35.0,<36)", "docker (>=5.0.2)", "firebase-admin (>=5.2.0,<6)", "flake8", "gcsfs (>=0.4.0,<=2022.01.0)", "google-cloud-bigquery-storage (>=2.0.0,<3)", "google-cloud-bigquery[pandas] (>=2,<4)", "google-cloud-bigtable (>=2.11.0,<3)", "google-cloud-datastore (>=2.1.0,<3)", "google-cloud-storage (>=1.34.0,<3)", "great-expectations (>=0.14.0,<0.15.0)", "grpcio-testing (>=1.0,<2.0)", "grpcio-testing (>=1.47.0)", "grpcio-tools (>=1.47.0)", "happybase (>=1.2.0,<3)", "hiredis (>=2.0.0,<3)", "isort (>=5,<6)", "kubernetes (<=20.13.0)", "minio (==7.1.0)", "mock (==2.0.0)", "moto (<4)", "mypy (>=0.981,<0.990)", "mypy-protobuf (==3.1)", "mysqlclient", "pip-tools", "pre-commit", "psutil (==5.9.0)", "psycopg2-binary (>=2.8.3,<3)", "py (>=1.11.0)", "pyOpenSSL (<22.1.0)", "pybindgen", "pymssql", "pymysql", "pyodbc (>=4.0.30)", "pyspark (>=3.0.0,<4)", "pytest (>=6.0.0,<8)", "pytest-benchmark (>=3.4.1,<4)", "pytest-cov", "pytest-lazy-fixture (==0.6.3)", "pytest-mock (==1.10.4)", "pytest-ordering (>=0.6.0,<0.7.0)", "pytest-timeout (==1.4.2)", "pytest-xdist", "redis (==4.2.2)", "s3fs (>=0.4.0,<=2022.01.0)", "snowflake-connector-python[pandas] (>=2.7.3,<3)", "testcontainers (>=3.5,<4)", "trino (>=0.305.0,<0.400.0)", "types-PyMySQL", "types-PyYAML", "types-protobuf (>=3.19.22,<3.20.0)", "types-python-dateutil", "types-pytz", "types-redis", "types-requests", "types-setuptools", "types-tabulate", "urllib3 (>=1.25.4,<2)"]
-docs = ["SQLAlchemy (>=1.4.19)", "Sphinx (>4.0.0,<7)", "adlfs (==0.5.9)", "assertpy (==1.1)", "avro (==1.10.0)", "azure-identity (>=1.6.1)", "azure-storage-blob (>=0.37.0)", "black (>=22.6.0,<23)", "boto3 (>=1.17.0,<=1.20.23)", "build", "bytewax (==0.13.1)", "cassandra-driver (>=3.24.0,<4)", "cryptography (>=35.0,<36)", "docker (>=5.0.2)", "firebase-admin (>=5.2.0,<6)", "flake8", "gcsfs (>=0.4.0,<=2022.01.0)", "google-cloud-bigquery-storage (>=2.0.0,<3)", "google-cloud-bigquery[pandas] (>=2,<4)", "google-cloud-bigtable (>=2.11.0,<3)", "google-cloud-datastore (>=2.1.0,<3)", "google-cloud-storage (>=1.34.0,<3)", "great-expectations (>=0.14.0,<0.15.0)", "grpcio-testing (>=1.47.0)", "grpcio-tools (>=1.47.0)", "happybase (>=1.2.0,<3)", "hiredis (>=2.0.0,<3)", "isort (>=5,<6)", "kubernetes (<=20.13.0)", "minio (==7.1.0)", "mock (==2.0.0)", "moto (<4)", "mypy (>=0.981,<0.990)", "mypy-protobuf (==3.1)", "pip-tools", "pre-commit", "psutil (==5.9.0)", "psycopg2-binary (>=2.8.3,<3)", "py (>=1.11.0)", "pyOpenSSL (<22.1.0)", "pybindgen", "pymssql", "pyodbc (>=4.0.30)", "pyspark (>=3.0.0,<4)", "pytest (>=6.0.0,<8)", "pytest-benchmark (>=3.4.1,<4)", "pytest-cov", "pytest-lazy-fixture (==0.6.3)", "pytest-mock (==1.10.4)", "pytest-ordering (>=0.6.0,<0.7.0)", "pytest-timeout (==1.4.2)", "pytest-xdist", "redis (==4.2.2)", "s3fs (>=0.4.0,<=2022.01.0)", "snowflake-connector-python[pandas] (>=2.7.3,<3)", "testcontainers (>=3.5,<4)", "trino (>=0.305.0,<0.400.0)", "types-PyYAML", "types-protobuf (>=3.19.22,<3.20.0)", "types-python-dateutil", "types-pytz", "types-redis", "types-requests", "types-setuptools", "types-tabulate", "urllib3 (>=1.25.4,<2)"]
-gcp = ["google-cloud-bigquery-storage (>=2.0.0,<3)", "google-cloud-bigquery[pandas] (>=2,<4)", "google-cloud-bigtable (>=2.11.0,<3)", "google-cloud-datastore (>=2.1.0,<3)", "google-cloud-storage (>=1.34.0,<3)"]
-ge = ["great-expectations (>=0.14.0,<0.15.0)"]
-go = ["cffi (>=1.15.0,<1.16.0)"]
+ci = ["SQLAlchemy (>=1.4.19)", "Sphinx (>4.0.0,<7)", "adlfs (==0.5.9)", "assertpy (==1.1)", "avro (==1.10.0)", "azure-identity (>=1.6.1)", "azure-storage-blob (>=0.37.0)", "black (>=22.6.0,<23)", "boto3 (>=1.17.0,<=1.20.23)", "build", "bytewax (==0.15.1)", "cassandra-driver (>=3.24.0,<4)", "cryptography (>=35.0,<36)", "docker (>=5.0.2)", "firebase-admin (>=5.2.0,<6)", "flake8", "gcsfs (>=0.4.0,<=2022.01.0)", "google-api-core (>=1.23.0,<3)", "google-cloud-bigquery-storage (>=2.0.0,<3)", "google-cloud-bigquery[pandas] (>=2,<4)", "google-cloud-bigtable (>=2.11.0,<3)", "google-cloud-datastore (>=2.1.0,<3)", "google-cloud-storage (>=1.34.0,<3)", "googleapis-common-protos (>=1.52.0,<2)", "great-expectations (>=0.15.41,<0.16.0)", "grpcio-testing (>=1.47.0)", "grpcio-tools (>=1.47.0)", "happybase (>=1.2.0,<3)", "hiredis (>=2.0.0,<3)", "isort (>=5,<6)", "kubernetes (<=20.13.0)", "minio (==7.1.0)", "mock (==2.0.0)", "moto", "mypy (>=0.981,<0.990)", "mypy-protobuf (==3.1)", "mysqlclient", "pip-tools", "pre-commit", "psutil (==5.9.0)", "psycopg2-binary (>=2.8.3,<3)", "py (>=1.11.0)", "pyOpenSSL (<22.1.0)", "pybindgen", "pymssql", "pymysql", "pyodbc (>=4.0.30)", "pyspark (>=3.0.0,<4)", "pytest (>=6.0.0,<8)", "pytest-benchmark (>=3.4.1,<4)", "pytest-cov", "pytest-lazy-fixture (==0.6.3)", "pytest-mock (==1.10.4)", "pytest-ordering (>=0.6.0,<0.7.0)", "pytest-timeout (==1.4.2)", "pytest-xdist", "redis (==4.2.2)", "regex", "rockset (>=1.0.3)", "s3fs (>=0.4.0,<=2022.01.0)", "snowflake-connector-python[pandas] (>=2.7.3,<3)", "testcontainers (>=3.5,<4)", "trino (>=0.305.0,<0.400.0)", "types-PyMySQL", "types-PyYAML", "types-protobuf (>=3.19.22,<3.20.0)", "types-python-dateutil", "types-pytz", "types-redis", "types-requests", "types-setuptools", "types-tabulate", "urllib3 (>=1.25.4,<2)"]
+dev = ["SQLAlchemy (>=1.4.19)", "Sphinx (>4.0.0,<7)", "adlfs (==0.5.9)", "assertpy (==1.1)", "avro (==1.10.0)", "azure-identity (>=1.6.1)", "azure-storage-blob (>=0.37.0)", "black (>=22.6.0,<23)", "boto3 (>=1.17.0,<=1.20.23)", "build", "bytewax (==0.15.1)", "cassandra-driver (>=3.24.0,<4)", "cryptography (>=35.0,<36)", "docker (>=5.0.2)", "firebase-admin (>=5.2.0,<6)", "flake8", "gcsfs (>=0.4.0,<=2022.01.0)", "google-api-core (>=1.23.0,<3)", "google-cloud-bigquery-storage (>=2.0.0,<3)", "google-cloud-bigquery[pandas] (>=2,<4)", "google-cloud-bigtable (>=2.11.0,<3)", "google-cloud-datastore (>=2.1.0,<3)", "google-cloud-storage (>=1.34.0,<3)", "googleapis-common-protos (>=1.52.0,<2)", "great-expectations (>=0.15.41,<0.16.0)", "grpcio-testing (>=1.0,<2.0)", "grpcio-testing (>=1.47.0)", "grpcio-tools (>=1.47.0)", "happybase (>=1.2.0,<3)", "hiredis (>=2.0.0,<3)", "isort (>=5,<6)", "kubernetes (<=20.13.0)", "minio (==7.1.0)", "mock (==2.0.0)", "moto", "mypy (>=0.981,<0.990)", "mypy-protobuf (==3.1)", "mysqlclient", "pip-tools", "pre-commit", "psutil (==5.9.0)", "psycopg2-binary (>=2.8.3,<3)", "py (>=1.11.0)", "pyOpenSSL (<22.1.0)", "pybindgen", "pymssql", "pymysql", "pyodbc (>=4.0.30)", "pyspark (>=3.0.0,<4)", "pytest (>=6.0.0,<8)", "pytest-benchmark (>=3.4.1,<4)", "pytest-cov", "pytest-lazy-fixture (==0.6.3)", "pytest-mock (==1.10.4)", "pytest-ordering (>=0.6.0,<0.7.0)", "pytest-timeout (==1.4.2)", "pytest-xdist", "redis (==4.2.2)", "regex", "rockset (>=1.0.3)", "s3fs (>=0.4.0,<=2022.01.0)", "snowflake-connector-python[pandas] (>=2.7.3,<3)", "testcontainers (>=3.5,<4)", "trino (>=0.305.0,<0.400.0)", "types-PyMySQL", "types-PyYAML", "types-protobuf (>=3.19.22,<3.20.0)", "types-python-dateutil", "types-pytz", "types-redis", "types-requests", "types-setuptools", "types-tabulate", "urllib3 (>=1.25.4,<2)"]
+docs = ["SQLAlchemy (>=1.4.19)", "Sphinx (>4.0.0,<7)", "adlfs (==0.5.9)", "assertpy (==1.1)", "avro (==1.10.0)", "azure-identity (>=1.6.1)", "azure-storage-blob (>=0.37.0)", "black (>=22.6.0,<23)", "boto3 (>=1.17.0,<=1.20.23)", "build", "bytewax (==0.15.1)", "cassandra-driver (>=3.24.0,<4)", "cryptography (>=35.0,<36)", "docker (>=5.0.2)", "firebase-admin (>=5.2.0,<6)", "flake8", "gcsfs (>=0.4.0,<=2022.01.0)", "google-api-core (>=1.23.0,<3)", "google-cloud-bigquery-storage (>=2.0.0,<3)", "google-cloud-bigquery[pandas] (>=2,<4)", "google-cloud-bigtable (>=2.11.0,<3)", "google-cloud-datastore (>=2.1.0,<3)", "google-cloud-storage (>=1.34.0,<3)", "googleapis-common-protos (>=1.52.0,<2)", "great-expectations (>=0.15.41,<0.16.0)", "grpcio-testing (>=1.47.0)", "grpcio-tools (>=1.47.0)", "happybase (>=1.2.0,<3)", "hiredis (>=2.0.0,<3)", "isort (>=5,<6)", "kubernetes (<=20.13.0)", "minio (==7.1.0)", "mock (==2.0.0)", "moto", "mypy (>=0.981,<0.990)", "mypy-protobuf (==3.1)", "pip-tools", "pre-commit", "psutil (==5.9.0)", "psycopg2-binary (>=2.8.3,<3)", "py (>=1.11.0)", "pyOpenSSL (<22.1.0)", "pybindgen", "pymssql", "pyodbc (>=4.0.30)", "pyspark (>=3.0.0,<4)", "pytest (>=6.0.0,<8)", "pytest-benchmark (>=3.4.1,<4)", "pytest-cov", "pytest-lazy-fixture (==0.6.3)", "pytest-mock (==1.10.4)", "pytest-ordering (>=0.6.0,<0.7.0)", "pytest-timeout (==1.4.2)", "pytest-xdist", "redis (==4.2.2)", "regex", "rockset (>=1.0.3)", "s3fs (>=0.4.0,<=2022.01.0)", "snowflake-connector-python[pandas] (>=2.7.3,<3)", "testcontainers (>=3.5,<4)", "trino (>=0.305.0,<0.400.0)", "types-PyYAML", "types-protobuf (>=3.19.22,<3.20.0)", "types-python-dateutil", "types-pytz", "types-redis", "types-requests", "types-setuptools", "types-tabulate", "urllib3 (>=1.25.4,<2)"]
+gcp = ["google-api-core (>=1.23.0,<3)", "google-cloud-bigquery-storage (>=2.0.0,<3)", "google-cloud-bigquery[pandas] (>=2,<4)", "google-cloud-bigtable (>=2.11.0,<3)", "google-cloud-datastore (>=2.1.0,<3)", "google-cloud-storage (>=1.34.0,<3)", "googleapis-common-protos (>=1.52.0,<2)"]
+ge = ["great-expectations (>=0.15.41,<0.16.0)"]
 hbase = ["happybase (>=1.2.0,<3)"]
 mysql = ["mysqlclient", "pymysql", "types-PyMySQL"]
 postgres = ["psycopg2-binary (>=2.8.3,<3)"]
 redis = ["hiredis (>=2.0.0,<3)", "redis (==4.2.2)"]
 snowflake = ["pyOpenSSL (<22.1.0)", "snowflake-connector-python[pandas] (>=2.7.3,<3)"]
 spark = ["pyspark (>=3.0.0,<4)"]
-trino = ["trino (>=0.305.0,<0.400.0)"]
+trino = ["regex", "trino (>=0.305.0,<0.400.0)"]
 
 [[package]]
 name = "fissix"
@@ -449,72 +430,6 @@ sftp = ["paramiko"]
 smb = ["smbprotocol"]
 ssh = ["paramiko"]
 tqdm = ["tqdm"]
-
-[[package]]
-name = "google-api-core"
-version = "2.11.0"
-description = "Google API client core library"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "google-api-core-2.11.0.tar.gz", hash = "sha256:4b9bb5d5a380a0befa0573b302651b8a9a89262c1730e37bf423cec511804c22"},
-    {file = "google_api_core-2.11.0-py3-none-any.whl", hash = "sha256:ce222e27b0de0d7bc63eb043b956996d6dccab14cc3b690aaea91c9cc99dc16e"},
-]
-
-[package.dependencies]
-google-auth = ">=2.14.1,<3.0dev"
-googleapis-common-protos = ">=1.56.2,<2.0dev"
-protobuf = ">=3.19.5,<3.20.0 || >3.20.0,<3.20.1 || >3.20.1,<4.21.0 || >4.21.0,<4.21.1 || >4.21.1,<4.21.2 || >4.21.2,<4.21.3 || >4.21.3,<4.21.4 || >4.21.4,<4.21.5 || >4.21.5,<5.0.0dev"
-requests = ">=2.18.0,<3.0.0dev"
-
-[package.extras]
-grpc = ["grpcio (>=1.33.2,<2.0dev)", "grpcio (>=1.49.1,<2.0dev)", "grpcio-status (>=1.33.2,<2.0dev)", "grpcio-status (>=1.49.1,<2.0dev)"]
-grpcgcp = ["grpcio-gcp (>=0.2.2,<1.0dev)"]
-grpcio-gcp = ["grpcio-gcp (>=0.2.2,<1.0dev)"]
-
-[[package]]
-name = "google-auth"
-version = "2.16.2"
-description = "Google Authentication Library"
-category = "main"
-optional = false
-python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
-files = [
-    {file = "google-auth-2.16.2.tar.gz", hash = "sha256:07e14f34ec288e3f33e00e2e3cc40c8942aa5d4ceac06256a28cd8e786591420"},
-    {file = "google_auth-2.16.2-py2.py3-none-any.whl", hash = "sha256:2fef3cf94876d1a0e204afece58bb4d83fb57228aaa366c64045039fda6770a2"},
-]
-
-[package.dependencies]
-cachetools = ">=2.0.0,<6.0"
-pyasn1-modules = ">=0.2.1"
-rsa = {version = ">=3.1.4,<5", markers = "python_version >= \"3.6\""}
-six = ">=1.9.0"
-
-[package.extras]
-aiohttp = ["aiohttp (>=3.6.2,<4.0.0dev)", "requests (>=2.20.0,<3.0.0dev)"]
-enterprise-cert = ["cryptography (==36.0.2)", "pyopenssl (==22.0.0)"]
-pyopenssl = ["cryptography (>=38.0.3)", "pyopenssl (>=20.0.0)"]
-reauth = ["pyu2f (>=0.1.5)"]
-requests = ["requests (>=2.20.0,<3.0.0dev)"]
-
-[[package]]
-name = "googleapis-common-protos"
-version = "1.58.0"
-description = "Common protobufs used in Google APIs"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "googleapis-common-protos-1.58.0.tar.gz", hash = "sha256:c727251ec025947d545184ba17e3578840fc3a24a0516a020479edab660457df"},
-    {file = "googleapis_common_protos-1.58.0-py2.py3-none-any.whl", hash = "sha256:ca3befcd4580dab6ad49356b46bf165bb68ff4b32389f028f1abd7c10ab9519a"},
-]
-
-[package.dependencies]
-protobuf = ">=3.19.5,<3.20.0 || >3.20.0,<3.20.1 || >3.20.1,<4.21.1 || >4.21.1,<4.21.2 || >4.21.2,<4.21.3 || >4.21.3,<4.21.4 || >4.21.4,<4.21.5 || >4.21.5,<5.0.0dev"
-
-[package.extras]
-grpc = ["grpcio (>=1.44.0,<2.0.0dev)"]
 
 [[package]]
 name = "greenlet"
@@ -1258,33 +1173,6 @@ files = [
 numpy = ">=1.16.6"
 
 [[package]]
-name = "pyasn1"
-version = "0.4.8"
-description = "ASN.1 types and codecs"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "pyasn1-0.4.8-py2.py3-none-any.whl", hash = "sha256:39c7e2ec30515947ff4e87fb6f456dfc6e84857d34be479c9d4a4ba4bf46aa5d"},
-    {file = "pyasn1-0.4.8.tar.gz", hash = "sha256:aef77c9fb94a3ac588e87841208bdec464471d9871bd5050a287cc9a475cd0ba"},
-]
-
-[[package]]
-name = "pyasn1-modules"
-version = "0.2.8"
-description = "A collection of ASN.1-based protocols modules."
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "pyasn1-modules-0.2.8.tar.gz", hash = "sha256:905f84c712230b2c592c19470d3ca8d552de726050d1d1716282a1f6146be65e"},
-    {file = "pyasn1_modules-0.2.8-py2.py3-none-any.whl", hash = "sha256:a50b808ffeb97cb3601dd25981f6b016cbb3d31fbf57a8b8a87428e6158d0c74"},
-]
-
-[package.dependencies]
-pyasn1 = ">=0.4.6,<0.5.0"
-
-[[package]]
 name = "pydantic"
 version = "1.10.6"
 description = "Data validation and settings management using python type hints"
@@ -1522,21 +1410,6 @@ idna = {version = "*", optional = true, markers = "extra == \"idna2008\""}
 idna2008 = ["idna"]
 
 [[package]]
-name = "rsa"
-version = "4.9"
-description = "Pure-Python RSA implementation"
-category = "main"
-optional = false
-python-versions = ">=3.6,<4"
-files = [
-    {file = "rsa-4.9-py3-none-any.whl", hash = "sha256:90260d9058e514786967344d0ef75fa8727eed8a7d2e43ce9f4bcf1b536174f7"},
-    {file = "rsa-4.9.tar.gz", hash = "sha256:e38464a49c6c85d7f1351b0126661487a7e0a14a50f1675ec50eb34d4f20ef21"},
-]
-
-[package.dependencies]
-pyasn1 = ">=0.1.3"
-
-[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -1759,22 +1632,19 @@ telegram = ["requests"]
 
 [[package]]
 name = "typeguard"
-version = "3.0.1"
+version = "2.13.3"
 description = "Run-time type checker for Python"
 category = "main"
 optional = false
-python-versions = ">=3.7.4"
+python-versions = ">=3.5.3"
 files = [
-    {file = "typeguard-3.0.1-py3-none-any.whl", hash = "sha256:15628045c830abf68533247afd2cb04683b5ce6f4e30d5401a5ef6f5182280de"},
-    {file = "typeguard-3.0.1.tar.gz", hash = "sha256:beb0e67c5dc76eea4a6d00a6606d444d899589908362960769d0c4a1d32bca70"},
+    {file = "typeguard-2.13.3-py3-none-any.whl", hash = "sha256:5e3e3be01e887e7eafae5af63d1f36c849aaa94e3a0112097312aabfa16284f1"},
+    {file = "typeguard-2.13.3.tar.gz", hash = "sha256:00edaa8da3a133674796cf5ea87d9f4b4c367d77476e185e80251cc13dfbb8c4"},
 ]
 
-[package.dependencies]
-typing-extensions = {version = ">=4.4.0", markers = "python_version < \"3.11\""}
-
 [package.extras]
-doc = ["packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
-test = ["mypy (>=0.991)", "pytest (>=7)"]
+doc = ["sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
+test = ["mypy", "pytest", "typing-extensions"]
 
 [[package]]
 name = "typing-extensions"
@@ -2000,4 +1870,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "ab9eeb3ef4f5eed697c430bca87704ee28d6eed9ff02876f3833c0f8ef416b53"
+content-hash = "049d0064cfe428900a470188f4d2f7623e3b19821554c1af2adb3ce9f786d812"
