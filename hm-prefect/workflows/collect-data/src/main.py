@@ -2,8 +2,8 @@ import asyncio
 import json
 from pathlib import Path
 
-from prefect import flow
-from prefect_shell import shell_run_command
+from prefect import flow, task
+from prefect_shell import ShellOperation
 from pydantic import BaseModel
 
 
@@ -13,6 +13,16 @@ class DataSource(BaseModel):
     destination: str
 
 
+@task
+async def copy(source: str, destination: str) -> list[str]:
+    return await ShellOperation(
+        commands=[
+            f"rclone lsl {source}",
+            f"rclone copy --progress {source} {destination}",
+        ],
+    ).run()
+
+
 @flow
 async def collect_data(data_sources: list[DataSource]) -> None:
     tasks = []
@@ -20,14 +30,9 @@ async def collect_data(data_sources: list[DataSource]) -> None:
         source_name = data_source.source_name
         source = data_source.source
         destination = data_source.destination
-        copy = shell_run_command.with_options(name=f"rclone-{source_name}")
-        task = asyncio.create_task(
-            copy(
-                command=f"rclone copy --progress {source} {destination}",
-                helper_command=f"rclone lsl {source}",
-            )
-        )
-        tasks.append(task)
+        copy_with_options = copy.with_options(name=f"rclone-{source_name}")
+        t = asyncio.create_task(copy_with_options(source, destination))
+        tasks.append(t)
     await asyncio.gather(*tasks)
 
 

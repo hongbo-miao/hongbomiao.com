@@ -13,14 +13,27 @@ show-system-info:
 	uname --all
 show-disk-space:
 	df --human-readable
-show-cpu:
-	cat /proc/cpuinfo
 show-ip:
 	hostname --all-ip-addresses
 show-usb-devices:
 	lsusb
 show-kernel-ring-buffer-messages:
 	sudo dmesg
+
+
+show-cpu-cores:
+	nproc
+show-cpu-summary:
+	lscpu
+show-cpu-details:
+	cat /proc/cpuinfo
+
+show-network-live:
+	vnstat --live
+show-network-hours:
+	vnstat --hours
+show-network-hoursgraph:
+	vnstat --hoursgraph
 
 apt-update:
 	sudo apt update
@@ -33,6 +46,11 @@ ls-owner-group:
 # https://github.com/quic-go/quic-go/wiki/UDP-Receive-Buffer-Size#non-bsd
 increase-udp-receive-buffer:
 	sysctl -w net.core.rmem_max=2500000
+
+show-active-services:
+	systemctl list-units --type=service
+show-service-status:
+	systemctl status xxx
 
 # htop
 htop-install:
