@@ -190,7 +190,6 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-open3d
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.calculate
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.collect-data
-	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.find-taxi-top-routes
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.greet
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.print-platform
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.upload-to-influxdb
