@@ -370,7 +370,8 @@ make kubernetes-clean
 
 ### Bots
 
-- **Renovate** - Dependency update
+- **Renovate** - Dependency updating
+- **CodeReview BOT** - Code reviewing
 - **Mergify** - Automatically merging
 - **Stale** - Stale issues and pull requests closing
 - **ImgBot** - Image compression

@@ -834,3 +834,18 @@ jobs:
           echo "## Params" >> report.md
           cat output/reports/params.txt >> report.md
           cml comment create report.md
+
+  code-review:
+    name: Code Review
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Code Review
+        uses: anc95/ChatGPT-CodeReview@v1.0.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
