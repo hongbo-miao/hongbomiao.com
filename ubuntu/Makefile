@@ -60,6 +60,8 @@ show-active-services:
 	systemctl list-units --type=service
 show-service-status:
 	systemctl status xxx
+show-service-log:
+	journalctl --unit=xxx --lines=60 --no-pager
 
 # htop
 htop-install:
