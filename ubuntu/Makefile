@@ -20,7 +20,15 @@ show-usb-devices:
 show-kernel-ring-buffer-messages:
 	sudo dmesg
 
+# Open file descriptors
+show-open-file-descriptor-soft-limit:
+	ulimit -n
+show-open-file-descriptor-hard-limit:
+	ulimit -n -H
+set-open-file-descriptor-soft-limit:
+	ulimit -n 102400
 
+# CPU
 show-cpu-cores:
 	nproc
 show-cpu-summary:
@@ -28,6 +36,7 @@ show-cpu-summary:
 show-cpu-details:
 	cat /proc/cpuinfo
 
+# Network
 show-network-live:
 	vnstat --live
 show-network-hours:
