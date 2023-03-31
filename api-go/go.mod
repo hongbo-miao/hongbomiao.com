@@ -27,7 +27,7 @@ require (
 	github.com/redis/go-redis/v9 v9.0.2
 	github.com/rs/zerolog v1.29.0
 	github.com/stretchr/testify v1.8.2
-	go.elastic.co/apm/module/apmgin/v2 v2.2.0
+	go.elastic.co/apm/module/apmgin/v2 v2.3.0
 	go.elastic.co/apm/module/apmgrpc/v2 v2.2.0
 	go.opencensus.io v0.24.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.40.0
@@ -104,8 +104,8 @@ require (
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	github.com/yashtewari/glob-intersection v0.1.0 // indirect
-	go.elastic.co/apm/module/apmhttp/v2 v2.2.0 // indirect
-	go.elastic.co/apm/v2 v2.2.0 // indirect
+	go.elastic.co/apm/module/apmhttp/v2 v2.3.0 // indirect
+	go.elastic.co/apm/v2 v2.3.0 // indirect
 	go.elastic.co/fastjson v1.1.0 // indirect
 	go.opentelemetry.io/otel/trace v1.14.0 // indirect
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
