@@ -11,8 +11,6 @@ ssh:
 # Ubuntu
 show-system-info:
 	uname --all
-show-disk-space:
-	df --human-readable
 show-ip:
 	hostname --all-ip-addresses
 show-usb-devices:
@@ -36,6 +34,12 @@ show-cpu-summary:
 show-cpu-details:
 	cat /proc/cpuinfo
 
+# Disk
+show-disk-free:
+	df --human-readable
+show-disk-usage:
+	du --human-readable --max-depth=0 /home
+
 # Network
 show-network-live:
 	vnstat --live
@@ -56,12 +60,23 @@ ls-owner-group:
 increase-udp-receive-buffer:
 	sysctl -w net.core.rmem_max=2500000
 
+# Service
 show-active-services:
 	systemctl list-units --type=service
 show-service-status:
 	systemctl status xxx
 show-service-log:
 	journalctl --unit=xxx --lines=60 --no-pager
+service-start:
+	sudo systemctl start xxx
+service-stop:
+	sudo systemctl stop xxx
+service-restart:
+	sudo systemctl restart xxx
+service-enable:
+	sudo systemctl enable xxx
+service-disable:
+	sudo systemctl disable xxx
 
 # htop
 htop-install:
