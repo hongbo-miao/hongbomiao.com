@@ -391,7 +391,7 @@ make kubernetes-clean
 
 #### NI VeriStand
 
-![NI VeriStand screenshot](https://user-images.githubusercontent.com/3375461/225783220-12621a41-f2f7-4b33-829c-f2de768e84e0.png)
+![NI VeriStand screenshot](https://user-images.githubusercontent.com/3375461/229713107-9b1ea646-ea41-4ca2-af3f-3c537aa601b9.jpg)
 
 #### ROS - Robot Operating System
 
