@@ -3,19 +3,22 @@ set -e
 
 # Elastic
 # Install custom resource definitions and the Elasticsearch operator with its RBAC rules
+# https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-deploy-eck.html
 echo "# Install custom resource definitions and the Elasticsearch operator with its RBAC rules"
-kubectl apply --filename=https://download.elastic.co/downloads/eck/1.9.0/crds.yaml
-kubectl apply --filename=https://download.elastic.co/downloads/eck/1.9.0/operator.yaml
+kubectl apply --filename=https://download.elastic.co/downloads/eck/2.7.0/crds.yaml
+kubectl apply --filename=https://download.elastic.co/downloads/eck/2.7.0/operator.yaml
+# kubectl delete --filename=https://download.elastic.co/downloads/eck/2.7.0/crds.yaml
+# kubectl delete --filename=https://download.elastic.co/downloads/eck/2.7.0/operator.yaml
 sleep 30
 echo "=================================================="
 
 # Monitor the Elasticsearch operator logs
-# kubectl logs --namespace=elastic-system --filename=statefulset.apps/elastic-operator
+# kubectl logs --namespace=elastic-system statefulset.apps/elastic-operator --follow
 
 # Deploy Elasticsearch
 echo "# Deploy Elasticsearch, Kibana, AMP"
 kubectl apply --filename=kubernetes/manifests/elastic
-# Delete: kubectl delete --filename=kubernetes/manifests/elastic
+# kubectl delete --filename=kubernetes/manifests/elastic
 sleep 60
 echo "=================================================="
 
