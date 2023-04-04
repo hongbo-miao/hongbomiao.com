@@ -7,9 +7,13 @@ metadata:
   name: hm-apm
   namespace: elastic
 spec:
-  version: 7.14.0
+  version: 8.6.1
   count: 1
   elasticsearchRef:
     name: hm-elasticsearch
+  config:
+    xpack.fleet.packages:
+      - name: apm
+        version: latest
   kibanaRef:
     name: hm-kibana
