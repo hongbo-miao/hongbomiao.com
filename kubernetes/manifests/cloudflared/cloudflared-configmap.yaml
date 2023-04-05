@@ -32,6 +32,14 @@ data:
     ingress:
 
     # The first rule proxies traffic to the httpbin sample Service defined in app.yaml
+    - hostname: elasticsearch.hongbomiao.com
+      service: https://hm-elasticsearch-es-http.elastic.svc:9200
+      originRequest:
+        noTLSVerify: true
+    - hostname: kibana.hongbomiao.com
+      service: https://hm-kibana-kb-http.elastic.svc:5601
+      originRequest:
+        noTLSVerify: true
     - hostname: prefect.hongbomiao.com
       service: http://prefect-server.hm-prefect.svc:4200
     - hostname: rasa.hongbomiao.com
