@@ -20,7 +20,7 @@ RUN . /venv/bin/activate \
   && poetry build
 
 
-FROM docker.io/prefecthq/prefect:2.9.0-python3.11-kubernetes AS release
+FROM docker.io/prefecthq/prefect:2.10.1-python3.11-kubernetes AS release
 COPY --from=builder /venv/ /venv/
 COPY --from=builder /usr/src/app/dist/ ./
 RUN . /venv/bin/activate \
