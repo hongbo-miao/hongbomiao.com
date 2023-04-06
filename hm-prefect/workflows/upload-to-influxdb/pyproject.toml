@@ -6,7 +6,7 @@ authors = ["Hongbo Miao"]
 
 [tool.poetry.dependencies]
 python = "3.11.x"
-influxdb-client = "1.36.1"
+influxdb-client = {version = "1.36.1", extras = ["async"]}
 pandas = "2.0.0"
 prefect = "2.9.0"
 prefect-aws = "0.2.5"
@@ -22,5 +22,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poe.tasks]
 prefect-server-start = "prefect server start"
 prefect-agent-start = "prefect agent start"
+prefect-profile-use = "prefect profile use"
+prefect-concurrency-limit-create = "prefect concurrency-limit create"
 
-dev = "python src/find_taxi_top_routes/main.py"
+dev = "python src/main.py"
