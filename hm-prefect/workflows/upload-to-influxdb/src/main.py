@@ -1,92 +1,109 @@
 import asyncio
 import io
+import json
+from pathlib import Path
 
 import pandas as pd
-from influxdb_client import InfluxDBClient, Point, WritePrecision
-from influxdb_client.client.write_api import SYNCHRONOUS, WriteApi
-from prefect import flow, task
+from influxdb_client import Point, WritePrecision
+from influxdb_client.client.influxdb_client_async import InfluxDBClientAsync
+from prefect import flow, get_run_logger, task
+from prefect.blocks.system import Secret
 from prefect_aws.credentials import AwsCredentials
 from prefect_aws.s3 import s3_download
 
 
 @task
-def write_to_influxdb(
-    row, influxdb_org: str, influxdb_bucket: str, influxdb_write_api: WriteApi
-):
-    point = (
-        Point("trip")
-        .tag("vendorid", row.vendorid)
-        .field("tpep_pickup_datetime", row.tpep_pickup_datetime.isoformat())
-        .field("tpep_dropoff_datetime", row.tpep_dropoff_datetime.isoformat())
-        .field("passenger_count", row.passenger_count)
-        .field("trip_distance", row.trip_distance)
-        .field("ratecodeid", row.ratecodeid)
-        .field("store_and_fwd_flag", row.store_and_fwd_flag)
-        .field("store_and_fwd_flag", row.store_and_fwd_flag)
-        .field("pulocationid", row.pulocationid)
-        .field("dolocationid", row.dolocationid)
-        .field("payment_type", row.payment_type)
-        .field("fare_amount", row.fare_amount)
-        .field("extra", row.extra)
-        .field("mta_tax", row.mta_tax)
-        .field("tip_amount", row.tip_amount)
-        .field("tolls_amount", row.tolls_amount)
-        .field("improvement_surcharge", row.improvement_surcharge)
-        .field("total_amount", row.total_amount)
-        .field("congestion_surcharge", row.congestion_surcharge)
-        .field("airport_fee", row.airport_fee)
-        .time(row.tpep_pickup_datetime, WritePrecision.NS)
-    )
-
-    influxdb_write_api.write(influxdb_bucket, influxdb_org, point)
-
-
-async def process(
-    path: str, influxdb_org: str, influxdb_bucket: str, influxdb_write_api: WriteApi
+async def write_to_influxdb(
+    data: bytes,
+    influxdb_url: str,
+    influxdb_org: str,
+    influxdb_bucket: str,
 ) -> None:
-    credentials = await AwsCredentials.load("aws-credentials-block")
-    data = await s3_download(
-        bucket="hongbomiao-bucket",
-        key=path,
-        aws_credentials=credentials,
-    )
+    logger = get_run_logger()
+
     df = pd.read_parquet(io.BytesIO(data), engine="pyarrow")
     df = df.rename(str.lower, axis="columns")
-    for row in df.itertuples():
-        write_to_influxdb(row, influxdb_org, influxdb_bucket, influxdb_write_api)
+
+    influxdb_token_block = await Secret.load("influxdb-token-block")
+    async with InfluxDBClientAsync(
+        url=influxdb_url,
+        org=influxdb_org,
+        token=influxdb_token_block.get(),
+        enable_gzip=True,
+        timeout=60000,  # ms
+    ) as influxdb_client:
+        influxdb_write_api = influxdb_client.write_api()
+        count = 0
+        points = []
+        for row in df.itertuples():
+            point = (
+                Point("trip")
+                .tag("vendorid", row.vendorid)
+                .field("tpep_pickup_datetime", row.tpep_pickup_datetime.isoformat())
+                .field("tpep_dropoff_datetime", row.tpep_dropoff_datetime.isoformat())
+                .field("passenger_count", row.passenger_count)
+                .field("trip_distance", row.trip_distance)
+                .field("ratecodeid", row.ratecodeid)
+                .field("store_and_fwd_flag", row.store_and_fwd_flag)
+                .field("store_and_fwd_flag", row.store_and_fwd_flag)
+                .field("pulocationid", row.pulocationid)
+                .field("dolocationid", row.dolocationid)
+                .field("payment_type", row.payment_type)
+                .field("fare_amount", row.fare_amount)
+                .field("extra", row.extra)
+                .field("mta_tax", row.mta_tax)
+                .field("tip_amount", row.tip_amount)
+                .field("tolls_amount", row.tolls_amount)
+                .field("improvement_surcharge", row.improvement_surcharge)
+                .field("total_amount", row.total_amount)
+                .field("congestion_surcharge", row.congestion_surcharge)
+                .field("airport_fee", row.airport_fee)
+                .time(row.tpep_pickup_datetime, WritePrecision.NS)
+            )
+            points.append(point)
+            count += 1
+            if len(points) == 1000:
+                await influxdb_write_api.write(influxdb_bucket, influxdb_org, points)
+                points = []
+                logger.info(f"Wrote {count} points.")
+
+        if len(points) > 0:
+            await influxdb_write_api.write(influxdb_bucket, influxdb_org, points)
+            logger.info(f"Wrote {count} points.")
+
+        logger.info(f"Finished writing {count} points.")
 
 
 @flow
-async def find_taxi_top_routes() -> None:
-    dirname = "taxi"
-    trip_filenames = [
-        "yellow_tripdata_2021-07.parquet",
-        "yellow_tripdata_2021-08.parquet",
-        "yellow_tripdata_2021-09.parquet",
-        "yellow_tripdata_2021-10.parquet",
-        "yellow_tripdata_2021-11.parquet",
-        "yellow_tripdata_2021-12.parquet",
-        "yellow_tripdata_2022-01.parquet",
-        "yellow_tripdata_2022-02.parquet",
-        "yellow_tripdata_2022-03.parquet",
-        "yellow_tripdata_2022-04.parquet",
-        "yellow_tripdata_2022-05.parquet",
-        "yellow_tripdata_2022-06.parquet",
-    ]
-
-    trip_data_paths = [f"{dirname}/{f}" for f in trip_filenames]
-
-    influxdb_token = ""
+async def find_taxi_top_routes(
+    influxdb_url: str, prefect_tags: list[str], trip_data_paths: list[str]
+) -> None:
     influxdb_org = "hongbomiao"
     influxdb_bucket = "hm-taxi-bucket"
+    credentials = await AwsCredentials.load("upload-to-influxdb-aws-credentials-block")
 
-    with InfluxDBClient(
-        url="http://localhost:20622", token=influxdb_token, org=influxdb_org
-    ) as client:
-        influxdb_write_api = client.write_api(write_options=SYNCHRONOUS)
-        for path in trip_data_paths:
-            await process(path, influxdb_org, influxdb_bucket, influxdb_write_api)
+    for trip_data_path in trip_data_paths:
+        filename = Path(trip_data_path).name
+        write_to_influxdb_with_options = write_to_influxdb.with_options(
+            name=f"write-{filename}", tags=prefect_tags
+        )
+        data = await s3_download(
+            bucket="hongbomiao-bucket",
+            key=trip_data_path,
+            aws_credentials=credentials,
+        )
+        await write_to_influxdb_with_options(
+            data, influxdb_url, influxdb_org, influxdb_bucket
+        )
 
 
 if __name__ == "__main__":
-    asyncio.run(find_taxi_top_routes())
+    params = json.loads(Path("params.json").read_text())
+    external_influxdb_url = "http://localhost:20622"
+    asyncio.run(
+        find_taxi_top_routes(
+            influxdb_url=external_influxdb_url,
+            prefect_tags=params["prefect_tags"],
+            trip_data_paths=params["trip_data_paths"],
+        )
+    )
