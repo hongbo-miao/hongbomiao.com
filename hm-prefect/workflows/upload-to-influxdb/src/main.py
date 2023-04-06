@@ -6,13 +6,49 @@ from pathlib import Path
 import pandas as pd
 from influxdb_client import Point, WritePrecision
 from influxdb_client.client.influxdb_client_async import InfluxDBClientAsync
+from influxdb_client.client.write_api_async import WriteApiAsync
 from prefect import flow, get_run_logger, task
 from prefect.blocks.system import Secret
+from prefect.tasks import exponential_backoff
 from prefect_aws.credentials import AwsCredentials
 from prefect_aws.s3 import s3_download
+from tenacity import retry, stop_after_attempt, wait_random_exponential
 
 
-@task
+def log_attempt_number(retry_state):
+    logger = get_run_logger()
+    logger.warning(f"Retrying {retry_state.attempt_number}...")
+
+
+@retry(
+    wait=wait_random_exponential(multiplier=40, max=120),
+    stop=stop_after_attempt(60),
+    after=log_attempt_number,
+)
+async def write_points(
+    influxdb_write_api: WriteApiAsync,
+    influxdb_bucket: str,
+    influxdb_org: str,
+    points: list[Point],
+) -> None:
+    logger = get_run_logger()
+    try:
+        await influxdb_write_api.write(influxdb_bucket, influxdb_org, points)
+    except Exception as e:
+        error_message = str(e)
+        if "timeout" in error_message:
+            logger.warning(f"WARN-001 | {error_message}")
+            raise e
+        else:
+            logger.error(f"ERR-001 | {error_message}")
+            raise e
+
+
+@task(
+    retries=2,
+    retry_delay_seconds=exponential_backoff(backoff_factor=10),
+    retry_jitter_factor=1,
+)
 async def write_to_influxdb(
     data: bytes,
     influxdb_url: str,
@@ -62,13 +98,17 @@ async def write_to_influxdb(
             )
             points.append(point)
             count += 1
-            if len(points) == 1000:
-                await influxdb_write_api.write(influxdb_bucket, influxdb_org, points)
+            if len(points) == 2000:
+                await write_points(
+                    influxdb_write_api, influxdb_bucket, influxdb_org, points
+                )
                 points = []
                 logger.info(f"Wrote {count} points.")
 
         if len(points) > 0:
-            await influxdb_write_api.write(influxdb_bucket, influxdb_org, points)
+            await write_points(
+                influxdb_write_api, influxdb_bucket, influxdb_org, points
+            )
             logger.info(f"Wrote {count} points.")
 
         logger.info(f"Finished writing {count} points.")
@@ -84,13 +124,15 @@ async def find_taxi_top_routes(
 
     for trip_data_path in trip_data_paths:
         filename = Path(trip_data_path).name
-        write_to_influxdb_with_options = write_to_influxdb.with_options(
-            name=f"write-{filename}", tags=prefect_tags
-        )
-        data = await s3_download(
+        s3_download_with_options = s3_download.with_options(name=f"download-{filename}")
+        data = await s3_download_with_options(
             bucket="hongbomiao-bucket",
             key=trip_data_path,
             aws_credentials=credentials,
+        )
+
+        write_to_influxdb_with_options = write_to_influxdb.with_options(
+            name=f"write-{filename}-to-influxdb", tags=prefect_tags
         )
         await write_to_influxdb_with_options(
             data, influxdb_url, influxdb_org, influxdb_bucket
