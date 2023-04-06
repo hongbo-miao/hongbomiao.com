@@ -11,8 +11,6 @@ helm install \
   --namespace=hm-influxdb \
   --create-namespace \
   --values=kubernetes/manifests/influxdb/helm/my-values.yaml
-
-# Delete:
 # helm uninstall influxdb --namespace=hm-influxdb
 
 # http://localhost:20622
