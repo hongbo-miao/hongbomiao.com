@@ -27,3 +27,6 @@ prefect-profile-use = "prefect profile use"
 prefect-concurrency-limit-create = "prefect concurrency-limit create"
 
 dev = "python src/main.py"
+add-kubernetes-job-block = "python add_kubernetes_job_block.py"
+build = "prefect deployment build src/main.py:upload_to_influxdb --name=upload-to-influxdb --infra-block=kubernetes-job/upload-to-influxdb-kubernetes-job-block --apply"
+run = "prefect deployment run upload-to-influxdb/upload-to-influxdb"
