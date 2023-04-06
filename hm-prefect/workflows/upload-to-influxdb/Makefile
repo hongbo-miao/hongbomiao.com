@@ -18,3 +18,15 @@ poetry-run-concurrency-limit-create:
 	poetry run poe prefect-concurrency-limit-create -- upload_to_influxdb_concurrency_limit 2
 poetry-run-dev:
 	poetry run poe dev
+poetry-run-add-kubernetes-job-block:
+	poetry run poe add-kubernetes-job-block
+poetry-run-build:
+	poetry run poe build -- --work-queue=hm-kubernetes-queue
+poetry-run-run:
+	poetry run poe run
+
+docker-build:
+	cd ../../.. && \
+	docker build --file=hm-prefect/workflows/upload-to-influxdb/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-upload-to-influxdb:latest .
+docker-push:
+	docker push ghcr.io/hongbo-miao/hm-prefect-upload-to-influxdb:latest

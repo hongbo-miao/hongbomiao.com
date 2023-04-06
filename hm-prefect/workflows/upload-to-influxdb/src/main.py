@@ -115,7 +115,7 @@ async def write_to_influxdb(
 
 
 @flow
-async def find_taxi_top_routes(
+async def upload_to_influxdb(
     influxdb_url: str, prefect_tags: list[str], trip_data_paths: list[str]
 ) -> None:
     influxdb_org = "hongbomiao"
@@ -143,7 +143,7 @@ if __name__ == "__main__":
     params = json.loads(Path("params.json").read_text())
     external_influxdb_url = "http://localhost:20622"
     asyncio.run(
-        find_taxi_top_routes(
+        upload_to_influxdb(
             influxdb_url=external_influxdb_url,
             prefect_tags=params["prefect_tags"],
             trip_data_paths=params["trip_data_paths"],
