@@ -42,6 +42,7 @@ echo "=================================================="
 # cd hm-prefect/workflows/collect-data
 # cd hm-prefect/workflows/greet
 cd hm-prefect/workflows/print-platform
+# cd hm-prefect/workflows/upload-to-influxdb
 
 echo "# Start the workflow"
 poetry run poe add-kubernetes-job-block
@@ -58,6 +59,9 @@ poetry run poe add-kubernetes-job-block
 # print-platform
 # poetry run poe build -- --work-queue=hm-local-queue
 poetry run poe build -- --work-queue=hm-kubernetes-queue
+
+# upload-to-influxdb
+# poetry run poe build -- --params=$$(cat params.json | jq -c .) --work-queue=hm-kubernetes-queue
 
 poetry run poe run
 # kubectl delete jobs --all --namespace=hm-prefect
