@@ -11,6 +11,8 @@ poetry-run-prefect-server-start:
 	poetry run poe prefect-server-start
 poetry-run-prefect-agent-start:
 	poetry run poe prefect-agent-start
+prefect-profile-use:
+	poetry run poe prefect-profile-use -- hm-kubernetes
 
 poetry-run-dev:
 	poetry run poe dev
