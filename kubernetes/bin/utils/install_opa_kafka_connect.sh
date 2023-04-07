@@ -4,8 +4,8 @@ set -e
 
 echo "# Create secret hm-opa-db-credentials"
 kubectl create secret generic hm-opa-db-credentials \
-  --from-file=kubernetes/manifests/kafka/postgres-kafkaconnector/opa-db-credentials.properties \
-  --namespace=kafka
+  --from-file=kubernetes/manifests/hm-opa-kafka-connect/postgres-kafka-connector/opa-db-credentials.properties \
+  --namespace=hm-kafka
 echo "=================================================="
 
 echo "# Clean elasticsearch-keystore.jks"
@@ -59,15 +59,15 @@ echo "=================================================="
 echo "# Create secret hm-elasticsearch-keystore"
 kubectl create secret generic hm-elasticsearch-keystore \
   --from-file="${KAFKACONNECT_DATA_PATH}/elasticsearch-keystore.jks" \
-  --namespace=kafka
+  --namespace=hm-kafka
 echo "=================================================="
 
 echo "# Create secret hm-elasticsearch-credentials"
 kubectl create secret generic hm-elasticsearch-credentials \
-  --from-file=kubernetes/manifests/kafka/elasticsearch-sink-kafkaconnector/elasticsearch-credentials.properties \
-  --namespace=kafka
+  --from-file=kubernetes/manifests/hm-opa-kafka-connect/elasticsearch-sink-kafka-connector/elasticsearch-credentials.properties \
+  --namespace=hm-kafka
 echo "=================================================="
 
-echo "# Install Debezium"
-kubectl apply --filename=kubernetes/manifests/kafka
+echo "# Install hm-opa-kafka-connect"
+kubectl apply --filename=kubernetes/manifests/hm-opa-kafka-connect
 echo "=================================================="
