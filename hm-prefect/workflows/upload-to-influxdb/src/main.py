@@ -114,38 +114,61 @@ async def write_to_influxdb(
         logger.info(f"Finished writing {count} points.")
 
 
-@flow
-async def upload_to_influxdb(
-    influxdb_url: str, prefect_tags: list[str], trip_data_paths: list[str]
+async def process_trip_data(
+    trip_data_path: str,
+    influxdb_url: str,
+    influxdb_org: str,
+    influxdb_bucket: str,
+    aws_credentials: AwsCredentials,
 ) -> None:
+    filename = Path(trip_data_path).name
+    s3_download_with_options = s3_download.with_options(
+        name=f"download-{filename}",
+        tags=["upload-to-influxdb-download-write-concurrency-limit"],
+    )
+    data = await s3_download_with_options(
+        bucket="hongbomiao-bucket",
+        key=trip_data_path,
+        aws_credentials=aws_credentials,
+    )
+
+    write_to_influxdb_with_options = write_to_influxdb.with_options(
+        name=f"write-{filename}-to-influxdb",
+        tags=["upload-to-influxdb-download-write-concurrency-limit"],
+    )
+    await write_to_influxdb_with_options(
+        data, influxdb_url, influxdb_org, influxdb_bucket
+    )
+
+
+@flow
+async def upload_to_influxdb(influxdb_url: str, trip_data_paths: list[str]) -> None:
     influxdb_org = "hongbomiao"
     influxdb_bucket = "hm-taxi-bucket"
-    credentials = await AwsCredentials.load("upload-to-influxdb-aws-credentials-block")
+    aws_credentials = await AwsCredentials.load(
+        "upload-to-influxdb-aws-credentials-block"
+    )
 
+    tasks = []
     for trip_data_path in trip_data_paths:
-        filename = Path(trip_data_path).name
-        s3_download_with_options = s3_download.with_options(name=f"download-{filename}")
-        data = await s3_download_with_options(
-            bucket="hongbomiao-bucket",
-            key=trip_data_path,
-            aws_credentials=credentials,
+        task = asyncio.create_task(
+            process_trip_data(
+                trip_data_path,
+                influxdb_url,
+                influxdb_org,
+                influxdb_bucket,
+                aws_credentials,
+            )
         )
-
-        write_to_influxdb_with_options = write_to_influxdb.with_options(
-            name=f"write-{filename}-to-influxdb", tags=prefect_tags
-        )
-        await write_to_influxdb_with_options(
-            data, influxdb_url, influxdb_org, influxdb_bucket
-        )
+        tasks.append(task)
+    await asyncio.gather(*tasks)
 
 
 if __name__ == "__main__":
-    params = json.loads(Path("params.json").read_text())
-    external_influxdb_url = "http://localhost:20622"
+    params = json.loads(Path("params.development.json").read_text())
     asyncio.run(
         upload_to_influxdb(
-            influxdb_url=external_influxdb_url,
-            prefect_tags=params["prefect_tags"],
+            influxdb_url=params["influxdb_url"],
             trip_data_paths=params["trip_data_paths"],
         )
     )
