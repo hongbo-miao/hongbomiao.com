@@ -500,7 +500,7 @@ jobs:
       - name: Install dependencies
         working-directory: api-python
         run: |
-          poetry install
+          poetry install --no-root
       - name: Test
         working-directory: api-python
         run: |
@@ -740,7 +740,7 @@ jobs:
       - name: Install dependencies
         working-directory: convolutional-neural-network
         run: |
-          poetry install
+          poetry install --no-root
       - name: Train model
         working-directory: convolutional-neural-network
         shell: bash -l {0}
@@ -809,7 +809,7 @@ jobs:
       - name: Install dependencies
         working-directory: convolutional-neural-network
         run: |
-          poetry install
+          poetry install --no-root
       - name: Pull Data
         working-directory: convolutional-neural-network
         env:
