@@ -213,7 +213,7 @@ lint-kubernetes:
 		-ignore-filename-pattern='.*my-values.yaml' \
 		-ignore-filename-pattern=kubernetes/manifests/argocd/ \
 		-ignore-filename-pattern=kubernetes/manifests/elastic/ \
-		-ignore-filename-pattern=kubernetes/manifests/hm-opa-kafka-connect/ \
+		-ignore-filename-pattern=kubernetes/manifests/hm-kafka-opa-kafka-connect/ \
 		-ignore-filename-pattern=kubernetes/manifests/prometheus/ \
 		-ignore-filename-pattern=kubernetes/manifests/yugabyte/ \
 		kubernetes/manifests/

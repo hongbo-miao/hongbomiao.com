@@ -21,8 +21,8 @@ jobs:
       api-python: ${{ steps.filter.outputs.api-python }}
       chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
+      hm-kafka-opa-kafka-connect: ${{ steps.filter.outputs.hm-kafka-opa-kafka-connect }}
       hm-keydb: ${{ steps.filter.outputs.hm-keydb }}
-      hm-opa-kafka-connect: ${{ steps.filter.outputs.hm-opa-kafka-connect }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-pgbackrest: ${{ steps.filter.outputs.hm-pgbackrest }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
@@ -57,12 +57,12 @@ jobs:
             hm-alpine:
               - '.github/workflows/build.yml'
               - 'hm-alpine/**'
+            hm-kafka-opa-kafka-connect:
+              - '.github/workflows/build.yml'
+              - 'hm-kafka/opa-kafka-connect/**'
             hm-keydb:
               - '.github/workflows/build.yml'
               - 'hm-keydb/**'
-            hm-opa-kafka-connect:
-              - '.github/workflows/build.yml'
-              - 'hm-opa-kafka-connect/**'
             hm-opal-client:
               - '.github/workflows/build.yml'
               - 'hm-opal-client/**'
@@ -618,6 +618,43 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
+  build-hm-kafka-opa-kafka-connect:
+    name: Build hm-kafka-opa-kafka-connect
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-kafka-opa-kafka-connect == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: production
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Log in GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: wandalen/wretry.action@v1.0.36
+        with:
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./hm-kafka/opa-kafka-connect/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-kafka-opa-kafka-connect:latest
+            platforms: linux/amd64,linux/arm64
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
+
   build-hm-opal-client:
     name: Build hm-opal-client
     needs: detect-changes
@@ -649,43 +686,6 @@ jobs:
             file: ./hm-opal-client/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-opal-client:latest
-            platforms: linux/amd64,linux/arm64
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
-
-  build-hm-opa-kafka-connect:
-    name: Build hm-opa-kafka-connect
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-opa-kafka-connect == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: production
-    timeout-minutes: 60
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: amd64,arm64
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Log in GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1.0.36
-        with:
-          action: docker/build-push-action@v3
-          with: |
-            context: .
-            file: ./hm-opa-kafka-connect/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-opa-kafka-connect:latest
             platforms: linux/amd64,linux/arm64
             cache-from: type=gha
             cache-to: type=gha,mode=max
