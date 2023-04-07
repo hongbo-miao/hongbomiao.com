@@ -2,15 +2,15 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnect
 metadata:
-  name: hm-kafkaconnect
-  namespace: kafka
+  name: hm-opa-kafka-connect
+  namespace: hm-kafka
   annotations:
     # use-connector-resources configures this KafkaConnect
     # to use KafkaConnector resources to avoid
     # needing to call the Connect REST API directly
     strimzi.io/use-connector-resources: "true"
 spec:
-  image: ghcr.io/hongbo-miao/hm-kafka-connect:latest
+  image: ghcr.io/hongbo-miao/hm-opa-kafka-connect:latest
   replicas: 1
   bootstrapServers: my-cluster-kafka-bootstrap:9093
   tls:
