@@ -108,7 +108,7 @@ ros2-param-get:
 poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
-	poetry install
+	poetry install --no-root
 poetry-add:
 	poetry add xxx
 poetry-add-dev:
