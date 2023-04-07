@@ -1,33 +1,33 @@
 # Docker
 docker-build:
 	cd .. && \
-	docker build --file=kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-kafka-connect:latest .
+	docker build --file=kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-opa-kafka-connect:latest .
 docker-push:
-	docker push ghcr.io/hongbo-miao/hm-kafka-connect:latest
+	docker push ghcr.io/hongbo-miao/hm-opa-kafka-connect:latest
 docker-sh:
-	docker run -it ghcr.io/hongbo-miao/hm-kafka-connect:latest sh
+	docker run -it ghcr.io/hongbo-miao/hm-opa-kafka-connect:latest sh
 
 # Kubernetes
-kafka-get-hm-kafkaconnect:
-	kubectl get kafkaconnects hm-kafkaconnect --namespace=kafka --output=yaml
-kafka-get-postgres-kafkaconnector:
-	kubectl get kafkaconnectors postgres-kafkaconnector --namespace=kafka --output=yaml
-kafka-get-elasticsearch-sink-kafkaconnector:
-	kubectl get kafkaconnectors elasticsearch-sink-kafkaconnector --namespace=kafka --output=yaml
-kafka-get-http-sink-kafkaconnector:
-	kubectl get kafkaconnectors http-sink-kafkaconnector --namespace=kafka --output=yaml
+kafka-get-hm-opa-kafka-connect:
+	kubectl get kafkaconnects hm-opa-kafka-connect --namespace=hm-kafka --output=yaml
+kafka-get-postgres-kafka-connector:
+	kubectl get kafkaconnectors postgres-kafka-connector --namespace=hm-kafka --output=yaml
+kafka-get-elasticsearch-sink-kafka-connector:
+	kubectl get kafkaconnectors elasticsearch-sink-kafka-connector --namespace=hm-kafka --output=yaml
+kafka-get-http-sink-kafka-connector:
+	kubectl get kafkaconnectors http-sink-kafka-connector --namespace=hm-kafka --output=yaml
 kafka-list-topics:
-	kubectl exec my-cluster-kafka-0 --namespace=kafka --container=kafka --stdin --tty -- \
+	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-topics.sh \
 			--bootstrap-server=localhost:9092 \
 			--list
 kafka-consume:
-	kubectl exec my-cluster-kafka-0 --namespace=kafka --container=kafka --stdin --tty -- \
+	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
 			--topic=opa_db_server.public.role
 kafka-consume-from-beginning:
-	kubectl exec my-cluster-kafka-0 --namespace=kafka --container=kafka --stdin --tty -- \
+	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
 			--topic=opa_db_server.public.role \

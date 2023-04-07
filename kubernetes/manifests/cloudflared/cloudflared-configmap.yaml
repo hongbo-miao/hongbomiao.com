@@ -36,12 +36,18 @@ data:
       service: https://hm-elasticsearch-es-http.elastic.svc:9200
       originRequest:
         noTLSVerify: true
+
     - hostname: kibana.hongbomiao.com
       service: https://hm-kibana-kb-http.elastic.svc:5601
       originRequest:
         noTLSVerify: true
+
+    - hostname: kafka-bootstrap.hongbomiao.com
+      service: http://my-cluster-kafka-bootstrap.hm-kafka.svc:9092
+
     - hostname: prefect.hongbomiao.com
       service: http://prefect-server.hm-prefect.svc:4200
+
     - hostname: rasa.hongbomiao.com
       service: http://web-service.hm.svc:80
 

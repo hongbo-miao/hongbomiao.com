@@ -2,10 +2,10 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
-  name: http-sink-kafkaconnector
-  namespace: kafka
+  name: http-sink-kafka-connector
+  namespace: hm-kafka
   labels:
-    strimzi.io/cluster: hm-kafkaconnect
+    strimzi.io/cluster: hm-opa-kafka-connect
 spec:
   class: io.aiven.kafka.connect.http.HttpSinkConnector
   tasksMax: 1
