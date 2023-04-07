@@ -52,8 +52,8 @@ if [ $is_debug = false ]; then
   source kubernetes/bin/utils/install_fluent_bit.sh
   source kubernetes/bin/utils/install_minio.sh
   # source kubernetes/bin/utils/install_yugabyte.sh
-  source kubernetes/bin/utils/install_kafka.sh
-  source kubernetes/bin/utils/install_opa_kafka_connect.sh
+  source kubernetes/bin/utils/install_hm_kafka.sh
+  source kubernetes/bin/utils/install_hm_kafka_opa_kafka_connect.sh
 fi
 
 source kubernetes/bin/utils/install_elastic.sh
