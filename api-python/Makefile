@@ -4,7 +4,7 @@ poetry-install:
 	brew install librdkafka
 	export C_INCLUDE_PATH=/opt/homebrew/include
 	export LIBRARY_PATH=/opt/homebrew/lib
-	poetry install
+	poetry install --no-root
 poetry-add:
 	poetry add xxx
 poetry-add-dev:
