@@ -22,6 +22,7 @@ jobs:
       chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
       hm-keydb: ${{ steps.filter.outputs.hm-keydb }}
+      hm-opa-kafka-connect: ${{ steps.filter.outputs.hm-opa-hm-opa-kafka-connect }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-pgbackrest: ${{ steps.filter.outputs.hm-pgbackrest }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
@@ -32,7 +33,6 @@ jobs:
       hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
       hm-traefik: ${{ steps.filter.outputs.hm-traefik }}
-      kafka-connect: ${{ steps.filter.outputs.kafka-connect }}
       streaming: ${{ steps.filter.outputs.streaming }}
       web: ${{ steps.filter.outputs.web }}
     steps:
@@ -60,6 +60,9 @@ jobs:
             hm-keydb:
               - '.github/workflows/build.yml'
               - 'hm-keydb/**'
+            hm-opa-kafka-connect:
+              - '.github/workflows/build.yml'
+              - 'hm-opa-kafka-connect/**'
             hm-opal-client:
               - '.github/workflows/build.yml'
               - 'hm-opal-client/**'
@@ -90,9 +93,6 @@ jobs:
             hm-traefik:
               - '.github/workflows/build.yml'
               - 'hm-traefik/**'
-            kafka-connect:
-              - '.github/workflows/build.yml'
-              - 'kafka-connect/**'
             streaming:
               - '.github/workflows/build.yml'
               - 'streaming/**'
@@ -655,10 +655,10 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  build-hm-kafka-connect:
-    name: Build hm-kafka-connect
+  build-hm-opa-kafka-connect:
+    name: Build hm-opa-kafka-connect
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.kafka-connect == 'true' }}
+    if: ${{ needs.detect-changes.outputs.hm-opa-kafka-connect == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -683,9 +683,9 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./kafka-connect/Dockerfile
+            file: ./hm-opa-kafka-connect/Dockerfile
             push: true
-            tags: ghcr.io/hongbo-miao/hm-kafka-connect:latest
+            tags: ghcr.io/hongbo-miao/hm-opa-kafka-connect:latest
             platforms: linux/amd64,linux/arm64
             cache-from: type=gha
             cache-to: type=gha,mode=max

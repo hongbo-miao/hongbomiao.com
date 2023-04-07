@@ -5,7 +5,7 @@ set -e
 # https://strimzi.io/quickstarts
 echo "# Install Strimzi"
 kubectl create namespace hm-kafka
-kubectl apply --filename="https://strimzi.io/install/latest?namespace=kafka" --namespace=hm-kafka
+kubectl apply --filename="https://strimzi.io/install/latest?namespace=hm-kafka" --namespace=hm-kafka
 # kubectl delete --filename="https://strimzi.io/install/latest?namespace=kafka" --namespace=hm-kafka
 echo "=================================================="
 
