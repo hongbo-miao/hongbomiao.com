@@ -21,6 +21,7 @@ jobs:
       api-python: ${{ steps.filter.outputs.api-python }}
       chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
+      hm-kafka-logging-kafka-connect: ${{ steps.filter.outputs.hm-kafka-logging-kafka-connect }}
       hm-kafka-opa-kafka-connect: ${{ steps.filter.outputs.hm-kafka-opa-kafka-connect }}
       hm-keydb: ${{ steps.filter.outputs.hm-keydb }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
@@ -57,6 +58,9 @@ jobs:
             hm-alpine:
               - '.github/workflows/build.yml'
               - 'hm-alpine/**'
+            hm-kafka-logging-kafka-connect:
+              - '.github/workflows/build.yml'
+              - 'hm-kafka-logging-kafka-connect/**'
             hm-kafka-opa-kafka-connect:
               - '.github/workflows/build.yml'
               - 'hm-kafka/opa-kafka-connect/**'
