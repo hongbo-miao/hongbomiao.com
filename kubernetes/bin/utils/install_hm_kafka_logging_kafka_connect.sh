@@ -1,14 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-echo "# Create secret hm-opa-db-credentials"
-kubectl create secret generic hm-opa-db-credentials \
-  --from-file=kubernetes/manifests/hm-kafka-opa-kafka-connect/postgres-kafka-connector/opa-db-credentials.properties \
-  --namespace=hm-kafka
-echo "=================================================="
-
 echo "# Clean elasticsearch-keystore.jks"
-KAFKACONNECT_DATA_PATH="kubernetes/data/hm-kafka-opa-kafka-connect"
+KAFKACONNECT_DATA_PATH="kubernetes/data/hm-kafka-logging-kafka-connect"
 rm -f "${KAFKACONNECT_DATA_PATH}/elasticsearch-keystore.jks"
 echo "=================================================="
 
@@ -63,10 +57,10 @@ echo "=================================================="
 
 echo "# Create secret hm-elasticsearch-credentials"
 kubectl create secret generic hm-elasticsearch-credentials \
-  --from-file=kubernetes/manifests/hm-kafka-opa-kafka-connect/elasticsearch-sink-kafka-connector/elasticsearch-credentials.properties \
+  --from-file=kubernetes/manifests/hm-kafka-logging-kafka-connect/elasticsearch-sink-kafka-connector/elasticsearch-credentials.properties \
   --namespace=hm-kafka
 echo "=================================================="
 
-echo "# Install hm-kafka-opa-kafka-connect"
-kubectl apply --filename=kubernetes/manifests/hm-kafka-opa-kafka-connect
+echo "# Install hm-kafka-logging-kafka-connect"
+kubectl apply --filename=kubernetes/manifests/hm-kafka-logging-kafka-connect
 echo "=================================================="

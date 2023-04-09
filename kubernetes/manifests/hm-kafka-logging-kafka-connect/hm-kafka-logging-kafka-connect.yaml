@@ -1,0 +1,36 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  name: hm-kafka-logging-kafka-connect
+  namespace: hm-kafka
+  annotations:
+    # use-connector-resources configures this KafkaConnect
+    # to use KafkaConnector resources to avoid
+    # needing to call the Connect REST API directly
+    strimzi.io/use-connector-resources: "true"
+spec:
+  image: ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest
+  replicas: 1
+  bootstrapServers: my-cluster-kafka-bootstrap:9093
+  tls:
+    trustedCertificates:
+      - secretName: my-cluster-cluster-ca-cert
+        certificate: ca.crt
+  config:
+    config.storage.replication.factor: 1
+    offset.storage.replication.factor: 1
+    status.storage.replication.factor: 1
+    config.providers: file
+    config.providers.file.class: org.apache.kafka.common.config.provider.FileConfigProvider
+  externalConfiguration:
+    volumes:
+      - name: hm-opa-db-credentials-volume
+        secret:
+          secretName: hm-opa-db-credentials
+      - name: hm-elasticsearch-credentials-volume
+        secret:
+          secretName: hm-elasticsearch-credentials
+      - name: hm-elasticsearch-keystore-volume
+        secret:
+          secretName: hm-elasticsearch-keystore

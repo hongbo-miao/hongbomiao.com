@@ -6,6 +6,8 @@ kafka-list-topics:
 			--list
 
 # Local
+kafka-install:
+	brew install kafka
 zookeeper-start:
 	zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties
 kafka-start:

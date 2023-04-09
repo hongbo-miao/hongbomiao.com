@@ -225,13 +225,14 @@ jobs:
         run: |
           docker run \
             --rm \
-            --volume=`pwd`/kubernetes:/kubernetes \
+            --volume="$(pwd)/kubernetes:/kubernetes" \
             ghcr.io/yannh/kubeconform:latest-alpine \
               -kubernetes-version=1.26.0 \
               -ignore-filename-pattern='.*trafficsplit.yaml' \
               -ignore-filename-pattern='.*my-values.yaml' \
               -ignore-filename-pattern=kubernetes/manifests/argocd/ \
               -ignore-filename-pattern=kubernetes/manifests/elastic/ \
+              -ignore-filename-pattern=kubernetes/manifests/hm-kafka-logging-kafka-connect/ \
               -ignore-filename-pattern=kubernetes/manifests/hm-kafka-opa-kafka-connect/ \
               -ignore-filename-pattern=kubernetes/manifests/prometheus/ \
               -ignore-filename-pattern=kubernetes/manifests/yugabyte/ \

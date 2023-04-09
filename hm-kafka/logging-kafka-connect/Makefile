@@ -1,15 +1,15 @@
 # Docker
 docker-build:
 	cd ../.. && \
-	docker build --file=hm-kafka/opa-kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-kafka-opa-kafka-connect:latest .
+	docker build --file=hm-kafka/logging-kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest .
 docker-push:
-	docker push ghcr.io/hongbo-miao/hm-kafka-opa-kafka-connect:latest
+	docker push ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest
 docker-sh:
-	docker run -it ghcr.io/hongbo-miao/hm-kafka-opa-kafka-connect:latest sh
+	docker run -it ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest sh
 
 # Kubernetes
-kafka-get-hm-kafka-opa-kafka-connect:
-	kubectl get kafkaconnects hm-kafka-opa-kafka-connect --namespace=hm-kafka --output=yaml
+kafka-get-hm-kafka-logging-kafka-connect:
+	kubectl get kafkaconnects hm-kafka-logging-kafka-connect --namespace=hm-kafka --output=yaml
 
 kafka-get-postgres-kafka-connector:
 	kubectl get kafkaconnectors postgres-kafka-connector --namespace=hm-kafka --output=yaml
@@ -22,10 +22,10 @@ kafka-consume:
 	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
-			--topic=opa_db_server.public.role
+			--topic=logging_db_server.public.role
 kafka-consume-from-beginning:
 	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
-			--topic=opa_db_server.public.role \
+			--topic=logging_db_server.public.role \
 			--from-beginning
