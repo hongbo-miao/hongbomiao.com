@@ -1,17 +1,39 @@
 # Kubernetes
-kafka-list-topics:
+kubernetes-kafka-topic-list:
 	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-topics.sh \
 			--bootstrap-server=localhost:9092 \
 			--list
+kubernetes-kafka-topic-delete:
+	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+		bin/kafka-topics.sh \
+			--bootstrap-server=localhost:9092 \
+			--delete \
+			--topic=my-topic
+kubernetes-kafka-topic-describe:
+	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+		bin/kafka-topics.sh \
+			--bootstrap-server=localhost:9092 \
+			--describe \
+			--topic=my-topic
+kubernetes-kafka-console-consumer-from-beginning:
+	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+		bin/kafka-console-consumer.sh \
+			--bootstrap-server=localhost:9092 \
+			--topic=hm.system-log \
+			--from-beginning
 
 # Local
 kafka-install:
 	brew install kafka
+
 zookeeper-start:
-	zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties
+	zookeeper-server-start /opt/homebrew/etc/kafka/zookeeper.properties
 kafka-start:
-	kafka-server-start /usr/local/etc/kafka/server.properties
+	kafka-server-start /opt/homebrew/etc/kafka/server.properties
+
+zookeeper-status:
+	zkServer status
 
 kafka-topic-create:
 	kafka-topics --bootstrap-server=localhost:9092 --create --topic=my-topic --partitions=3 --replication-factor=1
@@ -20,7 +42,7 @@ kafka-topic-delete:
 kafka-topic-list:
 	kafka-topics --bootstrap-server=localhost:9092 --list
 kafka-topic-describe:
-	kafka-topics --bootstrap-server=localhost:9092 --topic=my-topic --describe
+	kafka-topics --bootstrap-server=localhost:9092 --describe --topic=my-topic
 
 kafka-console-producer:
 	kafka-console-producer --bootstrap-server=localhost:9092 --topic=my-topic
