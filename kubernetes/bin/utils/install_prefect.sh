@@ -39,32 +39,40 @@ docker build --file=hm-prefect/workflows/print-platform/Dockerfile --tag=ghcr.io
 docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
 echo "=================================================="
 
-# cd hm-prefect/workflows/collect-data
-# cd hm-prefect/workflows/greet
-cd hm-prefect/workflows/print-platform
-# cd hm-prefect/workflows/upload-to-influxdb
-
 echo "# Start the workflow"
-poetry run poe add-kubernetes-job-block
-
 # calculate
+# cd hm-prefect/workflows/calculate
+# poetry run poe add-kubernetes-job-block
 # poetry run poe build -- --params='{"model":{"n":4}}' --work-queue=hm-kubernetes-queue
+# poetry run poe run
 
 # greet
+# cd hm-prefect/workflows/greet
+# poetry run poe add-kubernetes-job-block
 # poetry run poe build -- --params='{"user":{"first_name":"Hongbo","last_name":"Miao"}}' --work-queue=hm-kubernetes-queue
+# poetry run poe run
 
 # collect-data
+# poetry run poe add-kubernetes-job-block
+# cd hm-prefect/workflows/collect-data
 # poetry run poe build -- --params=$(cat params.json | jq -c .) --work-queue=hm-local-queue
+# poetry run poe run
 
 # print-platform
-# poetry run poe build -- --work-queue=hm-local-queue
+cd hm-prefect/workflows/print-platform
+poetry run poe add-kubernetes-job-block
 poetry run poe build -- --work-queue=hm-kubernetes-queue
+# poetry run poe build -- --work-queue=hm-kubernetes-queue --interval=300
+# poetry run poe build -- --work-queue=hm-local-queue
+poetry run poe run
 
 # upload-to-influxdb
+# cd hm-prefect/workflows/upload-to-influxdb
+# poetry run poe add-kubernetes-job-block
 # poetry run poe prefect-concurrency-limit-create -- upload-to-influxdb-download-write-concurrency-limit 3
 # poetry run poe build -- --params=$(cat params.production.json | jq -c .) --work-queue=hm-kubernetes-queue
+# poetry run poe run
 
-poetry run poe run
 # kubectl delete jobs --all --namespace=hm-prefect
 echo "=================================================="
 
