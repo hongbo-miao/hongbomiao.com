@@ -27,7 +27,7 @@ download-ingress-nginx:
 
 # Kafka
 download-kafka:
-	curl https://strimzi.io/install/latest?namespace=kafka > kafka/strimzi-cluster-operator.yaml
+	curl https://strimzi.io/install/latest?namespace=hm-kafka > kafka/strimzi-cluster-operator.yaml
 	curl https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml > kafka/kafka-persistent-single.yaml
 
 # MinIO
