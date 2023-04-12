@@ -2,5 +2,5 @@
 set -e
 
 echo "# Uninstall Postgres"
-kubectl delete --filename=manifests/postgres
+kubectl delete --filename=kubernetes/manifestspostgres
 echo "=================================================="

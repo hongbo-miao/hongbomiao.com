@@ -1,23 +1,23 @@
 # Kubernetes
 kubernetes-kafka-topic-list:
-	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-topics.sh \
 			--bootstrap-server=localhost:9092 \
 			--list
 kubernetes-kafka-topic-delete:
-	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-topics.sh \
 			--bootstrap-server=localhost:9092 \
 			--delete \
 			--topic=my-topic
 kubernetes-kafka-topic-describe:
-	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-topics.sh \
 			--bootstrap-server=localhost:9092 \
 			--describe \
 			--topic=my-topic
 kubernetes-kafka-console-consumer-from-beginning:
-	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
 			--topic=hm.system-log \

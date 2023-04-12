@@ -199,9 +199,9 @@ kubectl-port-forward-elastic:
 	kubectl port-forward service/hm-kibana-kb-http --namespace=elastic 5601:5601
 	kubectl port-forward service/hm-elasticsearch-es-http --namespace=elastic 9200:9200
 kubectl-port-forward-kafka-broker:
-	kubectl port-forward service/my-cluster-kafka-bootstrap --namespace=hm-kafka 9092:9092
+	kubectl port-forward service/hm-kafka-kafka-bootstrap --namespace=hm-kafka 9092:9092
 kubectl-port-forward-kafka-zookeeper:
-	kubectl port-forward service/my-cluster-zookeeper-client --namespace=hm-kafka 2181:2181
+	kubectl port-forward service/hm-kafka-zookeeper-client --namespace=hm-kafka 2181:2181
 kubectl-port-forward-hm-kafka-opa-kafka-connect:
 	kubectl port-forward service/hm-kafka-opa-kafka-connect-connect-api --namespace=hm-kafka 8083:8083
 kubectl-port-forward-spark:
