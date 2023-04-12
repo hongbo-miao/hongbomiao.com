@@ -19,12 +19,12 @@ kafka-get-http-sink-kafka-connector:
 	kubectl get kafkaconnectors http-sink-kafka-connector --namespace=hm-kafka --output=yaml
 
 kafka-consume:
-	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
 			--topic=opa_db_server.public.role
 kafka-consume-from-beginning:
-	kubectl exec my-cluster-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
 			--topic=opa_db_server.public.role \
