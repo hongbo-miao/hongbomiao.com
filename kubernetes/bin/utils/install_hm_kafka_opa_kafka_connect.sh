@@ -3,7 +3,7 @@ set -e
 
 echo "# Create secret hm-opa-db-credentials"
 kubectl create secret generic hm-opa-db-credentials \
-  --from-file=kubernetes/manifests/hm-kafka-opa-kafka-connect/postgres-kafka-connector/opa-db-credentials.properties \
+  --from-file=kubernetes/manifests/hm-kafka/opa-kafka-connect/postgres-kafka-connector/opa-db-credentials.properties \
   --namespace=hm-kafka
 echo "=================================================="
 
@@ -63,10 +63,10 @@ echo "=================================================="
 
 echo "# Create secret hm-elasticsearch-credentials"
 kubectl create secret generic hm-elasticsearch-credentials \
-  --from-file=kubernetes/manifests/hm-kafka-opa-kafka-connect/elasticsearch-sink-kafka-connector/elasticsearch-credentials.properties \
+  --from-file=kubernetes/manifests/hm-kafka/opa-kafka-connect/elasticsearch-sink-kafka-connector/elasticsearch-credentials.properties \
   --namespace=hm-kafka
 echo "=================================================="
 
 echo "# Install hm-kafka-opa-kafka-connect"
-kubectl apply --filename=kubernetes/manifests/hm-kafka-opa-kafka-connect
+kubectl apply --filename=kubernetes/manifests/hm-kafka/opa-kafka-connect
 echo "=================================================="
