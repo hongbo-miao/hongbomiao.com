@@ -12,10 +12,10 @@ metadata:
 spec:
   image: ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest
   replicas: 1
-  bootstrapServers: my-cluster-kafka-bootstrap:9093
+  bootstrapServers: hm-kafka-kafka-bootstrap:9093
   tls:
     trustedCertificates:
-      - secretName: my-cluster-cluster-ca-cert
+      - secretName: hm-kafka-cluster-ca-cert
         certificate: ca.crt
   config:
     config.storage.replication.factor: 1
