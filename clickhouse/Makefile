@@ -1,0 +1,4 @@
+clickhouse-install:
+	brew install altinity/clickhouse/clickhouse
+clickhouse-client:
+	clickhouse client
