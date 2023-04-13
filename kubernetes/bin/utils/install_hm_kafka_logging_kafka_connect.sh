@@ -2,7 +2,7 @@
 set -e
 
 echo "# Clean elasticsearch-keystore.jks"
-KAFKACONNECT_DATA_PATH="kubernetes/data/hm-kafka-logging-kafka-connect"
+KAFKACONNECT_DATA_PATH="kubernetes/data/hm-kafka/logging-kafka-connect"
 rm -f "${KAFKACONNECT_DATA_PATH}/elasticsearch-keystore.jks"
 echo "=================================================="
 
