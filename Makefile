@@ -159,6 +159,7 @@ lint-python-isort-fix:
 	poetry run poe lint-python-isort-fix
 lint-sql:
 	poetry run poe lint-sql -- --dialect=bigquery bigquery-ml
+	poetry run poe lint-sql -- --dialect=clickhouse clickhouse/cpu_metrics
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
 	poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
@@ -167,6 +168,7 @@ lint-sql:
 	poetry run poe lint-sql -- --dialect=sparksql hm-spark/applications/find-taxi-top-routes-sql/src/queries
 lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=bigquery bigquery-ml
+	poetry run poe lint-sql-fix -- --dialect=clickhouse clickhouse/cpu_metrics
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/seeds
 	poetry run poe lint-sql-fix -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations

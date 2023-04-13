@@ -190,12 +190,13 @@ make kubernetes-clean
 ### Database
 
 - **Trino** - Distributed SQL query engine
+- **PostgreSQL** - Object-relational database
+- **ClickHouse** - Column-oriented database
 - **YugabyteDB** - Distributed SQL database
 - **TimescaleDB** - Time-series SQL database
 - **Cassandra** - Distributed wide-column NoSQL database
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
-- **PostgreSQL** - Object-relational database
 - **KeyDB** - High performance fork of Redis
 - **MinIO** - High performance object storage
 - **Kafka** - Distributed event streaming platform

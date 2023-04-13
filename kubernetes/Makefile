@@ -180,6 +180,9 @@ kubectl-port-forward-config-loader:
 kubectl-port-forward-api-python:
 	kubectl port-forward service/api-python-service --namespace=hm-api-python 35903:35903
 
+kubectl-port-forward-clickhouse:
+	kubectl port-forward service/chi-simple-01-simple-0-0 --namespace=hm-clickhouse 8123:8123
+	kubectl port-forward service/chi-simple-01-simple-0-0 --namespace=hm-clickhouse 9000:9000
 kubectl-port-forward-postgres:
 	kubectl port-forward service/postgres-service --namespace=hm-postgres 5432:5432
 kubectl-port-forward-timescale:
