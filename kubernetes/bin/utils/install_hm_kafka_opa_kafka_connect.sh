@@ -8,7 +8,7 @@ kubectl create secret generic hm-opa-db-credentials \
 echo "=================================================="
 
 echo "# Clean elasticsearch-keystore.jks"
-KAFKACONNECT_DATA_PATH="kubernetes/data/hm-kafka-opa-kafka-connect"
+KAFKACONNECT_DATA_PATH="kubernetes/data/hm-kafka/opa-kafka-connect"
 rm -f "${KAFKACONNECT_DATA_PATH}/elasticsearch-keystore.jks"
 echo "=================================================="
 
