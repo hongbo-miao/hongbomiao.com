@@ -1,13 +1,15 @@
-# https://k3d.io/usage/configfile
+# https://k3d.io/v5.4.9/usage/configfile
 
 ---
-apiVersion: k3d.io/v1alpha3
+apiVersion: k3d.io/v1alpha4
 kind: Simple
 kubeAPI:
   host: "k8s-hongbomiao.com"
   hostIP: "127.0.0.1"
   hostPort: "6441"
 network: hm-network
+volumes:
+  - volume: "/Users/hongbo-miao/Clouds/Git/hongbomiao.com/kubernetes/data:/data"
 ports:
   - port: 40001:80
     nodeFilters:
