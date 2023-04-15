@@ -2,14 +2,14 @@
 set -e
 
 echo "# Install Redis"
-kubectl apply --filename=kubernetes/manifests/redis/hm-redis-namespace.yaml
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install \
+helm upgrade \
   redis \
-  bitnami/redis \
+  redis \
+  --install \
+  --repo=https://charts.bitnami.com/bitnami \
   --namespace=hm-redis \
+  --create-namespace \
   --values=kubernetes/manifests/redis/helm/my-values.yaml
-
-# Delete:
 # helm uninstall redis --namespace=hm-redis
+# kubectl delete namespace hm-redis
 echo "=================================================="

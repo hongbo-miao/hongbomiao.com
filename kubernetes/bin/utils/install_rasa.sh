@@ -2,42 +2,28 @@
 set -e
 
 echo "# Install Rasa Action Server"
-kubectl apply --filename=kubernetes/manifests/rasa-action-server/hm-rasa-action-server-namespace.yaml
-helm repo add rasa https://helm.rasa.com
-
-helm install \
+helm upgrade \
   hm-release \
-  rasa/rasa-action-server \
+  rasa-action-server \
+  --install \
+  --repo=https://helm.rasa.com \
   --namespace=hm-rasa-action-server \
+  --create-namespace \
   --values=kubernetes/manifests/rasa-action-server/helm/my-values.yaml
-
-# Upgrade:
-# helm upgrade \
-#   hm-release \
-#   rasa/rasa-action-server \
-#   --namespace=hm-rasa-action-server \
-#   --values=kubernetes/manifests/rasa-action-server/helm/my-values.yaml
-
-# Delete:
+kubectl apply --filename=kubernetes/manifests/rasa-action-server/hm-rasa-action-server-namespace.yaml
 # helm uninstall hm-release --namespace=hm-rasa-action-server
+# kubectl delete namespace hm-rasa-action-server
 echo "=================================================="
 
 echo "# Install Rasa Open Source"
-kubectl apply --filename=kubernetes/manifests/rasa/hm-rasa-namespace.yaml
-
-helm install \
+helm upgrade \
   hm-release \
-  rasa/rasa \
+  rasa \
+  --install \
+  --repo=https://helm.rasa.com \
   --namespace=hm-rasa \
+  --create-namespace \
   --values=kubernetes/manifests/rasa/helm/my-values.yaml
-
-# Upgrade:
-# helm upgrade \
-#   hm-release \
-#   rasa/rasa \
-#   --namespace=hm-rasa \
-#   --values=kubernetes/manifests/rasa/helm/my-values.yaml
-
-# Delete:
 # helm uninstall hm-release --namespace=hm-rasa
+# kubectl delete namespace hm-rasa
 echo "=================================================="

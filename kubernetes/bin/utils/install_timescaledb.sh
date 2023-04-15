@@ -3,18 +3,16 @@ set -e
 
 echo "# Install TimescaleDB"
 # https://docs.timescale.com/install/latest/installation-kubernetes/#install-timescaledb-on-kubernetes
-helm repo add timescale https://charts.timescale.com
-helm repo update timescale
-
-kubectl apply --filename=kubernetes/manifests/timescaledb/hm-timescale-namespace.yaml
-helm install \
+helm upgrade \
   timescale \
-  timescale/timescaledb-single \
+  timescaledb-single \
+  --install \
+  --repo=https://charts.timescale.com \
   --namespace=hm-timescale \
+  --create-namespace \
   --values=kubernetes/manifests/timescaledb/helm/my-values.yaml
-
-# Delete:
 # helm uninstall timescale --namespace=hm-timescale
+# kubectl delete namespace hm-timescale
 echo "=================================================="
 
 kubectl port-forward service/timescale --namespace=hm-timescale 25495:5432 &

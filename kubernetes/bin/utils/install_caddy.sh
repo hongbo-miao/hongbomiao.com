@@ -2,15 +2,16 @@
 set -e
 
 echo "# Install Caddy Ingress Controller"
-helm install caddy \
+helm upgrade \
+  caddy \
   caddy-ingress-controller \
+  --install \
+  --repo=https://caddyserver.github.io/ingress \
   --namespace=hm-caddy \
   --create-namespace \
-  --repo=https://caddyserver.github.io/ingress \
   --values=kubernetes/manifests/caddy/helm/my-values.yaml
-
-# Delete:
 # helm uninstall caddy --namespace=hm-caddy
+# kubectl delete namespace hm-caddy
 echo "=================================================="
 
 

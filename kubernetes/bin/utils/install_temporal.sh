@@ -13,8 +13,7 @@ helm install \
   --create-namespace \
   --values=kubernetes/manifests/temporal/helm/my-values.yaml \
   --timeout=15m
-
-# Delete:
 # helm uninstall temporal --namespace=hm-temporal
 # kubectl delete job temporal-schema-setup --namespace=hm-temporal
+# kubectl delete namespace hm-temporal
 echo "=================================================="

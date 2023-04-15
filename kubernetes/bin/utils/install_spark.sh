@@ -3,14 +3,13 @@ set -e
 
 echo "# Install Spark"
 # https://github.com/bitnami/charts/tree/main/bitnami/spark
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm repo update bitnami
-helm install \
+helm upgrade \
   spark \
-  bitnami/spark \
+  spark \
+  --install \
+  --repo=https://charts.bitnami.com/bitnami \
   --namespace=hm-spark \
   --create-namespace
-
-# Delete:
 # helm uninstall spark --namespace=hm-spark
+# kubectl delete namespace hm-spark
 echo "=================================================="
