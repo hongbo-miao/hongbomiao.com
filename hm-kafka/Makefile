@@ -20,7 +20,7 @@ kubernetes-kafka-console-consumer-from-beginning:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
-			--topic=hm.system-log \
+			--topic=my-topic \
 			--from-beginning
 
 # Local

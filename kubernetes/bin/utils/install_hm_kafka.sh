@@ -1,22 +1,78 @@
 #!/usr/bin/env bash
 set -e
 
-# Kafka
-# https://strimzi.io/quickstarts
-echo "# Install Strimzi"
-kubectl create namespace hm-kafka
-# kubectl delete namespace hm-kafka
-kubectl apply --filename="https://strimzi.io/install/latest?namespace=hm-kafka" --namespace=hm-kafka
-# kubectl delete --filename="https://strimzi.io/install/latest?namespace=kafka" --namespace=hm-kafka
+echo "# Install Ingress"
+# Note `enable-ssl-passthrough: true` in kubernetes/manifests/ingress-nginx/helm/my-values.yaml
+# is required to make Kakfa accessible for clients running outside of Kubernetes
+helm upgrade \
+  ingress-nginx \
+  ingress-nginx \
+  --install \
+  --repo=https://kubernetes.github.io/ingress-nginx \
+  --namespace=ingress-nginx \
+  --create-namespace \
+  --values=kubernetes/manifests/ingress-nginx/helm/my-values.yaml
+echo "=================================================="
+
+echo "# Get IP address by EXTERNAL-IP"
+# kubectl get nodes
+# kubectl get node lima-rancher-desktop --output=wide
+echo "=================================================="
+
+echo "# Update IP address in the Kafka bootstrap and brokers"
+# Update IP address in kubernetes/manifests/hm-kafka/kafka-persistent.yaml
+# Update IP address in below "Produce messages to Kafka" section
 echo "=================================================="
 
 echo "# Install Kafka"
-kubectl apply --filename=kubernetes/manifests/hm-kafka/kafka-persistent-single.yaml --namespace=hm-kafka
-# kubectl delete --filename=kubernetes/manifestshm-kafka/kafka-persistent-single.yaml --namespace=hm-kafka
+# https://strimzi.io/quickstarts
+kubectl create namespace hm-kafka
+kubectl apply --filename="https://strimzi.io/install/latest?namespace=hm-kafka"
+kubectl apply --filename=kubernetes/manifests/hm-kafka/kafka-persistent.yaml --namespace=hm-kafka
+# kubectl delete --filename=kubernetes/manifests/hm-kafka/kafka-persistent.yaml --namespace=hm-kafka
+# kubectl delete --filename="https://strimzi.io/install/latest?namespace=hm-kafka"
+# kubectl delete namespace hm-kafka
 echo "=================================================="
 
 echo "# Check Kafka"
-kubectl wait kafka/my-cluster --for=condition=Ready --timeout=300s --namespace=hm-kafka
-# kubectl run kafka-producer --stdin --tty --namespace=hm-kafka --image=quay.io/strimzi/kafka:0.26.0-kafka-3.0.0 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list=hm-kafka-kafka-bootstrap:9092 --topic=my-topic
-# kubectl run kafka-consumer --stdin --tty --namespace=hm-kafka --image=quay.io/strimzi/kafka:0.26.0-kafka-3.0.0 --rm=true --restart=Never -- bin/kafka-console-consumer.sh --bootstrap-server=hm-kafka-kafka-bootstrap:9092 --topic=my-topic --from-beginning
+kubectl wait kafka/hm-kafka --for=condition=Ready --timeout=300s --namespace=hm-kafka
+echo "=================================================="
+
+
+echo "# Get Kafka truststore"
+KAFKA_DATA_PATH="kubernetes/data/hm-kafka/hm-kafka"
+KEYSTORE_PASSWORD="m1Uaf4Crxzoo2Zxp"
+
+rm -f "${KAFKA_DATA_PATH}/ca.crt"
+rm -f "${KAFKA_DATA_PATH}/kafka-truststore.jks"
+
+kubectl get secret hm-kafka-cluster-ca-cert \
+  --namespace=hm-kafka \
+  --output=jsonpath="{.data.ca\.crt}" \
+  | base64 -d \
+  > "${KAFKA_DATA_PATH}/ca.crt"
+keytool -importcert \
+  -trustcacerts \
+  -alias root \
+  -file "${KAFKA_DATA_PATH}/ca.crt" \
+  -keystore "${KAFKA_DATA_PATH}/kafka-truststore.jks" \
+  -storepass ${KEYSTORE_PASSWORD} \
+  -noprompt
+echo "=================================================="
+
+echo "# Produce messages to Kafka"
+kafka-console-producer \
+  --broker-list=kafka-bootstrap.192.168.1.149.nip.io:443 \
+  --producer-property=security.protocol=SSL \
+  --producer-property=ssl.truststore.password="${KEYSTORE_PASSWORD}" \
+  --producer-property=ssl.truststore.location="${KAFKA_DATA_PATH}/kafka-truststore.jks" \
+  --topic=my-topic
+echo "=================================================="
+
+echo "# Consume messages from Kafka"
+kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+  bin/kafka-console-consumer.sh \
+    --bootstrap-server=localhost:9092 \
+    --topic=my-topic \
+    --from-beginning
 echo "=================================================="
