@@ -20,11 +20,6 @@ download-hasura:
 	curl https://raw.githubusercontent.com/hasura/graphql-engine/stable/install-manifests/kubernetes/deployment.yaml > hasura/hasura-deployment.yaml
 	curl https://raw.githubusercontent.com/hasura/graphql-engine/stable/install-manifests/kubernetes/svc.yaml > hasura/hasura-service.yaml
 
-# Ingress
-download-ingress-nginx:
-	$(eval INGRESS_VERSION := $(shell curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt))
-	curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/$(INGRESS_VERSION)/deploy/static/provider/cloud/deploy.yaml > ingress/ingress-nginx.yaml
-
 # Kafka
 download-kafka:
 	curl https://strimzi.io/install/latest?namespace=hm-kafka > kafka/strimzi-cluster-operator.yaml
