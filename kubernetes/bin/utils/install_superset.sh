@@ -10,15 +10,16 @@ pgrep kubectl | xargs kill -9
 echo "=================================================="
 
 echo "# Install Superset"
-helm repo add superset https://apache.github.io/superset
-helm repo update superset
-helm install \
+helm upgrade \
   superset \
-  superset/superset \
+  superset \
+  --install \
+  --repo=https://apache.github.io/superset \
   --namespace=hm-superset \
   --create-namespace \
   --values=kubernetes/manifests/superset/helm/my-values.yaml
 # helm uninstall superset --namespace=hm-superset
+# kubectl delete namespace hm-superset
 
 # Install database drivers:
 # https://superset.apache.org/docs/databases/installing-database-drivers

@@ -8,13 +8,14 @@ psql postgresql://admin@localhost:5432/postgres --command="grant all privileges 
 echo "=================================================="
 
 echo "# Install Metabase"
-helm repo add pmint93 https://pmint93.github.io/helm-charts
-helm repo update pmint93
-helm install \
+helm upgrade \
   metabase \
-  pmint93/metabase \
+  metabase \
+  --install \
+  --repo=https://pmint93.github.io/helm-charts \
   --namespace=hm-metabase \
   --create-namespace \
   --values=kubernetes/manifests/metabase/helm/my-values.yaml
 # helm uninstall metabase --namespace=hm-metabase
+# kubectl delete namespace hm-metabase
 echo "=================================================="

@@ -232,7 +232,7 @@ kubectl-port-forward-rasa:
 	kubectl port-forward service/hm-release-redis-master --namespace=hm-rasa 6379:6379
 	kubectl port-forward service/hm-release-rasa-action-server --namespace=hm-rasa-action-server 5055:5055
 kubectl-port-forward-goldilocks:
-	kubectl port-forward service/goldilocks-dashboard --namespace=hm-goldilocks 34617:34617
+	kubectl port-forward service/goldilocks-dashboard --namespace=hm-goldilocks 34617:80
 kubectl-port-forward-opencost:
 	kubectl port-forward service/opencost --namespace=hm-opencost 9090:9090
 kubectl-port-forward-kubecost:

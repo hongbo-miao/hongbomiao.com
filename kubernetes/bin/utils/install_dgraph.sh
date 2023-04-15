@@ -3,14 +3,14 @@ set -e
 
 echo "# Install Dgraph"
 # https://dgraph.io/docs/deploy/kubernetes/#using-helm-chart
-kubectl apply --filename=kubernetes/manifests/dgraph/hm-dgraph-namespace.yaml
-helm repo add dgraph https://charts.dgraph.io
-helm install \
+helm upgrade \
   dgraph \
-  dgraph/dgraph \
+  dgraph \
+  --install \
+  --repo=https://charts.dgraph.io \
   --namespace=hm-dgraph \
+  --create-namespace \
   --values=kubernetes/manifests/dgraph/helm/my-values.yaml
-
-# Delete:
 # helm uninstall dgraph --namespace=hm-dgraph
+# kubectl delete namespace hm-dgraph
 echo "=================================================="
