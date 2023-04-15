@@ -12,6 +12,8 @@ helm upgrade \
   --namespace=ingress-nginx \
   --create-namespace \
   --values=kubernetes/manifests/ingress-nginx/helm/my-values.yaml
+# helm uninstall ingress-nginx --namespace=ingress-nginx
+# kubectl delete namespace ingress-nginx
 echo "=================================================="
 
 echo "# Get IP address by EXTERNAL-IP"
@@ -28,8 +30,11 @@ echo "# Install Kafka"
 # https://strimzi.io/quickstarts
 kubectl create namespace hm-kafka
 kubectl apply --filename="https://strimzi.io/install/latest?namespace=hm-kafka"
-kubectl apply --filename=kubernetes/manifests/hm-kafka/kafka-persistent.yaml --namespace=hm-kafka
+kubectl apply --filename=kubernetes/manifests/hm-kafka/kafka-persistent-single.yaml --namespace=hm-kafka
+# kubectl apply --filename=kubernetes/manifests/hm-kafka/kafka-persistent.yaml --namespace=hm-kafka
+
 # kubectl delete --filename=kubernetes/manifests/hm-kafka/kafka-persistent.yaml --namespace=hm-kafka
+# kubectl delete --filename=kubernetes/manifests/hm-kafka/kafka-persistent-single.yaml --namespace=hm-kafka
 # kubectl delete --filename="https://strimzi.io/install/latest?namespace=hm-kafka"
 # kubectl delete namespace hm-kafka
 echo "=================================================="
@@ -37,7 +42,6 @@ echo "=================================================="
 echo "# Check Kafka"
 kubectl wait kafka/hm-kafka --for=condition=Ready --timeout=300s --namespace=hm-kafka
 echo "=================================================="
-
 
 echo "# Get Kafka truststore"
 KAFKA_DATA_PATH="kubernetes/data/hm-kafka/hm-kafka"
@@ -56,7 +60,7 @@ keytool -importcert \
   -alias hm-kafka-truststore \
   -file "${KAFKA_DATA_PATH}/ca.crt" \
   -keystore "${KAFKA_DATA_PATH}/kafka-truststore.jks" \
-  -storepass ${KEYSTORE_PASSWORD} \
+  -storepass "${KEYSTORE_PASSWORD}" \
   -noprompt
 echo "=================================================="
 
