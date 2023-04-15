@@ -23,7 +23,7 @@ download-hasura:
 # Kafka
 download-kafka:
 	curl https://strimzi.io/install/latest?namespace=hm-kafka > kafka/strimzi-cluster-operator.yaml
-	curl https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml > kafka/kafka-persistent-single.yaml
+	curl https://strimzi.io/examples/latest/kafka/kafka-persistent.yaml > kafka/kafka-persistent.yaml
 
 # MinIO
 # Manifests: https://github.com/minio/operator/tree/master/examples/kustomization
