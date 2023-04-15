@@ -2,13 +2,14 @@
 set -e
 
 echo "# Install Kubecost"
-helm repo add kubecost https://kubecost.github.io/cost-analyzer
-helm install \
+helm upgrade \
   kubecost \
-  kubecost/cost-analyzer \
+  cost-analyzer \
+  --install \
+  --repo=https://kubecost.github.io/cost-analyzer \
   --namespace=hm-kubecost \
-  --create-namespace
-
-# Delete:
+  --create-namespace \
+  --values=kubernetes/manifests/dgraph/helm/my-values.yaml
 # helm uninstall kubecost --namespace=hm-kubecost
+# kubectl delete namespace hm-kubecost
 echo "=================================================="

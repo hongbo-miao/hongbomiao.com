@@ -2,15 +2,15 @@
 set -e
 
 echo "# Install Polaris"
-# https://polaris.docs.fairwinds.com/dashboard/#using-the-dashboard
-kubectl apply --filename=kubernetes/manifests/polaris/hm-polaris-namespace.yaml
-helm repo add fairwinds-stable https://charts.fairwinds.com/stable
-helm install \
+# https://polaris.docs.fairwinds.com/dashboard
+helm upgrade \
   polaris \
-  fairwinds-stable/polaris \
+  polaris \
+  --install \
+  --repo=https://charts.fairwinds.com/stable \
   --namespace=hm-polaris \
+  --create-namespace \
   --values=kubernetes/manifests/polaris/helm/my-values.yaml
-
-# Delete:
 # helm uninstall polaris --namespace=hm-polaris
+# kubectl delete namespace hm-polaris
 echo "=================================================="
