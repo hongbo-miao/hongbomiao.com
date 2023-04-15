@@ -12,8 +12,14 @@ k3d cluster create dev --config=k3d/dev-cluster-config.yaml
 kubectl config use-context k3d-west
 # kubectl config use-context k3d-east
 # kubectl config use-context k3d-dev
+echo "=================================================="
 
-INGRESS_VERSION=$(curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/stable.txt)
-kubectl apply --filename="https://raw.githubusercontent.com/kubernetes/ingress-nginx/${INGRESS_VERSION}/deploy/static/provider/cloud/deploy.yaml"
-# Local: kubectl apply --filename=kubernetes/manifests-raw/ingress-nginx.yaml
+echo "# Install Ingress"
+helm upgrade \
+  ingress-nginx \
+  ingress-nginx \
+  --install \
+  --repo=https://kubernetes.github.io/ingress-nginx \
+  --namespace=ingress-nginx \
+  --create-namespace
 echo "=================================================="
