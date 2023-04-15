@@ -53,7 +53,7 @@ kubectl get secret hm-kafka-cluster-ca-cert \
   > "${KAFKA_DATA_PATH}/ca.crt"
 keytool -importcert \
   -trustcacerts \
-  -alias root \
+  -alias hm-kafka-truststore \
   -file "${KAFKA_DATA_PATH}/ca.crt" \
   -keystore "${KAFKA_DATA_PATH}/kafka-truststore.jks" \
   -storepass ${KEYSTORE_PASSWORD} \
