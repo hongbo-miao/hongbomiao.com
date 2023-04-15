@@ -6,22 +6,23 @@ source kubernetes/bin/utils/install_cloudflared.sh
 echo "=================================================="
 
 echo "# Install Postgres"
-source kubernetes/bin/utils/install_postgres.sh
+kubectl apply --filename=kubernetes/manifests/postgres
 psql postgresql://admin@localhost:5432/postgres --command="create database hm_prefect_db;"
 psql postgresql://admin@localhost:5432/postgres --command="grant all privileges on database hm_prefect_db to admin;"
 echo "=================================================="
 
 echo "# Install Prefect Server"
-helm repo add prefect https://prefecthq.github.io/prefect-helm
-helm repo update prefect
+kubectl create namespace hm-prefect
 kubectl create secret generic hm-prefect-postgres-secret \
   --namespace=hm-prefect \
   --from-literal="connection-string=postgresql+asyncpg://admin:passw0rd@postgres-service.hm-postgres.svc:5432/hm_prefect_db"
 # kubectl delete secret hm-prefect-postgres-secret --namespace=hm-prefect
 
-helm install \
+helm upgrade \
   prefect-server \
-  prefect/prefect-server \
+  prefect-server \
+  --install \
+  --repo=https://prefecthq.github.io/prefect-helm \
   --namespace=hm-prefect \
   --create-namespace \
   --values=kubernetes/manifests/prefect/helm/prefect-server/my-values.yaml
@@ -81,15 +82,19 @@ poetry run poe prefect-agent-start -- --work-queue=hm-local-queue
 echo "=================================================="
 
 echo "# Start Prefect Agents in Kubernetes"
-helm install \
+helm upgrade \
   prefect-agent-1 \
-  prefect/prefect-agent \
+  prefect-agent \
+  --install \
+  --repo=https://prefecthq.github.io/prefect-helm \
   --namespace=hm-prefect \
   --create-namespace \
   --values=kubernetes/manifests/prefect/helm/prefect-agent/my-values.yaml
-helm install \
+helm upgrade \
   prefect-agent-2 \
-  prefect/prefect-agent \
+  prefect-agent \
+  --install \
+  --repo=https://prefecthq.github.io/prefect-helm \
   --namespace=hm-prefect \
   --create-namespace \
   --values=kubernetes/manifests/prefect/helm/prefect-agent/my-values.yaml

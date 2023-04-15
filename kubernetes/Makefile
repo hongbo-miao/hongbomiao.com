@@ -199,8 +199,8 @@ kubectl-port-forward-dgraph:
 	kubectl port-forward service/dgraph-dgraph-alpha --namespace=hm-dgraph 8080:8080
 	kubectl port-forward service/dgraph-dgraph-zero --namespace=hm-dgraph 6080:6080
 kubectl-port-forward-elastic:
-	kubectl port-forward service/hm-kibana-kb-http --namespace=elastic 5601:5601
-	kubectl port-forward service/hm-elasticsearch-es-http --namespace=elastic 9200:9200
+	kubectl port-forward service/hm-kibana-kb-http --namespace=hm-elastic 5601:5601
+	kubectl port-forward service/hm-elasticsearch-es-http --namespace=hm-elastic 9200:9200
 kubectl-port-forward-kafka-broker:
 	kubectl port-forward service/hm-kafka-kafka-bootstrap --namespace=hm-kafka 9092:9092
 kubectl-port-forward-kafka-zookeeper:
@@ -382,9 +382,9 @@ pixie-delete:
 
 # Kibana
 kibana-ui:
-	kubectl port-forward service/hm-kb-http --namespace=elastic 5601:5601 &
+	kubectl port-forward service/hm-kb-http --namespace=hm-elastic 5601:5601 &
 kibana-get-password: # username: elastic
-	kubectl get secret hm-elasticsearch-es-elastic-user --namespace=elastic --output=jsonpath="{.data.elastic}" | base64 --decode; echo
+	kubectl get secret hm-elasticsearch-es-elastic-user --namespace=hm-elastic --output=jsonpath="{.data.elastic}" | base64 --decode; echo
 
 # Argo CD
 argocd-install:
@@ -412,7 +412,7 @@ argocd-sync-local:
 	argocd app sync hm-application --grpc-web --local=manifests/west
 argocd-sync-local-full:
 	kubectl create namespace hm
-	ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token --namespace=elastic --output=go-template='{{index .data "secret-token" | base64decode}}')
+	ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token --namespace=hm-elastic --output=go-template='{{index .data "secret-token" | base64decode}}')
 	kubectl create secret generic hm-elastic-apm --namespace=hm --from-literal="token=${ELASTIC_APM_TOKEN}"
 	kubectl apply --filename=manifests/argocd/hm-application.yaml
 	argocd app sync hm-application --grpc-web --local=manifests/west
