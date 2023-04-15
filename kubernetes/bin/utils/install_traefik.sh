@@ -2,15 +2,15 @@
 set -e
 
 echo "# Install Traefik Ingress Controller"
-helm repo add traefik https://traefik.github.io/charts
-helm install \
+helm upgrade \
   traefik \
-  traefik/traefik \
+  traefik \
+  --install \
+  --repo=https://traefik.github.io/charts \
   --namespace=hm-traefik \
   --create-namespace
-
-# Delete:
 # helm uninstall traefik --namespace=hm-traefik
+# kubectl delete namespace hm-traefik
 echo "=================================================="
 
 

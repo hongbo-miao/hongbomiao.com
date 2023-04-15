@@ -27,6 +27,7 @@ helm upgrade \
   --create-namespace \
   --values=kubernetes/manifests/prefect/helm/prefect-server/my-values.yaml
 # helm uninstall prefect-server --namespace=hm-prefect
+# kubectl delete namespace hm-prefect
 echo "=================================================="
 
 echo "# Create hm-kubernetes profile"
