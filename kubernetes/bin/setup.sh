@@ -19,7 +19,18 @@ if [ $is_debug = false ]; then
   source kubernetes/bin/utils/install_linkerd.sh "${CLUSTERS[@]}"
 fi
 
-source kubernetes/bin/utils/install_ingress.sh "${CLUSTERS[@]}"
+for cluster in "${CLUSTERS[@]}"; do
+  echo "# Install Ingress on: k3d-${cluster}"
+  helm upgrade \
+    ingress-nginx \
+    ingress-nginx \
+    --install \
+    --repo=https://kubernetes.github.io/ingress-nginx \
+    --kube-context="k3d-${cluster}" \
+    --namespace=ingress-nginx \
+    --create-namespace
+  echo "=================================================="
+done
 if [ $is_debug = false ]; then
   source kubernetes/bin/utils/patch_ingress.sh "${CLUSTERS[@]}"
 fi
