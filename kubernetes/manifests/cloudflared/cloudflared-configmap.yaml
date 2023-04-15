@@ -34,11 +34,11 @@ data:
     # The first rule proxies traffic to the httpbin sample Service defined in app.yaml
     # Elastic
     - hostname: elasticsearch.hongbomiao.com
-      service: https://hm-elasticsearch-es-http.elastic.svc:9200
+      service: https://hm-elasticsearch-es-http.hm-elastic.svc:9200
       originRequest:
         noTLSVerify: true
     - hostname: kibana.hongbomiao.com
-      service: https://hm-kibana-kb-http.elastic.svc:5601
+      service: https://hm-kibana-kb-http.hm-elastic.svc:5601
       originRequest:
         noTLSVerify: true
     # Prefect
@@ -51,7 +51,6 @@ data:
     # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
     # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
     # in the connection from cloudflared to your local service, not from the internet to cloudflared.
-
     - hostname: hello.example.com
       service: hello_world
 
