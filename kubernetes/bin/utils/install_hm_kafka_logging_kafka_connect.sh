@@ -11,17 +11,17 @@ KEYSTORE_P12_PASSWORD="SFLzyT8DPkGGjDtn"
 KEYSTORE_JSK_PASSWORD="MPx57vkACsRWKVap"
 
 kubectl get secret hm-elasticsearch-es-http-certs-public \
-  --namespace=elastic \
+  --namespace=hm-elastic \
   --output=go-template='{{index .data "ca.crt" | base64decode }}' \
   > "${KAFKACONNECT_DATA_PATH}/ca.crt"
 
 kubectl get secret hm-elasticsearch-es-http-certs-public \
-  --namespace=elastic \
+  --namespace=hm-elastic \
   --output=go-template='{{index .data "tls.crt" | base64decode }}' \
   > "${KAFKACONNECT_DATA_PATH}/tls.crt"
 
 kubectl get secret hm-elasticsearch-es-http-certs-internal \
-  --namespace=elastic \
+  --namespace=hm-elastic \
   --output=go-template='{{index .data "tls.key" | base64decode }}' \
   > "${KAFKACONNECT_DATA_PATH}/tls.key"
 
