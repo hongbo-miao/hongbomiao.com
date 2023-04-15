@@ -10,4 +10,6 @@ helm upgrade \
   --namespace=ingress-nginx \
   --create-namespace \
   --values=kubernetes/manifests/ingress-nginx/helm/my-values.yaml
+# helm uninstall ingress-nginx --namespace=ingress-nginx
+# kubectl delete namespace ingress-nginx
 echo "=================================================="
