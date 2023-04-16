@@ -28,4 +28,5 @@ kafka-consume-from-beginning:
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
 			--topic=opa_db_server.public.role \
+			--property=print.key=true \
 			--from-beginning

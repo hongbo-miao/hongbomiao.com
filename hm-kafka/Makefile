@@ -21,6 +21,7 @@ kubernetes-kafka-console-consumer-from-beginning:
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
 			--topic=my-topic \
+			--property=print.key=true \
 			--from-beginning
 
 keytool-list-hm-kafka-kafka-truststore:
@@ -66,11 +67,11 @@ kafka-topic-describe:
 kafka-console-producer:
 	kafka-console-producer --bootstrap-server=localhost:9092 --topic=my-topic
 kafka-console-consumer:
-	kafka-console-consumer --bootstrap-server=localhost:9092 --topic=my-topic
+	kafka-console-consumer --bootstrap-server=localhost:9092 --topic=my-topic --property=print.key=true
 kafka-console-consumer-from-beginning:
-	kafka-console-consumer --bootstrap-server=localhost:9092 --topic=my-topic --from-beginning
+	kafka-console-consumer --bootstrap-server=localhost:9092 --topic=my-topic --property=print.key=true --from-beginning
 kafka-console-consumer-group:
-	kafka-console-consumer --bootstrap-server=localhost:9092 --topic=my-topic --group=my-group
+	kafka-console-consumer --bootstrap-server=localhost:9092 --topic=my-topic --property=print.key=true --group=my-group
 
 kafka-consumer-group-list:
 	kafka-consumer-groups --bootstrap-server=localhost:9092 --list
