@@ -31,7 +31,8 @@ kubectl get secret hm-elasticsearch-es-http-certs-internal \
   --output=go-template='{{index .data "tls.key" | base64decode }}' \
   > "${KAFKACONNECT_DATA_PATH}/tls.key"
 
-openssl pkcs12 -export \
+openssl pkcs12 \
+  -export \
   -in "${KAFKACONNECT_DATA_PATH}/tls.crt" \
   -inkey "${KAFKACONNECT_DATA_PATH}/tls.key" \
   -CAfile "${KAFKACONNECT_DATA_PATH}/ca.crt" \
@@ -40,7 +41,8 @@ openssl pkcs12 -export \
   -password "pass:${KEYSTORE_P12_PASSWORD}" \
   -name hm-elasticsearch-keystore
 
-keytool -importkeystore \
+keytool \
+  -importkeystore \
   -srckeystore  "${KAFKACONNECT_DATA_PATH}/elasticsearch-keystore.p12" \
   -srcstoretype PKCS12 \
   -srcstorepass ${KEYSTORE_P12_PASSWORD} \
