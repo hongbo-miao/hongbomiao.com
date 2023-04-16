@@ -60,7 +60,7 @@ echo "=================================================="
 
 echo "# Create secret hm-elasticsearch-credentials"
 kubectl create secret generic hm-elasticsearch-credentials \
-  --from-file=kubernetes/manifests/hm-kafka/logging-kafka-connect/hm-dummy-log-elasticsearch-sink-kafka-connector/elasticsearch-credentials.properties \
+  --from-file=kubernetes/manifests/hm-kafka/logging-kafka-connect/elasticsearch-sink-kafka-connector/elasticsearch-credentials.properties \
   --namespace=hm-kafka
 # kubectl delete secret hm-elasticsearch-credentials --namespace=hm-kafka
 echo "=================================================="
