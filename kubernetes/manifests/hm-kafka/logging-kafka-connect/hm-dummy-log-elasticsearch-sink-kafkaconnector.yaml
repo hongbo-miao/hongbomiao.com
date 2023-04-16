@@ -2,7 +2,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
-  name: elasticsearch-sink-kafka-connector
+  name: hm-dummy-log-elasticsearch-sink-kafka-connector
   namespace: hm-kafka
   labels:
     strimzi.io/cluster: hm-kafka-logging-kafka-connect
@@ -26,7 +26,7 @@ spec:
     elastic.https.ssl.truststore.password: "${file:/opt/kafka/external-configuration/hm-elasticsearch-credentials-volume/elasticsearch-credentials.properties:elasticsearch_keystore_password}"
     elastic.https.ssl.truststore.type: "JKS"
     elastic.https.ssl.protocol: "TLSv1.3"
-    key.ignore": "true"
-    value.converter": "org.apache.kafka.connect.json.JsonConverter"
-    value.converter.schemas.enable": "false"
-    behavior.on.null.values": "delete"
+    key.ignore: "true"
+    value.converter: "org.apache.kafka.connect.json.JsonConverter"
+    value.converter.schemas.enable: "false"
+    behavior.on.null.values: "delete"
