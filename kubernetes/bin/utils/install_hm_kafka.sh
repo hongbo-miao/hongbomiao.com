@@ -30,11 +30,11 @@ echo "# Install Kafka"
 # https://strimzi.io/quickstarts
 kubectl create namespace hm-kafka
 kubectl apply --filename="https://strimzi.io/install/latest?namespace=hm-kafka"
-kubectl apply --filename=kubernetes/manifests/hm-kafka/kafka-persistent-single.yaml --namespace=hm-kafka
-# kubectl apply --filename=kubernetes/manifests/hm-kafka/kafka-persistent.yaml --namespace=hm-kafka
+kubectl apply --filename=kubernetes/manifests/hm-kafka/hm-kafka/kafka-persistent-single.yaml --namespace=hm-kafka
+# kubectl apply --filename=kubernetes/manifests/hm-kafka/hm-kafka/kafka-persistent.yaml --namespace=hm-kafka
 
-# kubectl delete --filename=kubernetes/manifests/hm-kafka/kafka-persistent.yaml --namespace=hm-kafka
-# kubectl delete --filename=kubernetes/manifests/hm-kafka/kafka-persistent-single.yaml --namespace=hm-kafka
+# kubectl delete --filename=kubernetes/manifests/hm-kafka/hm-kafka/kafka-persistent.yaml --namespace=hm-kafka
+# kubectl delete --filename=kubernetes/manifests/hm-kafka/hm-kafka/kafka-persistent-single.yaml --namespace=hm-kafka
 # kubectl delete --filename="https://strimzi.io/install/latest?namespace=hm-kafka"
 # kubectl delete namespace hm-kafka
 echo "=================================================="
