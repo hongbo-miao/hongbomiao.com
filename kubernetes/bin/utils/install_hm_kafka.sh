@@ -45,7 +45,7 @@ echo "=================================================="
 
 echo "# Get Kafka truststore"
 KAFKA_DATA_PATH="kubernetes/data/hm-kafka/hm-kafka"
-KEYSTORE_PASSWORD="m1Uaf4Crxzoo2Zxp"
+KAFKA_TRUSTSTORE_PASSWORD="m1Uaf4Crxzoo2Zxp"
 
 rm -f "${KAFKA_DATA_PATH}/ca.crt"
 rm -f "${KAFKA_DATA_PATH}/kafka-truststore.jks"
@@ -55,12 +55,13 @@ kubectl get secret hm-kafka-cluster-ca-cert \
   --output=jsonpath="{.data.ca\.crt}" \
   | base64 -d \
   > "${KAFKA_DATA_PATH}/ca.crt"
-keytool -importcert \
+keytool \
+  -importcert \
   -trustcacerts \
-  -alias hm-kafka-truststore \
   -file "${KAFKA_DATA_PATH}/ca.crt" \
   -keystore "${KAFKA_DATA_PATH}/kafka-truststore.jks" \
-  -storepass "${KEYSTORE_PASSWORD}" \
+  -storepass "${KAFKA_TRUSTSTORE_PASSWORD}" \
+  -alias hm-kafka-truststore \
   -noprompt
 echo "=================================================="
 
@@ -68,8 +69,8 @@ echo "# Produce messages to Kafka"
 kafka-console-producer \
   --broker-list=kafka-bootstrap.192.168.1.149.nip.io:443 \
   --producer-property=security.protocol=SSL \
-  --producer-property=ssl.truststore.password="${KEYSTORE_PASSWORD}" \
   --producer-property=ssl.truststore.location="${KAFKA_DATA_PATH}/kafka-truststore.jks" \
+  --producer-property=ssl.truststore.password="${KAFKA_TRUSTSTORE_PASSWORD}" \
   --topic=my-topic
 echo "=================================================="
 
