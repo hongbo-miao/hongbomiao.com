@@ -79,5 +79,6 @@ kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --t
   bin/kafka-console-consumer.sh \
     --bootstrap-server=localhost:9092 \
     --topic=my-topic \
+    --property=print.key=true \
     --from-beginning
 echo "=================================================="

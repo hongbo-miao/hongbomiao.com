@@ -55,14 +55,17 @@ echo "# Create secret hm-elasticsearch-keystore"
 kubectl create secret generic hm-elasticsearch-keystore \
   --from-file="${KAFKACONNECT_DATA_PATH}/elasticsearch-keystore.jks" \
   --namespace=hm-kafka
+# kubectl delete secret hm-elasticsearch-keystore --namespace=hm-kafka
 echo "=================================================="
 
 echo "# Create secret hm-elasticsearch-credentials"
 kubectl create secret generic hm-elasticsearch-credentials \
   --from-file=kubernetes/manifests/hm-kafka/logging-kafka-connect/elasticsearch-sink-kafka-connector/elasticsearch-credentials.properties \
   --namespace=hm-kafka
+# kubectl delete secret hm-elasticsearch-credentials --namespace=hm-kafka
 echo "=================================================="
 
 echo "# Install hm-kafka-logging-kafka-connect"
 kubectl apply --filename=kubernetes/manifests/hm-kafka/logging-kafka-connect
+# kubectl delete --filename=kubernetes/manifests/hm-kafka/logging-kafka-connect
 echo "=================================================="
