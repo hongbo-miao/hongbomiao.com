@@ -23,6 +23,25 @@ kubernetes-kafka-console-consumer-from-beginning:
 			--topic=my-topic \
 			--from-beginning
 
+keytool-list-hm-kafka-kafka-truststore:
+	cd .. && \
+	keytool \
+		-list \
+		-keystore kubernetes/data/hm-kafka/hm-kafka/kafka-truststore.jks \
+		-storepass m1Uaf4Crxzoo2Zxp
+keytool-list-opa-kafka-connect-elasticsearch-keystore:
+	cd .. && \
+	keytool \
+		-list \
+		-keystore kubernetes/data/hm-kafka/opa-kafka-connect/elasticsearch-keystore.jks \
+		-storepass MPx57vkACsRWKVap
+keytool-list-logging-kafka-connect-elasticsearch-keystore:
+	cd .. && \
+	keytool \
+		-list \
+		-keystore kubernetes/data/hm-kafka/logging-kafka-connect/elasticsearch-keystore.jks \
+		-storepass MPx57vkACsRWKVap
+
 # Local
 kafka-install:
 	brew install kafka
