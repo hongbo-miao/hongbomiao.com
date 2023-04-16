@@ -13,8 +13,8 @@ kafka-get-hm-kafka-logging-kafka-connect:
 
 kafka-get-postgres-kafka-connector:
 	kubectl get kafkaconnectors postgres-kafka-connector --namespace=hm-kafka --output=yaml
-kafka-get-elasticsearch-sink-kafka-connector:
-	kubectl get kafkaconnectors elasticsearch-sink-kafka-connector --namespace=hm-kafka --output=yaml
+kafka-get-hm-dummy-log-elasticsearch-sink-kafka-connector:
+	kubectl get kafkaconnectors hm-dummy-log-elasticsearch-sink-kafka-connector --namespace=hm-kafka --output=yaml
 kafka-get-http-sink-kafka-connector:
 	kubectl get kafkaconnectors http-sink-kafka-connector --namespace=hm-kafka --output=yaml
 
