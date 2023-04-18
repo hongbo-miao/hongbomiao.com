@@ -267,8 +267,12 @@ kubectl-ssh:
 	kubectl ssh node lima-rancher-desktop
 
 # Vagrant
+vagrant-install:
+	brew install --cask virtualbox
+	brew install --cask vagrant
+	brew install --cask vagrant-manager
 vagrant-init:
-	vagrant init hashicorp/bionic64
+	vagrant init ubuntu/jammy64
 vagrant-up:
 	vagrant up
 vagrant-suspend:
@@ -289,8 +293,10 @@ vagrant-box-outdated:
 	vagrant box outdated
 vagrant-box-update:
 	vagrant box update
+vagrant-box-add:
+	vagrant box add ubuntu/jammy64
 vagrant-box-remove:
-	vagrant box remove hashicorp/bionic64
+	vagrant box remove ubuntu/jammy64
 vagrant-box-help:
 	vagrant help box
 vagrant-plugin-list:

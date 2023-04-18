@@ -74,7 +74,7 @@ jupyter-lab:
 rbenv-list-latest-stable-versions:
 	rbenv install -l
 rbenv-install:
-	rbenv install 3.1.3
+	rbenv install 3.2.1
 
 bundle-init:
 	bundle init
