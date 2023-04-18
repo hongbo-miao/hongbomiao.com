@@ -42,7 +42,7 @@ show-disk-usage:
 
 # Network
 show-network-live:
-	vnstat --live
+	vnstat --live 1 --style 4 --rateunit 0
 show-network-hours:
 	vnstat --hours
 show-network-hoursgraph:
