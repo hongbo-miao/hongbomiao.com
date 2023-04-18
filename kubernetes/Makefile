@@ -280,7 +280,7 @@ vagrant-suspend:
 vagrant-halt:
 	vagrant halt
 vagrant-destroy:
-	vagrant destroy
+	vagrant destroy --force
 vagrant-status:
 	vagrant status
 vagrant-ssh:

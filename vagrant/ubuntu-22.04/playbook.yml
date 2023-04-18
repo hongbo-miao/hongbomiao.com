@@ -1,0 +1,8 @@
+---
+- name: Install packages
+  hosts: all
+  become: true
+  tasks:
+    - name: Install prerequisites
+      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+      loop: ['vnstat']
