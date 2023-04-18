@@ -7,5 +7,13 @@ vagrant-init:
 	vagrant init hbsmith/win11-arm
 vagrant-up:
 	vagrant up --provider=parallels
+vagrant-suspend:
+	vagrant suspend
+vagrant-halt:
+	vagrant halt
 vagrant-destroy:
-	vagrant destroy
+	vagrant destroy --force
+vagrant-ssh:
+	vagrant ssh
+vagrant-status:
+	vagrant status
