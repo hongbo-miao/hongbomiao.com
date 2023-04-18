@@ -286,6 +286,7 @@ make kubernetes-clean
 - **Kubecost** - Kubernetes cost monitoring and management
 - **Sloop** - Kubernetes history visualization
 - **Diun** - Container image update notifier
+- **Vagrant** - Development environments building and distributing
 - **Ansible** - IT automation system
 - **CodeQL** - Variant analysis
 
