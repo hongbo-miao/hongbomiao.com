@@ -1,8 +1,77 @@
 ---
-- name: Install packages
+- name: Install common packages
   hosts: all
-  become: true
+  gather_facts: no
   tasks:
-    - name: Install prerequisites
-      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
-      loop: ['vnstat']
+    - name: Install common packages
+      become: true
+      apt:
+        name:
+          # Network
+          - vnstat
+        update_cache: yes
+        state: present
+
+- name: Install Rclone
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Install Rclone
+      become: true
+      # https://github.com/pyenv/pyenv-installer
+      ansible.builtin.shell: |
+        sudo -v ; curl https://rclone.org/install.sh | sudo bash
+
+- name: Install Pyenv, Python, Poetry
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Install Pyenv
+      # https://github.com/pyenv/pyenv-installer
+      ansible.builtin.shell: |
+        curl https://pyenv.run | bash
+    - name: Add Pyenv to .bashrc
+      ansible.builtin.blockinfile:
+        path: ~/.bashrc
+        block: |
+          export PYENV_ROOT="$HOME/.pyenv"
+          command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+    - name: Install packages to build Python
+      become: true
+      apt:
+        name:
+          # https://devguide.python.org/getting-started/setup-building/index.html#linux
+          - build-essential
+          - gdb
+          - lcov
+          - pkg-config
+          - libbz2-dev
+          - libffi-dev
+          - libgdbm-dev
+          - libgdbm-compat-dev
+          - liblzma-dev
+          - libncurses5-dev
+          - libreadline6-dev
+          - libsqlite3-dev
+          - libssl-dev
+          - lzma
+          - lzma-dev
+          - tk-dev
+          - uuid-dev
+          - zlib1g-dev
+        update_cache: yes
+        state: present
+    - name: Install Python
+      ansible.builtin.shell: |
+        export PYENV_ROOT="$HOME/.pyenv"
+        command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+        pyenv install 3.11
+        pyenv global 3.11
+    - name: Install Poetry
+      # https://python-poetry.org/docs/
+      ansible.builtin.shell: |
+        curl -sSL https://install.python-poetry.org | python3 -
