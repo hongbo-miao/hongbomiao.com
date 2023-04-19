@@ -143,6 +143,8 @@ poetry-check:
 poetry-cache-clear:
 	poetry cache clear pypi --all
 
+lint-ansible:
+	poetry run poe lint-ansible
 lint-cmake:
 	poetry run poe lint-cmake
 lint-python-black:
