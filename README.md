@@ -315,6 +315,7 @@ make kubernetes-clean
 
 ### Code
 
+- **ansible-lint** - Ansible linter
 - **CMakeLint** - CMake linter
 - **commitlint** - Commit message linter
 - **Stylelint** - CSS linter
