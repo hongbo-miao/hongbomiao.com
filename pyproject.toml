@@ -8,6 +8,8 @@ authors = ["Hongbo Miao"]
 python = "3.11.x"
 
 [tool.poetry.group.dev.dependencies]
+ansible = "7.4.0"
+ansible-lint = { version = "6.14.6", markers = "platform_system != 'Windows'" }
 autoflake = "2.1.1"
 black = {version = "23.3.0", extras = ["d"]}
 cmakelint = "1.4.2"
@@ -23,6 +25,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
+lint-ansible = {shell = "ansible-lint $(git ls-files '*playbook.yml')"}
 lint-cmake = {shell = "cmakelint $(git ls-files '*CMakeLists.txt')"}
 lint-python-autoflake = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --check --recursive ."
 lint-python-autoflake-fix = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --in-place --recursive ."
