@@ -16,7 +16,13 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
-      static-type-check-typescript: ${{ steps.filter.outputs.static-type-check-typescript }}
+      api-go: ${{ steps.filter.outputs.api-go }}
+      api-node: ${{ steps.filter.outputs.api-node }}
+      ethereum: ${{ steps.filter.outputs.ethereum }}
+      grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
+      mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
+      web: ${{ steps.filter.outputs.web }}
+      web-cypress: ${{ steps.filter.outputs.web-cypress }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,13 +30,23 @@ jobs:
         id: filter
         with:
           filters: |
-            static-type-check-typescript:
+            api-node:
               - '.github/workflows/.static-type-check.yml'
               - 'api-node/**'
+            ethereum:
+              - '.github/workflows/.static-type-check.yml'
               - 'ethereum/**'
+            grafana-hm-panel-plugin:
+              - '.github/workflows/.static-type-check.yml'
               - 'grafana/hm-panel-plugin/**'
+            mobile-react-native:
+              - '.github/workflows/.static-type-check.yml'
               - 'mobile-react-native/**'
+            web:
+              - '.github/workflows/.static-type-check.yml'
               - 'web/**'
+            web-cypress:
+              - '.github/workflows/.static-type-check.yml'
               - 'web-cypress/**'
 
   static-type-check-kotlin:
@@ -123,10 +139,10 @@ jobs:
         run: |
           terraform validate
 
-  static-type-check-typescript:
-    name: TypeScript
+  static-type-check-typescript-api-node:
+    name: TypeScript (api-node)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.static-type-check-typescript == 'true' }}
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -136,28 +152,127 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version-file: .nvmrc
+          node-version-file: api-node/.nvmrc
           cache: npm
-          cache-dependency-path: |
-            api-node/package-lock.json
-            ethereum/package-lock.json
-            grafana/hm-panel-plugin/package-lock.json
-            mobile-react-native/package-lock.json
-            web/package-lock.json
-            web-cypress/package-lock.json
+          cache-dependency-path: api-node/package-lock.json
       - name: Install dependencies
         run: |
           cd api-node && npm ci
-          cd ../ethereum && npm ci
-          cd ../grafana/hm-panel-plugin && npm ci
-          cd ../../mobile-react-native && npm ci
-          cd ../web && npm ci
-          cd ../web-cypress && npm ci
       - name: Static type check TypeScript
         run: |
           cd api-node && npm run tsc
-          cd ../ethereum && npm run tsc
-          cd ../grafana/hm-panel-plugin && npm run tsc
-          cd ../../mobile-react-native && npm run tsc
-          cd ../web && npm run tsc
-          cd ../web-cypress && npm run tsc
+
+  static-type-check-typescript-ethereum:
+    name: TypeScript (ethereum)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ethereum/.nvmrc
+          cache: npm
+          cache-dependency-path: ethereum/package-lock.json
+      - name: Install dependencies
+        run: |
+          cd ethereum && npm ci
+      - name: Static type check TypeScript
+        run: |
+          cd ethereum && npm run tsc
+
+  static-type-check-typescript-grafana-hm-panel-plugin:
+    name: TypeScript (grafana-hm-panel-plugin)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: grafana/hm-panel-plugin/.nvmrc
+          cache: npm
+          cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
+      - name: Install dependencies
+        run: |
+          cd grafana/hm-panel-plugin && npm ci
+      - name: Static type check TypeScript
+        run: |
+          cd grafana/hm-panel-plugin && npm run tsc
+
+  static-type-check-typescript-mobile-react-native:
+    name: TypeScript (mobile-react-native)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: mobile-react-native/.nvmrc
+          cache: npm
+          cache-dependency-path: mobile-react-native/package-lock.json
+      - name: Install dependencies
+        run: |
+          cd mobile-react-native && npm ci
+      - name: Static type check TypeScript
+        run: |
+          cd mobile-react-native && npm run tsc
+
+  static-type-check-typescript-web:
+    name: TypeScript (web)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.web == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: web/.nvmrc
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install dependencies
+        run: |
+          cd web && npm ci
+      - name: Static type check TypeScript
+        run: |
+          cd web && npm run tsc
+
+  static-type-check-typescript-web-cypress:
+    name: TypeScript (web-cypress)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: web-cypress/.nvmrc
+          cache: npm
+          cache-dependency-path: web-cypress/package-lock.json
+      - name: Install dependencies
+        run: |
+          cd web-cypress && npm ci
+      - name: Static type check TypeScript
+        run: |
+          cd web-cypress && npm run tsc
