@@ -24,7 +24,7 @@ jobs:
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
-      grafana: ${{ steps.filter.outputs.grafana }}
+      grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
@@ -55,18 +55,15 @@ jobs:
             convolutional-neural-network:
               - '.github/workflows/test.yml'
               - 'convolutional-neural-network/**'
-            grafana:
+            grafana-hm-panel-plugin:
               - '.github/workflows/test.yml'
-              - 'grafana/**'
+              - 'grafana/hm-panel-plugin/**'
             chatbot:
               - '.github/workflows/test.yml'
               - 'chatbot/**'
             hm-opal-client:
               - '.github/workflows/test.yml'
               - 'hm-opal-client/**'
-            hm-prefect-find-taxi-top-routes:
-              - '.github/workflows/test.yml'
-              - 'hm-prefect/workflows/find-taxi-top-routes/**'
             hm-spark-find-retired-people-scala:
               - '.github/workflows/test.yml'
               - 'hm-spark/applications/find-retired-people-scala/**'
@@ -621,10 +618,10 @@ jobs:
         run: |
           docker build --file=prometheus/Dockerfile.test .
 
-  grafana-end-to-end-test:
-    name: Grafana | End-to-End Test
+  grafana-hm-panel-plugin-end-to-end-test:
+    name: Grafana (hm-panel-plugin) | End-to-End Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana == 'true' }}
+    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     steps:
@@ -664,8 +661,8 @@ jobs:
         run: |
           docker-compose down
 
-  grafana-compatibility-test:
-    name: Grafana | Compatibility Test
+  grafana-hm-panel-plugin-compatibility-test:
+    name: Grafana (hm-panel-plugin) | Compatibility Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.grafana == 'true' }}
     runs-on: ubuntu-22.04
