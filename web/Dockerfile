@@ -1,7 +1,6 @@
 FROM docker.io/node:20.0.0-alpine AS base
 WORKDIR /usr/src/app
 
-
 FROM base AS builder
 COPY ["web/package.json", "web/package-lock.json", "web/.npmrc", "./"]
 RUN npm ci
@@ -10,7 +9,6 @@ COPY web ./
 RUN rm -f ./.eslintrc.js \
   && npm run build \
   && npm prune --production
-
 
 FROM docker.io/nginx:1.24.0-alpine AS release
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
