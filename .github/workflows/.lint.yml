@@ -240,7 +240,7 @@ jobs:
   lint-javascript-grafana-hm-panel-plugin:
     name: JavaScript (grafana-hm-panel-plugin)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
+    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
