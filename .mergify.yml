@@ -30,8 +30,23 @@ pull_request_rules:
           - check-success=Lint / Go
           - check-skipped=Lint / Go
       - or:
-          - check-success=Lint / JavaScript
-          - check-skipped=Lint / JavaScript
+          - check-success=Lint / JavaScript (api-node)
+          - check-skipped=Lint / JavaScript (api-node)
+      - or:
+          - check-success=Lint / JavaScript (ethereum)
+          - check-skipped=Lint / JavaScript (ethereum)
+      - or:
+          - check-success=Lint / JavaScript (grafana-hm-panel-plugin)
+          - check-skipped=Lint / JavaScript (grafana-hm-panel-plugin)
+      - or:
+          - check-success=Lint / JavaScript (mobile-react-native)
+          - check-skipped=Lint / JavaScript (mobile-react-native)
+      - or:
+          - check-success=Lint / JavaScript (web)
+          - check-skipped=Lint / JavaScript (web)
+      - or:
+          - check-success=Lint / JavaScript (web-cypress)
+          - check-skipped=Lint / JavaScript (web-cypress)
       - or:
           - check-success=Lint / Kotlin
           - check-skipped=Lint / Kotlin
@@ -141,11 +156,11 @@ pull_request_rules:
           - check-success=Prometheus | Test
           - check-skipped=Prometheus | Test
       - or:
-          - check-success=Grafana | End-to-End Test
-          - check-skipped=Grafana | End-to-End Test
+          - check-success=Grafana (hm-panel-plugin) | End-to-End Test
+          - check-skipped=Grafana (hm-panel-plugin) | End-to-End Test
       - or:
-          - check-success=Grafana | Compatibility Test
-          - check-skipped=Grafana | Compatibility Test
+          - check-success=Grafana (hm-panel-plugin) | Compatibility Test
+          - check-skipped=Grafana (hm-panel-plugin) | Compatibility Test
       - or:
           - check-success=HM OPAL Client | Build
           - check-skipped=HM OPAL Client | Build
