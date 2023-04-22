@@ -1,7 +1,7 @@
 ---
 name: . Static Type Check
 
-"on":
+'on':
   workflow_call:
     secrets:
       TF_API_TOKEN:
@@ -156,11 +156,13 @@ jobs:
           cache: npm
           cache-dependency-path: api-node/package-lock.json
       - name: Install dependencies
+        working-directory: api-node
         run: |
-          cd api-node && npm ci
+          npm ci
       - name: Static type check TypeScript
+        working-directory: api-node
         run: |
-          cd api-node && npm run tsc
+          npm run tsc
 
   static-type-check-typescript-ethereum:
     name: TypeScript (ethereum)
@@ -179,11 +181,13 @@ jobs:
           cache: npm
           cache-dependency-path: ethereum/package-lock.json
       - name: Install dependencies
+        working-directory: ethereum
         run: |
-          cd ethereum && npm ci
+          npm ci
       - name: Static type check TypeScript
+        working-directory: ethereum
         run: |
-          cd ethereum && npm run tsc
+          npm run tsc
 
   static-type-check-typescript-grafana-hm-panel-plugin:
     name: TypeScript (grafana-hm-panel-plugin)
@@ -202,11 +206,13 @@ jobs:
           cache: npm
           cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
       - name: Install dependencies
+        working-directory: grafana/hm-panel-plugin
         run: |
-          cd grafana/hm-panel-plugin && npm ci
+          npm ci
       - name: Static type check TypeScript
+        working-directory: grafana/hm-panel-plugin
         run: |
-          cd grafana/hm-panel-plugin && npm run tsc
+          npm run tsc
 
   static-type-check-typescript-mobile-react-native:
     name: TypeScript (mobile-react-native)
@@ -225,11 +231,13 @@ jobs:
           cache: npm
           cache-dependency-path: mobile-react-native/package-lock.json
       - name: Install dependencies
+        working-directory: mobile-react-native
         run: |
-          cd mobile-react-native && npm ci
+          npm ci
       - name: Static type check TypeScript
+        working-directory: mobile-react-native
         run: |
-          cd mobile-react-native && npm run tsc
+          npm run tsc
 
   static-type-check-typescript-web:
     name: TypeScript (web)
@@ -248,11 +256,13 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
       - name: Install dependencies
+        working-directory: web
         run: |
-          cd web && npm ci
+          npm ci
       - name: Static type check TypeScript
+        working-directory: web
         run: |
-          cd web && npm run tsc
+          npm run tsc
 
   static-type-check-typescript-web-cypress:
     name: TypeScript (web-cypress)
@@ -271,8 +281,10 @@ jobs:
           cache: npm
           cache-dependency-path: web-cypress/package-lock.json
       - name: Install dependencies
+        working-directory: web-cypress
         run: |
-          cd web-cypress && npm ci
+          npm ci
       - name: Static type check TypeScript
+        working-directory: web-cypress
         run: |
-          cd web-cypress && npm run tsc
+          npm run tsc
