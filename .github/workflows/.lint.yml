@@ -1,7 +1,7 @@
 ---
 name: . Lint
 
-"on":
+'on':
   workflow_call:
 
 jobs:
@@ -208,11 +208,13 @@ jobs:
           cache: npm
           cache-dependency-path: api-node/package-lock.json
       - name: Install dependencies
+        working-directory: api-node
         run: |
-          cd api-node && npm ci
+          npm ci
       - name: Lint JavaScript
+        working-directory: api-node
         run: |
-          cd api-node && npm run lint:javascript
+          npm run lint:javascript
 
   lint-javascript-ethereum:
     name: JavaScript (ethereum)
@@ -231,11 +233,13 @@ jobs:
           cache: npm
           cache-dependency-path: ethereum/package-lock.json
       - name: Install dependencies
+        working-directory: ethereum
         run: |
-          cd ethereum && npm ci
+          npm ci
       - name: Lint JavaScript
+        working-directory: ethereum
         run: |
-          cd ethereum && npm run lint:javascript
+          npm run lint:javascript
 
   lint-javascript-grafana-hm-panel-plugin:
     name: JavaScript (grafana-hm-panel-plugin)
@@ -254,11 +258,13 @@ jobs:
           cache: npm
           cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
       - name: Install dependencies
+        working-directory: grafana/hm-panel-plugin
         run: |
-          cd grafana/hm-panel-plugin && npm ci
+          npm ci
       - name: Lint JavaScript
+        working-directory: grafana/hm-panel-plugin
         run: |
-          cd grafana/hm-panel-plugin && npm run lint:javascript
+          npm run lint:javascript
 
   lint-javascript-mobile-react-native:
     name: JavaScript (mobile-react-native)
@@ -277,11 +283,13 @@ jobs:
           cache: npm
           cache-dependency-path: mobile-react-native/package-lock.json
       - name: Install dependencies
+        working-directory: mobile-react-native
         run: |
-          cd mobile-react-native && npm ci
+          npm ci
       - name: Lint JavaScript
+        working-directory: mobile-react-native
         run: |
-          cd mobile-react-native && npm run lint:javascript
+          npm run lint:javascript
 
   lint-javascript-web:
     name: JavaScript (web)
@@ -300,11 +308,13 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
       - name: Install dependencies
+        working-directory: web
         run: |
-          cd web && npm ci
+          npm ci
       - name: Lint JavaScript
+        working-directory: web
         run: |
-          cd web && npm run lint:javascript
+          npm run lint:javascript
 
   lint-javascript-web-cypress:
     name: JavaScript (web-cypress)
@@ -323,11 +333,13 @@ jobs:
           cache: npm
           cache-dependency-path: web-cypress/package-lock.json
       - name: Install dependencies
+        working-directory: web-cypress
         run: |
-          cd web-cypress && npm ci
+          npm ci
       - name: Lint JavaScript
+        working-directory: web-cypress
         run: |
-          cd web-cypress && npm run lint:javascript
+          npm run lint:javascript
 
   lint-kotlin:
     name: Kotlin
