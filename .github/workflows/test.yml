@@ -664,7 +664,7 @@ jobs:
   grafana-hm-panel-plugin-compatibility-test:
     name: Grafana (hm-panel-plugin) | Compatibility Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana == 'true' }}
+    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     steps:
