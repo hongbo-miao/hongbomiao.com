@@ -12,5 +12,5 @@ lint-caddy-fix:
 static-type-check-caddy:
 	caddy validate
 
-build:
-	sh bin/build.sh
+build-web:
+	sh bin/build_web.sh
