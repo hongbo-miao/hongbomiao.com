@@ -957,7 +957,7 @@ jobs:
   deploy-hm-api-node:
     name: Deploy hm-api-node
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-22.04
     environment:
       name: production-web
