@@ -1,4 +1,4 @@
-// OpenTelemetry need to be setup before importing other modules
+// OpenTelemetry needs to be setup before importing other modules
 import './reliability/utils/initTracer';
 import http from 'http';
 import { execute, subscribe } from 'graphql';
