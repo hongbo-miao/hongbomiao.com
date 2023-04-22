@@ -11,3 +11,6 @@ lint-caddy-fix:
 	caddy fmt --overwrite
 static-type-check-caddy:
 	caddy validate
+
+build:
+	sh bin/build.sh
