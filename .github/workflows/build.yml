@@ -49,6 +49,7 @@ jobs:
             api-node:
               - '.github/workflows/build.yml'
               - 'api-node/**'
+              - 'Procfile'
             api-python:
               - '.github/workflows/build.yml'
               - 'api-python/**'
@@ -956,7 +957,8 @@ jobs:
 
   deploy-hm-api-node:
     name: Deploy hm-api-node
-    needs: build-hm-api-node
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
     runs-on: ubuntu-22.04
     environment:
       name: production-web
