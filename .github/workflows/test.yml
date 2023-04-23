@@ -28,6 +28,7 @@ jobs:
       chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
+      hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
@@ -67,6 +68,9 @@ jobs:
             hm-spark-find-retired-people-scala:
               - '.github/workflows/test.yml'
               - 'hm-spark/applications/find-retired-people-scala/**'
+            hm-spark-ingest-from-s3-to-kafka:
+              - '.github/workflows/test.yml'
+              - 'hm-spark/applications/ingest-from-s3-to-kafka/**'
             mobile-android:
               - '.github/workflows/test.yml'
               - 'mobile-android/**'
@@ -525,6 +529,27 @@ jobs:
           cache: sbt
       - name: Test
         working-directory: hm-spark/applications/find-retired-people-scala
+        run: |
+          sbt test
+
+  spark-ingest-from-s3-to-kafka:
+    name: Spark (ingest-from-s3-to-kafka) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: '17'
+          cache: sbt
+      - name: Test
+        working-directory: hm-spark/applications/ingest-from-s3-to-kafka
         run: |
           sbt test
 
