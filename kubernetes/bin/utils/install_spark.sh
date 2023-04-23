@@ -9,7 +9,8 @@ helm upgrade \
   --install \
   --repo=https://charts.bitnami.com/bitnami \
   --namespace=hm-spark \
-  --create-namespace
+  --create-namespace \
+  --values=kubernetes/manifests/spark/helm/my-values.yaml
 # helm uninstall spark --namespace=hm-spark
 # kubectl delete namespace hm-spark
 echo "=================================================="
