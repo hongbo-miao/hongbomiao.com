@@ -10,6 +10,13 @@ sbt-test:
 	sbt test
 sbt-run:
 	sbt run
+sbt-plugins:
+	sbt plugins
+
+lint-scala:
+	sbt scalafmtCheckAll
+lint-scala-fix:
+	sbt scalafmtAll
 
 java-list-versions:
 	/usr/libexec/java_home -V
@@ -17,7 +24,6 @@ java-current-version:
 	java -version
 java-set-version:
 	export JAVA_HOME=`/usr/libexec/java_home -v 11.0.17`
-
 
 # 1 - Local mode
 spark-submit-to-local:
