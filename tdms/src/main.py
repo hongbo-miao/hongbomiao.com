@@ -7,6 +7,7 @@ def main():
         df = group.as_dataframe()
         print(group.name)
         print(df)
+        # df.to_parquet(f"{group.name}.parquet", engine="pyarrow", compression="snappy")
         df.to_parquet(f"{group.name}.parquet", engine="pyarrow", compression="brotli")
 
 
