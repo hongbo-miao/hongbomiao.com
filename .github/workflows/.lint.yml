@@ -361,7 +361,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: corretto
-          java-version: '19'
+          java-version: '20'
           cache: gradle
       - name: Lint Kotlin
         run: |
@@ -469,7 +469,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Install Qt
+      - name: Set up Qt
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.*'
