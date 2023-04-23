@@ -69,6 +69,12 @@ pull_request_rules:
           - check-success=Lint / Ruby
           - check-skipped=Lint / Ruby
       - or:
+          - check-success=Lint / Spark (hm-spark-find-retired-people-scala)
+          - check-skipped=Lint / Spark (hm-spark-find-retired-people-scala)
+      - or:
+          - check-success=Lint / Spark (hm-spark-ingest-from-s3-to-kafka)
+          - check-skipped=Lint / Spark (hm-spark-ingest-from-s3-to-kafka)
+      - or:
           - check-success=Lint / Shell
           - check-skipped=Lint / Shell
       - or:
@@ -153,8 +159,11 @@ pull_request_rules:
           - check-success=API - Python | Test
           - check-skipped=API - Python | Test
       - or:
-          - check-success=Spark (find-retired-people-scala) | Test
-          - check-skipped=Spark (find-retired-people-scala) | Test
+          - check-success=Spark (hm-spark-find-retired-people-scala) | Test
+          - check-skipped=Spark (hm-spark-find-retired-people-scala) | Test
+      - or:
+          - check-success=Spark (hm-spark-ingest-from-s3-to-kafka) | Test
+          - check-skipped=Spark (hm-spark-ingest-from-s3-to-kafka) | Test
       - or:
           - check-success=Streaming | Test
           - check-skipped=Streaming | Test

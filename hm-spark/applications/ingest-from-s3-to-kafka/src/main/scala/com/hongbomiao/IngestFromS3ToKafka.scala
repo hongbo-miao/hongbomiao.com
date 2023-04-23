@@ -9,14 +9,14 @@ object IngestFromS3ToKafka {
     val awsAccessKeyID = config.getString("aws-access-key-id")
     val awsSecretAccessKey = config.getString("aws-secret-access-key")
 
-    val spark: SparkSession = SparkSession.builder()
+    val spark: SparkSession = SparkSession
+      .builder()
       .master("local[*]")
       .appName("ingest-from-s3-to-kafka")
       .config("spark.ui.port", "4040")
       .config("spark.hadoop.fs.s3a.access.key", awsAccessKeyID)
       .config("spark.hadoop.fs.s3a.secret.key", awsSecretAccessKey)
       .getOrCreate()
-
 
     import spark.implicits._
 
