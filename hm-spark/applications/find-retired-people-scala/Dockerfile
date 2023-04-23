@@ -4,6 +4,6 @@ COPY hm-spark/applications/find-retired-people-scala/src/ ./src/
 COPY hm-spark/applications/find-retired-people-scala/build.sbt ./
 RUN sbt package
 
-FROM docker.io/apache/spark:v3.4.0
+FROM docker.io/bitnami/spark:3.3.2-debian-11-r19
 WORKDIR /opt/spark/work-dir
 COPY --from=builder /usr/src/app/target/scala-2.12/findretiredpeople_2.12-1.0.jar /opt/spark/work-dir/
