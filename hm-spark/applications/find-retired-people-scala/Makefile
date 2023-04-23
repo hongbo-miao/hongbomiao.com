@@ -10,6 +10,13 @@ sbt-test:
 	sbt test
 sbt-run:
 	sbt run
+sbt-plugins:
+	sbt plugins
+
+lint-scala:
+	sbt scalafmtCheckAll
+lint-scala-fix:
+	sbt scalafmtAll
 
 java-list-versions:
 	/usr/libexec/java_home -V

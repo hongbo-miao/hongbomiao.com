@@ -12,7 +12,8 @@ object FindRetiredPeople {
       (5, "Eve", 45)
     )
 
-    val spark: SparkSession = SparkSession.builder()
+    val spark: SparkSession = SparkSession
+      .builder()
       .master("local[*]")
       .appName("find-retired-people-scala")
       .config("spark.ui.port", "4040")
@@ -22,10 +23,10 @@ object FindRetiredPeople {
     val df: DataFrame = people.toDF("id", "name", "age")
     df.createOrReplaceTempView("people")
 
-    val retiredPeople: DataFrame = spark.sql("SELECT name, age FROM people WHERE age >= 67")
+    val retiredPeople: DataFrame =
+      spark.sql("SELECT name, age FROM people WHERE age >= 67")
     retiredPeople.show()
 
     spark.stop()
   }
 }
-

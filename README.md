@@ -329,6 +329,7 @@ make kubernetes-clean
 - **Ruff**, **autoflake**, **isort** - Python linter
 - **qmllint** - QML linter
 - **RuboCop** - Ruby linter and code formatter
+- **Scalafmt** - Scala code formatter
 - **ShellCheck** - Shell linter
 - **solhint** - Solidity linter
 - **SQLFluff** - SQL linter and code formatter
