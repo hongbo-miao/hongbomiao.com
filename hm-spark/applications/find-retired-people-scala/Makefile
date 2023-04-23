@@ -10,6 +10,14 @@ sbt-test:
 	sbt test
 sbt-run:
 	sbt run
+sbt-assembly:
+	sbt assembly
+
+sbt-clean-compile-package:
+	sbt clean compile package
+sbt-clean-compile-assembly:
+	sbt clean compile assembly
+
 sbt-plugins:
 	sbt plugins
 
