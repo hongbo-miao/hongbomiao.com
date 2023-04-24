@@ -55,7 +55,7 @@ serve-files:
 #  		spark-submit \
 # 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 # 			--deploy-mode=cluster \
-# 			https://xxx.ngrok.io/main.py
+# 			https://xxx.ngrok-free.app/find-retired-people-python/src/main.py?download=true
 
 # 3.2 - Client mode
 spark-submit-to-spark-master-node-client-mode:
@@ -64,4 +64,4 @@ spark-submit-to-spark-master-node-client-mode:
  		spark-submit \
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=client \
-			https://xxx.ngrok.io/main.py
+			https://xxx.ngrok-free.app/find-retired-people-python/src/main.py?download=true
