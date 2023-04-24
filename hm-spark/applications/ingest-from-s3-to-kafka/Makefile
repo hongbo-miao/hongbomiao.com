@@ -6,19 +6,19 @@ sbt-compile:
 	sbt compile
 sbt-package:
 	sbt package
+sbt-assembly:
+	sbt assembly
+sbt-clean-compile-package:
+	sbt clean compile package
+sbt-clean-compile-assembly:
+	sbt clean compile assembly
+
 sbt-test:
 	sbt test
 sbt-run:
 	sbt run \
 		-Dspark.hadoop.fs.s3a.access.key=xxx \
 		-Dspark.hadoop.fs.s3a.secret.key=xxx
-sbt-assembly:
-	sbt assembly
-
-sbt-clean-compile-package:
-	sbt clean compile package
-sbt-clean-compile-assembly:
-	sbt clean compile assembly
 
 sbt-plugins:
 	sbt plugins
