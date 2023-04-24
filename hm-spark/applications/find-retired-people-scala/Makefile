@@ -38,7 +38,7 @@ spark-submit-to-local:
 	spark-submit \
 		--class=com.hongbomiao.FindRetiredPeople \
 		--master="local[*]" \
-		target/scala-2.12/findretiredpeople_2.12-1.0.jar
+		target/scala-2.12/FindRetiredPeople-assembly-1.0.jar
 
 # 2 - Run in a pod
 docker-build:
@@ -58,7 +58,7 @@ spark-submit-to-kubernetes-cluster:
         --conf=spark.kubernetes.namespace=hm-spark \
         --conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest \
         --conf=spark.kubernetes.container.image.pullPolicy=Always \
-        local:///opt/spark/work-dir/findretiredpeople_2.12-1.0.jar
+        local:///opt/spark/work-dir/FindRetiredPeople-assembly-1.0.jar
 kubectl-delete-spark-applications-in-kubernetes-cluster:
 	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=find-retired-people-scala
 
@@ -79,7 +79,7 @@ spark-submit-to-spark-master-node-cluster-mode:
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=cluster \
 			--class=com.hongbomiao.FindRetiredPeople \
-			https://xxx.ngrok.io/findretiredpeople_2.12-1.0.jar
+			https://xxx.ngrok.io/FindRetiredPeople-assembly-1.0.jar
 
 # 3.2 - Client mode
 spark-submit-to-spark-master-node-client-mode:
@@ -89,4 +89,4 @@ spark-submit-to-spark-master-node-client-mode:
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=client \
 			--class=com.hongbomiao.FindRetiredPeople \
-			https://xxx.ngrok.io/findretiredpeople_2.12-1.0.jar
+			https://xxx.ngrok.io/FindRetiredPeople-assembly-1.0.jar
