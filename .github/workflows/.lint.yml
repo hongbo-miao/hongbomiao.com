@@ -19,6 +19,7 @@ jobs:
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
+      mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
       kubernetes: ${{ steps.filter.outputs.kubernetes }}
       web: ${{ steps.filter.outputs.web }}
@@ -51,6 +52,9 @@ jobs:
             kubernetes:
               - '.github/workflows/.lint.yml'
               - 'kubernetes/manifests/**'
+            mobile-android:
+              - '.github/workflows/.lint.yml'
+              - 'mobile-android/**'
             mobile-react-native:
               - '.github/workflows/.lint.yml'
               - 'mobile-react-native/**'
@@ -349,8 +353,10 @@ jobs:
         run: |
           npm run lint:javascript
 
-  lint-kotlin:
-    name: Kotlin
+  lint-kotlin-mobile-android:
+    name: Kotlin (mobile-android)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 30
@@ -364,8 +370,9 @@ jobs:
           java-version: '17'
           cache: gradle
       - name: Lint Kotlin
+        working-directory: mobile-android
         run: |
-          cd mobile-android && ./gradlew ktlintCheck
+          ./gradlew ktlintCheck
 
   lint-kubernetes-manifest:
     name: Kubernetes Manifest
@@ -414,8 +421,8 @@ jobs:
         run: |
           npm run lint:markdown
 
-  lint-protocol-buffers:
-    name: Protocol Buffers
+  lint-protocol-buffers-api-go:
+    name: Protocol Buffers (api-go)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
@@ -425,8 +432,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Lint Protocol Buffers
+        working-directory: api-go
         run: |
-          cd api-go && docker run --rm --volume="$(pwd):/workspace" --workdir=/workspace bufbuild/buf lint
+          docker run \
+            --rm \
+            --volume="$(pwd):/workspace" \
+            --workdir=/workspace \
+            bufbuild/buf \
+            lint
 
   lint-python:
     name: Python
