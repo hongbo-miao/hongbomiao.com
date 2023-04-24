@@ -6,6 +6,5 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-sql" % "3.3.2" % "provided",
   "org.apache.hadoop" % "hadoop-common" % "3.3.5" % "provided",
   "org.apache.hadoop" % "hadoop-aws" % "3.3.5",
-  "com.amazonaws" % "aws-java-sdk-bundle" % "1.12.454",
-  "org.ekrich" %% "sconfig" % "1.5.0"
+  "com.amazonaws" % "aws-java-sdk-bundle" % "1.12.454"
 )
