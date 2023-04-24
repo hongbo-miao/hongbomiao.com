@@ -49,8 +49,8 @@ jobs:
               - '.github/workflows/.static-type-check.yml'
               - 'web-cypress/**'
 
-  static-type-check-kotlin:
-    name: Kotlin
+  static-type-check-kotlin-mobile-android:
+    name: Kotlin (mobile-android)
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 30
@@ -64,8 +64,8 @@ jobs:
           java-version: '17'
           cache: gradle
       - name: Static type check Kotlin
+        working-directory: mobile-android
         run: |
-          cd mobile-android
           ./gradlew detekt
 
   static-type-check-python:
