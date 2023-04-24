@@ -7,5 +7,5 @@ libraryDependencies ++= Seq(
   "org.apache.hadoop" % "hadoop-common" % "3.3.5" % "provided",
   "org.apache.hadoop" % "hadoop-aws" % "3.3.5",
   "com.amazonaws" % "aws-java-sdk-bundle" % "1.12.454",
-  "com.typesafe" % "config" % "1.4.2"
+  "org.ekrich" %% "sconfig" % "1.5.0"
 )
