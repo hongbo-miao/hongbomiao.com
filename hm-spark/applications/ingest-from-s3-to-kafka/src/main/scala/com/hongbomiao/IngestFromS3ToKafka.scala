@@ -1,21 +1,16 @@
 package com.hongbomiao
 
 import org.apache.spark.sql.{DataFrame, SparkSession}
-import org.ekrich.config.ConfigFactory
 
 object IngestFromS3ToKafka {
   def main(args: Array[String]): Unit = {
-    val config = ConfigFactory.load("application.conf")
-    val awsAccessKeyID = config.getString("aws-access-key-id")
-    val awsSecretAccessKey = config.getString("aws-secret-access-key")
-
     val spark: SparkSession = SparkSession
       .builder()
       .master("local[*]")
       .appName("ingest-from-s3-to-kafka")
       .config("spark.ui.port", "4040")
-      .config("spark.hadoop.fs.s3a.access.key", awsAccessKeyID)
-      .config("spark.hadoop.fs.s3a.secret.key", awsSecretAccessKey)
+      // .config("spark.hadoop.fs.s3a.access.key", "xxx")
+      // .config("spark.hadoop.fs.s3a.secret.key", "xxx")
       .getOrCreate()
 
     import spark.implicits._

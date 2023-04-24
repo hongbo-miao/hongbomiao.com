@@ -9,7 +9,9 @@ sbt-package:
 sbt-test:
 	sbt test
 sbt-run:
-	sbt run
+	sbt run \
+		-Dspark.hadoop.fs.s3a.access.key=xxx \
+		-Dspark.hadoop.fs.s3a.secret.key=xxx
 sbt-assembly:
 	sbt assembly
 
