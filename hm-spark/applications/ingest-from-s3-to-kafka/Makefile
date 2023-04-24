@@ -83,6 +83,8 @@ spark-submit-to-spark-master-node-cluster-mode:
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=cluster \
 			--class=com.hongbomiao.IngestFromS3ToKafka \
+			--conf=spark.hadoop.fs.s3a.access.key=xxx \
+			--conf=spark.hadoop.fs.s3a.secret.key=xxx \
 			https://xxx.ngrok-free.app/ingest-from-s3-to-kafka/target/scala-2.12/IngestFromS3ToKafka-assembly-1.0.jar
 
 # 3.2 - Client mode
@@ -93,4 +95,6 @@ spark-submit-to-spark-master-node-client-mode:
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=client \
 			--class=com.hongbomiao.IngestFromS3ToKafka \
+			--conf=spark.hadoop.fs.s3a.access.key=xxx \
+			--conf=spark.hadoop.fs.s3a.secret.key=xxx \
 			https://xxx.ngrok-free.app/ingest-from-s3-to-kafka/target/scala-2.12/IngestFromS3ToKafka-assembly-1.0.jar
