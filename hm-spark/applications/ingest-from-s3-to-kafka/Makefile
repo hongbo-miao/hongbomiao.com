@@ -10,6 +10,14 @@ sbt-test:
 	sbt test
 sbt-run:
 	sbt run
+sbt-assembly:
+	sbt assembly
+
+sbt-clean-compile-package:
+	sbt clean compile package
+sbt-clean-compile-assembly:
+	sbt clean compile assembly
+
 sbt-plugins:
 	sbt plugins
 
@@ -30,7 +38,7 @@ spark-submit-to-local:
 	spark-submit \
 		--class=com.hongbomiao.IngestFromS3ToKafka \
 		--master="local[*]" \
-		target/scala-2.12/ingestfroms3tokafka_2.12-1.0.jar
+		target/scala-2.12/IngestFromS3ToKafka-assembly-1.0.jar
 
 # 2 - Run in a pod
 docker-build:
@@ -50,7 +58,7 @@ spark-submit-to-kubernetes-cluster:
         --conf=spark.kubernetes.namespace=hm-spark \
         --conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest \
         --conf=spark.kubernetes.container.image.pullPolicy=Always \
-        local:///opt/spark/work-dir/ingestfroms3tokafka_2.12-1.0.jar
+        local:///opt/spark/work-dir/IngestFromS3ToKafka-assembly-1.0.jar
 kubectl-delete-spark-applications-in-kubernetes-cluster:
 	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=ingest-from-s3-to-kafka
 
@@ -71,7 +79,7 @@ spark-submit-to-spark-master-node-cluster-mode:
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=cluster \
 			--class=com.hongbomiao.IngestFromS3ToKafka \
-			https://xxx.ngrok.io/ingestfroms3tokafka_2.12-1.0.jar
+			https://xxx.ngrok.io/IngestFromS3ToKafka-assembly-1.0.jar
 
 # 3.2 - Client mode
 spark-submit-to-spark-master-node-client-mode:
@@ -81,4 +89,4 @@ spark-submit-to-spark-master-node-client-mode:
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=client \
 			--class=com.hongbomiao.IngestFromS3ToKafka \
-			https://xxx.ngrok.io/ingestfroms3tokafka_2.12-1.0.jar
+			https://xxx.ngrok.io/IngestFromS3ToKafka-assembly-1.0.jar
