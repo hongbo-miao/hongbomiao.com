@@ -23,3 +23,8 @@ spec:
     status.storage.replication.factor: 1
     config.providers: file
     config.providers.file.class: org.apache.kafka.common.config.provider.FileConfigProvider
+  externalConfiguration:
+    volumes:
+      - name: hm-sensor-db-credentials-volume
+        secret:
+          secretName: hm-sensor-db-credentials
