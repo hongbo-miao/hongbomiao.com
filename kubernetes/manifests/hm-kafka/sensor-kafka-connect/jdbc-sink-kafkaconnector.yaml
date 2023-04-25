@@ -2,18 +2,18 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnector
 metadata:
-  name: http-sink-kafka-connector
+  name: jdbc-sink-kafka-connector
   namespace: hm-kafka
   labels:
-    strimzi.io/cluster: hm-kafka-opa-kafka-connect
+    strimzi.io/cluster: hm-kafka-sensor-kafka-connect
 spec:
-  class: io.aiven.kafka.connect.http.HttpSinkConnector
+  class: io.aiven.connect.jdbc.JdbcSinkConnector
   tasksMax: 1
   # https://github.com/aiven/jdbc-connector-for-apache-kafka/blob/master/docs/sink-connector-config-options.rst
   config:
-    connector.class: "io.aiven.kafka.connect.http.HttpSinkConnector"
+    connector.class: "io.aiven.connect.jdbc.JdbcSinkConnector"
     tasks.max: "1"
-    topics: "opa_db_server.public.role"
-    connection.url: "jdbc:postgresql://timescale.hm-timescale.svc:5432/twitter_db"
-    http.authorization.type: "none"
-
+    topics: "hm.ehm"
+    connection.url: "jdbc:postgresql://timescale.hm-timescale.svc:5432/hm_sensor_db"
+    connection.user: "${file:/opt/kafka/external-configuration/hm-sensor-db-credentials-volume/sensor-db-credentials.properties:timescaledb_user}"
+    connection.password: "${file:/opt/kafka/external-configuration/hm-sensor-db-credentials-volume/sensor-db-credentials.properties:timescaledb_password}"
