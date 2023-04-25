@@ -67,7 +67,7 @@ echo "=================================================="
 
 echo "# Produce messages to Kafka"
 kafka-console-producer \
-  --broker-list=kafka-bootstrap.192.168.1.149.nip.io:443 \
+  --broker-list=kafka-bootstrap.10.10.8.135.nip.io:443 \
   --producer-property=security.protocol=SSL \
   --producer-property=ssl.truststore.location="${KAFKA_DATA_PATH}/kafka-truststore.jks" \
   --producer-property=ssl.truststore.password="${KAFKA_TRUSTSTORE_PASSWORD}" \
