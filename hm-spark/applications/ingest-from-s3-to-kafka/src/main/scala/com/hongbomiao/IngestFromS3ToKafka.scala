@@ -15,7 +15,7 @@ object IngestFromS3ToKafka {
       // .config("spark.hadoop.fs.s3a.secret.key", "xxx")
       .getOrCreate()
 
-    val filePath = "s3a://hongbomiao-bucket/dc-motor/EHM.parquet"
+    val filePath = "s3a://hongbomiao-bucket/sensor/EHM.parquet"
     spark.read
       .parquet(filePath)
       .select(to_json(struct("*")).alias("value"))

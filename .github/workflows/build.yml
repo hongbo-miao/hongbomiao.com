@@ -21,9 +21,9 @@ jobs:
       api-python: ${{ steps.filter.outputs.api-python }}
       chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
-      hm-kafka-dc-motor-kafka-connect: ${{ steps.filter.outputs.hm-kafka-dc-motor-kafka-connect }}
       hm-kafka-logging-kafka-connect: ${{ steps.filter.outputs.hm-kafka-logging-kafka-connect }}
       hm-kafka-opa-kafka-connect: ${{ steps.filter.outputs.hm-kafka-opa-kafka-connect }}
+      hm-kafka-sensor-kafka-connect: ${{ steps.filter.outputs.hm-kafka-sensor-kafka-connect }}
       hm-keydb: ${{ steps.filter.outputs.hm-keydb }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-pgbackrest: ${{ steps.filter.outputs.hm-pgbackrest }}
@@ -65,10 +65,6 @@ jobs:
               - '.dockerignore'
               - '.github/workflows/build.yml'
               - 'hm-alpine/**'
-            hm-kafka-dc-motor-kafka-connect:
-              - '.dockerignore'
-              - '.github/workflows/build.yml'
-              - 'hm-kafka/dc-motor-kafka-connect/**'
             hm-kafka-logging-kafka-connect:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -77,6 +73,10 @@ jobs:
               - '.dockerignore'
               - '.github/workflows/build.yml'
               - 'hm-kafka/opa-kafka-connect/**'
+            hm-kafka-sensor-kafka-connect:
+              - '.dockerignore'
+              - '.github/workflows/build.yml'
+              - 'hm-kafka/sensor-kafka-connect/**'
             hm-keydb:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -674,42 +674,6 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  build-hm-kafka-dc-motor-kafka-connect:
-    name: Build hm-kafka-dc-motor-kafka-connect
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-kafka-dc-motor-kafka-connect == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: production
-    timeout-minutes: 60
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: amd64,arm64
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Log in GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1.0.36
-        with:
-          action: docker/build-push-action@v3
-          with: |
-            context: .
-            file: ./hm-kafka/dc-motor-kafka-connect/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-kafka-dc-motor-kafka-connect:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
-
   build-hm-kafka-logging-kafka-connect:
     name: Build hm-kafka-logging-kafka-connect
     needs: detect-changes
@@ -777,6 +741,42 @@ jobs:
             file: ./hm-kafka/opa-kafka-connect/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-kafka-opa-kafka-connect:latest
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
+          attempt_limit: 3
+          attempt_delay: 2000
+
+  build-hm-kafka-sensor-kafka-connect:
+    name: Build hm-kafka-sensor-kafka-connect
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-kafka-sensor-kafka-connect == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: production
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64,arm64
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Log in GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: wandalen/wretry.action@v1.0.36
+        with:
+          action: docker/build-push-action@v3
+          with: |
+            context: .
+            file: ./hm-kafka/sensor-kafka-connect/Dockerfile
+            push: true
+            tags: ghcr.io/hongbo-miao/hm-kafka-sensor-kafka-connect:latest
             cache-from: type=gha
             cache-to: type=gha,mode=max
           attempt_limit: 3

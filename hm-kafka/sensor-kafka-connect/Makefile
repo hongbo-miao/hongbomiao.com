@@ -1,15 +1,15 @@
 # Docker
 docker-build:
 	cd ../.. && \
-	docker build --file=hm-kafka/dc-motor-kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-kafka-dc-motor-kafka-connect:latest .
+	docker build --file=hm-kafka/sensor-kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-kafka-sensor-kafka-connect:latest .
 docker-push:
-	docker push ghcr.io/hongbo-miao/hm-kafka-dc-motor-kafka-connect:latest
+	docker push ghcr.io/hongbo-miao/hm-kafka-sensor-kafka-connect:latest
 docker-sh:
-	docker run -it ghcr.io/hongbo-miao/hm-kafka-dc-motor-kafka-connect:latest sh
+	docker run -it ghcr.io/hongbo-miao/hm-kafka-sensor-kafka-connect:latest sh
 
 # Kubernetes
-kafka-get-hm-kafka-dc-motor-kafka-connect:
-	kubectl get kafkaconnects hm-kafka-dc-motor-kafka-connect --namespace=hm-kafka --output=yaml
+kafka-get-hm-kafka-sensor-kafka-connect:
+	kubectl get kafkaconnects hm-kafka-sensor-kafka-connect --namespace=hm-kafka --output=yaml
 
 kafka-get-postgres-kafka-connector:
 	kubectl get kafkaconnectors postgres-kafka-connector --namespace=hm-kafka --output=yaml

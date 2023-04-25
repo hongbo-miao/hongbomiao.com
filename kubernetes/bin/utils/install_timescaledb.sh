@@ -15,10 +15,9 @@ helm upgrade \
 # kubectl delete namespace hm-timescale
 echo "=================================================="
 
+echo "# Create database twitter_db"
 kubectl port-forward service/timescale --namespace=hm-timescale 25495:5432 &
 sleep 5
-
-echo "# Create database twitter_db"
 psql postgresql://admin:passw0rd@localhost:25495/postgres --command="create database twitter_db;"
 psql postgresql://admin:passw0rd@localhost:25495/postgres --command="grant all privileges on database twitter_db to admin;"
 echo "=================================================="
