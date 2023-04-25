@@ -1,6 +1,8 @@
 package com.hongbomiao
 
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.struct
+import org.apache.spark.sql.functions.to_json
 
 object IngestFromS3ToKafka {
   def main(args: Array[String]): Unit = {
@@ -13,14 +15,18 @@ object IngestFromS3ToKafka {
       // .config("spark.hadoop.fs.s3a.secret.key", "xxx")
       .getOrCreate()
 
-    import spark.implicits._
-
     val filePath = "s3a://hongbomiao-bucket/dc-motor/EHM.parquet"
-    val df = spark.read.parquet(filePath)
-    df.createOrReplaceTempView("ehm")
-
-    val retiredPeople: DataFrame = spark.sql("SELECT * FROM ehm")
-    retiredPeople.show()
+    spark.read
+      .parquet(filePath)
+      .select(to_json(struct("*")).alias("value"))
+      .write
+      .format("kafka")
+      .option(
+        "kafka.bootstrap.servers",
+        "hm-kafka-kafka-bootstrap.hm-kafka.svc:9092"
+      )
+      .option("topic", "hm.ehm")
+      .save()
 
     spark.stop()
   }

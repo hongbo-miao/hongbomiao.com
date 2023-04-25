@@ -62,6 +62,7 @@ spark-submit-to-kubernetes-cluster:
         --conf=spark.kubernetes.container.image.pullPolicy=Always \
         --conf=spark.hadoop.fs.s3a.access.key=xxx \
         --conf=spark.hadoop.fs.s3a.secret.key=xxx \
+		--packages=org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.2 \
         local:///opt/spark/work-dir/IngestFromS3ToKafka-assembly-1.0.jar
 kubectl-delete-spark-applications-in-kubernetes-cluster:
 	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=ingest-from-s3-to-kafka
@@ -85,6 +86,7 @@ spark-submit-to-spark-master-node-cluster-mode:
 			--class=com.hongbomiao.IngestFromS3ToKafka \
 			--conf=spark.hadoop.fs.s3a.access.key=xxx \
 			--conf=spark.hadoop.fs.s3a.secret.key=xxx \
+			--packages=org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.2 \
 			https://xxx.ngrok-free.app/ingest-from-s3-to-kafka/target/scala-2.12/IngestFromS3ToKafka-assembly-1.0.jar
 
 # 3.2 - Client mode
@@ -97,4 +99,5 @@ spark-submit-to-spark-master-node-client-mode:
 			--class=com.hongbomiao.IngestFromS3ToKafka \
 			--conf=spark.hadoop.fs.s3a.access.key=xxx \
 			--conf=spark.hadoop.fs.s3a.secret.key=xxx \
+			--packages=org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.2 \
 			https://xxx.ngrok-free.app/ingest-from-s3-to-kafka/target/scala-2.12/IngestFromS3ToKafka-assembly-1.0.jar
