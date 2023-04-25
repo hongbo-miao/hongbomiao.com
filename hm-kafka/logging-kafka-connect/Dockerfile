@@ -8,6 +8,5 @@ RUN mkdir -p /opt/kafka/plugins/ \
   && rm -f kafka-connect-elasticsearch.zip
 USER 1001
 
-
 FROM quay.io/strimzi/kafka:0.34.0-kafka-3.4.0
 COPY --from=builder /opt/kafka/plugins/ /opt/kafka/plugins/
