@@ -1,0 +1,19 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: http-sink-kafka-connector
+  namespace: hm-kafka
+  labels:
+    strimzi.io/cluster: hm-kafka-opa-kafka-connect
+spec:
+  class: io.aiven.kafka.connect.http.HttpSinkConnector
+  tasksMax: 1
+  # https://github.com/aiven/jdbc-connector-for-apache-kafka/blob/master/docs/sink-connector-config-options.rst
+  config:
+    connector.class: "io.aiven.kafka.connect.http.HttpSinkConnector"
+    tasks.max: "1"
+    topics: "opa_db_server.public.role"
+    connection.url: "jdbc:postgresql://timescale.hm-timescale.svc:5432/twitter_db"
+    http.authorization.type: "none"
+
