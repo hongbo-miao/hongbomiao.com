@@ -16,8 +16,8 @@ object IngestFromS3ToKafka {
       .getOrCreate()
 
     val schema =
-      spark.read.parquet("s3a://hongbomiao-bucket/sensor/EHM.parquet").schema
-    val folderPath = "s3a://hongbomiao-bucket/sensor/"
+      spark.read.parquet("s3a://hongbomiao-bucket/iot/motor.parquet").schema
+    val folderPath = "s3a://hongbomiao-bucket/iot/"
 
     val df = spark.readStream
       .schema(schema)
