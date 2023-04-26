@@ -14,7 +14,7 @@ echo "=================================================="
 
 echo "# Create secret hm-iot-db-credentials"
 kubectl create secret generic hm-iot-db-credentials \
-  --from-file=kubernetes/manifests/hm-kafka/iot-kafka-connect/jdbc-sink-kafka-connector/iot-db-credentials.properties \
+  --from-file=kubernetes/manifests/hm-kafka/iot-kafka-connect/hm-motor-jdbc-sink-kafka-connector/iot-db-credentials.properties \
   --namespace=hm-kafka
 # kubectl delete secret hm-iot-db-credentials --namespace=hm-kafka
 echo "=================================================="
