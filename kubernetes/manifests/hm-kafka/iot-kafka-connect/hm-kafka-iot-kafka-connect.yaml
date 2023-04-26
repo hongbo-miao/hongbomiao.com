@@ -2,7 +2,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnect
 metadata:
-  name: hm-kafka-sensor-kafka-connect
+  name: hm-kafka-iot-kafka-connect
   namespace: hm-kafka
   annotations:
     # use-connector-resources configures this KafkaConnect
@@ -10,7 +10,7 @@ metadata:
     # needing to call the Connect REST API directly
     strimzi.io/use-connector-resources: "true"
 spec:
-  image: ghcr.io/hongbo-miao/hm-kafka-sensor-kafka-connect:latest
+  image: ghcr.io/hongbo-miao/hm-kafka-iot-kafka-connect:latest
   replicas: 1
   bootstrapServers: hm-kafka-kafka-bootstrap:9093
   tls:
@@ -25,6 +25,6 @@ spec:
     config.providers.file.class: org.apache.kafka.common.config.provider.FileConfigProvider
   externalConfiguration:
     volumes:
-      - name: hm-sensor-db-credentials-volume
+      - name: hm-iot-db-credentials-volume
         secret:
-          secretName: hm-sensor-db-credentials
+          secretName: hm-iot-db-credentials
