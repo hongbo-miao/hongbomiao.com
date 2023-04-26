@@ -15,19 +15,26 @@ object IngestFromS3ToKafka {
       // .config("spark.hadoop.fs.s3a.secret.key", "xxx")
       .getOrCreate()
 
-    val filePath = "s3a://hongbomiao-bucket/sensor/EHM.parquet"
-    spark.read
-      .parquet(filePath)
+    val schema =
+      spark.read.parquet("s3a://hongbomiao-bucket/sensor/EHM.parquet").schema
+    val folderPath = "s3a://hongbomiao-bucket/sensor/"
+
+    val df = spark.readStream
+      .schema(schema)
+      .option("maxFilesPerTrigger", 1)
+      .parquet(folderPath)
       .select(to_json(struct("*")).alias("value"))
-      .write
+
+    val query = df.writeStream
       .format("kafka")
       .option(
         "kafka.bootstrap.servers",
         "hm-kafka-kafka-bootstrap.hm-kafka.svc:9092"
       )
       .option("topic", "hm.ehm")
-      .save()
+      .option("checkpointLocation", "/tmp/checkpoint")
+      .start()
 
-    spark.stop()
+    query.awaitTermination()
   }
 }
