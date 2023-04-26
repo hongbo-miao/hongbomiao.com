@@ -1,15 +1,14 @@
-from nptdms import TdmsFile
+from utils.convert_tdms_to_parquet import convert_tdms_to_parquet
+from utils.generate_iot_tdms import generate_iot_tdms
 
 
-def main():
-    tdms_file = TdmsFile.read("data/exampleMeasurements.tdms")
-    for group in tdms_file.groups():
-        df = group.as_dataframe()
-        print(group.name)
-        print(df)
-        # df.to_parquet(f"{group.name}.parquet", engine="pyarrow", compression="snappy")
-        df.to_parquet(f"{group.name}.parquet", engine="pyarrow", compression="brotli")
+def main(data_dirname: str, tdms_filename: str, data_point_count: int) -> None:
+    generate_iot_tdms(data_dirname, tdms_filename, data_point_count)
+    convert_tdms_to_parquet(data_dirname, tdms_filename)
 
 
 if __name__ == "__main__":
-    main()
+    external_data_dirname = "data"
+    external_tdms_filename = "iot.tdms"
+    external_data_point_count = 1000000
+    main(external_data_dirname, external_tdms_filename, external_data_point_count)

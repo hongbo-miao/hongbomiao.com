@@ -31,7 +31,7 @@ object IngestFromS3ToKafka {
         "kafka.bootstrap.servers",
         "hm-kafka-kafka-bootstrap.hm-kafka.svc:9092"
       )
-      .option("topic", "hm.ehm")
+      .option("topic", "hm.motor")
       .option("checkpointLocation", "/tmp/checkpoint")
       .start()
 

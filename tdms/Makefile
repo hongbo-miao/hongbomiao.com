@@ -8,7 +8,3 @@ poetry-add-dev:
 	poetry add xxx --group=dev
 poetry-run-dev:
 	poetry run poe dev
-
-download-tdms-sample:
-	# https://www-personal.acfr.usyd.edu.au/zubizarreta/EDatabase.php
-	curl http://www-personal.acfr.usyd.edu.au/zubizarreta/f/exampleMeasurements.tdms > data/exampleMeasurements.tdms
