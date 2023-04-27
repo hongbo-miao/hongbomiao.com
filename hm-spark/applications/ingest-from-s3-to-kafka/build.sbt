@@ -7,5 +7,5 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-sql-kafka-0-10" % "3.3.2" % "provided",
   "org.apache.hadoop" % "hadoop-common" % "3.3.5" % "provided",
   "org.apache.hadoop" % "hadoop-aws" % "3.3.5" % "provided",
-  "com.amazonaws" % "aws-java-sdk-bundle" % "1.12.456" % "provided"
+  "com.amazonaws" % "aws-java-sdk-bundle" % "1.12.457" % "provided"
 )
