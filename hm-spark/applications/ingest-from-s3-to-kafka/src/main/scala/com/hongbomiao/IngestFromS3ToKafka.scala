@@ -3,6 +3,7 @@ package com.hongbomiao
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.struct
 import org.apache.spark.sql.functions.to_json
+import org.apache.spark.sql.types.{DoubleType, StructType}
 
 object IngestFromS3ToKafka {
   def main(args: Array[String]): Unit = {
@@ -15,9 +16,14 @@ object IngestFromS3ToKafka {
       // .config("spark.hadoop.fs.s3a.secret.key", "xxx")
       .getOrCreate()
 
-    val schema =
-      spark.read.parquet("s3a://hongbomiao-bucket/iot/motor.parquet").schema
     val folderPath = "s3a://hongbomiao-bucket/iot/"
+
+    // val schema = spark.read.parquet("s3a://hongbomiao-bucket/iot/motor.parquet").schema
+    val schema = new StructType()
+      .add("timestamp", DoubleType)
+      .add("current", DoubleType)
+      .add("voltage", DoubleType)
+      .add("temperature", DoubleType)
 
     val df = spark.readStream
       .schema(schema)
