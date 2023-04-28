@@ -25,7 +25,13 @@ def generate_iot_tdms(
         },
     )
 
-    timestamp_data = np.array([time.time() + i / 1000 for i in range(data_point_count)])
+    # Generate timestamp data with a 10 ms interval
+    # Past
+    # timestamp_data = np.array(
+    #     [time.time() + (data_point_count - i) * 0.01 for i in range(data_point_count)]
+    # )
+    # Future
+    timestamp_data = np.array([time.time() + i * 0.01 for i in range(data_point_count)])
     current_data = np.random.rand(data_point_count) * 10
     voltage_data = np.random.rand(data_point_count) * 20
     temperature_data = np.random.rand(data_point_count) * 50 + 25
