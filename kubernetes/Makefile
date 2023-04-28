@@ -249,6 +249,8 @@ kubectl-port-forward-temporal:
 	kubectl port-forward service/temporal-web --namespace=hm-temporal 48780:8080
 kubectl-port-forward-metabase:
 	kubectl port-forward service/metabase --namespace=hm-metabase 50399:80
+kubectl-port-forward-pgadmin:
+	kubectl port-forward service/pgadmin-pgadmin4 --namespace=hm-pgadmin 40594:80
 
 list-port-forward:
 	ps -ef | grep port-forward
