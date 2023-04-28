@@ -1,8 +1,10 @@
 # https://github.com/timescale/helm-charts/blob/main/charts/timescaledb-single/values.yaml
 
 ---
-replicaCount: 1
-
+replicaCount: 3
+image:
+  repository: timescale/timescaledb-ha
+  tag: pg15.2-ts2.10.2-patroni-dcs-failsafe-p0
 secrets:
   credentials:
     PATRONI_SUPERUSER_PASSWORD: passw0rd
