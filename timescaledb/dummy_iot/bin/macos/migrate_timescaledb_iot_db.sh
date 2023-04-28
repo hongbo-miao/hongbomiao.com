@@ -8,5 +8,5 @@ echo "=================================================="
 
 echo "# Migrate database iot_db"
 TIMESCALEDB_URL="postgresql://admin:passw0rd@localhost:16863/iot_db?sslmode=disable&search_path=public"
-migrate -database "${TIMESCALEDB_URL}" -path timescaledb/migrations up
+migrate -database "${TIMESCALEDB_URL}" -path migrations up
 echo "=================================================="

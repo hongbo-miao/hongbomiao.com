@@ -22,7 +22,8 @@ kafka-consume:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
-			--topic=opa_db_server.public.role
+			--topic=opa_db_server.public.role \
+			--property=print.key=true
 kafka-consume-from-beginning:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
