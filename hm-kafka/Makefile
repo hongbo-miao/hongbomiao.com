@@ -15,7 +15,8 @@ kubernetes-kafka-topic-describe:
 		bin/kafka-topics.sh \
 			--bootstrap-server=localhost:9092 \
 			--describe \
-			--topic=my-topic
+			--topic=my-topic \
+			--property=print.key=true
 kubernetes-kafka-console-consumer-from-beginning:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \

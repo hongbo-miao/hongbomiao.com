@@ -25,11 +25,17 @@ def generate_iot_tdms(
         },
     )
 
+    timestamp_data = np.array([time.time() + i / 1000 for i in range(data_point_count)])
     current_data = np.random.rand(data_point_count) * 10
     voltage_data = np.random.rand(data_point_count) * 20
     temperature_data = np.random.rand(data_point_count) * 50 + 25
-    timestamp_data = np.array([time.time() + i for i in range(data_point_count)])
 
+    timestamp_channel = ChannelObject(
+        motor_group_name,
+        "timestamp",
+        timestamp_data,
+        properties={"units": "s"},
+    )
     current_channel = ChannelObject(
         motor_group_name, "current", current_data, properties={"units": "A"}
     )
@@ -39,21 +45,15 @@ def generate_iot_tdms(
     temperature_channel = ChannelObject(
         motor_group_name, "temperature", temperature_data, properties={"units": "C"}
     )
-    timestamp_channel = ChannelObject(
-        motor_group_name,
-        "timestamp",
-        timestamp_data,
-        properties={"units": "s"},
-    )
 
     with TdmsWriter(tdms_path) as tdms_writer:
         tdms_writer.write_segment(
             [
                 root_object,
                 motor_group,
+                timestamp_channel,
                 current_channel,
                 voltage_channel,
                 temperature_channel,
-                timestamp_channel,
             ]
         )
