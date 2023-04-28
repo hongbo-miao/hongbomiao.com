@@ -12,6 +12,11 @@ psql postgresql://admin:passw0rd@localhost:25495/postgres --command="create data
 psql postgresql://admin:passw0rd@localhost:25495/postgres --command="grant all privileges on database hm_iot_db to admin;"
 echo "=================================================="
 
+echo "# Migrate database hm_iot_db"
+TIMESCALEDB_URL="postgresql://admin:passw0rd@localhost:25495/hm_iot_db?sslmode=disable&search_path=public"
+migrate -database "${TIMESCALEDB_URL}" -path timescaledb/motor/migrations up
+echo "=================================================="
+
 echo "# Create secret hm-iot-db-credentials"
 kubectl create secret generic hm-iot-db-credentials \
   --from-file=kubernetes/manifests/hm-kafka/iot-kafka-connect/hm-motor-jdbc-sink-kafka-connector/iot-db-credentials.properties \
