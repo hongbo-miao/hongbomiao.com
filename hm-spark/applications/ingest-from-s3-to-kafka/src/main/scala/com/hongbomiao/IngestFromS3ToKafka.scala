@@ -31,7 +31,7 @@ object IngestFromS3ToKafka {
 
     val df = spark.readStream
       .schema(parquet_schema)
-      .option("maxFilesPerTrigger", 1)
+      .option("maxFilesPerTrigger", 8)
       .parquet(folderPath)
       .withColumn("timestamp", (col("timestamp") * 1000).cast(LongType))
       .select(
