@@ -3,11 +3,11 @@ set -e
 
 echo "# Install InfluxDB"
 # https://github.com/bitnami/charts/tree/main/bitnami/influxdb
+
 helm upgrade \
   influxdb \
-  influxdb \
+  oci://registry-1.docker.io/bitnamicharts/influxdb \
   --install \
-  --repo=https://charts.bitnami.com/bitnami \
   --namespace=hm-influxdb \
   --create-namespace \
   --values=kubernetes/manifests/influxdb/helm/my-values.yaml
