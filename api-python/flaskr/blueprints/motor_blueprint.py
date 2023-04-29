@@ -6,24 +6,24 @@ from confluent_kafka import Producer
 from flask import Blueprint, current_app
 from flaskr.utils import kafka_util
 
-garden_sensor_blueprint = Blueprint("garden_sensor_blueprint", __name__)
+motor_blueprint = Blueprint("motor_blueprint", __name__)
 
 
-@garden_sensor_blueprint.post("/generate-garden-sensor-data")
-def generate_garden_sensor_data() -> dict[str, bool]:
+@motor_blueprint.post("/generate-motor-data")
+def generate_motor_data() -> dict[str, bool]:
     producer = Producer(
         {"bootstrap.servers": current_app.config.get("KAFKA_BOOTSTRAP_SERVERS")}
     )
     for _ in range(5):
         data = {
-            "temperature": round(random.uniform(-10, 50), 1),
-            "humidity": round(random.uniform(0, 100), 1),
-            "wind": round(random.uniform(0, 10), 1),
-            "soil": round(random.uniform(0, 100), 1),
+            "timestamp": time.time() * 1000,
+            "current": random.uniform(0, 10),
+            "voltage": random.uniform(0, 20),
+            "temperature": random.uniform(0, 50) + 25,
         }
         producer.poll(0)
         producer.produce(
-            "garden_sensor_data",
+            "hm.motor",
             json.dumps(data).encode("utf-8"),
             callback=kafka_util.delivery_report,
         )

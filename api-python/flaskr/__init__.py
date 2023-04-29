@@ -5,9 +5,9 @@ from datetime import datetime
 import sentry_sdk
 from flask import Flask
 from flask_cors import CORS
-from flaskr.blueprints.garden_sensor_blueprint import garden_sensor_blueprint
 from flaskr.blueprints.health_blueprint import health_blueprint
 from flaskr.blueprints.lucky_number_blueprint import lucky_number_blueprint
+from flaskr.blueprints.motor_blueprint import motor_blueprint
 from flaskr.blueprints.seed_blueprint import seed_blueprint
 from flaskr.utils.scheduler import scheduler
 from flaskr.utils.sock import sock
@@ -34,9 +34,9 @@ def create_app() -> Flask:
     CORS(app)
     sock.init_app(app)
     scheduler.init_app(app)
-    app.register_blueprint(garden_sensor_blueprint)
     app.register_blueprint(health_blueprint)
     app.register_blueprint(lucky_number_blueprint)
+    app.register_blueprint(motor_blueprint)
     app.register_blueprint(seed_blueprint)
 
     scheduler.start(paused=True)
