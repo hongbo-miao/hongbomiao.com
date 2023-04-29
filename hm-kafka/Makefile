@@ -15,8 +15,14 @@ kubernetes-kafka-topic-describe:
 		bin/kafka-topics.sh \
 			--bootstrap-server=localhost:9092 \
 			--describe \
+			--topic=my-topic
+kubernetes-kafka-topic-message-count:
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+		bin/kafka-run-class.sh \
+			kafka.tools.GetOffsetShell \
+			--bootstrap-server=localhost:9092 \
 			--topic=my-topic \
-			--property=print.key=true
+			--time=-1
 kubernetes-kafka-console-consumer-from-beginning:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
