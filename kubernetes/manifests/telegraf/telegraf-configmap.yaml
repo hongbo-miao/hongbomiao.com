@@ -10,9 +10,25 @@ data:
   telegraf.conf: |
     [[inputs.kafka_consumer]]
       brokers = ["hm-kafka-kafka-bootstrap.hm-kafka.svc:9092"]
-      topics = ["garden_sensor_data"]
+      topics = ["hm.motor"]
       max_message_len = 1000000
-      data_format = "json"
+      data_format = "json_v2"
+      [[inputs.kafka_consumer.json_v2]]
+        measurement_name = "motor"
+        timestamp_format = "unix_ms"
+        timestamp_path = "payload.timestamp"
+        [[inputs.kafka_consumer.json_v2.field]]
+          path = "payload.current"
+          rename = "current"
+          type = "float"
+        [[inputs.kafka_consumer.json_v2.field]]
+          path = "payload.voltage"
+          rename = "voltage"
+          type = "float"
+        [[inputs.kafka_consumer.json_v2.field]]
+          path = "payload.temperature"
+          rename = "temperature"
+          type = "float"
     [[outputs.influxdb_v2]]
       urls = ["http://influxdb.hm-influxdb.svc:8086"]
       token = "${INFLUXDB_API_TOKEN}"
