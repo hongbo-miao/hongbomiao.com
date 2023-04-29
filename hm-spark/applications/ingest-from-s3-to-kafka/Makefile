@@ -43,6 +43,21 @@ spark-submit-to-local:
 		target/scala-2.12/IngestFromS3ToKafka-assembly-1.0.jar
 
 # 2 - Run in a pod
+rclone-sync:
+	cd ../../.. && \
+	rclone sync --progress tdms/data hm-s3:hongbomiao-bucket/iot --include="*.parquet"
+kafka-consume:
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+		bin/kafka-console-consumer.sh \
+			--bootstrap-server=localhost:9092 \
+			--topic=hm.motor \
+			--property=print.key=true
+kafka-topic-delete:
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+		bin/kafka-topics.sh \
+			--bootstrap-server=localhost:9092 \
+			--delete \
+			--topic=hm.motor
 docker-build:
 	cd ../../.. && \
 	docker build --file=hm-spark/applications/ingest-from-s3-to-kafka/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest .
