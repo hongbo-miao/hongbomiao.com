@@ -2,12 +2,7 @@ package com.hongbomiao
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.{array, col, lit, struct, to_json}
-import org.apache.spark.sql.types.{
-  DecimalType,
-  DoubleType,
-  LongType,
-  StructType
-}
+import org.apache.spark.sql.types.{DoubleType, LongType, StructType}
 
 object IngestFromS3ToKafka {
   def main(args: Array[String]): Unit = {
@@ -31,7 +26,7 @@ object IngestFromS3ToKafka {
 
     val df = spark.readStream
       .schema(parquet_schema)
-      .option("maxFilesPerTrigger", 8)
+      .option("maxFilesPerTrigger", 1)
       .parquet(folderPath)
       .withColumn("timestamp", (col("timestamp") * 1000).cast(LongType))
       .select(
