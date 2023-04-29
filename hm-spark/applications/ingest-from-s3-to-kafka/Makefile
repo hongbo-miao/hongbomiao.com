@@ -46,6 +46,7 @@ spark-submit-to-local:
 rclone-sync:
 	cd ../../.. && \
 	rclone sync --progress tdms/data hm-s3:hongbomiao-bucket/iot --include="*.parquet"
+
 kafka-consume:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
@@ -58,6 +59,30 @@ kafka-topic-delete:
 			--bootstrap-server=localhost:9092 \
 			--delete \
 			--topic=hm.motor
+
+kubectl-apply-telegraf:
+	cd ../../.. && \
+	kubectl apply --filename=kubernetes/manifests/telegraf
+influx-measurement-count:
+	export INFLUX_TOKEN=xxx && \
+	echo 'from(bucket: "primary") |> range(start: 2010-01-01T00:00:00Z, stop: 2030-01-01T00:00:00Z) |> filter(fn: (r) => r["_measurement"] == "motor") |> count() |> yield(name: "count")' | \
+		influx query --org=primary -
+influx-measurement-truncate:
+	export INFLUX_TOKEN=xxx && \
+	influx delete \
+		--org=primary \
+		--bucket=primary \
+		--start=2010-01-01T00:00:00Z \
+		--stop=2030-01-01T00:00:00Z
+
+kubectl-apply-hm-kafka-iot-kafka-connect:
+	cd ../../.. && \
+	kubectl apply --filename=kubernetes/manifests/hm-kafka/iot-kafka-connect
+timescaledb-table-count:
+	psql postgresql://admin:passw0rd@localhost:25495/hm_iot_db --command="select count(*) from motor;"
+timescaledb-table-truncate:
+	psql postgresql://admin:passw0rd@localhost:25495/hm_iot_db --command="truncate table motor;"
+
 docker-build:
 	cd ../../.. && \
 	docker build --file=hm-spark/applications/ingest-from-s3-to-kafka/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest .
