@@ -37,10 +37,17 @@ data:
       service: https://hm-elasticsearch-es-http.hm-elastic.svc:9200
       originRequest:
         noTLSVerify: true
+    # InfluxDB
+    - hostname: influxdb.hongbomiao.com
+      service: http://influxdb.hm-influxdb.svc:8086
+    # Kibana
     - hostname: kibana.hongbomiao.com
       service: https://hm-kibana-kb-http.hm-elastic.svc:5601
       originRequest:
         noTLSVerify: true
+    # Metabase
+    - hostname: metabase.hongbomiao.com
+      service: http://metabase.hm-metabase.svc:80
     # pgAdmin
     - hostname: pgadmin.hongbomiao.com
       service: http://pgadmin-pgadmin4.hm-pgadmin.svc:80
