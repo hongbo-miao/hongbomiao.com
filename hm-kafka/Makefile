@@ -23,6 +23,18 @@ kubernetes-kafka-topic-message-count:
 			--bootstrap-server=localhost:9092 \
 			--topic=my-topic \
 			--time=-1
+
+kubernetes-kafka-console-producer:
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+		bin/kafka-console-producer.sh \
+			--bootstrap-server=localhost:9092 \
+			--topic=my-topic
+kubernetes-kafka-console-consumer:
+	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+		bin/kafka-console-consumer.sh \
+			--bootstrap-server=localhost:9092 \
+			--topic=my-topic \
+			--property=print.key=true
 kubernetes-kafka-console-consumer-from-beginning:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
@@ -30,6 +42,28 @@ kubernetes-kafka-console-consumer-from-beginning:
 			--topic=my-topic \
 			--property=print.key=true \
 			--from-beginning
+
+kubernetes-kafka-avro-console-producer:
+	kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
+		kafka-avro-console-producer \
+            --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
+            --topic=my-avro-topic \
+            --property=schema.registry.url=http://localhost:8081 \
+            --property=value.schema='{"type": "record", "name": "myrecord", "fields": [{"name": "f1", "type": "string"}]}'
+	# {"f1": "hi"}
+kubernetes-kafka-avro-console-consumer:
+	kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
+		kafka-avro-console-consumer \
+            --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
+            --topic=my-avro-topic \
+            --property=schema.registry.url=http://localhost:8081
+kubernetes-kafka-avro-console-consumer-from-beginning:
+	kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
+		kafka-avro-console-consumer \
+            --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
+            --topic=my-avro-topic \
+            --property=schema.registry.url=http://localhost:8081 \
+            --from-beginning
 
 keytool-list-hm-kafka-kafka-truststore:
 	cd .. && \
