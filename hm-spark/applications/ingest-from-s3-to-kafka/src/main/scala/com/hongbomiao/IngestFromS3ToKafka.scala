@@ -1,8 +1,10 @@
 package com.hongbomiao
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.{array, col, lit, struct, to_json}
+import org.apache.spark.sql.functions.{col, struct}
 import org.apache.spark.sql.types.{DoubleType, LongType, StructType}
+import org.apache.spark.sql.avro.functions.to_avro
+import sttp.client3.{HttpClientSyncBackend, UriContext, basicRequest}
 
 object IngestFromS3ToKafka {
   def main(args: Array[String]): Unit = {
@@ -24,43 +26,20 @@ object IngestFromS3ToKafka {
       .add("voltage", DoubleType, nullable = true)
       .add("temperature", DoubleType, nullable = true)
 
+    val backend = HttpClientSyncBackend()
+    val response = basicRequest
+      .get(
+        uri"http://apicurio-registry-apicurio-registry.hm-apicurio-registry.svc:8080/apis/registry/v2/groups/hm-group/artifacts/hm.motor-value"
+      )
+      .send(backend)
+    val schemaString = response.body.fold(identity, identity)
+
     val df = spark.readStream
       .schema(parquet_schema)
       .option("maxFilesPerTrigger", 1)
       .parquet(folderPath)
       .withColumn("timestamp", (col("timestamp") * 1000).cast(LongType))
-      .select(
-        to_json(
-          struct(
-            struct(
-              lit("struct").alias("type"),
-              array(
-                struct(
-                  lit("int64").alias("type"),
-                  lit(false).alias("optional"),
-                  lit("timestamp").alias("field")
-                ),
-                struct(
-                  lit("double").alias("type"),
-                  lit(true).alias("optional"),
-                  lit("current").alias("field")
-                ),
-                struct(
-                  lit("double").alias("type"),
-                  lit(true).alias("optional"),
-                  lit("voltage").alias("field")
-                ),
-                struct(
-                  lit("double").alias("type"),
-                  lit(true).alias("optional"),
-                  lit("temperature").alias("field")
-                )
-              ).alias("fields")
-            ).alias("schema"),
-            struct("*").alias("payload")
-          )
-        ).alias("value")
-      )
+      .select(to_avro(struct("*"), schemaString).alias("value"))
 
     val query = df.writeStream
       .format("kafka")
