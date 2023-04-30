@@ -24,16 +24,30 @@ spec:
     table.name.format: motor
 
     # primary key
-    pk.mode: record_value
-    pk.fields: timestamp
+    # pk.mode: record_value
+    # pk.fields: timestamp
+
+    # timestamp
     transforms: convertTimestamp
     transforms.convertTimestamp.type: org.apache.kafka.connect.transforms.TimestampConverter$Value
     transforms.convertTimestamp.field: timestamp
     transforms.convertTimestamp.target.type: Timestamp
 
     # value
-    value.converter: org.apache.kafka.connect.json.JsonConverter
-    value.converter.schemas.enable: true
+    # 1) JSON
+    # value.converter: org.apache.kafka.connect.json.JsonConverter
+    # value.converter.schemas.enable: true
+
+    # 2) Avro
+    # https://www.apicur.io/registry/docs/apicurio-registry/2.4.x/getting-started/assembly-configuring-kafka-client-serdes.html#registry-serdes-config-props_registry
+    value.converter: io.apicurio.registry.utils.converter.AvroConverter
+    value.converter.apicurio.registry.url: http://apicurio-registry-apicurio-registry.hm-apicurio-registry.svc:8080/apis/registry/v2
+    value.converter.apicurio.registry.fallback.group-id: hm-group
+    value.converter.apicurio.registry.fallback.artifact-id: hm.motor-value
+
+    # 3) Confluent Avro
+    # value.converter: io.confluent.connect.avro.AvroConverter
+    # value.converter.schema.registry.url: http://confluent-schema-registry.hm-confluent-schema-registry.svc:8081
 
     # auto.create: true
     # auto.evolve: true
