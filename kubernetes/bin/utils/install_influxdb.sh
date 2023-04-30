@@ -3,7 +3,6 @@ set -e
 
 echo "# Install InfluxDB"
 # https://github.com/bitnami/charts/tree/main/bitnami/influxdb
-
 helm upgrade \
   influxdb \
   oci://registry-1.docker.io/bitnamicharts/influxdb \
