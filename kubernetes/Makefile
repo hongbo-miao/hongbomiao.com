@@ -205,8 +205,16 @@ kubectl-port-forward-kafka-broker:
 	kubectl port-forward service/hm-kafka-kafka-bootstrap --namespace=hm-kafka 9092:9092
 kubectl-port-forward-kafka-zookeeper:
 	kubectl port-forward service/hm-kafka-zookeeper-client --namespace=hm-kafka 2181:2181
+kubectl-port-forward-hm-kafka-iot-kafka-connect:
+	kubectl port-forward service/hm-kafka-iot-kafka-connect-connect-api --namespace=hm-kafka 8083:8083
+kubectl-port-forward-hm-kafka-logging-kafka-connect:
+	kubectl port-forward service/hm-kafka-logging-kafka-connect-connect-api --namespace=hm-kafka 8083:8083
 kubectl-port-forward-hm-kafka-opa-kafka-connect:
 	kubectl port-forward service/hm-kafka-opa-kafka-connect-connect-api --namespace=hm-kafka 8083:8083
+kubectl-port-forward-hm-apicurio-registry:
+	kubectl port-forward service/apicurio-registry-apicurio-registry --namespace=hm-apicurio-registry 35185:8080
+kubectl-port-forward-kafka-ui:
+	kubectl port-forward service/hm-kafka-ui --namespace=hm-kafka-ui 26917:80
 kubectl-port-forward-spark:
 	kubectl port-forward service/spark-master-svc --namespace=hm-spark 4040:80
 	kubectl port-forward service/spark-master-svc --namespace=hm-spark 7077:7077
