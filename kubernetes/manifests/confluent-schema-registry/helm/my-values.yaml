@@ -1,0 +1,14 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/schema-registry/values.yaml
+
+---
+kafka:
+  enabled: false
+  auth:
+    protocol: plaintext
+  service:
+    ports:
+      client: 9092
+externalKafka:
+  brokers:
+    - PLAINTEXT://hm-kafka-kafka-bootstrap.hm-kafka.svc:9092
+avroCompatibilityLevel: full
