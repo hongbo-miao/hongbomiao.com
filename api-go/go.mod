@@ -31,7 +31,7 @@ require (
 	go.elastic.co/apm/module/apmgin/v2 v2.4.1
 	go.elastic.co/apm/module/apmgrpc/v2 v2.4.1
 	go.opencensus.io v0.24.0
-	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.41.0
+	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.41.1
 	go.opentelemetry.io/otel v1.15.1
 	go.opentelemetry.io/otel/exporters/jaeger v1.15.1
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.15.1
