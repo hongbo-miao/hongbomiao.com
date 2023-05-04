@@ -92,18 +92,18 @@ kubectl-cluster-info:
 	kubectl cluster-info
 spark-submit-to-kubernetes-cluster:
 	spark-submit \
-        --master=k8s://https://127.0.0.1:6443 \
-        --deploy-mode=cluster \
-        --name=ingest-from-s3-to-kafka \
+		--master=k8s://https://127.0.0.1:6443 \
+		--deploy-mode=cluster \
+		--name=ingest-from-s3-to-kafka \
 		--class=com.hongbomiao.IngestFromS3ToKafka \
-        --conf=spark.executor.instances=5 \
-        --conf=spark.kubernetes.namespace=hm-spark \
-        --conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest \
-        --conf=spark.kubernetes.container.image.pullPolicy=Always \
-        --conf=spark.hadoop.fs.s3a.access.key=xxx \
-        --conf=spark.hadoop.fs.s3a.secret.key=xxx \
-        --packages=org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.2,org.apache.spark:spark-avro_2.12:3.3.2 \
-        local:///opt/spark/work-dir/IngestFromS3ToKafka-assembly-1.0.jar
+		--conf=spark.executor.instances=5 \
+		--conf=spark.kubernetes.namespace=hm-spark \
+		--conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest \
+		--conf=spark.kubernetes.container.image.pullPolicy=Always \
+		--conf=spark.hadoop.fs.s3a.access.key=xxx \
+		--conf=spark.hadoop.fs.s3a.secret.key=xxx \
+		--packages=org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.2,org.apache.spark:spark-avro_2.12:3.3.2 \
+		local:///opt/spark/work-dir/IngestFromS3ToKafka-assembly-1.0.jar
 kubectl-delete-spark-applications-in-kubernetes-cluster:
 	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=ingest-from-s3-to-kafka
 
@@ -120,7 +120,7 @@ serve-files:
 spark-submit-to-spark-master-node-cluster-mode:
 	# Note: update xxx
 	kubectl exec --stdin --tty --namespace=hm-spark spark-master-0 -- \
- 		spark-submit \
+		spark-submit \
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=cluster \
 			--class=com.hongbomiao.IngestFromS3ToKafka \
@@ -133,7 +133,7 @@ spark-submit-to-spark-master-node-cluster-mode:
 spark-submit-to-spark-master-node-client-mode:
 	# Note: update xxx
 	kubectl exec --stdin --tty --namespace=hm-spark spark-master-0 -- \
- 		spark-submit \
+		spark-submit \
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=client \
 			--class=com.hongbomiao.IngestFromS3ToKafka \
