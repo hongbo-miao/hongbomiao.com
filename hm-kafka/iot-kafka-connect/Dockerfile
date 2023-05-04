@@ -13,12 +13,12 @@ RUN mkdir -p /opt/kafka/plugins/ \
   # && mkdir -p /opt/kafka/plugins/kafka-connect-avro-converter/ \
   # && unzip kafka-connect-avro-converter.zip -d /opt/kafka/plugins/kafka-connect-avro-converter/ \
   # && rm -f kafka-connect-avro-converter.zip \
-  # jdbc-connector-for-apache-kafka
-  # https://github.com/aiven/jdbc-connector-for-apache-kafka
-  && wget --no-verbose --output-document=jdbc-connector-for-apache-kafka.tar https://github.com/aiven/jdbc-connector-for-apache-kafka/releases/download/v6.8.0/jdbc-connector-for-apache-kafka-6.8.0.tar \
-  && mkdir -p /opt/kafka/plugins/jdbc-connector-for-apache-kafka/ \
-  && tar -x -f jdbc-connector-for-apache-kafka.tar -C /opt/kafka/plugins/jdbc-connector-for-apache-kafka/ \
-  && rm -f jdbc-connector-for-apache-kafka.tar
+  # confluentinc-kafka-connect-jdbc
+  # https://www.confluent.io/hub/confluentinc/kafka-connect-elasticsearch
+  && wget --no-verbose --output-document=confluentinc-kafka-connect-jdbc.zip https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-jdbc/versions/10.7.1/confluentinc-kafka-connect-jdbc-10.7.1.zip \
+  && mkdir -p /opt/kafka/plugins/confluentinc-kafka-connect-jdbc/ \
+  && unzip confluentinc-kafka-connect-jdbc.zip -d /opt/kafka/plugins/confluentinc-kafka-connect-jdbc/ \
+  && rm -f confluentinc-kafka-connect-jdbc.zip
 USER 1001
 
 FROM quay.io/strimzi/kafka:0.34.0-kafka-3.4.0

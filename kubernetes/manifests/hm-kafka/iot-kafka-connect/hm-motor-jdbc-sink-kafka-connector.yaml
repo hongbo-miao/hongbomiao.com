@@ -7,25 +7,25 @@ metadata:
   labels:
     strimzi.io/cluster: hm-kafka-iot-kafka-connect
 spec:
-  class: io.aiven.connect.jdbc.JdbcSinkConnector
+  class: io.confluent.connect.jdbc.JdbcSinkConnector
   tasksMax: 8
-  # https://github.com/aiven/jdbc-connector-for-apache-kafka/blob/master/docs/sink-connector-config-options.rst
+  # https://docs.confluent.io/kafka-connectors/jdbc/current/sink-connector/sink_config_options.html
   config:
-    connector.class: io.aiven.connect.jdbc.JdbcSinkConnector
+    connector.class: io.confluent.connect.jdbc.JdbcSinkConnector
     tasks.max: 8
     topics: hm.motor
     connection.url: jdbc:postgresql://timescale.hm-timescale.svc:5432/hm_iot_db
     connection.user: "${file:/opt/kafka/external-configuration/hm-iot-db-credentials-volume/iot-db-credentials.properties:timescaledb_user}"
     connection.password: "${file:/opt/kafka/external-configuration/hm-iot-db-credentials-volume/iot-db-credentials.properties:timescaledb_password}"
-    insert.mode: multi
-    batch.size: 100000
+    insert.mode: insert
+    batch.size: 5000
 
     # table
     table.name.format: motor
 
     # primary key
-    # pk.mode: record_value
-    # pk.fields: timestamp
+    pk.mode: record_value
+    pk.fields: timestamp
 
     # value
     # 1) JSON
