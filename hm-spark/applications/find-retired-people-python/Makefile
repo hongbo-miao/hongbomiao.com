@@ -27,14 +27,14 @@ kubectl-cluster-info:
 	kubectl cluster-info
 spark-submit-to-kubernetes-cluster:
 	spark-submit \
-        --master=k8s://https://127.0.0.1:6443 \
-        --deploy-mode=cluster \
-        --name=find-retired-people-python \
-        --conf=spark.executor.instances=5 \
-        --conf=spark.kubernetes.namespace=hm-spark \
-        --conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-find-retired-people-python:latest \
-        --conf=spark.kubernetes.container.image.pullPolicy=Always \
-        local:///opt/spark/work-dir/src/main.py
+		--master=k8s://https://127.0.0.1:6443 \
+		--deploy-mode=cluster \
+		--name=find-retired-people-python \
+		--conf=spark.executor.instances=5 \
+		--conf=spark.kubernetes.namespace=hm-spark \
+		--conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-find-retired-people-python:latest \
+		--conf=spark.kubernetes.container.image.pullPolicy=Always \
+		local:///opt/spark/work-dir/src/main.py
 kubectl-delete-spark-applications-in-kubernetes-cluster:
 	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=find-retired-people-python
 
@@ -52,7 +52,7 @@ serve-files:
 # spark-submit-to-spark-master-node-cluster-mode:
 # 	# Note: update xxx
 # 	kubectl exec --stdin --tty --namespace=hm-spark spark-master-0 -- \
-#  		spark-submit \
+# 		spark-submit \
 # 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 # 			--deploy-mode=cluster \
 # 			https://xxx.ngrok-free.app/find-retired-people-python/src/main.py?download=true
@@ -61,7 +61,7 @@ serve-files:
 spark-submit-to-spark-master-node-client-mode:
 	# Note: update xxx
 	kubectl exec --stdin --tty --namespace=hm-spark spark-master-0 -- \
- 		spark-submit \
+		spark-submit \
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=client \
 			https://xxx.ngrok-free.app/find-retired-people-python/src/main.py?download=true
