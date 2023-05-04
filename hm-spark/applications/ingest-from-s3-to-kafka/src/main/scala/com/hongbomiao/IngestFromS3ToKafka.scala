@@ -20,26 +20,26 @@ object IngestFromS3ToKafka {
     val folderPath = "s3a://hongbomiao-bucket/iot/"
 
     // val parquet_schema = spark.read.parquet("s3a://hongbomiao-bucket/iot/motor.parquet").schema
-    val parquet_schema = new StructType()
+    val parquetSchema = new StructType()
       .add("timestamp", DoubleType)
       .add("current", DoubleType, nullable = true)
       .add("voltage", DoubleType, nullable = true)
       .add("temperature", DoubleType, nullable = true)
 
     val backend = HttpClientSyncBackend()
-    val response = basicRequest
+    val res = basicRequest
       .get(
         uri"http://apicurio-registry-apicurio-registry.hm-apicurio-registry.svc:8080/apis/registry/v2/groups/hm-group/artifacts/hm.motor-value"
       )
       .send(backend)
-    val schemaString = response.body.fold(identity, identity)
+    val kafkaRecordValueSchema = res.body.fold(identity, identity)
 
     val df = spark.readStream
-      .schema(parquet_schema)
+      .schema(parquetSchema)
       .option("maxFilesPerTrigger", 1)
       .parquet(folderPath)
       .withColumn("timestamp", (col("timestamp") * 1000).cast(LongType))
-      .select(to_avro(struct("*"), schemaString).alias("value"))
+      .select(to_avro(struct("*"), kafkaRecordValueSchema).alias("value"))
 
     val query = df.writeStream
       .format("kafka")
