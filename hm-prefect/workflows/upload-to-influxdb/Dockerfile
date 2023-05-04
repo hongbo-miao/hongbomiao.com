@@ -17,7 +17,7 @@ RUN . /venv/bin/activate \
   && poetry build
 
 
-FROM docker.io/prefecthq/prefect:2.10.6-python3.11-kubernetes AS release
+FROM docker.io/prefecthq/prefect:2.10.7-python3.11-kubernetes AS release
 # WORKDIR /opt/prefect
 COPY --from=builder /venv/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
 COPY ["hm-prefect/workflows/upload-to-influxdb/src/", "./flows/src/"]
