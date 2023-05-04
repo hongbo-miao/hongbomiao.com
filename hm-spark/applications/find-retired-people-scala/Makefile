@@ -75,7 +75,7 @@ serve-files:
 spark-submit-to-spark-master-node-cluster-mode:
 	# Note: update xxx
 	kubectl exec --stdin --tty --namespace=hm-spark spark-master-0 -- \
- 		spark-submit \
+		spark-submit \
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=cluster \
 			--class=com.hongbomiao.FindRetiredPeople \
@@ -85,7 +85,7 @@ spark-submit-to-spark-master-node-cluster-mode:
 spark-submit-to-spark-master-node-client-mode:
 	# Note: update xxx
 	kubectl exec --stdin --tty --namespace=hm-spark spark-master-0 -- \
- 		spark-submit \
+		spark-submit \
 			--master=spark://spark-master-svc.hm-spark.svc:7077 \
 			--deploy-mode=client \
 			--class=com.hongbomiao.FindRetiredPeople \
