@@ -34,14 +34,14 @@ spec:
 
     # 2) Avro
     # https://www.apicur.io/registry/docs/apicurio-registry/2.4.x/getting-started/assembly-configuring-kafka-client-serdes.html#registry-serdes-config-props_registry
-    value.converter: io.apicurio.registry.utils.converter.AvroConverter
-    value.converter.apicurio.registry.url: http://apicurio-registry-apicurio-registry.hm-apicurio-registry.svc:8080/apis/registry/v2
-    value.converter.apicurio.registry.fallback.group-id: hm-group
-    value.converter.apicurio.registry.fallback.artifact-id: hm.motor-value
+    # value.converter: io.apicurio.registry.utils.converter.AvroConverter
+    # value.converter.apicurio.registry.url: http://apicurio-registry-apicurio-registry.hm-apicurio-registry.svc:8080/apis/registry/v2
+    # value.converter.apicurio.registry.fallback.group-id: hm-group
+    # value.converter.apicurio.registry.fallback.artifact-id: hm.motor-value
 
     # 3) Confluent Avro
-    # value.converter: io.confluent.connect.avro.AvroConverter
-    # value.converter.schema.registry.url: http://confluent-schema-registry.hm-confluent-schema-registry.svc:8081
+    value.converter: io.confluent.connect.avro.AvroConverter
+    value.converter.schema.registry.url: http://confluent-schema-registry.hm-confluent-schema-registry.svc:8081
 
     # timestamp
     transforms: convertTimestamp

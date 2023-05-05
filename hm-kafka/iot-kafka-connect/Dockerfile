@@ -3,16 +3,16 @@ USER root:root
 RUN mkdir -p /opt/kafka/plugins/ \
   # apicurio-registry-distro-connect-converter
   # https://mvnrepository.com/artifact/io.apicurio/apicurio-registry-distro-connect-converter
-  && wget --no-verbose --output-document=apicurio-registry-distro-connect-converter.tar.gz https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.4.2.Final/apicurio-registry-distro-connect-converter-2.4.2.Final.tar.gz \
-  && mkdir -p /opt/kafka/plugins/apicurio-registry-distro-connect-converter/ \
-  && tar -x -f apicurio-registry-distro-connect-converter.tar.gz -C /opt/kafka/plugins/apicurio-registry-distro-connect-converter/ \
-  && rm -f apicurio-registry-distro-connect-converter.tar.gz \
+  # && wget --no-verbose --output-document=apicurio-registry-distro-connect-converter.tar.gz https://repo1.maven.org/maven2/io/apicurio/apicurio-registry-distro-connect-converter/2.4.2.Final/apicurio-registry-distro-connect-converter-2.4.2.Final.tar.gz \
+  # && mkdir -p /opt/kafka/plugins/apicurio-registry-distro-connect-converter/ \
+  # && tar -x -f apicurio-registry-distro-connect-converter.tar.gz -C /opt/kafka/plugins/apicurio-registry-distro-connect-converter/ \
+  # && rm -f apicurio-registry-distro-connect-converter.tar.gz \
   # kafka-connect-avro-converter
   # https://www.confluent.io/hub/confluentinc/kafka-connect-avro-converter
-  # && wget --no-verbose --output-document=kafka-connect-avro-converter.zip https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-avro-converter/versions/7.3.3/confluentinc-kafka-connect-avro-converter-7.3.3.zip \
-  # && mkdir -p /opt/kafka/plugins/kafka-connect-avro-converter/ \
-  # && unzip kafka-connect-avro-converter.zip -d /opt/kafka/plugins/kafka-connect-avro-converter/ \
-  # && rm -f kafka-connect-avro-converter.zip \
+   && wget --no-verbose --output-document=kafka-connect-avro-converter.zip https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-avro-converter/versions/7.3.3/confluentinc-kafka-connect-avro-converter-7.3.3.zip \
+   && mkdir -p /opt/kafka/plugins/kafka-connect-avro-converter/ \
+   && unzip kafka-connect-avro-converter.zip -d /opt/kafka/plugins/kafka-connect-avro-converter/ \
+   && rm -f kafka-connect-avro-converter.zip \
   # confluentinc-kafka-connect-jdbc
   # https://www.confluent.io/hub/confluentinc/kafka-connect-elasticsearch
   && wget --no-verbose --output-document=confluentinc-kafka-connect-jdbc.zip https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-jdbc/versions/10.7.1/confluentinc-kafka-connect-jdbc-10.7.1.zip \
