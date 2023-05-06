@@ -179,7 +179,6 @@ make kubernetes-clean
 - **response-time** - HTTP header `X-Response-Time`
 - **connect-timeout** - Request timeout
 - **Terminus** - Health check and graceful shutdown
-- **Opossum** - Circuit breaker
 - **pino** - Logging
 - **dotenv-flow** - Environment variables loading
 - **Stryker** - Mutation testing

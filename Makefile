@@ -66,6 +66,16 @@ docker-compose-down:
 	docker-compose --file=docker-compose.development.yaml down --volumes
 	docker-compose --file=docker-compose.cypress.yaml down --volumes
 
+# Node.js
+nvm-install:
+	nvm install xxx
+nvm-uninstall:
+	nvm uninstall xxx
+nvm-use:
+	nvm ls xxx
+nvm-alias-default:
+	nvm alias default xxx
+
 # JupterLab
 jupyter-lab:
 	jupyter-lab
