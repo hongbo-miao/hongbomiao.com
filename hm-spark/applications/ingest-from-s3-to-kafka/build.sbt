@@ -9,7 +9,7 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-avro" % "3.4.0" % "provided",
   "org.apache.hadoop" % "hadoop-common" % "3.3.5" % "provided",
   "org.apache.hadoop" % "hadoop-aws" % "3.3.5" % "provided",
-  "com.amazonaws" % "aws-java-sdk-bundle" % "1.12.463" % "provided",
+  "com.amazonaws" % "aws-java-sdk-bundle" % "1.12.464" % "provided",
   "za.co.absa" %% "abris" % "6.3.0"
 )
 ThisBuild / assemblyMergeStrategy := {
