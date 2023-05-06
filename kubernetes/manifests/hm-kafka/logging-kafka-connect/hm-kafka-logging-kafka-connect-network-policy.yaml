@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hm-kafka-logging-kafka-connect-network-policy
+  namespace: hm-kafka
+spec:
+  podSelector:
+    matchLabels:
+      strimzi.io/cluster: hm-kafka-logging-kafka-connect
+      strimzi.io/kind: KafkaConnect
+      strimzi.io/name: hm-kafka-logging-kafka-connect-connect
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 8083
+      from:
+        - namespaceSelector:
+            matchLabels:
+              name: hm-redpanda-console
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: console
