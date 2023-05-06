@@ -7,12 +7,10 @@ import createCSPNonce from '../utils/createCSPNonce';
 
 const CSP_CONNECT_SRC = isProduction() ? config.prodCSPConnectSrc : config.devCSPConnectSrc;
 const CSP_REPORT_URI = isProduction() ? config.reportURI.cspReportURI : '/api/violation/report-csp-violation';
-const EXCEPT_CT_REPORT_URI = config.reportURI.exceptCTReportURI;
 
 const helmetMiddleware = (
   cspConnectSrc: ReadonlyArray<string> = CSP_CONNECT_SRC,
   cspReportURI: string = CSP_REPORT_URI,
-  exceptCTReportURI: string = EXCEPT_CT_REPORT_URI,
 ): RequestHandler => {
   return (req: Request, res: Response, next: NextFunction) => {
     const cspNonce = createCSPNonce();
@@ -152,13 +150,6 @@ const helmetMiddleware = (
            */
           upgradeInsecureRequests: [],
         },
-      },
-
-      // Set header 'Expect-CT: max-age=86400, enforce, report-uri="https://example.com/api"'
-      expectCt: {
-        maxAge: 86400,
-        enforce: true,
-        reportUri: exceptCTReportURI,
       },
 
       // Set header 'Referrer-Policy: no-referrer'

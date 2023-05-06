@@ -123,7 +123,6 @@ type Config = {
   prodCSPConnectSrc: ReadonlyArray<string>;
   reportURI: {
     cspReportURI: string;
-    exceptCTReportURI: string;
     reportToURL: string;
   };
   jwtSecret: string;
@@ -160,7 +159,6 @@ const config: Config = {
   ],
   reportURI: {
     cspReportURI: 'https://hongbomiao.report-uri.com/r/d/csp/enforce',
-    exceptCTReportURI: 'https://hongbomiao.report-uri.com/r/d/ct/enforce',
     reportToURL: 'https://hongbomiao.report-uri.com/a/d/g',
   },
   jwtSecret: JWT_SECRET,
