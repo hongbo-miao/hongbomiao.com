@@ -14,7 +14,7 @@ RUN mkdir -p /opt/kafka/plugins/ \
    && unzip kafka-connect-avro-converter.zip -d /opt/kafka/plugins/kafka-connect-avro-converter/ \
    && rm -f kafka-connect-avro-converter.zip \
   # confluentinc-kafka-connect-jdbc
-  # https://www.confluent.io/hub/confluentinc/kafka-connect-elasticsearch
+  # https://www.confluent.io/hub/confluentinc/kafka-connect-jdbc
   && wget --no-verbose --output-document=confluentinc-kafka-connect-jdbc.zip https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-jdbc/versions/10.7.1/confluentinc-kafka-connect-jdbc-10.7.1.zip \
   && mkdir -p /opt/kafka/plugins/confluentinc-kafka-connect-jdbc/ \
   && unzip confluentinc-kafka-connect-jdbc.zip -d /opt/kafka/plugins/confluentinc-kafka-connect-jdbc/ \

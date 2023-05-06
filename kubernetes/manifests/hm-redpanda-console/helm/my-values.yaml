@@ -1,0 +1,20 @@
+# https://github.com/redpanda-data/helm-charts/blob/main/charts/console/values.yaml
+# https://github.com/redpanda-data/helm-charts/blob/main/charts/console/examples/console-enterprise.yaml
+
+---
+console:
+  config:
+    kafka:
+      brokers:
+        - hm-kafka-kafka-bootstrap.hm-kafka.svc:9092
+      # https://docs.redpanda.com/docs/manage/console/schema-registry
+      schemaRegistry:
+        enabled: true
+        urls:
+          - http://confluent-schema-registry.hm-confluent-schema-registry.svc:8081
+    # https://docs.redpanda.com/docs/manage/console/kafka-connect
+    # connect:
+    #   enabled: true
+    #   clusters:
+    #     - name: iot-kafka-connect
+    #       url: http://hm-kafka-iot-kafka-connect-connect-api.hm-kafka:8083
