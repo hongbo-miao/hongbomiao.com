@@ -13,8 +13,12 @@ console:
         urls:
           - http://confluent-schema-registry.hm-confluent-schema-registry.svc:8081
     # https://docs.redpanda.com/docs/manage/console/kafka-connect
-    # connect:
-    #   enabled: true
-    #   clusters:
-    #     - name: iot-kafka-connect
-    #       url: http://hm-kafka-iot-kafka-connect-connect-api.hm-kafka:8083
+    connect:
+      enabled: true
+      clusters:
+        - name: hm-kafka-iot-kafka-connect
+          url: http://hm-kafka-iot-kafka-connect-connect-api.hm-kafka:8083
+        - name: hm-kafka-logging-kafka-connect
+          url: http://hm-kafka-logging-kafka-connect-connect-api.hm-kafka:8083
+        - name: hm-kafka-opa-kafka-connect
+          url: http://hm-kafka-opa-kafka-connect-connect-api.hm-kafka:8083
