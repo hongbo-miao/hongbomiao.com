@@ -190,21 +190,30 @@ make kubernetes-clean
 ### Database
 
 - **Trino** - Distributed SQL query engine
-- **PostgreSQL** - Object-relational database
+- **PostgreSQL** - Object-relational databaseons
+  - **pgAdmin** - PostgreSQL management tool
 - **ClickHouse** - Column-oriented database
 - **YugabyteDB** - Distributed SQL database
 - **TimescaleDB** - Time-series SQL database
 - **Cassandra** - Distributed wide-column NoSQL database
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
+  - **Kibana** - Elasticsearch visualization
 - **KeyDB** - High performance fork of Redis
 - **MinIO** - High performance object storage
 - **Kafka** - Distributed event streaming platform
-  - **Debezium** - Distributed change-data-capture platform
-  - **debezium-connector-postgres** - PostgreSQL connector
+  - **Confluent Schema Registry** - Schema Registry
+  - **Apicurio Registry** - Schema Registry
+  - **Debezium** - Distributed change-data-capture (CDC) platform
   - **kafka-connect-elasticsearch** - Elasticsearch sink connector
+  - **confluentinc-kafka-connect-jdbc** - JDBC source and sink connector
+  - **debezium-connector-postgres** - PostgreSQL CDC source connector
   - **http-connector-for-apache-kafka** - HTTP sink connector
-- **golang-migrate/migrate** - Database migrations
+  - **kafka-connect-avro-converter** - Confluent Avro converter
+  - **apicurio-registry-distro-connect-converter** - Apicurio Avro converter
+  - **Redpanda Console** - Kafka management tool
+  - **UI for Apache Kafka** - Kafka management tool
+- **golang-migrate/migrate** - Database migrati
 
 ### Data Science and Machine Learning
 
@@ -257,7 +266,6 @@ make kubernetes-clean
 - **nginx** - Web server, reverse proxy, load balancer
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
-- **Kibana** - Data visualization dashboard for Elasticsearch
 - **Elastic APM** - Application performance monitoring
 - **OpenTelemetry** - Observability framework
 - **Jaeger** - Distributed tracing system
