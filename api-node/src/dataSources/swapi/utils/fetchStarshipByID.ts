@@ -1,7 +1,6 @@
 import axios from 'axios';
 import config from '../../../config';
 import GraphQLStarship from '../../../graphQL/types/GraphQLStarship';
-import createCircuitBreaker from '../../../reliability/utils/createCircuitBreaker';
 import formatStarship from './formatStarship';
 
 const fetchStarshipByID = async (id: string): Promise<GraphQLStarship | null> => {
@@ -9,10 +8,4 @@ const fetchStarshipByID = async (id: string): Promise<GraphQLStarship | null> =>
   return formatStarship(id, swapiStarship);
 };
 
-const breaker = createCircuitBreaker(fetchStarshipByID);
-
-const fetchStarshipByIDWithBreaker = async (id: string): Promise<GraphQLStarship | null> => {
-  return breaker.fire(id);
-};
-
-export default fetchStarshipByIDWithBreaker;
+export default fetchStarshipByID;
