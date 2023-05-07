@@ -2,7 +2,7 @@ package utils
 
 import (
 	"errors"
-	"github.com/golang-jwt/jwt/v4"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/rs/zerolog/log"
 	"net/http"
 	"strings"
