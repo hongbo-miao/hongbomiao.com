@@ -6,6 +6,7 @@ module.exports = {
     assert: {
       preset: 'lighthouse:recommended',
       assertions: {
+        'bf-cache': ['warn', { minScore: 0 }],
         'csp-xss': ['warn', { minScore: 0 }],
         'errors-in-console': ['warn', { minScore: 0 }],
         'no-unload-listeners': ['warn', { minScore: 0 }],
