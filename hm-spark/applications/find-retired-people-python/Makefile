@@ -1,6 +1,8 @@
 openjdk-install:
 	brew install openjdk@17
 
+poetry-env-use:
+	poetry env use 3.10
 poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
