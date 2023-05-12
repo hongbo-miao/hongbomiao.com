@@ -7,7 +7,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/bep/debounce v1.2.1
 	github.com/buger/jsonparser v1.1.1
-	github.com/dgraph-io/dgo/v230 v230.0.1-rc1
+	github.com/dgraph-io/dgo/v230 v230.0.1
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/logger v0.2.5
