@@ -178,6 +178,7 @@ lint-sql:
 	poetry run poe lint-sql -- --dialect=postgres streaming/migrations
 	poetry run poe lint-sql -- --dialect=postgres timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql -- --dialect=postgres timescaledb/motor/migrations
+	poetry run poe lint-sql -- --dialect=sparksql delta-lake/sql
 	poetry run poe lint-sql -- --dialect=sparksql hm-spark/applications/find-taxi-top-routes-sql/src/queries
 lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=bigquery bigquery-ml
@@ -188,6 +189,7 @@ lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=postgres streaming/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres timescaledb/motor/migrations
+	poetry run poe lint-sql-fix -- --dialect=sparksql delta-lake/sql
 	poetry run poe lint-sql-fix -- --dialect=sparksql hm-spark/applications/find-taxi-top-routes-sql/src/queries
 lint-yaml:
 	poetry run poe lint-yaml
