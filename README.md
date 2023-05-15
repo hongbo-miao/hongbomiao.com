@@ -338,6 +338,7 @@ make kubernetes-clean
 - **qmllint** - QML linter
 - **RuboCop** - Ruby linter and code formatter
 - **Scalafmt** - Scala code formatter
+- **Scalafix** - Scala linter
 - **ShellCheck** - Shell linter
 - **solhint** - Solidity linter
 - **SQLFluff** - SQL linter and code formatter
