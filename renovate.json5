@@ -7,9 +7,13 @@
   ],
   lockFileMaintenance: {
     enabled: true,
-    commitMessageExtra: '({{packageFile}})',
   },
-  additionalBranchPrefix: '{{parentDir}}-',
-  semanticCommitScope: '{{#if parentDir}}{{parentDir}}{{else}}deps{{/if}}',
   prHourlyLimit: 0,
+  packageRules: [
+    {
+      matchUpdateTypes: ['major', 'minor', 'patch'],
+      additionalBranchPrefix: '{{parentDir}}-',
+      semanticCommitScope: '{{#if parentDir}}{{parentDir}}{{else}}deps{{/if}}'
+    }
+  ]
 }
