@@ -12,6 +12,7 @@ libraryDependencies ++= Seq(
   "com.amazonaws" % "aws-java-sdk-bundle" % "1.12.468" % "provided",
   "za.co.absa" %% "abris" % "6.3.0"
 )
+
 ThisBuild / assemblyMergeStrategy := {
   // https://stackoverflow.com/a/67937671/2000548
   case PathList("module-info.class") => MergeStrategy.discard
@@ -22,3 +23,10 @@ ThisBuild / assemblyMergeStrategy := {
     val oldStrategy = (ThisBuild / assemblyMergeStrategy).value
     oldStrategy(x)
 }
+
+// Scalafix
+semanticdbEnabled := true
+semanticdbVersion := scalafixSemanticdb.revision // Required for Scala 2.x
+scalacOptions ++= Seq(
+  "-Ywarn-unused-import" // Required by RemoveUnused rule
+)
