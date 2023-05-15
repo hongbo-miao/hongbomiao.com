@@ -36,6 +36,9 @@ rclone-copy:
 rclone-sync:
 	rclone sync --progress hm-ubuntu:/tmp/rclone-backup /tmp/rclone-backup
 
-# UI
-rclone-ui:
-	rclone rcd --rc-web-gui
+
+# Server
+rclone-rcd:
+	rclone rcd
+rclone-rcd-ui:
+	rclone rcd --rc-web-gui --rc-addr=:5572 --rc-user=admin --rc-pass=passw0rd
