@@ -524,10 +524,14 @@ jobs:
           distribution: corretto
           java-version: '17'
           cache: sbt
-      - name: Lint Scala
+      - name: Lint Scala (Scalafmt)
         working-directory: hm-spark/applications/find-retired-people-scala
         run: |
           sbt scalafmtCheckAll
+      - name: Lint Scala (Scalafix)
+        working-directory: hm-spark/applications/find-retired-people-scala
+        run: |
+          sbt "scalafixAll --check"
 
   lint-scala-hm-spark-ingest-from-s3-to-kafka:
     name: Scala (hm-spark-ingest-from-s3-to-kafka)
@@ -545,10 +549,14 @@ jobs:
           distribution: corretto
           java-version: '17'
           cache: sbt
-      - name: Lint Scala
+      - name: Lint Scala (Scalafmt)
         working-directory: hm-spark/applications/ingest-from-s3-to-kafka
         run: |
           sbt scalafmtCheckAll
+      - name: Lint Scala (Scalafix)
+        working-directory: hm-spark/applications/ingest-from-s3-to-kafka
+        run: |
+          sbt "scalafixAll --check"
 
   lint-shell:
     name: Shell

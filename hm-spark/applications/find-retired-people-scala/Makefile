@@ -21,10 +21,14 @@ sbt-run:
 sbt-plugins:
 	sbt plugins
 
-lint-scala:
+lint-scala-scalafmt:
 	sbt scalafmtCheckAll
-lint-scala-fix:
+lint-scala-scalafmt-fix:
 	sbt scalafmtAll
+lint-scala-scalafix:
+	sbt "scalafixAll --check"
+lint-scala-scalafix-fix:
+	sbt scalafixAll
 
 java-list-versions:
 	/usr/libexec/java_home -V
