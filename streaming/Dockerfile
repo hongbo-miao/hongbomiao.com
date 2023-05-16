@@ -1,4 +1,4 @@
-FROM docker.io/maven:3.9.1-amazoncorretto-11 AS builder
+FROM docker.io/maven:3.9.2-amazoncorretto-11 AS builder
 WORKDIR /usr/src/app
 COPY ["streaming/src/",  "./src/"]
 COPY ["streaming/pom.xml", "./"]
