@@ -106,7 +106,6 @@ spark-submit-to-kubernetes-cluster:
 		--conf=spark.kubernetes.container.image.pullPolicy=Always \
 		--conf=spark.hadoop.fs.s3a.access.key=xxx \
 		--conf=spark.hadoop.fs.s3a.secret.key=xxx \
-		--packages=org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.2,org.apache.spark:spark-avro_2.12:3.3.2 \
 		local:///opt/spark/work-dir/IngestFromS3ToKafka-assembly-1.0.jar
 spark-submit-to-kubernetes-cluster-delight:
 	spark-submit \
@@ -115,7 +114,7 @@ spark-submit-to-kubernetes-cluster-delight:
 		--name=ingest-from-s3-to-kafka \
 		--class=com.hongbomiao.IngestFromS3ToKafka \
 		--repositories=https://oss.sonatype.org/content/repositories/snapshots \
-		--packages=co.datamechanics:delight_2.12:latest-SNAPSHOT,org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.2,org.apache.spark:spark-avro_2.12:3.3.2 \
+		--packages=co.datamechanics:delight_2.12:latest-SNAPSHOT \
 		--conf=spark.executor.instances=5 \
 		--conf=spark.kubernetes.namespace=hm-spark \
 		--conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest \
