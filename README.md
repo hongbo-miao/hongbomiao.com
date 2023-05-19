@@ -2,7 +2,7 @@
   <p>
     <a href="https://www.hongbomiao.com"><img width="100" src="https://user-images.githubusercontent.com/3375461/93688946-821f1880-fafc-11ea-8918-374f21f4ac6e.png" alt="Flying" /></a>
   </p>
-  <h2>HONGBO MIAO</h2>
+  <h2>Personal R&D Lab</h2>
   <p>Making magic happen</p>
   <br />
   <p>
@@ -39,9 +39,6 @@
   <p>
     <a href="https://www.chromatic.com/builds?appId=5d626a63a601530020759b10"><img alt="Storybook" src="https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg" /></a>
   </p>
-  <p>
-    <a href="https://www.hongbomiao.com">hongbomiao.com</a>
-  </p>
 </div>
 
 ---
@@ -52,17 +49,11 @@
 
 ## 👩‍🚀 Introduction
 
-Personal cutting-edge technology lab. Happy exchanging!
-
-[https://www.hongbomiao.com](https://www.hongbomiao.com)
-
-[![hongbomiao.com record](https://user-images.githubusercontent.com/3375461/100162554-deccf400-2eee-11eb-89b4-49cd6c23026d.gif)](https://www.hongbomiao.com)
+Personal R&D (research and development) lab. Happy exchanging!
 
 ## 🚀 Architecture
 
-This diagram shows the architecture of this repository.
-
-It is way over-engineering. Please make sure to know the tradeoffs before onboarding any technology to your project.
+The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
 ![Architecture](https://user-images.githubusercontent.com/3375461/226168898-7e10aa5f-6f2c-4ec2-acac-50518963cd12.svg)
 
