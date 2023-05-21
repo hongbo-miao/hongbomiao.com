@@ -44,27 +44,27 @@ echo "=================================================="
 echo "# Start the workflow"
 # calculate
 # cd hm-prefect/workflows/calculate
-# poetry run poe add-kubernetes-job-block
+# poetry run poe set-up
 # poetry run poe build -- --params='{"model":{"n":4}}' --work-queue=hm-kubernetes-queue
 # poetry run poe run
 
 # greet
 # cd hm-prefect/workflows/greet
-# poetry run poe add-kubernetes-job-block
+# poetry run poe set-up
 # poetry run poe build -- --params='{"user":{"first_name":"Hongbo","last_name":"Miao"}}' --work-queue=hm-kubernetes-queue
 # poetry run poe run
 
 # collect-data
-# poetry run poe add-kubernetes-job-block
 # cd hm-prefect/workflows/collect-data
+# poetry run poe set-up
 # poetry run poe build -- --params=$(cat params.json | jq -c .) --work-queue=hm-local-queue
 # poetry run poe run
 
 # print-platform
 cd hm-prefect/workflows/print-platform
-poetry run poe add-kubernetes-job-block
+poetry run poe set-up
 poetry run poe build -- --work-queue=hm-kubernetes-queue
-# poetry run poe build -- --work-queue=hm-kubernetes-queue --interval=300
+# poetry run poe build -- --work-queue=hm-kubernetes-queue
 # poetry run poe build -- --work-queue=hm-local-queue
 poetry run poe run
 
