@@ -1,5 +1,6 @@
 import tempfile
 
+import config
 import pandas as pd
 from nptdms import TdmsFile
 from tasks.copy_to_local import copy_to_local
@@ -16,7 +17,11 @@ def get_dataframe_from_tdms(tdms_path: str) -> pd.DataFrame:
 
 
 async def write_data(
-    filename: str, source_dirname: str, s3_path: str, delta_table_path: str
+    filename: str,
+    source_dirname: str,
+    s3_raw_path: str,
+    delta_table_path: str,
+    location: str,
 ) -> None:
     with tempfile.TemporaryDirectory() as tmp_dirname:
         copy_to_local_with_options = copy_to_local.with_options(
@@ -27,11 +32,13 @@ async def write_data(
 
         write_to_delta_lake_with_options = write_to_delta_lake.with_options(
             name=f"write-to-delta-lake-{filename}",
-            tags=["ingest-data-write-to-delta-table-motor-concurrency-limit"],
+            tags=[
+                f"{config.flow_name}-write-to-delta-table-{location}-concurrency-limit"
+            ],
         )
         await write_to_delta_lake_with_options(df, delta_table_path)
 
         write_to_s3_with_options = write_to_s3.with_options(
-            name=f"write-to-s3_path-{filename}",
+            name=f"write-to-s3-{filename}",
         )
-        await write_to_s3_with_options(filename, source_dirname, s3_path)
+        await write_to_s3_with_options(filename, source_dirname, s3_raw_path)
