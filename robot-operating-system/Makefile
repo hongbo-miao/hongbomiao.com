@@ -17,10 +17,8 @@ ros2-pkg-create-launch-package:
 ros2-pkg-create-interface:
 	cd src && ros2 pkg create hm_python_package
 
-ros2-setup:
-	source install/setup.bash
-ros2-setup-local:
-	source install/local_setup.bash
+ros2-set-up:
+	source install/set_up.sh
 
 colcon-build:
 	colcon build

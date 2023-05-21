@@ -60,7 +60,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## 📦 Setup
 
 ```shell
-make kubernetes-setup
+make kubernetes-set-up
 ```
 
 ```shell
