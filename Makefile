@@ -209,6 +209,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.calculate
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.collect-data
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.greet
+	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.ingest-data
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.print-platform
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-retired-people-python
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-taxi-top-routes
