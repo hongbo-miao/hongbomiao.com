@@ -1,11 +1,11 @@
-setup-multipass:
-	sh bin/setup_multipass.sh
-setup-k3d:
-	sh bin/setup_k3d.sh
-setup-kind:
-	sh bin/setup_kind.sh
-setup-minikube:
-	sh bin/setup_minikube.sh
+set-up-multipass:
+	sh bin/set_up_multipass.sh
+set-up-k3d:
+	sh bin/set_up_k3d.sh
+set-up-kind:
+	sh bin/set_up_kind.sh
+set-up-minikube:
+	sh bin/set_up_minikube.sh
 
 focus-opa-debug:
 	sh bin/utils/focus_opa_debug.sh
