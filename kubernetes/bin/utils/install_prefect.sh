@@ -68,13 +68,6 @@ poetry run poe build -- --work-queue=hm-kubernetes-queue
 # poetry run poe build -- --work-queue=hm-local-queue
 poetry run poe run
 
-# upload-to-influxdb
-# cd hm-prefect/workflows/upload-to-influxdb
-# poetry run poe add-kubernetes-job-block
-# poetry run poe prefect-concurrency-limit-create -- upload-to-influxdb-download-write-concurrency-limit 3
-# poetry run poe build -- --params=$(cat params.production.json | jq -c .) --work-queue=hm-kubernetes-queue
-# poetry run poe run
-
 # kubectl delete jobs --all --namespace=hm-prefect
 echo "=================================================="
 
