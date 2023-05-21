@@ -6,7 +6,7 @@ from utils.create_concurrency_limit import create_concurrency_limit
 from utils.create_kubernetes_job_block import create_kubernetes_job_block
 
 
-async def set_up(
+async def main(
     flow_name: str,
     aws_default_region: str,
     aws_access_key_id: str,
@@ -24,13 +24,13 @@ async def set_up(
 if __name__ == "__main__":
     config = dotenv_values("tools/set_up/.env.production.local")
 
-    external_flow_name = config["FLOW_NAME"]
+    external_flow_name = "ingest-data"
     external_aws_default_region = config["AWS_DEFAULT_REGION"]
     external_aws_access_key_id = config["AWS_ACCESS_KEY_ID"]
     external_aws_secret_access_key = config["AWS_SECRET_ACCESS_KEY"]
 
     asyncio.run(
-        set_up(
+        main(
             external_flow_name,
             external_aws_default_region,
             external_aws_access_key_id,

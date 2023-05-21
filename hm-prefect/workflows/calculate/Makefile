@@ -16,10 +16,10 @@ poetry-run-prefect-agent-start:
 prefect-profile-use:
 	poetry run poe prefect-profile-use -- hm-kubernetes
 
+poetry-run-set-up:
+	poetry run poe set-up
 poetry-run-dev:
 	poetry run poe dev
-poetry-run-add-kubernetes-job-block:
-	poetry run poe add-kubernetes-job-block
 poetry-run-build:
 	poetry run poe build -- --params='{"model":{"n":4}}' --work-queue=hm-kubernetes-queue
 poetry-run-run:
