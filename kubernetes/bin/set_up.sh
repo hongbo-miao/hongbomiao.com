@@ -13,7 +13,7 @@ else
   CLUSTERS=("west")
 fi
 
-source kubernetes/bin/utils/setup_k3d.sh "${CLUSTERS[@]}"
+source kubernetes/bin/utils/set_up_k3d.sh "${CLUSTERS[@]}"
 
 if [ $is_debug = false ]; then
   source kubernetes/bin/utils/install_linkerd.sh "${CLUSTERS[@]}"
