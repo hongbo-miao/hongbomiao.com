@@ -54,12 +54,6 @@ echo "# Start the workflow"
 # poetry run poe build -- --params='{"user":{"first_name":"Hongbo","last_name":"Miao"}}' --work-queue=hm-kubernetes-queue
 # poetry run poe run
 
-# collect-data
-# cd hm-prefect/workflows/collect-data
-# poetry run poe set-up
-# poetry run poe build -- --params=$(cat params.json | jq -c .) --work-queue=hm-local-queue
-# poetry run poe run
-
 # print-platform
 cd hm-prefect/workflows/print-platform
 poetry run poe set-up
