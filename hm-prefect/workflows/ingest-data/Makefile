@@ -1,0 +1,32 @@
+poetry-env-use:
+	poetry env use 3.11
+poetry-update-lock-file:
+	poetry lock --no-update
+poetry-install:
+	poetry install --no-root
+poetry-add:
+	poetry add xxx
+poetry-add-dev:
+	poetry add xxx --group=dev
+
+poetry-run-prefect-server-start:
+	poetry run poe prefect-server-start
+poetry-run-prefect-agent-start:
+	poetry run poe prefect-agent-start
+prefect-profile-use:
+	poetry run poe prefect-profile-use -- hm-kubernetes
+
+poetry-run-set-up:
+	poetry run poe set-up
+poetry-run-dev:
+	poetry run poe dev
+poetry-run-build:
+	poetry run poe build -- --params=$$(cat params.json | jq -c .) --work-queue=hm-local-queue
+poetry-run-run:
+	poetry run poe run
+
+docker-build:
+	cd ../../.. && \
+	docker build --file=hm-prefect/workflows/ingest-data/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-ingest-data:latest .
+docker-push:
+	docker push ghcr.io/hongbo-miao/hm-prefect-ingest-data:latest
