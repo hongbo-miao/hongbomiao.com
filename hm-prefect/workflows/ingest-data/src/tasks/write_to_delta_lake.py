@@ -10,7 +10,7 @@ from prefect_aws import AwsCredentials
 async def write_to_delta_lake(df: pd.DataFrame, delta_table_path: str) -> None:
     aws_credentials = await AwsCredentials.load("ingest-data-aws-credentials-block")
     storage_options = {
-        "AWS_DEFAULT_REGION": "us-west-2",
+        "AWS_DEFAULT_REGION": aws_credentials.region_name,
         "AWS_ACCESS_KEY_ID": aws_credentials.aws_access_key_id,
         "AWS_SECRET_ACCESS_KEY": aws_credentials.aws_secret_access_key.get_secret_value(),
         "AWS_S3_ALLOW_UNSAFE_RENAME": "true",
