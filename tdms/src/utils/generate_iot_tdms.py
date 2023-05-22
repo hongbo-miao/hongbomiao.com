@@ -4,9 +4,7 @@ import numpy as np
 from nptdms import ChannelObject, GroupObject, RootObject, TdmsWriter
 
 
-def generate_iot_tdms(
-    data_dirname: str, tdms_filename: str, data_point_count: int
-) -> None:
+def generate_iot_tdms(data_dirname: str, tdms_filename: str, row_count: int) -> None:
     tdms_path = f"{data_dirname}/{tdms_filename}"
 
     root_object = RootObject(
@@ -28,13 +26,13 @@ def generate_iot_tdms(
     # Generate timestamp data with a 10 ms interval
     # Past
     # timestamp_data = np.array(
-    #     [time.time() + (data_point_count - i) * 0.01 for i in range(data_point_count)]
+    #     [time.time() + (row_count - i) * 0.01 for i in range(row_count)]
     # )
     # Future
-    timestamp_data = np.array([time.time() + i * 0.01 for i in range(data_point_count)])
-    current_data = np.random.rand(data_point_count) * 10
-    voltage_data = np.random.rand(data_point_count) * 20
-    temperature_data = np.random.rand(data_point_count) * 50 + 25
+    timestamp_data = np.array([time.time() + i * 0.01 for i in range(row_count)])
+    current_data = np.random.rand(row_count) * 10
+    voltage_data = np.random.rand(row_count) * 20
+    temperature_data = np.random.rand(row_count) * 50 + 25
 
     timestamp_channel = ChannelObject(
         motor_group_name,

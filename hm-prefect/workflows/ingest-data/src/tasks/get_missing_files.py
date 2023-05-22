@@ -16,7 +16,7 @@ def extract_missing_files(log: list[str]) -> list[str]:
 @task
 async def get_missing_files(
     source_dirname: str, s3_raw_path: str, delta_table_path: str, location: str
-) -> list[tuple[str, str, str, str]]:
+) -> list[tuple[str, str, str, str, str]]:
     log = await ShellOperation(
         commands=[
             f'rclone copy --dry-run --include="*.tdms" --use-json-log {source_dirname} {s3_raw_path}',
