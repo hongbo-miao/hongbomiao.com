@@ -1,11 +1,24 @@
+import time
+
 import config
+import numpy as np
 import pandas as pd
 import pyarrow as pa
 from deltalake.writer import write_deltalake
 
 
-def main():
-    df = pd.read_parquet(config.parquet_path, engine="pyarrow")
+def main(row_count: int):
+    timestamp = np.array([time.time() + i * 0.01 for i in range(row_count)])
+    current = np.random.rand(row_count) * 10
+    voltage = np.random.rand(row_count) * 20
+    temperature = np.random.rand(row_count) * 50 + 25
+    data = {
+        "timestamp": timestamp,
+        "current": current,
+        "voltage": voltage,
+        "temperature": temperature,
+    }
+    df = pd.DataFrame(data)
     storage_options = {
         "AWS_DEFAULT_REGION": config.aws_default_region,
         "AWS_ACCESS_KEY_ID": config.aws_access_key_id,
@@ -30,4 +43,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    external_row_count = 10
+    main(external_row_count)
