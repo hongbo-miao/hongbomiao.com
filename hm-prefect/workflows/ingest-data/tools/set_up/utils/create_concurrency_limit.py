@@ -1,4 +1,4 @@
-from prefect.client.orchestration import get_client
+from prefect import get_client
 
 
 async def create_concurrency_limit(tag: str, concurrency_limit: int) -> None:
