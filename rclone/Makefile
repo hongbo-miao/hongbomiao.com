@@ -36,6 +36,9 @@ rclone-copy:
 rclone-sync:
 	rclone sync --progress hm-ubuntu:/tmp/rclone-backup /tmp/rclone-backup
 
+# Mount
+rclone-mount:
+	rclone mount hm-s3:hongbomiao-bucket/rclone-backup /tmp/rclone-backup
 
 # Server
 rclone-rcd:
