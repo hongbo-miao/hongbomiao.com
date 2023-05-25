@@ -192,7 +192,7 @@ kubectl-port-forward-influxdb:
 kubectl-port-forward-redis:
 	kubectl port-forward service/redis-headless --namespace=hm-redis 6379:6379
 kubectl-port-forward-trino:
-	kubectl port-forward service/trino --namespace=hm-trino 26869:26869
+	kubectl port-forward service/trino --namespace=hm-trino 26869:8080
 kubectl-port-forward-superset:
 	kubectl port-forward service/superset --namespace=hm-superset 22357:8088
 kubectl-port-forward-dgraph:
