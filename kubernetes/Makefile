@@ -486,11 +486,13 @@ minio-headless:
 postgres-connect:
 	psql postgresql://admin@localhost:5432/postgres
 migrate-up:
-	$(eval POSTGRESQL_URL := "postgresql://admin:passw0rd@localhost:5432/opa_db?sslmode=disable&search_path=public")
-	migrate -database "${POSTGRESQL_URL}" -path data/postgres/opa_db/migrations up
+	migrate \
+		-database "postgresql://admin:passw0rd@localhost:5432/opa_db?sslmode=disable&search_path=public" \
+		-path data/postgres/opa_db/migrations up
 migrate-down:
-	$(eval POSTGRESQL_URL := "postgresql://admin:passw0rd@localhost:5432/opa_db?sslmode=disable&search_path=public")
-	migrate -database "${POSTGRESQL_URL}" -path data/postgres/opa_db/migrations down
+	migrate \
+		-database "postgresql://admin:passw0rd@localhost:5432/opa_db?sslmode=disable&search_path=public" \
+		-path data/postgres/opa_db/migrations down
 
 # TorchServe
 torchserve-init:
