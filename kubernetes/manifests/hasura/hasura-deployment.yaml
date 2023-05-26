@@ -21,7 +21,7 @@ spec:
     spec:
       shareProcessNamespace: true
       containers:
-        - image: docker.io/hasura/graphql-engine:v2.6.1.cli-migrations-v3
+        - image: docker.io/hasura/graphql-engine:v2.25.1-ce.cli-migrations-v3
           name: hasura-graphql-engine
           # https://hasura.io/docs/latest/graphql/core/deployment/graphql-engine-flags/reference/
           env:
@@ -90,29 +90,37 @@ spec:
                 configMapKeyRef:
                   name: hasura-configmap
                   key: hasura_graphql_enable_telemetry
-            - name: HASURA_GRAPHQL_MIGRATIONS_DIR
-              valueFrom:
-                configMapKeyRef:
-                  name: hasura-configmap
-                  key: hasura_graphql_migrations_dir
-            - name: HASURA_GRAPHQL_METADATA_DIR
-              valueFrom:
-                configMapKeyRef:
-                  name: hasura-configmap
-                  key: hasura_graphql_metadata_dir
+            # - name: HASURA_GRAPHQL_MIGRATIONS_DIR
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: hasura-configmap
+            #       key: hasura_graphql_migrations_dir
+            # - name: HASURA_GRAPHQL_METADATA_DIR
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: hasura-configmap
+            #       key: hasura_graphql_metadata_dir
           ports:
             - name: hasura-engine
               protocol: TCP
               containerPort: 16020
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: hasura-engine
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: hasura-engine
           command: [
             "/bin/sh", "-c", "rm -f /tmp/log/stdout.log && mkfifo /tmp/log/stdout.log && /bin/graphql-engine serve | tee /tmp/log/stdout.log"
           ]
           volumeMounts:
-            - name: hasura-graphql-engine-volume
-              mountPath: /data/hasura/hasura-graphql-engine
+            # - name: hasura-graphql-engine-volume
+            #   mountPath: /data/hasura/hasura-graphql-engine
             - name: log-volume
               mountPath: /tmp/log
-        - image: ghcr.io/afitzek/hasura-metric-adapter:v0.1.4
+        - image: ghcr.io/afitzek/hasura-metric-adapter:v0.2.1
           name: hasura-metric-adapter
           env:
             - name: LOG_FILE
@@ -143,7 +151,7 @@ spec:
             - name: log-volume
               mountPath: /tmp/log
         # - image: ghcr.io/hongbo-miao/hm-traefik:latest
-        - image: docker.io/traefik:v2.6.6
+        - image: docker.io/traefik:v2.10.1
           name: traefik
           ports:
             - name: traefik-hasura
@@ -157,9 +165,9 @@ spec:
               mountPath: /etc/traefik/
       volumes:
         # hasura-graphql-engine
-        - name: hasura-graphql-engine-volume
-          persistentVolumeClaim:
-            claimName: hasura-graphql-engine-pvc
+        # - name: hasura-graphql-engine-volume
+        #   persistentVolumeClaim:
+        #     claimName: hasura-graphql-engine-pvc
 
         # hasura-metric-adapter
         - name: log-volume
