@@ -100,7 +100,6 @@ spark-submit-to-kubernetes-cluster:
 		--deploy-mode=cluster \
 		--name=ingest-from-s3-to-kafka \
 		--class=com.hongbomiao.IngestFromS3ToKafka \
-		--conf=spark.executor.instances=5 \
 		--conf=spark.kubernetes.namespace=hm-spark \
 		--conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest \
 		--conf=spark.kubernetes.container.image.pullPolicy=Always \
@@ -115,7 +114,6 @@ spark-submit-to-kubernetes-cluster-delight:
 		--class=com.hongbomiao.IngestFromS3ToKafka \
 		--repositories=https://oss.sonatype.org/content/repositories/snapshots \
 		--packages=co.datamechanics:delight_2.12:latest-SNAPSHOT \
-		--conf=spark.executor.instances=5 \
 		--conf=spark.kubernetes.namespace=hm-spark \
 		--conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest \
 		--conf=spark.kubernetes.container.image.pullPolicy=Always \

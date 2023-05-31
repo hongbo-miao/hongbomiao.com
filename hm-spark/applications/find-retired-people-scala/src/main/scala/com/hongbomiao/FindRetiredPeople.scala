@@ -15,8 +15,6 @@ object FindRetiredPeople {
     val spark: SparkSession = SparkSession
       .builder()
       .master("local[*]")
-      .appName("find-retired-people-scala")
-      .config("spark.ui.port", "4040")
       .getOrCreate()
 
     import spark.implicits._

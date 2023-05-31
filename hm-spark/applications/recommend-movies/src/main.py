@@ -4,12 +4,7 @@ from pyspark.sql.functions import col, explode
 
 
 def main(data_dirname: str, ratings_filename: str, movies_filename: str):
-    spark = (
-        SparkSession.builder.master("local[*]")
-        .appName("recommend-movie")
-        .config("spark.ui.port", "4040")
-        .getOrCreate()
-    )
+    spark = SparkSession.builder.master("local[*]").getOrCreate()
 
     ratings_df = spark.read.csv(
         f"{data_dirname}/{ratings_filename}",
