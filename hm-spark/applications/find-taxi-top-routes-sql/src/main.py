@@ -24,12 +24,7 @@ def main(
     with open(f"{query_dirname}/{query_filename}", "r") as f:
         sql_query = f.read()
 
-    spark = (
-        SparkSession.builder.master("local[*]")
-        .appName("find-taxi-top-routes-sql")
-        .config("spark.ui.port", "4040")
-        .getOrCreate()
-    )
+    spark = SparkSession.builder.master("local[*]").getOrCreate()
 
     trips = load_trips(spark, trip_data_paths)
     zones = load_zones(spark, zone_data_path)

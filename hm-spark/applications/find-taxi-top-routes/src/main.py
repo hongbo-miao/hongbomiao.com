@@ -25,12 +25,7 @@ def main(data_dirname: str, trip_filenames: list[str], zone_filename: str) -> No
     trip_data_paths = [f"{data_dirname}/{f}" for f in trip_filenames]
     zone_data_path = f"{data_dirname}/{zone_filename}"
 
-    spark = (
-        SparkSession.builder.master("local[*]")
-        .appName("find-taxi-top-routes")
-        .config("spark.ui.port", "4040")
-        .getOrCreate()
-    )
+    spark = SparkSession.builder.master("local[*]").getOrCreate()
 
     trips = load_trips(spark, trip_data_paths)
     zones = load_zones(spark, zone_data_path)

@@ -58,7 +58,6 @@ spark-submit-to-kubernetes-cluster:
         --deploy-mode=cluster \
         --name=find-retired-people-scala \
 		--class=com.hongbomiao.FindRetiredPeople \
-        --conf=spark.executor.instances=5 \
         --conf=spark.kubernetes.namespace=hm-spark \
         --conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest \
         --conf=spark.kubernetes.container.image.pullPolicy=Always \

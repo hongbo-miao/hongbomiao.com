@@ -32,7 +32,6 @@ spark-submit-to-kubernetes-cluster:
 		--master=k8s://https://127.0.0.1:6443 \
 		--deploy-mode=cluster \
 		--name=find-retired-people-python \
-		--conf=spark.executor.instances=5 \
 		--conf=spark.kubernetes.namespace=hm-spark \
 		--conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-find-retired-people-python:latest \
 		--conf=spark.kubernetes.container.image.pullPolicy=Always \
