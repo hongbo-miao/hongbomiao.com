@@ -46,7 +46,7 @@ spark-submit-to-local:
 		--master="local[*]" \
 		target/scala-2.12/IngestFromS3ToKafka-assembly-1.0.jar
 
-# 2 - Run in a pod
+# 2 - Run in a pod. Cluster mode (the master node will assign to worker nodes)
 rclone-sync:
 	cd ../../.. && \
 	rclone sync --progress tdms/data hm-s3:hongbomiao-bucket/iot --include="*.parquet"
@@ -100,6 +100,7 @@ spark-submit-to-kubernetes-cluster:
 		--deploy-mode=cluster \
 		--name=ingest-from-s3-to-kafka \
 		--class=com.hongbomiao.IngestFromS3ToKafka \
+		--conf=spark.kubernetes.driverEnv.SPARK_MASTER_URL=spark://spark-master-svc.hm-spark.svc:7077 \
 		--conf=spark.kubernetes.namespace=hm-spark \
 		--conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest \
 		--conf=spark.kubernetes.container.image.pullPolicy=Always \
