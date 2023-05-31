@@ -10,12 +10,7 @@ def main() -> None:
         {"id": 5, "name": "Eve", "age": 45},
     ]
 
-    spark = (
-        SparkSession.builder.master("local[*]")
-        .appName("find-retired-people-python")
-        .config("spark.ui.port", "4040")
-        .getOrCreate()
-    )
+    spark = SparkSession.builder.master("local[*]").getOrCreate()
     df = spark.createDataFrame(people)
     df.createOrReplaceTempView("people")
     retired_people = spark.sql("SELECT name, age FROM people WHERE age >= 67")
