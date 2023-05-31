@@ -2,13 +2,3 @@ apache-spark-install:
 	brew install apache-spark
 sbt-install:
 	brew install sbt
-
-spark-submit-to-kubernetes-cluster:
-	spark-submit \
-        --master=k8s://https://127.0.0.1:6443 \
-        --deploy-mode=cluster \
-        --name=spark-pi \
-		--class=org.apache.spark.examples.SparkPi \
-        --conf=spark.kubernetes.namespace=hm-spark \
-        --conf=spark.kubernetes.container.image=docker.io/bitnami/spark:3.4.0-debian-11-r1 \
-        local:///opt/bitnami/spark/examples/jars/spark-examples_2.12-3.4.0.jar
