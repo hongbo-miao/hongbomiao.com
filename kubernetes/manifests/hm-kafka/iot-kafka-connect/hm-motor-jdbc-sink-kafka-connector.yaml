@@ -13,7 +13,7 @@ spec:
   config:
     connector.class: io.confluent.connect.jdbc.JdbcSinkConnector
     tasks.max: 8
-    topics: hm.motor
+    topics: hm.motor.avro
     connection.url: jdbc:postgresql://timescale.hm-timescale.svc:5432/hm_iot_db
     connection.user: "${file:/opt/kafka/external-configuration/hm-iot-db-credentials-volume/iot-db-credentials.properties:timescaledb_user}"
     connection.password: "${file:/opt/kafka/external-configuration/hm-iot-db-credentials-volume/iot-db-credentials.properties:timescaledb_password}"
@@ -37,7 +37,7 @@ spec:
     # value.converter: io.apicurio.registry.utils.converter.AvroConverter
     # value.converter.apicurio.registry.url: http://apicurio-registry-apicurio-registry.hm-apicurio-registry.svc:8080/apis/registry/v2
     # value.converter.apicurio.registry.fallback.group-id: hm-group
-    # value.converter.apicurio.registry.fallback.artifact-id: hm.motor-value
+    # value.converter.apicurio.registry.fallback.artifact-id: hm.motor.avro-value
 
     # 3) Confluent Avro
     value.converter: io.confluent.connect.avro.AvroConverter

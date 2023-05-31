@@ -19,7 +19,7 @@ object IngestFromS3ToKafka {
 
     val toAvroConfig: ToAvroConfig =
       AbrisConfig.toConfluentAvro.downloadSchemaByLatestVersion
-        .andTopicNameStrategy("hm.motor")
+        .andTopicNameStrategy("hm.motor.avro")
         .usingSchemaRegistry(
           "http://confluent-schema-registry.hm-confluent-schema-registry.svc:8081"
         )
@@ -36,7 +36,7 @@ object IngestFromS3ToKafka {
         "kafka.bootstrap.servers",
         "hm-kafka-kafka-bootstrap.hm-kafka.svc:9092"
       )
-      .option("topic", "hm.motor")
+      .option("topic", "hm.motor.avro")
       .option("checkpointLocation", "/tmp/checkpoint")
       .start()
 
