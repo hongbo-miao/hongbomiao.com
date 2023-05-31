@@ -24,7 +24,7 @@ def main(
     with open(f"{query_dirname}/{query_filename}", "r") as f:
         sql_query = f.read()
 
-    spark = SparkSession.builder.master("local[*]").getOrCreate()
+    spark = SparkSession.builder.getOrCreate()
 
     trips = load_trips(spark, trip_data_paths)
     zones = load_zones(spark, zone_data_path)

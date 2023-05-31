@@ -44,7 +44,7 @@ spark-submit-to-local:
 		--master="local[*]" \
 		target/scala-2.12/FindRetiredPeople-assembly-1.0.jar
 
-# 2 - Run in a pod
+# 2 - Run in a pod. Cluster mode (the master node will assign to worker nodes)
 docker-build:
 	cd ../../.. && \
 	docker build --file=hm-spark/applications/find-retired-people-scala/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest .
@@ -58,6 +58,7 @@ spark-submit-to-kubernetes-cluster:
         --deploy-mode=cluster \
         --name=find-retired-people-scala \
 		--class=com.hongbomiao.FindRetiredPeople \
+		--conf=spark.kubernetes.driverEnv.SPARK_MASTER_URL=spark://spark-master-svc.hm-spark.svc:7077 \
         --conf=spark.kubernetes.namespace=hm-spark \
         --conf=spark.kubernetes.container.image=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest \
         --conf=spark.kubernetes.container.image.pullPolicy=Always \

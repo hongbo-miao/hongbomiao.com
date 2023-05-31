@@ -14,7 +14,6 @@ object FindRetiredPeople {
 
     val spark: SparkSession = SparkSession
       .builder()
-      .master("local[*]")
       .getOrCreate()
 
     import spark.implicits._
