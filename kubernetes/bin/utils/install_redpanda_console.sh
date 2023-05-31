@@ -10,7 +10,7 @@ helm upgrade \
   --repo=https://charts.redpanda.com \
   --namespace=hm-redpanda-console \
   --create-namespace \
-  --values=kubernetes/manifests/hm-redpanda-console/helm/my-values.yaml
+  --values=kubernetes/manifests/redpanda-console/helm/my-values.yaml
 # helm uninstall redpanda-console --namespace=hm-redpanda-console
 # kubectl delete namespace hm-redpanda-console
 echo "=================================================="
