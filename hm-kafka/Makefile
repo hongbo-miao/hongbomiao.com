@@ -29,13 +29,13 @@ kubernetes-kafka-console-producer:
 		bin/kafka-console-producer.sh \
 			--bootstrap-server=localhost:9092 \
 			--topic=my-topic
-kubernetes-kafka-console-consumer:
+kubernetes-kafka-topic-consume:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
 			--topic=my-topic \
 			--property=print.key=true
-kubernetes-kafka-console-consumer-from-beginning:
+kubernetes-kafka-topic-consume-from-beginning:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
@@ -43,7 +43,7 @@ kubernetes-kafka-console-consumer-from-beginning:
 			--property=print.key=true \
 			--from-beginning
 
-kubernetes-kafka-avro-console-producer:
+kubernetes-kafka-avro-console-produce:
 	kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
 		kafka-avro-console-producer \
             --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
@@ -51,7 +51,7 @@ kubernetes-kafka-avro-console-producer:
             --property=schema.registry.url=http://localhost:8081 \
             --property=value.schema='{"type": "record", "name": "myrecord", "fields": [{"name": "f1", "type": "string"}]}'
 	# {"f1": "hi"}
-kubernetes-kafka-avro-console-consumer:
+kubernetes-kafka-avro-console-consume:
 	kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
 		kafka-avro-console-consumer \
             --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
@@ -107,9 +107,9 @@ kafka-topic-describe:
 
 kafka-console-producer:
 	kafka-console-producer --bootstrap-server=localhost:9092 --topic=my-topic
-kafka-console-consumer:
+kafka-topic-consume:
 	kafka-console-consumer --bootstrap-server=localhost:9092 --topic=my-topic --property=print.key=true
-kafka-console-consumer-from-beginning:
+kafka-topic-consume-from-beginning:
 	kafka-console-consumer --bootstrap-server=localhost:9092 --topic=my-topic --property=print.key=true --from-beginning
 kafka-console-consumer-group:
 	kafka-console-consumer --bootstrap-server=localhost:9092 --topic=my-topic --property=print.key=true --group=my-group
