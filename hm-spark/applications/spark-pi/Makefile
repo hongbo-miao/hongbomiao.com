@@ -8,3 +8,5 @@ spark-submit-to-kubernetes-cluster:
         --conf=spark.kubernetes.namespace=hm-spark \
         --conf=spark.kubernetes.container.image=docker.io/bitnami/spark:3.4.0-debian-11-r1 \
         local:///opt/bitnami/spark/examples/jars/spark-examples_2.12-3.4.0.jar
+kubectl-delete-spark-applications-in-kubernetes-cluster:
+	kubectl delete pods --namespace=hm-spark --selector=spark-app-name=spark-pi
