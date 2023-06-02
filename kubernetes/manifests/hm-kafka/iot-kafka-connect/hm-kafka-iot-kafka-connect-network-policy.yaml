@@ -19,6 +19,12 @@ spec:
       from:
         - namespaceSelector:
             matchLabels:
+              name: hm-akhq
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: akhq
+        - namespaceSelector:
+            matchLabels:
               name: hm-redpanda-console
           podSelector:
             matchLabels:
