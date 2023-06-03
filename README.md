@@ -202,6 +202,7 @@ make kubernetes-clean
   - **kafka-connect-avro-converter** - Confluent Avro converter
   - **apicurio-registry-distro-connect-converter** - Apicurio Avro converter
   - **Redpanda Console** - Kafka management tool
+  - **AKHQ** - Kafka management tool
   - **UI for Apache Kafka** - Kafka management tool
 - **Delta Lake** - Data lakehouse
 - **golang-migrate/migrate** - Database migrati

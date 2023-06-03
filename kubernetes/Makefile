@@ -217,6 +217,8 @@ kubectl-port-forward-ui-for-apache-kafka:
 	kubectl port-forward service/ui-for-apache-kafka-kafka-ui --namespace=hm-ui-for-apache-kafka 26917:80
 kubectl-port-forward-redpanda-console:
 	kubectl port-forward service/redpanda-console --namespace=hm-redpanda-console 46270:8080
+kubectl-port-forward-akhq:
+	kubectl port-forward service/akhq --namespace=hm-akhq 34594:80
 kubectl-port-forward-spark:
 	kubectl port-forward service/spark-master-svc --namespace=hm-spark 4040:80
 	kubectl port-forward service/spark-master-svc --namespace=hm-spark 7077:7077
