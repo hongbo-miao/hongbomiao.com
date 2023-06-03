@@ -1,0 +1,30 @@
+# https://github.com/tchiotludo/akhq/blob/dev/helm/akhq/values.yaml
+# https://github.com/tchiotludo/akhq/blob/dev/application-dev.yml
+# https://github.com/tchiotludo/akhq/blob/dev/application.example.yml
+
+---
+configuration:
+  micronaut:
+    security:
+      enabled: true
+      token:
+        jwt:
+          signatures:
+            secret:
+              generator:
+                secret: 693c090aa055ae9766b0012e6260effe4ae0941a4a2fa1da4190381b442b0849
+  akhq:
+    connections:
+      hm-kafka:
+        properties:
+          bootstrap.servers: hm-kafka-kafka-bootstrap.hm-kafka.svc:9092
+        schema-registry:
+          type: confluent
+          url: http://confluent-schema-registry.hm-confluent-schema-registry.svc:8081
+        connect:
+          - name: hm-kafka-iot-kafka-connect
+            url: http://hm-kafka-iot-kafka-connect-connect-api.hm-kafka:8083
+          - name: hm-kafka-logging-kafka-connect
+            url: http://hm-kafka-logging-kafka-connect-connect-api.hm-kafka:8083
+          - name: hm-kafka-opa-kafka-connect
+            url: http://hm-kafka-opa-kafka-connect-connect-api.hm-kafka:8083
