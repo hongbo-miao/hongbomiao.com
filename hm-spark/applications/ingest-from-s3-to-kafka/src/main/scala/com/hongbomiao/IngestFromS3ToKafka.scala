@@ -17,7 +17,7 @@ object IngestFromS3ToKafka {
       )
       .getOrCreate()
 
-    val toAvroConfig: ToAvroConfig =
+    val motorValueSchemaConfig: ToAvroConfig =
       AbrisConfig.toConfluentAvro.downloadSchemaByLatestVersion
         .andTopicNameStrategy("hm.motor.avro")
         .usingSchemaRegistry(
@@ -28,7 +28,7 @@ object IngestFromS3ToKafka {
       .format("delta")
       .load("s3a://hongbomiao-bucket/delta-tables/motor")
       .withColumn("timestamp", (col("timestamp") * 1000).cast(LongType))
-      .select(to_avro(struct("*"), toAvroConfig).as("value"))
+      .select(to_avro(struct("*"), motorValueSchemaConfig).as("value"))
 
     val query = df.writeStream
       .format("kafka")
