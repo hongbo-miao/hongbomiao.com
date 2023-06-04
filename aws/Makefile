@@ -1,3 +1,8 @@
+aws-profile-list:
+	aws configure list-profiles
+aws-profile-show:
+	aws configure list --profile=default
+
 # Amazon EMR
 emr-cluster-create:
 	aws emr create-cluster xxx
