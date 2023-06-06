@@ -1,6 +1,6 @@
 name := "IngestFromS3ToKafka"
 version := "1.0"
-scalaVersion := "2.12.17"
+scalaVersion := "2.12.18"
 resolvers += "confluent" at "https://packages.confluent.io/maven/"
 
 val sparkVersion = "3.4.0"
