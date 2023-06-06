@@ -1,4 +1,4 @@
-FROM docker.io/sbtscala/scala-sbt:eclipse-temurin-jammy-17.0.5_8_1.8.2_2.12.17 AS builder
+FROM docker.io/sbtscala/scala-sbt:eclipse-temurin-jammy-17.0.5_8_1.9.0_2.12.17 AS builder
 WORKDIR /usr/src/app/
 COPY hm-spark/applications/ingest-from-s3-to-kafka/.jvmopts ./
 COPY hm-spark/applications/ingest-from-s3-to-kafka/build.sbt ./
