@@ -55,7 +55,7 @@ Personal R&D (research and development) lab. Happy exchanging!
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
-[![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/2b5e38ee-40db-484f-bfb4-c1c6a323f028)](https://github.com/Hongbo-Miao/hongbomiao.com)
+[![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/5daaf732-d667-4cdb-9d7d-18410e1d5a58)](https://github.com/Hongbo-Miao/hongbomiao.com)
 
 ## 📦 Setup
 
@@ -429,7 +429,7 @@ make kubernetes-clean
 
 #### Prefect - Orchestration Platform
 
-![Prefect screenshot](https://user-images.githubusercontent.com/3375461/194426252-5720d5ae-8507-4651-886f-4b584ce7f16d.png)
+![Prefect screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/2496f818-804b-43b8-88ee-9b535938b2f8)
 
 #### Airflow - Orchestration Platform
 
