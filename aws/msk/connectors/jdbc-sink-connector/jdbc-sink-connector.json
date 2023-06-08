@@ -1,0 +1,74 @@
+{
+  "connectorName": "hm-motor-jdbc-sink-connector",
+  "capacity": {
+    "autoScaling": {
+      "mcuCount": 1,
+      "minWorkerCount": 1,
+      "maxWorkerCount": 2,
+      "scaleInPolicy": {
+        "cpuUtilizationPercentage": 40
+      },
+      "scaleOutPolicy": {
+        "cpuUtilizationPercentage": 95
+      }
+    }
+  },
+  "connectorConfiguration": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "tasks.max": "8",
+    "topics": "hm.motor.avro",
+    "connection.url": "jdbc:postgresql://xxx.us-west-2.rds.amazonaws.com:5432/hm_iot_db",
+    "connection.user": "xxx",
+    "connection.password": "xxx",
+    "insert.mode": "upsert",
+    "batch.size": "100000",
+    "table.name.format": "motor",
+    "pk.mode": "record_value",
+    "pk.fields": "timestamp",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "https://confluent-schema-registry.hongbomiao.com",
+    "transforms": "convertTimestamp",
+    "transforms.convertTimestamp.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.convertTimestamp.field": "timestamp",
+    "transforms.convertTimestamp.target.type": "Timestamp"
+  },
+  "kafkaCluster": {
+    "apacheKafkaCluster": {
+      "bootstrapServers": "xxx.kafka.us-west-2.amazonaws.com:9098",
+      "vpc": {
+        "securityGroups": [
+          "sg-xxx"
+        ],
+        "subnets": [
+          "subnet-xxx",
+          "subnet-xxx"
+        ]
+      }
+    }
+  },
+  "kafkaClusterClientAuthentication": {
+    "authenticationType": "IAM"
+  },
+  "kafkaClusterEncryptionInTransit": {
+    "encryptionType": "TLS"
+  },
+  "kafkaConnectVersion": "2.7.1",
+  "logDelivery": {
+    "workerLogDelivery": {
+      "s3": {
+        "enabled": true,
+        "bucket": "hongbomiao-bucket",
+        "prefix": "amazon-msk/connectors/hm-motor-jdbc-sink-connector/"
+      }
+    }
+  },
+  "plugins": [
+    {
+      "customPlugin": {
+        "customPluginArn": "arn:aws:kafkaconnect:us-west-2:xxx:custom-plugin/jdbc-sink-plugin/xxx",
+        "revision": 1
+      }
+    }
+  ],
+  "serviceExecutionRoleArn": "arn:aws:iam::xxx:role/xxx"
+}
