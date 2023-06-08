@@ -276,6 +276,14 @@ make kubernetes-clean
 - **K3s** - Lightweight Kubernetes
 - **containerd** - Container runtime
 
+### Cloud
+
+- **Amazon EMR** - Big Data Platform
+- **Amazon MSK** - Kafka
+- **Amazon S3** - Object Storage
+- **AWS IAM** - Identity and Access Management
+- **AWS Secrets Manager** - Password Management
+
 ### Ops
 
 - **Argo CD** - Declarative GitOps CD for Kubernetes
