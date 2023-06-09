@@ -10,8 +10,8 @@ psql postgresql://postgres:passw0rd@localhost:5432/postgres --command="grant all
 echo "=================================================="
 
 echo "# Install Hasura"
-cp -r hasura-graphql-engine/migrations/ kubernetes/data/hasura/hasura-graphql-engine/migrations/
-cp -r hasura-graphql-engine/metadata/ kubernetes/data/hasura/hasura-graphql-engine/metadata/
+cp -R hasura-graphql-engine/migrations/ kubernetes/data/hasura/hasura-graphql-engine/migrations/
+cp -R hasura-graphql-engine/metadata/ kubernetes/data/hasura/hasura-graphql-engine/metadata/
 
 kubectl apply --filename=kubernetes/manifests/hasura/hm-hasura-namespace.yaml
 kubectl apply --filename=kubernetes/manifests/hasura
