@@ -6,4 +6,4 @@ npm install
 npm run build
 
 cd ..
-cp -r web/build/ caddy/public/
+cp -R web/build/ caddy/public/
