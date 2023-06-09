@@ -55,7 +55,7 @@ Personal R&D (research and development) lab. Happy exchanging!
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
-[![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/289f03d5-e167-4b69-bd54-6b8fa541d1c2)](https://github.com/Hongbo-Miao/hongbomiao.com)
+[![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/5a9f1966-3a10-448f-adc0-8a23aed72b65)](https://github.com/Hongbo-Miao/hongbomiao.com)
 
 ## 📦 Setup
 
@@ -163,7 +163,7 @@ make kubernetes-clean
 - **jsonwebtoken**, **express-jwt** - JSON Web Tokens (JWT)
 - **bcrypt** - Password hashing
 - **axios** - HTTP client
-- **Helmet** - HTTP header `Content-Security-Policy`, `Expect-CT`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
+- **Helmet** - HTTP header `Content-Security-Policy`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
 - **Report To** - HTTP header `Report-To`
 - **Network Error Logging** - HTTP header `NEL`
 - **express-request-id** - HTTP header `X-Request-ID`
@@ -281,6 +281,7 @@ make kubernetes-clean
 - **Amazon EMR** - Big Data Platform
 - **Amazon MSK** - Kafka
 - **Amazon S3** - Object Storage
+- **Amazon CloudTrail** - Data governance, data compliance, data auditing
 - **AWS IAM** - Identity and Access Management
 - **AWS Secrets Manager** - Password Management
 
