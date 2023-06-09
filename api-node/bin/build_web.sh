@@ -6,4 +6,4 @@ npm install
 npm run build
 
 cd ..
-cp -r web/build/ api-node/public/
+cp -R web/build/ api-node/public/
