@@ -6,3 +6,10 @@ emr-cluster-describe:
 	aws emr describe-cluster --cluster-id=xxx
 emr-cluster-terminate:
 	aws emr terminate-clusters --cluster-ids=xxx
+
+emr-hadoop-yarn-status:
+	sudo systemctl status hadoop-yarn-resourcemanager
+emr-hadoop-yarn-start:
+	sudo systemctl start hadoop-yarn-resourcemanager
+emr-hadoop-yarn-stop:
+	sudo systemctl stop hadoop-yarn-resourcemanager
