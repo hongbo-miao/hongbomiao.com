@@ -55,7 +55,7 @@ Personal R&D (research and development) lab. Happy exchanging!
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
-[![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/5a9f1966-3a10-448f-adc0-8a23aed72b65)](https://github.com/Hongbo-Miao/hongbomiao.com)
+[![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/03b2ba52-256b-4a7d-8611-0fc11e81457f)](https://github.com/Hongbo-Miao/hongbomiao.com)
 
 ## 📦 Setup
 
@@ -207,7 +207,7 @@ make kubernetes-clean
 - **Delta Lake** - Data lakehouse
 - **golang-migrate/migrate** - Database migrati
 
-### Data Science and Machine Learning
+### Data Science, Machine Learning
 
 - **NumPy** - Scientific computing library
 - **pandas** - Data analysis library
@@ -299,7 +299,7 @@ make kubernetes-clean
 - **Ansible** - IT automation system
 - **CodeQL** - Variant analysis
 
-### IoT
+### Embedded, IoT
 
 - **NI VeriStand** - Real-time testing and simulation
 - **MATLAB** - Programming and numeric computing platform
@@ -307,7 +307,8 @@ make kubernetes-clean
 - **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
-- **RTI Connext DDS** - Data Distribution Service (DDS)
+- **RTI Connext** - Real-time, distributed systems framework
+  - **RTI Connext DDS** - Data Distribution Service (DDS)
 - **npTDMS** - TDMS files reading and writing
 - **Arduino Uno** - Microcontroller board
 - **Rclone** - Sync program
