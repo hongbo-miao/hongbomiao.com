@@ -393,6 +393,23 @@ make kubernetes-clean
 - **ImgBot** - Image compression
 - **semantic-release** - Version management and package publishing
 
+### Testing
+
+- Unit testing
+- Snapshot testing
+- Visual testing
+- Instrumented testing
+- Smoke testing
+- Sanity testing
+- Compatibility testing
+- Integration testing
+- End-to-end testing
+- Contract testing
+- Mutation testing
+- Performance testing
+- Load testing
+- Hardware-in-the-loop testing
+
 ## 🏞️ Highlights
 
 ### IoT
