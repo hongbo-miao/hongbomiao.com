@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <a href="https://www.hongbomiao.com"><img width="100" src="https://user-images.githubusercontent.com/3375461/93688946-821f1880-fafc-11ea-8918-374f21f4ac6e.png" alt="Flying" /></a>
+    <a href="https://www.hongbomiao.com"><img width="100" src="https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/650b632a-383f-4e84-8227-bf1fac268d45" alt="Butterfly" /></a>
   </p>
   <h2>Personal R&D Lab</h2>
   <p>Making magic happen</p>
@@ -55,7 +55,7 @@ Personal R&D (research and development) lab. Happy exchanging!
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
-[![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/03b2ba52-256b-4a7d-8611-0fc11e81457f)](https://github.com/Hongbo-Miao/hongbomiao.com)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/43880e31-c0f9-4370-83dc-c34ed1d67e6e)
 
 ## 📦 Setup
 
