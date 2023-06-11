@@ -55,7 +55,7 @@ Personal R&D (research and development) lab. Happy exchanging!
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/43880e31-c0f9-4370-83dc-c34ed1d67e6e)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/46680857-13ef-4496-9f50-d24c1e1a2d61)
 
 ## 📦 Setup
 
@@ -359,6 +359,7 @@ make kubernetes-clean
 ### Design
 
 - **Fusion 360** - Industrial design
+- **Blender** - 3D graphic design
 - **Figma** - UX design
 
 ### Services
@@ -395,20 +396,20 @@ make kubernetes-clean
 
 ### Testing
 
-- Unit testing
-- Snapshot testing
-- Visual testing
-- Instrumented testing
-- Smoke testing
-- Sanity testing
-- Compatibility testing
-- Integration testing
-- End-to-end testing
-- Contract testing
-- Mutation testing
-- Performance testing
-- Load testing
-- Hardware-in-the-loop testing
+- **Unit testing**
+- **Snapshot testing**
+- **Visual testing**
+- **Instrumented testing**
+- **Smoke testing**
+- **Sanity testing**
+- **Compatibility testing**
+- **Integration testing**
+- **End-to-end testing**
+- **Contract testing**
+- **Mutation testing**
+- **Performance testing**
+- **Load testing**
+- **Hardware-in-the-loop testing**
 
 ## 🏞️ Highlights
 
