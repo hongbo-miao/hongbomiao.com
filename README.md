@@ -55,7 +55,7 @@ Personal R&D (research and development) lab. Happy exchanging!
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/0ef46a2f-80c1-4c59-af3c-4602098f9fb0)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/50942daa-ad66-43be-a41a-92fe9483e620)
 
 ## 📦 Setup
 
@@ -205,9 +205,9 @@ make kubernetes-clean
   - **AKHQ** - Kafka management tool
   - **UI for Apache Kafka** - Kafka management tool
 - **Delta Lake** - Data lakehouse
-- **golang-migrate/migrate** - Database migrati
+- **golang-migrate/migrate** - Database migrations
 
-### Data Science, Machine Learning
+### Data Engineering, Data Science, Machine Learning
 
 - **NumPy** - Scientific computing library
 - **pandas** - Data analysis library
