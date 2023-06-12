@@ -20,7 +20,9 @@ jobs:
       api-node: ${{ steps.filter.outputs.api-node }}
       ethereum: ${{ steps.filter.outputs.ethereum }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
+      mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
+      terraform: ${{ steps.filter.outputs.terraform }}
       web: ${{ steps.filter.outputs.web }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
     steps:
@@ -39,9 +41,15 @@ jobs:
             grafana-hm-panel-plugin:
               - '.github/workflows/.static-type-check.yml'
               - 'grafana/hm-panel-plugin/**'
+            mobile-android:
+              - '.github/workflows/.static-type-check.yml'
+              - 'mobile-android/**'
             mobile-react-native:
               - '.github/workflows/.static-type-check.yml'
               - 'mobile-react-native/**'
+            terraform:
+              - '.github/workflows/.static-type-check.yml'
+              - 'terraform/**'
             web:
               - '.github/workflows/.static-type-check.yml'
               - 'web/**'
@@ -51,6 +59,8 @@ jobs:
 
   static-type-check-kotlin-mobile-android:
     name: Kotlin (mobile-android)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 30
@@ -120,6 +130,8 @@ jobs:
 
   static-type-check-terraform:
     name: Terraform
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.terraform == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
