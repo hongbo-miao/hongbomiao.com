@@ -55,7 +55,7 @@ Personal R&D (research and development) lab. Happy exchanging!
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/3ff8ac4b-8781-49a2-a8fe-62fc3c83b50b)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/0ef46a2f-80c1-4c59-af3c-4602098f9fb0)
 
 ## 📦 Setup
 
@@ -410,6 +410,23 @@ make kubernetes-clean
 - **Performance testing**
 - **Load testing**
 - **Hardware-in-the-loop testing**
+
+### Standards
+
+#### Avionics Systems
+
+- **DO-178C** - Software considerations in airborne systems and equipment certification
+- **DO-254** - Design assurance guidance for airborne electronic hardware
+
+#### Automotive Systems
+
+- **ISO 26262** - Road vehicles — functional safety
+- **AUTOSAR** - Automotive open system architecture
+
+#### Industrial Robot Systems
+
+- **ISO 10218** - Robots and robotic devices — safety requirements for industrial robots
+- **ANSI/RIA R15.06-2012** - Industrial robots and robot systems — safety requirements
 
 ## 🏞️ Highlights
 
