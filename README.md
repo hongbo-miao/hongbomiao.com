@@ -409,7 +409,7 @@ make kubernetes-clean
 - **Mutation testing**
 - **Performance testing**
 - **Load testing**
-- **Hardware-in-the-loop testing**
+- **Hardware-in-the-loop (HIL) testing**
 
 ### Standards
 
@@ -428,7 +428,7 @@ make kubernetes-clean
 - **ISO 10218** - Robots and robotic devices — safety requirements for industrial robots
 - **ANSI/RIA R15.06-2012** - Industrial robots and robot systems — safety requirements
 
-## 🏞️ Highlights
+## 🏞 Highlights
 
 ### IoT
 
