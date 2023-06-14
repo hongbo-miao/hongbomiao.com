@@ -8,7 +8,7 @@ msk-kafka-cluster-describe:
 kafka-topic-list:
 	bin/kafka-topics.sh \
 		--bootstrap-server=xxx \
-		--command-config=config/client.properties \
+		--command-config=config/iam-client.properties \
 		--list
 kafka-topic-list-debug:
 	KAFKA_OPTS=-Dlog4j.configuration=file:config/log4j.properties \
@@ -20,7 +20,7 @@ kafka-topic-create:
 	KAFKA_HEAP_OPTS="-Xmx2g" \
 	bin/kafka-topics.sh \
 		--bootstrap-server=xxx \
-		--command-config=config/client.properties \
+		--command-config=config/iam-client.properties \
 		--create \
 		--topic=my-topic \
 		--partitions=3 \
@@ -28,17 +28,17 @@ kafka-topic-create:
 kafka-topic-create:
 	bin/kafka-topics.sh \
 		--bootstrap-server=xxx \
-		--command-config=config/client.properties \
+		--command-config=config/iam-client.properties \
 		--delete \
 		--topic=my-topic
 kafka-topic-producer:
 	bin/kafka-console-producer.sh \
 		--bootstrap-server=xxx \
-		--producer.config=config/client.properties \
+		--producer.config=config/iam-client.properties \
 		--topic=my-topic
 kafka-topic-consume:
 	bin/kafka-console-consumer.sh \
 		--bootstrap-server=xxx \
-		--consumer.config=config/client.properties \
+		--consumer.config=config/iam-client.properties \
 		--topic=my-topic \
 		--property=print.key=true
