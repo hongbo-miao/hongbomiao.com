@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram below may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/2b8f1f21-f67c-4ebd-a74c-585197ce8766)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/41ab3114-f3ae-413a-a183-666a56328587)
 
 ## 📦 Setup
 
@@ -371,7 +371,7 @@ make kubernetes-clean
 
 ### Physics
 
-- **SimScale** - Computational fluid dynamics (CFD)
+- **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
 
 ### Services
 
@@ -438,7 +438,7 @@ make kubernetes-clean
 
 ### Physics
 
-#### SimScale - Computational Fluid Dynamics (CFD)
+#### SimScale - Computational Fluid Dynamics (CFD), Finite Element Analysis (FEA), Thermal Simulation
 
 ![SimScale screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/cdfd5cac-3e6a-4cb3-9bf5-912718ee3a86)
 
