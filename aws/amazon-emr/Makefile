@@ -13,3 +13,6 @@ emr-hadoop-yarn-start:
 	sudo systemctl start hadoop-yarn-resourcemanager
 emr-hadoop-yarn-stop:
 	sudo systemctl stop hadoop-yarn-resourcemanager
+
+upload-bootstrap-actions:
+	aws s3 cp bootstrap-actions/set_up.sh s3://hongbomiao-bucket/amazon-emr/bootstrap-actions/set_up.sh

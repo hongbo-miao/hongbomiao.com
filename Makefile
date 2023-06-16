@@ -153,6 +153,8 @@ poetry-check:
 poetry-cache-clear:
 	poetry cache clear pypi --all
 
+clean-jupyter-notebook:
+	poetry run poe clean-jupyter-notebook -- aws/amazon-emr/studio/hm-studio/hm-workspace.ipynb
 lint-ansible:
 	poetry run poe lint-ansible
 lint-cmake:
