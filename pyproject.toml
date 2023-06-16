@@ -15,6 +15,7 @@ black = {version = "23.3.0", extras = ["d"]}
 cmakelint = "1.4.2"
 isort = "5.12.0"
 mypy = "1.3.0"
+nb-clean = "2.4.0"
 poethepoet = "0.20.0"
 ruff = "0.0.272"
 sqlfluff = "2.1.1"
@@ -25,6 +26,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
+clean-jupyter-notebook = "nb-clean clean"
 lint-ansible = {shell = "ansible-lint $(git ls-files '*playbook.yml')"}
 lint-cmake = {shell = "cmakelint $(git ls-files '*CMakeLists.txt')"}
 lint-python-autoflake = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --check --recursive ."
