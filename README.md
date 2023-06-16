@@ -321,10 +321,6 @@ make kubernetes-clean
 - **Rclone** - Sync program
 - **restic** - Backup program
 
-### Quantum Computing
-
-- **Qiskit** - Quantum computing SDK
-
 ### Ethereum
 
 - **Solidity** - Contract-oriented programming language
@@ -372,6 +368,7 @@ make kubernetes-clean
 ### Physics
 
 - **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
+- **Qiskit** - Quantum computing
 
 ### Services
 
