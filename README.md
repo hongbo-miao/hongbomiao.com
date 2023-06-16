@@ -55,6 +55,8 @@ Personal R&D (research and development) lab. Happy exchanging!
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
+(The diagram below may take a moment to load. Please wait patiently.)
+
 ![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/50942daa-ad66-43be-a41a-92fe9483e620)
 
 ## 📦 Setup
@@ -214,6 +216,7 @@ make kubernetes-clean
 - **Modin** - pandas workflows scaling
 - **Ray** - Unified framework for scaling AI and Python applications
 - **Jupyter Notebook** - Web-based interactive computing platform
+  - **nb-clean** - Jupyter notebook cleaning
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
