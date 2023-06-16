@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram below may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/50942daa-ad66-43be-a41a-92fe9483e620)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/2b8f1f21-f67c-4ebd-a74c-585197ce8766)
 
 ## 📦 Setup
 
@@ -235,13 +235,8 @@ make kubernetes-clean
   - **flink-connector-twitter** - Flink Twitter connector
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
-- **Dataprep** - Data cleaning
-- **BigQuery** - Data warehouse
-  - **BigQuery ML** - BigQuery machine learning
 - **Metabase** - Data visualization
 - **Superset** - Data visualization
-- **Looker Studio** - Data visualization
-- **Vertex AI** - AutoML
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
 ### Computer Vision
@@ -281,12 +276,21 @@ make kubernetes-clean
 
 ### Cloud
 
-- **Amazon EMR** - Big Data Platform
-- **Amazon MSK** - Kafka
-- **Amazon S3** - Object Storage
-- **Amazon CloudTrail** - Data governance, data compliance, data auditing
-- **AWS IAM** - Identity and Access Management
-- **AWS Secrets Manager** - Password Management
+- **Amazon Web Services**
+  - **Amazon CloudTrail** - Data governance, data compliance, data auditing
+  - **Amazon EMR** - Big Data Platform
+  - **Amazon MSK** - Kafka
+  - **Amazon S3** - Object Storage
+  - **AWS Glue DataBrew** - Data cleaning
+  - **AWS IAM** - Identity and Access Management
+  - **AWS Secrets Manager** - Password Management
+- **Google Cloud**
+  - **BigQuery** - Data warehouse
+    - **BigQuery ML** - BigQuery machine learning
+  - **Dataprep** - Data cleaning
+  - **Looker Studio** - Data visualization
+  - **Vertex AI** - AutoML
+- **Databricks** - Unified Data Analytics Platform
 
 ### Ops
 
@@ -365,6 +369,10 @@ make kubernetes-clean
 - **Blender** - 3D graphic design
 - **Figma** - UX design
 
+### Physics
+
+- **SimScale** - Computational fluid dynamics (CFD)
+
 ### Services
 
 - **Sentry** - Error tracking
@@ -416,34 +424,35 @@ make kubernetes-clean
 
 ### Standards
 
-#### Avionics Systems
-
-- **DO-178C** - Software considerations in airborne systems and equipment certification
-- **DO-254** - Design assurance guidance for airborne electronic hardware
-
-#### Automotive Systems
-
-- **ISO 26262** - Road vehicles — functional safety
-- **AUTOSAR** - Automotive open system architecture
-
-#### Industrial Robot Systems
-
-- **ISO 10218** - Robots and robotic devices — safety requirements for industrial robots
-- **ANSI/RIA R15.06-2012** - Industrial robots and robot systems — safety requirements
+- **Avionics Systems**
+  - **DO-178C** - Software considerations in airborne systems and equipment certification
+  - **DO-254** - Design assurance guidance for airborne electronic hardware
+- **Automotive Systems**
+  - **ISO 26262** - Road vehicles — functional safety
+  - **AUTOSAR** - Automotive open system architecture
+- **Industrial Robot Systems**
+  - **ISO 10218** - Robots and robotic devices — safety requirements for industrial robots
+  - **ANSI/RIA R15.06-2012** - Industrial robots and robot systems — safety requirements
 
 ## 🏞 Highlights
 
-### IoT
+### Physics
+
+#### SimScale - Computational Fluid Dynamics (CFD)
+
+![SimScale screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/cdfd5cac-3e6a-4cb3-9bf5-912718ee3a86)
+
+### Embedded / IoT
 
 #### MATLAB and Simulink
 
 ![MATLAB and Simulink screenshot](https://user-images.githubusercontent.com/3375461/187293381-8693512b-5a65-4f89-8d87-beb3a703e17f.png)
 
-#### RTI Connext DDS
+#### RTI Connext - Real-Time, Distributed Systems Framework
 
-![RTI Connext DDS screenshot](https://user-images.githubusercontent.com/3375461/197075768-18b61ddf-57db-4d32-ae48-c7e77cea9c77.jpg)
+![RTI Connext screenshot](https://user-images.githubusercontent.com/3375461/197075768-18b61ddf-57db-4d32-ae48-c7e77cea9c77.jpg)
 
-#### NI VeriStand
+#### NI VeriStand - Real-Time Testing and Simulation
 
 ![NI VeriStand screenshot](https://user-images.githubusercontent.com/3375461/229713107-9b1ea646-ea41-4ca2-af3f-3c537aa601b9.jpg)
 
