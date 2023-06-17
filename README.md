@@ -55,9 +55,9 @@ Personal R&D (research and development) lab. Happy exchanging!
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
-(The diagram below may take a moment to load. Please wait patiently.)
+(The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/41ab3114-f3ae-413a-a183-666a56328587)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/18e79ba7-276f-4629-8930-937c85ee38c1)
 
 ## 📦 Setup
 
