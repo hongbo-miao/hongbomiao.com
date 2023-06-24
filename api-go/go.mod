@@ -28,7 +28,7 @@ require (
 	github.com/rs/zerolog v1.29.1
 	github.com/stretchr/testify v1.8.4
 	go.elastic.co/apm/module/apmgin/v2 v2.4.3
-	go.elastic.co/apm/module/apmgrpc/v2 v2.4.2
+	go.elastic.co/apm/module/apmgrpc/v2 v2.4.3
 	go.opencensus.io v0.24.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.42.0
 	go.opentelemetry.io/otel v1.16.0
