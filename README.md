@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/2e4ec218-0d2c-4658-97ae-0aafc7abf25d)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/9db506b3-a801-46e9-b0a9-2c677209b2a8)
 
 ## 📦 Setup
 
@@ -182,17 +182,20 @@ make kubernetes-clean
 ### Database
 
 - **Trino** - Distributed SQL query engine
-- **PostgreSQL** - Object-relational databaseons
+- **PostgreSQL** - Object-relational database
   - **pgAdmin** - PostgreSQL management tool
 - **ClickHouse** - Column-oriented database
 - **YugabyteDB** - Distributed SQL database
 - **TimescaleDB** - Time-series SQL database
+- **InfluxDB** - Time-series database
+  - **InfluxDB Enterprise** - Distributed time-series database
 - **Cassandra** - Distributed wide-column NoSQL database
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
   - **Kibana** - Elasticsearch visualization
-- **KeyDB** - High performance fork of Redis
-- **MinIO** - High performance object storage
+- **Redis** - Distributed in-memory key–value database
+- **KeyDB** - Multithreaded fork of Redis
+- **MinIO** - Object storage
 - **Kafka** - Distributed event streaming platform
   - **Confluent Schema Registry** - Schema Registry
   - **Apicurio Registry** - Schema Registry
