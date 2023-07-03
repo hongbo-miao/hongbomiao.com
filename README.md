@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/77c6dcb8-71fd-4f20-b601-7077bf353ac6)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/7f8420c3-d9f7-4308-b662-61f831ae7aac)
 
 ## 📦 Setup
 
@@ -224,6 +224,7 @@ make kubernetes-clean
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
 - **Kubeflow** - Machine learning platform
+- **MLflow** - Machine learning platform
 - **CML** - Continuous machine learning
 - **DVC** - Data version control
 - **Feast** - Feature store
