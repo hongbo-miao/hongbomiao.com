@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/72853b10-0ce0-470f-bbe5-2ed1467e7d42)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/77c6dcb8-71fd-4f20-b601-7077bf353ac6)
 
 ## 📦 Setup
 
@@ -223,6 +223,7 @@ make kubernetes-clean
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
+- **Kubeflow** - Machine learning platform
 - **CML** - Continuous machine learning
 - **DVC** - Data version control
 - **Feast** - Feature store
@@ -483,6 +484,10 @@ make kubernetes-clean
 #### Dataprep - Data Cleaning
 
 ![Dataprep screenshot](https://user-images.githubusercontent.com/3375461/197430470-ae676c14-8dad-4cd7-9326-3df1856f242c.png)
+
+#### Kubeflow - Machine Learning Platform
+
+![Kubeflow screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/00574b34-37f2-4889-881e-e7e50a047bad)
 
 #### Prefect - Orchestration Platform
 
