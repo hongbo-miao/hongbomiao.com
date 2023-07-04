@@ -3,7 +3,7 @@ import wandb
 import yaml
 from evaluate import evaluate
 from model.data_loader import train_data_loader, val_data_loader
-from model.net import net
+from model.net import Net
 from torch import nn, optim
 from train import train
 from utils.device import device
@@ -20,16 +20,16 @@ def main():
         entity="hongbo-miao", project="convolutional-neural-network", config=params
     ) as wb:
         config = wb.config
-        net.to(device)
+        net = Net().to(device)
 
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(net.parameters(), lr=config["lr"])
 
         max_val_acc = 0.0
         for epoch in range(config["train"]["epochs"]):
-            train_loss = train(net, train_data_loader, optimizer, criterion)
-            train_acc = evaluate(net, train_data_loader)
-            val_acc = evaluate(net, val_data_loader)
+            train_loss = train(net, train_data_loader, device, optimizer, criterion)
+            train_acc = evaluate(net, train_data_loader, device)
+            val_acc = evaluate(net, val_data_loader, device)
 
             print({"Train": train_acc, "Validation": val_acc})
             wb.log(
