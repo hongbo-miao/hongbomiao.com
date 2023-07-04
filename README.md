@@ -220,15 +220,6 @@ make kubernetes-clean
 - **Ray** - Unified framework for scaling AI and Python applications
 - **Jupyter Notebook** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
-- **PyTorch** - Machine learning framework
-  - **PyTorch Geometric** - PyTorch geometric deep learning extension
-- **Rasa** - Machine learning framework for automated text and voice-based conversations
-- **Kubeflow** - Machine learning platform
-- **MLflow** - Machine learning platform
-- **CML** - Continuous machine learning
-- **DVC** - Data version control
-- **Feast** - Feature store
-- **OGB** - Open graph benchmark
 - **Temporal** - Microservice orchestration platform
 - **Prefect** - Orchestration platform
 - **Airflow** - Orchestration platform
@@ -242,6 +233,15 @@ make kubernetes-clean
   - **flink-connector-redis** - Flink Redis connector
 - **Metabase** - Data visualization
 - **Superset** - Data visualization
+- **PyTorch** - Machine learning framework
+  - **PyTorch Geometric** - PyTorch geometric deep learning extension
+- **OGB** - Open graph benchmark
+- **Rasa** - Machine learning framework for automated text and voice-based conversations
+- **CML** - Continuous machine learning
+- **DVC** - Data version control
+- **Feast** - Feature store
+- **Kubeflow** - Machine learning platform
+- **MLflow** - Machine learning platform
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
 ### Computer Vision
