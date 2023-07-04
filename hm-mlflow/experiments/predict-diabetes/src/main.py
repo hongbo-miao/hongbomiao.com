@@ -5,7 +5,8 @@ from sklearn.model_selection import train_test_split
 
 
 def main():
-    mlflow.autolog()
+    mlflow.set_tracking_uri("https://mlflow.hongbomiao.com")
+    mlflow.sklearn.autolog()
 
     db = load_diabetes()
     x_train, x_test, y_train, y_test = train_test_split(db.data, db.target)
