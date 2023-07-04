@@ -239,6 +239,8 @@ kubectl-port-forward-ory-hydra:
 	kubectl port-forward service/ory-hydra-admin --namespace=hm-ory-hydra 4445:4445
 kubectl-port-forward-kubeflow:
 	kubectl port-forward service/ml-pipeline-ui --namespace=kubeflow 38620:80
+kubectl-port-forward-mlflow:
+	kubectl port-forward service/mlflow --namespace=hm-mlflow 29858:5000
 kubectl-port-forward-rasa:
 	kubectl port-forward service/hm-release-rasa --namespace=hm-rasa 39143:5005
 	kubectl port-forward service/hm-release-postgresql-headless --namespace=hm-rasa 35785:5432
