@@ -1,13 +1,16 @@
 # https://github.com/community-charts/helm-charts/blob/main/charts/mlflow/values.yaml
 
 ---
-backendStore:
-  databaseMigration: true
-  databaseConnectionCheck: true
-  postgres:
-    enabled: true
-    host: postgres-service.hm-postgres.svc
-    port: 5432
-    database: hm_mlflow_db
-    user: admin
-    password: passw0rd
+image:
+  repository: docker.io/adacotechjp/mlflow
+  tag: 2.4.0
+# backendStore:
+#   databaseMigration: true
+#   databaseConnectionCheck: true
+#   postgres:
+#     enabled: true
+#     host: postgres-service.hm-postgres.svc
+#     port: 5432
+#     database: hm_mlflow_db
+#     user: admin
+#     password: passw0rd
