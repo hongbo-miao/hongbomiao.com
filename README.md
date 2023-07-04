@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/7f8420c3-d9f7-4308-b662-61f831ae7aac)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/ce43aa1a-ca79-4724-b970-9f5af417fcd9)
 
 ## 📦 Setup
 
@@ -217,7 +217,7 @@ make kubernetes-clean
 - **NumPy** - Scientific computing library
 - **pandas** - Data analysis library
 - **Modin** - pandas workflows scaling
-- **Ray** - Unified framework for scaling AI and Python applications
+- **Ray** - Distributed computing framework
 - **Jupyter Notebook** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
 - **Temporal** - Microservice orchestration platform
