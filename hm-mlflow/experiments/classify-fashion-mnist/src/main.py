@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as data
 import torchvision as tv
+from lightning.pytorch.loggers.wandb import WandbLogger
 
 
 class LitAutoEncoder(L.LightningModule):
@@ -36,15 +37,18 @@ class LitAutoEncoder(L.LightningModule):
 
 
 def main():
+    wandb_logger = WandbLogger()
+
     mlflow.set_tracking_uri("https://mlflow.hongbomiao.com")
     mlflow.pytorch.autolog()
+
     dataset = tv.datasets.MNIST(
         "./data", download=True, transform=tv.transforms.ToTensor()
     )
     train, val = data.random_split(dataset, [55000, 5000])
 
     autoencoder = LitAutoEncoder()
-    trainer = L.Trainer()
+    trainer = L.Trainer(logger=wandb_logger)
     trainer.fit(autoencoder, data.DataLoader(train), data.DataLoader(val))
 
 
