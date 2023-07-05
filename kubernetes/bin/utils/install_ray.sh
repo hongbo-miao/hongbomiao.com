@@ -19,7 +19,8 @@ helm upgrade \
   --install \
   --repo=https://ray-project.github.io/kuberay-helm \
   --namespace=hm-ray \
-  --create-namespace
+  --create-namespace \
+  --values=kubernetes/manifests/ray/helm/my-values.yaml
 # helm uninstall ray-cluster --namespace=hm-ray
 # kubectl delete namespace hm-ray
 echo "=================================================="

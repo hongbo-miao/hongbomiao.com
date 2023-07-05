@@ -246,6 +246,8 @@ kubectl-port-forward-rasa:
 	kubectl port-forward service/hm-release-postgresql-headless --namespace=hm-rasa 35785:5432
 	kubectl port-forward service/hm-release-redis-master --namespace=hm-rasa 6379:6379
 	kubectl port-forward service/hm-release-rasa-action-server --namespace=hm-rasa-action-server 5055:5055
+kubectl-port-forward-ray:
+	kubectl port-forward service/ray-cluster-kuberay-head-svc --namespace=hm-ray 31596:8265
 kubectl-port-forward-goldilocks:
 	kubectl port-forward service/goldilocks-dashboard --namespace=hm-goldilocks 34617:80
 kubectl-port-forward-opencost:
