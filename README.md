@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/996494c2-2510-44c0-b6a1-09694f8e108f)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/9c33b5e2-d9bb-4315-83a5-324847e73041)
 
 ## 📦 Setup
 
@@ -489,6 +489,10 @@ make kubernetes-clean
 #### Kubeflow - Machine Learning Platform
 
 ![Kubeflow screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/00574b34-37f2-4889-881e-e7e50a047bad)
+
+#### Ray - Distributed Computing
+
+![Ray screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/a949d05e-22bb-4e22-870b-30f7f96a9995)
 
 #### Prefect - Orchestration Platform
 
