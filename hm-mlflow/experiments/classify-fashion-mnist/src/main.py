@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as data
 import torchvision as tv
+from args import get_args
 from lightning.pytorch.loggers.wandb import WandbLogger
 
 
@@ -37,10 +38,17 @@ class LitAutoEncoder(L.LightningModule):
 
 
 def main():
-    wandb_logger = WandbLogger()
+    project_name = "classify-fashion-mnist"
 
+    # W&B
+    wandb_logger = WandbLogger(project=project_name)
+
+    # MLflow
     mlflow.set_tracking_uri("https://mlflow.hongbomiao.com")
+    mlflow.set_experiment(experiment_name=project_name)
     mlflow.pytorch.autolog()
+
+    args = get_args()
 
     dataset = tv.datasets.MNIST(
         "./data", download=True, transform=tv.transforms.ToTensor()
@@ -48,7 +56,13 @@ def main():
     train, val = data.random_split(dataset, [55000, 5000])
 
     autoencoder = LitAutoEncoder()
-    trainer = L.Trainer(logger=wandb_logger)
+    trainer = L.Trainer(
+        devices="auto",
+        accelerator="auto",
+        max_epochs=args.max_epochs,
+        check_val_every_n_epoch=1,
+        logger=wandb_logger,
+    )
     trainer.fit(autoencoder, data.DataLoader(train), data.DataLoader(val))
 
 
