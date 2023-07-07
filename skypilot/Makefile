@@ -13,11 +13,14 @@ skypilot:
 		/bin/bash
 
 skypilot-launch:
-	sky launch --cluster=hm-skypilot-cluster skypilot.yaml --idle-minutes-to-autostop=10
+	sky launch skypilot.yaml \
+		--cluster=hm-skypilot-cluster \
+		--idle-minutes-to-autostop=10 \
+		--yes
 skypilot-stop:
-	sky stop hm-skypilot-cluster
+	sky stop hm-skypilot-cluster --yes
 skypilot-terminate:
-	sky down hm-skypilot-cluster
+	sky down hm-skypilot-cluster --yes
 
 skypilot-check:
 	sky check
