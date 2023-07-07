@@ -459,9 +459,17 @@ kubectl-describe-role-argocd:
 # Dgraph
 dgraph-install-standalone:
 	mkdir -p ~/dgraph
-	docker run -it -p=5080:5080 -p=6080:6080 -p 8080:8080 \
-      -p=9080:9080 -p=8000:8000 -v=~/dgraph:/dgraph --name=dgraph \
-      dgraph/standalone
+	docker run \
+		--interactive \
+		--tty \
+		--name=dgraph \
+		--publish=5080:5080 \
+		--publish=6080:6080 \
+		--publish=8080:8080 \
+		--publish=9080:9080 \
+		--publish=8000:8000 \
+		--volume=~/dgraph:/dgraph \
+		dgraph/standalone
 dgraph-install:
 	kubectl apply --namespace=hm --filename=https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/dgraph-single/dgraph-single.yaml
 dgraph-delete:
