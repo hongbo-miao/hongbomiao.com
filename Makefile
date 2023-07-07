@@ -131,6 +131,8 @@ poetry-install-on-linux:
 	curl -sSL https://install.python-poetry.org | python3 -
 poetry-self-update:
 	poetry self update
+poetry-version:
+	poetry --version
 poetry-env-list:
 	# ~/Library/Caches/pypoetry/virtualenvs
 	poetry env list
