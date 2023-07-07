@@ -9,15 +9,15 @@ skypilot:
 		--volume="$HOME/.aws:/root/.aws:rw" \
 		--volume="$HOME/.config/gcloud:/root/.config/gcloud:rw" \
 		--volume="$HOME/.azure:/root/.azure:rw" \
-		public.ecr.aws/a9w6z7w5/sky:latest \
+		docker.io/berkeleyskypilot/skypilot:latest \
 		/bin/bash
 
 skypilot-launch:
-	sky launch --cluster=hm-classify-fashion-mnist-cluster skypilot.yaml --idle-minutes-to-autostop=10
+	sky launch --cluster=hm-skypilot-cluster skypilot.yaml --idle-minutes-to-autostop=10
 skypilot-stop:
-	sky stop hm-classify-fashion-mnist-cluster
+	sky stop hm-skypilot-cluster
 skypilot-terminate:
-	sky down hm-classify-fashion-mnist-cluster
+	sky down hm-skypilot-cluster
 
 skypilot-check:
 	sky check
@@ -25,3 +25,5 @@ skypilot-status:
 	sky status
 skypilot-show-gpus:
 	sky show-gpus
+skypilot-ssh:
+	ssh hm-skypilot-cluster
