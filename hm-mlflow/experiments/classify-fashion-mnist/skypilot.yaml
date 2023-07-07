@@ -1,20 +1,15 @@
 # https://skypilot.readthedocs.io/en/latest/reference/yaml-spec.html
 
 ---
-name: classify-fashion-mnist
-
+name: hm-mlflow-classify-fashion-mnist
 resources:
   cloud: aws
-  region: us-west-2
   accelerators: T4:1
-
 workdir: .
-
+envs:
+  WANDB_API_KEY: xxx
 setup: |
-  git clone https://github.com/Hongbo-Miao/hongbomiao.com || true
-  cd hm-mlflow/experiments/classify-fashion-mnist
+  curl -sSL https://install.python-poetry.org | python3 -
   poetry install --no-root
-
 run: |
-  cd hm-mlflow/experiments/classify-fashion-mnist
   poetry run poe dev
