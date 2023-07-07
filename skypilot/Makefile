@@ -1,6 +1,7 @@
 skypilot:
 	cd .. && \
 	docker run \
+		--name=skypilot \
 		--interactive \
 		--tty \
 		--rm \
