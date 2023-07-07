@@ -12,6 +12,8 @@ aws-configure:
 
 terraform-init:
 	terraform init
+terraform-update-lock-file:
+	terraform init -upgrade
 terraform-plan:
 	terraform plan
 terraform-apply:
