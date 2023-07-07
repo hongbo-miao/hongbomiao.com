@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/9c33b5e2-d9bb-4315-83a5-324847e73041)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/bd81aef2-0070-4641-a8e0-c6fbff76a6ea)
 
 ## 📦 Setup
 
@@ -283,19 +283,21 @@ make kubernetes-clean
 
 - **Amazon Web Services**
   - **Amazon CloudTrail** - Data governance, data compliance, data auditing
-  - **Amazon EMR** - Big Data Platform
+  - **Amazon EMR** - Big data platform
   - **Amazon MSK** - Kafka
-  - **Amazon S3** - Object Storage
+  - **Amazon EC2** - Cloud computing
+  - **Amazon S3** - Object storage
   - **AWS Glue DataBrew** - Data cleaning
-  - **AWS IAM** - Identity and Access Management
-  - **AWS Secrets Manager** - Password Management
+  - **AWS IAM** - Identity and access management
+  - **AWS Secrets Manager** - Password management
 - **Google Cloud**
   - **BigQuery** - Data warehouse
     - **BigQuery ML** - BigQuery machine learning
   - **Dataprep** - Data cleaning
   - **Looker Studio** - Data visualization
   - **Vertex AI** - AutoML
-- **Databricks** - Unified Data Analytics Platform
+- **Databricks** - Unified data analytics platform
+- **SkyPilot** - Sky computing
 
 ### Ops
 
