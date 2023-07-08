@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/bd81aef2-0070-4641-a8e0-c6fbff76a6ea)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/473ca9e4-86b5-4ae7-b19e-4ac7316933a0)
 
 ## 📦 Setup
 
@@ -190,6 +190,7 @@ make kubernetes-clean
 - **InfluxDB** - Time-series database
   - **InfluxDB Enterprise** - Distributed time-series database
 - **Cassandra** - Distributed wide-column NoSQL database
+- **Qdrant** - Distributed vector database
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
   - **Kibana** - Elasticsearch visualization
@@ -242,6 +243,8 @@ make kubernetes-clean
 - **Feast** - Feature store
 - **Kubeflow** - Machine learning platform
 - **MLflow** - Machine learning platform
+- **SkyPilot** - Sky computing
+- **Databricks** - Unified data analytics platform
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
 
 ### Computer Vision
@@ -296,8 +299,6 @@ make kubernetes-clean
   - **Dataprep** - Data cleaning
   - **Looker Studio** - Data visualization
   - **Vertex AI** - AutoML
-- **Databricks** - Unified data analytics platform
-- **SkyPilot** - Sky computing
 
 ### Ops
 
