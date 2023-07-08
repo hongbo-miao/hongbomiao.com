@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/ce45ee90-7323-40cd-b328-22ab4d4442c7)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/a637317a-f8a4-4782-9f61-935b21dfe76a)
 
 ## 📦 Setup
 
@@ -221,9 +221,9 @@ make kubernetes-clean
 - **Ray** - Distributed computing framework
 - **Jupyter Notebook** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
-- **Temporal** - Microservice orchestration platform
 - **Prefect** - Orchestration platform
 - **Airflow** - Orchestration platform
+- **Temporal** - Orchestration platform
 - **Spark** - Data processing framework
   - **Spark ML** - Spark machine learning
   - **pyspark** - Spark Python API library
@@ -299,6 +299,7 @@ make kubernetes-clean
   - **Dataprep** - Data cleaning
   - **Looker Studio** - Data visualization
   - **Vertex AI** - AutoML
+- **Komiser** - Cloud cost monitoring
 
 ### Ops
 
@@ -306,9 +307,9 @@ make kubernetes-clean
 - **Rancher** - Kubernetes container management platform
 - **Goldilocks** - Kubernetes resource requests recommending
 - **Polaris** - Kubernetes best practices validating
-- **OpenCost** - Kubernetes cost monitoring and management
-- **Kubecost** - Kubernetes cost monitoring and management
 - **Sloop** - Kubernetes history visualization
+- **OpenCost** - Kubernetes cost monitoring
+- **Kubecost** - Kubernetes cost monitoring
 - **Diun** - Container image update notifier
 - **Vagrant** - Development environments building and distributing
 - **Ansible** - IT automation system
