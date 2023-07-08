@@ -198,6 +198,8 @@ kubectl-port-forward-superset:
 kubectl-port-forward-dgraph:
 	kubectl port-forward service/dgraph-dgraph-alpha --namespace=hm-dgraph 8080:8080
 	kubectl port-forward service/dgraph-dgraph-zero --namespace=hm-dgraph 6080:6080
+kubectl-port-forward-qdrant:
+	kubectl port-forward service/qdrant --namespace=hm-qdrant 6333:6333
 kubectl-port-forward-elastic:
 	kubectl port-forward service/hm-kibana-kb-http --namespace=hm-elastic 5601:5601
 	kubectl port-forward service/hm-elasticsearch-es-http --namespace=hm-elastic 9200:9200
