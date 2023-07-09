@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/e53a497a-61ae-4bb2-88ad-11ee9f802a24)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/50c42ab0-f432-448d-b258-568f320055da)
 
 ## 📦 Setup
 
@@ -162,7 +162,7 @@ make kubernetes-clean
 - **rate-limiter-flexible** - Rate limiting
 - **expressjs/cors** - CORS
 - **csurf** - CSRF protection
-- **jsonwebtoken**, **express-jwt** - JSON Web Tokens (JWT)
+- **jsonwebtoken**, **express-jwt** - JSON web tokens (JWT)
 - **bcrypt** - Password hashing
 - **axios** - HTTP client
 - **Helmet** - HTTP header `Content-Security-Policy`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
@@ -324,7 +324,7 @@ make kubernetes-clean
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
 - **RTI Connext** - Real-time, distributed systems framework
-  - **RTI Connext DDS** - Data Distribution Service (DDS)
+  - **RTI Connext DDS** - Data distribution service (DDS)
 - **npTDMS** - TDMS files reading and writing
 - **Arduino Uno** - Microcontroller board
 - **Rclone** - Sync program
