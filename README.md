@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/9bba263f-38b1-437d-a977-83aa98858c67)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/b7057cfa-bf68-48fa-b228-7aeee0419223)
 
 ## 📦 Setup
 
@@ -145,6 +145,8 @@ make kubernetes-clean
 - **Tenacity** - General-purpose retrying library
 - **pytest** - Unit testing
 - **pydantic** - Data validation
+- **Poetry** - Python package management
+  - **Poe the Poet** - Poetry task runner
 
 ### API Server - Node.js
 
@@ -178,6 +180,8 @@ make kubernetes-clean
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
 - **Clinic.js** - Performance profiling
+- **Node.js** - JavaScript runtime
+- **npm** - JavaScript package management
 
 ### Database
 
@@ -275,7 +279,7 @@ make kubernetes-clean
 - **Pixie** - Observability tool for Kubernetes applications
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
-- **Multipass** - VM manager
+- **Multipass** - VM management
 - **Locust** - Load testing
 - **Cloudflare Tunnel** - Tunneling
 - **Kubernetes** - Container-orchestration system
