@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/b7057cfa-bf68-48fa-b228-7aeee0419223)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/deaaa363-0632-4396-b72f-2cb8aa249d40)
 
 ## 📦 Setup
 
@@ -246,10 +246,10 @@ make kubernetes-clean
 - **DVC** - Data version control
 - **Feast** - Feature store
 - **Kubeflow** - Machine learning platform
-- **MLflow** - Machine learning platform
 - **SkyPilot** - Sky computing
-- **Databricks** - Unified data analytics platform
+- **MLflow** - Machine learning experiment tracking
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
+- **Databricks** - Unified data analytics platform
 
 ### Computer Vision
 
@@ -304,13 +304,14 @@ make kubernetes-clean
   - **Looker Studio** - Data visualization
   - **Vertex AI** - AutoML
 - **Komiser** - Cloud cost monitoring
+- **Prowler** - Cloud security assessments
 
 ### Ops
 
 - **Argo CD** - Declarative GitOps CD for Kubernetes
 - **Rancher** - Kubernetes container management platform
-- **Goldilocks** - Kubernetes resource requests recommending
-- **Polaris** - Kubernetes best practices validating
+- **Goldilocks** - Kubernetes resource requests recommendation
+- **Polaris** - Kubernetes best practices validation
 - **Sloop** - Kubernetes history visualization
 - **OpenCost** - Kubernetes cost monitoring
 - **Kubecost** - Kubernetes cost monitoring
@@ -602,11 +603,11 @@ Chatbot on Telegram powered by Rasa.
 
 ![Kubecost screenshot](https://user-images.githubusercontent.com/3375461/167351502-ee32bb31-3499-4a9c-9dcc-87b38099aa62.jpg)
 
-#### Polaris - Kubernetes Best Practices Validating
+#### Polaris - Kubernetes Best Practices Validation
 
 ![Polaris screenshot](https://user-images.githubusercontent.com/3375461/167352130-75b7c8ee-d7e1-4731-9765-c4d05e22f684.jpg)
 
-#### Goldilocks - Kubernetes Resource Requests Recommending
+#### Goldilocks - Kubernetes Resource Requests Recommendation
 
 ![Goldilocks screenshot](https://user-images.githubusercontent.com/3375461/167352330-f2d99896-e99d-4e89-876c-91ea0741e1c2.jpg)
 
