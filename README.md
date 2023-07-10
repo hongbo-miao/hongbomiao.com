@@ -248,7 +248,7 @@ make kubernetes-clean
 - **Kubeflow** - Machine learning platform
 - **SkyPilot** - Sky computing
 - **MLflow** - Machine learning experiment tracking
-- **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network)** - Machine learning experiment tracking
+- **Weights & Biases** - Machine learning experiment tracking
 - **Databricks** - Unified data analytics platform
 
 ### Computer Vision
