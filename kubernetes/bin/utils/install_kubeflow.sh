@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
-echo "# Install Kubeflow"
+echo "# Install Kubeflow Pipelines"
 # https://www.kubeflow.org/docs/components/pipelines/v2/installation/quickstart/
 # https://github.com/kubeflow/pipelines/releases?q=Version
+kubectl create namespace kubeflow
 export PIPELINE_VERSION=2.0.0
 kubectl apply --kustomize="github.com/kubeflow/pipelines/manifests/kustomize/cluster-scoped-resources?ref=${PIPELINE_VERSION}"
 kubectl wait crd/applications.app.k8s.io --for=condition=established --timeout=60s
@@ -11,6 +12,10 @@ kubectl apply --kustomize="github.com/kubeflow/pipelines/manifests/kustomize/env
 # kubectl delete --kustomize="github.com/kubeflow/pipelines/manifests/kustomize/env/dev?ref=${PIPELINE_VERSION}"
 # kubectl delete --kustomize="github.com/kubeflow/pipelines/manifests/kustomize/cluster-scoped-resources?ref=${PIPELINE_VERSION}"
 # kubectl delete namespace kubeflow
+echo "=================================================="
+
+echo "# Install Kubeflow Training Operator"
+kubectl apply --kustomize="github.com/kubeflow/training-operator/manifests/overlays/standalone?ref=v1.6.0"
 echo "=================================================="
 
 echo "# Create a PyTorch training job"
