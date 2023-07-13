@@ -430,6 +430,8 @@ make kubernetes-clean
 - **Contract testing**
 - **Mutation testing**
 - **Performance testing**
+- **Duck testing**
+- **Bus testing**
 - **Load testing**
 - **Endurance testing**
 - **Fault injection testing**
