@@ -18,9 +18,7 @@ def calculate(a: int, b: int):
 
 
 if __name__ == "__main__":
-    endpoint = "https://kubeflow.hongbomiao.com"
-    kfp_client = client.Client(host=endpoint)
+    kfp_client = client.Client(host="https://kubeflow.hongbomiao.com")
     run = kfp_client.create_run_from_pipeline_func(
-        calculate,
-        arguments={"a": 1, "b": 2},
+        calculate, arguments={"a": 1, "b": 2}
     )
