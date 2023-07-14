@@ -22,5 +22,5 @@ echo "=================================================="
 echo "# Create a PyTorch training job"
 kubectl create --filename=https://raw.githubusercontent.com/kubeflow/training-operator/master/examples/pytorch/simple.yaml
 # kubectl get pytorchjobs --namespace=kubeflow
-# kubectl get pytorchjobs pytorch-simple --output=yaml
+# kubectl get pytorchjobs pytorch-simple --namespace=kubeflow --output=yaml
 echo "=================================================="
