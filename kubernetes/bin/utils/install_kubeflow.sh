@@ -4,7 +4,6 @@ set -e
 echo "# Install Kubeflow Pipelines"
 # https://www.kubeflow.org/docs/components/pipelines/v2/installation/quickstart/
 # https://github.com/kubeflow/pipelines/releases?q=Version
-kubectl create namespace kubeflow
 export PIPELINE_VERSION=2.0.0
 kubectl apply --kustomize="github.com/kubeflow/pipelines/manifests/kustomize/cluster-scoped-resources?ref=${PIPELINE_VERSION}"
 kubectl wait crd/applications.app.k8s.io --for=condition=established --timeout=60s
