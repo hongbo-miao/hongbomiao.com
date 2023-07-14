@@ -15,7 +15,8 @@ kubectl apply --kustomize="github.com/kubeflow/pipelines/manifests/kustomize/env
 echo "=================================================="
 
 echo "# Install Kubeflow Training Operator"
-kubectl apply --kustomize="github.com/kubeflow/training-operator/manifests/overlays/standalone?ref=v1.6.0"
+# https://github.com/kubeflow/training-operator/issues/1841#issuecomment-1635334868
+kubectl apply --kustomize=kubernetes/manifests/kubeflow/kubeflow-training-operator
 echo "=================================================="
 
 echo "# Create a PyTorch training job"
