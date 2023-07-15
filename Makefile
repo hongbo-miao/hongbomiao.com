@@ -80,6 +80,12 @@ nvm-alias-default:
 jupyter-lab:
 	jupyter-lab
 
+# Gitleaks
+gitleaks-install:
+	brew install gitleaks
+gitleaks-detect:
+	gitleaks detect --source=. --verbose
+
 # Ruby
 rbenv-list-latest-stable-versions:
 	rbenv install -l
