@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/5904c075-bdfc-4362-8b53-f42cb5bb0491)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/d1a02bf9-f91b-406e-8157-6ecd8e913d77)
 
 ## 📦 Setup
 
@@ -84,9 +84,21 @@ make kubernetes-clean
 - **Jest** - Unit testing, snapshot testing
 - **React Testing Library** - React component testing
 - **Storybook** - Visual testing
+  - **[Chromatic](https://www.chromatic.com/builds?appId=5d626a63a601530020759b10)** - Storybook reviewing
 - **rxjs/testing** - Marble testing
 - **Cypress** - End-to-end testing
 - **Lighthouse CI** - Performance, accessibility, SEO, progressive web app (PWA) analysis
+- **Sentry** - Error tracking
+- **Report URI** - Security reporting
+- **Google Tag Manager** - Tag management
+- **Google Analytics** - Web analytics
+- **FullStory** - Experience analytics, session replay, heatmaps
+- **Namecheap** - Domain
+- **Cloudflare** - CDN, DNS, DDoS protection
+- **[HTTP/3 Check](https://www.http3check.net/?host=www.hongbomiao.com)** - HTTP/3 checking
+- **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** - HSTS checking
+- **[Mozilla Observatory](https://observatory.mozilla.org/analyze/www.hongbomiao.com)** - Security monitoring
+- **[UptimeRobot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
 
 ### Mobile - iOS
 
@@ -231,6 +243,7 @@ make kubernetes-clean
 - **Spark** - Data processing framework
   - **Spark ML** - Spark machine learning
   - **pyspark** - Spark Python API library
+  - **Delight** - Spark UI and history server
 - **Flink** - Data processing framework
   - **flink-streaming-java** - Flink
   - **flink-connector-twitter** - Flink Twitter connector
@@ -305,7 +318,6 @@ make kubernetes-clean
   - **Looker Studio** - Data visualization
   - **Vertex AI** - AutoML
 - **Komiser** - Cloud cost monitoring
-- **Prowler** - Cloud security assessments
 
 ### Ops
 
@@ -319,7 +331,9 @@ make kubernetes-clean
 - **Diun** - Container image update notifier
 - **Vagrant** - Development environments building and distributing
 - **Ansible** - IT automation system
-- **CodeQL** - Variant analysis
+- **Discord** - ChatOps
+- **Opsgenie** - Incident management platform
+- **[GitHub Actions](https://github.com/Hongbo-Miao/hongbomiao.com/actions)** - Continuous integration
 
 ### Embedded, IoT
 
@@ -373,6 +387,17 @@ make kubernetes-clean
 - **Mypy** - Python static type checker
 - **tsc** - TypeScript static type checker
 - **detekt** - Kotlin static type checker
+- **[SonarCloud](https://sonarcloud.io/dashboard?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
+- **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
+- **[Depfu](https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=23463)** - Dependency monitoring
+- **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
+
+### Security
+
+- **CodeQL** - Variant analysis
+- **Prowler** - Cloud security assessments
+- **Gitleaks** - Git secret scanning
+- **GitGuardian** - Git secret scanning
 
 ### Design
 
@@ -384,29 +409,6 @@ make kubernetes-clean
 
 - **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
 - **Qiskit** - Quantum computing
-
-### Services
-
-- **Sentry** - Error tracking
-- **Report URI** - Security reporting
-- **Google Tag Manager** - Tag management
-- **Google Analytics** - Web analytics
-- **FullStory** - Experience analytics, session replay, heatmaps
-- **Namecheap** - Domain
-- **Cloudflare** - CDN, DNS, DDoS protection
-- **Discord** - ChatOps
-- **Opsgenie** - Incident management platform
-- **Delight** - Spark UI and history server
-- **[GitHub Actions](https://github.com/Hongbo-Miao/hongbomiao.com/actions)** - Continuous integration
-- **[SonarCloud](https://sonarcloud.io/dashboard?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
-- **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
-- **[Chromatic](https://www.chromatic.com/builds?appId=5d626a63a601530020759b10)** - UI reviewing and feedback collecting
-- **[HTTP/3 Check](https://www.http3check.net/?host=www.hongbomiao.com)** - HTTP/3 checking
-- **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** - HSTS checking
-- **[Mozilla Observatory](https://observatory.mozilla.org/analyze/www.hongbomiao.com)** - Security monitoring
-- **[Depfu](https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=23463)**, **[Requires.io](https://requires.io/github/Hongbo-Miao/hongbomiao.com/requirements)** - Dependency monitoring
-- **[UptimeRobot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
-- **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
 
 ### Bots
 
