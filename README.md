@@ -495,7 +495,7 @@ make kubernetes-clean
 
 The toroidal propeller allows a small multirotor aircraft to operate more quietly than the ones that use traditional propellers.
 
-![OpenSCAD screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/adf5dfeb-a1a1-4f85-b48d-36471dd2798c)
+![OpenSCAD screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/00b3e679-66a7-4d9c-8d68-c31c124e0a54)
 
 #### Poky - Reference Linux Distribution of the Yocto Project
 
