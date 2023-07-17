@@ -82,11 +82,11 @@ helm upgrade \
   --install \
   --namespace=karpenter \
   --create-namespace \
-  --version=${KARPENTER_VERSION} \
-  --set=serviceAccount.annotations."eks\.amazonaws\.com/role-arn=${KARPENTER_IAM_ROLE_ARN}" \
-  --set=settings.aws.clusterName=${CLUSTER_NAME} \
-  --set=settings.aws.defaultInstanceProfile="KarpenterNodeInstanceProfile-${CLUSTER_NAME}" \
-  --set=settings.aws.interruptionQueueName="${CLUSTER_NAME}" \
+  --version="${KARPENTER_VERSION}" \
+  --set="serviceAccount.annotations.eks.amazonaws.com/role-arn=${KARPENTER_IAM_ROLE_ARN}" \
+  --set="settings.aws.clusterName=${CLUSTER_NAME}" \
+  --set="settings.aws.defaultInstanceProfile=KarpenterNodeInstanceProfile-${CLUSTER_NAME}" \
+  --set="settings.aws.interruptionQueueName=${CLUSTER_NAME}" \
   --set=controller.resources.requests.cpu=1 \
   --set=controller.resources.requests.memory=1Gi \
   --set=controller.resources.limits.cpu=1 \
