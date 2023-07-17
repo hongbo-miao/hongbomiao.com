@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/c3467d55-238a-4374-a0a2-c0c4f6832ad6)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/abceb985-513c-4f85-9a89-36f74d99d8c7)
 
 ## 📦 Setup
 
@@ -335,7 +335,7 @@ make kubernetes-clean
 - **Opsgenie** - Incident management platform
 - **[GitHub Actions](https://github.com/Hongbo-Miao/hongbomiao.com/actions)** - Continuous integration
 
-### Embedded, IoT
+### Embedded, IoT, Hardware
 
 - **NI VeriStand** - Real-time testing and simulation
 - **MATLAB** - Programming and numeric computing platform
@@ -349,6 +349,7 @@ make kubernetes-clean
 - **Arduino Uno** - Microcontroller board
 - **Rclone** - Sync program
 - **restic** - Backup program
+- **OpenSCAD** - 3D CAD Modeller
 
 ### Ethereum
 
@@ -470,7 +471,7 @@ make kubernetes-clean
 
 ![SimScale screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/cdfd5cac-3e6a-4cb3-9bf5-912718ee3a86)
 
-### Embedded / IoT
+### Embedded, IoT, Hardware
 
 #### MATLAB and Simulink
 
@@ -489,6 +490,10 @@ make kubernetes-clean
 ![ROS screenshot](https://user-images.githubusercontent.com/3375461/209642451-94727634-8ce6-4bbf-bd2c-fa5dc1562f07.png)
 
 ![ROS screenshot](https://user-images.githubusercontent.com/3375461/209642038-fd588750-e1dd-410b-b5fa-e65d0460338a.png)
+
+#### OpenSCAD - 3D CAD Modeller
+
+![OpenSCAD screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/adf5dfeb-a1a1-4f85-b48d-36471dd2798c)
 
 #### Poky - Reference Linux Distribution of the Yocto Project
 
