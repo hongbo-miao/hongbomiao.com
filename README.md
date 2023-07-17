@@ -493,6 +493,8 @@ make kubernetes-clean
 
 #### OpenSCAD - 3D CAD Modeller
 
+The toroidal propeller allows a small multirotor aircraft to operate more quietly than the ones that use traditional propellers.
+
 ![OpenSCAD screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/adf5dfeb-a1a1-4f85-b48d-36471dd2798c)
 
 #### Poky - Reference Linux Distribution of the Yocto Project
@@ -649,7 +651,7 @@ The website [supports HTTP/3](https://www.http3check.net/?host=hongbomiao.com).
 
 Images on the website are using AVIF format.
 
-> “Roughly speaking, at an acceptable quality, the WebP is almost half the size of JPEG, and AVIF is under half the size of WebP.” – [Jake Archibald, 2020](https://jakearchibald.com/2020/avif-has-landed/)
+The WebP is almost half the size of JPEG, and AVIF is under half the size of WebP.
 
 #### Security
 
