@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/abceb985-513c-4f85-9a89-36f74d99d8c7)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/56057de2-8632-4c1a-9e3f-597cb70f5610)
 
 ## 📦 Setup
 
@@ -273,7 +273,7 @@ make kubernetes-clean
 - **Hasura** - GraphQL Engine
   - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
 - **Ory Hydra** - OAuth 2.0 and OpenID Connect server
-- **Terraform** - Infrastructure as code
+- **Terraform** - Infrastructure as code (IaC)
 - **TorchServe** - PyTorch models serving
 - **Linkerd** - Service mesh
 - **Caddy** - Web server, reverse proxy, load balancer
@@ -307,7 +307,9 @@ make kubernetes-clean
   - **Amazon MSK** - Kafka
   - **Amazon EC2** - Cloud computing
   - **Amazon ECR** - Container registry
+  - **Amazon EKS** - Kubernetes
   - **Amazon S3** - Object storage
+  - **AWS CloudFormation** - Infrastructure as Code (IaC)
   - **AWS Glue DataBrew** - Data cleaning
   - **AWS IAM** - Identity and access management
   - **AWS Secrets Manager** - Password management
@@ -317,6 +319,7 @@ make kubernetes-clean
   - **Dataprep** - Data cleaning
   - **Looker Studio** - Data visualization
   - **Vertex AI** - AutoML
+- **Karpenter** - Kubernetes node autoscaler
 - **Komiser** - Cloud cost monitoring
 
 ### Ops
