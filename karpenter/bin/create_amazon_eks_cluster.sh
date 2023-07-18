@@ -51,12 +51,12 @@ iamIdentityMappings:
       - system:bootstrappers
       - system:nodes
 managedNodeGroups:
-  - instanceType: m5.large
+  - instanceType: m6a.xlarge
     amiFamily: AmazonLinux2
     name: ${CLUSTER_NAME}-node-group
     desiredCapacity: 2
     minSize: 1
-    maxSize: 10
+    maxSize: 100
 EOF
 CLUSTER_ENDPOINT="$(aws eks describe-cluster --name=${CLUSTER_NAME} --query="cluster.endpoint" --output=text)"
 export CLUSTER_ENDPOINT
@@ -113,7 +113,6 @@ spec:
     name: default
   consolidation:
     enabled: true
-
 ---
 apiVersion: karpenter.k8s.aws/v1alpha1
 kind: AWSNodeTemplate
@@ -127,7 +126,7 @@ spec:
 EOF
 echo "=================================================="
 
-echo "# Add Prometheus and Grafana"
+echo "# Install Prometheus"
 kubectl create namespace monitoring
 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -135,30 +134,26 @@ helm repo update
 helm install prometheus prometheus-community/prometheus \
   --namespace=monitoring \
   --values=kubernetes/manifests-raw/karpenter/prometheus-values.yaml
+echo "=================================================="
 
+echo "# Install Grafana"
 helm repo add grafana-charts https://grafana.github.io/helm-charts
 helm repo update
 helm install grafana grafana-charts/grafana \
   --namespace=monitoring \
   --values=kubernetes/manifests-raw/karpenter/grafana-values.yaml
 
-kubectl port-forward service/grafana --namespace=monitoring 45767:80
+# kubectl port-forward service/grafana --namespace=monitoring 45767:80
 
 # Username: admin
 # Password:
-kubectl get secret grafana \
-  --namespace=monitoring \
-  --output=jsonpath="{.data.admin-password}" \
-  | base64 --decode
-
-kubectl get secret hm-elasticsearch-es-http-certs-internal \
-  --namespace=hm-elastic \
-  --output=go-template='{{index .data "tls.key" | base64decode }}' \
-  > "${KAFKACONNECT_DATA_PATH}/tls.key"
+#   kubectl get secret grafana \
+#     --namespace=monitoring \
+#     --output=jsonpath="{.data.admin-password}" \
+#     | base64 --decode
 echo "=================================================="
 
 echo "# Cleanup"
-kubectl delete node "${NODE_NAME}"
 helm uninstall karpenter --namespace=karpenter
 aws cloudformation delete-stack --stack-name="${CLUSTER_NAME}-karpenter-stack"
 aws ec2 describe-launch-templates --filters="Name=tag:karpenter.k8s.aws/cluster,Values=${CLUSTER_NAME}" |
