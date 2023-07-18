@@ -25,7 +25,7 @@ echo "=================================================="
 
 echo "# Install the Pixie CLI"
 export PL_CLOUD_ADDR=dev.withpixie.dev
-bash -c "$(curl -sSL https://withpixie.ai/install.sh)"
+bash -c "$(curl --silent --fail --show-error --location https://withpixie.ai/install.sh)"
 echo "=================================================="
 
 echo "# Deploy Pixie"

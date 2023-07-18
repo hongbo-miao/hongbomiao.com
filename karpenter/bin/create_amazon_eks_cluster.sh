@@ -17,7 +17,7 @@ export TEMPOUT
 echo "=================================================="
 
 echo "# Create a cluster"
-curl -sSL "https://raw.githubusercontent.com/aws/karpenter/${KARPENTER_VERSION}/website/content/en/preview/getting-started/getting-started-with-karpenter/cloudformation.yaml" > "${TEMPOUT}" && \
+curl --silent --fail --show-error --location "https://raw.githubusercontent.com/aws/karpenter/${KARPENTER_VERSION}/website/content/en/preview/getting-started/getting-started-with-karpenter/cloudformation.yaml" > "${TEMPOUT}" && \
 aws cloudformation deploy \
   --stack-name="${CLUSTER_NAME}-karpenter-stack" \
   --template-file="${TEMPOUT}" \

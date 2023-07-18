@@ -1,4 +1,4 @@
 install-arduino-lint:
-	curl -sSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh
+	curl --silent --fail --show-error --location https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh
 arduino-lint:
 	cd sketch && arduino-lint

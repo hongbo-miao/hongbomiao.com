@@ -6,7 +6,7 @@ echo "# Setup Multipass"
 multipass launch --name=west-master --cpus=8 --memory=56g --disk=512g
 # https://www.rancher.co.jp/docs/k3s/latest/en/installation/
 multipass exec west-master -- \
-  bash -c 'curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --disable traefik" K3S_KUBECONFIG_MODE="644" sh -'
+  bash -c 'curl --silent --fail --show-error --location https://get.k3s.io | INSTALL_K3S_EXEC="server --disable traefik" K3S_KUBECONFIG_MODE="644" sh -'
 multipass mount "${PWD}/data" west-master:/data
 
 # multipass info west-master

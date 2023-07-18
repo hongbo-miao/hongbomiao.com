@@ -134,7 +134,7 @@ pyenv-deactivate:
 poetry-install-on-macos:
 	brew install poetry
 poetry-install-on-linux:
-	curl -sSL https://install.python-poetry.org | python3 -
+	curl --silent --fail --show-error --location https://install.python-poetry.org | python3 -
 poetry-self-update:
 	poetry self update
 poetry-version:
