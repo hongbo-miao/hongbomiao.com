@@ -4,9 +4,9 @@ set -e
 # https://karpenter.sh/docs/getting-started/getting-started-with-karpenter/
 
 echo "# Set environment variables"
-export KARPENTER_VERSION=v0.29.0
+export KARPENTER_VERSION=v0.29.1
 export AWS_PARTITION="aws"
-export CLUSTER_NAME="hm-karpenter-cluster"
+export CLUSTER_NAME="hm-k8s-cluster"
 export AWS_DEFAULT_REGION="us-west-2"
 
 AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query=Account --output=text)"
@@ -19,12 +19,12 @@ echo "=================================================="
 echo "# Create a cluster"
 curl -sSL "https://raw.githubusercontent.com/aws/karpenter/${KARPENTER_VERSION}/website/content/en/preview/getting-started/getting-started-with-karpenter/cloudformation.yaml" > "${TEMPOUT}" && \
 aws cloudformation deploy \
-  --stack-name="karpenter-${CLUSTER_NAME}" \
+  --stack-name="${CLUSTER_NAME}-karpenter-stack" \
   --template-file="${TEMPOUT}" \
   --capabilities=CAPABILITY_NAMED_IAM \
   --parameter-overrides="ClusterName=${CLUSTER_NAME}"
 
-eksctl create cluster --filename=- <<EOF
+eksctl create cluster --config-file=- <<EOF
 ---
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
@@ -53,12 +53,12 @@ iamIdentityMappings:
 managedNodeGroups:
   - instanceType: m5.large
     amiFamily: AmazonLinux2
-    name: ${CLUSTER_NAME}-ng
+    name: ${CLUSTER_NAME}-node-group
     desiredCapacity: 2
     minSize: 1
     maxSize: 10
 EOF
-CLUSTER_ENDPOINT="$(aws eks describe-cluster --name ${CLUSTER_NAME} --query "cluster.endpoint" --output text)"
+CLUSTER_ENDPOINT="$(aws eks describe-cluster --name=${CLUSTER_NAME} --query="cluster.endpoint" --output=text)"
 export CLUSTER_ENDPOINT
 echo "${CLUSTER_ENDPOINT}"
 
@@ -83,7 +83,7 @@ helm upgrade \
   --namespace=karpenter \
   --create-namespace \
   --version="${KARPENTER_VERSION}" \
-  --set="serviceAccount.annotations.eks.amazonaws.com/role-arn=${KARPENTER_IAM_ROLE_ARN}" \
+  --set="serviceAccount.annotations.eks\.amazonaws\.com/role-arn=${KARPENTER_IAM_ROLE_ARN}" \
   --set="settings.aws.clusterName=${CLUSTER_NAME}" \
   --set="settings.aws.defaultInstanceProfile=KarpenterNodeInstanceProfile-${CLUSTER_NAME}" \
   --set="settings.aws.interruptionQueueName=${CLUSTER_NAME}" \
@@ -127,11 +127,41 @@ spec:
 EOF
 echo "=================================================="
 
+echo "# Add Prometheus and Grafana"
+kubectl create namespace monitoring
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install prometheus prometheus-community/prometheus \
+  --namespace=monitoring \
+  --values=kubernetes/manifests-raw/karpenter/prometheus-values.yaml
+
+helm repo add grafana-charts https://grafana.github.io/helm-charts
+helm repo update
+helm install grafana grafana-charts/grafana \
+  --namespace=monitoring \
+  --values=kubernetes/manifests-raw/karpenter/grafana-values.yaml
+
+kubectl port-forward service/grafana --namespace=monitoring 45767:80
+
+# Username: admin
+# Password:
+kubectl get secret grafana \
+  --namespace=monitoring \
+  --output=jsonpath="{.data.admin-password}" \
+  | base64 --decode
+
+kubectl get secret hm-elasticsearch-es-http-certs-internal \
+  --namespace=hm-elastic \
+  --output=go-template='{{index .data "tls.key" | base64decode }}' \
+  > "${KAFKACONNECT_DATA_PATH}/tls.key"
+echo "=================================================="
+
 echo "# Cleanup"
 kubectl delete node "${NODE_NAME}"
 helm uninstall karpenter --namespace=karpenter
-aws cloudformation delete-stack --stack-name="karpenter-${CLUSTER_NAME}"
-aws ec2 describe-launch-templates --filters=Name=tag:karpenter.k8s.aws/cluster,Values=${CLUSTER_NAME} |
+aws cloudformation delete-stack --stack-name="${CLUSTER_NAME}-karpenter-stack"
+aws ec2 describe-launch-templates --filters="Name=tag:karpenter.k8s.aws/cluster,Values=${CLUSTER_NAME}" |
     jq -r ".LaunchTemplates[].LaunchTemplateName" |
     xargs -I{} aws ec2 delete-launch-template --launch-template-name {}
 eksctl delete cluster --name="${CLUSTER_NAME}"
