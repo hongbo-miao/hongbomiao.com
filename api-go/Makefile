@@ -42,7 +42,7 @@ opa-check:
 
 # Decision Logger
 decision-logger-gzip-call:
-	echo '{"foo": "bar"}' | gzip | curl -v -i --data-binary @- -H "Content-Encoding: gzip" http://localhost:41797/logs
+	echo '{"foo": "bar"}' | gzip | curl --verbose --include --data-binary @- -H "Content-Encoding: gzip" http://localhost:41797/logs
 
 # Config Loader
 config-loader-generate-cert-and-key:
