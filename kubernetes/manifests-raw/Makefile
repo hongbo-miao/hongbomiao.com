@@ -26,6 +26,11 @@ download-kafka:
 	curl https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml > kafka/kafka-persistent-single.yaml
 	curl https://strimzi.io/examples/latest/kafka/kafka-persistent.yaml > kafka/kafka-persistent.yaml
 
+# Karpenter
+download-karpenter:
+	curl -sSL https://raw.githubusercontent.com/aws/karpenter/"${KARPENTER_VERSION}"/website/content/en/preview/getting-started/getting-started-with-karpenter/prometheus-values.yaml > karpenter/prometheus-values.yaml
+	curl -sSL https://raw.githubusercontent.com/aws/karpenter/"${KARPENTER_VERSION}"/website/content/en/preview/getting-started/getting-started-with-karpenter/grafana-values.yaml > karpenter/grafana-values.yaml
+
 # MinIO
 # Manifests: https://github.com/minio/operator/tree/master/examples/kustomization
 
