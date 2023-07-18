@@ -2,7 +2,7 @@
 set -e
 
 echo "# Install Linkerd Buoyant"
-curl -sL buoyant.cloud/install | sh
+curl --silent --fail --show-error --location buoyant.cloud/install | sh
 linkerd buoyant install | \
   kubectl apply --filename=-
 echo "=================================================="

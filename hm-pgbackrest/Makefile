@@ -11,5 +11,5 @@ sql-show-pgbackrest-info:
 	psql postgresql://postgres:passw0rd@localhost:5432/postgres --file=sql/pgsql-pgbackrest-info.sql
 
 download-pgbackrest-sql:
-	curl https://raw.githubusercontent.com/pgbackrest/pgbackrest/main/doc/example/pgsql-pgbackrest-info.sql > sql/pgsql-pgbackrest-info.sql
-	curl https://raw.githubusercontent.com/pgbackrest/pgbackrest/main/doc/example/pgsql-pgbackrest-query.sql > sql/pgsql-pgbackrest-query.sql
+	curl --silent --fail --show-error --location https://raw.githubusercontent.com/pgbackrest/pgbackrest/main/doc/example/pgsql-pgbackrest-info.sql > sql/pgsql-pgbackrest-info.sql
+	curl --silent --fail --show-error --location https://raw.githubusercontent.com/pgbackrest/pgbackrest/main/doc/example/pgsql-pgbackrest-query.sql > sql/pgsql-pgbackrest-query.sql

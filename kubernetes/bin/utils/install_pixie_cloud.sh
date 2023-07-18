@@ -4,7 +4,7 @@ set -e
 # https://docs.px.dev/installing-pixie/install-guides/community-cloud-for-pixie/
 
 echo "# Install the Pixie CLI"
-bash -c "$(curl -sSL https://withpixie.ai/install.sh)"
+bash -c "$(curl --silent --fail --show-error --location https://withpixie.ai/install.sh)"
 echo "=================================================="
 
 echo "# Deploy Pixie"
