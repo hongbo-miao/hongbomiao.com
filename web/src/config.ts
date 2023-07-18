@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/tracing';
 
 const { NODE_ENV, REACT_APP_SERVER_WS_PROTOCOL } = process.env;
 
@@ -40,7 +39,7 @@ const config: Config = {
   sentryOptions: {
     dsn: 'https://a0ff55d9ee00403ca144425a33c318eb@o379185.ingest.sentry.io/4504195581018112',
     environment: NODE_ENV,
-    integrations: [new BrowserTracing()],
+    integrations: [new Sentry.BrowserTracing()],
     tracesSampleRate: 1.0,
   },
 };
