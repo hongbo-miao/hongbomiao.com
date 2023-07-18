@@ -39,7 +39,7 @@ echo "=================================================="
 # ELASTIC_PASSWORD=$(kubectl get secret hm-elasticsearch-es-elastic-user \
 #   --namespace=hm-elastic \
 #   --output=go-template="{{.data.elastic | base64decode}}")
-# curl -u "elastic:${ELASTIC_PASSWORD}" -k "https://localhost:9200"
+# curl --user "elastic:${ELASTIC_PASSWORD}" --insecure "https://localhost:9200"
 
 # Kibana
 # kubectl port-forward service/hm-kb-http --namespace=hm-elastic 5601:5601
