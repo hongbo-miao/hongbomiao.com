@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/74567c05-d02d-4322-b62c-b4c2bcde1f04)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/fa6cbe34-0a95-4d25-bc44-bbabf7010e0c)
 
 ## 📦 Setup
 
@@ -296,6 +296,7 @@ make kubernetes-clean
 - **Locust** - Load testing
 - **Cloudflare Tunnel** - Tunneling
 - **Kubernetes** - Container-orchestration system
+- **Vertical Pod Autoscaler** - Kubernetes vertical pod autoscaler
 - **K3s** - Lightweight Kubernetes
 - **containerd** - Container runtime
 
