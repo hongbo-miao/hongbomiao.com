@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/208ad3dd-7e00-4497-8eff-0d9e9f24dbc2)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/51d6fd93-fba9-49e9-9608-8a61359946a2)
 
 ## 📦 Setup
 
@@ -87,7 +87,7 @@ make kubernetes-clean
   - **[Chromatic](https://www.chromatic.com/builds?appId=5d626a63a601530020759b10)** - Storybook reviewing
 - **rxjs/testing** - Marble testing
 - **Cypress** - End-to-end testing
-- **Lighthouse CI** - Performance, accessibility, SEO, progressive web app (PWA) analysis
+- **Lighthouse CI** - Performance, accessibility, search engine optimization (SEO), progressive web app (PWA) analysis
 - **Sentry** - Error tracking
 - **Report URI** - Security reporting
 - **Google Tag Manager** - Tag management
@@ -128,8 +128,8 @@ make kubernetes-clean
 - **Gin** - Web framework
 - **gRPC** - Remote procedure call (RPC) framework
 - **graphql-go** - GraphQL
-- **jwt-go** - JWT
-- **gin-contrib/cors** - CORS
+- **jwt-go** - JSON Web Token (JWT)
+- **gin-contrib/cors** - Cross-Origin Resource Sharing (CORS)
 - **opa** - Open Policy Agent
 - **dgo** - Dgraph client
 - **minio-go** - MinIO client
@@ -137,7 +137,7 @@ make kubernetes-clean
 - **pgx** - PostgreSQL driver
 - **Resty** - HTTP client
 - **Squirrel** - SQL query builder
-- **apm-agent-go** - APM agent
+- **apm-agent-go** - Application performance monitoring (APM) agent
 - **OpenTelemetry Go** - OpenTelemetry
 - **Prometheus Go** - Prometheus
 - **Testify** - Unit testing
@@ -149,10 +149,10 @@ make kubernetes-clean
 
 - **Flask** - Web framework
 - **Flask-APScheduler** - APScheduler
-- **Flask-CORS** - CORS
+- **Flask-CORS** - Cross-Origin Resource Sharing (CORS)
 - **Flask-Sock** - WebSocket
 - **confluent-kafka** - Kafka client
-- **Gunicorn** - Python WSGI HTTP server
+- **Gunicorn** - Python web server gateway interface (WSGI) HTTP server
 - **asyncpg** - PostgreSQL client
 - **Tenacity** - General-purpose retrying library
 - **pytest** - Unit testing
@@ -174,9 +174,9 @@ make kubernetes-clean
 - **node-postgres** - PostgreSQL client
 - **ioredis** - Redis client
 - **rate-limiter-flexible** - Rate limiting
-- **expressjs/cors** - CORS
+- **expressjs/cors** - Cross-Origin Resource Sharing (CORS)
 - **csurf** - CSRF protection
-- **jsonwebtoken**, **express-jwt** - JSON web tokens (JWT)
+- **jsonwebtoken**, **express-jwt** - JSON Web Token (JWT)
 - **bcrypt** - Password hashing
 - **axios** - HTTP client
 - **Helmet** - HTTP header `Content-Security-Policy`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
@@ -343,6 +343,7 @@ make kubernetes-clean
 
 ### Embedded, IoT, Hardware
 
+- **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
 - **NI VeriStand** - Real-time testing and simulation
 - **MATLAB** - Programming and numeric computing platform
 - **Simulink** - Simulation and model-based designing
@@ -388,6 +389,7 @@ make kubernetes-clean
 - **solhint** - Solidity linter
 - **SQLFluff** - SQL linter and code formatter
 - **terraform** - Terraform code formatter
+- **VHDL Style Guide (VSG)** - VHDL code formatter
 - **yamllint** - YAML linter
 - **Prettier** - Code formatter
 - **ClangFormat** - C/C++ code formatter
@@ -506,6 +508,12 @@ make kubernetes-clean
 The toroidal propeller allows a small multirotor aircraft to operate more quietly than the ones that use traditional propellers.
 
 ![OpenSCAD screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/00b3e679-66a7-4d9c-8d68-c31c124e0a54)
+
+#### VHDL - Very High Speed Integrated Circuits Program (VHSIC) Hardware Description Language
+
+The VHDL waveforms are displayed in GTKWave.
+
+![VHDL screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/8bafe459-24f5-4751-bae5-5a2b97688f2f)
 
 #### Poky - Reference Linux Distribution of the Yocto Project
 
