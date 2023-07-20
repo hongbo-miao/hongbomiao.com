@@ -663,6 +663,33 @@ jobs:
         run: |
           npm run lint:xml
 
+  lint-vhdl:
+    name: VHDL
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: poetry
+          cache-dependency-path: poetry.lock
+      - name: Set Poetry environment
+        run: |
+          poetry env use 3.11
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
+      - name: Lint VHDL
+        run: |
+          poetry run poe lint-vhdl
+
   lint-yaml:
     name: YAML
     runs-on: ubuntu-22.04
