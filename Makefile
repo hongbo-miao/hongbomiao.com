@@ -201,6 +201,10 @@ lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=postgres timescaledb/motor/migrations
 	poetry run poe lint-sql-fix -- --dialect=sparksql delta-lake/sql
 	poetry run poe lint-sql-fix -- --dialect=sparksql hm-spark/applications/find-taxi-top-routes-sql/src/queries
+lint-vhdl:
+	poetry run poe lint-vhdl
+lint-vhdl-fix:
+	poetry run poe lint-vhdl-fix
 lint-yaml:
 	poetry run poe lint-yaml
 static-type-check-python:
