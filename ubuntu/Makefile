@@ -78,6 +78,12 @@ service-enable:
 service-disable:
 	sudo systemctl disable xxx
 
+# History
+history-show:
+	history
+history-clear:
+	history -c
+
 # htop
 htop-install:
 	sudo snap install htop
