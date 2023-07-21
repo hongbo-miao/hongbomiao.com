@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/68690876-4756-4dea-9165-e904c35741fc)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/b312ed7a-5e45-48fd-9469-cd308f982e3b)
 
 ## 📦 Setup
 
@@ -453,10 +453,11 @@ make kubernetes-clean
 - **Duck testing**
 - **Bus testing**
 - **Load testing**
-- **Endurance testing**
+- **Durability testing**
 - **Fault injection testing**
 - **Parallel testing**
 - **Acceptance testing**
+- **Model-in-the-loop (MIL) testing**
 - **Hardware-in-the-loop (HIL) testing**
 - **Shock testing**
   - **Drop testing**
