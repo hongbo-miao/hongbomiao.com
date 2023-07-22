@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "read-delta-lake-by-amazon-athena"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.11.x"
+awswrangler = "3.2.1"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.21.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
