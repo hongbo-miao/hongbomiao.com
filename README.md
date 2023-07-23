@@ -49,7 +49,7 @@
 
 ## 👩‍🚀 Introduction
 
-Personal R&D (research and development) lab. Happy exchanging!
+A personal research and development (R&D) lab that facilitates the sharing of knowledge.
 
 ## 🚀 Architecture
 
@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/072e178b-a190-4818-9edb-6ccedd03a083)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/bc6a8bfe-9bc6-43ab-8005-65f2b5331144)
 
 ## 📦 Setup
 
