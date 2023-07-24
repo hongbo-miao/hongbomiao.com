@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/c908894d-fb7f-4203-8884-3caa41410a7b)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/1a7fe594-803e-4a85-b863-d498aa9973d3)
 
 ## 📦 Setup
 
@@ -315,6 +315,7 @@ make kubernetes-clean
   - **Amazon MSK** - Kafka
   - **Amazon RDS** - PostgreSQL
   - **Amazon S3** - Object storage
+  - **Amazon SageMaker** - Machine learning platform
   - **Amazon SQS** - Queue
   - **AWS CloudFormation** - Infrastructure as code (IaC)
   - **AWS CodeCommit** - Version control
@@ -324,12 +325,13 @@ make kubernetes-clean
   - **AWS Glue DataBrew** - Data cleaning
   - **AWS IAM** - Identity and access management
   - **AWS Secrets Manager** - Password management
+  - **Vertex AI** - Machine learning platform
 - **Google Cloud**
   - **BigQuery** - Data warehouse
     - **BigQuery ML** - BigQuery machine learning
   - **Dataprep** - Data cleaning
   - **Looker Studio** - Data visualization
-  - **Vertex AI** - AutoML
+  - **Vertex AI** - Machine learning platform
 - **Karpenter** - Kubernetes node autoscaler
 - **Komiser** - Cloud cost monitoring
 
