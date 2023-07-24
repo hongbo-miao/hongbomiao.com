@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/bc6a8bfe-9bc6-43ab-8005-65f2b5331144)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/b01bfce9-f729-4d96-b48b-389f84b3b25b)
 
 ## 📦 Setup
 
@@ -306,15 +306,18 @@ make kubernetes-clean
 - **Amazon Web Services**
   - **Amazon Athena** - Serverless query service
   - **Amazon CloudTrail** - Data governance, data compliance, data auditing
+  - **Amazon EBS** - Block storage
   - **Amazon EC2** - Cloud computing
   - **Amazon ECR** - Container registry
   - **Amazon EKS** - Kubernetes
   - **Amazon EMR** - Big data platform
   - **Amazon EventBridge** - Serverless event bus
   - **Amazon MSK** - Kafka
+  - **Amazon RDS** - PostgreSQL
   - **Amazon S3** - Object storage
   - **Amazon SQS** - Queue
   - **AWS CloudFormation** - Infrastructure as code (IaC)
+  - **AWS CodeCommit** - Version control
   - **AWS Glue** - Serverless data integration
     - **AWS Glue Crawler** - Data source discovery
     - **AWS Glue Data Catalog** - Data catalog
@@ -405,6 +408,7 @@ make kubernetes-clean
 - **Mypy** - Python static type checker
 - **tsc** - TypeScript static type checker
 - **detekt** - Kotlin static type checker
+- **GitHub** - Version control
 - **[SonarCloud](https://sonarcloud.io/dashboard?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
 - **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
 - **[Depfu](https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=23463)** - Dependency monitoring

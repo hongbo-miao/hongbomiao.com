@@ -13,12 +13,11 @@ terraform {
     }
   }
   # https://app.terraform.io/app/hongbomiao/workspaces/hm-workspace/settings/general
-  required_version = ">= 1.3"
+  required_version = ">= 1.5"
 }
 
 provider "aws" {
-  profile = "hm"
-  region  = "us-west-2"
+  region = "us-west-2"
 }
 
 resource "aws_instance" "hm_cnn_instance" {
