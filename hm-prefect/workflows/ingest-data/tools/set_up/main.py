@@ -20,7 +20,8 @@ async def main(data_sources: list[DataSource]) -> None:
         location = data_source["location"]
         t = asyncio.create_task(
             create_concurrency_limit(
-                f"{config.flow_name}-write-to-delta-table-{location}-concurrency-limit",
+                config.flow_name,
+                f"write-to-delta-table-{location}",
                 1,
             )
         )
