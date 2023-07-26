@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/129a0ee1-492b-4e54-bda0-06cc44b0dfd5)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/cac0c90a-e912-4caf-8a96-197b893e3cfc)
 
 ## 📦 Setup
 
@@ -476,7 +476,28 @@ make kubernetes-clean
 - **Ground testing**
 - **Flight testing**
 
-### Standards
+### Protocol
+
+- **The Internet Protocol (IP)**
+  - **IPv4**
+  - **IPv6**
+- **Hypertext Transfer Protocol (HTTP)**
+  - **Hypertext Transfer Protocol Secure (HTTPS)**
+  - **HTTP/1.1**
+  - **HTTP/2**
+  - **HTTP/3**
+- **gRPC Remote Procedure Calls (gRPC)**
+- **Transmission Control Protocol (TCP)
+- **User Datagram Protocol (UDP)**
+- **File Transfer Protocol (FTP)**
+- **Simple Mail Transfer Protocol (SMTP)**
+- **Post Office Protocol (POP)**
+- **MQTT**
+- **Serial Protocol**
+  - **Inter-Integrated Circuit (I²C)**
+  - **Serial Peripheral Interface (SPI)**
+
+### Standard
 
 - **Avionics Systems**
   - **DO-178C** - Software considerations in airborne systems and equipment certification
