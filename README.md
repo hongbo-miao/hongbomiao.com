@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/cac0c90a-e912-4caf-8a96-197b893e3cfc)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/3faf73f8-565b-40b4-ac7a-ed3bf4a19942)
 
 ## 📦 Setup
 
@@ -372,6 +372,7 @@ make kubernetes-clean
 - **Raspberry Pi 4 Model B** - Single-board computer (SBC)
 - **Jetson Nano** - Single-board computer (SBC)
 - **Jetson TX2** - Single-board computer (SBC)
+- **CubeSat** - Miniaturized satellite
 
 ### Ethereum
 
