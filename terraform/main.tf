@@ -9,7 +9,7 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"
-      version = "5.9.0"
+      version = "5.10.0"
     }
   }
   # https://app.terraform.io/app/hongbomiao/workspaces/hm-workspace/settings/general
