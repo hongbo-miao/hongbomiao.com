@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/3a028ba6-be0b-4a27-b509-e940d47953ad)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/07264045-dc7f-4608-bbe6-c0314f6768ee)
 
 ## 📦 Setup
 
@@ -468,16 +468,25 @@ make kubernetes-clean
 - **Acceptance testing**
 - **Model-in-the-loop (MIL) testing**
 - **Hardware-in-the-loop (HIL) testing**
-- **Shock testing**
-  - **Drop testing**
-- **Vibration testing**
+- **Environmental testing**
+  - **Vibration testing**
+  - **Shock testing**
+    - **Drop testing**
+  - **Temperature testing**
+  - **Humidity testing**
+  - **Altitude testing**
+  - **Icing testing**
+  - **Rain testing**
+  - **Fungus testing**
+  - **Salt fog testing**
+  - **Lightning testing**
 - **Structural testing**
 - **Dyno testing**
 - **Wind tunnel testing**
 - **Ground testing**
 - **Flight testing**
 
-### Protocol
+### Communication Standards and Protocols
 
 - **The Internet Protocol (IP)**
   - **IPv4**
@@ -488,7 +497,7 @@ make kubernetes-clean
   - **HTTP/2**
   - **HTTP/3**
 - **gRPC Remote Procedure Calls (gRPC)**
-- **Transmission Control Protocol (TCP)
+- **Transmission Control Protocol (TCP)**
 - **User Datagram Protocol (UDP)**
 - **File Transfer Protocol (FTP)**
 - **Simple Mail Transfer Protocol (SMTP)**
@@ -497,12 +506,17 @@ make kubernetes-clean
 - **Serial Protocol**
   - **Inter-Integrated Circuit (I²C)**
   - **Serial Peripheral Interface (SPI)**
+- **Controller Area Network (CAN)**
 
-### Standard
+### Guidances
 
 - **Avionics Systems**
   - **DO-178C** - Software considerations in airborne systems and equipment certification
   - **DO-254** - Design assurance guidance for airborne electronic hardware
+  - **ARP4754A** - Guidelines for development of civil aircraft and systems
+  - **DO-160G** - Environmental conditions and test procedures for airborne equipment
+  - **DO-331** - Model-based development and verification supplement to DO-178C and DO-278A
+  - **DO-330** - Software tool qualification considerations
 - **Automotive Systems**
   - **ISO 26262** - Road vehicles — functional safety
   - **AUTOSAR** - Automotive open system architecture
