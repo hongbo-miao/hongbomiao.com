@@ -36,6 +36,16 @@ git-log:
 git-status:
 	git status
 
+# Git LFS
+git-lfs-install:
+	git lfs install
+git-lfs-track:
+	git lfs track "*.slx"
+git-lfs-status:
+	git lfs status
+git-lfs-list:
+	git lfs ls-files
+
 # Docker
 docker-login:
 	docker login
@@ -165,6 +175,10 @@ clean-jupyter-notebook:
 	poetry run poe clean-jupyter-notebook -- aws/amazon-emr/studio/hm-studio/hm-workspace.ipynb
 lint-ansible:
 	poetry run poe lint-ansible
+lint-matlab:
+	poetry run poe lint-matlab
+lint-matlab-fix:
+	poetry run poe lint-matlab-fix
 lint-cmake:
 	poetry run poe lint-cmake
 lint-python-black:
