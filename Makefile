@@ -36,6 +36,16 @@ git-log:
 git-status:
 	git status
 
+# Git LFS
+git-lfs-install:
+	git lfs install
+git-lfs-track:
+	git lfs track "*.slx"
+git-lfs-status:
+	git lfs status
+git-lfs-list:
+	git lfs ls-files
+
 # Docker
 docker-login:
 	docker login
