@@ -423,6 +423,33 @@ jobs:
         run: |
           npm run lint:markdown
 
+  lint-matlab:
+    name: MATLAB
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: poetry
+          cache-dependency-path: poetry.lock
+      - name: Set Poetry environment
+        run: |
+          poetry env use 3.11
+      - name: Install dependencies
+        run: |
+          poetry install --no-root
+      - name: Lint MATLAB
+        run: |
+          poetry run poe lint-matlab
+
   lint-protocol-buffers-api-go:
     name: Protocol Buffers (api-go)
     needs: detect-changes
