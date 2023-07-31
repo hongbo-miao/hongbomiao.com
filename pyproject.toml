@@ -14,6 +14,7 @@ autoflake = "2.2.0"
 black = {version = "23.7.0", extras = ["d"]}
 cmakelint = "1.4.2"
 isort = "5.12.0"
+miss-hit = "0.9.42"
 mypy = "1.4.1"
 nb-clean = "2.4.0"
 poethepoet = "0.21.1"
@@ -30,6 +31,8 @@ build-backend = "poetry.core.masonry.api"
 clean-jupyter-notebook = "nb-clean clean"
 lint-ansible = {shell = "ansible-lint $(git ls-files '*playbook.yml')"}
 lint-cmake = {shell = "cmakelint $(git ls-files '*CMakeLists.txt')"}
+lint-matlab = {shell = "mh_style $(git ls-files '*.m')"}
+lint-matlab-fix = {shell = "mh_style --fix $(git ls-files '*.m')"}
 lint-python-autoflake = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --check --recursive ."
 lint-python-autoflake-fix = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --in-place --recursive ."
 lint-python-black = "black --check ."

@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/07264045-dc7f-4608-bbe6-c0314f6768ee)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/15a2e549-0b46-4243-bb71-df40403c41fc)
 
 ## 📦 Setup
 
@@ -357,7 +357,8 @@ make kubernetes-clean
 - **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
 - **NI VeriStand** - Real-time testing and simulation
 - **MATLAB** - Programming and numeric computing platform
-- **Simulink** - Simulation and model-based designing
+  - **Simulink** - Simulation and model-based designing
+    - **Simscape** - Model and simulate multidomain physical systems
 - **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
@@ -391,6 +392,7 @@ make kubernetes-clean
 - **Ktlint** - Kotlin linter and code formatter
 - **Kubeconform** - Kubernetes manifest linter
 - **markdownlint-cli2** - Markdown linter
+- **MISS_HIT** - MATLAB code formatter
 - **Buf** - Protocol Buffers linter
 - **Ruff**, **autoflake**, **isort** - Python linter
 - **qmllint** - QML linter
@@ -534,9 +536,9 @@ make kubernetes-clean
 
 ### Embedded, IoT, Hardware
 
-#### MATLAB and Simulink
+#### MATLAB, Simulink, Simscape
 
-![MATLAB and Simulink screenshot](https://user-images.githubusercontent.com/3375461/187293381-8693512b-5a65-4f89-8d87-beb3a703e17f.png)
+![MATLAB and Simulink screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
 
 #### RTI Connext - Real-Time, Distributed Systems Framework
 
