@@ -30,9 +30,9 @@ helm upgrade \
 # kubectl delete namespace hm-prefect
 echo "=================================================="
 
-echo "# Create hm-kubernetes profile"
-prefect profile create hm-kubernetes
-prefect profile use hm-kubernetes
+echo "# Create hm-prefect profile"
+prefect profile create hm-prefect
+prefect profile use hm-prefect
 prefect config set PREFECT_API_URL=https://prefect.hongbomiao.com/api
 echo "=================================================="
 
