@@ -1,7 +1,17 @@
-# Ansible
-ansible-find:
-	cd .. && \
-	ansible localhost -m find -a "paths=hm-alpine file_type=file"
+ansible-galaxy-collection-list:
+	ansible-galaxy collection list
+ansible-galaxy-role-list:
+	ansible-galaxy role list
 
-ansible-playbook:
-	ansible-playbook playbook.yml
+ansible-inventory-list:
+	ansible-inventory --inventory=hosts --list
+
+ansible-run-ping:
+	ansible all --inventory=hosts --module-name=ping
+ansible-run-uptime:
+	ansible all --inventory=hosts --args=uptime
+
+ansible-playbook-hm-macos:
+	ansible-playbook --inventory=hosts hm-macos/playbook.yml
+ansible-playbook-hm-ubuntu:
+	ansible-playbook --inventory=hosts hm-ubuntu/playbook.yml --ask-become-pass
