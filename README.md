@@ -498,16 +498,22 @@ make kubernetes-clean
   - **HTTP/1.1**
   - **HTTP/2**
   - **HTTP/3**
-- **gRPC Remote Procedure Calls (gRPC)**
 - **Transmission Control Protocol (TCP)**
 - **User Datagram Protocol (UDP)**
 - **File Transfer Protocol (FTP)**
-- **Simple Mail Transfer Protocol (SMTP)**
-- **Post Office Protocol (POP)**
-- **MQTT**
+- **gRPC Remote Procedure Calls (gRPC)**
+- **Email Protocol**
+  - **Post Office Protocol (POP)**
+  - **Simple Mail Transfer Protocol (SMTP)**
+  - **Internet Message Access Protocol (IMAP)**
 - **Serial Protocol**
   - **Inter-Integrated Circuit (I²C)**
   - **Serial Peripheral Interface (SPI)**
+- **Time Protocol**
+  - **Network Time Protocol (NTP)**
+  - **Precision Time Protocol (PTP)**
+  - **IRIG-B Time Protocol**
+- **MQTT**
 - **Controller Area Network (CAN)**
 
 ### Guidances
