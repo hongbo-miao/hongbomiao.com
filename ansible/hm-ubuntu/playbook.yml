@@ -1,0 +1,28 @@
+---
+- name: Test reachability
+  hosts: hm-ubuntu
+  remote_user: root
+  tasks:
+    - name: Ping
+      ansible.builtin.ping:
+
+- name: Install packages
+  hosts: hm-ubuntu
+  become: true
+  tasks:
+    - name: Install snap packages
+      community.general.snap:
+        name:
+          - htop
+        state: present
+    - name: Install apt packages
+      ansible.builtin.apt:
+        name:
+          - vnstat
+        state: present
+    - name: Install Rclone
+      ansible.builtin.include_role:
+        name: stefangweichinger.ansible_rclone
+      vars:
+        # https://github.com/stefangweichinger/ansible-rclone/blob/main/defaults/main.yml
+        rclone_arch: arm64

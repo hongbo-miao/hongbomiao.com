@@ -1,0 +1,24 @@
+---
+- name: Test reachability
+  hosts: hm-macos
+  remote_user: root
+  tasks:
+    - name: Ping
+      ansible.builtin.ping:
+
+- name: Install packages
+  hosts: hm-macos
+  remote_user: root
+  tasks:
+    - name: Install clang-format
+      community.general.homebrew:
+        name: clang-format
+        state: present
+    - name: Install hadolint
+      community.general.homebrew:
+        name: hadolint
+        state: present
+    - name: Install jq
+      community.general.homebrew:
+        name: jq
+        state: present
