@@ -16,8 +16,8 @@
   <p>
     <a href="https://goreportcard.com/report/github.com/Hongbo-Miao/hongbomiao.com"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/Hongbo-Miao/hongbomiao.com" /></a>
     <a href="https://observatory.mozilla.org/analyze/www.hongbomiao.com"><img alt="Mozilla Observatory grade" src="https://img.shields.io/mozilla-observatory/grade/www.hongbomiao.com" /></a>
-    <a href="https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
-    <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/Hongbo-Miao/hongbomiao.com" /></a>
+    <a href="https://app.codacy.com/gh/Hongbo-Miao/hongbomiao.com/dashboard"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
+    <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/Hongbo-Miao/hongbomiao.com" /></a>
     <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/trends/technical_debt"><img alt="Code Climate technical debt" src="https://img.shields.io/codeclimate/tech-debt/Hongbo-Miao/hongbomiao.com" /></a>
   </p>
   <p>
@@ -415,7 +415,7 @@ make kubernetes-clean
 - **tsc** - TypeScript static type checker
 - **detekt** - Kotlin static type checker
 - **GitHub** - Version control
-- **[SonarCloud](https://sonarcloud.io/dashboard?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/app/Hongbo-Miao/hongbomiao.com)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/maintainability)**, **[LGTM](https://lgtm.com/projects/g/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
+- **[SonarCloud](https://sonarcloud.io/project/overview?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/gh/Hongbo-Miao/hongbomiao.com/dashboard)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
 - **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
 - **[Depfu](https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=23463)** - Dependency monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
