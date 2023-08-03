@@ -1,0 +1,17 @@
+---
+- name: Test reachability
+  hosts: hm-windows
+  tasks:
+    - name: Ping
+      ansible.builtin.win_ping:
+
+- name: Install packages
+  hosts: hm-windows
+  become: true
+  tasks:
+    - name: Install packages from Scoop
+      community.windows.win_scoop:
+        name:
+          - btop
+          - rclone
+        state: present

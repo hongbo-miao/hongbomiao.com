@@ -6,7 +6,6 @@ generate-ssh-key:
 copy-ssh-key-to-ubuntu:
 	ssh-copy-id -i ~/.ssh/id_ed25519.pub parallels@10.211.55.4
 ssh:
-	ssh hongbo-miao@192.168.64.4
 	ssh parallels@10.211.55.4
 
 # Ubuntu
@@ -18,6 +17,8 @@ show-usb-devices:
 	lsusb
 show-kernel-ring-buffer-messages:
 	sudo dmesg
+which:
+	which xxx
 
 # Open file descriptors
 show-open-file-descriptor-soft-limit:

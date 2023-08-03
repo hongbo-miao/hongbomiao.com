@@ -1,14 +1,12 @@
 ---
 - name: Test reachability
   hosts: hm-macos
-  remote_user: root
   tasks:
     - name: Ping
       ansible.builtin.ping:
 
 - name: Install packages
   hosts: hm-macos
-  remote_user: root
   tasks:
     - name: Install clang-format
       community.general.homebrew:
