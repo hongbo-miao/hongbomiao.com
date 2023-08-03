@@ -1,3 +1,5 @@
+# https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html
+
 ---
 all:
   children:
@@ -10,10 +12,18 @@ all:
         hm-ubuntu:
           ansible_host: 10.211.55.4
           ansible_user: parallels
-          ansible_sudo_pass: !vault |
+          ansible_become_password: !vault |
             $ANSIBLE_VAULT;1.1;AES256
             33636435396230386437323331316332613865383735643037313234346139656439313735353738
             3864303661366334626532333838633235626463393736390a316234353634626633313062663838
             34363735643564306662333433633732303033383932653163393530393263653439336331333635
             3161356638316637320a393831333233313539663531616465636563663933373963343062346137
             6463
+    hm-windows-group:
+      hosts:
+        hm-windows:
+          ansible_host: 10.211.55.39
+          ansible_user: hongbo-miao
+          ansible_shell_type: powershell
+          ansible_become_method: runas
+          ansible_become_user: hongbo-miao
