@@ -23,3 +23,5 @@ ansible-playbook-hm-macos-group:
 	ansible-playbook --inventory=inventory.yaml hm-macos-group/playbook.yml
 ansible-playbook-hm-ubuntu-group:
 	ansible-playbook --inventory=inventory.yaml hm-ubuntu-group/playbook.yml --vault-password-file=~/.ansible_vault_pass
+ansible-playbook-hm-windows-group:
+	ansible-playbook --inventory=inventory.yaml hm-windows-group/playbook.yml --vault-password-file=~/.ansible_vault_pass

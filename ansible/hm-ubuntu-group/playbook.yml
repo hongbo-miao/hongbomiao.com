@@ -1,7 +1,6 @@
 ---
 - name: Test reachability
   hosts: hm-ubuntu
-  remote_user: root
   tasks:
     - name: Ping
       ansible.builtin.ping:
@@ -10,12 +9,13 @@
   hosts: hm-ubuntu
   become: true
   tasks:
-    - name: Install snap packages
+    - name: Install packages from Snap
       community.general.snap:
         name:
+          - btop
           - htop
         state: present
-    - name: Install apt packages
+    - name: Install packages from apt
       ansible.builtin.apt:
         name:
           - vnstat
