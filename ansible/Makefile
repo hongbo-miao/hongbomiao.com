@@ -1,7 +1,13 @@
 ansible-galaxy-collection-list:
 	ansible-galaxy collection list
+ansible-galaxy-collection-install:
+	ansible-galaxy collection install community.general
 ansible-galaxy-role-list:
 	ansible-galaxy role list
+ansible-galaxy-role-install:
+	ansible-galaxy install bartdorlandt.poetry
+	ansible-galaxy install staticdev.pyenv
+	ansible-galaxy install stefangweichinger.ansible_rclone
 
 ansible-doc-list:
 	ansible-doc --list
