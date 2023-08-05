@@ -1,6 +1,8 @@
 # Local
 emr-cluster-create:
-	aws emr create-cluster xxx
+	aws emr create-cluster \
+		--name='hm-amazon-emr-cluster' \
+		--configurations='[{"Classification": "delta-defaults", "Properties": {"delta.enabled": "true"}}, {"Classification": "trino-connector-delta", "Properties": {"hive.metastore": "glue"}}]'
 emr-cluster-list:
 	aws emr list-clusters
 emr-cluster-describe:
@@ -25,23 +27,18 @@ trino-show-config:
 trino-execute:
 	trino-cli \
 		--server=localhost:8889 \
+		--execute='select * from delta.hm_iot_delta_db.motor;'
+	trino-cli \
+		--server=localhost:8889 \
 		--execute='show catalogs;'
 	trino-cli \
 		--server=localhost:8889 \
-		--catalog=hive \
+		--catalog=delta \
 		--execute='show schemas;'
 	trino-cli \
 		--server=localhost:8889 \
-		--catalog=hudi \
-		--execute='show schemas;'
-	trino-cli \
-		--server=localhost:8889 \
-		--catalog=system \
-		--execute='show schemas;'
-	trino-cli \
-		--server=localhost:8889 \
-		--catalog=system \
-		--schema=jdbc \
+		--catalog=delta \
+		--schema=hm_iot_delta_db \
 		--execute='show tables;'
 
 # Amazon EMR - Presto
@@ -51,10 +48,6 @@ presto-execute:
 	presto-cli \
 		--server=localhost:8889 \
 		--execute='show catalogs;'
-	presto-cli \
-		--server=localhost:8889 \
-		--catalog=hive \
-		--execute='show schemas;'
 	presto-cli \
 		--server=localhost:8889 \
 		--catalog=system \
