@@ -1,5 +1,25 @@
 ---
-- name: Install packages
+- name: Install common packages
+  hosts: hm-ubuntu
+  tasks:
+    - name: Install common packages from Snap
+      become: true
+      become_user: root
+      community.general.snap:
+        name:
+          - btop
+          - htop
+        state: present
+    - name: Install common packages from Snap (edge)
+      become: true
+      become_user: root
+      community.general.snap:
+        name:
+          - vnstat
+        state: present
+        channel: edge
+
+- name: Install pyenv
   hosts: hm-ubuntu
   roles:
     - role: staticdev.pyenv
@@ -10,23 +30,10 @@
         - 3.11.4
       pyenv_global:
         - 3.11.4
+
+- name: Install Rclone
+  hosts: hm-ubuntu
   tasks:
-    - name: Install packages from Snap
-      become: true
-      become_user: root
-      community.general.snap:
-        name:
-          - btop
-          - htop
-        state: present
-    - name: Install packages from apt
-      become: true
-      become_user: root
-      ansible.builtin.apt:
-        name:
-          - vnstat
-        update_cache: true
-        state: present
     - name: Install Rclone
       ansible.builtin.include_role:
         name: stefangweichinger.ansible_rclone
