@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/4b447987-1417-4e19-b6dd-e1640a4352f2)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/f00bab8f-f6d9-4d6e-a27c-57fa34388bc4)
 
 ## 📦 Setup
 
@@ -200,32 +200,43 @@ make kubernetes-clean
 - **Trino** - Distributed SQL query engine
 - **PostgreSQL** - Object-relational database
   - **pgAdmin** - PostgreSQL management tool
+- **MySQL** - Relational database
+  - **MariaDB** - Fork of MySQL
 - **ClickHouse** - Column-oriented database
 - **YugabyteDB** - Distributed SQL database
 - **TimescaleDB** - Time-series SQL database
 - **InfluxDB** - Time-series database
   - **InfluxDB Enterprise** - Distributed time-series database
-- **Cassandra** - Distributed wide-column NoSQL database
+- **Apache Cassandra** - Distributed wide-column NoSQL database
 - **Qdrant** - Distributed vector database
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
   - **Kibana** - Elasticsearch visualization
 - **Redis** - Distributed in-memory key–value database
-- **KeyDB** - Multithreaded fork of Redis
+  - **KeyDB** - Multithreaded fork of Redis
 - **MinIO** - Object storage
-- **Kafka** - Distributed event streaming platform
-  - **Confluent Schema Registry** - Schema Registry
-  - **Apicurio Registry** - Schema Registry
-  - **Debezium** - Distributed change-data-capture (CDC) platform
-  - **kafka-connect-elasticsearch** - Elasticsearch sink connector
-  - **confluentinc-kafka-connect-jdbc** - JDBC source and sink connector
-  - **debezium-connector-postgres** - PostgreSQL CDC source connector
-  - **http-connector-for-apache-kafka** - HTTP sink connector
-  - **kafka-connect-avro-converter** - Confluent Avro converter
-  - **apicurio-registry-distro-connect-converter** - Apicurio Avro converter
-  - **Redpanda Console** - Kafka management tool
-  - **AKHQ** - Kafka management tool
-  - **UI for Apache Kafka** - Kafka management tool
+- **Apache ZooKeeper** - Distributed coordination system
+- **Apache Hadoop** - Software utility collection
+  - **Apache Hadoop HDFS (Distributed File System)** - Distributed file system
+  - **Apache Hadoop YARN (Yet Another Resource Negotiator)** - Resource management and job scheduling framework
+  - **Apache Hadoop MapReduce** - Data processing framework
+- **Apache Hive** - Distributed data warehousing and SQL-like query language system built on top of Apache Hadoop
+- **Apache Kafka** - Distributed event streaming platform
+  - Schema registries
+    - **Confluent Schema Registry** - Schema Registry
+    - **Apicurio Registry** - Schema Registry
+  - Connectors
+    - **Debezium** - Distributed change-data-capture (CDC) platform
+    - **kafka-connect-elasticsearch** - Elasticsearch sink connector
+    - **confluentinc-kafka-connect-jdbc** - JDBC source and sink connector
+    - **debezium-connector-postgres** - PostgreSQL CDC source connector
+    - **http-connector-for-apache-kafka** - HTTP sink connector
+    - **kafka-connect-avro-converter** - Confluent Avro converter
+    - **apicurio-registry-distro-connect-converter** - Apicurio Avro converter
+  - Management tools
+    - **Redpanda Console** - Kafka management tool
+    - **AKHQ** - Kafka management tool
+    - **UI for Apache Kafka** - Kafka management tool
 - **Delta Lake** - Data lakehouse
 - **golang-migrate/migrate** - Database migrations
 
@@ -239,19 +250,19 @@ make kubernetes-clean
 - **Jupyter Notebook** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
 - **Prefect** - Orchestration platform
-- **Airflow** - Orchestration platform
+- **Apache Airflow** - Orchestration platform
 - **Temporal** - Orchestration platform
-- **Spark** - Data processing framework
+- **Apache Spark** - Data processing framework
   - **Spark ML** - Spark machine learning
   - **pyspark** - Spark Python API library
   - **Delight** - Spark UI and history server
-- **Flink** - Data processing framework
+- **Apache Flink** - Data processing framework
   - **flink-streaming-java** - Flink
   - **flink-connector-twitter** - Flink Twitter connector
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
+- **Apache Superset** - Data visualization
 - **Metabase** - Data visualization
-- **Superset** - Data visualization
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **OGB** - Open graph benchmark
@@ -490,6 +501,8 @@ make kubernetes-clean
 
 ### Communication Standards and Protocols
 
+- **User Datagram Protocol (UDP)**
+- **Transmission Control Protocol (TCP)**
 - **The Internet Protocol (IP)**
   - **IPv4**
   - **IPv6**
@@ -498,23 +511,30 @@ make kubernetes-clean
   - **HTTP/1.1**
   - **HTTP/2**
   - **HTTP/3**
-- **Transmission Control Protocol (TCP)**
-- **User Datagram Protocol (UDP)**
+- **WebSocket**
 - **File Transfer Protocol (FTP)**
-- **gRPC Remote Procedure Calls (gRPC)**
-- **Email Protocol**
+- **Remote Procedure Call (RPC)**
+  - RPC frameworks
+    - **Apache Avro**
+    - **Apache Thrift**
+    - **gRPC Remote Procedure Calls (gRPC)**
+  - Binary data serialization formats
+    - **Avro**
+    - **Thrift**
+    - **Protocol Buffers (Protobuf)**
+- Email protocols
   - **Post Office Protocol (POP)**
   - **Simple Mail Transfer Protocol (SMTP)**
   - **Internet Message Access Protocol (IMAP)**
-- **Serial Protocol**
+- Serial protocols
   - **Inter-Integrated Circuit (I²C)**
   - **Serial Peripheral Interface (SPI)**
-- **Time Protocol**
+  - **Controller Area Network (CAN)**
+- Time protocols
   - **Network Time Protocol (NTP)**
   - **Precision Time Protocol (PTP)**
   - **IRIG-B Time Protocol**
 - **MQTT**
-- **Controller Area Network (CAN)**
 
 ### Guidances
 

@@ -61,3 +61,32 @@ presto-execute:
 		--catalog=awsdatacatalog \
 		--schema=information_schema \
 		--execute='show tables;'
+
+# Amazon EMR - Hive
+hive:
+	hive
+
+# Amazon EMR - Hadoop HDFS
+hadoop-hdfs-ls:
+	hdfs dfs -ls
+	hdfs dfs -ls /
+	hdfs dfs -ls /user
+	hdfs dfs -ls hdfs:///
+	hdfs dfs -ls hdfs:///user
+	hdfs dfs -ls s3://hongbomiao-bucket/
+hadoop-hdfs-show-disk-free:
+	hdfs dfs -df
+hadoop-hdfs-show-disk-usage:
+	hdfs dfs -du
+hadoop-hdfs-copy-from-local:
+	echo "Hello" >> file.txt
+	hdfs dfs -copyFromLocal file.txt
+hadoop-hdfs-cat:
+	hdfs dfs -cat file.txt
+hadoop-hdfs-mv:
+	hdfs dfs -mv file.txt file2.txt
+hadoop-hdfs-cp:
+	hdfs dfs -cp file.txt file2.txt
+hadoop-hdfs-rm:
+	hdfs dfs -rm file
+	hdfs dfs -rm -r folder
