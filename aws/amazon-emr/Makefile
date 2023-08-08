@@ -24,6 +24,8 @@ hadoop-yarn-stop:
 # Amazon EMR - Trino
 trino-show-config:
 	sudo cat /etc/trino/conf/config.properties
+trino-check-health:
+	curl localhost:8889/v1/status
 trino-execute:
 	trino-cli \
 		--server=localhost:8889 \
