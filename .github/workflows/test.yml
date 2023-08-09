@@ -244,7 +244,7 @@ jobs:
     name: Mobile - iOS | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
-    runs-on: macos-12
+    runs-on: macos-13
     environment: test
     timeout-minutes: 90
     env:
@@ -336,7 +336,7 @@ jobs:
     name: Mobile - Android | Instrumented Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: macos-12
+    runs-on: macos-13
     environment: test
     timeout-minutes: 30
     steps:
