@@ -90,7 +90,9 @@ jobs:
           poetry install --no-root
       - name: Install roles from Ansible Galaxy
         run: |
+          poetry run poe ansible-galaxy-install -- bartdorlandt.poetry
           poetry run poe ansible-galaxy-install -- staticdev.pyenv
+          poetry run poe ansible-galaxy-install -- stefangweichinger.ansible_rclone
       - name: Lint Ansible
         run: |
           poetry run poe lint-ansible

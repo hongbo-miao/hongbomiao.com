@@ -8,6 +8,8 @@ ansible-galaxy-role-install:
 	ansible-galaxy install bartdorlandt.poetry
 	ansible-galaxy install staticdev.pyenv
 	ansible-galaxy install stefangweichinger.ansible_rclone
+ansible-galaxy-role-update:
+	ansible-galaxy install xxx --force
 
 ansible-doc-list:
 	ansible-doc --list
