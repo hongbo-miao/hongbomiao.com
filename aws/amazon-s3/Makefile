@@ -1,2 +1,6 @@
 s3-list:
 	aws s3 list
+s3-upload:
+	aws s3 cp file.txt s3://hongbomiao-bucket/file.txt
+s3-download:
+	aws s3 cp s3://hongbomiao-bucket/file.txt file.txt
