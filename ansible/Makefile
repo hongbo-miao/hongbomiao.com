@@ -1,15 +1,26 @@
+# Ansible Galaxy
+ansible-galaxy-install:
+	ansible-galaxy install --role-file=requirements.yml
+ansible-galaxy-update:
+	ansible-galaxy install --role-file=requirements.yml --force
+
 ansible-galaxy-collection-list:
 	ansible-galaxy collection list
 ansible-galaxy-collection-install:
-	ansible-galaxy collection install community.general
+	ansible-galaxy collection install xxx
+ansible-galaxy-collection-update:
+	ansible-galaxy collection install xxx --force
+
 ansible-galaxy-role-list:
 	ansible-galaxy role list
 ansible-galaxy-role-install:
-	ansible-galaxy install bartdorlandt.poetry
-	ansible-galaxy install staticdev.pyenv
-	ansible-galaxy install stefangweichinger.ansible_rclone
+	ansible-galaxy install xxx
 ansible-galaxy-role-update:
 	ansible-galaxy install xxx --force
+
+# Ansible Vault
+ansible-vault-encrypt-string:
+	ansible-vault encrypt_string xxx
 
 ansible-doc-list:
 	ansible-doc --list
@@ -18,9 +29,6 @@ ansible-inventory-list:
 	ansible-inventory --inventory=inventory.yaml --list
 ansible-inventory-graph:
 	ansible-inventory --inventory=inventory.yaml --graph
-
-ansible-vault-encrypt-string:
-	ansible-vault encrypt_string xxx
 
 ansible-run-ping:
 	ansible hm-ubuntu-group --inventory=inventory.yaml --vault-password-file=~/.ansible_vault_pass --module-name=ping
