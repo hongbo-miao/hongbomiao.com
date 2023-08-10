@@ -63,8 +63,10 @@ increase-udp-receive-buffer:
 	sysctl -w net.core.rmem_max=2500000
 
 # Service
-show-active-services:
-	systemctl list-units --type=service
+show-services-active:
+	systemctl list-units --type=service --state=active
+show-services-active-running:
+	systemctl list-units --type=service --state=running
 show-service-status:
 	systemctl status xxx
 show-service-log:
