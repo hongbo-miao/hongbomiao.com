@@ -9,27 +9,40 @@
         name:
           - btop
           - htop
-        state: present
-    - name: Install common packages from Snap (edge)
-      become: true
-      become_user: root
-      community.general.snap:
-        name:
           - vnstat
         state: present
-        channel: edge
 
 - name: Install pyenv
   hosts: hm-ubuntu
+  vars:
+    python_version: 3.11.4
   roles:
     - role: staticdev.pyenv
       # https://github.com/pyenv/pyenv/releases
       pyenv_version: v2.3.23
       pyenv_env: user
       pyenv_python_versions:
-        - 3.11.4
+        - "{{ python_version }}"
       pyenv_global:
-        - 3.11.4
+        - "{{ python_version }}"
+  tasks:
+    - name: Creates directory ~/pyenv/
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/pyenv/"
+        state: directory
+    - name: Set global Python version
+      ansible.builtin.copy:
+        dest: "{{ ansible_env.HOME }}/pyenv/version"
+        content: "{{ python_version }}"
+        mode: 0644
+
+- name: Install Poetry
+  hosts: hm-ubuntu
+  roles:
+    - role: bartdorlandt.poetry
+      vars:
+        virtualenvs_inproject: false
+        virtualenvs_prefer_active_python: false
 
 - name: Install Rclone
   hosts: hm-ubuntu
