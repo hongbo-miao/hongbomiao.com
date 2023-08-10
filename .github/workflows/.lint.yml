@@ -88,11 +88,9 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install --no-root
-      - name: Install roles from Ansible Galaxy
+      - name: Install dependencies from Ansible Galaxy
         run: |
-          poetry run poe ansible-galaxy-install -- bartdorlandt.poetry
-          poetry run poe ansible-galaxy-install -- staticdev.pyenv
-          poetry run poe ansible-galaxy-install -- stefangweichinger.ansible_rclone
+          poetry run poe ansible-galaxy-install -- --role-file=ansible/requirements.yml
       - name: Lint Ansible
         run: |
           poetry run poe lint-ansible
