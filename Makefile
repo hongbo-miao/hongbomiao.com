@@ -227,6 +227,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=convolutional-neural-network
 	poetry run poe static-type-check-python -- --package=data-distribution-service
 	poetry run poe static-type-check-python -- --package=delta-lake.read-delta-lake-by-amazon-athena
+	poetry run poe static-type-check-python -- --package=delta-lake.read-delta-lake-by-trino
 	poetry run poe static-type-check-python -- --package=delta-lake.write-to-delta-lake
 	poetry run poe static-type-check-python -- --package=feature-store
 	poetry run poe static-type-check-python -- --package=grafana.hm-dashboard
