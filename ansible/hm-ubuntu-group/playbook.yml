@@ -50,3 +50,25 @@
       vars:
         # https://github.com/stefangweichinger/ansible-rclone/blob/main/defaults/main.yml
         rclone_arch: arm64
+
+- name: Start Prefect agent
+  hosts: hm-ubuntu
+  tasks:
+    - name: Install packages from pip
+      ansible.builtin.pip:
+        name: prefect==2.11.3
+        executable: "{{ ansible_env.HOME }}/pyenv/shims/pip"
+    - name: Create systemd service file
+      become: yes
+      template:
+        src: templates/prefect-agent.service.j2
+        dest: /etc/systemd/system/prefect-agent.service
+        owner: root
+        group: root
+        mode: 0644
+    - name: Start prefect agent service
+      become: yes
+      systemd:
+        name: prefect-agent
+        state: started
+        enabled: yes
