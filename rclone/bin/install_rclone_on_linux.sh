@@ -2,4 +2,4 @@
 set -e
 
 # https://rclone.org/install/#linux
-https://rclone.org/install.sh
+sudo -v ; curl https://rclone.org/install.sh | sudo bash
