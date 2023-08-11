@@ -41,7 +41,6 @@
   roles:
     - role: bartdorlandt.poetry
 
-
 - name: Install Rclone
   hosts: hm-ubuntu
   roles:
@@ -49,6 +48,32 @@
       vars:
         # https://github.com/stefangweichinger/ansible-rclone/blob/main/defaults/main.yml
         rclone_arch: arm64
+        rclone_config_location: "{{ ansible_env.HOME }}/.config/rclone/rclone.conf"
+        rclone_config_owner:
+          OWNER: "{{ ansible_env.USER }}"
+          GROUP: "{{ ansible_env.USER }}"
+        rclone_configs:
+          - name: hm-s3
+            properties:
+              type: s3
+              provider: AWS
+              access_key_id: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                35643735623839616262323630356332626638393930643866356235343938633631363564636231
+                3738656534316365376666626166643663353032653431650a363639306465303839656234343931
+                65626139626137633461393865323339623737383262366663653663316136323764643564393061
+                3730366635386166660a396231393038626233386439333863383363343034643332646635303030
+                39336632653764373162373630653332666138633363633239383334356436646638
+              secret_access_key: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                64646138613535386234383331313439653434383239616137313363663636343231383137333834
+                6633636666353764323035616634666337343235646438340a303466333763356135656436386532
+                63346433346238336235643762393432633138613462626433653336643835653562653831383537
+                6164353632646238630a383132663334643462616635373037366331373462393632303766333865
+                66326464303037623839643430396566373832336364666261633261326530613830643561346565
+                3133636366303031396632393836393834393232323231666361
+              region: us-west-2
+              storage_class: STANDARD
 
 - name: Start Prefect agent
   hosts: hm-ubuntu
@@ -65,7 +90,7 @@
         dest: /etc/systemd/system/prefect-agent.service
         mode: 0644
       register: systemd_unit
-    - name: Start prefect agent service
+    - name: Start Prefect agent
       become: yes
       ansible.builtin.systemd_service:
         name: prefect-agent
