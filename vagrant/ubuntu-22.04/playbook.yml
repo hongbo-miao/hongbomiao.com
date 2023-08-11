@@ -1,13 +1,12 @@
 ---
-- name: Install packages
+- name: Install common packages
   hosts: all
-  gather_facts: false
   tasks:
-    - name: Install packages from apt
+    - name: Install common packages from Snap
       become: true
-      become_user: root
-      ansible.builtin.apt:
+      community.general.snap:
         name:
+          - btop
+          - htop
           - vnstat
-        update_cache: true
         state: present
