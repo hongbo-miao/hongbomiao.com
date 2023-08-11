@@ -4,7 +4,6 @@
   tasks:
     - name: Install common packages from Snap
       become: true
-      become_user: root
       community.general.snap:
         name:
           - btop
@@ -18,13 +17,14 @@
     python_version: 3.11.4
   roles:
     - role: staticdev.pyenv
-      # https://github.com/pyenv/pyenv/releases
-      pyenv_version: v2.3.23
-      pyenv_env: user
-      pyenv_python_versions:
-        - "{{ python_version }}"
-      pyenv_global:
-        - "{{ python_version }}"
+      vars:
+        # https://github.com/pyenv/pyenv/releases
+        pyenv_version: v2.3.23
+        pyenv_env: user
+        pyenv_python_versions:
+          - "{{ python_version }}"
+        pyenv_global:
+          - "{{ python_version }}"
   tasks:
     - name: Creates directory ~/pyenv/
       ansible.builtin.file:
@@ -41,12 +41,11 @@
   roles:
     - role: bartdorlandt.poetry
 
+
 - name: Install Rclone
   hosts: hm-ubuntu
-  tasks:
-    - name: Install Rclone
-      ansible.builtin.include_role:
-        name: stefangweichinger.ansible_rclone
+  roles:
+    - role: stefangweichinger.ansible_rclone
       vars:
         # https://github.com/stefangweichinger/ansible-rclone/blob/main/defaults/main.yml
         rclone_arch: arm64
