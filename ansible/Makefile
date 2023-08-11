@@ -43,7 +43,7 @@ ansible-playbook-list-tags:
 	ansible-playbook hm_ubuntu_group/playbook.yml --list-tags
 
 ansible-playbook-hm-macos-group:
-	ansible-playbook --inventory=inventory.yaml hm_macos_group/playbook.yml
+	ansible-playbook --inventory=inventory.yaml --vault-password-file=~/.ansible_vault_pass hm_macos_group/playbook.yml
 ansible-playbook-hm-ubuntu-group:
 	ansible-playbook --inventory=inventory.yaml --vault-password-file=~/.ansible_vault_pass hm_ubuntu_group/playbook.yml
 ansible-playbook-hm-windows-group:
