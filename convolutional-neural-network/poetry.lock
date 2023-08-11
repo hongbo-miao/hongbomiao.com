@@ -878,14 +878,14 @@ pgp = ["gpg"]
 
 [[package]]
 name = "dvc"
-version = "3.14.0"
+version = "3.15.0"
 description = "Git for data scientists - manage your code and data together"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-3.14.0-py3-none-any.whl", hash = "sha256:078e71af4bdba5e8ea9f7f5171dd9ed88babdb50b82fabbb9e54a3ccbe1b0a2c"},
-    {file = "dvc-3.14.0.tar.gz", hash = "sha256:5c548094b3eee731ae18933a7c88757a93a34a8ac22cfd1b4789396972a201c2"},
+    {file = "dvc-3.15.0-py3-none-any.whl", hash = "sha256:529ec461d13c1382564f82cb6682b8951f3ee447694061ced04f24afdf64e19a"},
+    {file = "dvc-3.15.0.tar.gz", hash = "sha256:bd2ef4b7bc3fa98bbff4b66f08764a0cd3bc089349e341a76fee92cc13b97c12"},
 ]
 
 [package.dependencies]
@@ -893,7 +893,7 @@ colorama = ">=0.3.9"
 configobj = ">=5.0.6"
 distro = ">=1.3"
 dpath = ">=2.1.0,<3"
-dvc-data = ">=2.12.0,<2.13.0"
+dvc-data = ">=2.13.1,<2.14.0"
 dvc-http = ">=2.29.0"
 dvc-render = ">=0.3.1,<1"
 dvc-studio-client = ">=0.9.2,<1"
@@ -915,7 +915,7 @@ pyparsing = ">=2.4.7"
 requests = ">=2.22"
 rich = ">=12"
 "ruamel.yaml" = ">=0.17.11"
-scmrepo = ">=1.0.4,<2"
+scmrepo = ">=1.2.1,<2"
 shortuuid = ">=0.5"
 shtab = ">=1.3.4,<2"
 tabulate = ">=0.8.7"
@@ -927,7 +927,7 @@ voluptuous = ">=0.11.7"
 [package.extras]
 all = ["dvc[azure,gdrive,gs,hdfs,oss,s3,ssh,webdav,webhdfs]"]
 azure = ["dvc-azure (>=2.21.2)"]
-dev = ["dvc[azure,gdrive,gs,hdfs,lint,oss,s3,ssh,terraform,tests,webdav,webhdfs]"]
+dev = ["dvc[azure,gdrive,gs,hdfs,lint,oss,s3,ssh,tests,webdav,webhdfs]"]
 gdrive = ["dvc-gdrive (==2.20)"]
 gs = ["dvc-gs (==2.22.1)"]
 hdfs = ["dvc-hdfs (==2.19)"]
@@ -936,7 +936,6 @@ oss = ["dvc-oss (==2.19)"]
 s3 = ["dvc-s3 (==2.23.0)"]
 ssh = ["dvc-ssh (>=2.22.1,<3)"]
 ssh-gssapi = ["dvc-ssh[gssapi] (>=2.22.1,<3)"]
-terraform = ["tpi[ssh] (>=2.1)"]
 testing = ["pytest-benchmark[histogram]", "pytest-test-utils", "pytest-virtualenv"]
 tests = ["beautifulsoup4 (>=4.4)", "dvc-ssh", "dvc[testing]", "filelock", "flaky", "pytest (>=7,<8)", "pytest-cov (>=4.1.0)", "pytest-docker (>=1,<2)", "pytest-lazy-fixture", "pytest-mock", "pytest-test-utils", "pytest-timeout (>=2)", "pytest-xdist (>=3.2)", "pywin32 (>=225)", "tzdata"]
 webdav = ["dvc-webdav (==2.19.1)"]
@@ -945,14 +944,14 @@ webhdfs-kerberos = ["dvc-webhdfs[kerberos] (==2.19)"]
 
 [[package]]
 name = "dvc-data"
-version = "2.12.1"
+version = "2.13.1"
 description = "dvc data"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-data-2.12.1.tar.gz", hash = "sha256:7d94f7ca2b7aa199217068aa61aa5e89af6065aa33c3b23a198bfca740664046"},
-    {file = "dvc_data-2.12.1-py3-none-any.whl", hash = "sha256:c0f21024a702af1f36a3f83ed71d9271d0966243d8f865a7296157502b57686b"},
+    {file = "dvc-data-2.13.1.tar.gz", hash = "sha256:a252d99f395235d8b3d1e1fcd45e48aa294abfef4f30ea2749d317bad8f79972"},
+    {file = "dvc_data-2.13.1-py3-none-any.whl", hash = "sha256:20ee41effe05c43bf46a018c91471dd701939ab6e1cffa64aba10379c0c06977"},
 ]
 
 [package.dependencies]
@@ -968,8 +967,8 @@ sqltrie = ">=0.6.0,<1"
 [package.extras]
 all = ["rich (>=10.11.0,<14.0.0)", "typer[all] (>=0.6)"]
 cli = ["rich (>=10.11.0,<14.0.0)", "typer[all] (>=0.6)"]
-dev = ["blake3 (>=0.3.1)", "mypy (==0.971)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-benchmark (==4.0.0)", "pytest-cov (==4.0.0)", "pytest-mock (==3.10.0)", "pytest-servers[s3] (==0.1.3)", "pytest-sugar (==0.9.6)", "rich (>=10.11.0,<14.0.0)", "typer[all] (>=0.6)"]
-tests = ["mypy (==0.971)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-benchmark (==4.0.0)", "pytest-cov (==4.0.0)", "pytest-mock (==3.10.0)", "pytest-servers[s3] (==0.1.3)", "pytest-sugar (==0.9.6)"]
+dev = ["blake3 (>=0.3.1)", "mypy (==0.971)", "pylint (==2.17.5)", "pytest (==7.2.0)", "pytest-benchmark (==4.0.0)", "pytest-cov (==4.0.0)", "pytest-mock (==3.10.0)", "pytest-servers[s3] (==0.1.3)", "pytest-sugar (==0.9.6)", "rich (>=10.11.0,<14.0.0)", "typer[all] (>=0.6)"]
+tests = ["mypy (==0.971)", "pylint (==2.17.5)", "pytest (==7.2.0)", "pytest-benchmark (==4.0.0)", "pytest-cov (==4.0.0)", "pytest-mock (==3.10.0)", "pytest-servers[s3] (==0.1.3)", "pytest-sugar (==0.9.6)"]
 
 [[package]]
 name = "dvc-http"
@@ -2590,14 +2589,14 @@ crt = ["botocore[crt] (>=1.20.29,<2.0a.0)"]
 
 [[package]]
 name = "scmrepo"
-version = "1.1.0"
+version = "1.2.1"
 description = "SCM wrapper and fsspec filesystem for Git for use in DVC"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "scmrepo-1.1.0-py3-none-any.whl", hash = "sha256:96364bb1154151c94994eaafa5089500f1236c03f8d76a87f90e4c7d33508b58"},
-    {file = "scmrepo-1.1.0.tar.gz", hash = "sha256:e29dc3fd1055de3cc5c8be71d0f20c7d44d909c9ca9e8cd4670f3815e1e0c774"},
+    {file = "scmrepo-1.2.1-py3-none-any.whl", hash = "sha256:be87bf33efe9c4fd40fb9e4e53a4928415dfc89fc833a31a00a48662b0374d45"},
+    {file = "scmrepo-1.2.1.tar.gz", hash = "sha256:d4abb62ad00f98e30ba0357c0d0f9edf1428d64f2676c50b74f3cfeef5298986"},
 ]
 
 [package.dependencies]
@@ -2612,8 +2611,8 @@ pygtrie = ">=2.3.2"
 shortuuid = ">=0.5.0"
 
 [package.extras]
-dev = ["mock (==5.0.1)", "mypy (==0.971)", "paramiko (==3.1.0)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-asyncio (==0.18.3)", "pytest-cov (==3.0.0)", "pytest-docker (==0.12.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)", "pytest-test-utils (==0.0.8)", "types-certifi (==2021.10.8.3)", "types-mock (==5.0.0.6)", "types-paramiko (==3.0.0.10)"]
-tests = ["mock (==5.0.1)", "mypy (==0.971)", "paramiko (==3.1.0)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-asyncio (==0.18.3)", "pytest-cov (==3.0.0)", "pytest-docker (==0.12.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)", "pytest-test-utils (==0.0.8)", "types-certifi (==2021.10.8.3)", "types-mock (==5.0.0.6)", "types-paramiko (==3.0.0.10)"]
+dev = ["mock (==5.0.1)", "mypy (==0.971)", "paramiko (==3.2.0)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-asyncio (==0.18.3)", "pytest-cov (==3.0.0)", "pytest-docker (==0.12.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)", "pytest-test-utils (==0.0.8)", "types-certifi (==2021.10.8.3)", "types-mock (==5.0.0.6)", "types-paramiko (==3.2.0.1)"]
+tests = ["mock (==5.0.1)", "mypy (==0.971)", "paramiko (==3.2.0)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-asyncio (==0.18.3)", "pytest-cov (==3.0.0)", "pytest-docker (==0.12.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)", "pytest-test-utils (==0.0.8)", "types-certifi (==2021.10.8.3)", "types-mock (==5.0.0.6)", "types-paramiko (==3.2.0.1)"]
 
 [[package]]
 name = "sentry-sdk"
@@ -3365,4 +3364,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "d54777e891adef684eb25a19913ce598c5ef81a61c9090fff63dec66e870254a"
+content-hash = "24eb2a7e91841f4eed829275bc930bdc3844615c48a6f5f1e22f52c6b1e0053d"
