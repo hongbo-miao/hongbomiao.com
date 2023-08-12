@@ -815,7 +815,7 @@ jobs:
         env:
           WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
         run: |
-          poetry run poe dev-download-original-data
+          poetry run poe dev -- --should_download_original_data=True
       - name: Write CML report
         working-directory: convolutional-neural-network
         shell: bash -l {0}
