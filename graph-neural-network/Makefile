@@ -1,12 +1,15 @@
-setup:
-	sh bin/setup.sh
-clean:
-	sh bin/clean.sh
+poetry-env-use:
+	poetry env use 3.8
+poetry-update-lock-file:
+	poetry lock --no-update
+poetry-install:
+	poetry install --no-root
+poetry-add:
+	poetry add xxx
+poetry-add-dev:
+	poetry add xxx --group=dev
 
-train:
-	python main.py --dataset ogbg-molhiv --gnn gcn
-train-deeper-gcn:
-	python main.py --dataset ogbg-molhiv --gnn deeper-gcn --conv_encode_edge --num_layers 7 --dataset ogbg-molhiv --block res+ --gcn_aggr softmax --t 1.0 --learn_t --drop_ratio 0.2
-
-debug:
-	python main.py --dataset ogbg-molhiv --gnn gcn --feature simple --epochs 2
+poetry-run-dev:
+	poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn
+poetry-run-dev-debug:
+	poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=1
