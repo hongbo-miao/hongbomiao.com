@@ -141,10 +141,10 @@ pyenv-local:
 pyenv-deactivate:
 	pyenv shell system
 
-poetry-install-on-macos:
-	brew install poetry
-poetry-install-on-linux:
-	curl --silent --fail --show-error --location https://install.python-poetry.org | python3 -
+poetry-config-list:
+	poetry config --list
+poetry-config-set:
+	poetry config virtualenvs.in-project true
 poetry-self-update:
 	poetry self update
 poetry-version:
@@ -152,10 +152,10 @@ poetry-version:
 poetry-env-list:
 	# ~/Library/Caches/pypoetry/virtualenvs
 	poetry env list
-poetry-env-remove:
-	poetry env remove xxx
 poetry-env-use:
 	poetry env use 3.11
+poetry-env-remove:
+	poetry env remove xxx
 poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
