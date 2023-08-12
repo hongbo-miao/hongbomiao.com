@@ -25,6 +25,7 @@ jobs:
       api-python: ${{ steps.filter.outputs.api-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
+      graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
       chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
@@ -59,6 +60,10 @@ jobs:
             grafana-hm-panel-plugin:
               - '.github/workflows/test.yml'
               - 'grafana/hm-panel-plugin/**'
+              - 'api-python/**'
+            graph-neural-network:
+              - '.github/workflows/test.yml'
+              - 'graph-neural-network/**'
             chatbot:
               - '.github/workflows/test.yml'
               - 'chatbot/**'
@@ -738,6 +743,42 @@ jobs:
           file: ./hm-opal-client/Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  gnn-train:
+    name: GNN | Train
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up CML
+        uses: iterative/setup-cml@v1
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: poetry
+          cache-dependency-path: graph-neural-network/poetry.lock
+      - name: Set Poetry environment
+        working-directory: graph-neural-network
+        run: |
+          poetry env use 3.8
+      - name: Install dependencies
+        working-directory: graph-neural-network
+        run: |
+          poetry install --no-root
+      - name: Train model
+        working-directory: graph-neural-network
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+        run: |
+          poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=1
 
   cnn-cml-local-train:
     name: CNN | CML (Local) - Train

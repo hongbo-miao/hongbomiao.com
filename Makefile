@@ -136,8 +136,12 @@ pyenv-list-versions:
 	pyenv versions
 pyenv-install:
 	pyenv install 3.11
+pyenv-uninstall:
+	pyenv uninstall 3.11
 pyenv-local:
 	pyenv local 3.11
+pyenv-global:
+	pyenv global 3.11 3.10 3.8
 pyenv-deactivate:
 	pyenv shell system
 
