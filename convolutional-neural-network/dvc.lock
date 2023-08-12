@@ -4,38 +4,46 @@ stages:
     cmd: tar -x -f data/raw/cifar-10-python.tar.gz -C data/processed
     deps:
     - path: data/raw/cifar-10-python.tar.gz
+      hash: md5
       md5: c58f30108f718f92721af3b95e74349a
       size: 170498071
     outs:
     - path: data/processed/cifar-10-batches-py/
+      hash: md5
       md5: 2c2c368a819f1df18fd0afa1c052c6c4.dir
       size: 186214114
       nfiles: 8
   main:
-    cmd: python main.py
+    cmd: python src/main.py
     deps:
     - path: data/processed/cifar-10-batches-py/
+      hash: md5
       md5: 2c2c368a819f1df18fd0afa1c052c6c4.dir
       size: 186214114
       nfiles: 8
-    - path: evaluate.py
-      md5: 5efab5d3a1e93da28fa782dfa0901b4a
-      size: 485
-    - path: main.py
-      md5: 065a06b863a828c2d9badfadeda39259
-      size: 1635
-    - path: model/
-      md5: e30a59caeedaa861b307cc13591e3eab.dir
-      size: 3376
+    - path: src/evaluate.py
+      hash: md5
+      md5: 836d479d3ffaeae57596c8a546d3dcc7
+      size: 562
+    - path: src/main.py
+      hash: md5
+      md5: 3dd7b3d08199915e7f16c82a722990d5
+      size: 1578
+    - path: src/model/
+      hash: md5
+      md5: 4615cbf56709f76877b641d65b7344aa.dir
+      size: 3373
       nfiles: 4
-    - path: train.py
-      md5: ac7e4cd9586b3b66fc6d46f5b3b93504
-      size: 383
+    - path: src/train.py
+      hash: md5
+      md5: 7b09f7cff1af78b3be4c2b668e735bd9
+      size: 462
     params:
       params.yaml:
         lr: 0.001
         train.epochs: 2
     outs:
     - path: output/models/model.pt
-      md5: f62f625546c67ac666a05183a63003a7
-      size: 250887
+      hash: md5
+      md5: 837d72333a19990fd6a7d24d6e5942ce
+      size: 250863
