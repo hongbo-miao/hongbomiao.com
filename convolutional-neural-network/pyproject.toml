@@ -22,19 +22,16 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
-dev = "python main.py"
-dev-download-original-data = "python main.py --should_download_original_data=True"
+dev = "python src/main.py"
 
 dvc-init = "dvc init --subdir"
-dvc-add = "dvc add data/raw/cifar-10-python.tar.gz"
-dvc-run-prepare = "dvc run --name=prepare --deps=data/raw/cifar-10-python.tar.gz --outs=data/processed/cifar-10-batches-py/ tar -x -f data/raw/cifar-10-python.tar.gz -C data/processed"
-dvc-run-main = "dvc run --name=main --deps=data/processed/cifar-10-batches-py/ --deps=model/ --deps=main.py --deps=train.py --deps=evaluate.py --params=lr,train.epochs --outs=output/models/model.pt python main.py"
-dvc-run-main-no-exec = "dvc run --no-exec --name=main --deps=data/processed/cifar-10-batches-py/ --deps=model/ --deps=main.py --deps=train.py --deps=evaluate.py --params=lr,train.epochs --outs=output/models/model.pt python main.py"
-dvc-repro = "dvc repro data/raw/cifar-10-python.tar.gz.dvc"
+dvc-add = "dvc add"
+dvc-run = "dvc run"
+dvc-repro = "dvc repro"
 
-dvc-remove-stage = "dvc remove STAGE_NAME"
+dvc-remove = "dvc remove"
 dvc-dag = "dvc dag"
 
-dvc-remote-add = "dvc remote add -d hm-remote s3://hongbomiao-bucket/hm-cnn-dvc-store"
+dvc-remote-add = "dvc remote add"
 dvc-push = "dvc push"
 dvc-pull = "dvc pull"
