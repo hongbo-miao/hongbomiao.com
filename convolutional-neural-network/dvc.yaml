@@ -7,13 +7,13 @@ stages:
     outs:
       - data/processed/cifar-10-batches-py/
   main:
-    cmd: python main.py
+    cmd: python src/main.py
     deps:
       - data/processed/cifar-10-batches-py/
-      - evaluate.py
-      - main.py
-      - model/
-      - train.py
+      - src/evaluate.py
+      - src/main.py
+      - src/model/
+      - src/train.py
     params:
       - lr
       - train.epochs
