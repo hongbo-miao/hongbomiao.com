@@ -1,4 +1,5 @@
 import torch
+from model.conv import GNN_node, GNN_node_Virtualnode
 from torch_geometric.nn import (
     GlobalAttention,
     Set2Set,
@@ -6,8 +7,6 @@ from torch_geometric.nn import (
     global_max_pool,
     global_mean_pool,
 )
-
-from .conv import GNN_node, GNN_node_Virtualnode
 
 
 class GNN(torch.nn.Module):
