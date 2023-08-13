@@ -177,6 +177,7 @@ poetry-cache-clear:
 
 clean-jupyter-notebook:
 	poetry run poe clean-jupyter-notebook -- aws/amazon-emr/studio/hm-studio/hm-workspace.ipynb
+	poetry run poe clean-jupyter-notebook -- aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
 lint-ansible:
 	poetry run poe lint-ansible
 lint-matlab:
@@ -227,6 +228,7 @@ lint-yaml:
 	poetry run poe lint-yaml
 static-type-check-python:
 	poetry run poe static-type-check-python -- --package=api-python
+	poetry run poe static-type-check-python -- --package=aws.amazon-sagemaker.pytorch-mnist
 	poetry run poe static-type-check-python -- --package=chatbot
 	poetry run poe static-type-check-python -- --package=convolutional-neural-network
 	poetry run poe static-type-check-python -- --package=data-distribution-service
