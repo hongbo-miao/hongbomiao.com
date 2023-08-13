@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "amazon-sagemaker-pytorch-mnist"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.10.x"
+torch = "2.0.0"
+torchvision = "0.15.1"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.21.1"
+sagemaker = "2.177.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
