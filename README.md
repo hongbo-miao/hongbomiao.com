@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/611b9772-63d3-446d-a78a-414a8eeb8b46)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/c8b32b3d-8d87-41a9-abc9-9f9d974dff0e)
 
 ## 📦 Setup
 
@@ -273,7 +273,7 @@ make kubernetes-clean
 - **Kubeflow** - Machine learning platform
 - **SkyPilot** - Sky computing
 - **MLflow** - Machine learning experiment tracking
-- **Weights & Biases** - Machine learning experiment tracking
+- **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)** - Machine learning experiment tracking
 - **Databricks** - Unified data analytics platform
 
 ### Computer Vision
@@ -385,6 +385,7 @@ make kubernetes-clean
 - **Jetson Nano** - Single-board computer (SBC)
 - **Jetson TX2** - Single-board computer (SBC)
 - **CubeSat** - Miniaturized satellite
+- **QGroundControl** - Ground control station (GCS) for unmanned Aerial Vehicles (UAVs)
 
 ### Ethereum
 
@@ -545,6 +546,8 @@ make kubernetes-clean
   - **DO-160G** - Environmental conditions and test procedures for airborne equipment
   - **DO-331** - Model-based development and verification supplement to DO-178C and DO-278A
   - **DO-330** - Software tool qualification considerations
+- **Drone Systems**
+  - **Pixhawk standards** - Hardware specifications and guidelines for drone systems development
 - **Automotive Systems**
   - **ISO 26262** - Road vehicles — functional safety
   - **AUTOSAR** - Automotive open system architecture
