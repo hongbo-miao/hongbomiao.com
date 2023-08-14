@@ -84,16 +84,16 @@
         executable: "{{ ansible_env.HOME }}/pyenv/shims/pip"
       register: pip_package
     - name: Create systemd service file
-      become: yes
+      become: true
       ansible.builtin.template:
         src: templates/prefect-agent.service
         dest: /etc/systemd/system/prefect-agent.service
         mode: 0644
       register: systemd_unit
     - name: Start Prefect agent
-      become: yes
+      become: true
       ansible.builtin.systemd_service:
         name: prefect-agent
         state: "{{ 'restarted' if pip_package.changed or systemd_unit.changed else 'started' }}"
-        enabled: yes
+        enabled: true
         daemon_reload: "{{ systemd_unit.changed }}"
