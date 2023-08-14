@@ -1,4 +1,4 @@
-sagemaker-create-notebook-instance:
+amazon-sagemaker-create-notebook-instance:
 	aws sagemaker create-notebook-instance \
 		--notebook-instance-name=hm-sagemaker-notebook \
 		--instance-type=ml.m5.xlarge \

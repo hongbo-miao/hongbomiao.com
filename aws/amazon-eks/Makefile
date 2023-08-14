@@ -1,4 +1,4 @@
-eks-upgrade-kubernetes-version:
+amazon-eks-upgrade-kubernetes-version:
 	eksctl upgrade nodegroup \
 		--name=hm-k8s-cluster-node-group \
 		--cluster=hm-k8s-cluster \
