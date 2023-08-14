@@ -22,7 +22,7 @@ cp guava-18.0.jar jdbc-sink-plugin
 zip -r jdbc-sink-plugin.zip jdbc-sink-plugin
 echo "=================================================="
 
-echo "Cleanup"
+echo "Clean up"
 rm -f confluentinc-kafka-connect-avro-converter-7.4.0.zip
 rm -f confluentinc-kafka-connect-jdbc-10.7.2.zip
 rm -f guava-18.0.jar
