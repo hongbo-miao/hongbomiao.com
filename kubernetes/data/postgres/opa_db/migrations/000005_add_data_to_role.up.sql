@@ -59,4 +59,4 @@ select
     ins.role,
     ins.allow
 from opal_client
-inner join ins on ins.opal_client_name = opal_client.name;
+inner join ins on opal_client.name = ins.opal_client_name;
