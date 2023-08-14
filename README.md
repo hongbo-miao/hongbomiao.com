@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/c8b32b3d-8d87-41a9-abc9-9f9d974dff0e)
+![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/101b1999-84ab-4d59-8b48-a3d6c0829197)
 
 ## 📦 Setup
 
@@ -429,7 +429,7 @@ make kubernetes-clean
 - **GitHub** - Version control
 - **[SonarCloud](https://sonarcloud.io/project/overview?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/gh/Hongbo-Miao/hongbomiao.com/dashboard)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
 - **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
-- **[Depfu](https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=23463)** - Dependency monitoring
+- **[Depfu](https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=29781)** - Dependency monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
 
 ### Security
