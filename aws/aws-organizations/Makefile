@@ -1,2 +1,2 @@
-organization-list:
+aws-organization-list:
 	aws organizations list-accounts

@@ -1,7 +1,7 @@
 # Kafka
-msk-kafka-cluster-list:
+amazon-msk-kafka-cluster-list:
 	aws kafka list-clusters
-msk-kafka-cluster-describe:
+amazon-msk-kafka-cluster-describe:
 	aws kafka describe-cluster --cluster-arn=arn:aws:kafka:us-west-2:xxx
 
 # EC2
