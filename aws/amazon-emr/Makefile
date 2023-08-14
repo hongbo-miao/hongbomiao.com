@@ -1,16 +1,16 @@
 # Local
-emr-cluster-create:
+amazon-emr-cluster-create:
 	aws emr create-cluster \
 		--name='hm-amazon-emr-cluster' \
 		--configurations='[{"Classification": "delta-defaults", "Properties": {"delta.enabled": "true"}}, {"Classification": "trino-connector-delta", "Properties": {"hive.metastore": "glue"}}]'
-emr-cluster-list:
+amazon-emr-cluster-list:
 	aws emr list-clusters
-emr-cluster-describe:
+amazon-emr-cluster-describe:
 	aws emr describe-cluster --cluster-id=xxx
-emr-cluster-terminate:
+amazon-emr-cluster-terminate:
 	aws emr terminate-clusters --cluster-ids=xxx
 
-s3-upload-bootstrap-actions:
+amazon-s3-upload-bootstrap-actions:
 	aws s3 cp bootstrap-actions/set_up.sh s3://hongbomiao-bucket/amazon-emr/bootstrap-actions/set_up.sh
 
 # Amazon EMR - Hadoop
