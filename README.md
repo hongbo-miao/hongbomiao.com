@@ -337,7 +337,6 @@ make kubernetes-clean
   - **AWS IAM** - Identity and access management
   - **AWS IoT Core** - Internet of Things (IoT)
   - **AWS Secrets Manager** - Password management
-  - **Vertex AI** - Machine learning platform
 - **Google Cloud**
   - **BigQuery** - Data warehouse
     - **BigQuery ML** - BigQuery machine learning
