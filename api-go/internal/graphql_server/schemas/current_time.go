@@ -1,8 +1,8 @@
 package schemas
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/utils"
 	"github.com/graphql-go/graphql"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/graphql_server/utils"
 )
 
 var currentTimeGraphQLType = graphql.NewObject(graphql.ObjectConfig{

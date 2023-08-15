@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/routes"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/utils"
-	sharedUtils "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/utils"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/graphql_server/routes"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/graphql_server/utils"
+	sharedUtils "github.com/hongbo-miao/hongbomiao.com/api-go/internal/shared/utils"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 	"github.com/redis/go-redis/v9"

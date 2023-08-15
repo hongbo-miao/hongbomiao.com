@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/api/graphql_server/proto/greet/v1"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/grpc_server/utils"
 	grpczerolog "github.com/grpc-ecosystem/go-grpc-middleware/providers/zerolog/v2"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/api/graphql_server/proto/greet/v1"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/grpc_server/utils"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"go.elastic.co/apm/module/apmgrpc/v2"

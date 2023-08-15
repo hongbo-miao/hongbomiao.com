@@ -1,40 +1,40 @@
 <div align="center">
   <p>
-    <a href="https://www.hongbomiao.com"><img width="100" src="https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/650b632a-383f-4e84-8227-bf1fac268d45" alt="Butterfly" /></a>
+    <a href="https://www.hongbomiao.com"><img width="100" src="https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/650b632a-383f-4e84-8227-bf1fac268d45" alt="Butterfly" /></a>
   </p>
   <h2>Personal R&D Lab</h2>
   <p>Making magic happen</p>
   <br />
   <p>
-    <a href="https://github.com/Hongbo-Miao/hongbomiao.com/actions"><img alt="GitHub Actions" src="https://img.shields.io/github/actions/workflow/status/Hongbo-Miao/hongbomiao.com/build.yml?branch=main" /></a>
-    <a href="https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=29781"><img alt="Depfu" src="https://badges.depfu.com/badges/e337a1462a48dbcb803c98b5b2157aa7/overview.svg" /></a>
+    <a href="https://github.com/hongbo-miao/hongbomiao.com/actions"><img alt="GitHub Actions" src="https://img.shields.io/github/actions/workflow/status/hongbo-miao/hongbomiao.com/build.yml?branch=main" /></a>
+    <a href="https://depfu.com/github/hongbo-miao/hongbomiao.com?project_id=29781"><img alt="Depfu" src="https://badges.depfu.com/badges/e337a1462a48dbcb803c98b5b2157aa7/overview.svg" /></a>
     <a href="https://stats.uptimerobot.com/RoOoGTvyWN"><img alt="Uptime Robot status" src="https://img.shields.io/uptimerobot/status/m783305207-c7842815153e530df85633fe" /></a>
     <a href="https://www.http3check.net/?host=hongbomiao.com"><img alt="HTTP/3" src="https://img.shields.io/badge/http%2F3-supported-brightgreen" /></a>
     <a href="https://hstspreload.org/?domain=www.hongbomiao.com"><img alt="Chromium HSTS preload" src="https://img.shields.io/hsts/preload/www.hongbomiao.com" /></a>
     <a href="https://github.com/commitizen/cz-cli"><img alt="Commitizen friendly" src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" /></a>
   </p>
   <p>
-    <a href="https://goreportcard.com/report/github.com/Hongbo-Miao/hongbomiao.com"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/Hongbo-Miao/hongbomiao.com" /></a>
+    <a href="https://goreportcard.com/report/github.com/hongbo-miao/hongbomiao.com"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/hongbo-miao/hongbomiao.com" /></a>
     <a href="https://observatory.mozilla.org/analyze/www.hongbomiao.com"><img alt="Mozilla Observatory grade" src="https://img.shields.io/mozilla-observatory/grade/www.hongbomiao.com" /></a>
-    <a href="https://app.codacy.com/gh/Hongbo-Miao/hongbomiao.com/dashboard"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
-    <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/Hongbo-Miao/hongbomiao.com" /></a>
-    <a href="https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com/trends/technical_debt"><img alt="Code Climate technical debt" src="https://img.shields.io/codeclimate/tech-debt/Hongbo-Miao/hongbomiao.com" /></a>
+    <a href="https://app.codacy.com/gh/hongbo-miao/hongbomiao.com/dashboard"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
+    <a href="https://codeclimate.com/github/hongbo-miao/hongbomiao.com"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/hongbo-miao/hongbomiao.com" /></a>
+    <a href="https://codeclimate.com/github/hongbo-miao/hongbomiao.com/trends/technical_debt"><img alt="Code Climate technical debt" src="https://img.shields.io/codeclimate/tech-debt/hongbo-miao/hongbomiao.com" /></a>
   </p>
   <p>
-    <a href="https://hitsofcode.com/github/Hongbo-Miao/hongbomiao.com/view?branch=main"><img alt="Hits of code" src="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com?branch=main&label=hits%20of%20code" /></a>
-    <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Lines of code" src="https://tokei.ekzhang.com/b1/github/Hongbo-Miao/hongbomiao.com" /></a>
-    <a href="https://github.com/Hongbo-Miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/Hongbo-Miao/hongbomiao.com" /></a>
-    <a href="https://github.com/Hongbo-Miao/hongbomiao.com/graphs/contributors"><img alt="Commit activity" src="https://img.shields.io/github/commit-activity/y/Hongbo-Miao/hongbomiao.com"></a>
+    <a href="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com/view?branch=main"><img alt="Hits of code" src="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com?branch=main&label=hits%20of%20code" /></a>
+    <a href="https://github.com/hongbo-miao/hongbomiao.com"><img alt="Lines of code" src="https://tokei.ekzhang.com/b1/github/hongbo-miao/hongbomiao.com" /></a>
+    <a href="https://github.com/hongbo-miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com" /></a>
+    <a href="https://github.com/hongbo-miao/hongbomiao.com/graphs/contributors"><img alt="Commit activity" src="https://img.shields.io/github/commit-activity/y/hongbo-miao/hongbomiao.com"></a>
   </p>
   <p>
-    <a href="https://codecov.io/gh/Hongbo-Miao/hongbomiao.com"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/Hongbo-Miao/hongbomiao.com" /></a>
+    <a href="https://codecov.io/gh/hongbo-miao/hongbomiao.com"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/hongbo-miao/hongbomiao.com" /></a>
     <a href="https://github.com/prettier/prettier"><img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" /></a>
     <a href="https://github.com/psf/black"><img alt="Code style" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
-    <a href="https://github.com/Hongbo-Miao/hongbomiao.com/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/Hongbo-Miao/hongbomiao.com" /></a>
+    <a href="https://github.com/hongbo-miao/hongbomiao.com/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com" /></a>
   </p>
   <p>
     <a href="https://twitter.com/hongbo_miao"><img alt="Twitter follow" src="https://img.shields.io/twitter/follow/hongbo_miao?label=Follow&style=social" /></a>
-    <a href="https://github.com/hongbo-miao"><img alt="GitHub follow" src="https://img.shields.io/github/followers/Hongbo-Miao?label=Follow&style=social" /></a>
+    <a href="https://github.com/hongbo-miao"><img alt="GitHub follow" src="https://img.shields.io/github/followers/hongbo-miao?label=Follow&style=social" /></a>
   </p>
   <p>
     <a href="https://www.chromatic.com/builds?appId=5d626a63a601530020759b10"><img alt="Storybook" src="https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg" /></a>
@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/101b1999-84ab-4d59-8b48-a3d6c0829197)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/101b1999-84ab-4d59-8b48-a3d6c0829197)
 
 ## 📦 Setup
 
@@ -360,7 +360,7 @@ make kubernetes-clean
 - **Ansible** - IT automation system
 - **Discord** - ChatOps
 - **Opsgenie** - Incident management platform
-- **[GitHub Actions](https://github.com/Hongbo-Miao/hongbomiao.com/actions)** - Continuous integration
+- **[GitHub Actions](https://github.com/hongbo-miao/hongbomiao.com/actions)** - Continuous integration
 
 ### Embedded, IoT, Hardware
 
@@ -426,10 +426,10 @@ make kubernetes-clean
 - **tsc** - TypeScript static type checker
 - **detekt** - Kotlin static type checker
 - **GitHub** - Version control
-- **[SonarCloud](https://sonarcloud.io/project/overview?id=Hongbo-Miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/gh/Hongbo-Miao/hongbomiao.com/dashboard)**, **[Code Climate](https://codeclimate.com/github/Hongbo-Miao/hongbomiao.com)** - Code reviews and analytics
-- **[Codecov](https://codecov.io/gh/Hongbo-Miao/hongbomiao.com)** - Code coverage reports
-- **[Depfu](https://depfu.com/github/Hongbo-Miao/hongbomiao.com?project_id=29781)** - Dependency monitoring
-- **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2FHongbo-Miao%2Fhongbomiao.com)** - License compliance
+- **[SonarCloud](https://sonarcloud.io/project/overview?id=hongbo-miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/gh/hongbo-miao/hongbomiao.com/dashboard)**, **[Code Climate](https://codeclimate.com/github/hongbo-miao/hongbomiao.com)** - Code reviews and analytics
+- **[Codecov](https://codecov.io/gh/hongbo-miao/hongbomiao.com)** - Code coverage reports
+- **[Depfu](https://depfu.com/github/hongbo-miao/hongbomiao.com?project_id=29781)** - Dependency monitoring
+- **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2Fhongbo-miao%2Fhongbomiao.com)** - License compliance
 
 ### Security
 
@@ -560,13 +560,13 @@ make kubernetes-clean
 
 #### SimScale - Computational Fluid Dynamics (CFD), Finite Element Analysis (FEA), Thermal Simulation
 
-![SimScale screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/cdfd5cac-3e6a-4cb3-9bf5-912718ee3a86)
+![SimScale screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/cdfd5cac-3e6a-4cb3-9bf5-912718ee3a86)
 
 ### Embedded, IoT, Hardware
 
 #### MATLAB, Simulink, Simscape
 
-![MATLAB and Simulink screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
+![MATLAB and Simulink screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
 
 #### RTI Connext - Real-Time, Distributed Systems Framework
 
@@ -586,13 +586,13 @@ make kubernetes-clean
 
 The toroidal propeller allows a small multirotor aircraft to operate more quietly than the ones that use traditional propellers.
 
-![OpenSCAD screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/00b3e679-66a7-4d9c-8d68-c31c124e0a54)
+![OpenSCAD screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/00b3e679-66a7-4d9c-8d68-c31c124e0a54)
 
 #### VHDL - Very High Speed Integrated Circuits Program (VHSIC) Hardware Description Language
 
 The VHDL waveforms are displayed in GTKWave.
 
-![VHDL screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/8bafe459-24f5-4751-bae5-5a2b97688f2f)
+![VHDL screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/8bafe459-24f5-4751-bae5-5a2b97688f2f)
 
 #### Poky - Reference Linux Distribution of the Yocto Project
 
@@ -618,15 +618,15 @@ The VHDL waveforms are displayed in GTKWave.
 
 #### Kubeflow - Machine Learning Platform
 
-![Kubeflow screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/00574b34-37f2-4889-881e-e7e50a047bad)
+![Kubeflow screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/00574b34-37f2-4889-881e-e7e50a047bad)
 
 #### Ray - Distributed Computing
 
-![Ray screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/a949d05e-22bb-4e22-870b-30f7f96a9995)
+![Ray screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/a949d05e-22bb-4e22-870b-30f7f96a9995)
 
 #### Prefect - Orchestration Platform
 
-![Prefect screenshot](https://github.com/Hongbo-Miao/hongbomiao.com/assets/3375461/2496f818-804b-43b8-88ee-9b535938b2f8)
+![Prefect screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/2496f818-804b-43b8-88ee-9b535938b2f8)
 
 #### Airflow - Orchestration Platform
 
