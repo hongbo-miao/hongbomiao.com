@@ -2,7 +2,7 @@ package utils
 
 import (
 	"context"
-	greet "github.com/Hongbo-Miao/hongbomiao.com/api-go/api/graphql_server/proto/greet/v1"
+	greet "github.com/hongbo-miao/hongbomiao.com/api-go/api/graphql_server/proto/greet/v1"
 	"github.com/rs/zerolog/log"
 	"go.elastic.co/apm/module/apmgrpc/v2"
 	"go.opencensus.io/plugin/ocgrpc"

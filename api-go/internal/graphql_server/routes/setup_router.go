@@ -1,12 +1,12 @@
 package routes
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/controllers"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/handlers"
-	sharedControllers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/controllers"
-	sharedHandlers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/handlers"
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/graphql_server/controllers"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/graphql_server/handlers"
+	sharedControllers "github.com/hongbo-miao/hongbomiao.com/api-go/internal/shared/controllers"
+	sharedHandlers "github.com/hongbo-miao/hongbomiao.com/api-go/internal/shared/handlers"
 	"github.com/minio/minio-go/v7"
 	"github.com/redis/go-redis/v9"
 	"go.elastic.co/apm/module/apmgin/v2"

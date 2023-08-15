@@ -26,7 +26,7 @@ type Config = {
 
 const config: Config = {
   nodeEnv: NODE_ENV,
-  githubURL: 'https://github.com/Hongbo-Miao/hongbomiao.com',
+  githubURL: 'https://github.com/hongbo-miao/hongbomiao.com',
   graphqlServerGraphQLURL: NODE_ENV === 'development' ? 'http://localhost:31800/graphql' : '/graphql-server/graphql',
   webSocketGraphQLURL: `${REACT_APP_SERVER_WS_PROTOCOL}://${window.location.host}/graphql`,
   googleTagManagerOptions: {

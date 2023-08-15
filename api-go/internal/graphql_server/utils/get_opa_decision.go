@@ -2,7 +2,7 @@ package utils
 
 import (
 	"context"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/policies"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/graphql_server/policies"
 	"github.com/open-policy-agent/opa/rego"
 	"github.com/open-policy-agent/opa/storage/inmem"
 	"github.com/open-policy-agent/opa/util"

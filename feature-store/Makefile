@@ -12,7 +12,7 @@ poetry-add-dev:
 feast-init:
 	feast init driver_features
 download-driver-stats:
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/Hongbo-Miao/hm-driver-stats/main/driver_stats.parquet > features/data/driver_stats.parquet
+	curl --silent --fail --show-error --location https://raw.githubusercontent.com/hongbo-miao/hm-driver-stats/main/driver_stats.parquet > features/data/driver_stats.parquet
 
 inspect-raw-data:
 	poetry run poe inspect-raw-data

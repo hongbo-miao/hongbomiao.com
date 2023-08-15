@@ -2,8 +2,8 @@ package utils
 
 import (
 	"errors"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/types"
 	"github.com/graphql-go/graphql"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/graphql_server/types"
 )
 
 func CheckGraphQLContextMyID(p graphql.ResolveParams) error {
