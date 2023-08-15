@@ -1,4 +1,4 @@
-module github.com/Hongbo-Miao/hongbomiao.com/api-go
+module github.com/hongbo-miao/hongbomiao.com/api-go
 
 go 1.20
 

@@ -3,7 +3,7 @@ package utils
 import (
 	"context"
 	"encoding/json"
-	torchserve "github.com/Hongbo-Miao/hongbomiao.com/api-go/api/graphql_server/proto/torchserve/v1"
+	torchserve "github.com/hongbo-miao/hongbomiao.com/api-go/api/graphql_server/proto/torchserve/v1"
 	"github.com/rs/zerolog/log"
 	"go.elastic.co/apm/module/apmgrpc/v2"
 	"go.opencensus.io/plugin/ocgrpc"
