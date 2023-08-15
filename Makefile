@@ -240,9 +240,9 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=graph-neural-network
 	poetry run poe static-type-check-python -- --package=hm-airflow
 	poetry run poe static-type-check-python -- --package=hm-kubeflow.pipelines.calculate
-	poetry run poe static-type-check-python -- --package=hm-kubeflow.pipelines.classify-fashion-mnist
+	poetry run poe static-type-check-python -- --package=hm-kubeflow.pipelines.classify-mnist
 	poetry run poe static-type-check-python -- --package=hm-locust
-	poetry run poe static-type-check-python -- --package=hm-mlflow.experiments.classify-fashion-mnist
+	poetry run poe static-type-check-python -- --package=hm-mlflow.experiments.classify-mnist
 	poetry run poe static-type-check-python -- --package=hm-mlflow.experiments.predict-diabetes
 	poetry run poe static-type-check-python -- --package=hm-ni-veristand
 	poetry run poe static-type-check-python -- --package=hm-opal-client
