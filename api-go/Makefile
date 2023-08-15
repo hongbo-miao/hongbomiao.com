@@ -8,7 +8,7 @@ run-decision-logger:
 	go run cmd/decision_logger/main.go
 
 go-mod-init:
-	go mod init github.com/Hongbo-Miao/hongbomiao.com
+	go mod init github.com/hongbo-miao/hongbomiao.com
 go-mod-tidy:
 	go mod tidy
 go-test:

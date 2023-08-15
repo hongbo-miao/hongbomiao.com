@@ -13,7 +13,7 @@ const WEBSITES: ReadonlyArray<Website> = [
   {
     name: 'GitHub',
     src: githubLogo,
-    url: 'https://github.com/Hongbo-Miao',
+    url: 'https://github.com/hongbo-miao',
   },
   {
     name: 'Twitter',

@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_loader/controllers"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/config_loader/utils"
-	sharedControllers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/controllers"
-	sharedHandlers "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/handlers"
-	sharedUtils "github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/shared/utils"
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/config_loader/controllers"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/config_loader/utils"
+	sharedControllers "github.com/hongbo-miao/hongbomiao.com/api-go/internal/shared/controllers"
+	sharedHandlers "github.com/hongbo-miao/hongbomiao.com/api-go/internal/shared/handlers"
+	sharedUtils "github.com/hongbo-miao/hongbomiao.com/api-go/internal/shared/utils"
 	"github.com/rs/zerolog/log"
 	"go.elastic.co/apm/module/apmgin/v2"
 )

@@ -2,7 +2,7 @@ package utils
 
 import (
 	"errors"
-	"github.com/Hongbo-Miao/hongbomiao.com/api-go/internal/graphql_server/types"
+	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/graphql_server/types"
 	"github.com/rs/zerolog/log"
 )
 
