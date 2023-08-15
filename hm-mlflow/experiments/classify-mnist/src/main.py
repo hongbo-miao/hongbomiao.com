@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.data as data
-import torchvision as tv
+import torchvision
 from args import get_args
 from lightning.pytorch.loggers.wandb import WandbLogger
 
@@ -38,7 +38,7 @@ class LitAutoEncoder(L.LightningModule):
 
 
 def main():
-    project_name = "classify-fashion-mnist"
+    project_name = "classify-mnist"
 
     # W&B
     wandb_logger = WandbLogger(project=project_name)
@@ -50,8 +50,15 @@ def main():
 
     args = get_args()
 
-    dataset = tv.datasets.MNIST(
-        "./data", download=True, transform=tv.transforms.ToTensor()
+    dataset = torchvision.datasets.MNIST(
+        "data/",
+        download=True,
+        transform=torchvision.transforms.Compose(
+            [
+                torchvision.transforms.transforms.ToTensor(),
+                torchvision.transforms.transforms.Normalize((0.1307,), (0.3081,)),
+            ]
+        ),
     )
     train, val = data.random_split(dataset, [55000, 5000])
 

@@ -11,7 +11,7 @@ def train():
     import torch.nn as nn
     import torch.nn.functional as F
     import torch.utils.data as data
-    import torchvision as tv
+    import torchvision
 
     class LitAutoEncoder(L.LightningModule):
         def __init__(self):
@@ -40,8 +40,15 @@ def train():
             optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
             return optimizer
 
-    dataset = tv.datasets.MNIST(
-        "./data", download=True, transform=tv.transforms.ToTensor()
+    dataset = torchvision.datasets.MNIST(
+        "data/",
+        download=True,
+        transform=torchvision.transforms.Compose(
+            [
+                torchvision.transforms.transforms.ToTensor(),
+                torchvision.transforms.transforms.Normalize((0.1307,), (0.3081,)),
+            ]
+        ),
     )
     train, val = data.random_split(dataset, [55000, 5000])
 

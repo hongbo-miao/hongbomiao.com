@@ -1,15 +1,16 @@
 [tool.poetry]
-name = "hm-kubeflow-classify-fashion-mnist"
+name = "hm-mlflow-classify-mnist"
 version = "1.0.0"
 description = ""
 authors = ["Hongbo Miao"]
 
 [tool.poetry.dependencies]
 python = "3.10.x"
-kfp = "2.1.2"
+mlflow = "2.5.0"
 torch = "2.0.0"
 torchvision = "0.15.1"
 lightning = "2.0.6"
+wandb = "0.15.8"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "0.22.0"
@@ -19,4 +20,6 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
+mlflow-ui = "mlflow ui"
+
 dev = "python src/main.py"
