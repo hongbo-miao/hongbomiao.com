@@ -1,0 +1,19 @@
+---
+name: Stale
+
+'on':
+  schedule:
+    - cron: 0 14 * * 1
+
+jobs:
+  stale:
+    name: Stale
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/stale@v8
+        with:
+          stale-issue-message: This issue is stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 5 days.
+          close-issue-message: This issue was closed because it has been stalled for 5 days with no activity.
+          days-before-stale: 30
+          days-before-close: 5
