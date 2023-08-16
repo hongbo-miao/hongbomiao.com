@@ -1,8 +1,9 @@
 # Local
 amazon-emr-cluster-create:
 	aws emr create-cluster \
-		--name='hm-amazon-emr-cluster' \
-		--configurations='[{"Classification": "delta-defaults", "Properties": {"delta.enabled": "true"}}, {"Classification": "trino-connector-delta", "Properties": {"hive.metastore": "glue"}}]'
+		--name=hm-amazon-emr-cluster \
+		--applications=Name=Trino \
+		--configurations=file://configurations.json
 amazon-emr-cluster-list:
 	aws emr list-clusters
 amazon-emr-cluster-describe:
