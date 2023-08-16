@@ -10,8 +10,10 @@ poetry-add-dev:
 	poetry add xxx --group=dev
 
 poetry-run-dev:
+	export WANDB_MODE=offline && \
 	poetry run poe dev
 poetry-run-dev-should-download-original-data:
+	export WANDB_MODE=offline && \
 	poetry run poe dev -- --should_download_original_data=True
 
 poetry-dvc-init:
