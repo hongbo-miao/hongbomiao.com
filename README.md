@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/101b1999-84ab-4d59-8b48-a3d6c0829197)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/a0c3b618-2994-41d5-92fd-0f852e5c97cf)
 
 ## 📦 Setup
 
@@ -207,6 +207,7 @@ make kubernetes-clean
 - **TimescaleDB** - Time-series SQL database
 - **InfluxDB** - Time-series database
   - **InfluxDB Enterprise** - Distributed time-series database
+- **Prometheus** - Time-series database
 - **Apache Cassandra** - Distributed wide-column NoSQL database
 - **Qdrant** - Distributed vector database
 - **Dgraph** - Distributed graph database
@@ -261,6 +262,7 @@ make kubernetes-clean
   - **flink-connector-twitter** - Flink Twitter connector
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
+- **Grafana** - Data visualization
 - **Apache Superset** - Data visualization
 - **Metabase** - Data visualization
 - **PyTorch** - Machine learning framework
@@ -296,8 +298,7 @@ make kubernetes-clean
 - **Elastic APM** - Application performance monitoring
 - **OpenTelemetry** - Observability framework
 - **Jaeger** - Distributed tracing system
-- **Grafana** - Monitoring and observability platform
-- **Prometheus** - Monitoring system
+- **Netdata** - Distributed monitoring platform
 - **Telegraf** - Plugin-driven server agent
 - **Thanos** - Highly available Prometheus setup with long term storage capabilities
 - **Fluent Bit** - Log processor and forwarder
@@ -683,6 +684,10 @@ Chatbot on Telegram powered by Rasa.
 
 ![Traefik screenshot](https://user-images.githubusercontent.com/3375461/168451816-fee9aa54-d4b7-430d-bca3-a8f453931a35.jpg)
 
+#### Netdata - Distributed Monitoring Platform
+
+![Netdata screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/063da2a6-b188-44a3-a958-f2c1b561d85c)
+
 #### Elastic APM - Application Performance Management
 
 ![Elastic APM screenshot](https://user-images.githubusercontent.com/3375461/128647400-7377f888-6c76-4b13-8bce-50ad7afdb3c3.png)
@@ -691,7 +696,7 @@ Chatbot on Telegram powered by Rasa.
 
 ![Jaeger screenshot](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
 
-#### Grafana - Monitoring and Observability Platform
+#### Grafana - Data Visualization
 
 ![Grafana screenshot](https://user-images.githubusercontent.com/3375461/163708604-89ce4617-8fb7-463f-86a0-11a3c5c73bd9.png)
 
