@@ -12,4 +12,5 @@ poetry-add-dev:
 poetry-run-dev:
 	poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn
 poetry-run-dev-debug:
+	export WANDB_MODE=offline && \
 	poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
