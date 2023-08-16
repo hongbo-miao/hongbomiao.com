@@ -512,6 +512,7 @@ make kubernetes-clean
   - **HTTP/2**
   - **HTTP/3**
 - **WebSocket**
+- **Web Real-Time Communication (WebRTC)**
 - **File Transfer Protocol (FTP)**
 - **Remote Procedure Call (RPC)**
   - RPC frameworks
