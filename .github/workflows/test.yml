@@ -776,7 +776,7 @@ jobs:
       - name: Train model
         working-directory: graph-neural-network
         env:
-          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+          WANDB_MODE: offline
         run: |
           poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
 
@@ -813,7 +813,7 @@ jobs:
         working-directory: convolutional-neural-network
         shell: bash -l {0}
         env:
-          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+          WANDB_MODE: offline
         run: |
           poetry run poe dev -- --should_download_original_data=True
       - name: Write CML report
