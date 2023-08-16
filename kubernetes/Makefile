@@ -236,6 +236,8 @@ kubectl-port-forward-prometheus:
 	kubectl port-forward service/monitoring-kube-prometheus-prometheus --namespace=hm-monitoring 9090:9090
 kubectl-port-forward-grafana:
 	kubectl port-forward service/monitoring-grafana --namespace=hm-monitoring 54976:80
+kubectl-port-forward-netdata:
+	kubectl port-forward service/netdata --namespace=hm-netdata 55839:19999
 kubectl-port-forward-ory-hydra:
 	kubectl port-forward service/ory-hydra-public --namespace=hm-ory-hydra 4444:4444
 	kubectl port-forward service/ory-hydra-admin --namespace=hm-ory-hydra 4445:4445
