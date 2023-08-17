@@ -1,2 +1,4 @@
 aws-sts-get-caller-identity:
 	aws sts get-caller-identity
+aws-sts-decode-authorization-message:
+	aws sts decode-authorization-message --encoded-message=xxx

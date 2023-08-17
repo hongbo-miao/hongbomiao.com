@@ -147,6 +147,8 @@ pyenv-deactivate:
 
 poetry-config-list:
 	poetry config --list
+poetry-config-show:
+	poetry config virtualenvs.in-project
 poetry-config-set:
 	poetry config virtualenvs.in-project true
 poetry-self-update:
