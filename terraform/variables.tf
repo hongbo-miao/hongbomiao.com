@@ -1,4 +1,4 @@
 variable "instance_name" {
   type    = string
-  default = "hm-instance"
+  default = "hm-ec2-instance"
 }

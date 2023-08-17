@@ -17,7 +17,7 @@ terraform-update-lock-file:
 terraform-plan:
 	terraform plan
 terraform-apply:
-	terraform apply
+	terraform apply -auto-approve
 terraform-destroy:
 	terraform destroy
 
