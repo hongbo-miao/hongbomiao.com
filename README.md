@@ -367,6 +367,8 @@ make kubernetes-clean
 
 - **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
 - **NI VeriStand** - Real-time testing and simulation
+  - **npTDMS** - TDMS files reading and writing
+  - **PyVISA** - Virtual instrument software architecture (VISA) Python API library
 - **MATLAB** - Programming and numeric computing platform
   - **Simulink** - Simulation and model-based designing
     - **Simscape** - Model and simulate multidomain physical systems
@@ -375,7 +377,6 @@ make kubernetes-clean
 - **FreeRTOS** - Real-time operating system
 - **RTI Connext** - Real-time, distributed systems framework
   - **RTI Connext DDS** - Data distribution service (DDS)
-- **npTDMS** - TDMS files reading and writing
 - **Rclone** - Sync program
 - **restic** - Backup program
 - **OpenSCAD** - 3D CAD Modeller
