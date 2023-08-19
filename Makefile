@@ -246,22 +246,22 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-locust
 	poetry run poe static-type-check-python -- --package=hm-mlflow.experiments.classify-mnist
 	poetry run poe static-type-check-python -- --package=hm-mlflow.experiments.predict-diabetes
-	poetry run poe static-type-check-python -- --package=hm-ni-veristand
 	poetry run poe static-type-check-python -- --package=hm-opal-client
 	poetry run poe static-type-check-python -- --package=hm-open3d
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.calculate
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.greet
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.ingest-data
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.print-platform
-	poetry run poe static-type-check-python -- --package=hm-pyvisa
 	poetry run poe static-type-check-python -- --package=hm-ray.applications.greet
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-retired-people-python
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-taxi-top-routes
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-taxi-top-routes-sql
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.recommend-movies
 	poetry run poe static-type-check-python -- --package=hugging-face
+	poetry run poe static-type-check-python -- --package=national-instruments.hm-pyvisa
+	poetry run poe static-type-check-python -- --package=national-instruments.hm-tdms
+	poetry run poe static-type-check-python -- --package=national-instruments.hm-ni-veristand
 	poetry run poe static-type-check-python -- --package=quantum-computing
-	poetry run poe static-type-check-python -- --package=tdms
 
 # Lint
 lint-dockerfile:
