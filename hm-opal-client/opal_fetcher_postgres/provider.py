@@ -1,7 +1,6 @@
-# https://github.com/authorizon/opal-fetcher-postgres
+# https://github.com/permitio/opal-fetcher-postgres
 
 import json
-from typing import List, Optional
 
 import asyncpg
 from asyncpg.exceptions import DataError
@@ -14,28 +13,28 @@ from tenacity import retry_unless_exception_type, stop, wait
 
 
 class PostgresConnectionParams(BaseModel):
-    database: Optional[str] = Field(None, description="PostgreSQL database")
-    user: Optional[str] = Field(None, description="PostgreSQL user")
-    password: Optional[str] = Field(None, description="PostgreSQL password")
-    host: Optional[str] = Field(None, description="PostgreSQL host")
-    port: Optional[str] = Field(None, description="PostgreSQL port")
+    database: str | None = Field(None, description="PostgreSQL database")
+    user: str | None = Field(None, description="PostgreSQL user")
+    password: str | None = Field(None, description="PostgreSQL password")
+    host: str | None = Field(None, description="PostgreSQL host")
+    port: str | None = Field(None, description="PostgreSQL port")
 
 
 class PostgresFetcherConfig(FetcherConfig):
     fetcher: str = "PostgresFetchProvider"
-    connection_params: Optional[PostgresConnectionParams] = Field(
+    connection_params: PostgresConnectionParams | None = Field(
         None, description="can be overridden or complement parts of the DSN"
     )
     query: str = Field(..., description="the query")
     fetch_one: bool = Field(False, description="fetch only one row")
-    dict_key: Optional[str] = Field(
+    dict_key: str | None = Field(
         None, description="array of dict will map to dict with provided dict_key"
     )
 
 
 class PostgresFetchEvent(FetchEvent):
     fetcher: str = "PostgresFetchProvider"
-    config: Optional[PostgresFetcherConfig] = None
+    config: PostgresFetcherConfig | None = None
 
 
 class PostgresFetchProvider(BaseFetchProvider):
@@ -52,8 +51,8 @@ class PostgresFetchProvider(BaseFetchProvider):
         if event.config is None:
             event.config = PostgresFetcherConfig()
         super().__init__(event)
-        self._connection: Optional[asyncpg.Connection] = None
-        self._transaction: Optional[Transaction] = None
+        self._connection: asyncpg.Connection | None = None
+        self._transaction: Transaction | None = None
 
     def parse_event(self, event: FetchEvent) -> PostgresFetchEvent:
         return PostgresFetchEvent(**event.dict(exclude={"config"}), config=event.config)
@@ -88,8 +87,6 @@ class PostgresFetchProvider(BaseFetchProvider):
             await self._connection.close()
 
     async def _fetch_(self):
-        # self._event: PostgresFetchEvent  # type casting
-
         if self._event.config is None:
             logger.warning("Incomplete fetcher config!")
             return
@@ -102,9 +99,7 @@ class PostgresFetchProvider(BaseFetchProvider):
         else:
             return await self._connection.fetch(self._event.config.query)
 
-    async def _process_(self, records: List[asyncpg.Record]):
-        # self._event: PostgresFetchEvent  # type casting
-
+    async def _process_(self, records: list[asyncpg.Record]):
         if self._event.config is not None and self._event.config.fetch_one:
             if records and len(records) > 0:
                 return dict(records[0])
