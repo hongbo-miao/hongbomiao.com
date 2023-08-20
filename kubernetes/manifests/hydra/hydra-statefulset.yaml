@@ -2,44 +2,44 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgres-statefulset
-  namespace: hm-postgres
+  name: hydra-statefulset
+  namespace: hm-hydra
   labels:
-    app.kubernetes.io/name: postgres
+    app.kubernetes.io/name: hydra
 spec:
-  serviceName: postgres-service
+  serviceName: hydra-service
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: hydra
   template:
     metadata:
       labels:
-        app: postgres
+        app: hydra
     spec:
       containers:
-        - name: postgres
-          image: debezium/postgres:15-alpine
+        - name: hydra
+          image: ghcr.io/hydradatabase/hydra:latest
           env:
             - name: PGDATA
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-configmap
+                  name: hydra-configmap
                   key: pgdata
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-configmap
+                  name: hydra-configmap
                   key: postgres_db
             - name: POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-configmap
+                  name: hydra-configmap
                   key: postgres_user
             - name: POSTGRES_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  name: postgres-configmap
+                  name: hydra-configmap
                   key: postgres_password
           args: ["-c", "wal_level=logical"]
           ports:
