@@ -255,7 +255,7 @@ make kubernetes-clean
 - **Temporal** - Orchestration platform
 - **Apache Spark** - Data processing framework
   - **Spark ML** - Spark machine learning
-  - **pyspark** - Spark Python API library
+  - **pyspark** - Spark API library
   - **Delight** - Spark UI and history server
 - **Apache Flink** - Data processing framework
   - **flink-streaming-java** - Flink
@@ -366,9 +366,11 @@ make kubernetes-clean
 ### Embedded, IoT, Hardware
 
 - **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
+- **pySerial** - Serial communication library
 - **NI VeriStand** - Real-time testing and simulation
+  - **niveristand** - NI VeriStand API library
   - **npTDMS** - TDMS files reading and writing
-  - **PyVISA** - Virtual instrument software architecture (VISA) Python API library
+  - **PyVISA** - Virtual instrument software architecture (VISA) API library
 - **MATLAB** - Programming and numeric computing platform
   - **Simulink** - Simulation and model-based designing
     - **Simscape** - Model and simulate multidomain physical systems
