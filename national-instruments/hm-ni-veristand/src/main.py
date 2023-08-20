@@ -6,7 +6,7 @@ from niveristand.library import wait
 @nivs_rt_sequence
 @NivsParam("engine_power", BooleanValue(0), NivsParam.BY_REF)
 @NivsParam("desired_rpm", DoubleValue(0), NivsParam.BY_REF)
-def engine_demo_basic(engine_power, desired_rpm):
+def engine_demo_basic(engine_power, desired_rpm) -> None:
     engine_power_chan = ChannelReference("Aliases/EnginePower")
     desired_rpm_chan = ChannelReference("Aliases/DesiredRPM")
     engine_power_chan.value = engine_power.value
@@ -17,23 +17,23 @@ def engine_demo_basic(engine_power, desired_rpm):
 
 
 @nivs_rt_sequence
-def run_engine_demo():
+def run_engine_demo() -> None:
     engine_demo_basic(BooleanValue(True), DoubleValue(2500))
 
 
-def run_non_deterministic():
+def run_non_deterministic() -> None:
     print("Started non-deterministic")
     run_engine_demo()
     print("Finished non-deterministic")
 
 
-def run_deterministic():
+def run_deterministic() -> None:
     print("Started deterministic")
     realtimesequencetools.run_py_as_rtseq(run_engine_demo)
     print("Finished deterministic")
 
 
-def main(real_time_sequence_path: str):
+def main(real_time_sequence_path: str) -> None:
     realtimesequencetools.save_py_as_rtseq(run_engine_demo, real_time_sequence_path)
     run_non_deterministic()
     run_deterministic()
