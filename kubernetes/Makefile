@@ -189,6 +189,8 @@ kubectl-port-forward-postgres-cluster:
 	kubectl port-forward service/hm-postgres-cluster-repl --namespace=hm-postgres 31270:5432
 kubectl-port-forward-postgres:
 	kubectl port-forward service/postgres-service --namespace=hm-postgres 5432:5432
+kubectl-port-forward-hydra:
+	kubectl port-forward service/hydra-service --namespace=hm-hydra 26958:5432
 kubectl-port-forward-timescale:
 	kubectl port-forward service/timescale --namespace=hm-timescale 25495:5432
 kubectl-port-forward-influxdb:
