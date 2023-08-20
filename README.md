@@ -199,6 +199,7 @@ make kubernetes-clean
 
 - **Trino** - Distributed SQL query engine
 - **PostgreSQL** - Object-relational database
+  - **Postgres Operator** - PostgreSQL cluster provisioning
   - **pgAdmin** - PostgreSQL management tool
 - **MySQL** - Relational database
   - **MariaDB** - Fork of MySQL
@@ -325,7 +326,7 @@ make kubernetes-clean
   - **Amazon EMR** - Big data platform
   - **Amazon EventBridge** - Serverless event bus
   - **Amazon MSK** - Kafka
-  - **Amazon RDS** - PostgreSQL
+  - **Amazon RDS** - Relational database service
   - **Amazon S3** - Object storage
   - **Amazon SageMaker** - Machine learning platform
   - **Amazon SQS** - Queue

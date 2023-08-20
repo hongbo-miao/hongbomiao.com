@@ -1,0 +1,22 @@
+# https://github.com/zalando/postgres-operator/blob/master/manifests/complete-postgres-manifest.yaml
+
+---
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  name: hm-postgres-cluster
+  namespace: hm-postgres
+spec:
+  dockerImage: ghcr.io/zalando/spilo-15:3.0-p1
+  teamId: acid
+  volume:
+    size: 1Gi
+  numberOfInstances: 2
+  users:
+    admin:
+      - superuser
+      - createdb
+  preparedDatabases:
+    hm_iot_db: {}
+  postgresql:
+    version: "15"

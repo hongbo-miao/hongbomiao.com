@@ -183,6 +183,10 @@ kubectl-port-forward-api-python:
 kubectl-port-forward-clickhouse:
 	kubectl port-forward service/chi-simple-01-simple-0-0 --namespace=hm-clickhouse 8123:8123
 	kubectl port-forward service/chi-simple-01-simple-0-0 --namespace=hm-clickhouse 9000:9000
+kubectl-port-forward-postgres-operator-ui:
+	kubectl port-forward service/postgres-operator-ui --namespace=hm-postgres-operator 8081:80
+kubectl-port-forward-postgres-cluster:
+	kubectl port-forward service/hm-postgres-cluster-repl --namespace=hm-postgres 31270:5432
 kubectl-port-forward-postgres:
 	kubectl port-forward service/postgres-service --namespace=hm-postgres 5432:5432
 kubectl-port-forward-timescale:
