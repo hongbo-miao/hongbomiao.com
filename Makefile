@@ -269,7 +269,7 @@ lint-dockerfile:
 	hadolint $$(git ls-files "*Dockerfile*")
 lint-shell:
 	shellcheck $$(git ls-files "*.sh")
-lint-kubernetes:
+lint-kubernetes-manifest:
 	kubeconform \
 		-kubernetes-version=1.26.0 \
 		-ignore-filename-pattern='.*trafficsplit.yaml' \
