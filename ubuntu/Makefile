@@ -20,7 +20,15 @@ show-kernel-ring-buffer-messages:
 which:
 	which xxx
 
-# Open file descriptors
+# Install
+apt-update:
+	sudo apt update
+apt-install:
+	sudo apt --yes xxx
+snap-install:
+	sudo snap install htop
+
+# Open file descriptor
 show-open-file-descriptor-soft-limit:
 	ulimit -n
 show-open-file-descriptor-hard-limit:
@@ -50,11 +58,7 @@ show-network-hours:
 show-network-hoursgraph:
 	vnstat --hoursgraph
 
-apt-update:
-	sudo apt update
-apt-install:
-	sudo apt --yes xxx
-
+# File
 ls-owner-group:
 	ls -l
 	ls -l file.txt
@@ -89,8 +93,14 @@ history-show:
 history-clear:
 	history -c
 
-# htop
-htop-install:
-	sudo snap install htop
+# Device
+show-serial-devices:
+	ls /dev/tty*
+
+# Debug
+btop:
+	btop
 htop:
 	htop
+vnstat:
+	vnstat
