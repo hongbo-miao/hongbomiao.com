@@ -3,6 +3,7 @@ set -e
 
 echo "# Install Postgres"
 kubectl apply --filename=kubernetes/manifests/postgres
+# kubectl delete --filename=kubernetes/manifests/postgres
 echo "=================================================="
 
 kubectl wait pod postgres-statefulset-0 --for=condition=ready --namespace=hm-postgres

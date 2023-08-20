@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/a0c3b618-2994-41d5-92fd-0f852e5c97cf)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/58f323aa-17e1-479a-94de-972562a63d81)
 
 ## 📦 Setup
 
@@ -199,11 +199,13 @@ make kubernetes-clean
 
 - **Trino** - Distributed SQL query engine
 - **PostgreSQL** - Object-relational database
+  - **Postgres Operator** - PostgreSQL high-availability (HA) template
   - **Postgres Operator** - PostgreSQL cluster provisioning
   - **pgAdmin** - PostgreSQL management tool
 - **MySQL** - Relational database
   - **MariaDB** - Fork of MySQL
-- **ClickHouse** - Column-oriented database
+- **Hydra** - Column-oriented SQL database
+- **ClickHouse** - Column-oriented SQL database
 - **YugabyteDB** - Distributed SQL database
 - **TimescaleDB** - Time-series SQL database
 - **InfluxDB** - Time-series database
