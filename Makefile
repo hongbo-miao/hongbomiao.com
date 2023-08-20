@@ -278,6 +278,7 @@ lint-kubernetes:
 		-ignore-filename-pattern=kubernetes/manifests/elastic/ \
 		-ignore-filename-pattern=kubernetes/manifests/hm-kafka/ \
 		-ignore-filename-pattern=kubernetes/manifests/kubeflow/kubeflow-training-operator/ \
+		-ignore-filename-pattern=kubernetes/manifests/postgres-operator/ \
 		-ignore-filename-pattern=kubernetes/manifests/prometheus/ \
 		-ignore-filename-pattern=kubernetes/manifests/yugabyte/ \
 		kubernetes/manifests/
