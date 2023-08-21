@@ -1,15 +1,3 @@
-# https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-mac.html
-aws-install:
-	curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
-	sudo installer -pkg AWSCLIV2.pkg -target /
-# https://console.aws.amazon.com/iam/home#/security_credentials
-aws-configure:
-	aws configure --profile=hm
-	# AWS Access Key ID: xxx
-	# AWS Secret Access Key: xxx
-	# Default region name: us-west-2
-	# Default output format:
-
 terraform-init:
 	terraform init
 terraform-update-lock-file:

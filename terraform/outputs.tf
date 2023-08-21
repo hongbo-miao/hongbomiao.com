@@ -1,7 +1,7 @@
-output "instance_id" {
-  value = aws_instance.hm_ec2_instance.id
+output "hm_ec2_module_ec2_instance_id" {
+  value = module.hm_ec2_module.ec2_instance_id
 }
 
-output "instance_public_ip" {
-  value = aws_instance.hm_ec2_instance.public_ip
+output "hm_ec2_module_ec2_instance_public_ip" {
+  value = module.hm_ec2_module.ec2_instance_public_ip
 }
