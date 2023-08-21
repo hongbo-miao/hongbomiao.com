@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
+    region = "us-west-2"
     bucket = "hongbomiao-bucket"
     key    = "terraform/terraform.tfstate"
-    region = "us-west-2"
   }
   required_providers {
     # https://registry.terraform.io/providers/hashicorp/aws/latest
@@ -18,10 +18,7 @@ provider "aws" {
   region = "us-west-2"
 }
 
-resource "aws_instance" "hm_ec2_instance" {
-  ami           = "ami-08d70e59c07c61a3a"
-  instance_type = "t2.nano"
-  tags = {
-    Name = var.instance_name
-  }
+module "hm_ec2_module" {
+  source            = "./modules/hm_ec2"
+  ec2_instance_name = "hm-ec2-instance"
 }
