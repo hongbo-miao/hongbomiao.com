@@ -1,9 +1,8 @@
 terraform {
-  backend "remote" {
-    organization = "hongbomiao"
-    workspaces {
-      name = "hm-workspace"
-    }
+  backend "s3" {
+    bucket = "hongbomiao-bucket"
+    key    = "terraform/terraform.tfstate"
+    region = "us-west-2"
   }
   required_providers {
     # https://registry.terraform.io/providers/hashicorp/aws/latest
@@ -12,7 +11,6 @@ terraform {
       version = "5.13.1"
     }
   }
-  # https://app.terraform.io/app/hongbomiao/workspaces/hm-workspace/settings/general
   required_version = ">= 1.5"
 }
 
