@@ -1,6 +1,20 @@
+aws-install:
+	# https://docs.aws.amazon.com/cli/latest/userguide/getting-started-version.html
+	# https://github.com/aws/aws-cli/tags
+	curl "https://awscli.amazonaws.com/AWSCLIV2-2.13.11.pkg" -o "AWSCLIV2.pkg"
+	sudo installer -pkg AWSCLIV2.pkg -target /
+
+aws-profile-create:
+	# https://us-east-1.console.aws.amazon.com/iamv2/home#/security_credentials?section=codecommit_credentials
+	aws configure --profile=default
+	# AWS Access Key ID: xxx
+	# AWS Secret Access Key: xxx
+	# Default region name: us-west-2
+	# Default output format:
 aws-profile-list:
 	aws configure list-profiles
 aws-profile-show:
 	aws configure list --profile=default
+
 aws-credentials-show:
 	cat ~/.aws/credentials
