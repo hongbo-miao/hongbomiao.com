@@ -19,7 +19,6 @@ jobs:
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
-      chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
       hm-kafka-iot-kafka-connect: ${{ steps.filter.outputs.hm-kafka-iot-kafka-connect }}
       hm-kafka-logging-kafka-connect: ${{ steps.filter.outputs.hm-kafka-logging-kafka-connect }}
@@ -31,6 +30,7 @@ jobs:
       hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
       hm-prefect-ingest-data: ${{ steps.filter.outputs.hm-prefect-ingest-data }}
       hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
+      hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
       hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
@@ -56,10 +56,6 @@ jobs:
               - '.dockerignore'
               - '.github/workflows/build.yml'
               - 'api-python/**'
-            chatbot:
-              - '.dockerignore'
-              - '.github/workflows/build.yml'
-              - 'chatbot/**'
             hm-alpine:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -104,6 +100,10 @@ jobs:
               - '.dockerignore'
               - '.github/workflows/build.yml'
               - 'hm-prefect/workflows/print-platform/**'
+            hm-rasa:
+              - '.dockerignore'
+              - '.github/workflows/build.yml'
+              - 'hm-rasa/**'
             hm-spark-find-retired-people-python:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -780,7 +780,7 @@ jobs:
   build-hm-rasa-action-server:
     name: Build hm-rasa-action-server
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.chatbot == 'true' }}
+    if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -805,7 +805,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./chatbot/Dockerfile
+            file: ./hm-rasa/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-rasa-action-server:latest
             cache-from: type=gha
