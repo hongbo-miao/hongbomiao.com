@@ -6,5 +6,5 @@ WORKDIR /app
 USER root:root
 # RUN pip install --requirement=requirements-actions.txt
 
-COPY chatbot/actions /app/actions
+COPY hm-rasa/actions /app/actions
 USER 1001
