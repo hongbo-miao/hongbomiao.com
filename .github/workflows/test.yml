@@ -26,8 +26,8 @@ jobs:
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
-      chatbot: ${{ steps.filter.outputs.chatbot }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
+      hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
@@ -64,12 +64,12 @@ jobs:
             graph-neural-network:
               - '.github/workflows/test.yml'
               - 'graph-neural-network/**'
-            chatbot:
-              - '.github/workflows/test.yml'
-              - 'chatbot/**'
             hm-opal-client:
               - '.github/workflows/test.yml'
               - 'hm-opal-client/**'
+            hm-rasa:
+              - '.github/workflows/test.yml'
+              - 'hm-rasa/**'
             hm-spark-find-retired-people-scala:
               - '.github/workflows/test.yml'
               - 'hm-spark/applications/find-retired-people-scala/**'
@@ -622,7 +622,7 @@ jobs:
   rasa-test:
     name: Rasa | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.chatbot == 'true' }}
+    if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -633,7 +633,7 @@ jobs:
         uses: RasaHQ/rasa-train-test-gha@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          workspace: ${{ github.workspace }}/chatbot
+          workspace: ${{ github.workspace }}/hm-rasa
 
   prometheus-test:
     name: Prometheus | Test

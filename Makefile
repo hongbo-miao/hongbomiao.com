@@ -231,7 +231,6 @@ lint-yaml:
 static-type-check-python:
 	poetry run poe static-type-check-python -- --package=api-python
 	poetry run poe static-type-check-python -- --package=aws.amazon-sagemaker.pytorch-mnist
-	poetry run poe static-type-check-python -- --package=chatbot
 	poetry run poe static-type-check-python -- --package=convolutional-neural-network
 	poetry run poe static-type-check-python -- --package=data-distribution-service
 	poetry run poe static-type-check-python -- --package=delta-lake.read-delta-lake-by-amazon-athena
@@ -252,6 +251,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.greet
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.ingest-data
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.print-platform
+	poetry run poe static-type-check-python -- --package=hm-rasa
 	poetry run poe static-type-check-python -- --package=hm-ray.applications.greet
 	poetry run poe static-type-check-python -- --package=hm-serial
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-retired-people-python
