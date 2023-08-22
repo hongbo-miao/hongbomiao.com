@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/6954cd1e-af89-4c91-83bb-c9f6409dd6ad)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/1992a3c5-3c30-491b-9c52-4f84135b4b32)
 
 ## 📦 Setup
 
@@ -157,6 +157,7 @@ make kubernetes-clean
 - **Tenacity** - General-purpose retrying library
 - **pytest** - Unit testing
 - **pydantic** - Data validation
+- **pypdf** - PDF library
 - **Poetry** - Python package management
   - **Poe the Poet** - Poetry task runner
 
@@ -213,6 +214,7 @@ make kubernetes-clean
 - **Prometheus** - Time-series database
 - **Apache Cassandra** - Distributed wide-column NoSQL database
 - **Qdrant** - Distributed vector database
+- **Chroma** - Distributed vector database
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
   - **Kibana** - Elasticsearch visualization
@@ -270,6 +272,8 @@ make kubernetes-clean
 - **Metabase** - Data visualization
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
+- **LangChang** - Large language model (LLM) framework
+- **GPT4All** - Large language models
 - **OGB** - Open graph benchmark
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
 - **CML** - Continuous machine learning
