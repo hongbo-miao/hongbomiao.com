@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "hm-langchain-chat-pdf"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.11.x"
+chromadb = "0.4.6"
+gpt4all = "1.0.8"
+langchain = "0.0.270"
+pypdf = "3.15.2"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.22.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
