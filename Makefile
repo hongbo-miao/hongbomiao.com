@@ -242,6 +242,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-airflow
 	poetry run poe static-type-check-python -- --package=hm-kubeflow.pipelines.calculate
 	poetry run poe static-type-check-python -- --package=hm-kubeflow.pipelines.classify-mnist
+	poetry run poe static-type-check-python -- --package=hm-langchain.applications.chat-pdf
 	poetry run poe static-type-check-python -- --package=hm-locust
 	poetry run poe static-type-check-python -- --package=hm-mlflow.experiments.classify-mnist
 	poetry run poe static-type-check-python -- --package=hm-mlflow.experiments.predict-diabetes
