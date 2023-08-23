@@ -12,11 +12,9 @@ def main(model_path: str, pdf_path: str, question: str) -> None:
     loader = PyPDFLoader(file_path=pdf_path)
     documents = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=30)
-    docs = text_splitter.split_documents(documents=documents)
-
+    docs = text_splitter.split_documents(documents)
     embeddings = GPT4AllEmbeddings()
     vectorstore = Chroma.from_documents(docs, embeddings)
-
     llm = GPT4All(model=model_path, max_tokens=2048)
     qa = RetrievalQA.from_chain_type(
         llm=llm, chain_type="stuff", retriever=vectorstore.as_retriever()
