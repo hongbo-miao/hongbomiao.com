@@ -1,0 +1,3 @@
+vector-install:
+	brew tap vectordotdev/brew
+	brew install vector

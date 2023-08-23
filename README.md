@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/1992a3c5-3c30-491b-9c52-4f84135b4b32)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7d9e23ad-1033-46ed-991c-67e477260359)
 
 ## 📦 Setup
 
@@ -308,7 +308,8 @@ make kubernetes-clean
 - **Netdata** - Distributed monitoring platform
 - **Telegraf** - Plugin-driven server agent
 - **Thanos** - Highly available Prometheus setup with long term storage capabilities
-- **Fluent Bit** - Log processor and forwarder
+- **Vector** - Logging
+- **Fluent Bit** - Logging
 - **Pixie** - Observability tool for Kubernetes applications
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
