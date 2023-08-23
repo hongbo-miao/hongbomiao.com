@@ -396,7 +396,7 @@ make kubernetes-clean
 - **Jetson Nano** - Single-board computer (SBC)
 - **Jetson TX2** - Single-board computer (SBC)
 - **CubeSat** - Miniaturized satellite
-- **QGroundControl** - Ground control station (GCS) for unmanned Aerial Vehicles (UAVs)
+- **QGroundControl** - Ground control station (GCS) for unmanned aerial vehicles (UAVs)
 
 ### Ethereum
 
@@ -525,7 +525,6 @@ make kubernetes-clean
   - **HTTP/3**
 - **WebSocket**
 - **Web Real-Time Communication (WebRTC)**
-- **File Transfer Protocol (FTP)**
 - **Remote Procedure Call (RPC)**
   - RPC frameworks
     - **Apache Avro**
@@ -535,6 +534,10 @@ make kubernetes-clean
     - **Avro**
     - **Thrift**
     - **Protocol Buffers (Protobuf)**
+- File transfer protocols
+  - **File Transfer Protocol (FTP)**
+    - **Secure File Transfer Protocol (SFTP)**
+  - **Server Message Block (SMB)**
 - Email protocols
   - **Post Office Protocol (POP)**
   - **Simple Mail Transfer Protocol (SMTP)**
