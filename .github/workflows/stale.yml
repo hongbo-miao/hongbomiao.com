@@ -4,6 +4,7 @@ name: Stale
 'on':
   schedule:
     - cron: 0 14 * * *
+  workflow_dispatch:
 
 jobs:
   stale:
@@ -18,3 +19,4 @@ jobs:
           close-issue-message: This issue was closed because it has been stalled for 5 days with no activity.
           days-before-stale: 30
           days-before-close: 5
+          operations-per-run: 100
