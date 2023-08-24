@@ -1,3 +1,5 @@
+import logging
+
 import awswrangler as wr
 
 
@@ -6,8 +8,9 @@ def main():
         "select * from motor limit 10;",
         database="hm_iot_db",
     )
-    print(df)
+    logging.info(df)
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     main()
