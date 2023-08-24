@@ -14,7 +14,6 @@ helm upgrade \
 # kubectl delete namespace hm-caddy
 echo "=================================================="
 
-
 echo "# Install Caddy Ingress for the namespace hm-prefect"
 kubectl apply --filename=kubernetes/manifests/caddy/hm-prefect-caddy-ingress.yaml
 # kubectl delete --filename=kubernetes/manifests/caddy/hm-prefect-caddy-ingress.yaml

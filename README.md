@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7d9e23ad-1033-46ed-991c-67e477260359)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/16d1d1dd-878a-464e-90b3-8255c0c94c5f)
 
 ## 📦 Setup
 
@@ -212,6 +212,7 @@ make kubernetes-clean
 - **InfluxDB** - Time-series database
   - **InfluxDB Enterprise** - Distributed time-series database
 - **Prometheus** - Time-series database
+- **Loki** - Log aggregation system
 - **Apache Cassandra** - Distributed wide-column NoSQL database
 - **Qdrant** - Distributed vector database
 - **Chroma** - Distributed vector database
@@ -308,8 +309,8 @@ make kubernetes-clean
 - **Netdata** - Distributed monitoring platform
 - **Telegraf** - Plugin-driven server agent
 - **Thanos** - Highly available Prometheus setup with long term storage capabilities
-- **Vector** - Logging
-- **Fluent Bit** - Logging
+- **Vector** - Log collector
+- **Fluent Bit** - Log collector
 - **Pixie** - Observability tool for Kubernetes applications
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
@@ -538,6 +539,7 @@ make kubernetes-clean
   - **File Transfer Protocol (FTP)**
     - **Secure File Transfer Protocol (SFTP)**
   - **Server Message Block (SMB)**
+  - **Web Distributed Authoring and Versioning (WebDAV)**
 - Email protocols
   - **Post Office Protocol (POP)**
   - **Simple Mail Transfer Protocol (SMTP)**
