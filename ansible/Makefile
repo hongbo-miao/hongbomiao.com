@@ -20,7 +20,7 @@ ansible-galaxy-role-update:
 
 # Ansible Vault
 ansible-vault-encrypt-string:
-	ansible-vault encrypt_string 'xxx'
+	ansible-vault encrypt_string 'xxx' --vault-password-file=~/.ansible_vault_pass
 ansible-vault-decrypt-string:
 	echo '$ANSIBLE_VAULT;1.1;AES256 xxx' | tr -d ' ' | ansible-vault decrypt && echo
 

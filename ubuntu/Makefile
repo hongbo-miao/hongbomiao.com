@@ -58,6 +58,10 @@ show-network-hours:
 show-network-hoursgraph:
 	vnstat --hoursgraph
 
+# SSH
+ssh-remove-host-key:
+	ssh-keygen -R xxx.xxx.xxx.xxx
+
 # File
 ls-owner-group:
 	ls -l
