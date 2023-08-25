@@ -69,13 +69,13 @@ aio = ["aiohttp (>=3.0)"]
 
 [[package]]
 name = "azure-identity"
-version = "1.13.0"
+version = "1.14.0"
 description = "Microsoft Azure Identity Library for Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "azure-identity-1.13.0.zip", hash = "sha256:c931c27301ffa86b07b4dcf574e29da73e3deba9ab5d1fe4f445bb6a3117e260"},
-    {file = "azure_identity-1.13.0-py3-none-any.whl", hash = "sha256:bd700cebb80cd9862098587c29d8677e819beca33c62568ced6d5a8e5e332b82"},
+    {file = "azure-identity-1.14.0.zip", hash = "sha256:72441799f8c5c89bfe21026965e266672a7c5d050c2c65119ef899dd5362e2b1"},
+    {file = "azure_identity-1.14.0-py3-none-any.whl", hash = "sha256:edabf0e010eb85760e1dd19424d5e8f97ba2c9caff73a16e7b30ccbdbcce369b"},
 ]
 
 [package.dependencies]
@@ -83,7 +83,6 @@ azure-core = ">=1.11.0,<2.0.0"
 cryptography = ">=2.5"
 msal = ">=1.20.0,<2.0.0"
 msal-extensions = ">=0.3.0,<2.0.0"
-six = ">=1.12.0"
 
 [[package]]
 name = "azure-mgmt-authorization"
@@ -149,19 +148,19 @@ msrest = ">=0.6.21"
 
 [[package]]
 name = "azure-mgmt-storage"
-version = "21.0.0"
+version = "21.1.0"
 description = "Microsoft Azure Storage Management Client Library for Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "azure-mgmt-storage-21.0.0.zip", hash = "sha256:6eb13eeecf89195b2b5f47be0679e3f27888efd7bd2132eec7ebcbce75cb1377"},
-    {file = "azure_mgmt_storage-21.0.0-py3-none-any.whl", hash = "sha256:89d644c6192118b0b097deaa9c4925832d8f7ea4693d38d5fce3f0125b43a1c5"},
+    {file = "azure-mgmt-storage-21.1.0.tar.gz", hash = "sha256:d6d3c0e917c988bc9ed0472477d3ef3f90886009eb1d97a711944f8375630162"},
+    {file = "azure_mgmt_storage-21.1.0-py3-none-any.whl", hash = "sha256:593f2544fc4f05750c4fe7ca4d83c32ea1e9d266e57899bbf79ce5940124e8cc"},
 ]
 
 [package.dependencies]
 azure-common = ">=1.1,<2.0"
 azure-mgmt-core = ">=1.3.2,<2.0.0"
-msrest = ">=0.7.1"
+isodate = ">=0.6.1,<1.0.0"
 
 [[package]]
 name = "azure-mgmt-subscription"
@@ -533,6 +532,21 @@ gibberish = ["gibberish-detector"]
 word-list = ["pyahocorasick"]
 
 [[package]]
+name = "filelock"
+version = "3.12.2"
+description = "A platform independent file lock."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "filelock-3.12.2-py3-none-any.whl", hash = "sha256:cbb791cdea2a72f23da6ac5b5269ab0a0d161e9ef0100e653b69049a7706d1ec"},
+    {file = "filelock-3.12.2.tar.gz", hash = "sha256:002740518d8aa59a26b0c76e10fb8c6e15eae825d34b6fdf670333fd7b938d81"},
+]
+
+[package.extras]
+docs = ["furo (>=2023.5.20)", "sphinx (>=7.0.1)", "sphinx-autodoc-typehints (>=1.23,!=1.23.4)"]
+testing = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "diff-cover (>=7.5)", "pytest (>=7.3.1)", "pytest-cov (>=4.1)", "pytest-mock (>=3.10)", "pytest-timeout (>=2.1)"]
+
+[[package]]
 name = "google-api-core"
 version = "2.11.1"
 description = "Google API client core library"
@@ -556,13 +570,13 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2,<1.0.dev0)"]
 
 [[package]]
 name = "google-api-python-client"
-version = "2.95.0"
+version = "2.97.0"
 description = "Google API Client Library for Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "google-api-python-client-2.95.0.tar.gz", hash = "sha256:d2731ede12f79e53fbe11fdb913dfe986440b44c0a28431c78a8ec275f4c1541"},
-    {file = "google_api_python_client-2.95.0-py2.py3-none-any.whl", hash = "sha256:a8aab2da678f42a01f2f52108f787fef4310f23f9dd917c4e64664c3f0c885ba"},
+    {file = "google-api-python-client-2.97.0.tar.gz", hash = "sha256:48277291894876a1ca7ed4127e055e81f81e6343ced1b544a7200ae2c119dcd7"},
+    {file = "google_api_python_client-2.97.0-py2.py3-none-any.whl", hash = "sha256:5215f4cd577753fc4192ccfbe0bb8b55d4bb5fd68fa6268ac5cf271b6305de31"},
 ]
 
 [package.dependencies]
@@ -850,40 +864,40 @@ files = [
 
 [[package]]
 name = "prowler"
-version = "3.8.2"
-description = "Prowler is an Open Source security tool to perform Cloud Security best practices assessments, audits, incident response, continuous monitoring, hardening and forensics readiness. It contains more than 240 controls covering CIS, PCI-DSS, ISO27001, GDPR, HIPAA, FFIEC, SOC2, AWS FTR, ENS and custom security frameworks."
+version = "3.9.0"
+description = "Prowler is an Open Source security tool to perform AWS, GCP and Azure security best practices assessments, audits, incident response, continuous monitoring, hardening and forensics readiness. It contains hundreds of controls covering CIS, NIST 800, NIST CSF, CISA, RBI, FedRAMP, PCI-DSS, GDPR, HIPAA, FFIEC, SOC2, GXP, AWS Well-Architected Framework Security Pillar, AWS Foundational Technical Review (FTR), ENS (Spanish National Security Scheme) and your custom security frameworks."
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "prowler-3.8.2-py3-none-any.whl", hash = "sha256:70e5e981a1f86660f9f50556b47f0092d3c51bd5d219edd843bbc467daf07a31"},
-    {file = "prowler-3.8.2.tar.gz", hash = "sha256:e3d91fe7386313fb3fe4480cbcd356b525d1b9cadbcd8e5691db6b905b503ef5"},
+    {file = "prowler-3.9.0-py3-none-any.whl", hash = "sha256:87d53047f12f2a0e0ae4d5f3c1f6ee679032b7c5a2e12e8e8713c2d00feda2a6"},
+    {file = "prowler-3.9.0.tar.gz", hash = "sha256:7a105b1d09cde3e2cd8358c00598cbcdc1d346fbc833fb3771dd17ce6a3727fd"},
 ]
 
 [package.dependencies]
 alive-progress = "3.1.4"
 awsipranges = "0.3.3"
-azure-identity = "1.13.0"
+azure-identity = "1.14.0"
 azure-mgmt-authorization = "4.0.0"
 azure-mgmt-security = "5.0.0"
 azure-mgmt-sql = "3.0.1"
-azure-mgmt-storage = "21.0.0"
+azure-mgmt-storage = "21.1.0"
 azure-mgmt-subscription = "3.1.1"
 azure-storage-blob = "12.17.0"
 boto3 = "1.26.165"
 botocore = "1.29.165"
 colorama = "0.4.6"
 detect-secrets = "1.4.0"
-google-api-python-client = "2.95.0"
+google-api-python-client = "2.97.0"
 google-auth-httplib2 = ">=0.1.0,<0.2.0"
 msgraph-core = "0.2.2"
 pydantic = "1.10.12"
 schema = "0.7.5"
-shodan = "1.29.1"
+shodan = "1.30.0"
 slack-sdk = "3.21.3"
 tabulate = "0.9.0"
 
 [package.extras]
-docs = ["mkdocs (==1.5.2)", "mkdocs-material (==9.1.20)"]
+docs = ["mkdocs (==1.5.2)", "mkdocs-material (==9.2.1)"]
 
 [[package]]
 name = "pyasn1"
@@ -1115,6 +1129,21 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "requests-file"
+version = "1.5.1"
+description = "File transport adapter for Requests"
+optional = false
+python-versions = "*"
+files = [
+    {file = "requests-file-1.5.1.tar.gz", hash = "sha256:07d74208d3389d01c38ab89ef403af0cfec63957d53a0081d8eca738d0247d8e"},
+    {file = "requests_file-1.5.1-py2.py3-none-any.whl", hash = "sha256:dfe5dae75c12481f68ba353183c53a65e6044c923e64c24b2209f6c7570ca953"},
+]
+
+[package.dependencies]
+requests = ">=1.0.0"
+six = "*"
+
+[[package]]
 name = "requests-oauthlib"
 version = "1.3.1"
 description = "OAuthlib authentication support for Requests."
@@ -1179,12 +1208,12 @@ contextlib2 = ">=0.5.5"
 
 [[package]]
 name = "shodan"
-version = "1.29.1"
+version = "1.30.0"
 description = "Python library and command-line utility for Shodan (https://developer.shodan.io)"
 optional = false
 python-versions = "*"
 files = [
-    {file = "shodan-1.29.1.tar.gz", hash = "sha256:e2af6254e19d2a8fa4e929738be551e25dc7aafc394732e776e7e30fa44ce339"},
+    {file = "shodan-1.30.0.tar.gz", hash = "sha256:c9617c66c47b87d4801e7080b6c769ec9a31da398defe0b047a6794927436453"},
 ]
 
 [package.dependencies]
@@ -1192,6 +1221,7 @@ click = "*"
 click-plugins = "*"
 colorama = "*"
 requests = ">=2.2.1"
+tldextract = "*"
 XlsxWriter = "*"
 
 [[package]]
@@ -1233,6 +1263,23 @@ files = [
 
 [package.extras]
 widechars = ["wcwidth"]
+
+[[package]]
+name = "tldextract"
+version = "3.4.4"
+description = "Accurately separates a URL's subdomain, domain, and public suffix, using the Public Suffix List (PSL). By default, this includes the public ICANN TLDs and their exceptions. You can optionally support the Public Suffix List's private domains as well."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "tldextract-3.4.4-py3-none-any.whl", hash = "sha256:581e7dbefc90e7bb857bb6f768d25c811a3c5f0892ed56a9a2999ddb7b1b70c2"},
+    {file = "tldextract-3.4.4.tar.gz", hash = "sha256:5fe3210c577463545191d45ad522d3d5e78d55218ce97215e82004dcae1e1234"},
+]
+
+[package.dependencies]
+filelock = ">=3.0.8"
+idna = "*"
+requests = ">=2.1.0"
+requests-file = ">=1.4"
 
 [[package]]
 name = "tomli"
@@ -1297,4 +1344,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "146fb673ae70c27e5445101e912417bd975320199cf42be21067f3ac18e53cf9"
+content-hash = "e8dc8edd80a96de41ada3a2319375fbf284c54b4ce0e00de38e500129c4eea3e"
