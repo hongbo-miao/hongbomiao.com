@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/16d1d1dd-878a-464e-90b3-8255c0c94c5f)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b3b65bd0-b0d1-45c5-a4a2-1c59e22b8417)
 
 # 📦 Setup
 
