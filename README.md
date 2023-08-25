@@ -43,15 +43,15 @@
 
 ---
 
-## 🪴 Project Activity
+# 🪴 Project Activity
 
 ![Repobeats analytics](https://repobeats.axiom.co/api/embed/63c0e61d531eed7017c55a0d8cb706a46779c252.svg)
 
-## 👩‍🚀 Introduction
+# 👩‍🚀 Introduction
 
 A personal research and development (R&D) lab that facilitates the sharing of knowledge.
 
-## 🚀 Architecture
+# 🚀 Architecture
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
@@ -59,7 +59,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/16d1d1dd-878a-464e-90b3-8255c0c94c5f)
 
-## 📦 Setup
+# 📦 Setup
 
 ```shell
 make kubernetes-set-up
@@ -69,9 +69,9 @@ make kubernetes-set-up
 make kubernetes-clean
 ```
 
-## 🧱 Tech Stack
+# 🧱 Tech Stack
 
-### Web
+## Web
 
 - **React** - Web framework
 - **Redux** - State container
@@ -100,30 +100,30 @@ make kubernetes-clean
 - **[Mozilla Observatory](https://observatory.mozilla.org/analyze/www.hongbomiao.com)** - Security monitoring
 - **[UptimeRobot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
 
-### Mobile - iOS
+## Mobile - iOS
 
 - **SwiftUI** - UI framework
 - **XCTest** - Unit testing, performance testing
 - **Slather** - Code coverage reports generating
 
-### Mobile - Android
+## Mobile - Android
 
 - **AndroidX** - Android Jetpack
 - **JUnit** - Unit testing, instrumented testing
 
-### Mobile - React Native
+## Mobile - React Native
 
 - **Expo** - Universal native apps making platform
 - **React Native** - Mobile application framework
 - **UI Kitten** - UI library
 - **React Native Testing Library** - React Native component testing
 
-### Desktop - Qt
+## Desktop - Qt
 
 - **Qt Quick** - Cross-platform application development framework
 - **QML** - Qt modeling language
 
-### API Server - Go
+## API Server - Go
 
 - **Gin** - Web framework
 - **gRPC** - Remote procedure call (RPC) framework
@@ -145,7 +145,7 @@ make kubernetes-clean
 - **jsonparser** - JSON parser
 - **zerolog** - Logging
 
-### API Server - Python
+## API Server - Python
 
 - **Flask** - Web framework
 - **Flask-APScheduler** - APScheduler
@@ -161,7 +161,7 @@ make kubernetes-clean
 - **Poetry** - Python package management
   - **Poe the Poet** - Poetry task runner
 
-### API Server - Node.js
+## API Server - Node.js
 
 - **Express** - Web framework
 - **GraphQL.js**, **express-graphql** - GraphQL
@@ -196,7 +196,7 @@ make kubernetes-clean
 - **Node.js** - JavaScript runtime
 - **npm** - JavaScript package management
 
-### Database
+## Database
 
 - **Trino** - Distributed SQL query engine
 - **PostgreSQL** - Object-relational database
@@ -247,7 +247,7 @@ make kubernetes-clean
 - **Delta Lake** - Data lakehouse
 - **golang-migrate/migrate** - Database migrations
 
-### Data Engineering, Data Science, Machine Learning
+## Data Engineering, Data Science, Machine Learning
 
 - **NumPy** - Scientific computing library
 - **pandas** - Data analysis library
@@ -286,11 +286,11 @@ make kubernetes-clean
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)** - Machine learning experiment tracking
 - **Databricks** - Unified data analytics platform
 
-### Computer Vision
+## Computer Vision
 
 - **Open3D** - 3D data processing
 
-### Cloud Native
+## Cloud Native
 
 - **Hasura** - GraphQL Engine
   - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
@@ -322,7 +322,7 @@ make kubernetes-clean
 - **K3s** - Lightweight Kubernetes
 - **containerd** - Container runtime
 
-### Cloud
+## Cloud
 
 - **Amazon Web Services**
   - **Amazon Athena** - Serverless query service
@@ -356,7 +356,7 @@ make kubernetes-clean
 - **Karpenter** - Kubernetes node autoscaler
 - **Komiser** - Cloud cost monitoring
 
-### Ops
+## Ops
 
 - **Argo CD** - Declarative GitOps CD for Kubernetes
 - **Rancher** - Kubernetes container management platform
@@ -372,7 +372,7 @@ make kubernetes-clean
 - **Opsgenie** - Incident management platform
 - **[GitHub Actions](https://github.com/hongbo-miao/hongbomiao.com/actions)** - Continuous integration
 
-### Embedded, IoT, Hardware
+## Embedded, IoT, Hardware
 
 - **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
 - **pySerial** - Serial communication library
@@ -399,12 +399,12 @@ make kubernetes-clean
 - **CubeSat** - Miniaturized satellite
 - **QGroundControl** - Ground control station (GCS) for unmanned aerial vehicles (UAVs)
 
-### Ethereum
+## Ethereum
 
 - **Solidity** - Contract-oriented programming language
 - **solc-js** - JavaScript bindings for the Solidity compiler
 
-### Code
+## Code
 
 - **ansible-lint** - Ansible linter
 - **CMakeLint** - CMake linter
@@ -444,25 +444,25 @@ make kubernetes-clean
 - **[Depfu](https://depfu.com/github/hongbo-miao/hongbomiao.com?project_id=29781)** - Dependency monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2Fhongbo-miao%2Fhongbomiao.com)** - License compliance
 
-### Security
+## Security
 
 - **CodeQL** - Variant analysis
 - **Prowler** - Cloud security assessments
 - **Gitleaks** - Git secret scanning
 - **GitGuardian** - Git secret scanning
 
-### Design
+## Design
 
 - **Fusion 360** - Industrial design
 - **Blender** - 3D graphic design
 - **Figma** - UX design
 
-### Physics
+## Physics
 
 - **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
 - **Qiskit** - Quantum computing
 
-### Bots
+## Bots
 
 - **Renovate** - Dependency updating
 - **CodeReview BOT** - Code reviewing
@@ -471,7 +471,7 @@ make kubernetes-clean
 - **ImgBot** - Image compression
 - **semantic-release** - Version management and package publishing
 
-### Testing
+## Testing
 
 - **Unit testing**
 - **Snapshot testing**
@@ -512,7 +512,7 @@ make kubernetes-clean
 - **Ground testing**
 - **Flight testing**
 
-### Communication Standards and Protocols
+## Communication Standards and Protocols
 
 - **User Datagram Protocol (UDP)**
 - **Transmission Control Protocol (TCP)**
@@ -554,7 +554,7 @@ make kubernetes-clean
   - **IRIG-B Time Protocol**
 - **MQTT**
 
-### Guidances
+## Guidances
 
 - **Avionics Systems**
   - **DO-178C** - Software considerations in airborne systems and equipment certification
@@ -572,113 +572,113 @@ make kubernetes-clean
   - **ISO 10218** - Robots and robotic devices — safety requirements for industrial robots
   - **ANSI/RIA R15.06-2012** - Industrial robots and robot systems — safety requirements
 
-## 🏞 Highlights
+# 🏞 Highlights
 
-### Physics
+## Physics
 
-#### SimScale - Computational Fluid Dynamics (CFD), Finite Element Analysis (FEA), Thermal Simulation
+### SimScale - Computational Fluid Dynamics (CFD), Finite Element Analysis (FEA), Thermal Simulation
 
 ![SimScale screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/cdfd5cac-3e6a-4cb3-9bf5-912718ee3a86)
 
-### Embedded, IoT, Hardware
+## Embedded, IoT, Hardware
 
-#### MATLAB, Simulink, Simscape
+### MATLAB, Simulink, Simscape
 
 ![MATLAB and Simulink screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
 
-#### RTI Connext - Real-Time, Distributed Systems Framework
+### RTI Connext - Real-Time, Distributed Systems Framework
 
 ![RTI Connext screenshot](https://user-images.githubusercontent.com/3375461/197075768-18b61ddf-57db-4d32-ae48-c7e77cea9c77.jpg)
 
-#### NI VeriStand - Real-Time Testing and Simulation
+### NI VeriStand - Real-Time Testing and Simulation
 
 ![NI VeriStand screenshot](https://user-images.githubusercontent.com/3375461/229713107-9b1ea646-ea41-4ca2-af3f-3c537aa601b9.jpg)
 
-#### ROS - Robot Operating System
+### ROS - Robot Operating System
 
 ![ROS screenshot](https://user-images.githubusercontent.com/3375461/209642451-94727634-8ce6-4bbf-bd2c-fa5dc1562f07.png)
 
 ![ROS screenshot](https://user-images.githubusercontent.com/3375461/209642038-fd588750-e1dd-410b-b5fa-e65d0460338a.png)
 
-#### OpenSCAD - 3D CAD Modeller
+### OpenSCAD - 3D CAD Modeller
 
 The toroidal propeller allows a small multirotor aircraft to operate more quietly than the ones that use traditional propellers.
 
 ![OpenSCAD screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/00b3e679-66a7-4d9c-8d68-c31c124e0a54)
 
-#### VHDL - Very High Speed Integrated Circuits Program (VHSIC) Hardware Description Language
+### VHDL - Very High Speed Integrated Circuits Program (VHSIC) Hardware Description Language
 
 The VHDL waveforms are displayed in GTKWave.
 
 ![VHDL screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/8bafe459-24f5-4751-bae5-5a2b97688f2f)
 
-#### Poky - Reference Linux Distribution of the Yocto Project
+### Poky - Reference Linux Distribution of the Yocto Project
 
 ![Poky screenshot](https://user-images.githubusercontent.com/3375461/211735676-db514f9f-aff7-4f9f-9f84-434b3192c709.png)
 
-### Computer Vision
+## Computer Vision
 
-#### Open3D
+### Open3D
 
 ![Open3D screenshot](https://user-images.githubusercontent.com/3375461/206969208-a2e5ad6b-8541-4040-8737-24f198aee579.jpg)
 
-### Data
+## Data
 
-#### Vertex AI - AutoML
+### Vertex AI - AutoML
 
 ![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061661-c2530404-98af-4f8a-9749-30bbca952cd2.png)
 ![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061692-bbbfebf2-ff56-4336-b109-f07282df56a3.png)
 ![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061707-28510a32-65e2-413f-85e7-70d93dc44820.png)
 
-#### Dataprep - Data Cleaning
+### Dataprep - Data Cleaning
 
 ![Dataprep screenshot](https://user-images.githubusercontent.com/3375461/197430470-ae676c14-8dad-4cd7-9326-3df1856f242c.png)
 
-#### Kubeflow - Machine Learning Platform
+### Kubeflow - Machine Learning Platform
 
 ![Kubeflow screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/00574b34-37f2-4889-881e-e7e50a047bad)
 
-#### Ray - Distributed Computing
+### Ray - Distributed Computing
 
 ![Ray screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/a949d05e-22bb-4e22-870b-30f7f96a9995)
 
-#### Prefect - Orchestration Platform
+### Prefect - Orchestration Platform
 
 ![Prefect screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/2496f818-804b-43b8-88ee-9b535938b2f8)
 
-#### Airflow - Orchestration Platform
+### Airflow - Orchestration Platform
 
 ![Airflow screenshot](https://user-images.githubusercontent.com/3375461/178954051-929a42b3-667b-4075-bb1e-32306113251a.png)
 
-#### Flink - Data Processing
+### Flink - Data Processing
 
 ![Flink screenshot](https://user-images.githubusercontent.com/3375461/129500704-9032b559-5dc5-4385-99eb-3f7d4a1f1086.png)
 
-#### Dgraph - Distributed Graph Database
+### Dgraph - Distributed Graph Database
 
 ![Dgraph screenshot](https://user-images.githubusercontent.com/3375461/126815004-925b6be5-6e44-44be-9193-46b018ec4bf7.png)
 
-#### Redis with RedisGraph Module
+### Redis with RedisGraph Module
 
 ![Redis screenshot](https://user-images.githubusercontent.com/3375461/167368266-8f8d27b1-ec58-48c5-b6bd-030dc2970cc8.jpg)
 
-### Machine Learning
+## Machine Learning
 
-#### Contextual AI assistant
+### Contextual AI assistant
 
 Chatbot on Telegram powered by Rasa.
 
 ![Telegram screenshot](https://user-images.githubusercontent.com/3375461/148026649-70dca296-7813-4d58-bc82-d7a2c5b8576e.png)
 
-#### Weights & Biases - Machine Learning Experiment Tracking
+### Weights & Biases - Machine Learning Experiment Tracking
 
 [Distributed hyperparameter optimization result](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf) by Weights & Biases.
 
 [![Weights & Biases screenshot](https://user-images.githubusercontent.com/3375461/112082183-dbf1bf80-8bbf-11eb-9c81-675cc0bd2763.png)](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)
 
-### Cloud Native
+## Cloud Native
 
-#### Pixie - Kubernetes Application Observing
+### Pixie - Kubernetes Application Observing
 
 ![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168404534-18960440-3d91-4b03-9775-321364c3fcf8.jpg)
 
@@ -688,97 +688,101 @@ Chatbot on Telegram powered by Rasa.
 
 ![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168404542-2d43d21c-b6f4-4af6-93b7-b5e76c104268.jpg)
 
-#### Linkerd - Service Mesh
+### Linkerd - Service Mesh
 
 ![Linkerd screenshot](https://user-images.githubusercontent.com/3375461/127684629-a0d9d76b-cbc6-465f-80ea-10c3e06f7eac.png)
 
-#### Hasura - GraphQL Engine
+### Hasura - GraphQL Engine
 
 ![Hasura GraphQL Engine screenshot](https://user-images.githubusercontent.com/3375461/167373764-3fd97b12-034c-42bd-84d5-c65ecd068ae1.jpg)
 
-#### Traefik - Reverse Proxy and Load Balancer
+### Traefik - Reverse Proxy and Load Balancer
 
 ![Traefik screenshot](https://user-images.githubusercontent.com/3375461/168451816-fee9aa54-d4b7-430d-bca3-a8f453931a35.jpg)
 
-#### Netdata - Distributed Monitoring Platform
+### Netdata - Distributed Monitoring Platform
 
 ![Netdata screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/063da2a6-b188-44a3-a958-f2c1b561d85c)
 
-#### Elastic APM - Application Performance Management
+### Elastic APM - Application Performance Management
 
 ![Elastic APM screenshot](https://user-images.githubusercontent.com/3375461/128647400-7377f888-6c76-4b13-8bce-50ad7afdb3c3.png)
 
-#### Jaeger - Distributed Tracing
+### Jaeger - Distributed Tracing
 
 ![Jaeger screenshot](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
 
-#### Grafana - Data Visualization
+### Grafana - Data Visualization
 
-![Grafana screenshot](https://user-images.githubusercontent.com/3375461/163708604-89ce4617-8fb7-463f-86a0-11a3c5c73bd9.png)
+#### Data Source: Prometheus - Time-Series Database
 
-#### Prometheus - Metrics
+![Grafana - Prometheus screenshot](https://user-images.githubusercontent.com/3375461/163708604-89ce4617-8fb7-463f-86a0-11a3c5c73bd9.png)
+
+#### Data Source: Loki - Log Aggregation System
+
+![Grafana - Loki screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/24b1af78-8617-45ab-9ced-9e72de046f86)
+
+### Prometheus - Metrics
 
 ![Prometheus screenshot](https://user-images.githubusercontent.com/3375461/90955864-d14d3b80-e4b3-11ea-926b-8012cadb4f70.jpg)
 
-#### Kibana
+### Kibana
 
 ![Kibana screenshot](https://user-images.githubusercontent.com/3375461/90955224-50d80c00-e4ae-11ea-9345-dfa8e97ed41a.jpg)
 
-#### Locust - Load Testing
+## Testing
+
+### Locust - Load Testing
 
 ![Locust screenshot](https://user-images.githubusercontent.com/3375461/98866512-0613d200-24a8-11eb-8275-d245efdc4727.jpg)
 
-### Ops
+## Ops
 
-#### Argo CD - GitOps
+### Argo CD - GitOps
 
 ![Argo CD screenshot](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
 
-#### Discord - ChatOps
+### Discord - ChatOps
 
 ![Discord screenshot](https://user-images.githubusercontent.com/3375461/135687134-aaad261c-dee9-4a70-b8b2-2da393e114cb.png)
 
-#### Rancher - Kubernetes Container Management
+### Rancher - Kubernetes Container Management
 
 ![Rancher screenshot](https://user-images.githubusercontent.com/3375461/168413513-fb747e9f-ac75-4920-aa9e-f9253b8f724f.jpg)
 
-#### Kubecost - Kubernetes Cost Monitoring
+### Kubecost - Kubernetes Cost Monitoring
 
 ![Kubecost screenshot](https://user-images.githubusercontent.com/3375461/167351502-ee32bb31-3499-4a9c-9dcc-87b38099aa62.jpg)
 
-#### Polaris - Kubernetes Best Practices Validation
+### Polaris - Kubernetes Best Practices Validation
 
 ![Polaris screenshot](https://user-images.githubusercontent.com/3375461/167352130-75b7c8ee-d7e1-4731-9765-c4d05e22f684.jpg)
 
-#### Goldilocks - Kubernetes Resource Requests Recommendation
+### Goldilocks - Kubernetes Resource Requests Recommendation
 
 ![Goldilocks screenshot](https://user-images.githubusercontent.com/3375461/167352330-f2d99896-e99d-4e89-876c-91ea0741e1c2.jpg)
 
-#### Sloop - Kubernetes History Visualization
+## Web
 
-![Sloop screenshot](https://user-images.githubusercontent.com/3375461/167351205-0f7e0921-07ff-4072-b5b9-c343d88f25c4.jpg)
-
-### Web
-
-#### HTTP/3
+### HTTP/3
 
 The website [supports HTTP/3](https://www.http3check.net/?host=hongbomiao.com).
 
 [![HTTP/3 screenshot](https://user-images.githubusercontent.com/3375461/92599407-cdefe780-f2dc-11ea-8bf9-dc153187287f.jpg)](https://www.http3check.net/?host=hongbomiao.com)
 
-#### AVIF
+### AVIF
 
 Images on the website are using AVIF format.
 
 The WebP is almost half the size of JPEG, and AVIF is under half the size of WebP.
 
-#### Security
+### Security
 
 Below is the website [security report](https://observatory.mozilla.org/analyze/www.hongbomiao.com) generated by Mozilla Observatory.
 
 [![Mozilla Observatory screenshot](https://user-images.githubusercontent.com/3375461/148025144-57d3c888-7ddd-4242-90ab-9759642f393d.png)](https://observatory.mozilla.org/analyze/www.hongbomiao.com)
 
-#### Profiling
+### Profiling
 
 Profiling result by Clinic.js and autocannon.
 
