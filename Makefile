@@ -211,6 +211,7 @@ lint-sql:
 	poetry run poe lint-sql -- --dialect=postgres timescaledb/motor/migrations
 	poetry run poe lint-sql -- --dialect=sparksql delta-lake/sql
 	poetry run poe lint-sql -- --dialect=sparksql hm-spark/applications/find-taxi-top-routes-sql/src/queries
+	poetry run poe lint-sql -- --dialect=trino trino/queries
 lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
 	poetry run poe lint-sql-fix -- --dialect=clickhouse clickhouse/cpu_metrics
@@ -222,6 +223,7 @@ lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=postgres timescaledb/motor/migrations
 	poetry run poe lint-sql-fix -- --dialect=sparksql delta-lake/sql
 	poetry run poe lint-sql-fix -- --dialect=sparksql hm-spark/applications/find-taxi-top-routes-sql/src/queries
+	poetry run poe lint-sql-fix -- --dialect=trino trino/queries
 lint-vhdl:
 	poetry run poe lint-vhdl
 lint-vhdl-fix:
