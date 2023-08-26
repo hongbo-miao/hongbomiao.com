@@ -2147,6 +2147,16 @@ files = [
 ]
 
 [[package]]
+name = "circuitbreaker"
+version = "1.4.0"
+description = "Python Circuit Breaker pattern implementation"
+optional = false
+python-versions = "*"
+files = [
+    {file = "circuitbreaker-1.4.0.tar.gz", hash = "sha256:80b7bda803d9a20e568453eb26f3530cd9bf602d6414f6ff6a74c611603396d2"},
+]
+
+[[package]]
 name = "click"
 version = "8.0.4"
 description = "Composable command line interface toolkit"
@@ -2784,6 +2794,50 @@ files = [
 pyreadline3 = {version = "*", markers = "sys_platform == \"win32\" and python_version >= \"3.8\""}
 
 [[package]]
+name = "ibm-cloud-sdk-core"
+version = "3.13.1"
+description = "Core library used by SDKs for IBM Cloud Services"
+optional = false
+python-versions = "*"
+files = [
+    {file = "ibm-cloud-sdk-core-3.13.1.tar.gz", hash = "sha256:de2baa9ac251b4ca3f616549e18e4cc6bc6220973ca02c72ff08d29247711a0a"},
+]
+
+[package.dependencies]
+PyJWT = ">=2.0.1,<3.0.0"
+python_dateutil = ">=2.5.3,<3.0.0"
+requests = ">=2.20,<3.0"
+
+[[package]]
+name = "ibm-platform-services"
+version = "0.22.3"
+description = "Python client library for IBM Cloud Platform Services"
+optional = false
+python-versions = "*"
+files = [
+    {file = "ibm-platform-services-0.22.3.tar.gz", hash = "sha256:d745d3364cf9712764ffa1073986a5ddc2eae805bb281e5d54db123862f0c270"},
+]
+
+[package.dependencies]
+ibm_cloud_sdk_core = ">=3.13.0,<4.0.0"
+python_dateutil = ">=2.5.3,<3.0.0"
+requests = ">=2.24.0,<3.0"
+
+[[package]]
+name = "ibm-vpc"
+version = "0.8.0"
+description = "Python client library for IBM Cloud VPC Services"
+optional = false
+python-versions = "*"
+files = [
+    {file = "ibm-vpc-0.8.0.tar.gz", hash = "sha256:3e2b29ef4533d8e4fb1ed1b9e40588e2839a2d00b0402b27a28ffc8e61ed99d6"},
+]
+
+[package.dependencies]
+ibm_cloud_sdk_core = ">=3.11.3"
+python_dateutil = ">=2.5.3,<3.0.0"
+
+[[package]]
 name = "idna"
 version = "3.4"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -3359,6 +3413,25 @@ files = [
 rsa = ["cryptography (>=3.0.0)"]
 signals = ["blinker (>=1.4.0)"]
 signedtoken = ["cryptography (>=3.0.0)", "pyjwt (>=2.0.0,<3)"]
+
+[[package]]
+name = "oci"
+version = "2.110.2"
+description = "Oracle Cloud Infrastructure Python SDK"
+optional = false
+python-versions = "*"
+files = [
+    {file = "oci-2.110.2-py3-none-any.whl", hash = "sha256:50cfcea80ee4c7ad0df21becd1a0ae98d493a5d8d46aa91737425d2ddbf7a954"},
+    {file = "oci-2.110.2.tar.gz", hash = "sha256:4e16537675e8af8a6a7c0e26f799cf486eb4bfe974de110767608c69b84b8258"},
+]
+
+[package.dependencies]
+certifi = "*"
+circuitbreaker = ">=1.3.1,<2.0.0"
+cryptography = ">=3.2.1,<42.0.0"
+pyOpenSSL = ">=17.5.0,<24.0.0"
+python-dateutil = ">=2.5.3,<3.0.0"
+pytz = ">=2016.10"
 
 [[package]]
 name = "opencensus"
@@ -4390,10 +4463,14 @@ grpcio = [
     {version = ">=1.42.0,<1.48.0 || >1.48.0,<=1.51.3", markers = "python_version >= \"3.10\" and sys_platform != \"darwin\""},
     {version = ">=1.42.0,<1.48.0 || >1.48.0,<=1.49.1", markers = "python_version >= \"3.10\" and sys_platform == \"darwin\""},
 ]
+ibm-cloud-sdk-core = {version = "*", optional = true, markers = "extra == \"ibm\""}
+ibm-platform-services = {version = "*", optional = true, markers = "extra == \"ibm\""}
+ibm-vpc = {version = "*", optional = true, markers = "extra == \"ibm\""}
 jinja2 = ">=3.0"
 jsonschema = "*"
 networkx = "*"
 oauth2client = "*"
+oci = {version = "*", optional = true, markers = "extra == \"oci\""}
 packaging = "*"
 pandas = "*"
 pendulum = "*"
@@ -4769,4 +4846,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "caaf6be8831c1bad8b033f9e4c6d307e8b97f7497b10a2e3e43da6441af7df88"
+content-hash = "91a1cb58aeab5179de15bcc42cc2a9443c6a8e02def87913151a83c0da10b74b"
