@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/79212148-0b65-4f2d-b882-86506b1ead29)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/6dca8cfd-8353-4300-a430-93c450ea6144)
 
 # 📦 Setup
 
@@ -554,7 +554,7 @@ make kubernetes-clean
   - **IRIG-B Time Protocol**
 - **MQTT**
 
-## Guidances
+## Guidelines
 
 - **Avionics Systems**
   - **DO-178C** - Software considerations in airborne systems and equipment certification
