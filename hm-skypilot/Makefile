@@ -9,24 +9,26 @@ poetry-add:
 poetry-add-dev:
 	poetry add xxx --group=dev
 
-poetry-shell:
-	poetry shell
-
 sky-launch:
-	sky launch skypilot.yaml \
+	poetry run sky launch skypilot.yaml \
 		--cluster=hm-skypilot-cluster \
 		--idle-minutes-to-autostop=10 \
 		--yes
 sky-stop:
-	sky stop hm-skypilot-cluster --yes
+	poetry run sky stop hm-skypilot-cluster --yes
 sky-terminate:
-	sky down hm-skypilot-cluster --yes
+	poetry run sky down hm-skypilot-cluster --yes
 
 sky-check:
-	sky check
+	poetry run sky check
 sky-status:
-	sky status
-sky-show-gpus:
-	sky show-gpus
+	poetry run sky status
 sky-ssh:
-	ssh hm-skypilot-cluster
+	poetry run ssh hm-skypilot-cluster
+
+sky-show-gpus:
+	poetry run sky show-gpus
+sky-show-gpus-price:
+	poetry run sky show-gpus --all
+sky-show-gpus-price-a100-80gb-8:
+	poetry run sky show-gpus A100-80GB:8
