@@ -45,7 +45,7 @@
 
 # 🪴 Project Activity
 
-![Repobeats analytics](https://repobeats.axiom.co/api/embed/63c0e61d531eed7017c55a0d8cb706a46779c252.svg)
+![Repobeats analytics](https://repobeats.axiom.co/api/embed/5ea3f5ccba6439bdc337ee75ade22bc3525e3d9c.svg)
 
 # 👩‍🚀 Introduction
 
