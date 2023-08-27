@@ -240,8 +240,10 @@ kubectl-port-forward-airflow:
 	kubectl port-forward service/airflow-webserver --namespace=hm-airflow 45808:8080
 kubectl-port-forward-prometheus:
 	kubectl port-forward service/monitoring-kube-prometheus-prometheus --namespace=hm-monitoring 9090:9090
-kubectl-port-forward-grafana:
+kubectl-port-forward-grafana-by-prometheus:
 	kubectl port-forward service/monitoring-grafana --namespace=hm-monitoring 54976:80
+kubectl-port-forward-grafana-by-loki:
+	kubectl port-forward service/grafana --namespace=hm-grafana 18845:80
 kubectl-port-forward-netdata:
 	kubectl port-forward service/netdata --namespace=hm-netdata 55839:19999
 kubectl-port-forward-ory-hydra:
