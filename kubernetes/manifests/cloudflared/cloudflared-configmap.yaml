@@ -38,8 +38,8 @@ data:
       originRequest:
         noTLSVerify: true
     # Grafana
-    - hostname: monitoring.hongbomiao.com
-      service: http://monitoring-grafana.hm-monitoring.svc:80
+    - hostname: grafana.hongbomiao.com
+      service: http://grafana.hm-grafana.svc:80
     # InfluxDB
     - hostname: influxdb.hongbomiao.com
       service: http://influxdb.hm-influxdb.svc:8086
@@ -51,6 +51,9 @@ data:
     # Kubeflow
     - hostname: kubeflow.hongbomiao.com
       service: http://ml-pipeline-ui.kubeflow.svc:80
+    # Loki Write
+    - hostname: loki-write.hongbomiao.com
+      service: http://loki-write.hm-loki.svc:3100
     # MLflow
     - hostname: mlflow.hongbomiao.com
       service: http://mlflow.hm-mlflow.svc:5000
