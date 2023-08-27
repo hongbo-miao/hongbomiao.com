@@ -1,9 +1,17 @@
-[sources.in]
+[sources.log]
 type = "file"
 data_dir = "/tmp/vector/"
 include = ["data/dummy.log"]
 
-[sinks.out]
-inputs = ["in"]
+[sinks.console]
+inputs = ["log"]
 type = "console"
-encoding.codec = "text"
+encoding.codec = "logfmt"
+
+[sinks.hm_loki]
+inputs = ["log"]
+type = "loki"
+encoding.codec = "logfmt"
+endpoint = "https://loki-write.hongbomiao.com"
+  [sinks.hm_loki.labels]
+  source = "hm_vector_dummy_log"
