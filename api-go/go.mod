@@ -30,8 +30,8 @@ require (
 	go.elastic.co/apm/module/apmgin/v2 v2.4.3
 	go.elastic.co/apm/module/apmgrpc/v2 v2.4.3
 	go.opencensus.io v0.24.0
-	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.42.0
-	go.opentelemetry.io/otel v1.16.0
+	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.43.0
+	go.opentelemetry.io/otel v1.17.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.16.0
 	go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.16.0
 	go.opentelemetry.io/otel/sdk v1.16.0
@@ -109,8 +109,8 @@ require (
 	go.elastic.co/apm/module/apmhttp/v2 v2.4.3 // indirect
 	go.elastic.co/apm/v2 v2.4.3 // indirect
 	go.elastic.co/fastjson v1.1.0 // indirect
-	go.opentelemetry.io/otel/metric v1.16.0 // indirect
-	go.opentelemetry.io/otel/trace v1.16.0 // indirect
+	go.opentelemetry.io/otel/metric v1.17.0 // indirect
+	go.opentelemetry.io/otel/trace v1.17.0 // indirect
 	golang.org/x/arch v0.4.0 // indirect
 	golang.org/x/crypto v0.12.0 // indirect
 	golang.org/x/mod v0.8.0 // indirect
