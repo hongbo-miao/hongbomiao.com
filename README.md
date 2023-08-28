@@ -714,7 +714,6 @@ Chatbot on Telegram powered by Rasa.
 ![Jaeger screenshot](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
 
 ### Grafana - Data Visualization
-### Grafana - Tableau
 
 #### Data Source: Prometheus - Time-Series Database
 
