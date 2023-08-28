@@ -269,8 +269,9 @@ make kubernetes-clean
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
 - **Grafana** - Data visualization
-- **Apache Superset** - Data visualization
 - **Metabase** - Data visualization
+- **Apache Superset** - Data visualization
+- **Tableau** - Data visualization
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **LangChang** - Large language model (LLM) framework
@@ -713,6 +714,7 @@ Chatbot on Telegram powered by Rasa.
 ![Jaeger screenshot](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
 
 ### Grafana - Data Visualization
+### Grafana - Tableau
 
 #### Data Source: Prometheus - Time-Series Database
 
@@ -722,13 +724,13 @@ Chatbot on Telegram powered by Rasa.
 
 ![Grafana - Loki screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/24b1af78-8617-45ab-9ced-9e72de046f86)
 
-### Prometheus - Metrics
-
-![Prometheus screenshot](https://user-images.githubusercontent.com/3375461/90955864-d14d3b80-e4b3-11ea-926b-8012cadb4f70.jpg)
-
-### Kibana
+### Kibana - Elasticsearch Visualization
 
 ![Kibana screenshot](https://user-images.githubusercontent.com/3375461/90955224-50d80c00-e4ae-11ea-9345-dfa8e97ed41a.jpg)
+
+### Tableau - Data Visualization
+
+![Tableau screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/afdf388a-bd18-462e-96d5-cbb75f82f8bf)
 
 ## Testing
 
