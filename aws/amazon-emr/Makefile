@@ -3,7 +3,7 @@ amazon-emr-cluster-create:
 	aws emr create-cluster \
 		--name=hm-amazon-emr-cluster \
 		--applications=Name=Trino \
-		--configurations=file://configurations.json
+		--configurations=file://hm-amazon-emr-cluster-trino-config.json
 amazon-emr-cluster-list:
 	aws emr list-clusters
 amazon-emr-cluster-describe:
@@ -23,6 +23,12 @@ hadoop-yarn-stop:
 	sudo systemctl stop hadoop-yarn-resourcemanager
 
 # Amazon EMR - Trino
+trino-status:
+	sudo systemctl status trino-server
+trino-start:
+	sudo systemctl start trino-server
+trino-stop:
+	sudo systemctl stop trino-server
 trino-show-config:
 	sudo cat /etc/trino/conf/config.properties
 trino-check-health:
@@ -45,6 +51,12 @@ trino-execute:
 		--execute='show tables;'
 
 # Amazon EMR - Presto
+presto-status:
+	sudo systemctl status presto-server
+presto-start:
+	sudo systemctl start presto-server
+presto-stop:
+	sudo systemctl stop presto-server
 presto-show-config:
 	sudo cat /etc/presto/conf/config.properties
 presto-execute:
