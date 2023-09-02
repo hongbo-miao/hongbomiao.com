@@ -1,0 +1,36 @@
+[
+  {
+    "InstanceCount": 1,
+    "InstanceGroupType": "MASTER",
+    "Name": "Primary",
+    "InstanceType": "c7g.xlarge",
+    "EbsConfiguration": {
+      "EbsBlockDeviceConfigs": [
+        {
+          "VolumeSpecification": {
+            "VolumeType": "gp2",
+            "SizeInGB": 32
+          },
+          "VolumesPerInstance": 2
+        }
+      ]
+    }
+  },
+  {
+    "InstanceCount": 1,
+    "InstanceGroupType": "CORE",
+    "Name": "Core",
+    "InstanceType": "c7g.xlarge",
+    "EbsConfiguration": {
+      "EbsBlockDeviceConfigs": [
+        {
+          "VolumeSpecification": {
+            "VolumeType": "gp2",
+            "SizeInGB": 32
+          },
+          "VolumesPerInstance": 2
+        }
+      ]
+    }
+  }
+]
