@@ -25,7 +25,6 @@ type Config struct {
 	TorchServeGRPCPort           string
 	OpenCensusAgentHost          string
 	OpenCensusAgentPort          string
-	JaegerURL                    string
 	JWTSecret                    string
 	EnableOpenTelemetryStdoutLog string
 }
@@ -61,7 +60,6 @@ func GetConfig() *Config {
 		TorchServeGRPCPort:           os.Getenv("TORCH_SERVE_GRPC_PORT"),
 		OpenCensusAgentHost:          os.Getenv("OPEN_CENSUS_AGENT_HOST"),
 		OpenCensusAgentPort:          os.Getenv("OPEN_CENSUS_AGENT_PORT"),
-		JaegerURL:                    os.Getenv("JAEGER_URL"),
 		JWTSecret:                    os.Getenv("JWT_SECRET"),
 		EnableOpenTelemetryStdoutLog: os.Getenv("ENABLE_OPEN_TELEMETRY_STDOUT_LOG"),
 	}

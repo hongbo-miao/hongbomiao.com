@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/graphql_server/routes"
 	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/graphql_server/utils"
 	sharedUtils "github.com/hongbo-miao/hongbomiao.com/api-go/internal/shared/utils"
@@ -33,7 +32,6 @@ func main() {
 		Str("MinIOAccessKeyID", config.MinIOAccessKeyID).
 		Str("OpenCensusAgentHost", config.OpenCensusAgentHost).
 		Str("OpenCensusAgentPort", config.OpenCensusAgentPort).
-		Str("JaegerURL", config.JaegerURL).
 		Str("EnableOpenTelemetryStdoutLog", config.EnableOpenTelemetryStdoutLog).
 		Msg("main")
 
@@ -52,16 +50,6 @@ func main() {
 			log.Error().Err(err).Msg("rdb.Close")
 		}
 	}(rdb)
-
-	tp, err := utils.InitTracer(config.EnableOpenTelemetryStdoutLog, config.JaegerURL)
-	if err != nil {
-		log.Error().Err(err).Msg("InitTracer")
-	}
-	defer func() {
-		if err := tp.Shutdown(context.Background()); err != nil {
-			log.Error().Err(err).Msg("tp.Shutdown")
-		}
-	}()
 
 	sharedUtils.InitOpenCensusTracer(config.OpenCensusAgentHost, config.OpenCensusAgentPort, "graphql_server")
 
