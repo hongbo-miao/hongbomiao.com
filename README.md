@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/3594cff4-6895-4cb1-b559-338f6bafe429)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b4590338-9588-443a-be90-b11a8fae46cd)
 
 # 📦 Setup
 
@@ -336,6 +336,7 @@ make kubernetes-clean
   - **Amazon EventBridge** - Serverless event bus
   - **Amazon MSK** - Kafka
   - **Amazon RDS** - Relational database service
+  - **Amazon Route 53** - Domain Name System (DNS) web service
   - **Amazon S3** - Object storage
   - **Amazon SageMaker** - Machine learning platform
   - **Amazon SQS** - Queue
