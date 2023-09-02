@@ -49,6 +49,12 @@ trino-execute:
 		--catalog=delta \
 		--schema=hm_iot_delta_db \
 		--execute='show tables;'
+trino-show-config:
+	sudo cat /etc/trino/conf/config.properties
+trino-show-config-jvm:
+	cat /etc/trino/conf/jvm.config
+trino-show-hive-site:
+	cat /etc/hive/conf/hive-site.xml
 
 # Amazon EMR - Presto
 presto-status:
