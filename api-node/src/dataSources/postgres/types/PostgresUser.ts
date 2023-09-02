@@ -7,7 +7,7 @@ type PostgresUser = {
   first_name: string;
   last_name: string;
   bio: string | null;
-  created_on: Date;
+  created_at: Date;
   last_login: Date | null;
 };
 
