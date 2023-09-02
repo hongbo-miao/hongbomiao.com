@@ -12,7 +12,7 @@ create table if not exists opal_client
     id uuid default gen_random_uuid(),
     name text not null,
     config text,
-    created_on timestamptz not null default now(),
+    created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
     primary key (id)
 );
