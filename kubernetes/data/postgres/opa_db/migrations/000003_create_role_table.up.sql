@@ -13,7 +13,7 @@ create table if not exists role
     opal_client_id uuid not null,
     role text not null,
     allow jsonb not null,
-    created_on timestamptz not null default now(),
+    created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
     primary key (id),
     constraint fk_space foreign key (opal_client_id) references opal_client (id)
