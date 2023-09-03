@@ -22,12 +22,23 @@ trino-start:
 	sudo systemctl start trino-server
 trino-stop:
 	sudo systemctl stop trino-server
-trino-show-config:
-	sudo cat /etc/trino/conf/config.properties
-trino-show-config-jvm:
+
+trino-show-jvm-config:
 	cat /etc/trino/conf/jvm.config
+trino-show-trino-config:
+	sudo cat /etc/trino/conf/config.properties
+trino-show-trino-config-node:
+	cat /etc/trino/conf/node.properties
+trino-show-trino-config-catalog:
+	cat /etc/trino/conf.dist/catalog/delta.properties
+	cat /etc/trino/conf.dist/catalog/hive.properties
+	cat /etc/trino/conf.dist/catalog/postgresql.properties
+
+trino-web-ui:
+	curl localhost:8889/ui/login.html
 trino-check-health:
 	curl localhost:8889/v1/status
+
 trino-execute:
 	trino-cli \
 		--server=localhost:8889 \
@@ -43,33 +54,6 @@ trino-execute:
 		--server=localhost:8889 \
 		--catalog=delta \
 		--schema=hm_iot_delta_db \
-		--execute='show tables;'
-
-# Amazon EMR - Presto
-presto-status:
-	sudo systemctl status presto-server
-presto-start:
-	sudo systemctl start presto-server
-presto-stop:
-	sudo systemctl stop presto-server
-presto-show-config:
-	sudo cat /etc/presto/conf/config.properties
-presto-execute:
-	presto-cli \
-		--server=localhost:8889 \
-		--execute='show catalogs;'
-	presto-cli \
-		--server=localhost:8889 \
-		--catalog=system \
-		--execute='show schemas;'
-	presto-cli \
-		--server=localhost:8889 \
-		--catalog=awsdatacatalog \
-		--execute='show schemas;'
-	presto-cli \
-		--server=localhost:8889 \
-		--catalog=awsdatacatalog \
-		--schema=information_schema \
 		--execute='show tables;'
 
 # Amazon EMR - Hive
