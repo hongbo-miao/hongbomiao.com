@@ -674,27 +674,6 @@ jobs:
         run: |
           terraform fmt -recursive -check
 
-  lint-xml:
-    name: XML
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies
-        run: |
-          npm ci
-      - name: Lint XML
-        run: |
-          npm run lint:xml
-
   lint-vhdl:
     name: VHDL
     runs-on: ubuntu-22.04
@@ -721,6 +700,27 @@ jobs:
       - name: Lint VHDL
         run: |
           poetry run poe lint-vhdl
+
+  lint-xml:
+    name: XML
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Lint XML
+        run: |
+          npm run lint:xml
 
   lint-yaml:
     name: YAML
