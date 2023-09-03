@@ -33,7 +33,7 @@
     <a href="https://github.com/hongbo-miao/hongbomiao.com/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com" /></a>
   </p>
   <p>
-    <a href="https://twitter.com/hongbo_miao"><img alt="Twitter follow" src="https://img.shields.io/twitter/follow/hongbo_miao?label=Follow&style=social" /></a>
+    <a href="https://twitter.com/hongbo_miao"><img alt="X follow" src="https://img.shields.io/twitter/follow/hongbo_miao?label=Follow&style=social" /></a>
     <a href="https://github.com/hongbo-miao"><img alt="GitHub follow" src="https://img.shields.io/github/followers/hongbo-miao?label=Follow&style=social" /></a>
   </p>
   <p>
