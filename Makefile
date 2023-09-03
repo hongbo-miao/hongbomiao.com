@@ -113,11 +113,6 @@ bundle-update:
 bundle-lock:
 	bundle lock --add-platform x86_64-linux
 
-lint-ruby:
-	bundle exec rubocop
-lint-ruby-fix:
-	bundle exec rubocop --autocorrect-all
-
 # Python
 conda-create:
 	conda create --name=xxx python=3.10 --yes
@@ -177,17 +172,55 @@ poetry-check:
 poetry-cache-clear:
 	poetry cache clear pypi --all
 
+# Clean
 clean-jupyter-notebook:
 	poetry run poe clean-jupyter-notebook -- aws/amazon-emr/studio/hm-studio/hm-workspace.ipynb
 	poetry run poe clean-jupyter-notebook -- aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
+
+# Lint
 lint-ansible:
 	poetry run poe lint-ansible
+lint-c-cpp:
+	clang-format -i -style=file $$(git ls-files "*.c" "*.cpp" "*.h" "*.ino")
+lint-cmake:
+	poetry run poe lint-cmake
+lint-css:
+	npm run lint:css
+lint-css-fix:
+	npm run lint:css:fix
+lint-dockerfile:
+	hadolint $$(git ls-files "*Dockerfile*")
+lint-javascript:
+	npm run lint:javascript
+lint-javascript-fix:
+	npm run lint:javascript:fix
+lint-kotlin:
+	cd mobile-android && ./gradlew ktlintCheck
+lint-kotlin-fix:
+	cd mobile-android && ./gradlew ktlintFormat
+lint-kubernetes-manifest:
+	kubeconform \
+		-kubernetes-version=1.26.0 \
+		-ignore-filename-pattern='.*trafficsplit.yaml' \
+		-ignore-filename-pattern='.*my-values.yaml' \
+		-ignore-filename-pattern=kubernetes/manifests/argocd/ \
+		-ignore-filename-pattern=kubernetes/manifests/elastic/ \
+		-ignore-filename-pattern=kubernetes/manifests/hm-kafka/ \
+		-ignore-filename-pattern=kubernetes/manifests/kubeflow/kubeflow-training-operator/ \
+		-ignore-filename-pattern=kubernetes/manifests/postgres-operator/ \
+		-ignore-filename-pattern=kubernetes/manifests/prometheus/ \
+		-ignore-filename-pattern=kubernetes/manifests/yugabyte/ \
+		kubernetes/manifests/
+lint-markdown:
+	npm run lint:markdown
+lint-markdown-fix:
+	npm run lint:markdown:fix
 lint-matlab:
 	poetry run poe lint-matlab
 lint-matlab-fix:
 	poetry run poe lint-matlab-fix
-lint-cmake:
-	poetry run poe lint-cmake
+lint-protocol-buffers:
+	buf lint
 lint-python-black:
 	poetry run poe lint-python-black
 lint-python-black-fix:
@@ -200,6 +233,24 @@ lint-python-isort:
 	poetry run poe lint-python-isort
 lint-python-isort-fix:
 	poetry run poe lint-python-isort-fix
+lint-qml:
+	qmllint $$(git ls-files "*.qml")
+lint-ruby:
+	bundle exec rubocop
+lint-ruby-fix:
+	bundle exec rubocop --autocorrect-all
+lint-scala:
+	cd hm-spark/applications/find-retired-people-scala && sbt scalafmtCheckAll && sbt "scalafixAll --check"
+	cd hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtCheckAll && sbt "scalafixAll --check"
+lint-scala-fix:
+	cd hm-spark/applications/find-retired-people-scala && sbt scalafmtAll && sbt scalafixAll
+	cd hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtAll && sbt scalafixAll
+lint-shell:
+	shellcheck $$(git ls-files "*.sh")
+lint-solidity:
+	npm run lint:solidity
+lint-solidity-fix:
+	npm run lint:solidity:fix
 lint-sql:
 	poetry run poe lint-sql -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
 	poetry run poe lint-sql -- --dialect=clickhouse clickhouse/cpu_metrics
@@ -224,12 +275,22 @@ lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=sparksql delta-lake/sql
 	poetry run poe lint-sql-fix -- --dialect=sparksql hm-spark/applications/find-taxi-top-routes-sql/src/queries
 	poetry run poe lint-sql-fix -- --dialect=trino trino/queries
+lint-terraform:
+	terraform fmt -recursive -check
+lint-terraform-fix:
+	terraform fmt -recursive
 lint-vhdl:
 	poetry run poe lint-vhdl
 lint-vhdl-fix:
 	poetry run poe lint-vhdl-fix
+lint-xml:
+	npm run lint:xml
+lint-xml-fix:
+	npm run lint:xml:fix
 lint-yaml:
 	poetry run poe lint-yaml
+
+# Static type check
 static-type-check-python:
 	poetry run poe static-type-check-python -- --package=api-python
 	poetry run poe static-type-check-python -- --package=aws.amazon-sagemaker.pytorch-mnist
@@ -266,32 +327,10 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-tdms
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-ni-veristand
 	poetry run poe static-type-check-python -- --package=quantum-computing
-
-# Lint
-lint-dockerfile:
-	hadolint $$(git ls-files "*Dockerfile*")
-lint-shell:
-	shellcheck $$(git ls-files "*.sh")
-lint-kubernetes-manifest:
-	kubeconform \
-		-kubernetes-version=1.26.0 \
-		-ignore-filename-pattern='.*trafficsplit.yaml' \
-		-ignore-filename-pattern='.*my-values.yaml' \
-		-ignore-filename-pattern=kubernetes/manifests/argocd/ \
-		-ignore-filename-pattern=kubernetes/manifests/elastic/ \
-		-ignore-filename-pattern=kubernetes/manifests/hm-kafka/ \
-		-ignore-filename-pattern=kubernetes/manifests/kubeflow/kubeflow-training-operator/ \
-		-ignore-filename-pattern=kubernetes/manifests/postgres-operator/ \
-		-ignore-filename-pattern=kubernetes/manifests/prometheus/ \
-		-ignore-filename-pattern=kubernetes/manifests/yugabyte/ \
-		kubernetes/manifests/
-lint-protocol-buffers:
-	buf lint
-lint-c-cpp:
-	clang-format -i -style=file $$(git ls-files "*.c" "*.cpp" "*.h" "*.ino")
-lint-qml:
-	qmllint $$(git ls-files "*.qml")
-lint-terraform:
-	terraform fmt -recursive -check
-lint-terraform-fix:
-	terraform fmt -recursive
+static-type-check-terraform:
+	cd terraform && terraform validate
+static-type-check-typescript:
+	cd api-node && npm run tsc
+	cd ethereum && npm run tsc
+	cd mobile-react-native && npm run tsc
+	cd web-cypress && npm run tsc
