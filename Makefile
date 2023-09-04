@@ -252,6 +252,7 @@ lint-solidity:
 lint-solidity-fix:
 	npm run lint:solidity:fix
 lint-sql:
+	poetry run poe lint-sql -- --dialect=athena aws/amazon-athena/queries
 	poetry run poe lint-sql -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
 	poetry run poe lint-sql -- --dialect=clickhouse clickhouse/cpu_metrics
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
@@ -264,6 +265,7 @@ lint-sql:
 	poetry run poe lint-sql -- --dialect=sparksql hm-spark/applications/find-taxi-top-routes-sql/src/queries
 	poetry run poe lint-sql -- --dialect=trino trino/queries
 lint-sql-fix:
+	poetry run poe lint-sql-fix -- --dialect=athena aws/amazon-athena/queries
 	poetry run poe lint-sql-fix -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
 	poetry run poe lint-sql-fix -- --dialect=clickhouse clickhouse/cpu_metrics
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/migrations
