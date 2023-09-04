@@ -59,7 +59,7 @@ def main(data_dirname: str, ratings_filename: str, movies_filename: str):
 
 if __name__ == "__main__":
     # https://grouplens.org/datasets/movielens/latest/
-    data_dirname = "data"
-    ratings_filename = "ratings.csv"
-    movies_filename = "movies.csv"
-    main(data_dirname, ratings_filename, movies_filename)
+    external_data_dirname = "data"
+    external_ratings_filename = "ratings.csv"
+    external_movies_filename = "movies.csv"
+    main(external_data_dirname, external_ratings_filename, external_movies_filename)

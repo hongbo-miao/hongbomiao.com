@@ -50,7 +50,7 @@ def train():
             ]
         ),
     )
-    train, val = data.random_split(dataset, [55000, 5000])
+    train_dataset, val_dataset = data.random_split(dataset, [55000, 5000])
 
     autoencoder = LitAutoEncoder()
     trainer = L.Trainer(
@@ -59,7 +59,9 @@ def train():
         max_epochs=2,
         check_val_every_n_epoch=1,
     )
-    trainer.fit(autoencoder, data.DataLoader(train), data.DataLoader(val))
+    trainer.fit(
+        autoencoder, data.DataLoader(train_dataset), data.DataLoader(val_dataset)
+    )
 
 
 @dsl.pipeline

@@ -19,7 +19,7 @@ func VerifyJWTTokenAndExtractOPALClientID(tokenString string) (string, error) {
 		return "", err
 	}
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return jwt.ParseRSAPublicKeyFromPEM([]byte(publicKey))
+		return jwt.ParseRSAPublicKeyFromPEM(publicKey)
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("jwt.Parse")

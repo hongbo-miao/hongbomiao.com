@@ -3,7 +3,7 @@ package traefik_plugin_disable_graphql_introspection
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"strings"
@@ -34,7 +34,7 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 }
 
 func (d *DisableGraphQLIntrospection) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		log.Printf("Error reading body: %v", err)
 		rw.WriteHeader(http.StatusBadRequest)
@@ -60,6 +60,6 @@ func (d *DisableGraphQLIntrospection) ServeHTTP(rw http.ResponseWriter, r *http.
 			return
 		}
 	}
-	r.Body = ioutil.NopCloser(bytes.NewBuffer(body))
+	r.Body = io.NopCloser(bytes.NewBuffer(body))
 	d.next.ServeHTTP(rw, r)
 }
