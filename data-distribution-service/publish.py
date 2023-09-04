@@ -3,8 +3,8 @@ import time
 import rti.connextdds as dds
 
 
-def publisher_main(domain_id: int, total_count: int):
-    participant = dds.DomainParticipant(domain_id=domain_id)
+def publisher_main(dds_domain_id: int, total_count: int):
+    participant = dds.DomainParticipant(domain_id=dds_domain_id)
     hm_type = dds.QosProvider("hm_message.xml").type("HMMessage")
 
     topic = dds.DynamicData.Topic(participant, "hm-topic", hm_type)
@@ -26,6 +26,6 @@ def publisher_main(domain_id: int, total_count: int):
 
 
 if __name__ == "__main__":
-    dds_domain_id = 0
-    total_count = 100
-    publisher_main(dds_domain_id, total_count)
+    external_dds_domain_id = 0
+    external_total_count = 100
+    publisher_main(external_dds_domain_id, external_total_count)

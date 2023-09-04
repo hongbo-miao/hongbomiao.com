@@ -46,9 +46,9 @@ def main(
 
 if __name__ == "__main__":
     # https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
-    data_dirname = "data"
-    query_dirname = "src/queries"
-    trip_filenames = [
+    external_data_dirname = "data"
+    external_query_dirname = "src/queries"
+    external_trip_filenames = [
         "yellow_tripdata_2019-01.parquet",
         "yellow_tripdata_2019-02.parquet",
         "yellow_tripdata_2019-03.parquet",
@@ -92,6 +92,12 @@ if __name__ == "__main__":
         "yellow_tripdata_2022-05.parquet",
         "yellow_tripdata_2022-06.parquet",
     ]
-    zone_filename = "taxi_zones.csv"
-    query_filename = "query.sql"
-    main(data_dirname, query_dirname, trip_filenames, zone_filename, query_filename)
+    external_zone_filename = "taxi_zones.csv"
+    external_query_filename = "query.sql"
+    main(
+        external_data_dirname,
+        external_query_dirname,
+        external_trip_filenames,
+        external_zone_filename,
+        external_query_filename,
+    )
