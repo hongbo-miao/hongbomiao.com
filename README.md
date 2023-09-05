@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b4590338-9588-443a-be90-b11a8fae46cd)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/da03d766-bc0c-4c63-9ecf-3132e4888a60)
 
 # 📦 Setup
 
@@ -348,6 +348,7 @@ make kubernetes-clean
   - **AWS Glue DataBrew** - Data cleaning
   - **AWS IAM** - Identity and access management
   - **AWS IoT Core** - Internet of Things (IoT)
+  - **AWS Lake Formation** - Data lake governance
   - **AWS Secrets Manager** - Password management
 - **Google Cloud**
   - **BigQuery** - Data warehouse
