@@ -14,6 +14,8 @@ hadoop-yarn-stop:
 	sudo systemctl stop hadoop-yarn-resourcemanager
 
 # Amazon EMR - Hadoop HDFS
+hadoop-hdfs-version:
+	hdfs version
 hadoop-hdfs-ls:
 	hdfs dfs -ls
 	hdfs dfs -ls /
