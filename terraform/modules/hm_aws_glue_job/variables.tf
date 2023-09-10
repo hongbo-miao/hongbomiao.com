@@ -1,10 +1,7 @@
-variable "aws_glue_crawler_name" {
+variable "aws_glue_job_name" {
   type = string
 }
-variable "aws_glue_crawler_delta_tables" {
-  type = list(string)
-}
-variable "aws_glue_database" {
+variable "spark_script_s3_location" {
   type = string
 }
 variable "aws_iam_role" {
