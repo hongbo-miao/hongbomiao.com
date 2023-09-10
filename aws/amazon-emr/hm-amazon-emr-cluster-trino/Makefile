@@ -1,7 +1,7 @@
 amazon-emr-cluster-create:
 	aws emr create-cluster \
 		--name=hm-amazon-emr-cluster-trino \
-		--release-label=emr-6.12.0 \
+		--release-label=emr-6.13.0 \
 		--applications=Name=Trino \
 		--configurations=file://hm-amazon-emr-cluster-trino-config.json \
 		--instance-groups=file://cluster-config/instance-groups.json \
