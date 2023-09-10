@@ -3,7 +3,7 @@
     "InstanceCount": 1,
     "InstanceGroupType": "MASTER",
     "Name": "Primary",
-    "InstanceType": "m6a.2xlarge",
+    "InstanceType": "r5.2xlarge",
     "EbsConfiguration": {
       "EbsBlockDeviceConfigs": [
         {
@@ -20,7 +20,24 @@
     "InstanceCount": 1,
     "InstanceGroupType": "CORE",
     "Name": "Core",
-    "InstanceType": "m6a.2xlarge",
+    "InstanceType": "r5.2xlarge",
+    "EbsConfiguration": {
+      "EbsBlockDeviceConfigs": [
+        {
+          "VolumeSpecification": {
+            "VolumeType": "gp2",
+            "SizeInGB": 32
+          },
+          "VolumesPerInstance": 2
+        }
+      ]
+    }
+  },
+  {
+    "InstanceCount": 7,
+    "InstanceGroupType": "TASK",
+    "Name": "Task",
+    "InstanceType": "r5.2xlarge",
     "EbsConfiguration": {
       "EbsBlockDeviceConfigs": [
         {
