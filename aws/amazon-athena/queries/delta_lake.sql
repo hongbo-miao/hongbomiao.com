@@ -10,3 +10,5 @@ select
     voltage,
     temperature
 from awsdatacatalog.hm_iot_db.motor limit 100;
+
+show partitions awsdatacatalog.hm_iot_db.motor;
