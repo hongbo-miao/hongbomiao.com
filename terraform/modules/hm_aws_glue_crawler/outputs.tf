@@ -1,9 +1,9 @@
-output "crawler_id" {
+output "id" {
   value = aws_glue_crawler.hm_aws_glue_crawler.id
 }
-output "crawler_name" {
+output "name" {
   value = aws_glue_crawler.hm_aws_glue_crawler.name
 }
-output "crawler_arn" {
+output "arn" {
   value = aws_glue_crawler.hm_aws_glue_crawler.arn
 }
