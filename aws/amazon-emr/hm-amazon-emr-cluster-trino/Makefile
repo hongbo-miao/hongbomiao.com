@@ -6,7 +6,7 @@ amazon-emr-cluster-create:
 		--configurations=file://hm-amazon-emr-cluster-trino-config.json \
 		--instance-groups=file://cluster-config/instance-groups.json \
 		--bootstrap-actions='[{"Name": "set_up", "Path": "s3://hongbomiao-bucket/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"}]' \
-		--log-uri=s3n://hongbomiao-bucket/amazon-emr/logs/ \
+		--log-uri=s3://hongbomiao-bucket/amazon-emr/logs/ \
 		--service-role=arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-xxxxxxxxxxxxxxx \
 		--scale-down-behavior=TERMINATE_AT_TASK_COMPLETION \
 		--auto-termination-policy='{"IdleTimeout":7200}' \
