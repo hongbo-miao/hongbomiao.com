@@ -45,7 +45,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
       {
         Classification : "trino-connector-postgresql",
         Properties : {
-          connection-url : "jdbc:postgresql://${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_host"]}/${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_db"]}",
+          connection-url : "jdbc:postgresql://${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_host"]}:${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_port"]}/${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_db"]}",
           connection-user : jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_user"],
           connection-password : jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_password"]
         }
