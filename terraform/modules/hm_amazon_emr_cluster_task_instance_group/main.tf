@@ -4,5 +4,5 @@ resource "aws_emr_instance_group" "hm_amazon_emr_cluster_task_instance_group" {
   cluster_id     = var.amazon_emr_cluster_id
   instance_type  = var.task_instance_type
   instance_count = var.task_instance_count
-  bid_price      = 0.3
+  bid_price      = 0.6
 }

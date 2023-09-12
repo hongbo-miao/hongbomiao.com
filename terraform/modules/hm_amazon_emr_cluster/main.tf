@@ -3,7 +3,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
   name                              = var.amazon_emr_cluster_name
   release_label                     = var.amazon_emr_version
   applications                      = ["Trino"]
-  termination_protection            = false
+  termination_protection            = true
   keep_job_flow_alive_when_no_steps = true
   log_uri                           = "s3://integrated-test-data-archer/amazon-emr/logs/"
   ec2_attributes {
@@ -22,7 +22,6 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
     name           = "Core"
     instance_type  = var.core_instance_type
     instance_count = var.core_instance_count
-    bid_price      = 0.3
   }
   bootstrap_action {
     name = "set_up"
@@ -33,7 +32,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
       {
         Classification : "delta-defaults",
         Properties : {
-          "delta.enabled" : true
+          "delta.enabled" : "true"
         }
       },
       {
