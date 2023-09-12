@@ -29,7 +29,7 @@ module "hm_amazon_ec2_module" {
   ec2_instance_type = "t2.nano"
 }
 
-# Amazon EMR
+# Amazon EMR - Trino
 module "hm_amazon_emr_cluster" {
   source                  = "./modules/hm_amazon_emr_cluster"
   amazon_emr_cluster_name = "hm-emr-cluster-trino"
@@ -46,6 +46,17 @@ module "hm_amazon_emr_cluster_task_instance_group" {
   amazon_emr_cluster_id = module.hm_amazon_emr_cluster.id
   task_instance_type    = "r5.2xlarge"
   task_instance_count   = 1
+}
+data "aws_instance" "hm_amazon_emr_cluster_primary_node_amazon_ec2_instance" {
+  filter {
+    name   = "private-dns-name"
+    values = [module.hm_amazon_emr_cluster.master_public_dns]
+  }
+}
+module "hm_amazon_route_53_record" {
+  source  = "./modules/hm_amazon_route_53"
+  name    = "hm-emr-trino"
+  records = [data.aws_instance.hm_amazon_emr_cluster_primary_node_amazon_ec2_instance.private_ip]
 }
 
 # AWS Glue
