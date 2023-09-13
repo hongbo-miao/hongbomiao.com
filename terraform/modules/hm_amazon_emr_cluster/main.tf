@@ -25,7 +25,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
   }
   bootstrap_action {
     name = "set_up"
-    path = "s3://hongbomiao-bucket/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
+    path = var.bootstrap_set_up_script_s3_uri
   }
   configurations_json = jsonencode(
     [

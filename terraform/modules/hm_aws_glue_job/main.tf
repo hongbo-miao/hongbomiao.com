@@ -8,7 +8,7 @@ resource "aws_glue_job" "hm_aws_glue_job" {
   number_of_workers = 10
   timeout           = 30
   command {
-    script_location = var.spark_script_s3_location
+    script_location = var.spark_script_s3_uri
     python_version  = 3
   }
   execution_property {
