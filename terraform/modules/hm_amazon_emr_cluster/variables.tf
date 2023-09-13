@@ -13,6 +13,9 @@ variable "core_instance_type" {
 variable "core_instance_count" {
   type = number
 }
+variable "bootstrap_set_up_script_s3_uri" {
+  type = string
+}
 variable "aws_iam_role" {
   type = string
 }

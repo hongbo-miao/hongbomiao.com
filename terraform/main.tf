@@ -31,23 +31,24 @@ module "hm_amazon_ec2_module" {
 
 # Amazon EMR - Trino
 module "hm_amazon_emr_cluster" {
-  source                  = "./modules/hm_amazon_emr_cluster"
-  amazon_emr_cluster_name = "hm-emr-cluster-trino"
-  amazon_emr_version      = "emr-6.13.0"
-  primary_instance_type   = "r5.xlarge"
-  core_instance_type      = "r5.2xlarge"
-  core_instance_count     = 1
-  aws_iam_role            = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
-  environment             = var.environment
-  team                    = var.team
+  source                         = "./modules/hm_amazon_emr_cluster"
+  amazon_emr_cluster_name        = "hm-emr-cluster-trino"
+  amazon_emr_version             = "emr-6.13.0"
+  primary_instance_type          = "r6a.xlarge"
+  core_instance_type             = "r6a.2xlarge"
+  core_instance_count            = 1
+  bootstrap_set_up_script_s3_uri = "s3://hongbomiao-bucket/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
+  aws_iam_role                   = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  environment                    = var.environment
+  team                           = var.team
 }
 module "hm_amazon_emr_cluster_task_instance_group" {
   source                = "./modules/hm_amazon_emr_cluster_task_instance_group"
   amazon_emr_cluster_id = module.hm_amazon_emr_cluster.id
-  task_instance_type    = "r5.2xlarge"
+  task_instance_type    = "r6a.2xlarge"
   task_instance_count   = 1
 }
-data "aws_instance" "hm_amazon_emr_cluster_primary_node_amazon_ec2_instance" {
+data "aws_instance" "hm_amazon_emr_cluster_primary_node_ec2_instance" {
   filter {
     name   = "private-dns-name"
     values = [module.hm_amazon_emr_cluster.master_public_dns]
@@ -56,17 +57,17 @@ data "aws_instance" "hm_amazon_emr_cluster_primary_node_amazon_ec2_instance" {
 module "hm_amazon_route_53_record" {
   source  = "./modules/hm_amazon_route_53"
   name    = "hm-emr-trino"
-  records = [data.aws_instance.hm_amazon_emr_cluster_primary_node_amazon_ec2_instance.private_ip]
+  records = [data.aws_instance.hm_amazon_emr_cluster_primary_node_ec2_instance.private_ip]
 }
 
 # AWS Glue
 module "hm_aws_glue_job" {
-  source                   = "./modules/hm_aws_glue_job"
-  aws_glue_job_name        = "hm_write_parquet_to_delta_lake_motor"
-  spark_script_s3_location = "s3://hongbomiao-bucket/aws-glue/spark-scripts/hm_write_parquet_to_delta_lake_motor.py"
-  aws_iam_role             = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
-  environment              = var.environment
-  team                     = var.team
+  source              = "./modules/hm_aws_glue_job"
+  aws_glue_job_name   = "hm_write_parquet_to_delta_lake_motor"
+  spark_script_s3_uri = "s3://hongbomiao-bucket/aws-glue/spark-scripts/hm_write_parquet_to_delta_lake_motor.py"
+  aws_iam_role        = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
+  environment         = var.environment
+  team                = var.team
 }
 module "hm_aws_glue_crawler_module" {
   source                        = "./modules/hm_aws_glue_crawler"
