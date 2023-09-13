@@ -55,9 +55,9 @@ data "aws_instance" "hm_amazon_emr_cluster_primary_node_ec2_instance" {
   }
 }
 module "hm_amazon_route_53_record" {
-  source  = "./modules/hm_amazon_route_53"
-  name    = "hm-emr-trino"
-  records = [data.aws_instance.hm_amazon_emr_cluster_primary_node_ec2_instance.private_ip]
+  source                        = "./modules/hm_amazon_route_53"
+  amazon_route_53_record_name   = "hm-emr-trino"
+  amazon_route_53_record_values = [data.aws_instance.hm_amazon_emr_cluster_primary_node_ec2_instance.private_ip]
 }
 
 # AWS Glue
