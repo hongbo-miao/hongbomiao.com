@@ -61,6 +61,12 @@ module "hm_amazon_route_53_record" {
 }
 
 # AWS Glue
+module "itg_amazon_s3_object" {
+  source           = "./modules/hm_amazon_s3_object"
+  amazon_s3_bucket = "hongbomiao-bucket"
+  amazon_s3_key    = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_motor.py"
+  local_file_path  = "./data/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_motor.py"
+}
 module "hm_aws_glue_job" {
   source              = "./modules/hm_aws_glue_job"
   aws_glue_job_name   = "hm_write_parquet_to_delta_lake_motor"
