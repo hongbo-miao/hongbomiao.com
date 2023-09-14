@@ -251,8 +251,9 @@ make kubernetes-clean
 
 - **NumPy** - Scientific computing library
 - **pandas** - Data analysis library
-- **AWS SDK for pandas** - pandas on AWS
-- **Modin** - pandas workflows scaling
+  - **GeoPandas** - Geographic data library
+  - **AWS SDK for pandas** - pandas on AWS
+  - **Modin** - pandas workflows scaling
 - **Ray** - Distributed computing framework
 - **Jupyter Notebook** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
