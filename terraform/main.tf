@@ -46,7 +46,7 @@ module "hm_amazon_emr_cluster_task_instance_group" {
   source                = "./modules/hm_amazon_emr_cluster_task_instance_group"
   amazon_emr_cluster_id = module.hm_amazon_emr_cluster.id
   task_instance_type    = "r6a.2xlarge"
-  task_instance_count   = 1
+  task_instance_count   = 7
 }
 data "aws_instance" "hm_amazon_emr_cluster_primary_node_ec2_instance" {
   filter {
