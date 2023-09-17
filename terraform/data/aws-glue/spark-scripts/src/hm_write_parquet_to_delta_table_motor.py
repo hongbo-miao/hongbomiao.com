@@ -37,6 +37,6 @@ additional_options = {
 sink_to_delta_lake_node3_df = S3bucket_node1.toDF()
 sink_to_delta_lake_node3_df.write.format("delta").options(
     **additional_options
-).partitionBy(*partition_list).mode("append").save()
+).partitionBy(*partition_list).mode("overwrite").save()
 
 job.commit()
