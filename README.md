@@ -376,18 +376,22 @@ make kubernetes-clean
 - **Opsgenie** - Incident management platform
 - **[GitHub Actions](https://github.com/hongbo-miao/hongbomiao.com/actions)** - Continuous integration
 
-## Embedded, IoT, Hardware
+## Simulation
 
-- **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
-- **pySerial** - Serial communication library
+- **AnyLogic** - Simulation modeling tool
 - **NI VeriStand** - Real-time testing and simulation
   - **niveristand** - NI VeriStand API library
   - **npTDMS** - TDMS files reading and writing
   - **PyVISA** - Virtual instrument software architecture (VISA) API library
-- **AnyLogic** - Simulation modeling tool
 - **MATLAB** - Programming and numeric computing platform
   - **Simulink** - Simulation and model-based designing
     - **Simscape** - Model and simulate multidomain physical systems
+- **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
+
+## Embedded, IoT, Hardware
+
+- **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
+- **pySerial** - Serial communication library
 - **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
@@ -464,7 +468,6 @@ make kubernetes-clean
 
 ## Physics
 
-- **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
 - **Qiskit** - Quantum computing
 
 ## Bots
@@ -579,25 +582,31 @@ make kubernetes-clean
 
 # 🏞 Highlights
 
-## Physics
+## Simulation
+
+### AnyLogic - Simulation Modeling Tool
+
+The following presents a model of a radar-based air defense system. Bombers are dispatched to destroy ground facilities, while the buildings are safeguarded by the air defense system, comprising two radars equipped with guided surface-to-air missiles.
+
+![AnyLogic screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b34367cf-8cfa-4d96-8762-302d4f1308c4)
+
+### NI VeriStand - Real-Time Testing and Simulation
+
+![NI VeriStand screenshot](https://user-images.githubusercontent.com/3375461/229713107-9b1ea646-ea41-4ca2-af3f-3c537aa601b9.jpg)
 
 ### SimScale - Computational Fluid Dynamics (CFD), Finite Element Analysis (FEA), Thermal Simulation
 
 ![SimScale screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/cdfd5cac-3e6a-4cb3-9bf5-912718ee3a86)
 
-## Embedded, IoT, Hardware
-
 ### MATLAB, Simulink, Simscape
 
 ![MATLAB and Simulink screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
 
+## Embedded, IoT, Hardware
+
 ### RTI Connext - Real-Time, Distributed Systems Framework
 
 ![RTI Connext screenshot](https://user-images.githubusercontent.com/3375461/197075768-18b61ddf-57db-4d32-ae48-c7e77cea9c77.jpg)
-
-### NI VeriStand - Real-Time Testing and Simulation
-
-![NI VeriStand screenshot](https://user-images.githubusercontent.com/3375461/229713107-9b1ea646-ea41-4ca2-af3f-3c537aa601b9.jpg)
 
 ### ROS - Robot Operating System
 
