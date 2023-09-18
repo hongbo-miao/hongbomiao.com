@@ -6,9 +6,10 @@ from matplotlib import pyplot as plt
 
 
 def main() -> None:
-    chicago = geopandas.read_file(geodatasets.get_path("geoda.chicago_commpop"))
-    logging.info(chicago.head())
-    chicago.plot(
+    gdf = geopandas.read_file(geodatasets.get_path("geoda.chicago_commpop"))
+    logging.info(gdf.head())
+    gdf.to_parquet("data/chicago_commpop.parquet")
+    gdf.plot(
         column="POP2010",
         legend=True,
         scheme="quantiles",
