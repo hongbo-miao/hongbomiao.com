@@ -588,15 +588,15 @@ make kubernetes-clean
 
 The following presents a model of a radar-based air defense system. Bombers are dispatched to destroy ground facilities, while the buildings are safeguarded by the air defense system, comprising two radars equipped with guided surface-to-air missiles.
 
-![AnyLogic screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b34367cf-8cfa-4d96-8762-302d4f1308c4)
+![AnyLogic screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc2c8c2e-8acc-4df5-8a1a-fdf1da7c6f43)
 
 ### NI VeriStand - Real-Time Testing and Simulation
 
-![NI VeriStand screenshot](https://user-images.githubusercontent.com/3375461/229713107-9b1ea646-ea41-4ca2-af3f-3c537aa601b9.jpg)
+![NI VeriStand screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc7d0c92-7d55-4251-9d39-c53eaac699e2)
 
 ### SimScale - Computational Fluid Dynamics (CFD), Finite Element Analysis (FEA), Thermal Simulation
 
-![SimScale screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/cdfd5cac-3e6a-4cb3-9bf5-912718ee3a86)
+![SimScale screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/953ec6ed-201e-4e59-bb43-f77c385d4054)
 
 ### MATLAB, Simulink, Simscape
 
@@ -606,13 +606,13 @@ The following presents a model of a radar-based air defense system. Bombers are 
 
 ### RTI Connext - Real-Time, Distributed Systems Framework
 
-![RTI Connext screenshot](https://user-images.githubusercontent.com/3375461/197075768-18b61ddf-57db-4d32-ae48-c7e77cea9c77.jpg)
+![RTI Connext screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/3022ac89-a5d6-4bf6-a5cc-f6ad14d74f61)
 
 ### ROS - Robot Operating System
 
-![ROS screenshot](https://user-images.githubusercontent.com/3375461/209642451-94727634-8ce6-4bbf-bd2c-fa5dc1562f07.png)
+![ROS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/4e4ab425-53a1-428d-abb9-408eb48553da)
 
-![ROS screenshot](https://user-images.githubusercontent.com/3375461/209642038-fd588750-e1dd-410b-b5fa-e65d0460338a.png)
+![ROS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/6728d19c-9f04-4ec9-a603-46fd8ee0e2b0)
 
 ### OpenSCAD - 3D CAD Modeller
 
@@ -628,53 +628,53 @@ The VHDL waveforms are displayed in GTKWave.
 
 ### Poky - Reference Linux Distribution of the Yocto Project
 
-![Poky screenshot](https://user-images.githubusercontent.com/3375461/211735676-db514f9f-aff7-4f9f-9f84-434b3192c709.png)
+![Poky screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/fcb5650c-a33b-4564-ba9e-bca0a666b1a2)
 
 ## Computer Vision
 
 ### Open3D
 
-![Open3D screenshot](https://user-images.githubusercontent.com/3375461/206969208-a2e5ad6b-8541-4040-8737-24f198aee579.jpg)
+![Open3D screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/f4c6dca1-b0c1-4370-9c78-bef12bc70218)
 
 ## Data
 
 ### Vertex AI - AutoML
 
-![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061661-c2530404-98af-4f8a-9749-30bbca952cd2.png)
-![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061692-bbbfebf2-ff56-4336-b109-f07282df56a3.png)
-![Vertex AI screenshot](https://user-images.githubusercontent.com/3375461/208061707-28510a32-65e2-413f-85e7-70d93dc44820.png)
+![Vertex AI screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/96afa9b3-5393-487d-9eca-8251110f5ddf)
+![Vertex AI screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/902f0d1d-50e8-4e13-91ed-3fa6445c6d81)
+![Vertex AI screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/91edf48a-994b-4de2-bcd5-aeb38059dfd7)
 
 ### Dataprep - Data Cleaning
 
-![Dataprep screenshot](https://user-images.githubusercontent.com/3375461/197430470-ae676c14-8dad-4cd7-9326-3df1856f242c.png)
+![Dataprep screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/0fea3642-3c55-4f6a-94f3-e62faa41be2a)
 
 ### Kubeflow - Machine Learning Platform
 
-![Kubeflow screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/00574b34-37f2-4889-881e-e7e50a047bad)
+![Kubeflow screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/0de50151-9d5d-4239-82de-93bf2eed1169)
 
 ### Ray - Distributed Computing
 
-![Ray screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/a949d05e-22bb-4e22-870b-30f7f96a9995)
+![Ray screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/a7d77743-2a96-4fb0-b075-d2ec48ab655a)
 
 ### Prefect - Orchestration Platform
 
-![Prefect screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/2496f818-804b-43b8-88ee-9b535938b2f8)
+![Prefect screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7880b5a4-9b0b-40c8-ad35-a3e5e26da0aa)
 
 ### Airflow - Orchestration Platform
 
-![Airflow screenshot](https://user-images.githubusercontent.com/3375461/178954051-929a42b3-667b-4075-bb1e-32306113251a.png)
+![Airflow screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/449d08dc-08fe-4646-bf7e-8d1f6eb246ee)
 
 ### Flink - Data Processing
 
-![Flink screenshot](https://user-images.githubusercontent.com/3375461/129500704-9032b559-5dc5-4385-99eb-3f7d4a1f1086.png)
+![Flink screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/df4d0cd7-86da-4682-b097-88ca7ee1b7a7)
 
 ### Dgraph - Distributed Graph Database
 
-![Dgraph screenshot](https://user-images.githubusercontent.com/3375461/126815004-925b6be5-6e44-44be-9193-46b018ec4bf7.png)
+![Dgraph screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b0e4642d-ad8b-4ce1-a87d-c766f0292ae8)
 
 ### Redis with RedisGraph Module
 
-![Redis screenshot](https://user-images.githubusercontent.com/3375461/167368266-8f8d27b1-ec58-48c5-b6bd-030dc2970cc8.jpg)
+![Redis screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/c366b78c-90e2-441a-943b-4be59e0bea6c)
 
 ## Machine Learning
 
@@ -682,99 +682,99 @@ The VHDL waveforms are displayed in GTKWave.
 
 Chatbot on Telegram powered by Rasa.
 
-![Telegram screenshot](https://user-images.githubusercontent.com/3375461/148026649-70dca296-7813-4d58-bc82-d7a2c5b8576e.png)
+![Telegram screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/14374215-ec31-43d0-be25-dc59b0c9c70e)
 
 ### Weights & Biases - Machine Learning Experiment Tracking
 
 [Distributed hyperparameter optimization result](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf) by Weights & Biases.
 
-[![Weights & Biases screenshot](https://user-images.githubusercontent.com/3375461/112082183-dbf1bf80-8bbf-11eb-9c81-675cc0bd2763.png)](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)
+[![Weights & Biases screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/0fb8e396-94e0-47ad-80e2-517dfa191eed)](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)
 
 ## Cloud Native
 
 ### Pixie - Kubernetes Application Observing
 
-![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168404534-18960440-3d91-4b03-9775-321364c3fcf8.jpg)
+![Pixie screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/d3ea9059-45f3-4ee3-8664-bcf167e9eea6)
 
-![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168404530-cdc5fa7b-b9ec-4ce3-b573-5312badf2e7b.jpg)
+![Pixie screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/e0622e37-bb50-46d9-a572-8f76e717247c)
 
-![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168404538-98a197d9-632e-4252-b7e5-d1b94961c3d1.jpg)
+![Pixie screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/05ab9c40-cb6e-4872-938b-b6e03745b1f5)
 
-![Pixie screenshot](https://user-images.githubusercontent.com/3375461/168404542-2d43d21c-b6f4-4af6-93b7-b5e76c104268.jpg)
+![Pixie screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/fb2b47c0-a6de-4957-af7f-0fd90d09c7a2)
 
 ### Linkerd - Service Mesh
 
-![Linkerd screenshot](https://user-images.githubusercontent.com/3375461/127684629-a0d9d76b-cbc6-465f-80ea-10c3e06f7eac.png)
+![Linkerd screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/a0f0dae6-6df4-4813-8035-cc21dcc04059)
 
 ### Hasura - GraphQL Engine
 
-![Hasura GraphQL Engine screenshot](https://user-images.githubusercontent.com/3375461/167373764-3fd97b12-034c-42bd-84d5-c65ecd068ae1.jpg)
+![Hasura GraphQL Engine screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7b31aa59-1185-48f6-bb16-ea802bca7ba1)
 
 ### Traefik - Reverse Proxy and Load Balancer
 
-![Traefik screenshot](https://user-images.githubusercontent.com/3375461/168451816-fee9aa54-d4b7-430d-bca3-a8f453931a35.jpg)
+![Traefik screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/963117c7-7aee-4994-8f12-d4fb70b0e66d)
 
 ### Netdata - Distributed Monitoring Platform
 
-![Netdata screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/063da2a6-b188-44a3-a958-f2c1b561d85c)
+![Netdata screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/f1e51bd2-474b-4711-a669-9148baed2013)
 
 ### Elastic APM - Application Performance Management
 
-![Elastic APM screenshot](https://user-images.githubusercontent.com/3375461/128647400-7377f888-6c76-4b13-8bce-50ad7afdb3c3.png)
+![Elastic APM screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/68037cc6-2368-437c-8f2d-f49e3935be4d)
 
 ### Jaeger - Distributed Tracing
 
-![Jaeger screenshot](https://user-images.githubusercontent.com/3375461/90900854-9e943c00-e3fc-11ea-9628-682a605972eb.jpg)
+![Jaeger screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b384c102-d392-4116-aa16-d08fcfb9ab58)
 
 ### Grafana - Data Visualization
 
 #### Data Source: Prometheus - Time-Series Database
 
-![Grafana - Prometheus screenshot](https://user-images.githubusercontent.com/3375461/163708604-89ce4617-8fb7-463f-86a0-11a3c5c73bd9.png)
+![Grafana - Prometheus screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/9182c9ae-1a94-47c0-9a0d-a80f14395d8d)
 
 #### Data Source: Loki - Log Aggregation System
 
-![Grafana - Loki screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/24b1af78-8617-45ab-9ced-9e72de046f86)
+![Grafana - Loki screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/36ee4b6b-7d89-4ad7-8fc9-cc8d8b1802bc)
 
 ### Kibana - Elasticsearch Visualization
 
-![Kibana screenshot](https://user-images.githubusercontent.com/3375461/90955224-50d80c00-e4ae-11ea-9345-dfa8e97ed41a.jpg)
+![Kibana screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/160f8d1b-6f2b-4e18-af35-c6081612eeff)
 
 ### Tableau - Data Visualization
 
-![Tableau screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/afdf388a-bd18-462e-96d5-cbb75f82f8bf)
+![Tableau screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/c2f7b368-9b2c-4d69-a422-31779269097d)
 
 ## Testing
 
 ### Locust - Load Testing
 
-![Locust screenshot](https://user-images.githubusercontent.com/3375461/98866512-0613d200-24a8-11eb-8275-d245efdc4727.jpg)
+![Locust screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/bbec7be9-b7b8-418c-9c18-badba9a3e6e0)
 
 ## Ops
 
 ### Argo CD - GitOps
 
-![Argo CD screenshot](https://user-images.githubusercontent.com/3375461/127684622-28c23303-1b93-476d-9080-6194471a8c9a.png)
+![Argo CD screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b01c712f-488c-4298-91f7-604728bbaeea)
 
 ### Discord - ChatOps
 
-![Discord screenshot](https://user-images.githubusercontent.com/3375461/135687134-aaad261c-dee9-4a70-b8b2-2da393e114cb.png)
+![Discord screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/8824ac14-4d8b-4a64-9099-0fd7ecf461d3)
 
 ### Rancher - Kubernetes Container Management
 
-![Rancher screenshot](https://user-images.githubusercontent.com/3375461/168413513-fb747e9f-ac75-4920-aa9e-f9253b8f724f.jpg)
+![Rancher screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/559175fc-c7a0-40f1-9052-5534548e2e7c)
 
 ### Kubecost - Kubernetes Cost Monitoring
 
-![Kubecost screenshot](https://user-images.githubusercontent.com/3375461/167351502-ee32bb31-3499-4a9c-9dcc-87b38099aa62.jpg)
+![Kubecost screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/a9c0398a-cb97-4d60-ad48-dce7d2bdcf52)
 
 ### Polaris - Kubernetes Best Practices Validation
 
-![Polaris screenshot](https://user-images.githubusercontent.com/3375461/167352130-75b7c8ee-d7e1-4731-9765-c4d05e22f684.jpg)
+![Polaris screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/1eb685ce-d79d-49af-a308-0e84c4076172)
 
 ### Goldilocks - Kubernetes Resource Requests Recommendation
 
-![Goldilocks screenshot](https://user-images.githubusercontent.com/3375461/167352330-f2d99896-e99d-4e89-876c-91ea0741e1c2.jpg)
+![Goldilocks screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/68d82f43-a4f0-41c5-8e94-87864bed4795)
 
 ## Web
 
@@ -782,7 +782,7 @@ Chatbot on Telegram powered by Rasa.
 
 The website [supports HTTP/3](https://www.http3check.net/?host=hongbomiao.com).
 
-[![HTTP/3 screenshot](https://user-images.githubusercontent.com/3375461/92599407-cdefe780-f2dc-11ea-8bf9-dc153187287f.jpg)](https://www.http3check.net/?host=hongbomiao.com)
+[![HTTP/3 screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/fc3018df-74e9-4a0a-b8dc-b298eee69708)](https://www.http3check.net/?host=hongbomiao.com)
 
 ### AVIF
 
@@ -794,10 +794,10 @@ The WebP is almost half the size of JPEG, and AVIF is under half the size of Web
 
 Below is the website [security report](https://observatory.mozilla.org/analyze/www.hongbomiao.com) generated by Mozilla Observatory.
 
-[![Mozilla Observatory screenshot](https://user-images.githubusercontent.com/3375461/148025144-57d3c888-7ddd-4242-90ab-9759642f393d.png)](https://observatory.mozilla.org/analyze/www.hongbomiao.com)
+[![Mozilla Observatory screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/5b50746f-8f26-4b1f-aa40-898b47073a5c)](https://observatory.mozilla.org/analyze/www.hongbomiao.com)
 
 ### Profiling
 
 Profiling result by Clinic.js and autocannon.
 
-![Profiling screenshot](https://user-images.githubusercontent.com/3375461/94975997-100bf200-0546-11eb-9284-db40711a3052.jpg)
+![Profiling screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7e498a57-2c86-4762-8f5b-70af2054d2a7)
