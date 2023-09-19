@@ -4,6 +4,6 @@ variable "amazon_emr_cluster_id" {
 variable "task_instance_type" {
   type = string
 }
-variable "task_instance_count" {
+variable "task_target_spot_capacity" {
   type = number
 }

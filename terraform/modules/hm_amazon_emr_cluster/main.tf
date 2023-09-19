@@ -14,14 +14,31 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
     service_access_security_group     = "sg-xxxxxxxxxxxxxxxxx"
     key_name                          = "hm-ec2-key-pair"
   }
-  master_instance_group {
-    name          = "Primary"
-    instance_type = var.primary_instance_type
+  master_instance_fleet {
+    name                      = "Primary"
+    target_on_demand_capacity = 1
+    launch_specifications {
+      on_demand_specification {
+        allocation_strategy = "lowest-price"
+      }
+    }
+    instance_type_configs {
+      instance_type     = var.primary_instance_type
+      weighted_capacity = 1
+    }
   }
-  core_instance_group {
-    name           = "Core"
-    instance_type  = var.core_instance_type
-    instance_count = var.core_instance_count
+  core_instance_fleet {
+    name                      = "Core"
+    target_on_demand_capacity = var.core_target_on_demand_capacity
+    launch_specifications {
+      on_demand_specification {
+        allocation_strategy = "lowest-price"
+      }
+    }
+    instance_type_configs {
+      instance_type     = var.core_instance_type
+      weighted_capacity = 1
+    }
   }
   bootstrap_action {
     name = "set_up"

@@ -3,7 +3,7 @@ amazon-emr-cluster-create:
 		--name=hm-amazon-emr-cluster-jupterlab \
 		--release-label=emr-6.13.0 \
 		--applications Name=Hadoop Name=Hive Name=JupyterEnterpriseGateway Name=Spark \
-		--instance-groups=file://cluster-config/instance-groups.json \
+		--instance-fleets=file://cluster-config/instance-fleets.json \
 		--bootstrap-actions='[{"Name": "set_up", "Path": "s3://hongbomiao-bucket/amazon-emr/hm-amazon-emr-cluster-jupterlab/bootstrap-actions/set_up.sh"}]' \
 		--log-uri=s3://hongbomiao-bucket/amazon-emr/logs/ \
 		--service-role=arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-xxxxxxxxxxxxxxx \
