@@ -30,24 +30,5 @@
         "AllocationStrategy": "LOWEST_PRICE"
       }
     }
-  },
-  {
-    "Name": "Task",
-    "InstanceFleetType": "TASK",
-    "TargetSpotCapacity": 7,
-    "InstanceTypeConfigs": [
-      {
-        "InstanceType": "r6a.xlarge",
-        "WeightedCapacity": 1,
-        "BidPriceAsPercentageOfOnDemandPrice": 100
-      }
-    ],
-    "LaunchSpecifications": {
-      "SpotSpecification": {
-        "AllocationStrategy": "PRICE_CAPACITY_OPTIMIZED",
-        "TimeoutDurationMinutes": 60,
-        "TimeoutAction": "TERMINATE_CLUSTER"
-      }
-    }
   }
 ]
