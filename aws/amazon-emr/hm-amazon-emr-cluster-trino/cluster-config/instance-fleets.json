@@ -1,0 +1,53 @@
+[
+  {
+    "Name": "Primary",
+    "InstanceFleetType": "MASTER",
+    "TargetOnDemandCapacity": 1,
+    "LaunchSpecifications": {
+      "OnDemandSpecification": {
+        "AllocationStrategy": "LOWEST_PRICE"
+      }
+    },
+    "InstanceTypeConfigs": [
+      {
+        "InstanceType": "r6a.xlarge",
+        "WeightedCapacity": 1
+      }
+    ]
+  },
+  {
+    "Name": "Core",
+    "InstanceFleetType": "CORE",
+    "TargetOnDemandCapacity": 1,
+    "LaunchSpecifications": {
+      "OnDemandSpecification": {
+        "AllocationStrategy": "LOWEST_PRICE"
+      }
+    },
+    "InstanceTypeConfigs": [
+      {
+        "InstanceType": "r6a.xlarge",
+        "WeightedCapacity": 4
+      }
+    ]
+  },
+  {
+    "Name": "Task",
+    "InstanceFleetType": "TASK",
+    "TargetSpotCapacity": 1,
+    "LaunchSpecifications": {
+      "SpotSpecification": {
+        "AllocationStrategy": "PRICE_CAPACITY_OPTIMIZED",
+        "TimeoutAction": "TERMINATE_CLUSTER",
+        "TimeoutDurationMinutes": 60
+      }
+    },
+    "InstanceTypeConfigs": [
+      {
+        "InstanceType": "r6a.xlarge",
+        "WeightedCapacity": 4,
+        "BidPriceAsPercentageOfOnDemandPrice": 100
+      }
+    ]
+  }
+]
