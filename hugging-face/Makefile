@@ -9,5 +9,5 @@ poetry-add:
 poetry-add-dev:
 	poetry add xxx --group=dev
 
-poetry-run-sentiment-analysis:
-	poetry run poe sentiment-analysis
+poetry-run-dev:
+	poetry run poe dev

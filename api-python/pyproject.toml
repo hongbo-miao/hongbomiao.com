@@ -27,7 +27,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
 dev = "flask run"
-test = "pytest"
+test = "pytest --verbose --verbose"
 test-coverage = "pytest --cov=. --cov-report=xml"
 serve = "gunicorn 'flaskr:create_app()' --bind=:35903 --workers=5"
 flask-help = "flask --help"
