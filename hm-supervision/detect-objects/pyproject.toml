@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "hm-supervision-detect-objects"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.11.x"
+opencv-python = "4.8.0.76"
+supervision = "0.14.0"
+ultralytics = "8.0.184"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.22.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
