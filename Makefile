@@ -325,6 +325,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-taxi-top-routes
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-taxi-top-routes-sql
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.recommend-movies
+	poetry run poe static-type-check-python -- --package=hm-supervision.detect-objects
 	poetry run poe static-type-check-python -- --package=hugging-face
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-pyvisa
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-tdms
