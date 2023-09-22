@@ -3,7 +3,7 @@ import logging
 from transformers import pipeline
 
 
-def main():
+def main() -> None:
     classifier = pipeline("sentiment-analysis")
     logging.info(classifier("I've been waiting for this course my whole life."))
     logging.info(classifier("I've been waiting for so long for this package to ship."))

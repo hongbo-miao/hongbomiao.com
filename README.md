@@ -291,6 +291,9 @@ make kubernetes-clean
 ## Computer Vision
 
 - **Open3D** - 3D data processing
+- **OpenCV** - Computer vision library
+- **supervision** - Computer vision library
+- **Ultralytics YOLOv8** - Object detection model
 
 ## Cloud Native
 
