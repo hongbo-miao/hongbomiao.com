@@ -45,10 +45,6 @@ module.exports = {
         extensions: ['.js', '.ts', '.tsx'],
       },
     },
-    // https://github.com/yannickcr/eslint-plugin-react/issues/1955
-    react: {
-      version: '999.999.999',
-    },
   },
   rules: {
     'import/extensions': [
