@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/e25c3792-d29d-4831-906e-2906838322bc)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/765c280b-103b-4f65-85be-22b6f0e06b9c)
 
 # 📦 Setup
 
@@ -269,6 +269,7 @@ make kubernetes-clean
   - **flink-connector-twitter** - Flink Twitter connector
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
+- **Apache Sedona** - Spatial data processing framework
 - **Grafana** - Data visualization
 - **Metabase** - Data visualization
 - **Apache Superset** - Data visualization
