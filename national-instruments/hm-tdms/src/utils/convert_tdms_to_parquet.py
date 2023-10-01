@@ -11,6 +11,6 @@ def convert_tdms_to_parquet(data_dirname: str, tdms_filename: str) -> None:
         df.to_parquet(
             f"{data_dirname}/{group.name}.parquet",
             engine="pyarrow",
-            # compression="brotli",
-            compression="snappy",
+            compression="zstd",
+            compression_level=19,
         )

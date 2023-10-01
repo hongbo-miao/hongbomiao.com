@@ -31,7 +31,6 @@ S3bucket_node1 = glueContext.create_dynamic_frame.from_options(
 # Script generated for node sink_to_delta_lake
 additional_options = {
     "path": delta_table_path,
-    "write.parquet.compression-codec": "snappy",
     "mergeSchema": "true",
 }
 sink_to_delta_lake_node3_df = S3bucket_node1.toDF()
