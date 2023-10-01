@@ -1,8 +1,8 @@
 insert into iot_data (timestamp, temperature, humidity)
 select
     ts,
-    random() * 50 + 20 as temperature,
-    random() * 50 + 50 as humidity
+    random() * 50.0 + 20.0 as temperature,
+    random() * 50.0 + 50.0 as humidity
 from (
     select
         generate_series(

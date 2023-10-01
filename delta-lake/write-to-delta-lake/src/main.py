@@ -9,9 +9,9 @@ from deltalake.writer import write_deltalake
 
 def main(row_count: int):
     timestamp = np.array([time.time() + i * 0.01 for i in range(row_count)])
-    current = np.random.rand(row_count) * 10
-    voltage = np.random.rand(row_count) * 20
-    temperature = np.random.rand(row_count) * 50 + 25
+    current = np.random.rand(row_count) * 10.0
+    voltage = np.random.rand(row_count) * 20.0
+    temperature = np.random.rand(row_count) * 50.0 + 25.0
     data = {
         "timestamp": timestamp,
         "current": current,
