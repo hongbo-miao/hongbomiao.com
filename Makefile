@@ -262,7 +262,6 @@ lint-sql:
 	poetry run poe lint-sql -- --dialect=postgres timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql -- --dialect=postgres timescaledb/motor/migrations
 	poetry run poe lint-sql -- --dialect=sparksql delta-lake/sql
-	poetry run poe lint-sql -- --dialect=sparksql hm-spark/applications/find-taxi-top-routes-sql/src/queries
 	poetry run poe lint-sql -- --dialect=trino trino/queries
 lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=athena aws/amazon-athena/queries
@@ -275,7 +274,6 @@ lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=postgres timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres timescaledb/motor/migrations
 	poetry run poe lint-sql-fix -- --dialect=sparksql delta-lake/sql
-	poetry run poe lint-sql-fix -- --dialect=sparksql hm-spark/applications/find-taxi-top-routes-sql/src/queries
 	poetry run poe lint-sql-fix -- --dialect=trino trino/queries
 lint-terraform:
 	terraform fmt -recursive -check
