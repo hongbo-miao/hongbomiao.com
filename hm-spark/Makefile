@@ -1,3 +1,5 @@
+openjdk-install:
+	brew install openjdk@17
 apache-spark-install:
 	brew install apache-spark
 sbt-install:
