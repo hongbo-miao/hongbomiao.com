@@ -43,7 +43,8 @@ def main() -> None:
           points2.point as point2,
           st_distance(points1.point, points2.point) as distance
         from points1, points2
-        where st_distance(points1.point, points2.point) < 2
+        where 0.0 < st_distance(points1.point, points2.point) and st_distance(points1.point, points2.point) < 2.0
+        order by distance asc
         """
     )
     df.show()
