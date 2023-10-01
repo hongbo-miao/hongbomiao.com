@@ -3,12 +3,12 @@
 insert into cpu_metrics
 select
     'cpu',
-    ts + ((60 * 60) * randCanonical()) as ts,
-    round(val * (0.95 + (randCanonical() / 20)), 2) as val
+    ts + ((60.0 * 60.0) * randCanonical()) as ts,
+    round(val * (0.95 + (randCanonical() / 20.0)), 2) as val
 from (
     select
         toDateTime('2022-12-12 12:00:00') - interval h hour as ts,
-        round((100 * count) / m, 2) as val
+        round((100.0 * count) / m, 2) as val
     from (
         select
             h,
