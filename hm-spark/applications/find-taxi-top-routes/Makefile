@@ -11,3 +11,7 @@ poetry-add-dev:
 
 poetry-run-dev:
 	poetry run poe dev
+poetry-run-test:
+	poetry run poe test
+poetry-run-test-coverage:
+	poetry run poe test-coverage
