@@ -1,24 +1,7 @@
-from pyspark.sql import DataFrame, SparkSession
+from pyspark.sql import SparkSession
 from pyspark.sql.functions import count, desc
 from utils.trip import load_trips, preprocess_trips
 from utils.zone import load_zones, preprocess_zones
-
-
-def get_top_routes(trips: DataFrame, zones: DataFrame) -> DataFrame:
-    return (
-        trips.select("pulocationid", "dolocationid")
-        .groupBy("pulocationid", "dolocationid")
-        .agg(count("*").alias("total"))
-        .join(zones, on=[trips.pulocationid == zones.locationid], how="inner")
-        .withColumnRenamed("zone", "pulocation_zone")
-        .withColumnRenamed("borough", "pulocation_borough")
-        .drop("locationid", "shape_area", "shape_leng", "the_geom")
-        .join(zones, on=[trips.dolocationid == zones.locationid], how="inner")
-        .withColumnRenamed("zone", "dolocation_zone")
-        .withColumnRenamed("borough", "dolocation_borough")
-        .drop("locationid", "shape_area", "shape_leng", "the_geom")
-        .orderBy(desc("total"))
-    )
 
 
 def main(data_dirname: str, trip_filenames: list[str], zone_filename: str) -> None:
@@ -38,7 +21,20 @@ def main(data_dirname: str, trip_filenames: list[str], zone_filename: str) -> No
     print((zones.count(), len(zones.columns)))
     zones.show()
 
-    top_routes = get_top_routes(trips, zones)
+    top_routes = (
+        trips.select("pulocationid", "dolocationid")
+        .groupBy("pulocationid", "dolocationid")
+        .agg(count("*").alias("total"))
+        .join(zones, on=[trips.pulocationid == zones.locationid], how="inner")
+        .withColumnRenamed("zone", "pulocation_zone")
+        .withColumnRenamed("borough", "pulocation_borough")
+        .drop("locationid", "shape_area", "shape_leng", "the_geom")
+        .join(zones, on=[trips.dolocationid == zones.locationid], how="inner")
+        .withColumnRenamed("zone", "dolocation_zone")
+        .withColumnRenamed("borough", "dolocation_borough")
+        .drop("locationid", "shape_area", "shape_leng", "the_geom")
+        .orderBy(desc("total"))
+    )
     print((top_routes.count(), len(top_routes.columns)))
     top_routes.show(truncate=False)
 
@@ -49,42 +45,6 @@ if __name__ == "__main__":
     # https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
     external_data_dirname = "data"
     external_trip_filenames = [
-        "yellow_tripdata_2019-01.parquet",
-        "yellow_tripdata_2019-02.parquet",
-        "yellow_tripdata_2019-03.parquet",
-        "yellow_tripdata_2019-04.parquet",
-        "yellow_tripdata_2019-05.parquet",
-        "yellow_tripdata_2019-06.parquet",
-        "yellow_tripdata_2019-07.parquet",
-        "yellow_tripdata_2019-08.parquet",
-        "yellow_tripdata_2019-09.parquet",
-        "yellow_tripdata_2019-10.parquet",
-        "yellow_tripdata_2019-11.parquet",
-        "yellow_tripdata_2019-12.parquet",
-        "yellow_tripdata_2020-01.parquet",
-        "yellow_tripdata_2020-02.parquet",
-        "yellow_tripdata_2020-03.parquet",
-        "yellow_tripdata_2020-04.parquet",
-        "yellow_tripdata_2020-05.parquet",
-        "yellow_tripdata_2020-06.parquet",
-        "yellow_tripdata_2020-07.parquet",
-        "yellow_tripdata_2020-08.parquet",
-        "yellow_tripdata_2020-09.parquet",
-        "yellow_tripdata_2020-10.parquet",
-        "yellow_tripdata_2020-11.parquet",
-        "yellow_tripdata_2020-12.parquet",
-        "yellow_tripdata_2021-01.parquet",
-        "yellow_tripdata_2021-02.parquet",
-        "yellow_tripdata_2021-03.parquet",
-        "yellow_tripdata_2021-04.parquet",
-        "yellow_tripdata_2021-05.parquet",
-        "yellow_tripdata_2021-06.parquet",
-        "yellow_tripdata_2021-07.parquet",
-        "yellow_tripdata_2021-08.parquet",
-        "yellow_tripdata_2021-09.parquet",
-        "yellow_tripdata_2021-10.parquet",
-        "yellow_tripdata_2021-11.parquet",
-        "yellow_tripdata_2021-12.parquet",
         "yellow_tripdata_2022-01.parquet",
         "yellow_tripdata_2022-02.parquet",
         "yellow_tripdata_2022-03.parquet",
