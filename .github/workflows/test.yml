@@ -561,13 +561,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.12'
           cache: poetry
           cache-dependency-path: hm-spark/applications/find-taxi-top-routes/poetry.lock
       - name: Set Poetry environment
         working-directory: hm-spark/applications/find-taxi-top-routes
         run: |
-          poetry env use 3.11
+          poetry env use 3.12
       - name: Install dependencies
         working-directory: hm-spark/applications/find-taxi-top-routes
         run: |
