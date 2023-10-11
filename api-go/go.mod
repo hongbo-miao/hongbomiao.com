@@ -12,7 +12,7 @@ require (
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-contrib/logger v0.2.6
 	github.com/gin-gonic/gin v1.9.1
-	github.com/go-redis/redismock/v9 v9.0.3
+	github.com/go-redis/redismock/v9 v9.2.0
 	github.com/go-resty/resty/v2 v2.9.1
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/graphql-go/graphql v0.8.1
@@ -23,7 +23,7 @@ require (
 	github.com/minio/minio-go/v7 v7.0.63
 	github.com/open-policy-agent/opa v0.57.0
 	github.com/prometheus/client_golang v1.17.0
-	github.com/redis/go-redis/v9 v9.1.0
+	github.com/redis/go-redis/v9 v9.2.0
 	github.com/rs/zerolog v1.31.0
 	github.com/stretchr/testify v1.8.4
 	go.elastic.co/apm/module/apmgin/v2 v2.4.5
