@@ -463,6 +463,7 @@ make kubernetes-clean
 - **Prowler** - Cloud security assessments
 - **Gitleaks** - Git secret scanning
 - **GitGuardian** - Git secret scanning
+- **xxHash** - Hash algorithm
 
 ## Design
 
