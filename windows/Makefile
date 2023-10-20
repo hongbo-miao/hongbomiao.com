@@ -14,3 +14,7 @@ show-connection:
 which:
 	where.exe xxx
 
+execution-policy-get:
+	Get-ExecutionPolicy
+execution-policy-set:
+	Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
