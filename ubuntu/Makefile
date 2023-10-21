@@ -57,6 +57,10 @@ show-network-hours:
 	vnstat --hours
 show-network-hoursgraph:
 	vnstat --hoursgraph
+test-ip-connectivity:
+	ping www.hongbomiao.com
+test-ssl-connectivity:
+	openssl s_client -connect www.hongbomiao.com:443
 
 # SSH
 ssh-remove-host-key:
@@ -106,5 +110,3 @@ btop:
 	btop
 htop:
 	htop
-vnstat:
-	vnstat
