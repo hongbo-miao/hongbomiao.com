@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/04fdcff9-bace-4f65-a389-745e2e06af63)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/3c623e60-cb24-4377-8863-140276095d08)
 
 # 📦 Setup
 
@@ -260,6 +260,7 @@ make kubernetes-clean
 - **Prefect** - Orchestration platform
 - **Apache Airflow** - Orchestration platform
 - **Temporal** - Orchestration platform
+- **Airbyte** - Data integration
 - **dbt** - Data transforming
 - **Apache Spark** - Data processing framework
   - **Spark ML** - Spark machine learning
