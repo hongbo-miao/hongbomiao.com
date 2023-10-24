@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/1ece1adc-47eb-48fb-ab1b-371dbc51e22a)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/04fdcff9-bace-4f65-a389-745e2e06af63)
 
 # 📦 Setup
 
@@ -260,6 +260,7 @@ make kubernetes-clean
 - **Prefect** - Orchestration platform
 - **Apache Airflow** - Orchestration platform
 - **Temporal** - Orchestration platform
+- **dbt** - Data transforming
 - **Apache Spark** - Data processing framework
   - **Spark ML** - Spark machine learning
   - **pyspark** - Spark API library
@@ -343,6 +344,7 @@ make kubernetes-clean
   - **Amazon RDS** - Relational database service
   - **Amazon Route 53** - Domain Name System (DNS) web service
   - **Amazon S3** - Object storage
+  - **Amazon Redshift** - Data warehouse
   - **Amazon SageMaker** - Machine learning platform
   - **Amazon SQS** - Queue
   - **AWS CloudFormation** - Infrastructure as code (IaC)
