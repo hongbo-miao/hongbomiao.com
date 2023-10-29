@@ -77,7 +77,7 @@
       "Parameters": {
         "removeSourceColumn": "true",
         "sourceColumn": "trace",
-        "targetColumn": "trace_unnested"
+        "targetColumn": "_trace"
       }
     }
   },
@@ -85,8 +85,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[0]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[0]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_relative_timestamp"
       }
     }
@@ -95,8 +95,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[1]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[1]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_latitude_deg"
       }
     }
@@ -105,8 +105,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[2]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[2]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_longitude_deg"
       }
     }
@@ -115,8 +115,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[3]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[3]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_altitude_ft"
       }
     }
@@ -125,8 +125,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[4]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[4]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_ground_speed_kt"
       }
     }
@@ -135,8 +135,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[5]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[5]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_track_deg"
       }
     }
@@ -145,8 +145,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[6]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[6]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_db_flags"
       }
     }
@@ -155,8 +155,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[7]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[7]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_vertical_rate_fpm"
       }
     }
@@ -165,8 +165,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[8]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[8]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_aircraft"
       }
     }
@@ -175,8 +175,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[9]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[9]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_position_type"
       }
     }
@@ -185,8 +185,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[10]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[10]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_geometric_altitude_ft"
       }
     }
@@ -195,8 +195,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[11]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[11]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_geometric_vertical_rate_fpm"
       }
     }
@@ -205,8 +205,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[12]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[12]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_indicated_airspeed_kt"
       }
     }
@@ -215,8 +215,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[13]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[13]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_roll_angle_deg"
       }
     }
@@ -225,8 +225,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`trace_unnested`[14]",
-        "sourceColumn": "trace_unnested",
+        "path": "`_trace`[14]",
+        "sourceColumn": "_trace",
         "targetColumn": "trace_feeder_id"
       }
     }
@@ -235,7 +235,7 @@
     "Action": {
       "Operation": "DELETE",
       "Parameters": {
-        "sourceColumns": "[\"trace_unnested\"]"
+        "sourceColumns": "[\"_trace\"]"
       }
     }
   },
@@ -753,9 +753,48 @@
   },
   {
     "Action": {
-      "Operation": "REMOVE_DUPLICATES",
+      "Operation": "SORT",
       "Parameters": {
-        "sourceColumn": "_time"
+        "expressions": "[{\"sourceColumn\":\"_time\",\"ordering\":\"ASCENDING\",\"nullsOrdering\":\"NULLS_BOTTOM\",\"customOrder\":[]}]"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "DIVIDE",
+      "Parameters": {
+        "functionStepType": "DIVIDE",
+        "sourceColumn1": "_time",
+        "targetColumn": "_time_s",
+        "value2": "1000000000"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "UNIX_TIME_FORMAT",
+      "Parameters": {
+        "dateTimeFormat": "yyyy-mm-dd",
+        "functionStepType": "UNIX_TIME_FORMAT",
+        "sourceColumn": "_time_s",
+        "targetColumn": "_date"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "_date"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "DELETE",
+      "Parameters": {
+        "sourceColumns": "[\"_time_s\"]"
       }
     }
   }
