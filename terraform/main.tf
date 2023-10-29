@@ -14,7 +14,7 @@ terraform {
       version = "5.23.1"
     }
   }
-  required_version = ">= 1.5"
+  required_version = ">= 1.6"
 }
 
 provider "aws" {
@@ -22,52 +22,101 @@ provider "aws" {
 }
 
 # Amazon EC2
-module "hm_amazon_ec2_module" {
+module "hm_ec2_module" {
   source            = "./modules/hm_amazon_ec2"
-  ec2_instance_name = "hm-amazon-ec2-instance"
+  ec2_instance_name = "hm-ec2-instance"
   ec2_instance_ami  = "ami-0c79a55dda52434da" # Ubuntu Server 22.04 LTS (HVM), SSD Volume Type (64-bit (Arm))
   ec2_instance_type = "t2.nano"
 }
 
 # Amazon EMR - Trino
-module "hm_amazon_emr_cluster" {
+module "hm_emr_cluster_trino_s3_set_up_script" {
+  source           = "./modules/hm_amazon_s3_object"
+  amazon_s3_bucket = "hongbomiao-bucket"
+  amazon_s3_key    = "amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
+  local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
+}
+data "aws_secretsmanager_secret" "hm_rds_secret" {
+  name = "hm-iot-rds/hm_iot_db/readonly"
+}
+data "aws_secretsmanager_secret_version" "hm_rds_secret_version" {
+  secret_id = data.aws_secretsmanager_secret.hm_rds_secret.id
+}
+module "hm_emr_cluster" {
   source                         = "./modules/hm_amazon_emr_cluster"
   amazon_emr_cluster_name        = "hm-emr-cluster-trino"
-  amazon_emr_version             = "emr-6.13.0"
+  amazon_emr_version             = "emr-6.14.0"
   primary_instance_type          = "r6a.xlarge"
   core_instance_type             = "r6a.2xlarge"
   core_target_on_demand_capacity = 1
   bootstrap_set_up_script_s3_uri = "s3://hongbomiao-bucket/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
-  aws_iam_role                   = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
-  environment                    = var.environment
-  team                           = var.team
+  configurations = [
+    {
+      Classification : "delta-defaults",
+      Properties : {
+        "delta.enabled" : "true"
+      }
+    },
+    {
+      Classification : "trino-connector-delta",
+      Properties : {
+        "hive.metastore" : "glue"
+      }
+    },
+    {
+      Classification : "trino-connector-postgresql",
+      Properties : {
+        connection-url : "jdbc:postgresql://${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_host"]}:${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_port"]}/${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_db"]}",
+        connection-user : jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_user"],
+        connection-password : jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_password"]
+      }
+    }
+  ]
+  aws_iam_role = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  environment  = var.environment
+  team         = var.team
 }
-module "hm_amazon_emr_cluster_task_instance_fleet" {
+module "hm_emr_cluster_task_instance_fleet" {
   source                    = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
-  amazon_emr_cluster_id     = module.hm_amazon_emr_cluster.id
+  amazon_emr_cluster_id     = module.hm_emr_cluster.id
   task_instance_type        = "r6a.2xlarge"
   task_target_spot_capacity = 7
 }
-data "aws_instance" "hm_amazon_emr_cluster_primary_node_ec2_instance" {
+data "aws_instance" "hm_emr_cluster_primary_node_ec2_instance" {
   filter {
     name   = "private-dns-name"
-    values = [module.hm_amazon_emr_cluster.master_public_dns]
+    values = [module.hm_emr_cluster.master_public_dns]
   }
 }
-module "hm_amazon_route_53_record" {
+module "hm_route_53_record" {
   source                        = "./modules/hm_amazon_route_53"
   amazon_route_53_record_name   = "hm-emr-trino"
-  amazon_route_53_record_values = [data.aws_instance.hm_amazon_emr_cluster_primary_node_ec2_instance.private_ip]
+  amazon_route_53_record_values = [data.aws_instance.hm_emr_cluster_primary_node_ec2_instance.private_ip]
 }
 
-# AWS Glue
-module "itg_amazon_s3_object" {
+# AWS Glue DataBrew job
+# AWS Glue DataBrew job - ADS-B 2x Flight Trace
+module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data" {
+  source                     = "./modules/hm_aws_glue_databrew_job"
+  aws_glue_databrew_job_name = "hm-write-csv-to-parquet-adsb-2x-flight-trace-data"
+  recipe_name                = "adsb-2x-flight-trace-recipe"
+  recipe_version             = "1.0"
+  output_s3_bucket           = "hongbomiao-bucket"
+  output_s3_dir              = "data/raw-parquet/adsb_2x_flight_trace_data/"
+  aws_iam_role               = "arn:aws:iam::272394222652:role/service-role/AWSGlueDataBrewServiceRole-hm"
+  environment                = var.environment
+  team                       = var.team
+}
+
+# AWS Glue job
+# AWS Glue job - Motor
+module "hm_s3_object" {
   source           = "./modules/hm_amazon_s3_object"
   amazon_s3_bucket = "hongbomiao-bucket"
   amazon_s3_key    = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_motor.py"
   local_file_path  = "./data/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_motor.py"
 }
-module "hm_aws_glue_job" {
+module "hm_glue_job" {
   source              = "./modules/hm_aws_glue_job"
   aws_glue_job_name   = "hm_write_parquet_to_delta_lake_motor"
   spark_script_s3_uri = "s3://hongbomiao-bucket/aws-glue/spark-scripts/hm_write_parquet_to_delta_lake_motor.py"
@@ -75,7 +124,7 @@ module "hm_aws_glue_job" {
   environment         = var.environment
   team                = var.team
 }
-module "hm_aws_glue_crawler_module" {
+module "hm_glue_crawler_module" {
   source                        = "./modules/hm_aws_glue_crawler"
   aws_glue_crawler_name         = "hm-delta-lake-crawler-iot"
   aws_glue_crawler_delta_tables = ["s3://hongbomiao-bucket/delta-tables/motor/"]

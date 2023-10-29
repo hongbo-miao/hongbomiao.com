@@ -44,31 +44,8 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
     name = "set_up"
     path = var.bootstrap_set_up_script_s3_uri
   }
-  configurations_json = jsonencode(
-    [
-      {
-        Classification : "delta-defaults",
-        Properties : {
-          "delta.enabled" : "true"
-        }
-      },
-      {
-        Classification : "trino-connector-delta",
-        Properties : {
-          "hive.metastore" : "glue"
-        }
-      },
-      {
-        Classification : "trino-connector-postgresql",
-        Properties : {
-          connection-url : "jdbc:postgresql://${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_host"]}:${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_port"]}/${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_db"]}",
-          connection-user : jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_user"],
-          connection-password : jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_password"]
-        }
-      }
-    ]
-  )
-  service_role = var.aws_iam_role
+  configurations_json = jsonencode(var.configurations)
+  service_role        = var.aws_iam_role
   tags = {
     for-use-with-amazon-emr-managed-policies = true
     Environment                              = var.environment
@@ -82,11 +59,4 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
       configurations_json
     ]
   }
-}
-
-data "aws_secretsmanager_secret" "hm_rds_secret" {
-  name = "hm-iot-rds/hm_iot_db/readonly"
-}
-data "aws_secretsmanager_secret_version" "hm_rds_secret_version" {
-  secret_id = data.aws_secretsmanager_secret.hm_rds_secret.id
 }
