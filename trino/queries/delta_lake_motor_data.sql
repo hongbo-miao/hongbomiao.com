@@ -40,7 +40,7 @@ join tc on t0._time = tc._time
 join td on t0._time = td._time
 join te on t0._time = te._time
 join tf on t0._time = tf._time
-order by t_0._time asc
+order by t_0._time asc;
 
 -- Get downsampled data
 with
@@ -83,4 +83,4 @@ join tc on t_sec._time = tc._time
 join td on t_sec._time = td._time
 join te on t_sec._time = te._time
 join tf on t_sec._time = tf._time
-order by t_sec._time asc
+order by t_sec._time asc;

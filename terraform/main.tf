@@ -13,6 +13,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.23.1"
     }
+    # https://registry.terraform.io/providers/hashicorp/awscc/latest
+    awscc = {
+      source  = "hashicorp/awscc"
+      version = "0.63.0"
+    }
   }
   required_version = ">= 1.6"
 }
@@ -109,25 +114,41 @@ module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data" {
 }
 
 # AWS Glue job
-# AWS Glue job - Motor
-module "hm_s3_object" {
+# AWS Glue job - ADS-B 2x Flight Trace
+module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script" {
   source           = "./modules/hm_amazon_s3_object"
   amazon_s3_bucket = "hongbomiao-bucket"
-  amazon_s3_key    = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_motor.py"
-  local_file_path  = "./data/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_motor.py"
+  amazon_s3_key    = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data.py"
+  local_file_path  = "./data/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data.py"
 }
-module "hm_glue_job" {
+module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data" {
   source              = "./modules/hm_aws_glue_job"
-  aws_glue_job_name   = "hm_write_parquet_to_delta_lake_motor"
-  spark_script_s3_uri = "s3://hongbomiao-bucket/aws-glue/spark-scripts/hm_write_parquet_to_delta_lake_motor.py"
+  aws_glue_job_name   = "hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data"
+  spark_script_s3_uri = "s3://hongbomiao-bucket/aws-glue/spark-scripts/hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data.py"
   aws_iam_role        = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
   environment         = var.environment
   team                = var.team
 }
-module "hm_glue_crawler_module" {
+
+# AWS Glue job - Motor
+module "hm_glue_job_write_parquet_to_delta_table_motor_data_script" {
+  source           = "./modules/hm_amazon_s3_object"
+  amazon_s3_bucket = "hongbomiao-bucket"
+  amazon_s3_key    = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_motor_data.py"
+  local_file_path  = "./data/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_motor_data.py"
+}
+module "hm_glue_job_write_parquet_to_delta_table_motor_data" {
+  source              = "./modules/hm_aws_glue_job"
+  aws_glue_job_name   = "hm_write_parquet_to_delta_lake_motor_data"
+  spark_script_s3_uri = "s3://hongbomiao-bucket/aws-glue/spark-scripts/hm_write_parquet_to_delta_lake_motor_data.py"
+  aws_iam_role        = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
+  environment         = var.environment
+  team                = var.team
+}
+module "hm_glue_crawler_motor_data" {
   source                        = "./modules/hm_aws_glue_crawler"
   aws_glue_crawler_name         = "hm-delta-lake-crawler-iot"
-  aws_glue_crawler_delta_tables = ["s3://hongbomiao-bucket/delta-tables/motor/"]
+  aws_glue_crawler_delta_tables = ["s3://hongbomiao-bucket/delta-tables/motor_data/"]
   aws_glue_database             = "hm_delta_db"
   aws_iam_role                  = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
   environment                   = var.environment

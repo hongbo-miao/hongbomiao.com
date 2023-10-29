@@ -4,7 +4,7 @@ resource "awscc_databrew_job" "hm_aws_glue_databrew_job" {
   role_arn     = var.aws_iam_role
   type         = "RECIPE"
   dataset_name = "adsb-2x-flight-trace-data"
-  max_capacity = 10
+  max_capacity = 20
   recipe = {
     name    = var.recipe_name
     version = var.recipe_version
@@ -15,8 +15,9 @@ resource "awscc_databrew_job" "hm_aws_glue_databrew_job" {
         bucket = var.output_s3_bucket
         key    = var.output_s3_dir
       }
-      format    = "PARQUET"
-      overwrite = true
+      format           = "PARQUET"
+      max_output_files = 1
+      overwrite        = true
     }
   ]
   tags = [

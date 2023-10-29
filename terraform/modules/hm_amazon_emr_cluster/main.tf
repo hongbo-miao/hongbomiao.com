@@ -5,7 +5,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
   applications                      = ["Trino"]
   termination_protection            = true
   keep_job_flow_alive_when_no_steps = true
-  log_uri                           = "s3://integrated-test-data-archer/amazon-emr/logs/"
+  log_uri                           = "s3://hongbomiao-bucket/amazon-emr/logs/"
   ec2_attributes {
     instance_profile                  = "arn:aws:iam::272394222652:instance-profile/hm-emr-profile"
     subnet_id                         = "subnet-xxxxxxxxxxxxxxxxx"
