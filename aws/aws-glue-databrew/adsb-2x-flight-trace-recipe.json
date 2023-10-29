@@ -1,0 +1,762 @@
+[
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "desc"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "icao"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "boolean",
+        "sourceColumn": "noRegData"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "ownOp"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "r"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "t"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "timestamp"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "integer",
+        "sourceColumn": "year"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "UNNEST_ARRAY",
+      "Parameters": {
+        "removeSourceColumn": "true",
+        "sourceColumn": "trace",
+        "targetColumn": "trace_unnested"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[0]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_relative_timestamp"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[1]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_latitude_deg"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[2]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_longitude_deg"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[3]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_altitude_ft"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[4]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_ground_speed_kt"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[5]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_track_deg"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[6]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_db_flags"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[7]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_vertical_rate_fpm"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[8]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_aircraft"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[9]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_position_type"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[10]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_geometric_altitude_ft"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[11]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_geometric_vertical_rate_fpm"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[12]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_indicated_airspeed_kt"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[13]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_roll_angle_deg"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "EXTRACT_VALUE",
+      "Parameters": {
+        "path": "`trace_unnested`[14]",
+        "sourceColumn": "trace_unnested",
+        "targetColumn": "trace_feeder_id"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "DELETE",
+      "Parameters": {
+        "sourceColumns": "[\"trace_unnested\"]"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "BOOLEAN_OPERATION",
+      "Parameters": {
+        "falseValueExpression": "false",
+        "functionStepType": "BOOLEAN_OPERATION",
+        "targetColumn": "trace_on_ground",
+        "trueValueExpression": "true",
+        "valueExpression": "`trace_altitude_ft` = 'ground'",
+        "withExpressions": "[]"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_relative_timestamp"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_latitude_deg"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "trace_longitude_deg"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_altitude_ft"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_ground_speed_kt"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_track_deg"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "integer",
+        "sourceColumn": "trace_db_flags"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_vertical_rate_fpm"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "trace_position_type"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_geometric_altitude_ft"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_geometric_vertical_rate_fpm"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_indicated_airspeed_kt"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_roll_angle_deg"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "trace_feeder_id"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "JSON_TO_STRUCTS",
+      "Parameters": {
+        "sourceColumns": "[\"trace_aircraft\"]",
+        "unnestLevel": "120"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "UNNEST_STRUCT_N",
+      "Parameters": {
+        "delimiter": "_",
+        "removeSourceColumn": "true",
+        "sourceColumns": "[\"trace_aircraft\"]",
+        "targetColumn": "trace_aircraft",
+        "unnestLevel": "1"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_alert"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_alt_geom"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_baro_rate"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "trace_aircraft_category"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "trace_aircraft_emergency"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "trace_aircraft_flight"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_geom_rate"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_gva"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_ias"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_mach"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_mag_heading"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_nac_p"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_nac_v"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_nav_altitude_fms"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_nav_altitude_mcp"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_nav_heading"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_nav_qnh"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_nic"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_nic_baro"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_oat"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_rc"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_roll"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_sda"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_sil"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "trace_aircraft_sil_type"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_spi"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "trace_aircraft_squawk"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_tas"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_tat"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_track"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_track_rate"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_true_heading"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "string",
+        "sourceColumn": "trace_aircraft_type"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_version"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_wd"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_ws"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "double",
+        "sourceColumn": "trace_aircraft_version"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CUSTOM_EXPRESSION",
+      "Parameters": {
+        "expression": "(`timestamp` + `trace_relative_timestamp`) * 1000000000.0",
+        "functionStepType": "CUSTOM_EXPRESSION",
+        "targetColumn": "_time"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "CHANGE_DATA_TYPE",
+      "Parameters": {
+        "columnDataType": "long",
+        "sourceColumn": "_time"
+      }
+    }
+  },
+  {
+    "Action": {
+      "Operation": "REMOVE_DUPLICATES",
+      "Parameters": {
+        "sourceColumn": "_time"
+      }
+    }
+  }
+]
