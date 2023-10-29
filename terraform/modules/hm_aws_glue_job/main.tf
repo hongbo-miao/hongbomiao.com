@@ -5,8 +5,8 @@ resource "aws_glue_job" "hm_aws_glue_job" {
   role_arn          = var.aws_iam_role
   glue_version      = "4.0"
   worker_type       = "G.1X"
-  number_of_workers = 10
-  timeout           = 30
+  number_of_workers = 20
+  timeout           = 360
   command {
     script_location = var.spark_script_s3_uri
     python_version  = 3

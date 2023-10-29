@@ -1,5 +1,5 @@
 create external table awsdatacatalog.hm_iot_db.motor
-location 's3://hongbomiao-bucket/delta-tables/motor/'
+location 's3://hongbomiao-bucket/delta-tables/motor_data/'
 tblproperties (
     'table_type' = 'delta'
 );
