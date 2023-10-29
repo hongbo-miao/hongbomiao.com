@@ -2,10 +2,14 @@ terraform-init:
 	terraform init
 terraform-update-lock-file:
 	terraform init -upgrade
+terraform-reconfigure:
+	terraform init -reconfigure
 terraform-plan:
 	terraform plan
 terraform-apply:
 	terraform apply -auto-approve
+terraform-refresh:
+	terraform refresh
 terraform-destroy:
 	terraform destroy
 
