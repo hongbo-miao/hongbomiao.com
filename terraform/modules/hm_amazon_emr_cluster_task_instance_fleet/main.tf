@@ -15,4 +15,10 @@ resource "aws_emr_instance_fleet" "hm_amazon_emr_cluster_task_instance_fleet" {
       timeout_action           = "TERMINATE_CLUSTER"
     }
   }
+  # https://github.com/hashicorp/terraform-provider-aws/issues/34151
+  lifecycle {
+    ignore_changes = [
+      launch_specifications[0].spot_specification["allocation_strategy"]
+    ]
+  }
 }
