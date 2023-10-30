@@ -1,5 +1,5 @@
 select
-    from_unixtime(_time / 1000000000) as "Time",
+    from_unixtime_nanos(_time) as "Time",
     st_distance(
         st_geometryfromtext('POINT(37.773972 -122.431297)'),
         st_geometryfromtext(_coordinate)

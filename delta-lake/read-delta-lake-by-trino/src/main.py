@@ -37,7 +37,7 @@ def main():
             td as (select * from delta.hm_delta_db.motor_data_d where _event_id = :event_id),
             te as (select * from delta.hm_delta_db.motor_data_e where _event_id = :event_id),
             tf as (select * from delta.hm_delta_db.motor_data_f where _event_id = :event_id)
-            select from_unixtime(t0._time / 1000.0) AS _time, {cols}
+            select from_unixtime_nanos(t0._time) AS _time, {cols}
             from t0
             join t1 on t0._time = t1._time
             join t2 on t0._time = t2._time
