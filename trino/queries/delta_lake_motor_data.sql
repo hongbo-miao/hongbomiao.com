@@ -23,7 +23,7 @@ tc as (select * from delta.hm_delta_db.motor_data_c where _event_id = 'ad7953cd-
 td as (select * from delta.hm_delta_db.motor_data_d where _event_id = 'ad7953cd-6d49-4929-8180-99555bebc255'),
 te as (select * from delta.hm_delta_db.motor_data_e where _event_id = 'ad7953cd-6d49-4929-8180-99555bebc255'),
 tf as (select * from delta.hm_delta_db.motor_data_f where _event_id = 'ad7953cd-6d49-4929-8180-99555bebc255')
-select from_unixtime(t_sec._time / 1000.0) as _time, current, voltage, temperature
+select from_unixtime_nanos(_time) as _time, current, voltage, temperature
 from t0
 join t1 on t0._time = t1._time
 join t2 on t0._time = t2._time
@@ -47,7 +47,7 @@ with
 t_sec as (
     select max(_time) as _time
     from delta.hm_delta_db.motor_data_0
-    group by date_trunc('second', from_unixtime(_time / 1000.0))
+    group by date_trunc('second', from_unixtime_nanos(_time))
 ),
 t0 as (select * from delta.hm_delta_db.motor_data_0 where _event_id = 'ad7953cd-6d49-4929-8180-99555bebc255'),
 t1 as (select * from delta.hm_delta_db.motor_data_1 where _event_id = 'ad7953cd-6d49-4929-8180-99555bebc255'),
@@ -65,7 +65,7 @@ tc as (select * from delta.hm_delta_db.motor_data_c where _event_id = 'ad7953cd-
 td as (select * from delta.hm_delta_db.motor_data_d where _event_id = 'ad7953cd-6d49-4929-8180-99555bebc255'),
 te as (select * from delta.hm_delta_db.motor_data_e where _event_id = 'ad7953cd-6d49-4929-8180-99555bebc255'),
 tf as (select * from delta.hm_delta_db.motor_data_f where _event_id = 'ad7953cd-6d49-4929-8180-99555bebc255')
-select from_unixtime(t_sec._time / 1000.0) as _time, current, voltage, temperature
+select from_unixtime_nanos(_time) as _time, current, voltage, temperature
 from t_sec
 join t0 on t_sec._time = t0._time
 join t1 on t_sec._time = t1._time
