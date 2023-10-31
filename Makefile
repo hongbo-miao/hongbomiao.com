@@ -334,6 +334,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-pyvisa
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-tdms
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-ni-veristand
+	poetry run poe static-type-check-python -- --package=neural-forecasting.forecast-air-passenger-number
 	poetry run poe static-type-check-python -- --package=quantum-computing
 	poetry run poe static-type-check-python -- --package=reinforcement-learning.cart-pole
 static-type-check-terraform:
