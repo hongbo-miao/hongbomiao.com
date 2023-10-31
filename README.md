@@ -277,6 +277,7 @@ make kubernetes-clean
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
 - **LangChang** - Large language model (LLM) framework
+- **NeuralForecast** - Neural forecasting
 - **GPT4All** - Large language models
 - **OGB** - Open graph benchmark
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
