@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -e
 
 babel scripts --out-dir tmp --extensions '.ts,.tsx'
