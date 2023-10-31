@@ -96,6 +96,10 @@ gitleaks-install:
 gitleaks-detect:
 	gitleaks detect --source=. --verbose
 
+# rsvg-convert
+convert-svg-to-png:
+	rsvg-convert Architecture.svg > Architecture.png
+
 # Ruby
 rbenv-list-latest-stable-versions:
 	rbenv install -l

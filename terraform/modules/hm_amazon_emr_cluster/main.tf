@@ -2,7 +2,7 @@
 resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
   name                              = var.amazon_emr_cluster_name
   release_label                     = var.amazon_emr_version
-  applications                      = ["Trino"]
+  applications                      = var.applications
   termination_protection            = true
   keep_job_flow_alive_when_no_steps = true
   log_uri                           = "s3://hongbomiao-bucket/amazon-emr/logs/"

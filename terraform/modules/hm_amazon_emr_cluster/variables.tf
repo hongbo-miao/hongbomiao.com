@@ -4,6 +4,9 @@ variable "amazon_emr_cluster_name" {
 variable "amazon_emr_version" {
   type = string
 }
+variable "applications" {
+  type = list(string)
+}
 variable "primary_instance_type" {
   type = string
 }
