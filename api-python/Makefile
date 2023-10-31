@@ -7,10 +7,6 @@ poetry-install:
 	export C_INCLUDE_PATH=/opt/homebrew/include
 	export LIBRARY_PATH=/opt/homebrew/lib
 	poetry install --no-root
-poetry-add:
-	poetry add xxx
-poetry-add-dev:
-	poetry add xxx --group=dev
 
 poetry-run-dev:
 	poetry run poe dev

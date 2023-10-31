@@ -335,6 +335,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-tdms
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-ni-veristand
 	poetry run poe static-type-check-python -- --package=quantum-computing
+	poetry run poe static-type-check-python -- --package=reinforcement-learning.cart-pole
 static-type-check-terraform:
 	cd terraform && terraform validate
 static-type-check-typescript:

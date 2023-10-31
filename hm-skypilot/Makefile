@@ -4,10 +4,6 @@ poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
 	poetry install --no-root
-poetry-add:
-	poetry add xxx
-poetry-add-dev:
-	poetry add xxx --group=dev
 
 sky-launch:
 	poetry run sky launch skypilot.yaml \
