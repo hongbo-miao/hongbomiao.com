@@ -148,9 +148,7 @@ make kubernetes-clean
 ## API Server - Python
 
 - **Flask** - Web framework
-- **Flask-APScheduler** - APScheduler
 - **Flask-CORS** - Cross-Origin Resource Sharing (CORS)
-- **Flask-Sock** - WebSocket
 - **confluent-kafka** - Kafka client
 - **Gunicorn** - Python web server gateway interface (WSGI) HTTP server
 - **asyncpg** - PostgreSQL client
