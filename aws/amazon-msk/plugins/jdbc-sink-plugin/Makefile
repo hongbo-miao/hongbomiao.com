@@ -1,5 +1,5 @@
 plugin-build:
-	sh build.sh
+	bash build.sh
 plugin-upload:
 	aws s3 cp kafka-connect-jdbc.zip s3://hongbomiao-bucket/amazon-msk/plugins/jdbc-sink-plugin.zip
 plugin-create:

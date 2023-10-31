@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc && babel src --out-dir build --extensions .ts",
     "build:scripts": "tsc && babel scripts --out-dir build/scripts --extensions .ts",
-    "build:web": "sh ./bin/build_web.sh",
+    "build:web": "bash bin/build_web.sh",
     "debug": "npm run build && NODE_ENV=development node --inspect-brk build/index.js",
     "dev": "nodemon --ext ts --exec 'NODE_ENV=development babel-node src/index.ts --extensions .ts --hideHTTPLog --prettifyLog'",
     "dev:log": "nodemon --ext ts --exec 'NODE_ENV=development babel-node src/index.ts --extensions .ts --prettifyLog'",
@@ -22,9 +22,9 @@
     "test:stryker": "stryker run",
     "autocannon": "autocannon http://localhost:5000",
     "profile:endpoints": "npm run build:scripts && NODE_ENV=production node build/scripts/profileEndpoints.js",
-    "profile:bubbleprof": "npm run build:scripts && NODE_ENV=production clinic bubbleprof --on-port 'sh bin/profile.sh' -- node build/index.js",
-    "profile:doctor": "npm run build:scripts && NODE_ENV=production clinic doctor --on-port 'sh bin/profile.sh' -- node build/index.js",
-    "profile:flame": "npm run build:scripts && NODE_ENV=production clinic flame --on-port 'sh bin/profile.sh' -- node build/index.js"
+    "profile:bubbleprof": "npm run build:scripts && NODE_ENV=production clinic bubbleprof --on-port 'bash bin/profile.sh' -- node build/index.js",
+    "profile:doctor": "npm run build:scripts && NODE_ENV=production clinic doctor --on-port 'bash bin/profile.sh' -- node build/index.js",
+    "profile:flame": "npm run build:scripts && NODE_ENV=production clinic flame --on-port 'bash bin/profile.sh' -- node build/index.js"
   },
   "dependencies": {
     "@faker-js/faker": "8.2.0",
