@@ -1,16 +1,16 @@
 # Kubernetes
 kubernetes-set-up:
-	sh kubernetes/bin/set_up.sh
+	bash kubernetes/bin/set_up.sh
 kubernetes-clean:
-	sh kubernetes/bin/clean.sh
+	bash kubernetes/bin/clean.sh
 
 # Local
 local-set-up:
-	sh bin/set_up.sh
+	bash bin/set_up.sh
 local-build:
-	sh bin/build.sh
+	bash bin/build.sh
 local-clean:
-	sh bin/clean.sh
+	bash bin/clean.sh
 
 # Git
 git-add:
