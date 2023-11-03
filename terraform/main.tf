@@ -106,11 +106,11 @@ module "hm_route_53_record" {
 module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data" {
   source                     = "./modules/hm_aws_glue_databrew_job"
   aws_glue_databrew_job_name = "hm-write-csv-to-parquet-adsb-2x-flight-trace-data"
-  recipe_name                = "adsb-2x-flight-trace-recipe"
+  source_name                = "adsb-2x-flight-trace"
   recipe_version             = "1.0"
+  input_s3_bucket            = "hongbomiao-bucket"
   output_s3_bucket           = "hongbomiao-bucket"
   output_s3_dir              = "data/raw-parquet/adsb_2x_flight_trace_data/"
-  aws_iam_role               = "arn:aws:iam::272394222652:role/service-role/AWSGlueDataBrewServiceRole-hm"
   environment                = var.environment
   team                       = var.team
 }

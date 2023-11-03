@@ -38,13 +38,18 @@ s3_node = glue_context.create_dynamic_frame.from_options(
     transformation_ctx="s3_node",
 )
 
+# https://www.adsbexchange.com/version-2-api-wip
 sql_query = """
     select
         *,
-        case when (trace_db_flags & 1) > 0 then true else false end as trace_position_stale,
-        case when (trace_db_flags & 2) > 0 then true else false end as trace_new_leg_start,
-        case when (trace_db_flags & 4) > 0 then 'geometric' else 'barometric' end as trace_vertical_rate_type,
-        case when (trace_db_flags & 8) > 0 then 'geometric' else 'barometric' end as trace_altitude_type,
+        case when (dbFlags & 1) > 0 then true else false end as dbflags_military,
+        case when (dbFlags & 2) > 0 then true else false end as dbflags_interesting,
+        case when (dbFlags & 4) > 0 then true else false end as dbflags_pia,
+        case when (dbFlags & 8) > 0 then true else false end as dbflags_ladd,
+        case when (trace_flags & 1) > 0 then true else false end as trace_flags_position_stale,
+        case when (trace_flags & 2) > 0 then true else false end as trace_flags_new_leg_start,
+        case when (trace_flags & 4) > 0 then 'geometric' else 'barometric' end as trace_flags_vertical_rate_type,
+        case when (trace_flags & 8) > 0 then 'geometric' else 'barometric' end as trace_flags_altitude_type,
         concat('POINT (', trace_longitude_deg, ' ', trace_latitude_deg, ')') as _coordinate
     from my_table;
 """

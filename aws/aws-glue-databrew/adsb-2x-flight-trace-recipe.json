@@ -86,7 +86,7 @@
       "Parameters": {
         "removeSourceColumn": "true",
         "sourceColumn": "trace",
-        "targetColumn": "_trace"
+        "targetColumn": "_tmp_trace"
       }
     }
   },
@@ -94,8 +94,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[0]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[0]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_relative_timestamp"
       }
     }
@@ -104,8 +104,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[1]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[1]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_latitude_deg"
       }
     }
@@ -114,8 +114,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[2]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[2]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_longitude_deg"
       }
     }
@@ -124,8 +124,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[3]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[3]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_altitude_ft"
       }
     }
@@ -134,8 +134,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[4]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[4]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_ground_speed_kt"
       }
     }
@@ -144,8 +144,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[5]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[5]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_track_deg"
       }
     }
@@ -154,9 +154,9 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[6]",
-        "sourceColumn": "_trace",
-        "targetColumn": "trace_db_flags"
+        "path": "`_tmp_trace`[6]",
+        "sourceColumn": "_tmp_trace",
+        "targetColumn": "trace_flags"
       }
     }
   },
@@ -164,8 +164,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[7]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[7]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_vertical_rate_fpm"
       }
     }
@@ -174,8 +174,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[8]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[8]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_aircraft"
       }
     }
@@ -184,8 +184,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[9]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[9]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_position_type"
       }
     }
@@ -194,8 +194,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[10]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[10]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_geometric_altitude_ft"
       }
     }
@@ -204,8 +204,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[11]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[11]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_geometric_vertical_rate_fpm"
       }
     }
@@ -214,8 +214,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[12]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[12]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_indicated_airspeed_kt"
       }
     }
@@ -224,8 +224,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[13]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[13]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_roll_angle_deg"
       }
     }
@@ -234,8 +234,8 @@
     "Action": {
       "Operation": "EXTRACT_VALUE",
       "Parameters": {
-        "path": "`_trace`[14]",
-        "sourceColumn": "_trace",
+        "path": "`_tmp_trace`[14]",
+        "sourceColumn": "_tmp_trace",
         "targetColumn": "trace_feeder_id"
       }
     }
@@ -244,7 +244,7 @@
     "Action": {
       "Operation": "DELETE",
       "Parameters": {
-        "sourceColumns": "[\"_trace\"]"
+        "sourceColumns": "[\"_tmp_trace\"]"
       }
     }
   },
@@ -320,7 +320,7 @@
       "Operation": "CHANGE_DATA_TYPE",
       "Parameters": {
         "columnDataType": "long",
-        "sourceColumn": "trace_db_flags"
+        "sourceColumn": "trace_flags"
       }
     }
   },
@@ -774,7 +774,7 @@
       "Parameters": {
         "functionStepType": "DIVIDE",
         "sourceColumn1": "_time",
-        "targetColumn": "_time_s",
+        "targetColumn": "_tmp_time_s",
         "value2": "1000000000"
       }
     }
@@ -785,7 +785,7 @@
       "Parameters": {
         "dateTimeFormat": "yyyy-mm-dd",
         "functionStepType": "UNIX_TIME_FORMAT",
-        "sourceColumn": "_time_s",
+        "sourceColumn": "_tmp_time_s",
         "targetColumn": "_date"
       }
     }
@@ -803,7 +803,7 @@
     "Action": {
       "Operation": "DELETE",
       "Parameters": {
-        "sourceColumns": "[\"_time_s\"]"
+        "sourceColumns": "[\"_tmp_time_s\"]"
       }
     }
   }
