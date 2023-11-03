@@ -16,7 +16,7 @@ RUN apk add --no-cache gcc libffi-dev musl-dev bash g++ make \
   && python -m venv /venv/ \
   # Install librdkafka
   # https://github.com/edenhill/librdkafka#build-from-source
-  && wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/confluentinc/librdkafka/archive/refs/tags/v2.2.0.tar.gz \
+  && wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/confluentinc/librdkafka/archive/refs/tags/v2.3.0.tar.gz \
   && tar -x -f librdkafka.tar.gz \
   && rm -f librdkafka.tar.gz \
   && cd librdkafka-2.3.0 \
