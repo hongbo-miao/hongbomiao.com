@@ -1,4 +1,4 @@
-FROM docker.io/python:3.12.0-alpine AS base
+FROM docker.io/python:3.11.6-alpine AS base
 WORKDIR /usr/src/app
 ENV PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1
@@ -19,12 +19,12 @@ RUN apk add --no-cache gcc libffi-dev musl-dev bash g++ make \
   && wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/confluentinc/librdkafka/archive/refs/tags/v2.2.0.tar.gz \
   && tar -x -f librdkafka.tar.gz \
   && rm -f librdkafka.tar.gz \
-  && cd librdkafka-2.2.0 \
+  && cd librdkafka-2.3.0 \
   && ./configure \
   && make \
   && make install \
   && cd .. \
-  && rm -r -f librdkafka-2.2.0/
+  && rm -r -f librdkafka-2.3.0/
 COPY ["api-python/pyproject.toml", "api-python/poetry.lock", "./"]
 RUN . /venv/bin/activate \
   && poetry install --only=main --no-root
