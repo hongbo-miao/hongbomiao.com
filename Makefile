@@ -181,6 +181,9 @@ clean-jupyter-notebook:
 	poetry run poe clean-jupyter-notebook -- aws/amazon-emr/studio/hm-studio/hm-workspace.ipynb
 	poetry run poe clean-jupyter-notebook -- aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
 
+sqlfluff-list-dialects:
+	poetry run poe sqlfluff-list-dialects
+
 # Lint
 lint-ansible:
 	poetry run poe lint-ansible
@@ -265,8 +268,10 @@ lint-sql:
 	poetry run poe lint-sql -- --dialect=postgres streaming/migrations
 	poetry run poe lint-sql -- --dialect=postgres timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql -- --dialect=postgres timescaledb/motor/migrations
-	poetry run poe lint-sql -- --dialect=sparksql delta-lake/sql
+	poetry run poe lint-sql -- --dialect=sparksql delta-lake/queries
+	poetry run poe lint-sql -- --dialect=sqlite sqlite/queries
 	poetry run poe lint-sql -- --dialect=trino trino/queries
+	poetry run poe lint-sql -- --dialect=tsql microsoft-sql-server/queries
 lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=athena aws/amazon-athena/queries
 	poetry run poe lint-sql-fix -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
@@ -277,8 +282,10 @@ lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=postgres streaming/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres timescaledb/motor/migrations
-	poetry run poe lint-sql-fix -- --dialect=sparksql delta-lake/sql
+	poetry run poe lint-sql-fix -- --dialect=sparksql queries
+	poetry run poe lint-sql-fix -- --dialect=sqlite sqlite/queries
 	poetry run poe lint-sql-fix -- --dialect=trino trino/queries
+	poetry run poe lint-sql-fix -- --dialect=tsql microsoft-sql-server/queries
 lint-terraform:
 	terraform fmt -recursive -check
 lint-terraform-fix:
