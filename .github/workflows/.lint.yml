@@ -657,8 +657,10 @@ jobs:
           poetry run poe lint-sql -- --dialect=postgres streaming/migrations
           poetry run poe lint-sql -- --dialect=postgres timescaledb/dummy_iot/migrations
           poetry run poe lint-sql -- --dialect=postgres timescaledb/motor/migrations
-          poetry run poe lint-sql -- --dialect=sparksql delta-lake/sql
+          poetry run poe lint-sql -- --dialect=sparksql delta-lake/queries
+          poetry run poe lint-sql -- --dialect=sqlite sqlite/queries
           # poetry run poe lint-sql -- --dialect=trino trino/queries
+          poetry run poe lint-sql -- --dialect=tsql microsoft-sql-server/queries
 
   lint-terraform:
     name: Terraform

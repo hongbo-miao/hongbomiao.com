@@ -30,6 +30,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poe.tasks]
 clean-jupyter-notebook = "nb-clean clean"
 ansible-galaxy-install = "ansible-galaxy install"
+sqlfluff-list-dialects = "sqlfluff dialects"
 lint-ansible = {shell = "ansible-lint $(git ls-files '*playbook.yml')"}
 lint-cmake = {shell = "cmakelint $(git ls-files '*CMakeLists.txt')"}
 lint-matlab = {shell = "mh_style $(git ls-files '*.m')"}
