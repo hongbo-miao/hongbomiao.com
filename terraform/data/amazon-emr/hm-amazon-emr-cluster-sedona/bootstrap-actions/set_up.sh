@@ -8,9 +8,17 @@ echo "# Install Python"
 # https://github.com/aws-samples/aws-emr-utilities/blob/main/utilities/emr-ec2-custom-python3/README.md
 PYTHON_VERSION=3.11.6
 sudo yum --assumeyes remove openssl-devel*
-sudo yum --assumeyes install gcc openssl11-devel bzip2-devel libffi-devel tar gzip wget make expat-devel
+sudo yum --assumeyes install \
+  bzip2-devel \
+  expat-devel \
+  gcc \
+  libffi-devel \
+  make \
+  openssl11-devel \
+  tar
 curl --silent --fail --show-error --location "https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tar.xz" | tar -x -J -v
 cd "Python-${PYTHON_VERSION}"
+export CFLAGS="-march=native"
 ./configure \
   --enable-loadable-sqlite-extensions \
   --with-dtrace \
