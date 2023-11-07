@@ -101,6 +101,61 @@ module "hm_route_53_record" {
   amazon_route_53_record_values = [data.aws_instance.hm_trino_primary_node_ec2_instance.private_ip]
 }
 
+# Amazon EMR - Apache Sedona
+module "hm_sedona_s3_set_up_script" {
+  source           = "./modules/hm_amazon_s3_object"
+  amazon_s3_bucket = "hongbomiao-bucket"
+  amazon_s3_key    = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
+  local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
+}
+module "hm_sedona_emr" {
+  source                         = "./modules/hm_amazon_emr_cluster"
+  amazon_emr_cluster_name        = "hm-sedona"
+  amazon_emr_version             = "emr-6.14.0"
+  applications                   = ["Hadoop", "Hive", "JupyterEnterpriseGateway", "Spark"]
+  primary_instance_type          = "r7a.2xlarge"
+  core_instance_type             = "r7a.2xlarge"
+  core_target_on_demand_capacity = 1
+  bootstrap_set_up_script_s3_uri = "s3://hongbomiao-bucket/amazon-emr/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
+  configurations = [
+    {
+      Classification : "delta-defaults",
+      Properties : {
+        "delta.enabled" : "true"
+      }
+    },
+    {
+      "Classification" : "spark-hive-site",
+      "Properties" : {
+        "hive.metastore.client.factory.class" : "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"
+      }
+    },
+    {
+      "Classification" : "spark-defaults",
+      "Properties" : {
+        "spark.yarn.dist.jars" : "/usr/lib/spark/jars/sedona-spark-shaded-3.4_2.12-1.5.0.jar,/usr/lib/spark/jars/geotools-wrapper-1.5.0-28.2.jar",
+        "spark.serializer" : "org.apache.spark.serializer.KryoSerializer",
+        "spark.kryo.registrator" : "org.apache.sedona.core.serde.SedonaKryoRegistrator",
+        "spark.sql.extensions" : "org.apache.sedona.viz.sql.SedonaVizExtensions,org.apache.sedona.sql.SedonaSqlExtensions"
+      }
+    }
+  ]
+  aws_iam_role = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  environment  = var.environment
+  team         = var.team
+}
+module "hm_sedona_emr_task_instance_fleet" {
+  source                    = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
+  amazon_emr_cluster_id     = module.hm_sedona_emr.id
+  task_instance_type        = "r7a.2xlarge"
+  task_target_spot_capacity = 1
+}
+module "hm_sedona_emr_managed_scaling_policy" {
+  source                = "./modules/hm_amazon_emr_managed_scaling_policy"
+  amazon_emr_cluster_id = module.hm_sedona_emr.id
+  max_capacity_units    = 10
+}
+
 # AWS Glue DataBrew job
 # AWS Glue DataBrew job - ADS-B 2x Flight Trace
 module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data" {
