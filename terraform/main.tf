@@ -53,8 +53,8 @@ module "hm_trino" {
   amazon_emr_cluster_name        = "hm-trino"
   amazon_emr_version             = "emr-6.14.0"
   applications                   = ["Trino"]
-  primary_instance_type          = "r6a.xlarge"
-  core_instance_type             = "r6a.2xlarge"
+  primary_instance_type          = "r7a.xlarge"
+  core_instance_type             = "r7a.2xlarge"
   core_target_on_demand_capacity = 1
   bootstrap_set_up_script_s3_uri = "s3://hongbomiao-bucket/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
   configurations = [
@@ -86,7 +86,7 @@ module "hm_trino" {
 module "hm_trino_task_instance_fleet" {
   source                    = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
   amazon_emr_cluster_id     = module.hm_trino.id
-  task_instance_type        = "r6a.2xlarge"
+  task_instance_type        = "r7a.2xlarge"
   task_target_spot_capacity = 7
 }
 data "aws_instance" "hm_trino_primary_node_ec2_instance" {
