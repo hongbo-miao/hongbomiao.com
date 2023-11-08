@@ -55,7 +55,7 @@ resource "aws_iam_role_policy" "hm_amazon_emr_studio_iam_role_input_policy" {
 }
 resource "aws_iam_role_policy_attachment" "hm_amazon_emr_studio_iam_role_policy_attachment" {
   role       = aws_iam_role.hm_amazon_emr_studio_iam_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonElasticMapReduceEditorsRole"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonElasticMapReduceReadOnlyAccess"
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/emr_studio
