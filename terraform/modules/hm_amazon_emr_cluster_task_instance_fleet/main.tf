@@ -15,10 +15,13 @@ resource "aws_emr_instance_fleet" "hm_amazon_emr_cluster_task_instance_fleet" {
       timeout_action           = "TERMINATE_CLUSTER"
     }
   }
-  # https://github.com/hashicorp/terraform-provider-aws/issues/34151
   lifecycle {
     ignore_changes = [
-      launch_specifications[0].spot_specification["allocation_strategy"]
+      # https://github.com/hashicorp/terraform-provider-aws/issues/34151
+      launch_specifications[0].spot_specification["allocation_strategy"],
+      # https://stackoverflow.com/questions/77442744/why-does-emr-cluster-has-more-on-demand-instances-over-than-the-max-limit
+      target_on_demand_capacity,
+      target_spot_capacity
     ]
   }
 }

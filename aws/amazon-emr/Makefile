@@ -5,6 +5,11 @@ amazon-emr-cluster-describe:
 amazon-emr-cluster-terminate:
 	aws emr terminate-clusters --cluster-ids=xxx
 
+amazon-emr-studio-list:
+	aws emr list-studios
+amazon-emr-studio-describe:
+	aws emr describe-studio --studio-id=xxx
+
 # Amazon EMR - Hadoop
 hadoop-yarn-status:
 	sudo systemctl status hadoop-yarn-resourcemanager
