@@ -63,11 +63,11 @@ resource "aws_emr_studio" "hm_amazon_emr_studio" {
   name                        = var.amazon_emr_studio_name
   auth_mode                   = "IAM"
   default_s3_location         = var.s3_uri
-  engine_security_group_id    = var.engine_security_group_id
-  workspace_security_group_id = var.workspace_security_group_id
-  vpc_id                      = var.vpc_id
-  subnet_ids                  = var.subnet_ids
   service_role                = aws_iam_role.hm_amazon_emr_studio_iam_role.arn
+  engine_security_group_id    = "sg-xxxxxxxxxxxxxxxxx"
+  workspace_security_group_id = "sg-xxxxxxxxxxxxxxxxx"
+  vpc_id                      = "vpc-xxxxxxxxxxxxxxxxx"
+  subnet_ids                  = ["subnet-xxxxxxxxxxxxxxxxx"]
   tags = {
     Environment = var.environment
     Team        = var.team
