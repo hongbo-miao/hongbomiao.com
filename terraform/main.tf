@@ -155,6 +155,18 @@ module "hm_sedona_emr_managed_scaling_policy" {
   amazon_emr_cluster_id = module.hm_sedona_emr.id
   max_capacity_units    = 10
 }
+module "hm_sedona_emr_studio" {
+  source                      = "./modules/hm_amazon_emr_studio"
+  amazon_emr_studio_name      = "hm-sedona-emr-studio"
+  s3_bucket                   = "hongbomiao-bucket"
+  s3_uri                      = "s3://hongbomiao-bucket/amazon-emr/studio/hm-sedona-emr-studio"
+  engine_security_group_id    = "sg-xxxxxxxxxxxxxxxxx"
+  workspace_security_group_id = "sg-xxxxxxxxxxxxxxxxx"
+  vpc_id                      = "vpc-xxxxxxxxxxxxxxxxx"
+  subnet_ids                  = ["subnet-xxxxxxxxxxxxxxxxx"]
+  environment                 = var.environment
+  team                        = var.team
+}
 
 # AWS Glue DataBrew job
 # AWS Glue DataBrew job - ADS-B 2x Flight Trace
