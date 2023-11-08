@@ -1,9 +1,9 @@
 select
     from_unixtime_nanos(_time) as "Time",
     st_distance(
-        st_geometryfromtext('POINT(37.773972 -122.431297)'),
+        st_geometryfromtext('POINT(34.052235 -118.243683)'),
         st_geometryfromtext(_coordinate)
-    ) as "Distance to San Francisco",
+    ) as "Distance to Los Angeles, CA",
     _coordinate,
     desc,
     ownop,
