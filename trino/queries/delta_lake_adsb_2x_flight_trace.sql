@@ -63,5 +63,6 @@ select
     trace_aircraft_wd,
     trace_aircraft_ws
 from delta.adsb_db.adsb_2x_flight_trace_data
+where cast(_date as date) between date '2023-08-01' and date '2023-08-03'
 order by _time
 limit 100;
