@@ -178,7 +178,7 @@ poetry-cache-clear:
 
 # Clean
 clean-jupyter-notebook:
-	poetry run poe clean-jupyter-notebook -- aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/hm-workspace.ipynb
+	poetry run poe clean-jupyter-notebook -- aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/main.ipynb
 	poetry run poe clean-jupyter-notebook -- aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
 
 sqlfluff-list-dialects:
