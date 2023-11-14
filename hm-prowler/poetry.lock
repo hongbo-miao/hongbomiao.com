@@ -12,14 +12,31 @@ files = [
 ]
 
 [[package]]
+name = "adal"
+version = "1.2.7"
+description = "Note: This library is already replaced by MSAL Python, available here: https://pypi.org/project/msal/ .ADAL Python remains available here as a legacy. The ADAL for Python library makes it easy for python application to authenticate to Azure Active Directory (AAD) in order to access AAD protected web resources."
+optional = false
+python-versions = "*"
+files = [
+    {file = "adal-1.2.7-py2.py3-none-any.whl", hash = "sha256:2a7451ed7441ddbc57703042204a3e30ef747478eea022c70f789fc7f084bc3d"},
+    {file = "adal-1.2.7.tar.gz", hash = "sha256:d74f45b81317454d96e982fd1c50e6fb5c99ac2223728aea8764433a39f566f1"},
+]
+
+[package.dependencies]
+cryptography = ">=1.1.0"
+PyJWT = ">=1.0.0,<3"
+python-dateutil = ">=2.1.0,<3"
+requests = ">=2.0.0,<3"
+
+[[package]]
 name = "alive-progress"
-version = "3.1.4"
+version = "3.1.5"
 description = "A new kind of Progress Bar, with real-time throughput, ETA, and very cool animations!"
 optional = false
 python-versions = ">=3.7, <4"
 files = [
-    {file = "alive-progress-3.1.4.tar.gz", hash = "sha256:74a95d8d0d42bc99d3a3725dbd06ebb852245f1b64e301a7c375b92b22663f7b"},
-    {file = "alive_progress-3.1.4-py3-none-any.whl", hash = "sha256:c80ad87ce9c1054b01135a87fae69ecebbfc2107497ae87cbe6aec7e534903db"},
+    {file = "alive-progress-3.1.5.tar.gz", hash = "sha256:42e399a66c8150dc507602dff7b7953f105ef11faf97ddaa6d27b1cbf45c4c98"},
+    {file = "alive_progress-3.1.5-py3-none-any.whl", hash = "sha256:347220c1858e3abe137fa0746895668c04df09c5261a13dc03f05795e8a29be5"},
 ]
 
 [package.dependencies]
@@ -180,13 +197,13 @@ msrest = ">=0.7.1"
 
 [[package]]
 name = "azure-storage-blob"
-version = "12.18.3"
+version = "12.19.0"
 description = "Microsoft Azure Blob Storage Client Library for Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "azure-storage-blob-12.18.3.tar.gz", hash = "sha256:d8ced0deee3367fa3d4f3d1a03cd9edadf4440c0a371f503d623fa6c807554ee"},
-    {file = "azure_storage_blob-12.18.3-py3-none-any.whl", hash = "sha256:c278dde2ac41857a68d615c9f2b36d894ba877a7e84d62795603c7e79d0bb5e9"},
+    {file = "azure-storage-blob-12.19.0.tar.gz", hash = "sha256:26c0a4320a34a3c2a1b74528ba6812ebcb632a04cd67b1c7377232c4b01a5897"},
+    {file = "azure_storage_blob-12.19.0-py3-none-any.whl", hash = "sha256:7bbc2c9c16678f7a420367fef6b172ba8730a7e66df7f4d7a55d5b3c8216615b"},
 ]
 
 [package.dependencies]
@@ -578,13 +595,13 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2,<1.0.dev0)"]
 
 [[package]]
 name = "google-api-python-client"
-version = "2.106.0"
+version = "2.107.0"
 description = "Google API Client Library for Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "google-api-python-client-2.106.0.tar.gz", hash = "sha256:f6a3862be2f6e5e0536d7bd47b5af3f24ac0b9147c76c830cafb3329d71d5724"},
-    {file = "google_api_python_client-2.106.0-py2.py3-none-any.whl", hash = "sha256:c47c0dae5dd20aa43e4ea184566fe59d0c8fd0b86dd223b29040d8ea4f7ed6ea"},
+    {file = "google-api-python-client-2.107.0.tar.gz", hash = "sha256:ef6d4c1a17fe9ec0894fc6d4f61e751c4b859fb33f2ab5b881ceb0b80ba442ba"},
+    {file = "google_api_python_client-2.107.0-py2.py3-none-any.whl", hash = "sha256:51d7bf676f41a77b00b7b9c72ace0c1db3dd5a4dd392a13ae897cf4f571a3539"},
 ]
 
 [package.dependencies]
@@ -782,6 +799,22 @@ requests-oauthlib = ">=0.5.0"
 async = ["aiodns", "aiohttp (>=3.0)"]
 
 [[package]]
+name = "msrestazure"
+version = "0.6.4"
+description = "AutoRest swagger generator Python client runtime. Azure-specific module."
+optional = false
+python-versions = "*"
+files = [
+    {file = "msrestazure-0.6.4-py2.py3-none-any.whl", hash = "sha256:3de50f56147ef529b31e099a982496690468ecef33f0544cb0fa0cfe1e1de5b9"},
+    {file = "msrestazure-0.6.4.tar.gz", hash = "sha256:a06f0dabc9a6f5efe3b6add4bd8fb623aeadacf816b7a35b0f89107e0544d189"},
+]
+
+[package.dependencies]
+adal = ">=0.6.0,<2.0.0"
+msrest = ">=0.6.0,<2.0.0"
+six = "*"
+
+[[package]]
 name = "oauthlib"
 version = "3.2.2"
 description = "A generic, spec-compliant, thorough implementation of the OAuth request-signing logic"
@@ -867,17 +900,17 @@ files = [
 
 [[package]]
 name = "prowler"
-version = "3.11.1"
+version = "3.11.2"
 description = "Prowler is an Open Source security tool to perform AWS, GCP and Azure security best practices assessments, audits, incident response, continuous monitoring, hardening and forensics readiness. It contains hundreds of controls covering CIS, NIST 800, NIST CSF, CISA, RBI, FedRAMP, PCI-DSS, GDPR, HIPAA, FFIEC, SOC2, GXP, AWS Well-Architected Framework Security Pillar, AWS Foundational Technical Review (FTR), ENS (Spanish National Security Scheme) and your custom security frameworks."
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "prowler-3.11.1-py3-none-any.whl", hash = "sha256:0b16205a6ab99b3bb04dbcf49e83cccb37bbf7f3d1abeb6c084f8b15ece3da2b"},
-    {file = "prowler-3.11.1.tar.gz", hash = "sha256:43a83b202d1918b98cdbae521b1c2f1e8ee9e80738164f8e5551ffd4a41b1e50"},
+    {file = "prowler-3.11.2-py3-none-any.whl", hash = "sha256:903258b5165fc54d232ea7c9719a229b31467a873e53c5848b36b01f0e8382bd"},
+    {file = "prowler-3.11.2.tar.gz", hash = "sha256:6603a5c5b249c7f3e7d60f2abbbac70ec276fc9fea324394c91a5320fca0b28e"},
 ]
 
 [package.dependencies]
-alive-progress = "3.1.4"
+alive-progress = "3.1.5"
 awsipranges = "0.3.3"
 azure-identity = "1.15.0"
 azure-mgmt-authorization = "4.0.0"
@@ -885,14 +918,15 @@ azure-mgmt-security = "5.0.0"
 azure-mgmt-sql = "3.0.1"
 azure-mgmt-storage = "21.1.0"
 azure-mgmt-subscription = "3.1.1"
-azure-storage-blob = "12.18.3"
+azure-storage-blob = "12.19.0"
 boto3 = "1.26.165"
 botocore = "1.29.165"
 colorama = "0.4.6"
 detect-secrets = "1.4.0"
-google-api-python-client = "2.106.0"
+google-api-python-client = "2.107.0"
 google-auth-httplib2 = ">=0.1.0,<0.2.0"
 msgraph-core = "0.2.2"
+msrestazure = ">=0.6.4,<0.7.0"
 pydantic = "1.10.13"
 schema = "0.7.5"
 shodan = "1.30.1"
@@ -1357,4 +1391,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.x"
-content-hash = "a93b9d6f340d62b3b4a7bf079ef1eb49e2e75719a3aeb7bb678ca8ede1ab27ac"
+content-hash = "442e923fcd046e52597b30dbbd95de93a832e3ff89b4314a2eb3d26410299ed5"
