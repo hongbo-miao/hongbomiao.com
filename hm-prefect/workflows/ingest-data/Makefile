@@ -17,7 +17,7 @@ poetry-run-set-up:
 poetry-run-dev:
 	poetry run poe dev
 poetry-run-build:
-	poetry run poe build -- --params=$$(cat params.json | jq -c .) --work-queue=hm-local-queue
+	poetry run poe build -- --params=$$(jq --compact-output --monochrome-output . params.json) --work-queue=hm-local-queue
 poetry-run-run:
 	poetry run poe run
 

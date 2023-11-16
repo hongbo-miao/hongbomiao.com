@@ -5,3 +5,13 @@ amazon-sagemaker-create-notebook-instance:
 		--role-arn=arn:aws:iam::xxxxxxxxxxxx:role/service-role/xxx \
 		--platform-identifier=notebook-al2-v2 \
 		--root-access=Enabled
+
+amazon-sagemaker-domain-list:
+	aws sagemaker list-domains
+amazon-sagemaker-domain-delete:
+	aws sagemaker delete-domain --domain-id=d-xxxxxxxxxxxx
+
+amazon-sagemaker-user-profile-list:
+	aws sagemaker list-user-profiles
+amazon-sagemaker-user-profile-list:
+	aws sagemaker delete-user-profile --domain-id=d-xxxxxxxxxxxx --user-profile-name=xxx
