@@ -14,6 +14,9 @@ show-connection:
 which:
 	where.exe xxx
 
+show-powershell-version:
+	$PSVersionTable.PSVersion
+
 execution-policy-get:
 	Get-ExecutionPolicy
 execution-policy-set:
