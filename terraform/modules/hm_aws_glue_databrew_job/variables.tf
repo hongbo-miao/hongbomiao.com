@@ -1,7 +1,13 @@
 variable "aws_glue_databrew_job_name" {
   type = string
 }
-variable "source_name" {
+variable "iam_role_arn" {
+  type = string
+}
+variable "aws_glue_databrew_dataset_name" {
+  type = string
+}
+variable "recipe_name" {
   type = string
 }
 variable "recipe_version" {
@@ -10,14 +16,8 @@ variable "recipe_version" {
 variable "node_max_number" {
   type = number
 }
-variable "timeout" {
+variable "timeout_min" {
   type = number
-}
-variable "input_s3_bucket" {
-  type = string
-}
-variable "input_s3_dir" {
-  type = string
 }
 variable "output_s3_bucket" {
   type = string
