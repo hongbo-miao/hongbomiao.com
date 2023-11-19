@@ -36,7 +36,7 @@ sudo curl --silent --fail --show-error --location --remote-name --output-dir /us
   apache-sedona==1.5.0 \
   attrs==23.1.0 \
   descartes==1.1.0 \
-  geopandas==0.14.0 \
-  matplotlib==3.8.0 \
-  pandas==2.1.2 \
+  geopandas==0.14.1 \
+  matplotlib==3.8.2 \
+  pandas==2.1.3 \
   shapely==2.0.2
