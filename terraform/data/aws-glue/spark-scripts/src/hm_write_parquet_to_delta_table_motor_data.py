@@ -5,9 +5,9 @@ from awsglue.job import Job
 from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
 
-raw_parquet_path = "s3://hongbomiao-bucket/data/parquet/motor/"
+raw_parquet_paths = ["s3://hongbomiao-bucket/data/parquet/motor/"]
 delta_table_path = "s3://hongbomiao-bucket/data/delta-tables/motor_data/"
-partition_list = ["_event_id"]
+partitions = ["_event_id"]
 
 args = getResolvedOptions(sys.argv, ["JOB_NAME"])
 spark_context = SparkContext()
@@ -21,7 +21,7 @@ s3_node = glue_context.create_dynamic_frame.from_options(
     connection_type="s3",
     format="parquet",
     connection_options={
-        "paths": [raw_parquet_path],
+        "paths": raw_parquet_paths,
         "recurse": True,
     },
     transformation_ctx="s3_node",
@@ -32,8 +32,8 @@ additional_options = {
     "mergeSchema": "true",
 }
 df = s3_node.toDF()
-df.write.format("delta").options(**additional_options).partitionBy(
-    *partition_list
-).mode("overwrite").save()
+df.write.format("delta").options(**additional_options).partitionBy(*partitions).mode(
+    "overwrite"
+).save()
 
 job.commit()
