@@ -21,7 +21,7 @@ resource "aws_iam_role" "hm_amazon_emr_studio_iam_role" {
     Name        = "AmazonEMRStudioServiceRole-${var.amazon_emr_studio_name}"
   }
 }
-resource "aws_iam_role_policy" "hm_amazon_emr_studio_iam_role_input_policy" {
+resource "aws_iam_role_policy" "hm_amazon_emr_studio_iam_role_s3_policy" {
   name = "AmazonEMRStudioServicePolicyForS3-${var.amazon_emr_studio_name}"
   role = aws_iam_role.hm_amazon_emr_studio_iam_role.name
   policy = jsonencode({
