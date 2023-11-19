@@ -166,20 +166,38 @@ module "hm_sedona_emr_studio" {
 
 # AWS Glue DataBrew job
 # AWS Glue DataBrew job - ADS-B 2x Flight Trace
+module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data_iam" {
+  source           = "./modules/hm_aws_glue_databrew_iam"
+  source_name      = "adsb-2x-flight-trace"
+  input_s3_bucket  = "hongbomiao-bucket"
+  output_s3_bucket = "hongbomiao-bucket"
+  environment      = var.environment
+  team             = var.team
+}
+module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data_dataset" {
+  source                         = "./modules/hm_aws_glue_databrew_dataset"
+  count                          = length(var.adsb_2x_flight_trace_dates)
+  aws_glue_databrew_dataset_name = "adsb-2x-flight-trace-data-${replace(var.adsb_2x_flight_trace_dates[count.index], "/", "-")}"
+  input_s3_bucket                = "hongbomiao-bucket"
+  input_s3_dir                   = "data/raw-data/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_dates[count.index]}/"
+  environment                    = var.environment
+  team                           = var.team
+}
 module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data" {
-  source                     = "./modules/hm_aws_glue_databrew_job"
-  aws_glue_databrew_job_name = "hm-write-csv-to-parquet-adsb-2x-flight-trace-data"
-  source_name                = "adsb-2x-flight-trace"
-  recipe_version             = "1.0"
-  node_max_number            = 149
-  timeout                    = 525600
-  input_s3_bucket            = "hongbomiao-bucket"
-  input_s3_dir               = "data/raw-ata/adsb_2x_flight_trace_data/2023/10/"
-  output_s3_bucket           = "hongbomiao-bucket"
-  output_s3_dir              = "data/raw-parquet/adsb_2x_flight_trace_data/2023/10/"
-  output_max_file_number     = 900
-  environment                = var.environment
-  team                       = var.team
+  source                         = "./modules/hm_aws_glue_databrew_job"
+  count                          = length(var.adsb_2x_flight_trace_dates)
+  iam_role_arn                   = module.hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data_iam.arn
+  aws_glue_databrew_job_name     = "hm-write-csv-to-parquet-adsb-2x-flight-trace-data-${replace(var.adsb_2x_flight_trace_dates[count.index], "/", "-")}"
+  aws_glue_databrew_dataset_name = "adsb-2x-flight-trace-data-${replace(var.adsb_2x_flight_trace_dates[count.index], "/", "-")}"
+  recipe_name                    = "adsb-2x-flight-trace-recipe"
+  recipe_version                 = "1.0"
+  node_max_number                = 10
+  timeout_min                    = 1440
+  output_s3_bucket               = "hongbomiao-bucket"
+  output_s3_dir                  = "data/raw-parquet/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_dates[count.index]}/"
+  output_max_file_number         = 24
+  environment                    = var.environment
+  team                           = var.team
 }
 
 # AWS Glue job
