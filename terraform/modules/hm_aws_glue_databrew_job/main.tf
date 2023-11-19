@@ -82,13 +82,44 @@ resource "aws_iam_role_policy_attachment" "hm_aws_glue_databrew_iam_role_policy_
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueDataBrewServiceRole"
 }
 
+# https://registry.terraform.io/providers/hashicorp/awscc/latest/docs/resources/databrew_dataset
+resource "awscc_databrew_dataset" "hm_aws_databrew_dataset" {
+  name = "${var.source_name}-data"
+  input = {
+    s3_input_definition = {
+      bucket = var.input_s3_bucket
+      key    = var.input_s3_dir
+    }
+  }
+  format_options = {
+    json = {
+      multi_line = true
+    }
+  }
+  tags = [
+    {
+      key   = "Environment"
+      value = var.environment
+    },
+    {
+      key   = "Team"
+      value = var.team
+    },
+    {
+      key   = "Name"
+      value = "${var.source_name}-data"
+    }
+  ]
+}
+
 # https://registry.terraform.io/providers/hashicorp/awscc/latest/docs/resources/databrew_job
 resource "awscc_databrew_job" "hm_aws_glue_databrew_job" {
   name         = var.aws_glue_databrew_job_name
   role_arn     = aws_iam_role.hm_aws_glue_databrew_iam_role.arn
   type         = "RECIPE"
   dataset_name = "${var.source_name}-data"
-  max_capacity = 20
+  max_capacity = var.node_max_number
+  timeout      = var.timeout
   recipe = {
     name    = "${var.source_name}-recipe"
     version = var.recipe_version
@@ -100,7 +131,7 @@ resource "awscc_databrew_job" "hm_aws_glue_databrew_job" {
         key    = var.output_s3_dir
       }
       format           = "PARQUET"
-      max_output_files = 1
+      max_output_files = var.output_max_file_number
       overwrite        = true
     }
   ]

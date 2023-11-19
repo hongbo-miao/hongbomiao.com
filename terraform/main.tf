@@ -51,7 +51,7 @@ module "hm_trino_s3_set_up_script" {
 module "hm_trino" {
   source                         = "./modules/hm_amazon_emr_cluster"
   amazon_emr_cluster_name        = "hm-trino"
-  amazon_emr_version             = "emr-6.14.0"
+  amazon_emr_version             = "emr-6.15.0"
   applications                   = ["Trino"]
   primary_instance_type          = "r7a.xlarge"
   core_instance_type             = "r7a.2xlarge"
@@ -111,7 +111,7 @@ module "hm_sedona_s3_set_up_script" {
 module "hm_sedona_emr" {
   source                         = "./modules/hm_amazon_emr_cluster"
   amazon_emr_cluster_name        = "hm-sedona"
-  amazon_emr_version             = "emr-6.14.0"
+  amazon_emr_version             = "emr-6.15.0"
   applications                   = ["Hadoop", "Hive", "JupyterEnterpriseGateway", "Spark"]
   primary_instance_type          = "r7a.2xlarge"
   core_instance_type             = "r7a.2xlarge"
@@ -171,9 +171,13 @@ module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data" {
   aws_glue_databrew_job_name = "hm-write-csv-to-parquet-adsb-2x-flight-trace-data"
   source_name                = "adsb-2x-flight-trace"
   recipe_version             = "1.0"
+  node_max_number            = 149
+  timeout                    = 525600
   input_s3_bucket            = "hongbomiao-bucket"
+  input_s3_dir               = "data/raw-ata/adsb_2x_flight_trace_data/2023/10/"
   output_s3_bucket           = "hongbomiao-bucket"
-  output_s3_dir              = "data/raw-parquet/adsb_2x_flight_trace_data/"
+  output_s3_dir              = "data/raw-parquet/adsb_2x_flight_trace_data/2023/10/"
+  output_max_file_number     = 900
   environment                = var.environment
   team                       = var.team
 }
