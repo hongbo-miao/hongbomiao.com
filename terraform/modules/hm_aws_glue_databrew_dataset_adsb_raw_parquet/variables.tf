@@ -1,10 +1,10 @@
-variable "aws_glue_databrew_job_nickname" {
+variable "aws_glue_databrew_dataset_name" {
   type = string
 }
 variable "input_s3_bucket" {
   type = string
 }
-variable "output_s3_bucket" {
+variable "input_s3_dir" {
   type = string
 }
 variable "environment" {

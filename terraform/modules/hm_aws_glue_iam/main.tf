@@ -1,8 +1,8 @@
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
-resource "aws_iam_role" "hm_aws_glue_databrew_iam_role" {
-  name = "AWSGlueDataBrewServiceRole-${var.aws_glue_databrew_job_nickname}"
+resource "aws_iam_role" "hm_aws_glue_iam_role" {
+  name = "AWSGlueDataBrewServiceRole-${var.aws_glue_job_nickname}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -10,7 +10,7 @@ resource "aws_iam_role" "hm_aws_glue_databrew_iam_role" {
         Effect = "Allow"
         Action = "sts:AssumeRole"
         Principal = {
-          Service = "databrew.amazonaws.com"
+          Service = "glue.amazonaws.com"
         }
       }
     ]
@@ -18,12 +18,12 @@ resource "aws_iam_role" "hm_aws_glue_databrew_iam_role" {
   tags = {
     Environment = var.environment
     Team        = var.team
-    Name        = "AWSGlueDataBrewServiceRole-${var.aws_glue_databrew_job_nickname}"
+    Name        = "AWSGlueServiceRole-${var.aws_glue_job_nickname}"
   }
 }
-resource "aws_iam_role_policy" "hm_aws_glue_databrew_iam_role_input_policy" {
-  name = "AwsGlueDataBrewServicePolicyForInputS3-${var.aws_glue_databrew_job_nickname}"
-  role = aws_iam_role.hm_aws_glue_databrew_iam_role.name
+resource "aws_iam_role_policy" "hm_aws_glue_iam_role_input_policy" {
+  name = "AwsGlueDataBrewServicePolicyForInputS3-${var.aws_glue_job_nickname}"
+  role = aws_iam_role.hm_aws_glue_iam_role.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -41,9 +41,9 @@ resource "aws_iam_role_policy" "hm_aws_glue_databrew_iam_role_input_policy" {
     ]
   })
 }
-resource "aws_iam_role_policy" "hm_aws_glue_databrew_iam_role_output_policy" {
-  name = "AwsGlueDataBrewServicePolicyForOutputS3-${var.aws_glue_databrew_job_nickname}"
-  role = aws_iam_role.hm_aws_glue_databrew_iam_role.name
+resource "aws_iam_role_policy" "hm_aws_glue_iam_role_output_policy" {
+  name = "AwsGlueDataBrewServicePolicyForOutputS3-${var.aws_glue_job_nickname}"
+  role = aws_iam_role.hm_aws_glue_iam_role.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -77,7 +77,7 @@ resource "aws_iam_role_policy" "hm_aws_glue_databrew_iam_role_output_policy" {
     ]
   })
 }
-resource "aws_iam_role_policy_attachment" "hm_aws_glue_databrew_iam_role_policy_attachment" {
-  role       = aws_iam_role.hm_aws_glue_databrew_iam_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueDataBrewServiceRole"
+resource "aws_iam_role_policy_attachment" "hm_aws_glue_iam_role_policy_attachment" {
+  role       = aws_iam_role.hm_aws_glue_iam_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
 }

@@ -1,10 +1,10 @@
 # https://registry.terraform.io/providers/hashicorp/awscc/latest/docs/resources/databrew_job
-resource "awscc_databrew_job" "hm_aws_glue_databrew_job" {
-  name         = var.aws_glue_databrew_job_name
+resource "awscc_databrew_job" "hm_aws_glue_databrew_recipe_job" {
+  name         = var.aws_glue_databrew_recipe_job_name
   role_arn     = var.iam_role_arn
   type         = "RECIPE"
   dataset_name = var.aws_glue_databrew_dataset_name
-  max_capacity = var.node_max_number
+  max_capacity = var.spark_worker_max_number
   timeout      = var.timeout_min
   recipe = {
     name    = var.recipe_name
@@ -32,7 +32,7 @@ resource "awscc_databrew_job" "hm_aws_glue_databrew_job" {
     },
     {
       key   = "Name"
-      value = var.aws_glue_databrew_job_name
+      value = var.aws_glue_databrew_recipe_job_name
     }
   ]
 }

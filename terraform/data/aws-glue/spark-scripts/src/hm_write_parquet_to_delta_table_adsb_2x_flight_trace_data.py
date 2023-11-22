@@ -14,13 +14,6 @@ delta_table_path = "s3://hongbomiao-bucket/data/delta-tables/adsb_2x_flight_trac
 partitions = ["_date"]
 
 
-def cast_column_type_long_to_double(df: DataFrame) -> DataFrame:
-    for column_name, column_type in df.dtypes:
-        if column_type == "bigint":
-            df = df.withColumn(column_name, col(column_name).cast("double"))
-    return df
-
-
 def cast_column_type(df: DataFrame, column_name: str, new_data_type: str) -> DataFrame:
     if column_name in df.columns:
         df = df.withColumn(
@@ -146,7 +139,6 @@ df = s3_node.toDF()
 df = add_trace_on_ground_column(df, "trace_altitude_ft", "trace_on_ground", "ground")
 
 # Convert types
-df = cast_column_type_long_to_double(df)
 df = cast_column_type(df, "dbFlags", "bigint")
 df = cast_column_type(df, "desc", "string")
 df = cast_column_type(df, "icao", "string")
@@ -245,7 +237,7 @@ additional_options = {
     "mergeSchema": "true",
 }
 df.write.format("delta").options(**additional_options).partitionBy(*partitions).mode(
-    "overwrite"
+    "append"
 ).save()
 
 job.commit()
