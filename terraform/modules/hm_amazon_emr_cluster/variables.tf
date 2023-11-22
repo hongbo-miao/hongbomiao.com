@@ -25,7 +25,7 @@ variable "configurations" {
     Properties     = map(string)
   }))
 }
-variable "aws_iam_role" {
+variable "iam_role_arn" {
   type = string
 }
 variable "environment" {

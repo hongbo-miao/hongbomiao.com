@@ -2,7 +2,7 @@
 # https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html
 resource "aws_glue_job" "hm_aws_glue_job" {
   name              = var.aws_glue_job_name
-  role_arn          = var.aws_iam_role
+  role_arn          = var.iam_role_arn
   glue_version      = "4.0"
   worker_type       = var.spark_worker_type
   number_of_workers = var.spark_worker_max_number

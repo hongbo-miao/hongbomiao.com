@@ -45,7 +45,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
     path = var.bootstrap_set_up_script_s3_uri
   }
   configurations_json = jsonencode(var.configurations)
-  service_role        = var.aws_iam_role
+  service_role        = var.iam_role_arn
   tags = {
     for-use-with-amazon-emr-managed-policies = true
     Environment                              = var.environment

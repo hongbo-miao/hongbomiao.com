@@ -56,7 +56,7 @@ module "hm_trino" {
   primary_instance_type          = "r7a.xlarge"
   core_instance_type             = "r7a.2xlarge"
   core_target_on_demand_capacity = 1
-  bootstrap_set_up_script_s3_uri = "s3://hongbomiao-bucket/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
+  bootstrap_set_up_script_s3_uri = module.hm_trino_s3_set_up_script.uri
   configurations = [
     {
       Classification : "delta-defaults",
@@ -79,7 +79,7 @@ module "hm_trino" {
       }
     }
   ]
-  aws_iam_role = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  iam_role_arn = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
   environment  = var.environment
   team         = var.team
 }
@@ -116,7 +116,7 @@ module "hm_sedona_emr" {
   primary_instance_type          = "r7a.2xlarge"
   core_instance_type             = "r7a.2xlarge"
   core_target_on_demand_capacity = 1
-  bootstrap_set_up_script_s3_uri = "s3://hongbomiao-bucket/amazon-emr/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
+  bootstrap_set_up_script_s3_uri = module.hm_sedona_s3_set_up_script.uri
   configurations = [
     {
       Classification : "delta-defaults",
@@ -140,7 +140,7 @@ module "hm_sedona_emr" {
       }
     }
   ]
-  aws_iam_role = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  iam_role_arn = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
   environment  = var.environment
   team         = var.team
 }
@@ -155,53 +155,107 @@ module "hm_sedona_emr_managed_scaling_policy" {
   amazon_emr_cluster_id = module.hm_sedona_emr.id
   max_capacity_units    = 10
 }
+
+module "hm_sedona_emr_studio_iam" {
+  source                 = "./modules/hm_amazon_emr_studio_iam"
+  amazon_emr_studio_name = "hm-sedona-emr-studio"
+  s3_bucket              = "hongbomiao-bucke"
+  environment            = var.environment
+  team                   = var.team
+}
 module "hm_sedona_emr_studio" {
   source                 = "./modules/hm_amazon_emr_studio"
   amazon_emr_studio_name = "hm-sedona-emr-studio"
-  s3_bucket              = "hongbomiao-bucket"
   s3_uri                 = "s3://hongbomiao-bucket/amazon-emr/studio/hm-sedona-emr-studio"
+  iam_role_arn           = module.hm_sedona_emr_studio_iam.arn
   environment            = var.environment
   team                   = var.team
 }
 
 # AWS Glue DataBrew job
-# AWS Glue DataBrew job - ADS-B 2x Flight Trace
-module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data_iam" {
-  source           = "./modules/hm_aws_glue_databrew_iam"
-  source_name      = "adsb-2x-flight-trace"
-  input_s3_bucket  = "hongbomiao-bucket"
-  output_s3_bucket = "hongbomiao-bucket"
-  environment      = var.environment
-  team             = var.team
-}
-module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data_dataset" {
-  source                         = "./modules/hm_aws_glue_databrew_dataset"
-  count                          = length(var.adsb_2x_flight_trace_dates)
-  aws_glue_databrew_dataset_name = "adsb-2x-flight-trace-data-${replace(var.adsb_2x_flight_trace_dates[count.index], "/", "-")}"
-  input_s3_bucket                = "hongbomiao-bucket"
-  input_s3_dir                   = "data/raw-data/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_dates[count.index]}/"
-  environment                    = var.environment
-  team                           = var.team
-}
-module "hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data" {
-  source                         = "./modules/hm_aws_glue_databrew_job"
-  count                          = length(var.adsb_2x_flight_trace_dates)
-  iam_role_arn                   = module.hm_glue_databrew_job_write_csv_to_parquet_adsb_2x_flight_trace_data_iam.arn
-  aws_glue_databrew_job_name     = "hm-write-csv-to-parquet-adsb-2x-flight-trace-data-${replace(var.adsb_2x_flight_trace_dates[count.index], "/", "-")}"
-  aws_glue_databrew_dataset_name = "adsb-2x-flight-trace-data-${replace(var.adsb_2x_flight_trace_dates[count.index], "/", "-")}"
-  recipe_name                    = "adsb-2x-flight-trace-recipe"
-  recipe_version                 = "1.0"
-  node_max_number                = 10
-  timeout_min                    = 1440
+# AWS Glue DataBrew recipe job - ADS-B 2x Flight Trace - Write CSV to Parquet
+module "hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_iam" {
+  source                         = "./modules/hm_aws_glue_databrew_iam"
+  aws_glue_databrew_job_nickname = "write-adsb-csv-to-parquet"
+  input_s3_bucket                = "track-data-adsbexchange-transfer-archer"
   output_s3_bucket               = "hongbomiao-bucket"
-  output_s3_dir                  = "data/raw-parquet/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_dates[count.index]}/"
-  output_max_file_number         = 24
   environment                    = var.environment
   team                           = var.team
+}
+module "hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_dataset" {
+  source                         = "./modules/hm_aws_glue_databrew_dataset_adsb_raw_data"
+  count                          = length(var.adsb_2x_flight_trace_raw_data_dates)
+  aws_glue_databrew_dataset_name = "adsb-2x-flight-trace-dataset-raw-data-${replace(var.adsb_2x_flight_trace_raw_data_dates[count.index], "/", "-")}"
+  input_s3_bucket                = "track-data-adsbexchange-transfer-archer"
+  input_s3_dir                   = "hires-traces-json-gz/hires-traces/${var.adsb_2x_flight_trace_raw_data_dates[count.index]}/"
+  environment                    = var.environment
+  team                           = var.team
+}
+module "hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet" {
+  source                            = "./modules/hm_aws_glue_databrew_recipe_job"
+  count                             = length(var.adsb_2x_flight_trace_raw_data_dates)
+  aws_glue_databrew_recipe_job_name = "hm-write-adsb-2x-flight-trace-csv-to-parquet-${replace(var.adsb_2x_flight_trace_raw_data_dates[count.index], "/", "-")}"
+  aws_glue_databrew_dataset_name    = "adsb-2x-flight-trace-dataset-raw-data-${replace(var.adsb_2x_flight_trace_raw_data_dates[count.index], "/", "-")}"
+  recipe_name                       = "adsb-2x-flight-trace-recipe"
+  recipe_version                    = "1.0"
+  spark_worker_max_number           = 24
+  timeout_min                       = 1440
+  output_s3_bucket                  = "hongbomiao-bucket"
+  output_s3_dir                     = "data/raw-parquet/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_raw_data_dates[count.index]}/"
+  output_max_file_number            = 24
+  iam_role_arn                      = module.hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_iam.arn
+  environment                       = var.environment
+  team                              = var.team
+  depends_on = [
+    module.hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_dataset
+  ]
+}
+
+# AWS Glue DataBrew profile job - ADS-B 2x Flight Trace - Profile Parquet
+module "hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_iam" {
+  source                         = "./modules/hm_aws_glue_databrew_iam"
+  aws_glue_databrew_job_nickname = "profile-adsb-raw-parquet"
+  input_s3_bucket                = "hongbomiao-bucket"
+  output_s3_bucket               = "hongbomiao-bucket"
+  environment                    = var.environment
+  team                           = var.team
+}
+module "hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_dataset" {
+  source                         = "./modules/hm_aws_glue_databrew_dataset_adsb_raw_parquet"
+  count                          = length(var.adsb_2x_flight_trace_raw_parquet_dates)
+  aws_glue_databrew_dataset_name = "adsb-2x-flight-trace-dataset-raw-parquet-${replace(var.adsb_2x_flight_trace_raw_parquet_dates[count.index], "/", "-")}"
+  input_s3_bucket                = "hongbomiao-bucket"
+  input_s3_dir                   = "data/raw-parquet/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_raw_parquet_dates[count.index]}/"
+  environment                    = var.environment
+  team                           = var.team
+}
+module "hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet" {
+  source                             = "./modules/hm_aws_glue_databrew_profile_job"
+  count                              = length(var.adsb_2x_flight_trace_raw_parquet_dates)
+  aws_glue_databrew_profile_job_name = "hm-profile-adsb-2x-flight-trace-raw-parquet-${replace(var.adsb_2x_flight_trace_raw_parquet_dates[count.index], "/", "-")}"
+  aws_glue_databrew_dataset_name     = "adsb-2x-flight-trace-dataset-raw-parquet-${replace(var.adsb_2x_flight_trace_raw_parquet_dates[count.index], "/", "-")}"
+  spark_worker_max_number            = 24
+  timeout_min                        = 1440
+  output_s3_bucket                   = "hongbomiao-bucket"
+  output_s3_dir                      = "aws-glue-databrew/profile-results/"
+  iam_role_arn                       = module.hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_iam.arn
+  environment                        = var.environment
+  team                               = var.team
+  depends_on = [
+    module.hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_dataset
+  ]
 }
 
 # AWS Glue job
 # AWS Glue job - ADS-B 2x Flight Trace
+module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script_iam" {
+  source                = "./modules/hm_aws_glue_iam"
+  aws_glue_job_nickname = "write-adsb-parquet-to-delta-table"
+  input_s3_bucket       = "hongbomiao-bucket"
+  output_s3_bucket      = "hongbomiao-bucket"
+  environment           = var.environment
+  team                  = var.team
+}
 module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script" {
   source           = "./modules/hm_amazon_s3_object"
   amazon_s3_bucket = "hongbomiao-bucket"
@@ -211,11 +265,11 @@ module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_scrip
 module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data" {
   source                  = "./modules/hm_aws_glue_job"
   aws_glue_job_name       = "hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data"
-  spark_script_s3_uri     = "s3://hongbomiao-bucket/aws-glue/spark-scripts/hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data.py"
+  spark_script_s3_uri     = module.hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script.uri
   spark_worker_type       = "G.1X"
-  spark_worker_max_number = 50
+  spark_worker_max_number = 900
   timeout_min             = 360
-  aws_iam_role            = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
+  iam_role_arn            = module.hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script_iam.arn
   environment             = var.environment
   team                    = var.team
 }
@@ -234,7 +288,7 @@ module "hm_glue_job_write_parquet_to_delta_table_motor_data" {
   spark_worker_type       = "G.1X"
   spark_worker_max_number = 20
   timeout_min             = 360
-  aws_iam_role            = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
+  iam_role_arn            = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
   environment             = var.environment
   team                    = var.team
 }
@@ -243,7 +297,7 @@ module "hm_glue_crawler_motor_data" {
   aws_glue_crawler_name         = "hm-delta-lake-crawler-iot"
   aws_glue_crawler_delta_tables = ["s3://hongbomiao-bucket/delta-tables/motor_data/"]
   aws_glue_database             = "hm_delta_db"
-  aws_iam_role                  = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
+  iam_role_arn                  = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
   environment                   = var.environment
   team                          = var.team
 }

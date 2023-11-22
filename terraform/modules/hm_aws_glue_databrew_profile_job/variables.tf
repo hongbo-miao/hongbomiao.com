@@ -1,10 +1,10 @@
-variable "aws_glue_job_name" {
+variable "aws_glue_databrew_profile_job_name" {
   type = string
 }
-variable "spark_script_s3_uri" {
+variable "iam_role_arn" {
   type = string
 }
-variable "spark_worker_type" {
+variable "aws_glue_databrew_dataset_name" {
   type = string
 }
 variable "spark_worker_max_number" {
@@ -13,7 +13,10 @@ variable "spark_worker_max_number" {
 variable "timeout_min" {
   type = number
 }
-variable "iam_role_arn" {
+variable "output_s3_bucket" {
+  type = string
+}
+variable "output_s3_dir" {
   type = string
 }
 variable "environment" {

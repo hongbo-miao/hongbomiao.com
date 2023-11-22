@@ -1,4 +1,4 @@
-variable "aws_glue_databrew_job_name" {
+variable "aws_glue_databrew_recipe_job_name" {
   type = string
 }
 variable "iam_role_arn" {
@@ -13,7 +13,7 @@ variable "recipe_name" {
 variable "recipe_version" {
   type = string
 }
-variable "node_max_number" {
+variable "spark_worker_max_number" {
   type = number
 }
 variable "timeout_min" {
