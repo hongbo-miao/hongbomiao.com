@@ -2,7 +2,7 @@
 # https://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html
 resource "aws_glue_crawler" "hm_aws_glue_crawler" {
   name          = var.aws_glue_crawler_name
-  role          = var.aws_iam_role
+  role          = var.iam_role_arn
   database_name = var.aws_glue_database
   delta_target {
     delta_tables              = var.aws_glue_crawler_delta_tables

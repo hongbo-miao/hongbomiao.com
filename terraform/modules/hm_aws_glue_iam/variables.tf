@@ -1,4 +1,4 @@
-variable "aws_glue_databrew_job_nickname" {
+variable "aws_glue_job_nickname" {
   type = string
 }
 variable "input_s3_bucket" {

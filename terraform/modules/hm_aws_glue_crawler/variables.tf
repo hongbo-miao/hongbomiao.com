@@ -7,7 +7,7 @@ variable "aws_glue_crawler_delta_tables" {
 variable "aws_glue_database" {
   type = string
 }
-variable "aws_iam_role" {
+variable "iam_role_arn" {
   type = string
 }
 variable "environment" {
