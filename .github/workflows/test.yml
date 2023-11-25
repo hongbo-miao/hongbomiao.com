@@ -279,7 +279,8 @@ jobs:
           xcodebuild build-for-testing \
             -project HMMobile.xcodeproj \
             -scheme HMMobile \
-            -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.0"
+            -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.0" \
+            -allowProvisioningUpdates
       - name: Test
         uses: wandalen/wretry.action@v1
         with:
