@@ -4,7 +4,7 @@ m = 1;
 b = 0.5;
 k = 1;
 
-sim('mass_spring_damper_simscape.slx');
+sim('massSpringDamperSimscape.slx');
 figure;
 plot(ans.displacement);
 hold on;
