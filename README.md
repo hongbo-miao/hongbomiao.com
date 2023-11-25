@@ -392,8 +392,10 @@ make kubernetes-clean
   - **npTDMS** - TDMS files reading and writing
   - **PyVISA** - Virtual instrument software architecture (VISA) API library
 - **MATLAB** - Programming and numeric computing platform
+  - **Database Toolbox** - Relational and NoSQL databases interacting
+  - **Satellite Communications Toolbox** - Satellite communications systems simulation
   - **Simulink** - Simulation and model-based designing
-    - **Simscape** - Model and simulate multidomain physical systems
+    - **Simscape** - Multidomain physical systems simulation
 - **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
 
 ## Embedded, IoT, Hardware
@@ -607,9 +609,15 @@ The following presents a model of a radar-based air defense system. Bombers are 
 
 ![SimScale screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/953ec6ed-201e-4e59-bb43-f77c385d4054)
 
-### MATLAB, Simulink, Simscape
+### MATLAB
 
-![MATLAB and Simulink screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
+#### Satellite Communications Toolbox - Satellite Communications Systems Simulation
+
+![Satellite Communications Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/693e5605-de66-4dd4-9ab5-47e713f6dbc1)
+
+#### Simscape - Multidomain Physical Systems Simulation
+
+![Simscape screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
 
 ## Embedded, IoT, Hardware
 
