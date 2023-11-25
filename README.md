@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/6e98ed4a-0170-4ef9-9c59-314a9021e7af)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/affbed54-a837-4f89-86e1-356a1dff6f63)
 
 # 📦 Setup
 
@@ -276,6 +276,7 @@ make kubernetes-clean
 - **Tableau** - Data visualization
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
+  - **TorchServe** - PyTorch models serving
 - **Lightning** - Deep Learning framework
 - **LangChang** - Large language model (LLM) framework
 - **NeuralForecast** - Neural forecasting
@@ -303,15 +304,10 @@ make kubernetes-clean
 
 - **Hasura** - GraphQL Engine
   - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
-- **Ory Hydra** - OAuth 2.0 and OpenID Connect server
-- **Terraform** - Infrastructure as code (IaC)
-- **TorchServe** - PyTorch models serving
 - **Linkerd** - Service mesh
 - **Caddy** - Web server, reverse proxy, load balancer
 - **Traefik** - Web server, reverse proxy, load balancer
 - **nginx** - Web server, reverse proxy, load balancer
-- **Open Policy Agent (OPA)** - Policy-based control
-- **OPAL** - Open-policy administration layer
 - **Elastic APM** - Application performance monitoring
 - **OpenTelemetry** - Observability framework
 - **Jaeger** - Distributed tracing system
@@ -380,9 +376,22 @@ make kubernetes-clean
 - **Diun** - Container image update notifier
 - **Vagrant** - Development environments building and distributing
 - **Ansible** - IT automation system
+- **Terraform** - Infrastructure as code (IaC)
 - **Discord** - ChatOps
 - **Opsgenie** - Incident management platform
 - **[GitHub Actions](https://github.com/hongbo-miao/hongbomiao.com/actions)** - Continuous integration
+
+## Authentication, Authorization, Security
+
+- **Apache Ranger** - Authorization, auditing
+- **Ory Hydra** - OAuth 2.0 and OpenID Connect server
+- **Open Policy Agent (OPA)** - Policy-based control
+- **OPAL** - Open-policy administration layer
+- **CodeQL** - Variant analysis
+- **Prowler** - Cloud security assessments
+- **Gitleaks** - Git secret scanning
+- **GitGuardian** - Git secret scanning
+- **xxHash** - Hash algorithm
 
 ## Simulation
 
@@ -392,10 +401,11 @@ make kubernetes-clean
   - **npTDMS** - TDMS files reading and writing
   - **PyVISA** - Virtual instrument software architecture (VISA) API library
 - **MATLAB** - Programming and numeric computing platform
+  - **Aerospace Toolbox** - Aerospace vehicle motion analysis and visualization
   - **Database Toolbox** - Relational and NoSQL databases interacting
   - **Satellite Communications Toolbox** - Satellite communications systems simulation
+  - **Simscape** - Multidomain physical systems simulation
   - **Simulink** - Simulation and model-based designing
-    - **Simscape** - Multidomain physical systems simulation
 - **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
 
 ## Embedded, IoT, Hardware
@@ -462,14 +472,6 @@ make kubernetes-clean
 - **[Codecov](https://codecov.io/gh/hongbo-miao/hongbomiao.com)** - Code coverage reports
 - **[Depfu](https://depfu.com/github/hongbo-miao/hongbomiao.com?project_id=29781)** - Dependency monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2Fhongbo-miao%2Fhongbomiao.com)** - License compliance
-
-## Security
-
-- **CodeQL** - Variant analysis
-- **Prowler** - Cloud security assessments
-- **Gitleaks** - Git secret scanning
-- **GitGuardian** - Git secret scanning
-- **xxHash** - Hash algorithm
 
 ## Design
 
@@ -610,6 +612,10 @@ The following presents a model of a radar-based air defense system. Bombers are 
 ![SimScale screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/953ec6ed-201e-4e59-bb43-f77c385d4054)
 
 ### MATLAB
+
+#### Aerospace Toolbox - Aerospace Vehicle Motion Analysis and Visualization
+
+![Aerospace Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7f84f5d5-4a85-4bcd-97e3-7c5f853f03c0)
 
 #### Satellite Communications Toolbox - Satellite Communications Systems Simulation
 
