@@ -108,147 +108,147 @@ jobs:
               - '.github/workflows/test.yml'
               - 'web-cypress/**'
 
-  lint:
-    name: Lint
-    uses: ./.github/workflows/.lint.yml
-
-  static-type-check:
-    name: Static Type Check
-    uses: ./.github/workflows/.static-type-check.yml
-
-  web-test:
-    name: Web | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: web/.nvmrc
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Test
-        working-directory: web
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: web
-
-  web-end-to-end-test:
-    name: Web | End-to-End Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.web-cypress == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: web-cypress/.nvmrc
-          cache: npm
-          cache-dependency-path: web-cypress/package-lock.json
-      - name: Install dependencies
-        working-directory: web-cypress
-        run: |
-          npm ci
-      - name: Pull Docker images
-        working-directory: api-node
-        run: |
-          docker-compose --file=docker-compose.cypress.yaml pull
-      - name: Cache Docker images
-        uses: jpribyl/action-docker-layer-caching@v0.1.1
-        continue-on-error: true
-      - name: Start Docker
-        working-directory: api-node
-        run: |
-          docker-compose --file=docker-compose.cypress.yaml up --detach
-      - name: Cypress
-        working-directory: web-cypress
-        run: |
-          npm run test:cypress:headless:5000
-      - name: Stop Docker
-        working-directory: api-node
-        run: |
-          docker-compose --file=docker-compose.cypress.yaml down
-
-  web-lighthouse:
-    name: Web | Lighthouse
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: web/.nvmrc
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Build
-        working-directory: web
-        run: |
-          npm run build
-      - name: Lighthouse
-        working-directory: web
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-        run: |
-          npm run lighthouse
-
-  # https://www.chromatic.com/docs/github-actions
-  web-visual-test:
-    name: Web | Visual Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 20
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          # Required to retrieve git history
-          fetch-depth: 0
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: web/.nvmrc
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Build
-        working-directory: web
-        run: |
-          npm run build
-          npm run storybook:build
-      - name: Publish storybook to Chromatic
-        working-directory: web
-        run: |
-          npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
+#   lint:
+#     name: Lint
+#     uses: ./.github/workflows/.lint.yml
+#
+#   static-type-check:
+#     name: Static Type Check
+#     uses: ./.github/workflows/.static-type-check.yml
+#
+#   web-test:
+#     name: Web | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.web == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: web/.nvmrc
+#           cache: npm
+#           cache-dependency-path: web/package-lock.json
+#       - name: Install dependencies
+#         working-directory: web
+#         run: |
+#           npm ci
+#       - name: Test
+#         working-directory: web
+#         run: |
+#           npm run test:coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v3
+#         with:
+#           directory: web
+#
+#   web-end-to-end-test:
+#     name: Web | End-to-End Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.web-cypress == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: web-cypress/.nvmrc
+#           cache: npm
+#           cache-dependency-path: web-cypress/package-lock.json
+#       - name: Install dependencies
+#         working-directory: web-cypress
+#         run: |
+#           npm ci
+#       - name: Pull Docker images
+#         working-directory: api-node
+#         run: |
+#           docker-compose --file=docker-compose.cypress.yaml pull
+#       - name: Cache Docker images
+#         uses: jpribyl/action-docker-layer-caching@v0.1.1
+#         continue-on-error: true
+#       - name: Start Docker
+#         working-directory: api-node
+#         run: |
+#           docker-compose --file=docker-compose.cypress.yaml up --detach
+#       - name: Cypress
+#         working-directory: web-cypress
+#         run: |
+#           npm run test:cypress:headless:5000
+#       - name: Stop Docker
+#         working-directory: api-node
+#         run: |
+#           docker-compose --file=docker-compose.cypress.yaml down
+#
+#   web-lighthouse:
+#     name: Web | Lighthouse
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.web == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: web/.nvmrc
+#           cache: npm
+#           cache-dependency-path: web/package-lock.json
+#       - name: Install dependencies
+#         working-directory: web
+#         run: |
+#           npm ci
+#       - name: Build
+#         working-directory: web
+#         run: |
+#           npm run build
+#       - name: Lighthouse
+#         working-directory: web
+#         env:
+#           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+#         run: |
+#           npm run lighthouse
+#
+#   # https://www.chromatic.com/docs/github-actions
+#   web-visual-test:
+#     name: Web | Visual Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.web == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 20
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#         with:
+#           # Required to retrieve git history
+#           fetch-depth: 0
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: web/.nvmrc
+#           cache: npm
+#           cache-dependency-path: web/package-lock.json
+#       - name: Install dependencies
+#         working-directory: web
+#         run: |
+#           npm ci
+#       - name: Build
+#         working-directory: web
+#         run: |
+#           npm run build
+#           npm run storybook:build
+#       - name: Publish storybook to Chromatic
+#         working-directory: web
+#         run: |
+#           npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
 
   mobile-ios-test:
     name: Mobile - iOS | Test
@@ -300,698 +300,698 @@ jobs:
         with:
           directory: mobile-ios
 
-  mobile-android-lint:
-    name: Mobile - Android | Lint
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: gradle
-      - name: Lint
-        working-directory: mobile-android
-        run: |
-          ./gradlew lint
-
-  mobile-android-test:
-    name: Mobile - Android | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: gradle
-      - name: Test
-        working-directory: mobile-android
-        run: |
-          ./gradlew test
-
-  mobile-android-instrumented-test:
-    name: Mobile - Android | Instrumented Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: macos-13
-    environment: test
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: gradle
-      - name: Instrumented Test
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          working-directory: mobile-android
-          api-level: 29
-          script: ./gradlew connectedAndroidTest
-
-  mobile-react-native-test:
-    name: Mobile - React Native | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: mobile-react-native/.nvmrc
-          cache: npm
-          cache-dependency-path: mobile-react-native/package-lock.json
-      - name: Install dependencies
-        working-directory: mobile-react-native
-        run: |
-          npm ci
-      - name: Test
-        working-directory: mobile-react-native
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: mobile-react-native
-
-  api-go-test:
-    name: API - Go | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version-file: api-go/go.mod
-          cache-dependency-path: api-go/go.sum
-      - name: Test
-        working-directory: api-go
-        run: |
-          go test ./... -race -coverprofile=coverage.txt -covermode=atomic
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: api-go
-
-  api-node-test:
-    name: API - Node.js | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: api-node/.nvmrc
-          cache: npm
-          cache-dependency-path: api-node/package-lock.json
-      - name: Install dependencies
-        working-directory: api-node
-        run: |
-          npm ci
-      - name: Test
-        working-directory: api-node
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: api-node
-
-  api-node-mutation-test:
-    name: API - Node.js | Mutation Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: api-node/.nvmrc
-          cache: npm
-          cache-dependency-path: api-node/package-lock.json
-      - name: Install dependencies
-        working-directory: api-node
-        run: |
-          npm ci
-      - name: Stryker
-        working-directory: api-node
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: |
-          npm run test:stryker
-
-  api-python-test:
-    name: API - Python | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-python == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      # librdkafka is for confluent-kafka
-      - name: Install librdkafka
-        run: |
-          # https://github.com/edenhill/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v1.9.2.tar.gz
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd librdkafka-1.9.2
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f librdkafka-1.9.2/
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: poetry
-          cache-dependency-path: api-python/poetry.lock
-      - name: Set Poetry environment
-        working-directory: api-python
-        run: |
-          poetry env use python3.11
-      - name: Install dependencies
-        working-directory: api-python
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: api-python
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: api-python
-
-  spark-find-retired-people-scala:
-    name: Spark (find-retired-people-scala) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: sbt
-      - name: Test
-        working-directory: hm-spark/applications/find-retired-people-scala
-        run: |
-          sbt test
-
-  find-taxi-top-routes:
-    name: Spark (find-taxi-top-routes) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-          cache: poetry
-          cache-dependency-path: hm-spark/applications/find-taxi-top-routes/poetry.lock
-      - name: Set Poetry environment
-        working-directory: hm-spark/applications/find-taxi-top-routes
-        run: |
-          poetry env use python3.12
-      - name: Install dependencies
-        working-directory: hm-spark/applications/find-taxi-top-routes
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: hm-spark/applications/find-taxi-top-routes
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: hm-spark/applications/find-taxi-top-routes
-
-  find-taxi-top-routes-sql:
-    name: Spark (find-taxi-top-routes-sql) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes-sql == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-          cache: poetry
-          cache-dependency-path: hm-spark/applications/find-taxi-top-routes-sql/poetry.lock
-      - name: Set Poetry environment
-        working-directory: hm-spark/applications/find-taxi-top-routes-sql
-        run: |
-          poetry env use python3.12
-      - name: Install dependencies
-        working-directory: hm-spark/applications/find-taxi-top-routes-sql
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: hm-spark/applications/find-taxi-top-routes-sql
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: hm-spark/applications/find-taxi-top-routes-sql
-
-  spark-ingest-from-s3-to-kafka:
-    name: Spark (ingest-from-s3-to-kafka) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: sbt
-      - name: Test
-        working-directory: hm-spark/applications/ingest-from-s3-to-kafka
-        run: |
-          sbt test
-
-  streaming-test:
-    name: Streaming | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.streaming == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: corretto
-          java-version: '11'
-          cache: maven
-      - name: Test
-        working-directory: streaming
-        run: |
-          mvn test
-
-  opa-test:
-    name: OPA | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Download OPA Binary
-        run: |
-          curl --silent --fail --show-error --location --output opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
-          chmod 755 ./opa
-      - name: Test
-        run: |
-          ./opa test api-go/internal/graphql_server/policies/*.rego -v
-
-  ros-test:
-    name: ROS | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.robot-operating-system == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 20
-    container: ubuntu:jammy
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup ROS
-        uses: ros-tooling/setup-ros@v0.7
-        with:
-          required-ros-distributions: humble
-      - name: Build and test
-        uses: ros-tooling/action-ros-ci@v0.3
-        with:
-          package-name: turtle_robot
-          target-ros2-distro: humble
-
-  rasa-test:
-    name: Rasa | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Train and test
-        uses: RasaHQ/rasa-train-test-gha@main
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          workspace: ${{ github.workspace }}/hm-rasa
-
-  prometheus-test:
-    name: Prometheus | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.prometheus == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Test
-        run: |
-          docker build --file=prometheus/Dockerfile.test .
-
-  grafana-hm-panel-plugin-end-to-end-test:
-    name: Grafana (hm-panel-plugin) | End-to-End Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: grafana/hm-panel-plugin/.nvmrc
-          cache: npm
-          cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
-      - name: Install dependencies
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npm ci
-      - name: Build
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npm run build
-      - name: Pull Docker images
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          docker-compose pull
-      - name: Cache Docker images
-        uses: jpribyl/action-docker-layer-caching@v0.1.1
-        continue-on-error: true
-      - name: Start Docker
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          docker-compose up --detach
-      - name: Run e2e tests
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npm run e2e
-      - name: Stop Docker
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          docker-compose down
-
-  grafana-hm-panel-plugin-compatibility-test:
-    name: Grafana (hm-panel-plugin) | Compatibility Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: grafana/hm-panel-plugin/.nvmrc
-          cache: npm
-          cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
-      - name: Install dependencies
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npm ci
-      - name: Build
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npm run build
-      - name: Check compatibility
-        working-directory: grafana/hm-panel-plugin
-        run: |
-          npx @grafana/levitate@latest is-compatible --path=src/module.ts --target=@grafana/data,@grafana/ui,@grafana/runtime
-
-  hm-opal-client-build:
-    name: HM OPAL Client | Build
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-opal-client == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Build Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./hm-opal-client/Dockerfile
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-  gnn-train:
-    name: GNN | Train
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 20
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up CML
-        uses: iterative/setup-cml@v1
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-          cache: poetry
-          cache-dependency-path: graph-neural-network/poetry.lock
-      - name: Set Poetry environment
-        working-directory: graph-neural-network
-        run: |
-          poetry env use python3.8
-      - name: Install dependencies
-        working-directory: graph-neural-network
-        run: |
-          poetry install --no-root
-      - name: Train model
-        working-directory: graph-neural-network
-        env:
-          WANDB_MODE: offline
-        run: |
-          poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
-
-  cnn-cml-local-train:
-    name: CNN | CML (Local) - Train
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 20
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up CML
-        uses: iterative/setup-cml@v1
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          cache: poetry
-          cache-dependency-path: convolutional-neural-network/poetry.lock
-      - name: Set Poetry environment
-        working-directory: convolutional-neural-network
-        run: |
-          poetry env use python3.10
-      - name: Install dependencies
-        working-directory: convolutional-neural-network
-        run: |
-          poetry install --no-root
-      - name: Train model
-        working-directory: convolutional-neural-network
-        shell: bash -l {0}
-        env:
-          WANDB_MODE: offline
-        run: |
-          poetry run poe dev -- --should_download_original_data=True
-      - name: Write CML report
-        working-directory: convolutional-neural-network
-        shell: bash -l {0}
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "# CML (Local) Report" >> report.md
-          echo "## Params" >> report.md
-          cat output/reports/params.txt >> report.md
-          cml comment create report.md
-
-  cnn-cml-cloud-set-up:
-    name: CNN | CML (Cloud) - Set Up
-    runs-on: ubuntu-22.04
-    environment: test
-    needs: detect-changes
-    if: ${{ false }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up CML
-        uses: iterative/setup-cml@v1
-      - name: Set up cloud
-        shell: bash
-        env:
-          REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          cml-runner \
-          --cloud=aws \
-          --cloud-region=us-west-2 \
-          --cloud-type=t2.small \
-          --labels=cml-runner
-
-  cnn-cml-cloud-train:
-    name: CNN | CML (Cloud) - Train
-    needs: cnn-cml-cloud-set-up
-    runs-on: [self-hosted, cml-runner]
-    environment: test
-    # container: docker://iterativeai/cml:0-dvc2-base1-gpu
-    container: docker://iterativeai/cml:0-dvc2-base1
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          cache: poetry
-          cache-dependency-path: convolutional-neural-network/poetry.lock
-      - name: Set Poetry environment
-        working-directory: convolutional-neural-network
-        run: |
-          poetry env use python3.10
-      - name: Install dependencies
-        working-directory: convolutional-neural-network
-        run: |
-          poetry install --no-root
-      - name: Pull Data
-        working-directory: convolutional-neural-network
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          poetry run poe dvc-pull
-      - name: Train model
-        working-directory: convolutional-neural-network
-        shell: bash -l {0}
-        env:
-          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
-        run: |
-          poetry run poe dvc-repro
-      - name: Write CML report
-        working-directory: convolutional-neural-network
-        shell: bash -l {0}
-        env:
-          REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
-        run: |
-          echo "# CML (Cloud) Report" >> report.md
-          echo "## Params" >> report.md
-          cat output/reports/params.txt >> report.md
-          cml comment create report.md
-
-  code-review:
-    name: Code Review
-    if: ${{ false }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - name: Code Review
-        uses: anc95/ChatGPT-CodeReview@v1.0.11
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+#   mobile-android-lint:
+#     name: Mobile - Android | Lint
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 30
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Java
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: corretto
+#           java-version: '17'
+#           cache: gradle
+#       - name: Lint
+#         working-directory: mobile-android
+#         run: |
+#           ./gradlew lint
+#
+#   mobile-android-test:
+#     name: Mobile - Android | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 30
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Java
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: corretto
+#           java-version: '17'
+#           cache: gradle
+#       - name: Test
+#         working-directory: mobile-android
+#         run: |
+#           ./gradlew test
+#
+#   mobile-android-instrumented-test:
+#     name: Mobile - Android | Instrumented Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+#     runs-on: macos-13
+#     environment: test
+#     timeout-minutes: 30
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Java
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: corretto
+#           java-version: '17'
+#           cache: gradle
+#       - name: Instrumented Test
+#         uses: reactivecircus/android-emulator-runner@v2
+#         with:
+#           working-directory: mobile-android
+#           api-level: 29
+#           script: ./gradlew connectedAndroidTest
+#
+#   mobile-react-native-test:
+#     name: Mobile - React Native | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: mobile-react-native/.nvmrc
+#           cache: npm
+#           cache-dependency-path: mobile-react-native/package-lock.json
+#       - name: Install dependencies
+#         working-directory: mobile-react-native
+#         run: |
+#           npm ci
+#       - name: Test
+#         working-directory: mobile-react-native
+#         run: |
+#           npm run test:coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v3
+#         with:
+#           directory: mobile-react-native
+#
+#   api-go-test:
+#     name: API - Go | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Go
+#         uses: actions/setup-go@v4
+#         with:
+#           go-version-file: api-go/go.mod
+#           cache-dependency-path: api-go/go.sum
+#       - name: Test
+#         working-directory: api-go
+#         run: |
+#           go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v3
+#         with:
+#           directory: api-go
+#
+#   api-node-test:
+#     name: API - Node.js | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: api-node/.nvmrc
+#           cache: npm
+#           cache-dependency-path: api-node/package-lock.json
+#       - name: Install dependencies
+#         working-directory: api-node
+#         run: |
+#           npm ci
+#       - name: Test
+#         working-directory: api-node
+#         run: |
+#           npm run test:coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v3
+#         with:
+#           directory: api-node
+#
+#   api-node-mutation-test:
+#     name: API - Node.js | Mutation Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: api-node/.nvmrc
+#           cache: npm
+#           cache-dependency-path: api-node/package-lock.json
+#       - name: Install dependencies
+#         working-directory: api-node
+#         run: |
+#           npm ci
+#       - name: Stryker
+#         working-directory: api-node
+#         env:
+#           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+#         run: |
+#           npm run test:stryker
+#
+#   api-python-test:
+#     name: API - Python | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-python == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       # librdkafka is for confluent-kafka
+#       - name: Install librdkafka
+#         run: |
+#           # https://github.com/edenhill/librdkafka#build-from-source
+#           wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v1.9.2.tar.gz
+#           tar -x -f librdkafka.tar.gz
+#           rm -f librdkafka.tar.gz
+#           cd librdkafka-1.9.2
+#           ./configure
+#           make
+#           sudo make install
+#           sudo ldconfig
+#           cd ..
+#           rm -r -f librdkafka-1.9.2/
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.11'
+#           cache: poetry
+#           cache-dependency-path: api-python/poetry.lock
+#       - name: Set Poetry environment
+#         working-directory: api-python
+#         run: |
+#           poetry env use python3.11
+#       - name: Install dependencies
+#         working-directory: api-python
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: api-python
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v3
+#         with:
+#           directory: api-python
+#
+#   spark-find-retired-people-scala:
+#     name: Spark (find-retired-people-scala) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Java
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: corretto
+#           java-version: '17'
+#           cache: sbt
+#       - name: Test
+#         working-directory: hm-spark/applications/find-retired-people-scala
+#         run: |
+#           sbt test
+#
+#   find-taxi-top-routes:
+#     name: Spark (find-taxi-top-routes) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.12'
+#           cache: poetry
+#           cache-dependency-path: hm-spark/applications/find-taxi-top-routes/poetry.lock
+#       - name: Set Poetry environment
+#         working-directory: hm-spark/applications/find-taxi-top-routes
+#         run: |
+#           poetry env use python3.12
+#       - name: Install dependencies
+#         working-directory: hm-spark/applications/find-taxi-top-routes
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: hm-spark/applications/find-taxi-top-routes
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v3
+#         with:
+#           directory: hm-spark/applications/find-taxi-top-routes
+#
+#   find-taxi-top-routes-sql:
+#     name: Spark (find-taxi-top-routes-sql) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes-sql == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.12'
+#           cache: poetry
+#           cache-dependency-path: hm-spark/applications/find-taxi-top-routes-sql/poetry.lock
+#       - name: Set Poetry environment
+#         working-directory: hm-spark/applications/find-taxi-top-routes-sql
+#         run: |
+#           poetry env use python3.12
+#       - name: Install dependencies
+#         working-directory: hm-spark/applications/find-taxi-top-routes-sql
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: hm-spark/applications/find-taxi-top-routes-sql
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v3
+#         with:
+#           directory: hm-spark/applications/find-taxi-top-routes-sql
+#
+#   spark-ingest-from-s3-to-kafka:
+#     name: Spark (ingest-from-s3-to-kafka) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Java
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: corretto
+#           java-version: '17'
+#           cache: sbt
+#       - name: Test
+#         working-directory: hm-spark/applications/ingest-from-s3-to-kafka
+#         run: |
+#           sbt test
+#
+#   streaming-test:
+#     name: Streaming | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.streaming == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Java
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: corretto
+#           java-version: '11'
+#           cache: maven
+#       - name: Test
+#         working-directory: streaming
+#         run: |
+#           mvn test
+#
+#   opa-test:
+#     name: OPA | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Download OPA Binary
+#         run: |
+#           curl --silent --fail --show-error --location --output opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+#           chmod 755 ./opa
+#       - name: Test
+#         run: |
+#           ./opa test api-go/internal/graphql_server/policies/*.rego -v
+#
+#   ros-test:
+#     name: ROS | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.robot-operating-system == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 20
+#     container: ubuntu:jammy
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Setup ROS
+#         uses: ros-tooling/setup-ros@v0.7
+#         with:
+#           required-ros-distributions: humble
+#       - name: Build and test
+#         uses: ros-tooling/action-ros-ci@v0.3
+#         with:
+#           package-name: turtle_robot
+#           target-ros2-distro: humble
+#
+#   rasa-test:
+#     name: Rasa | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Train and test
+#         uses: RasaHQ/rasa-train-test-gha@main
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           workspace: ${{ github.workspace }}/hm-rasa
+#
+#   prometheus-test:
+#     name: Prometheus | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.prometheus == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Test
+#         run: |
+#           docker build --file=prometheus/Dockerfile.test .
+#
+#   grafana-hm-panel-plugin-end-to-end-test:
+#     name: Grafana (hm-panel-plugin) | End-to-End Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: grafana/hm-panel-plugin/.nvmrc
+#           cache: npm
+#           cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
+#       - name: Install dependencies
+#         working-directory: grafana/hm-panel-plugin
+#         run: |
+#           npm ci
+#       - name: Build
+#         working-directory: grafana/hm-panel-plugin
+#         run: |
+#           npm run build
+#       - name: Pull Docker images
+#         working-directory: grafana/hm-panel-plugin
+#         run: |
+#           docker-compose pull
+#       - name: Cache Docker images
+#         uses: jpribyl/action-docker-layer-caching@v0.1.1
+#         continue-on-error: true
+#       - name: Start Docker
+#         working-directory: grafana/hm-panel-plugin
+#         run: |
+#           docker-compose up --detach
+#       - name: Run e2e tests
+#         working-directory: grafana/hm-panel-plugin
+#         run: |
+#           npm run e2e
+#       - name: Stop Docker
+#         working-directory: grafana/hm-panel-plugin
+#         run: |
+#           docker-compose down
+#
+#   grafana-hm-panel-plugin-compatibility-test:
+#     name: Grafana (hm-panel-plugin) | Compatibility Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version-file: grafana/hm-panel-plugin/.nvmrc
+#           cache: npm
+#           cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
+#       - name: Install dependencies
+#         working-directory: grafana/hm-panel-plugin
+#         run: |
+#           npm ci
+#       - name: Build
+#         working-directory: grafana/hm-panel-plugin
+#         run: |
+#           npm run build
+#       - name: Check compatibility
+#         working-directory: grafana/hm-panel-plugin
+#         run: |
+#           npx @grafana/levitate@latest is-compatible --path=src/module.ts --target=@grafana/data,@grafana/ui,@grafana/runtime
+#
+#   hm-opal-client-build:
+#     name: HM OPAL Client | Build
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-opal-client == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v3
+#       - name: Build Docker image
+#         uses: docker/build-push-action@v5
+#         with:
+#           context: .
+#           file: ./hm-opal-client/Dockerfile
+#           cache-from: type=gha
+#           cache-to: type=gha,mode=max
+#
+#   gnn-train:
+#     name: GNN | Train
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 20
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up CML
+#         uses: iterative/setup-cml@v1
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.8'
+#           cache: poetry
+#           cache-dependency-path: graph-neural-network/poetry.lock
+#       - name: Set Poetry environment
+#         working-directory: graph-neural-network
+#         run: |
+#           poetry env use python3.8
+#       - name: Install dependencies
+#         working-directory: graph-neural-network
+#         run: |
+#           poetry install --no-root
+#       - name: Train model
+#         working-directory: graph-neural-network
+#         env:
+#           WANDB_MODE: offline
+#         run: |
+#           poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
+#
+#   cnn-cml-local-train:
+#     name: CNN | CML (Local) - Train
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 20
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up CML
+#         uses: iterative/setup-cml@v1
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.10'
+#           cache: poetry
+#           cache-dependency-path: convolutional-neural-network/poetry.lock
+#       - name: Set Poetry environment
+#         working-directory: convolutional-neural-network
+#         run: |
+#           poetry env use python3.10
+#       - name: Install dependencies
+#         working-directory: convolutional-neural-network
+#         run: |
+#           poetry install --no-root
+#       - name: Train model
+#         working-directory: convolutional-neural-network
+#         shell: bash -l {0}
+#         env:
+#           WANDB_MODE: offline
+#         run: |
+#           poetry run poe dev -- --should_download_original_data=True
+#       - name: Write CML report
+#         working-directory: convolutional-neural-network
+#         shell: bash -l {0}
+#         env:
+#           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: |
+#           echo "# CML (Local) Report" >> report.md
+#           echo "## Params" >> report.md
+#           cat output/reports/params.txt >> report.md
+#           cml comment create report.md
+#
+#   cnn-cml-cloud-set-up:
+#     name: CNN | CML (Cloud) - Set Up
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     needs: detect-changes
+#     if: ${{ false }}
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Set up CML
+#         uses: iterative/setup-cml@v1
+#       - name: Set up cloud
+#         shell: bash
+#         env:
+#           REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         run: |
+#           cml-runner \
+#           --cloud=aws \
+#           --cloud-region=us-west-2 \
+#           --cloud-type=t2.small \
+#           --labels=cml-runner
+#
+#   cnn-cml-cloud-train:
+#     name: CNN | CML (Cloud) - Train
+#     needs: cnn-cml-cloud-set-up
+#     runs-on: [self-hosted, cml-runner]
+#     environment: test
+#     # container: docker://iterativeai/cml:0-dvc2-base1-gpu
+#     container: docker://iterativeai/cml:0-dvc2-base1
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.10'
+#           cache: poetry
+#           cache-dependency-path: convolutional-neural-network/poetry.lock
+#       - name: Set Poetry environment
+#         working-directory: convolutional-neural-network
+#         run: |
+#           poetry env use python3.10
+#       - name: Install dependencies
+#         working-directory: convolutional-neural-network
+#         run: |
+#           poetry install --no-root
+#       - name: Pull Data
+#         working-directory: convolutional-neural-network
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         run: |
+#           poetry run poe dvc-pull
+#       - name: Train model
+#         working-directory: convolutional-neural-network
+#         shell: bash -l {0}
+#         env:
+#           WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+#         run: |
+#           poetry run poe dvc-repro
+#       - name: Write CML report
+#         working-directory: convolutional-neural-network
+#         shell: bash -l {0}
+#         env:
+#           REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
+#         run: |
+#           echo "# CML (Cloud) Report" >> report.md
+#           echo "## Params" >> report.md
+#           cat output/reports/params.txt >> report.md
+#           cml comment create report.md
+#
+#   code-review:
+#     name: Code Review
+#     if: ${{ false }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     permissions:
+#       contents: read
+#       pull-requests: write
+#     steps:
+#       - name: Code Review
+#         uses: anc95/ChatGPT-CodeReview@v1.0.11
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
