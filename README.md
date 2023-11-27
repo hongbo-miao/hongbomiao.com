@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/affbed54-a837-4f89-86e1-356a1dff6f63)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/f86a4eca-7500-41f6-b986-aa69cd661583)
 
 # 📦 Setup
 
@@ -402,10 +402,13 @@ make kubernetes-clean
   - **PyVISA** - Virtual instrument software architecture (VISA) API library
 - **MATLAB** - Programming and numeric computing platform
   - **Aerospace Toolbox** - Aerospace vehicle motion analysis and visualization
+  - **Computer Vision Toolbox** - Computer vision, 3D vision, and video processing systems design and testing
   - **Database Toolbox** - Relational and NoSQL databases interacting
+  - **Lidar Toolbox** - Lidar processing systems design, analysis, and testing
   - **Satellite Communications Toolbox** - Satellite communications systems simulation
-  - **Simscape** - Multidomain physical systems simulation
+  - **Signal Processing Toolbox** - Signal processing and analysis
   - **Simulink** - Simulation and model-based designing
+    - **Simscape** - Multidomain physical systems simulation
 - **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
 
 ## Embedded, IoT, Hardware
@@ -616,6 +619,10 @@ The following presents a model of a radar-based air defense system. Bombers are 
 #### Aerospace Toolbox - Aerospace Vehicle Motion Analysis and Visualization
 
 ![Aerospace Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7f84f5d5-4a85-4bcd-97e3-7c5f853f03c0)
+
+#### Lidar Toolbox - Lidar Processing Systems Design, Analysis, and Testing
+
+![Lidar Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/32796b6c-330d-4da3-9fcb-c3cfd78ca50f)
 
 #### Satellite Communications Toolbox - Satellite Communications Systems Simulation
 
