@@ -2,4 +2,5 @@ clear-command-window:
 	clc
 clear-workspace:
 	clear
-	clear xxx
+which:
+	which configureKalmanFilter
