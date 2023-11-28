@@ -176,13 +176,38 @@ poetry-check:
 poetry-cache-clear:
 	poetry cache clear pypi --all
 
-# Clean
-clean-jupyter-notebook:
+# Jupyter Notebook
+jupyter-notebook-clean:
 	poetry run poe clean-jupyter-notebook -- aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/main.ipynb
 	poetry run poe clean-jupyter-notebook -- aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
 
-sqlfluff-list-dialects:
+# SQLFluff
+sqlfluff-dialect-list:
 	poetry run poe sqlfluff-list-dialects
+
+# Rust
+rust-update:
+	rustup update
+rust-version:
+	rustc --version
+
+rustup-update:
+	rustup self update
+rustup-add:
+	rustup component add xxx
+rustup-remove:
+	rustup component remove xxx
+
+cargo-new:
+	cargo new xxx
+cargo-update-lock-file:
+	cargo generate-lockfile
+cargo-update:
+	cargo update
+cargo-add:
+	cargo add xxx
+cargo-add-dev:
+	cargo add xxx --dev
 
 # Lint
 lint-ansible:
@@ -246,6 +271,14 @@ lint-ruby:
 	bundle exec rubocop
 lint-ruby-fix:
 	bundle exec rubocop --autocorrect-all
+lint-rust-rustfmt:
+	cd hm-rust && cargo fmt --all -- --check
+lint-rust-rustfmt-fix:
+	cd hm-rust && cargo fmt --all
+lint-rust-clippy:
+	cd hm-rust && cargo clippy
+lint-rust-clippy-fix:
+	cd hm-rust && cargo clippy --fix --allow-dirty --allow-staged
 lint-scala:
 	cd hm-spark/applications/find-retired-people-scala && sbt scalafmtCheckAll && sbt "scalafixAll --check"
 	cd hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtCheckAll && sbt "scalafixAll --check"
