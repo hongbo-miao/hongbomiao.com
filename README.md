@@ -439,39 +439,39 @@ make kubernetes-clean
 ## Code
 
 - **ansible-lint** - Ansible linter
+- **ClangFormat** - C/C++ code formatter
 - **CMakeLint** - CMake linter
+- **Prettier** - Code formatter
 - **commitlint** - Commit message linter
 - **Stylelint** - CSS linter
 - **hadolint** - Dockerfile linter
+- **gofmt** - Go code formatter
 - **golangci-lint** - Go linter
 - **ESLint** - JavaScript linter
-- **Ktlint** - Kotlin linter and code formatter
+- **Ktlint** - Kotlin code formatter and linter
+- **detekt** - Kotlin static type checker
 - **Kubeconform** - Kubernetes manifest linter
 - **markdownlint-cli2** - Markdown linter
 - **MISS_HIT** - MATLAB code formatter
 - **Buf** - Protocol Buffers linter
-- **Ruff**, **autoflake**, **isort** - Python linter
+- **Black** - Python code formatter
+- **autoflake**, **isort**, **Ruff** - Python linter
+- **Mypy** - Python static type checker
 - **qmllint** - QML linter
-- **RuboCop** - Ruby linter and code formatter
+- **opa** - Rego code formatter
+- **RuboCop** - Ruby code formatter and linter
 - **rustfmt** - Rust code formatter
 - **Clippy** - Rust linter
 - **Scalafmt** - Scala code formatter
 - **Scalafix** - Scala linter
 - **ShellCheck** - Shell linter
 - **solhint** - Solidity linter
-- **SQLFluff** - SQL linter and code formatter
+- **SQLFluff** - SQL code formatter and linter
 - **terraform** - Terraform code formatter
-- **VHDL Style Guide (VSG)** - VHDL code formatter
-- **yamllint** - YAML linter
-- **Prettier** - Code formatter
-- **ClangFormat** - C/C++ code formatter
-- **gofmt** - Go code formatter
-- **Black** - Python code formatter
-- **opa** - Rego code formatter
-- **@prettier/plugin-xml** - XML formatter
-- **Mypy** - Python static type checker
 - **tsc** - TypeScript static type checker
-- **detekt** - Kotlin static type checker
+- **VHDL Style Guide (VSG)** - VHDL code formatter
+- **@prettier/plugin-xml** - XML formatter
+- **yamllint** - YAML linter
 - **GitHub** - Version control
 - **[SonarCloud](https://sonarcloud.io/project/overview?id=hongbo-miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/gh/hongbo-miao/hongbomiao.com/dashboard)**, **[Code Climate](https://codeclimate.com/github/hongbo-miao/hongbomiao.com)** - Code reviews and analytics
 - **[Codecov](https://codecov.io/gh/hongbo-miao/hongbomiao.com)** - Code coverage reports
