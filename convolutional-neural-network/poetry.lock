@@ -818,13 +818,13 @@ pgp = ["gpg"]
 
 [[package]]
 name = "dvc"
-version = "3.30.1"
+version = "3.30.3"
 description = "Git for data scientists - manage your code and data together"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-3.30.1-py3-none-any.whl", hash = "sha256:fdfd90f738fd1663fec560c9665600f78aa2636300da8c41fdca4964e28d2c01"},
-    {file = "dvc-3.30.1.tar.gz", hash = "sha256:4048b016b0a0bd08d08fadd889a5e7e2debcda1e891204987a5ccc8ccc4bdc29"},
+    {file = "dvc-3.30.3-py3-none-any.whl", hash = "sha256:637804af29011a56051cbdccc908c1aef8ada9ca998b6968731b998d1a0a8b7d"},
+    {file = "dvc-3.30.3.tar.gz", hash = "sha256:04bfcd6ef3d318ba279ce70ebe419a8094e88bc51c6d98fefb8b5a8abf8d90be"},
 ]
 
 [package.dependencies]
@@ -832,7 +832,7 @@ colorama = ">=0.3.9"
 configobj = ">=5.0.6"
 distro = ">=1.3"
 dpath = ">=2.1.0,<3"
-dvc-data = ">=2.22.0,<2.23.0"
+dvc-data = ">=2.22.1,<2.23.0"
 dvc-http = ">=2.29.0"
 dvc-render = ">=0.3.1,<1"
 dvc-studio-client = ">=0.13.0,<1"
@@ -876,21 +876,21 @@ oss = ["dvc-oss (>=2.20.0)"]
 s3 = ["dvc-s3 (==2.23.0)"]
 ssh = ["dvc-ssh (>=2.22.1,<3)"]
 ssh-gssapi = ["dvc-ssh[gssapi] (>=2.22.1,<3)"]
-testing = ["pytest-benchmark[histogram]", "pytest-test-utils", "pytest-virtualenv"]
-tests = ["beautifulsoup4 (>=4.4)", "dvc-ssh", "dvc[testing]", "filelock", "flaky", "pytest (>=7,<8)", "pytest-cov (>=4.1.0)", "pytest-docker (>=1,<3)", "pytest-lazy-fixture", "pytest-mock", "pytest-test-utils", "pytest-timeout (>=2)", "pytest-xdist (>=3.2)", "pywin32 (>=225)", "tzdata"]
+testing = ["pytest-benchmark[histogram]", "pytest-test-utils", "virtualenv"]
+tests = ["beautifulsoup4 (>=4.4)", "dbt-sqlite", "dvc-ssh", "dvc[testing]", "filelock", "flaky", "pytest (>=7,<8)", "pytest-cov (>=4.1.0)", "pytest-docker (>=1,<3)", "pytest-lazy-fixture", "pytest-mock", "pytest-test-utils", "pytest-timeout (>=2)", "pytest-xdist (>=3.2)", "pywin32 (>=225)", "tzdata"]
 webdav = ["dvc-webdav (==2.19.1)"]
 webhdfs = ["dvc-webhdfs (==2.19)"]
 webhdfs-kerberos = ["dvc-webhdfs[kerberos] (==2.19)"]
 
 [[package]]
 name = "dvc-data"
-version = "2.22.0"
+version = "2.22.3"
 description = "dvc data"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-data-2.22.0.tar.gz", hash = "sha256:970f465cd15d0511b9602764617495e515753f8c9dacc3dce955d02f36d0802e"},
-    {file = "dvc_data-2.22.0-py3-none-any.whl", hash = "sha256:fe171c19317930ced76a16caa5e5e0c95e429a809a5a0f454ef05e5d4d003e8e"},
+    {file = "dvc-data-2.22.3.tar.gz", hash = "sha256:ab4b6695078eea95f8289c6cde2d8356cfbff231c8d5b72b29cf34ec2ecf9c26"},
+    {file = "dvc_data-2.22.3-py3-none-any.whl", hash = "sha256:687c62ee3cb42438d8c27081a0c2dc39df5a77957dc44362057bd31f3579284b"},
 ]
 
 [package.dependencies]
@@ -901,13 +901,13 @@ dvc-objects = ">=1.1.0,<2"
 funcy = ">=1.14"
 pygtrie = ">=2.3.2"
 shortuuid = ">=0.5.0"
-sqltrie = ">=0.8.0,<1"
+sqltrie = ">=0.9.0,<1"
 
 [package.extras]
-all = ["rich (>=10.11.0,<14.0.0)", "typer[all] (>=0.6)"]
+all = ["dvc-data[cli]"]
 cli = ["rich (>=10.11.0,<14.0.0)", "typer[all] (>=0.6)"]
-dev = ["blake3 (>=0.3.1)", "mypy (==1.5.1)", "pylint (==2.17.5)", "pytest (==7.2.0)", "pytest-benchmark (==4.0.0)", "pytest-cov (==4.0.0)", "pytest-mock (==3.10.0)", "pytest-servers[s3] (==0.1.3)", "pytest-sugar (==0.9.6)", "rich (>=10.11.0,<14.0.0)", "typer[all] (>=0.6)"]
-tests = ["mypy (==1.5.1)", "pylint (==2.17.5)", "pytest (==7.2.0)", "pytest-benchmark (==4.0.0)", "pytest-cov (==4.0.0)", "pytest-mock (==3.10.0)", "pytest-servers[s3] (==0.1.3)", "pytest-sugar (==0.9.6)"]
+dev = ["blake3 (>=0.3.1)", "dvc-data[all]", "dvc-data[tests]"]
+tests = ["mypy (==1.5.1)", "pytest (==7.2.0)", "pytest-benchmark (==4.0.0)", "pytest-cov (==4.0.0)", "pytest-mock (==3.10.0)", "pytest-servers[s3] (==0.1.3)", "pytest-sugar (==0.9.6)"]
 
 [[package]]
 name = "dvc-http"
@@ -2878,13 +2878,13 @@ files = [
 
 [[package]]
 name = "sqltrie"
-version = "0.8.0"
+version = "0.9.0"
 description = "SQL-based prefix tree inspired by pygtrie and python-diskcache"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "sqltrie-0.8.0-py3-none-any.whl", hash = "sha256:80a708960fd9468b645f527b39ea6beae30e57d5d5dd284f54a49ac267d240eb"},
-    {file = "sqltrie-0.8.0.tar.gz", hash = "sha256:a773e41f00ae9215a79d3e0537526eaf5e37100037a2ef042d09edcc209abc9e"},
+    {file = "sqltrie-0.9.0-py3-none-any.whl", hash = "sha256:037e5ae614d94ce19cf49d802af4e2a1091f8bc0914c225e580b7a871723f19e"},
+    {file = "sqltrie-0.9.0.tar.gz", hash = "sha256:a5b3a0794156d509b6d721a8abba2241e86858d8a957c86c53a9cbede5cdbe41"},
 ]
 
 [package.dependencies]
@@ -2893,8 +2893,8 @@ orjson = {version = "*", markers = "implementation_name == \"cpython\""}
 pygtrie = "*"
 
 [package.extras]
-dev = ["mypy (==0.971)", "pyinstaller", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-benchmark", "pytest-cov (==3.0.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)"]
-tests = ["mypy (==0.971)", "pyinstaller", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-benchmark", "pytest-cov (==3.0.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)"]
+dev = ["sqltrie[tests]"]
+tests = ["mypy (==0.971)", "pyinstaller", "pytest (==7.2.0)", "pytest-benchmark", "pytest-cov (==3.0.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)"]
 
 [[package]]
 name = "sympy"
@@ -3414,4 +3414,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "951f67ffdf2e663dc2b5039e1bc8cc4bd6e6503d4a0def643c060d1fcd0f2f27"
+content-hash = "6d4390b3f97f4c729248430939ed883b520506798e878c8adc7f49189de46a39"
