@@ -29,7 +29,7 @@ require (
 	go.elastic.co/apm/module/apmgin/v2 v2.4.7
 	go.elastic.co/apm/module/apmgrpc/v2 v2.4.7
 	go.opencensus.io v0.24.0
-	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.45.0
+	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.46.1
 	go.uber.org/atomic v1.11.0
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
