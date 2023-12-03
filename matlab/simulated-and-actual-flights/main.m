@@ -1,3 +1,5 @@
+% https://www.mathworks.com/help/aerotbx/ug/overlaying-simulated-and-actual-flight-data.html
+
 h = Aero.Animation;
 
 % timeStep = (1 / FramesPerSecond) * TimeScaling = 0.5s
