@@ -1,3 +1,5 @@
+% https://www.mathworks.com/help/satcom/gs/model-and-visualize-satelliteScenario.html
+
 % Create a satellite scenario
 startTime = datetime(2020, 1, 1, 0, 0, 0);
 stopTime = startTime + hours(24);

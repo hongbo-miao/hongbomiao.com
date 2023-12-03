@@ -1,3 +1,5 @@
+% https://www.mathworks.com/help/bioinfo/ug/example-sequence-alignment.html
+
 humanHEXA = getgenbank('NM_000520');
 mouseHEXA = getgenbank('AK080777');
 

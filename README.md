@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/1f3d3062-e7f5-40cf-807c-56d66c635e67)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/ae4ecf2a-cd02-4914-bd6c-7aea6487a47e)
 
 # 📦 Setup
 
@@ -402,6 +402,7 @@ make kubernetes-clean
   - **PyVISA** - Virtual instrument software architecture (VISA) API library
 - **MATLAB** - Programming and numeric computing platform
   - **Aerospace Toolbox** - Aerospace vehicle motion analysis and visualization
+  - **Automated Driving Toolbox** - ADAS and autonomous driving systems design, simulation, and testing
   - **Bioinformatics Toolbox** - Genomic and proteomic data analysis and visualization
   - **Computer Vision Toolbox** - Computer vision, 3D vision, and video processing systems design and testing
   - **Database Toolbox** - Relational and NoSQL databases interacting
@@ -622,6 +623,10 @@ The following presents a model of a radar-based air defense system. Bombers are 
 #### Aerospace Toolbox - Aerospace Vehicle Motion Analysis and Visualization
 
 ![Aerospace Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7f84f5d5-4a85-4bcd-97e3-7c5f853f03c0)
+
+#### Automated Driving Toolbox - ADAS and Autonomous Driving Systems Design, Simulation, and Testing
+
+![Automated Driving Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/687b55f2-145e-4197-a213-ac2c51f113d4)
 
 #### Bioinformatics Toolbox - Genomic and Proteomic Data Analysis and Visualization
 
