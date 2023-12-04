@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/ae4ecf2a-cd02-4914-bd6c-7aea6487a47e)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/9b6f8609-4189-4ca9-9b22-658e04f99b3b)
 
 # 📦 Setup
 
@@ -401,12 +401,14 @@ make kubernetes-clean
   - **npTDMS** - TDMS files reading and writing
   - **PyVISA** - Virtual instrument software architecture (VISA) API library
 - **MATLAB** - Programming and numeric computing platform
+  - **5G Toolbox** - 5G communications systems simulation, analysis, and testing
   - **Aerospace Toolbox** - Aerospace vehicle motion analysis and visualization
   - **Automated Driving Toolbox** - ADAS and autonomous driving systems design, simulation, and testing
   - **Bioinformatics Toolbox** - Genomic and proteomic data analysis and visualization
   - **Computer Vision Toolbox** - Computer vision, 3D vision, and video processing systems design and testing
   - **Database Toolbox** - Relational and NoSQL databases interacting
   - **Lidar Toolbox** - Lidar processing systems design, analysis, and testing
+  - **Navigation Toolbox** - Autonomous navigation algorithms design, simulation, and deployment
   - **Satellite Communications Toolbox** - Satellite communications systems simulation
   - **Signal Processing Toolbox** - Signal processing and analysis
   - **Simulink** - Simulation and model-based designing
@@ -619,6 +621,10 @@ The following presents a model of a radar-based air defense system. Bombers are 
 ![SimScale screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/953ec6ed-201e-4e59-bb43-f77c385d4054)
 
 ### MATLAB
+
+#### 5G Toolbox - 5G Communications Systems Simulation, Analysis, and Testing
+
+![5G Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/acd927ee-3296-4139-9ea6-1ddcb2cb0e96)
 
 #### Aerospace Toolbox - Aerospace Vehicle Motion Analysis and Visualization
 
