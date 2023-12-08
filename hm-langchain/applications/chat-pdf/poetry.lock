@@ -1035,21 +1035,20 @@ adal = ["adal (>=1.0.2)"]
 
 [[package]]
 name = "langchain"
-version = "0.0.347"
+version = "0.0.348"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = ">=3.8.1,<4.0"
 files = [
-    {file = "langchain-0.0.347-py3-none-any.whl", hash = "sha256:9f11a716c5c1491dd9b5a2b8d2e052b297f15a673d0c7bc5e5df402b84be2f47"},
-    {file = "langchain-0.0.347.tar.gz", hash = "sha256:ab269564eb1c94215f4f27fd40d63e98862a8672af0f7936ee4c5e92646e047b"},
+    {file = "langchain-0.0.348-py3-none-any.whl", hash = "sha256:35ab72d9e2b9c48d6782f10ec400a9783eaa3c8a6e54fa1cbe0f195c425b3008"},
+    {file = "langchain-0.0.348.tar.gz", hash = "sha256:06ac3ab1cdaa7b55497ccae55119559a6b6e870b92dedddc0172be8796dca09d"},
 ]
 
 [package.dependencies]
 aiohttp = ">=3.8.3,<4.0.0"
-anyio = "<4.0"
 dataclasses-json = ">=0.5.7,<0.7"
 jsonpatch = ">=1.33,<2.0"
-langchain-core = ">=0.0.11,<0.1"
+langchain-core = ">=0.0.12,<0.1"
 langsmith = ">=0.0.63,<0.1.0"
 numpy = ">=1,<2"
 pydantic = ">=1,<3"
@@ -1075,20 +1074,27 @@ text-helpers = ["chardet (>=5.1.0,<6.0.0)"]
 
 [[package]]
 name = "langchain-core"
-version = "0.0.11"
+version = "0.0.12"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = ">=3.8.1,<4.0"
 files = [
-    {file = "langchain_core-0.0.11-py3-none-any.whl", hash = "sha256:7208bc195559336fae91dbd3d9b4b78e52d5cbc4166411f24b03845832d4c329"},
-    {file = "langchain_core-0.0.11.tar.gz", hash = "sha256:0c81adee6b3ef00f1677d01c22afb876b011fc6ebca7770cae05647b26e94875"},
+    {file = "langchain_core-0.0.12-py3-none-any.whl", hash = "sha256:7dd7379c3848f9473c93b71992d96ab73b4889c1951bf3d899417b849ba0236c"},
+    {file = "langchain_core-0.0.12.tar.gz", hash = "sha256:9c6cca4ed25a10950071be80dc62921b30caafae73ac1bd4b93d9f070967a7b2"},
 ]
 
 [package.dependencies]
+anyio = ">=3,<5"
 jsonpatch = ">=1.33,<2.0"
 langsmith = ">=0.0.63,<0.1.0"
+packaging = ">=23.2,<24.0"
 pydantic = ">=1,<3"
+PyYAML = ">=5.3"
+requests = ">=2,<3"
 tenacity = ">=8.1.0,<9.0.0"
+
+[package.extras]
+extended-testing = ["jinja2 (>=3,<4)"]
 
 [[package]]
 name = "langsmith"
@@ -2904,4 +2910,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.x"
-content-hash = "69cbe1561477e9fdde056ebc1567e08357ca64d4e8d43abc02f4410a6791d3fe"
+content-hash = "cfd0d7e1a481ce7b1b0c86e3ede36795e043b54017f89ad7ffd03a743d38f0a5"
