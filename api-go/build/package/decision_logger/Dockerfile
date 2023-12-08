@@ -8,7 +8,7 @@ COPY api-go ./
 RUN go build -o ./out/cmd/decision_logger/ ./cmd/decision_logger/main.go
 
 
-FROM docker.io/alpine:3.18.5 AS release
+FROM docker.io/alpine:3.19.0 AS release
 WORKDIR /usr/src/app
 ENV GIN_MODE=release
 
