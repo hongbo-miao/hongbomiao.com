@@ -818,13 +818,13 @@ pgp = ["gpg"]
 
 [[package]]
 name = "dvc"
-version = "3.33.3"
+version = "3.33.4"
 description = "Git for data scientists - manage your code and data together"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-3.33.3-py3-none-any.whl", hash = "sha256:0c92e625671ac9b649a51076eb4ace6a0c68be43d3f840d013d4adcee4bf48a2"},
-    {file = "dvc-3.33.3.tar.gz", hash = "sha256:a0bf0712cfe5db204f434021299de5149a947072af9882c4baacdb76d0ece99b"},
+    {file = "dvc-3.33.4-py3-none-any.whl", hash = "sha256:130881585e4d96b1c7ed29b15466bbad70add00ad8823a2b5573fa7702f0ef3a"},
+    {file = "dvc-3.33.4.tar.gz", hash = "sha256:2458852fc21762ed8384073e17575f3f7b60cdd22a31a7d1a55083a89ede8dd9"},
 ]
 
 [package.dependencies]
@@ -832,7 +832,7 @@ colorama = ">=0.3.9"
 configobj = ">=5.0.6"
 distro = ">=1.3"
 dpath = ">=2.1.0,<3"
-dvc-data = ">=2.22.6,<2.23.0"
+dvc-data = ">=2.24,<2.25"
 dvc-http = ">=2.29.0"
 dvc-render = ">=1.0.0,<2"
 dvc-studio-client = ">=0.17.1,<1"
@@ -884,30 +884,31 @@ webhdfs-kerberos = ["dvc-webhdfs[kerberos] (==2.19)"]
 
 [[package]]
 name = "dvc-data"
-version = "2.22.6"
-description = "dvc data"
+version = "2.24.0"
+description = "DVC's data management subsystem"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-data-2.22.6.tar.gz", hash = "sha256:8be52058a41acd18fe63f7fd431d1b868570292d1204086b9c44343ac053db24"},
-    {file = "dvc_data-2.22.6-py3-none-any.whl", hash = "sha256:171453a0285331441781a82af19189aae10bd0613e448033412f5b2ed0243f69"},
+    {file = "dvc-data-2.24.0.tar.gz", hash = "sha256:521cc4c751fafe115d2576ce69aae14b55d8c5946a09d44bb57908cada9ee3bf"},
+    {file = "dvc_data-2.24.0-py3-none-any.whl", hash = "sha256:dce7492758857c2bc26d823b1d6305d36313e0b2c2f771b31bfdd6c908dbb889"},
 ]
 
 [package.dependencies]
 attrs = ">=21.3.0"
 dictdiffer = ">=0.8.1"
 diskcache = ">=5.2.1"
-dvc-objects = ">=1.4.9,<2"
+dvc-objects = ">=2,<3"
 funcy = ">=1.14"
 pygtrie = ">=2.3.2"
 shortuuid = ">=0.5.0"
 sqltrie = ">=0.9.0,<1"
+tqdm = ">=4.63.1,<5"
 
 [package.extras]
 all = ["dvc-data[cli]"]
 cli = ["rich (>=10.11.0,<14.0.0)", "typer[all] (>=0.6)"]
-dev = ["blake3 (>=0.3.1)", "dvc-data[all]", "dvc-data[tests]"]
-tests = ["mypy (==1.5.1)", "pytest (==7.2.0)", "pytest-benchmark (==4.0.0)", "pytest-cov (==4.0.0)", "pytest-mock (==3.10.0)", "pytest-servers[s3] (==0.1.3)", "pytest-sugar (==0.9.6)"]
+dev = ["blake3 (>=0.3.1)", "dvc-data[all]", "dvc-data[tests]", "mypy (==1.7.1)", "types-tqdm"]
+tests = ["pytest (>=7,<8)", "pytest-benchmark (>=4)", "pytest-cov (>=4.1.0)", "pytest-mock", "pytest-servers[s3] (==0.1.3)", "pytest-sugar"]
 
 [[package]]
 name = "dvc-http"
@@ -929,26 +930,23 @@ tests = ["dvc[testing]", "flaky (==3.7.0)", "mypy (==0.910)", "pylint (==2.15.9)
 
 [[package]]
 name = "dvc-objects"
-version = "1.4.9"
-description = "dvc objects"
+version = "2.0.1"
+description = "dvc objects - filesystem and object-db level abstractions to use in dvc and dvc-data"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-objects-1.4.9.tar.gz", hash = "sha256:40f739a7678bcf35742d6b8fbfaeb3ba01a8b4c9e6f99f2e841b184aea7be74e"},
-    {file = "dvc_objects-1.4.9-py3-none-any.whl", hash = "sha256:d40a746db91b214bfcaf5c6de7202b984b1ecc9b9ae9b1114cfc4bf716b03951"},
+    {file = "dvc-objects-2.0.1.tar.gz", hash = "sha256:444566cb95c452f186f50ac08a9972f32c33d496c82f8a334b58317f243e3d37"},
+    {file = "dvc_objects-2.0.1-py3-none-any.whl", hash = "sha256:fcf104495ee2d7dc9fe53644b16abbe3c221255188a812e505b147d7a6e6b414"},
 ]
 
 [package.dependencies]
 fsspec = ">=2022.10.0"
 funcy = ">=1.14"
-packaging = ">=19"
 shortuuid = ">=0.5.0"
-tqdm = ">=4.63.1,<5"
-typing-extensions = ">=3.7.4"
 
 [package.extras]
-dev = ["dvc-objects[tests]", "types-tqdm"]
-tests = ["mypy (==1.5.1)", "pytest (==7.2.0)", "pytest-benchmark", "pytest-cov (==4.0.0)", "pytest-mock (==3.8.2)", "pytest-servers[s3] (==0.1.3)", "pytest-sugar (==0.9.6)", "reflink"]
+dev = ["dvc-objects[tests]", "mypy (==1.7.1)", "types-tqdm", "typing-extensions (>=3.7.4)"]
+tests = ["pytest (>=7,<8)", "pytest-benchmark", "pytest-cov (>=4.1.0)", "pytest-mock", "pytest-sugar", "reflink", "tqdm (>=4.63.1,<5)"]
 
 [[package]]
 name = "dvc-render"
@@ -2631,20 +2629,20 @@ crt = ["botocore[crt] (>=1.32.7,<2.0a.0)"]
 
 [[package]]
 name = "scmrepo"
-version = "1.5.0"
-description = "SCM wrapper and fsspec filesystem for Git for use in DVC"
+version = "1.6.0"
+description = "scmrepo"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "scmrepo-1.5.0-py3-none-any.whl", hash = "sha256:d6c3d3b565b0a44dc3376fedd0873751aef1c2a30e1862afd13b3864fb4a95ba"},
-    {file = "scmrepo-1.5.0.tar.gz", hash = "sha256:d0c55295853be011342c6a58ed373dfeb7f501966d1b346ed2e649ef3d388604"},
+    {file = "scmrepo-1.6.0-py3-none-any.whl", hash = "sha256:389c3ae694309c62268ce193d149a5bd344af28306943fe332a9907b0cb6d0fb"},
+    {file = "scmrepo-1.6.0.tar.gz", hash = "sha256:0092c3f99da7db327602fb1f655b9cca9a936ffabee7ab79eb6be23d627af7a2"},
 ]
 
 [package.dependencies]
 asyncssh = ">=2.13.1,<3"
 dulwich = ">=0.21.6"
 dvc-http = ">=2.29.0"
-dvc-objects = ">=1.0.1,<2"
+dvc-objects = ">=1.0.1,<3"
 fsspec = ">=2021.7.0"
 funcy = ">=1.14"
 gitpython = ">3"
@@ -2654,8 +2652,8 @@ pygtrie = ">=2.3.2"
 shortuuid = ">=0.5.0"
 
 [package.extras]
-dev = ["mock (==5.1.0)", "mypy (==0.971)", "paramiko (==3.3.1)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-asyncio (==0.18.3)", "pytest-cov (==3.0.0)", "pytest-docker (==0.12.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)", "pytest-test-utils (==0.0.8)", "types-certifi (==2021.10.8.3)", "types-mock (==5.1.0.2)", "types-paramiko (==3.3.0.0)"]
-tests = ["mock (==5.1.0)", "mypy (==0.971)", "paramiko (==3.3.1)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-asyncio (==0.18.3)", "pytest-cov (==3.0.0)", "pytest-docker (==0.12.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)", "pytest-test-utils (==0.0.8)", "types-certifi (==2021.10.8.3)", "types-mock (==5.1.0.2)", "types-paramiko (==3.3.0.0)"]
+dev = ["scmrepo[tests]"]
+tests = ["mock (==5.1.0)", "mypy (==0.971)", "paramiko (==3.3.1)", "pytest (==7.2.0)", "pytest-asyncio (==0.18.3)", "pytest-cov (==3.0.0)", "pytest-docker (==0.12.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.5)", "pytest-test-utils (==0.0.8)", "types-certifi (==2021.10.8.3)", "types-mock (==5.1.0.2)", "types-paramiko (==3.3.0.0)"]
 
 [[package]]
 name = "semver"
@@ -3414,4 +3412,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "96c7c9e19d515b6bbac3564903e9169934a0f374a318d4fd20f263da02a04817"
+content-hash = "85d43cb1f1b5599ad62956e2df58d88d2af17a31fdb2b458e85de6b800d05f71"
