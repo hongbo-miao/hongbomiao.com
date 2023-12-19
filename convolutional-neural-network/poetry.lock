@@ -818,13 +818,13 @@ pgp = ["gpg"]
 
 [[package]]
 name = "dvc"
-version = "3.33.4"
+version = "3.34.0"
 description = "Git for data scientists - manage your code and data together"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-3.33.4-py3-none-any.whl", hash = "sha256:130881585e4d96b1c7ed29b15466bbad70add00ad8823a2b5573fa7702f0ef3a"},
-    {file = "dvc-3.33.4.tar.gz", hash = "sha256:2458852fc21762ed8384073e17575f3f7b60cdd22a31a7d1a55083a89ede8dd9"},
+    {file = "dvc-3.34.0-py3-none-any.whl", hash = "sha256:3052fb984af2985144d1de4893a6edb3970fc2ca7e885e26d77a5098015205da"},
+    {file = "dvc-3.34.0.tar.gz", hash = "sha256:264020cacd2ebf3234fdc3c1af327d81426aca41ac06d7eb0cc9d99a81127ea0"},
 ]
 
 [package.dependencies]
@@ -832,7 +832,7 @@ colorama = ">=0.3.9"
 configobj = ">=5.0.6"
 distro = ">=1.3"
 dpath = ">=2.1.0,<3"
-dvc-data = ">=2.24,<2.25"
+dvc-data = ">=3,<3.1"
 dvc-http = ">=2.29.0"
 dvc-render = ">=1.0.0,<2"
 dvc-studio-client = ">=0.17.1,<1"
@@ -841,7 +841,7 @@ flatten-dict = ">=0.4.1,<1"
 "flufl.lock" = ">=5,<8"
 funcy = ">=1.14"
 grandalf = ">=0.7,<1"
-gto = ">=1.4.0,<2"
+gto = ">=1.6.0,<2"
 hydra-core = ">=1.1"
 iterative-telemetry = ">=0.0.7"
 networkx = ">=2.5"
@@ -855,7 +855,7 @@ pyparsing = ">=2.4.7"
 requests = ">=2.22"
 rich = ">=12"
 "ruamel.yaml" = ">=0.17.11"
-scmrepo = ">=1.5.0,<2"
+scmrepo = ">=2.0.2,<3"
 shortuuid = ">=0.5"
 shtab = ">=1.3.4,<2"
 tabulate = ">=0.8.7"
@@ -866,38 +866,38 @@ voluptuous = ">=0.11.7"
 
 [package.extras]
 all = ["dvc[azure,gdrive,gs,hdfs,oss,s3,ssh,webdav,webhdfs]"]
-azure = ["dvc-azure (>=2.23.0)"]
+azure = ["dvc-azure (>=3,<4)"]
 dev = ["dvc[azure,gdrive,gs,hdfs,lint,oss,s3,ssh,tests,webdav,webhdfs]"]
-gdrive = ["dvc-gdrive (==2.20)"]
-gs = ["dvc-gs (==2.22.1)"]
-hdfs = ["dvc-hdfs (==2.19)"]
+gdrive = ["dvc-gdrive (>=3,<4)"]
+gs = ["dvc-gs (>=3,<4)"]
+hdfs = ["dvc-hdfs (>=3,<4)"]
 lint = ["mypy (==1.7.1)", "pandas-stubs", "types-colorama", "types-psutil", "types-pyinstaller", "types-requests", "types-tabulate", "types-toml", "types-tqdm"]
-oss = ["dvc-oss (>=2.22.0)"]
-s3 = ["dvc-s3 (==2.23.0)"]
-ssh = ["dvc-ssh (>=2.22.1,<3)"]
-ssh-gssapi = ["dvc-ssh[gssapi] (>=2.22.1,<3)"]
+oss = ["dvc-oss (>=3,<4)"]
+s3 = ["dvc-s3 (>=3,<4)"]
+ssh = ["dvc-ssh (>=3,<4)"]
+ssh-gssapi = ["dvc-ssh[gssapi] (>=3,<4)"]
 testing = ["pytest-benchmark[histogram]", "pytest-test-utils", "virtualenv"]
 tests = ["beautifulsoup4 (>=4.4)", "dbt-sqlite", "dvc-ssh", "dvc[testing]", "filelock", "flaky", "pandas (>=1)", "pytest (>=7,<8)", "pytest-cov (>=4.1.0)", "pytest-docker (>=1,<3)", "pytest-lazy-fixture", "pytest-mock", "pytest-test-utils", "pytest-timeout (>=2)", "pytest-xdist (>=3.2)", "pywin32 (>=225)", "sqlalchemy (>=1,<3)", "tzdata"]
-webdav = ["dvc-webdav (==2.19.1)"]
-webhdfs = ["dvc-webhdfs (==2.19)"]
-webhdfs-kerberos = ["dvc-webhdfs[kerberos] (==2.19)"]
+webdav = ["dvc-webdav (>=3,<4)"]
+webhdfs = ["dvc-webhdfs (>=3,<4)"]
+webhdfs-kerberos = ["dvc-webhdfs[kerberos] (>=3,<4)"]
 
 [[package]]
 name = "dvc-data"
-version = "2.24.0"
+version = "3.0.1"
 description = "DVC's data management subsystem"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-data-2.24.0.tar.gz", hash = "sha256:521cc4c751fafe115d2576ce69aae14b55d8c5946a09d44bb57908cada9ee3bf"},
-    {file = "dvc_data-2.24.0-py3-none-any.whl", hash = "sha256:dce7492758857c2bc26d823b1d6305d36313e0b2c2f771b31bfdd6c908dbb889"},
+    {file = "dvc-data-3.0.1.tar.gz", hash = "sha256:4ec9f7a254ab0c89dafddf1a27de2f45d7eb65467235a67543b9556eb6de0fee"},
+    {file = "dvc_data-3.0.1-py3-none-any.whl", hash = "sha256:caff884c17ab7c604467c5f35ed5dd2c1256bc0b0015dd7553435673cb178a72"},
 ]
 
 [package.dependencies]
 attrs = ">=21.3.0"
 dictdiffer = ">=0.8.1"
 diskcache = ">=5.2.1"
-dvc-objects = ">=2,<3"
+dvc-objects = ">=3,<4"
 funcy = ">=1.14"
 pygtrie = ">=2.3.2"
 shortuuid = ">=0.5.0"
@@ -930,13 +930,13 @@ tests = ["dvc[testing]", "flaky (==3.7.0)", "mypy (==0.910)", "pylint (==2.15.9)
 
 [[package]]
 name = "dvc-objects"
-version = "2.0.1"
+version = "3.0.0"
 description = "dvc objects - filesystem and object-db level abstractions to use in dvc and dvc-data"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-objects-2.0.1.tar.gz", hash = "sha256:444566cb95c452f186f50ac08a9972f32c33d496c82f8a334b58317f243e3d37"},
-    {file = "dvc_objects-2.0.1-py3-none-any.whl", hash = "sha256:fcf104495ee2d7dc9fe53644b16abbe3c221255188a812e505b147d7a6e6b414"},
+    {file = "dvc-objects-3.0.0.tar.gz", hash = "sha256:fe6412d365d88b8f50e42aa3ed571b316f50e3466e9a83dbf99988e0802537ce"},
+    {file = "dvc_objects-3.0.0-py3-none-any.whl", hash = "sha256:9136056574f1fc85df5970694ea6fa10c909802efbc64bca0397e4490bdc5cea"},
 ]
 
 [package.dependencies]
@@ -1256,13 +1256,13 @@ full = ["numpy", "ply"]
 
 [[package]]
 name = "gto"
-version = "1.5.0"
+version = "1.6.1"
 description = "Version and deploy your models following GitOps principles"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "gto-1.5.0-py3-none-any.whl", hash = "sha256:018dd70a27038f11c30861a9ae0dabe1d69122179667a63889616306b9a07347"},
-    {file = "gto-1.5.0.tar.gz", hash = "sha256:3772716fc978b3a261a24650ddd4cc1d87addb3cdb6b644beba6790b4f06615f"},
+    {file = "gto-1.6.1-py3-none-any.whl", hash = "sha256:a5dabecd0cae0738778197ffd491a7c4a891160912ade18ecd5d9ada23385685"},
+    {file = "gto-1.6.1.tar.gz", hash = "sha256:176562699c26e79e535c0aa9df3b7c5db4453f43051f53da93cf177d6dc9df4f"},
 ]
 
 [package.dependencies]
@@ -1271,7 +1271,7 @@ funcy = "*"
 pydantic = ">=1.9.0,<2.0.0 || >2.0.0,<3"
 rich = "*"
 "ruamel.yaml" = "*"
-scmrepo = ">=1.4.0,<2"
+scmrepo = ">=1.4.0,<3"
 semver = ">=3.0.0"
 tabulate = ">=0.8.10"
 typer = ">=0.4.1"
@@ -2629,20 +2629,20 @@ crt = ["botocore[crt] (>=1.32.7,<2.0a.0)"]
 
 [[package]]
 name = "scmrepo"
-version = "1.6.0"
+version = "2.0.2"
 description = "scmrepo"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "scmrepo-1.6.0-py3-none-any.whl", hash = "sha256:389c3ae694309c62268ce193d149a5bd344af28306943fe332a9907b0cb6d0fb"},
-    {file = "scmrepo-1.6.0.tar.gz", hash = "sha256:0092c3f99da7db327602fb1f655b9cca9a936ffabee7ab79eb6be23d627af7a2"},
+    {file = "scmrepo-2.0.2-py3-none-any.whl", hash = "sha256:a6227c7b12455d674c370d8c31f4ae2bd6127e329eac33614da4cc0f39917518"},
+    {file = "scmrepo-2.0.2.tar.gz", hash = "sha256:17e75b6b8d730d84e0e0479f4b4e15fce7f191c54ee9604164004041cf0f07de"},
 ]
 
 [package.dependencies]
 asyncssh = ">=2.13.1,<3"
 dulwich = ">=0.21.6"
 dvc-http = ">=2.29.0"
-dvc-objects = ">=1.0.1,<3"
+dvc-objects = ">=3,<4"
 fsspec = ">=2021.7.0"
 funcy = ">=1.14"
 gitpython = ">3"
@@ -3412,4 +3412,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "f8d067f2c2a7923befcb1202f269798159e69eb8ea41e6b683f1cfa399384f79"
+content-hash = "ee060c982c300b375f12e42b1edd8f920884c00f5783f666c75c4d920636f8fc"
