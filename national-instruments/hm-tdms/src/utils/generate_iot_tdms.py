@@ -29,10 +29,11 @@ def generate_iot_tdms(data_dirname: str, tdms_filename: str, row_count: int) -> 
     #     [time.time() + (row_count - i) * 0.01 for i in range(row_count)]
     # )
     # Future
+    rng = np.random.default_rng()
     timestamp_data = np.array([time.time() + i * 0.01 for i in range(row_count)])
-    current_data = np.random.rand(row_count) * 10
-    voltage_data = np.random.rand(row_count) * 20
-    temperature_data = np.random.rand(row_count) * 50 + 25
+    current_data = rng.random(row_count) * 10
+    voltage_data = rng.random(row_count) * 20
+    temperature_data = rng.random(row_count) * 50 + 25
 
     timestamp_channel = ChannelObject(
         motor_group_name,
