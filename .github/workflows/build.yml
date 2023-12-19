@@ -988,7 +988,7 @@ jobs:
           docker create --name=hm-pgbackrest ghcr.io/hongbo-miao/hm-pgbackrest:latest
           docker cp hm-pgbackrest:/usr/src/app/build/pgbackrest-release-2.43/src/pgbackrest pgbackrest
       - name: Upload pgbackrest
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pgbackrest
           path: pgbackrest
