@@ -4,20 +4,15 @@ from sqlalchemy import create_engine, text
 from trino.sqlalchemy import URL
 
 
-def remove_dataframe_duplicate_columns(df: pd.DataFrame) -> pd.DataFrame:
-    df = df.copy()
-    df.columns = df.columns.str.lower()
-    df = df.loc[:, ~df.columns.duplicated()]
-    return df
-
-
 def main():
+    event_id = "ad7953cd-6d49-4929-8180-99555bebc255"
+    field_names = ["current", "voltage", "temperature"]
+
     engine = create_engine(
         URL(host=config.trino_host, port=config.trino_port, user=config.trino_user)
     )
     with engine.connect() as conn:
-        cols = ", ".join(["current", "voltage", "temperature"])
-        params = {"event_id": "ad7953cd-6d49-4929-8180-99555bebc255"}
+        column_names = ", ".join(field_names)
         sql_query = text(
             f"""
             with
@@ -37,7 +32,7 @@ def main():
             td as (select * from delta.hm_delta_db.motor_data_d where _event_id = :event_id),
             te as (select * from delta.hm_delta_db.motor_data_e where _event_id = :event_id),
             tf as (select * from delta.hm_delta_db.motor_data_f where _event_id = :event_id)
-            select from_unixtime_nanos(t0._time) AS _time, {cols}
+            select from_unixtime_nanos(t0._time) as _time, {column_names}
             from t0
             join t1 on t0._time = t1._time
             join t2 on t0._time = t2._time
@@ -54,10 +49,10 @@ def main():
             join td on t0._time = td._time
             join te on t0._time = te._time
             join tf on t0._time = tf._time
-            order by t0._time asc
+            order by _time asc
             """
         )
-        res = conn.execute(sql_query, params)
+        res = conn.execute(sql_query, {"event_id": event_id})
         df = pd.DataFrame(res.fetchall(), columns=res.keys())
         print(df)
 
