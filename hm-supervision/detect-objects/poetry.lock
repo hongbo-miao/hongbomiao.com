@@ -1456,13 +1456,13 @@ files = [
 
 [[package]]
 name = "ultralytics"
-version = "8.0.230"
+version = "8.0.231"
 description = "Ultralytics YOLOv8 for SOTA object detection, multi-object tracking, instance segmentation, pose estimation and image classification."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "ultralytics-8.0.230-py3-none-any.whl", hash = "sha256:d2df77d5449a46190ba38bf1e46027986b42487307072ff06bdb9422b96a3778"},
-    {file = "ultralytics-8.0.230.tar.gz", hash = "sha256:287d62a186e799bccbbe25fed2f578642e77a9eba185de697884a6bf30a30fe7"},
+    {file = "ultralytics-8.0.231-py3-none-any.whl", hash = "sha256:bad23d0a13a466bb4839740c7f07d756e65934081d05d3a4f7f0676fc84657dc"},
+    {file = "ultralytics-8.0.231.tar.gz", hash = "sha256:f7647c143e516f7e63b625f10896bf82a8d49cf1ba5e920a2863f9f40204b4c6"},
 ]
 
 [package.dependencies]
@@ -1483,8 +1483,10 @@ torchvision = ">=0.9.0"
 tqdm = ">=4.64.0"
 
 [package.extras]
-dev = ["check-manifest", "coverage", "ipython", "mkdocs-material", "mkdocs-redirects", "mkdocs-ultralytics-plugin (>=0.0.35)", "mkdocstrings[python]", "pre-commit", "pytest", "pytest-cov"]
-export = ["coremltools (>=7.0)", "jax (<=0.4.21)", "jaxlib (<=0.4.21)", "openvino-dev (>=2023.0)", "tensorflow (<=2.13.1)", "tensorflowjs"]
+dev = ["check-manifest", "coverage[toml]", "ipython", "mkdocs-material", "mkdocs-redirects", "mkdocs-ultralytics-plugin (>=0.0.34)", "mkdocstrings[python]", "pre-commit", "pytest", "pytest-cov"]
+export = ["coremltools (>=7.0)", "jax (<=0.4.21)", "jaxlib (<=0.4.21)", "onnx (>=1.12.0)", "openvino-dev (>=2023.0)", "tensorflow (<=2.13.1)", "tensorflowjs (>=3.9.0)"]
+extra = ["albumentations (>=1.0.3)", "ipython", "pycocotools (>=2.0.6)"]
+logging = ["comet", "dvclive (>=2.12.0)", "tensorboard (>=2.13.0)"]
 
 [[package]]
 name = "urllib3"
@@ -1505,4 +1507,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.x"
-content-hash = "3fd978340ece9751dd32db01eff183792524f40712eaa4a8f3acc1628da122b3"
+content-hash = "ceab38aabbf2036c85707cc338af0a141a61ff25299068a4bc05268b52c804ff"
