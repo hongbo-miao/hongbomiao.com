@@ -20,8 +20,13 @@ zipFileName = dataFolder + "scenario1.zip";
 pointCloudFilePattern = fullfile(dataFolder, 'scenario1', 'scan*.png');
 
 folderExists = exist(dataFolder, 'dir');
+fileCount = 2513;
 if ~folderExists
     mkdir(dataFolder);
+    disp('Downloading ...');
+    websave(zipFileName, baseDownloadURL, options);
+    unzip(zipFileName, dataFolder);
+elseif folderExists && numel(dir(pointCloudFilePattern)) < fileCount
     disp('Downloading ...');
     websave(zipFileName, baseDownloadURL, options);
     unzip(zipFileName, dataFolder);
