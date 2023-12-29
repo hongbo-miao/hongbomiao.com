@@ -295,10 +295,12 @@ make kubernetes-clean
 
 ## Computer Vision
 
-- **Open3D** - 3D data processing
 - **OpenCV** - Computer vision library
 - **supervision** - Computer vision library
 - **Ultralytics YOLOv8** - Object detection model
+- **Open3D** - 3D data processing
+- **PyVista** - 3D plotting and mesh analysis
+- **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization
 
 ## Cloud Native
 
@@ -679,6 +681,10 @@ The VHDL waveforms are displayed in GTKWave.
 ![Poky screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/fcb5650c-a33b-4564-ba9e-bca0a666b1a2)
 
 ## Computer Vision
+
+### PyVista
+
+![PyVista screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/705509be-4272-4d56-8080-9d91123c56ba)
 
 ### Open3D
 
