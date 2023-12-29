@@ -19,11 +19,12 @@ variable "core_target_on_demand_capacity" {
 variable "bootstrap_set_up_script_s3_uri" {
   type = string
 }
-variable "configurations" {
-  type = list(object({
-    Classification = string
-    Properties     = map(string)
-  }))
+variable "configurations_json_string" {
+  type = string
+}
+variable "steps" {
+  type    = list(any)
+  default = []
 }
 variable "iam_role_arn" {
   type = string

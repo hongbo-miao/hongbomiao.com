@@ -57,31 +57,33 @@ module "hm_trino" {
   core_instance_type             = "r7a.2xlarge"
   core_target_on_demand_capacity = 1
   bootstrap_set_up_script_s3_uri = module.hm_trino_s3_set_up_script.uri
-  configurations = [
-    {
-      Classification : "delta-defaults",
-      Properties : {
-        "delta.enabled" : "true"
+  configurations_json_string     = <<EOF
+    [
+      {
+        "Classification": "delta-defaults",
+        "Properties": {
+          "delta.enabled": "true"
+        }
+      },
+      {
+        "Classification": "trino-connector-delta",
+        "Properties": {
+          "hive.metastore": "glue"
+        }
+      },
+      {
+        "Classification": "trino-connector-postgresql",
+        "Properties": {
+          "connection-url": "jdbc:postgresql://${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["host"]}:${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["port"]}/${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["db"]}",
+          "connection-user": "${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["user"]}",
+          "connection-password": "${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["password"]}"
+        }
       }
-    },
-    {
-      Classification : "trino-connector-delta",
-      Properties : {
-        "hive.metastore" : "glue"
-      }
-    },
-    {
-      Classification : "trino-connector-postgresql",
-      Properties : {
-        connection-url : "jdbc:postgresql://${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_host"]}:${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_port"]}/${jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_db"]}",
-        connection-user : jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_user"],
-        connection-password : jsondecode(data.aws_secretsmanager_secret_version.hm_rds_secret_version.secret_string)["postgres_password"]
-      }
-    }
-  ]
-  iam_role_arn = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
-  environment  = var.environment
-  team         = var.team
+    ]
+  EOF
+  iam_role_arn                   = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  environment                    = var.environment
+  team                           = var.team
 }
 module "hm_trino_task_instance_fleet" {
   source                    = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
@@ -108,6 +110,12 @@ module "hm_sedona_s3_set_up_script" {
   amazon_s3_key    = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
   local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
 }
+module "hm_sedona_s3_validate_python_version_script" {
+  source           = "./modules/hm_amazon_s3_object"
+  amazon_s3_bucket = "hongbomiao-bucket"
+  amazon_s3_key    = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
+  local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
+}
 module "hm_sedona_emr" {
   source                         = "./modules/hm_amazon_emr_cluster"
   amazon_emr_cluster_name        = "hm-sedona"
@@ -117,32 +125,59 @@ module "hm_sedona_emr" {
   core_instance_type             = "r7a.2xlarge"
   core_target_on_demand_capacity = 1
   bootstrap_set_up_script_s3_uri = module.hm_sedona_s3_set_up_script.uri
-  configurations = [
+  steps = [
     {
-      Classification : "delta-defaults",
-      Properties : {
-        "delta.enabled" : "true"
-      }
-    },
-    {
-      "Classification" : "spark-hive-site",
-      "Properties" : {
-        "hive.metastore.client.factory.class" : "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"
-      }
-    },
-    {
-      "Classification" : "spark-defaults",
-      "Properties" : {
-        "spark.yarn.dist.jars" : "/usr/lib/spark/jars/sedona-spark-shaded-3.4_2.12-1.5.0.jar,/usr/lib/spark/jars/geotools-wrapper-1.5.0-28.2.jar",
-        "spark.serializer" : "org.apache.spark.serializer.KryoSerializer",
-        "spark.kryo.registrator" : "org.apache.sedona.core.serde.SedonaKryoRegistrator",
-        "spark.sql.extensions" : "org.apache.sedona.viz.sql.SedonaVizExtensions,org.apache.sedona.sql.SedonaSqlExtensions"
-      }
+      name              = "Validate Python Version"
+      action_on_failure = "CONTINUE"
+      hadoop_jar_step = [
+        {
+          jar        = "command-runner.jar"
+          args       = ["spark-submit", "--deploy-mode", "client", module.hm_sedona_s3_validate_python_version_script.uri]
+          main_class = ""
+          properties = {}
+        }
+      ]
     }
   ]
-  iam_role_arn = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
-  environment  = var.environment
-  team         = var.team
+  configurations_json_string = <<EOF
+    [
+      {
+        "Classification" : "delta-defaults",
+        "Properties" : {
+          "delta.enabled" : "true"
+        }
+      },
+      {
+        "Classification" : "spark-hive-site",
+        "Properties" : {
+          "hive.metastore.client.factory.class" : "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"
+        }
+      },
+      {
+        "Classification" : "spark-defaults",
+        "Properties" : {
+          "spark.yarn.dist.jars" : "/usr/lib/spark/jars/sedona-spark-shaded-3.4_2.12-1.5.0.jar,/usr/lib/spark/jars/geotools-wrapper-1.5.0-28.2.jar",
+          "spark.serializer" : "org.apache.spark.serializer.KryoSerializer",
+          "spark.kryo.registrator" : "org.apache.sedona.core.serde.SedonaKryoRegistrator",
+          "spark.sql.extensions" : "org.apache.sedona.viz.sql.SedonaVizExtensions,org.apache.sedona.sql.SedonaSqlExtensions"
+        }
+      },
+      {
+        "Classification": "spark-env",
+        "Configurations": [
+          {
+            "Classification": "export",
+            "Properties": {
+              "PYSPARK_PYTHON": "/usr/local/python3.11.7/bin/python3.11"
+            }
+          }
+        ]
+      }
+    ]
+  EOF
+  iam_role_arn               = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  environment                = var.environment
+  team                       = var.team
 }
 module "hm_sedona_emr_task_instance_fleet" {
   source                    = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
