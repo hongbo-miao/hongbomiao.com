@@ -424,6 +424,7 @@ make kubernetes-clean
 - **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
+- **ASTERIOS** - Real-time, safety-critical applications development
 - **RTI Connext** - Real-time, distributed systems framework
   - **RTI Connext DDS** - Data distribution service (DDS)
 - **Rclone** - Sync program
@@ -544,6 +545,38 @@ make kubernetes-clean
 - **Ground testing**
 - **Flight testing**
 
+## Languages
+
+- **C**
+  - **C++**
+  - **PsyC**
+- **CSS**
+- **Docker**
+- **Go**
+- **HTML**
+- **Java**
+  - **Kotlin**
+  - **Scala**
+- **JavaScript**
+  - **TypeScript**
+- **Makefile**
+- **Markdown**
+- **MATLAB**
+- **Protocol Buffers**
+- **Python**
+- **QML**
+- **Rego**
+- **Ruby**
+- **Rust**
+- **Shell**
+- **Solidity**
+- **SQL**
+- **Swift**
+- **Terraform**
+- **VHDL**
+- **XML**
+- **YAML**
+
 ## Communication Standards and Protocols
 
 - **User Datagram Protocol (UDP)**
@@ -653,6 +686,10 @@ The following presents a model of a radar-based air defense system. Bombers are 
 ![Simscape screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
 
 ## Embedded, IoT, Hardware
+
+### ASTERIOS - Real-Time, Safety-Critical Applications Development
+
+![ASTERIOS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/716ac0aa-7087-4507-8a63-619bc7c01e64)
 
 ### RTI Connext - Real-Time, Distributed Systems Framework
 

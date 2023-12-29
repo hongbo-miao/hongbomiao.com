@@ -1,0 +1,136 @@
+{
+	"version": "4.0",
+	"projectName": "LED Blinker",
+	"traceConf": {
+		"version": 1.1,
+		"traceEnabled": true,
+		"tasks": {
+			"agent_0": {
+				"id": "agent_0",
+				"name": "blinker",
+				"enable": true,
+				"isToggleEventPanel": false,
+				"events": {
+					"advance": {
+						"name": "advance",
+						"enable": true
+					}
+				}
+			}
+		},
+		"streams": {},
+		"sources": {
+			"realtime": {
+				"name": "realtime",
+				"enable": true,
+				"tasks": [
+					"agent_0"
+				]
+			}
+		},
+		"temporals": {}
+	},
+	"compilationConfigs": {
+		"version": 4,
+		"configs": {
+			"default": {
+				"name": "default",
+				"isSelected": true,
+				"selectedTarget": {
+					"name": "ksim",
+					"isValid": true
+				},
+				"compilationConf": {
+					"version": 2,
+					"steps": [
+						{
+							"id": "preBuild",
+							"selected": false,
+							"activated": false,
+							"status": "",
+							"scriptPath": "",
+							"options": []
+						},
+						{
+							"id": "build",
+							"selected": true,
+							"activated": true,
+							"status": "",
+							"options": [
+								{
+									"name": "$configurationFiles",
+									"disable": true
+								},
+								{
+									"name": "$gendir",
+									"disable": true
+								}
+							],
+							"compilationFilesAdded": {
+								"userChoice": true,
+								"asteriosChoice": true
+							},
+							"isProjectConfiguration": false,
+							"projectCompilationEnvironmentFile": "",
+							"isBuildSystemUI": true,
+							"isRTKMultiBinaries": true
+						},
+						{
+							"id": "postBuild",
+							"selected": false,
+							"activated": false,
+							"status": "",
+							"scriptPath": "",
+							"options": []
+						}
+					],
+					"gendir": null,
+					"files": [
+						"blinker.psy",
+						"conf.app.default.json",
+						"display_led_status.c"
+					]
+				}
+			}
+		}
+	},
+	"mpuConf": {
+		"version": 0.1,
+		"mpuEnabled": true
+	},
+	"partitionsConfigurations": {
+		"version": "1.0",
+		"configs": {
+			"default": {
+				"name": "default",
+				"currentPartition": "Global",
+				"partitions": [
+					{
+						"name": "Global",
+						"makeConfiguration": {
+							"envdir": "",
+							"makeExe": "",
+							"options": []
+						},
+						"files": []
+					},
+					{
+						"name": "Partition-1",
+						"makeConfiguration": {
+							"envdir": "",
+							"makeExe": "",
+							"options": []
+						},
+						"files": [
+							"blinker.psy",
+							"display_led_status.c",
+							"config/compile.json",
+							"config/partition.json",
+							"config/psymodule.json"
+						]
+					}
+				]
+			}
+		}
+	}
+}
