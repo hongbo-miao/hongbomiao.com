@@ -44,7 +44,8 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
     name = "set_up"
     path = var.bootstrap_set_up_script_s3_uri
   }
-  configurations_json = jsonencode(var.configurations)
+  configurations_json = var.configurations_json_string
+  step                = var.steps
   service_role        = var.iam_role_arn
   tags = {
     for-use-with-amazon-emr-managed-policies = true
@@ -56,7 +57,8 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
   # https://github.com/hashicorp/terraform-provider-aws/issues/12683#issuecomment-752899019
   lifecycle {
     ignore_changes = [
-      configurations_json
+      configurations_json,
+      step
     ]
   }
 }

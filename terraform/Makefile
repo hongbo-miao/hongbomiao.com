@@ -5,9 +5,9 @@ terraform-update-lock-file:
 terraform-reconfigure:
 	terraform init -reconfigure
 terraform-plan:
-	terraform plan
+	terraform plan -parallelism=8
 terraform-apply:
-	terraform apply -auto-approve
+	terraform apply -auto-approve -parallelism=8
 terraform-refresh:
 	terraform refresh
 terraform-destroy:

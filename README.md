@@ -194,7 +194,7 @@ make kubernetes-clean
 - **Node.js** - JavaScript runtime
 - **npm** - JavaScript package management
 
-## Database
+## Database, Data Warehouse, Data Lakehouse
 
 - **Trino** - Distributed SQL query engine
 - **PostgreSQL** - Object-relational database
