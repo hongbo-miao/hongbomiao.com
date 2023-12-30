@@ -1,0 +1,18 @@
+#include <asterios.h>
+$$#include <led_status.h>
+
+clock c1 = ast_realtime_ms;
+
+agent blinker(uses realtime, starttime 9 with c1) {
+  body start {
+    display_status(2u, converttick(c1, presenttime()), 1u, SET_ON);
+    advance 2 with c1;
+    display_status(8u, converttick(c1, presenttime()), 1u, ON);
+    advance 8 with c1;
+
+    display_status(2u, converttick(c1, presenttime()), 1u, SET_OFF);
+    advance 2 with c1;
+    display_status(8u, converttick(c1, presenttime()), 1u, OFF);
+    advance 8 with c1;
+  }
+}
