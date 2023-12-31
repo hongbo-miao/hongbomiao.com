@@ -35,6 +35,7 @@ jobs:
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
+      neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       streaming: ${{ steps.filter.outputs.streaming }}
@@ -92,6 +93,9 @@ jobs:
             mobile-react-native:
               - '.github/workflows/test.yml'
               - 'mobile-react-native/**'
+            neural-forecasting-forecast-air-passenger-number:
+              - '.github/workflows/test.yml'
+              - 'neural-forecasting/forecast-air-passenger-number/**'
             prometheus:
               - '.github/workflows/test.yml'
               - 'prometheus/**'
@@ -523,6 +527,42 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: api-python
+
+  neural-forecasting-forecast-air-passenger-number:
+    name: Neural Forecasting (forecast-air-passenger-number) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: poetry
+          cache-dependency-path: neural-forecasting/forecast-air-passenger-number/poetry.lock
+      - name: Set Poetry environment
+        working-directory: neural-forecasting/forecast-air-passenger-number
+        run: |
+          poetry env use python3.11
+      - name: Install dependencies
+        working-directory: neural-forecasting/forecast-air-passenger-number
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: neural-forecasting/forecast-air-passenger-number
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: neural-forecasting/forecast-air-passenger-number
 
   spark-find-retired-people-scala:
     name: Spark (find-retired-people-scala) | Test
