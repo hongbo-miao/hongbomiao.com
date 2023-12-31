@@ -508,7 +508,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version-file: api-python/pyproject.toml
           cache: poetry
           cache-dependency-path: api-python/poetry.lock
       - name: Set Poetry environment
@@ -544,7 +544,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version-file: neural-forecasting/forecast-air-passenger-number/pyproject.toml
           cache: poetry
           cache-dependency-path: neural-forecasting/forecast-air-passenger-number/poetry.lock
       - name: Set Poetry environment
