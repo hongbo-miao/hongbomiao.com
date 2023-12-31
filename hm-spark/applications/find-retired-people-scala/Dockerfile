@@ -6,6 +6,6 @@ COPY hm-spark/applications/ingest-from-s3-to-kafka/project/plugins.sbt ./project
 COPY hm-spark/applications/find-retired-people-scala/src/ ./src/
 RUN sbt compile assembly
 
-FROM docker.io/bitnami/spark:3.4.2-debian-11-r1
+FROM docker.io/bitnami/spark:3.5.0-debian-11-r17
 WORKDIR /opt/spark/work-dir
 COPY --from=builder /usr/src/app/target/scala-2.12/FindRetiredPeople-assembly-1.0.jar /opt/spark/work-dir/
