@@ -549,10 +549,12 @@ make kubernetes-clean
 
 - **C**
   - **C++**
+  - **Embedded C**
   - **PsyC**
 - **CSS**
 - **Docker**
 - **Go**
+- **GraphQL**
 - **HTML**
 - **Java**
   - **Kotlin**
@@ -571,6 +573,9 @@ make kubernetes-clean
 - **Shell**
 - **Solidity**
 - **SQL**
+  - **PromQL**
+  - **SedonaSQL**
+  - **Spark SQL**
 - **Swift**
 - **Terraform**
 - **VHDL**
