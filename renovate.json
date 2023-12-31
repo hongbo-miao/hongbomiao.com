@@ -11,13 +11,15 @@
   "prHourlyLimit": 0,
   "packageRules": [
     {
+      "description": "Group Python packages",
       "matchPackageNames": [
-        "stylelint",
-        "stylelint-prettier"
+        "docker.io/python",
+        "python"
       ],
-      "groupName": "stylelint packages"
+      "groupName": "python packages"
     },
     {
+      "description": "Group torch packages",
       "matchPackageNames": [
         "torch",
         "torchvision"
@@ -25,17 +27,27 @@
       "groupName": "torch packages"
     },
     {
+      "description": "Group stylelint packages",
+      "matchPackageNames": [
+        "stylelint",
+        "stylelint-prettier"
+      ],
+      "groupName": "stylelint packages"
+    },
+    {
+      "description": "Use custom regex versioning for Bitnami Docker images",
+      "matchPackageNames": [
+        "docker.io/bitnami/spark"
+      ],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(:?-(?<compatibility>.+)(?<build>\\d+)-r(?<revision>\\d+))?$"
+    },
+    {
+      "description": "Only allow Node.js upgrades to LTS versions",
       "matchPackageNames": [
         "docker.io/node",
         "node"
       ],
       "allowedVersions": "/^(\\d*[02468])\\..+$/"
-    },
-    {
-      "matchPackageNames": [
-        "docker.io/bitnami/spark"
-      ],
-      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(:?-(?<compatibility>.+)(?<build>\\d+)-r(?<revision>\\d+))?$"
     }
   ]
 }
