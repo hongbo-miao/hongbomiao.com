@@ -35,7 +35,9 @@ jobs:
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
       hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
-      hm-ni-veristand: ${{ steps.filter.outputs.hm-ni-veristand }}
+      national-instruments-hm-ni-veristand: ${{ steps.filter.outputs.national-instruments-hm-ni-veristand }}
+      national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
+      national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
       hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
@@ -111,9 +113,15 @@ jobs:
             hm-geopandas:
               - '.github/workflows/test.yml'
               - 'hm-geopandas/**'
-            hm-ni-veristand:
+            national-instruments-hm-ni-veristand:
               - '.github/workflows/test.yml'
               - 'national-instruments/hm-ni-veristand/**'
+            national-instruments-hm-pyvisa:
+              - '.github/workflows/test.yml'
+              - 'national-instruments/hm-pyvisa/**'
+            national-instruments-hm-tdms:
+              - '.github/workflows/test.yml'
+              - 'national-instruments/hm-tdms/**'
             hm-opal-client:
               - '.github/workflows/test.yml'
               - 'hm-opal-client/**'
@@ -948,10 +956,10 @@ jobs:
         with:
           directory: neural-forecasting/forecast-air-passenger-number
 
-  ni-veristand-test:
-    name: NI VeriStand | Test
+  national-instruments-hm-ni-veristand-test:
+    name: National Instruments (ni-veristand) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-ni-veristand == 'true' }}
+    if: ${{ needs.detect-changes.outputs.national-instruments-hm-ni-veristand == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -979,6 +987,70 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: national-instruments/hm-ni-veristand
+
+  national-instruments-hm-pyvisa-test:
+    name: National Instruments (pyvisa) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.national-instruments-hm-pyvisa == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: national-instruments/hm-pyvisa/pyproject.toml
+          cache: poetry
+          cache-dependency-path: national-instruments/hm-pyvisa/poetry.lock
+      - name: Install dependencies
+        working-directory: national-instruments/hm-pyvisa
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: national-instruments/hm-pyvisa
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: national-instruments/hm-pyvisa
+
+  national-instruments-hm-tdms-test:
+    name: National Instruments (tdms) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.national-instruments-hm-tdms == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: national-instruments/hm-tdms/pyproject.toml
+          cache: poetry
+          cache-dependency-path: national-instruments/hm-tdms/poetry.lock
+      - name: Install dependencies
+        working-directory: national-instruments/hm-tdms
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: national-instruments/hm-tdms
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: national-instruments/hm-tdms
 
   prefect-calculate-test:
     name: Prefect (calculate) | Test

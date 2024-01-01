@@ -12,6 +12,8 @@ pyarrow = "14.0.2"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "0.24.4"
+pytest = "7.4.4"
+pytest-cov = "4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -19,3 +21,5 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
 dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
