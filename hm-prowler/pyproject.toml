@@ -5,15 +5,20 @@ description = ""
 authors = ["Hongbo Miao"]
 
 [tool.poetry.dependencies]
-python = "3.12.x"
+python = "3.11.x"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "0.24.4"
 prowler = "3.11.3"
+pytest = "7.4.4"
+pytest-cov = "4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
+
 prowler = "prowler"
