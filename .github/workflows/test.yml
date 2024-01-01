@@ -26,6 +26,7 @@ jobs:
       api-python: ${{ steps.filter.outputs.api-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
+      feature-store: ${{ steps.filter.outputs.feature-store }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
@@ -77,6 +78,9 @@ jobs:
             data-distribution-service:
               - '.github/workflows/test.yml'
               - 'data-distribution-service/**'
+            feature-store:
+              - '.github/workflows/test.yml'
+              - 'feature-store/**'
             grafana-hm-panel-plugin:
               - '.github/workflows/test.yml'
               - 'grafana/hm-panel-plugin/**'
@@ -568,6 +572,38 @@ jobs:
         with:
           directory: api-python
 
+  amazon-sagemaker-pytorch-mnist-test:
+    name: Amazon SageMaker (pytorch-mnist) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.amazon-sagemaker-pytorch-mnist == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: aws/amazon-sagemaker/pytorch-mnist/pyproject.toml
+          cache: poetry
+          cache-dependency-path: aws/amazon-sagemaker/pytorch-mnist/poetry.lock
+      - name: Install dependencies
+        working-directory: aws/amazon-sagemaker/pytorch-mnist
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: aws/amazon-sagemaker/pytorch-mnist
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: aws/amazon-sagemaker/pytorch-mnist
+
   data-distribution-service-test:
     name: Data Distribution Service | Test
     needs: detect-changes
@@ -600,6 +636,38 @@ jobs:
         with:
           directory: data-distribution-service
 
+  feature-store-test:
+    name: Feature Store | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: feature-store/pyproject.toml
+          cache: poetry
+          cache-dependency-path: feature-store/poetry.lock
+      - name: Install dependencies
+        working-directory: feature-store
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: feature-store
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: feature-store
+
   geopandas-test:
     name: GeoPandas | Test
     needs: detect-changes
@@ -631,38 +699,6 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: hm-geopandas
-
-  amazon-sagemaker-pytorch-mnist-test:
-    name: Amazon SageMaker (pytorch-mnist) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.amazon-sagemaker-pytorch-mnist == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: aws/amazon-sagemaker/pytorch-mnist/pyproject.toml
-          cache: poetry
-          cache-dependency-path: aws/amazon-sagemaker/pytorch-mnist/poetry.lock
-      - name: Install dependencies
-        working-directory: aws/amazon-sagemaker/pytorch-mnist
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: aws/amazon-sagemaker/pytorch-mnist
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: aws/amazon-sagemaker/pytorch-mnist
 
   hugging-face-analyze-sentiment-test:
     name: Hugging Face (analyze-sentiment) | Test

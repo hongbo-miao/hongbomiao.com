@@ -1,5 +1,5 @@
 poetry-env-use:
-	poetry env use python3.10
+	poetry env use python3.11
 poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
@@ -10,25 +10,30 @@ feast-init:
 download-driver-stats:
 	curl --silent --fail --show-error --location https://raw.githubusercontent.com/hongbo-miao/hm-driver-stats/main/driver_stats.parquet > features/data/driver_stats.parquet
 
-inspect-raw-data:
+poetry-run-test:
+	poetry run poe test
+poetry-run-test-coverage:
+	poetry run poe test-coverage
+
+poetry-run-inspect-raw-data:
 	poetry run poe inspect-raw-data
 # Scan python files in the current directory for feature view/entity definitions, registers the objects, and deploys infrastructure.
-feast-apply:
+poetry-run-feast-apply:
 	poetry run poe feast-apply
 # Generate training data
-generate-training-data:
+poetry-run-generate-training-data:
 	poetry run poe generate-training-data
 # Load features into your online store
-materialize-features:
+poetry-run-materialize-features:
 	poetry run poe materialize-features
 # Inspect materialized features
-inspect-features:
+poetry-run-inspect-features:
 	poetry run poe inspect-features
 # Fetch feature vectors for inference
-fetch-features:
+poetry-run-fetch-features:
 	poetry run poe fetch-features
 # Fetch feature vectors for inference by feature service
-fetch-features-by-service:
+poetry-run-fetch-features-by-service:
 	poetry run poe fetch-features-by-service
-feast-ui:
+poetry-run-feast-ui:
 	poetry run poe feast-ui
