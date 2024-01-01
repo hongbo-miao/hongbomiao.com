@@ -26,6 +26,7 @@ jobs:
       api-python: ${{ steps.filter.outputs.api-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
+      dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
       delta-lake-read-delta-lake-by-amazon-athena: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-amazon-athena }}
       delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
       delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
@@ -83,6 +84,9 @@ jobs:
             data-distribution-service:
               - '.github/workflows/test.yml'
               - 'data-distribution-service/**'
+            dbt-hm-postgres:
+              - '.github/workflows/test.yml'
+              - 'dbt/dbt_hm_postgres/**'
             delta-lake-read-delta-lake-by-amazon-athena:
               - '.github/workflows/test.yml'
               - 'delta-lake/read-delta-lake-by-amazon-athena/**'
@@ -687,6 +691,38 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: data-distribution-service
+
+  dbt-hm-postgres-test:
+    name: dbt (hm-postgres) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.dbt-hm-postgres == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: dbt/dbt_hm_postgres/pyproject.toml
+          cache: poetry
+          cache-dependency-path: dbt/dbt_hm_postgres/poetry.lock
+      - name: Install dependencies
+        working-directory: dbt/dbt_hm_postgres
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: dbt/dbt_hm_postgres
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: dbt/dbt_hm_postgres
 
   delta-lake-read-delta-lake-by-amazon-athena-test:
     name: Delta Lake (read-delta-lake-by-amazon-athena) | Test
