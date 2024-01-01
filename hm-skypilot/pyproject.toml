@@ -5,11 +5,18 @@ description = ""
 authors = ["Hongbo Miao"]
 
 [tool.poetry.dependencies]
-python = "3.12.x"
+python = "3.11.x"
 
 [tool.poetry.group.dev.dependencies]
+poethepoet = "0.24.4"
+pytest = "7.4.4"
+pytest-cov = "4.1.0"
 skypilot = {version = "0.4.1", extras = ["aws", "azure", "gcp", "ibm", "lambda", "oci", "scp"]}
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
