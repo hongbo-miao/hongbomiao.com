@@ -58,6 +58,7 @@ jobs:
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
+      reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
       streaming: ${{ steps.filter.outputs.streaming }}
       web: ${{ steps.filter.outputs.web }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
@@ -179,6 +180,9 @@ jobs:
             prometheus:
               - '.github/workflows/test.yml'
               - 'prometheus/**'
+            reinforcement-learning-cart-pole:
+              - '.github/workflows/test.yml'
+              - 'reinforcement-learning/cart-pole/**'
             robot-operating-system:
               - '.github/workflows/test.yml'
               - 'robot-operating-system/**'
@@ -1181,7 +1185,7 @@ jobs:
           directory: hm-prefect/workflows/print-platform
 
   pyvista-mount-saint-helens-test:
-    name: PyVista (Mount Saint Helens) | Test
+    name: PyVista (mount-saint-helens) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
     runs-on: ubuntu-22.04
@@ -1211,6 +1215,38 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: hm-pyvista/mount-saint-helens
+
+  reinforcement-learning-cart-pole-test:
+    name: Reinforcement Learning (cart-pole) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: reinforcement-learning/cart-pole/pyproject.toml
+          cache: poetry
+          cache-dependency-path: reinforcement-learning/cart-pole/poetry.lock
+      - name: Install dependencies
+        working-directory: reinforcement-learning/cart-pole
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: reinforcement-learning/cart-pole
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: reinforcement-learning/cart-pole
 
   supervision-detect-objects-test:
     name: supervision (detect-objects) | Test
