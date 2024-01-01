@@ -158,7 +158,7 @@ poetry-env-list:
 	# ~/Library/Caches/pypoetry/virtualenvs
 	poetry env list
 poetry-env-use:
-	poetry env use python3.11
+	poetry env use python3.12
 poetry-env-remove:
 	poetry env remove xxx
 poetry-update-lock-file:
