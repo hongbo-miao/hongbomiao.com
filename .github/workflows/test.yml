@@ -26,6 +26,9 @@ jobs:
       api-python: ${{ steps.filter.outputs.api-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
+      delta-lake-read-delta-lake-by-amazon-athena: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-amazon-athena }}
+      delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
+      delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
@@ -80,6 +83,15 @@ jobs:
             data-distribution-service:
               - '.github/workflows/test.yml'
               - 'data-distribution-service/**'
+            delta-lake-read-delta-lake-by-amazon-athena:
+              - '.github/workflows/test.yml'
+              - 'delta-lake/read-delta-lake-by-amazon-athena/**'
+            delta-lake-read-delta-lake-by-trino:
+              - '.github/workflows/test.yml'
+              - 'delta-lake/read-delta-lake-by-trino/**'
+            delta-lake-write-to-delta-lake:
+              - '.github/workflows/test.yml'
+              - 'delta-lake/write-to-delta-lake/**'
             feature-store:
               - '.github/workflows/test.yml'
               - 'feature-store/**'
@@ -675,6 +687,102 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: data-distribution-service
+
+  delta-lake-read-delta-lake-by-amazon-athena-test:
+    name: Delta Lake (read-delta-lake-by-amazon-athena) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-amazon-athena == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: delta-lake/read-delta-lake-by-amazon-athena/pyproject.toml
+          cache: poetry
+          cache-dependency-path: delta-lake/read-delta-lake-by-amazon-athena/poetry.lock
+      - name: Install dependencies
+        working-directory: delta-lake/read-delta-lake-by-amazon-athena
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: delta-lake/read-delta-lake-by-amazon-athena
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: delta-lake/read-delta-lake-by-amazon-athena
+
+  delta-lake-read-delta-lake-by-trino-test:
+    name: Delta Lake (read-delta-lake-by-trino) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-trino == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: delta-lake/read-delta-lake-by-trino/pyproject.toml
+          cache: poetry
+          cache-dependency-path: delta-lake/read-delta-lake-by-trino/poetry.lock
+      - name: Install dependencies
+        working-directory: delta-lake/read-delta-lake-by-trino
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: delta-lake/read-delta-lake-by-trino
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: delta-lake/read-delta-lake-by-trino
+
+  delta-lake-write-to-delta-lake-test:
+    name: Delta Lake (write-to-delta-lake) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.delta-lake-write-to-delta-lake == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: delta-lake/write-to-delta-lake/pyproject.toml
+          cache: poetry
+          cache-dependency-path: delta-lake/write-to-delta-lake/poetry.lock
+      - name: Install dependencies
+        working-directory: delta-lake/write-to-delta-lake
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: delta-lake/write-to-delta-lake
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: delta-lake/write-to-delta-lake
 
   feature-store-test:
     name: Feature Store | Test
