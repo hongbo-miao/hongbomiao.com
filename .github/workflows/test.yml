@@ -32,6 +32,7 @@ jobs:
       hm-spark-find-taxi-top-routes: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes }}
       hm-spark-find-taxi-top-routes-sql: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes-sql }}
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
+      hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
@@ -84,6 +85,9 @@ jobs:
             hm-spark-ingest-from-s3-to-kafka:
               - '.github/workflows/test.yml'
               - 'hm-spark/applications/ingest-from-s3-to-kafka/**'
+            hugging-face-analyze-sentiment:
+              - '.github/workflows/test.yml'
+              - 'hugging-face/analyze-sentiment/**'
             mobile-android:
               - '.github/workflows/test.yml'
               - 'mobile-android/**'
@@ -523,6 +527,38 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: api-python
+
+  hugging-face-analyze-sentiment:
+    name: Hugging Face (analyze-sentiment) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hugging-face/analyze-sentiment/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hugging-face/analyze-sentiment/poetry.lock
+      - name: Install dependencies
+        working-directory: hugging-face/analyze-sentiment
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hugging-face/analyze-sentiment
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hugging-face/analyze-sentiment
 
   neural-forecasting-forecast-air-passenger-number:
     name: Neural Forecasting (forecast-air-passenger-number) | Test
