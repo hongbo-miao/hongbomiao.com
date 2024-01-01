@@ -5,12 +5,14 @@ description = ""
 authors = ["Hongbo Miao"]
 
 [tool.poetry.dependencies]
-python = "3.12.x"
+python = "3.10.x"
 cmake = "3.28.1"
 delocate = "0.10.7"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "0.24.4"
+pytest = "7.4.4"
+pytest-cov = "4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -20,3 +22,5 @@ build-backend = "poetry.core.masonry.api"
 build = { shell = "cd ../submodules/connextdds-py && git checkout tags/v0.1.5 && python configure.py --nddshome=/Applications/rti_connext_dds-6.1.1 --jobs=8 arm64Darwin20clang12.0 && pip install . && rm -f rti-0.1.5-cp310-cp310-macosx_12_0_arm64.whl && git checkout master" }
 subscribe = "python subscribe.py"
 publish = "python publish.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

@@ -25,6 +25,7 @@ jobs:
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
+      data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
@@ -73,6 +74,9 @@ jobs:
             convolutional-neural-network:
               - '.github/workflows/test.yml'
               - 'convolutional-neural-network/**'
+            data-distribution-service:
+              - '.github/workflows/test.yml'
+              - 'data-distribution-service/**'
             grafana-hm-panel-plugin:
               - '.github/workflows/test.yml'
               - 'grafana/hm-panel-plugin/**'
@@ -563,6 +567,38 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: api-python
+
+  data-distribution-service-test:
+    name: Data Distribution Service | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.data-distribution-service == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: data-distribution-service/pyproject.toml
+          cache: poetry
+          cache-dependency-path: data-distribution-service/poetry.lock
+      - name: Install dependencies
+        working-directory: data-distribution-service
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: data-distribution-service
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: data-distribution-service
 
   geopandas-test:
     name: GeoPandas | Test
