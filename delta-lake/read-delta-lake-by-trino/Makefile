@@ -1,5 +1,5 @@
 poetry-env-use:
-	poetry env use python3.12
+	poetry env use python3.11
 poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
