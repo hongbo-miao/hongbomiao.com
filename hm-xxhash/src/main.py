@@ -16,7 +16,7 @@ def get_file_xxh128(file_path: Path) -> str:
 
 
 def main() -> None:
-    file_path = Path("/path/to/file.txt")
+    file_path = Path("src/main.py")
     xxh128 = get_file_xxh128(file_path)
     logging.info(xxh128)
 
