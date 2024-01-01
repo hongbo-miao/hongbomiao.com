@@ -16,6 +16,10 @@ poetry-run-set-up:
 	poetry run poe set-up
 poetry-run-dev:
 	poetry run poe dev
+poetry-run-test:
+	poetry run poe test
+poetry-run-test-coverage:
+	poetry run poe test-coverage
 poetry-run-build:
 	poetry run poe build -- --work-queue=hm-kubernetes-queue
 poetry-run-run:
