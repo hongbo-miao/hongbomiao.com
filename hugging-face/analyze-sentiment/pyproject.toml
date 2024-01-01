@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "hugging-face"
+name = "hugging-face-analyze-sentiment"
 version = "1.0.0"
 description = ""
 authors = ["Hongbo Miao"]
@@ -11,6 +11,8 @@ transformers = {version = "4.36.2", extras = ["sentencepiece"]}
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "0.24.4"
+pytest = "7.4.4"
+pytest-cov = "4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -18,3 +20,5 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
 dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
