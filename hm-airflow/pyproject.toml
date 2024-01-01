@@ -8,6 +8,15 @@ authors = ["Hongbo Miao"]
 python = "3.11.x"
 apache-airflow = {version = "2.8.0", extras = ["celery", "s3"]}
 
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.24.4"
+pytest = "7.4.4"
+pytest-cov = "4.1.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
