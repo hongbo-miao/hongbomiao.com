@@ -564,7 +564,7 @@ jobs:
         with:
           directory: api-python
 
-  geopandas:
+  geopandas-test:
     name: GeoPandas | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
@@ -596,7 +596,7 @@ jobs:
         with:
           directory: hm-geopandas
 
-  xxhash:
+  xxhash-test:
     name: xxHash | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-xxhash == 'true' }}
@@ -628,7 +628,7 @@ jobs:
         with:
           directory: hm-xxhash
 
-  amazon-sagemaker-pytorch-mnist:
+  amazon-sagemaker-pytorch-mnist-test:
     name: Amazon SageMaker (pytorch-mnist) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.amazon-sagemaker-pytorch-mnist == 'true' }}
@@ -660,7 +660,7 @@ jobs:
         with:
           directory: aws/amazon-sagemaker/pytorch-mnist
 
-  prefect-calculate:
+  prefect-calculate-test:
     name: Prefect (calculate) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
@@ -692,7 +692,7 @@ jobs:
         with:
           directory: hm-prefect/workflows/calculate
 
-  prefect-greet:
+  prefect-greet-test:
     name: Prefect (greet) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
@@ -724,7 +724,7 @@ jobs:
         with:
           directory: hm-prefect/workflows/greet
 
-  prefect-ingest-data:
+  prefect-ingest-data-test:
     name: Prefect (ingest-data) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-ingest-data == 'true' }}
@@ -756,7 +756,7 @@ jobs:
         with:
           directory: hm-prefect/workflows/ingest-data
 
-  prefect-print-platform:
+  prefect-print-platform-test:
     name: Prefect (print-platform) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
@@ -788,7 +788,7 @@ jobs:
         with:
           directory: hm-prefect/workflows/print-platform
 
-  pyvista-mount-saint-helens:
+  pyvista-mount-saint-helens-test:
     name: PyVista (Mount Saint Helens) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
@@ -820,7 +820,7 @@ jobs:
         with:
           directory: hm-pyvista/mount-saint-helens
 
-  hugging-face-analyze-sentiment:
+  hugging-face-analyze-sentiment-test:
     name: Hugging Face (analyze-sentiment) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
@@ -852,7 +852,7 @@ jobs:
         with:
           directory: hugging-face/analyze-sentiment
 
-  neural-forecasting-forecast-air-passenger-number:
+  neural-forecasting-forecast-air-passenger-number-test:
     name: Neural Forecasting (forecast-air-passenger-number) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
@@ -884,7 +884,7 @@ jobs:
         with:
           directory: neural-forecasting/forecast-air-passenger-number
 
-  supervision-detect-objects:
+  supervision-detect-objects-test:
     name: supervision (detect-objects) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
@@ -916,7 +916,7 @@ jobs:
         with:
           directory: hm-supervision/detect-objects
 
-  spark-find-retired-people-scala:
+  spark-find-retired-people-scala-test:
     name: Spark (find-retired-people-scala) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
@@ -937,7 +937,7 @@ jobs:
         run: |
           sbt test
 
-  spark-find-taxi-top-routes:
+  spark-find-taxi-top-routes-test:
     name: Spark (find-taxi-top-routes) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
@@ -969,7 +969,7 @@ jobs:
         with:
           directory: hm-spark/applications/find-taxi-top-routes
 
-  spark-find-taxi-top-routes-sql:
+  spark-find-taxi-top-routes-sql-test:
     name: Spark (find-taxi-top-routes-sql) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes-sql == 'true' }}
@@ -1001,7 +1001,7 @@ jobs:
         with:
           directory: hm-spark/applications/find-taxi-top-routes-sql
 
-  spark-ingest-from-s3-to-kafka:
+  spark-ingest-from-s3-to-kafka-test:
     name: Spark (ingest-from-s3-to-kafka) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
@@ -1236,6 +1236,38 @@ jobs:
           WANDB_MODE: offline
         run: |
           poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
+
+  cnn-test:
+    name: CNN | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: convolutional-neural-network/pyproject.toml
+          cache: poetry
+          cache-dependency-path: convolutional-neural-network/poetry.lock
+      - name: Install dependencies
+        working-directory: convolutional-neural-network
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: convolutional-neural-network
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: convolutional-neural-network
 
   cnn-cml-local-train:
     name: CNN | CML (Local) - Train
