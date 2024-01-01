@@ -231,6 +231,9 @@ pull_request_rules:
           - check-success=GNN | Train
           - check-skipped=GNN | Train
       - or:
+          - check-success=CNN | Test
+          - check-skipped=CNN | Test
+      - or:
           - check-success=CNN | CML (Local) - Train
           - check-skipped=CNN | CML (Local) - Train
       - check-failure!=renovate/artifacts
