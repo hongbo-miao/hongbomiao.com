@@ -134,9 +134,6 @@ files = [
     {file = "coverage-7.4.0.tar.gz", hash = "sha256:707c0f58cb1712b8809ece32b68996ee1e609f71bd14615bd8f87a1293cb610e"},
 ]
 
-[package.dependencies]
-tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.11.0a6\" and extra == \"toml\""}
-
 [package.extras]
 toml = ["tomli"]
 
@@ -156,20 +153,6 @@ bindepend = {version = "*", markers = "sys_platform == \"win32\""}
 machomachomangler = {version = "*", markers = "sys_platform == \"win32\""}
 packaging = ">=20.9"
 typing-extensions = "*"
-
-[[package]]
-name = "exceptiongroup"
-version = "1.2.0"
-description = "Backport of PEP 654 (exception groups)"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "exceptiongroup-1.2.0-py3-none-any.whl", hash = "sha256:4bfd3996ac73b41e9b9628b04e079f193850720ea5945fc96a08633c66912f14"},
-    {file = "exceptiongroup-1.2.0.tar.gz", hash = "sha256:91f5c769735f051a4290d52edd0858999b57e5876e9f85937691bd4c9fa3ed68"},
-]
-
-[package.extras]
-test = ["pytest (>=6)"]
 
 [[package]]
 name = "iniconfig"
@@ -275,11 +258,9 @@ files = [
 
 [package.dependencies]
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
-exceptiongroup = {version = ">=1.0.0rc8", markers = "python_version < \"3.11\""}
 iniconfig = "*"
 packaging = "*"
 pluggy = ">=0.12,<2.0"
-tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 
 [package.extras]
 testing = ["argcomplete", "attrs (>=19.2.0)", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
@@ -326,5 +307,5 @@ files = [
 
 [metadata]
 lock-version = "2.0"
-python-versions = "3.10.x"
-content-hash = "b669b59953fcdfe77802eea51e1b7761399d60474418af515d3d237b208ed7be"
+python-versions = "3.12.x"
+content-hash = "0eee810a9d015721e22035693bea6b04f9db30749389ba466734ff30d3073b60"
