@@ -11,6 +11,10 @@ poetry-run-dev:
 poetry-run-dev-should-download-original-data:
 	export WANDB_MODE=offline && \
 	poetry run poe dev -- --should_download_original_data=True
+poetry-run-test:
+	poetry run poe test
+poetry-run-test-coverage:
+	poetry run poe test-coverage
 
 poetry-dvc-init:
 	poetry run poe dvc-init
