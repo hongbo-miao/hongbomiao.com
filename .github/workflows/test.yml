@@ -29,6 +29,7 @@ jobs:
       feature-store: ${{ steps.filter.outputs.feature-store }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
+      hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
@@ -87,6 +88,9 @@ jobs:
             graph-neural-network:
               - '.github/workflows/test.yml'
               - 'graph-neural-network/**'
+            hm-airflow:
+              - '.github/workflows/test.yml'
+              - 'hm-airflow/**'
             hm-geopandas:
               - '.github/workflows/test.yml'
               - 'hm-geopandas/**'
@@ -571,6 +575,38 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: api-python
+
+  airflow-test:
+    name: Airflow | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-airflow == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-airflow/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-airflow/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-airflow
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-airflow
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-airflow
 
   amazon-sagemaker-pytorch-mnist-test:
     name: Amazon SageMaker (pytorch-mnist) | Test
