@@ -27,6 +27,10 @@ jobs:
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
+      hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
+      hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
+      hm-prefect-ingest-data: ${{ steps.filter.outputs.hm-prefect-ingest-data }}
+      hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
       hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
       hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
@@ -72,6 +76,18 @@ jobs:
             hm-opal-client:
               - '.github/workflows/test.yml'
               - 'hm-opal-client/**'
+            hm-prefect-calculate:
+              - '.github/workflows/test.yml'
+              - 'hm-prefect/workflows/calculate/**'
+            hm-prefect-greet:
+              - '.github/workflows/test.yml'
+              - 'hm-prefect/workflows/greet/**'
+            hm-prefect-ingest-data:
+              - '.github/workflows/test.yml'
+              - 'hm-prefect/workflows/ingest-data/**'
+            hm-prefect-print-platform:
+              - '.github/workflows/test.yml'
+              - 'hm-prefect/workflows/print-platform/**'
             hm-pyvista-mount-saint-helens:
               - '.github/workflows/test.yml'
               - 'hm-pyvista/mount-saint-helens/**'
@@ -567,6 +583,134 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: hm-xxhash
+
+  prefect-calculate:
+    name: Prefect (calculate) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-prefect/workflows/calculate/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-prefect/workflows/calculate/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-prefect/workflows/calculate
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-prefect/workflows/calculate
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-prefect/workflows/calculate
+
+  prefect-greet:
+    name: Prefect (greet) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-prefect/workflows/greet/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-prefect/workflows/greet/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-prefect/workflows/greet
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-prefect/workflows/greet
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-prefect/workflows/greet
+
+  prefect-ingest-data:
+    name: Prefect (ingest-data) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-prefect-ingest-data == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-prefect/workflows/ingest-data/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-prefect/workflows/ingest-data/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-prefect/workflows/ingest-data
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-prefect/workflows/ingest-data
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-prefect/workflows/ingest-data
+
+  prefect-print-platform:
+    name: Prefect (print-platform) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-prefect/workflows/print-platform/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-prefect/workflows/print-platform/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-prefect/workflows/print-platform
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-prefect/workflows/print-platform
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-prefect/workflows/print-platform
 
   pyvista-mount-saint-helens:
     name: PyVista (Mount Saint Helens) | Test
