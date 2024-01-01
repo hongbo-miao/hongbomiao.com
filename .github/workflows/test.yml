@@ -632,38 +632,6 @@ jobs:
         with:
           directory: hm-geopandas
 
-  xxhash-test:
-    name: xxHash | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-xxhash == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: hm-xxhash/pyproject.toml
-          cache: poetry
-          cache-dependency-path: hm-xxhash/poetry.lock
-      - name: Install dependencies
-        working-directory: hm-xxhash
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: hm-xxhash
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: hm-xxhash
-
   amazon-sagemaker-pytorch-mnist-test:
     name: Amazon SageMaker (pytorch-mnist) | Test
     needs: detect-changes
@@ -695,6 +663,70 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: aws/amazon-sagemaker/pytorch-mnist
+
+  hugging-face-analyze-sentiment-test:
+    name: Hugging Face (analyze-sentiment) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hugging-face/analyze-sentiment/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hugging-face/analyze-sentiment/poetry.lock
+      - name: Install dependencies
+        working-directory: hugging-face/analyze-sentiment
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hugging-face/analyze-sentiment
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hugging-face/analyze-sentiment
+
+  neural-forecasting-forecast-air-passenger-number-test:
+    name: Neural Forecasting (forecast-air-passenger-number) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: neural-forecasting/forecast-air-passenger-number/pyproject.toml
+          cache: poetry
+          cache-dependency-path: neural-forecasting/forecast-air-passenger-number/poetry.lock
+      - name: Install dependencies
+        working-directory: neural-forecasting/forecast-air-passenger-number
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: neural-forecasting/forecast-air-passenger-number
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: neural-forecasting/forecast-air-passenger-number
 
   prefect-calculate-test:
     name: Prefect (calculate) | Test
@@ -856,70 +888,6 @@ jobs:
         with:
           directory: hm-pyvista/mount-saint-helens
 
-  hugging-face-analyze-sentiment-test:
-    name: Hugging Face (analyze-sentiment) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: hugging-face/analyze-sentiment/pyproject.toml
-          cache: poetry
-          cache-dependency-path: hugging-face/analyze-sentiment/poetry.lock
-      - name: Install dependencies
-        working-directory: hugging-face/analyze-sentiment
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: hugging-face/analyze-sentiment
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: hugging-face/analyze-sentiment
-
-  neural-forecasting-forecast-air-passenger-number-test:
-    name: Neural Forecasting (forecast-air-passenger-number) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: neural-forecasting/forecast-air-passenger-number/pyproject.toml
-          cache: poetry
-          cache-dependency-path: neural-forecasting/forecast-air-passenger-number/poetry.lock
-      - name: Install dependencies
-        working-directory: neural-forecasting/forecast-air-passenger-number
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: neural-forecasting/forecast-air-passenger-number
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          directory: neural-forecasting/forecast-air-passenger-number
-
   supervision-detect-objects-test:
     name: supervision (detect-objects) | Test
     needs: detect-changes
@@ -951,6 +919,38 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: hm-supervision/detect-objects
+
+  xxhash-test:
+    name: xxHash | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-xxhash == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-xxhash/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-xxhash/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-xxhash
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-xxhash
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-xxhash
 
   spark-find-retired-people-scala-test:
     name: Spark (find-retired-people-scala) | Test
