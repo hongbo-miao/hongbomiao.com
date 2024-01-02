@@ -24,6 +24,7 @@ jobs:
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
+      aws-glue-spark-scripts: ${{ steps.filter.outputs.aws-glue-spark-scripts }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
@@ -95,6 +96,9 @@ jobs:
             api-python:
               - '.github/workflows/test.yml'
               - 'api-python/**'
+            aws-glue-spark-scripts:
+              - '.github/workflows/test.yml'
+              - 'terraform/data/aws-glue/spark-scripts/**'
             convolutional-neural-network:
               - '.github/workflows/test.yml'
               - 'convolutional-neural-network/**'
@@ -727,6 +731,38 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: aws/amazon-sagemaker/pytorch-mnist
+
+  aws-glue-spark-scripts-test:
+    name: AWS Glue (spark-scripts) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.aws-glue-spark-scripts == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: terraform/data/aws-glue/spark-scripts/pyproject.toml
+          cache: poetry
+          cache-dependency-path: terraform/data/aws-glue/spark-scripts/poetry.lock
+      - name: Install dependencies
+        working-directory: terraform/data/aws-glue/spark-scripts
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: terraform/data/aws-glue/spark-scripts
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: terraform/data/aws-glue/spark-scripts
 
   data-distribution-service-test:
     name: Data Distribution Service | Test
