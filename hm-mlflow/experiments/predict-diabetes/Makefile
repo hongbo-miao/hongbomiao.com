@@ -5,8 +5,12 @@ poetry-update-lock-file:
 poetry-install:
 	poetry install --no-root
 
-poetry-run-mlflow-ui:
-	poetry run poe mlflow-ui
-
 poetry-run-dev:
 	poetry run poe dev
+poetry-run-test:
+	poetry run poe test
+poetry-run-test-coverage:
+	poetry run poe test-coverage
+
+poetry-run-mlflow-ui:
+	poetry run poe mlflow-ui
