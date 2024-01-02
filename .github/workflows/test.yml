@@ -53,6 +53,7 @@ jobs:
       hm-prowler: ${{ steps.filter.outputs.hm-prowler }}
       hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
       hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
+      hm-ray-greet: ${{ steps.filter.outputs.hm-ray-greet }}
       hm-serial: ${{ steps.filter.outputs.hm-serial }}
       hm-skypilot: ${{ steps.filter.outputs.hm-skypilot }}
       hm-spark-analyze-coffee-customers: ${{ steps.filter.outputs.hm-spark-analyze-coffee-customers }}
@@ -181,6 +182,9 @@ jobs:
             hm-rasa:
               - '.github/workflows/test.yml'
               - 'hm-rasa/**'
+            hm-ray-greet:
+              - '.github/workflows/test.yml'
+              - 'hm-ray-greet/**'
             hm-serial:
               - '.github/workflows/test.yml'
               - 'hm-serial/**'
@@ -1491,6 +1495,38 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: hm-pyvista/mount-saint-helens
+
+  ray-greet-test:
+    name: Ray (greet) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-ray-greet == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-ray/applications/greet/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-ray/applications/greet/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-ray/applications/greet
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-ray/applications/greet
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-ray/applications/greet
 
   reinforcement-learning-cart-pole-test:
     name: Reinforcement Learning (cart-pole) | Test
