@@ -31,6 +31,7 @@ jobs:
       delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
       delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
+      grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
       hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
@@ -108,6 +109,9 @@ jobs:
             feature-store:
               - '.github/workflows/test.yml'
               - 'feature-store/**'
+            grafana-hm-dashboard:
+              - '.github/workflows/test.yml'
+              - 'grafana/hm-dashboard/**'
             grafana-hm-panel-plugin:
               - '.github/workflows/test.yml'
               - 'grafana/hm-panel-plugin/**'
@@ -1723,6 +1727,38 @@ jobs:
       - name: Test
         run: |
           docker build --file=prometheus/Dockerfile.test .
+
+  grafana-hm-dashboard-test:
+    name: Grafana (hm-dashboard) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: grafana/hm-dashboard/pyproject.toml
+          cache: poetry
+          cache-dependency-path: grafana/hm-dashboard/poetry.lock
+      - name: Install dependencies
+        working-directory: grafana/hm-dashboard
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: grafana/hm-dashboard
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: grafana/hm-dashboard
 
   grafana-hm-panel-plugin-end-to-end-test:
     name: Grafana (hm-panel-plugin) | End-to-End Test
