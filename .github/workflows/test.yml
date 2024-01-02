@@ -42,6 +42,8 @@ jobs:
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
       hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
+      hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
+      hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-open3d: ${{ steps.filter.outputs.hm-open3d }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
@@ -143,6 +145,12 @@ jobs:
             hm-langchain-chat-pdf:
               - '.github/workflows/test.yml'
               - 'hm-langchain/applications/chat-pdf/**'
+            hm-mlflow-classify-mnist:
+              - '.github/workflows/test.yml'
+              - 'hm-mlflow/experiments/classify-mnist/**'
+            hm-mlflow-predict-diabetes:
+              - '.github/workflows/test.yml'
+              - 'hm-mlflow/experiments/predict-diabetes/**'
             hm-opal-client:
               - '.github/workflows/test.yml'
               - 'hm-opal-client/**'
@@ -1055,6 +1063,70 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: hm-langchain/applications/chat-pdf
+
+  mlflow-classify-mnist-test:
+    name: MLflow (classify-mnist) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-mlflow/experiments/classify-mnist/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-mlflow/experiments/classify-mnist/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-mlflow/experiments/classify-mnist
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-mlflow/experiments/classify-mnist
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-mlflow/experiments/classify-mnist
+
+  mlflow-predict-diabetes-test:
+    name: MLflow (predict-diabetes) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-mlflow/experiments/predict-diabetes/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-mlflow/experiments/predict-diabetes/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-mlflow/experiments/predict-diabetes
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-mlflow/experiments/predict-diabetes
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-mlflow/experiments/predict-diabetes
 
   neural-forecasting-forecast-air-passenger-number-test:
     name: Neural Forecasting (forecast-air-passenger-number) | Test

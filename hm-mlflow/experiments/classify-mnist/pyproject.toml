@@ -5,7 +5,7 @@ description = ""
 authors = ["Hongbo Miao"]
 
 [tool.poetry.dependencies]
-python = "3.10.x"
+python = "3.11.x"
 mlflow = "2.9.2"
 torch = "2.1.2"
 torchvision = "0.16.2"
@@ -14,12 +14,16 @@ wandb = "0.16.1"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "0.24.4"
+pytest = "7.4.4"
+pytest-cov = "4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
-mlflow-ui = "mlflow ui"
-
 dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
+
+mlflow-ui = "mlflow ui"
