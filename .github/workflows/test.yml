@@ -55,10 +55,13 @@ jobs:
       hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
       hm-serial: ${{ steps.filter.outputs.hm-serial }}
       hm-skypilot: ${{ steps.filter.outputs.hm-skypilot }}
+      hm-spark-analyze-coffee-customers: ${{ steps.filter.outputs.hm-spark-analyze-coffee-customers }}
+      hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
       hm-spark-find-taxi-top-routes: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes }}
       hm-spark-find-taxi-top-routes-sql: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes-sql }}
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
+      hm-spark-recommend-movies: ${{ steps.filter.outputs.hm-spark-recommend-movies }}
       hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
       hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
@@ -184,6 +187,12 @@ jobs:
             hm-skypilot:
               - '.github/workflows/test.yml'
               - 'hm-skypilot/**'
+            hm-spark-analyze-coffee-customers:
+              - '.github/workflows/test.yml'
+              - 'hm-spark/applications/analyze-coffee-customers/**'
+            hm-spark-find-retired-people-python:
+              - '.github/workflows/test.yml'
+              - 'hm-spark/applications/find-retired-people-python/**'
             hm-spark-find-retired-people-scala:
               - '.github/workflows/test.yml'
               - 'hm-spark/applications/find-retired-people-scala/**'
@@ -196,6 +205,9 @@ jobs:
             hm-spark-ingest-from-s3-to-kafka:
               - '.github/workflows/test.yml'
               - 'hm-spark/applications/ingest-from-s3-to-kafka/**'
+            hm-spark-recommend-movies:
+              - '.github/workflows/test.yml'
+              - 'hm-spark/applications/recommend-movies/**'
             hm-supervision-detect-objects:
               - '.github/workflows/test.yml'
               - 'hm-supervision/detect-objects/**'
@@ -1640,6 +1652,70 @@ jobs:
         with:
           directory: hm-xxhash
 
+  spark-analyze-coffee-customers-test:
+    name: Spark (analyze-coffee-customers) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-spark/applications/analyze-coffee-customers/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-spark/applications/analyze-coffee-customers/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-spark/applications/analyze-coffee-customers
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-spark/applications/analyze-coffee-customers
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-spark/applications/analyze-coffee-customers
+
+  spark-find-retired-people-python-test:
+    name: Spark (find-retired-people-python) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-spark/applications/find-retired-people-python/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-spark/applications/find-retired-people-python/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-spark/applications/find-retired-people-python
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-spark/applications/find-retired-people-python
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-spark/applications/find-retired-people-python
+
   spark-find-retired-people-scala-test:
     name: Spark (find-retired-people-scala) | Test
     needs: detect-changes
@@ -1745,6 +1821,38 @@ jobs:
         working-directory: hm-spark/applications/ingest-from-s3-to-kafka
         run: |
           sbt test
+
+  spark-recommend-movies-test:
+    name: Spark (recommend-movies) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-spark/applications/recommend-movies/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-spark/applications/recommend-movies/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-spark/applications/recommend-movies
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-spark/applications/recommend-movies
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-spark/applications/recommend-movies
 
   streaming-test:
     name: Streaming | Test
