@@ -278,7 +278,7 @@ make kubernetes-clean
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
 - **Lightning** - Deep Learning framework
-- **LangChang** - Large language model (LLM) framework
+- **LangChain** - Large language model (LLM) framework
 - **NeuralForecast** - Neural forecasting
 - **GPT4All** - Large language models
 - **Transformers** - Machine learning models

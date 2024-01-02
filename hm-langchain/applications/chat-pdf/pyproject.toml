@@ -5,7 +5,7 @@ description = ""
 authors = ["Hongbo Miao"]
 
 [tool.poetry.dependencies]
-python = "3.12.x"
+python = "3.11.x"
 chromadb = "0.4.21"
 gpt4all = "2.0.2"
 langchain = "0.0.353"
@@ -13,6 +13,8 @@ pypdf = "3.17.4"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "0.24.4"
+pytest = "7.4.4"
+pytest-cov = "4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -20,3 +22,5 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
 dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
