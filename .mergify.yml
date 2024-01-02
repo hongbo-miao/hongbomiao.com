@@ -294,9 +294,6 @@ pull_request_rules:
           - check-success=ROS | Test
           - check-skipped=ROS | Test
       - or:
-          - check-success=Rasa | Test
-          - check-skipped=Rasa | Test
-      - or:
           - check-success=Prometheus | Test
           - check-skipped=Prometheus | Test
       - or:
@@ -311,6 +308,12 @@ pull_request_rules:
       - or:
           - check-success=HM OPAL Client | Build
           - check-skipped=HM OPAL Client | Build
+      - or:
+          - check-success=Rasa | Test
+          - check-skipped=Rasa | Test
+      - or:
+          - check-success=GNN | Test
+          - check-skipped=GNN | Test
       - or:
           - check-success=GNN | Train
           - check-skipped=GNN | Train

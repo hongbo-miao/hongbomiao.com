@@ -1986,22 +1986,6 @@ jobs:
           package-name: turtle_robot
           target-ros2-distro: humble
 
-  rasa-test:
-    name: Rasa | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Train and test
-        uses: RasaHQ/rasa-train-test-gha@main
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          workspace: ${{ github.workspace }}/hm-rasa
-
   prometheus-test:
     name: Prometheus | Test
     needs: detect-changes
@@ -2140,6 +2124,54 @@ jobs:
           file: ./hm-opal-client/Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  rasa-test:
+    name: Rasa | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Train and test
+        uses: RasaHQ/rasa-train-test-gha@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workspace: ${{ github.workspace }}/hm-rasa
+
+  gnn-test:
+    name: GNN | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: graph-neural-network/pyproject.toml
+          cache: poetry
+          cache-dependency-path: graph-neural-network/poetry.lock
+      - name: Install dependencies
+        working-directory: graph-neural-network
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: graph-neural-network
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: graph-neural-network
 
   gnn-train:
     name: GNN | Train
