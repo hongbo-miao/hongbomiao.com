@@ -41,6 +41,7 @@ jobs:
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
+      hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-open3d: ${{ steps.filter.outputs.hm-open3d }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
@@ -139,6 +140,9 @@ jobs:
             hm-kubeflow-classify-mnist:
               - '.github/workflows/test.yml'
               - 'hm-kubeflow/pipelines/classify-mnist/**'
+            hm-langchain-chat-pdf:
+              - '.github/workflows/test.yml'
+              - 'hm-langchain/applications/chat-pdf/**'
             hm-opal-client:
               - '.github/workflows/test.yml'
               - 'hm-opal-client/**'
@@ -1019,6 +1023,38 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           directory: hm-kubeflow/pipelines/classify-mnist
+
+  langchain-chat-pdf-test:
+    name: LangChain (chat-pdf) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: hm-langchain/applications/chat-pdf/pyproject.toml
+          cache: poetry
+          cache-dependency-path: hm-langchain/applications/chat-pdf/poetry.lock
+      - name: Install dependencies
+        working-directory: hm-langchain/applications/chat-pdf
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: hm-langchain/applications/chat-pdf
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: hm-langchain/applications/chat-pdf
 
   neural-forecasting-forecast-air-passenger-number-test:
     name: Neural Forecasting (forecast-air-passenger-number) | Test
