@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "hm-dashboard"
+name = "grafana-hm-dashboard"
 version = "1.0.0"
 description = ""
 authors = ["Hongbo Miao"]
@@ -11,11 +11,16 @@ requests = "2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "0.24.4"
+pytest = "7.4.4"
+pytest-cov = "4.1.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
+
 generate-dashboard = "generate-dashboard --output=frontend.json hm.dashboard.py"
 upload-dashboard = "python upload_dashboard.py"
