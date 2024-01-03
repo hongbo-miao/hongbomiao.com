@@ -51,10 +51,10 @@ module "hm_trino_s3_set_up_script" {
 module "hm_trino" {
   source                         = "./modules/hm_amazon_emr_cluster"
   amazon_emr_cluster_name        = "hm-trino"
-  amazon_emr_version             = "emr-6.15.0"
+  amazon_emr_version             = "emr-7.0.0"
   applications                   = ["Trino"]
-  primary_instance_type          = "r7a.xlarge"
-  core_instance_type             = "r7a.2xlarge"
+  primary_instance_type          = "r7gd.xlarge"
+  core_instance_type             = "r7gd.2xlarge"
   core_target_on_demand_capacity = 1
   bootstrap_set_up_script_s3_uri = module.hm_trino_s3_set_up_script.uri
   configurations_json_string     = <<EOF
@@ -88,7 +88,7 @@ module "hm_trino" {
 module "hm_trino_task_instance_fleet" {
   source                    = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
   amazon_emr_cluster_id     = module.hm_trino.id
-  task_instance_type        = "r7a.2xlarge"
+  task_instance_type        = "r7gd.2xlarge"
   task_target_spot_capacity = 7
 }
 data "aws_instance" "hm_trino_primary_node_ec2_instance" {
@@ -119,10 +119,10 @@ module "hm_sedona_s3_validate_python_version_script" {
 module "hm_sedona_emr" {
   source                         = "./modules/hm_amazon_emr_cluster"
   amazon_emr_cluster_name        = "hm-sedona"
-  amazon_emr_version             = "emr-6.15.0"
+  amazon_emr_version             = "emr-7.0.0"
   applications                   = ["Hadoop", "Hive", "JupyterEnterpriseGateway", "Spark"]
-  primary_instance_type          = "r7a.2xlarge"
-  core_instance_type             = "r7a.2xlarge"
+  primary_instance_type          = "r7gd.2xlarge"
+  core_instance_type             = "r7gd.2xlarge"
   core_target_on_demand_capacity = 1
   bootstrap_set_up_script_s3_uri = module.hm_sedona_s3_set_up_script.uri
   steps = [
@@ -182,7 +182,7 @@ module "hm_sedona_emr" {
 module "hm_sedona_emr_task_instance_fleet" {
   source                    = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
   amazon_emr_cluster_id     = module.hm_sedona_emr.id
-  task_instance_type        = "r7a.2xlarge"
+  task_instance_type        = "r7gd.2xlarge"
   task_target_spot_capacity = 1
 }
 module "hm_sedona_emr_managed_scaling_policy" {
