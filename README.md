@@ -421,6 +421,8 @@ make kubernetes-clean
 
 - **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
 - **pySerial** - Serial communication library
+- **cantools** - Controller Area Network (CAN) bus tools
+- **python-can** - Controller Area Network (CAN) bus library
 - **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
