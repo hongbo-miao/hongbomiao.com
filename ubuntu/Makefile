@@ -105,6 +105,14 @@ history-clear:
 show-serial-devices:
 	ls /dev/tty*
 
+# GPG
+gpg-private-key-list:
+	gpg --list-secret-keys
+gpg-public-key-list:
+	gpg --list-keys
+gpg-public-key-show:
+	gpg --armor --export xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 # Debug
 btop:
 	btop
