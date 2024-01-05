@@ -338,6 +338,7 @@ lint-yaml:
 static-type-check-python:
 	poetry run poe static-type-check-python -- --package=api-python
 	poetry run poe static-type-check-python -- --package=aws.amazon-sagemaker.pytorch-mnist
+	poetry run poe static-type-check-python -- --package=can-bus
 	poetry run poe static-type-check-python -- --package=convolutional-neural-network
 	poetry run poe static-type-check-python -- --package=data-distribution-service
 	poetry run poe static-type-check-python -- --package=delta-lake.read-delta-lake-by-amazon-athena
