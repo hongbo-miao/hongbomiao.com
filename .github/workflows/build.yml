@@ -87,19 +87,19 @@ jobs:
             hm-prefect-calculate:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-prefect/workflows/calculate/**'
+              - 'data-orchestration/hm-prefect/workflows/calculate/**'
             hm-prefect-greet:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-prefect/workflows/greet/**'
+              - 'data-orchestration/hm-prefect/workflows/greet/**'
             hm-prefect-ingest-data:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-prefect/workflows/ingest-data/**'
+              - 'data-orchestration/hm-prefect/workflows/ingest-data/**'
             hm-prefect-print-platform:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-prefect/workflows/print-platform/**'
+              - 'data-orchestration/hm-prefect/workflows/print-platform/**'
             hm-rasa:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -409,7 +409,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-prefect/workflows/calculate/Dockerfile
+            file: ./data-orchestration/hm-prefect/workflows/calculate/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-calculate:latest
             cache-from: type=gha
@@ -445,7 +445,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-prefect/workflows/greet/Dockerfile
+            file: ./data-orchestration/hm-prefect/workflows/greet/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-greet:latest
             cache-from: type=gha
@@ -481,7 +481,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-prefect/workflows/ingest-data/Dockerfile
+            file: ./data-orchestration/hm-prefect/workflows/ingest-data/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-ingest-data:latest
             cache-from: type=gha
@@ -517,7 +517,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-prefect/workflows/print-platform/Dockerfile
+            file: ./data-orchestration/hm-prefect/workflows/print-platform/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
             cache-from: type=gha

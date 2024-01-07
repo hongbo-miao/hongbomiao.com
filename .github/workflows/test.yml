@@ -136,7 +136,7 @@ jobs:
               - 'machine-learning/graph-neural-network/**'
             hm-airflow:
               - '.github/workflows/test.yml'
-              - 'hm-airflow/**'
+              - 'data-orchestration/hm-airflow/**'
             hm-geopandas:
               - '.github/workflows/test.yml'
               - 'hm-geopandas/**'
@@ -172,13 +172,13 @@ jobs:
               - 'hm-open3d/**'
             hm-prefect-calculate:
               - '.github/workflows/test.yml'
-              - 'hm-prefect/workflows/calculate/**'
+              - 'data-orchestration/hm-prefect/workflows/calculate/**'
             hm-prefect-greet:
               - '.github/workflows/test.yml'
-              - 'hm-prefect/workflows/greet/**'
+              - 'data-orchestration/hm-prefect/workflows/greet/**'
             hm-prefect-ingest-data:
               - '.github/workflows/test.yml'
-              - 'hm-prefect/workflows/ingest-data/**'
+              - 'data-orchestration/hm-prefect/workflows/ingest-data/**'
             hm-prowler:
               - '.github/workflows/test.yml'
               - 'hm-prowler/**'
@@ -187,7 +187,7 @@ jobs:
               - 'hm-pulumi/**'
             hm-prefect-print-platform:
               - '.github/workflows/test.yml'
-              - 'hm-prefect/workflows/print-platform/**'
+              - 'data-orchestration/hm-prefect/workflows/print-platform/**'
             hm-pyvista-mount-saint-helens:
               - '.github/workflows/test.yml'
               - 'hm-pyvista/mount-saint-helens/**'
@@ -692,21 +692,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-airflow/pyproject.toml
+          python-version-file: data-orchestration/hm-airflow/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-airflow/poetry.lock
+          cache-dependency-path: data-orchestration/hm-airflow/poetry.lock
       - name: Install dependencies
-        working-directory: hm-airflow
+        working-directory: data-orchestration/hm-airflow
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-airflow
+        working-directory: data-orchestration/hm-airflow
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-airflow
+          directory: data-orchestration/hm-airflow
 
   amazon-sagemaker-pytorch-mnist-test:
     name: Amazon SageMaker (pytorch-mnist) | Test
@@ -1396,21 +1396,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-prefect/workflows/calculate/pyproject.toml
+          python-version-file: data-orchestration/hm-prefect/workflows/calculate/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-prefect/workflows/calculate/poetry.lock
+          cache-dependency-path: data-orchestration/hm-prefect/workflows/calculate/poetry.lock
       - name: Install dependencies
-        working-directory: hm-prefect/workflows/calculate
+        working-directory: data-orchestration/hm-prefect/workflows/calculate
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-prefect/workflows/calculate
+        working-directory: data-orchestration/hm-prefect/workflows/calculate
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-prefect/workflows/calculate
+          directory: data-orchestration/hm-prefect/workflows/calculate
 
   prefect-greet-test:
     name: Prefect (greet) | Test
@@ -1428,21 +1428,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-prefect/workflows/greet/pyproject.toml
+          python-version-file: data-orchestration/hm-prefect/workflows/greet/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-prefect/workflows/greet/poetry.lock
+          cache-dependency-path: data-orchestration/hm-prefect/workflows/greet/poetry.lock
       - name: Install dependencies
-        working-directory: hm-prefect/workflows/greet
+        working-directory: data-orchestration/hm-prefect/workflows/greet
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-prefect/workflows/greet
+        working-directory: data-orchestration/hm-prefect/workflows/greet
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-prefect/workflows/greet
+          directory: data-orchestration/hm-prefect/workflows/greet
 
   prefect-ingest-data-test:
     name: Prefect (ingest-data) | Test
@@ -1460,21 +1460,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-prefect/workflows/ingest-data/pyproject.toml
+          python-version-file: data-orchestration/hm-prefect/workflows/ingest-data/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-prefect/workflows/ingest-data/poetry.lock
+          cache-dependency-path: data-orchestration/hm-prefect/workflows/ingest-data/poetry.lock
       - name: Install dependencies
-        working-directory: hm-prefect/workflows/ingest-data
+        working-directory: data-orchestration/hm-prefect/workflows/ingest-data
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-prefect/workflows/ingest-data
+        working-directory: data-orchestration/hm-prefect/workflows/ingest-data
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-prefect/workflows/ingest-data
+          directory: data-orchestration/hm-prefect/workflows/ingest-data
 
   prefect-print-platform-test:
     name: Prefect (print-platform) | Test
@@ -1492,21 +1492,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-prefect/workflows/print-platform/pyproject.toml
+          python-version-file: data-orchestration/hm-prefect/workflows/print-platform/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-prefect/workflows/print-platform/poetry.lock
+          cache-dependency-path: data-orchestration/hm-prefect/workflows/print-platform/poetry.lock
       - name: Install dependencies
-        working-directory: hm-prefect/workflows/print-platform
+        working-directory: data-orchestration/hm-prefect/workflows/print-platform
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-prefect/workflows/print-platform
+        working-directory: data-orchestration/hm-prefect/workflows/print-platform
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-prefect/workflows/print-platform
+          directory: data-orchestration/hm-prefect/workflows/print-platform
 
   prowler-test:
     name: Prowler | Test
