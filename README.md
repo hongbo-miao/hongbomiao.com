@@ -22,7 +22,7 @@
   </p>
   <p>
     <a href="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com/view?branch=main"><img alt="Hits of code" src="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com?branch=main&label=hits%20of%20code" /></a>
-    <a href="https://github.com/hongbo-miao/hongbomiao.com"><img alt="Lines of code" src="https://tokei.ekzhang.com/b1/github/hongbo-miao/hongbomiao.com" /></a>
+    <a href="https://github.com/hongbo-miao/hongbomiao.com"><img alt="Lines of code" src="https://tokei.rs/b1/github/hongbo-miao/hongbomiao.com" /></a>
     <a href="https://github.com/hongbo-miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com" /></a>
     <a href="https://github.com/hongbo-miao/hongbomiao.com/graphs/contributors"><img alt="Commit activity" src="https://img.shields.io/github/commit-activity/y/hongbo-miao/hongbomiao.com"></a>
   </p>
