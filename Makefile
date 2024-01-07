@@ -339,22 +339,16 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=api-python
 	poetry run poe static-type-check-python -- --package=aws.amazon-sagemaker.pytorch-mnist
 	poetry run poe static-type-check-python -- --package=can-bus
-	poetry run poe static-type-check-python -- --package=convolutional-neural-network
 	poetry run poe static-type-check-python -- --package=data-distribution-service
 	poetry run poe static-type-check-python -- --package=delta-lake.read-delta-lake-by-amazon-athena
 	poetry run poe static-type-check-python -- --package=delta-lake.read-delta-lake-by-trino
 	poetry run poe static-type-check-python -- --package=delta-lake.write-to-delta-lake
-	poetry run poe static-type-check-python -- --package=feature-store
 	poetry run poe static-type-check-python -- --package=grafana.hm-dashboard
-	poetry run poe static-type-check-python -- --package=graph-neural-network
 	poetry run poe static-type-check-python -- --package=hm-airflow
 	poetry run poe static-type-check-python -- --package=hm-geopandas
 	poetry run poe static-type-check-python -- --package=hm-kubeflow.pipelines.calculate
 	poetry run poe static-type-check-python -- --package=hm-kubeflow.pipelines.classify-mnist
-	poetry run poe static-type-check-python -- --package=hm-langchain.applications.chat-pdf
 	poetry run poe static-type-check-python -- --package=hm-locust
-	poetry run poe static-type-check-python -- --package=hm-mlflow.experiments.classify-mnist
-	poetry run poe static-type-check-python -- --package=hm-mlflow.experiments.predict-diabetes
 	poetry run poe static-type-check-python -- --package=hm-opal-client
 	poetry run poe static-type-check-python -- --package=hm-open3d
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.calculate
@@ -362,7 +356,6 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.ingest-data
 	poetry run poe static-type-check-python -- --package=hm-prefect.workflows.print-platform
 	poetry run poe static-type-check-python -- --package=hm-pyvista.mount-saint-helens
-	poetry run poe static-type-check-python -- --package=hm-rasa
 	poetry run poe static-type-check-python -- --package=hm-ray.applications.greet
 	poetry run poe static-type-check-python -- --package=hm-serial
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.analyze-coffee-customers
@@ -370,15 +363,22 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-taxi-top-routes
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-taxi-top-routes-sql
 	poetry run poe static-type-check-python -- --package=hm-spark.applications.recommend-movies
-	poetry run poe static-type-check-python -- --package=hm-supervision.detect-objects
 	poetry run poe static-type-check-python -- --package=hm-xxhash
-	poetry run poe static-type-check-python -- --package=hugging-face
+	poetry run poe static-type-check-python -- --package=machine-learning.convolutional-neural-network
+	poetry run poe static-type-check-python -- --package=machine-learning.feature-store
+	poetry run poe static-type-check-python -- --package=machine-learning.graph-neural-network
+	poetry run poe static-type-check-python -- --package=machine-learning.hm-langchain.applications.chat-pdf
+	poetry run poe static-type-check-python -- --package=machine-learning.hm-mlflow.experiments.classify-mnist
+	poetry run poe static-type-check-python -- --package=machine-learning.hm-mlflow.experiments.predict-diabetes
+	poetry run poe static-type-check-python -- --package=machine-learning.hm-rasa
+	poetry run poe static-type-check-python -- --package=machine-learning.hm-supervision.detect-objects
+	poetry run poe static-type-check-python -- --package=machine-learning.hugging-face
+	poetry run poe static-type-check-python -- --package=machine-learning.neural-forecasting.forecast-air-passenger-number
+	poetry run poe static-type-check-python -- --package=machine-learning.reinforcement-learning.cart-pole
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-pyvisa
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-tdms
 	poetry run poe static-type-check-python -- --package=national-instruments.hm-ni-veristand
-	poetry run poe static-type-check-python -- --package=neural-forecasting.forecast-air-passenger-number
 	poetry run poe static-type-check-python -- --package=quantum-computing
-	poetry run poe static-type-check-python -- --package=reinforcement-learning.cart-pole
 static-type-check-terraform:
 	cd terraform && terraform validate
 static-type-check-typescript:
