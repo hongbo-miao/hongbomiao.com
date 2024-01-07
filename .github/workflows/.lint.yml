@@ -633,8 +633,8 @@ jobs:
           poetry install --no-root
       - name: Lint SQL
         run: |
-          # poetry run poe lint-sql -- --dialect=athena aws/amazon-athena/queries
-          # poetry run poe lint-sql -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
+          # poetry run poe lint-sql -- --dialect=athena cloud-platform/aws/amazon-athena/queries
+          # poetry run poe lint-sql -- --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
           # poetry run poe lint-sql -- --dialect=clickhouse data-storage/clickhouse/cpu_metrics
           poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
           poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds

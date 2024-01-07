@@ -98,8 +98,8 @@ jobs:
       - name: Static type check Python
         run: |
           poetry run poe static-type-check-python -- --package=api-python
-          poetry run poe static-type-check-python -- --package=aws.amazon-sagemaker.pytorch-mnist
           poetry run poe static-type-check-python -- --package=can-bus
+          poetry run poe static-type-check-python -- --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
           poetry run poe static-type-check-python -- --package=data-distribution-service
           poetry run poe static-type-check-python -- --package=data-orchestration.hm-airflow
           poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.calculate
@@ -154,11 +154,11 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Initialize Terraform
-        working-directory: terraform
+        working-directory: cloud-infrastructure/terraform
         run: |
           terraform init -backend=false
       - name: Static type check Terraform
-        working-directory: terraform
+        working-directory: cloud-infrastructure/terraform
         run: |
           terraform validate
 
