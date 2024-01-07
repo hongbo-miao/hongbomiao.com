@@ -21,12 +21,12 @@ poetry-run-test:
 poetry-run-test-coverage:
 	poetry run poe test-coverage
 poetry-run-build:
-	poetry run poe build -- --params='{"user":{"first_name":"Hongbo","last_name":"Miao"}}' --work-queue=hm-kubernetes-queue
+	poetry run poe build -- --work-queue=hm-kubernetes-queue
 poetry-run-run:
 	poetry run poe run
 
 docker-build:
-	cd ../../.. && \
-	docker build --file=hm-prefect/workflows/greet/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-greet:latest .
+	cd ../../../.. && \
+	docker build --file=data-orchestration/hm-prefect/workflows/print-platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
 docker-push:
-	docker push ghcr.io/hongbo-miao/hm-prefect-greet:latest
+	docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
