@@ -635,17 +635,17 @@ jobs:
         run: |
           # poetry run poe lint-sql -- --dialect=athena aws/amazon-athena/queries
           # poetry run poe lint-sql -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
-          # poetry run poe lint-sql -- --dialect=clickhouse clickhouse/cpu_metrics
+          # poetry run poe lint-sql -- --dialect=clickhouse data-storage/clickhouse/cpu_metrics
           poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
           poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
           poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
           poetry run poe lint-sql -- --dialect=postgres streaming/migrations
-          poetry run poe lint-sql -- --dialect=postgres timescaledb/dummy_iot/migrations
-          poetry run poe lint-sql -- --dialect=postgres timescaledb/motor/migrations
-          poetry run poe lint-sql -- --dialect=sparksql delta-lake/queries
-          poetry run poe lint-sql -- --dialect=sqlite sqlite/queries
+          poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
+          poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/motor/migrations
+          poetry run poe lint-sql -- --dialect=sparksql data-storage/delta-lake/queries
+          poetry run poe lint-sql -- --dialect=sqlite data-storage/sqlite/queries
           # poetry run poe lint-sql -- --dialect=trino trino/queries
-          poetry run poe lint-sql -- --dialect=tsql microsoft-sql-server/queries
+          poetry run poe lint-sql -- --dialect=tsql data-storage/microsoft-sql-server/queries
 
   lint-terraform:
     name: Terraform
