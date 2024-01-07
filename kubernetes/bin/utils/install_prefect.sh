@@ -37,25 +37,25 @@ prefect config set PREFECT_API_URL=https://prefect.hongbomiao.com/api
 echo "=================================================="
 
 echo "# Build hm-prefect-print-platform"
-docker build --file=hm-prefect/workflows/print-platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
+docker build --file=data-orchestration/hm-prefect/workflows/print-platform/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-print-platform:latest .
 docker push ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
 echo "=================================================="
 
 echo "# Start the workflow"
 # calculate
-# cd hm-prefect/workflows/calculate
+# cd data-orchestration/hm-prefect/workflows/calculate
 # poetry run poe set-up
 # poetry run poe build -- --params='{"model":{"n":4}}' --work-queue=hm-kubernetes-queue
 # poetry run poe run
 
 # greet
-# cd hm-prefect/workflows/greet
+# cd data-orchestration/hm-prefect/workflows/greet
 # poetry run poe set-up
 # poetry run poe build -- --params='{"user":{"first_name":"Hongbo","last_name":"Miao"}}' --work-queue=hm-kubernetes-queue
 # poetry run poe run
 
 # print-platform
-cd hm-prefect/workflows/print-platform
+cd data-orchestration/hm-prefect/workflows/print-platform
 poetry run poe set-up
 poetry run poe build -- --work-queue=hm-kubernetes-queue
 # poetry run poe build -- --work-queue=hm-kubernetes-queue
