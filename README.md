@@ -379,6 +379,7 @@ make kubernetes-clean
 - **Vagrant** - Development environments building and distributing
 - **Ansible** - IT automation system
 - **Terraform** - Infrastructure as code (IaC)
+- **Pulumi** - Infrastructure as code (IaC)
 - **Discord** - ChatOps
 - **Opsgenie** - Incident management platform
 - **[GitHub Actions](https://github.com/hongbo-miao/hongbomiao.com/actions)** - Continuous integration
