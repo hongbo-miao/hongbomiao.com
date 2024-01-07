@@ -21,8 +21,8 @@
     <a href="https://codeclimate.com/github/hongbo-miao/hongbomiao.com/trends/technical_debt"><img alt="Code Climate technical debt" src="https://img.shields.io/codeclimate/tech-debt/hongbo-miao/hongbomiao.com" /></a>
   </p>
   <p>
-    <a href="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com/view?branch=main"><img alt="Hits of code" src="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com?branch=main&label=hits%20of%20code" /></a>
-    <a href="https://github.com/hongbo-miao/hongbomiao.com"><img alt="Lines of code" src="https://tokei.rs/b1/github/hongbo-miao/hongbomiao.com" /></a>
+    <a href="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com/view?branch=main"><img alt="Code hits" src="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com?branch=main&label=code%20hits" /></a>
+    <a href="https://github.com/hongbo-miao/hongbomiao.com"><img alt="Code lines" src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/hongbo-miao/ecff3e2b8226a5c1406b0c2e2622e968/raw/code_line_count.json" /></a>
     <a href="https://github.com/hongbo-miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com" /></a>
     <a href="https://github.com/hongbo-miao/hongbomiao.com/graphs/contributors"><img alt="Commit activity" src="https://img.shields.io/github/commit-activity/y/hongbo-miao/hongbomiao.com"></a>
   </p>
