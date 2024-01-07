@@ -178,8 +178,8 @@ poetry-cache-clear:
 
 # Jupyter Notebook
 jupyter-notebook-clean:
-	poetry run poe clean-jupyter-notebook -- aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/main.ipynb
-	poetry run poe clean-jupyter-notebook -- aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
+	poetry run poe clean-jupyter-notebook -- cloud-platform/aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/main.ipynb
+	poetry run poe clean-jupyter-notebook -- cloud-platform/aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
 
 # SQLFluff
 sqlfluff-dialect-list:
@@ -292,8 +292,8 @@ lint-solidity:
 lint-solidity-fix:
 	npm run lint:solidity:fix
 lint-sql:
-	poetry run poe lint-sql -- --dialect=athena aws/amazon-athena/queries
-	poetry run poe lint-sql -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
+	poetry run poe lint-sql -- --dialect=athena cloud-platform/aws/amazon-athena/queries
+	poetry run poe lint-sql -- --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
 	poetry run poe lint-sql -- --dialect=clickhouse data-storage/clickhouse/cpu_metrics
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
@@ -306,8 +306,8 @@ lint-sql:
 	poetry run poe lint-sql -- --dialect=trino trino/queries
 	poetry run poe lint-sql -- --dialect=tsql data-storage/microsoft-sql-server/queries
 lint-sql-fix:
-	poetry run poe lint-sql-fix -- --dialect=athena aws/amazon-athena/queries
-	poetry run poe lint-sql-fix -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
+	poetry run poe lint-sql-fix -- --dialect=athena cloud-platform/aws/amazon-athena/queries
+	poetry run poe lint-sql-fix -- --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
 	poetry run poe lint-sql-fix -- --dialect=clickhouse data-storage/clickhouse/cpu_metrics
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/seeds
@@ -337,8 +337,8 @@ lint-yaml:
 # Static type check
 static-type-check-python:
 	poetry run poe static-type-check-python -- --package=api-python
-	poetry run poe static-type-check-python -- --package=aws.amazon-sagemaker.pytorch-mnist
 	poetry run poe static-type-check-python -- --package=can-bus
+	poetry run poe static-type-check-python -- --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
 	poetry run poe static-type-check-python -- --package=data-distribution-service
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-airflow
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.calculate
