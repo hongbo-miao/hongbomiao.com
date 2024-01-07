@@ -151,10 +151,10 @@ jobs:
               - 'national-instruments/hm-tdms/**'
             hm-kubeflow-calculate:
               - '.github/workflows/test.yml'
-              - 'hm-kubeflow/pipelines/calculate/**'
+              - 'machine-learning/hm-kubeflow/pipelines/calculate/**'
             hm-kubeflow-classify-mnist:
               - '.github/workflows/test.yml'
-              - 'hm-kubeflow/pipelines/classify-mnist/**'
+              - 'machine-learning/hm-kubeflow/pipelines/classify-mnist/**'
             hm-langchain-chat-pdf:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-langchain/applications/chat-pdf/**'
@@ -1076,21 +1076,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-kubeflow/pipelines/calculate/pyproject.toml
+          python-version-file: machine-learning/hm-kubeflow/pipelines/calculate/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-kubeflow/pipelines/calculate/poetry.lock
+          cache-dependency-path: machine-learning/hm-kubeflow/pipelines/calculate/poetry.lock
       - name: Install dependencies
-        working-directory: hm-kubeflow/pipelines/calculate
+        working-directory: machine-learning/hm-kubeflow/pipelines/calculate
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-kubeflow/pipelines/calculate
+        working-directory: machine-learning/hm-kubeflow/pipelines/calculate
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-kubeflow/pipelines/calculate
+          directory: machine-learning/hm-kubeflow/pipelines/calculate
 
   kubeflow-classify-mnist-test:
     name: Kubeflow (classify-mnist) | Test
@@ -1108,21 +1108,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-kubeflow/pipelines/classify-mnist/pyproject.toml
+          python-version-file: machine-learning/hm-kubeflow/pipelines/classify-mnist/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-kubeflow/pipelines/classify-mnist/poetry.lock
+          cache-dependency-path: machine-learning/hm-kubeflow/pipelines/classify-mnist/poetry.lock
       - name: Install dependencies
-        working-directory: hm-kubeflow/pipelines/classify-mnist
+        working-directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-kubeflow/pipelines/classify-mnist
+        working-directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-kubeflow/pipelines/classify-mnist
+          directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
 
   langchain-chat-pdf-test:
     name: LangChain (chat-pdf) | Test
