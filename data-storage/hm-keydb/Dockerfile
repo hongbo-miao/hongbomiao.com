@@ -8,7 +8,7 @@ RUN apt-get update \
   && apt-get clean \
   && rm -r -f /var/lib/apt/lists/*
 
-COPY ["hm-keydb/modules/", "/usr/lib/keydb/modules/"]
+COPY ["data-storage/hm-keydb/modules/", "/usr/lib/keydb/modules/"]
 CMD ["keydb-server", \
   "/etc/keydb/keydb.conf", \
   "--loadmodule", "/usr/lib/keydb/modules/redisgraph.so"]

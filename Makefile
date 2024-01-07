@@ -294,31 +294,31 @@ lint-solidity-fix:
 lint-sql:
 	poetry run poe lint-sql -- --dialect=athena aws/amazon-athena/queries
 	poetry run poe lint-sql -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
-	poetry run poe lint-sql -- --dialect=clickhouse clickhouse/cpu_metrics
+	poetry run poe lint-sql -- --dialect=clickhouse data-storage/clickhouse/cpu_metrics
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
 	poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
 	poetry run poe lint-sql -- --dialect=postgres streaming/migrations
-	poetry run poe lint-sql -- --dialect=postgres timescaledb/dummy_iot/migrations
-	poetry run poe lint-sql -- --dialect=postgres timescaledb/motor/migrations
-	poetry run poe lint-sql -- --dialect=sparksql delta-lake/queries
-	poetry run poe lint-sql -- --dialect=sqlite sqlite/queries
+	poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
+	poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/motor/migrations
+	poetry run poe lint-sql -- --dialect=sparksql data-storage/delta-lake/queries
+	poetry run poe lint-sql -- --dialect=sqlite data-storage/sqlite/queries
 	poetry run poe lint-sql -- --dialect=trino trino/queries
-	poetry run poe lint-sql -- --dialect=tsql microsoft-sql-server/queries
+	poetry run poe lint-sql -- --dialect=tsql data-storage/microsoft-sql-server/queries
 lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=athena aws/amazon-athena/queries
 	poetry run poe lint-sql-fix -- --dialect=bigquery google-cloud/bigquery/bigquery-ml
-	poetry run poe lint-sql-fix -- --dialect=clickhouse clickhouse/cpu_metrics
+	poetry run poe lint-sql-fix -- --dialect=clickhouse data-storage/clickhouse/cpu_metrics
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/seeds
 	poetry run poe lint-sql-fix -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres streaming/migrations
-	poetry run poe lint-sql-fix -- --dialect=postgres timescaledb/dummy_iot/migrations
-	poetry run poe lint-sql-fix -- --dialect=postgres timescaledb/motor/migrations
+	poetry run poe lint-sql-fix -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
+	poetry run poe lint-sql-fix -- --dialect=postgres data-storage/timescaledb/motor/migrations
 	poetry run poe lint-sql-fix -- --dialect=sparksql queries
-	poetry run poe lint-sql-fix -- --dialect=sqlite sqlite/queries
+	poetry run poe lint-sql-fix -- --dialect=sqlite data-storage/sqlite/queries
 	poetry run poe lint-sql-fix -- --dialect=trino trino/queries
-	poetry run poe lint-sql-fix -- --dialect=tsql microsoft-sql-server/queries
+	poetry run poe lint-sql-fix -- --dialect=tsql data-storage/microsoft-sql-server/queries
 lint-terraform:
 	terraform fmt -recursive -check
 lint-terraform-fix:
@@ -340,9 +340,9 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=aws.amazon-sagemaker.pytorch-mnist
 	poetry run poe static-type-check-python -- --package=can-bus
 	poetry run poe static-type-check-python -- --package=data-distribution-service
-	poetry run poe static-type-check-python -- --package=delta-lake.read-delta-lake-by-amazon-athena
-	poetry run poe static-type-check-python -- --package=delta-lake.read-delta-lake-by-trino
-	poetry run poe static-type-check-python -- --package=delta-lake.write-to-delta-lake
+	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena
+	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-trino
+	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.write-to-delta-lake
 	poetry run poe static-type-check-python -- --package=grafana.hm-dashboard
 	poetry run poe static-type-check-python -- --package=hm-airflow
 	poetry run poe static-type-check-python -- --package=hm-geopandas
