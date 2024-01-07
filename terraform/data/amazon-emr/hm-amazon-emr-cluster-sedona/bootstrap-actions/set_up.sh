@@ -41,17 +41,3 @@ sudo curl --silent --fail --show-error --location --remote-name --output-dir /us
 sudo curl --silent --fail --show-error --location --remote-name --output-dir /usr/lib/spark/jars/ https://repo1.maven.org/maven2/org/datasyslab/geotools-wrapper/1.5.0-28.2/geotools-wrapper-1.5.0-28.2.jar
 "/usr/local/python${PYTHON_VERSION}/bin/python${PYTHON_VERSION%.*}" -m pip install \
   apache-sedona[spark]==1.5.0
-
-echo "# Install JupyterLab-scoped dependencies"
-sudo /emr/notebook-env/bin/conda create --name="python${PYTHON_VERSION}" python=${PYTHON_VERSION} --yes
-sudo "/emr/notebook-env/envs/python${PYTHON_VERSION}/bin/python" -m pip install \
-  apache-sedona[spark]==1.5.0 \
-  attrs==23.1.0 \
-  descartes==1.1.0 \
-  ipykernel==6.28.0 \
-  matplotlib==3.8.2 \
-  pandas==2.1.4 \
-  shapely==2.0.2
-
-echo "# Add JupyterLab kernel"
-sudo "/emr/notebook-env/envs/python${PYTHON_VERSION}/bin/python" -m ipykernel install --name="python${PYTHON_VERSION}"
