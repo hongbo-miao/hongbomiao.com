@@ -116,6 +116,12 @@ module "hm_sedona_s3_validate_python_version_script" {
   amazon_s3_key    = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
   local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
 }
+module "hm_sedona_s3_set_up_jupyterlab_script" {
+  source           = "./modules/hm_amazon_s3_object"
+  amazon_s3_bucket = "hongbomiao-bucket"
+  amazon_s3_key    = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
+  local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
+}
 module "hm_sedona_emr" {
   source                         = "./modules/hm_amazon_emr_cluster"
   amazon_emr_cluster_name        = "hm-sedona"
@@ -133,6 +139,18 @@ module "hm_sedona_emr" {
         {
           jar        = "command-runner.jar"
           args       = ["spark-submit", "--deploy-mode", "client", module.hm_sedona_s3_validate_python_version_script.uri]
+          main_class = ""
+          properties = {}
+        }
+      ]
+    },
+    {
+      name              = "Set Up JupyterLab"
+      action_on_failure = "CONTINUE"
+      hadoop_jar_step = [
+        {
+          jar        = "s3://us-west-2.elasticmapreduce/libs/script-runner/script-runner.jar"
+          args       = ["bash", "--deploy-mode", "client", module.hm_sedona_s3_set_up_jupyterlab_script.uri]
           main_class = ""
           properties = {}
         }
