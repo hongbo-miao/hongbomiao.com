@@ -88,7 +88,7 @@ jobs:
           filters: |
             amazon-sagemaker-pytorch-mnist:
               - '.github/workflows/test.yml'
-              - 'aws/amazon-sagemaker/pytorch-mnist/**'
+              - 'cloud-platform/aws/amazon-sagemaker/pytorch-mnist/**'
             api-go:
               - '.github/workflows/test.yml'
               - 'api-go/**'
@@ -724,21 +724,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: aws/amazon-sagemaker/pytorch-mnist/pyproject.toml
+          python-version-file: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/pyproject.toml
           cache: poetry
-          cache-dependency-path: aws/amazon-sagemaker/pytorch-mnist/poetry.lock
+          cache-dependency-path: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/poetry.lock
       - name: Install dependencies
-        working-directory: aws/amazon-sagemaker/pytorch-mnist
+        working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: aws/amazon-sagemaker/pytorch-mnist
+        working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: aws/amazon-sagemaker/pytorch-mnist
+          directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
 
   aws-glue-spark-scripts-test:
     name: AWS Glue (spark-scripts) | Test
