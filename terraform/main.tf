@@ -131,33 +131,7 @@ module "hm_sedona_emr" {
   core_instance_type             = "r7gd.2xlarge"
   core_target_on_demand_capacity = 1
   bootstrap_set_up_script_s3_uri = module.hm_sedona_s3_set_up_script.uri
-  steps = [
-    {
-      name              = "Validate Python Version"
-      action_on_failure = "CONTINUE"
-      hadoop_jar_step = [
-        {
-          jar        = "command-runner.jar"
-          args       = ["spark-submit", "--deploy-mode", "client", module.hm_sedona_s3_validate_python_version_script.uri]
-          main_class = ""
-          properties = {}
-        }
-      ]
-    },
-    {
-      name              = "Set Up JupyterLab"
-      action_on_failure = "CONTINUE"
-      hadoop_jar_step = [
-        {
-          jar        = "s3://us-west-2.elasticmapreduce/libs/script-runner/script-runner.jar"
-          args       = ["bash", "--deploy-mode", "client", module.hm_sedona_s3_set_up_jupyterlab_script.uri]
-          main_class = ""
-          properties = {}
-        }
-      ]
-    }
-  ]
-  configurations_json_string = <<EOF
+  configurations_json_string     = <<EOF
     [
       {
         "Classification" : "delta-defaults",
@@ -179,23 +153,12 @@ module "hm_sedona_emr" {
           "spark.kryo.registrator" : "org.apache.sedona.core.serde.SedonaKryoRegistrator",
           "spark.sql.extensions" : "org.apache.sedona.viz.sql.SedonaVizExtensions,org.apache.sedona.sql.SedonaSqlExtensions"
         }
-      },
-      {
-        "Classification": "spark-env",
-        "Configurations": [
-          {
-            "Classification": "export",
-            "Properties": {
-              "PYSPARK_PYTHON": "/usr/local/python3.11.7/bin/python3.11"
-            }
-          }
-        ]
       }
     ]
   EOF
-  iam_role_arn               = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
-  environment                = var.environment
-  team                       = var.team
+  iam_role_arn                   = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  environment                    = var.environment
+  team                           = var.team
 }
 module "hm_sedona_emr_task_instance_fleet" {
   source                    = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
