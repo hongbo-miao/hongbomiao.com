@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *************************************************
-	         AnyLogic Project File 
-*************************************************	         
+	         AnyLogic Project File
+*************************************************
 -->
 <AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.4.202307181708" AlpVersion="8.8.2">
 <Model>
@@ -145,11 +145,11 @@ do
 	Building bldg = randomWhere(buildings, b -> b.destroyed==false);
 
 	boolean	assigned = false;
-	
-	//look up if bomber is handling it already	
-	for (Bomber bomber : bombers) 
+
+	//look up if bomber is handling it already
+	for (Bomber bomber : bombers)
 	{
-		if (bomber.target == bldg) 
+		if (bomber.target == bldg)
 		{
 			assigned = true;
 			break;
@@ -157,11 +157,11 @@ do
 	}
 
 	//if not - send a bomber
-	if(! assigned) 
+	if(! assigned)
 	{
 		add_bombers(bldg);
 		chosen = true;
-	}	
+	}
 }
 while (!chosen);]]></Action>
 				</Event>
@@ -216,7 +216,7 @@ while (!chosen);]]></Action>
 						<Code><![CDATA[5]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
+					<InEnvironment>true</InEnvironment>
 					<InitialLocationType>NODE</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -282,7 +282,7 @@ while (!chosen);]]></Action>
 						<Code><![CDATA[0]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
+					<InEnvironment>true</InEnvironment>
 					<InitialSpeedCode Class="CodeUnitValue">
 						<Code><![CDATA[600]]></Code>
 						<Unit Class="SpeedUnits"><![CDATA[KPH]]></Unit>
@@ -354,7 +354,7 @@ while (!chosen);]]></Action>
 						<Code><![CDATA[0]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
+					<InEnvironment>true</InEnvironment>
 					<InitialSpeedCode Class="CodeUnitValue">
 						<Code><![CDATA[400]]></Code>
 						<Unit Class="SpeedUnits"><![CDATA[KPH]]></Unit>
@@ -426,7 +426,7 @@ while (!chosen);]]></Action>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
+					<InEnvironment>true</InEnvironment>
 					<InitialSpeedCode Class="CodeUnitValue">
 						<Code><![CDATA[10]]></Code>
 						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
@@ -498,7 +498,7 @@ while (!chosen);]]></Action>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
+					<InEnvironment>true</InEnvironment>
 					<InitialSpeedCode Class="CodeUnitValue">
 						<Code><![CDATA[10]]></Code>
 						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
@@ -570,7 +570,7 @@ while (!chosen);]]></Action>
 						<Code><![CDATA[0]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
+					<InEnvironment>true</InEnvironment>
 					<InitialSpeedCode Class="CodeUnitValue">
 						<Code><![CDATA[900]]></Code>
 						<Unit Class="SpeedUnits"><![CDATA[KPH]]></Unit>
@@ -817,7 +817,7 @@ while (!chosen);]]></Action>
 						<Dz>0</Dz>
 						<AngleX>30</AngleX>
 						<AngleZ>0</AngleZ>
-						<SlopeType>angle</SlopeType>	
+						<SlopeType>angle</SlopeType>
 					</Slope>
 
 					<Points>
@@ -872,7 +872,7 @@ while (!chosen);]]></Action>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<Z>340</Z>
-					<FakeNode>false</FakeNode>	
+					<FakeNode>false</FakeNode>
 					<Lock>false</Lock>
 					<Color>-14774017</Color>
 					<Radius>1</Radius>
@@ -896,7 +896,7 @@ while (!chosen);]]></Action>
 					<LineMaterial>null</LineMaterial>
 					<LineWidth>2</LineWidth>
 					<PathType>dashedLine</PathType>
-					
+
 					<Width Class="UnitValue">
 						<Value Class="Double">1</Value>
 						<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
@@ -1132,7 +1132,7 @@ while (!chosen);]]></Action>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
+						<Type><![CDATA[boolean]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[false]]></Code>
 						</InitialValue>
@@ -1392,7 +1392,7 @@ while (!chosen);]]></Action>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>                 
+					</Properties>
 				</Variable>
 			</Variables>
 			<StatechartElements>
@@ -1404,9 +1404,9 @@ while (!chosen);]]></Action>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<Properties>	
+					<Properties>
 						<Action><![CDATA[main.remove_bombers(this);]]></Action>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="FinalState" ParentState="ROOT_NODE">
 					<Id>1468938299374</Id>
@@ -1416,8 +1416,8 @@ while (!chosen);]]></Action>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<Properties>	
-					</Properties>	
+					<Properties>
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
 					<Id>1468938396959</Id>
@@ -1470,7 +1470,7 @@ while (!chosen);]]></Action>
 						<Point><X>0</X><Y>40</Y></Point>
 					</Points>
 					<Properties Target="1467195133740">
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="Transition" ParentState="state" ParentStateId="1468938396959">
 					<Id>1467195149166</Id>
@@ -1501,7 +1501,7 @@ while (!chosen);]]></Action>
 						<FilterType><![CDATA[unconditionally]]></FilterType>
 						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
 					<Id>1467195159103</Id>
@@ -1531,7 +1531,7 @@ while (!chosen);]]></Action>
 						<FilterType><![CDATA[unconditionally]]></FilterType>
 						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
 					<Id>1468938297034</Id>
@@ -1563,7 +1563,7 @@ while (!chosen);]]></Action>
 						<FilterType><![CDATA[equalsTo]]></FilterType>
 						<EqualsExpression><![CDATA["You are destroyed"]]></EqualsExpression>
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 			</StatechartElements>
 			<AgentLinks>
@@ -1773,7 +1773,7 @@ while (!chosen);]]></Action>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>                 
+					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1467381019277</Id>
@@ -1794,7 +1794,7 @@ while (!chosen);]]></Action>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>                 
+					</Properties>
 				</Variable>
 			</Variables>
 			<StatechartElements>
@@ -1819,9 +1819,9 @@ while (!chosen);]]></Action>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<Properties>	
+					<Properties>
 						<Action><![CDATA[main.remove_bombs( this );]]></Action>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
 					<Id>1467381086800</Id>
@@ -1838,8 +1838,8 @@ while (!chosen);]]></Action>
 					<IconOffset>20.0</IconOffset>
 					<Properties Source="1467381066616" Target="1467381092550" Trigger="arrival">
 						<Action><![CDATA[deliver( "You are destroyed", target );
-	
-if (findFirst(main.buildings, b -> b.destroyed == false) == null) 
+
+if (findFirst(main.buildings, b -> b.destroyed == false) == null)
 {
 	traceln("No more targets. Mission complete!");
 	finishSimulation();
@@ -1858,7 +1858,7 @@ if (findFirst(main.buildings, b -> b.destroyed == false) == null)
 						<FilterType><![CDATA[unconditionally]]></FilterType>
 						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="EntryPoint" ParentState="ROOT_NODE">
 					<Id>1467381564255</Id>
@@ -1874,7 +1874,7 @@ if (findFirst(main.buildings, b -> b.destroyed == false) == null)
 					</Points>
 					<Properties Target="1467381066616">
 						<Action><![CDATA[setXYZ( bomber.getX(), bomber.getY(), bomber.getZ() );]]></Action>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 			</StatechartElements>
 			<AgentLinks>
@@ -1999,13 +1999,13 @@ if (findFirst(main.buildings, b -> b.destroyed == false) == null)
 					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 				</VelocityCode>
 				<AfterStepCode><![CDATA[//for all bombers in the air
-for( Bomber b : main.bombers ) { 
+for( Bomber b : main.bombers ) {
 	//if can't have more engagements, do nothing
-    if( guidedmissiles.size() >= 2 ) 
+    if( guidedmissiles.size() >= 2 )
         break;
     //if within engagement range
-        //already engaged by another missile?    
-    if( distanceTo( b ) < range ) { 
+        //already engaged by another missile?
+    if( distanceTo( b ) < range ) {
         boolean engaged = false;
         for( Missile m : main.missiles ) {
             if( m.target == b ) {
@@ -2106,7 +2106,7 @@ for( Bomber b : main.bombers ) {
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>                 
+					</Properties>
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1468841757548</Id>
@@ -2338,7 +2338,7 @@ for( Bomber b : main.bombers ) {
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>                 
+					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1468837390431</Id>
@@ -2359,7 +2359,7 @@ for( Bomber b : main.bombers ) {
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>                 
+					</Properties>
 				</Variable>
 			</Variables>
 			<StatechartElements>
@@ -2384,10 +2384,10 @@ for( Bomber b : main.bombers ) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties>	
-						<Action><![CDATA[radar.guidedmissiles.remove( this ); 
+					<Properties>
+						<Action><![CDATA[radar.guidedmissiles.remove( this );
 main.remove_missiles(this); ]]></Action>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="EntryPoint" ParentState="ROOT_NODE">
 					<Id>1468837906320</Id>
@@ -2403,7 +2403,7 @@ main.remove_missiles(this); ]]></Action>
 					</Points>
 					<Properties Target="1468837916267">
 						<Action><![CDATA[setXYZ(radar.getX(), radar.getY(), radar.getZ());]]></Action>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
 					<Id>1468837925873</Id>
@@ -2436,7 +2436,7 @@ main.remove_missiles(this); ]]></Action>
 						<FilterType><![CDATA[unconditionally]]></FilterType>
 						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
 					<Id>1468838140603</Id>
@@ -2467,7 +2467,7 @@ main.remove_missiles(this); ]]></Action>
 						<FilterType><![CDATA[unconditionally]]></FilterType>
 						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
 					<Id>1468838255047</Id>
@@ -2499,7 +2499,7 @@ main.remove_missiles(this); ]]></Action>
 						<FilterType><![CDATA[unconditionally]]></FilterType>
 						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
-					</Properties>	
+					</Properties>
 				</StatechartElement>
 			</StatechartElements>
 			<AgentLinks>
@@ -2602,7 +2602,7 @@ main.remove_missiles(this); ]]></Action>
 			</Presentation>
 
 		</ActiveObjectClass>
-	</ActiveObjectClasses>	
+	</ActiveObjectClasses>
 	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
 	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
@@ -2623,17 +2623,17 @@ main.remove_missiles(this); ]]></Action>
 		<ExportSettings>
 		</ExportSettings>
 	</Database>
-	
+
 	<RunConfiguration ActiveObjectClassId="1466586910703">
 		<Id>1521547217750</Id>
 		<Name><![CDATA[RunConfiguration]]></Name>
 		<MaximumMemory>512</MaximumMemory>
 		<ModelTimeProperties>
 			<StopOption><![CDATA[Stop at specified time]]></StopOption>
-			<InitialDate><![CDATA[1466553600000]]></InitialDate>	
-			<InitialTime><![CDATA[0.0]]></InitialTime>	
-			<FinalDate><![CDATA[1469145600000]]></FinalDate>	
-			<FinalTime><![CDATA[100.0]]></FinalTime>	
+			<InitialDate><![CDATA[1466553600000]]></InitialDate>
+			<InitialTime><![CDATA[0.0]]></InitialTime>
+			<FinalDate><![CDATA[1469145600000]]></FinalDate>
+			<FinalTime><![CDATA[100.0]]></FinalTime>
 		</ModelTimeProperties>
 		<AnimationProperties>
 			<StopNever>true</StopNever>
@@ -2643,12 +2643,12 @@ main.remove_missiles(this); ]]></Action>
 			<EnableDeveloperPanel>false</EnableDeveloperPanel>
 			<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 		</AnimationProperties>
-		<Inputs>		
+		<Inputs>
 		</Inputs>
 		<Outputs>
 		</Outputs>
 	</RunConfiguration>
-	<Experiments>	
+	<Experiments>
 		<!--   =========   Simulation Experiment   ========  -->
 		<SimulationExperiment ActiveObjectClassId="1466586910703">
 			<Id>1466586910716</Id>
@@ -2686,25 +2686,25 @@ main.remove_missiles(this); ]]></Action>
 				</Text>
 			</Presentation>
 
-			<Parameters>			
-			</Parameters>			
+			<Parameters>
+			</Parameters>
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[Air Defense System : Simulation]]></Title>	
+				<Title><![CDATA[Air Defense System : Simulation]]></Title>
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 				<RealTimeScale>1.0</RealTimeScale>
 			</PresentationProperties>
 			<ModelTimeProperties>
 				<StopOption><![CDATA[Never]]></StopOption>
-				<InitialDate><![CDATA[1466553600000]]></InitialDate>	
-				<InitialTime><![CDATA[0.0]]></InitialTime>	
-				<FinalDate><![CDATA[1469145600000]]></FinalDate>	
-				<FinalTime><![CDATA[100.0]]></FinalTime>	
+				<InitialDate><![CDATA[1466553600000]]></InitialDate>
+				<InitialTime><![CDATA[0.0]]></InitialTime>
+				<FinalDate><![CDATA[1469145600000]]></FinalDate>
+				<FinalTime><![CDATA[100.0]]></FinalTime>
 			</ModelTimeProperties>
 			<BypassInitialScreen>true</BypassInitialScreen>
-		</SimulationExperiment>	
+		</SimulationExperiment>
 	</Experiments>
 	<ModelResources>
 		<Resource>

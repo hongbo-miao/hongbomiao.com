@@ -558,6 +558,7 @@ make kubernetes-clean
 - **Docker**
 - **Go**
 - **GraphQL**
+- **HCL**
 - **HTML**
 - **Java**
   - **Kotlin**
@@ -580,7 +581,6 @@ make kubernetes-clean
   - **SedonaSQL**
   - **Spark SQL**
 - **Swift**
-- **Terraform**
 - **VHDL**
 - **XML**
 - **YAML**
