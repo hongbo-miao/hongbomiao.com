@@ -226,22 +226,6 @@ make kubernetes-clean
   - **Apache Hadoop YARN (Yet Another Resource Negotiator)** - Resource management and job scheduling framework
   - **Apache Hadoop MapReduce** - Data processing framework
 - **Apache Hive** - Distributed data warehousing and SQL-like query language system built on top of Apache Hadoop
-- **Apache Kafka** - Distributed event streaming platform
-  - Schema registries
-    - **Confluent Schema Registry** - Schema Registry
-    - **Apicurio Registry** - Schema Registry
-  - Connectors
-    - **Debezium** - Distributed change-data-capture (CDC) platform
-    - **kafka-connect-elasticsearch** - Elasticsearch sink connector
-    - **confluentinc-kafka-connect-jdbc** - JDBC source and sink connector
-    - **debezium-connector-postgres** - PostgreSQL CDC source connector
-    - **http-connector-for-apache-kafka** - HTTP sink connector
-    - **kafka-connect-avro-converter** - Confluent Avro converter
-    - **apicurio-registry-distro-connect-converter** - Apicurio Avro converter
-  - Management tools
-    - **Redpanda Console** - Kafka management tool
-    - **AKHQ** - Kafka management tool
-    - **UI for Apache Kafka** - Kafka management tool
 - **Delta Lake** - Data lakehouse
 - **golang-migrate/migrate** - Database migrations
 
@@ -260,6 +244,22 @@ make kubernetes-clean
 - **Temporal** - Orchestration platform
 - **Airbyte** - Data integration
 - **dbt** - Data transforming
+- **Apache Kafka** - Distributed event streaming platform
+  - Schema registries
+    - **Confluent Schema Registry** - Schema Registry
+    - **Apicurio Registry** - Schema Registry
+  - Connectors
+    - **Debezium** - Distributed change-data-capture (CDC) platform
+    - **kafka-connect-elasticsearch** - Elasticsearch sink connector
+    - **confluentinc-kafka-connect-jdbc** - JDBC source and sink connector
+    - **debezium-connector-postgres** - PostgreSQL CDC source connector
+    - **http-connector-for-apache-kafka** - HTTP sink connector
+    - **kafka-connect-avro-converter** - Confluent Avro converter
+    - **apicurio-registry-distro-connect-converter** - Apicurio Avro converter
+  - Management tools
+    - **Redpanda Console** - Kafka management tool
+    - **AKHQ** - Kafka management tool
+    - **UI for Apache Kafka** - Kafka management tool
 - **Apache Spark** - Data processing framework
   - **Spark ML** - Spark machine learning
   - **pyspark** - Spark API library

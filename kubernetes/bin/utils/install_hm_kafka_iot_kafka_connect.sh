@@ -14,7 +14,7 @@ echo "=================================================="
 
 echo "# Migrate database hm_iot_db"
 TIMESCALEDB_URL="postgresql://admin:passw0rd@localhost:25495/hm_iot_db?sslmode=disable&search_path=public"
-migrate -database "${TIMESCALEDB_URL}" -path timescaledb/motor/migrations up
+migrate -database "${TIMESCALEDB_URL}" -path data-storage/timescaledb/motor/migrations up
 echo "=================================================="
 
 echo "# Create secret hm-iot-db-credentials"
