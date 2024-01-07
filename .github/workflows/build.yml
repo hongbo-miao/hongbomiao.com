@@ -103,7 +103,7 @@ jobs:
             hm-rasa:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-rasa/**'
+              - 'machine-learning/hm-rasa/**'
             hm-spark-find-retired-people-python:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -805,7 +805,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-rasa/Dockerfile
+            file: ./machine-learning/hm-rasa/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-rasa-action-server:latest
             cache-from: type=gha
