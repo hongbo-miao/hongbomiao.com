@@ -106,7 +106,7 @@ jobs:
               - 'can-bus/**'
             convolutional-neural-network:
               - '.github/workflows/test.yml'
-              - 'convolutional-neural-network/**'
+              - 'machine-learning/convolutional-neural-network**'
             data-distribution-service:
               - '.github/workflows/test.yml'
               - 'data-distribution-service/**'
@@ -124,7 +124,7 @@ jobs:
               - 'delta-lake/write-to-delta-lake/**'
             feature-store:
               - '.github/workflows/test.yml'
-              - 'feature-store/**'
+              - 'machine-learning/feature-store/**'
             grafana-hm-dashboard:
               - '.github/workflows/test.yml'
               - 'grafana/hm-dashboard/**'
@@ -133,7 +133,7 @@ jobs:
               - 'grafana/hm-panel-plugin/**'
             graph-neural-network:
               - '.github/workflows/test.yml'
-              - 'graph-neural-network/**'
+              - 'machine-learning/graph-neural-network/**'
             hm-airflow:
               - '.github/workflows/test.yml'
               - 'hm-airflow/**'
@@ -157,13 +157,13 @@ jobs:
               - 'hm-kubeflow/pipelines/classify-mnist/**'
             hm-langchain-chat-pdf:
               - '.github/workflows/test.yml'
-              - 'hm-langchain/applications/chat-pdf/**'
+              - 'machine-learning/hm-langchain/applications/chat-pdf/**'
             hm-mlflow-classify-mnist:
               - '.github/workflows/test.yml'
-              - 'hm-mlflow/experiments/classify-mnist/**'
+              - 'machine-learning/hm-mlflow/experiments/classify-mnist/**'
             hm-mlflow-predict-diabetes:
               - '.github/workflows/test.yml'
-              - 'hm-mlflow/experiments/predict-diabetes/**'
+              - 'machine-learning/hm-mlflow/experiments/predict-diabetes/**'
             hm-opal-client:
               - '.github/workflows/test.yml'
               - 'hm-opal-client/**'
@@ -193,7 +193,7 @@ jobs:
               - 'hm-pyvista/mount-saint-helens/**'
             hm-rasa:
               - '.github/workflows/test.yml'
-              - 'hm-rasa/**'
+              - 'machine-learning/hm-rasa/**'
             hm-ray-greet:
               - '.github/workflows/test.yml'
               - 'hm-ray-greet/**'
@@ -226,13 +226,13 @@ jobs:
               - 'hm-spark/applications/recommend-movies/**'
             hm-supervision-detect-objects:
               - '.github/workflows/test.yml'
-              - 'hm-supervision/detect-objects/**'
+              - 'machine-learning/hm-supervision/detect-objects/**'
             hm-xxhash:
               - '.github/workflows/test.yml'
               - 'hm-xxhash/**'
             hugging-face-analyze-sentiment:
               - '.github/workflows/test.yml'
-              - 'hugging-face/analyze-sentiment/**'
+              - 'machine-learning/hugging-face/analyze-sentiment/**'
             mobile-android:
               - '.github/workflows/test.yml'
               - 'mobile-android/**'
@@ -244,13 +244,13 @@ jobs:
               - 'mobile-react-native/**'
             neural-forecasting-forecast-air-passenger-number:
               - '.github/workflows/test.yml'
-              - 'neural-forecasting/forecast-air-passenger-number/**'
+              - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
             prometheus:
               - '.github/workflows/test.yml'
               - 'prometheus/**'
             reinforcement-learning-cart-pole:
               - '.github/workflows/test.yml'
-              - 'reinforcement-learning/cart-pole/**'
+              - 'machine-learning/reinforcement-learning/cart-pole/**'
             robot-operating-system:
               - '.github/workflows/test.yml'
               - 'robot-operating-system/**'
@@ -980,21 +980,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: feature-store/pyproject.toml
+          python-version-file: machine-learning/feature-store/pyproject.toml
           cache: poetry
-          cache-dependency-path: feature-store/poetry.lock
+          cache-dependency-path: machine-learning/feature-store/poetry.lock
       - name: Install dependencies
-        working-directory: feature-store
+        working-directory: machine-learning/feature-store
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: feature-store
+        working-directory: machine-learning/feature-store
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: feature-store
+          directory: machine-learning/feature-store
 
   geopandas-test:
     name: GeoPandas | Test
@@ -1044,21 +1044,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hugging-face/analyze-sentiment/pyproject.toml
+          python-version-file: machine-learning/hugging-face/analyze-sentiment/pyproject.toml
           cache: poetry
-          cache-dependency-path: hugging-face/analyze-sentiment/poetry.lock
+          cache-dependency-path: machine-learning/hugging-face/analyze-sentiment/poetry.lock
       - name: Install dependencies
-        working-directory: hugging-face/analyze-sentiment
+        working-directory: machine-learning/hugging-face/analyze-sentiment
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hugging-face/analyze-sentiment
+        working-directory: machine-learning/hugging-face/analyze-sentiment
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hugging-face/analyze-sentiment
+          directory: machine-learning/hugging-face/analyze-sentiment
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
@@ -1140,21 +1140,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-langchain/applications/chat-pdf/pyproject.toml
+          python-version-file: machine-learning/hm-langchain/applications/chat-pdf/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-langchain/applications/chat-pdf/poetry.lock
+          cache-dependency-path: machine-learning/hm-langchain/applications/chat-pdf/poetry.lock
       - name: Install dependencies
-        working-directory: hm-langchain/applications/chat-pdf
+        working-directory: machine-learning/hm-langchain/applications/chat-pdf
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-langchain/applications/chat-pdf
+        working-directory: machine-learning/hm-langchain/applications/chat-pdf
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-langchain/applications/chat-pdf
+          directory: machine-learning/hm-langchain/applications/chat-pdf
 
   mlflow-classify-mnist-test:
     name: MLflow (classify-mnist) | Test
@@ -1172,21 +1172,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-mlflow/experiments/classify-mnist/pyproject.toml
+          python-version-file: machine-learning/hm-mlflow/experiments/classify-mnist/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-mlflow/experiments/classify-mnist/poetry.lock
+          cache-dependency-path: machine-learning/hm-mlflow/experiments/classify-mnist/poetry.lock
       - name: Install dependencies
-        working-directory: hm-mlflow/experiments/classify-mnist
+        working-directory: machine-learning/hm-mlflow/experiments/classify-mnist
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-mlflow/experiments/classify-mnist
+        working-directory: machine-learning/hm-mlflow/experiments/classify-mnist
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-mlflow/experiments/classify-mnist
+          directory: machine-learning/hm-mlflow/experiments/classify-mnist
 
   mlflow-predict-diabetes-test:
     name: MLflow (predict-diabetes) | Test
@@ -1204,21 +1204,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-mlflow/experiments/predict-diabetes/pyproject.toml
+          python-version-file: machine-learning/hm-mlflow/experiments/predict-diabetes/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-mlflow/experiments/predict-diabetes/poetry.lock
+          cache-dependency-path: machine-learning/hm-mlflow/experiments/predict-diabetes/poetry.lock
       - name: Install dependencies
-        working-directory: hm-mlflow/experiments/predict-diabetes
+        working-directory: machine-learning/hm-mlflow/experiments/predict-diabetes
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-mlflow/experiments/predict-diabetes
+        working-directory: machine-learning/hm-mlflow/experiments/predict-diabetes
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-mlflow/experiments/predict-diabetes
+          directory: machine-learning/hm-mlflow/experiments/predict-diabetes
 
   neural-forecasting-forecast-air-passenger-number-test:
     name: Neural Forecasting (forecast-air-passenger-number) | Test
@@ -1236,21 +1236,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: neural-forecasting/forecast-air-passenger-number/pyproject.toml
+          python-version-file: machine-learning/neural-forecasting/forecast-air-passenger-number/pyproject.toml
           cache: poetry
-          cache-dependency-path: neural-forecasting/forecast-air-passenger-number/poetry.lock
+          cache-dependency-path: machine-learning/neural-forecasting/forecast-air-passenger-number/poetry.lock
       - name: Install dependencies
-        working-directory: neural-forecasting/forecast-air-passenger-number
+        working-directory: machine-learning/neural-forecasting/forecast-air-passenger-number
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: neural-forecasting/forecast-air-passenger-number
+        working-directory: machine-learning/neural-forecasting/forecast-air-passenger-number
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: neural-forecasting/forecast-air-passenger-number
+          directory: machine-learning/neural-forecasting/forecast-air-passenger-number
 
   national-instruments-hm-ni-veristand-test:
     name: National Instruments (ni-veristand) | Test
@@ -1652,21 +1652,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: reinforcement-learning/cart-pole/pyproject.toml
+          python-version-file: machine-learning/reinforcement-learning/cart-pole/pyproject.toml
           cache: poetry
-          cache-dependency-path: reinforcement-learning/cart-pole/poetry.lock
+          cache-dependency-path: machine-learning/reinforcement-learning/cart-pole/poetry.lock
       - name: Install dependencies
-        working-directory: reinforcement-learning/cart-pole
+        working-directory: machine-learning/reinforcement-learning/cart-pole
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: reinforcement-learning/cart-pole
+        working-directory: machine-learning/reinforcement-learning/cart-pole
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: reinforcement-learning/cart-pole
+          directory: machine-learning/reinforcement-learning/cart-pole
 
   serial-test:
     name: Serial | Test
@@ -1748,21 +1748,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-supervision/detect-objects/pyproject.toml
+          python-version-file: machine-learning/hm-supervision/detect-objects/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-supervision/detect-objects/poetry.lock
+          cache-dependency-path: machine-learning/hm-supervision/detect-objects/poetry.lock
       - name: Install dependencies
-        working-directory: hm-supervision/detect-objects
+        working-directory: machine-learning/hm-supervision/detect-objects
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-supervision/detect-objects
+        working-directory: machine-learning/hm-supervision/detect-objects
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-supervision/detect-objects
+          directory: machine-learning/hm-supervision/detect-objects
 
   xxhash-test:
     name: xxHash | Test
@@ -2211,7 +2211,7 @@ jobs:
         uses: RasaHQ/rasa-train-test-gha@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          workspace: ${{ github.workspace }}/hm-rasa
+          workspace: ${{ github.workspace }}/machine-learning/hm-rasa
 
   gnn-test:
     name: GNN | Test
@@ -2229,21 +2229,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: graph-neural-network/pyproject.toml
+          python-version-file: machine-learning/graph-neural-network/pyproject.toml
           cache: poetry
-          cache-dependency-path: graph-neural-network/poetry.lock
+          cache-dependency-path: machine-learning/graph-neural-network/poetry.lock
       - name: Install dependencies
-        working-directory: graph-neural-network
+        working-directory: machine-learning/graph-neural-network
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: graph-neural-network
+        working-directory: machine-learning/graph-neural-network
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: graph-neural-network
+          directory: machine-learning/graph-neural-network
 
   gnn-train:
     name: GNN | Train
@@ -2263,15 +2263,15 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: graph-neural-network/pyproject.toml
+          python-version-file: machine-learning/graph-neural-network/pyproject.toml
           cache: poetry
-          cache-dependency-path: graph-neural-network/poetry.lock
+          cache-dependency-path: machine-learning/graph-neural-network/poetry.lock
       - name: Install dependencies
-        working-directory: graph-neural-network
+        working-directory: machine-learning/graph-neural-network
         run: |
           poetry install --no-root
       - name: Train model
-        working-directory: graph-neural-network
+        working-directory: machine-learning/graph-neural-network
         env:
           WANDB_MODE: offline
         run: |
@@ -2293,21 +2293,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: convolutional-neural-network/pyproject.toml
+          python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
           cache: poetry
-          cache-dependency-path: convolutional-neural-network/poetry.lock
+          cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
       - name: Install dependencies
-        working-directory: convolutional-neural-network
+        working-directory: machine-learning/convolutional-neural-network
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: convolutional-neural-network
+        working-directory: machine-learning/convolutional-neural-network
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: convolutional-neural-network
+          directory: machine-learning/convolutional-neural-network
 
   cnn-cml-local-train:
     name: CNN | CML (Local) - Train
@@ -2327,22 +2327,22 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: convolutional-neural-network/pyproject.toml
+          python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
           cache: poetry
-          cache-dependency-path: convolutional-neural-network/poetry.lock
+          cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
       - name: Install dependencies
-        working-directory: convolutional-neural-network
+        working-directory: machine-learning/convolutional-neural-network
         run: |
           poetry install --no-root
       - name: Train model
-        working-directory: convolutional-neural-network
+        working-directory: machine-learning/convolutional-neural-network
         shell: bash -l {0}
         env:
           WANDB_MODE: offline
         run: |
           poetry run poe dev -- --should_download_original_data=True
       - name: Write CML report
-        working-directory: convolutional-neural-network
+        working-directory: machine-learning/convolutional-neural-network
         shell: bash -l {0}
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -2392,9 +2392,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: convolutional-neural-network/pyproject.toml
+          python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
           cache: poetry
-          cache-dependency-path: convolutional-neural-network/poetry.lock
+          cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
       - name: Install dependencies
         working-directory: convolutional-neural-network
         run: |
