@@ -100,7 +100,7 @@ jobs:
               - 'api-python/**'
             aws-glue-spark-scripts:
               - '.github/workflows/test.yml'
-              - 'terraform/data/aws-glue/spark-scripts/**'
+              - 'cloud-infrastructure/terraform/data/aws-glue/spark-scripts/**'
             can-bus:
               - '.github/workflows/test.yml'
               - 'can-bus/**'
@@ -184,7 +184,7 @@ jobs:
               - 'hm-prowler/**'
             hm-pulumi:
               - '.github/workflows/test.yml'
-              - 'hm-pulumi/**'
+              - 'cloud-infrastructure/hm-pulumi/**'
             hm-prefect-print-platform:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/print-platform/**'
@@ -756,21 +756,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: terraform/data/aws-glue/spark-scripts/pyproject.toml
+          python-version-file: cloud-infrastructure/terraform/data/aws-glue/spark-scripts/pyproject.toml
           cache: poetry
-          cache-dependency-path: terraform/data/aws-glue/spark-scripts/poetry.lock
+          cache-dependency-path: cloud-infrastructure/terraform/data/aws-glue/spark-scripts/poetry.lock
       - name: Install dependencies
-        working-directory: terraform/data/aws-glue/spark-scripts
+        working-directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: terraform/data/aws-glue/spark-scripts
+        working-directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: terraform/data/aws-glue/spark-scripts
+          directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
 
   can-bus-test:
     name: CAN Bus | Test
@@ -1556,21 +1556,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-pulumi/pyproject.toml
+          python-version-file: cloud-infrastructure/hm-pulumi/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-pulumi/poetry.lock
+          cache-dependency-path: cloud-infrastructure/hm-pulumi/poetry.lock
       - name: Install dependencies
-        working-directory: hm-pulumi
+        working-directory: cloud-infrastructure/hm-pulumi
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-pulumi
+        working-directory: cloud-infrastructure/hm-pulumi
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-pulumi
+          directory: cloud-infrastructure/hm-pulumi
 
   pyvista-mount-saint-helens-test:
     name: PyVista (mount-saint-helens) | Test
