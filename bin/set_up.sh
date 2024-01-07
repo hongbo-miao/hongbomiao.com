@@ -9,8 +9,8 @@ cp -n api-node/.env.production.local.example api-node/.env.production.local || t
 cp -n api-node/postgres/.env.development.local.example api-node/postgres/.env.development.local || true
 cp -n api-node/postgres/.env.production.local.example api-node/postgres/.env.production.local || true
 
-cp -n streaming/src/main/resources/application-development.properties.template streaming/src/main/resources/application-development.properties || true
-cp -n streaming/src/main/resources/application-production.properties.template streaming/src/main/resources/application-production.properties || true
+cp -n data-processing/flink/applications/stream-tweets/src/main/resources/application-development.properties.template data-processing/flink/applications/stream-tweets/src/main/resources/application-development.properties || true
+cp -n data-processing/flink/applications/stream-tweets/src/main/resources/application-production.properties.template data-processing/flink/applications/stream-tweets/src/main/resources/application-production.properties || true
 
 # Install dependencies
 npm install

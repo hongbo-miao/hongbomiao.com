@@ -46,8 +46,8 @@ spark-submit-to-local:
 
 # 2 - Run in a pod. Cluster mode (the master node will assign to worker nodes)
 docker-build:
-	cd ../../.. && \
-	docker build --file=hm-spark/applications/find-retired-people-scala/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest .
+	cd ../../../.. && \
+	docker build --file=data-processing/hm-spark/applications/find-retired-people-scala/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest .
 docker-push:
 	docker push ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest
 kubectl-cluster-info:
@@ -70,7 +70,7 @@ kubectl-delete-spark-applications-in-kubernetes-cluster:
 serve-files:
 	brew install codeskyblue/tap/gohttpserver
 	gohttpserver \
-		--root=hm-spark/applications/find-retired-people-scala/target/scala-2.12/ \
+		--root=data-processing/hm-spark/applications/find-retired-people-scala/target/scala-2.12/ \
 		--port=32609 \
 		--upload
 	ngrok http 32609

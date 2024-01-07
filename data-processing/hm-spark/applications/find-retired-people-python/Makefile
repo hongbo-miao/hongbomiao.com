@@ -18,8 +18,8 @@ spark-submit-to-local:
 
 # 2 - Run in a pod. Cluster mode (the master node will assign to worker nodes)
 docker-build:
-	cd ../../.. && \
-	docker build --file=hm-spark/applications/find-retired-people-python/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-find-retired-people-python:latest .
+	cd ../../../.. && \
+	docker build --file=data-processing/hm-spark/applications/find-retired-people-python/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-find-retired-people-python:latest .
 docker-push:
 	docker push ghcr.io/hongbo-miao/hm-spark-find-retired-people-python:latest
 kubectl-cluster-info:
