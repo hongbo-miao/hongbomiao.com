@@ -1,0 +1,31 @@
+---
+name: Badge
+
+'on':
+  push:
+    branches: [main]
+
+jobs:
+  count-code-lines:
+    name: Count Code Lines
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install cloc
+        run: |
+          sudo apt update --yes
+          sudo apt install --yes cloc
+      - name: Count code lines
+        run: |
+          echo "CODE_LINE_COUNT=$(bin/count_code_lines.sh)" >> $GITHUB_ENV
+      - name: Create badge
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: ecff3e2b8226a5c1406b0c2e2622e968
+          filename: code_line_count.json
+          label: code lines
+          labelColor: gray
+          message: ${{ env.CODE_LINE_COUNT }}
+          color: blue
