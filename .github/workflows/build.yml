@@ -75,7 +75,7 @@ jobs:
             hm-keydb:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-keydb/**'
+              - 'data-storage/hm-keydb/**'
             hm-opal-client:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -83,7 +83,7 @@ jobs:
             hm-pgbackrest:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-pgbackrest/**'
+              - 'data-storage/hm-pgbackrest/**'
             hm-prefect-calculate:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -890,7 +890,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-keydb/Dockerfile
+            file: ./data-storage/hm-keydb/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-keydb:latest
             cache-from: type=gha
@@ -982,7 +982,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Build pgbackrest
         run: |
-          docker build --file=hm-pgbackrest/Dockerfile --tag=ghcr.io/hongbo-miao/hm-pgbackrest:latest .
+          docker build --file=data-storage/hm-pgbackrest/Dockerfile --tag=ghcr.io/hongbo-miao/hm-pgbackrest:latest .
       - name: Extract pgbackrest
         run: |
           docker create --name=hm-pgbackrest ghcr.io/hongbo-miao/hm-pgbackrest:latest

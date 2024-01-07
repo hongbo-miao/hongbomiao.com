@@ -115,13 +115,13 @@ jobs:
               - 'dbt/dbt_hm_postgres/**'
             delta-lake-read-delta-lake-by-amazon-athena:
               - '.github/workflows/test.yml'
-              - 'delta-lake/read-delta-lake-by-amazon-athena/**'
+              - 'data-storage/delta-lake/read-delta-lake-by-amazon-athena/**'
             delta-lake-read-delta-lake-by-trino:
               - '.github/workflows/test.yml'
-              - 'delta-lake/read-delta-lake-by-trino/**'
+              - 'data-storage/delta-lake/read-delta-lake-by-trino/**'
             delta-lake-write-to-delta-lake:
               - '.github/workflows/test.yml'
-              - 'delta-lake/write-to-delta-lake/**'
+              - 'data-storage/delta-lake/write-to-delta-lake/**'
             feature-store:
               - '.github/workflows/test.yml'
               - 'machine-learning/feature-store/**'
@@ -247,7 +247,7 @@ jobs:
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
             prometheus:
               - '.github/workflows/test.yml'
-              - 'prometheus/**'
+              - 'data-storage/prometheus/**'
             reinforcement-learning-cart-pole:
               - '.github/workflows/test.yml'
               - 'machine-learning/reinforcement-learning/cart-pole/**'
@@ -884,21 +884,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: delta-lake/read-delta-lake-by-amazon-athena/pyproject.toml
+          python-version-file: data-storage/delta-lake/read-delta-lake-by-amazon-athena/pyproject.toml
           cache: poetry
-          cache-dependency-path: delta-lake/read-delta-lake-by-amazon-athena/poetry.lock
+          cache-dependency-path: data-storage/delta-lake/read-delta-lake-by-amazon-athena/poetry.lock
       - name: Install dependencies
-        working-directory: delta-lake/read-delta-lake-by-amazon-athena
+        working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: delta-lake/read-delta-lake-by-amazon-athena
+        working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: delta-lake/read-delta-lake-by-amazon-athena
+          directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
 
   delta-lake-read-delta-lake-by-trino-test:
     name: Delta Lake (read-delta-lake-by-trino) | Test
@@ -916,21 +916,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: delta-lake/read-delta-lake-by-trino/pyproject.toml
+          python-version-file: data-storage/delta-lake/read-delta-lake-by-trino/pyproject.toml
           cache: poetry
-          cache-dependency-path: delta-lake/read-delta-lake-by-trino/poetry.lock
+          cache-dependency-path: data-storage/delta-lake/read-delta-lake-by-trino/poetry.lock
       - name: Install dependencies
-        working-directory: delta-lake/read-delta-lake-by-trino
+        working-directory: data-storage/delta-lake/read-delta-lake-by-trino
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: delta-lake/read-delta-lake-by-trino
+        working-directory: data-storage/delta-lake/read-delta-lake-by-trino
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: delta-lake/read-delta-lake-by-trino
+          directory: data-storage/delta-lake/read-delta-lake-by-trino
 
   delta-lake-write-to-delta-lake-test:
     name: Delta Lake (write-to-delta-lake) | Test
@@ -948,21 +948,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: delta-lake/write-to-delta-lake/pyproject.toml
+          python-version-file: data-storage/delta-lake/write-to-delta-lake/pyproject.toml
           cache: poetry
-          cache-dependency-path: delta-lake/write-to-delta-lake/poetry.lock
+          cache-dependency-path: data-storage/delta-lake/write-to-delta-lake/poetry.lock
       - name: Install dependencies
-        working-directory: delta-lake/write-to-delta-lake
+        working-directory: data-storage/delta-lake/write-to-delta-lake
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: delta-lake/write-to-delta-lake
+        working-directory: data-storage/delta-lake/write-to-delta-lake
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: delta-lake/write-to-delta-lake
+          directory: data-storage/delta-lake/write-to-delta-lake
 
   feature-store-test:
     name: Feature Store | Test
@@ -2070,7 +2070,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Test
         run: |
-          docker build --file=prometheus/Dockerfile.test .
+          docker build --file=data-storage/prometheus/Dockerfile.test .
 
   grafana-hm-dashboard-test:
     name: Grafana (hm-dashboard) | Test
