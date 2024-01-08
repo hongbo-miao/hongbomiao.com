@@ -42,7 +42,7 @@ jobs:
               - 'ethereum/**'
             grafana-hm-panel-plugin:
               - '.github/workflows/.lint.yml'
-              - 'grafana/hm-panel-plugin/**'
+              - 'data-visualization/grafana/hm-panel-plugin/**'
             hm-spark-find-retired-people-scala:
               - '.github/workflows/.lint.yml'
               - 'data-processing/hm-spark/applications/find-retired-people-scala/**'
@@ -264,15 +264,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: grafana/hm-panel-plugin/.nvmrc
+          node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
           cache: npm
-          cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
+          cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
       - name: Install dependencies
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           npm ci
       - name: Lint JavaScript
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           npm run lint:javascript
 
