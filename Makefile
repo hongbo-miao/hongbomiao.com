@@ -356,6 +356,9 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-trino
 	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.write-to-delta-lake
 	poetry run poe static-type-check-python -- --package=data-visualization.grafana.hm-dashboard
+	poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-pyvisa
+	poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-tdms
+	poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-ni-veristand
 	poetry run poe static-type-check-python -- --package=hm-locust
 	poetry run poe static-type-check-python -- --package=hm-opal-client
 	poetry run poe static-type-check-python -- --package=hm-open3d
@@ -375,9 +378,6 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=machine-learning.hugging-face
 	poetry run poe static-type-check-python -- --package=machine-learning.neural-forecasting.forecast-air-passenger-number
 	poetry run poe static-type-check-python -- --package=machine-learning.reinforcement-learning.cart-pole
-	poetry run poe static-type-check-python -- --package=national-instruments.hm-pyvisa
-	poetry run poe static-type-check-python -- --package=national-instruments.hm-tdms
-	poetry run poe static-type-check-python -- --package=national-instruments.hm-ni-veristand
 	poetry run poe static-type-check-python -- --package=quantum-computing
 static-type-check-terraform:
 	cd terraform && terraform validate
