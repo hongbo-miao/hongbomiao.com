@@ -41,5 +41,5 @@ cd ../ethereum
 rm -r -f node_modules/
 
 # Grafana
-cd ../grafana/hm-panel-plugin
+cd ../data-visualization/grafana/hm-panel-plugin
 rm -r -f node_modules/

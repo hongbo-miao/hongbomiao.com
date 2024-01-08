@@ -2088,21 +2088,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: grafana/hm-dashboard/pyproject.toml
+          python-version-file: data-visualization/grafana/hm-dashboard/pyproject.toml
           cache: poetry
-          cache-dependency-path: grafana/hm-dashboard/poetry.lock
+          cache-dependency-path: data-visualization/grafana/hm-dashboard/poetry.lock
       - name: Install dependencies
-        working-directory: grafana/hm-dashboard
+        working-directory: data-visualization/grafana/hm-dashboard
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: grafana/hm-dashboard
+        working-directory: data-visualization/grafana/hm-dashboard
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: grafana/hm-dashboard
+          directory: data-visualization/grafana/hm-dashboard
 
   grafana-hm-panel-plugin-end-to-end-test:
     name: Grafana (hm-panel-plugin) | End-to-End Test
@@ -2117,34 +2117,34 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: grafana/hm-panel-plugin/.nvmrc
+          node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
           cache: npm
-          cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
+          cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
       - name: Install dependencies
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           npm ci
       - name: Build
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           npm run build
       - name: Pull Docker images
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           docker-compose pull
       - name: Cache Docker images
         uses: jpribyl/action-docker-layer-caching@v0.1.1
         continue-on-error: true
       - name: Start Docker
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           docker-compose up --detach
       - name: Run e2e tests
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           npm run e2e
       - name: Stop Docker
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           docker-compose down
 
@@ -2161,19 +2161,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: grafana/hm-panel-plugin/.nvmrc
+          node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
           cache: npm
-          cache-dependency-path: grafana/hm-panel-plugin/package-lock.json
+          cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
       - name: Install dependencies
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           npm ci
       - name: Build
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           npm run build
       - name: Check compatibility
-        working-directory: grafana/hm-panel-plugin
+        working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
           npx @grafana/levitate@latest is-compatible --path=src/module.ts --target=@grafana/data,@grafana/ui,@grafana/runtime
 
