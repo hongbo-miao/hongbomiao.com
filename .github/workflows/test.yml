@@ -184,7 +184,7 @@ jobs:
               - 'data-orchestration/hm-prefect/workflows/ingest-data/**'
             hm-prowler:
               - '.github/workflows/test.yml'
-              - 'hm-prowler/**'
+              - 'cloud-security/hm-prowler/**'
             hm-pulumi:
               - '.github/workflows/test.yml'
               - 'cloud-infrastructure/hm-pulumi/**'
@@ -1524,21 +1524,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-prowler/pyproject.toml
+          python-version-file: cloud-security/hm-prowler/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-prowler/poetry.lock
+          cache-dependency-path: cloud-security/hm-prowler/poetry.lock
       - name: Install dependencies
-        working-directory: hm-prowler
+        working-directory: cloud-security/hm-prowler
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-prowler
+        working-directory: cloud-security/hm-prowler
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-prowler
+          directory: cloud-security/hm-prowler
 
   pulumi-test:
     name: Pulumi | Test
