@@ -395,6 +395,10 @@ make kubernetes-clean
 - **Pulumi** - Infrastructure as code (IaC)
 - **Karpenter** - Kubernetes node autoscaler
 
+### Cloud Security
+
+- **Prowler** - Cloud security assessments
+
 ### Cloud Cost
 
 - **Komiser** - Cloud cost monitoring
@@ -422,7 +426,6 @@ make kubernetes-clean
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
 - **CodeQL** - Variant analysis
-- **Prowler** - Cloud security assessments
 - **Gitleaks** - Git secret scanning
 - **GitGuardian** - Git secret scanning
 - **xxHash** - Hash algorithm
