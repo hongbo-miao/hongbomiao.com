@@ -40,10 +40,10 @@ jobs:
               - 'data-visualization/grafana/hm-panel-plugin/**'
             mobile-android:
               - '.github/workflows/.static-type-check.yml'
-              - 'mobile-android/**'
+              - 'mobile/mobile-android/**'
             mobile-react-native:
               - '.github/workflows/.static-type-check.yml'
-              - 'mobile-react-native/**'
+              - 'mobile/mobile-react-native/**'
             terraform:
               - '.github/workflows/.static-type-check.yml'
               - 'cloud-infrastructure/terraform/**'
@@ -71,7 +71,7 @@ jobs:
           java-version: '17'
           cache: gradle
       - name: Static type check Kotlin
-        working-directory: mobile-android
+        working-directory: mobile/mobile-android
         run: |
           ./gradlew detekt
 
@@ -250,15 +250,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: mobile-react-native/.nvmrc
+          node-version-file: mobile/mobile-react-native/.nvmrc
           cache: npm
-          cache-dependency-path: mobile-react-native/package-lock.json
+          cache-dependency-path: mobile/mobile-react-native/package-lock.json
       - name: Install dependencies
-        working-directory: mobile-react-native
+        working-directory: mobile/mobile-react-native
         run: |
           npm ci
       - name: Static type check TypeScript
-        working-directory: mobile-react-native
+        working-directory: mobile/mobile-react-native
         run: |
           npm run tsc
 
