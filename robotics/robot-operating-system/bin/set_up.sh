@@ -55,6 +55,6 @@ sudo apt install --yes ros-humble-turtlesim
 echo "=================================================="
 
 echo "# Set up"
-echo "source /media/psf/Home/Clouds/Git/hongbomiao.com/robot-operating-system/install/setup.bash" >> ~/.bashrc
+echo "source /media/psf/Home/Clouds/Git/hongbomiao.com/robotics/robot-operating-system/install/setup.bash" >> ~/.bashrc
 # source ~/.bashrc
 echo "=================================================="
