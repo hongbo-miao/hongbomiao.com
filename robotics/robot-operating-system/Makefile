@@ -53,7 +53,7 @@ colcon-test:
 colcon-test-package:
 	colcon test --packages-select=hm_cpp_package --return-code-on-test-failure
 	colcon test --packages-select=hm_python_package --return-code-on-test-failure
-	# Log: robot-operating-system/log/latest_test/turtle_robot/stdout_stderr.log
+	# Log: robotics/robot-operating-system/log/latest_test/turtle_robot/stdout_stderr.log
 	colcon test --packages-select=turtle_robot --return-code-on-test-failure
 
 ros2-service-list:
