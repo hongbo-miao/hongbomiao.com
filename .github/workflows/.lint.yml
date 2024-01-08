@@ -45,10 +45,10 @@ jobs:
               - 'grafana/hm-panel-plugin/**'
             hm-spark-find-retired-people-scala:
               - '.github/workflows/.lint.yml'
-              - 'hm-spark/applications/find-retired-people-scala/**'
+              - 'data-processing/hm-spark/applications/find-retired-people-scala/**'
             hm-spark-ingest-from-s3-to-kafka:
               - '.github/workflows/.lint.yml'
-              - 'hm-spark/applications/ingest-from-s3-to-kafka/**'
+              - 'data-processing/hm-spark/applications/ingest-from-s3-to-kafka/**'
             kubernetes:
               - '.github/workflows/.lint.yml'
               - 'kubernetes/manifests/**'
@@ -545,11 +545,11 @@ jobs:
           java-version: '17'
           cache: sbt
       - name: Lint Scala (Scalafmt)
-        working-directory: hm-spark/applications/find-retired-people-scala
+        working-directory: data-processing/hm-spark/applications/find-retired-people-scala
         run: |
           sbt scalafmtCheckAll
       - name: Lint Scala (Scalafix)
-        working-directory: hm-spark/applications/find-retired-people-scala
+        working-directory: data-processing/hm-spark/applications/find-retired-people-scala
         run: |
           sbt "scalafixAll --check"
 
@@ -570,11 +570,11 @@ jobs:
           java-version: '17'
           cache: sbt
       - name: Lint Scala (Scalafmt)
-        working-directory: hm-spark/applications/ingest-from-s3-to-kafka
+        working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
         run: |
           sbt scalafmtCheckAll
       - name: Lint Scala (Scalafix)
-        working-directory: hm-spark/applications/ingest-from-s3-to-kafka
+        working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
         run: |
           sbt "scalafixAll --check"
 
@@ -639,7 +639,7 @@ jobs:
           poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
           poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
           poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-          poetry run poe lint-sql -- --dialect=postgres streaming/migrations
+          poetry run poe lint-sql -- --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
           poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
           poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/motor/migrations
           poetry run poe lint-sql -- --dialect=sparksql data-storage/delta-lake/queries

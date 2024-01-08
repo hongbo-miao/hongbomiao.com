@@ -41,8 +41,8 @@ set-secret-base64-in-github:
 	gh secret set HM_STEAMING_APPLICATION_PROPERTIES_BASE64 < application-production.properties.base64 && \
 	rm -f application-production.properties.base64
 docker-build:
-	cd .. && \
-	docker build --file=streaming/Dockerfile --tag=ghcr.io/hongbo-miao/hm-streaming:latest .
+	cd ../../../.. && \
+	docker build --file=data-processing/flink/applications/stream-tweetsDockerfile --tag=ghcr.io/hongbo-miao/hm-streaming:latest .
 docker-push:
 	docker push ghcr.io/hongbo-miao/hm-streaming:latest
 flink-application-init:
@@ -73,8 +73,8 @@ timescaledb-start:
 		--env=POSTGRES_PASSWORD=passw0rd \
 		timescale/timescaledb:latest-pg15
 timescaledb-migrate:
-	cd .. && \
-	sh streaming/bin/migrate_timescaledb_twitter_db.sh
+	cd ../../../.. && \
+	sh data-processing/flink/applications/stream-tweets/bin/migrate_timescaledb_twitter_db.sh
 
 # Redis
 redis-cli:

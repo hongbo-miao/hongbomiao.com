@@ -19,6 +19,7 @@ jobs:
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
+      flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
       hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
       hm-kafka-iot-kafka-connect: ${{ steps.filter.outputs.hm-kafka-iot-kafka-connect }}
       hm-kafka-logging-kafka-connect: ${{ steps.filter.outputs.hm-kafka-logging-kafka-connect }}
@@ -35,7 +36,6 @@ jobs:
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
       hm-traefik: ${{ steps.filter.outputs.hm-traefik }}
-      streaming: ${{ steps.filter.outputs.streaming }}
       web: ${{ steps.filter.outputs.web }}
     steps:
       - name: Checkout
@@ -56,6 +56,10 @@ jobs:
               - '.dockerignore'
               - '.github/workflows/build.yml'
               - 'api-python/**'
+            flink-stream-tweets:
+              - '.dockerignore'
+              - '.github/workflows/build.yml'
+              - 'data-processing/flink/applications/stream-tweets/**'
             hm-alpine:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -107,23 +111,19 @@ jobs:
             hm-spark-find-retired-people-python:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-spark/applications/find-retired-people-python/**'
+              - 'data-processing/hm-spark/applications/find-retired-people-python/**'
             hm-spark-find-retired-people-scala:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-spark/applications/find-retired-people-scala/**'
+              - 'data-processing/hm-spark/applications/find-retired-people-scala/**'
             hm-spark-ingest-from-s3-to-kafka:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-spark/applications/ingest-from-s3-to-kafka/**'
+              - 'data-processing/hm-spark/applications/ingest-from-s3-to-kafka/**'
             hm-traefik:
               - '.dockerignore'
               - '.github/workflows/build.yml'
               - 'hm-traefik/**'
-            streaming:
-              - '.dockerignore'
-              - '.github/workflows/build.yml'
-              - 'streaming/**'
             web:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -553,7 +553,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-spark/applications/find-retired-people-python/Dockerfile
+            file: ./data-processing/hm-spark/applications/find-retired-people-python/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-spark-find-retired-people-python:latest
             cache-from: type=gha
@@ -589,7 +589,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-spark/applications/find-retired-people-scala/Dockerfile
+            file: ./data-processing/hm-spark/applications/find-retired-people-scala/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest
             cache-from: type=gha
@@ -625,7 +625,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-spark/applications/ingest-from-s3-to-kafka/Dockerfile
+            file: ./data-processing/hm-spark/applications/ingest-from-s3-to-kafka/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest
             cache-from: type=gha
@@ -813,10 +813,10 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
 
-  build-hm-streaming:
-    name: Build hm-streaming
+  build-flink-stream-tweets:
+    name: Build flink-stream-tweets
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.streaming == 'true' }}
+    if: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
     runs-on: ubuntu-22.04
     environment: production
     timeout-minutes: 60
@@ -836,7 +836,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Retrieve the secret and decode it to a file
-        working-directory: streaming/src/main/resources
+        working-directory: data-processing/flink/applications/stream-tweets/src/main/resources
         env:
           PROPERTIES_BASE64: ${{ secrets.HM_STEAMING_APPLICATION_PROPERTIES_BASE64 }}
         run: |
@@ -847,9 +847,9 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./streaming/Dockerfile
+            file: ./data-processing/flink/applications/stream-tweets/Dockerfile
             push: true
-            tags: ghcr.io/hongbo-miao/hm-streaming:latest
+            tags: ghcr.io/hongbo-miao/hm-flink-stream-tweets:latest
             cache-from: type=gha
             cache-to: type=gha,mode=max
           attempt_limit: 3

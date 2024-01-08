@@ -29,7 +29,7 @@ public class Main {
   public static void main(String[] args) throws Exception {
     final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-    // String paramsFilePath = "streaming/src/main/resources/application-development.properties";
+    // String paramsFilePath = "data-processing/flink/applications/stream-tweets/src/main/resources/application-development.properties";
     String paramsFilePath = "application-production.properties";
     Config config = new Config(paramsFilePath);
 

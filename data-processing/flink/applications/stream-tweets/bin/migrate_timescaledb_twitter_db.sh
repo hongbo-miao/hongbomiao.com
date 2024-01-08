@@ -8,5 +8,5 @@ echo "=================================================="
 
 echo "# Migrate database twitter_db"
 TIMESCALEDB_URL="postgresql://admin:passw0rd@localhost:16863/twitter_db?sslmode=disable&search_path=public"
-migrate -database "${TIMESCALEDB_URL}" -path streaming/migrations up
+migrate -database "${TIMESCALEDB_URL}" -path data-processing/flink/applications/stream-tweets/migrations up
 echo "=================================================="

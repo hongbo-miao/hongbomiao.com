@@ -280,11 +280,11 @@ lint-rust-clippy:
 lint-rust-clippy-fix:
 	cd hm-rust && cargo clippy --fix --allow-dirty --allow-staged
 lint-scala:
-	cd hm-spark/applications/find-retired-people-scala && sbt scalafmtCheckAll && sbt "scalafixAll --check"
-	cd hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtCheckAll && sbt "scalafixAll --check"
+	cd data-processing/hm-spark/applications/find-retired-people-scala && sbt scalafmtCheckAll && sbt "scalafixAll --check"
+	cd data-processing/hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtCheckAll && sbt "scalafixAll --check"
 lint-scala-fix:
-	cd hm-spark/applications/find-retired-people-scala && sbt scalafmtAll && sbt scalafixAll
-	cd hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtAll && sbt scalafixAll
+	cd data-processing/hm-spark/applications/find-retired-people-scala && sbt scalafmtAll && sbt scalafixAll
+	cd data-processing/hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtAll && sbt scalafixAll
 lint-shell:
 	shellcheck $$(git ls-files "*.sh")
 lint-solidity:
@@ -298,7 +298,7 @@ lint-sql:
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
 	poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-	poetry run poe lint-sql -- --dialect=postgres streaming/migrations
+	poetry run poe lint-sql -- --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
 	poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/motor/migrations
 	poetry run poe lint-sql -- --dialect=sparksql data-storage/delta-lake/queries
@@ -312,7 +312,7 @@ lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/seeds
 	poetry run poe lint-sql-fix -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-	poetry run poe lint-sql-fix -- --dialect=postgres streaming/migrations
+	poetry run poe lint-sql-fix -- --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres data-storage/timescaledb/motor/migrations
 	poetry run poe lint-sql-fix -- --dialect=sparksql queries
@@ -345,6 +345,11 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.greet
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.ingest-data
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.print-platform
+	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.analyze-coffee-customers
+	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.find-retired-people-python
+	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.find-taxi-top-routes
+	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.find-taxi-top-routes-sql
+	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.recommend-movies
 	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena
 	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-trino
 	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.write-to-delta-lake
@@ -356,11 +361,6 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hm-pyvista.mount-saint-helens
 	poetry run poe static-type-check-python -- --package=hm-ray.applications.greet
 	poetry run poe static-type-check-python -- --package=hm-serial
-	poetry run poe static-type-check-python -- --package=hm-spark.applications.analyze-coffee-customers
-	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-retired-people-python
-	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-taxi-top-routes
-	poetry run poe static-type-check-python -- --package=hm-spark.applications.find-taxi-top-routes-sql
-	poetry run poe static-type-check-python -- --package=hm-spark.applications.recommend-movies
 	poetry run poe static-type-check-python -- --package=hm-xxhash
 	poetry run poe static-type-check-python -- --package=machine-learning.convolutional-neural-network
 	poetry run poe static-type-check-python -- --package=machine-learning.feature-store
