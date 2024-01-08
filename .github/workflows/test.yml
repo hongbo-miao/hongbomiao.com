@@ -205,7 +205,7 @@ jobs:
               - 'hm-serial/**'
             hm-skypilot:
               - '.github/workflows/test.yml'
-              - 'hm-skypilot/**'
+              - 'cloud-computing/hm-skypilot/**'
             hm-spark-analyze-coffee-customers:
               - '.github/workflows/test.yml'
               - 'data-processing/hm-spark/applications/analyze-coffee-customers/**'
@@ -1620,21 +1620,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-ray/applications/greet/pyproject.toml
+          python-version-file: cloud-computing/hm-ray/applications/greet/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-ray/applications/greet/poetry.lock
+          cache-dependency-path: cloud-computing/hm-ray/applications/greet/poetry.lock
       - name: Install dependencies
-        working-directory: hm-ray/applications/greet
+        working-directory: cloud-computing/hm-ray/applications/greet
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-ray/applications/greet
+        working-directory: cloud-computing/hm-ray/applications/greet
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-ray/applications/greet
+          directory: cloud-computing/hm-ray/applications/greet
 
   reinforcement-learning-cart-pole-test:
     name: Reinforcement Learning (cart-pole) | Test
@@ -1716,21 +1716,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-skypilot/pyproject.toml
+          python-version-file: cloud-computing/hm-skypilot/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-skypilot/poetry.lock
+          cache-dependency-path: cloud-computing/hm-skypilot/poetry.lock
       - name: Install dependencies
-        working-directory: hm-skypilot
+        working-directory: cloud-computing/hm-skypilot
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-skypilot
+        working-directory: cloud-computing/hm-skypilot
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-skypilot
+          directory: cloud-computing/hm-skypilot
 
   supervision-detect-objects-test:
     name: supervision (detect-objects) | Test
