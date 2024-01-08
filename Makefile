@@ -340,6 +340,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=can-bus
 	poetry run poe static-type-check-python -- --package=cloud-computing.hm-ray.applications.greet
 	poetry run poe static-type-check-python -- --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
+	poetry run poe static-type-check-python -- --package=data-analytics.hm-geopandas
 	poetry run poe static-type-check-python -- --package=data-distribution-service
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-airflow
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.calculate
@@ -355,7 +356,6 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-trino
 	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.write-to-delta-lake
 	poetry run poe static-type-check-python -- --package=grafana.hm-dashboard
-	poetry run poe static-type-check-python -- --package=hm-geopandas
 	poetry run poe static-type-check-python -- --package=hm-locust
 	poetry run poe static-type-check-python -- --package=hm-opal-client
 	poetry run poe static-type-check-python -- --package=hm-open3d
