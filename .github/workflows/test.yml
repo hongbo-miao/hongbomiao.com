@@ -33,6 +33,7 @@ jobs:
       delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
       delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
+      flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
       grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
@@ -76,7 +77,6 @@ jobs:
       prometheus: ${{ steps.filter.outputs.prometheus }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
-      streaming: ${{ steps.filter.outputs.streaming }}
       web: ${{ steps.filter.outputs.web }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
     steps:
@@ -125,6 +125,9 @@ jobs:
             feature-store:
               - '.github/workflows/test.yml'
               - 'machine-learning/feature-store/**'
+            flink-stream-tweets:
+              - '.github/workflows/test.yml'
+              - 'data-processing/flink/applications/stream-tweets/**'
             grafana-hm-dashboard:
               - '.github/workflows/test.yml'
               - 'grafana/hm-dashboard/**'
@@ -205,25 +208,25 @@ jobs:
               - 'hm-skypilot/**'
             hm-spark-analyze-coffee-customers:
               - '.github/workflows/test.yml'
-              - 'hm-spark/applications/analyze-coffee-customers/**'
+              - 'data-processing/hm-spark/applications/analyze-coffee-customers/**'
             hm-spark-find-retired-people-python:
               - '.github/workflows/test.yml'
-              - 'hm-spark/applications/find-retired-people-python/**'
+              - 'data-processing/hm-spark/applications/find-retired-people-python/**'
             hm-spark-find-retired-people-scala:
               - '.github/workflows/test.yml'
-              - 'hm-spark/applications/find-retired-people-scala/**'
+              - 'data-processing/hm-spark/applications/find-retired-people-scala/**'
             hm-spark-find-taxi-top-routes:
               - '.github/workflows/test.yml'
-              - 'hm-spark/applications/find-taxi-top-routes/**'
+              - 'data-processing/hm-spark/applications/find-taxi-top-routes/**'
             hm-spark-find-taxi-top-routes-sql:
               - '.github/workflows/test.yml'
-              - 'hm-spark/applications/find-taxi-top-routes-sql/**'
+              - 'data-processing/hm-spark/applications/find-taxi-top-routes-sql/**'
             hm-spark-ingest-from-s3-to-kafka:
               - '.github/workflows/test.yml'
-              - 'hm-spark/applications/ingest-from-s3-to-kafka/**'
+              - 'data-processing/hm-spark/applications/ingest-from-s3-to-kafka/**'
             hm-spark-recommend-movies:
               - '.github/workflows/test.yml'
-              - 'hm-spark/applications/recommend-movies/**'
+              - 'data-processing/hm-spark/applications/recommend-movies/**'
             hm-supervision-detect-objects:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-supervision/detect-objects/**'
@@ -254,9 +257,6 @@ jobs:
             robot-operating-system:
               - '.github/workflows/test.yml'
               - 'robot-operating-system/**'
-            streaming:
-              - '.github/workflows/test.yml'
-              - 'streaming/**'
             web:
               - '.github/workflows/test.yml'
               - 'web/**'
@@ -1812,21 +1812,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-spark/applications/analyze-coffee-customers/pyproject.toml
+          python-version-file: data-processing/hm-spark/applications/analyze-coffee-customers/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-spark/applications/analyze-coffee-customers/poetry.lock
+          cache-dependency-path: data-processing/hm-spark/applications/analyze-coffee-customers/poetry.lock
       - name: Install dependencies
-        working-directory: hm-spark/applications/analyze-coffee-customers
+        working-directory: data-processing/hm-spark/applications/analyze-coffee-customers
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-spark/applications/analyze-coffee-customers
+        working-directory: data-processing/hm-spark/applications/analyze-coffee-customers
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-spark/applications/analyze-coffee-customers
+          directory: data-processing/hm-spark/applications/analyze-coffee-customers
 
   spark-find-retired-people-python-test:
     name: Spark (find-retired-people-python) | Test
@@ -1844,21 +1844,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-spark/applications/find-retired-people-python/pyproject.toml
+          python-version-file: data-processing/hm-spark/applications/find-retired-people-python/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-spark/applications/find-retired-people-python/poetry.lock
+          cache-dependency-path: data-processing/hm-spark/applications/find-retired-people-python/poetry.lock
       - name: Install dependencies
-        working-directory: hm-spark/applications/find-retired-people-python
+        working-directory: data-processing/hm-spark/applications/find-retired-people-python
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-spark/applications/find-retired-people-python
+        working-directory: data-processing/hm-spark/applications/find-retired-people-python
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-spark/applications/find-retired-people-python
+          directory: data-processing/hm-spark/applications/find-retired-people-python
 
   spark-find-retired-people-scala-test:
     name: Spark (find-retired-people-scala) | Test
@@ -1877,7 +1877,7 @@ jobs:
           java-version: '17'
           cache: sbt
       - name: Test
-        working-directory: hm-spark/applications/find-retired-people-scala
+        working-directory: data-processing/hm-spark/applications/find-retired-people-scala
         run: |
           sbt test
 
@@ -1897,21 +1897,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-spark/applications/find-taxi-top-routes/pyproject.toml
+          python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-spark/applications/find-taxi-top-routes/poetry.lock
+          cache-dependency-path: data-processing/hm-spark/applications/find-taxi-top-routes/poetry.lock
       - name: Install dependencies
-        working-directory: hm-spark/applications/find-taxi-top-routes
+        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-spark/applications/find-taxi-top-routes
+        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-spark/applications/find-taxi-top-routes
+          directory: data-processing/hm-spark/applications/find-taxi-top-routes
 
   spark-find-taxi-top-routes-sql-test:
     name: Spark (find-taxi-top-routes-sql) | Test
@@ -1929,21 +1929,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-spark/applications/find-taxi-top-routes-sql/pyproject.toml
+          python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes-sql/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-spark/applications/find-taxi-top-routes-sql/poetry.lock
+          cache-dependency-path: data-processing/hm-spark/applications/find-taxi-top-routes-sql/poetry.lock
       - name: Install dependencies
-        working-directory: hm-spark/applications/find-taxi-top-routes-sql
+        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-spark/applications/find-taxi-top-routes-sql
+        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-spark/applications/find-taxi-top-routes-sql
+          directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
 
   spark-ingest-from-s3-to-kafka-test:
     name: Spark (ingest-from-s3-to-kafka) | Test
@@ -1962,7 +1962,7 @@ jobs:
           java-version: '17'
           cache: sbt
       - name: Test
-        working-directory: hm-spark/applications/ingest-from-s3-to-kafka
+        working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
         run: |
           sbt test
 
@@ -1982,26 +1982,26 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-spark/applications/recommend-movies/pyproject.toml
+          python-version-file: data-processing/hm-spark/applications/recommend-movies/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-spark/applications/recommend-movies/poetry.lock
+          cache-dependency-path: data-processing/hm-spark/applications/recommend-movies/poetry.lock
       - name: Install dependencies
-        working-directory: hm-spark/applications/recommend-movies
+        working-directory: data-processing/hm-spark/applications/recommend-movies
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-spark/applications/recommend-movies
+        working-directory: data-processing/hm-spark/applications/recommend-movies
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-spark/applications/recommend-movies
+          directory: data-processing/hm-spark/applications/recommend-movies
 
-  streaming-test:
-    name: Streaming | Test
+  flink-stream-tweets-test:
+    name: Flink (stream-tweets) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.streaming == 'true' }}
+    if: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -2015,7 +2015,7 @@ jobs:
           java-version: '11'
           cache: maven
       - name: Test
-        working-directory: streaming
+        working-directory: data-processing/flink/applications/stream-tweets
         run: |
           mvn test
 
