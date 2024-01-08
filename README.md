@@ -243,7 +243,7 @@ make kubernetes-clean
 - **Apache Airflow** - Orchestration platform
 - **Temporal** - Orchestration platform
 - **Airbyte** - Data integration
-- **dbt** - Data transforming
+- **dbt** - Data transformation
 - **Apache Kafka** - Distributed event streaming platform
   - Schema registries
     - **Confluent Schema Registry** - Schema Registry
