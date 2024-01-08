@@ -340,6 +340,8 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=can-bus
 	poetry run poe static-type-check-python -- --package=cloud-computing.hm-ray.applications.greet
 	poetry run poe static-type-check-python -- --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
+	poetry run poe static-type-check-python -- --package=computer-vision.hm-open3d
+	poetry run poe static-type-check-python -- --package=computer-vision.hm-pyvista.mount-saint-helens
 	poetry run poe static-type-check-python -- --package=data-analytics.hm-geopandas
 	poetry run poe static-type-check-python -- --package=data-distribution-service
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-airflow
@@ -361,8 +363,6 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-ni-veristand
 	poetry run poe static-type-check-python -- --package=hm-locust
 	poetry run poe static-type-check-python -- --package=hm-opal-client
-	poetry run poe static-type-check-python -- --package=hm-open3d
-	poetry run poe static-type-check-python -- --package=hm-pyvista.mount-saint-helens
 	poetry run poe static-type-check-python -- --package=hm-serial
 	poetry run poe static-type-check-python -- --package=hm-xxhash
 	poetry run poe static-type-check-python -- --package=machine-learning.convolutional-neural-network
