@@ -337,6 +337,7 @@ lint-yaml:
 # Static type check
 static-type-check-python:
 	poetry run poe static-type-check-python -- --package=api-python
+	poetry run poe static-type-check-python -- --package=authorization.hm-opal-client
 	poetry run poe static-type-check-python -- --package=can-bus
 	poetry run poe static-type-check-python -- --package=cloud-computing.hm-ray.applications.greet
 	poetry run poe static-type-check-python -- --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
@@ -362,7 +363,6 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-tdms
 	poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-ni-veristand
 	poetry run poe static-type-check-python -- --package=hm-locust
-	poetry run poe static-type-check-python -- --package=hm-opal-client
 	poetry run poe static-type-check-python -- --package=hm-serial
 	poetry run poe static-type-check-python -- --package=hm-xxhash
 	poetry run poe static-type-check-python -- --package=machine-learning.convolutional-neural-network
