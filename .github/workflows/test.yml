@@ -169,7 +169,7 @@ jobs:
               - 'machine-learning/hm-mlflow/experiments/predict-diabetes/**'
             hm-opal-client:
               - '.github/workflows/test.yml'
-              - 'hm-opal-client/**'
+              - 'authorization/hm-opal-client/**'
             hm-open3d:
               - '.github/workflows/test.yml'
               - 'computer-vision/hm-open3d/**'
@@ -2193,7 +2193,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./hm-opal-client/Dockerfile
+          file: ./authorization/hm-opal-client/Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
