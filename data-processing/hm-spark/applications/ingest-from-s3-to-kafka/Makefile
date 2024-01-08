@@ -88,8 +88,8 @@ timescaledb-table-truncate:
 	psql postgresql://admin:passw0rd@localhost:25495/hm_iot_db --command="truncate table motor;"
 
 docker-build:
-	cd ../../.. && \
-	docker build --file=hm-spark/applications/ingest-from-s3-to-kafka/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest .
+	cd ../../../.. && \
+	docker build --file=data-processing/hm-spark/applications/ingest-from-s3-to-kafka/Dockerfile --tag=ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest .
 docker-push:
 	docker push ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest
 kubectl-cluster-info:
@@ -130,7 +130,7 @@ kubectl-delete-spark-applications-in-kubernetes-cluster:
 serve-files:
 	brew install codeskyblue/tap/gohttpserver
 	gohttpserver \
-		--root=hm-spark/applications/ \
+		--root=data-processing/hm-spark/applications/ \
 		--port=32609 \
 		--upload
 	ngrok http 32609
