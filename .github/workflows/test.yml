@@ -172,7 +172,7 @@ jobs:
               - 'hm-opal-client/**'
             hm-open3d:
               - '.github/workflows/test.yml'
-              - 'hm-open3d/**'
+              - 'computer-vision/hm-open3d/**'
             hm-prefect-calculate:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/calculate/**'
@@ -193,7 +193,7 @@ jobs:
               - 'data-orchestration/hm-prefect/workflows/print-platform/**'
             hm-pyvista-mount-saint-helens:
               - '.github/workflows/test.yml'
-              - 'hm-pyvista/mount-saint-helens/**'
+              - 'computer-vision/hm-pyvista/mount-saint-helens/**'
             hm-rasa:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-rasa/**'
@@ -1364,21 +1364,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-open3d/pyproject.toml
+          python-version-file: computer-vision/hm-open3d/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-open3d/poetry.lock
+          cache-dependency-path: computer-vision/hm-open3d/poetry.lock
       - name: Install dependencies
-        working-directory: hm-open3d
+        working-directory: computer-vision/hm-open3d
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-open3d
+        working-directory: computer-vision/hm-open3d
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-open3d
+          directory: computer-vision/hm-open3d
 
   prefect-calculate-test:
     name: Prefect (calculate) | Test
@@ -1588,21 +1588,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-pyvista/mount-saint-helens/pyproject.toml
+          python-version-file: computer-vision/hm-pyvista/mount-saint-helens/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-pyvista/mount-saint-helens/poetry.lock
+          cache-dependency-path: computer-vision/hm-pyvista/mount-saint-helens/poetry.lock
       - name: Install dependencies
-        working-directory: hm-pyvista/mount-saint-helens
+        working-directory: computer-vision/hm-pyvista/mount-saint-helens
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-pyvista/mount-saint-helens
+        working-directory: computer-vision/hm-pyvista/mount-saint-helens
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-pyvista/mount-saint-helens
+          directory: computer-vision/hm-pyvista/mount-saint-helens
 
   ray-greet-test:
     name: Ray (greet) | Test
