@@ -83,7 +83,7 @@ jobs:
             hm-opal-client:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-opal-client/**'
+              - 'authorization/hm-opal-client/**'
             hm-pgbackrest:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -769,7 +769,7 @@ jobs:
           action: docker/build-push-action@v3
           with: |
             context: .
-            file: ./hm-opal-client/Dockerfile
+            file: ./authorization/hm-opal-client/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-opal-client:latest
             cache-from: type=gha
