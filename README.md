@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dff322ab-c07e-4aac-a0a0-bc50a03b68e5)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/4b153351-4f1b-43c0-a667-8292992de1f7)
 
 # 📦 Setup
 
@@ -194,7 +194,9 @@ make kubernetes-clean
 - **Node.js** - JavaScript runtime
 - **npm** - JavaScript package management
 
-## Database, Data Warehouse, Data Lakehouse
+## Data
+
+### Database, Data Warehouse, Data Lakehouse
 
 - **Trino** - Distributed SQL query engine
 - **PostgreSQL** - Object-relational database
@@ -229,21 +231,30 @@ make kubernetes-clean
 - **Delta Lake** - Data lakehouse
 - **golang-migrate/migrate** - Database migrations
 
-## Data Engineering, Data Science, Machine Learning
+### Data Ingestion
 
-- **NumPy** - Scientific computing library
-- **pandas** - Data analysis library
-  - **GeoPandas** - Geographic data library
-  - **AWS SDK for pandas** - pandas on AWS
-  - **Modin** - pandas workflows scaling
-- **Ray** - Distributed computing framework
-- **Jupyter Notebook** - Web-based interactive computing platform
-  - **nb-clean** - Jupyter notebook cleaning
+- **Airbyte** - Data integration
+- **Vector** - Log collector
+- **Fluent Bit** - Log collector
+
+### Data Orchestration
+
 - **Prefect** - Orchestration platform
 - **Apache Airflow** - Orchestration platform
 - **Temporal** - Orchestration platform
-- **Airbyte** - Data integration
-- **dbt** - Data transformation
+
+### Data Processing
+
+- **Apache Spark** - Data processing framework
+  - **Spark ML** - Spark machine learning
+  - **pyspark** - Spark API library
+  - **Delight** - Spark UI and history server
+- **Apache Sedona** - Spatial data processing framework
+- **Apache Flink** - Data processing framework
+  - **flink-streaming-java** - Flink
+  - **flink-connector-twitter** - Flink Twitter connector
+  - **flink-connector-jdbc** - Flink JDBC Connector
+  - **flink-connector-redis** - Flink Redis connector
 - **Apache Kafka** - Distributed event streaming platform
   - Schema registries
     - **Confluent Schema Registry** - Schema Registry
@@ -260,20 +271,31 @@ make kubernetes-clean
     - **Redpanda Console** - Kafka management tool
     - **AKHQ** - Kafka management tool
     - **UI for Apache Kafka** - Kafka management tool
-- **Apache Spark** - Data processing framework
-  - **Spark ML** - Spark machine learning
-  - **pyspark** - Spark API library
-  - **Delight** - Spark UI and history server
-- **Apache Flink** - Data processing framework
-  - **flink-streaming-java** - Flink
-  - **flink-connector-twitter** - Flink Twitter connector
-  - **flink-connector-jdbc** - Flink JDBC Connector
-  - **flink-connector-redis** - Flink Redis connector
-- **Apache Sedona** - Spatial data processing framework
+
+### Data Transformation
+
+- **dbt** - Data transformation
+
+### Data Visualization
+
 - **Grafana** - Data visualization
 - **Metabase** - Data visualization
 - **Apache Superset** - Data visualization
 - **Tableau** - Data visualization
+
+### Data Analytics
+
+- **NumPy** - Scientific computing library
+- **pandas** - Data analysis library
+  - **GeoPandas** - Geographic data library
+  - **AWS SDK for pandas** - pandas on AWS
+  - **Modin** - pandas workflows scaling
+- **Jupyter Notebook** - Web-based interactive computing platform
+  - **nb-clean** - Jupyter notebook cleaning
+- **Databricks** - Unified data analytics platform
+
+### Machine Learning
+
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
@@ -288,10 +310,8 @@ make kubernetes-clean
 - **DVC** - Data version control
 - **Feast** - Feature store
 - **Kubeflow** - Machine learning platform
-- **SkyPilot** - Sky computing
 - **MLflow** - Machine learning experiment tracking
 - **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)** - Machine learning experiment tracking
-- **Databricks** - Unified data analytics platform
 
 ## Computer Vision
 
@@ -316,8 +336,6 @@ make kubernetes-clean
 - **Netdata** - Distributed monitoring platform
 - **Telegraf** - Plugin-driven server agent
 - **Thanos** - Highly available Prometheus setup with long term storage capabilities
-- **Vector** - Log collector
-- **Fluent Bit** - Log collector
 - **Pixie** - Observability tool for Kubernetes applications
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
@@ -330,6 +348,13 @@ make kubernetes-clean
 - **containerd** - Container runtime
 
 ## Cloud
+
+### Cloud Computing
+
+- **Ray** - Distributed computing framework
+- **SkyPilot** - Sky computing
+
+### Cloud Platform
 
 - **Amazon Web Services**
   - **Amazon Athena** - Serverless query service
@@ -363,7 +388,15 @@ make kubernetes-clean
   - **Dataprep** - Data cleaning
   - **Looker Studio** - Data visualization
   - **Vertex AI** - Machine learning platform
+
+### Cloud Infrastructure
+
+- **Terraform** - Infrastructure as code (IaC)
+- **Pulumi** - Infrastructure as code (IaC)
 - **Karpenter** - Kubernetes node autoscaler
+
+### Cloud Cost
+
 - **Komiser** - Cloud cost monitoring
 
 ## Ops
@@ -378,8 +411,6 @@ make kubernetes-clean
 - **Diun** - Container image update notifier
 - **Vagrant** - Development environments building and distributing
 - **Ansible** - IT automation system
-- **Terraform** - Infrastructure as code (IaC)
-- **Pulumi** - Infrastructure as code (IaC)
 - **Discord** - ChatOps
 - **Opsgenie** - Incident management platform
 - **[GitHub Actions](https://github.com/hongbo-miao/hongbomiao.com/actions)** - Continuous integration
@@ -725,47 +756,7 @@ The VHDL waveforms are displayed in GTKWave.
 
 ![Poky screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/fcb5650c-a33b-4564-ba9e-bca0a666b1a2)
 
-## Computer Vision
-
-### PyVista
-
-![PyVista screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/705509be-4272-4d56-8080-9d91123c56ba)
-
-### Open3D
-
-![Open3D screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/f4c6dca1-b0c1-4370-9c78-bef12bc70218)
-
-## Data
-
-### Vertex AI - AutoML
-
-![Vertex AI screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/96afa9b3-5393-487d-9eca-8251110f5ddf)
-![Vertex AI screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/902f0d1d-50e8-4e13-91ed-3fa6445c6d81)
-![Vertex AI screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/91edf48a-994b-4de2-bcd5-aeb38059dfd7)
-
-### Dataprep - Data Cleaning
-
-![Dataprep screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/0fea3642-3c55-4f6a-94f3-e62faa41be2a)
-
-### Kubeflow - Machine Learning Platform
-
-![Kubeflow screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/0de50151-9d5d-4239-82de-93bf2eed1169)
-
-### Ray - Distributed Computing
-
-![Ray screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/a7d77743-2a96-4fb0-b075-d2ec48ab655a)
-
-### Prefect - Orchestration Platform
-
-![Prefect screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7880b5a4-9b0b-40c8-ad35-a3e5e26da0aa)
-
-### Airflow - Orchestration Platform
-
-![Airflow screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/449d08dc-08fe-4646-bf7e-8d1f6eb246ee)
-
-### Flink - Data Processing
-
-![Flink screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/df4d0cd7-86da-4682-b097-88ca7ee1b7a7)
+## Database, Data Warehouse, Data Lakehouse
 
 ### Dgraph - Distributed Graph Database
 
@@ -775,7 +766,39 @@ The VHDL waveforms are displayed in GTKWave.
 
 ![Redis screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/c366b78c-90e2-441a-943b-4be59e0bea6c)
 
+## Data Cleaning
+
+### Dataprep - Data Cleaning
+
+![Dataprep screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/0fea3642-3c55-4f6a-94f3-e62faa41be2a)
+
+## Data Orchestration
+
+### Prefect - Orchestration Platform
+
+![Prefect screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7880b5a4-9b0b-40c8-ad35-a3e5e26da0aa)
+
+### Airflow - Orchestration Platform
+
+![Airflow screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/449d08dc-08fe-4646-bf7e-8d1f6eb246ee)
+
+## Data Processing
+
+### Flink - Data Processing
+
+![Flink screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/df4d0cd7-86da-4682-b097-88ca7ee1b7a7)
+
 ## Machine Learning
+
+### Vertex AI - AutoML
+
+![Vertex AI screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/96afa9b3-5393-487d-9eca-8251110f5ddf)
+![Vertex AI screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/902f0d1d-50e8-4e13-91ed-3fa6445c6d81)
+![Vertex AI screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/91edf48a-994b-4de2-bcd5-aeb38059dfd7)
+
+### Kubeflow - Machine Learning Platform
+
+![Kubeflow screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/0de50151-9d5d-4239-82de-93bf2eed1169)
 
 ### Contextual AI assistant
 
@@ -788,6 +811,22 @@ Chatbot on Telegram powered by Rasa.
 [Distributed hyperparameter optimization result](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf) by Weights & Biases.
 
 [![Weights & Biases screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/0fb8e396-94e0-47ad-80e2-517dfa191eed)](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)
+
+## Computer Vision
+
+### PyVista
+
+![PyVista screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/705509be-4272-4d56-8080-9d91123c56ba)
+
+### Open3D
+
+![Open3D screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/f4c6dca1-b0c1-4370-9c78-bef12bc70218)
+
+## Cloud Computing
+
+### Ray - Distributed Computing
+
+![Ray screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/a7d77743-2a96-4fb0-b075-d2ec48ab655a)
 
 ## Cloud Native
 
