@@ -142,7 +142,7 @@ jobs:
               - 'data-orchestration/hm-airflow/**'
             hm-geopandas:
               - '.github/workflows/test.yml'
-              - 'hm-geopandas/**'
+              - 'data-analytics/hm-geopandas/**'
             national-instruments-hm-ni-veristand:
               - '.github/workflows/test.yml'
               - 'national-instruments/hm-ni-veristand/**'
@@ -1012,21 +1012,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: hm-geopandas/pyproject.toml
+          python-version-file: data-analytics/hm-geopandas/pyproject.toml
           cache: poetry
-          cache-dependency-path: hm-geopandas/poetry.lock
+          cache-dependency-path: data-analytics/hm-geopandas/poetry.lock
       - name: Install dependencies
-        working-directory: hm-geopandas
+        working-directory: data-analytics/hm-geopandas
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: hm-geopandas
+        working-directory: data-analytics/hm-geopandas
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: hm-geopandas
+          directory: data-analytics/hm-geopandas
 
   hugging-face-analyze-sentiment-test:
     name: Hugging Face (analyze-sentiment) | Test
