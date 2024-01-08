@@ -238,13 +238,13 @@ jobs:
               - 'machine-learning/hugging-face/analyze-sentiment/**'
             mobile-android:
               - '.github/workflows/test.yml'
-              - 'mobile-android/**'
+              - 'mobile/mobile-android/**'
             mobile-ios:
               - '.github/workflows/test.yml'
-              - 'mobile-ios/**'
+              - 'mobile/mobile-ios/**'
             mobile-react-native:
               - '.github/workflows/test.yml'
-              - 'mobile-react-native/**'
+              - 'mobile/mobile-react-native/**'
             neural-forecasting-forecast-air-passenger-number:
               - '.github/workflows/test.yml'
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
@@ -416,7 +416,7 @@ jobs:
     env:
       # To use a Gemfile which is not at the root
       # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
-      BUNDLE_GEMFILE: ${{ github.workspace }}/mobile-ios/Gemfile
+      BUNDLE_GEMFILE: ${{ github.workspace }}/mobile/mobile-ios/Gemfile
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -427,10 +427,10 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          working-directory: mobile-ios
+          working-directory: mobile/mobile-ios
           bundler-cache: true
       - name: Build
-        working-directory: mobile-ios
+        working-directory: mobile/mobile-ios
         run: |
           xcodebuild build-for-testing \
             -project HMMobile.xcodeproj \
@@ -439,7 +439,7 @@ jobs:
       - name: Test
         uses: wandalen/wretry.action@v1
         with:
-          current_path: mobile-ios
+          current_path: mobile/mobile-ios
           command: |
             xcodebuild test-without-building \
               -project HMMobile.xcodeproj \
@@ -448,13 +448,13 @@ jobs:
           attempt_limit: 3
           attempt_delay: 2000
       - name: Convert coverage to Cobertura XML format
-        working-directory: mobile-ios
+        working-directory: mobile/mobile-ios
         run: |
           bundle exec slather
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: mobile-ios
+          directory: mobile/mobile-ios
 
   mobile-android-lint:
     name: Mobile - Android | Lint
@@ -473,7 +473,7 @@ jobs:
           java-version: '17'
           cache: gradle
       - name: Lint
-        working-directory: mobile-android
+        working-directory: mobile/mobile-android
         run: |
           ./gradlew lint
 
@@ -494,7 +494,7 @@ jobs:
           java-version: '17'
           cache: gradle
       - name: Test
-        working-directory: mobile-android
+        working-directory: mobile/mobile-android
         run: |
           ./gradlew test
 
@@ -517,7 +517,7 @@ jobs:
       - name: Instrumented Test
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          working-directory: mobile-android
+          working-directory: mobile/mobile-android
           api-level: 29
           script: ./gradlew connectedAndroidTest
 
@@ -534,21 +534,21 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: mobile-react-native/.nvmrc
+          node-version-file: mobile/mobile-react-native/.nvmrc
           cache: npm
-          cache-dependency-path: mobile-react-native/package-lock.json
+          cache-dependency-path: mobile/mobile-react-native/package-lock.json
       - name: Install dependencies
-        working-directory: mobile-react-native
+        working-directory: mobile/mobile-react-native
         run: |
           npm ci
       - name: Test
-        working-directory: mobile-react-native
+        working-directory: mobile/mobile-react-native
         run: |
           npm run test:coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: mobile-react-native
+          directory: mobile/mobile-react-native
 
   api-go-test:
     name: API - Go | Test

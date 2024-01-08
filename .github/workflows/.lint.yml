@@ -54,10 +54,10 @@ jobs:
               - 'kubernetes/manifests/**'
             mobile-android:
               - '.github/workflows/.lint.yml'
-              - 'mobile-android/**'
+              - 'mobile/mobile-android/**'
             mobile-react-native:
               - '.github/workflows/.lint.yml'
-              - 'mobile-react-native/**'
+              - 'mobile/mobile-react-native/**'
             web:
               - '.github/workflows/.lint.yml'
               - 'web/**'
@@ -289,15 +289,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: mobile-react-native/.nvmrc
+          node-version-file: mobile/mobile-react-native/.nvmrc
           cache: npm
-          cache-dependency-path: mobile-react-native/package-lock.json
+          cache-dependency-path: mobile/mobile-react-native/package-lock.json
       - name: Install dependencies
-        working-directory: mobile-react-native
+        working-directory: mobile/mobile-react-native
         run: |
           npm ci
       - name: Lint JavaScript
-        working-directory: mobile-react-native
+        working-directory: mobile/mobile-react-native
         run: |
           npm run lint:javascript
 
@@ -368,7 +368,7 @@ jobs:
           java-version: '17'
           cache: gradle
       - name: Lint Kotlin
-        working-directory: mobile-android
+        working-directory: mobile/mobile-android
         run: |
           ./gradlew ktlintCheck
 
