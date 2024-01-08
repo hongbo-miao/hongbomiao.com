@@ -355,7 +355,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena
 	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-trino
 	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.write-to-delta-lake
-	poetry run poe static-type-check-python -- --package=grafana.hm-dashboard
+	poetry run poe static-type-check-python -- --package=data-visualization.grafana.hm-dashboard
 	poetry run poe static-type-check-python -- --package=hm-locust
 	poetry run poe static-type-check-python -- --package=hm-opal-client
 	poetry run poe static-type-check-python -- --package=hm-open3d
