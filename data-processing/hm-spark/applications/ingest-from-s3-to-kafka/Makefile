@@ -49,7 +49,7 @@ spark-submit-to-local:
 # 2 - Run in a pod. Cluster mode (the master node will assign to worker nodes)
 rclone-sync:
 	cd ../../.. && \
-	rclone sync --progress national-instruments/hm-tdms/data hm-s3:hongbomiao-bucket/iot --include="*.parquet"
+	rclone sync --progress hardware-in-the-loop/national-instruments/hm-tdms/data hm-s3:hongbomiao-bucket/iot --include="*.parquet"
 
 kafka-consume:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \

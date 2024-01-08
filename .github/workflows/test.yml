@@ -145,13 +145,13 @@ jobs:
               - 'data-analytics/hm-geopandas/**'
             national-instruments-hm-ni-veristand:
               - '.github/workflows/test.yml'
-              - 'national-instruments/hm-ni-veristand/**'
+              - 'hardware-in-the-loop/national-instruments/hm-ni-veristand/**'
             national-instruments-hm-pyvisa:
               - '.github/workflows/test.yml'
-              - 'national-instruments/hm-pyvisa/**'
+              - 'hardware-in-the-loop/national-instruments/hm-pyvisa/**'
             national-instruments-hm-tdms:
               - '.github/workflows/test.yml'
-              - 'national-instruments/hm-tdms/**'
+              - 'hardware-in-the-loop/national-instruments/hm-tdms/**'
             hm-kubeflow-calculate:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-kubeflow/pipelines/calculate/**'
@@ -1268,21 +1268,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: national-instruments/hm-ni-veristand/pyproject.toml
+          python-version-file: hardware-in-the-loop/national-instruments/hm-ni-veristand/pyproject.toml
           cache: poetry
-          cache-dependency-path: national-instruments/hm-ni-veristand/poetry.lock
+          cache-dependency-path: hardware-in-the-loop/national-instruments/hm-ni-veristand/poetry.lock
       - name: Install dependencies
-        working-directory: national-instruments/hm-ni-veristand
+        working-directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: national-instruments/hm-ni-veristand
+        working-directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: national-instruments/hm-ni-veristand
+          directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
 
   national-instruments-hm-pyvisa-test:
     name: National Instruments (pyvisa) | Test
@@ -1300,21 +1300,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: national-instruments/hm-pyvisa/pyproject.toml
+          python-version-file: hardware-in-the-loop/national-instruments/hm-pyvisa/pyproject.toml
           cache: poetry
-          cache-dependency-path: national-instruments/hm-pyvisa/poetry.lock
+          cache-dependency-path: hardware-in-the-loop/national-instruments/hm-pyvisa/poetry.lock
       - name: Install dependencies
-        working-directory: national-instruments/hm-pyvisa
+        working-directory: hardware-in-the-loop/national-instruments/hm-pyvisa
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: national-instruments/hm-pyvisa
+        working-directory: hardware-in-the-loop/national-instruments/hm-pyvisa
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: national-instruments/hm-pyvisa
+          directory: hardware-in-the-loop/national-instruments/hm-pyvisa
 
   national-instruments-hm-tdms-test:
     name: National Instruments (tdms) | Test
@@ -1332,21 +1332,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version-file: national-instruments/hm-tdms/pyproject.toml
+          python-version-file: hardware-in-the-loop/national-instruments/hm-tdms/pyproject.toml
           cache: poetry
-          cache-dependency-path: national-instruments/hm-tdms/poetry.lock
+          cache-dependency-path: hardware-in-the-loop/national-instruments/hm-tdms/poetry.lock
       - name: Install dependencies
-        working-directory: national-instruments/hm-tdms
+        working-directory: hardware-in-the-loop/national-instruments/hm-tdms
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: national-instruments/hm-tdms
+        working-directory: hardware-in-the-loop/national-instruments/hm-tdms
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: national-instruments/hm-tdms
+          directory: hardware-in-the-loop/national-instruments/hm-tdms
 
   open3d-test:
     name: Open3D | Test
