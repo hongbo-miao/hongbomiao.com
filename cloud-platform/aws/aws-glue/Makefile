@@ -1,7 +1,9 @@
-aws-glue-crawler-get-crawler:
-	aws glue get-crawler --name=hm-delta-lake-crawler-iot
+aws-glue-job-run:
+	aws glue start-job-run --job-name=hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data
 
-aws-glue-crawler-get-connection:
+aws-glue-crawler-crawler-get:
+	aws glue get-crawler --name=hm-delta-lake-crawler-iot
+aws-glue-crawler-connection-get:
 	aws glue get-connection --name=hm-postgres-connection
 
 aws-glue-partition-index-list:
