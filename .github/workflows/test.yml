@@ -81,8 +81,8 @@ jobs:
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
+        uses: actions/checkout@v4.1.1
+      - uses: dorny/paths-filter@v2.11.1
         id: filter
         with:
           filters: |
@@ -281,9 +281,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: web/.nvmrc
           cache: npm
@@ -310,9 +310,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: web-cypress/.nvmrc
           cache: npm
@@ -350,9 +350,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: web/.nvmrc
           cache: npm
@@ -382,12 +382,12 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
         with:
           # Required to retrieve git history
           fetch-depth: 0
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: web/.nvmrc
           cache: npm
@@ -419,9 +419,9 @@ jobs:
       BUNDLE_GEMFILE: ${{ github.workspace }}/mobile/mobile-ios/Gemfile
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Xcode
-        uses: maxim-lobanov/setup-xcode@v1
+        uses: maxim-lobanov/setup-xcode@v1.6.0
         with:
           xcode-version: '14.2'
       - name: Set up Ruby
@@ -437,7 +437,7 @@ jobs:
             -scheme HMMobile \
             -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
       - name: Test
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
           current_path: mobile/mobile-ios
           command: |
@@ -465,9 +465,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.0.0
         with:
           distribution: corretto
           java-version: '17'
@@ -486,9 +486,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.0.0
         with:
           distribution: corretto
           java-version: '17'
@@ -507,15 +507,15 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.0.0
         with:
           distribution: corretto
           java-version: '17'
           cache: gradle
       - name: Instrumented Test
-        uses: reactivecircus/android-emulator-runner@v2
+        uses: reactivecircus/android-emulator-runner@v2.29.0
         with:
           working-directory: mobile/mobile-android
           api-level: 29
@@ -530,9 +530,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: mobile/mobile-react-native/.nvmrc
           cache: npm
@@ -559,9 +559,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v5.0.0
         with:
           go-version-file: api-go/go.mod
           cache-dependency-path: api-go/go.sum
@@ -583,9 +583,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: api-node/.nvmrc
           cache: npm
@@ -612,9 +612,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: api-node/.nvmrc
           cache: npm
@@ -639,7 +639,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       # librdkafka is for confluent-kafka
       - name: Install librdkafka
         run: |
@@ -658,7 +658,7 @@ jobs:
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: api-python/pyproject.toml
           cache: poetry
@@ -685,12 +685,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-orchestration/hm-airflow/pyproject.toml
           cache: poetry
@@ -717,12 +717,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/pyproject.toml
           cache: poetry
@@ -749,12 +749,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: cloud-infrastructure/terraform/data/aws-glue/spark-scripts/pyproject.toml
           cache: poetry
@@ -781,12 +781,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: embedded/can-bus/pyproject.toml
           cache: poetry
@@ -813,12 +813,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-distribution-service/pyproject.toml
           cache: poetry
@@ -845,12 +845,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-transformation/dbt/projects/dbt_hm_postgres/pyproject.toml
           cache: poetry
@@ -877,12 +877,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-storage/delta-lake/read-delta-lake-by-amazon-athena/pyproject.toml
           cache: poetry
@@ -909,12 +909,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-storage/delta-lake/read-delta-lake-by-trino/pyproject.toml
           cache: poetry
@@ -941,12 +941,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-storage/delta-lake/write-to-delta-lake/pyproject.toml
           cache: poetry
@@ -973,12 +973,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/feature-store/pyproject.toml
           cache: poetry
@@ -1005,12 +1005,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-analytics/hm-geopandas/pyproject.toml
           cache: poetry
@@ -1037,12 +1037,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/hugging-face/analyze-sentiment/pyproject.toml
           cache: poetry
@@ -1069,12 +1069,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/hm-kubeflow/pipelines/calculate/pyproject.toml
           cache: poetry
@@ -1101,12 +1101,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/hm-kubeflow/pipelines/classify-mnist/pyproject.toml
           cache: poetry
@@ -1133,12 +1133,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/hm-langchain/applications/chat-pdf/pyproject.toml
           cache: poetry
@@ -1165,12 +1165,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/hm-mlflow/experiments/classify-mnist/pyproject.toml
           cache: poetry
@@ -1197,12 +1197,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/hm-mlflow/experiments/predict-diabetes/pyproject.toml
           cache: poetry
@@ -1229,12 +1229,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/neural-forecasting/forecast-air-passenger-number/pyproject.toml
           cache: poetry
@@ -1261,12 +1261,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: hardware-in-the-loop/national-instruments/hm-ni-veristand/pyproject.toml
           cache: poetry
@@ -1293,12 +1293,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: hardware-in-the-loop/national-instruments/hm-pyvisa/pyproject.toml
           cache: poetry
@@ -1325,12 +1325,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: hardware-in-the-loop/national-instruments/hm-tdms/pyproject.toml
           cache: poetry
@@ -1357,12 +1357,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: computer-vision/hm-open3d/pyproject.toml
           cache: poetry
@@ -1389,12 +1389,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-orchestration/hm-prefect/workflows/calculate/pyproject.toml
           cache: poetry
@@ -1421,12 +1421,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-orchestration/hm-prefect/workflows/greet/pyproject.toml
           cache: poetry
@@ -1453,12 +1453,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-orchestration/hm-prefect/workflows/ingest-data/pyproject.toml
           cache: poetry
@@ -1485,12 +1485,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-orchestration/hm-prefect/workflows/print-platform/pyproject.toml
           cache: poetry
@@ -1517,12 +1517,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: cloud-security/hm-prowler/pyproject.toml
           cache: poetry
@@ -1549,12 +1549,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: cloud-infrastructure/hm-pulumi/pyproject.toml
           cache: poetry
@@ -1581,12 +1581,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: computer-vision/hm-pyvista/mount-saint-helens/pyproject.toml
           cache: poetry
@@ -1613,12 +1613,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: cloud-computing/hm-ray/applications/greet/pyproject.toml
           cache: poetry
@@ -1645,12 +1645,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/reinforcement-learning/cart-pole/pyproject.toml
           cache: poetry
@@ -1677,12 +1677,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: embedded/hm-serial/pyproject.toml
           cache: poetry
@@ -1709,12 +1709,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: cloud-computing/hm-skypilot/pyproject.toml
           cache: poetry
@@ -1741,12 +1741,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/hm-supervision/detect-objects/pyproject.toml
           cache: poetry
@@ -1773,12 +1773,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: hm-xxhash/pyproject.toml
           cache: poetry
@@ -1805,12 +1805,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-processing/hm-spark/applications/analyze-coffee-customers/pyproject.toml
           cache: poetry
@@ -1837,12 +1837,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-processing/hm-spark/applications/find-retired-people-python/pyproject.toml
           cache: poetry
@@ -1869,9 +1869,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.0.0
         with:
           distribution: corretto
           java-version: '17'
@@ -1890,12 +1890,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes/pyproject.toml
           cache: poetry
@@ -1922,12 +1922,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes-sql/pyproject.toml
           cache: poetry
@@ -1954,9 +1954,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.0.0
         with:
           distribution: corretto
           java-version: '17'
@@ -1975,12 +1975,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-processing/hm-spark/applications/recommend-movies/pyproject.toml
           cache: poetry
@@ -2007,9 +2007,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.0.0
         with:
           distribution: corretto
           java-version: '11'
@@ -2028,7 +2028,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Download OPA Binary
         run: |
           curl --silent --fail --show-error --location --output opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
@@ -2047,13 +2047,13 @@ jobs:
     container: ubuntu:jammy
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Setup ROS
-        uses: ros-tooling/setup-ros@v0.7
+        uses: ros-tooling/setup-ros@0.7.1
         with:
           required-ros-distributions: humble
       - name: Build and test
-        uses: ros-tooling/action-ros-ci@v0.3
+        uses: ros-tooling/action-ros-ci@0.3.5
         with:
           package-name: turtle_robot
           target-ros2-distro: humble
@@ -2067,7 +2067,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Test
         run: |
           docker build --file=data-storage/prometheus/Dockerfile.test .
@@ -2081,12 +2081,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: data-visualization/grafana/hm-dashboard/pyproject.toml
           cache: poetry
@@ -2113,9 +2113,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
           cache: npm
@@ -2157,9 +2157,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
           cache: npm
@@ -2186,11 +2186,11 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Build Docker image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v5.1.0
         with:
           context: .
           file: ./authorization/hm-opal-client/Dockerfile
@@ -2206,9 +2206,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Train and test
-        uses: RasaHQ/rasa-train-test-gha@main
+        uses: RasaHQ/rasa-train-test-gha@2.2.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workspace: ${{ github.workspace }}/machine-learning/hm-rasa
@@ -2222,12 +2222,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/graph-neural-network/pyproject.toml
           cache: poetry
@@ -2254,14 +2254,14 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up CML
-        uses: iterative/setup-cml@v1
+        uses: iterative/setup-cml@v2.0.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/graph-neural-network/pyproject.toml
           cache: poetry
@@ -2286,12 +2286,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
           cache: poetry
@@ -2318,14 +2318,14 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up CML
-        uses: iterative/setup-cml@v1
+        uses: iterative/setup-cml@v2.0.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
           cache: poetry
@@ -2360,9 +2360,9 @@ jobs:
     if: ${{ false }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up CML
-        uses: iterative/setup-cml@v1
+        uses: iterative/setup-cml@v2.0.1
       - name: Set up cloud
         shell: bash
         env:
@@ -2385,12 +2385,12 @@ jobs:
     container: docker://iterativeai/cml:0-dvc2-base1
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
           cache: poetry
