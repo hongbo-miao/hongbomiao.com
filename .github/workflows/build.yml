@@ -39,8 +39,8 @@ jobs:
       web: ${{ steps.filter.outputs.web }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
+        uses: actions/checkout@v4.1.1
+      - uses: dorny/paths-filter@v2.11.1
         id: filter
         with:
           filters: |
@@ -138,23 +138,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./web/Dockerfile
@@ -174,23 +174,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./api-node/Dockerfile
@@ -210,23 +210,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./api-python/Dockerfile
@@ -246,23 +246,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./api-go/build/package/graphql_server/Dockerfile
@@ -282,23 +282,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./api-go/build/package/grpc_server/Dockerfile
@@ -318,23 +318,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./api-go/build/package/config_loader/Dockerfile
@@ -354,23 +354,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./api-go/build/package/decision_logger/Dockerfile
@@ -390,23 +390,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./data-orchestration/hm-prefect/workflows/calculate/Dockerfile
@@ -426,23 +426,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./data-orchestration/hm-prefect/workflows/greet/Dockerfile
@@ -462,23 +462,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./data-orchestration/hm-prefect/workflows/ingest-data/Dockerfile
@@ -498,23 +498,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./data-orchestration/hm-prefect/workflows/print-platform/Dockerfile
@@ -534,23 +534,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./data-processing/hm-spark/applications/find-retired-people-python/Dockerfile
@@ -570,23 +570,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./data-processing/hm-spark/applications/find-retired-people-scala/Dockerfile
@@ -606,23 +606,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./data-processing/hm-spark/applications/ingest-from-s3-to-kafka/Dockerfile
@@ -642,23 +642,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./hm-kafka/iot-kafka-connect/Dockerfile
@@ -678,23 +678,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./hm-kafka/logging-kafka-connect/Dockerfile
@@ -714,23 +714,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./hm-kafka/opa-kafka-connect/Dockerfile
@@ -750,23 +750,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./authorization/hm-opal-client/Dockerfile
@@ -786,23 +786,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./machine-learning/hm-rasa/Dockerfile
@@ -822,15 +822,15 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -842,9 +842,9 @@ jobs:
         run: |
           echo $HM_STEAMING_APPLICATION_PROPERTIES_BASE64 | base64 --decode > application-production.properties
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./data-processing/flink/applications/stream-tweets/Dockerfile
@@ -864,15 +864,15 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -885,9 +885,9 @@ jobs:
           docker container rm $(cat /tmp/cid.txt)
           rm -f /tmp/cid.txt
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./data-storage/hm-keydb/Dockerfile
@@ -907,23 +907,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./hm-traefik/Dockerfile
@@ -943,23 +943,23 @@ jobs:
     timeout-minutes: 60
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.0.0
         with:
           platforms: amd64,arm64
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.0.0
       - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v1
+        uses: wandalen/wretry.action@v1.3.0
         with:
-          action: docker/build-push-action@v3
+          action: docker/build-push-action@v5.1.0
           with: |
             context: .
             file: ./hm-alpine/Dockerfile
@@ -979,7 +979,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Build pgbackrest
         run: |
           docker build --file=data-storage/hm-pgbackrest/Dockerfile --tag=ghcr.io/hongbo-miao/hm-pgbackrest:latest .
@@ -1004,9 +1004,9 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: web/.nvmrc
           cache: npm

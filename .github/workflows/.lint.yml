@@ -26,8 +26,8 @@ jobs:
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
+        uses: actions/checkout@v4.1.1
+      - uses: dorny/paths-filter@v2.11.1
         id: filter
         with:
           filters: |
@@ -72,12 +72,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: pyproject.toml
           cache: poetry
@@ -99,9 +99,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Lint C, C++
-        uses: DoozyX/clang-format-lint-action@v0.15
+        uses: DoozyX/clang-format-lint-action@v0.17
         with:
           source: .
           extensions: c,cpp,h,ino
@@ -115,12 +115,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: pyproject.toml
           cache: poetry
@@ -139,11 +139,11 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
       - name: Lint Commit
-        uses: wagoid/commitlint-github-action@v5
+        uses: wagoid/commitlint-github-action@v5.4.5
 
   lint-css:
     name: CSS
@@ -152,9 +152,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -173,9 +173,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Lint Dockerfile
-        uses: jbergstroem/hadolint-gh-action@v1
+        uses: jbergstroem/hadolint-gh-action@v1.11.0
         with:
           dockerfile: '**/Dockerfile*'
 
@@ -188,14 +188,14 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v5.0.0
         with:
           go-version-file: api-go/go.mod
           cache-dependency-path: api-go/go.sum
       - name: Lint Go
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v3.7.0
         with:
           version: latest
           working-directory: api-go
@@ -210,9 +210,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: api-node/.nvmrc
           cache: npm
@@ -235,9 +235,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: ethereum/.nvmrc
           cache: npm
@@ -260,9 +260,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
           cache: npm
@@ -285,9 +285,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: mobile/mobile-react-native/.nvmrc
           cache: npm
@@ -310,9 +310,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: web/.nvmrc
           cache: npm
@@ -335,9 +335,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: web-cypress/.nvmrc
           cache: npm
@@ -360,9 +360,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.0.0
         with:
           distribution: corretto
           java-version: '17'
@@ -381,7 +381,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Lint Kubernetes
         run: |
           docker run \
@@ -407,9 +407,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -428,12 +428,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: pyproject.toml
           cache: poetry
@@ -454,7 +454,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Lint Protocol Buffers
         working-directory: api-go
         run: |
@@ -472,12 +472,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: pyproject.toml
           cache: poetry
@@ -502,9 +502,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v3.3.0
         with:
           version: '6.*'
           cache: true
@@ -519,7 +519,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -537,9 +537,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.0.0
         with:
           distribution: corretto
           java-version: '17'
@@ -562,9 +562,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.0.0
         with:
           distribution: corretto
           java-version: '17'
@@ -585,7 +585,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Lint Shell
         run: |
           shellcheck $(git ls-files '*.sh')
@@ -597,9 +597,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -618,12 +618,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: pyproject.toml
           cache: poetry
@@ -654,7 +654,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Lint Terraform
@@ -668,12 +668,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: pyproject.toml
           cache: poetry
@@ -692,9 +692,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.0.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -713,12 +713,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
       - name: Install Poetry
         run: |
           pipx install poetry
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.0.0
         with:
           python-version-file: pyproject.toml
           cache: poetry
