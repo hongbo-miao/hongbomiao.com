@@ -383,6 +383,23 @@ ssh = ["paramiko"]
 tqdm = ["tqdm"]
 
 [[package]]
+name = "hub-sdk"
+version = "0.0.2"
+description = "Ultralytics HUB Client SDK."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "hub-sdk-0.0.2.tar.gz", hash = "sha256:8528ca260fe9dbe19732da2fc38d9a60d54c034bd4db74f3adc3e4def5edd4dc"},
+    {file = "hub_sdk-0.0.2-py3-none-any.whl", hash = "sha256:1b4fc6468a6b1149c8bfc4f5dcb97c6924f1194315b3b539556141fc9c09a455"},
+]
+
+[package.dependencies]
+requests = "*"
+
+[package.extras]
+dev = ["check-manifest", "coverage[toml]", "ipython", "mkdocs-material", "mkdocs-redirects", "mkdocs-ultralytics-plugin (>=0.0.34)", "mkdocstrings[python]", "pre-commit", "pytest", "pytest-cov"]
+
+[[package]]
 name = "idna"
 version = "3.6"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -1587,16 +1604,17 @@ files = [
 
 [[package]]
 name = "ultralytics"
-version = "8.0.238"
+version = "8.0.239"
 description = "Ultralytics YOLOv8 for SOTA object detection, multi-object tracking, instance segmentation, pose estimation and image classification."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "ultralytics-8.0.238-py3-none-any.whl", hash = "sha256:9d36ff683f3495a497ead9f0e42f5d2d6a101138d685fc9720b0cfd6bc22d937"},
-    {file = "ultralytics-8.0.238.tar.gz", hash = "sha256:e7006d25b32b9d3342e3ef1c1fd959c681d058c071e522c41374382151b9a3ed"},
+    {file = "ultralytics-8.0.239-py3-none-any.whl", hash = "sha256:97387df36996c95bb10a63d904a98315b035a89406681de44b168d2b5eef4f96"},
+    {file = "ultralytics-8.0.239.tar.gz", hash = "sha256:ec7e084639d16d2e1c22b38d23a15e9a9ad1da3148a71002c8bb929a184f6d59"},
 ]
 
 [package.dependencies]
+hub-sdk = ">=0.0.2"
 matplotlib = ">=3.3.0"
 numpy = ">=1.22.2"
 opencv-python = ">=4.6.0"
@@ -1639,4 +1657,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "061d0a2b78cde601a68bf24d79636486ac7fd6f7b0d4f33c84dbebfd1d6c51c0"
+content-hash = "6dbd7c8bb6f7f5eb11a95bd2aba8d31cb0ca8154f2262c5e18dd34ef1110022b"
