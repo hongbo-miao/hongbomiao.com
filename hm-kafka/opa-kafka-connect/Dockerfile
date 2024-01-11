@@ -4,7 +4,7 @@ RUN mkdir -p /opt/kafka/plugins/ \
   # debezium-connector-postgres
   # https://mvnrepository.com/artifact/io.debezium/debezium-connector-postgres \
   && wget --no-verbose --output-document=debezium-connector-postgres.tar.gz https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/2.1.4.Final/debezium-connector-postgres-2.1.4.Final-plugin.tar.gz \
-  && tar -x -f debezium-connector-postgres.tar.gz -C /opt/kafka/plugins/ \
+  && tar --extract --file=debezium-connector-postgres.tar.gz -C /opt/kafka/plugins/ \
   && rm -f debezium-connector-postgres.tar.gz \
   # confluentinc-kafka-connect-elasticsearch
   # https://www.confluent.io/hub/confluentinc/kafka-connect-elasticsearch
