@@ -462,6 +462,7 @@ make kubernetes-clean
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
 - **ASTERIOS** - Real-time, safety-critical applications development
+- **PX4** - Flight control software
 - **RTI Connext** - Real-time, distributed systems framework
   - **RTI Connext DDS** - Data distribution service (DDS)
 - **Rclone** - Sync program
@@ -742,6 +743,10 @@ The following presents a model of a radar-based air defense system. Bombers are 
 ![ROS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/4e4ab425-53a1-428d-abb9-408eb48553da)
 
 ![ROS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/6728d19c-9f04-4ec9-a603-46fd8ee0e2b0)
+
+### PX4 - Flight Control Software
+
+![PX4 screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/715acd1d-a5e3-428c-a3b4-97be2700c4f5)
 
 ### OpenSCAD - 3D CAD Modeller
 
