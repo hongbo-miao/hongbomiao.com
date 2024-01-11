@@ -2,40 +2,40 @@
 
 [[package]]
 name = "awswrangler"
-version = "3.4.2"
+version = "3.5.0"
 description = "Pandas on AWS."
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "awswrangler-3.4.2-py3-none-any.whl", hash = "sha256:d9a80d0d00556e5341d8ec40765b8e5ad332c98621ff633415f764612f27a3f2"},
-    {file = "awswrangler-3.4.2.tar.gz", hash = "sha256:b680040c4541b9cf45f6ef02c4e6b1ae5f895559dfc57c9b521f6c9726e2738e"},
+    {file = "awswrangler-3.5.0-py3-none-any.whl", hash = "sha256:eb7ded7027a3f82e5438fe69439b4a45a79fc9f10e38f7cb08be751e7522f37b"},
+    {file = "awswrangler-3.5.0.tar.gz", hash = "sha256:7ca20be9dfcee56e7d13d1287874fe2c8a3a7b0cd5063f62c6253816413f7487"},
 ]
 
 [package.dependencies]
 boto3 = ">=1.20.32,<2.0.0"
 botocore = ">=1.23.32,<2.0.0"
-numpy = ">=1.18,<2.0"
+numpy = {version = ">=1.18,<2.0", markers = "python_version < \"3.12\""}
 packaging = ">=21.1,<24.0"
-pandas = ">=1.2.0,<3.0.0"
+pandas = {version = ">=1.2.0,<3.0.0", markers = "python_version >= \"3.9\""}
 pyarrow = ">=7.0.0"
 typing-extensions = ">=4.4.0,<5.0.0"
 
 [package.extras]
-deltalake = ["deltalake (>=0.6.4,<0.11.0)"]
-geopandas = ["geopandas (>=0.13.2,<0.14.0)"]
-gremlin = ["gremlinpython (>=3.6.2,<4.0.0)", "requests (>=2.0.0,<3.0.0)"]
-modin = ["modin (>=0.23.0,<0.24.0)"]
+deltalake = ["deltalake (>=0.6.4,<0.16.0)"]
+geopandas = ["geopandas (>=0.13.2,<0.14.0)", "geopandas (>=0.14.1,<0.15.0)"]
+gremlin = ["aiohttp (>=3.9.0,<4.0.0)", "async-timeout (>=4.0.3,<5.0.0)", "gremlinpython (>=3.7.1,<4.0.0)", "requests (>=2.0.0,<3.0.0)"]
+modin = ["modin (==0.23.1post0)", "modin (>=0.26.0,<0.27.0)"]
 mysql = ["pymysql (>=1.0.0,<2.0.0)"]
 opencypher = ["requests (>=2.0.0,<3.0.0)"]
 openpyxl = ["openpyxl (>=3.0.0,<4.0.0)"]
 opensearch = ["jsonpath-ng (>=1.5.3,<2.0.0)", "opensearch-py (>=2.0.0,<3.0.0)", "requests-aws4auth (>=1.1.1,<2.0.0)"]
-oracle = ["oracledb (>=1.0.0,<2.0.0)"]
+oracle = ["oracledb (>=1,<3)"]
 postgres = ["pg8000 (>=1.29.0,<2.0.0)"]
 progressbar = ["progressbar2 (>=4.0.0,<5.0.0)"]
-ray = ["ray[data,default] (>=2.0.0,<2.7.0)"]
+ray = ["ray[data,default] (>=2.9.0,<3.0.0)"]
 redshift = ["redshift-connector (>=2.0.0,<3.0.0)"]
 sparql = ["SPARQLWrapper (>=2.0.0,<3.0.0)", "requests (>=2.0.0,<3.0.0)"]
-sqlserver = ["pyodbc (>=4.0.0,<5.0.0)"]
+sqlserver = ["pyodbc (>=4,<6)"]
 
 [[package]]
 name = "boto3"
@@ -510,4 +510,4 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "c1ff354b95d1594bb1c0529c00d34c79c528795f423c177d6eab9f08ef44f3e4"
+content-hash = "673ccd2fc6b1df7bb2cc88654c7da0163d270d199d1e44eefc2fed663abb7da1"
