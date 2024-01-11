@@ -458,6 +458,7 @@ make kubernetes-clean
 - **pySerial** - Serial communication library
 - **cantools** - Controller Area Network (CAN) bus tools
 - **python-can** - Controller Area Network (CAN) bus library
+- **Valgrind** - Memory debugging and profiling
 - **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
