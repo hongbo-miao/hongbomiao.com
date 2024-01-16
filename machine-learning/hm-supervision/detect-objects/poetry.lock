@@ -383,23 +383,6 @@ ssh = ["paramiko"]
 tqdm = ["tqdm"]
 
 [[package]]
-name = "hub-sdk"
-version = "0.0.2"
-description = "Ultralytics HUB Client SDK."
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "hub-sdk-0.0.2.tar.gz", hash = "sha256:8528ca260fe9dbe19732da2fc38d9a60d54c034bd4db74f3adc3e4def5edd4dc"},
-    {file = "hub_sdk-0.0.2-py3-none-any.whl", hash = "sha256:1b4fc6468a6b1149c8bfc4f5dcb97c6924f1194315b3b539556141fc9c09a455"},
-]
-
-[package.dependencies]
-requests = "*"
-
-[package.extras]
-dev = ["check-manifest", "coverage[toml]", "ipython", "mkdocs-material", "mkdocs-redirects", "mkdocs-ultralytics-plugin (>=0.0.34)", "mkdocstrings[python]", "pre-commit", "pytest", "pytest-cov"]
-
-[[package]]
 name = "idna"
 version = "3.6"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -1604,17 +1587,16 @@ files = [
 
 [[package]]
 name = "ultralytics"
-version = "8.1.1"
+version = "8.1.2"
 description = "Ultralytics YOLOv8 for SOTA object detection, multi-object tracking, instance segmentation, pose estimation and image classification."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "ultralytics-8.1.1-py3-none-any.whl", hash = "sha256:829daa1545777ab0c34b054e358fa405903076762d8cdce3f500d7e315cbc92f"},
-    {file = "ultralytics-8.1.1.tar.gz", hash = "sha256:7612b9ee9b06f30b71f8a2d6e05b845fc0c17eae38ee6db3580e9d323b3df3a7"},
+    {file = "ultralytics-8.1.2-py3-none-any.whl", hash = "sha256:6c2be862f494c162ba09cf8d7a4a396aebf8ad39326b1a324d76c7608a731547"},
+    {file = "ultralytics-8.1.2.tar.gz", hash = "sha256:e40e58660a5c579d2b6ad5d036b6ff10cc812ac5e789166f0e351dab6ce6d4ce"},
 ]
 
 [package.dependencies]
-hub-sdk = ">=0.0.2"
 matplotlib = ">=3.3.0"
 numpy = ">=1.22.2"
 opencv-python = ">=4.6.0"
@@ -1635,7 +1617,7 @@ tqdm = ">=4.64.0"
 dev = ["check-manifest", "coverage[toml]", "ipython", "mkdocs-jupyter", "mkdocs-material", "mkdocs-redirects", "mkdocs-ultralytics-plugin (>=0.0.34)", "mkdocstrings[python]", "pre-commit", "pytest", "pytest-cov"]
 explorer = ["duckdb", "lancedb", "streamlit"]
 export = ["coremltools (>=7.0)", "onnx (>=1.12.0)", "openvino-dev (>=2023.0)", "tensorflow (<=2.13.1)", "tensorflowjs (>=3.9.0)"]
-extra = ["albumentations (>=1.0.3)", "ipython", "pycocotools (>=2.0.6)"]
+extra = ["albumentations (>=1.0.3)", "hub-sdk (>=0.0.2)", "ipython", "pycocotools (>=2.0.6)"]
 logging = ["comet", "dvclive (>=2.12.0)", "tensorboard (>=2.13.0)"]
 
 [[package]]
@@ -1657,4 +1639,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "91c1135390dfac902fe33d7ded2b76a28d00def58304507e10b9511c89442b06"
+content-hash = "46d9c85efa38db9e64a7d060f8b00a1c3f9a80d870910ab9520494317e3e3ee5"
