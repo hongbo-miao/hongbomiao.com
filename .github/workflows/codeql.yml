@@ -6,8 +6,8 @@ name: CodeQL
     - cron: 0 9 * * *
 
 jobs:
-  codeql-cpp:
-    name: C++
+  codeql-c-cpp:
+    name: C, C++
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 20
@@ -28,7 +28,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3.23.0
         with:
-          languages: cpp
+          languages: c-cpp
           tools: latest
       - name: Remove irrelevant Makefile
         run: |
@@ -56,8 +56,8 @@ jobs:
       - name: CodeQL
         uses: github/codeql-action/analyze@v3.23.0
 
-  codeql-java:
-    name: Java
+  codeql-java-kotlin:
+    name: Java, Kotlin
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 20
@@ -73,15 +73,15 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3.23.0
         with:
-          languages: java
+          languages: java-kotlin
           tools: latest
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3.23.0
       - name: CodeQL
         uses: github/codeql-action/analyze@v3.23.0
 
-  codeql-javascript:
-    name: JavaScript
+  codeql-javascript-typescript:
+    name: JavaScript, TypeScript
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 20
@@ -91,7 +91,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3.23.0
         with:
-          languages: javascript
+          languages: javascript-typescript
           tools: latest
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3.23.0
@@ -128,6 +128,24 @@ jobs:
         uses: github/codeql-action/init@v3.23.0
         with:
           languages: ruby
+          tools: latest
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3.23.0
+      - name: CodeQL
+        uses: github/codeql-action/analyze@v3.23.0
+
+  codeql-swift:
+    name: Swift
+    runs-on: macos-13
+    environment: test
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3.23.0
+        with:
+          languages: swift
           tools: latest
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3.23.0
