@@ -613,6 +613,7 @@ make kubernetes-clean
 - **Shell**
 - **Solidity**
 - **SQL**
+  - **LogQL**
   - **PromQL**
   - **SedonaSQL**
   - **Spark SQL**
