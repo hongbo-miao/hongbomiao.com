@@ -899,13 +899,13 @@ pgp = ["gpg"]
 
 [[package]]
 name = "dvc"
-version = "3.40.1"
+version = "3.41.0"
 description = "Git for data scientists - manage your code and data together"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-3.40.1-py3-none-any.whl", hash = "sha256:f99748f36ff2f19237ce1e5422c4adbe7028ce9a03be642403c522f06c56468c"},
-    {file = "dvc-3.40.1.tar.gz", hash = "sha256:2be77c113e33e05e9dac06d855165334d224d6736930bef9ab710d3e694f60d1"},
+    {file = "dvc-3.41.0-py3-none-any.whl", hash = "sha256:8825d1adf4221e3300e6aaddf5549b70222b327ad33cc77fe84561259af168e4"},
+    {file = "dvc-3.41.0.tar.gz", hash = "sha256:a77617e07354426698d063ad82f0815fc02cdaae37c97011f72a1f1531f58401"},
 ]
 
 [package.dependencies]
@@ -915,7 +915,7 @@ distro = ">=1.3"
 dpath = ">=2.1.0,<3"
 dvc-data = ">=3.7,<3.8"
 dvc-http = ">=2.29.0"
-dvc-render = ">=1.0.0,<2"
+dvc-render = ">=1.0.1,<2"
 dvc-studio-client = ">=0.17.1,<1"
 dvc-task = ">=0.3.0,<1"
 flatten-dict = ">=0.4.1,<1"
@@ -1031,21 +1031,21 @@ tests = ["pytest (>=7,<8)", "pytest-asyncio (>=0.23.2,<1)", "pytest-benchmark", 
 
 [[package]]
 name = "dvc-render"
-version = "1.0.0"
-description = "DVC render"
+version = "1.0.1"
+description = "Dvc Render"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-render-1.0.0.tar.gz", hash = "sha256:64be22457a92d7c7983de89cb5c4da2d27e289d10f4ee5d4c51ba885ad1c7762"},
-    {file = "dvc_render-1.0.0-py3-none-any.whl", hash = "sha256:08ffd17c1de07fce3440a7082c18f1d7f9dc156e44b42f982f28938fb27b1376"},
+    {file = "dvc-render-1.0.1.tar.gz", hash = "sha256:d7296869ea64c18ead9c99c46062ff116503b77a8d6e5c988f2d24716ea01d4a"},
+    {file = "dvc_render-1.0.1-py3-none-any.whl", hash = "sha256:a8704e2048cd698d5ee19a611619f4f0e9c0a8508a2af3652198a2cb79b7a279"},
 ]
 
 [package.extras]
-dev = ["flatten-dict (>=0.4.1,<1)", "funcy (>=1.17)", "matplotlib", "mkdocs (==1.5.2)", "mkdocs-gen-files (==0.5.0)", "mkdocs-material (==9.3.1)", "mkdocs-section-index (==0.3.6)", "mkdocstrings-python (==1.6.3)", "mypy (==0.981)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-cov (==3.0.0)", "pytest-mock (==3.8.2)", "pytest-sugar (>=0.9.6,<1.0)", "pytest-test-utils (>=0.0.6)", "tabulate (>=0.8.7)"]
+dev = ["dvc-render[docs]", "dvc-render[markdown]", "dvc-render[table]", "dvc-render[tests]"]
 docs = ["mkdocs (==1.5.2)", "mkdocs-gen-files (==0.5.0)", "mkdocs-material (==9.3.1)", "mkdocs-section-index (==0.3.6)", "mkdocstrings-python (==1.6.3)"]
-markdown = ["flatten-dict (>=0.4.1,<1)", "matplotlib", "tabulate (>=0.8.7)"]
+markdown = ["dvc-render[table]", "matplotlib"]
 table = ["flatten-dict (>=0.4.1,<1)", "tabulate (>=0.8.7)"]
-tests = ["flatten-dict (>=0.4.1,<1)", "funcy (>=1.17)", "matplotlib", "mypy (==0.981)", "pylint (==2.15.0)", "pytest (==7.2.0)", "pytest-cov (==3.0.0)", "pytest-mock (==3.8.2)", "pytest-sugar (>=0.9.6,<1.0)", "pytest-test-utils (>=0.0.6)", "tabulate (>=0.8.7)"]
+tests = ["dvc-render[markdown]", "dvc-render[table]", "mypy (==1.2.0)", "pytest (==7.2.0)", "pytest-cov (==3.0.0)", "pytest-mock (==3.8.2)", "pytest-sugar (==0.9.7)"]
 
 [[package]]
 name = "dvc-s3"
@@ -3598,4 +3598,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "10fd9ddbe320baeb138a423e6b04514b085ac24b12904377bcd3967991f5c0e5"
+content-hash = "f0511f494b87f869152f5ea07f6a7993b1cad0a9072d7d52d883b0ed49bd7f7d"
