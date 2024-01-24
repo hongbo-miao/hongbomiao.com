@@ -9,5 +9,6 @@ echo "# Add SSH keys"
 } >> /home/hadoop/.ssh/authorized_keys
 
 echo "# Install Amazon EMR cluster-scoped dependencies"
-sudo curl --silent --fail --show-error --location --remote-name --output-dir /usr/lib/spark/jars/ https://repo1.maven.org/maven2/org/apache/sedona/sedona-spark-shaded-3.4_2.12/1.5.0/sedona-spark-shaded-3.4_2.12-1.5.0.jar
-sudo curl --silent --fail --show-error --location --remote-name --output-dir /usr/lib/spark/jars/ https://repo1.maven.org/maven2/org/datasyslab/geotools-wrapper/1.5.0-28.2/geotools-wrapper-1.5.0-28.2.jar
+# https://sedona.apache.org/latest/setup/emr/
+sudo curl --silent --fail --show-error --location --remote-name --output-dir /usr/lib/spark/jars/ https://repo1.maven.org/maven2/org/apache/sedona/sedona-spark-shaded-3.5_2.12/1.5.1/sedona-spark-shaded-3.5_2.12-1.5.1.jar
+sudo curl --silent --fail --show-error --location --remote-name --output-dir /usr/lib/spark/jars/ https://repo1.maven.org/maven2/org/datasyslab/geotools-wrapper/1.5.1-28.2/geotools-wrapper-1.5.1-28.2.jar
