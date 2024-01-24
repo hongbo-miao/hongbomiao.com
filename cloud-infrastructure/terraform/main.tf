@@ -148,7 +148,7 @@ module "hm_sedona_emr" {
       {
         "Classification" : "spark-defaults",
         "Properties" : {
-          "spark.yarn.dist.jars" : "/usr/lib/spark/jars/sedona-spark-shaded-3.4_2.12-1.5.0.jar,/usr/lib/spark/jars/geotools-wrapper-1.5.0-28.2.jar",
+          "spark.yarn.dist.jars" : "/usr/lib/spark/jars/geotools-wrapper-1.5.1-28.2.jar,/usr/lib/spark/jars/sedona-spark-shaded-3.5_2.12-1.5.1.jar",
           "spark.serializer" : "org.apache.spark.serializer.KryoSerializer",
           "spark.kryo.registrator" : "org.apache.sedona.core.serde.SedonaKryoRegistrator",
           "spark.sql.extensions" : "org.apache.sedona.viz.sql.SedonaVizExtensions,org.apache.sedona.sql.SedonaSqlExtensions"

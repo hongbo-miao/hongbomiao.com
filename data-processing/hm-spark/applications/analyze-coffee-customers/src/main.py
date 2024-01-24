@@ -6,10 +6,10 @@ def main() -> None:
         SedonaContext.builder()
         .config(
             "spark.jars.packages",
-            # https://mvnrepository.https://mvnrepository.com/artifact/org.apache.sedona
-            "org.apache.sedona:sedona-spark-shaded-3.4_2.12:1.4.1,"
             # https://mvnrepository.com/artifact/org.datasyslab/geotools-wrapper
-            "org.datasyslab:geotools-wrapper:1.4.0-28.2",
+            "org.datasyslab:geotools-wrapper:1.5.1-28.2",
+            # https://mvnrepository.https://mvnrepository.com/artifact/org.apache.sedona
+            "org.apache.sedona:sedona-spark-shaded-3.5_2.12:1.5.1,",
         )
         .getOrCreate()
     )
