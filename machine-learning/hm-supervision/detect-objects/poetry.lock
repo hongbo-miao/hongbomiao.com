@@ -267,6 +267,17 @@ docs = ["ipython", "matplotlib", "numpydoc", "sphinx"]
 tests = ["pytest", "pytest-cov", "pytest-xdist"]
 
 [[package]]
+name = "defusedxml"
+version = "0.7.1"
+description = "XML bomb protection for Python stdlib modules"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+files = [
+    {file = "defusedxml-0.7.1-py2.py3-none-any.whl", hash = "sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61"},
+    {file = "defusedxml-0.7.1.tar.gz", hash = "sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69"},
+]
+
+[[package]]
 name = "filelock"
 version = "3.13.1"
 description = "A platform independent file lock."
@@ -1369,26 +1380,26 @@ files = [
 
 [[package]]
 name = "supervision"
-version = "0.17.1"
+version = "0.18.0"
 description = "A set of easy-to-use utils that will come in handy in any Computer Vision project"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "supervision-0.17.1-py3-none-any.whl", hash = "sha256:d36ce87ba2e43f31fb36f2064339419d331c89a60178362f33ec6e2619471215"},
-    {file = "supervision-0.17.1.tar.gz", hash = "sha256:813689af02e4e9231e331493a806a7f83702ededb238d0be5e4c05d9ab2a95a5"},
+    {file = "supervision-0.18.0-py3-none-any.whl", hash = "sha256:78d05e91c8c2fd605a8c04a0fc6073bdce9eb3cbd3300c2badbe6868e7964804"},
+    {file = "supervision-0.18.0.tar.gz", hash = "sha256:6f83229f7f7866df7141370231f24dd3ac824c989f17854ed31f91dc0769fd5a"},
 ]
 
 [package.dependencies]
-matplotlib = ">=3.5.0"
+defusedxml = ">=0.7.1,<0.8.0"
+matplotlib = ">=3.6.0"
 numpy = ">=1.21.2"
-opencv-python-headless = ">=4.5.5.64,<=4.8.1.78"
-pillow = ">=9.4"
+opencv-python-headless = ">=4.5.5.64"
 pyyaml = ">=5.3"
-scipy = ">=1.9.0"
+scipy = {version = ">=1.10.0,<2.0.0", markers = "python_version >= \"3.9\""}
 
 [package.extras]
 assets = ["requests (>=2.26.0,<=2.31.0)", "tqdm (>=4.62.3,<=4.66.1)"]
-desktop = ["opencv-python (>=4.5.5.64,<=4.8.1.78)"]
+desktop = ["opencv-python (>=4.5.5.64)"]
 
 [[package]]
 name = "sympy"
@@ -1640,4 +1651,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "52273a2ef23fc7c3dd7215ecadd715655bc51c3f2f0419303f8f5294f122ee4d"
+content-hash = "61420e81b37341426a2a5048cca036d8d1e8f90eea8a9504996b4da001ae4692"
