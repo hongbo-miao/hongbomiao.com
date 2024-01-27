@@ -1,4 +1,4 @@
-FROM docker.io/alpine:3.19.0 AS builder
+FROM docker.io/alpine:3.19.1 AS builder
 USER root:root
 RUN mkdir -p /opt/kafka/plugins/ \
   # confluentinc-kafka-connect-elasticsearch
