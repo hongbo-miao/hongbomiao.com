@@ -1,3 +1,3 @@
 module github.com/hongbo-miao/traefik-plugin-disable-graphql-introspection
 
-go 1.19.0
+go 1.21.6
