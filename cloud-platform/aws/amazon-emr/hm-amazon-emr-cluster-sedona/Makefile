@@ -13,3 +13,9 @@ amazon-emr-cluster-create:
 		--region=us-west-2
 amazon-s3-upload-bootstrap-actions:
 	aws s3 cp bootstrap-actions/set_up.sh s3://hongbomiao-bucket/amazon-emr/hm-amazon-emr-cluster-jupterlab/bootstrap-actions/set_up.sh
+
+spark-show-spark-defaults:
+	cat /etc/spark/conf/spark-defaults.conf
+
+hadoop-show-yarn-site:
+	cat /etc/hadoop/conf.empty/yarn-site.xml
