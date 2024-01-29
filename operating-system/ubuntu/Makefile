@@ -80,6 +80,8 @@ show-services-active:
 	systemctl list-units --type=service --state=active
 show-services-active-running:
 	systemctl list-units --type=service --state=running
+show-services-inactive:
+	systemctl list-units --type=service --state=inactive
 show-service-status:
 	systemctl status xxx
 show-service-log:
