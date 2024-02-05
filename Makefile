@@ -119,7 +119,7 @@ bundle-lock:
 
 # Python
 conda-create:
-	conda create --name=xxx python=3.10 --yes
+	conda create --name=xxx python=3.12 --yes
 conda-env-remove:
 	conda env remove --name=xxx
 conda-activate:
