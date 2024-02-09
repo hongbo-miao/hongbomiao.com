@@ -1,2 +1,2 @@
-FROM docker.io/prefecthq/prefect:2.14.20-python3.11-kubernetes
+FROM docker.io/prefecthq/prefect:2.14.21-python3.11-kubernetes
 COPY ["data-orchestration/hm-prefect/workflows/ingest-data/src/", "/opt/prefect/flows/src/"]
