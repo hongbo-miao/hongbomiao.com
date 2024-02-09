@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/31a09901-f25d-4e60-91e3-55f6c3c77f6b)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/6377488f-3da1-4530-a0d2-a3b440ddb566)
 
 # 📦 Setup
 
@@ -294,6 +294,7 @@ make kubernetes-clean
 - **Jupyter Notebook** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
 - **Databricks** - Unified data analytics platform
+- **Palantir** - Data integration and analysis platform
 
 ### Machine Learning
 
