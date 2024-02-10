@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/6377488f-3da1-4530-a0d2-a3b440ddb566)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/33ce5f0c-d0d3-4194-94f1-ce798e430278)
 
 # 📦 Setup
 
@@ -94,7 +94,7 @@ make kubernetes-clean
 - **Google Analytics** - Web analytics
 - **FullStory** - Experience analytics, session replay, heatmaps
 - **Namecheap** - Domain
-- **Cloudflare** - CDN, DNS, DDoS protection
+- **Cloudflare** - DNS, DDoS protection, CDN
 - **[HTTP/3 Check](https://www.http3check.net/?host=www.hongbomiao.com)** - HTTP/3 checking
 - **[hstspreload.org](https://hstspreload.org/?domain=hongbomiao.com)** - HSTS checking
 - **[Mozilla Observatory](https://observatory.mozilla.org/analyze/www.hongbomiao.com)** - Security monitoring
