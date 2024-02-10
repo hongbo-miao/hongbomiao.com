@@ -155,6 +155,7 @@ make kubernetes-clean
 - **Tenacity** - General-purpose retrying library
 - **pytest** - Unit testing
 - **pydantic** - Data validation
+- **HTTPX** - HTTP client
 - **pypdf** - PDF library
 - **Poetry** - Python package management
   - **Poe the Poet** - Poetry task runner
@@ -291,7 +292,7 @@ make kubernetes-clean
   - **GeoPandas** - Geographic data library
   - **AWS SDK for pandas** - pandas on AWS
   - **Modin** - pandas workflows scaling
-- **Jupyter Notebook** - Web-based interactive computing platform
+- **JupyterLab** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
 - **Databricks** - Unified data analytics platform
 - **Palantir** - Data integration and analysis platform
@@ -301,6 +302,7 @@ make kubernetes-clean
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
+- **Gradio** - Machine learning web application building
 - **Lightning** - Deep Learning framework
 - **LangChain** - Large language model (LLM) framework
 - **NeuralForecast** - Neural forecasting
