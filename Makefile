@@ -370,6 +370,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=machine-learning.convolutional-neural-network
 	poetry run poe static-type-check-python -- --package=machine-learning.feature-store
 	poetry run poe static-type-check-python -- --package=machine-learning.graph-neural-network
+	poetry run poe static-type-check-python -- --package=machine-learning.hm-gradio.applications.classify-image
 	poetry run poe static-type-check-python -- --package=machine-learning.hm-kubeflow.pipelines.calculate
 	poetry run poe static-type-check-python -- --package=machine-learning.hm-kubeflow.pipelines.classify-mnist
 	poetry run poe static-type-check-python -- --package=machine-learning.hm-langchain.applications.chat-pdf
