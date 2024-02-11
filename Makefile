@@ -40,7 +40,9 @@ git-status:
 git-lfs-install:
 	git lfs install
 git-lfs-track:
-	git lfs track "*.slx"
+	git lfs track "*.mp4"
+git-lfs-untrack:
+	git lfs untrack "*.mp4"
 git-lfs-status:
 	git lfs status
 git-lfs-list:

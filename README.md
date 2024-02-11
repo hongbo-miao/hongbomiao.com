@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/33ce5f0c-d0d3-4194-94f1-ce798e430278)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/8c32073f-b5f7-47d5-a71e-51f0ccc88703)
 
 # 📦 Setup
 
@@ -437,6 +437,7 @@ make kubernetes-clean
 ## Simulation
 
 - **AnyLogic** - Simulation modeling tool
+- **NI LabVIEW** - Graphical programming environment
 - **NI VeriStand** - Real-time testing and simulation
   - **niveristand** - NI VeriStand API library
   - **npTDMS** - TDMS files reading and writing
@@ -695,6 +696,10 @@ make kubernetes-clean
 The following presents a model of a radar-based air defense system. Bombers are dispatched to destroy ground facilities, while the buildings are safeguarded by the air defense system, comprising two radars equipped with guided surface-to-air missiles.
 
 ![AnyLogic screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc2c8c2e-8acc-4df5-8a1a-fdf1da7c6f43)
+
+### NI LabVIEW - Graphical Programming Environment
+
+![NI LabVIEW screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/acf44d58-a3f4-433b-9045-f4d913b05dfd)
 
 ### NI VeriStand - Real-Time Testing and Simulation
 
