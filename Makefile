@@ -379,6 +379,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=machine-learning.hm-mlflow.experiments.classify-mnist
 	poetry run poe static-type-check-python -- --package=machine-learning.hm-mlflow.experiments.predict-diabetes
 	poetry run poe static-type-check-python -- --package=machine-learning.hm-rasa
+	poetry run poe static-type-check-python -- --package=machine-learning.hm-streamlit.applications.map
 	poetry run poe static-type-check-python -- --package=machine-learning.hm-supervision.detect-objects
 	poetry run poe static-type-check-python -- --package=machine-learning.hugging-face
 	poetry run poe static-type-check-python -- --package=machine-learning.neural-forecasting.forecast-air-passenger-number
