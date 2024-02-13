@@ -303,6 +303,7 @@ make kubernetes-clean
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
 - **Gradio** - Machine learning web application building
+- **Streamlit** - Data web application building
 - **Lightning** - Deep Learning framework
 - **LangChain** - Large language model (LLM) framework
 - **NeuralForecast** - Neural forecasting
