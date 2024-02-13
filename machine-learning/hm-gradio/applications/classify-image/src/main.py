@@ -1,5 +1,3 @@
-import logging
-
 import gradio as gr
 import httpx
 import torch
@@ -30,5 +28,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
     main()
