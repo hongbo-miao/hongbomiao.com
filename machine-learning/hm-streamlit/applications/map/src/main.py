@@ -7,9 +7,9 @@ def main() -> None:
     generator = np.random.default_rng(42)
     df = pd.DataFrame(
         {
-            "col1": generator.standard_normal(1000) / 50 + 37.76,
-            "col2": generator.standard_normal(1000) / 50 + -122.4,
-            "col3": generator.standard_normal(1000) * 100,
+            "col1": generator.standard_normal(1000) / 50.0 + 37.76,
+            "col2": generator.standard_normal(1000) / 50.0 + -122.4,
+            "col3": generator.standard_normal(1000) * 100.0,
             "col4": generator.standard_normal((1000, 4)).tolist(),
         }
     )
