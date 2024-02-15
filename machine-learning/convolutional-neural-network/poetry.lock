@@ -899,13 +899,13 @@ pgp = ["gpg"]
 
 [[package]]
 name = "dvc"
-version = "3.44.0"
+version = "3.45.0"
 description = "Git for data scientists - manage your code and data together"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "dvc-3.44.0-py3-none-any.whl", hash = "sha256:44e02648b417f2ed76a92945c9b1fa3c421095931e8b0afd5cdf4eb108860ecb"},
-    {file = "dvc-3.44.0.tar.gz", hash = "sha256:0a862a5b75b42c29675016e71a51127d0b868cd1155dfca5b183d213ccb47e66"},
+    {file = "dvc-3.45.0-py3-none-any.whl", hash = "sha256:82fad5c23874c0c66bfbabc0aaa4afceba151be3398a56d53abc9fb11403320a"},
+    {file = "dvc-3.45.0.tar.gz", hash = "sha256:3d3bb4868cd88cafe6829b046baf98611d8c0f77f08e2c271462e5ab2a7dab7d"},
 ]
 
 [package.dependencies]
@@ -913,10 +913,10 @@ colorama = ">=0.3.9"
 configobj = ">=5.0.6"
 distro = ">=1.3"
 dpath = ">=2.1.0,<3"
-dvc-data = ">=3.10,<3.12"
+dvc-data = ">=3.13,<3.14"
 dvc-http = ">=2.29.0"
 dvc-render = ">=1.0.1,<2"
-dvc-studio-client = ">=0.17.1,<1"
+dvc-studio-client = ">=0.19,<1"
 dvc-task = ">=0.3.0,<1"
 flatten-dict = ">=0.4.1,<1"
 "flufl.lock" = ">=5,<8"
@@ -965,13 +965,13 @@ webhdfs-kerberos = ["dvc-webhdfs[kerberos] (>=3.1,<4)"]
 
 [[package]]
 name = "dvc-data"
-version = "3.11.0"
+version = "3.13.0"
 description = "DVC's data management subsystem"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-data-3.11.0.tar.gz", hash = "sha256:44289f1c45c5abca3fe6f5e915309138e7e7b91c0234b27a6a2ac50fa2666fd0"},
-    {file = "dvc_data-3.11.0-py3-none-any.whl", hash = "sha256:a4f6fd9dee53b109e853b131536e20b2e79a668d45581f7fdc65105a82475e50"},
+    {file = "dvc-data-3.13.0.tar.gz", hash = "sha256:692850b771bc1cffd1908463037797dd6ea5091750925ad9b915a4cc24bee3b9"},
+    {file = "dvc_data-3.13.0-py3-none-any.whl", hash = "sha256:f2bdd5f593279a6819129d25b9ae7f0774d0dcb30ef236f411b9247e59f5f8cd"},
 ]
 
 [package.dependencies]
@@ -990,7 +990,7 @@ tqdm = ">=4.63.1,<5"
 all = ["dvc-data[cli]"]
 cli = ["rich (>=10.11.0,<14.0.0)", "typer[all] (>=0.6)"]
 dev = ["blake3 (>=0.3.1)", "dvc-data[all]", "dvc-data[tests]", "mypy (==1.7.1)", "types-tqdm"]
-tests = ["pytest (>=7,<8)", "pytest-benchmark (>=4)", "pytest-cov (>=4.1.0)", "pytest-mock", "pytest-servers[s3] (==0.1.3)", "pytest-sugar"]
+tests = ["pytest (>=7,<8)", "pytest-benchmark (>=4)", "pytest-cov (>=4.1.0)", "pytest-mock", "pytest-servers[s3] (==0.5.0)", "pytest-sugar"]
 
 [[package]]
 name = "dvc-http"
@@ -1069,13 +1069,13 @@ tests = ["Pygments (==2.10.0)", "collective.checkdocs (==0.2)", "dvc[testing]", 
 
 [[package]]
 name = "dvc-studio-client"
-version = "0.18.0"
+version = "0.19.0"
 description = "Small library to post data from DVC/DVCLive to Iterative Studio"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dvc-studio-client-0.18.0.tar.gz", hash = "sha256:41d2ee96bfb3784fad2d71508938197b0917445946090b3bb5ad53354fa35fcc"},
-    {file = "dvc_studio_client-0.18.0-py3-none-any.whl", hash = "sha256:eac41a74af46a313553b09948e0dc47d1be8ccfbea4513d54cd82bc32a480c4e"},
+    {file = "dvc-studio-client-0.19.0.tar.gz", hash = "sha256:bd4d9c07d2347c689dcc882e26dae633fd5fe75120e2b89637d6c88a077bded0"},
+    {file = "dvc_studio_client-0.19.0-py3-none-any.whl", hash = "sha256:1de15f3a45081029eb64f91add3c2dd8ddd75bbc909f69a158735d8e25a04b6f"},
 ]
 
 [package.dependencies]
@@ -1084,9 +1084,9 @@ requests = "*"
 voluptuous = "*"
 
 [package.extras]
-dev = ["mkdocs (==1.5.3)", "mkdocs-gen-files (==0.5.0)", "mkdocs-material (==9.4.6)", "mkdocs-section-index (==0.3.8)", "mkdocstrings-python (==1.7.3)", "pytest (==7.4.2)", "pytest-cov (==4.1.0)", "pytest-mock (==3.12.0)", "pytest-sugar (==0.9.7)"]
-docs = ["mkdocs (==1.5.3)", "mkdocs-gen-files (==0.5.0)", "mkdocs-material (==9.4.6)", "mkdocs-section-index (==0.3.8)", "mkdocstrings-python (==1.7.3)"]
-tests = ["pytest (==7.4.2)", "pytest-cov (==4.1.0)", "pytest-mock (==3.12.0)", "pytest-sugar (==0.9.7)"]
+dev = ["dvc-studio-client[docs]", "dvc-studio-client[tests]", "types-requests"]
+docs = ["mkdocs (==1.5.3)", "mkdocs-gen-files (==0.5.0)", "mkdocs-material (==9.5.8)", "mkdocs-section-index (==0.3.8)", "mkdocstrings-python (==1.8.0)"]
+tests = ["mypy (==1.8.0)", "pytest (==8.0.0)", "pytest-cov (==4.1.0)", "pytest-mock (==3.12.0)", "pytest-sugar (==1.0.0)"]
 
 [[package]]
 name = "dvc-task"
@@ -3605,4 +3605,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "bd2e36109d903a8800469fd3fb07f474e858247b797c0af4f93ed9720f45a84f"
+content-hash = "3008536968ef56a7c06b268064a046f6399a262526019b4e5bbcd72d89ba8004"
