@@ -695,6 +695,22 @@ docs = ["sphinx (>=5)", "sphinx-autodoc-typehints", "sphinx-rtd-theme"]
 test = ["coverage", "mock (>=4)", "pytest (>=7)", "pytest-cov", "pytest-mock (>=3)"]
 
 [[package]]
+name = "greenback"
+version = "1.2.0"
+description = "Reenter an async event loop from synchronous code"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "greenback-1.2.0-py3-none-any.whl", hash = "sha256:7b510dd3c22cb3d20043a628b1a5e02713fc98fea59f9ebd299902a5d078c9ce"},
+    {file = "greenback-1.2.0.tar.gz", hash = "sha256:db8b323617e1e1a7cbb3615fb9048c44b483aab3d3415f49e07c6957c5fce60d"},
+]
+
+[package.dependencies]
+greenlet = "!=0.4.17"
+outcome = "*"
+sniffio = "*"
+
+[[package]]
 name = "greenlet"
 version = "3.0.3"
 description = "Lightweight in-process concurrent programming"
@@ -893,6 +909,17 @@ python-versions = ">=3.7"
 files = [
     {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
     {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
+]
+
+[[package]]
+name = "itsdangerous"
+version = "2.1.2"
+description = "Safely pass data to untrusted environments and back."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "itsdangerous-2.1.2-py3-none-any.whl", hash = "sha256:2c2349112351b88699d8d4b6b075022c0808887cb7ad10069318a8b0bc88db44"},
+    {file = "itsdangerous-2.1.2.tar.gz", hash = "sha256:5dbbc68b317e5e42f327f9021763545dc3fc3bfe22e6deb96aaf1fc38874156a"},
 ]
 
 [[package]]
@@ -1212,6 +1239,20 @@ files = [
 ]
 
 [[package]]
+name = "outcome"
+version = "1.3.0.post0"
+description = "Capture the outcome of Python function calls."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "outcome-1.3.0.post0-py2.py3-none-any.whl", hash = "sha256:e771c5ce06d1415e356078d3bdd68523f284b4ce5419828922b6871e65eda82b"},
+    {file = "outcome-1.3.0.post0.tar.gz", hash = "sha256:9dcf02e65f2971b80047b377468e72a268e15c0af3cf1238e6ff14f7f91143b8"},
+]
+
+[package.dependencies]
+attrs = ">=19.2.0"
+
+[[package]]
 name = "packaging"
 version = "23.2"
 description = "Core utilities for Python packages"
@@ -1313,13 +1354,13 @@ poetry-plugin = ["poetry (>=1.0,<2.0)"]
 
 [[package]]
 name = "prefect"
-version = "2.14.21"
+version = "2.15.0"
 description = "Workflow orchestration and management."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "prefect-2.14.21-py3-none-any.whl", hash = "sha256:3a028800ada5349d756082886f9564ddfb218008380ee657eb89d3d6e8bb974b"},
-    {file = "prefect-2.14.21.tar.gz", hash = "sha256:bc74fe873f6565a69e8bb7a6f09025a9650d8851f371564759f542095253f445"},
+    {file = "prefect-2.15.0-py3-none-any.whl", hash = "sha256:f0c2918b88eeea049bb547a45b247ee3a623ab6a2821cdd25e5edbcb0eb6f91b"},
+    {file = "prefect-2.15.0.tar.gz", hash = "sha256:7732ae51005612be8545b1bb6ccbe313c5b1ed451da4b9c623ca7f856a2ca038"},
 ]
 
 [package.dependencies]
@@ -1339,9 +1380,11 @@ dateparser = ">=1.1.1,<2.0.0"
 docker = ">=4.0,<7.0"
 fsspec = ">=2022.5.0"
 graphviz = ">=0.20.1"
+greenback = ">=1.2.0"
 griffe = ">=0.20.0"
 httpcore = ">=0.15.0,<2.0.0"
 httpx = {version = ">=0.23,<0.23.2 || >0.23.2", extras = ["http2"]}
+itsdangerous = "*"
 jinja2 = ">=3.0.0,<4.0.0"
 jsonpatch = ">=1.32,<2.0"
 jsonschema = ">=3.2.0,<5.0.0"
@@ -1352,6 +1395,7 @@ pathspec = ">=0.8.0"
 pendulum = {version = "<3.0", markers = "python_version < \"3.12\""}
 pydantic = {version = ">=1.10.0,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.1.0 || >2.1.0,<3.0.0", extras = ["email"]}
 python-dateutil = ">=2.8.2,<3.0.0"
+python-multipart = ">=0.0.7"
 python-slugify = ">=5.0,<9.0"
 pytz = ">=2021.1,<2025"
 pyyaml = ">=5.4.1,<7.0.0"
@@ -1360,7 +1404,6 @@ rich = ">=11.0,<14.0"
 "ruamel.yaml" = ">=0.17.0"
 sniffio = ">=1.3.0,<2.0.0"
 sqlalchemy = {version = ">=1.4.22,<1.4.33 || >1.4.33,<3.0.0", extras = ["asyncio"]}
-starlette = ">=0.27.0,<0.33.0"
 toml = ">=0.10.0"
 typer = ">=0.4.2"
 typing-extensions = ">=4.5.0,<5.0.0"
@@ -1584,6 +1627,20 @@ files = [
 
 [package.dependencies]
 six = ">=1.5"
+
+[[package]]
+name = "python-multipart"
+version = "0.0.9"
+description = "A streaming multipart parser for Python"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "python_multipart-0.0.9-py3-none-any.whl", hash = "sha256:97ca7b8ea7b05f977dc3849c3ba99d51689822fab725c3703af7c866a0c2b215"},
+    {file = "python_multipart-0.0.9.tar.gz", hash = "sha256:03f54688c663f1b7977105f021043b0793151e4cb1c1a9d4a11fc13d622c4026"},
+]
+
+[package.extras]
+dev = ["atomicwrites (==1.4.1)", "attrs (==23.2.0)", "coverage (==7.4.1)", "hatch", "invoke (==2.2.0)", "more-itertools (==10.2.0)", "pbr (==6.0.0)", "pluggy (==1.4.0)", "py (==1.11.0)", "pytest (==8.0.0)", "pytest-cov (==4.1.0)", "pytest-timeout (==2.2.0)", "pyyaml (==6.0.1)", "ruff (==0.2.1)"]
 
 [[package]]
 name = "python-slugify"
@@ -2220,23 +2277,6 @@ pymysql = ["pymysql"]
 sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
-name = "starlette"
-version = "0.32.0.post1"
-description = "The little ASGI library that shines."
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "starlette-0.32.0.post1-py3-none-any.whl", hash = "sha256:cd0cb10ddb49313f609cedfac62c8c12e56c7314b66d89bb077ba228bada1b09"},
-    {file = "starlette-0.32.0.post1.tar.gz", hash = "sha256:e54e2b7e2fb06dff9eac40133583f10dfa05913f5a85bf26f427c7a40a9a3d02"},
-]
-
-[package.dependencies]
-anyio = ">=3.4.0,<5"
-
-[package.extras]
-full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart", "pyyaml"]
-
-[[package]]
 name = "text-unidecode"
 version = "1.3"
 description = "The most basic Text::Unidecode port"
@@ -2537,4 +2577,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "e2213a35f6975268b8e45021ee87e6339a1d30d0a54bf19f697bc327fb7fbbf3"
+content-hash = "54a8a0bd16ccd0b844d9a939a9615b2a2f8c4b056535f457cc6098db3db10100"
