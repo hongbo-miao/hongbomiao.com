@@ -1,3 +1,3 @@
-FROM docker.io/bitnami/spark:3.5.0-debian-11-r34
+FROM docker.io/bitnami/spark:3.5.0-debian-11-r35
 WORKDIR /opt/spark/work-dir
 COPY data-processing/hm-spark/applications/find-retired-people-python/src/ src/
