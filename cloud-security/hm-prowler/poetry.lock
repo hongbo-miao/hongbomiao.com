@@ -250,6 +250,22 @@ msal = ">=1.24.0,<2.0.0"
 msal-extensions = ">=0.3.0,<2.0.0"
 
 [[package]]
+name = "azure-mgmt-applicationinsights"
+version = "4.0.0"
+description = "Microsoft Azure Application Insights Management Client Library for Python"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "azure-mgmt-applicationinsights-4.0.0.zip", hash = "sha256:50c3db05573e0cc2d56314a0556fb346ef05ec489ac000f4d720d92c6b647e06"},
+    {file = "azure_mgmt_applicationinsights-4.0.0-py3-none-any.whl", hash = "sha256:2b1ffd9a0114974455795c73a3a5d17c849e32b961d707d2db393b99254b576f"},
+]
+
+[package.dependencies]
+azure-common = ">=1.1,<2.0"
+azure-mgmt-core = ">=1.3.2,<2.0.0"
+isodate = ">=0.6.1,<1.0.0"
+
+[[package]]
 name = "azure-mgmt-authorization"
 version = "4.0.0"
 description = "Microsoft Azure Authorization Management Client Library for Python"
@@ -278,6 +294,38 @@ files = [
 
 [package.dependencies]
 azure-core = ">=1.26.2,<2.0.0"
+
+[[package]]
+name = "azure-mgmt-cosmosdb"
+version = "9.4.0"
+description = "Microsoft Azure Cosmos DB Management Client Library for Python"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "azure-mgmt-cosmosdb-9.4.0.tar.gz", hash = "sha256:cabb821cd446b09e73d24c31c287a60fcc3623488f1ffa9335c692267e79c341"},
+    {file = "azure_mgmt_cosmosdb-9.4.0-py3-none-any.whl", hash = "sha256:8ce9ab58df018980c4cf8defb38022fa5f2a9dcbccdeb73e952374cbaff919c5"},
+]
+
+[package.dependencies]
+azure-common = ">=1.1,<2.0"
+azure-mgmt-core = ">=1.3.2,<2.0.0"
+isodate = ">=0.6.1,<1.0.0"
+
+[[package]]
+name = "azure-mgmt-rdbms"
+version = "10.1.0"
+description = "Microsoft Azure RDBMS Management Client Library for Python"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "azure-mgmt-rdbms-10.1.0.zip", hash = "sha256:a87d401c876c84734cdd4888af551e4a1461b4b328d9816af60cb8ac5979f035"},
+    {file = "azure_mgmt_rdbms-10.1.0-py3-none-any.whl", hash = "sha256:8eac17d1341a91d7ed914435941ba917b5ef1568acabc3e65653603966a7cc88"},
+]
+
+[package.dependencies]
+azure-common = ">=1.1,<2.0"
+azure-mgmt-core = ">=1.3.0,<2.0.0"
+msrest = ">=0.6.21"
 
 [[package]]
 name = "azure-mgmt-security"
@@ -913,13 +961,13 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2,<1.0.dev0)"]
 
 [[package]]
 name = "google-api-python-client"
-version = "2.116.0"
+version = "2.118.0"
 description = "Google API Client Library for Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "google-api-python-client-2.116.0.tar.gz", hash = "sha256:f9f32361e16114d62929638fe07f77be30216b079ad316dc2ced859d9f72e5ad"},
-    {file = "google_api_python_client-2.116.0-py2.py3-none-any.whl", hash = "sha256:846e44417c6b7385fa5f5a46cb6b9d23327754c560830245ee53a577c5e44cec"},
+    {file = "google-api-python-client-2.118.0.tar.gz", hash = "sha256:ebf4927a3f5184096647be8f705d090e7f06d48ad82b0fa431a2fe80c2cbe182"},
+    {file = "google_api_python_client-2.118.0-py2.py3-none-any.whl", hash = "sha256:9d83b178496b180e058fd206ebfb70ea1afab49f235dd326f557513f56f496d5"},
 ]
 
 [package.dependencies]
@@ -1756,20 +1804,23 @@ files = [
 
 [[package]]
 name = "prowler"
-version = "3.13.0"
+version = "3.13.1"
 description = "Prowler is an Open Source security tool to perform AWS, GCP and Azure security best practices assessments, audits, incident response, continuous monitoring, hardening and forensics readiness. It contains hundreds of controls covering CIS, NIST 800, NIST CSF, CISA, RBI, FedRAMP, PCI-DSS, GDPR, HIPAA, FFIEC, SOC2, GXP, AWS Well-Architected Framework Security Pillar, AWS Foundational Technical Review (FTR), ENS (Spanish National Security Scheme) and your custom security frameworks."
 optional = false
 python-versions = ">=3.9,<3.13"
 files = [
-    {file = "prowler-3.13.0-py3-none-any.whl", hash = "sha256:b1d15a66d4b4365098e8adf104fa744961832d25262aa48344333c7304fb9d6b"},
-    {file = "prowler-3.13.0.tar.gz", hash = "sha256:3c2afb16a5c67e972dfe480782968a8ac4fc850636c98f633e9be7ef4590d3dd"},
+    {file = "prowler-3.13.1-py3-none-any.whl", hash = "sha256:6835b7e70fd7d0ddc656b183ca84a5cd97ec4fd6b2d91a81cc91275c099c419f"},
+    {file = "prowler-3.13.1.tar.gz", hash = "sha256:1962025390596df4ba9ba9068af83f1fa036e60633242fef185975ce44d18b14"},
 ]
 
 [package.dependencies]
 alive-progress = "3.1.5"
 awsipranges = "0.3.3"
 azure-identity = "1.15.0"
+azure-mgmt-applicationinsights = "4.0.0"
 azure-mgmt-authorization = "4.0.0"
+azure-mgmt-cosmosdb = "9.4.0"
+azure-mgmt-rdbms = "10.1.0"
 azure-mgmt-security = "6.0.0"
 azure-mgmt-sql = "3.0.1"
 azure-mgmt-storage = "21.1.0"
@@ -1779,7 +1830,7 @@ boto3 = "1.26.165"
 botocore = "1.29.165"
 colorama = "0.4.6"
 detect-secrets = "1.4.0"
-google-api-python-client = "2.116.0"
+google-api-python-client = "2.118.0"
 google-auth-httplib2 = ">=0.1,<0.3"
 jsonschema = "4.21.1"
 msgraph-sdk = ">=1.0.0,<2.0.0"
@@ -1787,11 +1838,11 @@ msrestazure = ">=0.6.4,<0.7.0"
 pydantic = "1.10.14"
 schema = "0.7.5"
 shodan = "1.31.0"
-slack-sdk = "3.26.2"
+slack-sdk = "3.27.0"
 tabulate = "0.9.0"
 
 [package.extras]
-docs = ["mkdocs (==1.5.3)", "mkdocs-material (==9.5.6)"]
+docs = ["mkdocs (==1.5.3)", "mkdocs-material (==9.5.10)"]
 
 [[package]]
 name = "pyasn1"
@@ -2303,14 +2354,17 @@ files = [
 
 [[package]]
 name = "slack-sdk"
-version = "3.26.2"
+version = "3.27.0"
 description = "The Slack API Platform SDK for Python"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "slack_sdk-3.26.2-py2.py3-none-any.whl", hash = "sha256:a10e8ee69ca17d274989d0c2bbecb875f19898da3052d8d57de0898a00b1ab52"},
-    {file = "slack_sdk-3.26.2.tar.gz", hash = "sha256:bcdac5e688fa50e9357ecd00b803b6a8bad766aa614d35d8dc0636f40adc48bf"},
+    {file = "slack_sdk-3.27.0-py2.py3-none-any.whl", hash = "sha256:a901c68cb5547d5459cdefd81343d116db56d65f6b33f4081ddf1cdd243bf07e"},
+    {file = "slack_sdk-3.27.0.tar.gz", hash = "sha256:811472ce598db855ab3c02f098fa430323ccb253cfe17ba20c7b05ab206d984d"},
 ]
+
+[package.extras]
+optional = ["SQLAlchemy (>=1.4,<3)", "aiodns (>1.0)", "aiohttp (>=3.7.3,<4)", "boto3 (<=2)", "websocket-client (>=1,<2)", "websockets (>=10,<11)", "websockets (>=9.1,<10)"]
 
 [[package]]
 name = "sniffio"
@@ -2636,4 +2690,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "6c8a3f8688c63fe418fa6c9873186d8e508205916308c8b8ec29c69095084d52"
+content-hash = "875fb36750a57e8a5effd5e0f1dd7e43ddaf696a08b7e7bb592215a2177f3d82"
