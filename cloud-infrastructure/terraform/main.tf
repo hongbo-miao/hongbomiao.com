@@ -19,7 +19,8 @@ terraform {
       version = "0.70.0"
     }
   }
-  required_version = ">= 1.6"
+  # terraform version
+  required_version = ">= 1.7"
 }
 
 provider "aws" {
@@ -48,16 +49,19 @@ module "hm_trino_s3_set_up_script" {
   amazon_s3_key    = "amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
   local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
 }
-module "hm_trino" {
-  source                         = "./modules/hm_amazon_emr_cluster"
-  amazon_emr_cluster_name        = "hm-trino"
-  amazon_emr_version             = "emr-7.0.0"
-  applications                   = ["Trino"]
-  primary_instance_type          = "r7gd.xlarge"
-  core_instance_type             = "r7gd.2xlarge"
-  core_target_on_demand_capacity = 1
-  bootstrap_set_up_script_s3_uri = module.hm_trino_s3_set_up_script.uri
-  configurations_json_string     = <<EOF
+module "hm_trino_emr" {
+  source                                     = "./modules/hm_amazon_emr_cluster"
+  amazon_emr_cluster_name                    = "hm-trino"
+  amazon_emr_version                         = "emr-7.0.0"
+  applications                               = ["Trino"]
+  primary_instance_target_on_demand_capacity = 1
+  primary_instance_weighted_capacity         = 1
+  primary_instance_type                      = "r7g.xlarge"
+  core_instance_target_on_demand_capacity    = 1
+  core_instance_weighted_capacity            = 1
+  core_instance_type                         = "r7g.xlarge"
+  bootstrap_set_up_script_s3_uri             = module.hm_trino_s3_set_up_script.uri
+  configurations_json_string                 = <<EOF
     [
       {
         "Classification": "delta-defaults",
@@ -81,20 +85,21 @@ module "hm_trino" {
       }
     ]
   EOF
-  iam_role_arn                   = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
-  environment                    = var.environment
-  team                           = var.team
+  iam_role_arn                               = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  environment                                = var.environment
+  team                                       = var.team
 }
 module "hm_trino_task_instance_fleet" {
-  source                    = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
-  amazon_emr_cluster_id     = module.hm_trino.id
-  task_instance_type        = "r7gd.2xlarge"
-  task_target_spot_capacity = 7
+  source                             = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
+  amazon_emr_cluster_id              = module.hm_trino_emr.id
+  task_instance_target_spot_capacity = 1
+  task_instance_weighted_capacity    = 1
+  task_instance_type                 = "r7g.xlarge"
 }
 data "aws_instance" "hm_trino_primary_node_ec2_instance" {
   filter {
     name   = "private-dns-name"
-    values = [module.hm_trino.master_public_dns]
+    values = [module.hm_trino_emr.master_public_dns]
   }
 }
 module "hm_route_53_record" {
@@ -123,15 +128,18 @@ module "hm_sedona_s3_set_up_jupyterlab_script" {
   local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
 }
 module "hm_sedona_emr" {
-  source                         = "./modules/hm_amazon_emr_cluster"
-  amazon_emr_cluster_name        = "hm-sedona"
-  amazon_emr_version             = "emr-7.0.0"
-  applications                   = ["Hadoop", "Hive", "JupyterEnterpriseGateway", "Spark"]
-  primary_instance_type          = "r7gd.2xlarge"
-  core_instance_type             = "r7gd.2xlarge"
-  core_target_on_demand_capacity = 1
-  bootstrap_set_up_script_s3_uri = module.hm_sedona_s3_set_up_script.uri
-  configurations_json_string     = <<EOF
+  source                                     = "./modules/hm_amazon_emr_cluster"
+  amazon_emr_cluster_name                    = "hm-sedona"
+  amazon_emr_version                         = "emr-7.0.0"
+  applications                               = ["Hadoop", "Hive", "JupyterEnterpriseGateway", "Livy", "Spark"]
+  primary_instance_target_on_demand_capacity = 1
+  primary_instance_weighted_capacity         = 1
+  primary_instance_type                      = "r7g.xlarge"
+  core_instance_target_on_demand_capacity    = 1
+  core_instance_weighted_capacity            = 1
+  core_instance_type                         = "r7g.xlarge"
+  bootstrap_set_up_script_s3_uri             = module.hm_sedona_s3_set_up_script.uri
+  configurations_json_string                 = <<EOF
     [
       {
         "Classification" : "delta-defaults",
@@ -156,26 +164,38 @@ module "hm_sedona_emr" {
       }
     ]
   EOF
-  iam_role_arn                   = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
-  environment                    = var.environment
-  team                           = var.team
+  iam_role_arn                               = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  environment                                = var.environment
+  team                                       = var.team
 }
 module "hm_sedona_emr_task_instance_fleet" {
-  source                    = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
-  amazon_emr_cluster_id     = module.hm_sedona_emr.id
-  task_instance_type        = "r7gd.2xlarge"
-  task_target_spot_capacity = 1
+  source                             = "./modules/hm_amazon_emr_cluster_task_instance_fleet"
+  amazon_emr_cluster_id              = module.hm_sedona_emr.id
+  task_instance_target_spot_capacity = 2
+  task_instance_weighted_capacity    = 2
+  task_instance_type                 = "r7g.2xlarge"
 }
 module "hm_sedona_emr_managed_scaling_policy" {
   source                = "./modules/hm_amazon_emr_managed_scaling_policy"
   amazon_emr_cluster_id = module.hm_sedona_emr.id
-  max_capacity_units    = 10
+  max_capacity_units    = 60
+}
+data "aws_instance" "hm_sedona_emr_primary_node" {
+  filter {
+    name   = "private-dns-name"
+    values = [module.hm_sedona_emr.master_public_dns]
+  }
+}
+module "hm_sedona_route_53" {
+  source                        = "./modules/hm_amazon_route_53"
+  amazon_route_53_record_name   = "hm-sedona"
+  amazon_route_53_record_values = [data.aws_instance.hm_sedona_emr_primary_node.private_ip]
 }
 
 module "hm_sedona_emr_studio_iam" {
   source                 = "./modules/hm_amazon_emr_studio_iam"
   amazon_emr_studio_name = "hm-sedona-emr-studio"
-  s3_bucket              = "hongbomiao-bucke"
+  s3_bucket              = "hongbomiao-bucket"
   environment            = var.environment
   team                   = var.team
 }
@@ -203,7 +223,7 @@ module "hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_da
   count                          = length(var.adsb_2x_flight_trace_raw_data_dates)
   aws_glue_databrew_dataset_name = "adsb-2x-flight-trace-dataset-raw-data-${replace(var.adsb_2x_flight_trace_raw_data_dates[count.index], "/", "-")}"
   input_s3_bucket                = "hongbomiao-bucket"
-  input_s3_dir                   = "hires-traces-json-gz/hires-traces/${var.adsb_2x_flight_trace_raw_data_dates[count.index]}/"
+  input_s3_dir                   = "data/raw/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_raw_data_dates[count.index]}/"
   environment                    = var.environment
   team                           = var.team
 }
