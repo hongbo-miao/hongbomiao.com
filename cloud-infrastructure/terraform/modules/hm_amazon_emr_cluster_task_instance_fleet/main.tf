@@ -2,10 +2,10 @@
 resource "aws_emr_instance_fleet" "hm_amazon_emr_cluster_task_instance_fleet" {
   cluster_id           = var.amazon_emr_cluster_id
   name                 = "Task"
-  target_spot_capacity = var.task_target_spot_capacity
+  target_spot_capacity = var.task_instance_target_spot_capacity
   instance_type_configs {
+    weighted_capacity                          = var.task_instance_weighted_capacity
     instance_type                              = var.task_instance_type
-    weighted_capacity                          = 1
     bid_price_as_percentage_of_on_demand_price = 100
   }
   launch_specifications {
@@ -17,9 +17,7 @@ resource "aws_emr_instance_fleet" "hm_amazon_emr_cluster_task_instance_fleet" {
   }
   lifecycle {
     ignore_changes = [
-      # https://github.com/hashicorp/terraform-provider-aws/issues/34151
-      launch_specifications[0].spot_specification["allocation_strategy"],
-      # https://stackoverflow.com/questions/77442744/why-does-emr-cluster-has-more-on-demand-instances-over-than-the-max-limit
+      # https://stackoverflow.com/questions/77442744/how-can-i-make-emr-cluster-auto-scaling-to-utilize-on-demand-instances-while-sta
       target_on_demand_capacity,
       target_spot_capacity
     ]
