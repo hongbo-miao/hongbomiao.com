@@ -1,3 +1,4 @@
+import logging
 import time
 from decimal import Decimal
 from pathlib import Path
@@ -66,16 +67,17 @@ def decode_can_data(
                 message
             )
             if message_count % 1000000 == 0:
-                print(
+                logging.info(
                     f"Decoded: {round(current_bytes * 100.0 / blf_size_bytes)} %, {message_count = }"
                 )
             message_count += 1
-    print(f"Decoded: 100 %, {message_count = }")
+    logging.info(f"Decoded: 100 %, {message_count = }")
     return unit_type_and_unit_id_dict
 
 
 if __name__ == "__main__":
-    start_time = time.time()
+    logging.basicConfig(level=logging.INFO)
+
     data_dir_path = Path("data")
     blf_path = data_dir_path / Path("can.blf")
     dbc_path_dict = {
@@ -91,10 +93,12 @@ if __name__ == "__main__":
         "5": {"can_logger_channel_id": "5", "type": "eec", "id": "4"},
     }
 
+    start_time = time.time()
     dbc_dict = load_dbc_dict(dbc_path_dict)
     unit_type_and_unit_id_dict = decode_can_data(blf_path, dbc_dict, unit_dict)
-    print(f"Deserializing time: {time.time() - start_time} seconds")
+    logging.info(f"Decoding time: {time.time() - start_time} seconds")
 
     for unit_type_and_unit_id, data in unit_type_and_unit_id_dict.items():
+        parquet_path = data_dir_path / Path(f"{unit_type_and_unit_id}.parquet")
         df = pd.DataFrame(data)
-        df.to_parquet(f"{unit_type_and_unit_id}.parquet", engine="pyarrow")
+        df.to_parquet(parquet_path, engine="pyarrow")
