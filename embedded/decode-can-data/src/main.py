@@ -10,8 +10,8 @@ import pandas as pd
 
 def load_dbc_dict(dbc_path_dict: dict[str, Path]) -> dict[str, cantools.db.Database]:
     return {
-        type: cantools.db.load_file(dbc_path)
-        for type, dbc_path in dbc_path_dict.items()
+        unit_type: cantools.db.load_file(dbc_path)
+        for unit_type, dbc_path in dbc_path_dict.items()
     }
 
 
