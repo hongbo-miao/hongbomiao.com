@@ -1,5 +1,6 @@
 import logging
 import random
+from pathlib import Path
 
 import cv2
 import supervision as sv
@@ -15,16 +16,17 @@ def generate_random_color() -> tuple[int, int, int]:
     return r, g, b
 
 
-def main(model_path: str, image_path: str) -> None:
+def main(model_path: Path, image_path: Path) -> None:
     model = YOLO(model_path)
-    image = cv2.imread(image_path)
+    image = cv2.imread(str(image_path))
     res = model(image)[0]
     detections = sv.Detections.from_ultralytics(res)
     detections = detections[detections.confidence > 0.3]
     class_names = model.names
 
     for detection in detections:
-        xyxy, mask, confidence, class_id, tracker_id = detection
+        print(detection)
+        xyxy, _, _, class_id, _, _ = detection
 
         x0, y0, x1, y1 = xyxy
         x0 = int(x0)
@@ -48,7 +50,7 @@ def main(model_path: str, image_path: str) -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    data_path = "data"
-    external_model_path = f"{data_path}/yolov8x.pt"
-    external_image_path = f"{data_path}/image.jpg"
+    data_dir_path = Path("data")
+    external_model_path = data_dir_path / Path("yolov8x.pt")
+    external_image_path = data_dir_path / Path("image.jpg")
     main(external_model_path, external_image_path)
