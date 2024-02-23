@@ -25,7 +25,7 @@ jobs:
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
       aws-glue-spark-scripts: ${{ steps.filter.outputs.aws-glue-spark-scripts }}
-      can-bus: ${{ steps.filter.outputs.can-bus }}
+      format-can-data: ${{ steps.filter.outputs.format-can-data }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
@@ -103,9 +103,9 @@ jobs:
             aws-glue-spark-scripts:
               - '.github/workflows/test.yml'
               - 'cloud-infrastructure/terraform/data/aws-glue/spark-scripts/**'
-            can-bus:
+            format-can-data:
               - '.github/workflows/test.yml'
-              - 'embedded/can-bus/**'
+              - 'embedded/format-can-data/**'
             convolutional-neural-network:
               - '.github/workflows/test.yml'
               - 'machine-learning/convolutional-neural-network/**'
@@ -780,10 +780,10 @@ jobs:
         with:
           directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
 
-  can-bus-test:
-    name: CAN Bus | Test
+  format-can-data-test:
+    name: Format CAN Data | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.can-bus == 'true' }}
+    if: ${{ needs.detect-changes.outputs.format-can-data == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -796,21 +796,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.0.0
         with:
-          python-version-file: embedded/can-bus/pyproject.toml
+          python-version-file: embedded/format-can-data/pyproject.toml
           cache: poetry
-          cache-dependency-path: embedded/can-bus/poetry.lock
+          cache-dependency-path: embedded/format-can-data/poetry.lock
       - name: Install dependencies
-        working-directory: embedded/can-bus
+        working-directory: embedded/format-can-data
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: embedded/can-bus
+        working-directory: embedded/format-can-data
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
-          directory: embedded/can-bus
+          directory: embedded/format-can-data
 
   data-distribution-service-test:
     name: Data Distribution Service | Test
