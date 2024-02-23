@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 
 import geodatasets
 import geopandas
@@ -8,7 +9,7 @@ from matplotlib import pyplot as plt
 def main() -> None:
     gdf = geopandas.read_file(geodatasets.get_path("geoda.chicago_commpop"))
     logging.info(gdf.head())
-    gdf.to_parquet("data/chicago_commpop.parquet")
+    gdf.to_parquet(Path("data/chicago_commpop.parquet"))
     gdf.plot(
         column="POP2010",
         legend=True,
