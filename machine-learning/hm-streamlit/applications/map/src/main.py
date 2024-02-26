@@ -3,17 +3,23 @@ import pandas as pd
 import streamlit as st
 
 
-def main() -> None:
+@st.cache_data
+def get_data() -> pd.DataFrame:
     generator = np.random.default_rng(42)
-    df = pd.DataFrame(
+    return pd.DataFrame(
         {
-            "col1": generator.standard_normal(1000) / 50.0 + 37.76,
-            "col2": generator.standard_normal(1000) / 50.0 + -122.4,
-            "col3": generator.standard_normal(1000) * 100.0,
-            "col4": generator.standard_normal((1000, 4)).tolist(),
+            "latitude": generator.standard_normal(1000) / 50.0 + 37.76,
+            "longitude": generator.standard_normal(1000) / 50.0 + -122.4,
+            "size": generator.standard_normal(1000) * 100.0,
+            "color": generator.standard_normal((1000, 4)).tolist(),
         }
     )
-    st.map(df, latitude="col1", longitude="col2", size="col3", color="col4")
+
+
+def main() -> None:
+    st.title("Map")
+    df = get_data()
+    st.map(df, latitude="latitude", longitude="longitude", size="size", color="color")
 
 
 if __name__ == "__main__":
