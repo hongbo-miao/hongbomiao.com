@@ -44,6 +44,7 @@ jobs:
       national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
+      hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
       hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
@@ -236,6 +237,9 @@ jobs:
             hm-spark-recommend-movies:
               - '.github/workflows/test.yml'
               - 'data-processing/hm-spark/applications/recommend-movies/**'
+            hm-streamlit-live-line-chart:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/hm-streamlit/applications/live-line-chart/**'
             hm-streamlit-map:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-streamlit/applications/map/**'
@@ -1135,6 +1139,38 @@ jobs:
         uses: codecov/codecov-action@v4.0.2
         with:
           directory: machine-learning/hm-gradio/applications/classify-image
+
+  streamlit-live-line-chart:
+    name: Streamlit (live-line-chart) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.0.0
+        with:
+          python-version-file: machine-learning/hm-streamlit/applications/live-line-chart/pyproject.toml
+          cache: poetry
+          cache-dependency-path: machine-learning/hm-streamlit/applications/live-line-chart/poetry.lock
+      - name: Install dependencies
+        working-directory: machine-learning/hm-streamlit/applications/live-line-chart
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: machine-learning/hm-streamlit/applications/live-line-chart
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.0.2
+        with:
+          directory: machine-learning/hm-streamlit/applications/live-line-chart
 
   streamlit-map:
     name: Streamlit (map) | Test
