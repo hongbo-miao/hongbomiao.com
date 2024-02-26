@@ -490,7 +490,7 @@ classdef LaneDetector < handle
 
         function [P, score] = fitPolynomial(pts, degree, resolution)
             P = fitPolynomialRANSAC(pts, degree, resolution);
-            score =  mean(sqrt((polyval(P, pts(:, 1)) - pts(:, 2)).^2));
+            score = mean(sqrt((polyval(P, pts(:, 1)) - pts(:, 2)).^2));
         end
 
         function ptCloud = cropPointCloudFromROI(ptCloud, roi)
