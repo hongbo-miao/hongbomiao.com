@@ -8,3 +8,6 @@ show-user-work-path:
 
 which:
 	which configureKalmanFilter
+
+open-deep-network-designer:
+	deepNetworkDesigner
