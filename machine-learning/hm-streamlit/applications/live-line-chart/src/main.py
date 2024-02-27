@@ -8,7 +8,7 @@ import streamlit as st
 
 @st.cache_data
 def get_data() -> pd.DataFrame:
-    return pd.DataFrame(columns=["value"])
+    return pd.DataFrame(columns=["value1", "value2"])
 
 
 def main() -> None:
@@ -21,9 +21,9 @@ def main() -> None:
     while True:
         current_time = datetime.now()
         new_data_point = (
-            generator.standard_normal(1) / 10.0 + df.loc[prev_time]
+            generator.standard_normal(2) / 10.0 + df.loc[prev_time]
             if prev_time
-            else generator.standard_normal(1)
+            else generator.standard_normal(2)
         )
         df.loc[current_time] = new_data_point
         prev_time = current_time
@@ -33,7 +33,12 @@ def main() -> None:
             df = df.iloc[1:]
 
         with placeholder.container():
+            st.header("Chart")
             st.line_chart(df, height=200)
+
+            st.header("Table")
+            st.dataframe(df)
+
             time.sleep(0.01)
 
 
