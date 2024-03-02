@@ -13,9 +13,10 @@ def get_hello(name: str) -> str:
 
 
 @flow
-def greet_subflow(msg: str):
+def greet_subflow(msg: str) -> str:
     logger = get_run_logger()
     logger.info(f"Subflow says: {msg}")
+    return "Bye"
 
 
 @flow
@@ -23,7 +24,8 @@ def greet(user: User) -> None:
     logger = get_run_logger()
     message = get_hello(f"{user.first_name} {user.last_name}")
     logger.info(message)
-    greet_subflow(message)
+    bye_message = greet_subflow(message)
+    logger.info(bye_message)
 
 
 if __name__ == "__main__":
