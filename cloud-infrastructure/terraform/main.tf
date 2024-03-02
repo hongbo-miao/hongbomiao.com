@@ -148,6 +148,12 @@ module "hm_sedona_emr" {
         }
       },
       {
+        "Classification": "spark",
+        "Properties": {
+          "maximizeResourceAllocation": "true"
+        }
+      },
+      {
         "Classification" : "spark-hive-site",
         "Properties" : {
           "hive.metastore.client.factory.class" : "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"
