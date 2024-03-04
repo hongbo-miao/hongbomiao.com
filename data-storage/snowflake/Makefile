@@ -1,0 +1,4 @@
+snowsql-install:
+	brew install --cask snowflake-snowsql
+snowsql:
+	snowsql --accountname=hongbomiao --username=me@hongbomiao.com --authenticator=externalbrowser
