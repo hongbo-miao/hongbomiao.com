@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/02d2d604-5257-42f5-a386-27c404371f22)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b54a9107-1ba9-4534-8f96-d3507f25dd0f)
 
 # 📦 Setup
 
@@ -461,6 +461,7 @@ make kubernetes-clean
   - **Simulink** - Simulation and model-based designing
     - **Simscape** - Multidomain physical systems simulation
 - **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
+- **CoppeliaSim** - Robot simulation
 
 ## Embedded, IoT, Hardware
 
@@ -709,6 +710,10 @@ The following presents a model of a radar-based air defense system. Bombers are 
 ### NI VeriStand - Real-Time Testing and Simulation
 
 ![NI VeriStand screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc7d0c92-7d55-4251-9d39-c53eaac699e2)
+
+### CoppeliaSim - Robot Simulation
+
+![CoppeliaSim screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/e167e2b9-6428-40c2-a1d9-377eb630a991)
 
 ### SimScale - Computational Fluid Dynamics (CFD), Finite Element Analysis (FEA), Thermal Simulation
 
