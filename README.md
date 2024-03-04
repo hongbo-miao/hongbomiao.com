@@ -195,6 +195,31 @@ make kubernetes-clean
 - **Node.js** - JavaScript runtime
 - **npm** - JavaScript package management
 
+## Cloud Native
+
+- **Hasura** - GraphQL Engine
+  - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
+- **Linkerd** - Service mesh
+- **Caddy** - Web server, reverse proxy, load balancer
+- **Traefik** - Web server, reverse proxy, load balancer
+- **nginx** - Web server, reverse proxy, load balancer
+- **Elastic APM** - Application performance monitoring
+- **OpenTelemetry** - Observability framework
+- **Jaeger** - Distributed tracing system
+- **Netdata** - Distributed monitoring platform
+- **Telegraf** - Plugin-driven server agent
+- **Thanos** - Highly available Prometheus setup with long term storage capabilities
+- **Pixie** - Observability tool for Kubernetes applications
+- **Docker** - Container
+- **Skaffold** - Continuous development for Kubernetes applications
+- **Multipass** - VM management
+- **Locust** - Load testing
+- **Cloudflare Tunnel** - Tunneling
+- **Kubernetes** - Container-orchestration system
+- **Vertical Pod Autoscaler** - Kubernetes vertical pod autoscaler
+- **K3s** - Lightweight Kubernetes
+- **containerd** - Container runtime
+
 ## Data
 
 ### Database, Data Warehouse, Data Lakehouse
@@ -297,7 +322,7 @@ make kubernetes-clean
 - **Databricks** - Unified data analytics platform
 - **Palantir** - Data integration and analysis platform
 
-### Machine Learning
+### Machine Learning (ML)
 
 - **PyTorch** - Machine learning framework
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
@@ -327,30 +352,9 @@ make kubernetes-clean
 - **PyVista** - 3D plotting and mesh analysis
 - **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization
 
-## Cloud Native
+## High-Performance Computing (HPC)
 
-- **Hasura** - GraphQL Engine
-  - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
-- **Linkerd** - Service mesh
-- **Caddy** - Web server, reverse proxy, load balancer
-- **Traefik** - Web server, reverse proxy, load balancer
-- **nginx** - Web server, reverse proxy, load balancer
-- **Elastic APM** - Application performance monitoring
-- **OpenTelemetry** - Observability framework
-- **Jaeger** - Distributed tracing system
-- **Netdata** - Distributed monitoring platform
-- **Telegraf** - Plugin-driven server agent
-- **Thanos** - Highly available Prometheus setup with long term storage capabilities
-- **Pixie** - Observability tool for Kubernetes applications
-- **Docker** - Container
-- **Skaffold** - Continuous development for Kubernetes applications
-- **Multipass** - VM management
-- **Locust** - Load testing
-- **Cloudflare Tunnel** - Tunneling
-- **Kubernetes** - Container-orchestration system
-- **Vertical Pod Autoscaler** - Kubernetes vertical pod autoscaler
-- **K3s** - Lightweight Kubernetes
-- **containerd** - Container runtime
+- **Open MPI** - High-performance computing
 
 ## Cloud
 
