@@ -352,16 +352,22 @@ make kubernetes-clean
 - **PyVista** - 3D plotting and mesh analysis
 - **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization
 
-## High-Performance Computing (HPC)
+## Computing
+
+### High-Performance Computing (HPC)
 
 - **Open MPI** - High-performance computing
-
-## Cloud
 
 ### Cloud Computing
 
 - **Ray** - Distributed computing framework
 - **SkyPilot** - Sky computing
+
+### Quantum Computing
+
+- **Qiskit** - Quantum computing
+
+## Cloud
 
 ### Cloud Platform
 
@@ -541,10 +547,6 @@ make kubernetes-clean
 - **Blender** - 3D graphic design
 - **Figma** - UX design
 
-## Physics
-
-- **Qiskit** - Quantum computing
-
 ## Bots
 
 - **Renovate** - Dependency updating
@@ -628,6 +630,7 @@ make kubernetes-clean
   - **PromQL**
   - **SedonaSQL**
   - **Spark SQL**
+  - **Snowflake SQL**
 - **Swift**
 - **VHDL**
 - **XML**
@@ -851,7 +854,7 @@ Chatbot on Telegram powered by Rasa.
 
 ![Open3D screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/f4c6dca1-b0c1-4370-9c78-bef12bc70218)
 
-## Cloud Computing
+## Computing
 
 ### Ray - Distributed Computing
 
