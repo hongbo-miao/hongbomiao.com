@@ -304,6 +304,7 @@ lint-sql:
 	poetry run poe lint-sql -- --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
 	poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/motor/migrations
+	poetry run poe lint-sql -- --dialect=snowflake data-storage/snowflake/queries
 	poetry run poe lint-sql -- --dialect=sparksql data-storage/delta-lake/queries
 	poetry run poe lint-sql -- --dialect=sqlite data-storage/sqlite/queries
 	poetry run poe lint-sql -- --dialect=trino trino/queries
@@ -319,6 +320,7 @@ lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres data-storage/timescaledb/motor/migrations
+	poetry run poe lint-sql-fix -- --dialect=snowflake data-storage/snowflake/queries
 	poetry run poe lint-sql-fix -- --dialect=sparksql queries
 	poetry run poe lint-sql-fix -- --dialect=sqlite data-storage/sqlite/queries
 	poetry run poe lint-sql-fix -- --dialect=trino trino/queries
