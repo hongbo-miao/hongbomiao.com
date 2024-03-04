@@ -1,0 +1,6 @@
+build:
+	mpicc hello.c -o hello
+run:
+	mpirun -n=10 hello
+clean:
+	rm -f hello
