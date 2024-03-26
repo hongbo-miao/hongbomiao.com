@@ -908,33 +908,40 @@ pgp = ["gpg"]
 
 [[package]]
 name = "dvc"
-version = "3.48.4"
+version = "3.49.0"
 description = "Git for data scientists - manage your code and data together"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "dvc-3.48.4-py3-none-any.whl", hash = "sha256:06e0852bb7173ee93fe1bb712244e6b8ae230af12957d16f12d9143a70b60f89"},
-    {file = "dvc-3.48.4.tar.gz", hash = "sha256:ce9823b5cf95e2094d77ff8037d0c0dfd9b04014dd79f17a9995badcdf8b062c"},
+    {file = "dvc-3.49.0-py3-none-any.whl", hash = "sha256:5122424debe4a4192cdae76918df4194153e61c7fa9224c0d82627d2786110c7"},
+    {file = "dvc-3.49.0.tar.gz", hash = "sha256:ab3779ef9a422e0a6734765a98f05cadaab7290de8726db023e0c14ec079031f"},
 ]
 
 [package.dependencies]
+attrs = ">=22.2.0"
+celery = "*"
 colorama = ">=0.3.9"
 configobj = ">=5.0.6"
 distro = ">=1.3"
 dpath = ">=2.1.0,<3"
-dvc-data = ">=3.13,<3.15"
+dulwich = "*"
+dvc-data = ">=3.15,<3.16"
 dvc-http = ">=2.29.0"
+dvc-objects = "*"
 dvc-render = ">=1.0.1,<2"
 dvc-studio-client = ">=0.20,<1"
 dvc-task = ">=0.3.0,<1"
 flatten-dict = ">=0.4.1,<1"
 "flufl.lock" = ">=5,<8"
+fsspec = "*"
 funcy = ">=1.14"
 grandalf = ">=0.7,<1"
 gto = ">=1.6.0,<2"
 hydra-core = ">=1.1"
 iterative-telemetry = ">=0.0.7"
+kombu = "*"
 networkx = ">=2.5"
+omegaconf = "*"
 packaging = ">=19"
 pathspec = ">=0.10.3"
 platformdirs = ">=3.1.1,<4"
@@ -974,13 +981,13 @@ webhdfs-kerberos = ["dvc-webhdfs[kerberos] (>=3.1,<4)"]
 
 [[package]]
 name = "dvc-data"
-version = "3.14.1"
+version = "3.15.1"
 description = "DVC's data management subsystem"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "dvc-data-3.14.1.tar.gz", hash = "sha256:00b46fc826a05b6094d7d76158f8b15c48e7a491a36353a020790cd12a33f6e3"},
-    {file = "dvc_data-3.14.1-py3-none-any.whl", hash = "sha256:78288bf02743ed85eeafdc2bb0f52ca226116050c8494fd1772da5babac86501"},
+    {file = "dvc-data-3.15.1.tar.gz", hash = "sha256:db141bbbcf9e1ff37d9ff8657d04747e804899b90b4931b120f5d21bbd401583"},
+    {file = "dvc_data-3.15.1-py3-none-any.whl", hash = "sha256:e869825af922add091bc3e2de477ba0d05e847db402bb4044483600161f3a7a7"},
 ]
 
 [package.dependencies]
@@ -997,8 +1004,8 @@ tqdm = ">=4.63.1,<5"
 [package.extras]
 all = ["dvc-data[cli]"]
 cli = ["rich (>=10.11.0,<14.0.0)", "typer[all] (>=0.6)"]
-dev = ["blake3 (>=0.3.1)", "dvc-data[all]", "dvc-data[tests]", "mypy (==1.8.0)", "types-tqdm"]
-tests = ["pytest (>=7,<8)", "pytest-benchmark (>=4)", "pytest-cov (>=4.1.0)", "pytest-mock", "pytest-servers[s3] (==0.5.0)", "pytest-sugar"]
+dev = ["blake3 (>=0.3.1)", "dvc-data[all]", "dvc-data[tests]", "mypy (==1.9.0)", "types-tqdm"]
+tests = ["pytest (>=7,<9)", "pytest-benchmark (>=4)", "pytest-cov (>=4.1.0)", "pytest-mock", "pytest-servers[s3] (==0.5.0)", "pytest-sugar"]
 
 [[package]]
 name = "dvc-http"
@@ -3625,4 +3632,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "889be568766f7773e1c06e8b71e7f970dc760fffc47f50eedab49750cc70bc51"
+content-hash = "17d15be1764c3489b3583919c98352da7c3542e6ca75f22f78c2d597727aa81d"
