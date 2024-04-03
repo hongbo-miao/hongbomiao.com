@@ -42,20 +42,29 @@ module "production_hm_ec2_module" {
   ec2_instance_type = "t2.nano"
 }
 
+# Amazon S3 bucket - hm-production-bucket
+module "production_amazon_hm_production_s3_bucket" {
+  providers      = { aws = aws.production }
+  source         = "./modules/hm_amazon_s3_bucket"
+  s3_bucket_name = "hm-production-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+
 # Amazon EMR
 # Amazon EMR - Trino
 data "aws_secretsmanager_secret" "hm_rds_secret" {
-  name = "hm-iot-rds/hm_iot_db/readonly"
+  name = "hm-iot-rds/hm_iot_db/public/readonly"
 }
 data "aws_secretsmanager_secret_version" "hm_rds_secret_version" {
   secret_id = data.aws_secretsmanager_secret.hm_rds_secret.id
 }
 module "production_hm_trino_s3_set_up_script" {
-  providers        = { aws = aws.production }
-  source           = "./modules/hm_amazon_s3_object"
-  amazon_s3_bucket = "hongbomiao-bucket"
-  amazon_s3_key    = "amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
-  local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
+  providers       = { aws = aws.production }
+  source          = "./modules/hm_amazon_s3_object"
+  s3_bucket_name  = module.production_amazon_hm_production_s3_bucket.name
+  s3_key          = "amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
+  local_file_path = "./data/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
 }
 module "production_hm_trino_emr" {
   providers                                  = { aws = aws.production }
@@ -121,25 +130,25 @@ module "production_hm_route_53_record" {
 
 # Amazon EMR - Apache Sedona
 module "production_hm_sedona_s3_set_up_script" {
-  providers        = { aws = aws.production }
-  source           = "./modules/hm_amazon_s3_object"
-  amazon_s3_bucket = "hongbomiao-bucket"
-  amazon_s3_key    = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
-  local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
+  providers       = { aws = aws.production }
+  source          = "./modules/hm_amazon_s3_object"
+  s3_bucket_name  = module.production_amazon_hm_production_s3_bucket.name
+  s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
+  local_file_path = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
 }
 module "production_hm_sedona_s3_validate_python_version_script" {
-  providers        = { aws = aws.production }
-  source           = "./modules/hm_amazon_s3_object"
-  amazon_s3_bucket = "hongbomiao-bucket"
-  amazon_s3_key    = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
-  local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
+  providers       = { aws = aws.production }
+  source          = "./modules/hm_amazon_s3_object"
+  s3_bucket_name  = module.production_amazon_hm_production_s3_bucket.name
+  s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
+  local_file_path = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
 }
 module "production_hm_sedona_s3_set_up_jupyterlab_script" {
-  providers        = { aws = aws.production }
-  source           = "./modules/hm_amazon_s3_object"
-  amazon_s3_bucket = "hongbomiao-bucket"
-  amazon_s3_key    = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
-  local_file_path  = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
+  providers       = { aws = aws.production }
+  source          = "./modules/hm_amazon_s3_object"
+  s3_bucket_name  = module.production_amazon_hm_production_s3_bucket.name
+  s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
+  local_file_path = "./data/amazon-emr/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
 }
 module "production_hm_sedona_emr" {
   providers                                  = { aws = aws.production }
@@ -220,7 +229,7 @@ module "production_hm_sedona_emr_studio_iam" {
   providers              = { aws = aws.production }
   source                 = "./modules/hm_amazon_emr_studio_iam"
   amazon_emr_studio_name = "hm-sedona-emr-studio"
-  s3_bucket              = "hongbomiao-bucket"
+  s3_bucket              = module.production_amazon_hm_production_s3_bucket.name
   environment            = var.environment
   team                   = var.team
 }
@@ -240,8 +249,8 @@ module "production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to
   providers                      = { aws = aws.production }
   source                         = "./modules/hm_aws_glue_databrew_iam"
   aws_glue_databrew_job_nickname = "write-adsb-csv-to-parquet"
-  input_s3_bucket                = "hongbomiao-bucket"
-  output_s3_bucket               = "hongbomiao-bucket"
+  input_s3_bucket_name           = module.production_amazon_hm_production_s3_bucket.name
+  output_s3_bucket_name          = module.production_amazon_hm_production_s3_bucket.name
   environment                    = var.environment
   team                           = var.team
 }
@@ -250,8 +259,8 @@ module "production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to
   source                         = "./modules/hm_aws_glue_databrew_dataset_adsb_raw_data"
   count                          = length(var.adsb_2x_flight_trace_raw_data_dates)
   aws_glue_databrew_dataset_name = "adsb-2x-flight-trace-dataset-raw-data-${replace(var.adsb_2x_flight_trace_raw_data_dates[count.index], "/", "-")}"
-  input_s3_bucket                = "hongbomiao-bucket"
-  input_s3_dir                   = "data/raw/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_raw_data_dates[count.index]}/"
+  input_s3_bucket_name           = module.production_amazon_hm_production_s3_bucket.name
+  input_s3_key                   = "data/raw/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_raw_data_dates[count.index]}/"
   environment                    = var.environment
   team                           = var.team
 }
@@ -265,8 +274,8 @@ module "production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to
   recipe_version                    = "1.0"
   spark_worker_max_number           = 24
   timeout_min                       = 1440
-  output_s3_bucket                  = "hongbomiao-bucket"
-  output_s3_dir                     = "data/raw-parquet/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_raw_data_dates[count.index]}/"
+  output_s3_bucket_name             = module.production_amazon_hm_production_s3_bucket.name
+  output_s3_key                     = "data/raw-parquet/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_raw_data_dates[count.index]}/"
   output_max_file_number            = 24
   iam_role_arn                      = module.production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_iam.arn
   environment                       = var.environment
@@ -281,8 +290,8 @@ module "production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw
   providers                      = { aws = aws.production }
   source                         = "./modules/hm_aws_glue_databrew_iam"
   aws_glue_databrew_job_nickname = "profile-adsb-raw-parquet"
-  input_s3_bucket                = "hongbomiao-bucket"
-  output_s3_bucket               = "hongbomiao-bucket"
+  input_s3_bucket_name           = module.production_amazon_hm_production_s3_bucket.name
+  output_s3_bucket_name          = module.production_amazon_hm_production_s3_bucket.name
   environment                    = var.environment
   team                           = var.team
 }
@@ -291,8 +300,8 @@ module "production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw
   source                         = "./modules/hm_aws_glue_databrew_dataset_adsb_raw_parquet"
   count                          = length(var.adsb_2x_flight_trace_raw_parquet_dates)
   aws_glue_databrew_dataset_name = "adsb-2x-flight-trace-dataset-raw-parquet-${replace(var.adsb_2x_flight_trace_raw_parquet_dates[count.index], "/", "-")}"
-  input_s3_bucket                = "hongbomiao-bucket"
-  input_s3_dir                   = "data/raw-parquet/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_raw_parquet_dates[count.index]}/"
+  input_s3_bucket_name           = module.production_amazon_hm_production_s3_bucket.name
+  input_s3_key                   = "data/raw-parquet/adsb_2x_flight_trace_data/${var.adsb_2x_flight_trace_raw_parquet_dates[count.index]}/"
   environment                    = var.environment
   team                           = var.team
 }
@@ -304,8 +313,8 @@ module "production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw
   aws_glue_databrew_dataset_name     = "adsb-2x-flight-trace-dataset-raw-parquet-${replace(var.adsb_2x_flight_trace_raw_parquet_dates[count.index], "/", "-")}"
   spark_worker_max_number            = 24
   timeout_min                        = 1440
-  output_s3_bucket                   = "hongbomiao-bucket"
-  output_s3_dir                      = "aws-glue-databrew/profile-results/"
+  output_s3_bucket_name              = module.production_amazon_hm_production_s3_bucket.name
+  output_s3_key                      = "aws-glue-databrew/profile-results/"
   iam_role_arn                       = module.production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_iam.arn
   environment                        = var.environment
   team                               = var.team
@@ -320,17 +329,17 @@ module "production_hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace
   providers             = { aws = aws.production }
   source                = "./modules/hm_aws_glue_iam"
   aws_glue_job_nickname = "write-adsb-parquet-to-delta-table"
-  input_s3_bucket       = "hongbomiao-bucket"
-  output_s3_bucket      = "hongbomiao-bucket"
+  input_s3_bucket_name  = module.production_amazon_hm_production_s3_bucket.name
+  output_s3_bucket_name = module.production_amazon_hm_production_s3_bucket.name
   environment           = var.environment
   team                  = var.team
 }
 module "production_hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script" {
-  providers        = { aws = aws.production }
-  source           = "./modules/hm_amazon_s3_object"
-  amazon_s3_bucket = "hongbomiao-bucket"
-  amazon_s3_key    = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data.py"
-  local_file_path  = "./data/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data.py"
+  providers       = { aws = aws.production }
+  source          = "./modules/hm_amazon_s3_object"
+  s3_bucket_name  = module.production_amazon_hm_production_s3_bucket.name
+  s3_key          = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data.py"
+  local_file_path = "./data/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data.py"
 }
 module "production_hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data" {
   providers               = { aws = aws.production }
@@ -347,11 +356,11 @@ module "production_hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace
 
 # AWS Glue job - Motor
 module "production_hm_glue_job_write_parquet_to_delta_table_motor_data_script" {
-  providers        = { aws = aws.production }
-  source           = "./modules/hm_amazon_s3_object"
-  amazon_s3_bucket = "hongbomiao-bucket"
-  amazon_s3_key    = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_motor_data.py"
-  local_file_path  = "./data/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_motor_data.py"
+  providers       = { aws = aws.production }
+  source          = "./modules/hm_amazon_s3_object"
+  s3_bucket_name  = module.production_amazon_hm_production_s3_bucket.name
+  s3_key          = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_motor_data.py"
+  local_file_path = "./data/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_motor_data.py"
 }
 module "production_hm_glue_job_write_parquet_to_delta_table_motor_data" {
   providers               = { aws = aws.production }
@@ -374,4 +383,70 @@ module "production_hm_glue_crawler_motor_data" {
   iam_role_arn                  = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
   environment                   = var.environment
   team                          = var.team
+}
+
+# Amazon MSK
+module "production_hm_amazon_msk_cluster" {
+  providers               = { aws = aws.production }
+  source                  = "./modules/hm_amazon_msk_cluster"
+  amazon_msk_cluster_name = "tracker-kafka"
+  kafka_version           = "3.6.0"
+  instance_type           = "kafka.m7g.large"
+  kafka_broker_number     = 3
+  environment             = var.environment
+  team                    = var.team
+}
+module "local_tracker_sink_plugin" {
+  source                            = "./modules/hm_local_tracker_sink_plugin"
+  snowflake_kafka_connector_version = "2.2.1"
+  bc_fips_version                   = "1.0.2.4"
+  bcpkix_fips_version               = "1.0.7"
+  local_dir_path                    = "data/amazon-msk/plugins"
+  local_file_name                   = var.tracker_sink_plugin_file_name
+}
+module "production_tracker_sink_plugin" {
+  providers       = { aws = aws.production }
+  source          = "./modules/hm_amazon_s3_object"
+  s3_bucket_name  = module.production_amazon_hm_production_s3_bucket.name
+  s3_key          = "amazon-msk/plugins/${var.tracker_sink_plugin_file_name}"
+  local_file_path = module.local_tracker_sink_plugin.local_file_path
+}
+module "production_hm_amazon_msk_tracker_sink_plugin" {
+  providers                = { aws = aws.production }
+  source                   = "./modules/hm_amazon_msk_plugin"
+  amazon_msk_plugin_name   = "tracker-sink-plugin"
+  s3_bucket_arn            = module.production_amazon_hm_production_s3_bucket.arn
+  amazon_msk_plugin_s3_key = module.production_tracker_sink_plugin.s3_key
+}
+module "production_hm_amazon_msk_tracker_sink_connector_iam" {
+  providers                 = { aws = aws.production }
+  source                    = "./modules/hm_amazon_msk_connector_iam"
+  amazon_msk_connector_name = var.tracker_sink_connector_name
+  amazon_msk_arn            = module.production_hm_amazon_msk_cluster.arn
+  msk_plugin_s3_bucket_name = module.production_amazon_hm_production_s3_bucket.name
+  msk_log_s3_bucket_name    = module.production_amazon_hm_production_s3_bucket.name
+  environment               = var.environment
+  team                      = var.team
+}
+data "aws_secretsmanager_secret" "tracker_snowflake_secret" {
+  name = "hm-snowflake/production_tracker_db/public/readwrite"
+}
+data "aws_secretsmanager_secret_version" "tracker_snowflake_secret_version" {
+  secret_id = data.aws_secretsmanager_secret.tracker_snowflake_secret.id
+}
+module "production_hm_amazon_msk_tracker_sink_connector" {
+  providers                         = { aws = aws.production }
+  source                            = "./modules/hm_amazon_msk_connector"
+  amazon_msk_connector_name         = var.tracker_sink_connector_name
+  kafka_connect_version             = "2.7.1"
+  amazon_msk_plugin_arn             = module.production_hm_amazon_msk_tracker_sink_plugin.arn
+  amazon_msk_plugin_revision        = module.production_hm_amazon_msk_tracker_sink_plugin.latest_revision
+  amazon_msk_connector_iam_role_arn = module.production_hm_amazon_msk_tracker_sink_connector_iam.arn
+  snowflake_username                = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["username"]
+  snowflake_private_key             = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key"]
+  snowflake_private_key_passphrase  = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key_passphrase"]
+  msk_log_s3_bucket_name            = module.production_amazon_hm_production_s3_bucket.name
+  msk_log_s3_key                    = "amazon-msk/connectors/${module.production_hm_amazon_msk_tracker_sink_connector.name}"
+  environment                       = var.environment
+  team                              = var.team
 }

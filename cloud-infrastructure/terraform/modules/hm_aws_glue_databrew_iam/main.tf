@@ -42,8 +42,8 @@ resource "aws_iam_role_policy" "hm_aws_glue_databrew_iam_role_input_policy" {
           "s3:ListBucket"
         ]
         Resource = [
-          "arn:aws:s3:::${var.input_s3_bucket}",
-          "arn:aws:s3:::${var.input_s3_bucket}/*"
+          "arn:aws:s3:::${var.input_s3_bucket_name}",
+          "arn:aws:s3:::${var.input_s3_bucket_name}/*"
         ]
       }
     ]
@@ -66,8 +66,8 @@ resource "aws_iam_role_policy" "hm_aws_glue_databrew_iam_role_output_policy" {
           "s3:PutObject"
         ]
         Resource = [
-          "arn:aws:s3:::${var.output_s3_bucket}",
-          "arn:aws:s3:::${var.output_s3_bucket}/*"
+          "arn:aws:s3:::${var.output_s3_bucket_name}",
+          "arn:aws:s3:::${var.output_s3_bucket_name}/*"
         ]
       },
       {
@@ -76,7 +76,7 @@ resource "aws_iam_role_policy" "hm_aws_glue_databrew_iam_role_output_policy" {
           "s3:PutObjectAcl"
         ]
         Resource = [
-          "arn:aws:s3:::${var.output_s3_bucket}/*"
+          "arn:aws:s3:::${var.output_s3_bucket_name}/*"
         ],
         Condition = {
           StringEquals = {

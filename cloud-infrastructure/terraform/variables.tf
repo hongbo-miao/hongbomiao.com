@@ -75,3 +75,12 @@ variable "adsb_2x_flight_trace_raw_parquet_dates" {
     "2023/10/30"
   ]
 }
+
+variable "tracker_sink_connector_name" {
+  type    = string
+  default = "TrackerSinkConnector"
+}
+variable "tracker_sink_plugin_file_name" {
+  type    = string
+  default = "tracker-sink-plugin.zip"
+}
