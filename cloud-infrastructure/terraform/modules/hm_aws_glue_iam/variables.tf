@@ -1,10 +1,10 @@
 variable "aws_glue_job_nickname" {
   type = string
 }
-variable "input_s3_bucket" {
+variable "input_s3_bucket_name" {
   type = string
 }
-variable "output_s3_bucket" {
+variable "output_s3_bucket_name" {
   type = string
 }
 variable "environment" {
