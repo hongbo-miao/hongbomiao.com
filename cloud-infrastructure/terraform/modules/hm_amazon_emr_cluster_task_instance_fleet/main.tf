@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/emr_instance_fleet
 resource "aws_emr_instance_fleet" "hm_amazon_emr_cluster_task_instance_fleet" {
   cluster_id           = var.amazon_emr_cluster_id
