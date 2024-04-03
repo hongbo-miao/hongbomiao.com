@@ -476,6 +476,7 @@ make kubernetes-clean
 - **cantools** - Controller Area Network (CAN) bus tools
 - **python-can** - Controller Area Network (CAN) bus library
 - **Valgrind** - Memory debugging and profiling
+- **hexedit** - File viewing and editing in hexadecimal and ASCII
 - **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
