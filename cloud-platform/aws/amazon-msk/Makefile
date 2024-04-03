@@ -7,19 +7,19 @@ amazon-msk-kafka-cluster-describe:
 # EC2
 kafka-topic-list:
 	bin/kafka-topics.sh \
-		--bootstrap-server=xxx \
+		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
 		--command-config=config/iam-client.properties \
 		--list
 kafka-topic-list-debug:
 	KAFKA_OPTS=-Dlog4j.configuration=file:config/log4j.properties \
 	bin/kafka-topics.sh \
-		--bootstrap-server=xxx \
+		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
 		--command-config=config/iam-client.properties \
 		--list
 kafka-topic-create:
 	KAFKA_HEAP_OPTS="-Xmx2g" \
 	bin/kafka-topics.sh \
-		--bootstrap-server=xxx \
+		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
 		--command-config=config/iam-client.properties \
 		--create \
 		--topic=my-topic \
@@ -27,18 +27,23 @@ kafka-topic-create:
 		--replication-factor=2
 kafka-topic-create:
 	bin/kafka-topics.sh \
-		--bootstrap-server=xxx \
+		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
 		--command-config=config/iam-client.properties \
 		--delete \
 		--topic=my-topic
 kafka-topic-producer:
 	bin/kafka-console-producer.sh \
-		--bootstrap-server=xxx \
+		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
 		--producer.config=config/iam-client.properties \
 		--topic=my-topic
 kafka-topic-consume:
 	bin/kafka-console-consumer.sh \
-		--bootstrap-server=xxx \
+		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
 		--consumer.config=config/iam-client.properties \
 		--topic=my-topic \
 		--property=print.key=true
+kafka-consumer-group-list:
+	bin/kafka-consumer-groups.sh \
+		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
+		--command-config=config/iam-client.properties \
+		--list
