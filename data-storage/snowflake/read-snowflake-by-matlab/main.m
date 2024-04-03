@@ -1,4 +1,4 @@
-conn = database('hm-snowflake', 'production_tracker_db_public_readonly', 'xxx')
+conn = database('hm-snowflake', 'production_tracker_db_public_readonly', 'xxx');
 
 fieldNames = {'record_metadata', 'record_content'};
 
