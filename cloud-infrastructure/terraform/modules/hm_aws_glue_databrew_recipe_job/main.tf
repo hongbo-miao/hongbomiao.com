@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    awscc = {
+      source = "hashicorp/awscc"
+    }
+  }
+}
+
 # https://registry.terraform.io/providers/hashicorp/awscc/latest/docs/resources/databrew_job
 resource "awscc_databrew_job" "hm_aws_glue_databrew_recipe_job" {
   name         = var.aws_glue_databrew_recipe_job_name

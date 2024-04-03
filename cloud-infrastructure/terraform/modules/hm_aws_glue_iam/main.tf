@@ -1,6 +1,4 @@
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role" "hm_aws_glue_iam_role" {
   name = "AWSGlueDataBrewServiceRole-${var.aws_glue_job_nickname}"
   assume_role_policy = jsonencode({
@@ -21,6 +19,8 @@ resource "aws_iam_role" "hm_aws_glue_iam_role" {
     Name        = "AWSGlueServiceRole-${var.aws_glue_job_nickname}"
   }
 }
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "hm_aws_glue_iam_role_input_policy" {
   name = "AwsGlueDataBrewServicePolicyForInputS3-${var.aws_glue_job_nickname}"
   role = aws_iam_role.hm_aws_glue_iam_role.name
@@ -41,6 +41,8 @@ resource "aws_iam_role_policy" "hm_aws_glue_iam_role_input_policy" {
     ]
   })
 }
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "hm_aws_glue_iam_role_output_policy" {
   name = "AwsGlueDataBrewServicePolicyForOutputS3-${var.aws_glue_job_nickname}"
   role = aws_iam_role.hm_aws_glue_iam_role.name
@@ -77,6 +79,8 @@ resource "aws_iam_role_policy" "hm_aws_glue_iam_role_output_policy" {
     ]
   })
 }
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role_policy_attachment" "hm_aws_glue_iam_role_policy_attachment" {
   role       = aws_iam_role.hm_aws_glue_iam_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"

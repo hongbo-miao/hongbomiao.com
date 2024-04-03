@@ -1,6 +1,12 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role" "hm_amazon_emr_studio_iam_role" {
   name = "AmazonEMRStudioServiceRole-${var.amazon_emr_studio_name}"
   assume_role_policy = jsonencode({
@@ -21,6 +27,8 @@ resource "aws_iam_role" "hm_amazon_emr_studio_iam_role" {
     Name        = "AmazonEMRStudioServiceRole-${var.amazon_emr_studio_name}"
   }
 }
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "hm_amazon_emr_studio_iam_role_s3_policy" {
   name = "AmazonEMRStudioServicePolicyForS3-${var.amazon_emr_studio_name}"
   role = aws_iam_role.hm_amazon_emr_studio_iam_role.name
@@ -53,6 +61,8 @@ resource "aws_iam_role_policy" "hm_amazon_emr_studio_iam_role_s3_policy" {
     ]
   })
 }
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role_policy_attachment" "hm_amazon_emr_studio_iam_role_policy_attachment" {
   role       = aws_iam_role.hm_amazon_emr_studio_iam_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonElasticMapReduceEditorsRole"
