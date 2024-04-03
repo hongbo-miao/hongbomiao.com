@@ -390,7 +390,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=machine-learning.reinforcement-learning.cart-pole
 	poetry run poe static-type-check-python -- --package=quantum-computing
 static-type-check-terraform:
-	cd terraform && terraform validate
+	cd cloud-infrastructure/terraform && terraform validate
 static-type-check-typescript:
 	cd api-node && npm run tsc
 	cd ethereum && npm run tsc

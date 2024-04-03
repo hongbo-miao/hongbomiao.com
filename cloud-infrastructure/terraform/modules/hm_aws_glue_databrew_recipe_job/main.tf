@@ -21,8 +21,8 @@ resource "awscc_databrew_job" "hm_aws_glue_databrew_recipe_job" {
   outputs = [
     {
       location = {
-        bucket = var.output_s3_bucket
-        key    = var.output_s3_dir
+        bucket = var.output_s3_bucket_name
+        key    = var.output_s3_key
       }
       format           = "PARQUET"
       max_output_files = var.output_max_file_number
