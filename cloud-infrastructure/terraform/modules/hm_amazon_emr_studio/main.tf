@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/emr_studio
 resource "aws_emr_studio" "hm_amazon_emr_studio" {
   name                        = var.amazon_emr_studio_name

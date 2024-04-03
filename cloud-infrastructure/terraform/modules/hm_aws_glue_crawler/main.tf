@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glue_crawler
 # https://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html
 resource "aws_glue_crawler" "hm_aws_glue_crawler" {
