@@ -863,40 +863,41 @@ files = [
 
 [[package]]
 name = "httpcore"
-version = "0.18.0"
+version = "1.0.5"
 description = "A minimal low-level HTTP client."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "httpcore-0.18.0-py3-none-any.whl", hash = "sha256:adc5398ee0a476567bf87467063ee63584a8bce86078bf748e48754f60202ced"},
-    {file = "httpcore-0.18.0.tar.gz", hash = "sha256:13b5e5cd1dca1a6636a6aaea212b19f4f85cd88c366a2b82304181b769aab3c9"},
+    {file = "httpcore-1.0.5-py3-none-any.whl", hash = "sha256:421f18bac248b25d310f3cacd198d55b8e6125c107797b609ff9b7a6ba7991b5"},
+    {file = "httpcore-1.0.5.tar.gz", hash = "sha256:34a38e2f9291467ee3b44e89dd52615370e152954ba21721378a87b2960f7a61"},
 ]
 
 [package.dependencies]
-anyio = ">=3.0,<5.0"
 certifi = "*"
 h11 = ">=0.13,<0.15"
-sniffio = "==1.*"
 
 [package.extras]
+asyncio = ["anyio (>=4.0,<5.0)"]
 http2 = ["h2 (>=3,<5)"]
 socks = ["socksio (==1.*)"]
+trio = ["trio (>=0.22.0,<0.26.0)"]
 
 [[package]]
 name = "httpx"
-version = "0.25.0"
+version = "0.27.0"
 description = "The next generation HTTP client."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "httpx-0.25.0-py3-none-any.whl", hash = "sha256:181ea7f8ba3a82578be86ef4171554dd45fec26a02556a744db029a0a27b7100"},
-    {file = "httpx-0.25.0.tar.gz", hash = "sha256:47ecda285389cb32bb2691cc6e069e3ab0205956f681c5b2ad2325719751d875"},
+    {file = "httpx-0.27.0-py3-none-any.whl", hash = "sha256:71d5465162c13681bff01ad59b2cc68dd838ea1f10e51574bac27103f00c91a5"},
+    {file = "httpx-0.27.0.tar.gz", hash = "sha256:a0cb88a46f32dc874e04ee956e4c2764aba2aa228f650b06788ba6bda2962ab5"},
 ]
 
 [package.dependencies]
+anyio = "*"
 certifi = "*"
 h2 = {version = ">=3,<5", optional = true, markers = "extra == \"http2\""}
-httpcore = ">=0.18.0,<0.19.0"
+httpcore = "==1.*"
 idna = "*"
 sniffio = "*"
 
@@ -1550,13 +1551,13 @@ poetry-plugin = ["poetry (>=1.0,<2.0)"]
 
 [[package]]
 name = "prefect"
-version = "2.16.8"
+version = "2.16.9"
 description = "Workflow orchestration and management."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "prefect-2.16.8-py3-none-any.whl", hash = "sha256:f570f3be390a641169c1407bbf5eae34e28481a57764e87e68defdf59e47d0ee"},
-    {file = "prefect-2.16.8.tar.gz", hash = "sha256:c75eb1feac78c888f20d917e4a73dfbcfaafb4cb2db7a71ccebaaf5b6285794c"},
+    {file = "prefect-2.16.9-py3-none-any.whl", hash = "sha256:ca351ef242d4133a8bc79849af30e8353764e8a307fb5efa6e0f22c759c73536"},
+    {file = "prefect-2.16.9.tar.gz", hash = "sha256:52165c5c2560e37a657ee9cf30703b3a85814f4196d65f4ef57f1e460249b645"},
 ]
 
 [package.dependencies]
@@ -1577,7 +1578,7 @@ docker = ">=4.0,<7.0"
 fsspec = ">=2022.5.0"
 graphviz = ">=0.20.1"
 griffe = ">=0.20.0"
-httpcore = ">=0.15.0,<2.0.0"
+httpcore = ">=1.0.5,<2.0.0"
 httpx = {version = ">=0.23,<0.23.2 || >0.23.2", extras = ["http2"]}
 importlib-resources = ">=6.1.3,<6.2.0"
 itsdangerous = "*"
@@ -1590,6 +1591,7 @@ packaging = ">=21.3,<24.3"
 pathspec = ">=0.8.0"
 pendulum = {version = "<3.0", markers = "python_version < \"3.12\""}
 pydantic = {version = ">=1.10.0,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.1.0 || >2.1.0,<3.0.0", extras = ["email"]}
+pydantic-core = ">=2.10.0,<3.0.0"
 python-dateutil = ">=2.8.2,<3.0.0"
 python-multipart = ">=0.0.7"
 python-slugify = ">=5.0,<9.0"
@@ -1602,7 +1604,7 @@ rich = ">=11.0,<14.0"
 sniffio = ">=1.3.0,<2.0.0"
 sqlalchemy = {version = ">=1.4.22,<1.4.33 || >1.4.33,<3.0.0", extras = ["asyncio"]}
 toml = ">=0.10.0"
-typer = ">=0.4.2"
+typer = ">=0.12.0,<0.13.0"
 typing-extensions = ">=4.5.0,<5.0.0"
 ujson = ">=5.8.0,<6.0.0"
 uvicorn = ">=0.14.0,<0.29.0"
@@ -2502,6 +2504,17 @@ testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8-2020", "ini2toml[l
 testing-integration = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "packaging (>=23.1)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
+name = "shellingham"
+version = "1.5.4"
+description = "Tool to Detect Surrounding Shell"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686"},
+    {file = "shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de"},
+]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -2658,24 +2671,53 @@ files = [
 
 [[package]]
 name = "typer"
-version = "0.9.0"
+version = "0.12.0"
 description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "typer-0.9.0-py3-none-any.whl", hash = "sha256:5d96d986a21493606a358cae4461bd8cdf83cbf33a5aa950ae629ca3b51467ee"},
-    {file = "typer-0.9.0.tar.gz", hash = "sha256:50922fd79aea2f4751a8e0408ff10d2662bd0c8bbfa84755a699f3bada2978b2"},
+    {file = "typer-0.12.0-py3-none-any.whl", hash = "sha256:0441a0bb8962fb4383b8537ada9f7eb2d0deda0caa2cfe7387cc221290f617e4"},
+    {file = "typer-0.12.0.tar.gz", hash = "sha256:900fe786ce2d0ea44653d3c8ee4594a22a496a3104370ded770c992c5e3c542d"},
 ]
 
 [package.dependencies]
-click = ">=7.1.1,<9.0.0"
+typer-cli = "0.12.0"
+typer-slim = {version = "0.12.0", extras = ["standard"]}
+
+[[package]]
+name = "typer-cli"
+version = "0.12.0"
+description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "typer_cli-0.12.0-py3-none-any.whl", hash = "sha256:7b7e2dd49f59974bb5a869747045d5444b17bffb851e006cd424f602d3578104"},
+    {file = "typer_cli-0.12.0.tar.gz", hash = "sha256:603ed3d5a278827bd497e4dc73a39bb714b230371c8724090b0de2abdcdd9f6e"},
+]
+
+[package.dependencies]
+typer-slim = {version = "0.12.0", extras = ["standard"]}
+
+[[package]]
+name = "typer-slim"
+version = "0.12.0"
+description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "typer_slim-0.12.0-py3-none-any.whl", hash = "sha256:ddd7042b29a32140528caa415750bcae54113ba0c32270ca11a6f64069ddadf9"},
+    {file = "typer_slim-0.12.0.tar.gz", hash = "sha256:3e8a3f17286b173d76dca0fd4e02651c9a2ce1467b3754876b1ac4bd72572beb"},
+]
+
+[package.dependencies]
+click = ">=8.0.0"
+rich = {version = ">=10.11.0", optional = true, markers = "extra == \"standard\""}
+shellingham = {version = ">=1.3.0", optional = true, markers = "extra == \"standard\""}
 typing-extensions = ">=3.7.4.3"
 
 [package.extras]
-all = ["colorama (>=0.4.3,<0.5.0)", "rich (>=10.11.0,<14.0.0)", "shellingham (>=1.3.0,<2.0.0)"]
-dev = ["autoflake (>=1.3.1,<2.0.0)", "flake8 (>=3.8.3,<4.0.0)", "pre-commit (>=2.17.0,<3.0.0)"]
-doc = ["cairosvg (>=2.5.2,<3.0.0)", "mdx-include (>=1.4.1,<2.0.0)", "mkdocs (>=1.1.2,<2.0.0)", "mkdocs-material (>=8.1.4,<9.0.0)", "pillow (>=9.3.0,<10.0.0)"]
-test = ["black (>=22.3.0,<23.0.0)", "coverage (>=6.2,<7.0)", "isort (>=5.0.6,<6.0.0)", "mypy (==0.910)", "pytest (>=4.4.0,<8.0.0)", "pytest-cov (>=2.10.0,<5.0.0)", "pytest-sugar (>=0.9.4,<0.10.0)", "pytest-xdist (>=1.32.0,<4.0.0)", "rich (>=10.11.0,<14.0.0)", "shellingham (>=1.3.0,<2.0.0)"]
+all = ["rich (>=10.11.0)", "shellingham (>=1.3.0)"]
+standard = ["rich (>=10.11.0)", "shellingham (>=1.3.0)"]
 
 [[package]]
 name = "typing-extensions"
@@ -2918,4 +2960,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "9088ad5f6c4b50ef9744deececf7eef1f8008de7f6b33b1a53e567bff89705a5"
+content-hash = "a1183c273773793798c1cfb056e0c87f19a25634f5c5fe2dd66fa853600947fa"
