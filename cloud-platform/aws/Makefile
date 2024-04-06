@@ -18,3 +18,9 @@ aws-profile-show:
 
 aws-credentials-show:
 	cat ~/.aws/credentials
+
+aws-service-quotas-service-list:
+	aws service-quotas list-services --no-cli-pager
+aws-service-quotas-service-quotas-list:
+	aws service-quotas list-service-quotas --service-code=glue --no-cli-pager
+	aws service-quotas list-service-quotas --service-code=databrew --no-cli-pager
