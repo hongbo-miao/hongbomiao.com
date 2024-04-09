@@ -553,41 +553,41 @@ files = [
 
 [[package]]
 name = "boto3"
-version = "1.26.165"
+version = "1.34.77"
 description = "The AWS SDK for Python"
 optional = false
-python-versions = ">= 3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "boto3-1.26.165-py3-none-any.whl", hash = "sha256:fa85b67147c8dc99b6e7c699fc086103f958f9677db934f70659e6e6a72a818c"},
-    {file = "boto3-1.26.165.tar.gz", hash = "sha256:9e7242b9059d937f34264125fecd844cb5e01acce6be093f6c44869fdf7c6e30"},
+    {file = "boto3-1.34.77-py3-none-any.whl", hash = "sha256:7abd327980258ec2ae980d2ff7fc32ede7448146b14d34c56bf0be074e2a149b"},
+    {file = "boto3-1.34.77.tar.gz", hash = "sha256:8ebed4fa5a3b84dd4037f28226985af00e00fb860d739fc8b1ed6381caa4b330"},
 ]
 
 [package.dependencies]
-botocore = ">=1.29.165,<1.30.0"
+botocore = ">=1.34.77,<1.35.0"
 jmespath = ">=0.7.1,<2.0.0"
-s3transfer = ">=0.6.0,<0.7.0"
+s3transfer = ">=0.10.0,<0.11.0"
 
 [package.extras]
 crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.29.165"
+version = "1.34.80"
 description = "Low-level, data-driven core of boto 3."
 optional = false
-python-versions = ">= 3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "botocore-1.29.165-py3-none-any.whl", hash = "sha256:6f35d59e230095aed7cd747604fe248fa384bebb7d09549077892f936a8ca3df"},
-    {file = "botocore-1.29.165.tar.gz", hash = "sha256:988b948be685006b43c4bbd8f5c0cb93e77c66deb70561994e0c5b31b5a67210"},
+    {file = "botocore-1.34.80-py3-none-any.whl", hash = "sha256:354a00f03faba52acc6f1a84fa4f035d48541633be98ccc24b59dc544f679f8b"},
+    {file = "botocore-1.34.80.tar.gz", hash = "sha256:8402262e819f3d46df504bbd781e770858c0130b90f660699f75ef3a63abca5a"},
 ]
 
 [package.dependencies]
 jmespath = ">=0.7.1,<2.0.0"
 python-dateutil = ">=2.1,<3.0.0"
-urllib3 = ">=1.25.4,<1.27"
+urllib3 = {version = ">=1.25.4,<2.2.0 || >2.2.0,<3", markers = "python_version >= \"3.10\""}
 
 [package.extras]
-crt = ["awscrt (==0.16.9)"]
+crt = ["awscrt (==0.19.19)"]
 
 [[package]]
 name = "cachetools"
@@ -1241,13 +1241,13 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2,<1.0.dev0)"]
 
 [[package]]
 name = "google-api-python-client"
-version = "2.124.0"
+version = "2.125.0"
 description = "Google API Client Library for Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "google-api-python-client-2.124.0.tar.gz", hash = "sha256:f6d3258420f7c76b0f5266b5e402e6f804e30351b018a10083f4a46c3ec33773"},
-    {file = "google_api_python_client-2.124.0-py2.py3-none-any.whl", hash = "sha256:07dc674449ed353704b1169fdee792f74438d024261dad71b6ce7bb9c683d51f"},
+    {file = "google-api-python-client-2.125.0.tar.gz", hash = "sha256:51a0385cff65ec135106e8be60ee7112557396dde5f44113ae23912baddda143"},
+    {file = "google_api_python_client-2.125.0-py2.py3-none-any.whl", hash = "sha256:0a62b60fbd61b61a455f15d925264b3301099b67cafd2d33cf8bf151f1fca4f4"},
 ]
 
 [package.dependencies]
@@ -1564,13 +1564,13 @@ referencing = ">=0.31.0"
 
 [[package]]
 name = "kubernetes"
-version = "28.1.0"
+version = "29.0.0"
 description = "Kubernetes python client"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "kubernetes-28.1.0-py2.py3-none-any.whl", hash = "sha256:10f56f8160dcb73647f15fafda268e7f60cf7dbc9f8e46d52fcd46d3beb0c18d"},
-    {file = "kubernetes-28.1.0.tar.gz", hash = "sha256:1468069a573430fb1cb5ad22876868f57977930f80a6749405da31cd6086a7e9"},
+    {file = "kubernetes-29.0.0-py2.py3-none-any.whl", hash = "sha256:ab8cb0e0576ccdfb71886366efb102c6a20f268d817be065ce7f9909c631e43e"},
+    {file = "kubernetes-29.0.0.tar.gz", hash = "sha256:c4812e227ae74d07d53c88293e564e54b850452715a59a927e7e1bc6b9a60459"},
 ]
 
 [package.dependencies]
@@ -1582,7 +1582,7 @@ pyyaml = ">=5.4.1"
 requests = "*"
 requests-oauthlib = "*"
 six = ">=1.9.0"
-urllib3 = ">=1.24.2,<2.0"
+urllib3 = ">=1.24.2"
 websocket-client = ">=0.32.0,<0.40.0 || >0.40.0,<0.41.dev0 || >=0.43.dev0"
 
 [package.extras]
@@ -1659,13 +1659,13 @@ files = [
 
 [[package]]
 name = "microsoft-kiota-abstractions"
-version = "1.1.0"
+version = "1.3.2"
 description = "Core abstractions for kiota generated libraries in Python"
 optional = false
 python-versions = "*"
 files = [
-    {file = "microsoft_kiota_abstractions-1.1.0-py2.py3-none-any.whl", hash = "sha256:de076a12aed5d39d4eb2f4a36d483ba6a74086b1f4ef2d2ead54a6e1935d1af2"},
-    {file = "microsoft_kiota_abstractions-1.1.0.tar.gz", hash = "sha256:41609aa57518b0fe470a97c874ed31cfe0630162e7bef294e8a3fb63ce6d0568"},
+    {file = "microsoft_kiota_abstractions-1.3.2-py2.py3-none-any.whl", hash = "sha256:ec4335df425874b1c0171a97c4b5ccdc4a9d076e1ecd3a5c2582af1cacc25016"},
+    {file = "microsoft_kiota_abstractions-1.3.2.tar.gz", hash = "sha256:acac0b34b443d3fc10a3a86dd996cdf92248080553a3768a77c23350541f1aa2"},
 ]
 
 [package.dependencies]
@@ -1709,6 +1709,21 @@ opentelemetry-api = ">=1.20.0"
 opentelemetry-sdk = ">=1.20.0"
 
 [[package]]
+name = "microsoft-kiota-serialization-form"
+version = "0.1.0"
+description = "Implementation of Kiota Serialization Interfaces for URI-Form encoded serialization"
+optional = false
+python-versions = "*"
+files = [
+    {file = "microsoft_kiota_serialization_form-0.1.0-py2.py3-none-any.whl", hash = "sha256:5bc76fb2fc67d7c1f878f876d252ea814e4fc38df505099b9b86de52d974380a"},
+    {file = "microsoft_kiota_serialization_form-0.1.0.tar.gz", hash = "sha256:663ece0cb1a41fe9ddfc9195aa3f15f219e14d2a1ee51e98c53ad8d795b2785d"},
+]
+
+[package.dependencies]
+microsoft-kiota_abstractions = ">=1.0.0,<2.0.0"
+pendulum = ">=3.0.0"
+
+[[package]]
 name = "microsoft-kiota-serialization-json"
 version = "1.0.1"
 description = "Implementation of Kiota Serialization interfaces for JSON"
@@ -1722,6 +1737,20 @@ files = [
 [package.dependencies]
 microsoft-kiota_abstractions = ">=1.0.0,<2.0.0"
 pendulum = ">=3.0.0b1"
+
+[[package]]
+name = "microsoft-kiota-serialization-multipart"
+version = "0.1.0"
+description = "Implementation of Kiota Serialization Interfaces for Multipart serialization"
+optional = false
+python-versions = "*"
+files = [
+    {file = "microsoft_kiota_serialization_multipart-0.1.0-py2.py3-none-any.whl", hash = "sha256:ef183902e77807806b8a181cdde53ba5bc04c6c9bdb2f7d80f8bad5d720e0015"},
+    {file = "microsoft_kiota_serialization_multipart-0.1.0.tar.gz", hash = "sha256:14e89e92582e6630ddbc70ac67b70bf189dacbfc41a96d3e1d10339e86c8dde5"},
+]
+
+[package.dependencies]
+microsoft-kiota_abstractions = ">=1.0.0,<2.0.0"
 
 [[package]]
 name = "microsoft-kiota-serialization-text"
@@ -1797,13 +1826,13 @@ dev = ["bumpver", "isort", "mypy", "pylint", "pytest", "yapf"]
 
 [[package]]
 name = "msgraph-sdk"
-version = "1.0.0"
+version = "1.2.0"
 description = "The Microsoft Graph Python SDK"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "msgraph-sdk-1.0.0.tar.gz", hash = "sha256:78c301d2aac7ac19bf3e2ace4356c6a077f50f3fd6e6da222fbe4dcbac0c5540"},
-    {file = "msgraph_sdk-1.0.0-py3-none-any.whl", hash = "sha256:977cf806490077743530d0aa239c517be0035025299b62d50395b7fbf7e534ef"},
+    {file = "msgraph-sdk-1.2.0.tar.gz", hash = "sha256:689eec74fcb5cb29446947e4761fa57edeeb3ec1dccd7975c44d12d8d9db9c4f"},
+    {file = "msgraph_sdk-1.2.0-py3-none-any.whl", hash = "sha256:4a9f706413c0a497cdfffd0b741122a5e73206333d566d115089cef9f4adadb7"},
 ]
 
 [package.dependencies]
@@ -1811,9 +1840,11 @@ azure-identity = ">=1.12.0"
 microsoft-kiota-abstractions = ">=1.0.0,<2.0.0"
 microsoft-kiota-authentication-azure = ">=1.0.0,<2.0.0"
 microsoft-kiota-http = ">=1.0.0,<2.0.0"
+microsoft-kiota-serialization-form = ">=0.1.0"
 microsoft-kiota-serialization-json = ">=1.0.0,<2.0.0"
+microsoft-kiota-serialization-multipart = ">=0.1.0"
 microsoft-kiota-serialization-text = ">=1.0.0,<2.0.0"
-msgraph-core = ">=1.0.0a2"
+msgraph-core = ">=1.0.0"
 
 [package.extras]
 dev = ["bumpver", "isort", "mypy", "pylint", "pytest", "yapf"]
@@ -2347,13 +2378,13 @@ files = [
 
 [[package]]
 name = "prowler"
-version = "4.0.0"
+version = "4.0.1"
 description = "Prowler is an Open Source security tool to perform AWS, GCP and Azure security best practices assessments, audits, incident response, continuous monitoring, hardening and forensics readiness. It contains hundreds of controls covering CIS, NIST 800, NIST CSF, CISA, RBI, FedRAMP, PCI-DSS, GDPR, HIPAA, FFIEC, SOC2, GXP, AWS Well-Architected Framework Security Pillar, AWS Foundational Technical Review (FTR), ENS (Spanish National Security Scheme) and your custom security frameworks."
 optional = false
 python-versions = "<3.13,>=3.9"
 files = [
-    {file = "prowler-4.0.0-py3-none-any.whl", hash = "sha256:cf94f809304fd59108c9ae8d8914cd8d487bc0089f5cc6d3860137e4e42dba5f"},
-    {file = "prowler-4.0.0.tar.gz", hash = "sha256:bc07c7067fda4f27d7c5000b6fd4409f1be8f141c5f1ee739c26525603d465e7"},
+    {file = "prowler-4.0.1-py3-none-any.whl", hash = "sha256:3e3f09ee69650209729766533230931d1439d48605d73cdb2f5d97c5ee106a96"},
+    {file = "prowler-4.0.1.tar.gz", hash = "sha256:95a05c6455d5c0194dcd43111c82dad2600a1bd377cddc5216e68ddb8ed0decb"},
 ]
 
 [package.dependencies]
@@ -2377,17 +2408,18 @@ azure-mgmt-storage = "21.1.0"
 azure-mgmt-subscription = "3.1.1"
 azure-mgmt-web = "7.2.0"
 azure-storage-blob = "12.19.1"
-boto3 = "1.26.165"
-botocore = "1.29.165"
+boto3 = "1.34.77"
+botocore = "1.34.80"
 colorama = "0.4.6"
 dash = "2.16.1"
 dash-bootstrap-components = "1.5.0"
 detect-secrets = "1.4.0"
-google-api-python-client = "2.124.0"
+google-api-python-client = "2.125.0"
 google-auth-httplib2 = ">=0.1,<0.3"
 jsonschema = "4.21.1"
-kubernetes = "28.1.0"
-msgraph-sdk = "1.0.0"
+kubernetes = "29.0.0"
+microsoft-kiota-abstractions = "1.3.2"
+msgraph-sdk = "1.2.0"
 msrestazure = "0.6.4"
 numpy = "1.26.4"
 pandas = "2.2.1"
@@ -2888,20 +2920,20 @@ pyasn1 = ">=0.1.3"
 
 [[package]]
 name = "s3transfer"
-version = "0.6.2"
+version = "0.10.1"
 description = "An Amazon S3 Transfer Manager"
 optional = false
-python-versions = ">= 3.7"
+python-versions = ">= 3.8"
 files = [
-    {file = "s3transfer-0.6.2-py3-none-any.whl", hash = "sha256:b014be3a8a2aab98cfe1abc7229cc5a9a0cf05eb9c1f2b86b230fd8df3f78084"},
-    {file = "s3transfer-0.6.2.tar.gz", hash = "sha256:cab66d3380cca3e70939ef2255d01cd8aece6a4907a9528740f668c4b0611861"},
+    {file = "s3transfer-0.10.1-py3-none-any.whl", hash = "sha256:ceb252b11bcf87080fb7850a224fb6e05c8a776bab8f2b64b7f25b969464839d"},
+    {file = "s3transfer-0.10.1.tar.gz", hash = "sha256:5683916b4c724f799e600f41dd9e10a9ff19871bf87623cc8f491cb4f5fa0a19"},
 ]
 
 [package.dependencies]
-botocore = ">=1.12.36,<2.0a.0"
+botocore = ">=1.33.2,<2.0a.0"
 
 [package.extras]
-crt = ["botocore[crt] (>=1.20.29,<2.0a.0)"]
+crt = ["botocore[crt] (>=1.33.2,<2.0a.0)"]
 
 [[package]]
 name = "schema"
@@ -3347,4 +3379,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "40cec910accf28ca546f593d9767160041fc72c859c5c756c32c69152e83bb1c"
+content-hash = "b406a9a49e3b3091bf2ea6268f916f88af9f29791f461b64fd35028b2ab0d224"
