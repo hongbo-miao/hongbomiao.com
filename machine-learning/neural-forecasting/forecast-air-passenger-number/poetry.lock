@@ -1266,13 +1266,13 @@ test = ["pytest (>=7.2)", "pytest-cov (>=4.0)"]
 
 [[package]]
 name = "neuralforecast"
-version = "1.7.0"
+version = "1.7.1"
 description = "Time series forecasting suite using deep learning models"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "neuralforecast-1.7.0-py3-none-any.whl", hash = "sha256:762d9a86c81b40db436041915a37440ce4cbe8e0c59f1489136c36f1ee9c9c1c"},
-    {file = "neuralforecast-1.7.0.tar.gz", hash = "sha256:22e9ff60089331072a75df7021370a9316e6b4c9e0225ade01eec1a68073b63f"},
+    {file = "neuralforecast-1.7.1-py3-none-any.whl", hash = "sha256:309d50b12ca0cdd40e73c8d987490340394e5a682328300f2c37466b260f5daf"},
+    {file = "neuralforecast-1.7.1.tar.gz", hash = "sha256:86a10728bb33bc620feca3cc50792a0df8930d7791ba499ac4c90469015e7b0b"},
 ]
 
 [package.dependencies]
@@ -1287,7 +1287,9 @@ torch = ">=2.0.0"
 utilsforecast = ">=0.0.25"
 
 [package.extras]
+aws = ["fsspec[s3]"]
 dev = ["black", "gitpython", "hyperopt", "matplotlib", "mypy", "nbdev", "polars", "pre-commit", "pyarrow", "ruff", "s3fs", "transformers"]
+spark = ["fugue", "pyspark (>=3.5)"]
 
 [[package]]
 name = "numpy"
@@ -2579,4 +2581,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "ea1d3e79d15144ce678ff1c2a4dc67f5612bb376f74b3bfad11639534e003de1"
+content-hash = "ca052a38b0701fcd8c09e0f7fb51fbb2598bbf5d656901ba70539e6c7340ebb2"
