@@ -908,6 +908,20 @@ http2 = ["h2 (>=3,<5)"]
 socks = ["socksio (==1.*)"]
 
 [[package]]
+name = "humanize"
+version = "4.9.0"
+description = "Python humanize utilities"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "humanize-4.9.0-py3-none-any.whl", hash = "sha256:ce284a76d5b1377fd8836733b983bfb0b76f1aa1c090de2566fcf008d7f6ab16"},
+    {file = "humanize-4.9.0.tar.gz", hash = "sha256:582a265c931c683a7e9b8ed9559089dea7edcf6cc95be39a3cbc2c5d5ac2bcfa"},
+]
+
+[package.extras]
+tests = ["freezegun", "pytest", "pytest-cov"]
+
+[[package]]
 name = "hyperframe"
 version = "6.0.1"
 description = "HTTP/2 framing layer for Python"
@@ -982,6 +996,21 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
+
+[[package]]
+name = "jinja2-humanize-extension"
+version = "0.4.0"
+description = "a jinja2 extension to use humanize library inside jinja2 templates"
+optional = false
+python-versions = ">=3.0"
+files = [
+    {file = "jinja2_humanize_extension-0.4.0-py3-none-any.whl", hash = "sha256:b6326e2da0f7d425338bebf58848e830421defbce785f12ae812e65128518156"},
+    {file = "jinja2_humanize_extension-0.4.0.tar.gz", hash = "sha256:e7d69b1c20f32815bbec722330ee8af14b1287bb1c2b0afa590dbf031cadeaa0"},
+]
+
+[package.dependencies]
+humanize = ">=3.14.0"
+jinja2 = "*"
 
 [[package]]
 name = "jmespath"
@@ -1549,13 +1578,13 @@ poetry-plugin = ["poetry (>=1.0,<2.0)"]
 
 [[package]]
 name = "prefect"
-version = "2.16.9"
+version = "2.17.0"
 description = "Workflow orchestration and management."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "prefect-2.16.9-py3-none-any.whl", hash = "sha256:ca351ef242d4133a8bc79849af30e8353764e8a307fb5efa6e0f22c759c73536"},
-    {file = "prefect-2.16.9.tar.gz", hash = "sha256:52165c5c2560e37a657ee9cf30703b3a85814f4196d65f4ef57f1e460249b645"},
+    {file = "prefect-2.17.0-py3-none-any.whl", hash = "sha256:62750212930f39be0011a08c896be868045232736021db179e0ebf9e89e4ef87"},
+    {file = "prefect-2.17.0.tar.gz", hash = "sha256:f13cf9df628cfb1ff86ff95d1dece2cbb972e5a8ae29d6fe06b44cb142f415b9"},
 ]
 
 [package.dependencies]
@@ -1578,18 +1607,20 @@ graphviz = ">=0.20.1"
 griffe = ">=0.20.0"
 httpcore = ">=1.0.5,<2.0.0"
 httpx = {version = ">=0.23,<0.23.2 || >0.23.2", extras = ["http2"]}
+humanize = ">=4.9.0"
 importlib-resources = ">=6.1.3,<6.2.0"
 itsdangerous = "*"
 jinja2 = ">=3.0.0,<4.0.0"
+jinja2-humanize-extension = ">=0.4.0"
 jsonpatch = ">=1.32,<2.0"
-jsonschema = ">=3.2.0,<5.0.0"
+jsonschema = ">=4.0.0,<5.0.0"
 kubernetes = ">=24.2.0,<30.0.0"
 orjson = ">=3.7,<4.0"
 packaging = ">=21.3,<24.3"
 pathspec = ">=0.8.0"
 pendulum = {version = "<3.0", markers = "python_version < \"3.12\""}
 pydantic = {version = ">=1.10.0,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.1.0 || >2.1.0,<3.0.0", extras = ["email"]}
-pydantic-core = ">=2.10.0,<3.0.0"
+pydantic-core = ">=2.12.0,<3.0.0"
 python-dateutil = ">=2.8.2,<3.0.0"
 python-multipart = ">=0.0.7"
 python-slugify = ">=5.0,<9.0"
@@ -1602,7 +1633,7 @@ rich = ">=11.0,<14.0"
 sniffio = ">=1.3.0,<2.0.0"
 sqlalchemy = {version = ">=1.4.22,<1.4.33 || >1.4.33,<3.0.0", extras = ["asyncio"]}
 toml = ">=0.10.0"
-typer = ">=0.12.0,<0.13.0"
+typer = ">=0.12.0,<0.12.2 || >0.12.2,<0.13.0"
 typing-extensions = ">=4.5.0,<5.0.0"
 ujson = ">=5.8.0,<6.0.0"
 uvicorn = ">=0.14.0,<0.29.0"
@@ -2958,4 +2989,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "0ac646d59f60f70afdff05355236c9d8b47ee4966a01c98f098b5ddf2ca3ba09"
+content-hash = "e51af790f35490fe73dd2aaeaaf686bf7231ed8d51858f2fd1ca613fe591d3b4"
