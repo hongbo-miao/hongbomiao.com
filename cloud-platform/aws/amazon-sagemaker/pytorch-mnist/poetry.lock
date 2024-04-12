@@ -1380,13 +1380,13 @@ crt = ["botocore[crt] (>=1.33.2,<2.0a.0)"]
 
 [[package]]
 name = "sagemaker"
-version = "2.214.3"
+version = "2.215.0"
 description = "Open source library for training and deploying models on Amazon SageMaker."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "sagemaker-2.214.3-py3-none-any.whl", hash = "sha256:c897946d9efe4a8a8b211ca1d9ba198a60189ff1dcb0b8091a825b5171a85228"},
-    {file = "sagemaker-2.214.3.tar.gz", hash = "sha256:e326d9d542faed628a363a6d525fe8a14b922c9b6224f06d83c8d70219f8203f"},
+    {file = "sagemaker-2.215.0-py3-none-any.whl", hash = "sha256:5fea530fb2a871f55c5faa01e53b527de7167d1c2188ad7a38a575cd21549112"},
+    {file = "sagemaker-2.215.0.tar.gz", hash = "sha256:508e3b7de9f4512be19cd3dd580641dcf34b31b11e34eb79af4f652f61d9df67"},
 ]
 
 [package.dependencies]
@@ -1413,12 +1413,12 @@ tqdm = "*"
 urllib3 = ">=1.26.8,<3.0.0"
 
 [package.extras]
-all = ["PyYAML (>=5.4.1,<7)", "accelerate (>=0.24.1,<=0.27.0)", "docker (>=5.0.2,<7.0.0)", "pyspark (==3.3.1)", "sagemaker-feature-store-pyspark-3.3", "scipy (==1.10.1)", "urllib3 (>=1.26.8,<3.0.0)"]
+all = ["PyYAML (>=5.4.1,<7)", "accelerate (>=0.24.1,<=0.27.0)", "docker (>=5.0.2,<7.0.0)", "pyspark (==3.3.1)", "sagemaker-feature-store-pyspark-3.3", "sagemaker-schema-inference-artifacts (>=0.0.5)", "scipy (==1.10.1)", "urllib3 (>=1.26.8,<3.0.0)"]
 feature-processor = ["pyspark (==3.3.1)", "sagemaker-feature-store-pyspark-3.3"]
-huggingface = ["accelerate (>=0.24.1,<=0.27.0)"]
+huggingface = ["accelerate (>=0.24.1,<=0.27.0)", "sagemaker-schema-inference-artifacts (>=0.0.5)"]
 local = ["PyYAML (>=5.4.1,<7)", "docker (>=5.0.2,<7.0.0)", "urllib3 (>=1.26.8,<3.0.0)"]
 scipy = ["scipy (==1.10.1)"]
-test = ["Jinja2 (==3.1.3)", "PyYAML (==6.0)", "PyYAML (>=5.4.1,<7)", "accelerate (>=0.24.1,<=0.27.0)", "apache-airflow (==2.8.3)", "apache-airflow-providers-amazon (==7.2.1)", "attrs (>=23.1.0,<24)", "awslogs (==0.14.0)", "black (==22.3.0)", "cloudpickle (==2.2.1)", "contextlib2 (==21.6.0)", "coverage (>=5.2,<6.2)", "docker (>=5.0.2,<7.0.0)", "fabric (==2.6.0)", "flake8 (==4.0.1)", "mock (==4.0.3)", "nbformat (>=5.9,<6)", "onnx (>=1.15.0)", "pandas (>=1.3.5,<1.5)", "pillow (>=10.0.1,<=11)", "pyspark (==3.3.1)", "pytest (==6.2.5)", "pytest-cov (==3.0.0)", "pytest-rerunfailures (==10.2)", "pytest-timeout (==2.1.0)", "pytest-xdist (==2.4.0)", "pyvis (==0.2.1)", "requests (==2.31.0)", "sagemaker-experiments (==0.1.35)", "sagemaker-feature-store-pyspark-3.3", "schema (==0.7.5)", "scikit-learn (==1.3.0)", "scipy (==1.10.1)", "stopit (==1.1.2)", "tox (==3.24.5)", "tritonclient[http] (<2.37.0)", "urllib3 (>=1.26.8,<3.0.0)", "xgboost (>=1.6.2,<=1.7.6)"]
+test = ["Jinja2 (==3.1.3)", "PyYAML (==6.0)", "PyYAML (>=5.4.1,<7)", "accelerate (>=0.24.1,<=0.27.0)", "apache-airflow (==2.8.3)", "apache-airflow-providers-amazon (==7.2.1)", "attrs (>=23.1.0,<24)", "awslogs (==0.14.0)", "black (==22.3.0)", "cloudpickle (==2.2.1)", "contextlib2 (==21.6.0)", "coverage (>=5.2,<6.2)", "docker (>=5.0.2,<7.0.0)", "fabric (==2.6.0)", "flake8 (==4.0.1)", "mock (==4.0.3)", "nbformat (>=5.9,<6)", "onnx (>=1.15.0)", "pandas (>=1.3.5,<1.5)", "pillow (>=10.0.1,<=11)", "pyspark (==3.3.1)", "pytest (==6.2.5)", "pytest-cov (==3.0.0)", "pytest-rerunfailures (==10.2)", "pytest-timeout (==2.1.0)", "pytest-xdist (==2.4.0)", "pyvis (==0.2.1)", "requests (==2.31.0)", "sagemaker-experiments (==0.1.35)", "sagemaker-feature-store-pyspark-3.3", "sagemaker-schema-inference-artifacts (>=0.0.5)", "schema (==0.7.5)", "scikit-learn (==1.3.0)", "scipy (==1.10.1)", "stopit (==1.1.2)", "tox (==3.24.5)", "tritonclient[http] (<2.37.0)", "urllib3 (>=1.26.8,<3.0.0)", "xgboost (>=1.6.2,<=1.7.6)"]
 
 [[package]]
 name = "schema"
@@ -1707,4 +1707,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.x"
-content-hash = "f008995c27ecfcf299517caaa9c35b5bad1436f723e94c6780eda670d69648ae"
+content-hash = "c95531ed283b19af1ec9f3038d14ed95895abc56f2a8c222ab16ae862a0af5ba"
