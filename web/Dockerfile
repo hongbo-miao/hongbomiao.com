@@ -10,7 +10,7 @@ RUN rm -f ./.eslintrc.js \
   && npm run build \
   && npm prune --production
 
-FROM docker.io/nginx:1.25.4-alpine AS release
+FROM docker.io/nginx:1.25.5-alpine AS release
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 COPY web/conf/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
