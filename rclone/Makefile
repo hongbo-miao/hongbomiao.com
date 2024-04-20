@@ -20,7 +20,7 @@ rclone-list-files-no-modification-time:
 rclone-list-files:
 	rclone lsl hm-ubuntu:/tmp/rclone-backup
 rclone-list-files-s3:
-	rclone lsl hm-s3:hongbomiao-bucket/rclone-backup
+	rclone lsl hm-s3:hm-production-bucket/rclone-backup
 rclone-list-files-min-age:
 	rclone lsl hm-ubuntu:/tmp/rclone-backup --min-age=1w
 rclone-list-files-exclude:
@@ -36,16 +36,16 @@ rclone-list-directories:
 # Copy
 rclone-copy:
 	rclone copy --progress /tmp/rclone-backup hm-ubuntu:/tmp/rclone-backup
-	rclone copy --progress /tmp/rclone-backup hm-s3:hongbomiao-bucket/rclone-backup
+	rclone copy --progress /tmp/rclone-backup hm-s3:hm-production-bucket/rclone-backup
 	rclone copy --progress hm-ubuntu:/tmp/rclone-backup /tmp/rclone-backup
 	rclone copy --progress hm-ubuntu:/tmp/rclone-backup hm-ubuntu:/tmp/rclone-backup-big
-	rclone copy --progress hm-ubuntu:/tmp/rclone-backup hm-s3:hongbomiao-bucket/rclone-backup
+	rclone copy --progress hm-ubuntu:/tmp/rclone-backup hm-s3:hm-production-bucket/rclone-backup
 rclone-sync:
 	rclone sync --progress hm-ubuntu:/tmp/rclone-backup /tmp/rclone-backup
 
 # Mount
 rclone-mount:
-	rclone mount hm-s3:hongbomiao-bucket/rclone-backup /tmp/rclone-backup
+	rclone mount hm-s3:hm-production-bucket/rclone-backup /tmp/rclone-backup
 
 # Server
 rclone-rcd:

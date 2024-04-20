@@ -8,9 +8,11 @@ from pyspark.sql import DataFrame
 from pyspark.sql.functions import col, concat, date_format, from_unixtime, lit, when
 
 raw_parquet_paths = [
-    "s3://hongbomiao-bucket/data/raw-parquet/adsb_2x_flight_trace_data/"
+    "s3://hm-production-bucket/data/raw-parquet/adsb_2x_flight_trace_data/"
 ]
-delta_table_path = "s3://hongbomiao-bucket/data/delta-tables/adsb_2x_flight_trace_data/"
+delta_table_path = (
+    "s3://hm-production-bucket/data/delta-tables/adsb_2x_flight_trace_data/"
+)
 partitions = ["_date"]
 
 

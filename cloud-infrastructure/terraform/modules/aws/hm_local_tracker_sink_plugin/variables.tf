@@ -13,3 +13,6 @@ variable "bc_fips_version" {
 variable "bcpkix_fips_version" {
   type = string
 }
+variable "confluent_kafka_connect_avro_converter_version" {
+  type = string
+}

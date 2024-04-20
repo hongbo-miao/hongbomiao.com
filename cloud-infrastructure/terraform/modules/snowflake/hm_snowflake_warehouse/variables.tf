@@ -4,6 +4,6 @@ variable "snowflake_warehouse_name" {
 variable "snowflake_warehouse_size" {
   type = string
 }
-variable "auto_suspend_s" {
+variable "auto_suspend_min" {
   type = number
 }

@@ -49,7 +49,7 @@ spark-submit-to-local:
 # 2 - Run in a pod. Cluster mode (the master node will assign to worker nodes)
 rclone-sync:
 	cd ../../.. && \
-	rclone sync --progress hardware-in-the-loop/national-instruments/hm-tdms/data hm-s3:hongbomiao-bucket/iot --include="*.parquet"
+	rclone sync --progress hardware-in-the-loop/national-instruments/hm-tdms/data hm-s3:hm-production-bucket/iot --include="*.parquet"
 
 kafka-consume:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
@@ -83,9 +83,9 @@ kubectl-apply-hm-kafka-iot-kafka-connect:
 	cd ../../.. && \
 	kubectl apply --filename=kubernetes/manifests/hm-kafka/iot-kafka-connect
 timescaledb-table-count:
-	psql postgresql://admin:passw0rd@localhost:25495/hm_iot_db --command="select count(*) from motor;"
+	psql postgresql://admin:passw0rd@localhost:25495/production_hm_iot_db --command="select count(*) from motor;"
 timescaledb-table-truncate:
-	psql postgresql://admin:passw0rd@localhost:25495/hm_iot_db --command="truncate table motor;"
+	psql postgresql://admin:passw0rd@localhost:25495/production_hm_iot_db --command="truncate table motor;"
 
 docker-build:
 	cd ../../../.. && \
