@@ -11,10 +11,13 @@ resource "aws_emr_instance_fleet" "hm_amazon_emr_cluster_task_instance_fleet" {
   cluster_id           = var.amazon_emr_cluster_id
   name                 = "Task"
   target_spot_capacity = var.task_instance_target_spot_capacity
-  instance_type_configs {
-    weighted_capacity                          = var.task_instance_weighted_capacity
-    instance_type                              = var.task_instance_type
-    bid_price_as_percentage_of_on_demand_price = 100
+  dynamic "instance_type_configs" {
+    for_each = var.task_instance_configs
+    content {
+      weighted_capacity                          = instance_type_configs.value.weighted_capacity
+      instance_type                              = instance_type_configs.value.instance_type
+      bid_price_as_percentage_of_on_demand_price = 100
+    }
   }
   launch_specifications {
     spot_specification {

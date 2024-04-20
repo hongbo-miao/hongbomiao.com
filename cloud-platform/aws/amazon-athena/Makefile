@@ -4,8 +4,8 @@ amazon-athena-list-databases:
 amazon-athena-list-databases:
 	aws athena list-table-metadata \
 		--catalog-name=AwsDataCatalog \
-		--database-name=hm_iot_db
+		--database-name=production_hm_iot_db
 amazon-athena-query:
 	aws athena start-query-execution \
 		--query-string='select * from hm_iot_delta_db.motor limit 10;' \
-		--result-configuration='OutputLocation=s3://hongbomiao-bucket/amazon-athena/query-results/aws-cli/query-result/'
+		--result-configuration='OutputLocation=s3://hm-production-bucket/amazon-athena/query-results/aws-cli/query-result/'

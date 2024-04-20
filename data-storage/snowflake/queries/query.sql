@@ -32,3 +32,5 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 use role securityadmin;
 grant role sysadmin to user hongbo_miao;
 grant role securityadmin to user hongbo_miao;
+
+select system$pipe_status('DEVELOPMENT_HM_KAFKA_DB.PRODUCT.SNOWFLAKE_KAFKA_CONNECTOR_DEVELOPMENTTRACKERSINKCONNECTOR_PIPE_TRACKER_ANALYTIC_EVENTS_2');

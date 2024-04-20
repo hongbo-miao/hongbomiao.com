@@ -24,27 +24,41 @@ resource "aws_mskconnect_connector" "hm_amazon_msk_connector" {
     }
   }
   # https://docs.snowflake.com/en/user-guide/kafka-connector-install#label-kafka-properties
+  # https://docs.snowflake.com/en/user-guide/data-load-snowpipe-streaming-kafka
   connector_configuration = {
-    "connector.class" = "com.snowflake.kafka.connector.SnowflakeSinkConnector"
-    "tasks.max"       = "8"
-    "topics" : "tracker.analytic-events.avro",
-    "buffer.count.records" : "10000",
-    "buffer.flush.time" : "60",
-    "buffer.size.bytes" : "5000000",
-    "snowflake.url.name" : "hongbomiao.snowflakecomputing.com:443",
-    "snowflake.user.name" : var.snowflake_username,
-    "snowflake.private.key" : var.snowflake_private_key,
-    "snowflake.private.key.passphrase" : var.snowflake_private_key_passphrase,
-    "snowflake.database.name" : "production_tracker_db",
-    "snowflake.schema.name" : "public",
-    "snowflake.topic2table.map" : "tracker.analytic-events.avro:analytic_events",
-    "key.converter" : "org.apache.kafka.connect.storage.StringConverter",
-    "value.converter" : "com.snowflake.kafka.connector.records.SnowflakeAvroConverter",
-    "value.converter.schema.registry.url" : "https://confluent-schema-registry.hongbomiao.com",
+    "connector.class"                  = "com.snowflake.kafka.connector.SnowflakeSinkConnector"
+    "tasks.max"                        = 4
+    "topics"                           = var.kafka_topic_name,
+    "buffer.count.records"             = 10000,
+    "buffer.flush.time"                = 5,
+    "buffer.size.bytes"                = 20000000,
+    "snowflake.url.name"               = "hongbomiao.snowflakecomputing.com:443",
+    "snowflake.user.name"              = var.snowflake_user_name,
+    "snowflake.private.key"            = var.snowflake_private_key,
+    "snowflake.private.key.passphrase" = var.snowflake_private_key_passphrase,
+    "snowflake.role.name"              = var.snowflake_role_name
+    "snowflake.ingestion.method"       = "SNOWPIPE_STREAMING"
+    "snowflake.enable.schematization"  = true
+    "snowflake.database.name"          = var.snowflake_database_name,
+    "snowflake.schema.name"            = var.snowflake_schema_name,
+    # e.g., development.tracker.analytic-events.avro -> tracker_analytic_events
+    "snowflake.topic2table.map" = "${var.kafka_topic_name}:${
+      upper(join("_",
+        [
+          replace(split(".", var.kafka_topic_name)[1], "-", "_"),
+          replace(split(".", var.kafka_topic_name)[2], "-", "_")
+        ]
+      ))
+    }",
+    "value.converter"                     = "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url" = "https://confluent-schema-registry.hongbomiao.com",
+    "errors.log.enable"                   = true
+    "errors.tolerance"                    = "all"
+    "jmx"                                 = true
   }
   kafka_cluster {
     apache_kafka_cluster {
-      bootstrap_servers = "b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098"
+      bootstrap_servers = var.amazon_msk_cluster_bootstrap_servers
       vpc {
         security_groups = [
           "sg-xxxxxxxxxxxxxxxxx"

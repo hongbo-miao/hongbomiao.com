@@ -1,32 +1,32 @@
 aws-secrets-manager-secret-list:
 	aws secretsmanager list-secrets
 
-# RDS - hm_iot_db
-aws-secrets-manager-secret-create-hm-iot-db:
-	aws secretsmanager create-secret \
-        --name=hm-iot-rds/hm_iot_db/public/readonly \
-        --description="hm-iot-rds/hm_iot_db/public/readonly credentials" \
-        --region=us-west-2 \
-        --secret-string=file://secrets/hm-iot-rds-secret.json
-aws-secrets-manager-secret-delete-hm-iot-db:
-	aws secretsmanager delete-secret \
-		--secret-id=arn:aws:secretsmanager:us-west-2:272394222652:secret:hm-iot-rds/hm_iot_db/public/readonly-xxxxxx \
-		--force-delete-without-recovery
-aws-secrets-manager-secret-describe-hm-iot-db:
+aws-secrets-manager-secret-describe:
 	aws secretsmanager describe-secret \
-		--secret-id=arn:aws:secretsmanager:us-west-2:272394222652:secret:hm-iot-rds/hm_iot_db/public/readonly-xxxxxx
+		--secret-id=arn:aws:secretsmanager:us-west-2:272394222652:secret:xxx
+aws-secrets-manager-secret-delete:
+	aws secretsmanager delete-secret \
+		--secret-id=arn:aws:secretsmanager:us-west-2:272394222652:secret:xxx \
+		--force-delete-without-recovery
 
-# Snowflake - production_tracker_db
-aws-secrets-manager-secret-create-production-tracker-db:
+aws-secrets-manager-secret-create-hm-amazon-rds-development-hm-iot-db-public-read-only:
 	aws secretsmanager create-secret \
-        --name=hm-snowflake/production_tracker_db/public/readwrite \
-        --description="hm-snowflake/production_tracker_db/public/readwrite credentials" \
+        --name=hm/amazon-rds/development_hm_iot_db/public/read_only \
         --region=us-west-2 \
-        --secret-string=file://secrets/tracker-snowflake-credentials.json
-aws-secrets-manager-secret-delete-production-tracker-db:
-	aws secretsmanager delete-secret \
-		--secret-id=arn:aws:secretsmanager:us-west-2:272394222652:secret:hm-snowflake/production_tracker_db/public/readwrite-xxxxxx \
-		--force-delete-without-recovery
-aws-secrets-manager-secret-describe-hm-iot-db:
-	aws secretsmanager describe-secret \
-		--secret-id=arn:aws:secretsmanager:us-west-2:272394222652:secret:hm-snowflake/production_tracker_db/public/readwrite-xxxxxx \
+        --secret-string=file://secrets/hm-amazon-rds-development-hm-iot-db-public-read-only-user-credentials.json
+aws-secrets-manager-secret-create-hm-amazon-rds-production-hm-iot-db-public-read-only:
+	aws secretsmanager create-secret \
+        --name=hm/amazon-rds/production_hm_iot_db/public/read_only \
+        --region=us-west-2 \
+        --secret-string=file://secrets/hm-amazon-rds-production-hm-iot-db-public-read-only-user-credentials.json
+
+aws-secrets-manager-secret-create-hm-snowflake-development-hm-kafka-db-product-read-write:
+	aws secretsmanager create-secret \
+        --name=hm/snowflake/development_hm_kafka_db/product/read_write \
+        --region=us-west-2 \
+        --secret-string=file://secrets/hm-snowflake-hm-development-hm-kafka-db-product-read-write-user-credentials.json
+aws-secrets-manager-secret-create-hm-snowflake-production-hm-kafka-db-product-read-write:
+	aws secretsmanager create-secret \
+        --name=hm/snowflake/production_hm_kafka_db/product/read_write \
+        --region=us-west-2 \
+        --secret-string=file://secrets/hm-snowflake-hm-production-hm-kafka-db-product-read-write-user-credentials.json

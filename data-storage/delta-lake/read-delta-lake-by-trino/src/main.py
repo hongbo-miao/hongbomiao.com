@@ -16,22 +16,22 @@ def main():
         sql_query = text(
             f"""
             with
-            t0 as (select * from delta.hm_delta_db.motor_data_0 where _event_id = :event_id),
-            t1 as (select * from delta.hm_delta_db.motor_data_1 where _event_id = :event_id),
-            t2 as (select * from delta.hm_delta_db.motor_data_2 where _event_id = :event_id),
-            t3 as (select * from delta.hm_delta_db.motor_data_3 where _event_id = :event_id),
-            t4 as (select * from delta.hm_delta_db.motor_data_4 where _event_id = :event_id),
-            t5 as (select * from delta.hm_delta_db.motor_data_5 where _event_id = :event_id),
-            t6 as (select * from delta.hm_delta_db.motor_data_6 where _event_id = :event_id),
-            t7 as (select * from delta.hm_delta_db.motor_data_7 where _event_id = :event_id),
-            t8 as (select * from delta.hm_delta_db.motor_data_8 where _event_id = :event_id),
-            t9 as (select * from delta.hm_delta_db.motor_data_9 where _event_id = :event_id),
-            ta as (select * from delta.hm_delta_db.motor_data_a where _event_id = :event_id),
-            tb as (select * from delta.hm_delta_db.motor_data_b where _event_id = :event_id),
-            tc as (select * from delta.hm_delta_db.motor_data_c where _event_id = :event_id),
-            td as (select * from delta.hm_delta_db.motor_data_d where _event_id = :event_id),
-            te as (select * from delta.hm_delta_db.motor_data_e where _event_id = :event_id),
-            tf as (select * from delta.hm_delta_db.motor_data_f where _event_id = :event_id)
+            t0 as (select * from delta.production_hm_delta_db.motor_data_0 where _event_id = :event_id),
+            t1 as (select * from delta.production_hm_delta_db.motor_data_1 where _event_id = :event_id),
+            t2 as (select * from delta.production_hm_delta_db.motor_data_2 where _event_id = :event_id),
+            t3 as (select * from delta.production_hm_delta_db.motor_data_3 where _event_id = :event_id),
+            t4 as (select * from delta.production_hm_delta_db.motor_data_4 where _event_id = :event_id),
+            t5 as (select * from delta.production_hm_delta_db.motor_data_5 where _event_id = :event_id),
+            t6 as (select * from delta.production_hm_delta_db.motor_data_6 where _event_id = :event_id),
+            t7 as (select * from delta.production_hm_delta_db.motor_data_7 where _event_id = :event_id),
+            t8 as (select * from delta.production_hm_delta_db.motor_data_8 where _event_id = :event_id),
+            t9 as (select * from delta.production_hm_delta_db.motor_data_9 where _event_id = :event_id),
+            ta as (select * from delta.production_hm_delta_db.motor_data_a where _event_id = :event_id),
+            tb as (select * from delta.production_hm_delta_db.motor_data_b where _event_id = :event_id),
+            tc as (select * from delta.production_hm_delta_db.motor_data_c where _event_id = :event_id),
+            td as (select * from delta.production_hm_delta_db.motor_data_d where _event_id = :event_id),
+            te as (select * from delta.production_hm_delta_db.motor_data_e where _event_id = :event_id),
+            tf as (select * from delta.production_hm_delta_db.motor_data_f where _event_id = :event_id)
             select from_unixtime_nanos(t0._time) as _time, {column_names}
             from t0
             join t1 on t0._time = t1._time

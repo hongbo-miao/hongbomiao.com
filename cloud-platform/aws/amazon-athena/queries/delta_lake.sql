@@ -1,5 +1,5 @@
-create external table awsdatacatalog.hm_iot_db.motor
-location 's3://hongbomiao-bucket/delta-tables/motor_data/'
+create external table awsdatacatalog.production_hm_iot_db.motor
+location 's3://hm-production-bucket/delta-tables/motor_data/'
 tblproperties (
     'table_type' = 'delta'
 );
@@ -9,6 +9,6 @@ select
     current,
     voltage,
     temperature
-from awsdatacatalog.hm_iot_db.motor limit 100;
+from awsdatacatalog.production_hm_iot_db.motor limit 100;
 
-show partitions awsdatacatalog.hm_iot_db.motor;
+show partitions awsdatacatalog.production_hm_iot_db.motor;

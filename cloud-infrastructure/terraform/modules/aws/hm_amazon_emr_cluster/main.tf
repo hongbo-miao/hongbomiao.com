@@ -13,7 +13,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
   applications                      = var.applications
   termination_protection            = false
   keep_job_flow_alive_when_no_steps = true
-  log_uri                           = "s3://hongbomiao-bucket/amazon-emr/logs/"
+  log_uri                           = "s3://hm-production-bucket/amazon-emr/logs/"
   ec2_attributes {
     instance_profile                  = "arn:aws:iam::272394222652:instance-profile/hm-emr-profile"
     subnet_id                         = "subnet-xxxxxxxxxxxxxxxxx"
@@ -62,9 +62,12 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
     Name                                     = var.amazon_emr_cluster_name
   }
   lifecycle {
-    # https://github.com/hashicorp/terraform-provider-aws/issues/12683#issuecomment-752899019
+    create_before_destroy = true
     ignore_changes = [
+      # https://github.com/hashicorp/terraform-provider-aws/issues/12683#issuecomment-752899019
       configurations_json,
+      # https://github.com/hashicorp/terraform-provider-aws/issues/36492
+      core_instance_fleet[0].target_on_demand_capacity,
       step
     ]
   }

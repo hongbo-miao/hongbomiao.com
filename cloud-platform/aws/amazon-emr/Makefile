@@ -27,7 +27,7 @@ hadoop-hdfs-ls:
 	hdfs dfs -ls /user
 	hdfs dfs -ls hdfs:///
 	hdfs dfs -ls hdfs:///user
-	hdfs dfs -ls s3://hongbomiao-bucket/
+	hdfs dfs -ls s3://hm-production-bucket/
 hadoop-hdfs-show-disk-free:
 	hdfs dfs -df
 hadoop-hdfs-show-disk-usage:
