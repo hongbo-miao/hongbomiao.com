@@ -1,13 +1,15 @@
 terraform-init:
 	terraform init
-terraform-update-lock-file:
 	terraform init -upgrade
-terraform-reconfigure:
 	terraform init -reconfigure
+	terraform init -backend=false
 terraform-plan:
+	terraform plan
 	terraform plan -parallelism=8
 terraform-apply:
-	terraform apply -auto-approve -parallelism=8
+	terraform apply
+	terraform apply -auto-approve
+	terraform apply -parallelism=8
 terraform-refresh:
 	terraform refresh
 terraform-destroy:
@@ -27,3 +29,6 @@ terraform-state-list:
 	terraform state list
 terraform-output:
 	terraform output
+terraform-console:
+	terraform console
+	# substr(module.snowflake_development_hm_kafka_db_product_read_write_user_rsa_key.public_key_pem, 27, 747)

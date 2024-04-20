@@ -105,8 +105,17 @@ pull_request_rules:
           - check-success=Static Type Check / Python
           - check-skipped=Static Type Check / Python
       - or:
-          - check-success=Static Type Check / Terraform
-          - check-skipped=Static Type Check / Terraform
+          - check-success=Static Type Check / Terraform (development/aws)
+          - check-skipped=Static Type Check / Terraform (development/aws)
+      - or:
+          - check-success=Static Type Check / Terraform (production/aws)
+          - check-skipped=Static Type Check / Terraform (production/aws)
+      - or:
+          - check-success=Static Type Check / Terraform (development/snowflake)
+          - check-skipped=Static Type Check / Terraform (development/snowflake)
+      - or:
+          - check-success=Static Type Check / Terraform (production/snowflake)
+          - check-skipped=Static Type Check / Terraform (production/snowflake)
       - or:
           - check-success=Static Type Check / TypeScript (api-node)
           - check-skipped=Static Type Check / TypeScript (api-node)
