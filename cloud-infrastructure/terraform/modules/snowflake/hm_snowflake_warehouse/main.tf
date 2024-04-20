@@ -10,5 +10,5 @@ terraform {
 resource "snowflake_warehouse" "hm_snowflake_warehouse" {
   name           = var.snowflake_warehouse_name
   warehouse_size = var.snowflake_warehouse_size
-  auto_suspend   = var.auto_suspend_s
+  auto_suspend   = var.auto_suspend_min * 60 # seconds
 }

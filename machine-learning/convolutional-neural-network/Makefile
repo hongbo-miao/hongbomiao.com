@@ -35,13 +35,13 @@ poetry-dvc-dag:
 	poetry run poe dvc-dag
 
 poetry-dvc-remote-add:
-	poetry run poe dvc-remote-add -- -d hm-remote s3://hongbomiao-bucket/hm-cnn-dvc-store
+	poetry run poe dvc-remote-add -- -d hm-remote s3://hm-production-bucket/hm-cnn-dvc-store
 poetry-dvc-push:
 	poetry run poe dvc-push
 poetry-dvc-pull:
 	poetry run poe dvc-pull
 
 aws-create-s3:
-	aws s3 mb s3://hongbomiao-bucket/hm-cnn-dvc-store --region us-west-2
+	aws s3 mb s3://hm-production-bucket/hm-cnn-dvc-store --region us-west-2
 aws-ls:
-	aws s3 ls s3://hongbomiao-bucket/hm-cnn-dvc-store
+	aws s3 ls s3://hm-production-bucket/hm-cnn-dvc-store

@@ -27,7 +27,7 @@ with DAG(
         os.rename(src=file_path, dst=path.parent.joinpath(new_file_name))
 
     file_name = download_from_s3(
-        bucket="hongbomiao-bucket",
+        bucket="hm-production-bucket",
         key="hm-airflow/taxi.csv",
         local_path="/tmp/",
     )

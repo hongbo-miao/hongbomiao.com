@@ -17,7 +17,7 @@
     "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
     "tasks.max": "8",
     "topics": "hm.motor.avro",
-    "connection.url": "jdbc:postgresql://xxx.us-west-2.rds.amazonaws.com:5432/hm_iot_db",
+    "connection.url": "jdbc:postgresql://xxx.us-west-2.rds.amazonaws.com:5432/production_hm_iot_db",
     "connection.user": "xxx",
     "connection.password": "xxx",
     "insert.mode": "upsert",
@@ -56,7 +56,7 @@
     "workerLogDelivery": {
       "s3": {
         "enabled": true,
-        "bucket": "hongbomiao-bucket",
+        "bucket": "hm-production-bucket",
         "prefix": "amazon-msk/connectors/hm-motor-jdbc-sink-connector/"
       }
     }

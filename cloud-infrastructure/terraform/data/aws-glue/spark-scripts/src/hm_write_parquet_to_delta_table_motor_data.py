@@ -5,8 +5,8 @@ from awsglue.job import Job
 from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
 
-raw_parquet_paths = ["s3://hongbomiao-bucket/data/parquet/motor/"]
-delta_table_path = "s3://hongbomiao-bucket/data/delta-tables/motor_data/"
+raw_parquet_paths = ["s3://hm-production-bucket/data/parquet/motor/"]
+delta_table_path = "s3://hm-production-bucket/data/delta-tables/motor_data/"
 partitions = ["_event_id"]
 
 args = getResolvedOptions(sys.argv, ["JOB_NAME"])

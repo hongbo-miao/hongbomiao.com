@@ -26,7 +26,7 @@ object IngestFromS3ToKafka {
 
     val df = spark.readStream
       .format("delta")
-      .load("s3a://hongbomiao-bucket/delta-tables/motor_data")
+      .load("s3a://hm-production-bucket/delta-tables/motor_data")
       .withColumn("timestamp", (col("timestamp") * 1000).cast(LongType))
       .select(to_avro(struct("*"), motorValueSchemaConfig).as("value"))
 
