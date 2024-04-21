@@ -426,7 +426,7 @@ jobs:
     name: Mobile - iOS | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
-    runs-on: macos-13
+    runs-on: macos-14
     environment: test
     timeout-minutes: 90
     env:
@@ -439,7 +439,7 @@ jobs:
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1.6.0
         with:
-          xcode-version: '14.2'
+          xcode-version: '15.3.0'
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -451,7 +451,7 @@ jobs:
           xcodebuild build-for-testing \
             -project HMMobile.xcodeproj \
             -scheme HMMobile \
-            -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
+            -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
       - name: Test
         uses: wandalen/wretry.action@v3.4.0
         with:
@@ -460,7 +460,7 @@ jobs:
             xcodebuild test-without-building \
               -project HMMobile.xcodeproj \
               -scheme HMMobile \
-              -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
+              -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
           attempt_limit: 3
           attempt_delay: 2000
       - name: Convert coverage to Cobertura XML format
@@ -518,7 +518,7 @@ jobs:
     name: Mobile - Android | Instrumented Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: macos-13
+    runs-on: macos-14
     environment: test
     timeout-minutes: 30
     steps:

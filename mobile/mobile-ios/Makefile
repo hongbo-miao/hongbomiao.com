@@ -2,17 +2,17 @@ build:
 	xcodebuild build-for-testing \
 		-project HMMobile.xcodeproj \
 		-scheme HMMobile \
-		-destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
+		-destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
 test:
 	xcodebuild test-without-building \
 		-project HMMobile.xcodeproj \
 		-scheme HMMobile \
-		-destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
+		-destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
 build-test:
 	xcodebuild test \
 		-project HMMobile.xcodeproj \
 		-scheme HMMobile \
-		-destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
+		-destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
 
 bundle-install:
 	bundle install
