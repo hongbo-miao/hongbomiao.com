@@ -26,7 +26,7 @@ jobs:
           version: 6.6.1
           cache: true
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.25.1
+        uses: github/codeql-action/init@v3.25.2
         with:
           languages: c-cpp
           tools: latest
@@ -34,9 +34,9 @@ jobs:
         run: |
           rm -f $(git ls-files "*Makefile")
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.25.1
+        uses: github/codeql-action/autobuild@v3.25.2
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.25.1
+        uses: github/codeql-action/analyze@v3.25.2
 
   codeql-go:
     name: Go
@@ -47,14 +47,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.3
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.25.1
+        uses: github/codeql-action/init@v3.25.2
         with:
           languages: go
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.25.1
+        uses: github/codeql-action/autobuild@v3.25.2
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.25.1
+        uses: github/codeql-action/analyze@v3.25.2
 
   codeql-java-kotlin:
     name: Java, Kotlin
@@ -71,14 +71,14 @@ jobs:
           java-version: '17'
           cache: gradle
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.25.1
+        uses: github/codeql-action/init@v3.25.2
         with:
           languages: java-kotlin
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.25.1
+        uses: github/codeql-action/autobuild@v3.25.2
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.25.1
+        uses: github/codeql-action/analyze@v3.25.2
 
   codeql-javascript-typescript:
     name: JavaScript, TypeScript
@@ -89,14 +89,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.3
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.25.1
+        uses: github/codeql-action/init@v3.25.2
         with:
           languages: javascript-typescript
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.25.1
+        uses: github/codeql-action/autobuild@v3.25.2
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.25.1
+        uses: github/codeql-action/analyze@v3.25.2
 
   codeql-python:
     name: Python
@@ -107,14 +107,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.3
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.25.1
+        uses: github/codeql-action/init@v3.25.2
         with:
           languages: python
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.25.1
+        uses: github/codeql-action/autobuild@v3.25.2
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.25.1
+        uses: github/codeql-action/analyze@v3.25.2
 
   codeql-ruby:
     name: Ruby
@@ -125,14 +125,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.3
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.25.1
+        uses: github/codeql-action/init@v3.25.2
         with:
           languages: ruby
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.25.1
+        uses: github/codeql-action/autobuild@v3.25.2
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.25.1
+        uses: github/codeql-action/analyze@v3.25.2
 
   codeql-swift:
     name: Swift
@@ -143,11 +143,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.3
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.25.1
+        uses: github/codeql-action/init@v3.25.2
         with:
           languages: swift
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.25.1
+        uses: github/codeql-action/autobuild@v3.25.2
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.25.1
+        uses: github/codeql-action/analyze@v3.25.2
