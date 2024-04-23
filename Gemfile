@@ -2,6 +2,6 @@
 
 source 'https://rubygems.org'
 
-ruby '3.2.2'
+ruby '3.3.1'
 
 gem 'rubocop', '1.63.3', require: false
