@@ -220,7 +220,7 @@ cargo-add-dev:
 lint-ansible:
 	poetry run poe lint-ansible
 lint-c-cpp:
-	clang-format -i -style=file $$(git ls-files "*.c" "*.cpp" "*.h" "*.ino")
+	clang-format -i -style=file $$(git ls-files "*.c" "*.cpp" "*.cu" "*.h" "*.ino")
 lint-cmake:
 	poetry run poe lint-cmake
 lint-css:

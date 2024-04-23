@@ -354,6 +354,10 @@ make kubernetes-clean
 
 ## Computing
 
+### Parallel Computing
+
+- **CUDA** - Parallel computing
+
 ### High-Performance Computing (HPC)
 
 - **Open MPI** - High-performance computing
