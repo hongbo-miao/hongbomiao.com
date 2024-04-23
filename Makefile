@@ -19,9 +19,11 @@ git-commit:
 	git commit --message="xxx"
 
 git-branch-switch:
-	git switch xxx
+	git switch branch-name
 git-branch-create-and-switch:
-	git switch -c xxx
+	git switch -c branch-name
+git-branch-create-by-commit-hash:
+	git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 git-branch-list-local:
 	git branch
 git-branch-list-remote:
@@ -35,6 +37,9 @@ git-log:
 	git log
 git-status:
 	git status
+git-recover:
+	git reflog --no-abbrev
+	git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # Git LFS
 git-lfs-install:
