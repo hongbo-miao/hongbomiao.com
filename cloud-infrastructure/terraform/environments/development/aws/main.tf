@@ -29,6 +29,17 @@ provider "awscc" {
   region = "us-west-2"
 }
 
+# Amazon VPC
+data "aws_vpc" "hm_amazon_vpc" {
+  default = true
+}
+data "aws_subnets" "hm_amazon_vpc_subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.hm_amazon_vpc.id]
+  }
+}
+
 # Amazon EC2
 module "development_hm_ec2_module" {
   providers         = { aws = aws.development }
@@ -474,4 +485,60 @@ module "development_hm_amazon_msk_tracker_sink_connector" {
   snowflake_schema_name                = "ENGINEERING"
   environment                          = var.environment
   team                                 = var.team
+}
+
+# AWS Batch
+module "development_hm_aws_batch_security_group" {
+  providers                      = { aws = aws.development }
+  source                         = "../../../modules/aws/hm_amazon_ec2_security_group"
+  amazon_ec2_security_group_name = "hm-aws-batch-security-group"
+  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
+  environment                    = var.environment
+  team                           = var.team
+}
+module "development_hm_aws_batch_compute_environment_iam" {
+  providers                              = { aws = aws.development }
+  source                                 = "../../../modules/aws/hm_aws_batch_compute_environment_iam"
+  aws_batch_compute_environment_nickname = "hm-batch-compute-env"
+  environment                            = var.environment
+  team                                   = var.team
+}
+module "development_hm_aws_batch_compute_environment" {
+  providers                          = { aws = aws.development }
+  source                             = "../../../modules/aws/hm_aws_batch_compute_environment"
+  aws_batch_compute_environment_name = "hm-aws-batch-compute-environment"
+  amazon_ec2_security_group_ids      = [module.development_hm_aws_batch_security_group.id]
+  amazon_vpc_subnet_ids              = data.aws_subnets.hm_amazon_vpc_subnets.ids
+  iam_role_arn                       = module.development_hm_aws_batch_compute_environment_iam.arn
+  environment                        = var.environment
+  team                               = var.team
+  depends_on = [
+    module.development_hm_aws_batch_compute_environment_iam
+  ]
+}
+module "development_hm_aws_batch_job_queue" {
+  providers                          = { aws = aws.development }
+  source                             = "../../../modules/aws/hm_aws_batch_job_queue"
+  aws_batch_job_queue_name           = "hm-aws-batch-queue"
+  aws_batch_compute_environment_arns = [module.development_hm_aws_batch_compute_environment.arn]
+  environment                        = var.environment
+  team                               = var.team
+}
+module "development_hm_aws_batch_job_definition_iam" {
+  providers                         = { aws = aws.development }
+  source                            = "../../../modules/aws/hm_aws_batch_job_definition_iam"
+  aws_batch_job_definition_nickname = "hm-batch-job-def"
+  environment                       = var.environment
+  team                              = var.team
+}
+module "development_hm_aws_batch_job_definition" {
+  providers                     = { aws = aws.development }
+  source                        = "../../../modules/aws/hm_aws_batch_job_definition"
+  aws_batch_job_definition_name = "hm-aws-batch-definition"
+  iam_role_arn                  = module.development_hm_aws_batch_job_definition_iam.arn
+  environment                   = var.environment
+  team                          = var.team
+  depends_on = [
+    module.development_hm_aws_batch_job_definition_iam
+  ]
 }
