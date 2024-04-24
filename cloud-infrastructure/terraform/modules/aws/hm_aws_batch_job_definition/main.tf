@@ -17,9 +17,6 @@ resource "aws_batch_job_definition" "hm_aws_batch_job_definition" {
     fargatePlatformConfiguration = {
       platformVersion = "LATEST"
     }
-    networkConfiguration = {
-      assignPublicIp = "ENABLED"
-    }
     resourceRequirements = [
       {
         type  = "VCPU"
