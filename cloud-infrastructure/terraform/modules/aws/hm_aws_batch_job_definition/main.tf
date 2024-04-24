@@ -12,8 +12,8 @@ resource "aws_batch_job_definition" "hm_aws_batch_job_definition" {
   type                  = "container"
   platform_capabilities = ["FARGATE"]
   container_properties = jsonencode({
-    command = ["echo", "test"]
-    image   = "busybox"
+    command = ["echo", "hello"]
+    image   = "docker.io/busybox:latest"
     fargatePlatformConfiguration = {
       platformVersion = "LATEST"
     }
