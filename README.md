@@ -391,6 +391,7 @@ make kubernetes-clean
   - **Amazon Redshift** - Data warehouse
   - **Amazon SageMaker** - Machine learning platform
   - **Amazon SQS** - Queue
+  - **AWS Batch** - Batch computing
   - **AWS CloudFormation** - Infrastructure as code (IaC)
   - **AWS CodeCommit** - Version control
   - **AWS Glue** - Serverless data integration
