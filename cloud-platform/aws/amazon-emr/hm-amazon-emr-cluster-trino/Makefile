@@ -1,20 +1,3 @@
-amazon-emr-cluster-create:
-	aws emr create-cluster \
-		--name=hm-amazon-emr-cluster-trino \
-		--release-label=emr-6.13.0 \
-		--applications=Name=Trino \
-		--configurations=file://hm-amazon-emr-cluster-trino-config.json \
-		--instance-fleets=file://cluster-config/instance-fleets.json \
-		--bootstrap-actions='[{"Name": "set_up", "Path": "s3://hm-production-bucket/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"}]' \
-		--log-uri=s3://hm-production-bucket/amazon-emr/logs/ \
-		--service-role=arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-xxxxxxxxxxxxxxx \
-		--scale-down-behavior=TERMINATE_AT_TASK_COMPLETION \
-		--auto-termination-policy='{"IdleTimeout":7200}' \
-		--step-concurrency-level=10 \
-		--region=us-west-2
-amazon-s3-upload-bootstrap-actions:
-	aws s3 cp bootstrap-actions/set_up.sh s3://hm-production-bucket/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh
-
 # Amazon EMR - Trino
 trino-status:
 	sudo systemctl status trino-server
