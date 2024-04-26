@@ -66,28 +66,49 @@ data "aws_secretsmanager_secret" "hm_rds_secret" {
 data "aws_secretsmanager_secret_version" "hm_rds_secret_version" {
   secret_id = data.aws_secretsmanager_secret.hm_rds_secret.id
 }
+locals {
+  amazon_emr_cluster_name = "hm-trino"
+}
 module "development_hm_trino_s3_set_up_script" {
   providers       = { aws = aws.development }
   source          = "../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = module.development_amazon_hm_development_s3_bucket.name
-  s3_key          = "amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
-  local_file_path = "./data/amazon-emr/hm-amazon-emr-cluster-trino/bootstrap-actions/set_up.sh"
+  s3_key          = "amazon-emr/clusters/${local.amazon_emr_cluster_name}/bootstrap-actions/set_up.sh"
+  local_file_path = "./data/amazon-emr/clusters/${local.amazon_emr_cluster_name}/bootstrap-actions/set_up.sh"
 }
 module "development_hm_trino_emr" {
   providers                                  = { aws = aws.development }
   source                                     = "../../../modules/aws/hm_amazon_emr_cluster"
-  amazon_emr_cluster_name                    = "hm-trino"
-  amazon_emr_version                         = "emr-7.0.0"
+  amazon_emr_cluster_name                    = local.amazon_emr_cluster_name
+  amazon_emr_version                         = "emr-7.1.0"
   applications                               = ["Trino"]
   primary_instance_target_on_demand_capacity = 1
   primary_instance_weighted_capacity         = 1
-  primary_instance_type                      = "r7g.xlarge"
+  primary_instance_type                      = "c7g.4xlarge"
   core_instance_target_on_demand_capacity    = 1
   core_instance_weighted_capacity            = 1
   core_instance_type                         = "r7g.xlarge"
   bootstrap_set_up_script_s3_uri             = module.development_hm_trino_s3_set_up_script.uri
   configurations_json_string                 = <<EOF
     [
+      {
+        "Classification": "trino-config",
+        "Properties": {
+          "exchange.compression-enabled": "true",
+          "retry-policy": "TASK",
+          "query.low-memory-killer.delay": "0s",
+          "query.remote-task.max-error-duration": "1m",
+          "task.low-memory-killer.policy": "total-reservation-on-blocked-nodes"
+        }
+      },
+      {
+        "Classification": "trino-exchange-manager",
+        "Properties": {
+          "exchange-manager.name": "filesystem",
+          "exchange.base-directories": "s3://${module.development_amazon_hm_development_s3_bucket.name}/amazon-emr/clusters/${local.amazon_emr_cluster_name}/exchange-spooling",
+          "exchange.s3.region": "us-west-2"
+        }
+      },
       {
         "Classification": "delta-defaults",
         "Properties": {
@@ -118,15 +139,15 @@ module "development_hm_trino_task_instance_fleet" {
   providers                          = { aws = aws.development }
   source                             = "../../../modules/aws/hm_amazon_emr_cluster_task_instance_fleet"
   amazon_emr_cluster_id              = module.development_hm_trino_emr.id
-  task_instance_target_spot_capacity = 1
+  task_instance_target_spot_capacity = 38
   task_instance_configs = [
     {
-      instance_type     = "r7g.xlarge"
-      weighted_capacity = 1
+      instance_type     = "r7g.2xlarge"
+      weighted_capacity = 2
     },
     {
-      instance_type     = "r6g.xlarge"
-      weighted_capacity = 1
+      instance_type     = "r6g.2xlarge"
+      weighted_capacity = 2
     }
   ]
 }
@@ -169,7 +190,7 @@ module "development_hm_sedona_emr" {
   providers                                  = { aws = aws.development }
   source                                     = "../../../modules/aws/hm_amazon_emr_cluster"
   amazon_emr_cluster_name                    = "hm-sedona"
-  amazon_emr_version                         = "emr-7.0.0"
+  amazon_emr_version                         = "emr-7.1.0"
   applications                               = ["Hadoop", "Hive", "JupyterEnterpriseGateway", "Livy", "Spark"]
   primary_instance_target_on_demand_capacity = 1
   primary_instance_weighted_capacity         = 1

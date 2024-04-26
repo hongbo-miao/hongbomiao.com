@@ -1,5 +1,7 @@
 show functions;
 
+select * from system.runtime.nodes;
+
 describe delta.production_hm_iot_db.motor;
 
 analyze delta.production_hm_iot_db.motor;
