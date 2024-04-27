@@ -1,4 +1,4 @@
-FROM docker.io/node:20.12.2-alpine AS web-base
+FROM docker.io/node:22.0.0-alpine AS web-base
 WORKDIR /usr/src/app
 
 FROM web-base AS web-builder
@@ -10,7 +10,7 @@ RUN rm -f ./.eslintrc.js \
   && npm run build \
   && npm prune --production
 
-FROM docker.io/node:20.12.2-alpine AS api-node-base
+FROM docker.io/node:22.0.0-alpine AS api-node-base
 WORKDIR /usr/src/app
 
 FROM api-node-base AS api-node-builder
