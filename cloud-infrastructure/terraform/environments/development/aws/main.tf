@@ -94,8 +94,8 @@ module "development_hm_trino_emr" {
       {
         "Classification": "trino-config",
         "Properties": {
-          "exchange.compression-enabled": "true",
           "retry-policy": "TASK",
+          "exchange.compression-codec": "LZ4",
           "query.low-memory-killer.delay": "0s",
           "query.remote-task.max-error-duration": "1m",
           "task.low-memory-killer.policy": "total-reservation-on-blocked-nodes"
