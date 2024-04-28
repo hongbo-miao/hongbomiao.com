@@ -22,9 +22,9 @@ resource "aws_iam_role" "hm_amazon_emr_studio_iam_role" {
     ]
   })
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "AmazonEMRStudioServiceRole-${var.amazon_emr_studio_name}"
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = "AmazonEMRStudioServiceRole-${var.amazon_emr_studio_name}"
   }
 }
 

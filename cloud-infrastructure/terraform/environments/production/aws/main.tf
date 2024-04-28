@@ -47,6 +47,8 @@ module "production_hm_ec2_module" {
   ec2_instance_name = "hm-ec2-instance"
   ec2_instance_ami  = "ami-0c79a55dda52434da" # Ubuntu Server 22.04 LTS (HVM), SSD Volume Type (64-bit (Arm))
   ec2_instance_type = "t2.nano"
+  environment       = var.environment
+  team              = var.team
 }
 
 # Amazon S3 bucket - hm-production-bucket

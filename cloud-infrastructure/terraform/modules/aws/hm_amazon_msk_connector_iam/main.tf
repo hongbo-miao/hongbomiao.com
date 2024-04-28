@@ -23,9 +23,9 @@ resource "aws_iam_role" "hm_amazon_msk_connector_iam_role" {
     ]
   })
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "AmazonMSKConnectorServiceRole-${var.amazon_msk_connector_name}"
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = "AmazonMSKConnectorServiceRole-${var.amazon_msk_connector_name}"
   }
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy

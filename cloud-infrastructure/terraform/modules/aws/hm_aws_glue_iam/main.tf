@@ -22,9 +22,9 @@ resource "aws_iam_role" "hm_aws_glue_iam_role" {
     ]
   })
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "AWSGlueServiceRole-${var.aws_glue_job_nickname}"
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = "AWSGlueServiceRole-${var.aws_glue_job_nickname}"
   }
 }
 

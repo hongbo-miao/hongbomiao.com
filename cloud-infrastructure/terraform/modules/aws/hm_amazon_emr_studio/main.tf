@@ -17,8 +17,8 @@ resource "aws_emr_studio" "hm_amazon_emr_studio" {
   vpc_id                      = "vpc-xxxxxxxxxxxxxxxxx"
   subnet_ids                  = ["subnet-xxxxxxxxxxxxxxxxx"]
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = var.amazon_emr_studio_name
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = var.amazon_emr_studio_name
   }
 }
