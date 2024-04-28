@@ -30,8 +30,8 @@ resource "aws_msk_cluster" "hm_amazon_msk_cluster" {
     encryption_at_rest_kms_key_arn = "arn:aws:kms:us-west-2:272394222652:key/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
   }
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = var.amazon_msk_cluster_name
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = var.amazon_msk_cluster_name
   }
 }

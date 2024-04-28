@@ -18,8 +18,8 @@ resource "aws_batch_compute_environment" "hm_aws_batch_compute_environment" {
   service_role = var.iam_role_arn
   type         = "MANAGED"
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = var.aws_batch_compute_environment_name
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = var.aws_batch_compute_environment_name
   }
 }

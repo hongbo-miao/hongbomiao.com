@@ -30,8 +30,8 @@ resource "aws_batch_job_definition" "hm_aws_batch_job_definition" {
     executionRoleArn = var.iam_role_arn
   })
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = var.aws_batch_job_definition_name
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = var.aws_batch_job_definition_name
   }
 }

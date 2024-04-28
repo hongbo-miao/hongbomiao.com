@@ -20,7 +20,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
     emr_managed_master_security_group = "sg-xxxxxxxxxxxxxxxxx"
     emr_managed_slave_security_group  = "sg-xxxxxxxxxxxxxxxxx"
     service_access_security_group     = "sg-xxxxxxxxxxxxxxxxx"
-    key_name                          = "hm-ec2-key-pair"
+    key_name                          = "hm-key-pair"
   }
   master_instance_fleet {
     name                      = "Primary"
@@ -59,7 +59,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
     for-use-with-amazon-emr-managed-policies = true
     Environment                              = var.environment
     Team                                     = var.team
-    Name                                     = var.amazon_emr_cluster_name
+    ResourceName                             = var.amazon_emr_cluster_name
   }
   lifecycle {
     create_before_destroy = true

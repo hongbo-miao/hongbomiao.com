@@ -19,8 +19,8 @@ resource "aws_security_group" "hm_amazon_ec2_security_group" {
     ]
   }
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = var.amazon_ec2_security_group_name
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = var.amazon_ec2_security_group_name
   }
 }

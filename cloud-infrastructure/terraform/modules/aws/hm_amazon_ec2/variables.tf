@@ -7,3 +7,9 @@ variable "ec2_instance_ami" {
 variable "ec2_instance_type" {
   type = string
 }
+variable "environment" {
+  type = string
+}
+variable "team" {
+  type = string
+}
