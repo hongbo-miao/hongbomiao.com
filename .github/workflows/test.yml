@@ -43,6 +43,7 @@ jobs:
       national-instruments-hm-ni-veristand: ${{ steps.filter.outputs.national-instruments-hm-ni-veristand }}
       national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
+      hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
       hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
@@ -159,6 +160,9 @@ jobs:
             national-instruments-hm-tdms:
               - '.github/workflows/test.yml'
               - 'hardware-in-the-loop/national-instruments/hm-tdms/**'
+            hm-aws-parallelcluster:
+              - '.github/workflows/test.yml'
+              - 'cloud-platform/aws/aws-parallelcluster/**'
             hm-gradio-classify-image:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-gradio/applications/classify-image/**'
@@ -787,6 +791,38 @@ jobs:
         uses: codecov/codecov-action@v4.3.0
         with:
           directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
+
+  aws-parallelcluster-test:
+    name: AWS ParallelCluster | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.aws-glue-spark-scripts == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version-file: cloud-platform/aws/aws-parallelcluster/pyproject.toml
+          cache: poetry
+          cache-dependency-path: cloud-platform/aws/aws-parallelcluster/poetry.lock
+      - name: Install dependencies
+        working-directory: cloud-platform/aws/aws-parallelcluster
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: cloud-platform/aws/aws-parallelcluster
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.3.0
+        with:
+          directory: cloud-platform/aws/aws-parallelcluster
 
   decode-can-data-test:
     name: Decode CAN Data | Test
