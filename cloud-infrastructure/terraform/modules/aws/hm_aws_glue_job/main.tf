@@ -36,8 +36,8 @@ resource "aws_glue_job" "hm_aws_glue_job" {
     "--conf"                             = "spark.sql.sources.partitionOverwriteMode=dynamic --conf spark.sql.parquet.compression.codec=zstd"
   }
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = var.aws_glue_job_name
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = var.aws_glue_job_name
   }
 }
