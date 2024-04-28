@@ -13,8 +13,8 @@ resource "aws_batch_job_queue" "hm_aws_batch_job_queue" {
   priority             = "0"
   compute_environments = var.aws_batch_compute_environment_arns
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = var.aws_batch_job_queue_name
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = var.aws_batch_job_queue_name
   }
 }

@@ -34,8 +34,8 @@ resource "aws_glue_crawler" "hm_aws_glue_crawler" {
     }
   )
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = var.aws_glue_crawler_name
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = var.aws_glue_crawler_name
   }
 }

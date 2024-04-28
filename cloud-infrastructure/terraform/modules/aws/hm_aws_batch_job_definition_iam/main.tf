@@ -22,9 +22,9 @@ resource "aws_iam_role" "hm_aws_batch_job_definition_iam" {
     ]
   })
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "AWSBatchJobDefininationExecutionRole-${var.aws_batch_job_definition_nickname}"
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = "AWSBatchJobDefininationExecutionRole-${var.aws_batch_job_definition_nickname}"
   }
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
