@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b54a9107-1ba9-4534-8f96-d3507f25dd0f)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/49de880c-fe38-45a2-8ef1-353e36158a3f)
 
 # 📦 Setup
 
@@ -361,6 +361,7 @@ make kubernetes-clean
 ### High-Performance Computing (HPC)
 
 - **AWS ParallelCluster** - High performance computing (HPC) cluster management
+  - **NICE DCV** - Remote display
 - **AWS Batch** - Batch computing
 - **Open MPI** - High-performance computing (HPC) library
 - **Slurm** - Workload management
@@ -382,6 +383,7 @@ make kubernetes-clean
 - **Amazon Web Services**
   - **Amazon Athena** - Serverless query service
   - **Amazon CloudTrail** - Data governance, data compliance, data auditing
+  - **Amazon DynamoDB** - NoSQL database
   - **Amazon EBS** - Block storage
   - **Amazon EC2** - Cloud computing
   - **Amazon ECR** - Container registry
@@ -401,11 +403,12 @@ make kubernetes-clean
   - **AWS Glue** - Serverless data integration
     - **AWS Glue Crawler** - Data source discovery
     - **AWS Glue Data Catalog** - Data catalog
-  - **AWS Glue DataBrew** - Data cleaning
+    - **AWS Glue DataBrew** - Data cleaning
   - **AWS IAM** - Identity and access management
   - **AWS IoT Core** - Internet of Things (IoT)
   - **AWS Lake Formation** - Data lake governance
   - **AWS ParallelCluster** - High performance computing (HPC) cluster management
+    - **NICE DCV** - Remote display
   - **AWS Secrets Manager** - Password management
 - **Google Cloud**
   - **BigQuery** - Data warehouse

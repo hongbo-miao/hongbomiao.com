@@ -41,6 +41,6 @@ pcluster-dcv-connect:
 slurm-job-submit:
 	sbatch --wrap="srun jobs/hello.sh"
 	sbatch --wrap="srun jobs/hello.sh" --nodes=2
-	sbatch --wrap="srun jobs/hello.sh" --nodes=3 --partition=spot-queue --constraint="[c7gn.large*1&c7gn.medium*2]"
+	sbatch --wrap="srun jobs/hello.sh" --nodes=3 --partition=spot-queue --constraint="[c7gn.16xlarge*1&c7gn.metal*2]"
 slurm-queue-view:
 	squeue
