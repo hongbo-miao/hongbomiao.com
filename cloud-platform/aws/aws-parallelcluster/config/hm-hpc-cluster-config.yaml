@@ -1,0 +1,61 @@
+# https://docs.aws.amazon.com/parallelcluster/latest/ug/Scheduling-v3.html
+
+---
+Region: us-west-2
+Image:
+  Os: ubuntu2204
+HeadNode:
+  InstanceType: t4g.small
+  Networking:
+    # Public
+    SubnetId: subnet-xxxxxxxxxxxxxxxxx
+  Ssh:
+    KeyName: hm-key-pair
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: spot-queue
+      CapacityType: SPOT
+      AllocationStrategy: capacity-optimized
+      ComputeResources:
+        - Name: c7gn-medium
+          Instances:
+            - InstanceType: c7gn.medium
+          MinCount: 0
+          MaxCount: 10
+        - Name: c7gn-large
+          Instances:
+            - InstanceType: c7gn.large
+          MinCount: 0
+          MaxCount: 10
+      Networking:
+        # Private
+        SubnetIds:
+          - subnet-xxxxxxxxxxxxxxxxx
+      Tags:
+        - Key: Team
+          Value: hongbomiao
+        - Key: Environment
+          Value: production
+        - Key: ResourceName
+          Value: spot-queue
+    - Name: on-demand-queue
+      CapacityType: ONDEMAND
+      AllocationStrategy: lowest-price
+      ComputeResources:
+        - Name: t4g-small
+          Instances:
+            - InstanceType: t4g.small
+          MinCount: 0
+          MaxCount: 10
+      Networking:
+        # Private
+        SubnetIds:
+          - subnet-xxxxxxxxxxxxxxxxx
+      Tags:
+        - Key: Team
+          Value: hongbomiao
+        - Key: Environment
+          Value: production
+        - Key: ResourceName
+          Value: on-demand-queue

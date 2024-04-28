@@ -360,10 +360,14 @@ make kubernetes-clean
 
 ### High-Performance Computing (HPC)
 
-- **Open MPI** - High-performance computing
+- **AWS ParallelCluster** - High performance computing (HPC) cluster management
+- **AWS Batch** - Batch computing
+- **Open MPI** - High-performance computing (HPC) library
+- **Slurm** - Workload management
 
 ### Cloud Computing
 
+- **Amazon EC2** - Cloud computing
 - **Ray** - Distributed computing framework
 - **SkyPilot** - Sky computing
 
@@ -401,6 +405,7 @@ make kubernetes-clean
   - **AWS IAM** - Identity and access management
   - **AWS IoT Core** - Internet of Things (IoT)
   - **AWS Lake Formation** - Data lake governance
+  - **AWS ParallelCluster** - High performance computing (HPC) cluster management
   - **AWS Secrets Manager** - Password management
 - **Google Cloud**
   - **BigQuery** - Data warehouse
