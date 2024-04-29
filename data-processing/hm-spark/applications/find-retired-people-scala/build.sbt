@@ -1,6 +1,6 @@
 name := "FindRetiredPeople"
 version := "1.0"
-scalaVersion := "2.12.19"
+scalaVersion := "2.13.14"
 
 val sparkVersion = "3.5.1"
 
