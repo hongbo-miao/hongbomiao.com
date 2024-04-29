@@ -1,3 +1,4 @@
+# https://docs.aws.amazon.com/parallelcluster/latest/ug/HeadNode-v3.html
 # https://docs.aws.amazon.com/parallelcluster/latest/ug/Scheduling-v3.html
 
 ---
@@ -13,25 +14,36 @@ HeadNode:
     KeyName: hm-key-pair
 Scheduling:
   Scheduler: slurm
+  SlurmSettings:
+    QueueUpdateStrategy: DRAIN
+    EnableMemoryBasedScheduling: true
   SlurmQueues:
     - Name: spot-queue
       CapacityType: SPOT
       AllocationStrategy: capacity-optimized
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            VolumeType: gp3
       ComputeResources:
-        - Name: c7gn-medium
-          Instances:
-            - InstanceType: c7gn.medium
+        - Name: c7gn-16xlarge
+          Efa:
+            Enabled: true
+          InstanceType: c7gn.16xlarge
           MinCount: 0
-          MaxCount: 10
-        - Name: c7gn-large
-          Instances:
-            - InstanceType: c7gn.large
+          MaxCount: 5
+        - Name: c7gn-metal
+          Efa:
+            Enabled: true
+          InstanceType: c7gn.metal
           MinCount: 0
-          MaxCount: 10
+          MaxCount: 5
       Networking:
         # Private
         SubnetIds:
           - subnet-xxxxxxxxxxxxxxxxx
+        PlacementGroup:
+          Enabled: true
       Tags:
         - Key: Team
           Value: hongbomiao
@@ -42,16 +54,23 @@ Scheduling:
     - Name: on-demand-queue
       CapacityType: ONDEMAND
       AllocationStrategy: lowest-price
+      ComputeSettings:
+        LocalStorage:
+          RootVolume:
+            VolumeType: gp3
       ComputeResources:
-        - Name: t4g-small
-          Instances:
-            - InstanceType: t4g.small
+        - Name: c7gn-metal
+          Efa:
+            Enabled: true
+          InstanceType: c7gn.metal
           MinCount: 0
-          MaxCount: 10
+          MaxCount: 5
       Networking:
         # Private
         SubnetIds:
           - subnet-xxxxxxxxxxxxxxxxx
+        PlacementGroup:
+          Enabled: true
       Tags:
         - Key: Team
           Value: hongbomiao
