@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-avro" % sparkVersion,
   "org.apache.spark" %% "spark-sql-kafka-0-10" % sparkVersion,
   "io.delta" %% "delta-core" % "2.4.0",
-  "za.co.absa" %% "abris" % "6.4.0"
+  "za.co.absa" %% "abris" % "6.4.1"
 )
 
 ThisBuild / assemblyMergeStrategy := {
