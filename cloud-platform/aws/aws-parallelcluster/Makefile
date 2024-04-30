@@ -27,12 +27,10 @@ pcluster-delete:
 	pcluster delete-cluster --cluster-name=hm-hpc-cluster
 	aws cloudformation list-stacks
 	aws cloudformation delete-stack --stack-name=parallelclusternetworking-pubpriv-xxxxxxxxxxxxxx
-
 pcluster-list:
 	pcluster list-clusters
 pcluster-describe:
 	pcluster describe-cluster --cluster-name=hm-hpc-cluster
-
 pcluster-ssh:
 	pcluster ssh --cluster-name=hm-hpc-cluster
 pcluster-dcv-connect:
@@ -44,3 +42,10 @@ slurm-job-submit:
 	sbatch --wrap="srun jobs/hello.sh" --nodes=3 --partition=spot-queue --constraint="[c7gn.16xlarge*1&c7gn.metal*2]"
 slurm-queue-view:
 	squeue
+slurm-module-list-available:
+	module avail
+slurm-module-list-loaded:
+	module list
+
+open-mpi-version:
+	mpirun --version
