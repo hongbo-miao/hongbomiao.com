@@ -10,7 +10,7 @@ require (
 	github.com/dgraph-io/dgo/v230 v230.0.1
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-contrib/gzip v1.0.0
-	github.com/gin-contrib/logger v1.1.1
+	github.com/gin-contrib/logger v1.1.2
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-redis/redismock/v9 v9.2.0
 	github.com/go-resty/resty/v2 v2.12.0
