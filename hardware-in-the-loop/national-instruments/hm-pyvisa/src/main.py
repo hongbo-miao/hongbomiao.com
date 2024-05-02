@@ -2,9 +2,8 @@ import logging
 
 import pyvisa
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
 
+def main() -> None:
     resource_manager = pyvisa.ResourceManager()
     logging.info(resource_manager.list_resources())
     logging.info(resource_manager.list_opened_resources())
@@ -13,3 +12,8 @@ if __name__ == "__main__":
     logging.info(instrument)
 
     instrument.close()
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    main()
