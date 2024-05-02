@@ -25,6 +25,7 @@ jobs:
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
       aws-glue-spark-scripts: ${{ steps.filter.outputs.aws-glue-spark-scripts }}
+      call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
       decode-can-data: ${{ steps.filter.outputs.decode-can-data }}
       format-can-data: ${{ steps.filter.outputs.format-can-data }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
@@ -106,6 +107,9 @@ jobs:
             aws-glue-spark-scripts:
               - '.github/workflows/test.yml'
               - 'cloud-infrastructure/terraform/data/aws-glue/spark-scripts/**'
+            call-matlab-function-in-python:
+              - '.github/workflows/test.yml'
+              - 'matlab/call-matlab-function-in-python/**'
             decode-can-data:
               - '.github/workflows/test.yml'
               - 'embedded/decode-can-data/**'
@@ -795,7 +799,7 @@ jobs:
   aws-parallelcluster-test:
     name: AWS ParallelCluster | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.aws-glue-spark-scripts == 'true' }}
+    if: ${{ needs.detect-changes.outputs.hm-aws-parallelcluster == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -823,6 +827,43 @@ jobs:
         uses: codecov/codecov-action@v4.3.1
         with:
           directory: cloud-platform/aws/aws-parallelcluster
+
+  call-matlab-function-in-python:
+    name: Call MATLAB Function in Python | Test
+    needs: detect-changes
+    if: ${{ false }}
+    # if: ${{ needs.detect-changes.outputs.call-matlab-function-in-python == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.4
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v2.1.2
+        with:
+          release: R2024a
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version-file: matlab/call-matlab-function-in-python/pyproject.toml
+          cache: poetry
+          cache-dependency-path: matlab/call-matlab-function-in-python/poetry.lock
+      - name: Install dependencies
+        working-directory: matlab/call-matlab-function-in-python
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: matlab/call-matlab-function-in-python
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.3.1
+        with:
+          directory: matlab/call-matlab-function-in-python
 
   decode-can-data-test:
     name: Decode CAN Data | Test
@@ -2393,7 +2434,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workspace: ${{ github.workspace }}/machine-learning/hm-rasa
 
-  gnn-test:
+  graph-neural-network-test:
     name: GNN | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
@@ -2425,7 +2466,7 @@ jobs:
         with:
           directory: machine-learning/graph-neural-network
 
-  gnn-train:
+  graph-neural-network-train:
     name: GNN | Train
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
@@ -2457,7 +2498,7 @@ jobs:
         run: |
           poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
 
-  cnn-test:
+  convolutional-neural-network-test:
     name: CNN | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
@@ -2489,7 +2530,7 @@ jobs:
         with:
           directory: machine-learning/convolutional-neural-network
 
-  cnn-cml-local-train:
+  convolutional-neural-network-cml-local-train:
     name: CNN | CML (Local) - Train
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
@@ -2532,7 +2573,7 @@ jobs:
           cat output/reports/params.txt >> report.md
           cml comment create report.md
 
-  cnn-cml-cloud-set-up:
+  convolutional-neural-network-cml-cloud-set-up:
     name: CNN | CML (Cloud) - Set Up
     runs-on: ubuntu-22.04
     environment: test
@@ -2556,9 +2597,9 @@ jobs:
           --cloud-type=t2.small \
           --labels=cml-runner
 
-  cnn-cml-cloud-train:
+  convolutional-neural-network-cml-cloud-train:
     name: CNN | CML (Cloud) - Train
-    needs: cnn-cml-cloud-set-up
+    needs: convolutional-neural-network-cml-cloud-set-up
     runs-on: [self-hosted, cml-runner]
     environment: test
     # container: docker://iterativeai/cml:0-dvc2-base1-gpu
