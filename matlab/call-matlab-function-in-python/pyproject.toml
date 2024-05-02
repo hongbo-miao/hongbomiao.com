@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "call-matlab-function-in-python"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.11.x"
+matlabengine = "24.1.2"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.26.0"
+pytest = "8.2.0"
+pytest-cov = "5.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
