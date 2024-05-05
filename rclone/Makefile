@@ -9,7 +9,8 @@ rclone-config-show-content:
 rclone-config-create-sftp:
 	rclone config create hm-ubuntu sftp user=parallels host=10.211.55.4 port=22 key_file=~/.ssh/id_ed25519
 rclone-config-create-s3:
-	rclone config create hm-s3 s3 provider=AWS access_key_id=xxx secret_access_key=xxx region=us-west-2 storage_class=STANDARD
+	rclone config create hm-s3 s3 provider=AWS region=us-west-2 storage_class=STANDARD access_key_id=xxx secret_access_key=xxx
+	rclone config create hm-s3 s3 provider=AWS region=us-west-2 storage_class=STANDARD env_auth=true
 clone-config-delete:
 	rclone config delete hm-s3
 
