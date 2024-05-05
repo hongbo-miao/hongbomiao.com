@@ -334,6 +334,7 @@ make kubernetes-clean
 - **NeuralForecast** - Neural forecasting
 - **GPT4All** - Large language models
 - **Transformers** - Machine learning models
+- **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
 - **CML** - Continuous machine learning

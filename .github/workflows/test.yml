@@ -44,6 +44,7 @@ jobs:
       national-instruments-hm-ni-veristand: ${{ steps.filter.outputs.national-instruments-hm-ni-veristand }}
       national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
+      hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
       hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
@@ -164,6 +165,9 @@ jobs:
             national-instruments-hm-tdms:
               - '.github/workflows/test.yml'
               - 'hardware-in-the-loop/national-instruments/hm-tdms/**'
+            hm-autogluon:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/hm-autogluon/**'
             hm-aws-parallelcluster:
               - '.github/workflows/test.yml'
               - 'cloud-platform/aws/aws-parallelcluster/**'
@@ -1088,6 +1092,38 @@ jobs:
         uses: codecov/codecov-action@v4.3.1
         with:
           directory: data-storage/delta-lake/write-to-delta-lake
+
+  autogluon-test:
+    name: AutoGluon | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.4
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version-file: machine-learning/hm-autogluon/pyproject.toml
+          cache: poetry
+          cache-dependency-path: machine-learning/hm-autogluon/poetry.lock
+      - name: Install dependencies
+        working-directory: machine-learning/hm-autogluon
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: machine-learning/hm-autogluon
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.3.1
+        with:
+          directory: machine-learning/hm-autogluon
 
   feature-store-test:
     name: Feature Store | Test
