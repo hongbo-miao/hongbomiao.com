@@ -4,10 +4,10 @@ variable "environment" {
 variable "snowflake_public_schema_name" {
   type = string
 }
-variable "snowflake_sysadmin" {
-  type = string
+variable "development_warehouse_auto_suspend_min" {
+  type = number
 }
-variable "hongbomiao_departments" {
+variable "development_department_db_departments" {
   type = list(object({
     name             = string
     admin_user_names = list(string)
@@ -18,12 +18,9 @@ variable "hongbomiao_departments" {
     }))
   }))
 }
-variable "warehouse_auto_suspend_min" {
-  type = number
-}
-variable "database_data_retention_days" {
-  type = number
-}
-variable "production_hm_kafka_db_product_read_write_user_rsa_public_key_without_header_and_trailer" {
-  type = string
+variable "development_hm_kafka_db_departments" {
+  type = list(object({
+    name                                                      = string
+    read_write_user_rsa_public_key_without_header_and_trailer = string
+  }))
 }
