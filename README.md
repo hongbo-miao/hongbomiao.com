@@ -490,7 +490,6 @@ make kubernetes-clean
 - **cantools** - Controller Area Network (CAN) bus tools
 - **python-can** - Controller Area Network (CAN) bus library
 - **Valgrind** - Memory debugging and profiling
-- **hexedit** - File viewing and editing in hexadecimal and ASCII
 - **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
@@ -508,6 +507,14 @@ make kubernetes-clean
 - **Jetson TX2** - Single-board computer (SBC)
 - **CubeSat** - Miniaturized satellite
 - **QGroundControl** - Ground control station (GCS) for unmanned aerial vehicles (UAVs)
+
+## Reverse Engineering
+
+- **hexedit** - File viewing and editing in hexadecimal and ASCII
+- **xxd** - File viewing and editing in hexadecimal and ASCII
+- **strings** - Strings of printable characters viewing
+- **objdump** - Disassembler
+- **IDA** - Disassembler
 
 ## Ethereum
 
