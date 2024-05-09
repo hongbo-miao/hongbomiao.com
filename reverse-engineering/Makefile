@@ -1,0 +1,4 @@
+hexedit-install:
+	brew install hexedit
+ida-install:
+	brew install --cask idafree
