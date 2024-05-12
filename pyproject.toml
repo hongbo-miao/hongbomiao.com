@@ -31,10 +31,10 @@ build-backend = "poetry.core.masonry.api"
 clean-jupyter-notebook = "nb-clean clean"
 ansible-galaxy-install = "ansible-galaxy install"
 sqlfluff-list-dialects = "sqlfluff dialects"
-lint-ansible = {shell = "ansible-lint $(git ls-files '*playbook.yml')"}
-lint-cmake = {shell = "cmakelint $(git ls-files '*CMakeLists.txt')"}
-lint-matlab = {shell = "mh_style $(git ls-files '*.m')"}
-lint-matlab-fix = {shell = "mh_style --fix $(git ls-files '*.m')"}
+lint-ansible = {shell = "ansible-lint $(git ls-files '**/playbook.yml')"}
+lint-cmake = {shell = "cmakelint $(git ls-files '**/CMakeLists.txt')"}
+lint-matlab = {shell = "mh_style $(git ls-files '**/*.m')"}
+lint-matlab-fix = {shell = "mh_style --fix $(git ls-files '**/*.m')"}
 lint-python-autoflake = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --check --recursive ."
 lint-python-autoflake-fix = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --in-place --recursive ."
 lint-python-black = "black --check ."
@@ -45,7 +45,7 @@ lint-python-isort = "isort --check-only ."
 lint-python-isort-fix = "isort ."
 lint-sql = "sqlfluff lint"
 lint-sql-fix = "sqlfluff fix --force"
-lint-vhdl = {shell = "vsg --filename $(git ls-files '*.vhd')"}
-lint-vhdl-fix = {shell = "vsg --filename $(git ls-files '*.vhd') --fix"}
+lint-vhdl = {shell = "vsg --filename $(git ls-files '**/*.vhd')"}
+lint-vhdl-fix = {shell = "vsg --filename $(git ls-files '**/*.vhd') --fix"}
 lint-yaml = "yamllint ."
 static-type-check-python = "mypy --install-types --non-interactive"

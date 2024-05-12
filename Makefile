@@ -219,8 +219,8 @@ cargo-add-dev:
 # Lint
 lint-ansible:
 	poetry run poe lint-ansible
-lint-c-cpp:
-	clang-format -i -style=file $$(git ls-files "*.c" "*.cpp" "*.cu" "*.h" "*.ino")
+lint-c-cpp-fix:
+	clang-format -i -style=file $$(git ls-files "**/*.c" "**/*.cpp" "**/*.cu" "**/*.h" "**/*.ino")
 lint-cmake:
 	poetry run poe lint-cmake
 lint-css:
@@ -228,7 +228,7 @@ lint-css:
 lint-css-fix:
 	npm run lint:css:fix
 lint-dockerfile:
-	hadolint $$(git ls-files "*Dockerfile*")
+	hadolint $$(git ls-files "**/Dockerfile*")
 lint-javascript:
 	npm run lint:javascript
 lint-javascript-fix:
@@ -273,7 +273,7 @@ lint-python-isort:
 lint-python-isort-fix:
 	poetry run poe lint-python-isort-fix
 lint-qml:
-	qmllint $$(git ls-files "*.qml")
+	qmllint $$(git ls-files "**/*.qml")
 lint-ruby:
 	bundle exec rubocop
 lint-ruby-fix:
@@ -293,7 +293,7 @@ lint-scala-fix:
 	cd data-processing/hm-spark/applications/find-retired-people-scala && sbt scalafmtAll && sbt scalafixAll
 	cd data-processing/hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtAll && sbt scalafixAll
 lint-shell:
-	shellcheck $$(git ls-files "*.sh")
+	shellcheck $$(git ls-files "**/*.sh")
 lint-solidity:
 	npm run lint:solidity
 lint-solidity-fix:
