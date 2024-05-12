@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-
 is_debug=false
 # source kubernetes/bin/utils/focus_opa_debug.sh
 
