@@ -510,7 +510,7 @@ jobs:
           cache: true
       - name: Lint QML
         run: |
-          qmllint $(git ls-files "*.qml")
+          qmllint $(git ls-files "**/*.qml")
 
   lint-ruby:
     name: Ruby
@@ -588,7 +588,7 @@ jobs:
         uses: actions/checkout@v4.1.5
       - name: Lint Shell
         run: |
-          shellcheck $(git ls-files '*.sh')
+          shellcheck $(git ls-files '**/*.sh')
 
   lint-solidity:
     name: Solidity
