@@ -747,7 +747,7 @@ The following presents a model of a radar-based air defense system. Bombers are 
 
 OpenFOAM simulation results viewed by ParaView.
 
-![ParaView screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/83b53e12-01a8-4ed9-b2aa-4b5e6803aab4)
+![OpenFOAM screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/02ebf178-b8fd-48bc-a12b-c1739f435858)
 
 ### SimScale - Computational Fluid Dynamics (CFD), Finite Element Analysis (FEA), Thermal Simulation
 

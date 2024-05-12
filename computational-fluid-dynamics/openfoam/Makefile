@@ -1,13 +1,12 @@
 openfoam-install:
-	sh bin/install.sh
+	brew install gerlero/openfoam/openfoam
 
 openfoam-run:
-	openfoam-docker -dry-run
-	openfoam-docker
+	openfoam
 
 openfoam-generate-mesh:
 	blockMesh
 openfoam-solve-incompressible-laminar-navier-stokes-equations-using-piso-algorithm:
 	icoFoam
-openfoam-generate-openfoam-file:
-	paraFoam -touch
+openfoam-view:
+	paraFoam
