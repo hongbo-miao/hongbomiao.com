@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/932bcc44-2b86-40cc-bb33-552bc202ea1f)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/bf67842e-2692-45bd-93b1-0398adc12106)
 
 # 📦 Setup
 
@@ -480,8 +480,10 @@ make kubernetes-clean
   - **Signal Processing Toolbox** - Signal processing and analysis
   - **Simulink** - Simulation and model-based designing
     - **Simscape** - Multidomain physical systems simulation
+- **OpenFOAM** - Computational fluid dynamics (CFD)
 - **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
 - **CoppeliaSim** - Robot simulation
+- **ParaView** - Post-processing visualization
 
 ## Embedded, IoT, Hardware
 
@@ -614,6 +616,7 @@ make kubernetes-clean
   - **Salt fog testing**
   - **Lightning testing**
 - **Structural testing**
+- **Battery drop testing**
 - **Dyno testing**
 - **Wind tunnel testing**
 - **Ground testing**
@@ -739,6 +742,12 @@ The following presents a model of a radar-based air defense system. Bombers are 
 ### CoppeliaSim - Robot Simulation
 
 ![CoppeliaSim screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/e167e2b9-6428-40c2-a1d9-377eb630a991)
+
+### OpenFOAM - Computational Fluid Dynamics (CFD)
+
+OpenFOAM simulation results viewed by ParaView.
+
+![ParaView screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/83b53e12-01a8-4ed9-b2aa-4b5e6803aab4)
 
 ### SimScale - Computational Fluid Dynamics (CFD), Finite Element Analysis (FEA), Thermal Simulation
 
