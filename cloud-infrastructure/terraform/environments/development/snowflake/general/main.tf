@@ -1,25 +1,3 @@
-terraform {
-  backend "s3" {
-    region = "us-west-2"
-    bucket = "hm-terraform-bucket"
-    key    = "development/snowflake/general/terraform.tfstate"
-  }
-  required_providers {
-    # https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest
-    snowflake = {
-      source  = "Snowflake-Labs/snowflake"
-      version = "0.90.0"
-    }
-  }
-  required_version = ">= 1.7"
-}
-
-# Snowflake
-provider "snowflake" {
-  alias = "hm_development_terraform_read_write_role"
-  role  = "HM_DEVELOPMENT_TERRAFORM_READ_WRITE_ROLE"
-}
-
 data "terraform_remote_state" "hm_terraform_remote_state_production_snowflake_data" {
   backend = "s3"
   config = {
