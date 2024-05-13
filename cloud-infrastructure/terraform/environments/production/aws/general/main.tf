@@ -1,33 +1,3 @@
-terraform {
-  backend "s3" {
-    region = "us-west-2"
-    bucket = "hm-terraform-bucket"
-    key    = "production/aws/general/terraform.tfstate"
-  }
-  required_providers {
-    # https://registry.terraform.io/providers/hashicorp/aws/latest
-    aws = {
-      source  = "hashicorp/aws"
-      version = "5.49.0"
-    }
-    # https://registry.terraform.io/providers/hashicorp/awscc/latest
-    awscc = {
-      source  = "hashicorp/awscc"
-      version = "0.76.0"
-    }
-  }
-  required_version = ">= 1.7"
-}
-
-provider "aws" {
-  alias  = "production"
-  region = "us-west-2"
-}
-provider "awscc" {
-  alias  = "production"
-  region = "us-west-2"
-}
-
 data "terraform_remote_state" "hm_terraform_remote_state_production_aws_network" {
   backend = "s3"
   config = {

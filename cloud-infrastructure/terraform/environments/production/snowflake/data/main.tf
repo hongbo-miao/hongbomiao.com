@@ -1,25 +1,3 @@
-terraform {
-  backend "s3" {
-    region = "us-west-2"
-    bucket = "hm-terraform-bucket"
-    key    = "production/snowflake/data/terraform.tfstate"
-  }
-  required_providers {
-    # https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest
-    snowflake = {
-      source  = "Snowflake-Labs/snowflake"
-      version = "0.90.0"
-    }
-  }
-  required_version = ">= 1.7"
-}
-
-provider "snowflake" {
-  alias = "hm_production_terraform_read_write_role"
-  role  = "HM_DEVELOPMENT_TERRAFORM_READ_WRITE_ROLE"
-}
-
-
 # Department database
 locals {
   production_department_db_department_names = toset([for department in var.production_department_db_departments : department.name])
