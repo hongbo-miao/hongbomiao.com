@@ -1,7 +1,7 @@
 # Docker
 docker-build:
 	cd ../.. && \
-	docker build --file=hm-kafka/iot-kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-kafka-iot-kafka-connect:latest .
+	docker build --file=hm-kafka/kafka-connect/iot-kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-kafka-iot-kafka-connect:latest .
 docker-push:
 	docker push ghcr.io/hongbo-miao/hm-kafka-iot-kafka-connect:latest
 docker-sh:
