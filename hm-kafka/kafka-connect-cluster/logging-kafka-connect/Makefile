@@ -1,15 +1,15 @@
 # Docker
 docker-build:
 	cd ../.. && \
-	docker build --file=hm-kafka/kafka-connect/iot-kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-kafka-iot-kafka-connect:latest .
+	docker build --file=hm-kafka/kafka-connect-cluster/logging-kafka-connect/Dockerfile --tag=ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest .
 docker-push:
-	docker push ghcr.io/hongbo-miao/hm-kafka-iot-kafka-connect:latest
+	docker push ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest
 docker-sh:
-	docker run -it ghcr.io/hongbo-miao/hm-kafka-iot-kafka-connect:latest sh
+	docker run -it ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest sh
 
 # Kubernetes
-kafka-get-hm-kafka-iot-kafka-connect:
-	kubectl get kafkaconnects hm-kafka-iot-kafka-connect --namespace=hm-kafka --output=yaml
+kafka-get-hm-kafka-logging-kafka-connect:
+	kubectl get kafkaconnects hm-kafka-logging-kafka-connect --namespace=hm-kafka --output=yaml
 
 kafka-get-postgres-kafka-connector:
 	kubectl get kafkaconnectors postgres-kafka-connector --namespace=hm-kafka --output=yaml
@@ -22,12 +22,12 @@ kafka-consume:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
-			--topic=hm.motor \
+			--topic=hm.dummy-log \
 			--property=print.key=true
 kafka-consume-from-beginning:
 	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
 		bin/kafka-console-consumer.sh \
 			--bootstrap-server=localhost:9092 \
-			--topic=hm.motor \
+			--topic=hm.dummy-log \
 			--property=print.key=true \
 			--from-beginning
