@@ -9,7 +9,7 @@ function [desired_state] = generateHelixTrajectory(t, state, r, z_max)
     if nargin < 3
         r = 5;
     end
-    T       = 12;       % finishing time 10
+    T = 12; % finishing time 10
 
     if t >= T
         % hover controller input
