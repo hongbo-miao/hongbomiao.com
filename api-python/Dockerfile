@@ -7,6 +7,7 @@ ENV PYTHONFAULTHANDLER=1 \
 FROM base AS builder
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   PIP_NO_CACHE_DIR=1
+ARG LIBRDKAFKA_VERSION=2.4.0
 # bash, g++, make are for librdkafka, which is for confluent-kafka
 # gcc, libffi-dev, musl-dev are for Poetry
 # hadolint ignore=DL3003
@@ -16,15 +17,15 @@ RUN apk add --no-cache gcc libffi-dev musl-dev bash g++ make \
   && python -m venv /venv/ \
   # Install librdkafka
   # https://github.com/edenhill/librdkafka#build-from-source
-  && wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/confluentinc/librdkafka/archive/refs/tags/v2.3.0.tar.gz \
+  && wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/confluentinc/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz \
   && tar --extract --file=librdkafka.tar.gz \
   && rm -f librdkafka.tar.gz \
-  && cd librdkafka-2.3.0 \
+  && cd librdkafka-${LIBRDKAFKA_VERSION} \
   && ./configure \
   && make \
   && make install \
   && cd .. \
-  && rm -r -f librdkafka-2.3.0/
+  && rm -r -f librdkafka-${LIBRDKAFKA_VERSION}/
 COPY ["api-python/pyproject.toml", "api-python/poetry.lock", "./"]
 RUN . /venv/bin/activate \
   && poetry install --only=main --no-root
