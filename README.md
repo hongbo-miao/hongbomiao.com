@@ -459,6 +459,41 @@ make kubernetes-clean
 - **GitGuardian** - Git secret scanning
 - **xxHash** - Hash algorithm
 
+## Reverse Engineering
+
+- **hexedit** - File viewing and editing in hexadecimal and ASCII
+- **xxd** - File viewing and editing in hexadecimal and ASCII
+- **strings** - Strings of printable characters viewing
+- **objdump** - Disassembler
+- **IDA** - Disassembler
+
+## Ethereum
+
+- **Solidity** - Contract-oriented programming language
+- **solc-js** - JavaScript bindings for the Solidity compiler
+
+## Embedded, IoT, Hardware
+
+- **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
+- **pySerial** - Serial communication library
+- **cantools** - Controller Area Network (CAN) bus tools
+- **python-can** - Controller Area Network (CAN) bus library
+- **Valgrind** - Memory debugging and profiling
+- **Yocto Project** - Linux distribution creating
+- **ROS** - Robot operating system
+- **FreeRTOS** - Real-time operating system
+- **ASTERIOS** - Real-time, safety-critical applications development
+- **RTI Connext** - Real-time, distributed systems framework
+  - **RTI Connext DDS** - Data distribution service (DDS)
+- **Rclone** - Sync program
+- **restic** - Backup program
+- **OpenSCAD** - 3D CAD Modeller
+- **Arduino Uno** - Microcontroller board
+- **BeagleBone Black** - Microcontroller board
+- **Raspberry Pi 4 Model B** - Single-board computer (SBC)
+- **Jetson Nano** - Single-board computer (SBC)
+- **Jetson TX2** - Single-board computer (SBC)
+
 ## Simulation
 
 - **AnyLogic** - Simulation modeling tool
@@ -485,43 +520,13 @@ make kubernetes-clean
 - **CoppeliaSim** - Robot simulation
 - **ParaView** - Post-processing visualization
 
-## Embedded, IoT, Hardware
+## Aerospace
 
-- **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
-- **pySerial** - Serial communication library
-- **cantools** - Controller Area Network (CAN) bus tools
-- **python-can** - Controller Area Network (CAN) bus library
-- **Valgrind** - Memory debugging and profiling
-- **Yocto Project** - Linux distribution creating
-- **ROS** - Robot operating system
-- **FreeRTOS** - Real-time operating system
-- **ASTERIOS** - Real-time, safety-critical applications development
 - **PX4** - Flight control software
-- **RTI Connext** - Real-time, distributed systems framework
-  - **RTI Connext DDS** - Data distribution service (DDS)
-- **Rclone** - Sync program
-- **restic** - Backup program
-- **OpenSCAD** - 3D CAD Modeller
-- **Arduino Uno** - Microcontroller board
-- **BeagleBone Black** - Microcontroller board
-- **Raspberry Pi 4 Model B** - Single-board computer (SBC)
-- **Jetson Nano** - Single-board computer (SBC)
-- **Jetson TX2** - Single-board computer (SBC)
 - **CubeSat** - Miniaturized satellite
 - **QGroundControl** - Ground control station (GCS) for unmanned aerial vehicles (UAVs)
-
-## Reverse Engineering
-
-- **hexedit** - File viewing and editing in hexadecimal and ASCII
-- **xxd** - File viewing and editing in hexadecimal and ASCII
-- **strings** - Strings of printable characters viewing
-- **objdump** - Disassembler
-- **IDA** - Disassembler
-
-## Ethereum
-
-- **Solidity** - Contract-oriented programming language
-- **solc-js** - JavaScript bindings for the Solidity compiler
+- **OpenAeroStruct** - Aerostructural optimization
+- **OpenMDAO** - Multidisciplinary analysis and optimization
 
 ## Code
 

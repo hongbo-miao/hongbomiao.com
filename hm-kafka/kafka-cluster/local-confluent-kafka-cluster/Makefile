@@ -8,4 +8,3 @@ confluent-kafka-stop:
 
 confluent-kafka-topic-create:
 	confluent local kafka topic create purchases
-
