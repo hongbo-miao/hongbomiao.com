@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "hm-openaerostruct"
+version = "1.0.0"
+description = ""
+authors = ["Hongbo Miao"]
+
+[tool.poetry.dependencies]
+python = "3.12.x"
+numpy = "1.26.4"
+openaerostruct = "2.7.1"
+openmdao = "3.32.0"
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "0.26.1"
+pytest = "8.2.0"
+pytest-cov = "5.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
