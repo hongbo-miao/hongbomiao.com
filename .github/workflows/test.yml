@@ -56,6 +56,7 @@ jobs:
       hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-open3d: ${{ steps.filter.outputs.hm-open3d }}
+      hm-openaerostruct: ${{ steps.filter.outputs.hm-openaerostruct }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
       hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
       hm-prefect-ingest-data: ${{ steps.filter.outputs.hm-prefect-ingest-data }}
@@ -195,6 +196,9 @@ jobs:
             hm-open3d:
               - '.github/workflows/test.yml'
               - 'computer-vision/hm-open3d/**'
+            hm-openaerostruct:
+              - '.github/workflows/test.yml'
+              - 'computer-vision/hm-openaerostruct/**'
             hm-prefect-calculate:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/calculate/**'
@@ -1636,6 +1640,38 @@ jobs:
         uses: codecov/codecov-action@v4.3.1
         with:
           directory: computer-vision/hm-open3d
+
+  openaerostruct-test:
+    name: OpenAeroStruct | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.5
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version-file: aerospace/hm-openaerostruct/pyproject.toml
+          cache: poetry
+          cache-dependency-path: aerospace/hm-openaerostruct/poetry.lock
+      - name: Install dependencies
+        working-directory: aerospace/hm-openaerostruct
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: aerospace/hm-openaerostruct
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.3.1
+        with:
+          directory: aerospace/hm-openaerostruct
 
   prefect-calculate-test:
     name: Prefect (calculate) | Test
