@@ -21,7 +21,7 @@ module "hm_amazon_eks_access_entry_iam" {
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
 module "eks" {
   source                         = "terraform-aws-modules/eks/aws"
-  version                        = "20.10.0"
+  version                        = "20.11.0"
   cluster_name                   = local.amazon_eks_cluster_name
   cluster_version                = "1.29"
   cluster_endpoint_public_access = false
