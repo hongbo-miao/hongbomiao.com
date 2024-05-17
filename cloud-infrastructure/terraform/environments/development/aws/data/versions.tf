@@ -13,7 +13,7 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/awscc/latest
     awscc = {
       source  = "hashicorp/awscc"
-      version = "0.76.0"
+      version = "0.77.0"
     }
   }
   required_version = ">= 1.8"
