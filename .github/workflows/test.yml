@@ -39,6 +39,7 @@ jobs:
       grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
+      hm-aerosandbox: ${{ steps.filter.outputs.hm-aerosandbox }}
       hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
       national-instruments-hm-ni-veristand: ${{ steps.filter.outputs.national-instruments-hm-ni-veristand }}
@@ -151,6 +152,9 @@ jobs:
             graph-neural-network:
               - '.github/workflows/test.yml'
               - 'machine-learning/graph-neural-network/**'
+            hm-aerosandbox:
+              - '.github/workflows/test.yml'
+              - 'data-orchestration/hm-aerosandbox/**'
             hm-airflow:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-airflow/**'
@@ -1640,6 +1644,38 @@ jobs:
         uses: codecov/codecov-action@v4.4.0
         with:
           directory: computer-vision/hm-open3d
+
+  aerosandbox-test:
+    name: AeroSandbox | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.6
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version-file: aerospace/hm-aerosandbox/pyproject.toml
+          cache: poetry
+          cache-dependency-path: aerospace/hm-aerosandbox/poetry.lock
+      - name: Install dependencies
+        working-directory: aerospace/hm-aerosandbox
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: aerospace/hm-aerosandbox
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.4.0
+        with:
+          directory: aerospace/hm-aerosandbox
 
   openaerostruct-test:
     name: OpenAeroStruct | Test

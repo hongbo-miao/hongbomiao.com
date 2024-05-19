@@ -525,6 +525,7 @@ make kubernetes-clean
 - **PX4** - Flight control software
 - **CubeSat** - Miniaturized satellite
 - **QGroundControl** - Ground control station (GCS) for unmanned aerial vehicles (UAVs)
+- **AeroSandbox** - Aircraft design and optimization
 - **OpenAeroStruct** - Aerostructural optimization
 - **OpenMDAO** - Multidisciplinary analysis and optimization
 
@@ -757,6 +758,10 @@ OpenFOAM simulation results viewed by ParaView.
 ### SimScale - Computational Fluid Dynamics (CFD), Finite Element Analysis (FEA), Thermal Simulation
 
 ![SimScale screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/953ec6ed-201e-4e59-bb43-f77c385d4054)
+
+### AeroSandbox - Aircraft Design and Optimization
+
+![AeroSandbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b64356f4-fc8a-4fa8-9b8a-b752f5570b32)
 
 ### MATLAB
 
