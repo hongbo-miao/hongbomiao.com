@@ -3,9 +3,11 @@ rclone-config:
 	rclone config
 rclone-config-show-path:
 	rclone config file
-rclone-config-show-content:
+rclone-config-show-full-content:
 	# cat ~/.config/rclone/rclone.conf
 	rclone config show
+rclone-config-show-redacted-content:
+	rclone config redacted
 rclone-config-create-sftp:
 	rclone config create hm-ubuntu sftp user=parallels host=10.211.55.4 port=22 key_file=~/.ssh/id_ed25519
 rclone-config-create-s3:
