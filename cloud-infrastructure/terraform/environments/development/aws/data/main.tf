@@ -41,14 +41,14 @@ module "eks" {
   control_plane_subnet_ids = ["subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx"]
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
-    instance_types = ["m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
+    instance_types = ["m7i.large", "m7g.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
   }
   eks_managed_node_groups = {
     hm_node_group = {
       min_size       = 1
       max_size       = 10
       desired_size   = 1
-      instance_types = ["t3.large"]
+      instance_types = ["t3a.large"]
       capacity_type  = "SPOT"
     }
   }
