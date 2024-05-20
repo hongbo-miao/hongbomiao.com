@@ -57,10 +57,12 @@ convert-svg-to-png:
 	rsvg-convert Architecture.svg > Architecture.png
 
 # Ruby
+ruby-build-upgrade:
+	brew upgrade ruby-build
 rbenv-list-latest-stable-versions:
 	rbenv install -l
 rbenv-install:
-	rbenv install 3.2.1
+	rbenv install 3.3.1
 
 bundle-init:
 	bundle init
