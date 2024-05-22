@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 database_name="iot_db"
 source="motor"
