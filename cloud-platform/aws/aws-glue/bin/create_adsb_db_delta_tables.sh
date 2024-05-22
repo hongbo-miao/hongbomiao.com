@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 database_name="adsb_db"
 source="adsb_2x_flight_trace"
