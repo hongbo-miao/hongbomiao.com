@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+set -e
 
-cd ~/.ssh || exit
+cd ~/.ssh
 
 # Development
 openssl genrsa 4096 | openssl pkcs8 -topk8 -inform PEM -out snowflake_development_hm_kafka_db_product_read_write_user_key.p8
