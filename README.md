@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/64810482-3000-4694-bc93-3d7b9f6bc305)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b6ba7ded-eb19-411d-8543-5e3bf44ed662)
 
 # 📦 Setup
 
@@ -342,7 +342,8 @@ make kubernetes-clean
 - **Feast** - Feature store
 - **Kubeflow** - Machine learning platform
 - **MLflow** - Machine learning experiment tracking
-- **[Weights & Biases](https://wandb.ai/hongbo-miao/graph-neural-network/sweeps/p0fgtvcf)** - Machine learning experiment tracking
+- **Weights & Biases** - Machine learning experiment tracking
+- **Triton Inference Server** - Inference server
 
 ## Computer Vision
 
