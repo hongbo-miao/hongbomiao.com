@@ -45,8 +45,8 @@ resource "aws_iam_role_policy" "hm_amazon_emr_studio_iam_role_s3_policy" {
           "s3:PutObject"
         ]
         Resource = [
-          "arn:aws:s3:::${var.s3_bucket}",
-          "arn:aws:s3:::${var.s3_bucket}/*"
+          "arn:aws:s3:::${var.s3_bucket_name}",
+          "arn:aws:s3:::${var.s3_bucket_name}/*"
         ]
       },
       {
