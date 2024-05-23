@@ -1,7 +1,4 @@
-variable "amazon_emr_studio_name" {
-  type = string
-}
-variable "s3_bucket_name" {
+variable "amazon_sagemaker_notebook_instance_name" {
   type = string
 }
 variable "environment" {
