@@ -241,7 +241,7 @@ module "development_hm_sedona_emr_studio_iam" {
   providers              = { aws = aws.development }
   source                 = "../../../../modules/aws/hm_amazon_emr_studio_iam"
   amazon_emr_studio_name = "hm-sedona-emr-studio"
-  s3_bucket              = data.terraform_remote_state.hm_terraform_remote_state_development_aws_network.outputs.development_hm_development_bucket_amazon_s3_bucket_name
+  s3_bucket_name         = data.terraform_remote_state.hm_terraform_remote_state_development_aws_network.outputs.development_hm_development_bucket_amazon_s3_bucket_name
   environment            = var.environment
   team                   = var.team
 }
@@ -530,4 +530,25 @@ module "development_hm_aws_batch_job_definition" {
   depends_on = [
     module.development_hm_aws_batch_job_definition_iam
   ]
+}
+
+# Amazon SageMaker
+locals {
+  amazon_sagemaker_notebook_instance_name = "hm-amazon-sagemaker-notebook"
+}
+module "development_hm_amazon_sagemaker_notebook_instance_iam" {
+  providers                               = { aws = aws.development }
+  source                                  = "../../../../modules/aws/hm_amazon_sagemaker_notebook_instance_iam"
+  amazon_sagemaker_notebook_instance_name = local.amazon_sagemaker_notebook_instance_name
+  environment                             = var.environment
+  team                                    = var.team
+}
+module "development_hm_amazon_sagemaker_notebook_instance" {
+  providers                               = { aws = aws.development }
+  source                                  = "../../../../modules/aws/hm_amazon_sagemaker_notebook_instance"
+  amazon_sagemaker_notebook_instance_name = local.amazon_sagemaker_notebook_instance_name
+  iam_role_arn                            = module.development_hm_amazon_sagemaker_notebook_instance_iam.arn
+  instance_type                           = "ml.g4dn.4xlarge"
+  environment                             = var.environment
+  team                                    = var.team
 }
