@@ -28,5 +28,4 @@ docker run \
   --rm \
   --network=host \
   "nvcr.io/nvidia/tritonserver:${TRITON_SERVER_VERSION}-py3-sdk"
-#
 # /workspace/install/bin/image_client -m densenet_onnx -c 3 -s INCEPTION /workspace/images/mug.jpg

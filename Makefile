@@ -302,6 +302,8 @@ lint-yaml:
 
 # Static type check
 static-type-check-python:
+	poetry run poe static-type-check-python -- --package=aerospace.hm-aerosandbox
+	poetry run poe static-type-check-python -- --package=aerospace.hm-openaerostruct
 	poetry run poe static-type-check-python -- --package=api-python
 	poetry run poe static-type-check-python -- --package=authorization.hm-opal-client
 	poetry run poe static-type-check-python -- --package=cloud-computing.hm-ray.applications.greet
@@ -348,6 +350,7 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=machine-learning.hugging-face
 	poetry run poe static-type-check-python -- --package=machine-learning.neural-forecasting.forecast-air-passenger-number
 	poetry run poe static-type-check-python -- --package=machine-learning.reinforcement-learning.cart-pole
+	poetry run poe static-type-check-python -- --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.client
 	poetry run poe static-type-check-python -- --package=quantum-computing
 static-type-check-terraform:
 	cd cloud-infrastructure/terraform/environments/development/aws && terraform validate
