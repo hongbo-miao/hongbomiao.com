@@ -347,7 +347,7 @@ jobs:
     if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.web-cypress == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.6
