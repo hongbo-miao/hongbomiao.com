@@ -9,8 +9,8 @@ from utils.predict_by_tensorrt_model import predict_by_tensorrt_model
 
 def main() -> None:
     image_path = Path("data/dog.jpg")
-    sagemaker_client = boto3.client("sagemaker-runtime")
-    endpoint_name = "resnet50-mme-gpu-ep-2024-05-25-05-40-24"
+    sagemaker_runtime_client = boto3.client("sagemaker-runtime")
+    endpoint_name = "resnet-50-endpoint"
 
     # TensorRT
     input_name = "input"
@@ -19,7 +19,7 @@ def main() -> None:
         image_path, input_name, output_name
     )
     result = predict_by_tensorrt_model(
-        sagemaker_client, endpoint_name, request_body, header_length
+        sagemaker_runtime_client, endpoint_name, request_body, header_length
     )
     logging.info(result.as_numpy(output_name))
 
@@ -30,9 +30,8 @@ def main() -> None:
         image_path, input_name, output_name
     )
     result = predict_by_pytorch_model(
-        sagemaker_client, endpoint_name, request_body, header_length
+        sagemaker_runtime_client, endpoint_name, request_body, header_length
     )
-    print(type(result))
     logging.info(result.as_numpy(output_name))
 
 
