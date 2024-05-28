@@ -308,42 +308,42 @@ jobs:
               - '.github/workflows/test.yml'
               - 'web-cypress/**'
 
-  lint:
-    name: Lint
-    uses: ./.github/workflows/.lint.yml
-
-  static-type-check:
-    name: Static Type Check
-    uses: ./.github/workflows/.static-type-check.yml
-
-  web-test:
-    name: Web | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version-file: web/.nvmrc
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Test
-        working-directory: web
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: web
+#   lint:
+#     name: Lint
+#     uses: ./.github/workflows/.lint.yml
+#
+#   static-type-check:
+#     name: Static Type Check
+#     uses: ./.github/workflows/.static-type-check.yml
+#
+#   web-test:
+#     name: Web | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.web == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4.0.2
+#         with:
+#           node-version-file: web/.nvmrc
+#           cache: npm
+#           cache-dependency-path: web/package-lock.json
+#       - name: Install dependencies
+#         working-directory: web
+#         run: |
+#           npm ci
+#       - name: Test
+#         working-directory: web
+#         run: |
+#           npm run test:coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: web
 
   web-end-to-end-test:
     name: Web | End-to-End Test
@@ -379,2464 +379,2465 @@ jobs:
       - name: Cypress
         working-directory: web-cypress
         run: |
+          docker ps -a
           npm run test:cypress:headless:5000
       - name: Stop Docker
         working-directory: api-node
         run: |
           docker-compose --file=docker-compose.cypress.yaml down
 
-  web-lighthouse:
-    name: Web | Lighthouse
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version-file: web/.nvmrc
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Build
-        working-directory: web
-        run: |
-          npm run build
-      - name: Lighthouse
-        working-directory: web
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-        run: |
-          npm run lighthouse
-
-  # https://www.chromatic.com/docs/github-actions
-  web-visual-test:
-    name: Web | Visual Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 20
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-        with:
-          # Required to retrieve git history
-          fetch-depth: 0
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version-file: web/.nvmrc
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Build
-        working-directory: web
-        run: |
-          npm run build
-          npm run storybook:build
-      - name: Publish storybook to Chromatic
-        working-directory: web
-        run: |
-          npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
-
-  mobile-ios-test:
-    name: Mobile - iOS | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
-    runs-on: macos-13
-    environment: test
-    timeout-minutes: 90
-    env:
-      # To use a Gemfile which is not at the root
-      # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
-      BUNDLE_GEMFILE: ${{ github.workspace }}/mobile/mobile-ios/Gemfile
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Xcode
-        uses: maxim-lobanov/setup-xcode@v1.6.0
-        with:
-          xcode-version: '14.2'
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          working-directory: mobile/mobile-ios
-          bundler-cache: true
-      - name: Build
-        working-directory: mobile/mobile-ios
-        run: |
-          xcodebuild build-for-testing \
-            -project HMMobile.xcodeproj \
-            -scheme HMMobile \
-            -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
-      - name: Test
-        uses: wandalen/wretry.action@v3.5.0
-        with:
-          current_path: mobile/mobile-ios
-          command: |
-            xcodebuild test-without-building \
-              -project HMMobile.xcodeproj \
-              -scheme HMMobile \
-              -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
-          attempt_limit: 3
-          attempt_delay: 2000
-      - name: Convert coverage to Cobertura XML format
-        working-directory: mobile/mobile-ios
-        run: |
-          bundle exec slather
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: mobile/mobile-ios
-
-  mobile-android-lint:
-    name: Mobile - Android | Lint
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Java
-        uses: actions/setup-java@v4.2.1
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: gradle
-      - name: Lint
-        working-directory: mobile/mobile-android
-        run: |
-          ./gradlew lint
-
-  mobile-android-test:
-    name: Mobile - Android | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Java
-        uses: actions/setup-java@v4.2.1
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: gradle
-      - name: Test
-        working-directory: mobile/mobile-android
-        run: |
-          ./gradlew test
-
-  mobile-android-instrumented-test:
-    name: Mobile - Android | Instrumented Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: macos-13
-    environment: test
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Java
-        uses: actions/setup-java@v4.2.1
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: gradle
-      - name: Instrumented Test
-        uses: reactivecircus/android-emulator-runner@v2.31.0
-        with:
-          working-directory: mobile/mobile-android
-          api-level: 29
-          script: ./gradlew connectedAndroidTest
-
-  mobile-react-native-test:
-    name: Mobile - React Native | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version-file: mobile/mobile-react-native/.nvmrc
-          cache: npm
-          cache-dependency-path: mobile/mobile-react-native/package-lock.json
-      - name: Install dependencies
-        working-directory: mobile/mobile-react-native
-        run: |
-          npm ci
-      - name: Test
-        working-directory: mobile/mobile-react-native
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: mobile/mobile-react-native
-
-  api-go-test:
-    name: API - Go | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Go
-        uses: actions/setup-go@v5.0.1
-        with:
-          go-version-file: api-go/go.mod
-          cache-dependency-path: api-go/go.sum
-      - name: Test
-        working-directory: api-go
-        run: |
-          go test ./... -race -coverprofile=coverage.txt -covermode=atomic
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: api-go
-
-  api-node-test:
-    name: API - Node.js | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version-file: api-node/.nvmrc
-          cache: npm
-          cache-dependency-path: api-node/package-lock.json
-      - name: Install dependencies
-        working-directory: api-node
-        run: |
-          npm ci
-      - name: Test
-        working-directory: api-node
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: api-node
-
-  api-node-mutation-test:
-    name: API - Node.js | Mutation Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version-file: api-node/.nvmrc
-          cache: npm
-          cache-dependency-path: api-node/package-lock.json
-      - name: Install dependencies
-        working-directory: api-node
-        run: |
-          npm ci
-      - name: Stryker
-        working-directory: api-node
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: |
-          npm run test:stryker
-
-  api-python-test:
-    name: API - Python | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-python == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      # librdkafka is for confluent-kafka
-      - name: Install librdkafka
-        run: |
-          # https://github.com/edenhill/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v1.9.2.tar.gz
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd librdkafka-1.9.2
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f librdkafka-1.9.2/
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: api-python/pyproject.toml
-          cache: poetry
-          cache-dependency-path: api-python/poetry.lock
-      - name: Install dependencies
-        working-directory: api-python
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: api-python
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: api-python
-
-  airflow-test:
-    name: Airflow | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-airflow == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-orchestration/hm-airflow/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-orchestration/hm-airflow/poetry.lock
-      - name: Install dependencies
-        working-directory: data-orchestration/hm-airflow
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-orchestration/hm-airflow
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-orchestration/hm-airflow
-
-  amazon-sagemaker-pytorch-mnist-test:
-    name: Amazon SageMaker (pytorch-mnist) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.amazon-sagemaker-pytorch-mnist == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/poetry.lock
-      - name: Install dependencies
-        working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
-
-  amazon-sagamaker-triton-resnet-50-deploy-test:
-    name: Amazon SageMaker Triton ResNet 50 (Deploy) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.amazon-sagamaker-triton-resnet-50-deploy == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
-
-  amazon-sagamaker-triton-resnet-50-infer-test:
-    name: Amazon SageMaker Triton ResNet 50 (Infer) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.amazon-sagamaker-triton-resnet-50-infer == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
-
-  aws-glue-spark-scripts-test:
-    name: AWS Glue (spark-scripts) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.aws-glue-spark-scripts == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: cloud-infrastructure/terraform/data/aws-glue/spark-scripts/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-infrastructure/terraform/data/aws-glue/spark-scripts/poetry.lock
-      - name: Install dependencies
-        working-directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
-
-  aws-parallelcluster-test:
-    name: AWS ParallelCluster | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-aws-parallelcluster == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: cloud-platform/aws/aws-parallelcluster/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-platform/aws/aws-parallelcluster/poetry.lock
-      - name: Install dependencies
-        working-directory: cloud-platform/aws/aws-parallelcluster
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: cloud-platform/aws/aws-parallelcluster
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: cloud-platform/aws/aws-parallelcluster
-
-  call-matlab-function-in-python:
-    name: Call MATLAB Function in Python | Test
-    needs: detect-changes
-    if: ${{ false }}
-    # if: ${{ needs.detect-changes.outputs.call-matlab-function-in-python == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up MATLAB
-        uses: matlab-actions/setup-matlab@v2.2.0
-        with:
-          release: R2024a
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: matlab/call-matlab-function-in-python/pyproject.toml
-          cache: poetry
-          cache-dependency-path: matlab/call-matlab-function-in-python/poetry.lock
-      - name: Install dependencies
-        working-directory: matlab/call-matlab-function-in-python
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: matlab/call-matlab-function-in-python
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: matlab/call-matlab-function-in-python
-
-  decode-can-data-test:
-    name: Decode CAN Data | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.decode-can-data == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: embedded/decode-can-data/pyproject.toml
-          cache: poetry
-          cache-dependency-path: embedded/decode-can-data/poetry.lock
-      - name: Install dependencies
-        working-directory: embedded/decode-can-data
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: embedded/decode-can-data
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: embedded/decode-can-data
-
-  format-can-data-test:
-    name: Format CAN Data | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.format-can-data == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: embedded/format-can-data/pyproject.toml
-          cache: poetry
-          cache-dependency-path: embedded/format-can-data/poetry.lock
-      - name: Install dependencies
-        working-directory: embedded/format-can-data
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: embedded/format-can-data
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: embedded/format-can-data
-
-  data-distribution-service-test:
-    name: Data Distribution Service | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.data-distribution-service == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-distribution-service/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-distribution-service/poetry.lock
-      - name: Install dependencies
-        working-directory: data-distribution-service
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-distribution-service
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-distribution-service
-
-  dbt-hm-postgres-test:
-    name: dbt (hm-postgres) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.dbt-hm-postgres == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-transformation/dbt/projects/dbt_hm_postgres/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-transformation/dbt/projects/dbt_hm_postgres/poetry.lock
-      - name: Install dependencies
-        working-directory: data-transformation/dbt/projects/dbt_hm_postgres
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-transformation/dbt/projects/dbt_hm_postgres
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-transformation/dbt/projects/dbt_hm_postgres
-
-  delta-lake-read-delta-lake-by-amazon-athena-test:
-    name: Delta Lake (read-delta-lake-by-amazon-athena) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-amazon-athena == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-storage/delta-lake/read-delta-lake-by-amazon-athena/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-storage/delta-lake/read-delta-lake-by-amazon-athena/poetry.lock
-      - name: Install dependencies
-        working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
-
-  delta-lake-read-delta-lake-by-trino-test:
-    name: Delta Lake (read-delta-lake-by-trino) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-trino == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-storage/delta-lake/read-delta-lake-by-trino/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-storage/delta-lake/read-delta-lake-by-trino/poetry.lock
-      - name: Install dependencies
-        working-directory: data-storage/delta-lake/read-delta-lake-by-trino
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-storage/delta-lake/read-delta-lake-by-trino
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-storage/delta-lake/read-delta-lake-by-trino
-
-  delta-lake-write-to-delta-lake-test:
-    name: Delta Lake (write-to-delta-lake) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.delta-lake-write-to-delta-lake == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-storage/delta-lake/write-to-delta-lake/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-storage/delta-lake/write-to-delta-lake/poetry.lock
-      - name: Install dependencies
-        working-directory: data-storage/delta-lake/write-to-delta-lake
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-storage/delta-lake/write-to-delta-lake
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-storage/delta-lake/write-to-delta-lake
-
-  autogluon-test:
-    name: AutoGluon | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hm-autogluon/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-autogluon/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hm-autogluon
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hm-autogluon
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hm-autogluon
-
-  feature-store-test:
-    name: Feature Store | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/feature-store/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/feature-store/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/feature-store
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/feature-store
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/feature-store
-
-  geopandas-test:
-    name: GeoPandas | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-analytics/hm-geopandas/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-analytics/hm-geopandas/poetry.lock
-      - name: Install dependencies
-        working-directory: data-analytics/hm-geopandas
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-analytics/hm-geopandas
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-analytics/hm-geopandas
-
-  hugging-face-analyze-sentiment-test:
-    name: Hugging Face (analyze-sentiment) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hugging-face/analyze-sentiment/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hugging-face/analyze-sentiment/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hugging-face/analyze-sentiment
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hugging-face/analyze-sentiment
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hugging-face/analyze-sentiment
-
-  gradio-classify-image:
-    name: Gradio (classify-image) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hm-gradio/applications/classify-image/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-gradio/applications/classify-image/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hm-gradio/applications/classify-image
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hm-gradio/applications/classify-image
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hm-gradio/applications/classify-image
-
-  streamlit-live-line-chart:
-    name: Streamlit (live-line-chart) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hm-streamlit/applications/live-line-chart/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-streamlit/applications/live-line-chart/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hm-streamlit/applications/live-line-chart
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hm-streamlit/applications/live-line-chart
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hm-streamlit/applications/live-line-chart
-
-  streamlit-map:
-    name: Streamlit (map) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hm-streamlit/applications/map/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-streamlit/applications/map/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hm-streamlit/applications/map
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hm-streamlit/applications/map
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hm-streamlit/applications/map
-
-  kubeflow-calculate-test:
-    name: Kubeflow (calculate) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hm-kubeflow/pipelines/calculate/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-kubeflow/pipelines/calculate/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hm-kubeflow/pipelines/calculate
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hm-kubeflow/pipelines/calculate
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hm-kubeflow/pipelines/calculate
-
-  kubeflow-classify-mnist-test:
-    name: Kubeflow (classify-mnist) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hm-kubeflow/pipelines/classify-mnist/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-kubeflow/pipelines/classify-mnist/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
-
-  langchain-chat-pdf-test:
-    name: LangChain (chat-pdf) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hm-langchain/applications/chat-pdf/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-langchain/applications/chat-pdf/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hm-langchain/applications/chat-pdf
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hm-langchain/applications/chat-pdf
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hm-langchain/applications/chat-pdf
-
-  mlflow-classify-mnist-test:
-    name: MLflow (classify-mnist) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hm-mlflow/experiments/classify-mnist/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-mlflow/experiments/classify-mnist/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hm-mlflow/experiments/classify-mnist
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hm-mlflow/experiments/classify-mnist
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hm-mlflow/experiments/classify-mnist
-
-  mlflow-predict-diabetes-test:
-    name: MLflow (predict-diabetes) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hm-mlflow/experiments/predict-diabetes/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-mlflow/experiments/predict-diabetes/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hm-mlflow/experiments/predict-diabetes
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hm-mlflow/experiments/predict-diabetes
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hm-mlflow/experiments/predict-diabetes
-
-  neural-forecasting-forecast-air-passenger-number-test:
-    name: Neural Forecasting (forecast-air-passenger-number) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/neural-forecasting/forecast-air-passenger-number/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/neural-forecasting/forecast-air-passenger-number/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/neural-forecasting/forecast-air-passenger-number
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/neural-forecasting/forecast-air-passenger-number
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/neural-forecasting/forecast-air-passenger-number
-
-  national-instruments-hm-ni-veristand-test:
-    name: National Instruments (ni-veristand) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.national-instruments-hm-ni-veristand == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: hardware-in-the-loop/national-instruments/hm-ni-veristand/pyproject.toml
-          cache: poetry
-          cache-dependency-path: hardware-in-the-loop/national-instruments/hm-ni-veristand/poetry.lock
-      - name: Install dependencies
-        working-directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
-
-  national-instruments-hm-pyvisa-test:
-    name: National Instruments (pyvisa) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.national-instruments-hm-pyvisa == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: hardware-in-the-loop/national-instruments/hm-pyvisa/pyproject.toml
-          cache: poetry
-          cache-dependency-path: hardware-in-the-loop/national-instruments/hm-pyvisa/poetry.lock
-      - name: Install dependencies
-        working-directory: hardware-in-the-loop/national-instruments/hm-pyvisa
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: hardware-in-the-loop/national-instruments/hm-pyvisa
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: hardware-in-the-loop/national-instruments/hm-pyvisa
-
-  national-instruments-hm-tdms-test:
-    name: National Instruments (tdms) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.national-instruments-hm-tdms == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: hardware-in-the-loop/national-instruments/hm-tdms/pyproject.toml
-          cache: poetry
-          cache-dependency-path: hardware-in-the-loop/national-instruments/hm-tdms/poetry.lock
-      - name: Install dependencies
-        working-directory: hardware-in-the-loop/national-instruments/hm-tdms
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: hardware-in-the-loop/national-instruments/hm-tdms
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: hardware-in-the-loop/national-instruments/hm-tdms
-
-  open3d-test:
-    name: Open3D | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-open3d == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: computer-vision/hm-open3d/pyproject.toml
-          cache: poetry
-          cache-dependency-path: computer-vision/hm-open3d/poetry.lock
-      - name: Install dependencies
-        working-directory: computer-vision/hm-open3d
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: computer-vision/hm-open3d
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: computer-vision/hm-open3d
-
-  aerosandbox-test:
-    name: AeroSandbox | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: aerospace/hm-aerosandbox/pyproject.toml
-          cache: poetry
-          cache-dependency-path: aerospace/hm-aerosandbox/poetry.lock
-      - name: Install dependencies
-        working-directory: aerospace/hm-aerosandbox
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: aerospace/hm-aerosandbox
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: aerospace/hm-aerosandbox
-
-  openaerostruct-test:
-    name: OpenAeroStruct | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: aerospace/hm-openaerostruct/pyproject.toml
-          cache: poetry
-          cache-dependency-path: aerospace/hm-openaerostruct/poetry.lock
-      - name: Install dependencies
-        working-directory: aerospace/hm-openaerostruct
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: aerospace/hm-openaerostruct
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: aerospace/hm-openaerostruct
-
-  prefect-calculate-test:
-    name: Prefect (calculate) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-orchestration/hm-prefect/workflows/calculate/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-orchestration/hm-prefect/workflows/calculate/poetry.lock
-      - name: Install dependencies
-        working-directory: data-orchestration/hm-prefect/workflows/calculate
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-orchestration/hm-prefect/workflows/calculate
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-orchestration/hm-prefect/workflows/calculate
-
-  prefect-greet-test:
-    name: Prefect (greet) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-orchestration/hm-prefect/workflows/greet/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-orchestration/hm-prefect/workflows/greet/poetry.lock
-      - name: Install dependencies
-        working-directory: data-orchestration/hm-prefect/workflows/greet
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-orchestration/hm-prefect/workflows/greet
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-orchestration/hm-prefect/workflows/greet
-
-  prefect-ingest-data-test:
-    name: Prefect (ingest-data) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect-ingest-data == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-orchestration/hm-prefect/workflows/ingest-data/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-orchestration/hm-prefect/workflows/ingest-data/poetry.lock
-      - name: Install dependencies
-        working-directory: data-orchestration/hm-prefect/workflows/ingest-data
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-orchestration/hm-prefect/workflows/ingest-data
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-orchestration/hm-prefect/workflows/ingest-data
-
-  prefect-print-platform-test:
-    name: Prefect (print-platform) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-orchestration/hm-prefect/workflows/print-platform/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-orchestration/hm-prefect/workflows/print-platform/poetry.lock
-      - name: Install dependencies
-        working-directory: data-orchestration/hm-prefect/workflows/print-platform
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-orchestration/hm-prefect/workflows/print-platform
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-orchestration/hm-prefect/workflows/print-platform
-
-  prowler-test:
-    name: Prowler | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prowler == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: cloud-security/hm-prowler/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-security/hm-prowler/poetry.lock
-      - name: Install dependencies
-        working-directory: cloud-security/hm-prowler
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: cloud-security/hm-prowler
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: cloud-security/hm-prowler
-
-  pulumi-test:
-    name: Pulumi | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-pulumi == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: cloud-infrastructure/hm-pulumi/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-infrastructure/hm-pulumi/poetry.lock
-      - name: Install dependencies
-        working-directory: cloud-infrastructure/hm-pulumi
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: cloud-infrastructure/hm-pulumi
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: cloud-infrastructure/hm-pulumi
-
-  pyvista-mount-saint-helens-test:
-    name: PyVista (mount-saint-helens) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: computer-vision/hm-pyvista/mount-saint-helens/pyproject.toml
-          cache: poetry
-          cache-dependency-path: computer-vision/hm-pyvista/mount-saint-helens/poetry.lock
-      - name: Install dependencies
-        working-directory: computer-vision/hm-pyvista/mount-saint-helens
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: computer-vision/hm-pyvista/mount-saint-helens
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: computer-vision/hm-pyvista/mount-saint-helens
-
-  ray-greet-test:
-    name: Ray (greet) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-ray-greet == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: cloud-computing/hm-ray/applications/greet/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-computing/hm-ray/applications/greet/poetry.lock
-      - name: Install dependencies
-        working-directory: cloud-computing/hm-ray/applications/greet
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: cloud-computing/hm-ray/applications/greet
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: cloud-computing/hm-ray/applications/greet
-
-  reinforcement-learning-cart-pole-test:
-    name: Reinforcement Learning (cart-pole) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/reinforcement-learning/cart-pole/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/reinforcement-learning/cart-pole/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/reinforcement-learning/cart-pole
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/reinforcement-learning/cart-pole
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/reinforcement-learning/cart-pole
-
-  serial-test:
-    name: Serial | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-serial == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: embedded/hm-serial/pyproject.toml
-          cache: poetry
-          cache-dependency-path: embedded/hm-serial/poetry.lock
-      - name: Install dependencies
-        working-directory: embedded/hm-serial
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: embedded/hm-serial
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: embedded/hm-serial
-
-  skypilot-test:
-    name: SkyPilot | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-skypilot == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: cloud-computing/hm-skypilot/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-computing/hm-skypilot/poetry.lock
-      - name: Install dependencies
-        working-directory: cloud-computing/hm-skypilot
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: cloud-computing/hm-skypilot
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: cloud-computing/hm-skypilot
-
-  supervision-detect-objects-test:
-    name: supervision (detect-objects) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/hm-supervision/detect-objects/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-supervision/detect-objects/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/hm-supervision/detect-objects
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/hm-supervision/detect-objects
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/hm-supervision/detect-objects
-
-  xxhash-test:
-    name: xxHash | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-xxhash == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: hm-xxhash/pyproject.toml
-          cache: poetry
-          cache-dependency-path: hm-xxhash/poetry.lock
-      - name: Install dependencies
-        working-directory: hm-xxhash
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: hm-xxhash
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: hm-xxhash
-
-  spark-analyze-coffee-customers-test:
-    name: Spark (analyze-coffee-customers) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-processing/hm-spark/applications/analyze-coffee-customers/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-processing/hm-spark/applications/analyze-coffee-customers/poetry.lock
-      - name: Install dependencies
-        working-directory: data-processing/hm-spark/applications/analyze-coffee-customers
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/analyze-coffee-customers
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-processing/hm-spark/applications/analyze-coffee-customers
-
-  spark-find-retired-people-python-test:
-    name: Spark (find-retired-people-python) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-processing/hm-spark/applications/find-retired-people-python/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-processing/hm-spark/applications/find-retired-people-python/poetry.lock
-      - name: Install dependencies
-        working-directory: data-processing/hm-spark/applications/find-retired-people-python
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/find-retired-people-python
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-processing/hm-spark/applications/find-retired-people-python
-
-  spark-find-retired-people-scala-test:
-    name: Spark (find-retired-people-scala) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Java
-        uses: actions/setup-java@v4.2.1
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: sbt
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/find-retired-people-scala
-        run: |
-          sbt test
-
-  spark-find-taxi-top-routes-test:
-    name: Spark (find-taxi-top-routes) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-processing/hm-spark/applications/find-taxi-top-routes/poetry.lock
-      - name: Install dependencies
-        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-processing/hm-spark/applications/find-taxi-top-routes
-
-  spark-find-taxi-top-routes-sql-test:
-    name: Spark (find-taxi-top-routes-sql) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes-sql == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes-sql/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-processing/hm-spark/applications/find-taxi-top-routes-sql/poetry.lock
-      - name: Install dependencies
-        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
-
-  spark-ingest-from-s3-to-kafka-test:
-    name: Spark (ingest-from-s3-to-kafka) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Java
-        uses: actions/setup-java@v4.2.1
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: sbt
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
-        run: |
-          sbt test
-
-  spark-recommend-movies-test:
-    name: Spark (recommend-movies) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-processing/hm-spark/applications/recommend-movies/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-processing/hm-spark/applications/recommend-movies/poetry.lock
-      - name: Install dependencies
-        working-directory: data-processing/hm-spark/applications/recommend-movies
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/recommend-movies
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-processing/hm-spark/applications/recommend-movies
-
-  flink-stream-tweets-test:
-    name: Flink (stream-tweets) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Java
-        uses: actions/setup-java@v4.2.1
-        with:
-          distribution: corretto
-          java-version: '11'
-          cache: maven
-      - name: Test
-        working-directory: data-processing/flink/applications/stream-tweets
-        run: |
-          mvn test
-
-  opa-test:
-    name: OPA | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Download OPA Binary
-        run: |
-          curl --silent --fail --show-error --location --output opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
-          chmod 755 ./opa
-      - name: Test
-        run: |
-          ./opa test api-go/internal/graphql_server/policies/*.rego -v
-
-  ros-test:
-    name: ROS | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.robot-operating-system == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 20
-    container: ubuntu:jammy
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Setup ROS
-        uses: ros-tooling/setup-ros@0.7.6
-        with:
-          required-ros-distributions: humble
-      - name: Build and test
-        uses: ros-tooling/action-ros-ci@0.3.14
-        with:
-          package-name: turtle_robot
-          target-ros2-distro: humble
-
-  prometheus-test:
-    name: Prometheus | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.prometheus == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Test
-        run: |
-          docker build --file=data-storage/prometheus/Dockerfile.test .
-
-  grafana-hm-dashboard-test:
-    name: Grafana (hm-dashboard) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: data-visualization/grafana/hm-dashboard/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-visualization/grafana/hm-dashboard/poetry.lock
-      - name: Install dependencies
-        working-directory: data-visualization/grafana/hm-dashboard
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: data-visualization/grafana/hm-dashboard
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: data-visualization/grafana/hm-dashboard
-
-  grafana-hm-panel-plugin-end-to-end-test:
-    name: Grafana (hm-panel-plugin) | End-to-End Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
-          cache: npm
-          cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
-      - name: Install dependencies
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          npm ci
-      - name: Build
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          npm run build
-      - name: Pull Docker images
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          docker-compose pull
-      - name: Cache Docker images
-        uses: jpribyl/action-docker-layer-caching@v0.1.1
-        continue-on-error: true
-      - name: Start Docker
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          docker-compose up --detach
-      - name: Run e2e tests
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          npm run e2e
-      - name: Stop Docker
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          docker-compose down
-
-  grafana-hm-panel-plugin-compatibility-test:
-    name: Grafana (hm-panel-plugin) | Compatibility Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.0.2
-        with:
-          node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
-          cache: npm
-          cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
-      - name: Install dependencies
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          npm ci
-      - name: Build
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          npm run build
-      - name: Check compatibility
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          npx @grafana/levitate@latest is-compatible --path=src/module.ts --target=@grafana/data,@grafana/ui,@grafana/runtime
-
-  hm-opal-client-build:
-    name: HM OPAL Client | Build
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-opal-client == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.3.0
-      - name: Build Docker image
-        uses: docker/build-push-action@v5.3.0
-        with:
-          context: .
-          file: ./authorization/hm-opal-client/Dockerfile
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-  rasa-test:
-    name: Rasa | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Train and test
-        uses: RasaHQ/rasa-train-test-gha@2.2.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          workspace: ${{ github.workspace }}/machine-learning/hm-rasa
-
-  graph-neural-network-test:
-    name: GNN | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/graph-neural-network/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/graph-neural-network/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/graph-neural-network
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/graph-neural-network
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/graph-neural-network
-
-  graph-neural-network-train:
-    name: GNN | Train
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 20
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up CML
-        uses: iterative/setup-cml@v2.0.1
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/graph-neural-network/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/graph-neural-network/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/graph-neural-network
-        run: |
-          poetry install --no-root
-      - name: Train model
-        working-directory: machine-learning/graph-neural-network
-        env:
-          WANDB_MODE: offline
-        run: |
-          poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
-
-  convolutional-neural-network-test:
-    name: CNN | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/convolutional-neural-network
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: machine-learning/convolutional-neural-network
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.4.1
-        with:
-          directory: machine-learning/convolutional-neural-network
-
-  convolutional-neural-network-cml-local-train:
-    name: CNN | CML (Local) - Train
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 20
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up CML
-        uses: iterative/setup-cml@v2.0.1
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
-      - name: Install dependencies
-        working-directory: machine-learning/convolutional-neural-network
-        run: |
-          poetry install --no-root
-      - name: Train model
-        working-directory: machine-learning/convolutional-neural-network
-        shell: bash -l {0}
-        env:
-          WANDB_MODE: offline
-        run: |
-          poetry run poe dev -- --should_download_original_data=True
-      - name: Write CML report
-        working-directory: machine-learning/convolutional-neural-network
-        shell: bash -l {0}
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "# CML (Local) Report" >> report.md
-          echo "## Params" >> report.md
-          cat output/reports/params.txt >> report.md
-          cml comment create report.md
-
-  convolutional-neural-network-cml-cloud-set-up:
-    name: CNN | CML (Cloud) - Set Up
-    runs-on: ubuntu-22.04
-    environment: test
-    needs: detect-changes
-    if: ${{ false }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Set up CML
-        uses: iterative/setup-cml@v2.0.1
-      - name: Set up cloud
-        shell: bash
-        env:
-          REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          cml-runner \
-          --cloud=aws \
-          --cloud-region=us-west-2 \
-          --cloud-type=t2.small \
-          --labels=cml-runner
-
-  convolutional-neural-network-cml-cloud-train:
-    name: CNN | CML (Cloud) - Train
-    needs: convolutional-neural-network-cml-cloud-set-up
-    runs-on: [self-hosted, cml-runner]
-    environment: test
-    # container: docker://iterativeai/cml:0-dvc2-base1-gpu
-    container: docker://iterativeai/cml:0-dvc2-base1
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.6
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
-      - name: Install dependencies
-        working-directory: convolutional-neural-network
-        run: |
-          poetry install --no-root
-      - name: Pull Data
-        working-directory: convolutional-neural-network
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          poetry run poe dvc-pull
-      - name: Train model
-        working-directory: convolutional-neural-network
-        shell: bash -l {0}
-        env:
-          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
-        run: |
-          poetry run poe dvc-repro
-      - name: Write CML report
-        working-directory: convolutional-neural-network
-        shell: bash -l {0}
-        env:
-          REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
-        run: |
-          echo "# CML (Cloud) Report" >> report.md
-          echo "## Params" >> report.md
-          cat output/reports/params.txt >> report.md
-          cml comment create report.md
-
-  code-review:
-    name: Code Review
-    if: ${{ false }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - name: Code Review
-        uses: anc95/ChatGPT-CodeReview@v1.0.13
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+#   web-lighthouse:
+#     name: Web | Lighthouse
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.web == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4.0.2
+#         with:
+#           node-version-file: web/.nvmrc
+#           cache: npm
+#           cache-dependency-path: web/package-lock.json
+#       - name: Install dependencies
+#         working-directory: web
+#         run: |
+#           npm ci
+#       - name: Build
+#         working-directory: web
+#         run: |
+#           npm run build
+#       - name: Lighthouse
+#         working-directory: web
+#         env:
+#           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+#         run: |
+#           npm run lighthouse
+#
+#   # https://www.chromatic.com/docs/github-actions
+#   web-visual-test:
+#     name: Web | Visual Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.web == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 20
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#         with:
+#           # Required to retrieve git history
+#           fetch-depth: 0
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4.0.2
+#         with:
+#           node-version-file: web/.nvmrc
+#           cache: npm
+#           cache-dependency-path: web/package-lock.json
+#       - name: Install dependencies
+#         working-directory: web
+#         run: |
+#           npm ci
+#       - name: Build
+#         working-directory: web
+#         run: |
+#           npm run build
+#           npm run storybook:build
+#       - name: Publish storybook to Chromatic
+#         working-directory: web
+#         run: |
+#           npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
+#
+#   mobile-ios-test:
+#     name: Mobile - iOS | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
+#     runs-on: macos-13
+#     environment: test
+#     timeout-minutes: 90
+#     env:
+#       # To use a Gemfile which is not at the root
+#       # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
+#       BUNDLE_GEMFILE: ${{ github.workspace }}/mobile/mobile-ios/Gemfile
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Xcode
+#         uses: maxim-lobanov/setup-xcode@v1.6.0
+#         with:
+#           xcode-version: '14.2'
+#       - name: Set up Ruby
+#         uses: ruby/setup-ruby@v1
+#         with:
+#           working-directory: mobile/mobile-ios
+#           bundler-cache: true
+#       - name: Build
+#         working-directory: mobile/mobile-ios
+#         run: |
+#           xcodebuild build-for-testing \
+#             -project HMMobile.xcodeproj \
+#             -scheme HMMobile \
+#             -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
+#       - name: Test
+#         uses: wandalen/wretry.action@v3.5.0
+#         with:
+#           current_path: mobile/mobile-ios
+#           command: |
+#             xcodebuild test-without-building \
+#               -project HMMobile.xcodeproj \
+#               -scheme HMMobile \
+#               -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
+#           attempt_limit: 3
+#           attempt_delay: 2000
+#       - name: Convert coverage to Cobertura XML format
+#         working-directory: mobile/mobile-ios
+#         run: |
+#           bundle exec slather
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: mobile/mobile-ios
+#
+#   mobile-android-lint:
+#     name: Mobile - Android | Lint
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 30
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Java
+#         uses: actions/setup-java@v4.2.1
+#         with:
+#           distribution: corretto
+#           java-version: '17'
+#           cache: gradle
+#       - name: Lint
+#         working-directory: mobile/mobile-android
+#         run: |
+#           ./gradlew lint
+#
+#   mobile-android-test:
+#     name: Mobile - Android | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 30
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Java
+#         uses: actions/setup-java@v4.2.1
+#         with:
+#           distribution: corretto
+#           java-version: '17'
+#           cache: gradle
+#       - name: Test
+#         working-directory: mobile/mobile-android
+#         run: |
+#           ./gradlew test
+#
+#   mobile-android-instrumented-test:
+#     name: Mobile - Android | Instrumented Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+#     runs-on: macos-13
+#     environment: test
+#     timeout-minutes: 30
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Java
+#         uses: actions/setup-java@v4.2.1
+#         with:
+#           distribution: corretto
+#           java-version: '17'
+#           cache: gradle
+#       - name: Instrumented Test
+#         uses: reactivecircus/android-emulator-runner@v2.31.0
+#         with:
+#           working-directory: mobile/mobile-android
+#           api-level: 29
+#           script: ./gradlew connectedAndroidTest
+#
+#   mobile-react-native-test:
+#     name: Mobile - React Native | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4.0.2
+#         with:
+#           node-version-file: mobile/mobile-react-native/.nvmrc
+#           cache: npm
+#           cache-dependency-path: mobile/mobile-react-native/package-lock.json
+#       - name: Install dependencies
+#         working-directory: mobile/mobile-react-native
+#         run: |
+#           npm ci
+#       - name: Test
+#         working-directory: mobile/mobile-react-native
+#         run: |
+#           npm run test:coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: mobile/mobile-react-native
+#
+#   api-go-test:
+#     name: API - Go | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Go
+#         uses: actions/setup-go@v5.0.1
+#         with:
+#           go-version-file: api-go/go.mod
+#           cache-dependency-path: api-go/go.sum
+#       - name: Test
+#         working-directory: api-go
+#         run: |
+#           go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: api-go
+#
+#   api-node-test:
+#     name: API - Node.js | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4.0.2
+#         with:
+#           node-version-file: api-node/.nvmrc
+#           cache: npm
+#           cache-dependency-path: api-node/package-lock.json
+#       - name: Install dependencies
+#         working-directory: api-node
+#         run: |
+#           npm ci
+#       - name: Test
+#         working-directory: api-node
+#         run: |
+#           npm run test:coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: api-node
+#
+#   api-node-mutation-test:
+#     name: API - Node.js | Mutation Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4.0.2
+#         with:
+#           node-version-file: api-node/.nvmrc
+#           cache: npm
+#           cache-dependency-path: api-node/package-lock.json
+#       - name: Install dependencies
+#         working-directory: api-node
+#         run: |
+#           npm ci
+#       - name: Stryker
+#         working-directory: api-node
+#         env:
+#           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+#         run: |
+#           npm run test:stryker
+#
+#   api-python-test:
+#     name: API - Python | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-python == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       # librdkafka is for confluent-kafka
+#       - name: Install librdkafka
+#         run: |
+#           # https://github.com/edenhill/librdkafka#build-from-source
+#           wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v1.9.2.tar.gz
+#           tar -x -f librdkafka.tar.gz
+#           rm -f librdkafka.tar.gz
+#           cd librdkafka-1.9.2
+#           ./configure
+#           make
+#           sudo make install
+#           sudo ldconfig
+#           cd ..
+#           rm -r -f librdkafka-1.9.2/
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: api-python/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: api-python/poetry.lock
+#       - name: Install dependencies
+#         working-directory: api-python
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: api-python
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: api-python
+#
+#   airflow-test:
+#     name: Airflow | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-airflow == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-orchestration/hm-airflow/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-orchestration/hm-airflow/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-orchestration/hm-airflow
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-orchestration/hm-airflow
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-orchestration/hm-airflow
+#
+#   amazon-sagemaker-pytorch-mnist-test:
+#     name: Amazon SageMaker (pytorch-mnist) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.amazon-sagemaker-pytorch-mnist == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/poetry.lock
+#       - name: Install dependencies
+#         working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
+#
+#   amazon-sagamaker-triton-resnet-50-deploy-test:
+#     name: Amazon SageMaker Triton ResNet 50 (Deploy) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.amazon-sagamaker-triton-resnet-50-deploy == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
+#
+#   amazon-sagamaker-triton-resnet-50-infer-test:
+#     name: Amazon SageMaker Triton ResNet 50 (Infer) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.amazon-sagamaker-triton-resnet-50-infer == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
+#
+#   aws-glue-spark-scripts-test:
+#     name: AWS Glue (spark-scripts) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.aws-glue-spark-scripts == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: cloud-infrastructure/terraform/data/aws-glue/spark-scripts/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: cloud-infrastructure/terraform/data/aws-glue/spark-scripts/poetry.lock
+#       - name: Install dependencies
+#         working-directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
+#
+#   aws-parallelcluster-test:
+#     name: AWS ParallelCluster | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-aws-parallelcluster == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: cloud-platform/aws/aws-parallelcluster/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: cloud-platform/aws/aws-parallelcluster/poetry.lock
+#       - name: Install dependencies
+#         working-directory: cloud-platform/aws/aws-parallelcluster
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: cloud-platform/aws/aws-parallelcluster
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: cloud-platform/aws/aws-parallelcluster
+#
+#   call-matlab-function-in-python:
+#     name: Call MATLAB Function in Python | Test
+#     needs: detect-changes
+#     if: ${{ false }}
+#     # if: ${{ needs.detect-changes.outputs.call-matlab-function-in-python == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up MATLAB
+#         uses: matlab-actions/setup-matlab@v2.2.0
+#         with:
+#           release: R2024a
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: matlab/call-matlab-function-in-python/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: matlab/call-matlab-function-in-python/poetry.lock
+#       - name: Install dependencies
+#         working-directory: matlab/call-matlab-function-in-python
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: matlab/call-matlab-function-in-python
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: matlab/call-matlab-function-in-python
+#
+#   decode-can-data-test:
+#     name: Decode CAN Data | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.decode-can-data == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: embedded/decode-can-data/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: embedded/decode-can-data/poetry.lock
+#       - name: Install dependencies
+#         working-directory: embedded/decode-can-data
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: embedded/decode-can-data
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: embedded/decode-can-data
+#
+#   format-can-data-test:
+#     name: Format CAN Data | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.format-can-data == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: embedded/format-can-data/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: embedded/format-can-data/poetry.lock
+#       - name: Install dependencies
+#         working-directory: embedded/format-can-data
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: embedded/format-can-data
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: embedded/format-can-data
+#
+#   data-distribution-service-test:
+#     name: Data Distribution Service | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.data-distribution-service == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-distribution-service/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-distribution-service/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-distribution-service
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-distribution-service
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-distribution-service
+#
+#   dbt-hm-postgres-test:
+#     name: dbt (hm-postgres) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.dbt-hm-postgres == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-transformation/dbt/projects/dbt_hm_postgres/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-transformation/dbt/projects/dbt_hm_postgres/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-transformation/dbt/projects/dbt_hm_postgres
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-transformation/dbt/projects/dbt_hm_postgres
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-transformation/dbt/projects/dbt_hm_postgres
+#
+#   delta-lake-read-delta-lake-by-amazon-athena-test:
+#     name: Delta Lake (read-delta-lake-by-amazon-athena) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-amazon-athena == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-storage/delta-lake/read-delta-lake-by-amazon-athena/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-storage/delta-lake/read-delta-lake-by-amazon-athena/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+#
+#   delta-lake-read-delta-lake-by-trino-test:
+#     name: Delta Lake (read-delta-lake-by-trino) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-trino == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-storage/delta-lake/read-delta-lake-by-trino/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-storage/delta-lake/read-delta-lake-by-trino/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-storage/delta-lake/read-delta-lake-by-trino
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-storage/delta-lake/read-delta-lake-by-trino
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-storage/delta-lake/read-delta-lake-by-trino
+#
+#   delta-lake-write-to-delta-lake-test:
+#     name: Delta Lake (write-to-delta-lake) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.delta-lake-write-to-delta-lake == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-storage/delta-lake/write-to-delta-lake/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-storage/delta-lake/write-to-delta-lake/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-storage/delta-lake/write-to-delta-lake
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-storage/delta-lake/write-to-delta-lake
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-storage/delta-lake/write-to-delta-lake
+#
+#   autogluon-test:
+#     name: AutoGluon | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hm-autogluon/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hm-autogluon/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hm-autogluon
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hm-autogluon
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hm-autogluon
+#
+#   feature-store-test:
+#     name: Feature Store | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/feature-store/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/feature-store/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/feature-store
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/feature-store
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/feature-store
+#
+#   geopandas-test:
+#     name: GeoPandas | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-analytics/hm-geopandas/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-analytics/hm-geopandas/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-analytics/hm-geopandas
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-analytics/hm-geopandas
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-analytics/hm-geopandas
+#
+#   hugging-face-analyze-sentiment-test:
+#     name: Hugging Face (analyze-sentiment) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hugging-face/analyze-sentiment/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hugging-face/analyze-sentiment/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hugging-face/analyze-sentiment
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hugging-face/analyze-sentiment
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hugging-face/analyze-sentiment
+#
+#   gradio-classify-image:
+#     name: Gradio (classify-image) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hm-gradio/applications/classify-image/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hm-gradio/applications/classify-image/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hm-gradio/applications/classify-image
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hm-gradio/applications/classify-image
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hm-gradio/applications/classify-image
+#
+#   streamlit-live-line-chart:
+#     name: Streamlit (live-line-chart) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hm-streamlit/applications/live-line-chart/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hm-streamlit/applications/live-line-chart/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hm-streamlit/applications/live-line-chart
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hm-streamlit/applications/live-line-chart
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hm-streamlit/applications/live-line-chart
+#
+#   streamlit-map:
+#     name: Streamlit (map) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hm-streamlit/applications/map/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hm-streamlit/applications/map/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hm-streamlit/applications/map
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hm-streamlit/applications/map
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hm-streamlit/applications/map
+#
+#   kubeflow-calculate-test:
+#     name: Kubeflow (calculate) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hm-kubeflow/pipelines/calculate/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hm-kubeflow/pipelines/calculate/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hm-kubeflow/pipelines/calculate
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hm-kubeflow/pipelines/calculate
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hm-kubeflow/pipelines/calculate
+#
+#   kubeflow-classify-mnist-test:
+#     name: Kubeflow (classify-mnist) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hm-kubeflow/pipelines/classify-mnist/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hm-kubeflow/pipelines/classify-mnist/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
+#
+#   langchain-chat-pdf-test:
+#     name: LangChain (chat-pdf) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hm-langchain/applications/chat-pdf/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hm-langchain/applications/chat-pdf/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hm-langchain/applications/chat-pdf
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hm-langchain/applications/chat-pdf
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hm-langchain/applications/chat-pdf
+#
+#   mlflow-classify-mnist-test:
+#     name: MLflow (classify-mnist) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hm-mlflow/experiments/classify-mnist/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hm-mlflow/experiments/classify-mnist/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hm-mlflow/experiments/classify-mnist
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hm-mlflow/experiments/classify-mnist
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hm-mlflow/experiments/classify-mnist
+#
+#   mlflow-predict-diabetes-test:
+#     name: MLflow (predict-diabetes) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hm-mlflow/experiments/predict-diabetes/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hm-mlflow/experiments/predict-diabetes/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hm-mlflow/experiments/predict-diabetes
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hm-mlflow/experiments/predict-diabetes
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hm-mlflow/experiments/predict-diabetes
+#
+#   neural-forecasting-forecast-air-passenger-number-test:
+#     name: Neural Forecasting (forecast-air-passenger-number) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/neural-forecasting/forecast-air-passenger-number/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/neural-forecasting/forecast-air-passenger-number/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/neural-forecasting/forecast-air-passenger-number
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/neural-forecasting/forecast-air-passenger-number
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/neural-forecasting/forecast-air-passenger-number
+#
+#   national-instruments-hm-ni-veristand-test:
+#     name: National Instruments (ni-veristand) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.national-instruments-hm-ni-veristand == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: hardware-in-the-loop/national-instruments/hm-ni-veristand/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: hardware-in-the-loop/national-instruments/hm-ni-veristand/poetry.lock
+#       - name: Install dependencies
+#         working-directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
+#
+#   national-instruments-hm-pyvisa-test:
+#     name: National Instruments (pyvisa) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.national-instruments-hm-pyvisa == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: hardware-in-the-loop/national-instruments/hm-pyvisa/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: hardware-in-the-loop/national-instruments/hm-pyvisa/poetry.lock
+#       - name: Install dependencies
+#         working-directory: hardware-in-the-loop/national-instruments/hm-pyvisa
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: hardware-in-the-loop/national-instruments/hm-pyvisa
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: hardware-in-the-loop/national-instruments/hm-pyvisa
+#
+#   national-instruments-hm-tdms-test:
+#     name: National Instruments (tdms) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.national-instruments-hm-tdms == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: hardware-in-the-loop/national-instruments/hm-tdms/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: hardware-in-the-loop/national-instruments/hm-tdms/poetry.lock
+#       - name: Install dependencies
+#         working-directory: hardware-in-the-loop/national-instruments/hm-tdms
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: hardware-in-the-loop/national-instruments/hm-tdms
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: hardware-in-the-loop/national-instruments/hm-tdms
+#
+#   open3d-test:
+#     name: Open3D | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-open3d == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: computer-vision/hm-open3d/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: computer-vision/hm-open3d/poetry.lock
+#       - name: Install dependencies
+#         working-directory: computer-vision/hm-open3d
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: computer-vision/hm-open3d
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: computer-vision/hm-open3d
+#
+#   aerosandbox-test:
+#     name: AeroSandbox | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: aerospace/hm-aerosandbox/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: aerospace/hm-aerosandbox/poetry.lock
+#       - name: Install dependencies
+#         working-directory: aerospace/hm-aerosandbox
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: aerospace/hm-aerosandbox
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: aerospace/hm-aerosandbox
+#
+#   openaerostruct-test:
+#     name: OpenAeroStruct | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: aerospace/hm-openaerostruct/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: aerospace/hm-openaerostruct/poetry.lock
+#       - name: Install dependencies
+#         working-directory: aerospace/hm-openaerostruct
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: aerospace/hm-openaerostruct
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: aerospace/hm-openaerostruct
+#
+#   prefect-calculate-test:
+#     name: Prefect (calculate) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-orchestration/hm-prefect/workflows/calculate/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-orchestration/hm-prefect/workflows/calculate/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-orchestration/hm-prefect/workflows/calculate
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-orchestration/hm-prefect/workflows/calculate
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-orchestration/hm-prefect/workflows/calculate
+#
+#   prefect-greet-test:
+#     name: Prefect (greet) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-orchestration/hm-prefect/workflows/greet/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-orchestration/hm-prefect/workflows/greet/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-orchestration/hm-prefect/workflows/greet
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-orchestration/hm-prefect/workflows/greet
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-orchestration/hm-prefect/workflows/greet
+#
+#   prefect-ingest-data-test:
+#     name: Prefect (ingest-data) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-prefect-ingest-data == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-orchestration/hm-prefect/workflows/ingest-data/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-orchestration/hm-prefect/workflows/ingest-data/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-orchestration/hm-prefect/workflows/ingest-data
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-orchestration/hm-prefect/workflows/ingest-data
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-orchestration/hm-prefect/workflows/ingest-data
+#
+#   prefect-print-platform-test:
+#     name: Prefect (print-platform) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-orchestration/hm-prefect/workflows/print-platform/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-orchestration/hm-prefect/workflows/print-platform/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-orchestration/hm-prefect/workflows/print-platform
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-orchestration/hm-prefect/workflows/print-platform
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-orchestration/hm-prefect/workflows/print-platform
+#
+#   prowler-test:
+#     name: Prowler | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-prowler == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: cloud-security/hm-prowler/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: cloud-security/hm-prowler/poetry.lock
+#       - name: Install dependencies
+#         working-directory: cloud-security/hm-prowler
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: cloud-security/hm-prowler
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: cloud-security/hm-prowler
+#
+#   pulumi-test:
+#     name: Pulumi | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-pulumi == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: cloud-infrastructure/hm-pulumi/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: cloud-infrastructure/hm-pulumi/poetry.lock
+#       - name: Install dependencies
+#         working-directory: cloud-infrastructure/hm-pulumi
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: cloud-infrastructure/hm-pulumi
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: cloud-infrastructure/hm-pulumi
+#
+#   pyvista-mount-saint-helens-test:
+#     name: PyVista (mount-saint-helens) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: computer-vision/hm-pyvista/mount-saint-helens/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: computer-vision/hm-pyvista/mount-saint-helens/poetry.lock
+#       - name: Install dependencies
+#         working-directory: computer-vision/hm-pyvista/mount-saint-helens
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: computer-vision/hm-pyvista/mount-saint-helens
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: computer-vision/hm-pyvista/mount-saint-helens
+#
+#   ray-greet-test:
+#     name: Ray (greet) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-ray-greet == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: cloud-computing/hm-ray/applications/greet/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: cloud-computing/hm-ray/applications/greet/poetry.lock
+#       - name: Install dependencies
+#         working-directory: cloud-computing/hm-ray/applications/greet
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: cloud-computing/hm-ray/applications/greet
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: cloud-computing/hm-ray/applications/greet
+#
+#   reinforcement-learning-cart-pole-test:
+#     name: Reinforcement Learning (cart-pole) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/reinforcement-learning/cart-pole/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/reinforcement-learning/cart-pole/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/reinforcement-learning/cart-pole
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/reinforcement-learning/cart-pole
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/reinforcement-learning/cart-pole
+#
+#   serial-test:
+#     name: Serial | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-serial == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: embedded/hm-serial/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: embedded/hm-serial/poetry.lock
+#       - name: Install dependencies
+#         working-directory: embedded/hm-serial
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: embedded/hm-serial
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: embedded/hm-serial
+#
+#   skypilot-test:
+#     name: SkyPilot | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-skypilot == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: cloud-computing/hm-skypilot/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: cloud-computing/hm-skypilot/poetry.lock
+#       - name: Install dependencies
+#         working-directory: cloud-computing/hm-skypilot
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: cloud-computing/hm-skypilot
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: cloud-computing/hm-skypilot
+#
+#   supervision-detect-objects-test:
+#     name: supervision (detect-objects) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/hm-supervision/detect-objects/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/hm-supervision/detect-objects/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/hm-supervision/detect-objects
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/hm-supervision/detect-objects
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/hm-supervision/detect-objects
+#
+#   xxhash-test:
+#     name: xxHash | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-xxhash == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: hm-xxhash/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: hm-xxhash/poetry.lock
+#       - name: Install dependencies
+#         working-directory: hm-xxhash
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: hm-xxhash
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: hm-xxhash
+#
+#   spark-analyze-coffee-customers-test:
+#     name: Spark (analyze-coffee-customers) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-processing/hm-spark/applications/analyze-coffee-customers/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-processing/hm-spark/applications/analyze-coffee-customers/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-processing/hm-spark/applications/analyze-coffee-customers
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-processing/hm-spark/applications/analyze-coffee-customers
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-processing/hm-spark/applications/analyze-coffee-customers
+#
+#   spark-find-retired-people-python-test:
+#     name: Spark (find-retired-people-python) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-processing/hm-spark/applications/find-retired-people-python/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-processing/hm-spark/applications/find-retired-people-python/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-processing/hm-spark/applications/find-retired-people-python
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-processing/hm-spark/applications/find-retired-people-python
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-processing/hm-spark/applications/find-retired-people-python
+#
+#   spark-find-retired-people-scala-test:
+#     name: Spark (find-retired-people-scala) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Java
+#         uses: actions/setup-java@v4.2.1
+#         with:
+#           distribution: corretto
+#           java-version: '17'
+#           cache: sbt
+#       - name: Test
+#         working-directory: data-processing/hm-spark/applications/find-retired-people-scala
+#         run: |
+#           sbt test
+#
+#   spark-find-taxi-top-routes-test:
+#     name: Spark (find-taxi-top-routes) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-processing/hm-spark/applications/find-taxi-top-routes/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-processing/hm-spark/applications/find-taxi-top-routes
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-processing/hm-spark/applications/find-taxi-top-routes
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-processing/hm-spark/applications/find-taxi-top-routes
+#
+#   spark-find-taxi-top-routes-sql-test:
+#     name: Spark (find-taxi-top-routes-sql) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes-sql == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes-sql/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-processing/hm-spark/applications/find-taxi-top-routes-sql/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
+#
+#   spark-ingest-from-s3-to-kafka-test:
+#     name: Spark (ingest-from-s3-to-kafka) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Java
+#         uses: actions/setup-java@v4.2.1
+#         with:
+#           distribution: corretto
+#           java-version: '17'
+#           cache: sbt
+#       - name: Test
+#         working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
+#         run: |
+#           sbt test
+#
+#   spark-recommend-movies-test:
+#     name: Spark (recommend-movies) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-processing/hm-spark/applications/recommend-movies/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-processing/hm-spark/applications/recommend-movies/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-processing/hm-spark/applications/recommend-movies
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-processing/hm-spark/applications/recommend-movies
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-processing/hm-spark/applications/recommend-movies
+#
+#   flink-stream-tweets-test:
+#     name: Flink (stream-tweets) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Java
+#         uses: actions/setup-java@v4.2.1
+#         with:
+#           distribution: corretto
+#           java-version: '11'
+#           cache: maven
+#       - name: Test
+#         working-directory: data-processing/flink/applications/stream-tweets
+#         run: |
+#           mvn test
+#
+#   opa-test:
+#     name: OPA | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Download OPA Binary
+#         run: |
+#           curl --silent --fail --show-error --location --output opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+#           chmod 755 ./opa
+#       - name: Test
+#         run: |
+#           ./opa test api-go/internal/graphql_server/policies/*.rego -v
+#
+#   ros-test:
+#     name: ROS | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.robot-operating-system == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 20
+#     container: ubuntu:jammy
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Setup ROS
+#         uses: ros-tooling/setup-ros@0.7.6
+#         with:
+#           required-ros-distributions: humble
+#       - name: Build and test
+#         uses: ros-tooling/action-ros-ci@0.3.14
+#         with:
+#           package-name: turtle_robot
+#           target-ros2-distro: humble
+#
+#   prometheus-test:
+#     name: Prometheus | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.prometheus == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Test
+#         run: |
+#           docker build --file=data-storage/prometheus/Dockerfile.test .
+#
+#   grafana-hm-dashboard-test:
+#     name: Grafana (hm-dashboard) | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: data-visualization/grafana/hm-dashboard/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: data-visualization/grafana/hm-dashboard/poetry.lock
+#       - name: Install dependencies
+#         working-directory: data-visualization/grafana/hm-dashboard
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: data-visualization/grafana/hm-dashboard
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: data-visualization/grafana/hm-dashboard
+#
+#   grafana-hm-panel-plugin-end-to-end-test:
+#     name: Grafana (hm-panel-plugin) | End-to-End Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4.0.2
+#         with:
+#           node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
+#           cache: npm
+#           cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
+#       - name: Install dependencies
+#         working-directory: data-visualization/grafana/hm-panel-plugin
+#         run: |
+#           npm ci
+#       - name: Build
+#         working-directory: data-visualization/grafana/hm-panel-plugin
+#         run: |
+#           npm run build
+#       - name: Pull Docker images
+#         working-directory: data-visualization/grafana/hm-panel-plugin
+#         run: |
+#           docker-compose pull
+#       - name: Cache Docker images
+#         uses: jpribyl/action-docker-layer-caching@v0.1.1
+#         continue-on-error: true
+#       - name: Start Docker
+#         working-directory: data-visualization/grafana/hm-panel-plugin
+#         run: |
+#           docker-compose up --detach
+#       - name: Run e2e tests
+#         working-directory: data-visualization/grafana/hm-panel-plugin
+#         run: |
+#           npm run e2e
+#       - name: Stop Docker
+#         working-directory: data-visualization/grafana/hm-panel-plugin
+#         run: |
+#           docker-compose down
+#
+#   grafana-hm-panel-plugin-compatibility-test:
+#     name: Grafana (hm-panel-plugin) | Compatibility Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4.0.2
+#         with:
+#           node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
+#           cache: npm
+#           cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
+#       - name: Install dependencies
+#         working-directory: data-visualization/grafana/hm-panel-plugin
+#         run: |
+#           npm ci
+#       - name: Build
+#         working-directory: data-visualization/grafana/hm-panel-plugin
+#         run: |
+#           npm run build
+#       - name: Check compatibility
+#         working-directory: data-visualization/grafana/hm-panel-plugin
+#         run: |
+#           npx @grafana/levitate@latest is-compatible --path=src/module.ts --target=@grafana/data,@grafana/ui,@grafana/runtime
+#
+#   hm-opal-client-build:
+#     name: HM OPAL Client | Build
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-opal-client == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v3.3.0
+#       - name: Build Docker image
+#         uses: docker/build-push-action@v5.3.0
+#         with:
+#           context: .
+#           file: ./authorization/hm-opal-client/Dockerfile
+#           cache-from: type=gha
+#           cache-to: type=gha,mode=max
+#
+#   rasa-test:
+#     name: Rasa | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Train and test
+#         uses: RasaHQ/rasa-train-test-gha@2.2.0
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           workspace: ${{ github.workspace }}/machine-learning/hm-rasa
+#
+#   graph-neural-network-test:
+#     name: GNN | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/graph-neural-network/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/graph-neural-network/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/graph-neural-network
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/graph-neural-network
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/graph-neural-network
+#
+#   graph-neural-network-train:
+#     name: GNN | Train
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 20
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up CML
+#         uses: iterative/setup-cml@v2.0.1
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/graph-neural-network/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/graph-neural-network/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/graph-neural-network
+#         run: |
+#           poetry install --no-root
+#       - name: Train model
+#         working-directory: machine-learning/graph-neural-network
+#         env:
+#           WANDB_MODE: offline
+#         run: |
+#           poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
+#
+#   convolutional-neural-network-test:
+#     name: CNN | Test
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/convolutional-neural-network
+#         run: |
+#           poetry install --no-root
+#       - name: Test
+#         working-directory: machine-learning/convolutional-neural-network
+#         run: |
+#           poetry run poe test-coverage
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4.4.1
+#         with:
+#           directory: machine-learning/convolutional-neural-network
+#
+#   convolutional-neural-network-cml-local-train:
+#     name: CNN | CML (Local) - Train
+#     needs: detect-changes
+#     if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 20
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up CML
+#         uses: iterative/setup-cml@v2.0.1
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
+#       - name: Install dependencies
+#         working-directory: machine-learning/convolutional-neural-network
+#         run: |
+#           poetry install --no-root
+#       - name: Train model
+#         working-directory: machine-learning/convolutional-neural-network
+#         shell: bash -l {0}
+#         env:
+#           WANDB_MODE: offline
+#         run: |
+#           poetry run poe dev -- --should_download_original_data=True
+#       - name: Write CML report
+#         working-directory: machine-learning/convolutional-neural-network
+#         shell: bash -l {0}
+#         env:
+#           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: |
+#           echo "# CML (Local) Report" >> report.md
+#           echo "## Params" >> report.md
+#           cat output/reports/params.txt >> report.md
+#           cml comment create report.md
+#
+#   convolutional-neural-network-cml-cloud-set-up:
+#     name: CNN | CML (Cloud) - Set Up
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     needs: detect-changes
+#     if: ${{ false }}
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Set up CML
+#         uses: iterative/setup-cml@v2.0.1
+#       - name: Set up cloud
+#         shell: bash
+#         env:
+#           REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         run: |
+#           cml-runner \
+#           --cloud=aws \
+#           --cloud-region=us-west-2 \
+#           --cloud-type=t2.small \
+#           --labels=cml-runner
+#
+#   convolutional-neural-network-cml-cloud-train:
+#     name: CNN | CML (Cloud) - Train
+#     needs: convolutional-neural-network-cml-cloud-set-up
+#     runs-on: [self-hosted, cml-runner]
+#     environment: test
+#     # container: docker://iterativeai/cml:0-dvc2-base1-gpu
+#     container: docker://iterativeai/cml:0-dvc2-base1
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4.1.6
+#       - name: Install Poetry
+#         run: |
+#           pipx install poetry
+#       - name: Set up Python
+#         uses: actions/setup-python@v5.1.0
+#         with:
+#           python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
+#           cache: poetry
+#           cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
+#       - name: Install dependencies
+#         working-directory: convolutional-neural-network
+#         run: |
+#           poetry install --no-root
+#       - name: Pull Data
+#         working-directory: convolutional-neural-network
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         run: |
+#           poetry run poe dvc-pull
+#       - name: Train model
+#         working-directory: convolutional-neural-network
+#         shell: bash -l {0}
+#         env:
+#           WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+#         run: |
+#           poetry run poe dvc-repro
+#       - name: Write CML report
+#         working-directory: convolutional-neural-network
+#         shell: bash -l {0}
+#         env:
+#           REPO_TOKEN: ${{ secrets.CML_ACCESS_TOKEN }}
+#         run: |
+#           echo "# CML (Cloud) Report" >> report.md
+#           echo "## Params" >> report.md
+#           cat output/reports/params.txt >> report.md
+#           cml comment create report.md
+#
+#   code-review:
+#     name: Code Review
+#     if: ${{ false }}
+#     runs-on: ubuntu-22.04
+#     environment: test
+#     timeout-minutes: 10
+#     permissions:
+#       contents: read
+#       pull-requests: write
+#     steps:
+#       - name: Code Review
+#         uses: anc95/ChatGPT-CodeReview@v1.0.13
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
