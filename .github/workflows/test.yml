@@ -380,7 +380,6 @@ jobs:
         working-directory: web-cypress
         run: |
           docker ps -a
-          curl -X GET -L http://0.0.0.0:5000
           curl -X GET -L http://127.0.0.1:5000
           npm run test:cypress:headless:5000
       - name: Stop Docker
