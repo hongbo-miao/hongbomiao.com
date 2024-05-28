@@ -11,8 +11,10 @@ services:
       dockerfile: api-node/Dockerfile.development
     env_file:
       - .env.development.local.example.docker
-    network_mode: host
+    #network_mode: host
     restart: unless-stopped
+    ports:
+      - 5000:5000
     depends_on:
       - redis
       - postgres
@@ -23,8 +25,10 @@ services:
     image: redis:7.2.5-alpine
     volumes:
       - redis_data:/data
-    network_mode: host
+    #network_mode: host
     restart: unless-stopped
+    ports:
+      - 6379:6379
 
   # PostgreSQL
   postgres:
@@ -35,8 +39,10 @@ services:
       - ./postgres/init_up.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - ./postgres/.env.development.local.example
-    network_mode: host
+    #network_mode: host
     restart: unless-stopped
+    ports:
+      - 5432:5432
 
 # For persistence between restarts
 volumes:
