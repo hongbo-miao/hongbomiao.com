@@ -21,6 +21,8 @@ trino-web-ui:
 	curl localhost:8889/ui/login.html
 trino-check-health:
 	curl localhost:8889/v1/status
+trino-show-service-log:
+	sudo journalctl --unit=trino-server.service --lines=60 --no-pager
 
 trino-execute:
 	trino-cli \
