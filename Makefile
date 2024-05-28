@@ -142,6 +142,7 @@ jupyter-lab:
 jupyter-notebook-clean:
 	poetry run poe clean-jupyter-notebook -- cloud-platform/aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/notebook.ipynb
 	poetry run poe clean-jupyter-notebook -- cloud-platform/aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
+	poetry run poe clean-jupyter-notebook -- machine-learning/triton/amazon-sagamaker-triton-resnet-50/set_up/notebook.ipynb
 
 # SQLFluff
 sqlfluff-dialect-list:
@@ -350,7 +351,8 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=machine-learning.hugging-face
 	poetry run poe static-type-check-python -- --package=machine-learning.neural-forecasting.forecast-air-passenger-number
 	poetry run poe static-type-check-python -- --package=machine-learning.reinforcement-learning.cart-pole
-	poetry run poe static-type-check-python -- --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.client
+	poetry run poe static-type-check-python -- --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.deploy
+	poetry run poe static-type-check-python -- --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.infer
 	poetry run poe static-type-check-python -- --package=quantum-computing
 static-type-check-terraform:
 	cd cloud-infrastructure/terraform/environments/development/aws && terraform validate
