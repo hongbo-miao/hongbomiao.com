@@ -21,7 +21,8 @@ jobs:
       pull-requests: read
     outputs:
       amazon-sagemaker-pytorch-mnist: ${{ steps.filter.outputs.amazon-sagemaker-pytorch-mnist }}
-      amazon-sagamaker-triton-resnet-50-client: ${{ steps.filter.outputs.amazon-sagamaker-triton-resnet-50-client }}
+      amazon-sagamaker-triton-resnet-50-deploy: ${{ steps.filter.outputs.amazon-sagamaker-triton-resnet-50-deploy }}
+      amazon-sagamaker-triton-resnet-50-infer: ${{ steps.filter.outputs.amazon-sagamaker-triton-resnet-50-infer }}
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
@@ -99,9 +100,12 @@ jobs:
             amazon-sagemaker-pytorch-mnist:
               - '.github/workflows/test.yml'
               - 'cloud-platform/aws/amazon-sagemaker/pytorch-mnist/**'
-            amazon-sagamaker-triton-resnet-50-client:
+            amazon-sagamaker-triton-resnet-50-deploy:
               - '.github/workflows/test.yml'
-              - 'machine-learning/triton/amazon-sagamaker-triton-resnet-50/client/**'
+              - 'machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy/**'
+            amazon-sagamaker-triton-resnet-50-infer:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer/**'
             api-go:
               - '.github/workflows/test.yml'
               - 'api-go/**'
@@ -780,10 +784,10 @@ jobs:
         with:
           directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
 
-  amazon-sagamaker-triton-resnet-50-client-test:
-    name: Amazon SageMaker Triton ResNet 50 Client | Test
+  amazon-sagamaker-triton-resnet-50-deploy-test:
+    name: Amazon SageMaker Triton ResNet 50 (Deploy) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.amazon-sagamaker-triton-resnet-50-client == 'true' }}
+    if: ${{ needs.detect-changes.outputs.amazon-sagamaker-triton-resnet-50-deploy == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -796,21 +800,53 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version-file: machine-learning/triton/amazon-sagamaker-triton-resnet-50/client/pyproject.toml
+          python-version-file: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy/pyproject.toml
           cache: poetry
-          cache-dependency-path: machine-learning/triton/amazon-sagamaker-triton-resnet-50/client/poetry.lock
+          cache-dependency-path: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy/poetry.lock
       - name: Install dependencies
-        working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/client
+        working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/client
+        working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4.4.1
         with:
-          directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/client
+          directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
+
+  amazon-sagamaker-triton-resnet-50-infer-test:
+    name: Amazon SageMaker Triton ResNet 50 (Infer) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.amazon-sagamaker-triton-resnet-50-infer == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.6
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version-file: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer/pyproject.toml
+          cache: poetry
+          cache-dependency-path: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer/poetry.lock
+      - name: Install dependencies
+        working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.4.1
+        with:
+          directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
 
   aws-glue-spark-scripts-test:
     name: AWS Glue (spark-scripts) | Test
