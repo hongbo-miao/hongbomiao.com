@@ -140,7 +140,7 @@ jupyter-lab:
 
 # Jupyter Notebook
 jupyter-notebook-clean:
-	poetry run poe clean-jupyter-notebook -- cloud-platform/aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/main.ipynb
+	poetry run poe clean-jupyter-notebook -- cloud-platform/aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/notebook.ipynb
 	poetry run poe clean-jupyter-notebook -- cloud-platform/aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
 
 # SQLFluff
