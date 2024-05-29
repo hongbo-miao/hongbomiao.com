@@ -516,19 +516,19 @@ make kubernetes-clean
   - **Signal Processing Toolbox** - Signal processing and analysis
   - **Simulink** - Simulation and model-based designing
     - **Simscape** - Multidomain physical systems simulation
-- **OpenFOAM** - Computational fluid dynamics (CFD)
-- **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
 - **CoppeliaSim** - Robot simulation
-- **ParaView** - Post-processing visualization
 
 ## Aerospace
 
-- **PX4** - Flight control software
-- **CubeSat** - Miniaturized satellite
-- **QGroundControl** - Ground control station (GCS) for unmanned aerial vehicles (UAVs)
 - **AeroSandbox** - Aircraft design and optimization
 - **OpenAeroStruct** - Aerostructural optimization
 - **OpenMDAO** - Multidisciplinary analysis and optimization
+- **OpenFOAM** - Computational fluid dynamics (CFD)
+- **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
+- **ParaView** - Post-processing visualization
+- **PX4** - Flight control software
+- **CubeSat** - Miniaturized satellite
+- **QGroundControl** - Ground control station (GCS) for unmanned aerial vehicles (UAVs)
 
 ## Code
 
