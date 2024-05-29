@@ -85,6 +85,7 @@ jobs:
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
+      pack-unpack-data: ${{ steps.filter.outputs.pack-unpack-data }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
@@ -292,6 +293,9 @@ jobs:
             neural-forecasting-forecast-air-passenger-number:
               - '.github/workflows/test.yml'
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
+            pack-unpack-data:
+              - '.github/workflows/test.yml'
+              - 'embedded/pack-unpack-data/**'
             prometheus:
               - '.github/workflows/test.yml'
               - 'data-storage/prometheus/**'
@@ -2100,6 +2104,38 @@ jobs:
         uses: codecov/codecov-action@v4.4.1
         with:
           directory: embedded/hm-serial
+
+  pack-unpack-data-test:
+    name: Pack Unpack Data | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.pack-unpack-data == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.6
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version-file: embedded/pack-unpack-data/pyproject.toml
+          cache: poetry
+          cache-dependency-path: embedded/pack-unpack-data/poetry.lock
+      - name: Install dependencies
+        working-directory: embedded/pack-unpack-data
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: embedded/pack-unpack-data
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.4.1
+        with:
+          directory: embedded/pack-unpack-data
 
   skypilot-test:
     name: SkyPilot | Test
