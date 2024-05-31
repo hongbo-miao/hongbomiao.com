@@ -4597,13 +4597,13 @@ files = [
 
 [[package]]
 name = "skypilot"
-version = "0.5.0"
+version = "0.6.0"
 description = "SkyPilot: An intercloud broker for the clouds"
 optional = false
 python-versions = "*"
 files = [
-    {file = "skypilot-0.5.0-py3-none-any.whl", hash = "sha256:7fb7809fd9f269512125572c17e6ec2c89d8faf1b42196ef3d6b115aa96a0b78"},
-    {file = "skypilot-0.5.0.tar.gz", hash = "sha256:3bc2e227b83769478b4423b6c1bf1144ae36a8bed00032ce4cc93182ccac872e"},
+    {file = "skypilot-0.6.0-py3-none-any.whl", hash = "sha256:353d7865eb8581ad88d26cbbe0f853965050cf046596ccd90fc4ab5514155d8b"},
+    {file = "skypilot-0.6.0.tar.gz", hash = "sha256:5edbab27c49dcab88e294550075ace70b94537652d261678f0f04f7e67bbdc2a"},
 ]
 
 [package.dependencies]
@@ -4640,7 +4640,7 @@ psutil = "*"
 pulp = "*"
 python-dotenv = "*"
 pyyaml = ">3.13,<5.4.dev0 || >=5.5.dev0"
-ray = {version = ">=2.2.0,<2.6.0 || >2.6.0,<=2.6.3", extras = ["default"], optional = true, markers = "extra == \"azure\" or extra == \"ibm\" or extra == \"lambda\" or extra == \"oci\" or extra == \"scp\""}
+ray = {version = ">=2.2.0,<2.6.0 || >2.6.0", extras = ["default"], optional = true, markers = "extra == \"azure\" or extra == \"ibm\" or extra == \"lambda\" or extra == \"oci\" or extra == \"scp\""}
 requests = "*"
 rich = "*"
 tabulate = "*"
@@ -4649,20 +4649,20 @@ urllib3 = {version = "<2", optional = true, markers = "extra == \"aws\""}
 wheel = "*"
 
 [package.extras]
-all = ["awscli (>=1.27.10)", "azure-cli (>=2.31.0)", "azure-core", "azure-identity (>=1.13.0)", "azure-mgmt-network", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "cudo-compute (>=0.1.8)", "docker", "google-api-python-client (>=2.69.0)", "google-cloud-storage", "grpcio (>=1.32.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.32.0,!=1.48.0,<=1.51.3)", "grpcio (>=1.42.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.42.0,!=1.48.0,<=1.51.3)", "ibm-cloud-sdk-core", "ibm-cos-sdk", "ibm-platform-services", "ibm-vpc", "kubernetes (>=20.0.0)", "oci", "protobuf (>=3.15.3,!=3.19.5)", "pydantic (>=1.10.8,<2.0)", "pyvmomi (==8.0.1.0.2)", "ray[default] (>=2.2.0,!=2.6.0,<=2.6.3)", "runpod (>=1.5.1)", "urllib3 (<2)"]
+all = ["awscli (>=1.27.10)", "azure-cli (>=2.31.0)", "azure-core", "azure-identity (>=1.13.0)", "azure-mgmt-network", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "cudo-compute (>=0.1.10)", "docker", "google-api-python-client (>=2.69.0)", "google-cloud-storage", "grpcio (>=1.32.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.32.0,!=1.48.0,<=1.51.3)", "grpcio (>=1.42.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.42.0,!=1.48.0,<=1.51.3)", "ibm-cloud-sdk-core", "ibm-cos-sdk", "ibm-platform-services", "ibm-vpc", "kubernetes (>=20.0.0)", "oci", "protobuf (>=3.15.3,!=3.19.5)", "pydantic (<2.0.dev0 || >=2.5.dev0,<3)", "pyvmomi (==8.0.1.0.2)", "ray[default] (>=2.2.0,!=2.6.0)", "runpod (>=1.5.1)", "urllib3 (<2)"]
 aws = ["awscli (>=1.27.10)", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "urllib3 (<2)"]
-azure = ["azure-cli (>=2.31.0)", "azure-core", "azure-identity (>=1.13.0)", "azure-mgmt-network", "ray[default] (>=2.2.0,!=2.6.0,<=2.6.3)"]
+azure = ["azure-cli (>=2.31.0)", "azure-core", "azure-identity (>=1.13.0)", "azure-mgmt-network", "ray[default] (>=2.2.0,!=2.6.0)"]
 cloudflare = ["awscli (>=1.27.10)", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "urllib3 (<2)"]
-cudo = ["cudo-compute (>=0.1.8)"]
-docker = ["docker", "ray[default] (>=2.2.0,!=2.6.0,<=2.6.3)"]
+cudo = ["cudo-compute (>=0.1.10)"]
+docker = ["docker", "ray[default] (>=2.2.0,!=2.6.0)"]
 gcp = ["google-api-python-client (>=2.69.0)", "google-cloud-storage"]
-ibm = ["ibm-cloud-sdk-core", "ibm-cos-sdk", "ibm-platform-services", "ibm-vpc", "ray[default] (>=2.2.0,!=2.6.0,<=2.6.3)"]
+ibm = ["ibm-cloud-sdk-core", "ibm-cos-sdk", "ibm-platform-services", "ibm-vpc", "ray[default] (>=2.2.0,!=2.6.0)"]
 kubernetes = ["kubernetes (>=20.0.0)"]
-lambda = ["ray[default] (>=2.2.0,!=2.6.0,<=2.6.3)"]
-oci = ["oci", "ray[default] (>=2.2.0,!=2.6.0,<=2.6.3)"]
-remote = ["grpcio (>=1.32.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.32.0,!=1.48.0,<=1.51.3)", "grpcio (>=1.42.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.42.0,!=1.48.0,<=1.51.3)", "protobuf (>=3.15.3,!=3.19.5)", "pydantic (>=1.10.8,<2.0)"]
+lambda = ["ray[default] (>=2.2.0,!=2.6.0)"]
+oci = ["oci", "ray[default] (>=2.2.0,!=2.6.0)"]
+remote = ["grpcio (>=1.32.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.32.0,!=1.48.0,<=1.51.3)", "grpcio (>=1.42.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.42.0,!=1.48.0,<=1.51.3)", "protobuf (>=3.15.3,!=3.19.5)", "pydantic (<2.0.dev0 || >=2.5.dev0,<3)"]
 runpod = ["runpod (>=1.5.1)"]
-scp = ["ray[default] (>=2.2.0,!=2.6.0,<=2.6.3)"]
+scp = ["ray[default] (>=2.2.0,!=2.6.0)"]
 vsphere = ["pyvmomi (==8.0.1.0.2)"]
 
 [[package]]
@@ -5025,4 +5025,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "e4832b1a2ae3db4f47200a87f067136d67e3d2c708efc3a69b4adfa69a6eb99b"
+content-hash = "6f94ad895316ecca7c04e3e1f99c071c9325f3640b06f0bd88daf0d5bb3c74e4"
