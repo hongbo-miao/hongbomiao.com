@@ -839,14 +839,14 @@ grpc = ["grpcio (>=1.44.0,<2.0.0.dev0)"]
 
 [[package]]
 name = "gpt4all"
-version = "2.6.0"
+version = "2.7.0"
 description = "Python bindings for GPT4All"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "gpt4all-2.6.0-py3-none-macosx_10_15_universal2.whl", hash = "sha256:2d750cf20a3dbfd9ed0ffbd780161eb2720ae923130e8a259e9dcc9a9b108983"},
-    {file = "gpt4all-2.6.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:506a0e0089044e36e0a0792cd7abba0e2f688669101bc927b8bae4f82409dcec"},
-    {file = "gpt4all-2.6.0-py3-none-win_amd64.whl", hash = "sha256:997c40a4c9ef639eef74861d9eb731e80be29ac8a455b2530df98fdeded6557f"},
+    {file = "gpt4all-2.7.0-py3-none-macosx_10_15_universal2.whl", hash = "sha256:6e3263fbf4817916a09a7c1af36f90104fcb450b33a66bdb163dcd7587f56188"},
+    {file = "gpt4all-2.7.0-py3-none-manylinux1_x86_64.whl", hash = "sha256:35891bb52f9179e82b07f61602b37e7b4cb695d1a9fa458e1fe3c01b4ad6abce"},
+    {file = "gpt4all-2.7.0-py3-none-win_amd64.whl", hash = "sha256:b83275ff9ace9c5237cbee4a776b13f2187de22e7999639cb4e8ef84a171fcea"},
 ]
 
 [package.dependencies]
@@ -854,7 +854,9 @@ requests = "*"
 tqdm = "*"
 
 [package.extras]
-dev = ["black", "isort", "mkautodoc", "mkdocs-jupyter", "mkdocs-material", "mkdocstrings[python]", "pytest", "setuptools", "twine", "typing-extensions (>=3.10)", "wheel"]
+all = ["gpt4all[cuda]"]
+cuda = ["nvidia-cublas-cu12", "nvidia-cuda-runtime-cu12"]
+dev = ["black", "gpt4all[all]", "isort", "mkautodoc", "mkdocs-jupyter", "mkdocs-material", "mkdocstrings[python]", "pytest", "setuptools", "twine", "typing-extensions (>=3.10)", "wheel"]
 
 [[package]]
 name = "greenlet"
@@ -3417,4 +3419,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "3925f27062db9ccb4a9e2c94264fcb96adb65e8bbd62ce228e85955b876b5756"
+content-hash = "494e6f3e968fb7708a7222df6fa36a09f6ca255027eb2448fb0b79fa315b0b91"
