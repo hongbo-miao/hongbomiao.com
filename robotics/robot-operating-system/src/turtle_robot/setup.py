@@ -13,7 +13,7 @@ setup(
     install_requires=["setuptools"],
     zip_safe=True,
     maintainer="Hongbo Miao",
-    maintainer_email="Hongbo.Miao@outlook.com",
+    maintainer_email="hongbo.miao@outlook.com",
     description="Turtle Robot",
     license="MIT",
     tests_require=["pytest"],
