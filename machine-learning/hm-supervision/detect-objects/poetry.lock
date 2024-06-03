@@ -1440,19 +1440,6 @@ files = [
 mpmath = ">=0.19"
 
 [[package]]
-name = "thop"
-version = "0.1.1.post2209072238"
-description = "A tool to count the FLOPs of PyTorch model."
-optional = false
-python-versions = "*"
-files = [
-    {file = "thop-0.1.1.post2209072238-py3-none-any.whl", hash = "sha256:01473c225231927d2ad718351f78ebf7cffe6af3bed464c4f1ba1ef0f7cdda27"},
-]
-
-[package.dependencies]
-torch = "*"
-
-[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -1631,13 +1618,13 @@ files = [
 
 [[package]]
 name = "ultralytics"
-version = "8.2.27"
+version = "8.2.28"
 description = "Ultralytics YOLOv8 for SOTA object detection, multi-object tracking, instance segmentation, pose estimation and image classification."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "ultralytics-8.2.27-py3-none-any.whl", hash = "sha256:bd00d487fc68360667a906292ccf21ba1b7022604c3ac5c74369b808bcdfec87"},
-    {file = "ultralytics-8.2.27.tar.gz", hash = "sha256:70cc1ce7af33a53d2f0f449ba709a0fd28edb5f2571b69f47d6fa05def458194"},
+    {file = "ultralytics-8.2.28-py3-none-any.whl", hash = "sha256:f9ef6d6083d3faf680e3e3b9e976a717366ff3b1f97afb78cf730f05bd567d1a"},
+    {file = "ultralytics-8.2.28.tar.gz", hash = "sha256:700bda3960b59348205a12a6f9b893d1fd73cbbc85413dabe50f1bb3f3e03066"},
 ]
 
 [package.dependencies]
@@ -1651,17 +1638,32 @@ pyyaml = ">=5.3.1"
 requests = ">=2.23.0"
 scipy = ">=1.4.1"
 seaborn = ">=0.11.0"
-thop = ">=0.1.1"
 torch = ">=1.8.0"
 torchvision = ">=0.9.0"
 tqdm = ">=4.64.0"
+ultralytics-thop = ">=0.2.5"
 
 [package.extras]
-dev = ["check-manifest", "coverage[toml]", "ipython", "mkdocs (>=1.6.0)", "mkdocs-jupyter", "mkdocs-material (>=9.5.9)", "mkdocs-redirects", "mkdocs-ultralytics-plugin (>=0.0.44)", "mkdocstrings[python]", "pre-commit", "pytest", "pytest-cov"]
+dev = ["check-manifest", "coverage[toml]", "ipython", "mkdocs (>=1.6.0)", "mkdocs-jupyter", "mkdocs-material (>=9.5.9)", "mkdocs-redirects", "mkdocs-ultralytics-plugin (>=0.0.45)", "mkdocstrings[python]", "pre-commit", "pytest", "pytest-cov"]
 explorer = ["duckdb (<=0.9.2)", "lancedb", "streamlit"]
 export = ["coremltools (>=7.0)", "flatbuffers (>=23.5.26,<100)", "h5py (!=3.11.0)", "keras", "numpy (==1.23.5)", "onnx (>=1.12.0)", "openvino (>=2024.0.0)", "tensorflow (>=2.0.0)", "tensorflowjs (>=3.9.0)"]
 extra = ["albumentations (>=1.4.6)", "hub-sdk (>=0.0.5)", "ipython", "pycocotools (>=2.0.7)"]
 logging = ["comet", "dvclive (>=2.12.0)", "tensorboard (>=2.13.0)"]
+
+[[package]]
+name = "ultralytics-thop"
+version = "0.2.6"
+description = "Ultralytics THOP package for fast computation of PyTorch model FLOPs and parameters."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "ultralytics_thop-0.2.6-py3-none-any.whl", hash = "sha256:97296262c1d98e716aa2e04bd0dbefcef8792dbd89f9549bc9245a6c3813f38f"},
+    {file = "ultralytics_thop-0.2.6.tar.gz", hash = "sha256:6dd8e1a9e57b643321237baaddac079aadf1c1cad2275076b8c9572965eb670d"},
+]
+
+[package.dependencies]
+numpy = "*"
+torch = "*"
 
 [[package]]
 name = "urllib3"
@@ -1683,4 +1685,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "89ea3a529b35ef73a339702f3ac0a8bd95712c3d5294b2d5b4e77148bd13b050"
+content-hash = "668412816bf5b603f5ff749194ec2a38f3e8569308967ac0dcc2b033c4d84ec8"
