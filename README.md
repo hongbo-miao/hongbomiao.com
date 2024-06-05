@@ -624,6 +624,7 @@ make kubernetes-clean
   - **Lightning testing**
 - **Structural testing**
 - **Battery drop testing**
+- **Battery vibration testing**
 - **Dyno testing**
 - **Flammability testing**
 - **Wind tunnel testing**
