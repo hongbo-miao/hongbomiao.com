@@ -22,12 +22,12 @@ type Me struct {
 
 func GetMe(id string) (*Me, error) {
 	config := GetConfig()
-	conn, err := grpc.Dial(
+	conn, err := grpc.NewClient(
 		config.DgraphHost+":"+config.DgraphGRPCPort,
 		grpc.WithUnaryInterceptor(apmgrpc.NewUnaryClientInterceptor()),
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Error().Err(err).Msg("grpc.Dial")
+		log.Error().Err(err).Msg("grpc.NewClient")
 		return nil, err
 	}
 	defer func(conn *grpc.ClientConn) {
