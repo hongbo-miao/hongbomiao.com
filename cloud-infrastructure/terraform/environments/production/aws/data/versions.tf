@@ -10,10 +10,15 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.52.0"
     }
-    # https://registry.terraform.io/providers/hashicorp/awscc/latest
-    awscc = {
-      source  = "hashicorp/awscc"
-      version = "1.0.0"
+    # https://registry.terraform.io/providers/hashicorp/helm/latest
+    helm = {
+      source  = "hashicorp/helm"
+      version = "2.13.2"
+    }
+    # https://registry.terraform.io/providers/hashicorp/kubernetes/latest
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "2.30.0"
     }
   }
   required_version = ">= 1.8"
