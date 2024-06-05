@@ -6,4 +6,7 @@ amazon-eks-upgrade-kubernetes-version:
 		--name=hm-k8s-cluster-node-group \
 		--cluster=hm-k8s-cluster \
 		--region=us-west-2 \
-		--kubernetes-version=1.29
+		--kubernetes-version=1.30
+
+amazon-eks-create-kubeconfig:
+	aws eks update-kubeconfig --name=hm-eks-cluster
