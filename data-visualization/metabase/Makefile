@@ -1,0 +1,8 @@
+curl-download-metabase-driver:
+	curl --silent --fail --show-error --location --output plugins/starburst-4.1.0.metabase-driver.jar https://github.com/starburstdata/metabase-driver/releases/download/4.1.0/starburst-4.1.0.metabase-driver.jar
+metabase-run:
+	docker run --publish=3000:3000 \
+		--volume="$(pwd)/plugins:/app/plugins" \
+		--name=metabase \
+		metabase/metabase:v0.49.13
+		# bobblybook/metabase:v0.49.13

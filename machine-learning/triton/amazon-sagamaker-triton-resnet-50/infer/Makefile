@@ -13,4 +13,4 @@ poetry-run-test-coverage:
 	poetry run poe test-coverage
 
 curl-download-dog:
-	curl https://i.ibb.co/bLvrvRV/shiba-inu-dog.jpg > data/dog.jpg
+	curl --silent --fail --show-error --location --output data/dog.jpg https://i.ibb.co/bLvrvRV/shiba-inu-dog.jpg
