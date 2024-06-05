@@ -23,8 +23,8 @@ module "eks" {
   source                         = "terraform-aws-modules/eks/aws"
   version                        = "20.13.1"
   cluster_name                   = local.amazon_eks_cluster_name
-  cluster_version                = "1.29"
-  cluster_endpoint_public_access = false
+  cluster_version                = "1.30"
+  cluster_endpoint_public_access = true
   cluster_addons = {
     coredns = {
       most_recent = true
@@ -90,4 +90,25 @@ module "karpenter" {
     Team        = var.team
     Name        = "${local.amazon_eks_cluster_name}-karpenter"
   }
+}
+
+# Argo CD
+module "hm_kubernetes_namespace_argo_cd" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "hm-${var.environment}-argo-cd"
+  depends_on = [
+    module.eks
+  ]
+}
+module "hm_argo_cd_helm_chart" {
+  source = "../../../../modules/kubernetes/hm_argo_cd_helm_chart"
+  name   = "hm-argo-cd"
+  # https://artifacthub.io/packages/helm/argo/argo-cd
+  argo_cd_version = "2.11.2"
+  namespace       = module.hm_kubernetes_namespace_argo_cd.namespace
+  environment     = var.environment
+  team            = var.team
+  depends_on = [
+    module.hm_kubernetes_namespace_argo_cd
+  ]
 }
