@@ -424,38 +424,38 @@ kibana-get-password: # username: elastic
 	kubectl get secret hm-elasticsearch-es-elastic-user --namespace=hm-elastic --output=jsonpath="{.data.elastic}" | base64 --decode; echo
 
 # Argo CD
-argocd-install:
+argo-cd-install:
 	kubectl create namespace argocd
 	kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-argocd-ui:
+argo-cd-ui:
 	kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
-argocd-get-password: # username: admin
+argo-cd-get-password: # username: admin
 	kubectl get secret argocd-initial-admin-secret --namespace=argocd --output=jsonpath="{.data.password}" | base64 -d && echo
-argocd-login:
+argo-cd-login:
 	$(eval ARGOCD_PASSWORD := $(shell kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo))
 	argocd login localhost:31026 --username=admin --password=$(ARGOCD_PASSWORD) --insecure
-argocd-enable-auth-sync:
+argo-cd-enable-auth-sync:
 	argocd app set hm-application --sync-policy=automated
-argocd-disable-auth-sync:
+argo-cd-disable-auth-sync:
 	argocd app set hm-application --sync-policy=none
-argocd-diff:
+argo-cd-diff:
 	argocd app diff hm-application --local=manifests
-argocd-apply:
+argo-cd-apply:
 	kubectl apply --filename=manifests/argocd/hm-application.yaml
-argocd-sync:
+argo-cd-sync:
 	kubectl apply --filename=manifests/argocd/hm-application.yaml
 	argocd app sync hm-application --grpc-web
-argocd-sync-local:
+argo-cd-sync-local:
 	argocd app sync hm-application --grpc-web --local=manifests/west
-argocd-sync-local-full:
+argo-cd-sync-local-full:
 	kubectl create namespace hm
 	ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token --namespace=hm-elastic --output=go-template='{{index .data "secret-token" | base64decode}}')
 	kubectl create secret generic hm-elastic-apm --namespace=hm --from-literal="token=${ELASTIC_APM_TOKEN}"
 	kubectl apply --filename=manifests/argocd/hm-application.yaml
 	argocd app sync hm-application --grpc-web --local=manifests/west
-argocd-list:
+argo-cd-list:
 	argocd app list
-argocd-delete:
+argo-cd-delete:
 	argocd app delete hm-application --yes
 kubectl-get-pods-argocd:
 	kubectl get pods --namespace=argocd
