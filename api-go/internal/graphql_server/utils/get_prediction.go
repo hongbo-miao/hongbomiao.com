@@ -37,13 +37,13 @@ func GetPrediction(fileHeader *multipart.FileHeader) (*Prediction, error) {
 	}
 
 	config := GetConfig()
-	conn, err := grpc.Dial(
+	conn, err := grpc.NewClient(
 		config.TorchServeGRPCHost+":"+config.TorchServeGRPCPort,
 		grpc.WithUnaryInterceptor(apmgrpc.NewUnaryClientInterceptor()),
 		grpc.WithStatsHandler(new(ocgrpc.ClientHandler)),
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Error().Err(err).Msg("grpc.Dial")
+		log.Error().Err(err).Msg("grpc.NewClient")
 		return nil, err
 	}
 	defer func(conn *grpc.ClientConn) {
