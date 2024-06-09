@@ -1,9 +1,13 @@
+import logging
+import os
 import sys
 
 from awsglue.context import GlueContext
 from awsglue.job import Job
 from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
+
+logging.basicConfig(level=logging.INFO)
 
 raw_parquet_paths = ["s3://hm-production-bucket/data/parquet/motor/"]
 delta_table_path = "s3://hm-production-bucket/data/delta-tables/motor_data/"
@@ -27,11 +31,17 @@ s3_node = glue_context.create_dynamic_frame.from_options(
     transformation_ctx="s3_node",
 )
 
+df = s3_node.toDF()
+
+if df.isEmpty():
+    logging.info("DataFrame is empty.")
+    job.commit()
+    os._exit(os.EX_OK)
+
 additional_options = {
     "path": delta_table_path,
     "mergeSchema": "true",
 }
-df = s3_node.toDF()
 df.write.format("delta").options(**additional_options).partitionBy(*partitions).mode(
     "overwrite"
 ).save()
