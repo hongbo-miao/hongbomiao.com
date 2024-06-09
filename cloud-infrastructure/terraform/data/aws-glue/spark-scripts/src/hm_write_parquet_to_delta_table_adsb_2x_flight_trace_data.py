@@ -1,3 +1,5 @@
+import logging
+import os
 import sys
 
 from awsglue.context import GlueContext
@@ -6,6 +8,8 @@ from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import col, concat, date_format, from_unixtime, lit, when
+
+logging.basicConfig(level=logging.INFO)
 
 raw_parquet_paths = [
     "s3://hm-production-bucket/data/raw-parquet/adsb_2x_flight_trace_data/"
@@ -136,6 +140,11 @@ s3_node = glue_context.create_dynamic_frame.from_options(
     transformation_ctx="s3_node",
 )
 df = s3_node.toDF()
+
+if df.isEmpty():
+    logging.info("DataFrame is empty.")
+    job.commit()
+    os._exit(os.EX_OK)
 
 # Add "trace_on_ground"
 df = add_trace_on_ground_column(df, "trace_altitude_ft", "trace_on_ground", "ground")
