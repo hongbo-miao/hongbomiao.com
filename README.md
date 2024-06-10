@@ -295,9 +295,10 @@ make kubernetes-clean
     - **kafka-connect-avro-converter** - Confluent Avro converter
     - **apicurio-registry-distro-connect-converter** - Apicurio Avro converter
   - Management tools
-    - **Redpanda Console** - Kafka management tool
-    - **AKHQ** - Kafka management tool
-    - **UI for Apache Kafka** - Kafka management tool
+    - **Redpanda Console** - Kafka management
+    - **AKHQ** - Kafka management
+    - **UI for Apache Kafka** - Kafka management
+    - **topicctl** - Kafka topic management
 
 ### Data Transformation
 
