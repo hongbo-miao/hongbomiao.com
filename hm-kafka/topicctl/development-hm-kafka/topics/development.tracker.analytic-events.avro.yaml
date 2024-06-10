@@ -1,0 +1,15 @@
+---
+meta:
+  name: development.tracker.analytic-events.avro
+  cluster: hm-kafka
+  environment: non-production
+  region: us-west-2
+spec:
+  partitions: 3
+  replicationFactor: 2
+  retentionMinutes: 10080 # 7 days
+  placement:
+    strategy: any
+  settings:
+    cleanup.policy: delete
+    max.message.bytes: 1048576 # 1 MB
