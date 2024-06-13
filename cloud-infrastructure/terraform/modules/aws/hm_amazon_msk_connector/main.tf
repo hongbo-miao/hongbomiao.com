@@ -28,19 +28,19 @@ resource "aws_mskconnect_connector" "hm_amazon_msk_connector" {
   connector_configuration = {
     "connector.class"                  = "com.snowflake.kafka.connector.SnowflakeSinkConnector"
     "tasks.max"                        = 4
-    "topics"                           = var.kafka_topic_name,
-    "buffer.count.records"             = 10000,
-    "buffer.flush.time"                = 5,
-    "buffer.size.bytes"                = 20000000,
-    "snowflake.url.name"               = "hongbomiao.snowflakecomputing.com:443",
-    "snowflake.user.name"              = var.snowflake_user_name,
-    "snowflake.private.key"            = var.snowflake_private_key,
-    "snowflake.private.key.passphrase" = var.snowflake_private_key_passphrase,
+    "topics"                           = var.kafka_topic_name
+    "buffer.count.records"             = 10000
+    "buffer.flush.time"                = 5
+    "buffer.size.bytes"                = 20000000
+    "snowflake.url.name"               = "hongbomiao.snowflakecomputing.com:443"
+    "snowflake.user.name"              = var.snowflake_user_name
+    "snowflake.private.key"            = var.snowflake_private_key
+    "snowflake.private.key.passphrase" = var.snowflake_private_key_passphrase
     "snowflake.role.name"              = var.snowflake_role_name
     "snowflake.ingestion.method"       = "SNOWPIPE_STREAMING"
     "snowflake.enable.schematization"  = true
-    "snowflake.database.name"          = var.snowflake_database_name,
-    "snowflake.schema.name"            = var.snowflake_schema_name,
+    "snowflake.database.name"          = var.snowflake_database_name
+    "snowflake.schema.name"            = var.snowflake_schema_name
     # e.g., development.tracker.analytic-events.avro -> tracker_analytic_events
     "snowflake.topic2table.map" = "${var.kafka_topic_name}:${
       upper(join("_",
@@ -49,9 +49,9 @@ resource "aws_mskconnect_connector" "hm_amazon_msk_connector" {
           replace(split(".", var.kafka_topic_name)[2], "-", "_")
         ]
       ))
-    }",
-    "value.converter"                     = "io.confluent.connect.avro.AvroConverter",
-    "value.converter.schema.registry.url" = "https://confluent-schema-registry.hongbomiao.com",
+    }"
+    "value.converter"                     = "io.confluent.connect.avro.AvroConverter"
+    "value.converter.schema.registry.url" = var.confluent_schema_registry_url
     "errors.log.enable"                   = true
     "errors.tolerance"                    = "all"
     "jmx"                                 = true

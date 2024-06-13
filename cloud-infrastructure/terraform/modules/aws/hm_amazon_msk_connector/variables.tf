@@ -16,6 +16,9 @@ variable "amazon_msk_connector_iam_role_arn" {
 variable "amazon_msk_cluster_bootstrap_servers" {
   type = string
 }
+variable "confluent_schema_registry_url" {
+  type = string
+}
 variable "snowflake_user_name" {
   type = string
 }

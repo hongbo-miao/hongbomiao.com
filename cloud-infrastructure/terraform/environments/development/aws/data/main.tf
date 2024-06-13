@@ -12,7 +12,7 @@ locals {
   amazon_eks_cluster_name = "hm-development-eks-cluster"
 }
 module "hm_amazon_eks_access_entry_iam" {
-  providers                    = { aws = aws.engineering }
+  providers                    = { aws = aws.development }
   source                       = "../../../../modules/aws/hm_amazon_eks_access_entry_iam"
   amazon_eks_access_entry_name = "hm-development-eks-cluster-access-entry"
   environment                  = var.environment
@@ -39,24 +39,20 @@ module "eks" {
   vpc_id                   = "vpc-xxxxxxxxxxxxxxxxx"
   subnet_ids               = ["subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx"]
   control_plane_subnet_ids = ["subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx"]
-  # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
     instance_types = ["m7i.large", "m7g.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
   }
   eks_managed_node_groups = {
     hm_node_group = {
-      min_size       = 1
+      min_size       = 2
       max_size       = 10
-      desired_size   = 1
-      instance_types = ["t3a.large"]
+      desired_size   = 2
+      instance_types = ["m7i.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
       capacity_type  = "SPOT"
     }
   }
-  # Cluster access entry
-  # To add the current caller identity as an administrator
   enable_cluster_creator_admin_permissions = true
   access_entries = {
-    # One access entry with a policy associated
     hm_access_entry = {
       kubernetes_groups = []
       principal_arn     = module.hm_amazon_eks_access_entry_iam.arn
@@ -93,9 +89,9 @@ module "karpenter" {
 }
 
 # Argo CD
-module "hm_kubernetes_namespace_argo_cd" {
+module "hm_kubernetes_namespace_hm_argo_cd" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "hm-${var.environment}-argo-cd"
+  kubernetes_namespace = "${var.environment}-hm-argo-cd"
   depends_on = [
     module.eks
   ]
@@ -104,11 +100,29 @@ module "hm_argo_cd_helm_chart" {
   source = "../../../../modules/kubernetes/hm_argo_cd_helm_chart"
   name   = "hm-argo-cd"
   # https://artifacthub.io/packages/helm/argo/argo-cd
-  argo_cd_version = "2.11.2"
-  namespace       = module.hm_kubernetes_namespace_argo_cd.namespace
+  argo_cd_version = "7.1.3"
+  namespace       = module.hm_kubernetes_namespace_hm_argo_cd.namespace
   environment     = var.environment
   team            = var.team
   depends_on = [
-    module.hm_kubernetes_namespace_argo_cd
+    module.hm_kubernetes_namespace_hm_argo_cd
+  ]
+}
+
+# Sealed Secrets
+module "hm_kubernetes_namespace_hm_sealed_secrets" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-sealed-secrets"
+  depends_on = [
+    module.eks
+  ]
+}
+
+# Monitoring
+module "hm_kubernetes_namespace_hm_monitoring" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-monitoring"
+  depends_on = [
+    module.eks
   ]
 }

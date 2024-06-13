@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-monitoring
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-monitoring
+spec:
+  project: default
+  source:
+    chart: kube-prometheus-stack
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 60.1.0
+    helm:
+      releaseName: kube-prometheus-stack
+  destination:
+    namespace: production-hm-monitoring
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true

@@ -463,6 +463,7 @@ module "development_hm_amazon_msk_tracker_sink_connector" {
   amazon_msk_plugin_revision           = module.development_hm_amazon_msk_tracker_sink_plugin.latest_revision
   amazon_msk_connector_iam_role_arn    = module.development_hm_amazon_msk_tracker_sink_connector_iam.arn
   amazon_msk_cluster_bootstrap_servers = module.development_hm_amazon_msk_cluster.bootstrap_servers
+  confluent_schema_registry_url        = "https://development-confluent-schema-registry.hongbomiao.com"
   snowflake_user_name                  = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["user_name"]
   snowflake_private_key                = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key"]
   snowflake_private_key_passphrase     = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key_passphrase"]
