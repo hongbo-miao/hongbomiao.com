@@ -7,11 +7,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: "https://github.com/hongbo-miao/hongbomiao.com"
+    repoURL: https://github.com/hongbo-miao/hongbomiao.com
     path: kubernetes
     targetRevision: HEAD
   destination:
     namespace: hm
-    server: "https://kubernetes.default.svc"
+    server: https://kubernetes.default.svc
   syncPolicy:
-    automated: null
+    syncOptions:
+      - ServerSideApply=true
