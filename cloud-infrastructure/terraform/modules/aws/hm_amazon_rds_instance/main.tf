@@ -20,6 +20,7 @@ resource "aws_db_instance" "hm_amazon_rds_instance" {
   db_subnet_group_name                  = var.subnet_group_name
   parameter_group_name                  = var.parameter_group_name
   publicly_accessible                   = false
+  storage_encrypted                     = true
   ca_cert_identifier                    = "rds-ca-ecc384-g1"
   performance_insights_enabled          = true
   performance_insights_retention_period = 7
