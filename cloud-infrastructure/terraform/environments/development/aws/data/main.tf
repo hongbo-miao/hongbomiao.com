@@ -51,6 +51,16 @@ module "eks" {
       capacity_type  = "SPOT"
     }
   }
+  node_security_group_additional_rules = {
+    # For kubeseal
+    ingress_8080 = {
+      type                          = "ingress"
+      protocol                      = "tcp"
+      from_port                     = 8080
+      to_port                       = 8080
+      source_cluster_security_group = true
+    }
+  }
   enable_cluster_creator_admin_permissions = true
   access_entries = {
     hm_access_entry = {

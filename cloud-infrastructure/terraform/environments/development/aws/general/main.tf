@@ -480,7 +480,7 @@ module "development_hm_amazon_msk_tracker_sink_connector" {
 # AWS Batch
 module "development_hm_aws_batch_security_group" {
   providers                      = { aws = aws.development }
-  source                         = "../../../../modules/aws/hm_amazon_ec2_security_group"
+  source                         = "../../../../modules/aws/hm_aws_batch_security_group"
   amazon_ec2_security_group_name = "hm-aws-batch-security-group"
   amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
   environment                    = var.environment
