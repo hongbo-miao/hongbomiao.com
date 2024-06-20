@@ -1,3 +1,7 @@
+data "aws_vpc" "hm_amazon_vpc" {
+  default = true
+}
+
 # Amazon S3 bucket - hm-development-bucket
 module "development_hm_development_bucket_amazon_s3_bucket" {
   providers      = { aws = aws.development }
@@ -116,6 +120,84 @@ module "hm_argo_cd_helm_chart" {
   team            = var.team
   depends_on = [
     module.hm_kubernetes_namespace_hm_argo_cd
+  ]
+}
+
+# Airbyte
+# Airbyte - S3 bucket
+module "hm_amazon_s3_bucket_hm_airbyte" {
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${var.environment}-hm-airbyte"
+  environment    = var.environment
+  team           = var.team
+}
+# Airbyte - IAM user
+module "hm_airbyte_iam_user" {
+  source            = "../../../../modules/aws/hm_airbyte_iam_user"
+  aws_iam_user_name = "${var.environment}_hm_airbyte_user"
+  s3_bucket_name    = module.hm_amazon_s3_bucket_hm_airbyte.name
+  environment       = var.environment
+  team              = var.team
+}
+# Airbyte - Postgres
+locals {
+  amazon_rds_name = "${var.environment}-hm-airbyte-postgres"
+}
+data "aws_secretsmanager_secret" "hm_airbyte_postgres_secret" {
+  name = "${var.environment}-hm-airbyte-postgres/admin"
+}
+data "aws_secretsmanager_secret_version" "hm_airbyte_postgres_secret_version" {
+  secret_id = data.aws_secretsmanager_secret.hm_airbyte_postgres_secret.id
+}
+module "hm_hm_airbyte_postgres_security_group" {
+  source                         = "../../../../modules/aws/hm_airbyte_postgres_security_group"
+  amazon_ec2_security_group_name = "${local.amazon_rds_name}-security-group"
+  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
+  environment                    = var.environment
+  team                           = var.team
+}
+module "hm_hm_airbyte_postgres_subnet_group" {
+  source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
+  subnet_group_name = "${local.amazon_rds_name}-subnet-group"
+  subnet_ids        = ["subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx"]
+  environment       = var.environment
+  team              = var.team
+}
+module "hm_hm_airbyte_postgres_parameter_group" {
+  source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
+  family               = "postgres16"
+  parameter_group_name = "${local.amazon_rds_name}-parameter-group"
+  # https://stackoverflow.com/questions/78645095/pod-airbyte-temporal-failed-to-connect-to-rds-with-rds-force-ssl-enabled
+  parameters = [
+    {
+      name  = "rds.force_ssl"
+      value = "0"
+    }
+  ]
+  environment = var.environment
+  team        = var.team
+}
+module "hm_hm_airbyte_postgres_instance" {
+  source                     = "../../../../modules/aws/hm_amazon_rds_instance"
+  amazon_rds_name            = local.amazon_rds_name
+  amazon_rds_engine          = "postgres"
+  amazon_rds_engine_version  = "16.3"
+  amazon_rds_instance_class  = "db.m7g.large"
+  amazon_rds_storage_size_gb = 32
+  user_name                  = jsondecode(data.aws_secretsmanager_secret_version.hm_airbyte_postgres_secret_version.secret_string)["user_name"]
+  password                   = jsondecode(data.aws_secretsmanager_secret_version.hm_airbyte_postgres_secret_version.secret_string)["password"]
+  parameter_group_name       = module.hm_hm_airbyte_postgres_parameter_group.name
+  subnet_group_name          = module.hm_hm_airbyte_postgres_subnet_group.name
+  vpc_security_group_ids     = [module.hm_hm_airbyte_postgres_security_group.id]
+  cloudwatch_log_types       = ["postgresql", "upgrade"]
+  environment                = var.environment
+  team                       = var.team
+}
+module "hm_kubernetes_namespace_hm_airbyte" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-airbyte"
+  depends_on = [
+    module.eks
   ]
 }
 

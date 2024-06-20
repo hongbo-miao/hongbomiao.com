@@ -1,0 +1,164 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-airbyte
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-airbyte
+spec:
+  project: hongbomiao
+  source:
+    chart: airbyte
+    repoURL: https://airbytehq.github.io/helm-charts
+    targetRevision: 0.199.0
+    helm:
+      releaseName: airbyte
+      values: |
+        # https://docs.airbyte.com/deploying-airbyte/on-kubernetes-via-helm
+        # https://github.com/airbytehq/airbyte-platform/blob/main/charts/airbyte/values.yaml
+        ---
+        global:
+          auth:
+            instanceAdmin:
+              firstName: Hongbo
+              lastName:  Miao
+              secretName: production-hm-airbyte-secret
+              emailSecretKey: AIRBYTE_ADMIN_EMAIL
+              passwordSecretKey: AIRBYTE_ADMIN_PASSWORD
+          state:
+            storage:
+              type: S3
+          database:
+            type: external
+            host: production-hm-airbyte-postgres.xxx.us-west-2.rds.amazonaws.com
+            port: 5432
+            database: airbyte_db
+            secretName: production-hm-airbyte-secret
+            userSecretKey: POSTGRES_USER_NAME
+            passwordSecretKey: POSTGRES_PASSWORD
+          logs:
+            accessKey:
+              existingSecret: production-hm-airbyte-secret
+              existingSecretKey: AWS_ACCESS_KEY_ID
+            secretKey:
+              existingSecret: production-hm-airbyte-secret
+              existingSecretKey: AWS_SECRET_ACCESS_KEY
+          storage:
+            type: S3
+            bucket:
+              activityPayload: production-hm-airbyte
+              log: production-hm-airbyte
+              state: production-hm-airbyte
+              workloadOutput: production-hm-airbyte
+          minio:
+            enabled: false
+        server:
+          extraEnv:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: STATE_STORAGE_S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: STATE_STORAGE_S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: STATE_STORAGE_S3_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: LOG_S3_BUCKET_NAME
+            - name: STATE_STORAGE_S3_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: LOG_S3_BUCKET_REGION
+        worker:
+          extraEnv:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: STATE_STORAGE_S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: STATE_STORAGE_S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: STATE_STORAGE_S3_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: LOG_S3_BUCKET_NAME
+            - name: STATE_STORAGE_S3_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: LOG_S3_BUCKET_REGION
+            - name: AWS_DEFAULT_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: production-hm-airbyte-secret
+                  key: LOG_S3_BUCKET_REGION
+        postgresql:
+          enabled: false
+        externalDatabase:
+          host: production-hm-airbyte-postgres.xxx.us-west-2.rds.amazonaws.com
+          port: 5432
+          database: airbyte_db
+          user: airbyte_user
+          existingSecret: production-hm-airbyte-secret
+          existingSecretPasswordKey: POSTGRES_PASSWORD
+          jdbcUrl: jdbc:postgresql://production-hm-airbyte-postgres.xxx.us-west-2.rds.amazonaws.com:5432/airbyte_db?ssl=true&sslmode=require
+        temporal:
+          extraVolumes:
+            - name: airbyte-config-map-volume
+              configMap:
+                name: production-hm-airbyte-config-map
+          extraVolumeMounts:
+            - name: airbyte-config-map-volume
+              subPath: amazon-rds-ca-global-bundle.pem
+              mountPath: /etc/ssl/certs/amazon-rds-ca-global-bundle.pem
+          extraEnv:
+            # https://github.com/temporalio/docker-builds/blob/main/docker/auto-setup.sh
+            # Ensure that the boolean values below are in string format
+            - name: SKIP_DB_CREATE
+              value: "true"
+            - name: DBNAME
+              value: temporal_db
+            - name: VISIBILITY_DBNAME
+              value: temporal_visibility_db
+            - name: POSTGRES_TLS_ENABLED
+              value: "true"
+            - name: POSTGRES_TLS_DISABLE_HOST_VERIFICATION
+              value: "false"
+            - name: POSTGRES_TLS_CA_FILE
+              value: /etc/ssl/certs/amazon-rds-ca-global-bundle.pem
+  destination:
+    namespace: production-hm-airbyte
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
