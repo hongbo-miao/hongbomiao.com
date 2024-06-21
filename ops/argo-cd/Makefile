@@ -21,3 +21,8 @@ argo-cd-repo-list:
 	argocd repo list
 argo-cd-repo-remove:
 	argocd repo rm git@github.com:hongbo-miao/hongbomiao.com.git
+
+argo-cd-app-create:
+	argocd app create xxx --file=xxx.yaml
+argo-cd-app-sync:
+	argocd app sync xxx

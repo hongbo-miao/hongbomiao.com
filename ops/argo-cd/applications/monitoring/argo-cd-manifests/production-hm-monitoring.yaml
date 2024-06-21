@@ -9,9 +9,9 @@ metadata:
 spec:
   project: hongbomiao
   source:
-    chart: kube-prometheus-stack
     repoURL: https://prometheus-community.github.io/helm-charts
     targetRevision: 60.1.0
+    chart: kube-prometheus-stack
     helm:
       releaseName: kube-prometheus-stack
   destination:
@@ -20,3 +20,5 @@ spec:
   syncPolicy:
     syncOptions:
       - ServerSideApply=true
+    automated:
+      prune: true
