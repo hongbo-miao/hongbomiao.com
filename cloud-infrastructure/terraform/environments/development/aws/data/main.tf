@@ -202,6 +202,15 @@ module "hm_kubernetes_namespace_hm_airbyte" {
   ]
 }
 
+# Metrics Server
+module "hm_kubernetes_namespace_hm_metrics_server" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-metrics-server"
+  depends_on = [
+    module.eks
+  ]
+}
+
 # Sealed Secrets
 module "hm_kubernetes_namespace_hm_sealed_secrets" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
@@ -211,10 +220,10 @@ module "hm_kubernetes_namespace_hm_sealed_secrets" {
   ]
 }
 
-# Monitoring
-module "hm_kubernetes_namespace_hm_monitoring" {
+# Prometheus
+module "hm_kubernetes_namespace_hm_prometheus" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-monitoring"
+  kubernetes_namespace = "${var.environment}-hm-prometheus"
   depends_on = [
     module.eks
   ]
