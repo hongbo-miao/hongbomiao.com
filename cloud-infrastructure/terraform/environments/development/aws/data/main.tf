@@ -48,9 +48,9 @@ module "eks" {
   }
   eks_managed_node_groups = {
     hm_node_group = {
-      min_size       = 2
-      max_size       = 10
-      desired_size   = 2
+      min_size       = 10
+      max_size       = 50
+      desired_size   = 10
       instance_types = ["m7i.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
       capacity_type  = "SPOT"
     }
@@ -114,10 +114,11 @@ module "hm_argo_cd_helm_chart" {
   source = "../../../../modules/kubernetes/hm_argo_cd_helm_chart"
   name   = "hm-argo-cd"
   # https://artifacthub.io/packages/helm/argo/argo-cd
-  argo_cd_version = "7.1.3"
-  namespace       = module.hm_kubernetes_namespace_hm_argo_cd.namespace
-  environment     = var.environment
-  team            = var.team
+  argo_cd_version     = "7.2.0"
+  namespace           = module.hm_kubernetes_namespace_hm_argo_cd.namespace
+  my_values_yaml_path = "files/argo-cd/helm/my-values.yaml"
+  environment         = var.environment
+  team                = var.team
   depends_on = [
     module.hm_kubernetes_namespace_hm_argo_cd
   ]
