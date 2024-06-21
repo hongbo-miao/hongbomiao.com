@@ -1,0 +1,20 @@
+# https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
+---
+redis-ha:
+  enabled: true
+
+  haproxy:
+    # https://github.com/argoproj/argo-helm/discussions/2785# https://github.com/argoproj/argo-helm/discussions/2785
+    enabled: false
+controller:
+  replicas: 1
+server:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+repoServer:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+applicationSet:
+  replicas: 2
