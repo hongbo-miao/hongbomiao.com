@@ -12,5 +12,7 @@ resource "helm_release" "hm_argo_cd_helm_chart" {
   chart      = "argo-cd"
   name       = var.name
   version    = var.argo_cd_version
+  values     = [file(var.my_values_yaml_path)]
+  wait       = true
   namespace  = var.namespace
 }
