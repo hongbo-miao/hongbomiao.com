@@ -26,9 +26,10 @@ jobs:
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
-      aws-glue-spark-scripts: ${{ steps.filter.outputs.aws-glue-spark-scripts }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
       decode-can-data: ${{ steps.filter.outputs.decode-can-data }}
+      development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
+      production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
       format-can-data: ${{ steps.filter.outputs.format-can-data }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
@@ -116,15 +117,18 @@ jobs:
             api-python:
               - '.github/workflows/test.yml'
               - 'api-python/**'
-            aws-glue-spark-scripts:
-              - '.github/workflows/test.yml'
-              - 'cloud-infrastructure/terraform/data/aws-glue/spark-scripts/**'
             call-matlab-function-in-python:
               - '.github/workflows/test.yml'
               - 'matlab/call-matlab-function-in-python/**'
             decode-can-data:
               - '.github/workflows/test.yml'
               - 'embedded/decode-can-data/**'
+            development-aws-glue-spark-scripts:
+              - '.github/workflows/test.yml'
+              - 'cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts/**'
+            production-aws-glue-spark-scripts:
+              - '.github/workflows/test.yml'
+              - 'cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/**'
             format-can-data:
               - '.github/workflows/test.yml'
               - 'embedded/format-can-data/**'
@@ -852,10 +856,10 @@ jobs:
         with:
           directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
 
-  aws-glue-spark-scripts-test:
-    name: AWS Glue (spark-scripts) | Test
+  development-aws-glue-spark-scripts-test:
+    name: AWS Glue (development spark-scripts) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.aws-glue-spark-scripts == 'true' }}
+    if: ${{ needs.detect-changes.outputs.development-aws-glue-spark-scripts == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -868,21 +872,53 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.0
         with:
-          python-version-file: cloud-infrastructure/terraform/data/aws-glue/spark-scripts/pyproject.toml
+          python-version-file: cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts/pyproject.toml
           cache: poetry
-          cache-dependency-path: cloud-infrastructure/terraform/data/aws-glue/spark-scripts/poetry.lock
+          cache-dependency-path: cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts/poetry.lock
       - name: Install dependencies
-        working-directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
+        working-directory: cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
+        working-directory: cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4.5.0
         with:
-          directory: cloud-infrastructure/terraform/data/aws-glue/spark-scripts
+          directory: cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts
+
+  production-aws-glue-spark-scripts-test:
+    name: AWS Glue (production spark-scripts) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.production-aws-glue-spark-scripts == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.7
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version-file: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/pyproject.toml
+          cache: poetry
+          cache-dependency-path: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/poetry.lock
+      - name: Install dependencies
+        working-directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
+        run: |
+          poetry install --no-root
+      - name: Test
+        working-directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.5.0
+        with:
+          directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
 
   aws-parallelcluster-test:
     name: AWS ParallelCluster | Test
