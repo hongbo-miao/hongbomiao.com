@@ -9,9 +9,6 @@ metadata:
 spec:
   project: production-hongbomiao
   sources:
-    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-      targetRevision: HEAD
-      path: ops/argo-cd/applications/production-hongbomiao/airbyte/kubernetes-manifests
     - repoURL: https://airbytehq.github.io/helm-charts
       targetRevision: 0.199.0
       chart: airbyte
@@ -159,6 +156,9 @@ spec:
                 value: "false"
               - name: POSTGRES_TLS_CA_FILE
                 value: /etc/ssl/certs/amazon-rds-ca-global-bundle.pem
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: HEAD
+      path: ops/argo-cd/applications/production-hongbomiao/airbyte/kubernetes-manifests
   destination:
     namespace: production-hm-airbyte
     server: https://kubernetes.default.svc

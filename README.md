@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/cb67a7a8-2fe6-45c1-9d0d-bb0293ed9bce)
+![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/3946b33d-12c6-47bd-bf3b-c2f0e1b01973)
 
 # 📦 Setup
 
@@ -203,13 +203,15 @@ make kubernetes-clean
 - **Caddy** - Web server, reverse proxy, load balancer
 - **Traefik** - Web server, reverse proxy, load balancer
 - **nginx** - Web server, reverse proxy, load balancer
+- **Metrics Server** - Kubernetes metrics
 - **Elastic APM** - Application performance monitoring
 - **OpenTelemetry** - Observability framework
 - **Jaeger** - Distributed tracing system
 - **Netdata** - Distributed monitoring platform
 - **Telegraf** - Plugin-driven server agent
-- **Thanos** - Highly available Prometheus setup with long term storage capabilities
+- **Thanos** - Highly available Prometheus setup with long-term storage capabilities
 - **Pixie** - Observability tool for Kubernetes applications
+- **Sealed Secrets** - Kubernetes secret encrypting
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
 - **Multipass** - VM management
@@ -437,7 +439,6 @@ make kubernetes-clean
 ## Ops
 
 - **Argo CD** - Declarative GitOps CD for Kubernetes
-- **Sealed Secrets** - Kubernetes secret encrypting
 - **Rancher** - Kubernetes container management platform
 - **Goldilocks** - Kubernetes resource requests recommendation
 - **Polaris** - Kubernetes best practices validation
