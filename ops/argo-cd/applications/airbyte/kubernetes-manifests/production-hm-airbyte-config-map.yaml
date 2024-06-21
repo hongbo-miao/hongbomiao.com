@@ -4,6 +4,8 @@ kind: ConfigMap
 metadata:
   name: production-hm-airbyte-config-map
   namespace: production-hm-airbyte
+  annotations:
+    argocd.argoproj.io/hook: PreSync
 data:
   # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html#UsingWithRDS.SSL.CertificatesAllRegions
   amazon-rds-ca-global-bundle.pem: |
