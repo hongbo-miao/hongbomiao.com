@@ -240,8 +240,6 @@ kubectl-port-forward-airflow:
 	kubectl port-forward service/airflow-webserver --namespace=hm-airflow 45808:8080
 kubectl-port-forward-prometheus:
 	kubectl port-forward service/monitoring-kube-prometheus-prometheus --namespace=hm-monitoring 9090:9090
-kubectl-port-forward-grafana-by-prometheus:
-	kubectl port-forward service/monitoring-grafana --namespace=hm-monitoring 54976:80
 kubectl-port-forward-grafana-by-loki:
 	kubectl port-forward service/grafana --namespace=hm-grafana 18845:80
 kubectl-port-forward-netdata:
@@ -260,10 +258,6 @@ kubectl-port-forward-rasa:
 	kubectl port-forward service/hm-release-rasa-action-server --namespace=hm-rasa-action-server 5055:5055
 kubectl-port-forward-ray:
 	kubectl port-forward service/ray-cluster-kuberay-head-svc --namespace=hm-ray 31596:8265
-kubectl-port-forward-goldilocks:
-	kubectl port-forward service/goldilocks-dashboard --namespace=hm-goldilocks 34617:80
-kubectl-port-forward-opencost:
-	kubectl port-forward service/opencost --namespace=hm-opencost 56053:9090
 kubectl-port-forward-kubecost:
 	kubectl port-forward service/kubecost-cost-analyzer --namespace=hm-kubecost 9090:9090
 kubectl-port-forward-polaris:
@@ -272,14 +266,17 @@ kubectl-port-forward-sloop:
 	kubectl port-forward service/sloop --namespace=hm-sloop 16850:16850
 kubectl-port-forward-rancher:
 	kubectl port-forward service/rancher --namespace=cattle-system 46271:443
-kubectl-port-forward-argocd:
-	kubectl port-forward service/argocd-server --namespace=argocd 31026:443
 kubectl-port-forward-temporal:
 	kubectl port-forward service/temporal-web --namespace=hm-temporal 48780:8080
 kubectl-port-forward-metabase:
 	kubectl port-forward service/metabase --namespace=hm-metabase 50399:80
 kubectl-port-forward-pgadmin:
 	kubectl port-forward service/pgadmin-pgadmin4 --namespace=hm-pgadmin 40594:80
+
+kubectl-label-add:
+	kubectl label namespace production-hm-goldilocks goldilocks.fairwinds.com/enabled=true
+kubectl-label-remove:
+	kubectl label namespace production-hm-goldilocks goldilocks.fairwinds.com/enabled-
 
 list-port-forward:
 	ps -ef | grep port-forward
