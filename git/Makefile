@@ -28,6 +28,14 @@ git-recover:
 	git reflog --no-abbrev
 	git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+# Git submodule
+git-submodule-add:
+	git submodule add https://github.com/hongbo-miao/hongbomiao.com.git
+git-submodule-remove:
+	git rm hongbomiao.com
+git-submodule-move:
+	git mv hongbomiao.com submodules/hongbomiao.com
+
 # Git LFS
 git-lfs-install:
 	git lfs install
