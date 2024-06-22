@@ -8,3 +8,5 @@ sealed-secrets-seal:
 
 argo-cd-app-create:
 	argocd app create hm-airbyte --file=manifests/hm-airbyte.yaml
+argo-cd-app-update:
+	argocd app create hm-airbyte --file=manifests/hm-airbyte.yaml --upsert

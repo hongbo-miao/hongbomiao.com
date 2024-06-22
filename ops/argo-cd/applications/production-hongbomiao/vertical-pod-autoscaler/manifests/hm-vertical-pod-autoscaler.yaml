@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-vertical-pod-autoscaler
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-vertical-pod-autoscaler
+spec:
+  project: production-hongbomiao
+  source:
+    repoURL: https://charts.fairwinds.com/stable
+    targetRevision: 4.5.0
+    chart: vpa
+    helm:
+      releaseName: hm-vertical-pod-autoscaler
+  destination:
+    namespace: production-hm-vertical-pod-autoscaler
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
