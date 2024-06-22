@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-caddy-ingress-controller
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-caddy-ingress-controller
+spec:
+  project: production-hm
+  source:
+    repoURL: https://caddyserver.github.io/ingress
+    # https://github.com/caddyserver/ingress/releases
+    targetRevision: 1.1.0
+    chart: caddy-ingress-controller
+    helm:
+      releaseName: hm-caddy-ingress-controller
+  destination:
+    namespace: production-hm-caddy-ingress-controller
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
