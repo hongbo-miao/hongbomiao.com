@@ -47,7 +47,7 @@ module "eks" {
     instance_types = ["m7i.large", "m7g.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
   }
   eks_managed_node_groups = {
-    hm_node_group = {
+    hm_eks_node_group = {
       min_size       = 10
       max_size       = 50
       desired_size   = 10
@@ -197,6 +197,21 @@ module "hm_hm_airbyte_postgres_instance" {
 module "hm_kubernetes_namespace_hm_airbyte" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-airbyte"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = true
+  }
+  depends_on = [
+    module.eks
+  ]
+}
+
+# Goldilocks
+module "hm_kubernetes_namespace_hm_goldilocks" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-goldilocks"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = true
+  }
   depends_on = [
     module.eks
   ]
@@ -206,15 +221,21 @@ module "hm_kubernetes_namespace_hm_airbyte" {
 module "hm_kubernetes_namespace_hm_metrics_server" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-metrics-server"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = true
+  }
   depends_on = [
     module.eks
   ]
 }
 
-# Sealed Secrets
-module "hm_kubernetes_namespace_hm_sealed_secrets" {
+# OpenCost
+module "hm_kubernetes_namespace_hm_opencost" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-sealed-secrets"
+  kubernetes_namespace = "${var.environment}-hm-opencost"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = true
+  }
   depends_on = [
     module.eks
   ]
@@ -224,6 +245,30 @@ module "hm_kubernetes_namespace_hm_sealed_secrets" {
 module "hm_kubernetes_namespace_hm_prometheus" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-prometheus"
+  depends_on = [
+    module.eks
+  ]
+}
+
+# Sealed Secrets
+module "hm_kubernetes_namespace_hm_sealed_secrets" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-sealed-secrets"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = true
+  }
+  depends_on = [
+    module.eks
+  ]
+}
+
+# Vertical Pod Autoscaler
+module "hm_kubernetes_namespace_hm_vertical_pod_autoscaler" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-vertical-pod-autoscaler"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = true
+  }
   depends_on = [
     module.eks
   ]
