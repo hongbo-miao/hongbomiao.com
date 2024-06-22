@@ -263,7 +263,7 @@ kubectl-port-forward-ray:
 kubectl-port-forward-goldilocks:
 	kubectl port-forward service/goldilocks-dashboard --namespace=hm-goldilocks 34617:80
 kubectl-port-forward-opencost:
-	kubectl port-forward service/opencost --namespace=hm-opencost 9090:9090
+	kubectl port-forward service/opencost --namespace=hm-opencost 56053:9090
 kubectl-port-forward-kubecost:
 	kubectl port-forward service/kubecost-cost-analyzer --namespace=hm-kubecost 9090:9090
 kubectl-port-forward-polaris:
