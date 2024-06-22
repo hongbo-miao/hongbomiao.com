@@ -9,6 +9,7 @@ terraform {
 # https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/namespace
 resource "kubernetes_namespace" "hm_kubernetes_namespace" {
   metadata {
-    name = var.kubernetes_namespace
+    name   = var.kubernetes_namespace
+    labels = var.labels
   }
 }
