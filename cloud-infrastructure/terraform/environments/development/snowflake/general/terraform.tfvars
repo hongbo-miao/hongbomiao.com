@@ -1,6 +1,8 @@
-environment                            = "development"
-snowflake_public_schema_name           = "PUBLIC"
-development_warehouse_auto_suspend_min = 2
+environment                                       = "development"
+snowflake_public_schema_name                      = "PUBLIC"
+development_department_warehouse_auto_suspend_min = 5
+development_kafka_warehouse_auto_suspend_min      = 60
+development_streamlit_warehouse_auto_suspend_min  = 5
 hongbomiao_departments = [
   {
     name             = "ENGINEERING",
