@@ -165,16 +165,13 @@ module "snowflake_grant_all_future_table_in_schema_privileges_to_production_depa
   ]
 }
 module "snowflake_grant_production_department_db_schema_read_only_role_to_production_department_db_schema_read_write_role" {
-  providers                  = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                     = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
-  for_each                   = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name        = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
-  snowflake_parent_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
+  providers                    = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                       = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
+  for_each                     = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
+  snowflake_role_name          = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
+  snowflake_grant_to_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
   depends_on = [
     module.snowflake_production_department_db_schema_read_only_role,
-    module.snowflake_grant_database_privileges_to_production_department_db_schema_read_only_role,
-    module.snowflake_grant_all_future_table_in_schema_privileges_to_production_department_db_schema_read_only_role,
-    module.snowflake_grant_warehouse_privileges_to_production_department_db_schema_read_only_role,
     module.snowflake_production_department_db_schema_read_write_role
   ]
 }
@@ -246,16 +243,13 @@ module "snowflake_grant_future_table_all_privileges_to_role_to_production_depart
   ]
 }
 module "snowflake_grant_production_department_db_schema_read_write_role_to_production_department_db_admin_role" {
-  providers                  = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                     = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
-  for_each                   = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name        = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
-  snowflake_parent_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_ADMIN_ROLE"
+  providers                    = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                       = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
+  for_each                     = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
+  snowflake_role_name          = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
+  snowflake_grant_to_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_ADMIN_ROLE"
   depends_on = [
     module.snowflake_production_department_db_schema_read_write_role,
-    module.snowflake_grant_production_department_db_schema_read_only_role_to_production_department_db_schema_read_write_role,
-    module.snowflake_grant_schema_privileges_to_production_department_db_schema_read_write_role,
-    module.snowflake_grant_all_future_table_in_schema_privileges_to_production_department_db_schema_read_write_role,
     module.snowflake_production_department_db_admin_role
   ]
 }
@@ -345,11 +339,76 @@ module "snowflake_production_hm_kafka_wh_warehouse" {
   snowflake_warehouse_size = "xsmall"
   auto_suspend_min         = var.production_warehouse_auto_suspend_min
 }
+module "snowflake_production_hm_kafka_db_department_read_only_role" {
+  providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source              = "../../../../modules/snowflake/hm_snowflake_role"
+  for_each            = local.production_hm_kafka_db_department_names
+  snowflake_role_name = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_ONLY_ROLE"
+}
+module "snowflake_grant_database_privileges_to_production_hm_kafka_db_department_read_only_role" {
+  providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_privileges_to_role"
+  for_each                = local.production_hm_kafka_db_department_names
+  snowflake_role_name     = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_ONLY_ROLE"
+  privileges              = ["USAGE"]
+  snowflake_database_name = data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name
+  depends_on = [
+    module.snowflake_production_hm_kafka_db_department_read_only_role
+  ]
+}
+module "snowflake_grant_schema_privileges_to_production_hm_kafka_db_department_read_only_role" {
+  providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
+  for_each                = local.production_hm_kafka_db_department_names
+  snowflake_role_name     = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_ONLY_ROLE"
+  privileges              = ["USAGE"]
+  snowflake_database_name = data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name
+  snowflake_schema_name   = each.value
+  depends_on = [
+    module.snowflake_production_hm_kafka_db_department_read_only_role
+  ]
+}
+module "snowflake_grant_warehouse_privileges_to_production_hm_kafka_db_department_read_only_role" {
+  providers                = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                   = "../../../../modules/snowflake/hm_snowflake_grant_warehouse_privileges_to_role"
+  for_each                 = local.production_hm_kafka_db_department_names
+  snowflake_role_name      = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_ONLY_ROLE"
+  privileges               = ["USAGE"]
+  snowflake_warehouse_name = module.snowflake_production_hm_kafka_wh_warehouse.name
+  depends_on = [
+    module.snowflake_production_hm_kafka_db_department_read_only_role,
+    module.snowflake_production_hm_kafka_wh_warehouse
+  ]
+}
 module "snowflake_production_hm_kafka_db_department_read_write_role" {
   providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source              = "../../../../modules/snowflake/hm_snowflake_role"
   for_each            = local.production_hm_kafka_db_department_names
   snowflake_role_name = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_WRITE_ROLE"
+}
+# https://docs.snowflake.com/en/user-guide/kafka-connector-install
+module "snowflake_grant_schema_privileges_to_production_hm_kafka_db_department_read_write_role" {
+  providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
+  for_each                = local.production_hm_kafka_db_department_names
+  snowflake_role_name     = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_WRITE_ROLE"
+  privileges              = ["CREATE TABLE", "CREATE STAGE", "CREATE PIPE"]
+  snowflake_database_name = data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name
+  snowflake_schema_name   = each.value
+  depends_on = [
+    module.snowflake_production_hm_kafka_db_department_read_write_role
+  ]
+}
+module "snowflake_grant_production_hm_kafka_db_department_read_only_role_to_production_hm_kafka_db_department_read_write_role" {
+  providers                    = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                       = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
+  for_each                     = local.production_hm_kafka_db_department_names
+  snowflake_role_name          = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_ONLY_ROLE"
+  snowflake_grant_to_role_name = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_WRITE_ROLE"
+  depends_on = [
+    module.snowflake_production_hm_kafka_db_department_read_only_role,
+    module.snowflake_production_hm_kafka_db_department_read_write_role
+  ]
 }
 module "snowflake_production_hm_kafka_db_department_read_write_user" {
   providers                                 = { snowflake = snowflake.hm_production_terraform_read_write_role }
@@ -371,41 +430,5 @@ module "snowflake_grant_production_hm_kafka_db_department_read_write_role_to_pro
   depends_on = [
     module.snowflake_production_hm_kafka_db_department_read_write_user,
     module.snowflake_production_hm_kafka_db_department_read_write_role
-  ]
-}
-# https://docs.snowflake.com/en/user-guide/kafka-connector-install
-module "snowflake_grant_database_privileges_to_production_hm_kafka_db_department_read_write_role" {
-  providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_privileges_to_role"
-  for_each                = local.production_hm_kafka_db_department_names
-  snowflake_role_name     = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_WRITE_ROLE"
-  privileges              = ["USAGE"]
-  snowflake_database_name = data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name
-  depends_on = [
-    module.snowflake_production_hm_kafka_db_department_read_write_role
-  ]
-}
-module "snowflake_grant_schema_privileges_to_production_hm_kafka_db_department_read_write_role" {
-  providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
-  for_each                = local.production_hm_kafka_db_department_names
-  snowflake_role_name     = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_WRITE_ROLE"
-  privileges              = ["USAGE", "CREATE TABLE", "CREATE STAGE", "CREATE PIPE"]
-  snowflake_database_name = data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name
-  snowflake_schema_name   = each.value
-  depends_on = [
-    module.snowflake_production_hm_kafka_db_department_read_write_role
-  ]
-}
-module "snowflake_grant_warehouse_privileges_to_production_hm_kafka_db_department_read_write_role" {
-  providers                = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                   = "../../../../modules/snowflake/hm_snowflake_grant_warehouse_privileges_to_role"
-  for_each                 = local.production_hm_kafka_db_department_names
-  snowflake_role_name      = "HM_${data.terraform_remote_state.hm_terraform_remote_state_production_snowflake_data.outputs.snowflake_production_hm_kafka_db_database_name}_${each.value}_READ_WRITE_ROLE"
-  privileges               = ["USAGE"]
-  snowflake_warehouse_name = module.snowflake_production_hm_kafka_wh_warehouse.name
-  depends_on = [
-    module.snowflake_production_hm_kafka_db_department_read_write_role,
-    module.snowflake_production_hm_kafka_wh_warehouse
   ]
 }
