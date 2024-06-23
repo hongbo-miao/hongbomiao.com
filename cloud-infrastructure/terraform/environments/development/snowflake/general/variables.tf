@@ -4,7 +4,13 @@ variable "environment" {
 variable "snowflake_public_schema_name" {
   type = string
 }
-variable "development_warehouse_auto_suspend_min" {
+variable "development_department_warehouse_auto_suspend_min" {
+  type = number
+}
+variable "development_kafka_warehouse_auto_suspend_min" {
+  type = number
+}
+variable "development_streamlit_warehouse_auto_suspend_min" {
   type = number
 }
 variable "development_department_db_departments" {
