@@ -49,16 +49,27 @@ module "development_hm_trino_emr" {
   source                                     = "../../../../modules/aws/hm_amazon_emr_cluster"
   amazon_emr_cluster_name                    = local.amazon_emr_cluster_name
   amazon_emr_version                         = "emr-7.1.0"
-  applications                               = ["Trino"]
-  primary_instance_target_on_demand_capacity = 1
-  primary_instance_weighted_capacity         = 1
+  applications                               = ["HCatalog", "Trino"]
+  primary_instance_target_on_demand_capacity = 3
   primary_instance_type                      = "c7g.4xlarge"
-  core_instance_target_on_demand_capacity    = 1
-  core_instance_weighted_capacity            = 1
-  core_instance_type                         = "r7g.xlarge"
+  core_instance_target_on_demand_capacity    = 4
+  core_instance_weighted_capacity            = 4
+  core_instance_type                         = "m7a.4xlarge"
   bootstrap_set_up_script_s3_uri             = module.development_hm_trino_s3_set_up_script.uri
   configurations_json_string                 = <<EOF
     [
+      {
+        "Classification": "hive-site",
+        "Properties": {
+          "hive.metastore.client.factory.class": "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory"
+        }
+      },
+      {
+        "Classification": "trino-connector-hive",
+        "Properties": {
+          "hive.metastore": "glue"
+        }
+      },
       {
         "Classification": "trino-config",
         "Properties": {
@@ -107,15 +118,15 @@ module "development_hm_trino_task_instance_fleet" {
   providers                          = { aws = aws.development }
   source                             = "../../../../modules/aws/hm_amazon_emr_cluster_task_instance_fleet"
   amazon_emr_cluster_id              = module.development_hm_trino_emr.id
-  task_instance_target_spot_capacity = 38
+  task_instance_target_spot_capacity = 28
   task_instance_configs = [
     {
-      instance_type     = "r7g.2xlarge"
-      weighted_capacity = 2
+      instance_type     = "m7a.4xlarge"
+      weighted_capacity = 4
     },
     {
-      instance_type     = "r6g.2xlarge"
-      weighted_capacity = 2
+      instance_type     = "m6a.4xlarge"
+      weighted_capacity = 4
     }
   ]
 }
@@ -161,7 +172,6 @@ module "development_hm_sedona_emr" {
   amazon_emr_version                         = "emr-7.1.0"
   applications                               = ["Hadoop", "Hive", "JupyterEnterpriseGateway", "Livy", "Spark"]
   primary_instance_target_on_demand_capacity = 1
-  primary_instance_weighted_capacity         = 1
   primary_instance_type                      = "r7g.xlarge"
   core_instance_target_on_demand_capacity    = 1
   core_instance_weighted_capacity            = 1
