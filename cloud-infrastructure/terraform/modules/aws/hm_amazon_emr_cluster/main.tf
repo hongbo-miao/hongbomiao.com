@@ -12,6 +12,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
   release_label                     = var.amazon_emr_version
   applications                      = var.applications
   termination_protection            = false
+  unhealthy_node_replacement        = true
   keep_job_flow_alive_when_no_steps = true
   log_uri                           = "s3://hm-production-bucket/amazon-emr/logs/"
   ec2_attributes {
@@ -31,7 +32,7 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
       }
     }
     instance_type_configs {
-      weighted_capacity = var.primary_instance_weighted_capacity
+      weighted_capacity = 1
       instance_type     = var.primary_instance_type
     }
   }
