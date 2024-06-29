@@ -10,9 +10,6 @@ variable "applications" {
 variable "primary_instance_target_on_demand_capacity" {
   type = number
 }
-variable "primary_instance_weighted_capacity" {
-  type = number
-}
 variable "primary_instance_type" {
   type = string
 }
