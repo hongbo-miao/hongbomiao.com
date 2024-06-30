@@ -22,6 +22,13 @@ aws-secrets-manager-secret-create-hm-snowflake-production-hm-kafka-db-product-re
         --region=us-west-2 \
         --secret-string=file://secrets/hm-snowflake-hm-production-hm-kafka-db-product-read-write-user-credentials.json
 
+# Snowflake - HM_AIRBYTE_DB database
+aws-secrets-manager-secret-create-snowflake-production-hm-airbyte-db-owner-user:
+	aws secretsmanager create-secret \
+        --name=hm/snowflake/production_hm_airbyte_db/owner \
+        --region=us-west-2 \
+        --secret-string=file://secrets/hm-snowflake-hm-production-hm-airbyte-db-owner-user-credentials.json
+
 # Airbyte - Amazon RDS
 aws-secrets-manager-secret-create-production-hm-airbyte-postgres:
 	aws secretsmanager create-secret \

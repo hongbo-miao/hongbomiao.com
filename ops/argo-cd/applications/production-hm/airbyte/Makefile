@@ -4,9 +4,9 @@ sealed-secrets-seal:
 		--controller-namespace=production-hm-sealed-secrets \
 		--controller-name=hm-sealed-secrets \
 		--format=yaml \
-		> manifests/hm-airbyte-secret.yaml
+		> kubernetes-manifests/hm-airbyte-secret.yaml
 
 argo-cd-app-create:
-	argocd app create hm-airbyte --file=manifests/hm-airbyte.yaml
+	argocd app create hm-airbyte --file=argo-cd-manifests/hm-airbyte.yaml
 argo-cd-app-update:
-	argocd app create hm-airbyte --file=manifests/hm-airbyte.yaml --upsert
+	argocd app create hm-airbyte --file=argo-cd-manifests/hm-airbyte.yaml --upsert

@@ -5,7 +5,11 @@ metadata:
   name: hm-airbyte-config-map
   namespace: production-hm-airbyte
   annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
     argocd.argoproj.io/hook: PreSync
+  labels:
+    app.kubernetes.io/name: hm-airbyte-config-map
+    app.kubernetes.io/part-of: production-hm-airbyte
 data:
   # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html#UsingWithRDS.SSL.CertificatesAllRegions
   amazon-rds-ca-global-bundle.pem: |
