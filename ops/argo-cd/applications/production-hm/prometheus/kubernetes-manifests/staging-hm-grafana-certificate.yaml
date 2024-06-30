@@ -1,0 +1,17 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: staging-hm-grafana-certificate
+  namespace: production-hm-prometheus
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+spec:
+  commonName: hm-grafana.internal.hongbomiao.com
+  secretName: staging-hm-grafana-certificate
+  dnsNames:
+    - hm-grafana.internal.hongbomiao.com
+  issuerRef:
+    kind: ClusterIssuer
+    name: staging-lets-encrypt-cluster-issuer

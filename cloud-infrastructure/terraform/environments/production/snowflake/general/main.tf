@@ -368,6 +368,7 @@ module "snowflake_production_hm_kafka_db_department_read_write_user" {
   for_each                                  = { for x in local.production_hm_kafka_db_department_name_read_write_user_rsa_public_key_without_header_and_trailer_list : "${x.department_name}.${x.read_write_user_rsa_public_key_without_header_and_trailer}" => x }
   snowflake_user_name                       = "HM_PRODUCTION_HM_KAFKA_DB_${each.value.department_name}_READ_WRITE_USER"
   default_role                              = "HM_PRODUCTION_HM_KAFKA_DB_${each.value.department_name}_READ_WRITE_ROLE"
+  default_warehouse                         = module.snowflake_production_hm_kafka_wh_warehouse.name
   rsa_public_key_without_header_and_trailer = each.value.read_write_user_rsa_public_key_without_header_and_trailer
   depends_on = [
     module.snowflake_production_hm_kafka_db_department_read_write_role

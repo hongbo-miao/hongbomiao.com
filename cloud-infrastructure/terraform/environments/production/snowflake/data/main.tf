@@ -16,14 +16,14 @@ module "snowflake_production_department_db_database" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_database"
   for_each                = local.production_department_db_department_names
-  snowflake_database_name = "DEVELOPMENT_DEPARTMENT_${each.value}_DB"
+  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value}_DB"
   data_retention_days     = var.production_database_data_retention_days
 }
 module "snowflake_production_department_db_schema" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_schema"
   for_each                = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x if x.schema_name != var.snowflake_public_schema_name }
-  snowflake_database_name = "DEVELOPMENT_DEPARTMENT_${each.value.department_name}_DB"
+  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value.department_name}_DB"
   snowflake_schema_name   = each.value.schema_name
   depends_on = [
     module.snowflake_production_department_db_database
@@ -34,7 +34,7 @@ module "snowflake_production_department_db_schema" {
 module "snowflake_production_hongbomiao_streamlit_db_database" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_database"
-  snowflake_database_name = "DEVELOPMENT_HONGBOMIAO_STREAMLIT_DB"
+  snowflake_database_name = "PRODUCTION_HONGBOMIAO_STREAMLIT_DB"
   data_retention_days     = var.production_database_data_retention_days
 }
 module "snowflake_production_hongbomiao_streamlit_db_department_schema" {
@@ -55,7 +55,7 @@ locals {
 module "snowflake_production_hm_kafka_db_database" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_database"
-  snowflake_database_name = "DEVELOPMENT_HM_KAFKA_DB"
+  snowflake_database_name = "PRODUCTION_HM_KAFKA_DB"
   data_retention_days     = var.production_database_data_retention_days
 }
 module "snowflake_production_hm_kafka_db_department_schema" {
