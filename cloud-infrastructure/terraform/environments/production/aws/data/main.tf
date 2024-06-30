@@ -13,22 +13,49 @@ module "production_hm_production_bucket_amazon_s3_bucket" {
 
 # Amazon EKS
 locals {
-  amazon_eks_cluster_name = "hm-production-eks-cluster"
+  amazon_eks_cluster_name = "hm-${var.environment}-eks-cluster"
 }
 module "hm_amazon_eks_access_entry_iam" {
   providers                    = { aws = aws.production }
   source                       = "../../../../modules/aws/hm_amazon_eks_access_entry_iam"
-  amazon_eks_access_entry_name = "hm-production-eks-cluster-access-entry"
+  amazon_eks_access_entry_name = "${amazon_eks_cluster_name}-access-entry"
   environment                  = var.environment
   team                         = var.team
 }
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
-module "eks" {
+module "hm_amazon_eks_cluster" {
   source                         = "terraform-aws-modules/eks/aws"
   version                        = "20.15.0"
   cluster_name                   = local.amazon_eks_cluster_name
   cluster_version                = "1.30"
-  cluster_endpoint_public_access = true
+  cluster_endpoint_public_access = false
+  cluster_service_ipv4_cidr      = "10.215.0.0/16"
+  cluster_security_group_additional_rules = {
+    ingress_rule_on_site = {
+      description = "On-Site"
+      type        = "ingress"
+      cidr_blocks = ["10.10.0.0/15"]
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+    },
+    ingress_rule_vpn = {
+      description = "VPN"
+      type        = "ingress"
+      cidr_blocks = ["10.100.0.0/15"]
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+    },
+    ingress_rule_vpc = {
+      description = "VPC"
+      type        = "ingress"
+      cidr_blocks = ["172.16.0.0/12"]
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+    }
+  }
   cluster_addons = {
     coredns = {
       most_recent = true
@@ -51,7 +78,7 @@ module "eks" {
       min_size       = 10
       max_size       = 50
       desired_size   = 10
-      instance_types = ["m7i.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
+      instance_types = ["m7a.xlarge", "m7i.xlarge", "m6a.xlarge", "m6i.xlarge", "m6in.xlarge", "m5.xlarge", "m5a.xlarge", "m5n.xlarge", "m5zn.xlarge"]
       capacity_type  = "SPOT"
     }
   }
@@ -82,23 +109,23 @@ module "eks" {
     }
   }
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = local.amazon_eks_cluster_name
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = local.amazon_eks_cluster_name
   }
 }
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
 module "karpenter" {
   source       = "terraform-aws-modules/eks/aws//modules/karpenter"
-  cluster_name = module.eks.cluster_name
+  cluster_name = module.hm_amazon_eks_cluster.cluster_name
   # Attach additional IAM policies to the Karpenter node IAM role
   node_iam_role_additional_policies = {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "${local.amazon_eks_cluster_name}-karpenter"
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = "${local.amazon_eks_cluster_name}-karpenter"
   }
 }
 
@@ -107,7 +134,7 @@ module "hm_kubernetes_namespace_hm_argo_cd" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-argo-cd"
   depends_on = [
-    module.eks
+    module.hm_amazon_eks_cluster
   ]
 }
 module "hm_argo_cd_helm_chart" {
@@ -122,6 +149,74 @@ module "hm_argo_cd_helm_chart" {
   depends_on = [
     module.hm_kubernetes_namespace_hm_argo_cd
   ]
+}
+
+# Sealed Secrets
+module "hm_kubernetes_namespace_hm_sealed_secrets" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-sealed-secrets"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
+# Traefik
+module "hm_kubernetes_namespace_hm_traefik" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-traefik"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
+# ExternalDNS
+module "hm_kubernetes_namespace_hm_external_dns" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-external-dns"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+module "hm_external_dns_iam_role" {
+  source                               = "../../../../modules/aws/hm_external_dns_iam_role"
+  external_dns_service_account_name    = "hm-external-dns"
+  external_dns_namespace               = "${var.environment}-hm-external-dns"
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  amazon_route53_hosted_zone_id        = var.amazon_route53_hosted_zone_id
+  environment                          = var.environment
+  team                                 = var.team
+}
+
+# cert-manager
+module "hm_kubernetes_namespace_hm_cert_manager" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-cert-manager"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+module "hm_cert_manager_iam_role" {
+  source                               = "../../../../modules/aws/hm_cert_manager_iam_role"
+  cert_manager_service_account_name    = "hm-cert-manager"
+  cert_manager_namespace               = "${var.environment}-hm-cert-manager"
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  amazon_route53_hosted_zone_id        = var.amazon_route53_hosted_zone_id
+  environment                          = var.environment
+  team                                 = var.team
 }
 
 # Airbyte
@@ -201,64 +296,7 @@ module "hm_kubernetes_namespace_hm_airbyte" {
     "goldilocks.fairwinds.com/enabled" = true
   }
   depends_on = [
-    module.eks
-  ]
-}
-
-# Goldilocks
-module "hm_kubernetes_namespace_hm_goldilocks" {
-  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-goldilocks"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = true
-  }
-  depends_on = [
-    module.eks
-  ]
-}
-
-# Metrics Server
-module "hm_kubernetes_namespace_hm_metrics_server" {
-  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-metrics-server"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = true
-  }
-  depends_on = [
-    module.eks
-  ]
-}
-
-# OpenCost
-module "hm_kubernetes_namespace_hm_opencost" {
-  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-opencost"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = true
-  }
-  depends_on = [
-    module.eks
-  ]
-}
-
-# Prometheus
-module "hm_kubernetes_namespace_hm_prometheus" {
-  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-prometheus"
-  depends_on = [
-    module.eks
-  ]
-}
-
-# Sealed Secrets
-module "hm_kubernetes_namespace_hm_sealed_secrets" {
-  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-sealed-secrets"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = true
-  }
-  depends_on = [
-    module.eks
+    module.hm_amazon_eks_cluster
   ]
 }
 
@@ -267,9 +305,54 @@ module "hm_kubernetes_namespace_hm_vertical_pod_autoscaler" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-vertical-pod-autoscaler"
   labels = {
-    "goldilocks.fairwinds.com/enabled" = true
+    "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.eks
+    module.hm_amazon_eks_cluster
+  ]
+}
+
+# Goldilocks
+module "hm_kubernetes_namespace_hm_goldilocks" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-goldilocks"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
+# Metrics Server
+module "hm_kubernetes_namespace_hm_metrics_server" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-metrics-server"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
+# Prometheus
+module "hm_kubernetes_namespace_hm_prometheus" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-prometheus"
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
+# OpenCost
+module "hm_kubernetes_namespace_hm_opencost" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-opencost"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
   ]
 }

@@ -1,0 +1,2 @@
+amazon-route-53-hosted-zone-list:
+	aws route53 list-hosted-zones

@@ -17,20 +17,35 @@ resource "aws_security_group" "hm_airbyte_postgres_security_group" {
   }
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
-resource "aws_vpc_security_group_ingress_rule" "ingress_allow_1" {
+resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site" {
   security_group_id = aws_security_group.hm_airbyte_postgres_security_group.id
-  cidr_ipv4         = "10.0.0.0/8"
+  description       = "On-Site"
+  cidr_ipv4         = "10.10.0.0/15"
   ip_protocol       = "tcp"
   from_port         = 5432
   to_port           = 5432
   tags = {
     Environment  = var.environment
     Team         = var.team
-    ResourceName = var.amazon_ec2_security_group_name
+    ResourceName = "On-Site"
   }
 }
-resource "aws_vpc_security_group_ingress_rule" "ingress_allow_2" {
+resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn" {
   security_group_id = aws_security_group.hm_airbyte_postgres_security_group.id
+  description       = "VPN"
+  cidr_ipv4         = "10.100.0.0/15"
+  ip_protocol       = "tcp"
+  from_port         = 5432
+  to_port           = 5432
+  tags = {
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = "VPN"
+  }
+}
+resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc" {
+  security_group_id = aws_security_group.hm_airbyte_postgres_security_group.id
+  description       = "VPC"
   cidr_ipv4         = "172.16.0.0/12"
   ip_protocol       = "tcp"
   from_port         = 5432
@@ -38,14 +53,14 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_allow_2" {
   tags = {
     Environment  = var.environment
     Team         = var.team
-    ResourceName = var.amazon_ec2_security_group_name
+    ResourceName = "VPC"
   }
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
 resource "aws_vpc_security_group_egress_rule" "egress_allow" {
   security_group_id = aws_security_group.hm_airbyte_postgres_security_group.id
   cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "-1" # all ports
+  ip_protocol       = "-1" # semantically equivalent to all ports
   tags = {
     Environment  = var.environment
     Team         = var.team

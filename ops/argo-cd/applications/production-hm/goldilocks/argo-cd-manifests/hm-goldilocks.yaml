@@ -1,0 +1,30 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-goldilocks
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-goldilocks
+spec:
+  project: production-hm
+  source:
+    repoURL: https://charts.fairwinds.com/stable
+    # https://artifacthub.io/packages/helm/fairwinds-stable/goldilocks
+    targetRevision: 8.0.2
+    chart: goldilocks
+    helm:
+      releaseName: hm-goldilocks
+      values: |
+        # https://github.com/FairwindsOps/charts/blob/master/stable/goldilocks/values.yaml
+        ---
+        dashboard:
+          replicaCount: 1
+  destination:
+    namespace: production-hm-goldilocks
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

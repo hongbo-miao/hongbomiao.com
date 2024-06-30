@@ -4,6 +4,9 @@ variable "environment" {
 variable "team" {
   type = string
 }
+variable "amazon_route53_hosted_zone_id" {
+  type = string
+}
 variable "adsb_2x_flight_trace_raw_data_dates" {
   type = list(string)
   default = [
