@@ -7,6 +7,9 @@ variable "snowflake_public_schema_name" {
 variable "production_department_warehouse_auto_suspend_min" {
   type = number
 }
+variable "production_airbyte_warehouse_auto_suspend_min" {
+  type = number
+}
 variable "production_kafka_warehouse_auto_suspend_min" {
   type = number
 }
@@ -29,4 +32,7 @@ variable "production_hm_kafka_db_departments" {
     name                                                      = string
     read_write_user_rsa_public_key_without_header_and_trailer = string
   }))
+}
+variable "production_hm_airbyte_db_owner_user_rsa_public_key_without_header_and_trailer" {
+  type = string
 }

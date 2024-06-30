@@ -1,0 +1,17 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: staging-hm-airbyte-certificate
+  namespace: production-hm-airbyte
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+spec:
+  commonName: hm-airbyte.internal.hongbomiao.com
+  secretName: staging-hm-airbyte-certificate
+  dnsNames:
+    - hm-airbyte.internal.hongbomiao.com
+  issuerRef:
+    kind: ClusterIssuer
+    name: staging-lets-encrypt-cluster-issuer
