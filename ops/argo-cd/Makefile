@@ -10,9 +10,9 @@ argo-cd-sign-in:
 	argocd login localhost:31026 --username=admin --insecure
 
 argo-cd-project-create:
-	argocd proj create hongbomiao --file
+	argocd proj create production-hm --file
 argo-cd-project-delete:
-	argocd proj delete hongbomiao
+	argocd proj delete production-hm
 argo-cd-project-list:
 	argocd proj list
 
