@@ -856,38 +856,6 @@ jobs:
         with:
           directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
 
-  development-aws-glue-spark-scripts-test:
-    name: AWS Glue (development spark-scripts) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.development-aws-glue-spark-scripts == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.1.7
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.1.0
-        with:
-          python-version-file: cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts/poetry.lock
-      - name: Install dependencies
-        working-directory: cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts
-        run: |
-          poetry install --no-root
-      - name: Test
-        working-directory: cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.5.0
-        with:
-          directory: cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts
-
   production-aws-glue-spark-scripts-test:
     name: AWS Glue (production spark-scripts) | Test
     needs: detect-changes
