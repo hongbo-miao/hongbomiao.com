@@ -47,7 +47,13 @@ module "snowflake_production_hongbomiao_streamlit_db_department_schema" {
     module.snowflake_production_hongbomiao_streamlit_db_database
   ]
 }
-
+# HM Airbyte database
+module "snowflake_production_hm_airbyte_db_database" {
+  providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                  = "../../../../modules/snowflake/hm_snowflake_database"
+  snowflake_database_name = "PRODUCTION_HM_AIRBYTE_DB"
+  data_retention_days     = var.production_database_data_retention_days
+}
 # HM Kafka database
 locals {
   production_hm_kafka_db_department_names = toset([for department in var.production_hm_kafka_db_departments : department.name])
