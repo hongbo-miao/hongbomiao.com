@@ -269,6 +269,53 @@ module "snowflake_grant_production_department_db_schema_admin_role_to_production
   ]
 }
 
+# HM Airbyte warehouse
+module "snowflake_production_hm_airbyte_wh_warehouse" {
+  providers                = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                   = "../../../../modules/snowflake/hm_snowflake_warehouse"
+  snowflake_warehouse_name = "HM_PRODUCTION_HM_AIRBYTE_WH"
+  snowflake_warehouse_size = "xsmall"
+  auto_suspend_min         = var.production_airbyte_warehouse_auto_suspend_min
+}
+# HM Airbyte role - owner role
+# https://docs.airbyte.com/integrations/destinations/snowflake
+module "snowflake_production_hm_airbyte_db_owner_role" {
+  providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source              = "../../../../modules/snowflake/hm_snowflake_role"
+  snowflake_role_name = "HM_PRODUCTION_HM_AIRBYTE_DB_OWNER_ROLE"
+}
+module "snowflake_transfer_production_hm_airbyte_db_ownership_to_production_hm_airbyte_db_owner_role" {
+  providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                  = "../../../../modules/snowflake/hm_snowflake_transfer_database_ownership_to_role"
+  snowflake_database_name = "PRODUCTION_HM_AIRBYTE_DB"
+  snowflake_role_name     = module.snowflake_production_hm_airbyte_db_owner_role.name
+  depends_on = [
+    module.snowflake_production_hm_airbyte_db_owner_role
+  ]
+}
+# HM Airbyte role - owner user
+module "snowflake_production_hm_airbyte_db_owner_user" {
+  providers                                 = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                                    = "../../../../modules/snowflake/hm_snowflake_user"
+  snowflake_user_name                       = "HM_PRODUCTION_HM_AIRBYTE_DB_OWNER_USER"
+  default_role                              = module.snowflake_production_hm_airbyte_db_owner_role.name
+  default_warehouse                         = module.snowflake_production_hm_airbyte_wh_warehouse.name
+  rsa_public_key_without_header_and_trailer = var.production_hm_airbyte_db_owner_user_rsa_public_key_without_header_and_trailer
+  depends_on = [
+    module.snowflake_production_hm_airbyte_db_owner_role
+  ]
+}
+module "snowflake_grant_production_hm_airbyte_db_owner_role_to_production_hm_airbyte_db_owner_user" {
+  providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
+  snowflake_role_name = module.snowflake_production_hm_airbyte_db_owner_role.name
+  snowflake_user_name = module.snowflake_production_hm_airbyte_db_owner_user.name
+  depends_on = [
+    module.snowflake_production_hm_airbyte_db_owner_user,
+    module.snowflake_production_hm_airbyte_db_owner_role
+  ]
+}
+
 # HM Kafka warehouse
 module "snowflake_production_hm_kafka_wh_warehouse" {
   providers                = { snowflake = snowflake.hm_production_terraform_read_write_role }

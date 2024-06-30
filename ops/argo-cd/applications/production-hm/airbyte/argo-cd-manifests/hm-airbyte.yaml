@@ -8,11 +8,11 @@ metadata:
   labels:
     app.kubernetes.io/name: hm-airbyte
 spec:
-  project: production-hongbomiao
+  project: production-hm
   sources:
     - repoURL: https://airbytehq.github.io/helm-charts
       # https://artifacthub.io/packages/helm/airbyte/airbyte
-      targetRevision: 0.199.0
+      targetRevision: 0.233.2
       chart: airbyte
       helm:
         releaseName: hm-airbyte
@@ -21,6 +21,8 @@ spec:
           # https://github.com/airbytehq/airbyte-platform/blob/main/charts/airbyte/values.yaml
           ---
           global:
+            airbyteUrl: https://hm-airbyte.internal.hongbomiao.com
+            serviceAccountName: airbyte-admin
             auth:
               instanceAdmin:
                 firstName: Hongbo
@@ -33,7 +35,7 @@ spec:
                 type: S3
             database:
               type: external
-              host: production-hm-airbyte-postgres.xxx.us-west-2.rds.amazonaws.com
+              host: production-hm-airbyte-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
               port: 5432
               database: airbyte_db
               secretName: hm-airbyte-secret
@@ -55,39 +57,28 @@ spec:
                 workloadOutput: production-hm-airbyte
             minio:
               enabled: false
+            jobs:
+              resources:
+                requests:
+                   cpu: 500m
+                   memory: 1Gi
+                limits:
+                   cpu: 1000m
+                   memory: 2Gi
+          serviceAccount:
+            create: true
+            name: airbyte-admin
+          webapp:
+            enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 200m
+                memory: 256Mi
           server:
-            extraEnv:
-              - name: AWS_ACCESS_KEY_ID
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AWS_ACCESS_KEY_ID
-              - name: AWS_SECRET_ACCESS_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AWS_SECRET_ACCESS_KEY
-              - name: STATE_STORAGE_S3_ACCESS_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AWS_ACCESS_KEY_ID
-              - name: STATE_STORAGE_S3_SECRET_ACCESS_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AWS_SECRET_ACCESS_KEY
-              - name: STATE_STORAGE_S3_BUCKET_NAME
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AIRBYTE_LOG_S3_BUCKET_NAME
-              - name: STATE_STORAGE_S3_REGION
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AIRBYTE_LOG_S3_BUCKET_REGION
-          worker:
+            enabled: true
             extraEnv:
               - name: AWS_ACCESS_KEY_ID
                 valueFrom:
@@ -124,17 +115,105 @@ spec:
                   secretKeyRef:
                     name: hm-airbyte-secret
                     key: AIRBYTE_LOG_S3_BUCKET_REGION
-          postgresql:
-            enabled: false
-          externalDatabase:
-            host: production-hm-airbyte-postgres.xxx.us-west-2.rds.amazonaws.com
-            port: 5432
-            database: airbyte_db
-            user: airbyte_user
-            existingSecret: hm-airbyte-secret
-            existingSecretPasswordKey: POSTGRES_PASSWORD
-            jdbcUrl: jdbc:postgresql://production-hm-airbyte-postgres.xxx.us-west-2.rds.amazonaws.com:5432/airbyte_db?ssl=true&sslmode=require
+            resources:
+              requests:
+                cpu: 500m
+                memory: 2Gi
+              limits:
+                cpu: 1000m
+                memory: 4Gi
+          worker:
+            enabled: true
+            extraEnv:
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: hm-airbyte-secret
+                    key: AWS_ACCESS_KEY_ID
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: hm-airbyte-secret
+                    key: AWS_SECRET_ACCESS_KEY
+              - name: STATE_STORAGE_S3_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: hm-airbyte-secret
+                    key: AWS_ACCESS_KEY_ID
+              - name: STATE_STORAGE_S3_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: hm-airbyte-secret
+                    key: AWS_SECRET_ACCESS_KEY
+              - name: STATE_STORAGE_S3_BUCKET_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name: hm-airbyte-secret
+                    key: AIRBYTE_LOG_S3_BUCKET_NAME
+              - name: STATE_STORAGE_S3_REGION
+                valueFrom:
+                  secretKeyRef:
+                    name: hm-airbyte-secret
+                    key: AIRBYTE_LOG_S3_BUCKET_REGION
+              - name: AWS_DEFAULT_REGION
+                valueFrom:
+                  secretKeyRef:
+                    name: hm-airbyte-secret
+                    key: AIRBYTE_LOG_S3_BUCKET_REGION
+            resources:
+              requests:
+                cpu: 1000m
+                memory: 1Gi
+              limits:
+                cpu: 2000m
+                memory: 2Gi
+          airbyte-bootloader:
+            enabled: true
+            resources:
+              requests:
+                cpu: 1000m
+                memory: 512Mi
+              limits:
+                cpu: 2000m
+                memory: 1Gi
+          airbyte-api-server:
+            enabled: true
+            resources:
+              requests:
+                cpu: 200m
+                memory: 256Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+          connector-builder-server:
+            enabled: true
+            resources:
+              requests:
+                cpu: 200m
+                memory: 512Mi
+              limits:
+                cpu: 500m
+                memory: 1Gi
+          pod-sweeper:
+            enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 200m
+                memory: 256Mi
+          cron:
+            enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                cpu: 200m
+                memory: 1Gi
           temporal:
+            enabled: true
             extraVolumes:
               - name: airbyte-config-map-volume
                 configMap:
@@ -158,9 +237,26 @@ spec:
                 value: "false"
               - name: POSTGRES_TLS_CA_FILE
                 value: /etc/ssl/certs/amazon-rds-ca-global-bundle.pem
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
+          postgresql:
+            enabled: false
+          externalDatabase:
+            host: production-hm-airbyte-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
+            port: 5432
+            database: airbyte_db
+            user: airbyte_user
+            existingSecret: hm-airbyte-secret
+            existingSecretPasswordKey: POSTGRES_PASSWORD
+            jdbcUrl: jdbc:postgresql://production-hm-airbyte-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com:5432/airbyte_db?ssl=true&sslmode=require
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: HEAD
-      path: ops/argo-cd/applications/production-hongbomiao/airbyte/kubernetes-manifests
+      path: ops/argo-cd/applications/production-hm/airbyte/kubernetes-manifests
   destination:
     namespace: production-hm-airbyte
     server: https://kubernetes.default.svc

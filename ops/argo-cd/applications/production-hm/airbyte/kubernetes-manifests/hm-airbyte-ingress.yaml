@@ -1,0 +1,34 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-airbyte-ingress
+  namespace: production-hm-airbyte
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://cert-manager.io/docs/usage/ingress/#supported-annotations
+    cert-manager.io/cluster-issuer: production-lets-encrypt-cluster-issuer
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+  labels:
+    app.kubernetes.io/name: hm-airbyte-ingress
+    app.kubernetes.io/part-of: production-hm-airbyte
+spec:
+  rules:
+    - host: hm-airbyte.internal.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-airbyte-airbyte-webapp-svc
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - hm-airbyte.internal.hongbomiao.com
+      secretName: production-hm-airbyte-certificate
