@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-metrics-server
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-metrics-server
+spec:
+  project: production-hm
+  source:
+    repoURL: https://kubernetes-sigs.github.io/metrics-server
+    # https://artifacthub.io/packages/helm/metrics-server/metrics-server
+    targetRevision: 3.12.1
+    chart: metrics-server
+    helm:
+      releaseName: hm-metrics-server
+  destination:
+    namespace: production-hm-metrics-server
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

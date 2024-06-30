@@ -1,0 +1,44 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-external-dns
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-external-dns
+spec:
+  project: production-hm
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    # https://artifacthub.io/packages/helm/bitnami/external-dns
+    targetRevision: 8.0.0
+    chart: external-dns
+    helm:
+      releaseName: hm-external-dns
+      values: |
+        # https://github.com/bitnami/charts/blob/main/bitnami/external-dns/values.yaml
+        ---
+        sources:
+          - service
+          - ingress
+        provider: aws
+        aws:
+          region: us-west-2
+          zoneType: public
+          txtOwnerId: Z1XXXXXXXXXXXXXXXXXXX
+          domainFilters:
+            - internal.hongbomiao.com
+          registry: txt
+        policy: sync
+        serviceAccount:
+          create: true
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/ExternalDNSRole-hm-external-dns
+  destination:
+    namespace: production-hm-external-dns
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

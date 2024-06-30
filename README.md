@@ -197,6 +197,9 @@ make kubernetes-clean
 
 ## Cloud Native
 
+- **Sealed Secrets** - Kubernetes secret encrypting
+- **ExternalDNS** - Kubernetes services and Ingresses exposing
+- **cert-manager** - Kubernetes X.509 certificate management
 - **Hasura** - GraphQL Engine
   - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
 - **Linkerd** - Service mesh
@@ -211,16 +214,15 @@ make kubernetes-clean
 - **Telegraf** - Plugin-driven server agent
 - **Thanos** - Highly available Prometheus setup with long-term storage capabilities
 - **Pixie** - Observability tool for Kubernetes applications
-- **Sealed Secrets** - Kubernetes secret encrypting
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
 - **Multipass** - VM management
 - **Locust** - Load testing
 - **Cloudflare Tunnel** - Tunneling
-- **Kubernetes** - Container-orchestration system
 - **Vertical Pod Autoscaler** - Kubernetes vertical pod autoscaler
 - **K3s** - Lightweight Kubernetes
 - **containerd** - Container runtime
+- **Kubernetes** - Container-orchestration system
 
 ## Data
 
@@ -403,6 +405,7 @@ make kubernetes-clean
   - **Amazon SageMaker** - Machine learning platform
   - **Amazon SQS** - Queue
   - **AWS Batch** - Batch computing
+  - **AWS Certificate Manager** - SSL/TLS certificate management
   - **AWS CloudFormation** - Infrastructure as code (IaC)
   - **AWS CodeCommit** - Version control
   - **AWS Glue** - Serverless data integration

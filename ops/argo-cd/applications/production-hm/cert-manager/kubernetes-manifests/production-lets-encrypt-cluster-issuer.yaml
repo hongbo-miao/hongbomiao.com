@@ -1,0 +1,22 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: production-lets-encrypt-cluster-issuer
+  namespace: production-hm-cert-manager
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+spec:
+  acme:
+    email: hongbo.miao@outlook.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: production-lets-encrypt-cluster-issuer-account-secret
+    solvers:
+      - selector:
+          dnsZones:
+            - internal.hongbomiao.com
+        dns01:
+          route53:
+            region: us-west-2

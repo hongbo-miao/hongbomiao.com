@@ -1,0 +1,28 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-prometheus
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-prometheus
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      # https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
+      targetRevision: 60.1.0
+      chart: kube-prometheus-stack
+      helm:
+        releaseName: hm-prometheus
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: HEAD
+      path: ops/argo-cd/applications/production-hm/opencost/kubernetes-manifests
+  destination:
+    namespace: production-hm-prometheus
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
