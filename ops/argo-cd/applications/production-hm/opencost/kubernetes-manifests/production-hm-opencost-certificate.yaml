@@ -1,0 +1,17 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: production-hm-opencost-certificate
+  namespace: production-hm-opencost
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+spec:
+  commonName: hm-opencost.internal.hongbomiao.com
+  secretName: production-hm-opencost-certificate
+  dnsNames:
+    - hm-opencost.internal.hongbomiao.com
+  issuerRef:
+    kind: ClusterIssuer
+    name: production-lets-encrypt-cluster-issuer

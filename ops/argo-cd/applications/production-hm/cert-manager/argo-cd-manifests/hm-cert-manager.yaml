@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-cert-manager
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-cert-manager
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://charts.jetstack.io
+      # https://artifacthub.io/packages/helm/cert-manager/cert-manager
+      # 1.15.1 has bug: https://github.com/cert-manager/cert-manager/issues/7102
+      targetRevision: 1.14.7
+      chart: cert-manager
+      helm:
+        releaseName: hm-cert-manager
+        values: |
+          # https://cert-manager.io/docs/configuration/acme/dns01/route53
+          # https://github.com/cert-manager/cert-manager/blob/master/deploy/charts/cert-manager/values.yaml
+          ---
+          crds:
+            enabled: true
+            keep: true
+          serviceAccount:
+            create: true
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/CertManagerRole-hm-cert-manager
+          securityContext:
+            fsGroup: 1001
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: HEAD
+      path: ops/argo-cd/applications/production-hm/cert-manager/kubernetes-manifests
+  destination:
+    namespace: production-hm-cert-manager
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

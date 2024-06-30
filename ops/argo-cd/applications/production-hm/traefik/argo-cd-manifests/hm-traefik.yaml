@@ -1,0 +1,46 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-traefik
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-traefik
+spec:
+  project: production-hm
+  source:
+    repoURL: https://traefik.github.io/charts
+    # https://artifacthub.io/packages/helm/traefik/traefik
+    targetRevision: 28.3.0
+    chart: traefik
+    helm:
+      releaseName: hm-traefik
+      values: |
+        # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+        ---
+        providers:
+          kubernetesIngress:
+            publishedService:
+              enabled: true
+        service:
+          enabled: true
+          type: LoadBalancer
+          annotations:
+            # https://cloud-provider-aws.sigs.k8s.io/service_controller
+            service.beta.kubernetes.io/aws-load-balancer-type: nlb
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+        ports:
+          web:
+            redirectTo:
+              port: websecure
+        globalArguments: []
+        # additionalArguments:
+        #   - --log.level=DEBUG
+  destination:
+    namespace: production-hm-traefik
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
