@@ -60,11 +60,11 @@ spec:
             jobs:
               resources:
                 requests:
-                   cpu: 500m
-                   memory: 1Gi
-                limits:
                    cpu: 1000m
                    memory: 2Gi
+                limits:
+                   cpu: 4000m
+                   memory: 8Gi
           serviceAccount:
             create: true
             name: airbyte-admin
@@ -80,6 +80,11 @@ spec:
           server:
             enabled: true
             extraEnv:
+              - name: AWS_DEFAULT_REGION
+                valueFrom:
+                  secretKeyRef:
+                    name: hm-airbyte-secret
+                    key: AIRBYTE_LOG_S3_BUCKET_REGION
               - name: AWS_ACCESS_KEY_ID
                 valueFrom:
                   secretKeyRef:
@@ -106,11 +111,6 @@ spec:
                     name: hm-airbyte-secret
                     key: AIRBYTE_LOG_S3_BUCKET_NAME
               - name: STATE_STORAGE_S3_REGION
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AIRBYTE_LOG_S3_BUCKET_REGION
-              - name: AWS_DEFAULT_REGION
                 valueFrom:
                   secretKeyRef:
                     name: hm-airbyte-secret
@@ -125,6 +125,11 @@ spec:
           worker:
             enabled: true
             extraEnv:
+              - name: AWS_DEFAULT_REGION
+                valueFrom:
+                  secretKeyRef:
+                    name: hm-airbyte-secret
+                    key: AIRBYTE_LOG_S3_BUCKET_REGION
               - name: AWS_ACCESS_KEY_ID
                 valueFrom:
                   secretKeyRef:
@@ -151,11 +156,6 @@ spec:
                     name: hm-airbyte-secret
                     key: AIRBYTE_LOG_S3_BUCKET_NAME
               - name: STATE_STORAGE_S3_REGION
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AIRBYTE_LOG_S3_BUCKET_REGION
-              - name: AWS_DEFAULT_REGION
                 valueFrom:
                   secretKeyRef:
                     name: hm-airbyte-secret
