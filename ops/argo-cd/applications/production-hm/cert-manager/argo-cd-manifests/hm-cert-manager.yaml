@@ -29,6 +29,39 @@ spec:
               eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/CertManagerRole-hm-cert-manager
           securityContext:
             fsGroup: 1001
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+          startupapicheck:
+            enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+          webhook:
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+          cainjector:
+            enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: HEAD
       path: ops/argo-cd/applications/production-hm/cert-manager/kubernetes-manifests

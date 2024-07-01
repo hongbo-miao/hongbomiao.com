@@ -34,6 +34,13 @@ spec:
           create: true
           annotations:
             eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/ExternalDNSRole-hm-external-dns
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
   destination:
     namespace: production-hm-external-dns
     server: https://kubernetes.default.svc
