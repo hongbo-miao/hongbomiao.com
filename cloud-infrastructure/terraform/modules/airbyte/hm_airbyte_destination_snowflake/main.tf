@@ -23,8 +23,6 @@ resource "airbyte_destination_snowflake" "hm_airbyte_destination_snowflake" {
         private_key_password = var.snowflake_user_private_key_passphrase
       }
     }
-    retention_period_days = var.data_retention_days
-    raw_data_schema       = "_AIRBYTE_INTERNAL"
-    disable_type_dedupe   = false
+    disable_type_dedupe = false
   }
 }
