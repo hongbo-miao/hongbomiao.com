@@ -28,6 +28,3 @@ variable "snowflake_user_private_key" {
 variable "snowflake_user_private_key_passphrase" {
   type = string
 }
-variable "data_retention_days" {
-  type = number
-}
