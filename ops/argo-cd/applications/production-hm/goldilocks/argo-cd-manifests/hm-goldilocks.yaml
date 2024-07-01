@@ -20,6 +20,22 @@ spec:
         ---
         dashboard:
           replicaCount: 1
+        dashboard:
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+        controller:
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
   destination:
     namespace: production-hm-goldilocks
     server: https://kubernetes.default.svc

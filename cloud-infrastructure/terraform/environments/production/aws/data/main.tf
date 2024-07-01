@@ -340,6 +340,9 @@ module "hm_kubernetes_namespace_hm_metrics_server" {
 module "hm_kubernetes_namespace_hm_prometheus" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-prometheus"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
   depends_on = [
     module.hm_amazon_eks_cluster
   ]
