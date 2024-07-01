@@ -25,6 +25,23 @@ spec:
                 serviceName: hm-prometheus-kube-pr-prometheus
                 namespaceName: production-hm-prometheus
                 port: 9090
+            exporter:
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 100m
+                  memory: 256Mi
+            ui:
+              enabled: true
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 100m
+                  memory: 256Mi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: HEAD
       path: ops/argo-cd/applications/production-hm/opencost/kubernetes-manifests

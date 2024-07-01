@@ -8,14 +8,9 @@ grant all privileges on database airbyte_db to airbyte_user;
 grant all privileges on database temporal_db to airbyte_user;
 grant all privileges on database temporal_visibility_db to airbyte_user;
 
--- \connect airbyte_db
+\connect airbyte_db
 grant all privileges on schema public to airbyte_user;
--- \quit
-
--- \connect temporal_db
+\connect temporal_db
 grant all privileges on schema public to airbyte_user;
--- \quit
-
--- \connect temporal_visibility_db
+\connect temporal_visibility_db
 grant all privileges on schema public to airbyte_user;
--- \quit

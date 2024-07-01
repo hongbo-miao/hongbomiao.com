@@ -15,6 +15,81 @@ spec:
       chart: kube-prometheus-stack
       helm:
         releaseName: hm-prometheus
+        values: |
+          # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+          ---
+          alertmanager:
+            enabled: true
+            alertmanagerSpec:
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 100m
+                  memory: 256Mi
+          prometheusOperator:
+            enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+            admissionWebhooks:
+              patch:
+                enabled: true
+                resources:
+                  requests:
+                    cpu: 50m
+                    memory: 128Mi
+                  limits:
+                    cpu: 100m
+                    memory: 256Mi
+            prometheusConfigReloader:
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 100m
+                  memory: 256Mi
+          prometheus:
+            enabled: true
+            prometheusSpec:
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 512Mi
+                limits:
+                  cpu: 200m
+                  memory: 1Gi
+          prometheus-node-exporter:
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+          kube-state-metrics:
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+          grafana:
+            enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                cpu: 100m
+                memory: 512Mi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: HEAD
       path: ops/argo-cd/applications/production-hm/opencost/kubernetes-manifests

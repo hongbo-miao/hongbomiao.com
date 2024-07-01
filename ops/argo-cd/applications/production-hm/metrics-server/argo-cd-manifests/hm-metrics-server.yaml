@@ -15,6 +15,16 @@ spec:
     chart: metrics-server
     helm:
       releaseName: hm-metrics-server
+      values: |
+        # https://github.com/kubernetes-sigs/metrics-server/blob/master/charts/metrics-server/values.yaml
+        ---
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
   destination:
     namespace: production-hm-metrics-server
     server: https://kubernetes.default.svc
