@@ -60,8 +60,8 @@ spec:
             jobs:
               resources:
                 requests:
-                   cpu: 1000m
-                   memory: 2Gi
+                   cpu: 3000m
+                   memory: 4Gi
                 limits:
                    cpu: 4000m
                    memory: 8Gi
@@ -177,14 +177,7 @@ spec:
                 cpu: 2000m
                 memory: 1Gi
           airbyte-api-server:
-            enabled: true
-            resources:
-              requests:
-                cpu: 200m
-                memory: 256Mi
-              limits:
-                cpu: 500m
-                memory: 512Mi
+            enabled: false
           connector-builder-server:
             enabled: true
             resources:
