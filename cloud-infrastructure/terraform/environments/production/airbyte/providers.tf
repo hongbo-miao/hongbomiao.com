@@ -1,3 +1,3 @@
 provider "airbyte" {
-  server_url = "http://localhost:38688/v1"
+  server_url = "https://hm-airbyte.hongbomiao.com/api/public/v1"
 }
