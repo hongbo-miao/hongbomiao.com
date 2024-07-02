@@ -15,6 +15,13 @@ aws-secrets-manager-secret-create-hm-amazon-rds-production-hm-iot-db-public-read
         --region=us-west-2 \
         --secret-string=file://secrets/hm-amazon-rds-production-hm-iot-db-public-read-only-user-credentials.json
 
+# HM Jira
+aws-secrets-manager-secret-create-hm-jira:
+	aws secretsmanager create-secret \
+        --name=hm-jira \
+        --region=us-west-2 \
+        --secret-string=file://secrets/hm-jira-credentials.json
+
 # Snowflake - HM_KAFKA_DB database PRODUCT schema
 aws-secrets-manager-secret-create-hm-snowflake-production-hm-kafka-db-product-read-write:
 	aws secretsmanager create-secret \
