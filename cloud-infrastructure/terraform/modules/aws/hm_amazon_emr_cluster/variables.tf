@@ -25,12 +25,19 @@ variable "core_instance_type" {
 variable "bootstrap_set_up_script_s3_uri" {
   type = string
 }
+variable "configurations_json_string" {
+  type = string
+}
+variable "placement_group_config" {
+  type = list(object({
+    instance_role      = string
+    placement_strategy = string
+  }))
+  default = []
+}
 variable "steps" {
   type    = list(any)
   default = []
-}
-variable "configurations_json_string" {
-  type = string
 }
 variable "iam_role_arn" {
   type = string
