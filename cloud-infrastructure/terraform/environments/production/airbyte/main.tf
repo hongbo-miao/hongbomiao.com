@@ -1,3 +1,17 @@
+locals {
+  # https://www.javainuse.com/cron
+  production_engineering_iot_public_airbyte_connection_schedule_cron_expression = "0 11 * * * ? * US/Pacific" # every hour at minute 11
+  production_engineering_jira_airbyte_connection_schedule_cron_expression       = "0 32 * * * ? * US/Pacific" # every hour at minute 32
+}
+
+# Snowflake
+data "aws_secretsmanager_secret" "snowflake_production_hm_airbyte_db_owner_secret" {
+  name = "hm/snowflake/production_hm_airbyte_db/owner"
+}
+data "aws_secretsmanager_secret_version" "snowflake_production_hm_airbyte_db_owner_secret_version" {
+  secret_id = data.aws_secretsmanager_secret.snowflake_production_hm_airbyte_db_owner_secret.id
+}
+
 # Source - Postgres: production-hm-postgres | Database: iot_db | Schema: motor
 data "aws_secretsmanager_secret" "production_hm_postgres_airbyte_user_secret" {
   name = "production-hm-postgres/airbyte-user"
@@ -6,25 +20,25 @@ data "aws_secretsmanager_secret_version" "production_hm_postgres_airbyte_user_se
   secret_id = data.aws_secretsmanager_secret.production_hm_postgres_airbyte_user_secret.id
 }
 module "hm_airbyte_source_production_hm_postgres_iot_db_database_motor_schema" {
-  source                    = "../../../modules/airbyte/hm_airbyte_source_postgres"
-  name                      = "production-hm-postgres-iot-db-motor"
-  workspace_id              = var.airbyte_workspace_id
-  postgres_host             = "production-hm-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com"
-  postgres_port             = 5432
-  postgres_user_name        = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["user_name"]
-  postgres_password         = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["password"]
-  postgres_database         = "iot_db"
-  postgres_schemas          = ["motor"]
-  postgres_replication_slot = "airbyte_slot"
-  postgres_publication      = "airbyte_publication"
+  source             = "../../../modules/airbyte/hm_airbyte_source_postgres"
+  name               = "production-hm-postgres-iot-db-motor"
+  workspace_id       = var.airbyte_workspace_id
+  postgres_host      = "production-hm-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com"
+  postgres_port      = 5432
+  postgres_user_name = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["user_name"]
+  postgres_password  = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["password"]
+  postgres_database  = "iot_db"
+  postgres_schema    = "public"
+  # tunnel_method = {
+  #   ssh_key_authentication = {
+  #     tunnel_host = "xxx.xxx.xxx.xxx"
+  #     tunnel_port = 22
+  #     tunnel_user = "ubuntu"
+  #     ssh_key     = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["tunnel_ssh_private_key"]
+  #   }
+  # }
 }
 # Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_IOT_DB_MOTOR
-data "aws_secretsmanager_secret" "snowflake_production_hm_airbyte_db_owner_secret" {
-  name = "hm/snowflake/production_hm_airbyte_db/owner"
-}
-data "aws_secretsmanager_secret_version" "snowflake_production_hm_airbyte_db_owner_secret_version" {
-  secret_id = data.aws_secretsmanager_secret.snowflake_production_hm_airbyte_db_owner_secret.id
-}
 module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema" {
   source                                = "../../../modules/airbyte/hm_airbyte_destination_snowflake"
   name                                  = "production-engineering-motor"
@@ -42,21 +56,20 @@ module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engin
 # - Source - Postgres: production-hm-postgres | Database: iot_db | Schema: motor
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_IOT_DB_MOTOR
 module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema" {
-  source           = "../../../modules/airbyte/hm_airbyte_connection"
-  source_id        = module.hm_airbyte_source_production_hm_postgres_iot_db_database_motor_schema.id
-  destination_id   = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.id
-  destination_name = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.name
-  schedule_type    = "cron"
-  # https://www.javainuse.com/cron
-  schedule_cron_expression = "0 0 * * * ? * US/Pacific" # every hour
+  source                   = "../../../modules/airbyte/hm_airbyte_connection"
+  source_id                = module.hm_airbyte_source_production_hm_postgres_iot_db_database_motor_schema.id
+  destination_id           = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.id
+  destination_name         = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.name
+  schedule_type            = "cron"
+  schedule_cron_expression = local.production_engineering_iot_public_airbyte_connection_schedule_cron_expression
   streams = [
     {
       name      = "users"
-      sync_mode = "incremental_append"
+      sync_mode = "incremental_deduped_history"
     },
     {
       name      = "experiments"
-      sync_mode = "incremental_append"
+      sync_mode = "incremental_deduped_history"
     }
   ]
   depends_on = [
@@ -141,13 +154,12 @@ module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engin
 # - Source - Jira
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: JIRA
 module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engineering_jira_schema" {
-  source           = "../../../modules/airbyte/hm_airbyte_connection"
-  source_id        = module.hm_airbyte_source_jira.id
-  destination_id   = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema.id
-  destination_name = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema.name
-  schedule_type    = "cron"
-  # https://www.javainuse.com/cron
-  schedule_cron_expression = "0 0 * * * ? * US/Pacific" # every hour
+  source                   = "../../../modules/airbyte/hm_airbyte_connection"
+  source_id                = module.hm_airbyte_source_jira.id
+  destination_id           = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema.id
+  destination_name         = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema.name
+  schedule_type            = "cron"
+  schedule_cron_expression = local.production_engineering_jira_airbyte_connection_schedule_cron_expression
   streams = [
     {
       name      = "issues"
