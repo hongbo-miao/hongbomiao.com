@@ -19,13 +19,20 @@ variable "postgres_password" {
 variable "postgres_database" {
   type = string
 }
-variable "postgres_schemas" {
-  type = list(string)
-}
-variable "postgres_replication_slot" {
+variable "postgres_schema" {
   type = string
 }
-variable "postgres_publication" {
-  type = string
+variable "tunnel_method" {
+  type = object({
+    no_tunnel = optional(map(any))
+    ssh_key_authentication = optional(object({
+      tunnel_host = string
+      tunnel_port = number
+      tunnel_user = string
+      ssh_key     = string
+    }))
+  })
+  default = {
+    no_tunnel = {}
+  }
 }
-
