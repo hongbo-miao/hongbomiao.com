@@ -110,9 +110,15 @@ module "production_hm_trino_emr" {
       }
     ]
   EOF
-  iam_role_arn                               = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
-  environment                                = var.environment
-  team                                       = var.team
+  placement_group_config = [
+    {
+      instance_role      = "MASTER"
+      placement_strategy = "SPREAD"
+    }
+  ]
+  iam_role_arn = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
+  environment  = var.environment
+  team         = var.team
 }
 module "production_hm_trino_task_instance_fleet" {
   providers                          = { aws = aws.production }
