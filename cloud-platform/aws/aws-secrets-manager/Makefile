@@ -42,3 +42,10 @@ aws-secrets-manager-secret-create-production-hm-airbyte-postgres:
         --name=production-hm-airbyte-postgres/admin \
         --region=us-west-2 \
         --secret-string=file://secrets/production-hm-airbyte-postgres-admin-credentials.json
+
+# MLflow - Amazon RDS
+aws-secrets-manager-secret-create-production-hm-mlflow-postgres:
+	aws secretsmanager create-secret \
+        --name=production-hm-mlflow-postgres/admin \
+        --region=us-west-2 \
+        --secret-string=file://secrets/production-hm-mlflow-postgres-admin-credentials.json
