@@ -4,7 +4,16 @@ variable "environment" {
 variable "team" {
   type = string
 }
+variable "amazon_vpc_id" {
+  type = string
+}
+variable "amazon_vpc_private_subnet_ids" {
+  type = list(string)
+}
 variable "amazon_route53_hosted_zone_id" {
+  type = string
+}
+variable "amazon_route53_hosted_zone_name" {
   type = string
 }
 variable "adsb_2x_flight_trace_raw_data_dates" {
