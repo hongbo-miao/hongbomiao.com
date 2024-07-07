@@ -24,10 +24,28 @@ module "hm_amazon_eks_access_entry_iam" {
 }
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
 module "hm_amazon_eks_cluster" {
-  source                         = "terraform-aws-modules/eks/aws"
-  version                        = "20.17.2"
-  cluster_name                   = local.amazon_eks_cluster_name
-  cluster_version                = "1.30"
+  source          = "terraform-aws-modules/eks/aws"
+  version         = "20.17.2"
+  cluster_name    = local.amazon_eks_cluster_name
+  cluster_version = "1.30"
+  cluster_addons = {
+    coredns = {
+      addon_version               = "v1.11.1-eksbuild.9"
+      resolve_conflicts_on_create = "OVERWRITE"
+      resolve_conflicts_on_update = "OVERWRITE"
+    }
+    kube-proxy = {
+      addon_version               = "v1.30.0-eksbuild.3"
+      resolve_conflicts_on_create = "OVERWRITE"
+      resolve_conflicts_on_update = "OVERWRITE"
+    }
+    vpc-cni = {
+      addon_version               = "v1.18.2-eksbuild.1"
+      resolve_conflicts_on_create = "OVERWRITE"
+      resolve_conflicts_on_update = "OVERWRITE"
+    }
+  }
+
   cluster_endpoint_public_access = false
   cluster_service_ipv4_cidr      = "10.215.0.0/16"
   cluster_security_group_additional_rules = {
@@ -56,20 +74,9 @@ module "hm_amazon_eks_cluster" {
       to_port     = 443
     }
   }
-  cluster_addons = {
-    coredns = {
-      most_recent = true
-    }
-    kube-proxy = {
-      most_recent = true
-    }
-    vpc-cni = {
-      most_recent = true
-    }
-  }
-  vpc_id                   = "vpc-xxxxxxxxxxxxxxxxx"
-  subnet_ids               = ["subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx"]
-  control_plane_subnet_ids = ["subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx"]
+  vpc_id                   = var.amazon_vpc_id
+  subnet_ids               = var.amazon_vpc_private_subnet_ids
+  control_plane_subnet_ids = var.amazon_vpc_private_subnet_ids
   eks_managed_node_group_defaults = {
     instance_types = ["m7i.large", "m7g.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
   }
@@ -198,6 +205,17 @@ module "hm_external_dns_iam_role" {
 }
 
 # cert-manager
+module "hm_cert_manager_iam_role" {
+  source                               = "../../../../modules/aws/hm_cert_manager_iam_role"
+  cert_manager_service_account_name    = "hm-cert-manager"
+  cert_manager_namespace               = "${var.environment}-hm-cert-manager"
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  amazon_route53_hosted_zone_id        = var.amazon_route53_hosted_zone_id
+  amazon_route53_hosted_zone_name      = var.amazon_route53_hosted_zone_name
+  environment                          = var.environment
+  team                                 = var.team
+}
 module "hm_kubernetes_namespace_hm_cert_manager" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-cert-manager"
@@ -207,16 +225,6 @@ module "hm_kubernetes_namespace_hm_cert_manager" {
   depends_on = [
     module.hm_amazon_eks_cluster
   ]
-}
-module "hm_cert_manager_iam_role" {
-  source                               = "../../../../modules/aws/hm_cert_manager_iam_role"
-  cert_manager_service_account_name    = "hm-cert-manager"
-  cert_manager_namespace               = "${var.environment}-hm-cert-manager"
-  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
-  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
-  amazon_route53_hosted_zone_id        = var.amazon_route53_hosted_zone_id
-  environment                          = var.environment
-  team                                 = var.team
 }
 
 # Airbyte
@@ -237,7 +245,7 @@ module "hm_airbyte_iam_user" {
 }
 # Airbyte - Postgres
 locals {
-  amazon_rds_name = "${var.environment}-hm-airbyte-postgres"
+  airbyte_postgres_name = "${var.environment}-hm-airbyte-postgres"
 }
 data "aws_secretsmanager_secret" "hm_airbyte_postgres_secret" {
   name = "${var.environment}-hm-airbyte-postgres/admin"
@@ -245,24 +253,24 @@ data "aws_secretsmanager_secret" "hm_airbyte_postgres_secret" {
 data "aws_secretsmanager_secret_version" "hm_airbyte_postgres_secret_version" {
   secret_id = data.aws_secretsmanager_secret.hm_airbyte_postgres_secret.id
 }
-module "hm_hm_airbyte_postgres_security_group" {
-  source                         = "../../../../modules/aws/hm_airbyte_postgres_security_group"
-  amazon_ec2_security_group_name = "${local.amazon_rds_name}-security-group"
+module "hm_airbyte_postgres_security_group" {
+  source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
+  amazon_ec2_security_group_name = "${local.airbyte_postgres_name}-security-group"
   amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
   environment                    = var.environment
   team                           = var.team
 }
-module "hm_hm_airbyte_postgres_subnet_group" {
+module "hm_airbyte_postgres_subnet_group" {
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
-  subnet_group_name = "${local.amazon_rds_name}-subnet-group"
-  subnet_ids        = ["subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx", "subnet-xxxxxxxxxxxxxxxxx"]
+  subnet_group_name = "${local.airbyte_postgres_name}-subnet-group"
+  subnet_ids        = var.amazon_vpc_private_subnet_ids
   environment       = var.environment
   team              = var.team
 }
-module "hm_hm_airbyte_postgres_parameter_group" {
+module "hm_airbyte_postgres_parameter_group" {
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres16"
-  parameter_group_name = "${local.amazon_rds_name}-parameter-group"
+  parameter_group_name = "${local.airbyte_postgres_name}-parameter-group"
   # https://github.com/airbytehq/airbyte/issues/39636
   parameters = [
     {
@@ -273,18 +281,18 @@ module "hm_hm_airbyte_postgres_parameter_group" {
   environment = var.environment
   team        = var.team
 }
-module "hm_hm_airbyte_postgres_instance" {
+module "hm_airbyte_postgres_instance" {
   source                     = "../../../../modules/aws/hm_amazon_rds_instance"
-  amazon_rds_name            = local.amazon_rds_name
+  amazon_rds_name            = local.airbyte_postgres_name
   amazon_rds_engine          = "postgres"
   amazon_rds_engine_version  = "16.3"
   amazon_rds_instance_class  = "db.m7g.large"
   amazon_rds_storage_size_gb = 32
   user_name                  = jsondecode(data.aws_secretsmanager_secret_version.hm_airbyte_postgres_secret_version.secret_string)["user_name"]
   password                   = jsondecode(data.aws_secretsmanager_secret_version.hm_airbyte_postgres_secret_version.secret_string)["password"]
-  parameter_group_name       = module.hm_hm_airbyte_postgres_parameter_group.name
-  subnet_group_name          = module.hm_hm_airbyte_postgres_subnet_group.name
-  vpc_security_group_ids     = [module.hm_hm_airbyte_postgres_security_group.id]
+  parameter_group_name       = module.hm_airbyte_postgres_parameter_group.name
+  subnet_group_name          = module.hm_airbyte_postgres_subnet_group.name
+  vpc_security_group_ids     = [module.hm_airbyte_postgres_security_group.id]
   cloudwatch_log_types       = ["postgresql", "upgrade"]
   environment                = var.environment
   team                       = var.team

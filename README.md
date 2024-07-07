@@ -404,6 +404,7 @@ make kubernetes-clean
   - **Amazon Redshift** - Data warehouse
   - **Amazon SageMaker** - Machine learning platform
   - **Amazon SQS** - Queue
+  - **Amazon VPC** - Virtual private cloud
   - **AWS Batch** - Batch computing
   - **AWS Certificate Manager** - SSL/TLS certificate management
   - **AWS CloudFormation** - Infrastructure as code (IaC)

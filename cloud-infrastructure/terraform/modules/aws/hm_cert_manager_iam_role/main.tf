@@ -64,24 +64,24 @@ resource "aws_iam_role_policy" "hm_cert_manager_iam_role_policy" {
         Action = [
           "route53:ChangeResourceRecordSets"
         ]
-        Resource = "arn:aws:route53:::hostedzone/${var.amazon_route53_hosted_zone_id}",
-        "Condition" : {
-          "ForAllValues:StringEquals" : {
-            "route53:ChangeResourceRecordSetsNormalizedRecordNames" : [
-              "_acme-challenge.*"
+        Resource = "arn:aws:route53:::hostedzone/${var.amazon_route53_hosted_zone_id}"
+        Condition = {
+          "ForAllValues:StringEquals" = {
+            "route53:ChangeResourceRecordSetsNormalizedRecordNames" = [
+              "_acme-challenge.*.${var.amazon_route53_hosted_zone_name}"
             ],
-            "route53:ChangeResourceRecordSetsRecordTypes" : [
+            "route53:ChangeResourceRecordSetsRecordTypes" = [
               "TXT"
             ]
           }
         }
       },
       {
-        "Effect" = "Allow",
-        "Action" = [
+        Effect = "Allow"
+        Action = [
           "route53:ListHostedZonesByName"
-        ],
-        "Resource" = "*"
+        ]
+        Resource = "*"
       }
     ]
   })
