@@ -1,0 +1,66 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-netdata
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-netdata
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://netdata.github.io/helmchart
+      # https://artifacthub.io/packages/helm/netdata/netdata
+      targetRevision: 3.7.94
+      chart: netdata
+      helm:
+        releaseName: hm-netdata
+        values: |
+          # https://github.com/netdata/helmchart/blob/master/charts/netdata/values.yaml
+          ---
+          parent:
+            enabled: true
+            database:
+              persistence: true
+              storageclass: hm-netdata-storage-class
+              volumesize: 5Gi
+            alarms:
+              persistence: true
+              storageclass: hm-netdata-storage-class
+              volumesize: 1Gi
+            parent:
+              enabled: true
+              port: 19999
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 512Mi
+                limits:
+                  cpu: 200m
+                  memory: 1Gi
+          k8sState:
+            enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+            persistence:
+              enabled: true
+              storageclass: hm-netdata-storage-class
+              volumesize: 1Gi
+          ingress:
+            enabled: false
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: HEAD
+      path: ops/argo-cd/applications/production-hm/metadata/kubernetes-manifests
+  destination:
+    namespace: production-hm-netdata
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
