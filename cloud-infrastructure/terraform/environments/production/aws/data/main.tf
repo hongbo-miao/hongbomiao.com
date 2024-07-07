@@ -448,6 +448,18 @@ module "hm_kubernetes_namespace_hm_prometheus" {
   ]
 }
 
+# Netdata
+module "hm_kubernetes_namespace_hm_netdata" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-netdata"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = true
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
 # OpenCost
 module "hm_kubernetes_namespace_hm_opencost" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
