@@ -21,7 +21,7 @@ spec:
           serviceAccount:
             create: true
             annotations:
-              eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/MLflowRole-hm-cert-manager
+              eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/MLflowRole-hm-mlflow
           run:
             enabled: true
             resources:
@@ -35,11 +35,13 @@ spec:
             auth:
               enabled: true
               existingSecret: hm-mlflow-secret
-              existingSecretUserKey: mlflow_tracking_server_admin_user_name
-              existingSecretPasswordKey: mlflow_tracking_server_admin_password
+              existingSecretUserKey: mlflow_admin_user_name
+              existingSecretPasswordKey: mlflow_admin_password
             persistence:
               enabled: true
               existingClaim: hm-mlflow-tracking-server-persistent-volume-claim
+            service:
+              type: ClusterIP
             resources:
               requests:
                 cpu: 200m
