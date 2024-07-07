@@ -1,20 +1,78 @@
 # https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 ---
-redis-ha:
-  enabled: true
-
-  haproxy:
-    # https://github.com/argoproj/argo-helm/discussions/2785# https://github.com/argoproj/argo-helm/discussions/2785
-    enabled: false
 controller:
-  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 200m
+      memory: 512Mi
 server:
-  autoscaling:
-    enabled: true
-    minReplicas: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
 repoServer:
-  autoscaling:
-    enabled: true
-    minReplicas: 2
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
 applicationSet:
-  replicas: 2
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      cpu: 50m
+      memory: 128Mi
+dex:
+  enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      cpu: 50m
+      memory: 128Mi
+  initImage:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        cpu: 50m
+        memory: 128Mi
+redisSecretInit:
+  enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+redis:
+  enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      cpu: 50m
+      memory: 128Mi
+notifications:
+  enabled: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      cpu: 50m
+      memory: 128Mi
