@@ -1,0 +1,77 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-mlflow
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-mlflow
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://charts.bitnami.com/bitnami
+      # https://charts.bitnami.com/bitnami
+      targetRevision: 1.4.12
+      chart: mlflow
+      helm:
+        releaseName: hm-mlflow
+        values: |
+          # https://github.com/bitnami/charts/blob/main/bitnami/mlflow/values.yaml
+          ---
+          serviceAccount:
+            create: true
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/MLflowRole-hm-cert-manager
+          run:
+            enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 16Mi
+              limits:
+                cpu: 100m
+                memory: 128Mi
+          tracking:
+            auth:
+              enabled: true
+              existingSecret: hm-mlflow-secret
+              existingSecretUserKey: mlflow_tracking_server_admin_user_name
+              existingSecretPasswordKey: mlflow_tracking_server_admin_password
+            persistence:
+              enabled: true
+              existingClaim: hm-mlflow-tracking-server-persistent-volume-claim
+            resources:
+              requests:
+                cpu: 200m
+                memory: 1Gi
+              limits:
+                cpu: 500m
+                memory: 2Gi
+          postgresql:
+            enabled: false
+          externalDatabase:
+            dialectDriver: postgresql
+            host: production-hm-mlflow-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
+            port: 5432
+            database: mlflow_db
+            authDatabase: mlflow_auth_db
+            user: mlflow_user
+            existingSecret: hm-mlflow-secret
+            existingSecretPasswordKey: postgres_password
+          minio:
+            enabled: false
+          externalS3:
+            bucket: production-hm-mlflow
+            serveArtifacts: true
+            useCredentialsInSecret: true
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: HEAD
+      path: mlflow/manifests
+  destination:
+    namespace: production-hm-mlflow
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
