@@ -415,6 +415,7 @@ make kubernetes-clean
     - **AWS Glue DataBrew** - Data cleaning
   - **AWS IAM** - Identity and access management
   - **AWS IoT Core** - Internet of Things (IoT)
+  - **AWS KMS** - Key management service
   - **AWS Lake Formation** - Data lake governance
   - **AWS ParallelCluster** - High performance computing (HPC) cluster management
     - **NICE DCV** - Remote display
