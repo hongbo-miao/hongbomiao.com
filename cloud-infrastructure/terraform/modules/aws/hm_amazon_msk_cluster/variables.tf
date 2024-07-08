@@ -4,10 +4,22 @@ variable "amazon_msk_cluster_name" {
 variable "kafka_version" {
   type = string
 }
-variable "instance_type" {
+variable "kafka_broker_number" {
   type = string
 }
-variable "kafka_broker_number" {
+variable "kafka_broker_instance_type" {
+  type = string
+}
+variable "kafka_broker_log_s3_bucket_name" {
+  type = string
+}
+variable "amazon_vpc_security_group_id" {
+  type = string
+}
+variable "amazon_vpc_subnet_ids" {
+  type = list(string)
+}
+variable "aws_kms_key_arn" {
   type = string
 }
 variable "environment" {

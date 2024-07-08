@@ -1,3 +1,6 @@
+variable "kafka_plugin_name" {
+  type = string
+}
 variable "local_dir_path" {
   type = string
 }
