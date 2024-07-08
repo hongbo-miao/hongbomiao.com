@@ -16,14 +16,18 @@ module "production_hm_production_bucket_amazon_s3_bucket" {
   team           = var.team
 }
 
-# Amazon MSK
-# Amazon S3 bucket - hm-tracker-kafka
+# Tracker Kafka
+# Tracker Kafka - S3 bucket
 module "hm_amazon_s3_bucket_development_hm_tracker_kafka" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-tracker-kakfa"
   environment    = var.environment
   team           = var.team
+}
+# Tracker Kafka - Kafka cluster
+data "aws_kms_alias" "aws_kms_kafka_key" {
+  name = "alias/aws/kafka"
 }
 locals {
   tracker_kafka_broker_number           = 3
@@ -39,10 +43,11 @@ module "hm_amazon_msk_cluster" {
   kafka_broker_log_s3_bucket_name = module.hm_amazon_s3_bucket_development_hm_tracker_kafka.name
   amazon_vpc_security_group_id    = "sg-xxxxxxxxxxxxxxxxx"
   amazon_vpc_subnet_ids           = local.tracker_amazon_vpc_private_subnet_ids
-  aws_kms_key_arn                 = "arn:aws:kms:us-west-2:272394222652:key/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  aws_kms_key_arn                 = data.aws_kms_alias.aws_kms_kafka_key.arn
   environment                     = var.environment
   team                            = var.team
 }
+# Tracker Kafka - Kafka sink plugin
 locals {
   tracker_kafka_sink_plugin_name      = "${var.environment}-hm-tracker-sink-plugin"
   tracker_kafka_sink_plugin_file_name = "${local.tracker_kafka_sink_plugin_name}.zip"
@@ -71,6 +76,7 @@ module "hm_amazon_msk_plugin_tracker_kafka_sink_plugin" {
   s3_bucket_arn            = module.hm_amazon_s3_bucket_development_hm_tracker_kafka.arn
   amazon_msk_plugin_s3_key = module.hm_amazon_s3_object_tracker_kafka_sink_plugin.s3_key
 }
+# Tracker Kafka - Kafka sink connector
 locals {
   production_tracker_sink_connector_name = "DevelopmentTrackerSinkConnector"
 }
