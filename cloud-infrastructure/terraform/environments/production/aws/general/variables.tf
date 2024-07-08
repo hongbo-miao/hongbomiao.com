@@ -1,8 +1,5 @@
-variable "environment" {
-  type = string
-}
-variable "team" {
-  type = string
+variable "amazon_vpc_private_subnet_ids" {
+  type = list(string)
 }
 variable "adsb_2x_flight_trace_raw_data_dates" {
   type = list(string)
@@ -73,4 +70,10 @@ variable "adsb_2x_flight_trace_raw_parquet_dates" {
     "2023/09/29",
     "2023/09/30"
   ]
+}
+variable "environment" {
+  type = string
+}
+variable "team" {
+  type = string
 }

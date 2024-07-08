@@ -16,7 +16,7 @@ data "terraform_remote_state" "hm_terraform_remote_state_production_aws_data" {
 }
 
 # Amazon EC2
-module "production_hm_ec2_module" {
+module "hm_amazon_ec2" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_ec2"
   ec2_instance_name = "hm-ec2-instance"
@@ -37,14 +37,14 @@ data "aws_secretsmanager_secret_version" "hm_rds_secret_version" {
 locals {
   amazon_emr_cluster_name = "hm-trino"
 }
-module "production_hm_trino_s3_set_up_script" {
+module "hm_trino_s3_set_up_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.hm_amazon_vpc_subnets_ids
   s3_key          = "amazon-emr/clusters/${local.amazon_emr_cluster_name}/bootstrap-actions/set_up.sh"
   local_file_path = "files/amazon-emr/clusters/${local.amazon_emr_cluster_name}/bootstrap-actions/set_up.sh"
 }
-module "production_hm_trino_emr" {
+module "hm_trino_emr" {
   providers                                  = { aws = aws.production }
   source                                     = "../../../../modules/aws/hm_amazon_emr_cluster"
   amazon_emr_cluster_name                    = local.amazon_emr_cluster_name
@@ -55,7 +55,7 @@ module "production_hm_trino_emr" {
   core_instance_target_on_demand_capacity    = 4
   core_instance_weighted_capacity            = 4
   core_instance_type                         = "m7a.4xlarge"
-  bootstrap_set_up_script_s3_uri             = module.production_hm_trino_s3_set_up_script.uri
+  bootstrap_set_up_script_s3_uri             = module.hm_trino_s3_set_up_script.uri
   configurations_json_string                 = <<EOF
     [
       {
@@ -120,10 +120,10 @@ module "production_hm_trino_emr" {
   environment  = var.environment
   team         = var.team
 }
-module "production_hm_trino_task_instance_fleet" {
+module "hm_trino_task_instance_fleet" {
   providers                          = { aws = aws.production }
   source                             = "../../../../modules/aws/hm_amazon_emr_cluster_task_instance_fleet"
-  amazon_emr_cluster_id              = module.production_hm_trino_emr.id
+  amazon_emr_cluster_id              = module.hm_trino_emr.id
   task_instance_target_spot_capacity = 28
   task_instance_configs = [
     {
@@ -139,10 +139,10 @@ module "production_hm_trino_task_instance_fleet" {
 data "aws_instance" "hm_trino_primary_node_ec2_instance" {
   filter {
     name   = "private-dns-name"
-    values = [module.production_hm_trino_emr.master_public_dns]
+    values = [module.hm_trino_emr.master_public_dns]
   }
 }
-module "production_hm_route_53_record" {
+module "hm_route_53_record" {
   providers                     = { aws = aws.production }
   source                        = "../../../../modules/aws/hm_amazon_route_53"
   amazon_route_53_record_name   = "hm-emr-trino"
@@ -150,28 +150,28 @@ module "production_hm_route_53_record" {
 }
 
 # Amazon EMR - Apache Sedona
-module "production_hm_sedona_s3_set_up_script" {
+module "hm_sedona_s3_set_up_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
   local_file_path = "files/amazon-emr/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
 }
-module "production_hm_sedona_s3_validate_python_version_script" {
+module "hm_sedona_s3_validate_python_version_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
   local_file_path = "files/amazon-emr/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
 }
-module "production_hm_sedona_s3_set_up_jupyterlab_script" {
+module "hm_sedona_s3_set_up_jupyterlab_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
   local_file_path = "files/amazon-emr/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
 }
-module "production_hm_sedona_emr" {
+module "hm_sedona_emr" {
   providers                                  = { aws = aws.production }
   source                                     = "../../../../modules/aws/hm_amazon_emr_cluster"
   amazon_emr_cluster_name                    = "hm-sedona"
@@ -182,7 +182,7 @@ module "production_hm_sedona_emr" {
   core_instance_target_on_demand_capacity    = 1
   core_instance_weighted_capacity            = 1
   core_instance_type                         = "r7g.xlarge"
-  bootstrap_set_up_script_s3_uri             = module.production_hm_sedona_s3_set_up_script.uri
+  bootstrap_set_up_script_s3_uri             = module.hm_sedona_s3_set_up_script.uri
   configurations_json_string                 = <<EOF
     [
       {
@@ -218,10 +218,10 @@ module "production_hm_sedona_emr" {
   environment                                = var.environment
   team                                       = var.team
 }
-module "production_hm_sedona_emr_task_instance_fleet" {
+module "hm_sedona_emr_task_instance_fleet" {
   providers                          = { aws = aws.production }
   source                             = "../../../../modules/aws/hm_amazon_emr_cluster_task_instance_fleet"
-  amazon_emr_cluster_id              = module.production_hm_sedona_emr.id
+  amazon_emr_cluster_id              = module.hm_sedona_emr.id
   task_instance_target_spot_capacity = 2
   task_instance_configs = [
     {
@@ -234,26 +234,26 @@ module "production_hm_sedona_emr_task_instance_fleet" {
     }
   ]
 }
-module "production_hm_sedona_emr_managed_scaling_policy" {
+module "hm_sedona_emr_managed_scaling_policy" {
   providers             = { aws = aws.production }
   source                = "../../../../modules/aws/hm_amazon_emr_managed_scaling_policy"
-  amazon_emr_cluster_id = module.production_hm_sedona_emr.id
+  amazon_emr_cluster_id = module.hm_sedona_emr.id
   max_capacity_units    = 60
 }
 data "aws_instance" "hm_sedona_emr_primary_node" {
   filter {
     name   = "private-dns-name"
-    values = [module.production_hm_sedona_emr.master_public_dns]
+    values = [module.hm_sedona_emr.master_public_dns]
   }
 }
-module "production_hm_sedona_route_53" {
+module "hm_sedona_route_53" {
   providers                     = { aws = aws.production }
   source                        = "../../../../modules/aws/hm_amazon_route_53"
   amazon_route_53_record_name   = "hm-sedona"
   amazon_route_53_record_values = [data.aws_instance.hm_sedona_emr_primary_node.private_ip]
 }
 
-module "production_hm_sedona_emr_studio_iam" {
+module "hm_sedona_emr_studio_iam" {
   providers              = { aws = aws.production }
   source                 = "../../../../modules/aws/hm_amazon_emr_studio_iam"
   amazon_emr_studio_name = "hm-sedona-emr-studio"
@@ -261,19 +261,19 @@ module "production_hm_sedona_emr_studio_iam" {
   environment            = var.environment
   team                   = var.team
 }
-module "production_hm_sedona_emr_studio" {
+module "hm_sedona_emr_studio" {
   providers              = { aws = aws.production }
   source                 = "../../../../modules/aws/hm_amazon_emr_studio"
   amazon_emr_studio_name = "hm-sedona-emr-studio"
   s3_uri                 = "s3://hm-production-bucket/amazon-emr/studio/hm-sedona-emr-studio"
-  iam_role_arn           = module.production_hm_sedona_emr_studio_iam.arn
+  iam_role_arn           = module.hm_sedona_emr_studio_iam.arn
   environment            = var.environment
   team                   = var.team
 }
 
 # AWS Glue DataBrew job
 # AWS Glue DataBrew recipe job - ADS-B 2x Flight Trace - Write CSV to Parquet
-module "production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_iam" {
+module "hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_iam" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_aws_glue_databrew_iam"
   aws_glue_databrew_job_nickname = "write-adsb-csv-to-parquet"
@@ -282,7 +282,7 @@ module "production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to
   environment                    = var.environment
   team                           = var.team
 }
-module "production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_dataset" {
+module "hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_dataset" {
   providers                      = { awscc = awscc.production }
   source                         = "../../../../modules/aws/hm_aws_glue_databrew_dataset_adsb_raw_data"
   for_each                       = toset(var.adsb_2x_flight_trace_raw_data_dates)
@@ -292,7 +292,7 @@ module "production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to
   environment                    = var.environment
   team                           = var.team
 }
-module "production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet" {
+module "hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet" {
   providers                         = { awscc = awscc.production }
   source                            = "../../../../modules/aws/hm_aws_glue_databrew_recipe_job"
   for_each                          = toset(var.adsb_2x_flight_trace_raw_data_dates)
@@ -305,16 +305,16 @@ module "production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to
   output_s3_bucket_name             = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   output_s3_key                     = "data/raw-parquet/adsb_2x_flight_trace_data/${each.value}/"
   output_max_file_number            = 24
-  iam_role_arn                      = module.production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_iam.arn
+  iam_role_arn                      = module.hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_iam.arn
   environment                       = var.environment
   team                              = var.team
   depends_on = [
-    module.production_hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_dataset
+    module.hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_dataset
   ]
 }
 
 # AWS Glue DataBrew profile job - ADS-B 2x Flight Trace - Profile Parquet
-module "production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_iam" {
+module "hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_iam" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_aws_glue_databrew_iam"
   aws_glue_databrew_job_nickname = "profile-adsb-raw-parquet"
@@ -323,7 +323,7 @@ module "production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw
   environment                    = var.environment
   team                           = var.team
 }
-module "production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_dataset" {
+module "hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_dataset" {
   providers                      = { awscc = awscc.production }
   source                         = "../../../../modules/aws/hm_aws_glue_databrew_dataset_adsb_raw_parquet"
   for_each                       = toset(var.adsb_2x_flight_trace_raw_parquet_dates)
@@ -333,7 +333,7 @@ module "production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw
   environment                    = var.environment
   team                           = var.team
 }
-module "production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet" {
+module "hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet" {
   providers                          = { awscc = awscc.production }
   source                             = "../../../../modules/aws/hm_aws_glue_databrew_profile_job"
   for_each                           = toset(var.adsb_2x_flight_trace_raw_parquet_dates)
@@ -343,17 +343,17 @@ module "production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw
   timeout_min                        = 1440
   output_s3_bucket_name              = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   output_s3_key                      = "aws-glue-databrew/profile-results/"
-  iam_role_arn                       = module.production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_iam.arn
+  iam_role_arn                       = module.hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_iam.arn
   environment                        = var.environment
   team                               = var.team
   depends_on = [
-    module.production_hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_dataset
+    module.hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_dataset
   ]
 }
 
 # AWS Glue job
 # AWS Glue job - ADS-B 2x Flight Trace
-module "production_hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script_iam" {
+module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script_iam" {
   providers             = { aws = aws.production }
   source                = "../../../../modules/aws/hm_aws_glue_iam"
   aws_glue_job_nickname = "write-adsb-parquet-to-delta-table"
@@ -362,35 +362,35 @@ module "production_hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace
   environment           = var.environment
   team                  = var.team
 }
-module "production_hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script" {
+module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   s3_key          = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data.py"
   local_file_path = "files/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data.py"
 }
-module "production_hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data" {
+module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data" {
   providers               = { aws = aws.production }
   source                  = "../../../../modules/aws/hm_aws_glue_job"
   aws_glue_job_name       = "hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data"
-  spark_script_s3_uri     = module.production_hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script.uri
+  spark_script_s3_uri     = module.hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script.uri
   spark_worker_type       = "G.1X"
   spark_worker_max_number = 900
   timeout_min             = 360
-  iam_role_arn            = module.production_hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script_iam.arn
+  iam_role_arn            = module.hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script_iam.arn
   environment             = var.environment
   team                    = var.team
 }
 
 # AWS Glue job - Motor
-module "production_hm_glue_job_write_parquet_to_delta_table_motor_data_script" {
+module "hm_glue_job_write_parquet_to_delta_table_motor_data_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   s3_key          = "aws-glue/spark-scripts/hm_write_parquet_to_delta_table_motor_data.py"
   local_file_path = "files/aws-glue/spark-scripts/src/hm_write_parquet_to_delta_table_motor_data.py"
 }
-module "production_hm_glue_job_write_parquet_to_delta_table_motor_data" {
+module "hm_glue_job_write_parquet_to_delta_table_motor_data" {
   providers               = { aws = aws.production }
   source                  = "../../../../modules/aws/hm_aws_glue_job"
   aws_glue_job_name       = "hm_write_parquet_to_delta_lake_motor_data"
@@ -402,7 +402,7 @@ module "production_hm_glue_job_write_parquet_to_delta_table_motor_data" {
   environment             = var.environment
   team                    = var.team
 }
-module "production_hm_glue_crawler_motor_data" {
+module "hm_glue_crawler_motor_data" {
   providers                     = { aws = aws.production }
   source                        = "../../../../modules/aws/hm_aws_glue_crawler"
   aws_glue_crawler_name         = "hm-delta-lake-crawler-iot"
@@ -413,139 +413,59 @@ module "production_hm_glue_crawler_motor_data" {
   team                          = var.team
 }
 
-# Amazon MSK
-module "production_hm_amazon_msk_cluster" {
-  providers               = { aws = aws.production }
-  source                  = "../../../../modules/aws/hm_amazon_msk_cluster"
-  amazon_msk_cluster_name = "tracker-kafka"
-  kafka_version           = "3.6.0"
-  instance_type           = "kafka.m7g.large"
-  kafka_broker_number     = 2
-  environment             = var.environment
-  team                    = var.team
-}
-locals {
-  tracker_sink_plugin_file_name = "tracker-sink-plugin.zip"
-}
-module "local_tracker_sink_plugin" {
-  source                                         = "../../../../modules/aws/hm_local_tracker_sink_plugin"
-  snowflake_kafka_connector_version              = "2.2.1"
-  bc_fips_version                                = "1.0.2.4"
-  bcpkix_fips_version                            = "1.0.7"
-  confluent_kafka_connect_avro_converter_version = "7.6.1"
-  local_dir_path                                 = "../../../../data/amazon-msk/plugins"
-  local_file_name                                = local.tracker_sink_plugin_file_name
-}
-module "production_tracker_sink_plugin" {
-  providers       = { aws = aws.production }
-  source          = "../../../../modules/aws/hm_amazon_s3_object"
-  s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
-  s3_key          = "amazon-msk/plugins/${local.tracker_sink_plugin_file_name}"
-  local_file_path = module.local_tracker_sink_plugin.local_file_path
-}
-module "production_hm_amazon_msk_tracker_sink_plugin" {
-  providers                = { aws = aws.production }
-  source                   = "../../../../modules/aws/hm_amazon_msk_plugin"
-  amazon_msk_plugin_name   = "tracker-sink-plugin"
-  s3_bucket_arn            = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_arn
-  amazon_msk_plugin_s3_key = module.production_tracker_sink_plugin.s3_key
-}
-locals {
-  production_tracker_sink_connector_name = "DevelopmentTrackerSinkConnector"
-}
-
-module "production_hm_amazon_msk_tracker_sink_connector_iam" {
-  providers                 = { aws = aws.production }
-  source                    = "../../../../modules/aws/hm_amazon_msk_connector_iam"
-  amazon_msk_connector_name = local.production_tracker_sink_connector_name
-  amazon_msk_arn            = module.production_hm_amazon_msk_cluster.arn
-  msk_plugin_s3_bucket_name = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
-  msk_log_s3_bucket_name    = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
-  environment               = var.environment
-  team                      = var.team
-}
-data "aws_secretsmanager_secret" "tracker_snowflake_secret" {
-  name = "hm/snowflake/production_hm_kafka_db/product/read_write"
-}
-data "aws_secretsmanager_secret_version" "tracker_snowflake_secret_version" {
-  secret_id = data.aws_secretsmanager_secret.tracker_snowflake_secret.id
-}
-module "production_hm_amazon_msk_tracker_sink_connector" {
-  providers                            = { aws = aws.production }
-  source                               = "../../../../modules/aws/hm_amazon_msk_connector"
-  amazon_msk_connector_name            = local.production_tracker_sink_connector_name
-  kafka_connect_version                = "2.7.1"
-  amazon_msk_plugin_arn                = module.production_hm_amazon_msk_tracker_sink_plugin.arn
-  amazon_msk_plugin_revision           = module.production_hm_amazon_msk_tracker_sink_plugin.latest_revision
-  amazon_msk_connector_iam_role_arn    = module.production_hm_amazon_msk_tracker_sink_connector_iam.arn
-  amazon_msk_cluster_bootstrap_servers = module.production_hm_amazon_msk_cluster.bootstrap_servers
-  confluent_schema_registry_url        = "https://production-confluent-schema-registry.hongbomiao.com"
-  snowflake_user_name                  = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["user_name"]
-  snowflake_private_key                = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key"]
-  snowflake_private_key_passphrase     = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key_passphrase"]
-  snowflake_role_name                  = "HM_DEVELOPMENT_HM_KAFKA_DB_PRODUCT_READ_WRITE_ROLE"
-  msk_log_s3_bucket_name               = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
-  msk_log_s3_key                       = "amazon-msk/connectors/${local.production_tracker_sink_connector_name}"
-  kafka_topic_name                     = "production.tracker.analytic-events.avro"
-  snowflake_database_name              = "DEVELOPMENT_HM_KAFKA_DB"
-  snowflake_schema_name                = "ENGINEERING"
-  environment                          = var.environment
-  team                                 = var.team
-}
-
 # AWS Batch
-module "production_hm_aws_batch_security_group" {
+module "hm_aws_batch_security_group" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_aws_batch_security_group"
   amazon_ec2_security_group_name = "hm-aws-batch-security-group"
-  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
+  amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
   environment                    = var.environment
   team                           = var.team
 }
-module "production_hm_aws_batch_compute_environment_iam" {
+module "hm_aws_batch_compute_environment_iam" {
   providers                              = { aws = aws.production }
   source                                 = "../../../../modules/aws/hm_aws_batch_compute_environment_iam"
   aws_batch_compute_environment_nickname = "hm-batch-compute-env"
   environment                            = var.environment
   team                                   = var.team
 }
-module "production_hm_aws_batch_compute_environment" {
+module "hm_aws_batch_compute_environment" {
   providers                          = { aws = aws.production }
   source                             = "../../../../modules/aws/hm_aws_batch_compute_environment"
   aws_batch_compute_environment_name = "hm-aws-batch-compute-environment"
-  amazon_ec2_security_group_ids      = [module.production_hm_aws_batch_security_group.id]
+  amazon_ec2_security_group_ids      = [module.hm_aws_batch_security_group.id]
   amazon_vpc_subnet_ids              = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
-  iam_role_arn                       = module.production_hm_aws_batch_compute_environment_iam.arn
+  iam_role_arn                       = module.hm_aws_batch_compute_environment_iam.arn
   environment                        = var.environment
   team                               = var.team
   depends_on = [
-    module.production_hm_aws_batch_compute_environment_iam
+    module.hm_aws_batch_compute_environment_iam
   ]
 }
-module "production_hm_aws_batch_job_queue" {
+module "hm_aws_batch_job_queue" {
   providers                          = { aws = aws.production }
   source                             = "../../../../modules/aws/hm_aws_batch_job_queue"
   aws_batch_job_queue_name           = "hm-aws-batch-queue"
-  aws_batch_compute_environment_arns = [module.production_hm_aws_batch_compute_environment.arn]
+  aws_batch_compute_environment_arns = [module.hm_aws_batch_compute_environment.arn]
   environment                        = var.environment
   team                               = var.team
 }
-module "production_hm_aws_batch_job_definition_iam" {
+module "hm_aws_batch_job_definition_iam" {
   providers                         = { aws = aws.production }
   source                            = "../../../../modules/aws/hm_aws_batch_job_definition_iam"
   aws_batch_job_definition_nickname = "hm-batch-job-def"
   environment                       = var.environment
   team                              = var.team
 }
-module "production_hm_aws_batch_job_definition" {
+module "hm_aws_batch_job_definition" {
   providers                     = { aws = aws.production }
   source                        = "../../../../modules/aws/hm_aws_batch_job_definition"
   aws_batch_job_definition_name = "hm-aws-batch-definition"
-  iam_role_arn                  = module.production_hm_aws_batch_job_definition_iam.arn
+  iam_role_arn                  = module.hm_aws_batch_job_definition_iam.arn
   environment                   = var.environment
   team                          = var.team
   depends_on = [
-    module.production_hm_aws_batch_job_definition_iam
+    module.hm_aws_batch_job_definition_iam
   ]
 }
 
@@ -553,18 +473,18 @@ module "production_hm_aws_batch_job_definition" {
 locals {
   amazon_sagemaker_notebook_instance_name = "hm-amazon-sagemaker-notebook"
 }
-module "production_hm_amazon_sagemaker_notebook_instance_iam" {
+module "hm_amazon_sagemaker_notebook_instance_iam" {
   providers                               = { aws = aws.production }
   source                                  = "../../../../modules/aws/hm_amazon_sagemaker_notebook_instance_iam"
   amazon_sagemaker_notebook_instance_name = local.amazon_sagemaker_notebook_instance_name
   environment                             = var.environment
   team                                    = var.team
 }
-module "production_hm_amazon_sagemaker_notebook_instance" {
+module "hm_amazon_sagemaker_notebook_instance" {
   providers                               = { aws = aws.production }
   source                                  = "../../../../modules/aws/hm_amazon_sagemaker_notebook_instance"
   amazon_sagemaker_notebook_instance_name = local.amazon_sagemaker_notebook_instance_name
-  iam_role_arn                            = module.production_hm_amazon_sagemaker_notebook_instance_iam.arn
+  iam_role_arn                            = module.hm_amazon_sagemaker_notebook_instance_iam.arn
   instance_type                           = "ml.g4dn.4xlarge"
   environment                             = var.environment
   team                                    = var.team

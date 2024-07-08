@@ -11,23 +11,27 @@ resource "aws_msk_cluster" "hm_amazon_msk_cluster" {
   cluster_name           = var.amazon_msk_cluster_name
   kafka_version          = var.kafka_version
   number_of_broker_nodes = var.kafka_broker_number
+  broker_node_group_info {
+    instance_type   = var.kafka_broker_instance_type
+    security_groups = [var.amazon_vpc_security_group_id]
+    client_subnets  = var.amazon_vpc_subnet_ids
+  }
+  logging_info {
+    broker_logs {
+      s3 {
+        enabled = true
+        bucket  = var.kafka_broker_log_s3_bucket_name
+        prefix  = "brokers"
+      }
+    }
+  }
+  encryption_info {
+    encryption_at_rest_kms_key_arn = var.aws_kms_key_arn
+  }
   client_authentication {
     sasl {
       iam = true
     }
-  }
-  broker_node_group_info {
-    instance_type = var.instance_type
-    security_groups = [
-      "sg-xxxxxxxxxxxxxxxxx"
-    ]
-    client_subnets = [
-      "subnet-xxxxxxxxxxxxxxxxx",
-      "subnet-xxxxxxxxxxxxxxxxx"
-    ]
-  }
-  encryption_info {
-    encryption_at_rest_kms_key_arn = "arn:aws:kms:us-west-2:272394222652:key/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
   }
   tags = {
     Environment  = var.environment
