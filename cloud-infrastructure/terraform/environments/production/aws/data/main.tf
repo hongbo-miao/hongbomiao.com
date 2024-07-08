@@ -1,5 +1,10 @@
-data "aws_vpc" "hm_amazon_vpc" {
-  default = true
+data "terraform_remote_state" "hm_terraform_remote_state_production_aws_network" {
+  backend = "s3"
+  config = {
+    region = "us-west-2"
+    bucket = "hm-terraform-bucket"
+    key    = "production/aws/network/terraform.tfstate"
+  }
 }
 
 # Amazon S3 bucket - hm-production-bucket
@@ -9,6 +14,103 @@ module "production_hm_production_bucket_amazon_s3_bucket" {
   s3_bucket_name = "hm-production-bucket"
   environment    = var.environment
   team           = var.team
+}
+
+# Amazon MSK
+# Amazon S3 bucket - hm-tracker-kafka
+module "hm_amazon_s3_bucket_development_hm_tracker_kafka" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${var.environment}-hm-tracker-kakfa"
+  environment    = var.environment
+  team           = var.team
+}
+locals {
+  tracker_kafka_broker_number           = 3
+  tracker_amazon_vpc_private_subnet_ids = local.tracker_kafka_broker_number < 4 ? slice(var.amazon_vpc_private_subnet_ids, 0, local.tracker_kafka_broker_number) : var.amazon_vpc_private_subnet_ids
+}
+module "hm_amazon_msk_cluster" {
+  providers                       = { aws = aws.production }
+  source                          = "../../../../modules/aws/hm_amazon_msk_cluster"
+  amazon_msk_cluster_name         = "${var.environment}-hm-tracker-kafka"
+  kafka_version                   = "3.6.0"
+  kafka_broker_instance_type      = "kafka.m7g.large"
+  kafka_broker_number             = local.tracker_kafka_broker_number
+  kafka_broker_log_s3_bucket_name = module.hm_amazon_s3_bucket_development_hm_tracker_kafka.name
+  amazon_vpc_security_group_id    = "sg-xxxxxxxxxxxxxxxxx"
+  amazon_vpc_subnet_ids           = local.tracker_amazon_vpc_private_subnet_ids
+  aws_kms_key_arn                 = "arn:aws:kms:us-west-2:272394222652:key/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  environment                     = var.environment
+  team                            = var.team
+}
+locals {
+  tracker_kafka_sink_plugin_name      = "${var.environment}-hm-tracker-sink-plugin"
+  tracker_kafka_sink_plugin_file_name = "${local.tracker_kafka_sink_plugin_name}.zip"
+}
+module "local_tracker_sink_plugin" {
+  source                                         = "../../../../modules/aws/hm_local_tracker_sink_plugin"
+  kafka_plugin_name                              = local.tracker_kafka_sink_plugin_name
+  snowflake_kafka_connector_version              = "2.2.1"
+  bc_fips_version                                = "1.0.2.4"
+  bcpkix_fips_version                            = "1.0.7"
+  confluent_kafka_connect_avro_converter_version = "7.6.1"
+  local_dir_path                                 = "files/amazon-msk/${var.environment}-hm-tracker-kafka/plugins"
+  local_file_name                                = local.tracker_kafka_sink_plugin_file_name
+}
+module "hm_amazon_s3_object_tracker_kafka_sink_plugin" {
+  providers       = { aws = aws.production }
+  source          = "../../../../modules/aws/hm_amazon_s3_object"
+  s3_bucket_name  = module.hm_amazon_s3_bucket_development_hm_tracker_kafka.name
+  s3_key          = "plugins/${local.tracker_kafka_sink_plugin_file_name}"
+  local_file_path = module.local_tracker_sink_plugin.local_file_path
+}
+module "hm_amazon_msk_plugin_tracker_kafka_sink_plugin" {
+  providers                = { aws = aws.production }
+  source                   = "../../../../modules/aws/hm_amazon_msk_plugin"
+  amazon_msk_plugin_name   = local.tracker_kafka_sink_plugin_name
+  s3_bucket_arn            = module.hm_amazon_s3_bucket_development_hm_tracker_kafka.arn
+  amazon_msk_plugin_s3_key = module.hm_amazon_s3_object_tracker_kafka_sink_plugin.s3_key
+}
+locals {
+  production_tracker_sink_connector_name = "DevelopmentTrackerSinkConnector"
+}
+module "hm_amazon_msk_tracker_sink_connector_iam" {
+  providers                 = { aws = aws.production }
+  source                    = "../../../../modules/aws/hm_amazon_msk_connector_iam"
+  amazon_msk_connector_name = local.production_tracker_sink_connector_name
+  amazon_msk_arn            = module.hm_amazon_msk_cluster.arn
+  msk_plugin_s3_bucket_name = module.hm_amazon_s3_bucket_development_hm_tracker_kafka.name
+  msk_log_s3_bucket_name    = module.hm_amazon_s3_bucket_development_hm_tracker_kafka.name
+  environment               = var.environment
+  team                      = var.team
+}
+data "aws_secretsmanager_secret" "tracker_snowflake_secret" {
+  name = "hm/snowflake/production_hm_kafka_db/product/read_write"
+}
+data "aws_secretsmanager_secret_version" "tracker_snowflake_secret_version" {
+  secret_id = data.aws_secretsmanager_secret.tracker_snowflake_secret.id
+}
+module "hm_amazon_msk_tracker_sink_connector" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/aws/hm_amazon_msk_connector"
+  amazon_msk_connector_name            = local.production_tracker_sink_connector_name
+  kafka_connect_version                = "2.7.1"
+  amazon_msk_plugin_arn                = module.hm_amazon_msk_plugin_tracker_kafka_sink_plugin.arn
+  amazon_msk_plugin_revision           = module.hm_amazon_msk_plugin_tracker_kafka_sink_plugin.latest_revision
+  amazon_msk_connector_iam_role_arn    = module.hm_amazon_msk_tracker_sink_connector_iam.arn
+  amazon_msk_cluster_bootstrap_servers = module.hm_amazon_msk_cluster.bootstrap_servers
+  confluent_schema_registry_url        = "https://production-confluent-schema-registry.hongbomiao.com"
+  snowflake_user_name                  = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["user_name"]
+  snowflake_private_key                = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key"]
+  snowflake_private_key_passphrase     = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key_passphrase"]
+  snowflake_role_name                  = "HM_DEVELOPMENT_HM_KAFKA_DB_PRODUCT_READ_WRITE_ROLE"
+  msk_log_s3_bucket_name               = module.hm_amazon_s3_bucket_development_hm_tracker_kafka.name
+  msk_log_s3_key                       = "amazon-msk/connectors/${local.production_tracker_sink_connector_name}"
+  kafka_topic_name                     = "production.tracker.analytic-events.avro"
+  snowflake_database_name              = "DEVELOPMENT_HM_KAFKA_DB"
+  snowflake_schema_name                = "ENGINEERING"
+  environment                          = var.environment
+  team                                 = var.team
 }
 
 # Amazon EKS
@@ -271,7 +373,7 @@ data "aws_secretsmanager_secret_version" "hm_airbyte_postgres_secret_version" {
 module "hm_airbyte_postgres_security_group" {
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.airbyte_postgres_name}-security-group"
-  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
+  amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
   environment                    = var.environment
   team                           = var.team
 }
@@ -355,7 +457,7 @@ data "aws_secretsmanager_secret_version" "hm_mlflow_postgres_secret_version" {
 module "hm_mlflow_postgres_security_group" {
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.mlflow_postgres_name}-security-group"
-  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
+  amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
   environment                    = var.environment
   team                           = var.team
 }
