@@ -10,6 +10,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.57.0"
     }
+    # https://registry.terraform.io/providers/hashicorp/external/latest
+    external = {
+      source  = "hashicorp/external"
+      version = "2.3.3"
+    }
     # https://registry.terraform.io/providers/hashicorp/helm/latest
     helm = {
       source  = "hashicorp/helm"
