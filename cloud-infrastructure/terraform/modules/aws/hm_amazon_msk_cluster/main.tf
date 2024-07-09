@@ -11,6 +11,7 @@ resource "aws_msk_cluster" "hm_amazon_msk_cluster" {
   cluster_name           = var.amazon_msk_cluster_name
   kafka_version          = var.kafka_version
   number_of_broker_nodes = var.kafka_broker_number
+  storage_mode           = "TIERED"
   broker_node_group_info {
     instance_type   = var.kafka_broker_instance_type
     security_groups = [var.amazon_vpc_security_group_id]
