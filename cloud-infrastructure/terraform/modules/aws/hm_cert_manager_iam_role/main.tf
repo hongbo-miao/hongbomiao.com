@@ -66,7 +66,7 @@ resource "aws_iam_role_policy" "hm_cert_manager_iam_role_policy" {
         ]
         Resource = "arn:aws:route53:::hostedzone/${var.amazon_route53_hosted_zone_id}"
         Condition = {
-          "ForAllValues:StringEquals" = {
+          "ForAllValues:StringLike" = {
             "route53:ChangeResourceRecordSetsNormalizedRecordNames" = [
               "_acme-challenge.*.${var.amazon_route53_hosted_zone_name}"
             ],
