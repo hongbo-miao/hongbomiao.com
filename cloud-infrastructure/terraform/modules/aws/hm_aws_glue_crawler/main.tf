@@ -12,13 +12,18 @@ resource "aws_glue_crawler" "hm_aws_glue_crawler" {
   name          = var.aws_glue_crawler_name
   role          = var.iam_role_arn
   database_name = var.aws_glue_database
+  schedule      = var.schedule
   delta_target {
     delta_tables              = var.aws_glue_crawler_delta_tables
-    create_native_delta_table = false
+    create_native_delta_table = true
     write_manifest            = false
   }
   schema_change_policy {
     delete_behavior = "LOG"
+    update_behavior = "LOG"
+  }
+  lineage_configuration {
+    crawler_lineage_settings = "ENABLE"
   }
   configuration = jsonencode(
     {
@@ -34,8 +39,8 @@ resource "aws_glue_crawler" "hm_aws_glue_crawler" {
     }
   )
   tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.aws_glue_crawler_name
+    Environment = var.environment
+    Team        = var.team
+    Name        = var.aws_glue_crawler_name
   }
 }
