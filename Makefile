@@ -60,9 +60,9 @@ convert-svg-to-png:
 ruby-build-upgrade:
 	brew upgrade ruby-build
 rbenv-list-latest-stable-versions:
-	rbenv install -l
+	rbenv install --list
 rbenv-install:
-	rbenv install 3.3.1
+	rbenv install 3.3.4
 
 bundle-init:
 	bundle init
