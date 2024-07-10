@@ -52,7 +52,7 @@ data "external" "hm_local_tracker_sink_plugin" {
   program = ["bash", "files/amazon-msk/${var.environment}-tracker-kafka/plugins/build.sh"]
   query = {
     kafka_plugin_name                              = local.tracker_kafka_sink_plugin_name
-    snowflake_kafka_connector_version              = "2.2.2"   # https://github.com/snowflakedb/snowflake-kafka-connector/releases
+    snowflake_kafka_connector_version              = "2.2.2"   # https://mvnrepository.com/artifact/com.snowflake/snowflake-kafka-connector
     bc_fips_version                                = "1.0.2.5" # https://mvnrepository.com/artifact/org.bouncycastle/bc-fips
     bcpkix_fips_version                            = "1.0.7"   # https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-fips
     confluent_kafka_connect_avro_converter_version = "7.6.1"   # https://www.confluent.io/hub/confluentinc/kafka-connect-avro-converter
