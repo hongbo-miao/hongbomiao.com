@@ -20,7 +20,7 @@ bundle-add:
 	bundle add xxx
 bundle-update:
 	bundle update
-bundle-lock:
-	bundle lock --add-platform x86_64-darwin-20
+bundle-add-platform:
+	bundle lock --add-platform x86_64-darwin-21
 bundle-exec-test-coverage:
 	bundle exec slather
