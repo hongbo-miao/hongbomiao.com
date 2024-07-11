@@ -3,76 +3,76 @@
 controller:
   resources:
     requests:
-      cpu: 100m
-      memory: 256Mi
-    limits:
       cpu: 200m
       memory: 512Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
 server:
   resources:
     requests:
-      cpu: 100m
-      memory: 64Mi
-    limits:
-      cpu: 200m
+      cpu: 20m
       memory: 128Mi
+    limits:
+      cpu: 50m
+      memory: 256Mi
 repoServer:
   resources:
     requests:
-      cpu: 50m
-      memory: 64Mi
+      cpu: 500m
+      memory: 512Mi
     limits:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 1000m
+      memory: 1Gi
 applicationSet:
   resources:
     requests:
-      cpu: 10m
-      memory: 64Mi
+      cpu: 20m
+      memory: 128Mi
     limits:
       cpu: 50m
-      memory: 128Mi
+      memory: 256Mi
 dex:
   enabled: true
   resources:
     requests:
-      cpu: 10m
-      memory: 64Mi
+      cpu: 20m
+      memory: 128Mi
     limits:
       cpu: 50m
-      memory: 128Mi
+      memory: 256Mi
   initImage:
     resources:
       requests:
-        cpu: 10m
-        memory: 64Mi
+        cpu: 20m
+        memory: 128Mi
       limits:
         cpu: 50m
-        memory: 128Mi
+        memory: 256Mi
 redisSecretInit:
   enabled: true
   resources:
     requests:
       cpu: 100m
-      memory: 64Mi
+      memory: 128Mi
     limits:
       cpu: 200m
-      memory: 128Mi
+      memory: 256Mi
 redis:
   enabled: true
   resources:
     requests:
-      cpu: 10m
-      memory: 64Mi
+      cpu: 20m
+      memory: 128Mi
     limits:
       cpu: 50m
-      memory: 128Mi
+      memory: 256Mi
 notifications:
   enabled: true
   resources:
     requests:
-      cpu: 10m
-      memory: 64Mi
+      cpu: 20m
+      memory: 128Mi
     limits:
       cpu: 50m
-      memory: 128Mi
+      memory: 256Mi
