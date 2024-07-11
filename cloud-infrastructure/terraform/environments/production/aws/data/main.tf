@@ -265,15 +265,19 @@ module "hm_amazon_ebs_csi_driver_iam_role" {
 module "hm_kubernetes_namespace_hm_argo_cd" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-argo-cd"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
   depends_on = [
     module.hm_amazon_eks_cluster
   ]
 }
 module "hm_argo_cd_helm_chart" {
-  source = "../../../../modules/kubernetes/hm_argo_cd_helm_chart"
-  name   = "hm-argo-cd"
-  # https://artifacthub.io/packages/helm/argo/argo-cd
-  argo_cd_version     = "7.2.0"
+  source              = "../../../../modules/kubernetes/hm_helm_chart"
+  repository          = "https://argoproj.github.io/argo-helm"
+  chart_name          = "argo-cd"
+  chart_version       = "7.3.5" # https://artifacthub.io/packages/helm/argo/argo-cd
+  release_name        = "hm-argo-cd"
   namespace           = module.hm_kubernetes_namespace_hm_argo_cd.namespace
   my_values_yaml_path = "files/argo-cd/helm/my-values.yaml"
   environment         = var.environment
