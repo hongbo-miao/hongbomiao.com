@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://netdata.github.io/helmchart
       # https://artifacthub.io/packages/helm/netdata/netdata
-      targetRevision: 3.7.94
+      targetRevision: 3.7.95
       chart: netdata
       helm:
         releaseName: hm-netdata
@@ -28,18 +28,48 @@ spec:
               persistence: true
               storageclass: hm-netdata-storage-class
               volumesize: 1Gi
-            parent:
-              enabled: true
-              port: 19999
-              resources:
-                requests:
-                  cpu: 100m
-                  memory: 512Mi
-                limits:
-                  cpu: 200m
-                  memory: 1Gi
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1Gi
+              limits:
+                cpu: 200m
+                memory: 2Gi
+          child:
+            enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 200m
+                memory: 256Mi
+            configs:
+              kubelet:
+                enabled: true
+                data: |
+                  update_every: 3
+                  autodetection_retry: 0
+                  jobs:
+                    - url: http://127.0.0.1:10255/metrics
+                    - url: https://localhost:10250/metrics
+                      tls_skip_verify: yes
+              kubeproxy:
+                enabled: true
+                data: |
+                  update_every: 3
+                  autodetection_retry: 0
+                  jobs:
+                    - url: http://127.0.0.1:10249/metrics
           k8sState:
             enabled: true
+            configs:
+              go.d-k8s_state:
+                enabled: true
+                data: |
+                  jobs:
+                    - name: k8s_state
+                      update_every: 3
             resources:
               requests:
                 cpu: 50m
