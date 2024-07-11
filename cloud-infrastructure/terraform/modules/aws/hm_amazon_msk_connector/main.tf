@@ -32,7 +32,7 @@ resource "aws_mskconnect_connector" "hm_amazon_msk_connector" {
     "buffer.count.records"             = 10000
     "buffer.flush.time"                = 5
     "buffer.size.bytes"                = 20000000
-    "snowflake.url.name"               = "hongbomiao.snowflakecomputing.com:443"
+    "snowflake.url.name"               = "hongbomiao.snowflakecomputing.com"
     "snowflake.user.name"              = var.snowflake_user_name
     "snowflake.private.key"            = var.snowflake_private_key
     "snowflake.private.key.passphrase" = var.snowflake_private_key_passphrase

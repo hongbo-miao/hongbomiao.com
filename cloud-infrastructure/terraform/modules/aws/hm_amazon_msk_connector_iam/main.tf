@@ -6,10 +6,13 @@ terraform {
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 # https://docs.aws.amazon.com/msk/latest/developerguide/msk-connect-service-execution-role.html
+locals {
+  aws_iam_role_name_prefix = "AmazonMSKConnectorRole"
+}
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "hm_amazon_msk_connector_iam_role" {
-  name = "AmazonMSKConnectorServiceRole-${var.amazon_msk_connector_name}"
+  name = "${local.aws_iam_role_name_prefix}-${var.amazon_msk_connector_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -23,14 +26,14 @@ resource "aws_iam_role" "hm_amazon_msk_connector_iam_role" {
     ]
   })
   tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = "AmazonMSKConnectorServiceRole-${var.amazon_msk_connector_name}"
+    Environment = var.environment
+    Team        = var.team
+    Name        = "${local.aws_iam_role_name_prefix}-${var.amazon_msk_connector_name}"
   }
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
-resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_policy" {
-  name = "AmazonMSKConnectorServicePolicyForMSK-${var.amazon_msk_connector_name}"
+resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_msk_policy" {
+  name = "${local.aws_iam_role_name_prefix}MSKPolicy-${var.amazon_msk_connector_name}"
   role = aws_iam_role.hm_amazon_msk_connector_iam_role.name
   policy = jsonencode({
     Version = "2012-10-17"
@@ -92,8 +95,8 @@ resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_policy" {
   })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
-resource "aws_iam_role_policy" "hm_aws_glue_databrew_iam_role_input_policy" {
-  name = "AmazonMSKConnectorServicePolicyForMSKPluginS3-${var.amazon_msk_connector_name}"
+resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_plugin_s3_policy" {
+  name = "${local.aws_iam_role_name_prefix}PluginS3Policy-${var.amazon_msk_connector_name}"
   role = aws_iam_role.hm_amazon_msk_connector_iam_role.name
   policy = jsonencode({
     Version = "2012-10-17"
@@ -113,8 +116,8 @@ resource "aws_iam_role_policy" "hm_aws_glue_databrew_iam_role_input_policy" {
   })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
-resource "aws_iam_role_policy" "hm_aws_glue_databrew_iam_role_kafka_worker_log_s3_policy" {
-  name = "AmazonMSKConnectorServicePolicyForMSKLogS3-${var.amazon_msk_connector_name}"
+resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_log_s3_policy" {
+  name = "${local.aws_iam_role_name_prefix}LogS3Policy-${var.amazon_msk_connector_name}"
   role = aws_iam_role.hm_amazon_msk_connector_iam_role.name
   policy = jsonencode({
     Version = "2012-10-17"
