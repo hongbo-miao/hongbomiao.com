@@ -1,0 +1,36 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-ray-ingress
+  namespace: production-hm-ray-cluster
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: hm-ray.internal.hongbomiao.com
+    # https://cert-manager.io/docs/usage/ingress/#supported-annotations
+    cert-manager.io/cluster-issuer: production-lets-encrypt-cluster-issuer
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+  labels:
+    app.kubernetes.io/name: hm-ray-ingress
+    app.kubernetes.io/part-of: production-hm-ray-cluster
+spec:
+  rules:
+    - host: hm-ray.internal.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-ray-cluster-kuberay-head-svc
+                port:
+                  number: 8265
+  tls:
+    - hosts:
+        - hm-ray.internal.hongbomiao.com
+      secretName: production-hm-ray-certificate
