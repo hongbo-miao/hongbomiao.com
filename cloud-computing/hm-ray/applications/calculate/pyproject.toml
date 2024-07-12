@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "hm-ray-greet"
+name = "hm-ray-calculate"
 version = "1.0.0"
 description = ""
 authors = ["Hongbo Miao"]
 
 [tool.poetry.dependencies]
-python = "3.12.x"
+python = "3.9.x"
 ray = {version = "2.32.0", extras = ["default"]}
 
 [tool.poetry.group.dev.dependencies]
@@ -21,5 +21,4 @@ build-backend = "poetry.core.masonry.api"
 dev = "python src/main.py"
 test = "pytest --verbose --verbose"
 test-coverage = "pytest --cov=. --cov-report=xml"
-
-submit = "ray job submit --address=https://ray.hongbomiao.com --working-dir=src -- python main.py"
+submit = "ray job submit"
