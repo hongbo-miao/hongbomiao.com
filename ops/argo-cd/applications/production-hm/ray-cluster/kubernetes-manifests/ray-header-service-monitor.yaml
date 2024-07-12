@@ -1,0 +1,24 @@
+# https://docs.ray.io/en/latest/cluster/kubernetes/k8s-ecosystem/prometheus-grafana.html
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ray-head-service-monitor
+  namespace: production-hm-prometheus
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+  labels:
+    release: hm-prometheus
+spec:
+  jobLabel: ray-head
+  namespaceSelector:
+    matchNames:
+      - production-hm-ray-cluster
+  selector:
+    matchLabels:
+      ray.io/node-type: head
+  endpoints:
+    - port: metrics
+  targetLabels:
+    - ray.io/cluster

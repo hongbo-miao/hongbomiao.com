@@ -514,6 +514,28 @@ module "hm_kubernetes_namespace_hm_mlflow" {
   ]
 }
 
+# Ray
+module "hm_kubernetes_namespace_hm_kuberay_operator" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-kuberay-operator"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+module "hm_kubernetes_namespace_hm_ray_cluster" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-ray-cluster"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
 # Vertical Pod Autoscaler
 module "hm_kubernetes_namespace_hm_vertical_pod_autoscaler" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
