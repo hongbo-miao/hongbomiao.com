@@ -19,6 +19,7 @@ curl --silent --fail --show-error --location --output "/tmp/$KAFKA_PLUGIN_NAME/r
 # Build
 unzip -q "/tmp/$KAFKA_PLUGIN_NAME/raw/confluentinc-kafka-connect-avro-converter-$CONFLUENT_KAFKA_CONNECT_AVRO_CONVERTER_VERSION.zip" -d "/tmp/$KAFKA_PLUGIN_NAME/process/"
 cp -R "/tmp/$KAFKA_PLUGIN_NAME/process/confluentinc-kafka-connect-avro-converter-$CONFLUENT_KAFKA_CONNECT_AVRO_CONVERTER_VERSION/lib/." "/tmp/$KAFKA_PLUGIN_NAME/jar/"
+rm -f "$LOCAL_DIR_PATH/$LOCAL_FILE_NAME"
 zip -q --recurse-paths --junk-paths "$LOCAL_DIR_PATH/$LOCAL_FILE_NAME" "/tmp/$KAFKA_PLUGIN_NAME/jar/"
 
 # Clean
