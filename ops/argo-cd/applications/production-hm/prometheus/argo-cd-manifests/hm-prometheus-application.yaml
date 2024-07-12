@@ -83,6 +83,13 @@ spec:
                 memory: 256Mi
           grafana:
             enabled: true
+            grafana.ini:
+              security:
+                # For Ray: https://docs.ray.io/en/latest/cluster/kubernetes/k8s-ecosystem/prometheus-grafana.html
+                allow_embedding: true
+              auth.anonymous:
+                enabled: true
+                org_role: Viewer
             resources:
               requests:
                 cpu: 50m
