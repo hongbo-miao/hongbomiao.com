@@ -510,3 +510,26 @@ module "hm_kubernetes_namespace_hm_opencost" {
     module.hm_amazon_eks_cluster
   ]
 }
+
+# Redpanda Console
+# Redpanda Console - IAM role
+module "hm_redpanda_console_iam_role" {
+  source                                = "../../../../modules/aws/hm_redpanda_console_iam_role"
+  redpanda_console_service_account_name = "hm-redpanda-console"
+  redpanda_console_namespace            = "${var.environment}-hm-redpanda-console"
+  amazon_eks_cluster_oidc_provider      = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn  = module.hm_amazon_eks_cluster.oidc_provider_arn
+  environment                           = var.environment
+  team                                  = var.team
+}
+# Redpanda Console - Kubernetes namespace
+module "hm_kubernetes_namespace_hm_redpanda_console" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-redpanda-console"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
