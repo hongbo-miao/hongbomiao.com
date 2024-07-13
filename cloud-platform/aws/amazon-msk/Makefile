@@ -3,6 +3,8 @@ amazon-msk-kafka-cluster-list:
 	aws kafka list-clusters
 amazon-msk-kafka-cluster-describe:
 	aws kafka describe-cluster --cluster-arn=arn:aws:kafka:us-west-2:272394222652:cluster/hm-msk-cluster/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-xx
+amazon-msk-kafka-cluster-broker-list:
+	aws kafka get-bootstrap-brokers --cluster-arn=arn:aws:kafka:us-west-2:272394222652:cluster/hm-msk-cluster/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-xx
 
 # EC2
 kafka-topic-list:
