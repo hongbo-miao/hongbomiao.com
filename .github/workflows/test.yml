@@ -69,7 +69,7 @@ jobs:
       hm-pulumi: ${{ steps.filter.outputs.hm-pulumi }}
       hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
       hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
-      hm-ray-greet: ${{ steps.filter.outputs.hm-ray-greet }}
+      hm-ray-calculate: ${{ steps.filter.outputs.hm-ray-calculate }}
       hm-serial: ${{ steps.filter.outputs.hm-serial }}
       hm-skypilot: ${{ steps.filter.outputs.hm-skypilot }}
       hm-spark-analyze-coffee-customers: ${{ steps.filter.outputs.hm-spark-analyze-coffee-customers }}
@@ -240,9 +240,9 @@ jobs:
             hm-rasa:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-rasa/**'
-            hm-ray-greet:
+            hm-ray-calculate:
               - '.github/workflows/test.yml'
-              - 'hm-ray-greet/**'
+              - 'hm-ray-calculate/**'
             hm-serial:
               - '.github/workflows/test.yml'
               - 'embedded/hm-serial/**'
@@ -2013,10 +2013,10 @@ jobs:
         with:
           directory: computer-vision/hm-pyvista/mount-saint-helens
 
-  ray-greet-test:
-    name: Ray (greet) | Test
+  ray-calculate-test:
+    name: Ray (calculate) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-ray-greet == 'true' }}
+    if: ${{ needs.detect-changes.outputs.hm-ray-calculate == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -2029,21 +2029,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.1.1
         with:
-          python-version-file: cloud-computing/hm-ray/applications/greet/pyproject.toml
+          python-version-file: cloud-computing/hm-ray/applications/calculate/pyproject.toml
           cache: poetry
-          cache-dependency-path: cloud-computing/hm-ray/applications/greet/poetry.lock
+          cache-dependency-path: cloud-computing/hm-ray/applications/calculate/poetry.lock
       - name: Install dependencies
-        working-directory: cloud-computing/hm-ray/applications/greet
+        working-directory: cloud-computing/hm-ray/applications/calculate
         run: |
           poetry install --no-root
       - name: Test
-        working-directory: cloud-computing/hm-ray/applications/greet
+        working-directory: cloud-computing/hm-ray/applications/calculate
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4.5.0
         with:
-          directory: cloud-computing/hm-ray/applications/greet
+          directory: cloud-computing/hm-ray/applications/calculate
 
   reinforcement-learning-cart-pole-test:
     name: Reinforcement Learning (cart-pole) | Test
