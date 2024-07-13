@@ -72,20 +72,22 @@ resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_msk_policy" {
         ]
       },
       {
+        # Source connector
         Effect = "Allow"
         Action = [
           "kafka-cluster:DescribeTopic",
-          "kafka-cluster:ReadData"
+          "kafka-cluster:WriteData"
         ]
         Resource = [
           "*"
         ]
       },
       {
+        # Sink connector
         Effect = "Allow"
         Action = [
           "kafka-cluster:DescribeTopic",
-          "kafka-cluster:WriteData"
+          "kafka-cluster:ReadData"
         ]
         Resource = [
           "*"
