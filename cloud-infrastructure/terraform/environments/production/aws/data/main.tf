@@ -60,7 +60,8 @@ module "hm_amazon_msk_cluster" {
 }
 # Tracker Kafka - Kafka sink plugin
 data "external" "hm_local_tracker_sink_plugin" {
-  program = ["bash", "files/amazon-msk/${var.environment}-tracker-kafka/plugins/build.sh"]
+  provider = aws.production
+  program  = ["bash", "files/amazon-msk/${var.environment}-tracker-kafka/plugins/build.sh"]
   query = {
     kafka_plugin_name                              = local.tracker_kafka_sink_plugin_name
     snowflake_kafka_connector_version              = "2.2.2"   # https://mvnrepository.com/artifact/com.snowflake/snowflake-kafka-connector
@@ -104,9 +105,11 @@ module "hm_amazon_msk_tracker_sink_connector_iam" {
   team                      = var.team
 }
 data "aws_secretsmanager_secret" "tracker_snowflake_secret" {
-  name = "hm/snowflake/production_hm_kafka_db/product/read_write"
+  provider = aws.production
+  name     = "hm/snowflake/production_hm_kafka_db/product/read_write"
 }
 data "aws_secretsmanager_secret_version" "tracker_snowflake_secret_version" {
+  provider  = aws.production
   secret_id = data.aws_secretsmanager_secret.tracker_snowflake_secret.id
 }
 module "hm_amazon_msk_tracker_sink_connector" {
