@@ -13,6 +13,9 @@ variable "primary_instance_target_on_demand_capacity" {
 variable "primary_instance_type" {
   type = string
 }
+variable "primary_instance_ebs_volume_size_gb" {
+  type = string
+}
 variable "core_instance_target_on_demand_capacity" {
   type = number
 }
@@ -20,6 +23,9 @@ variable "core_instance_weighted_capacity" {
   type = number
 }
 variable "core_instance_type" {
+  type = string
+}
+variable "core_instance_ebs_volume_size_gb" {
   type = string
 }
 variable "bootstrap_set_up_script_s3_uri" {

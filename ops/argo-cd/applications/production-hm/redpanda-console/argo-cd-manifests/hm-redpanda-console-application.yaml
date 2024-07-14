@@ -19,6 +19,11 @@ spec:
         values: |
           # https://github.com/redpanda-data/helm-charts/blob/main/charts/console/values.yaml
           ---
+          image:
+            registry: docker.redpanda.com
+            repository: redpandadata/console
+            # https://hub.docker.com/r/redpandadata/console/tags
+            tag: v2.6.1
           console:
             config:
               kafka:
