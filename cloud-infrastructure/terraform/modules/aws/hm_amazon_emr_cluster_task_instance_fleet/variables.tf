@@ -6,7 +6,8 @@ variable "task_instance_target_spot_capacity" {
 }
 variable "task_instance_configs" {
   type = list(object({
-    instance_type     = string
-    weighted_capacity = number
+    instance_type      = string
+    weighted_capacity  = number
+    ebs_volume_size_gb = number
   }))
 }

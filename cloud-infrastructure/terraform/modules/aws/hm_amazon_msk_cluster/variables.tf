@@ -13,6 +13,9 @@ variable "kafka_broker_instance_type" {
 variable "kafka_broker_log_s3_bucket_name" {
   type = string
 }
+variable "amazon_ebs_volume_size_gb" {
+  type = number
+}
 variable "amazon_vpc_security_group_id" {
   type = string
 }

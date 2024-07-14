@@ -34,6 +34,11 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
     instance_type_configs {
       weighted_capacity = 1
       instance_type     = var.primary_instance_type
+      ebs_config {
+        size                 = var.primary_instance_ebs_volume_size_gb
+        type                 = "gp3"
+        volumes_per_instance = 1
+      }
     }
   }
   core_instance_fleet {
@@ -47,6 +52,11 @@ resource "aws_emr_cluster" "hm_amazon_emr_cluster" {
     instance_type_configs {
       weighted_capacity = var.core_instance_weighted_capacity
       instance_type     = var.core_instance_type
+      ebs_config {
+        size                 = var.core_instance_ebs_volume_size_gb
+        type                 = "gp3"
+        volumes_per_instance = 1
+      }
     }
   }
   bootstrap_action {

@@ -16,6 +16,11 @@ resource "aws_msk_cluster" "hm_amazon_msk_cluster" {
     instance_type   = var.kafka_broker_instance_type
     security_groups = [var.amazon_vpc_security_group_id]
     client_subnets  = var.amazon_vpc_subnet_ids
+    storage_info {
+      ebs_storage_info {
+        volume_size = var.amazon_ebs_volume_size_gb
+      }
+    }
   }
   logging_info {
     broker_logs {
