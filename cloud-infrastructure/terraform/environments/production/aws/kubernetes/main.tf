@@ -19,6 +19,7 @@ module "hm_amazon_eks_access_entry_iam" {
 }
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
 module "hm_amazon_eks_cluster" {
+  providers       = { aws = aws.production }
   source          = "terraform-aws-modules/eks/aws"
   version         = "20.17.2"
   cluster_name    = local.amazon_eks_cluster_name
@@ -138,6 +139,7 @@ module "karpenter" {
 
 # Amazon EBS CSI Driver - IAM role
 module "hm_amazon_ebs_csi_driver_iam_role" {
+  providers                            = { aws = aws.production }
   source                               = "../../../../modules/aws/hm_amazon_ebs_csi_driver_iam_role"
   amazon_eks_cluster_name              = module.hm_amazon_eks_cluster.cluster_name
   amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
@@ -203,6 +205,7 @@ module "hm_kubernetes_namespace_hm_traefik" {
 # ExternalDNS
 # ExternalDNS - IAM role
 module "hm_external_dns_iam_role" {
+  providers                            = { aws = aws.production }
   source                               = "../../../../modules/aws/hm_external_dns_iam_role"
   external_dns_service_account_name    = "hm-external-dns"
   external_dns_namespace               = "${var.environment}-hm-external-dns"
@@ -227,6 +230,7 @@ module "hm_kubernetes_namespace_hm_external_dns" {
 # cert-manager
 # cert-manager - IAM role
 module "hm_cert_manager_iam_role" {
+  providers                            = { aws = aws.production }
   source                               = "../../../../modules/aws/hm_cert_manager_iam_role"
   cert_manager_service_account_name    = "hm-cert-manager"
   cert_manager_namespace               = "${var.environment}-hm-cert-manager"
@@ -252,6 +256,7 @@ module "hm_kubernetes_namespace_hm_cert_manager" {
 # Airbyte
 # Airbyte - S3 bucket
 module "hm_amazon_s3_bucket_hm_airbyte" {
+  providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-airbyte"
   environment    = var.environment
@@ -259,6 +264,7 @@ module "hm_amazon_s3_bucket_hm_airbyte" {
 }
 # Airbyte - IAM user
 module "hm_airbyte_iam_user" {
+  providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_airbyte_iam_user"
   aws_iam_user_name = "${var.environment}_hm_airbyte_user"
   s3_bucket_name    = module.hm_amazon_s3_bucket_hm_airbyte.name
@@ -270,12 +276,15 @@ locals {
   airbyte_postgres_name = "${var.environment}-hm-airbyte-postgres"
 }
 data "aws_secretsmanager_secret" "hm_airbyte_postgres_secret" {
-  name = "${var.environment}-hm-airbyte-postgres/admin"
+  provider = aws.production
+  name     = "${var.environment}-hm-airbyte-postgres/admin"
 }
 data "aws_secretsmanager_secret_version" "hm_airbyte_postgres_secret_version" {
+  provider  = aws.production
   secret_id = data.aws_secretsmanager_secret.hm_airbyte_postgres_secret.id
 }
 module "hm_airbyte_postgres_security_group" {
+  providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.airbyte_postgres_name}-security-group"
   amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
@@ -283,6 +292,7 @@ module "hm_airbyte_postgres_security_group" {
   team                           = var.team
 }
 module "hm_airbyte_postgres_subnet_group" {
+  providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.airbyte_postgres_name}-subnet-group"
   subnet_ids        = var.amazon_vpc_private_subnet_ids
@@ -290,6 +300,7 @@ module "hm_airbyte_postgres_subnet_group" {
   team              = var.team
 }
 module "hm_airbyte_postgres_parameter_group" {
+  providers            = { aws = aws.production }
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres16"
   parameter_group_name = "${local.airbyte_postgres_name}-parameter-group"
@@ -304,6 +315,7 @@ module "hm_airbyte_postgres_parameter_group" {
   team        = var.team
 }
 module "hm_airbyte_postgres_instance" {
+  providers                  = { aws = aws.production }
   source                     = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name            = local.airbyte_postgres_name
   amazon_rds_engine          = "postgres"
@@ -334,6 +346,7 @@ module "hm_kubernetes_namespace_hm_airbyte" {
 # MLflow
 # MLflow - S3 bucket
 module "hm_amazon_s3_bucket_hm_mlflow" {
+  providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-mlflow"
   environment    = var.environment
@@ -341,6 +354,7 @@ module "hm_amazon_s3_bucket_hm_mlflow" {
 }
 # MLflow - IAM role
 module "hm_mlflow_iam_role" {
+  providers                            = { aws = aws.production }
   source                               = "../../../../modules/aws/hm_mlflow_iam_role"
   mlflow_service_account_name          = "hm-mlflow"
   mlflow_namespace                     = "${var.environment}-hm-mlflow"
@@ -355,12 +369,15 @@ locals {
   mlflow_postgres_name = "${var.environment}-hm-mlflow-postgres"
 }
 data "aws_secretsmanager_secret" "hm_mlflow_postgres_secret" {
-  name = "${var.environment}-hm-mlflow-postgres/admin"
+  provider = aws.production
+  name     = "${var.environment}-hm-mlflow-postgres/admin"
 }
 data "aws_secretsmanager_secret_version" "hm_mlflow_postgres_secret_version" {
+  provider  = aws.production
   secret_id = data.aws_secretsmanager_secret.hm_mlflow_postgres_secret.id
 }
 module "hm_mlflow_postgres_security_group" {
+  providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.mlflow_postgres_name}-security-group"
   amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
@@ -368,6 +385,7 @@ module "hm_mlflow_postgres_security_group" {
   team                           = var.team
 }
 module "hm_mlflow_postgres_subnet_group" {
+  providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.mlflow_postgres_name}-subnet-group"
   subnet_ids        = var.amazon_vpc_private_subnet_ids
@@ -375,6 +393,7 @@ module "hm_mlflow_postgres_subnet_group" {
   team              = var.team
 }
 module "hm_mlflow_postgres_parameter_group" {
+  providers            = { aws = aws.production }
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres16"
   parameter_group_name = "${local.mlflow_postgres_name}-parameter-group"
@@ -382,6 +401,7 @@ module "hm_mlflow_postgres_parameter_group" {
   team                 = var.team
 }
 module "hm_mlflow_postgres_instance" {
+  providers                  = { aws = aws.production }
   source                     = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name            = local.mlflow_postgres_name
   amazon_rds_engine          = "postgres"
@@ -514,6 +534,7 @@ module "hm_kubernetes_namespace_hm_opencost" {
 # Redpanda Console
 # Redpanda Console - IAM role
 module "hm_redpanda_console_iam_role" {
+  providers                             = { aws = aws.production }
   source                                = "../../../../modules/aws/hm_redpanda_console_iam_role"
   redpanda_console_service_account_name = "hm-redpanda-console"
   redpanda_console_namespace            = "${var.environment}-hm-redpanda-console"

@@ -29,9 +29,11 @@ module "hm_amazon_ec2" {
 # Amazon EMR
 # Amazon EMR - Trino
 data "aws_secretsmanager_secret" "hm_rds_secret" {
-  name = "hm/amazon-rds/production_hm_iot_db/public/read_only"
+  provider = aws.production
+  name     = "hm/amazon-rds/production_hm_iot_db/public/read_only"
 }
 data "aws_secretsmanager_secret_version" "hm_rds_secret_version" {
+  provider  = aws.production
   secret_id = data.aws_secretsmanager_secret.hm_rds_secret.id
 }
 locals {
@@ -144,6 +146,7 @@ module "hm_trino_task_instance_fleet" {
   ]
 }
 data "aws_instance" "hm_trino_primary_node_ec2_instance" {
+  provider = aws.production
   filter {
     name   = "private-dns-name"
     values = [module.hm_trino_emr.master_public_dns]
@@ -163,20 +166,6 @@ module "s3_object_hm_sedona_set_up_script" {
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
   local_file_path = "files/amazon-emr/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
-}
-module "s3_object_hm_sedona_validate_python_version_script" {
-  providers       = { aws = aws.production }
-  source          = "../../../../modules/aws/hm_amazon_s3_object"
-  s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
-  s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
-  local_file_path = "files/amazon-emr/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
-}
-module "s3_object_hm_sedona_set_up_jupyterlab_script" {
-  providers       = { aws = aws.production }
-  source          = "../../../../modules/aws/hm_amazon_s3_object"
-  s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
-  s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
-  local_file_path = "files/amazon-emr/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
 }
 module "hm_sedona_cluster" {
   providers                                  = { aws = aws.production }
@@ -255,6 +244,7 @@ module "hm_sedona_cluster_managed_scaling_policy" {
   max_capacity_units    = 60
 }
 data "aws_instance" "hm_sedona_cluster_primary_node" {
+  provider = aws.production
   filter {
     name   = "private-dns-name"
     values = [module.hm_sedona_cluster.master_public_dns]
