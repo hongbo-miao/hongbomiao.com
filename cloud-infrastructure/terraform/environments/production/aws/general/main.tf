@@ -37,7 +37,7 @@ data "aws_secretsmanager_secret_version" "hm_rds_secret_version" {
 locals {
   amazon_emr_cluster_name = "hm-trino"
 }
-module "hm_trino_s3_set_up_script" {
+module "s3_object_hm_trino_set_up_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.hm_amazon_vpc_subnets_ids
@@ -52,10 +52,12 @@ module "hm_trino_emr" {
   applications                               = ["HCatalog", "Trino"]
   primary_instance_target_on_demand_capacity = 3
   primary_instance_type                      = "c7g.4xlarge"
+  primary_instance_ebs_volume_size_gb        = 16
   core_instance_target_on_demand_capacity    = 4
   core_instance_weighted_capacity            = 4
   core_instance_type                         = "m7a.4xlarge"
-  bootstrap_set_up_script_s3_uri             = module.hm_trino_s3_set_up_script.uri
+  core_instance_ebs_volume_size_gb           = 16
+  bootstrap_set_up_script_s3_uri             = module.s3_object_hm_trino_set_up_script.uri
   configurations_json_string                 = <<EOF
     [
       {
@@ -119,6 +121,9 @@ module "hm_trino_emr" {
   iam_role_arn = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
   environment  = var.environment
   team         = var.team
+  depends_on = [
+    module.s3_object_hm_trino_set_up_script
+  ]
 }
 module "hm_trino_task_instance_fleet" {
   providers                          = { aws = aws.production }
@@ -127,12 +132,14 @@ module "hm_trino_task_instance_fleet" {
   task_instance_target_spot_capacity = 28
   task_instance_configs = [
     {
-      instance_type     = "m7a.4xlarge"
-      weighted_capacity = 4
+      instance_type      = "m7a.4xlarge"
+      weighted_capacity  = 4
+      ebs_volume_size_gb = 16
     },
     {
-      instance_type     = "m6a.4xlarge"
-      weighted_capacity = 4
+      instance_type      = "m6a.4xlarge"
+      weighted_capacity  = 4
+      ebs_volume_size_gb = 16
     }
   ]
 }
@@ -150,28 +157,28 @@ module "hm_route_53_record" {
 }
 
 # Amazon EMR - Apache Sedona
-module "hm_sedona_s3_set_up_script" {
+module "s3_object_hm_sedona_set_up_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
   local_file_path = "files/amazon-emr/hm-amazon-emr-cluster-sedona/bootstrap-actions/set_up.sh"
 }
-module "hm_sedona_s3_validate_python_version_script" {
+module "s3_object_hm_sedona_validate_python_version_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
   local_file_path = "files/amazon-emr/hm-amazon-emr-cluster-sedona/steps/validate_python_version.py"
 }
-module "hm_sedona_s3_set_up_jupyterlab_script" {
+module "s3_object_hm_sedona_set_up_jupyterlab_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.production_hm_production_bucket_amazon_s3_bucket_name
   s3_key          = "amazon-emr/clusters/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
   local_file_path = "files/amazon-emr/hm-amazon-emr-cluster-sedona/steps/set_up_jupyterlab.sh"
 }
-module "hm_sedona_emr" {
+module "hm_sedona_cluster" {
   providers                                  = { aws = aws.production }
   source                                     = "../../../../modules/aws/hm_amazon_emr_cluster"
   amazon_emr_cluster_name                    = "hm-sedona"
@@ -179,10 +186,12 @@ module "hm_sedona_emr" {
   applications                               = ["Hadoop", "Hive", "JupyterEnterpriseGateway", "Livy", "Spark"]
   primary_instance_target_on_demand_capacity = 1
   primary_instance_type                      = "r7g.xlarge"
+  primary_instance_ebs_volume_size_gb        = 16
   core_instance_target_on_demand_capacity    = 1
   core_instance_weighted_capacity            = 1
-  core_instance_type                         = "r7g.xlarge"
-  bootstrap_set_up_script_s3_uri             = module.hm_sedona_s3_set_up_script.uri
+  core_instance_type                         = "r7g.2xlarge"
+  core_instance_ebs_volume_size_gb           = 16
+  bootstrap_set_up_script_s3_uri             = module.s3_object_hm_sedona_set_up_script.uri
   configurations_json_string                 = <<EOF
     [
       {
@@ -217,43 +226,48 @@ module "hm_sedona_emr" {
   iam_role_arn                               = "arn:aws:iam::272394222652:role/service-role/AmazonEMR-ServiceRole-hm"
   environment                                = var.environment
   team                                       = var.team
+  depends_on = [
+    module.s3_object_hm_sedona_set_up_script
+  ]
 }
-module "hm_sedona_emr_task_instance_fleet" {
+module "hm_sedona_cluster_task_instance_fleet" {
   providers                          = { aws = aws.production }
   source                             = "../../../../modules/aws/hm_amazon_emr_cluster_task_instance_fleet"
-  amazon_emr_cluster_id              = module.hm_sedona_emr.id
+  amazon_emr_cluster_id              = module.hm_sedona_cluster.id
   task_instance_target_spot_capacity = 2
   task_instance_configs = [
     {
-      instance_type     = "r7g.2xlarge"
-      weighted_capacity = 2
+      instance_type      = "r7g.2xlarge"
+      weighted_capacity  = 2
+      ebs_volume_size_gb = 16
     },
     {
-      instance_type     = "r6g.2xlarge"
-      weighted_capacity = 2
+      instance_type      = "r6g.2xlarge"
+      weighted_capacity  = 2
+      ebs_volume_size_gb = 16
     }
   ]
 }
-module "hm_sedona_emr_managed_scaling_policy" {
+module "hm_sedona_cluster_managed_scaling_policy" {
   providers             = { aws = aws.production }
   source                = "../../../../modules/aws/hm_amazon_emr_managed_scaling_policy"
-  amazon_emr_cluster_id = module.hm_sedona_emr.id
+  amazon_emr_cluster_id = module.hm_sedona_cluster.id
   max_capacity_units    = 60
 }
-data "aws_instance" "hm_sedona_emr_primary_node" {
+data "aws_instance" "hm_sedona_cluster_primary_node" {
   filter {
     name   = "private-dns-name"
-    values = [module.hm_sedona_emr.master_public_dns]
+    values = [module.hm_sedona_cluster.master_public_dns]
   }
 }
 module "hm_sedona_route_53" {
   providers                     = { aws = aws.production }
   source                        = "../../../../modules/aws/hm_amazon_route_53"
   amazon_route_53_record_name   = "hm-sedona"
-  amazon_route_53_record_values = [data.aws_instance.hm_sedona_emr_primary_node.private_ip]
+  amazon_route_53_record_values = [data.aws_instance.hm_sedona_cluster_primary_node.private_ip]
 }
 
-module "hm_sedona_emr_studio_iam" {
+module "hm_sedona_cluster_studio_iam" {
   providers              = { aws = aws.production }
   source                 = "../../../../modules/aws/hm_amazon_emr_studio_iam"
   amazon_emr_studio_name = "hm-sedona-emr-studio"
@@ -261,12 +275,12 @@ module "hm_sedona_emr_studio_iam" {
   environment            = var.environment
   team                   = var.team
 }
-module "hm_sedona_emr_studio" {
+module "hm_sedona_cluster_studio" {
   providers              = { aws = aws.production }
   source                 = "../../../../modules/aws/hm_amazon_emr_studio"
   amazon_emr_studio_name = "hm-sedona-emr-studio"
   s3_uri                 = "s3://hm-production-bucket/amazon-emr/studio/hm-sedona-emr-studio"
-  iam_role_arn           = module.hm_sedona_emr_studio_iam.arn
+  iam_role_arn           = module.hm_sedona_cluster_studio_iam.arn
   environment            = var.environment
   team                   = var.team
 }
