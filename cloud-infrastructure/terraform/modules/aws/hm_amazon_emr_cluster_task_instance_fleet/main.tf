@@ -14,8 +14,13 @@ resource "aws_emr_instance_fleet" "hm_amazon_emr_cluster_task_instance_fleet" {
   dynamic "instance_type_configs" {
     for_each = var.task_instance_configs
     content {
-      weighted_capacity                          = instance_type_configs.value.weighted_capacity
-      instance_type                              = instance_type_configs.value.instance_type
+      weighted_capacity = instance_type_configs.value.weighted_capacity
+      instance_type     = instance_type_configs.value.instance_type
+      ebs_config {
+        size                 = instance_type_configs.value.ebs_volume_size_gb
+        type                 = "gp3"
+        volumes_per_instance = 1
+      }
       bid_price_as_percentage_of_on_demand_price = 100
     }
   }

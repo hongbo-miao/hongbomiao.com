@@ -16,10 +16,14 @@ resource "aws_security_group" "hm_amazon_rds_security_group" {
     ResourceName = var.amazon_ec2_security_group_name
   }
 }
+# Ingress - On-Site
+locals {
+  ingress_rule_on_site = "on_site"
+}
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site" {
   security_group_id = aws_security_group.hm_amazon_rds_security_group.id
-  description       = "On-Site"
+  description       = local.ingress_rule_on_site
   cidr_ipv4         = "10.10.0.0/15"
   ip_protocol       = "tcp"
   from_port         = 5432
@@ -27,8 +31,11 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site" {
   tags = {
     Environment  = var.environment
     Team         = var.team
-    ResourceName = "On-Site"
+    ResourceName = local.ingress_rule_on_site
   }
+}
+locals {
+  ingress_rule_vpn = "vpn"
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn" {
   security_group_id = aws_security_group.hm_amazon_rds_security_group.id
@@ -40,12 +47,15 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn" {
   tags = {
     Environment  = var.environment
     Team         = var.team
-    ResourceName = "VPN"
+    ResourceName = local.ingress_rule_vpn
   }
+}
+locals {
+  ingress_rule_vpc = "vpc"
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc" {
   security_group_id = aws_security_group.hm_amazon_rds_security_group.id
-  description       = "VPC"
+  description       = local.ingress_rule_vpc
   cidr_ipv4         = "172.16.0.0/12"
   ip_protocol       = "tcp"
   from_port         = 5432
@@ -53,7 +63,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc" {
   tags = {
     Environment  = var.environment
     Team         = var.team
-    ResourceName = "VPC"
+    ResourceName = local.ingress_rule_vpc
   }
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
