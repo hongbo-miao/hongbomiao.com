@@ -56,7 +56,7 @@ locals {
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc" {
   security_group_id = aws_security_group.hm_amazon_rds_security_group.id
   description       = local.ingress_rule_vpc
-  cidr_ipv4         = "172.16.0.0/12"
+  cidr_ipv4         = var.amazon_vpc_cidr_ipv4
   ip_protocol       = "tcp"
   from_port         = 5432
   to_port           = 5432

@@ -20,15 +20,16 @@ data "aws_secretsmanager_secret_version" "production_hm_postgres_airbyte_user_se
   secret_id = data.aws_secretsmanager_secret.production_hm_postgres_airbyte_user_secret.id
 }
 module "hm_airbyte_source_production_hm_postgres_iot_db_database_motor_schema" {
-  source             = "../../../modules/airbyte/hm_airbyte_source_postgres"
-  name               = "production-hm-postgres-iot-db-motor"
-  workspace_id       = var.airbyte_workspace_id
-  postgres_host      = "production-hm-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com"
-  postgres_port      = 5432
-  postgres_user_name = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["user_name"]
-  postgres_password  = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["password"]
-  postgres_database  = "iot_db"
-  postgres_schema    = "public"
+  source                 = "../../../modules/airbyte/hm_airbyte_source_postgres"
+  name                   = "production-hm-postgres-iot-db-motor"
+  workspace_id           = var.airbyte_workspace_id
+  postgres_host          = "production-hm-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com"
+  postgres_port          = 5432
+  postgres_user_name     = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["user_name"]
+  postgres_password      = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["password"]
+  postgres_database      = "iot_db"
+  postgres_schema        = "public"
+  initial_waiting_time_s = 120
   # tunnel_method = {
   #   ssh_key_authentication = {
   #     tunnel_host = "xxx.xxx.xxx.xxx"

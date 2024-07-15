@@ -22,6 +22,9 @@ variable "postgres_database" {
 variable "postgres_schema" {
   type = string
 }
+variable "initial_waiting_time_s" {
+  type = number
+}
 variable "tunnel_method" {
   type = object({
     no_tunnel = optional(map(any))
