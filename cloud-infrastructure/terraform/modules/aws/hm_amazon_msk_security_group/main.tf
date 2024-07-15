@@ -116,7 +116,7 @@ locals {
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_tls" {
   security_group_id = aws_security_group.hm_amazon_msk_security_group.id
   description       = local.ingress_rule_vpc_kafka_broker_tls
-  cidr_ipv4         = "172.16.0.0/12"
+  cidr_ipv4         = var.amazon_vpc_cidr_ipv4
   ip_protocol       = "tcp"
   from_port         = 9094
   to_port           = 9094
@@ -129,7 +129,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_tl
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_sasl_scram" {
   security_group_id = aws_security_group.hm_amazon_msk_security_group.id
   description       = local.ingress_rule_vpc_kafka_broker_sasl_scram
-  cidr_ipv4         = "172.16.0.0/12"
+  cidr_ipv4         = var.amazon_vpc_cidr_ipv4
   ip_protocol       = "tcp"
   from_port         = 9096
   to_port           = 9096
@@ -142,7 +142,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_sa
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_iam" {
   security_group_id = aws_security_group.hm_amazon_msk_security_group.id
   description       = local.ingress_rule_vpc_kafka_broker_iam
-  cidr_ipv4         = "172.16.0.0/12"
+  cidr_ipv4         = var.amazon_vpc_cidr_ipv4
   ip_protocol       = "tcp"
   from_port         = 9098
   to_port           = 9098
