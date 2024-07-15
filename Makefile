@@ -261,7 +261,7 @@ lint-sql:
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
 	poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-	poetry run poe lint-sql -- --dialect=postgres data-ingestion/airbyte/sources/postgres/iot
+	poetry run poe lint-sql -- --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
 	poetry run poe lint-sql -- --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
 	poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/motor/migrations
@@ -278,7 +278,7 @@ lint-sql-fix:
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/seeds
 	poetry run poe lint-sql-fix -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-	poetry run poe lint-sql-fix -- --dialect=postgres data-ingestion/airbyte/sources/postgres/iot
+	poetry run poe lint-sql-fix -- --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
 	poetry run poe lint-sql-fix -- --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
 	poetry run poe lint-sql-fix -- --dialect=postgres data-storage/timescaledb/motor/migrations

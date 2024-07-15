@@ -1,13 +1,17 @@
 -- https://docs.airbyte.com/integrations/sources/postgres
 -- https://wolfman.dev/posts/pg-logical-heartbeats
 
+-- In Amazon RDS, set
+--   rds.logical_replication = 1
+--   max_slot_wal_keep_size = 524288 (512 GB)
+
 create user airbyte_user password 'xxx';
+
+grant rds_replication to airbyte_user;
 
 grant usage on schema public to airbyte_user;
 grant select on all tables in schema public to airbyte_user;
 alter default privileges in schema public grant select on tables to airbyte_user;
-
-grant rds_replication to airbyte_user;
 
 select pg_create_logical_replication_slot('airbyte_public_logical_replication_slot', 'pgoutput');
 -- List: select * from pg_replication_slots;
@@ -30,7 +34,6 @@ do $$
             end loop;
     end $$;
 
-
 create publication airbyte_public_publication for table
 public.my_table_1,
 public.my_table_2;
@@ -44,5 +47,3 @@ create table if not exists public._airbyte_heartbeat (
     timestamp timestamptz not null default now()
 );
 grant insert, update on table public._airbyte_heartbeat to airbyte_user;
-
--- In Amazon RDS, set max_slot_wal_keep_size to 524288 (512 GB)
