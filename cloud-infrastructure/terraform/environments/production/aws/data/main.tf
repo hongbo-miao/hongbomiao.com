@@ -39,6 +39,7 @@ module "tracker_kafka_security_group" {
   source                         = "../../../../modules/aws/hm_amazon_msk_security_group"
   amazon_ec2_security_group_name = "${local.tracker_kafka_name}-security-group"
   amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
+  amazon_vpc_cidr_ipv4           = "172.16.0.0/12"
   environment                    = var.environment
   team                           = var.team
 }
