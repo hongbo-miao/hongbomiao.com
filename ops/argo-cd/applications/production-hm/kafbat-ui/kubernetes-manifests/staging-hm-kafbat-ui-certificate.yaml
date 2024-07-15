@@ -1,0 +1,17 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: staging-hm-kafbat-ui-certificate
+  namespace: production-hm-kafbat-ui
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+spec:
+  commonName: hm-kafbat-ui.internal.hongbomiao.com
+  secretName: staging-hm-kafbat-ui-certificate
+  dnsNames:
+    - hm-kafbat-ui.internal.hongbomiao.com
+  issuerRef:
+    kind: ClusterIssuer
+    name: staging-lets-encrypt-cluster-issuer

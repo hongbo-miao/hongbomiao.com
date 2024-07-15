@@ -556,3 +556,27 @@ module "hm_kubernetes_namespace_hm_redpanda_console" {
     module.hm_amazon_eks_cluster
   ]
 }
+
+# Kafbat UI
+# Kafbat UI - IAM role
+module "hm_kafbat_ui_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/aws/hm_kafbat_ui_iam_role"
+  kafbat_ui_service_account_name       = "hm-kafbat-ui"
+  kafbat_ui_namespace                  = "${var.environment}-hm-kafbat-ui"
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  environment                          = var.environment
+  team                                 = var.team
+}
+# Kafbat UI - Kubernetes namespace
+module "hm_kubernetes_namespace_hm_kafbat_ui" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-kafbat-ui"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
