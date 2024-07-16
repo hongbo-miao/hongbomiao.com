@@ -5,10 +5,11 @@
 --   rds.logical_replication = 1
 --   max_slot_wal_keep_size = 524288 (512 GB)
 
-create user airbyte_user password 'xxx';
 
+create user airbyte_user password 'xxx';
 grant rds_replication to airbyte_user;
 
+-- Schema: public
 grant usage on schema public to airbyte_user;
 grant select on all tables in schema public to airbyte_user;
 alter default privileges in schema public grant select on tables to airbyte_user;
@@ -21,6 +22,7 @@ do $$
     declare
         schema_name text := 'public';
         table_names text[] := array[
+            '_airbyte_heartbeat',
             'my_table_1',
             'my_table_2'
         ];
@@ -33,8 +35,15 @@ do $$
             ', schema_name, table_name);
             end loop;
     end $$;
+-- View:
+-- select pg_class.relname, pg_class.relreplident
+-- from pg_class
+-- inner join pg_namespace on pg_class.relnamespace = pg_namespace.oid
+-- where pg_class.relkind = 'r' and pg_namespace.nspname not in ('pg_catalog', 'information_schema')
+-- order by pg_class.relname;
 
 create publication airbyte_public_publication for table
+public._airbyte_heartbeat,
 public.my_table_1,
 public.my_table_2;
 -- List: select * from pg_publication;
