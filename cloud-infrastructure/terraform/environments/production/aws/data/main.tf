@@ -90,6 +90,9 @@ module "hm_amazon_msk_plugin_tracker_kafka_sink_plugin" {
   amazon_msk_plugin_name   = local.tracker_kafka_sink_plugin_name
   s3_bucket_arn            = module.hm_amazon_s3_bucket_tracker_kafka.arn
   amazon_msk_plugin_s3_key = module.hm_amazon_s3_object_tracker_kafka_sink_plugin.s3_key
+  depends_on = [
+    module.hm_amazon_s3_object_tracker_kafka_sink_plugin
+  ]
 }
 # Tracker Kafka - Kafka sink connector
 locals {
@@ -134,4 +137,7 @@ module "hm_amazon_msk_tracker_sink_connector" {
   snowflake_schema_name                = "ENGINEERING"
   environment                          = var.environment
   team                                 = var.team
+  depends_on = [
+    module.hm_amazon_msk_plugin_tracker_kafka_sink_plugin
+  ]
 }
