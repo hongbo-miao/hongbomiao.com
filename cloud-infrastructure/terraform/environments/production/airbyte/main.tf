@@ -65,12 +65,16 @@ module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engine
   schedule_cron_expression = local.production_engineering_iot_public_airbyte_connection_schedule_cron_expression
   streams = [
     {
+      name      = "_airbyte_heartbeat"
+      sync_mode = "full_refresh_overwrite"
+    },
+    {
       name      = "users"
-      sync_mode = "incremental_deduped_history"
+      sync_mode = "incremental_append"
     },
     {
       name      = "experiments"
-      sync_mode = "incremental_deduped_history"
+      sync_mode = "incremental_append"
     }
   ]
   depends_on = [
