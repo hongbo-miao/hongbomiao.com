@@ -12,7 +12,11 @@ metadata:
     # https://kubernetes-sigs.github.io/external-dns/latest/annotations/annotations
     external-dns.alpha.kubernetes.io/hostname: hm-akhq.internal.hongbomiao.com
     # https://cert-manager.io/docs/usage/ingress/#supported-annotations
+    # https://letsencrypt.org/certificates
     cert-manager.io/cluster-issuer: production-lets-encrypt-cluster-issuer
+    cert-manager.io/private-key-algorithm: ECDSA
+    cert-manager.io/private-key-size: "384"
+    cert-manager.io/private-key-rotation-policy: Always
     # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
     argocd.argoproj.io/hook: PostSync
   labels:
