@@ -27,7 +27,7 @@ kafka-topic-create:
 		--topic=my-topic \
 		--partitions=3 \
 		--replication-factor=2
-kafka-topic-create:
+kafka-topic-delete:
 	bin/kafka-topics.sh \
 		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
 		--command-config=config/iam-client.properties \
