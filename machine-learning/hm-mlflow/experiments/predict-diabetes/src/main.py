@@ -8,9 +8,7 @@ from sklearn.model_selection import train_test_split
 
 
 def main():
-    mlflow.set_tracking_uri(
-        f"https://{config.MLFLOW_TRACKING_SERVER_USER_NAME}:{config.MLFLOW_TRACKING_SERVER_PASSWORD}@{config.MLFLOW_TRACKING_SERVER_HOST}"
-    )
+    mlflow.set_tracking_uri(config.MLFLOW_TRACKING_SERVER_URL)
     mlflow.set_experiment(config.MLFLOW_EXPERIMENT_NAME)
 
     mlflow.sklearn.autolog()
