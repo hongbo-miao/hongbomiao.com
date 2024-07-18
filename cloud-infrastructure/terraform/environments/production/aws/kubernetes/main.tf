@@ -354,10 +354,21 @@ module "hm_amazon_s3_bucket_hm_mlflow" {
   team           = var.team
 }
 # MLflow - IAM role
-module "hm_mlflow_iam_role" {
+module "hm_mlflow_tracking_server_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/aws/hm_mlflow_iam_role"
-  mlflow_service_account_name          = "hm-mlflow"
+  source                               = "../../../../modules/aws/hm_mlflow_tracking_server_iam_role"
+  mlflow_service_account_name          = "hm-mlflow-tracking"
+  mlflow_namespace                     = "${var.environment}-hm-mlflow"
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  s3_bucket_name                       = module.hm_amazon_s3_bucket_hm_mlflow.name
+  environment                          = var.environment
+  team                                 = var.team
+}
+module "hm_mlflow_run_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/aws/hm_mlflow_run_iam_role"
+  mlflow_service_account_name          = "hm-mlflow-run"
   mlflow_namespace                     = "${var.environment}-hm-mlflow"
   amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
@@ -442,6 +453,18 @@ module "hm_kubernetes_namespace_hm_kuberay_operator" {
   depends_on = [
     module.hm_amazon_eks_cluster
   ]
+}
+# Ray Cluster - IAM role
+module "hm_ray_cluster_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/aws/hm_ray_cluster_iam_role"
+  ray_cluster_service_account_name     = "hm-ray-cluster-service-account"
+  ray_cluster_namespace                = "${var.environment}-hm-ray-cluster"
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  s3_bucket_name                       = module.hm_amazon_s3_bucket_hm_mlflow.name
+  environment                          = var.environment
+  team                                 = var.team
 }
 # Ray Cluster - Kubernetes namespace
 module "hm_kubernetes_namespace_hm_ray_cluster" {

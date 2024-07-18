@@ -1,0 +1,11 @@
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv(".env.production.local")
+
+MLFLOW_TRACKING_USERNAME = os.getenv("MLFLOW_TRACKING_USERNAME")
+MLFLOW_TRACKING_PASSWORD = os.getenv("MLFLOW_TRACKING_PASSWORD")
+
+MLFLOW_TRACKING_SERVER_HOST = os.getenv("MLFLOW_TRACKING_SERVER_HOST")
+MLFLOW_EXPERIMENT_NAME = os.getenv("MLFLOW_EXPERIMENT_NAME")

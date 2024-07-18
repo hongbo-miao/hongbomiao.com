@@ -18,14 +18,11 @@ spec:
         values: |
           # https://github.com/ray-project/kuberay/blob/master/helm-chart/ray-cluster/values.yaml
           ---
+          image:
+            repository: docker.io/rayproject/ray
+            tag: 2.32.0
           head:
-            resources:
-              requests:
-                cpu: 1000m
-                memory: 2Gi
-              limits:
-                cpu: 2000m
-                memory: 4Gi
+            serviceAccountName: hm-ray-cluster-service-account
             containerEnv:
               - name: RAY_GRAFANA_IFRAME_HOST
                 value: https://hm-grafana.internal.hongbomiao.com
@@ -34,7 +31,23 @@ spec:
               - name: RAY_PROMETHEUS_HOST
                 value: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus.svc:9090
             ports: []
+            resources:
+              requests:
+                cpu: 1000m
+                memory: 2Gi
+              limits:
+                cpu: 2000m
+                memory: 4Gi
           worker:
+            replicas: 10
+            minReplicas: 2
+            maxReplicas: 100
+            serviceAccountName: hm-ray-cluster-service-account
+            containerEnv:
+              # https://github.com/ray-project/kuberay/issues/2239
+              - name: RANDOM_ENV
+                value: "1"
+            ports: []
             resources:
               requests:
                 cpu: 1000m
@@ -42,11 +55,6 @@ spec:
               limits:
                 cpu: 2000m
                 memory: 8Gi
-            containerEnv:
-              # https://github.com/ray-project/kuberay/issues/2239
-              - name: RANDOM_ENV
-                value: "1"
-            ports: []
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: HEAD
       path: ops/argo-cd/applications/production-hm/ray-cluster/kubernetes-manifests
