@@ -8,7 +8,7 @@ terraform {
     # https://registry.terraform.io/providers/airbytehq/airbyte/latest
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.5.3"
+      version = "0.6.0"
     }
   }
   # terraform version
