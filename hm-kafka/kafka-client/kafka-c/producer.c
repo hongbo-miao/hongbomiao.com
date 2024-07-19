@@ -53,16 +53,15 @@ int main(int argc, char **argv) {
   conf = NULL;
 
   // Produce data by selecting random values from these lists
-  int message_count = 10;
-  const char *topic = "purchases";
-  const char *user_ids[6] = {"eabara",   "jsmith",  "sgarcia",
-                             "jbernard", "htanaka", "awalther"};
-  const char *products[5] = {"book", "alarm clock", "t-shirts", "gift card",
-                             "batteries"};
+  int message_count = 10000;
+  const char *topic = "production.iot.device.json";
+  const char *device_ids[6] = {"device1", "device2", "device3",
+                               "device4", "device5", "device6"};
+  const char *status[3] = {"online", "offline", "maintenance"};
 
   for (int i = 0; i < message_count; i++) {
-    const char *key = user_ids[random() % ARR_SIZE(user_ids)];
-    const char *value = products[random() % ARR_SIZE(products)];
+    const char *key = device_ids[random() % ARR_SIZE(device_ids)];
+    const char *value = status[random() % ARR_SIZE(status)];
     size_t key_len = strlen(key);
     size_t value_len = strlen(value);
 

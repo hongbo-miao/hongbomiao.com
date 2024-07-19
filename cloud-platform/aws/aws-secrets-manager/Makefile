@@ -49,3 +49,13 @@ aws-secrets-manager-secret-create-production-hm-mlflow-postgres:
         --name=production-hm-mlflow-postgres/admin \
         --region=us-west-2 \
         --secret-string=file://secrets/production-hm-mlflow-postgres-admin-credentials.json
+
+# Production IoT Kafka
+# https://docs.aws.amazon.com/msk/latest/developerguide/msk-password.html
+# - Secret name must start with "AmazonMSK_"
+aws-secrets-manager-secret-create-snowflake-production-iot-kafka-producer:
+	aws secretsmanager create-secret \
+        --name=AmazonMSK_hm/production-iot-kafka/producer \
+        --region=us-west-2 \
+        --kms-key-id=arn:aws:kms:us-west-2:272394222652:key/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
+        --secret-string=file://secrets/production-iot-kafka-credentials.json
