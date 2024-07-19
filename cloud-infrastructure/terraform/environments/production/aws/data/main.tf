@@ -71,10 +71,6 @@ module "iot_kafka_sasl_scram_secret_association" {
 }
 
 # Tracker Kafka
-data "aws_kms_alias" "aws_kms_kafka_key" {
-  provider = aws.production
-  name     = "alias/aws/kafka"
-}
 locals {
   tracker_kafka_name                    = "hm-${var.environment}-tracker-kakfa"
   tracker_amazon_vpc_private_subnet_ids = slice(var.amazon_vpc_private_subnet_ids, 0, 3)
@@ -109,7 +105,7 @@ module "hm_amazon_msk_cluster" {
   amazon_vpc_security_group_id    = module.tracker_kafka_security_group.id
   amazon_vpc_subnet_ids           = slice(var.amazon_vpc_private_subnet_ids, 0, 3)
   amazon_ebs_volume_size_gb       = 16
-  aws_kms_key_arn                 = data.aws_kms_alias.aws_kms_kafka_key.target_key_arn
+  aws_kms_key_arn                 = module.kafka_kms_key.arn
   environment                     = var.environment
   team                            = var.team
 }
