@@ -16,6 +16,60 @@ module "production_hm_production_bucket_amazon_s3_bucket" {
   team           = var.team
 }
 
+# Kafka KMS key
+module "kafka_kms_key" {
+  source           = "../../../../modules/aws/hm_aws_kms_key"
+  aws_kms_key_name = "hm/kafka-kms-key"
+  environment      = var.environment
+  team             = var.team
+}
+
+# IoT Kafka
+locals {
+  iot_kafka_name = "hm-${var.environment}-iot-kakfa"
+}
+# IoT Kafka - S3 bucket
+module "iot_kafka_s3_bucket" {
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.iot_kafka_name}-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+# IoT Kafka - security group
+module "iot_kafka_security_group" {
+  source                         = "../../../../modules/aws/hm_amazon_msk_security_group"
+  amazon_ec2_security_group_name = "${local.iot_kafka_name}-security-group"
+  amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
+  amazon_vpc_cidr_ipv4           = "172.16.0.0/12"
+  environment                    = var.environment
+  team                           = var.team
+}
+# IoT Kafka - Kafka cluster
+module "iot_kafka_cluster" {
+  source                          = "../../../../modules/aws/hm_amazon_msk_cluster"
+  amazon_msk_cluster_name         = local.iot_kafka_name
+  kafka_version                   = "3.7.x.kraft"
+  kafka_broker_instance_type      = "kafka.m7g.large"
+  kafka_broker_number             = 60
+  kafka_broker_log_s3_bucket_name = module.iot_kafka_s3_bucket.name
+  amazon_vpc_security_group_id    = module.iot_kafka_security_group.id
+  amazon_vpc_subnet_ids           = slice(var.amazon_vpc_private_subnet_ids, 0, 3)
+  amazon_ebs_volume_size_gb       = 102400
+  aws_kms_key_arn                 = module.kafka_kms_key.arn
+  is_scram_enabled                = true
+  environment                     = var.environment
+  team                            = var.team
+}
+# IoT Kafka - SASL/SCRAM
+data "aws_secretsmanager_secret" "iot_kafka_producer_secret" {
+  name = "AmazonMSK_hm/production-iot-kafka/producer"
+}
+module "iot_kafka_sasl_scram_secret_association" {
+  source                         = "../../../../modules/aws/hm_amazon_msk_cluster_sasl_scram_secret_association"
+  amazon_msk_cluster_arn         = module.iot_kafka_cluster.arn
+  aws_secrets_manager_secret_arn = data.aws_secretsmanager_secret.iot_kafka_producer_secret.arn
+}
+
 # Tracker Kafka
 data "aws_kms_alias" "aws_kms_kafka_key" {
   provider = aws.production
@@ -26,7 +80,7 @@ locals {
   tracker_amazon_vpc_private_subnet_ids = slice(var.amazon_vpc_private_subnet_ids, 0, 3)
 }
 # Tracker Kafka - S3 bucket
-module "hm_amazon_s3_bucket_tracker_kafka" {
+module "tracker_kafka_s3_bucket" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.tracker_kafka_name}-bucket"
@@ -51,10 +105,10 @@ module "hm_amazon_msk_cluster" {
   kafka_version                   = "3.7.x.kraft"
   kafka_broker_instance_type      = "kafka.m7g.large"
   kafka_broker_number             = 3
-  kafka_broker_log_s3_bucket_name = module.hm_amazon_s3_bucket_tracker_kafka.name
-  amazon_vpc_security_group_id    = "sg-xxxxxxxxxxxxxxxxx"
+  kafka_broker_log_s3_bucket_name = module.tracker_kafka_s3_bucket.name
+  amazon_vpc_security_group_id    = module.tracker_kafka_security_group.id
   amazon_vpc_subnet_ids           = slice(var.amazon_vpc_private_subnet_ids, 0, 3)
-  amazon_ebs_volume_size_gb       = 32
+  amazon_ebs_volume_size_gb       = 16
   aws_kms_key_arn                 = data.aws_kms_alias.aws_kms_kafka_key.target_key_arn
   environment                     = var.environment
   team                            = var.team
@@ -80,7 +134,7 @@ locals {
 module "hm_amazon_s3_object_tracker_kafka_sink_plugin" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
-  s3_bucket_name  = module.hm_amazon_s3_bucket_tracker_kafka.name
+  s3_bucket_name  = module.tracker_kafka_s3_bucket.name
   s3_key          = "plugins/${local.tracker_kafka_sink_plugin_file_name}"
   local_file_path = data.external.hm_local_tracker_sink_plugin.result.local_file_path
 }
@@ -88,7 +142,7 @@ module "hm_amazon_msk_plugin_tracker_kafka_sink_plugin" {
   providers                = { aws = aws.production }
   source                   = "../../../../modules/aws/hm_amazon_msk_plugin"
   amazon_msk_plugin_name   = local.tracker_kafka_sink_plugin_name
-  s3_bucket_arn            = module.hm_amazon_s3_bucket_tracker_kafka.arn
+  s3_bucket_arn            = module.tracker_kafka_s3_bucket.arn
   amazon_msk_plugin_s3_key = module.hm_amazon_s3_object_tracker_kafka_sink_plugin.s3_key
   depends_on = [
     module.hm_amazon_s3_object_tracker_kafka_sink_plugin
@@ -103,8 +157,8 @@ module "hm_amazon_msk_tracker_sink_connector_iam" {
   source                    = "../../../../modules/aws/hm_amazon_msk_connector_iam"
   amazon_msk_connector_name = local.production_tracker_sink_connector_name
   amazon_msk_arn            = module.hm_amazon_msk_cluster.arn
-  msk_plugin_s3_bucket_name = module.hm_amazon_s3_bucket_tracker_kafka.name
-  msk_log_s3_bucket_name    = module.hm_amazon_s3_bucket_tracker_kafka.name
+  msk_plugin_s3_bucket_name = module.tracker_kafka_s3_bucket.name
+  msk_log_s3_bucket_name    = module.tracker_kafka_s3_bucket.name
   environment               = var.environment
   team                      = var.team
 }
@@ -130,7 +184,7 @@ module "hm_amazon_msk_tracker_sink_connector" {
   snowflake_private_key                = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key"]
   snowflake_private_key_passphrase     = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key_passphrase"]
   snowflake_role_name                  = "HM_hmHM_KAFKA_DB_PRODUCT_READ_WRITE_ROLE"
-  msk_log_s3_bucket_name               = module.hm_amazon_s3_bucket_tracker_kafka.name
+  msk_log_s3_bucket_name               = module.tracker_kafka_s3_bucket.name
   msk_log_s3_key                       = "amazon-msk/connectors/${local.production_tracker_sink_connector_name}"
   kafka_topic_name                     = "production.tracker.analytic-events.avro"
   snowflake_database_name              = "hmHM_KAFKA_DB"
