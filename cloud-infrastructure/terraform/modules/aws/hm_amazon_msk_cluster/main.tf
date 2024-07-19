@@ -36,7 +36,8 @@ resource "aws_msk_cluster" "hm_amazon_msk_cluster" {
   }
   client_authentication {
     sasl {
-      iam = true
+      iam   = true
+      scram = var.is_scram_enabled
     }
   }
   tags = {

@@ -25,6 +25,10 @@ variable "amazon_vpc_subnet_ids" {
 variable "aws_kms_key_arn" {
   type = string
 }
+variable "is_scram_enabled" {
+  type    = bool
+  default = false
+}
 variable "environment" {
   type = string
 }
