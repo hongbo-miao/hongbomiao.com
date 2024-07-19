@@ -21,7 +21,7 @@ module "hm_amazon_eks_access_entry_iam" {
 module "hm_amazon_eks_cluster" {
   providers       = { aws = aws.production }
   source          = "terraform-aws-modules/eks/aws"
-  version         = "20.19.0"
+  version         = "20.20.0"
   cluster_name    = local.amazon_eks_cluster_name
   cluster_version = "1.30"
   cluster_addons = {
