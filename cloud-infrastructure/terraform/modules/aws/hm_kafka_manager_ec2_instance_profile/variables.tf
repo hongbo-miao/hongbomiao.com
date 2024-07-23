@@ -1,10 +1,7 @@
-variable "ec2_instance_name" {
+variable "kafka_manager_name" {
   type = string
 }
-variable "ec2_instance_ami" {
-  type = string
-}
-variable "ec2_instance_type" {
+variable "amazon_msk_arn" {
   type = string
 }
 variable "environment" {

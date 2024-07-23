@@ -9,7 +9,7 @@ terraform {
 locals {
   aws_iam_role_name_prefix = "CertManagerRole"
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "hm_cert_manager_iam_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.cert_manager_service_account_name}"
   assume_role_policy = jsonencode({
@@ -38,7 +38,7 @@ resource "aws_iam_role" "hm_cert_manager_iam_role" {
 }
 # https://cert-manager.io/docs/configuration/acme/dns01/route53
 # https://registry.terraform.io/providers/vancluever/acme/latest/docs/guides/dns-providers-route53#least-privilege-policy-for-production-purposes
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "hm_cert_manager_iam_role_policy" {
   name = "${local.aws_iam_role_name_prefix}Policy-${var.cert_manager_service_account_name}"
   role = aws_iam_role.hm_cert_manager_iam_role.name

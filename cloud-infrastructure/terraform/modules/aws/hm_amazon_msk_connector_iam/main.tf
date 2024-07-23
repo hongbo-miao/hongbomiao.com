@@ -79,7 +79,7 @@ resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_msk_policy" {
           "kafka-cluster:WriteData"
         ]
         Resource = [
-          "*"
+          "${replace(var.amazon_msk_arn, ":cluster", ":topic")}/*"
         ]
       },
       {
@@ -90,7 +90,7 @@ resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_msk_policy" {
           "kafka-cluster:ReadData"
         ]
         Resource = [
-          "*"
+          "${replace(var.amazon_msk_arn, ":cluster", ":topic")}/*"
         ]
       }
     ]
