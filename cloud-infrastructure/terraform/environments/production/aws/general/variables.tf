@@ -1,6 +1,3 @@
-variable "amazon_vpc_private_subnet_ids" {
-  type = list(string)
-}
 variable "adsb_2x_flight_trace_raw_data_dates" {
   type = list(string)
   default = [

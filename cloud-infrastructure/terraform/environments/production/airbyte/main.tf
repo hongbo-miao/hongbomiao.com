@@ -57,12 +57,14 @@ module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engin
 # - Source - Postgres: production-hm-postgres | Database: iot_db | Schema: motor
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_IOT_DB_MOTOR
 module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema" {
-  source                   = "../../../modules/airbyte/hm_airbyte_connection"
-  source_id                = module.hm_airbyte_source_production_hm_postgres_iot_db_database_motor_schema.id
-  destination_id           = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.id
-  destination_name         = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.name
-  schedule_type            = "cron"
-  schedule_cron_expression = local.production_engineering_iot_public_airbyte_connection_schedule_cron_expression
+  source                               = "../../../modules/airbyte/hm_airbyte_connection"
+  source_id                            = module.hm_airbyte_source_production_hm_postgres_iot_db_database_motor_schema.id
+  destination_id                       = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.id
+  destination_name                     = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.name
+  schedule_type                        = "cron"
+  schedule_cron_expression             = local.production_engineering_iot_public_airbyte_connection_schedule_cron_expression
+  non_breaking_schema_updates_behavior = "ignore"
+  status                               = "active"
   streams = [
     {
       name      = "_airbyte_heartbeat"
@@ -109,11 +111,13 @@ module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engin
 # - Source - CSV: cities
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_WORLD
 module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engineering_world_schema" {
-  source           = "../../../modules/airbyte/hm_airbyte_connection"
-  source_id        = module.hm_airbyte_source_csv_cities.id
-  destination_id   = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_world_schema.id
-  destination_name = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_world_schema.name
-  schedule_type    = "manual"
+  source                               = "../../../modules/airbyte/hm_airbyte_connection"
+  source_id                            = module.hm_airbyte_source_csv_cities.id
+  destination_id                       = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_world_schema.id
+  destination_name                     = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_world_schema.name
+  schedule_type                        = "manual"
+  non_breaking_schema_updates_behavior = "ignore"
+  status                               = "active"
   streams = [
     {
       name      = "cities"
@@ -159,12 +163,14 @@ module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engin
 # - Source - Jira
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: JIRA
 module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engineering_jira_schema" {
-  source                   = "../../../modules/airbyte/hm_airbyte_connection"
-  source_id                = module.hm_airbyte_source_jira.id
-  destination_id           = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema.id
-  destination_name         = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema.name
-  schedule_type            = "cron"
-  schedule_cron_expression = local.production_engineering_jira_airbyte_connection_schedule_cron_expression
+  source                               = "../../../modules/airbyte/hm_airbyte_connection"
+  source_id                            = module.hm_airbyte_source_jira.id
+  destination_id                       = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema.id
+  destination_name                     = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema.name
+  schedule_type                        = "cron"
+  schedule_cron_expression             = local.production_engineering_jira_airbyte_connection_schedule_cron_expression
+  non_breaking_schema_updates_behavior = "ignore"
+  status                               = "active"
   streams = [
     {
       name      = "issues"

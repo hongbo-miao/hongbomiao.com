@@ -20,3 +20,9 @@ variable "schedule_cron_expression" {
   type    = string
   default = null
 }
+variable "non_breaking_schema_updates_behavior" {
+  type = string
+}
+variable "status" {
+  type = string
+}
