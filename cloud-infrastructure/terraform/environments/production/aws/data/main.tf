@@ -1,4 +1,4 @@
-data "terraform_remote_state" "hm_terraform_remote_state_production_aws_network" {
+data "terraform_remote_state" "production_aws_network_terraform_remote_state" {
   backend = "s3"
   config = {
     region = "us-west-2"
@@ -8,7 +8,7 @@ data "terraform_remote_state" "hm_terraform_remote_state_production_aws_network"
 }
 
 # Amazon S3 bucket - hm-production-bucket
-module "production_hm_production_bucket_amazon_s3_bucket" {
+module "hm_production_bucket" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "hm-production-bucket"
@@ -39,8 +39,8 @@ module "iot_kafka_s3_bucket" {
 module "iot_kafka_security_group" {
   source                         = "../../../../modules/aws/hm_amazon_msk_security_group"
   amazon_ec2_security_group_name = "${local.iot_kafka_name}-security-group"
-  amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
-  amazon_vpc_cidr_ipv4           = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_ipv4_cidr_block
+  amazon_vpc_id                  = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id
+  amazon_vpc_cidr_ipv4           = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_ipv4_cidr_block
   environment                    = var.environment
   team                           = var.team
 }
@@ -53,7 +53,7 @@ module "iot_kafka_cluster" {
   kafka_broker_number             = 60
   kafka_broker_log_s3_bucket_name = module.iot_kafka_s3_bucket.name
   amazon_vpc_security_group_id    = module.iot_kafka_security_group.id
-  amazon_vpc_subnet_ids           = slice(data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
+  amazon_vpc_subnet_ids           = slice(data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
   amazon_ebs_volume_size_gb       = 102400
   aws_kms_key_arn                 = module.kafka_kms_key.arn
   is_scram_enabled                = true
@@ -73,7 +73,7 @@ module "iot_kafka_sasl_scram_secret_association" {
 # Tracker Kafka
 locals {
   tracker_kafka_name                    = "hm-${var.environment}-tracker-kakfa"
-  tracker_amazon_vpc_private_subnet_ids = slice(data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
+  tracker_amazon_vpc_private_subnet_ids = slice(data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
 }
 # Tracker Kafka - S3 bucket
 module "tracker_kafka_s3_bucket" {
@@ -88,13 +88,13 @@ module "tracker_kafka_security_group" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_msk_security_group"
   amazon_ec2_security_group_name = "${local.tracker_kafka_name}-security-group"
-  amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
-  amazon_vpc_cidr_ipv4           = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id.cidr_block
+  amazon_vpc_id                  = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id
+  amazon_vpc_cidr_ipv4           = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id.cidr_block
   environment                    = var.environment
   team                           = var.team
 }
 # Tracker Kafka - Kafka cluster
-module "hm_amazon_msk_cluster" {
+module "tracker_kafka_cluster" {
   providers                       = { aws = aws.production }
   source                          = "../../../../modules/aws/hm_amazon_msk_cluster"
   amazon_msk_cluster_name         = local.tracker_kafka_name
@@ -103,14 +103,14 @@ module "hm_amazon_msk_cluster" {
   kafka_broker_number             = 3
   kafka_broker_log_s3_bucket_name = module.tracker_kafka_s3_bucket.name
   amazon_vpc_security_group_id    = module.tracker_kafka_security_group.id
-  amazon_vpc_subnet_ids           = slice(data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
+  amazon_vpc_subnet_ids           = slice(data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
   amazon_ebs_volume_size_gb       = 16
   aws_kms_key_arn                 = module.kafka_kms_key.arn
   environment                     = var.environment
   team                            = var.team
 }
 # Tracker Kafka - Kafka sink plugin
-data "external" "hm_local_tracker_sink_plugin" {
+data "external" "local_tracker_kafka_sink_plugin" {
   provider = aws.production
   program  = ["bash", "files/amazon-msk/${var.environment}-tracker-kafka/plugins/build.sh"]
   query = {
@@ -127,32 +127,32 @@ locals {
   tracker_kafka_sink_plugin_name      = "${var.environment}-tracker-sink-plugin"
   tracker_kafka_sink_plugin_file_name = "${local.tracker_kafka_sink_plugin_name}.zip"
 }
-module "hm_amazon_s3_object_tracker_kafka_sink_plugin" {
+module "s3_object_tracker_kafka_sink_plugin" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = module.tracker_kafka_s3_bucket.name
   s3_key          = "plugins/${local.tracker_kafka_sink_plugin_file_name}"
-  local_file_path = data.external.hm_local_tracker_sink_plugin.result.local_file_path
+  local_file_path = data.external.local_tracker_kafka_sink_plugin.result.local_file_path
 }
 module "hm_amazon_msk_plugin_tracker_kafka_sink_plugin" {
   providers                = { aws = aws.production }
   source                   = "../../../../modules/aws/hm_amazon_msk_plugin"
   amazon_msk_plugin_name   = local.tracker_kafka_sink_plugin_name
   s3_bucket_arn            = module.tracker_kafka_s3_bucket.arn
-  amazon_msk_plugin_s3_key = module.hm_amazon_s3_object_tracker_kafka_sink_plugin.s3_key
+  amazon_msk_plugin_s3_key = module.s3_object_tracker_kafka_sink_plugin.s3_key
   depends_on = [
-    module.hm_amazon_s3_object_tracker_kafka_sink_plugin
+    module.s3_object_tracker_kafka_sink_plugin
   ]
 }
 # Tracker Kafka - Kafka sink connector
 locals {
   production_tracker_sink_connector_name = "DevelopmentTrackerSinkConnector"
 }
-module "hm_amazon_msk_tracker_sink_connector_iam" {
+module "tracker_kafka_sink_connector_iam_role" {
   providers                 = { aws = aws.production }
   source                    = "../../../../modules/aws/hm_amazon_msk_connector_iam"
   amazon_msk_connector_name = local.production_tracker_sink_connector_name
-  amazon_msk_arn            = module.hm_amazon_msk_cluster.arn
+  amazon_msk_arn            = module.tracker_kafka_cluster.arn
   msk_plugin_s3_bucket_name = module.tracker_kafka_s3_bucket.name
   msk_log_s3_bucket_name    = module.tracker_kafka_s3_bucket.name
   environment               = var.environment
@@ -166,15 +166,15 @@ data "aws_secretsmanager_secret_version" "tracker_snowflake_secret_version" {
   provider  = aws.production
   secret_id = data.aws_secretsmanager_secret.tracker_snowflake_secret.id
 }
-module "hm_amazon_msk_tracker_sink_connector" {
+module "tracker_kafka_sink_connector" {
   providers                            = { aws = aws.production }
   source                               = "../../../../modules/aws/hm_amazon_msk_connector"
   amazon_msk_connector_name            = local.production_tracker_sink_connector_name
   kafka_connect_version                = "2.7.1"
   amazon_msk_plugin_arn                = module.hm_amazon_msk_plugin_tracker_kafka_sink_plugin.arn
   amazon_msk_plugin_revision           = module.hm_amazon_msk_plugin_tracker_kafka_sink_plugin.latest_revision
-  amazon_msk_connector_iam_role_arn    = module.hm_amazon_msk_tracker_sink_connector_iam.arn
-  amazon_msk_cluster_bootstrap_servers = module.hm_amazon_msk_cluster.bootstrap_servers
+  amazon_msk_connector_iam_role_arn    = module.tracker_kafka_sink_connector_iam_role.arn
+  amazon_msk_cluster_bootstrap_servers = module.tracker_kafka_cluster.bootstrap_servers
   confluent_schema_registry_url        = "https://production-confluent-schema-registry.hongbomiao.com"
   snowflake_user_name                  = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["user_name"]
   snowflake_private_key                = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key"]
