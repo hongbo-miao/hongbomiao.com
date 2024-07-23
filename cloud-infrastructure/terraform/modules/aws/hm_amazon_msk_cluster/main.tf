@@ -32,6 +32,10 @@ resource "aws_msk_cluster" "hm_amazon_msk_cluster" {
     }
   }
   encryption_info {
+    encryption_in_transit {
+      client_broker = "TLS"
+      in_cluster    = true
+    }
     encryption_at_rest_kms_key_arn = var.aws_kms_key_arn
   }
   client_authentication {
