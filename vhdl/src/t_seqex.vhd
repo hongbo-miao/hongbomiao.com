@@ -9,7 +9,7 @@ architecture test of t_seqex is
       b : in    bit;
       c : out   bit
     );
-  end component;
+  end component seqex;
 
   signal a : bit;
   signal b : bit;
