@@ -10,7 +10,7 @@ locals {
   aws_iam_role_name_prefix = "AmazonEBSCSIDriverRole"
 }
 # https://docs.aws.amazon.com/eks/latest/userguide/csi-iam-role.html
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "hm_amazon_ebs_csi_driver_iam_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
   assume_role_policy = jsonencode({

@@ -1,4 +1,4 @@
-data "terraform_remote_state" "hm_terraform_remote_state_production_aws_network" {
+data "terraform_remote_state" "production_aws_network_terraform_remote_state" {
   backend = "s3"
   config = {
     region = "us-west-2"
@@ -76,9 +76,9 @@ module "hm_amazon_eks_cluster" {
       to_port     = 443
     }
   }
-  vpc_id                   = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
-  subnet_ids               = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_private_subnets_ids
-  control_plane_subnet_ids = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_private_subnets_ids
+  vpc_id                   = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id
+  subnet_ids               = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids
+  control_plane_subnet_ids = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids
   eks_managed_node_group_defaults = {
     instance_types = ["m7i.large", "m7g.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
   }
@@ -288,7 +288,7 @@ module "hm_airbyte_postgres_security_group" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.airbyte_postgres_name}-security-group"
-  amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
+  amazon_vpc_id                  = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id
   amazon_vpc_cidr_ipv4           = "172.16.0.0/12"
   environment                    = var.environment
   team                           = var.team
@@ -393,7 +393,7 @@ module "hm_mlflow_postgres_security_group" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.mlflow_postgres_name}-security-group"
-  amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
+  amazon_vpc_id                  = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id
   amazon_vpc_cidr_ipv4           = "172.16.0.0/12"
   environment                    = var.environment
   team                           = var.team
