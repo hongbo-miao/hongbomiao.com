@@ -9,7 +9,7 @@ terraform {
 locals {
   aws_iam_role_name_prefix = "MLflowTrackingServerRole"
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "hm_mlflow_tracking_server_iam_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.mlflow_service_account_name}"
   assume_role_policy = jsonencode({
@@ -36,7 +36,7 @@ resource "aws_iam_role" "hm_mlflow_tracking_server_iam_role" {
     Name        = "${local.aws_iam_role_name_prefix}-${var.mlflow_service_account_name}"
   }
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "hm_mlflow_iam_role_policy" {
   name = "${local.aws_iam_role_name_prefix}Policy-${var.mlflow_service_account_name}"
   role = aws_iam_role.hm_mlflow_tracking_server_iam_role.name
