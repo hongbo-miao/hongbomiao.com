@@ -23,7 +23,8 @@ variable "amazon_vpc_subnet_ids" {
   type = list(string)
 }
 variable "aws_kms_key_arn" {
-  type = string
+  type    = string
+  default = null
 }
 variable "is_scram_enabled" {
   type    = bool

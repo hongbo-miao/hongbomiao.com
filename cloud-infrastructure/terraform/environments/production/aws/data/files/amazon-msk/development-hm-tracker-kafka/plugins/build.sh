@@ -5,10 +5,9 @@ set -e
 eval "$(jq --raw-output '@sh "KAFKA_PLUGIN_NAME=\(.kafka_plugin_name) SNOWFLAKE_KAFKA_CONNECTOR_VERSION=\(.snowflake_kafka_connector_version) BC_FIPS_VERSION=\(.bc_fips_version) BCPKIX_FIPS_VERSION=\(.bcpkix_fips_version) CONFLUENT_KAFKA_CONNECT_AVRO_CONVERTER_VERSION=\(.confluent_kafka_connect_avro_converter_version) LOCAL_DIR_PATH=\(.local_dir_path) LOCAL_FILE_NAME=\(.local_file_name)"')"
 
 # Prepare
-mkdir "/tmp/$KAFKA_PLUGIN_NAME/"
-mkdir "/tmp/$KAFKA_PLUGIN_NAME/raw/"
-mkdir "/tmp/$KAFKA_PLUGIN_NAME/process/"
-mkdir "/tmp/$KAFKA_PLUGIN_NAME/jar/"
+mkdir -p "/tmp/$KAFKA_PLUGIN_NAME/raw/"
+mkdir -p "/tmp/$KAFKA_PLUGIN_NAME/process/"
+mkdir -p "/tmp/$KAFKA_PLUGIN_NAME/jar/"
 
 # Download
 curl --silent --fail --show-error --location --output "/tmp/$KAFKA_PLUGIN_NAME/jar/snowflake-kafka-connector-$SNOWFLAKE_KAFKA_CONNECTOR_VERSION.jar" "https://repo1.maven.org/maven2/com/snowflake/snowflake-kafka-connector/$SNOWFLAKE_KAFKA_CONNECTOR_VERSION/snowflake-kafka-connector-$SNOWFLAKE_KAFKA_CONNECTOR_VERSION.jar"

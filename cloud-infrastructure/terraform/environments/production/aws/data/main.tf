@@ -40,7 +40,7 @@ module "iot_kafka_security_group" {
   source                         = "../../../../modules/aws/hm_amazon_msk_security_group"
   amazon_ec2_security_group_name = "${local.iot_kafka_name}-security-group"
   amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
-  amazon_vpc_cidr_ipv4           = "172.16.0.0/12"
+  amazon_vpc_cidr_ipv4           = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_ipv4_cidr_block
   environment                    = var.environment
   team                           = var.team
 }
@@ -53,7 +53,7 @@ module "iot_kafka_cluster" {
   kafka_broker_number             = 60
   kafka_broker_log_s3_bucket_name = module.iot_kafka_s3_bucket.name
   amazon_vpc_security_group_id    = module.iot_kafka_security_group.id
-  amazon_vpc_subnet_ids           = slice(var.amazon_vpc_private_subnet_ids, 0, 3)
+  amazon_vpc_subnet_ids           = slice(data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
   amazon_ebs_volume_size_gb       = 102400
   aws_kms_key_arn                 = module.kafka_kms_key.arn
   is_scram_enabled                = true
@@ -73,7 +73,7 @@ module "iot_kafka_sasl_scram_secret_association" {
 # Tracker Kafka
 locals {
   tracker_kafka_name                    = "hm-${var.environment}-tracker-kakfa"
-  tracker_amazon_vpc_private_subnet_ids = slice(var.amazon_vpc_private_subnet_ids, 0, 3)
+  tracker_amazon_vpc_private_subnet_ids = slice(data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
 }
 # Tracker Kafka - S3 bucket
 module "tracker_kafka_s3_bucket" {
@@ -89,7 +89,7 @@ module "tracker_kafka_security_group" {
   source                         = "../../../../modules/aws/hm_amazon_msk_security_group"
   amazon_ec2_security_group_name = "${local.tracker_kafka_name}-security-group"
   amazon_vpc_id                  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
-  amazon_vpc_cidr_ipv4           = "172.16.0.0/12"
+  amazon_vpc_cidr_ipv4           = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id.cidr_block
   environment                    = var.environment
   team                           = var.team
 }
@@ -103,7 +103,7 @@ module "hm_amazon_msk_cluster" {
   kafka_broker_number             = 3
   kafka_broker_log_s3_bucket_name = module.tracker_kafka_s3_bucket.name
   amazon_vpc_security_group_id    = module.tracker_kafka_security_group.id
-  amazon_vpc_subnet_ids           = slice(var.amazon_vpc_private_subnet_ids, 0, 3)
+  amazon_vpc_subnet_ids           = slice(data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
   amazon_ebs_volume_size_gb       = 16
   aws_kms_key_arn                 = module.kafka_kms_key.arn
   environment                     = var.environment
