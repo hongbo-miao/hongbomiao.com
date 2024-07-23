@@ -6,6 +6,7 @@ data "terraform_remote_state" "hm_terraform_remote_state_production_aws_network"
     key    = "production/aws/network/terraform.tfstate"
   }
 }
+
 # Amazon EKS
 locals {
   amazon_eks_cluster_name = "hm-${var.environment}-eks-cluster"
@@ -75,9 +76,9 @@ module "hm_amazon_eks_cluster" {
       to_port     = 443
     }
   }
-  vpc_id                   = var.amazon_vpc_id
-  subnet_ids               = var.amazon_vpc_private_subnet_ids
-  control_plane_subnet_ids = var.amazon_vpc_private_subnet_ids
+  vpc_id                   = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_id
+  subnet_ids               = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_private_subnets_ids
+  control_plane_subnet_ids = data.terraform_remote_state.hm_terraform_remote_state_production_aws_network.outputs.hm_amazon_vpc_private_subnets_ids
   eks_managed_node_group_defaults = {
     instance_types = ["m7i.large", "m7g.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
   }

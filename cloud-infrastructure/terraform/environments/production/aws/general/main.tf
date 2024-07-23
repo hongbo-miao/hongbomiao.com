@@ -42,7 +42,7 @@ locals {
 module "s3_object_hm_trino_set_up_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
-  s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.hm_amazon_vpc_subnets_ids
+  s3_bucket_name  = data.terraform_remote_state.hm_terraform_remote_state_production_aws_data.outputs.hm_amazon_vpc_private_subnets_ids
   s3_key          = "amazon-emr/clusters/${local.amazon_emr_cluster_name}/bootstrap-actions/set_up.sh"
   local_file_path = "files/amazon-emr/clusters/${local.amazon_emr_cluster_name}/bootstrap-actions/set_up.sh"
 }
