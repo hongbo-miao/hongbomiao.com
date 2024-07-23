@@ -13,7 +13,7 @@ begin
   process_input_check : process (a, b) is
   begin
 
-    if (a='1' or b = '1') then
+    if (a = '1' or b = '1') then
       c <= '1';
     else
       c <= '0';
