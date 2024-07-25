@@ -81,7 +81,7 @@ module "hm_trino_emr" {
   primary_instance_ebs_volume_size_gb        = 16
   core_instance_target_on_demand_capacity    = 4
   core_instance_weighted_capacity            = 4
-  core_instance_type                         = "m7a.4xlarge"
+  core_instance_type                         = "m7g.4xlarge"
   core_instance_ebs_volume_size_gb           = 16
   bootstrap_set_up_script_s3_uri             = module.s3_object_hm_trino_set_up_script.uri
   configurations_json_string                 = <<EOF
@@ -158,12 +158,32 @@ module "hm_trino_task_instance_fleet" {
   task_instance_target_spot_capacity = 28
   task_instance_configs = [
     {
+      instance_type      = "m7g.4xlarge"
+      weighted_capacity  = 4
+      ebs_volume_size_gb = 16
+    },
+    {
       instance_type      = "m7a.4xlarge"
       weighted_capacity  = 4
       ebs_volume_size_gb = 16
     },
     {
+      instance_type      = "m7i.4xlarge"
+      weighted_capacity  = 4
+      ebs_volume_size_gb = 16
+    },
+    {
+      instance_type      = "m6g.4xlarge"
+      weighted_capacity  = 4
+      ebs_volume_size_gb = 16
+    },
+    {
       instance_type      = "m6a.4xlarge"
+      weighted_capacity  = 4
+      ebs_volume_size_gb = 16
+    },
+    {
+      instance_type      = "m6i.4xlarge"
       weighted_capacity  = 4
       ebs_volume_size_gb = 16
     }
