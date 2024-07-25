@@ -148,9 +148,9 @@ module "hm_amazon_msk_plugin_tracker_kafka_sink_plugin" {
 locals {
   production_tracker_sink_connector_name = "DevelopmentTrackerSinkConnector"
 }
-module "tracker_kafka_sink_connector_iam_role" {
+module "tracker_kafka_snowflake_sink_connector_iam_role" {
   providers                 = { aws = aws.production }
-  source                    = "../../../../modules/aws/hm_amazon_msk_connector_iam"
+  source                    = "../../../../modules/aws/hm_amazon_msk_snowflake_sink_connector_iam"
   amazon_msk_connector_name = local.production_tracker_sink_connector_name
   amazon_msk_arn            = module.tracker_kafka_cluster.arn
   msk_plugin_s3_bucket_name = module.tracker_kafka_s3_bucket.name
@@ -168,23 +168,28 @@ data "aws_secretsmanager_secret_version" "tracker_snowflake_secret_version" {
 }
 module "tracker_kafka_sink_connector" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/aws/hm_amazon_msk_connector"
+  source                               = "../../../../modules/aws/hm_amazon_msk_snowflake_sink_connector"
   amazon_msk_connector_name            = local.production_tracker_sink_connector_name
-  kafka_connect_version                = "2.7.1"
-  amazon_msk_plugin_arn                = module.hm_amazon_msk_plugin_tracker_kafka_sink_plugin.arn
-  amazon_msk_plugin_revision           = module.hm_amazon_msk_plugin_tracker_kafka_sink_plugin.latest_revision
-  amazon_msk_connector_iam_role_arn    = module.tracker_kafka_sink_connector_iam_role.arn
-  amazon_msk_cluster_bootstrap_servers = module.tracker_kafka_cluster.bootstrap_servers
-  confluent_schema_registry_url        = "https://production-confluent-schema-registry.hongbomiao.com"
+  kafka_topic                          = "production.tracker.analytic-events.avro"
+  max_task_number                      = 3
+  max_worker_number                    = 2
+  worker_microcontroller_unit_number   = 1
   snowflake_user_name                  = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["user_name"]
   snowflake_private_key                = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key"]
   snowflake_private_key_passphrase     = jsondecode(data.aws_secretsmanager_secret_version.tracker_snowflake_secret_version.secret_string)["private_key_passphrase"]
-  snowflake_role_name                  = "HM_hmHM_KAFKA_DB_PRODUCT_READ_WRITE_ROLE"
+  snowflake_role_name                  = "HM_KAFKA_DB_PRODUCT_READ_WRITE_ROLE"
+  snowflake_database_name              = "HM_KAFKA_DB"
+  snowflake_schema_name                = "ENGINEERING"
+  confluent_schema_registry_url        = "https://production-confluent-schema-registry.hongbomiao.com"
+  kafka_connect_version                = "2.7.1"
+  amazon_msk_plugin_arn                = module.hm_amazon_msk_plugin_tracker_kafka_sink_plugin.arn
+  amazon_msk_plugin_revision           = module.hm_amazon_msk_plugin_tracker_kafka_sink_plugin.latest_revision
+  amazon_msk_connector_iam_role_arn    = module.tracker_kafka_snowflake_sink_connector_iam_role.arn
+  amazon_msk_cluster_bootstrap_servers = module.tracker_kafka_cluster.bootstrap_servers
+  amazon_vpc_security_group_id         = module.tracker_kafka_security_group.id
+  amazon_vpc_subnet_ids                = local.tracker_amazon_vpc_private_subnet_ids
   msk_log_s3_bucket_name               = module.tracker_kafka_s3_bucket.name
   msk_log_s3_key                       = "amazon-msk/connectors/${local.production_tracker_sink_connector_name}"
-  kafka_topic_name                     = "production.tracker.analytic-events.avro"
-  snowflake_database_name              = "hmHM_KAFKA_DB"
-  snowflake_schema_name                = "ENGINEERING"
   environment                          = var.environment
   team                                 = var.team
   depends_on = [
