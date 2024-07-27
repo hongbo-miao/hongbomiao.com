@@ -54,12 +54,14 @@ int main(int argc, char **argv) {
 
   // Increase the internal queue buffer size
   rd_kafka_conf_set(conf, "queue.buffering.max.messages", "10000000", NULL, 0);
-  rd_kafka_conf_set(conf, "queue.buffering.max.kbytes", "10485760", NULL,
-                    0);  // 10 GiB
+
+  rd_kafka_conf_set(conf, "queue.buffering.max.kbytes",
+                    "10485760",  // 10 GiB
+                    NULL, 0, );
 
   // Adjust batch size and linger time
-  rd_kafka_conf_set(conf, "batch.size", "65536", NULL, 0);  // 64 KB
-  rd_kafka_conf_set(conf, "linger.ms", "5", NULL, 0);       // 5 milliseconds
+  rd_kafka_conf_set(conf, "batch.size", "65536", NULL, 0);  // 64 KiB
+  rd_kafka_conf_set(conf, "linger.ms", "5", NULL, 0);       // 5 ms
 
   // Install a delivery-error callback
   rd_kafka_conf_set_dr_msg_cb(conf, delivery_report);
