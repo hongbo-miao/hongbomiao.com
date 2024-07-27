@@ -24,12 +24,26 @@ module "kafka_kms_key" {
   team             = var.team
 }
 
+# IoT data
+locals {
+  iot_data_name = "hm-${var.environment}-iot-data"
+}
+# IoT data - S3 bucket
+module "s3_bucket_iot_data" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.iot_data_name}-bucket"
+  environment    = var.environment
+  team           = var.team
+}
 # IoT Kafka
 locals {
-  iot_kafka_name = "hm-${var.environment}-iot-kakfa"
+  iot_kafka_name                    = "hm-${var.environment}-iot-kafka"
+  iot_amazon_vpc_private_subnet_ids = slice(data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
 }
 # IoT Kafka - S3 bucket
-module "iot_kafka_s3_bucket" {
+module "s3_bucket_iot_kafka" {
+  providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.iot_kafka_name}-bucket"
   environment    = var.environment
@@ -37,24 +51,26 @@ module "iot_kafka_s3_bucket" {
 }
 # IoT Kafka - security group
 module "iot_kafka_security_group" {
+  providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_msk_security_group"
   amazon_ec2_security_group_name = "${local.iot_kafka_name}-security-group"
   amazon_vpc_id                  = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id
-  amazon_vpc_cidr_ipv4           = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_ipv4_cidr_block
+  amazon_vpc_cidr_ipv4           = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id.cidr_block
   environment                    = var.environment
   team                           = var.team
 }
 # IoT Kafka - Kafka cluster
 module "iot_kafka_cluster" {
+  providers                       = { aws = aws.production }
   source                          = "../../../../modules/aws/hm_amazon_msk_cluster"
   amazon_msk_cluster_name         = local.iot_kafka_name
   kafka_version                   = "3.7.x.kraft"
   kafka_broker_instance_type      = "kafka.m7g.large"
-  kafka_broker_number             = 60
-  kafka_broker_log_s3_bucket_name = module.iot_kafka_s3_bucket.name
+  kafka_broker_number             = 3
+  kafka_broker_log_s3_bucket_name = module.s3_bucket_iot_kafka.name
   amazon_vpc_security_group_id    = module.iot_kafka_security_group.id
-  amazon_vpc_subnet_ids           = slice(data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids, 0, 3)
-  amazon_ebs_volume_size_gb       = 102400
+  amazon_vpc_subnet_ids           = local.iot_amazon_vpc_private_subnet_ids
+  amazon_ebs_volume_size_gb       = 32
   aws_kms_key_arn                 = module.kafka_kms_key.arn
   is_scram_enabled                = true
   environment                     = var.environment
@@ -65,9 +81,86 @@ data "aws_secretsmanager_secret" "iot_kafka_producer_secret" {
   name = "AmazonMSK_hm/production-iot-kafka/producer"
 }
 module "iot_kafka_sasl_scram_secret_association" {
+  providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_msk_cluster_sasl_scram_secret_association"
   amazon_msk_cluster_arn         = module.iot_kafka_cluster.arn
   aws_secrets_manager_secret_arn = data.aws_secretsmanager_secret.iot_kafka_producer_secret.arn
+}
+# IoT Kafka - Kafka sink plugin
+locals {
+  iot_kafka_sink_plugin_name      = "${var.environment}-iot-kafka-sink-plugin"
+  iot_kafka_sink_plugin_file_name = "${local.iot_kafka_sink_plugin_name}.zip"
+}
+data "external" "local_iot_kafka_sink_plugin" {
+  program = ["bash", "files/amazon-msk/${var.environment}-iot-kafka/plugins/build.sh"]
+  query = {
+    kafka_plugin_name                            = local.iot_kafka_sink_plugin_name
+    confluent_kafka_connect_s3_converter_version = "10.5.13" # https://www.confluent.io/hub/confluentinc/kafka-connect-s3
+    local_dir_path                               = "files/amazon-msk/${var.environment}-iot-kafka/plugins"
+    local_file_name                              = local.iot_kafka_sink_plugin_file_name
+  }
+}
+module "s3_object_iot_kafka_sink_plugin" {
+  providers       = { aws = aws.production }
+  source          = "../../../../modules/aws/hm_amazon_s3_object"
+  s3_bucket_name  = module.s3_bucket_iot_kafka.name
+  s3_key          = "plugins/${local.iot_kafka_sink_plugin_file_name}"
+  local_file_path = data.external.local_iot_kafka_sink_plugin.result.local_file_path
+}
+module "iot_kafka_sink_plugin" {
+  providers                = { aws = aws.production }
+  source                   = "../../../../modules/aws/hm_amazon_msk_plugin"
+  amazon_msk_plugin_name   = local.iot_kafka_sink_plugin_name
+  s3_bucket_arn            = module.s3_bucket_iot_kafka.arn
+  amazon_msk_plugin_s3_key = module.s3_object_iot_kafka_sink_plugin.s3_key
+  depends_on = [
+    module.s3_object_iot_kafka_sink_plugin
+  ]
+}
+# IoT Kafka - Kafka S3 sink connector
+locals {
+  iot_kafka_s3_sink_connector_name = "ProductionIoTKafkaS3SinkConnector"
+}
+module "iot_kafka_s3_sink_connector_iam_role" {
+  providers                 = { aws = aws.production }
+  source                    = "../../../../modules/aws/hm_amazon_msk_s3_sink_connector_iam_role"
+  amazon_msk_connector_name = local.iot_kafka_s3_sink_connector_name
+  amazon_msk_arn            = module.iot_kafka_cluster.arn
+  msk_plugin_s3_bucket_name = module.s3_bucket_iot_kafka.name
+  msk_log_s3_bucket_name    = module.s3_bucket_iot_kafka.name
+  msk_data_s3_bucket_name   = module.s3_bucket_iot_data.name
+  environment               = var.environment
+  team                      = var.team
+}
+data "aws_secretsmanager_secret" "iot_snowflake_secret" {
+  name = "hm/snowflake/development_hm_kafka_db/product/read_write"
+}
+data "aws_secretsmanager_secret_version" "iot_snowflake_secret_version" {
+  secret_id = data.aws_secretsmanager_secret.iot_snowflake_secret.id
+}
+module "iot_kafka_s3_sink_connector" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/aws/hm_amazon_msk_s3_sink_connector"
+  amazon_msk_connector_name            = local.iot_kafka_s3_sink_connector_name
+  kafka_topics                         = "production.iot.device.json"
+  s3_bucket_name                       = module.s3_bucket_iot_data.name
+  max_task_number                      = 3
+  max_worker_number                    = 10
+  worker_microcontroller_unit_number   = 1
+  kafka_connect_version                = "2.7.1"
+  amazon_msk_plugin_arn                = module.iot_kafka_sink_plugin.arn
+  amazon_msk_plugin_revision           = module.iot_kafka_sink_plugin.latest_revision
+  amazon_msk_connector_iam_role_arn    = module.iot_kafka_s3_sink_connector_iam_role.arn
+  amazon_msk_cluster_bootstrap_servers = module.iot_kafka_cluster.bootstrap_servers
+  amazon_vpc_security_group_id         = module.iot_kafka_security_group.id
+  amazon_vpc_subnet_ids                = local.iot_amazon_vpc_private_subnet_ids
+  msk_log_s3_bucket_name               = module.s3_bucket_iot_kafka.name
+  msk_log_s3_key                       = "connectors/${local.iot_kafka_s3_sink_connector_name}"
+  environment                          = var.environment
+  team                                 = var.team
+  depends_on = [
+    module.iot_kafka_sink_plugin
+  ]
 }
 
 # Tracker Kafka
