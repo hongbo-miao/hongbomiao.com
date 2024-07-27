@@ -175,6 +175,26 @@ files = [
 ]
 
 [[package]]
+name = "anyio"
+version = "4.4.0"
+description = "High level compatibility layer for multiple asynchronous event loop implementations"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "anyio-4.4.0-py3-none-any.whl", hash = "sha256:c1b2d8f46a8a812513012e1107cb0e68c17159a7a594208005a57dc776e1bdc7"},
+    {file = "anyio-4.4.0.tar.gz", hash = "sha256:5aadc6a1bbb7cdb0bede386cac5e2940f5e2ff3aa20277e991cf028e0585ce94"},
+]
+
+[package.dependencies]
+idna = ">=2.8"
+sniffio = ">=1.1"
+
+[package.extras]
+doc = ["Sphinx (>=7)", "packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
+test = ["anyio[trio]", "coverage[toml] (>=7)", "exceptiongroup (>=1.2.0)", "hypothesis (>=4.0)", "psutil (>=5.9)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (>=0.17)"]
+trio = ["trio (>=0.23)"]
+
+[[package]]
 name = "applicationinsights"
 version = "0.11.10"
 description = "This project extends the Application Insights API surface to support Python."
@@ -1784,6 +1804,26 @@ files = [
 ]
 
 [[package]]
+name = "azure-storage-blob"
+version = "12.21.0"
+description = "Microsoft Azure Blob Storage Client Library for Python"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "azure-storage-blob-12.21.0.tar.gz", hash = "sha256:b9722725072f5b7373c0f4dd6d78fbae2bb37bffc5c3e01731ab8c750ee8dd7e"},
+    {file = "azure_storage_blob-12.21.0-py3-none-any.whl", hash = "sha256:f9ede187dd5a0ef296b583a7c1861c6938ddd6708d6e70f4203a163c2ab42d43"},
+]
+
+[package.dependencies]
+azure-core = ">=1.28.0"
+cryptography = ">=2.1.4"
+isodate = ">=0.6.1"
+typing-extensions = ">=4.6.0"
+
+[package.extras]
+aio = ["azure-core[aio] (>=1.28.0)"]
+
+[[package]]
 name = "azure-storage-common"
 version = "1.4.2"
 description = "Microsoft Azure Storage Common Client Library for Python"
@@ -2783,6 +2823,64 @@ files = [
 protobuf = ["grpcio-tools (>=1.59.2)"]
 
 [[package]]
+name = "h11"
+version = "0.14.0"
+description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "h11-0.14.0-py3-none-any.whl", hash = "sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761"},
+    {file = "h11-0.14.0.tar.gz", hash = "sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d"},
+]
+
+[[package]]
+name = "h2"
+version = "4.1.0"
+description = "HTTP/2 State-Machine based protocol implementation"
+optional = false
+python-versions = ">=3.6.1"
+files = [
+    {file = "h2-4.1.0-py3-none-any.whl", hash = "sha256:03a46bcf682256c95b5fd9e9a99c1323584c3eec6440d379b9903d709476bc6d"},
+    {file = "h2-4.1.0.tar.gz", hash = "sha256:a83aca08fbe7aacb79fec788c9c0bac936343560ed9ec18b82a13a12c28d2abb"},
+]
+
+[package.dependencies]
+hpack = ">=4.0,<5"
+hyperframe = ">=6.0,<7"
+
+[[package]]
+name = "hpack"
+version = "4.0.0"
+description = "Pure-Python HPACK header compression"
+optional = false
+python-versions = ">=3.6.1"
+files = [
+    {file = "hpack-4.0.0-py3-none-any.whl", hash = "sha256:84a076fad3dc9a9f8063ccb8041ef100867b1878b25ef0ee63847a5d53818a6c"},
+    {file = "hpack-4.0.0.tar.gz", hash = "sha256:fc41de0c63e687ebffde81187a948221294896f6bdc0ae2312708df339430095"},
+]
+
+[[package]]
+name = "httpcore"
+version = "1.0.5"
+description = "A minimal low-level HTTP client."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "httpcore-1.0.5-py3-none-any.whl", hash = "sha256:421f18bac248b25d310f3cacd198d55b8e6125c107797b609ff9b7a6ba7991b5"},
+    {file = "httpcore-1.0.5.tar.gz", hash = "sha256:34a38e2f9291467ee3b44e89dd52615370e152954ba21721378a87b2960f7a61"},
+]
+
+[package.dependencies]
+certifi = "*"
+h11 = ">=0.13,<0.15"
+
+[package.extras]
+asyncio = ["anyio (>=4.0,<5.0)"]
+http2 = ["h2 (>=3,<5)"]
+socks = ["socksio (==1.*)"]
+trio = ["trio (>=0.22.0,<0.26.0)"]
+
+[[package]]
 name = "httplib2"
 version = "0.22.0"
 description = "A comprehensive HTTP client library."
@@ -2797,6 +2895,31 @@ files = [
 pyparsing = {version = ">=2.4.2,<3.0.0 || >3.0.0,<3.0.1 || >3.0.1,<3.0.2 || >3.0.2,<3.0.3 || >3.0.3,<4", markers = "python_version > \"3.0\""}
 
 [[package]]
+name = "httpx"
+version = "0.27.0"
+description = "The next generation HTTP client."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "httpx-0.27.0-py3-none-any.whl", hash = "sha256:71d5465162c13681bff01ad59b2cc68dd838ea1f10e51574bac27103f00c91a5"},
+    {file = "httpx-0.27.0.tar.gz", hash = "sha256:a0cb88a46f32dc874e04ee956e4c2764aba2aa228f650b06788ba6bda2962ab5"},
+]
+
+[package.dependencies]
+anyio = "*"
+certifi = "*"
+h2 = {version = ">=3,<5", optional = true, markers = "extra == \"http2\""}
+httpcore = "==1.*"
+idna = "*"
+sniffio = "*"
+
+[package.extras]
+brotli = ["brotli", "brotlicffi"]
+cli = ["click (==8.*)", "pygments (==2.*)", "rich (>=10,<14)"]
+http2 = ["h2 (>=3,<5)"]
+socks = ["socksio (==1.*)"]
+
+[[package]]
 name = "humanfriendly"
 version = "10.0"
 description = "Human friendly output for text interfaces using Python"
@@ -2809,6 +2932,17 @@ files = [
 
 [package.dependencies]
 pyreadline3 = {version = "*", markers = "sys_platform == \"win32\" and python_version >= \"3.8\""}
+
+[[package]]
+name = "hyperframe"
+version = "6.0.1"
+description = "HTTP/2 framing layer for Python"
+optional = false
+python-versions = ">=3.6.1"
+files = [
+    {file = "hyperframe-6.0.1-py3-none-any.whl", hash = "sha256:0ec6bafd80d8ad2195c4f03aacba3a8265e57bc4cff261e802bf39970ed02a15"},
+    {file = "hyperframe-6.0.1.tar.gz", hash = "sha256:ae510046231dc8e9ecb1a6586f63d2347bf4c8905914aa84ba585ae85f28a914"},
+]
 
 [[package]]
 name = "ibm-cloud-sdk-core"
@@ -2907,6 +3041,25 @@ files = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
 ]
+
+[[package]]
+name = "importlib-metadata"
+version = "8.0.0"
+description = "Read metadata from Python packages"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "importlib_metadata-8.0.0-py3-none-any.whl", hash = "sha256:15584cf2b1bf449d98ff8a6ff1abef57bf20f3ac6454f431736cd3e660921b2f"},
+    {file = "importlib_metadata-8.0.0.tar.gz", hash = "sha256:188bd24e4c346d3f0a933f275c2fec67050326a856b9a359881d7c2a697e8812"},
+]
+
+[package.dependencies]
+zipp = ">=0.5"
+
+[package.extras]
+doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+perf = ["ipython"]
+test = ["flufl.flake8", "importlib-resources (>=1.3)", "jaraco.test (>=5.4)", "packaging", "pyfakefs", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-mypy", "pytest-perf (>=0.9.2)", "pytest-ruff (>=0.2.1)"]
 
 [[package]]
 name = "iniconfig"
@@ -3169,6 +3322,87 @@ files = [
 ]
 
 [[package]]
+name = "microsoft-kiota-abstractions"
+version = "1.3.3"
+description = "Core abstractions for kiota generated libraries in Python"
+optional = false
+python-versions = "*"
+files = [
+    {file = "microsoft_kiota_abstractions-1.3.3-py2.py3-none-any.whl", hash = "sha256:deced0b01249459426d4ed45c8ab34e19250e514d4d05ce84c08893058ae06a1"},
+    {file = "microsoft_kiota_abstractions-1.3.3.tar.gz", hash = "sha256:3cc01832a2e6dc6094c4e1abf7cbef3849a87d818a3b9193ad6c83a9f88e14ff"},
+]
+
+[package.dependencies]
+opentelemetry-api = ">=1.19.0"
+opentelemetry-sdk = ">=1.19.0"
+std-uritemplate = ">=0.0.38"
+
+[[package]]
+name = "microsoft-kiota-authentication-azure"
+version = "1.0.0"
+description = "Authentication provider for Kiota using Azure Identity"
+optional = false
+python-versions = "*"
+files = [
+    {file = "microsoft_kiota_authentication_azure-1.0.0-py2.py3-none-any.whl", hash = "sha256:289fe002951ae661415a6d3fa7c422c096b739165acb32d786316988120a1b27"},
+    {file = "microsoft_kiota_authentication_azure-1.0.0.tar.gz", hash = "sha256:752304f8d94b884cfec12583dd763ec0478805c7f80b29344e78c6d55a97bd01"},
+]
+
+[package.dependencies]
+aiohttp = ">=3.8.0"
+azure-core = ">=1.21.1"
+microsoft-kiota-abstractions = ">=1.0.0,<2.0.0"
+opentelemetry-api = ">=1.20.0"
+opentelemetry-sdk = ">=1.20.0"
+
+[[package]]
+name = "microsoft-kiota-http"
+version = "1.3.2"
+description = "Kiota http request adapter implementation for httpx library"
+optional = false
+python-versions = "*"
+files = [
+    {file = "microsoft_kiota_http-1.3.2-py2.py3-none-any.whl", hash = "sha256:24c6a48a2207cadb5225dc4db243849a3d49ad0fdd044231807995cc385e49e5"},
+    {file = "microsoft_kiota_http-1.3.2.tar.gz", hash = "sha256:56c075c6788955bece8c80c4d480419873dfee9585220616d6e316b8286d4e20"},
+]
+
+[package.dependencies]
+httpx = {version = ">=0.23.0", extras = ["http2"]}
+microsoft-kiota_abstractions = ">=1.0.0,<2.0.0"
+opentelemetry-api = ">=1.20.0"
+opentelemetry-sdk = ">=1.20.0"
+
+[[package]]
+name = "microsoft-kiota-serialization-json"
+version = "1.0.0"
+description = "Implementation of Kiota Serialization interfaces for JSON"
+optional = false
+python-versions = "*"
+files = [
+    {file = "microsoft_kiota_serialization_json-1.0.0-py2.py3-none-any.whl", hash = "sha256:92066a81d2452d686bd805540b238ce02a4b22e3df7d884bacb3f16639af1191"},
+    {file = "microsoft_kiota_serialization_json-1.0.0.tar.gz", hash = "sha256:9f6ac6591ac219c31884b13e7619e424ae2a4772e30c886ea3a853f998efde5f"},
+]
+
+[package.dependencies]
+microsoft-kiota_abstractions = ">=1.0.0,<2.0.0"
+pendulum = ">=2.1.2"
+
+[[package]]
+name = "microsoft-kiota-serialization-text"
+version = "1.0.0"
+description = "Implementation of Kiota Serialization interfaces for text/plain"
+optional = false
+python-versions = "*"
+files = [
+    {file = "microsoft_kiota_serialization_text-1.0.0-py2.py3-none-any.whl", hash = "sha256:1d3789e012b603e059a36cc675d1fd08cb81e0dde423d970c0af2eabce9c0d43"},
+    {file = "microsoft_kiota_serialization_text-1.0.0.tar.gz", hash = "sha256:c3dd3f409b1c4f4963bd1e41d51b65f7e53e852130bb441d79b77dad88ee76ed"},
+]
+
+[package.dependencies]
+microsoft-kiota_abstractions = ">=1.0.0,<2.0.0"
+python-dateutil = ">=2.8.2"
+
+[[package]]
 name = "msal"
 version = "1.22.0"
 description = "The Microsoft Authentication Library (MSAL) for Python library enables your app to access the Microsoft Cloud by supporting authentication of users with Microsoft Azure Active Directory accounts (AAD) and Microsoft Accounts (MSA) using industry standard OAuth2 and OpenID Connect."
@@ -3270,6 +3504,49 @@ files = [
     {file = "msgpack-1.0.7-cp39-cp39-win_amd64.whl", hash = "sha256:1dc93e8e4653bdb5910aed79f11e165c85732067614f180f70534f056da97db3"},
     {file = "msgpack-1.0.7.tar.gz", hash = "sha256:572efc93db7a4d27e404501975ca6d2d9775705c2d922390d878fcf768d92c87"},
 ]
+
+[[package]]
+name = "msgraph-core"
+version = "1.1.2"
+description = "Core component of the Microsoft Graph Python SDK"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "msgraph_core-1.1.2-py3-none-any.whl", hash = "sha256:ed0695275d66914994a6ff71e7d71736ee4c4db3548a1021b2dd3a9605247def"},
+    {file = "msgraph_core-1.1.2.tar.gz", hash = "sha256:c533cad1a23980487a4aa229dc5d9b00975fc6590e157e9f51046c6e80349288"},
+]
+
+[package.dependencies]
+httpx = {version = ">=0.23.0", extras = ["http2"]}
+microsoft-kiota-abstractions = ">=1.0.0,<2.0.0"
+microsoft-kiota-authentication-azure = ">=1.0.0,<2.0.0"
+microsoft-kiota-http = ">=1.0.0,<2.0.0"
+
+[package.extras]
+dev = ["bumpver", "isort", "mypy", "pylint", "pytest", "yapf"]
+
+[[package]]
+name = "msgraph-sdk"
+version = "1.1.0"
+description = "The Microsoft Graph Python SDK"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "msgraph-sdk-1.1.0.tar.gz", hash = "sha256:c81bbd7c82b1237a25baee46d2a40ea3eabd15e06c5e50621ad4a9045012da5d"},
+    {file = "msgraph_sdk-1.1.0-py3-none-any.whl", hash = "sha256:661b6ddcc76391434af505bef0c3729405418402b3a7e673f1d094cb4fd5f80a"},
+]
+
+[package.dependencies]
+azure-identity = ">=1.12.0"
+microsoft-kiota-abstractions = ">=1.0.0,<2.0.0"
+microsoft-kiota-authentication-azure = ">=1.0.0,<2.0.0"
+microsoft-kiota-http = ">=1.0.0,<2.0.0"
+microsoft-kiota-serialization-json = ">=1.0.0,<2.0.0"
+microsoft-kiota-serialization-text = ">=1.0.0,<2.0.0"
+msgraph-core = ">=1.0.0"
+
+[package.extras]
+dev = ["bumpver", "isort", "mypy", "pylint", "pytest", "yapf"]
 
 [[package]]
 name = "msrest"
@@ -3521,6 +3798,52 @@ files = [
     {file = "opencensus-context-0.1.3.tar.gz", hash = "sha256:a03108c3c10d8c80bb5ddf5c8a1f033161fa61972a9917f9b9b3a18517f0088c"},
     {file = "opencensus_context-0.1.3-py2.py3-none-any.whl", hash = "sha256:073bb0590007af276853009fac7e4bab1d523c3f03baf4cb4511ca38967c6039"},
 ]
+
+[[package]]
+name = "opentelemetry-api"
+version = "1.26.0"
+description = "OpenTelemetry Python API"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "opentelemetry_api-1.26.0-py3-none-any.whl", hash = "sha256:7d7ea33adf2ceda2dd680b18b1677e4152000b37ca76e679da71ff103b943064"},
+    {file = "opentelemetry_api-1.26.0.tar.gz", hash = "sha256:2bd639e4bed5b18486fef0b5a520aaffde5a18fc225e808a1ac4df363f43a1ce"},
+]
+
+[package.dependencies]
+deprecated = ">=1.2.6"
+importlib-metadata = ">=6.0,<=8.0.0"
+
+[[package]]
+name = "opentelemetry-sdk"
+version = "1.26.0"
+description = "OpenTelemetry Python SDK"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "opentelemetry_sdk-1.26.0-py3-none-any.whl", hash = "sha256:feb5056a84a88670c041ea0ded9921fca559efec03905dddeb3885525e0af897"},
+    {file = "opentelemetry_sdk-1.26.0.tar.gz", hash = "sha256:c90d2868f8805619535c05562d699e2f4fb1f00dbd55a86dcefca4da6fa02f85"},
+]
+
+[package.dependencies]
+opentelemetry-api = "1.26.0"
+opentelemetry-semantic-conventions = "0.47b0"
+typing-extensions = ">=3.7.4"
+
+[[package]]
+name = "opentelemetry-semantic-conventions"
+version = "0.47b0"
+description = "OpenTelemetry Semantic Conventions"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "opentelemetry_semantic_conventions-0.47b0-py3-none-any.whl", hash = "sha256:4ff9d595b85a59c1c1413f02bba320ce7ea6bf9e2ead2b0913c4395c7bbc1063"},
+    {file = "opentelemetry_semantic_conventions-0.47b0.tar.gz", hash = "sha256:a8d57999bbe3495ffd4d510de26a97dadc1dace53e0275001b2c1b2f67992a7e"},
+]
+
+[package.dependencies]
+deprecated = ">=1.2.6"
+opentelemetry-api = "1.26.0"
 
 [[package]]
 name = "packaging"
@@ -4597,13 +4920,13 @@ files = [
 
 [[package]]
 name = "skypilot"
-version = "0.6.0"
+version = "0.6.1"
 description = "SkyPilot: An intercloud broker for the clouds"
 optional = false
 python-versions = "*"
 files = [
-    {file = "skypilot-0.6.0-py3-none-any.whl", hash = "sha256:353d7865eb8581ad88d26cbbe0f853965050cf046596ccd90fc4ab5514155d8b"},
-    {file = "skypilot-0.6.0.tar.gz", hash = "sha256:5edbab27c49dcab88e294550075ace70b94537652d261678f0f04f7e67bbdc2a"},
+    {file = "skypilot-0.6.1-py3-none-any.whl", hash = "sha256:5605ede40dd0d32a2421f1d6ca3bc0f89f16a51dd489e506dcdd212ce92873e5"},
+    {file = "skypilot-0.6.1.tar.gz", hash = "sha256:563fc2f60c98151801c1d8ef80b09140f37f3c78a36765acef24af5a1a876b17"},
 ]
 
 [package.dependencies]
@@ -4612,6 +4935,7 @@ azure-cli = {version = ">=2.31.0", optional = true, markers = "extra == \"azure\
 azure-core = {version = "*", optional = true, markers = "extra == \"azure\""}
 azure-identity = {version = ">=1.13.0", optional = true, markers = "extra == \"azure\""}
 azure-mgmt-network = {version = "*", optional = true, markers = "extra == \"azure\""}
+azure-storage-blob = {version = "*", optional = true, markers = "extra == \"azure\""}
 boto3 = {version = ">=1.26.1", optional = true, markers = "extra == \"aws\""}
 botocore = {version = ">=1.29.10", optional = true, markers = "extra == \"aws\""}
 cachetools = "*"
@@ -4630,6 +4954,7 @@ ibm-platform-services = {version = "*", optional = true, markers = "extra == \"i
 ibm-vpc = {version = "*", optional = true, markers = "extra == \"ibm\""}
 jinja2 = ">=3.0"
 jsonschema = "*"
+msgraph-sdk = {version = "*", optional = true, markers = "extra == \"azure\""}
 networkx = "*"
 oci = {version = "*", optional = true, markers = "extra == \"oci\""}
 packaging = "*"
@@ -4649,9 +4974,9 @@ urllib3 = {version = "<2", optional = true, markers = "extra == \"aws\""}
 wheel = "*"
 
 [package.extras]
-all = ["awscli (>=1.27.10)", "azure-cli (>=2.31.0)", "azure-core", "azure-identity (>=1.13.0)", "azure-mgmt-network", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "cudo-compute (>=0.1.10)", "docker", "google-api-python-client (>=2.69.0)", "google-cloud-storage", "grpcio (>=1.32.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.32.0,!=1.48.0,<=1.51.3)", "grpcio (>=1.42.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.42.0,!=1.48.0,<=1.51.3)", "ibm-cloud-sdk-core", "ibm-cos-sdk", "ibm-platform-services", "ibm-vpc", "kubernetes (>=20.0.0)", "oci", "protobuf (>=3.15.3,!=3.19.5)", "pydantic (<2.0.dev0 || >=2.5.dev0,<3)", "pyvmomi (==8.0.1.0.2)", "ray[default] (>=2.2.0,!=2.6.0)", "runpod (>=1.5.1)", "urllib3 (<2)"]
+all = ["awscli (>=1.27.10)", "azure-cli (>=2.31.0)", "azure-core", "azure-identity (>=1.13.0)", "azure-mgmt-network", "azure-storage-blob", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "cudo-compute (>=0.1.10)", "docker", "google-api-python-client (>=2.69.0)", "google-cloud-storage", "grpcio (>=1.32.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.32.0,!=1.48.0,<=1.51.3)", "grpcio (>=1.42.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.42.0,!=1.48.0,<=1.51.3)", "ibm-cloud-sdk-core", "ibm-cos-sdk", "ibm-platform-services", "ibm-vpc", "kubernetes (>=20.0.0)", "msgraph-sdk", "oci", "protobuf (>=3.15.3,!=3.19.5)", "pydantic (<2.0.dev0 || >=2.5.dev0,<3)", "pyvmomi (==8.0.1.0.2)", "ray[default] (>=2.2.0,!=2.6.0)", "runpod (>=1.5.1)", "urllib3 (<2)"]
 aws = ["awscli (>=1.27.10)", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "urllib3 (<2)"]
-azure = ["azure-cli (>=2.31.0)", "azure-core", "azure-identity (>=1.13.0)", "azure-mgmt-network", "ray[default] (>=2.2.0,!=2.6.0)"]
+azure = ["azure-cli (>=2.31.0)", "azure-core", "azure-identity (>=1.13.0)", "azure-mgmt-network", "azure-storage-blob", "msgraph-sdk", "ray[default] (>=2.2.0,!=2.6.0)"]
 cloudflare = ["awscli (>=1.27.10)", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "urllib3 (<2)"]
 cudo = ["cudo-compute (>=0.1.10)"]
 docker = ["docker", "ray[default] (>=2.2.0,!=2.6.0)"]
@@ -4687,6 +5012,17 @@ test = ["azure-common", "azure-core", "azure-storage-blob", "boto3", "google-clo
 webhdfs = ["requests"]
 
 [[package]]
+name = "sniffio"
+version = "1.3.1"
+description = "Sniff out which async library your code is running under"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "sniffio-1.3.1-py3-none-any.whl", hash = "sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2"},
+    {file = "sniffio-1.3.1.tar.gz", hash = "sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc"},
+]
+
+[[package]]
 name = "sshtunnel"
 version = "0.1.5"
 description = "Pure python SSH tunnels"
@@ -4704,6 +5040,17 @@ paramiko = ">=1.15.2"
 build-sphinx = ["sphinx", "sphinxcontrib-napoleon"]
 dev = ["check-manifest"]
 test = ["tox (>=1.8.1)"]
+
+[[package]]
+name = "std-uritemplate"
+version = "1.0.5"
+description = "std-uritemplate implementation for Python"
+optional = false
+python-versions = "<4.0,>=3.8"
+files = [
+    {file = "std_uritemplate-1.0.5-py3-none-any.whl", hash = "sha256:8daf745b350ef3bc7b4ef82460a6c48aa459ca65fce8bda8657178959e3832d7"},
+    {file = "std_uritemplate-1.0.5.tar.gz", hash = "sha256:6ea31e72f96ab2b54d93c774de2175ce5350a833fbf7c024bb3718a3a539f605"},
+]
 
 [[package]]
 name = "tabulate"
@@ -5022,7 +5369,22 @@ files = [
 idna = ">=2.0"
 multidict = ">=4.0"
 
+[[package]]
+name = "zipp"
+version = "3.19.2"
+description = "Backport of pathlib-compatible object wrapper for zip files"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "zipp-3.19.2-py3-none-any.whl", hash = "sha256:f091755f667055f2d02b32c53771a7a6c8b47e1fdbc4b72a8b9072b3eef8015c"},
+    {file = "zipp-3.19.2.tar.gz", hash = "sha256:bf1dcf6450f873a13e952a29504887c89e6de7506209e5b1bcc3460135d4de19"},
+]
+
+[package.extras]
+doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more-itertools", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy", "pytest-ruff (>=0.2.1)"]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "fe606d7af60819a4c26ef1368b4e5449753c3d254604b657580aa39f5afff9e3"
+content-hash = "7b7694a635ae35e819d3588e9fbcc4df03e432c046561da5607983955b83ecec"
