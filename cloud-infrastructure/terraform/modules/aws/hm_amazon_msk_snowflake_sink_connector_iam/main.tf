@@ -72,18 +72,6 @@ resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_msk_policy" {
         ]
       },
       {
-        # Source connector
-        Effect = "Allow"
-        Action = [
-          "kafka-cluster:DescribeTopic",
-          "kafka-cluster:WriteData"
-        ]
-        Resource = [
-          "${replace(var.amazon_msk_arn, ":cluster", ":topic")}/*"
-        ]
-      },
-      {
-        # Sink connector
         Effect = "Allow"
         Action = [
           "kafka-cluster:DescribeTopic",
