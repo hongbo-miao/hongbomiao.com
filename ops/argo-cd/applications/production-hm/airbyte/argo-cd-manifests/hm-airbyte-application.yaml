@@ -12,7 +12,7 @@ spec:
   sources:
     - repoURL: https://airbytehq.github.io/helm-charts
       # https://artifacthub.io/packages/helm/airbyte/airbyte
-      targetRevision: 0.282.0
+      targetRevision: 0.350.0
       chart: airbyte
       helm:
         releaseName: hm-airbyte
@@ -58,6 +58,14 @@ spec:
             minio:
               enabled: false
             jobs:
+              kube:
+                images:
+                  # https://gallery.ecr.aws/docker/library/busybox
+                  busybox: public.ecr.aws/docker/library/busybox:1.36.1
+                  # https://gallery.ecr.aws/t2o0z5n2/socat
+                  socat: public.ecr.aws/t2o0z5n2/socat:1.7.4.4-r0
+                  # https://gallery.ecr.aws/groundcovercom/curl
+                  curl: public.ecr.aws/groundcovercom/curl:8.6.0
               resources:
                 requests:
                    cpu: 3000m
