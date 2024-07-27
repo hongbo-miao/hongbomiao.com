@@ -2,21 +2,31 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/snowflake-labs/snowflake" {
-  version     = "0.90.0"
-  constraints = "0.90.0"
+  version     = "0.94.0"
+  constraints = "0.94.0"
   hashes = [
-    "h1:D6irIQKG18S5iPBEtABXuxKRF4Imx3jsvC+eP/i435E=",
-    "zh:0e2d0b65e77e7cc0710c373b6be19b1780f25eb57f3238126b167c67f76123d9",
-    "zh:2dd4b6771b521f073adf29895dbcaf6b17b0d61cc1e971a348f0dff054df0db8",
-    "zh:55e6f281496d8cca75c8d232b74c155ddd327933be97c0d33c82728c00c8fdc8",
-    "zh:5f4cfd5bd9f7b6fa76954764d420d65319b2f31934d4ee3a21313aab307a6dc9",
-    "zh:615599c163cf6e28a5554bf624b4e1cf718f296a7aceb3111c961f74f518e3bf",
-    "zh:63db0265510a7fd5c29a510062a48b4c79009ce30166d1155f088f4c81b00ccc",
-    "zh:877beb8e47dc74ba05c6575941bfc701377594b4cd6f3d378070c03c7a0c76d7",
-    "zh:96ef293c28a2416df42637c7ad7b757aad35c4406bab51f0e1ba009df56047a4",
-    "zh:bf0d3d282e68102c831f5487b203237e2c761015ebe0ade85c555205b8e03d7c",
-    "zh:d15ef30465475f87cc85b6dc078ff96de6f9b90b432e3b238d67aa28b37291a5",
-    "zh:eda9c9f007a69a18e6043925eafc3a979d39bdf49f906da54970373e699c3acc",
+    "h1:+ZSpb6BG1Lmuow5gtQzxP7rBwIks2EZ6hxaxdxcwkPU=",
+    "h1:6ViSGjCjvW49bYwTFwLaNmGA2f5CEbhvF8maD5HkyLs=",
+    "h1:6eCOrFkzcul7VtIZtKaXsiTd5zMy/Q/dWD7WokmMA5o=",
+    "h1:E1UOOZBUa+eNsaI1pVXmMt3qrln8NTiwYM6fdybVEJI=",
+    "h1:JrctVkBE7EqVaiWtrmzK2PkzD4AfwyqYBcEykTF89mk=",
+    "h1:QL6/IJnDmQ6x8KKKqp/3oFu+UjbKgs4szkYEb3vlZ7c=",
+    "h1:gE0snQfDg+9dwYw/WM2vEqCxBMUUJNJf+JLvPbJmopk=",
+    "h1:k8FjpF7cwAhUO56E6Wn1p5LDfnI+KBX5WOiPjF6vFZI=",
+    "h1:ls1Ttz4bs9Xp+r/2rhvc9y4WBet0rL3hU3cS81ZKFSw=",
+    "h1:rPpbFGx+EjcgymKIa9gHKIXhBMDz0NnfPzAr4K+I/7I=",
+    "h1:rh1OIIgayevWTn7/QAkUsmJWYcOdeOidhHsLFZ0wwHU=",
+    "zh:0ec5b11d2effe0b98925cf056c4b29fa154b66e2d5c65d366e64e691de859bf3",
+    "zh:165a3703482fce1248befb1bde5fe84b306cd6612851236826d8479287e5074e",
+    "zh:20b842997580ae703064b50c61e5010ff49c677b619ea30bb64faa759f90d30c",
+    "zh:33b0a748258f4b26c36647bdb3771e412f8ea18e71cf88de55191ccc782d1025",
+    "zh:3ef876cfe3fe89a36ff02afb83a300595099bf9eeecb28f88dcc25583de056e9",
+    "zh:424df54b280864c2336f0975aea6c29b8e056b97492091f3e66e886eff43cde1",
+    "zh:452d2feb5cebcb8743aec1cc1ac073ba297e3083f686ea2d292630aa954a6ad7",
+    "zh:5c10eb954161fc301c443be25767c32e245f6c86fbc2cd5d5393384ac441064e",
+    "zh:66776435d3473984de83da345198196b08bdb271eb9208ea468d71ae225a8c67",
     "zh:f569b65999264a9416862bca5cd2a6177d94ccb0424f3a4ef424428912b9cb3c",
+    "zh:f5c8525d73ed58a43e4b1eaee521172e55dbea05283de520e0a71fcb2d9d6439",
+    "zh:f68e926630d065eaafb421d2aee4a4e445bfe529e26cf5e00ef0b6e01abb2aa6",
   ]
 }
