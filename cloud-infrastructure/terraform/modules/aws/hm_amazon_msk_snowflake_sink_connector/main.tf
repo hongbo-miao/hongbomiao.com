@@ -50,10 +50,10 @@ resource "aws_mskconnect_connector" "horizon_amazon_msk_snowflake_sink_connector
       max_worker_count = var.max_worker_number
       mcu_count        = var.worker_microcontroller_unit_number
       scale_in_policy {
-        cpu_utilization_percentage = 40
+        cpu_utilization_percentage = 20
       }
       scale_out_policy {
-        cpu_utilization_percentage = 95
+        cpu_utilization_percentage = 80
       }
     }
   }
