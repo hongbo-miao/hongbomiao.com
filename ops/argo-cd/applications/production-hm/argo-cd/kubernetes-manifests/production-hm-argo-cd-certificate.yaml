@@ -1,3 +1,4 @@
+# https://cert-manager.io/docs/usage/certificate
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -12,3 +13,8 @@ spec:
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer
+  # https://letsencrypt.org/certificates
+  privateKey:
+    algorithm: ECDSA
+    size: 384
+    rotationPolicy: Always
