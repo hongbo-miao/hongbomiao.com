@@ -380,14 +380,14 @@ jobs:
       - name: Pull Docker images
         working-directory: api-node
         run: |
-          docker-compose --file=docker-compose.cypress.yaml pull
+          docker compose --file=docker-compose.cypress.yaml pull
       - name: Cache Docker images
         uses: jpribyl/action-docker-layer-caching@v0.1.1
         continue-on-error: true
       - name: Start Docker
         working-directory: api-node
         run: |
-          docker-compose --file=docker-compose.cypress.yaml up --detach
+          docker compose --file=docker-compose.cypress.yaml up --detach
       - name: Cypress
         working-directory: web-cypress
         run: |
@@ -395,7 +395,7 @@ jobs:
       - name: Stop Docker
         working-directory: api-node
         run: |
-          docker-compose --file=docker-compose.cypress.yaml down
+          docker compose --file=docker-compose.cypress.yaml down
 
   web-lighthouse:
     name: Web | Lighthouse
@@ -2608,14 +2608,14 @@ jobs:
       - name: Pull Docker images
         working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
-          docker-compose pull
+          docker compose pull
       - name: Cache Docker images
         uses: jpribyl/action-docker-layer-caching@v0.1.1
         continue-on-error: true
       - name: Start Docker
         working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
-          docker-compose up --detach
+          docker compose up --detach
       - name: Run e2e tests
         working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
@@ -2623,7 +2623,7 @@ jobs:
       - name: Stop Docker
         working-directory: data-visualization/grafana/hm-panel-plugin
         run: |
-          docker-compose down
+          docker compose down
 
   grafana-hm-panel-plugin-compatibility-test:
     name: Grafana (hm-panel-plugin) | Compatibility Test
