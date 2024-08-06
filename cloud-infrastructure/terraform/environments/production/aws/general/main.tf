@@ -74,7 +74,7 @@ module "hm_trino_emr" {
   providers                                  = { aws = aws.production }
   source                                     = "../../../../modules/aws/hm_amazon_emr_cluster"
   amazon_emr_cluster_name                    = local.amazon_emr_cluster_name
-  amazon_emr_version                         = "emr-7.1.0"
+  amazon_emr_version                         = "emr-7.2.0"
   applications                               = ["HCatalog", "Trino"]
   primary_instance_target_on_demand_capacity = 3
   primary_instance_type                      = "c7g.4xlarge"
@@ -215,7 +215,7 @@ module "hm_sedona_cluster" {
   providers                                  = { aws = aws.production }
   source                                     = "../../../../modules/aws/hm_amazon_emr_cluster"
   amazon_emr_cluster_name                    = "hm-sedona"
-  amazon_emr_version                         = "emr-7.1.0"
+  amazon_emr_version                         = "emr-7.2.0"
   applications                               = ["Hadoop", "Hive", "JupyterEnterpriseGateway", "Livy", "Spark"]
   primary_instance_target_on_demand_capacity = 1
   primary_instance_type                      = "r7g.xlarge"

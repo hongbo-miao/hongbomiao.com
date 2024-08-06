@@ -6,9 +6,13 @@ terraform {
   }
 }
 
+locals {
+  aws_iam_role_prefix = "EKSAccessEntryRole"
+  aws_iam_role_name   = "${local.aws_iam_role_prefix}-${var.amazon_eks_access_entry_name}-${var.amazon_eks_cluster_name_hash}"
+}
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "hm_amazon_eks_access_entry_iam" {
-  name = "AmazonEKSAcessEntryRole-${var.amazon_eks_access_entry_name}"
+  name = local.aws_iam_role_name
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -22,8 +26,8 @@ resource "aws_iam_role" "hm_amazon_eks_access_entry_iam" {
     ]
   })
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "AmazonEKSAcessEntryRole-${var.amazon_eks_access_entry_name}"
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = "${local.aws_iam_role_prefix}-${var.amazon_eks_access_entry_name}"
   }
 }

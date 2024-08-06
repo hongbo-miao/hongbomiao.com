@@ -7,12 +7,13 @@ terraform {
 }
 
 locals {
-  aws_iam_role_name_prefix = "AmazonEBSCSIDriverRole"
+  aws_iam_role_prefix = "EBSCSIDriverRole"
+  aws_iam_role_name   = "${local.aws_iam_role_prefix}-${var.amazon_eks_cluster_name}-${var.amazon_eks_cluster_name_hash}"
 }
 # https://docs.aws.amazon.com/eks/latest/userguide/csi-iam-role.html
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "hm_amazon_ebs_csi_driver_iam_role" {
-  name = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
+  name = local.aws_iam_role_name
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -32,9 +33,9 @@ resource "aws_iam_role" "hm_amazon_ebs_csi_driver_iam_role" {
     ]
   })
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = local.aws_iam_role_name
   }
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment

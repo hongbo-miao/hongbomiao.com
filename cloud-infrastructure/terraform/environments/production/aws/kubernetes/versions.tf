@@ -5,6 +5,11 @@ terraform {
     key    = "production/aws/data/terraform.tfstate"
   }
   required_providers {
+    # https://registry.terraform.io/providers/gavinbunney/kubectl/latest
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = "1.14.0"
+    }
     # https://registry.terraform.io/providers/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"

@@ -13,6 +13,9 @@ variable "amazon_eks_cluster_oidc_provider_arn" {
 variable "amazon_route53_hosted_zone_id" {
   type = string
 }
+variable "amazon_eks_cluster_name_hash" {
+  type = string
+}
 variable "environment" {
   type = string
 }
