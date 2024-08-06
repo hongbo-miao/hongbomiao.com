@@ -57,6 +57,12 @@ show-network-hours:
 	vnstat --hours
 show-network-hoursgraph:
 	vnstat --hoursgraph
+show-dns:
+	dig www.hongbomiao.com
+show-dns-record-all:
+	dig www.hongbomiao.com any
+show-dns-record-nameserver:
+	dig www.hongbomiao.com ns
 test-ip-connectivity:
 	ping www.hongbomiao.com
 test-ssl-connectivity:
