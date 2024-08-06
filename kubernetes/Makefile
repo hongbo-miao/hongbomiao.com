@@ -93,6 +93,14 @@ kubectl-apply-with-linkerd:
 	linkerd inject - | kubectl apply --filename=manifests
 kubectl-delete:
 	kubectl delete --filename=manifests
+kubectl-get-customer-resources:
+	kubectl api-resources --api-group=gateway.networking.k8s.io
+kubectl-delete-customer-resources:
+	kubectl delete customresourcedefinition gatewayclasses.gateway.networking.k8s.io
+	kubectl delete customresourcedefinition gateways.gateway.networking.k8s.io
+	kubectl delete customresourcedefinition grpcroutes.gateway.networking.k8s.io
+	kubectl delete customresourcedefinition httproutes.gateway.networking.k8s.io
+	kubectl delete customresourcedefinition referencegrants.gateway.networking.k8s.io
 kubectl-get-node:
 	kubectl get node --output=wide
 kubectl-get-pods-all:
