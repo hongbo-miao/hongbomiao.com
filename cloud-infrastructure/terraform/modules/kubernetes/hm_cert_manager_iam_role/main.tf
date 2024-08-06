@@ -7,11 +7,13 @@ terraform {
 }
 
 locals {
-  aws_iam_role_name_prefix = "CertManagerRole"
+  aws_iam_role_prefix      = "CertManagerRole"
+  aws_iam_role_name        = "${local.aws_iam_role_prefix}-${var.cert_manager_service_account_name}-${var.amazon_eks_cluster_name_hash}"
+  aws_iam_role_policy_name = "${local.aws_iam_role_prefix}Policy-${var.cert_manager_service_account_name}-${var.amazon_eks_cluster_name_hash}"
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "hm_cert_manager_iam_role" {
-  name = "${local.aws_iam_role_name_prefix}-${var.cert_manager_service_account_name}"
+  name = local.aws_iam_role_name
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -31,16 +33,16 @@ resource "aws_iam_role" "hm_cert_manager_iam_role" {
     ]
   })
   tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "${local.aws_iam_role_name_prefix}-${var.cert_manager_service_account_name}"
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = local.aws_iam_role_name
   }
 }
 # https://cert-manager.io/docs/configuration/acme/dns01/route53
 # https://registry.terraform.io/providers/vancluever/acme/latest/docs/guides/dns-providers-route53#least-privilege-policy-for-production-purposes
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "hm_cert_manager_iam_role_policy" {
-  name = "${local.aws_iam_role_name_prefix}Policy-${var.cert_manager_service_account_name}"
+  name = local.aws_iam_role_policy_name
   role = aws_iam_role.hm_cert_manager_iam_role.name
   policy = jsonencode({
     Version = "2012-10-17"
@@ -68,7 +70,7 @@ resource "aws_iam_role_policy" "hm_cert_manager_iam_role_policy" {
         Condition = {
           "ForAllValues:StringLike" = {
             "route53:ChangeResourceRecordSetsNormalizedRecordNames" = [
-              "_acme-challenge.*.${var.amazon_route53_hosted_zone_name}"
+              "_acme-challenge.*"
             ],
             "route53:ChangeResourceRecordSetsRecordTypes" = [
               "TXT"
