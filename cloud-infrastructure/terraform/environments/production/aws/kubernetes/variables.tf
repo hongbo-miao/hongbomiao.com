@@ -1,9 +1,6 @@
 variable "amazon_route53_hosted_zone_id" {
   type = string
 }
-variable "amazon_route53_hosted_zone_name" {
-  type = string
-}
 variable "amazon_vpc_id" {
   type = string
 }
