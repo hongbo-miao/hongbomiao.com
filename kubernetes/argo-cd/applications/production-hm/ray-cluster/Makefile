@@ -1,7 +1,7 @@
 argo-cd-app-create:
-	argocd app create hm-ray-cluster --file=manifests/hm-ray-cluster-application.yaml
+	argocd app create hm-ray-cluster --file=argo-cd-manifests/hm-ray-cluster-application.yaml
 argo-cd-app-update:
-	argocd app create hm-ray-cluster --file=manifests/hm-ray-cluster-application.yaml --upsert
+	argocd app create hm-ray-cluster --file=argo-cd-manifests/hm-ray-cluster-application.yaml --upsert
 argo-cd-app-delete:
 	argocd app delete hm-ray-cluster --yes
 
