@@ -1,7 +1,7 @@
 locals {
   # https://www.javainuse.com/cron
-  production_engineering_iot_public_airbyte_connection_schedule_cron_expression = "0 11 * * * ? * US/Pacific" # every hour at minute 11
-  production_engineering_jira_airbyte_connection_schedule_cron_expression       = "0 32 * * * ? * US/Pacific" # every hour at minute 32
+  production_engineering_iot_public_airbyte_connection_schedule_cron_expression = "0 11 * * * ? * US/Pacific"      # every hour at minute 11
+  production_engineering_jira_airbyte_connection_schedule_cron_expression       = "0 32 7-19/2 ? * 2-6 US/Pacific" # every 2 hour at minute 32, 7am - 7pm, Monday - Friday
 }
 
 # Snowflake
