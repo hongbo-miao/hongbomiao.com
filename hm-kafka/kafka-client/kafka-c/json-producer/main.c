@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
     free((void *)json_str);  // cJSON_PrintUnformatted allocates memory
 
     rd_kafka_poll(producer, 0);
-    g_usleep(50);  // μs
+    g_usleep(5);  // μs
   }
 
   // Block until the messages are all sent

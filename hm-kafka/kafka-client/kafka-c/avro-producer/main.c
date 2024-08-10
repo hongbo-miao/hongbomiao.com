@@ -169,7 +169,7 @@ int main(int argc, char **argv) {
     free(avro_payload);
     avro_value_decref(&record);
     rd_kafka_poll(producer, 0);
-    g_usleep(50);  // μs
+    g_usleep(5);  // μs
   }
 
   g_message("Flushing final messages ...");
