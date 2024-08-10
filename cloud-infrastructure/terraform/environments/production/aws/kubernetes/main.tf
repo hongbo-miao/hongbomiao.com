@@ -32,6 +32,25 @@ module "amazon_ebs_csi_driver_iam_role" {
   environment                          = var.environment
   team                                 = var.team
 }
+# Amazon S3 CSI driver mountpoint - S3 bucket
+module "amazon_s3_bucket_eks_cluster_mount" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.amazon_eks_cluster_name}-mount"
+  environment    = var.environment
+  team           = var.team
+}
+# Amazon S3 CSI driver mountpoint - IAM role
+module "amazon_s3_csi_driver_mountpoint_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/kubernetes/hm_amazon_s3_csi_driver_mountpoint_iam_role"
+  amazon_eks_cluster_name              = module.amazon_eks_cluster.cluster_name
+  amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
+  s3_bucket_name                       = module.amazon_s3_bucket_eks_cluster_mount.name
+  environment                          = var.environment
+  team                                 = var.team
+}
 # Amazon EKS cluster
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
 module "amazon_eks_cluster" {
@@ -52,13 +71,19 @@ module "amazon_eks_cluster" {
       resolve_conflicts_on_update = "OVERWRITE"
     }
     vpc-cni = {
-      addon_version               = "v1.18.2-eksbuild.1"
+      addon_version               = "v1.18.3-eksbuild.1"
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
     aws-ebs-csi-driver = {
-      addon_version               = "v1.32.0-eksbuild.1"
+      addon_version               = "v1.33.0-eksbuild.1"
       service_account_role_arn    = module.amazon_ebs_csi_driver_iam_role.arn
+      resolve_conflicts_on_create = "OVERWRITE"
+      resolve_conflicts_on_update = "OVERWRITE"
+    }
+    aws-mountpoint-s3-csi-driver = {
+      addon_version               = "v1.7.0-eksbuild.1"
+      service_account_role_arn    = module.amazon_s3_csi_driver_mountpoint_iam_role.arn
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
