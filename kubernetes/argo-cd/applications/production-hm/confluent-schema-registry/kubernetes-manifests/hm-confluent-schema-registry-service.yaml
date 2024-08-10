@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hm-confluent-schema-registry-service
+  namespace: production-hm-confluent-schema-registry
+  labels:
+    app.kubernetes.io/name: hm-confluent-schema-registry-service
+    app.kubernetes.io/part-of: production-hm-confluent-schema-registry
+spec:
+  type: ClusterIP
+  selector:
+    app: hm-confluent-schema-registry
+  ports:
+    - name: schema-registry
+      protocol: TCP
+      targetPort: schema-registry
+      port: 8081
