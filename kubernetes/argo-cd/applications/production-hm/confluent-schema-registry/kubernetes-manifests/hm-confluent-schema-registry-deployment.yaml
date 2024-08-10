@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hm-confluent-schema-registry-deployment
+  namespace: production-hm-confluent-schema-registry
+  labels:
+    app.kubernetes.io/name: hm-confluent-schema-registry-deployment
+    app.kubernetes.io/part-of: production-hm-confluent-schema-registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hm-confluent-schema-registry
+  template:
+    metadata:
+      labels:
+        app: hm-confluent-schema-registry
+    spec:
+      serviceAccountName: hm-confluent-schema-registry-service-account
+      containers:
+        - name: confluent-schema-registry
+          image: ghcr.io/hongbo-miao/hm-confluent-schema-registry:latest
+          resources:
+            requests:
+              cpu: 50m
+              memory: 512Mi
+            limits:
+              cpu: 100m
+              memory: 1Gi
+          ports:
+            - name: schema-registry
+              protocol: TCP
+              containerPort: 8081
+          # https://docs.confluent.io/platform/current/schema-registry/installation/config.html
+          # https://docs.confluent.io/platform/current/installation/docker/config-reference.html#sr-long-configuration
+          env:
+            - name: SCHEMA_REGISTRY_LISTENERS
+              valueFrom:
+                configMapKeyRef:
+                  name: hm-confluent-schema-registry-config
+                  key: schema_registry_listeners
+            - name: SCHEMA_REGISTRY_HOST_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: hm-confluent-schema-registry-config
+                  key: schema_registry_host_name
+            - name: SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: hm-confluent-schema-registry-config
+                  key: schema_registry_kafkastore_bootstrap_servers
