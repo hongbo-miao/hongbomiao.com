@@ -1,7 +1,7 @@
 #include <glib.h>
 #include <librdkafka/rdkafka.h>
 
-#include "common.c"
+#include "config.c"
 
 static volatile sig_atomic_t run = 1;
 
