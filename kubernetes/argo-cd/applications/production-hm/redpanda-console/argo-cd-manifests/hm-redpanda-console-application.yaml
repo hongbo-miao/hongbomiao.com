@@ -1,0 +1,59 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hm-redpanda-console
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-redpanda-console
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://charts.redpanda.com
+      # https://artifacthub.io/packages/helm/redpanda-data/console
+      targetRevision: 0.7.26
+      chart: console
+      helm:
+        releaseName: hm-redpanda-console
+        values: |
+          # https://github.com/redpanda-data/helm-charts/blob/main/charts/console/values.yaml
+          ---
+          image:
+            registry: docker.redpanda.com
+            repository: redpandadata/console
+            # https://hub.docker.com/r/redpandadata/console/tags
+            tag: v2.6.1
+          console:
+            config:
+              kafka:
+                brokers:
+                  - b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098
+                  - b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098
+                  - b-3.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098
+                sasl:
+                  enabled: true
+                  mechanism: AWS_MSK_IAM
+                tls:
+                  enabled: true
+          serviceAccount:
+            create: true
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/RedpandaConsoleRole-hm-redpanda-console
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 1Gi
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: HEAD
+      path: kubernetes/argo-cd/applications/production-hm/redpanda-console/kubernetes-manifests
+  destination:
+    namespace: production-hm-redpanda-console
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
