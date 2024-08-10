@@ -618,6 +618,32 @@ module "kubernetes_namespace_hm_opencost" {
   ]
 }
 
+# Confluent Schema Registry
+# Confluent Schema Registry - IAM role
+module "confluent_schema_registry_iam_role" {
+  providers                                          = { aws = aws.production }
+  source                                             = "../../../../modules/kubernetes/hm_confluent_schema_registry_iam_role"
+  confluent_schema_registry_service_account_nickname = "hm-schema-registry-service-account"
+  confluent_schema_registry_service_account_name     = "hm-confluent-schema-registry-service-account"
+  confluent_schema_registry_namespace                = "production-hm-confluent-schema-registry"
+  amazon_eks_cluster_oidc_provider                   = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn               = module.amazon_eks_cluster.oidc_provider_arn
+  amazon_msk_arn                                     = "arn:aws:kafka:us-west-2:272394222652:cluster/production-iot-kafka/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-xx"
+  environment                                        = var.environment
+  team                                               = var.team
+}
+# Confluent Schema Registry - Kubernetes namespace
+module "kubernetes_namespace_hm_confluent_schema_registry" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-confluent-schema-registry"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # Redpanda Console
 # Redpanda Console - IAM role
 module "redpanda_console_iam_role" {
