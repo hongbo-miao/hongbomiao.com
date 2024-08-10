@@ -7,7 +7,7 @@ ENV PYTHONFAULTHANDLER=1 \
 FROM base AS builder
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   PIP_NO_CACHE_DIR=1
-ARG LIBRDKAFKA_VERSION=2.4.0
+ARG LIBRDKAFKA_VERSION=2.5.0
 # bash, g++, make are for librdkafka, which is for confluent-kafka
 # gcc, libffi-dev, musl-dev are for Poetry
 # hadolint ignore=DL3003
