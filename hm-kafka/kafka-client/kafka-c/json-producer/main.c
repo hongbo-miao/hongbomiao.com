@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "common.c"
+#include "config.c"
 
 #define ARR_SIZE(arr) (sizeof((arr)) / sizeof((arr[0])))
 
@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
 
   rd_kafka_conf_set(conf, "queue.buffering.max.kbytes",
                     "10485760",  // 10 GiB
-                    NULL, 0, );
+                    NULL, 0);
 
   // Adjust batch size and linger time
   rd_kafka_conf_set(conf, "batch.size", "65536", NULL, 0);  // 64 KiB
@@ -84,19 +84,21 @@ int main(int argc, char **argv) {
   const char *topic = "production.iot.device.json";
   const char *device_ids[6] = {"device1", "device2", "device3",
                                "device4", "device5", "device6"};
-  const char *status[3] = {"online", "offline", "maintenance"};
+  const char *status_list[3] = {"online", "offline", "maintenance"};
   const char *locations[3] = {"locationA", "locationB", "locationC"};
   const char *types[3] = {"type1", "type2", "type3"};
 
   while (is_running) {
     const char *key = device_ids[random() % ARR_SIZE(device_ids)];
-    const char *status_value = status[random() % ARR_SIZE(status)];
+
+    const char *status = status_list[random() % ARR_SIZE(status_list)];
     const char *location = locations[random() % ARR_SIZE(locations)];
     const char *type = types[random() % ARR_SIZE(types)];
-    int temperature = (random() % 100) - 50;     // Range from -50 to 49
-    double humidity = (random() % 101) / 100.0;  // Range from 0.0 to 1.0
-    int battery = random() % 101;                // Range from 0 to 100
-    int signal_strength = random() % 101;        // Range from 0 to 100
+    double temperature =
+        ((double)random() / RAND_MAX) * 100.0 - 50.0;  // [-50.0, 50.0]
+    double humidity = (random() % 101) / 100.0;        // [0.0, 1.0]
+    int battery = random() % 101;                      // [0, 100]
+    int signal_strength = random() % 101;              // [0, 100]
     const char *mode = (random() % 2) ? "manual" : "auto";
     bool active = (random() % 2) ? true : false;
 
@@ -106,7 +108,7 @@ int main(int argc, char **argv) {
       g_error("Failed to create JSON object");
       break;
     }
-    cJSON_AddStringToObject(json_obj, "status", status_value);
+    cJSON_AddStringToObject(json_obj, "status", status);
     cJSON_AddStringToObject(json_obj, "location", location);
     cJSON_AddStringToObject(json_obj, "type", type);
     cJSON_AddNumberToObject(json_obj, "temperature", temperature);
