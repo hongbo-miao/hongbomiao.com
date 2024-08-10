@@ -73,48 +73,60 @@ module "snowflake_production_department_db_schema_read_only_role" {
   providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source              = "../../../../modules/snowflake/hm_snowflake_role"
   for_each            = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
+  snowflake_role_name = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
 }
-module "snowflake_grant_database_privileges_to_production_department_db_schema_read_only_role" {
+module "grant_database_privileges_to_production_department_db_schema_read_only_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_privileges_to_role"
   for_each                = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name     = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   privileges              = ["USAGE"]
-  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value.department_name}_DB"
+  snowflake_database_name = "PRODUCTION_${each.value.department_name}_DB"
   depends_on = [
     module.snowflake_production_department_db_schema_read_only_role
   ]
 }
-module "snowflake_grant_schema_privileges_to_production_department_db_schema_read_only_role" {
+module "grant_schema_privileges_to_production_department_db_schema_read_only_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
   for_each                = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name     = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   privileges              = ["USAGE"]
-  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value.department_name}_DB"
+  snowflake_database_name = "PRODUCTION_${each.value.department_name}_DB"
   snowflake_schema_name   = each.value.schema_name
   depends_on = [
     module.snowflake_production_department_db_schema_read_only_role
   ]
 }
-module "snowflake_grant_all_future_table_in_schema_privileges_to_production_department_db_schema_read_only_role" {
+module "grant_table_in_schema_privileges_to_production_department_db_schema_read_only_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_future_table_in_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/hm_snowflake_grant_table_in_schema_privileges_to_role"
   for_each                = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name     = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   privileges              = ["SELECT"]
-  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value.department_name}_DB"
+  snowflake_database_name = "PRODUCTION_${each.value.department_name}_DB"
   snowflake_schema_name   = each.value.schema_name
   depends_on = [
     module.snowflake_production_department_db_schema_read_only_role
   ]
 }
-module "snowflake_grant_warehouse_privileges_to_production_department_db_schema_read_only_role" {
+module "grant_view_in_schema_privileges_to_production_department_db_schema_read_only_role" {
+  providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                  = "../../../../modules/snowflake/hm_snowflake_grant_view_in_schema_privileges_to_role"
+  for_each                = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
+  privileges              = ["SELECT"]
+  snowflake_database_name = "PRODUCTION_${each.value.department_name}_DB"
+  snowflake_schema_name   = each.value.schema_name
+  depends_on = [
+    module.snowflake_production_department_db_schema_read_only_role
+  ]
+}
+module "grant_warehouse_privileges_to_production_department_db_schema_read_only_role" {
   providers                = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                   = "../../../../modules/snowflake/hm_snowflake_grant_warehouse_privileges_to_role"
   for_each                 = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name      = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
+  snowflake_role_name      = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   privileges               = ["USAGE"]
   snowflake_warehouse_name = module.snowflake_production_hm_department_wh_warehouse.name
   depends_on = [
@@ -122,14 +134,14 @@ module "snowflake_grant_warehouse_privileges_to_production_department_db_schema_
     module.snowflake_production_hm_department_wh_warehouse
   ]
 }
-module "snowflake_grant_production_department_db_schema_read_only_role_to_production_department_db_schema_read_only_user" {
+module "grant_production_department_db_schema_read_only_role_to_production_department_db_schema_read_only_user" {
   providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
   for_each            = { for x in local.production_department_db_department_name_schema_name_read_only_user_name_list : "${x.department_name}.${x.schema_name}.${x.read_only_user_name}" => x }
-  snowflake_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
+  snowflake_role_name = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   snowflake_user_name = each.value.read_only_user_name
   depends_on = [
-    module.snowflake_grant_warehouse_privileges_to_production_department_db_schema_read_only_role
+    module.snowflake_production_department_db_schema_read_only_role
   ]
 }
 # Department role - read write role
@@ -137,51 +149,60 @@ module "snowflake_production_department_db_schema_read_write_role" {
   providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source              = "../../../../modules/snowflake/hm_snowflake_role"
   for_each            = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
+  snowflake_role_name = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
 }
-module "snowflake_grant_schema_privileges_to_production_department_db_schema_read_write_role" {
+module "grant_schema_privileges_to_production_department_db_schema_read_write_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
   for_each                = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name     = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
   privileges              = ["CREATE TABLE", "CREATE VIEW"]
-  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value.department_name}_DB"
+  snowflake_database_name = "PRODUCTION_${each.value.department_name}_DB"
   snowflake_schema_name   = each.value.schema_name
   depends_on = [
     module.snowflake_production_department_db_schema_read_write_role
   ]
 }
-module "snowflake_grant_all_future_table_in_schema_privileges_to_production_department_db_schema_read_write_role" {
+module "grant_table_in_schema_privileges_to_production_department_db_schema_read_write_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_future_table_in_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/hm_snowflake_grant_table_in_schema_privileges_to_role"
   for_each                = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name     = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
   privileges              = ["INSERT", "UPDATE", "DELETE"]
-  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value.department_name}_DB"
+  snowflake_database_name = "PRODUCTION_${each.value.department_name}_DB"
   snowflake_schema_name   = each.value.schema_name
   depends_on = [
     module.snowflake_production_department_db_schema_read_write_role
   ]
 }
-module "snowflake_grant_production_department_db_schema_read_only_role_to_production_department_db_schema_read_write_role" {
+module "grant_view_in_schema_privileges_to_production_department_db_schema_read_write_role" {
+  providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
+  source                  = "../../../../modules/snowflake/hm_snowflake_grant_view_in_schema_privileges_to_role"
+  for_each                = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
+  privileges              = ["INSERT", "UPDATE", "DELETE"]
+  snowflake_database_name = "PRODUCTION_${each.value.department_name}_DB"
+  snowflake_schema_name   = each.value.schema_name
+  depends_on = [
+    module.snowflake_production_department_db_schema_read_write_role
+  ]
+}
+module "grant_production_department_db_schema_read_only_role_to_production_department_db_schema_read_write_role" {
   providers                    = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                       = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
   for_each                     = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name          = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
-  snowflake_grant_to_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
+  snowflake_role_name          = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
+  snowflake_grant_to_role_name = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
   depends_on = [
     module.snowflake_production_department_db_schema_read_only_role,
-    module.snowflake_grant_database_privileges_to_production_department_db_schema_read_only_role,
-    module.snowflake_grant_all_future_table_in_schema_privileges_to_production_department_db_schema_read_only_role,
-    module.snowflake_grant_warehouse_privileges_to_production_department_db_schema_read_only_role,
     module.snowflake_production_department_db_schema_read_write_role
   ]
 }
-module "snowflake_grant_production_department_db_schema_read_write_role_to_production_department_db_schema_read_write_user" {
+module "grant_production_department_db_schema_read_write_role_to_production_department_db_schema_read_write_user" {
   providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
   for_each            = { for x in local.production_department_db_department_name_schema_name_read_write_user_name_list : "${x.department_name}.${x.schema_name}.${x.read_write_user_name}" => x }
-  snowflake_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
+  snowflake_role_name = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
   snowflake_user_name = each.value.read_write_user_name
   depends_on = [
     module.snowflake_production_department_db_schema_read_only_role
@@ -192,77 +213,64 @@ module "snowflake_production_department_db_admin_role" {
   providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source              = "../../../../modules/snowflake/hm_snowflake_role"
   for_each            = local.production_department_db_department_names
-  snowflake_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value}_DB_ADMIN_ROLE"
+  snowflake_role_name = "HORIZON_PRODUCTION_${each.value}_DB_ADMIN_ROLE"
 }
-module "snowflake_grant_database_all_privileges_to_role_to_production_department_db_admin_role" {
+module "grant_database_all_privileges_to_role_to_production_department_db_admin_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_all_privileges_to_role"
   for_each                = local.production_department_db_department_names
-  snowflake_role_name     = "HM_PRODUCTION_DEPARTMENT_${each.value}_DB_ADMIN_ROLE"
-  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value}_DB"
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value}_DB_ADMIN_ROLE"
+  snowflake_database_name = "PRODUCTION_${each.value}_DB"
   depends_on = [
     module.snowflake_production_department_db_admin_role
   ]
 }
-module "snowflake_grant_existing_schema_all_privileges_to_role_to_production_department_db_admin_role" {
+module "grant_schema_all_privileges_to_role_to_production_department_db_admin_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_existing_schema_all_privileges_to_role"
+  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_all_privileges_to_role"
   for_each                = local.production_department_db_department_names
-  snowflake_role_name     = "HM_PRODUCTION_DEPARTMENT_${each.value}_DB_ADMIN_ROLE"
-  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value}_DB"
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value}_DB_ADMIN_ROLE"
+  snowflake_database_name = "PRODUCTION_${each.value}_DB"
   depends_on = [
     module.snowflake_production_department_db_admin_role
   ]
 }
-module "snowflake_grant_future_schema_all_privileges_to_role_to_production_department_db_admin_role" {
+module "grant_table_all_privileges_to_role_to_production_department_db_admin_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_future_schema_all_privileges_to_role"
+  source                  = "../../../../modules/snowflake/hm_snowflake_grant_table_all_privileges_to_role"
   for_each                = local.production_department_db_department_names
-  snowflake_role_name     = "HM_PRODUCTION_DEPARTMENT_${each.value}_DB_ADMIN_ROLE"
-  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value}_DB"
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value}_DB_ADMIN_ROLE"
+  snowflake_database_name = "PRODUCTION_${each.value}_DB"
   depends_on = [
     module.snowflake_production_department_db_admin_role
   ]
 }
-module "snowflake_grant_existing_table_all_privileges_to_role_to_production_department_db_admin_role" {
+module "grant_view_all_privileges_to_role_to_production_department_db_admin_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_existing_table_all_privileges_to_role"
+  source                  = "../../../../modules/snowflake/hm_snowflake_grant_view_all_privileges_to_role"
   for_each                = local.production_department_db_department_names
-  snowflake_role_name     = "HM_PRODUCTION_DEPARTMENT_${each.value}_DB_ADMIN_ROLE"
-  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value}_DB"
+  snowflake_role_name     = "HORIZON_PRODUCTION_${each.value}_DB_ADMIN_ROLE"
+  snowflake_database_name = "PRODUCTION_${each.value}_DB"
   depends_on = [
     module.snowflake_production_department_db_admin_role
   ]
 }
-module "snowflake_grant_future_table_all_privileges_to_role_to_production_department_db_admin_role" {
-  providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_future_table_all_privileges_to_role"
-  for_each                = local.production_department_db_department_names
-  snowflake_role_name     = "HM_PRODUCTION_DEPARTMENT_${each.value}_DB_ADMIN_ROLE"
-  snowflake_database_name = "PRODUCTION_DEPARTMENT_${each.value}_DB"
-  depends_on = [
-    module.snowflake_production_department_db_admin_role
-  ]
-}
-module "snowflake_grant_production_department_db_schema_read_write_role_to_production_department_db_admin_role" {
+module "grant_production_department_db_schema_read_write_role_to_production_department_db_admin_role" {
   providers                    = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                       = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
   for_each                     = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
-  snowflake_role_name          = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
-  snowflake_grant_to_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_ADMIN_ROLE"
+  snowflake_role_name          = "HORIZON_PRODUCTION_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
+  snowflake_grant_to_role_name = "HORIZON_PRODUCTION_${each.value.department_name}_DB_ADMIN_ROLE"
   depends_on = [
     module.snowflake_production_department_db_schema_read_write_role,
-    module.snowflake_grant_production_department_db_schema_read_only_role_to_production_department_db_schema_read_write_role,
-    module.snowflake_grant_schema_privileges_to_production_department_db_schema_read_write_role,
-    module.snowflake_grant_all_future_table_in_schema_privileges_to_production_department_db_schema_read_write_role,
     module.snowflake_production_department_db_admin_role
   ]
 }
-module "snowflake_grant_production_department_db_schema_admin_role_to_production_department_db_schema_admin_user" {
+module "grant_production_department_db_schema_admin_role_to_production_department_db_schema_admin_user" {
   providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
   for_each            = { for x in local.production_department_db_department_name_admin_user_name_list : "${x.department_name}.${x.admin_user_name}" => x }
-  snowflake_role_name = "HM_PRODUCTION_DEPARTMENT_${each.value.department_name}_DB_ADMIN_ROLE"
+  snowflake_role_name = "HORIZON_PRODUCTION_${each.value.department_name}_DB_ADMIN_ROLE"
   snowflake_user_name = each.value.admin_user_name
   depends_on = [
     module.snowflake_production_department_db_admin_role
@@ -305,7 +313,7 @@ module "snowflake_production_hm_airbyte_db_owner_user" {
     module.snowflake_production_hm_airbyte_db_owner_role
   ]
 }
-module "snowflake_grant_production_hm_airbyte_db_owner_role_to_production_hm_airbyte_db_owner_user" {
+module "grant_production_hm_airbyte_db_owner_role_to_production_hm_airbyte_db_owner_user" {
   providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
   snowflake_role_name = module.snowflake_production_hm_airbyte_db_owner_role.name
@@ -342,7 +350,7 @@ module "snowflake_production_hm_kafka_db_department_read_only_role" {
   for_each            = local.production_hm_kafka_db_department_names
   snowflake_role_name = "HM_PRODUCTION_HM_KAFKA_DB_${each.value}_READ_ONLY_ROLE"
 }
-module "snowflake_grant_database_privileges_to_production_hm_kafka_db_department_read_only_role" {
+module "grant_database_privileges_to_production_hm_kafka_db_department_read_only_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_privileges_to_role"
   for_each                = local.production_hm_kafka_db_department_names
@@ -353,7 +361,7 @@ module "snowflake_grant_database_privileges_to_production_hm_kafka_db_department
     module.snowflake_production_hm_kafka_db_department_read_only_role
   ]
 }
-module "snowflake_grant_schema_privileges_to_production_hm_kafka_db_department_read_only_role" {
+module "grant_schema_privileges_to_production_hm_kafka_db_department_read_only_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
   for_each                = local.production_hm_kafka_db_department_names
@@ -365,7 +373,7 @@ module "snowflake_grant_schema_privileges_to_production_hm_kafka_db_department_r
     module.snowflake_production_hm_kafka_db_department_read_only_role
   ]
 }
-module "snowflake_grant_warehouse_privileges_to_production_hm_kafka_db_department_read_only_role" {
+module "grant_warehouse_privileges_to_production_hm_kafka_db_department_read_only_role" {
   providers                = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                   = "../../../../modules/snowflake/hm_snowflake_grant_warehouse_privileges_to_role"
   for_each                 = local.production_hm_kafka_db_department_names
@@ -385,7 +393,7 @@ module "snowflake_production_hm_kafka_db_department_read_write_role" {
   snowflake_role_name = "HM_PRODUCTION_HM_KAFKA_DB_${each.value}_READ_WRITE_ROLE"
 }
 # https://docs.snowflake.com/en/user-guide/kafka-connector-install
-module "snowflake_grant_schema_privileges_to_production_hm_kafka_db_department_read_write_role" {
+module "grant_schema_privileges_to_production_hm_kafka_db_department_read_write_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
   for_each                = local.production_hm_kafka_db_department_names
@@ -397,7 +405,7 @@ module "snowflake_grant_schema_privileges_to_production_hm_kafka_db_department_r
     module.snowflake_production_hm_kafka_db_department_read_write_role
   ]
 }
-module "snowflake_grant_production_hm_kafka_db_department_read_only_role_to_production_hm_kafka_db_department_read_write_role" {
+module "grant_production_hm_kafka_db_department_read_only_role_to_production_hm_kafka_db_department_read_write_role" {
   providers                    = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                       = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
   for_each                     = local.production_hm_kafka_db_department_names
@@ -421,7 +429,7 @@ module "snowflake_production_hm_kafka_db_department_read_write_user" {
     module.snowflake_production_hm_kafka_db_department_read_write_role
   ]
 }
-module "snowflake_grant_production_hm_kafka_db_department_read_write_role_to_production_hm_kafka_db_department_read_write_user" {
+module "grant_production_hm_kafka_db_department_read_write_role_to_production_hm_kafka_db_department_read_write_user" {
   providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
   for_each            = local.production_hm_kafka_db_department_names
@@ -448,7 +456,7 @@ module "snowflake_production_hm_streamlit_db_department_read_write_role" {
   for_each            = local.production_department_db_department_names
   snowflake_role_name = "HM_PRODUCTION_HM_STREAMLIT_DB_${each.value}_READ_WRITE_ROLE"
 }
-module "snowflake_grant_database_privileges_to_production_hm_streamlit_db_read_write_role" {
+module "grant_database_privileges_to_production_hm_streamlit_db_read_write_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_privileges_to_role"
   for_each                = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
@@ -459,7 +467,7 @@ module "snowflake_grant_database_privileges_to_production_hm_streamlit_db_read_w
     module.snowflake_production_hm_streamlit_db_department_read_write_role
   ]
 }
-module "snowflake_grant_schema_privileges_to_production_hm_streamlit_db_read_write_role" {
+module "grant_schema_privileges_to_production_hm_streamlit_db_read_write_role" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
   for_each                = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
@@ -471,7 +479,7 @@ module "snowflake_grant_schema_privileges_to_production_hm_streamlit_db_read_wri
     module.snowflake_production_hm_streamlit_db_department_read_write_role
   ]
 }
-module "snowflake_grant_warehouse_privileges_to_production_department_db_department_read_write_role" {
+module "grant_warehouse_privileges_to_production_department_db_department_read_write_role" {
   providers                = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                   = "../../../../modules/snowflake/hm_snowflake_grant_warehouse_privileges_to_role"
   for_each                 = { for x in local.production_department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
@@ -489,5 +497,5 @@ module "snowflake_production_streamlit_app_for_department_end_users_role" {
   providers           = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source              = "../../../../modules/snowflake/hm_snowflake_role"
   for_each            = local.production_department_db_department_names
-  snowflake_role_name = "HM_PRODUCTION_STREAMLIT_APP_FOR_DEPARTMENT_${each.value}_END_USERS_ROLE"
+  snowflake_role_name = "HM_PRODUCTION_STREAMLIT_APP_FOR_${each.value}_END_USERS_ROLE"
 }
