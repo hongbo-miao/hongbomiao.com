@@ -28,6 +28,9 @@ spec:
                     sasl.mechanism: AWS_MSK_IAM
                     sasl.jaas.config: software.amazon.msk.auth.iam.IAMLoginModule required;
                     sasl.client.callback.handler.class: software.amazon.msk.auth.iam.IAMClientCallbackHandler
+                  schema-registry:
+                    type: confluent
+                    url: http://hm-confluent-schema-registry-service.production-hm-confluent-schema-registry.svc:8081
           serviceAccount:
             create: true
             annotations:
