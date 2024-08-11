@@ -2,6 +2,9 @@ variable "amazon_msk_connector_name" {
   type = string
 }
 variable "kafka_topics" {
+  type = list(string)
+}
+variable "aws_region" {
   type = string
 }
 variable "s3_bucket_name" {
@@ -15,6 +18,9 @@ variable "max_worker_number" {
 }
 variable "worker_microcontroller_unit_number" {
   type = number
+}
+variable "confluent_schema_registry_url" {
+  type = string
 }
 variable "kafka_connect_version" {
   type = string
