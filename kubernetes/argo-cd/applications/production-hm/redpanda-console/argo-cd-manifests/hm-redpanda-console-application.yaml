@@ -35,6 +35,11 @@ spec:
                   mechanism: AWS_MSK_IAM
                 tls:
                   enabled: true
+                # https://docs.redpanda.com/current/manage/schema-reg/schema-reg-ui
+                schemaRegistry:
+                  enabled: true
+                  urls:
+                    - http://hm-confluent-schema-registry-service.production-hm-confluent-schema-registry.svc:8081
           serviceAccount:
             create: true
             annotations:

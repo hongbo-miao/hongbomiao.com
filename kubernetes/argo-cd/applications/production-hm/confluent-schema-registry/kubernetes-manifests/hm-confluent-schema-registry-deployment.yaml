@@ -50,3 +50,8 @@ spec:
                 configMapKeyRef:
                   name: hm-confluent-schema-registry-config
                   key: schema_registry_kafkastore_bootstrap_servers
+            - name: SCHEMA_REGISTRY_SCHEMA_COMPATIBILITY_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: horizon-confluent-schema-registry-config
+                  key: schema_registry_schema_compatibility_level
