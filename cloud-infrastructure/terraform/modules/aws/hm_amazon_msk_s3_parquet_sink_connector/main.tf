@@ -7,34 +7,31 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/mskconnect_connector
-resource "aws_mskconnect_connector" "hm_amazon_msk_s3_sink_connector" {
+resource "aws_mskconnect_connector" "hm_amazon_msk_s3_parquet_sink_connector" {
   name = var.amazon_msk_connector_name
   # https://docs.confluent.io/kafka-connectors/s3-sink/current/configuration_options.html
   connector_configuration = {
     "connector.class"   = "io.confluent.connect.s3.S3SinkConnector"
-    "topics"            = var.kafka_topics
+    "topics"            = join(",", var.kafka_topics)
     "tasks.max"         = var.max_task_number
     "errors.log.enable" = true
     "errors.tolerance"  = "all"
     "jmx"               = true
 
     # Connector
-    "format.class"                = "io.confluent.connect.s3.format.json.JsonFormat"
     "flush.size"                  = "1000000"
     "rotate.schedule.interval.ms" = "3600000" # every hour
 
     # Schema
-    "schema.compatibility" = "NONE"
+    "schema.compatibility" = "FULL"
 
     # S3
+    "s3.region"      = var.aws_region
     "s3.bucket.name" = var.s3_bucket_name
-    "s3.region"      = "us-west-2"
     "s3.part.size"   = "104857600" # 100 MiB
 
     # Storage
-    "storage.class"        = "io.confluent.connect.s3.storage.S3Storage"
-    "s3.compression.type"  = "gzip"
-    "s3.compression.level" = 9
+    "storage.class" = "io.confluent.connect.s3.storage.S3Storage"
 
     # Partition
     "partitioner.class"     = "io.confluent.connect.storage.partitioner.TimeBasedPartitioner"
@@ -42,6 +39,12 @@ resource "aws_mskconnect_connector" "hm_amazon_msk_s3_sink_connector" {
     "partition.duration.ms" = 3600000 # 1 hour
     "locale"                = "en"
     "timezone"              = "UTC"
+
+    # Parquet
+    "format.class"                        = "io.confluent.connect.s3.format.parquet.ParquetFormat"
+    "parquet.codec"                       = "lz4"
+    "value.converter"                     = "io.confluent.connect.avro.AvroConverter"
+    "value.converter.schema.registry.url" = var.confluent_schema_registry_url
   }
   kafkaconnect_version = var.kafka_connect_version
   capacity {
