@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
 
   serdes_conf = serdes_conf_new(
       NULL, 0, "schema.registry.url",
-      "https://hm-confluent-schema-registry.internal.hongbomiao.com", NULL);
+      "https://confluent-schema-registry.internal.hongbomiao.com", NULL);
 
   serdes = serdes_new(serdes_conf, errstr, sizeof(errstr));
   if (!serdes) {
@@ -80,9 +80,9 @@ int main(int argc, char **argv) {
 
   const char *topic = "production.iot.device.json";
   const char *schema_name = "production.iot.device.json-value";
-  serdes_schema_t *schema =
+  serdes_schema_t *serdes_schema =
       serdes_schema_get(serdes, schema_name, -1, errstr, sizeof(errstr));
-  if (!schema) {
+  if (!serdes_schema) {
     g_error("Failed to retrieve AVRO schema: %s", errstr);
     return 1;
   }
@@ -108,9 +108,8 @@ int main(int argc, char **argv) {
     const char *mode = (random() % 2) ? "manual" : "auto";
     bool active = (random() % 2);
 
-    avro_schema_t serdes_schema = serdes_schema_avro(schema);
-    avro_value_iface_t *record_class =
-        avro_generic_class_from_schema(serdes_schema);
+    avro_schema_t schema = serdes_schema_avro(serdes_schema);
+    avro_value_iface_t *record_class = avro_generic_class_from_schema(schema);
 
     avro_value_t record;
     avro_generic_value_new(record_class, &record);
@@ -146,8 +145,9 @@ int main(int argc, char **argv) {
 
     void *avro_payload = NULL;
     size_t avro_size;
-    serdes_err_t serr = serdes_schema_serialize_avro(
-        schema, &record, &avro_payload, &avro_size, errstr, sizeof(errstr));
+    serdes_err_t serr =
+        serdes_schema_serialize_avro(serdes_schema, &record, &avro_payload,
+                                     &avro_size, errstr, sizeof(errstr));
     if (serr != SERDES_ERR_OK) {
       g_error("Failed to serialize data: %s", serdes_err2str(serr));
       return 1;
@@ -181,7 +181,7 @@ int main(int argc, char **argv) {
 
   g_message("Producer stopped.");
   rd_kafka_destroy(producer);
-  serdes_schema_destroy(schema);
+  serdes_schema_destroy(serdes_schema);
   serdes_destroy(serdes);
   return 0;
 }
