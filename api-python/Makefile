@@ -1,12 +1,12 @@
 poetry-env-use:
-	poetry env use python3.11
+	poetry env use python3.12
 poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
 	brew install librdkafka
 	export C_INCLUDE_PATH=/opt/homebrew/include
 	export LIBRARY_PATH=/opt/homebrew/lib
-	poetry install --no-root
+	poetry install
 
 poetry-run-dev:
 	poetry run poe dev
