@@ -1,4 +1,6 @@
-static void print_serdes_schema(serdes_schema_t *serdes_schema) {
+#include "../include/schema.h"
+
+void print_serdes_schema(serdes_schema_t *serdes_schema) {
   if (!serdes_schema) {
     g_print("serdes_schema is NULL.\n");
     return;
@@ -22,9 +24,9 @@ static void print_serdes_schema(serdes_schema_t *serdes_schema) {
   }
 }
 
-static void print_avro_schema(avro_schema_t schema) {
+void print_avro_schema(avro_schema_t schema) {
   char schema_str[8192];
-  avro_writer_t writer = avro_writer_memory(schema_str, 8192);
+  avro_writer_t writer = avro_writer_memory(schema_str, sizeof(schema_str));
   avro_schema_to_json(schema, writer);
   g_print("schema: %s\n", schema_str);
 }
