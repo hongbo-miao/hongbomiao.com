@@ -1,9 +1,9 @@
 #include "../include/app.h"
 
-volatile sig_atomic_t is_running = 1;
+volatile sig_atomic_t is_running = true;
 
-void signal_handler(int signal) {
+void handle_signal(int signal) {
   if (signal == SIGINT || signal == SIGTERM) {
-    is_running = 0;
+    is_running = false;
   }
 }

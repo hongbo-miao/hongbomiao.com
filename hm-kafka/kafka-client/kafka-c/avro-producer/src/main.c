@@ -49,8 +49,8 @@ int main(int argc, char **argv) {
     g_error("Failed to create new producer: %s", err_str);
   }
 
-  signal(SIGINT, signal_handler);
-  signal(SIGTERM, signal_handler);
+  signal(SIGINT, handle_signal);
+  signal(SIGTERM, handle_signal);
 
   serdes_conf =
     serdes_conf_new(NULL, 0, "schema.registry.url", confluent_schema_registry_url, NULL);
