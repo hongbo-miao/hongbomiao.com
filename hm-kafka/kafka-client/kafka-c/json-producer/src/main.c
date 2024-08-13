@@ -35,8 +35,8 @@ int main(int argc, char **argv) {
   }
   conf = NULL;
 
-  signal(SIGINT, signal_handler);
-  signal(SIGTERM, signal_handler);
+  signal(SIGINT, handle_signal);
+  signal(SIGTERM, handle_signal);
 
   const char *device_ids[5] = {"device1", "device2", "device3", "device4", "device5"};
   const char *status_list[3] = {"online", "offline", "maintenance"};
