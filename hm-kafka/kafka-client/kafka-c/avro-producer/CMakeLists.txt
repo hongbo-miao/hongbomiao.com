@@ -1,9 +1,10 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.28)
 project(producer)
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 23)
+set(CMAKE_C_FLAGS "-Wall -Werror -Wextra")
 set(TARGET main)
-set(SOURCE_FILES main.c)
+file(GLOB SOURCE_FILES src/*.c)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(glib REQUIRED IMPORTED_TARGET glib-2.0)
