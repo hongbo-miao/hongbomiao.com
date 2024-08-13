@@ -31,22 +31,27 @@ module "snowflake_production_department_db_schema" {
 }
 
 # hongbomiao Streamlit database
-module "snowflake_production_hongbomiao_streamlit_db_database" {
+locals {
+  production_hm_streamlit_db_department_names = toset([for department in var.production_hm_streamlit_db_departments : department.name])
+}
+module "snowflake_production_hm_streamlit_db_database" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_database"
-  snowflake_database_name = "PRODUCTION_HONGBOMIAO_STREAMLIT_DB"
+  snowflake_database_name = "PRODUCTION_HM_STREAMLIT_DB"
   data_retention_days     = var.production_database_data_retention_days
 }
-module "snowflake_production_hongbomiao_streamlit_db_department_schema" {
+module "snowflake_production_hm_streamlit_db_department_schema" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }
   source                  = "../../../../modules/snowflake/hm_snowflake_schema"
-  for_each                = local.production_department_db_department_names
-  snowflake_database_name = module.snowflake_production_hongbomiao_streamlit_db_database.name
+  for_each                = local.production_hm_streamlit_db_department_names
+  snowflake_database_name = module.snowflake_production_hm_streamlit_db_database.name
   snowflake_schema_name   = each.value
+  is_managed              = false
   depends_on = [
-    module.snowflake_production_hongbomiao_streamlit_db_database
+    module.snowflake_production_hm_streamlit_db_database
   ]
 }
+
 # HM Airbyte database
 module "snowflake_production_hm_airbyte_db_database" {
   providers               = { snowflake = snowflake.hm_production_terraform_read_write_role }

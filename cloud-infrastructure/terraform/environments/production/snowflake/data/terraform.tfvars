@@ -3,7 +3,7 @@ snowflake_public_schema_name            = "PUBLIC"
 production_database_data_retention_days = 90
 production_department_db_departments = [
   {
-    name = "ENGINEERING",
+    name = "ENGINEERING"
     schemas = [
       {
         name = "PUBLIC"
@@ -28,5 +28,16 @@ production_department_db_departments = [
         name = "PUBLIC"
       }
     ]
+  }
+]
+production_hm_streamlit_db_departments = [
+  {
+    name = "ENGINEERING"
+  },
+  {
+    name = "PRODUCT"
+  },
+  {
+    name = "FINANCE"
   }
 ]

@@ -6,12 +6,12 @@ production_kafka_warehouse_auto_suspend_min      = 60
 production_streamlit_warehouse_auto_suspend_min  = 5
 hongbomiao_departments = [
   {
-    name             = "ENGINEERING",
+    name             = "ENGINEERING"
     admin_user_names = []
     schemas = [
       {
         name                  = "PUBLIC"
-        read_only_user_names  = ["ME@HONGBOMIAO.COM"],
+        read_only_user_names  = ["ME@HONGBOMIAO.COM"]
         read_write_user_names = []
       }
     ]
@@ -22,12 +22,12 @@ hongbomiao_departments = [
     schemas = [
       {
         name                  = "PUBLIC"
-        read_only_user_names  = ["ME@HONGBOMIAO.COM"],
+        read_only_user_names  = ["ME@HONGBOMIAO.COM"]
         read_write_user_names = []
       },
       {
         name                  = "TRACKER"
-        read_only_user_names  = ["ME@HONGBOMIAO.COM"],
+        read_only_user_names  = ["ME@HONGBOMIAO.COM"]
         read_write_user_names = []
       }
     ]
@@ -38,10 +38,27 @@ hongbomiao_departments = [
     schemas = [
       {
         name                  = "PUBLIC"
-        read_only_user_names  = ["ME@HONGBOMIAO.COM"],
+        read_only_user_names  = ["ME@HONGBOMIAO.COM"]
         read_write_user_names = []
       }
     ]
+  }
+]
+production_hm_streamlit_db_departments = [
+  {
+    name          = "ENGINEERING"
+    creator_names = ["ME@HONGBOMIAO.COM"]
+    user_names    = []
+  },
+  {
+    name          = "PRODUCT"
+    creator_names = []
+    user_names    = []
+  },
+  {
+    name          = "FINANCE"
+    creator_names = []
+    user_names    = []
   }
 ]
 production_hm_kafka_db_departments = [
