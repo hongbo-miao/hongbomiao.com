@@ -10,7 +10,7 @@ terraform {
 resource "snowflake_schema" "hm_snowflake_schema" {
   database            = var.snowflake_database_name
   name                = var.snowflake_schema_name
-  is_managed          = true
+  is_managed          = var.is_managed
   is_transient        = false
   data_retention_days = -1 # Inherit the database data_retention_days
   lifecycle {
