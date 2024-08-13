@@ -1,11 +1,11 @@
 import logging
 
 from langchain.chains import RetrievalQA
-from langchain.document_loaders import PyPDFLoader
-from langchain.embeddings import GPT4AllEmbeddings
-from langchain.llms import GPT4All
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Chroma
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.embeddings import GPT4AllEmbeddings
+from langchain_community.llms import GPT4All
+from langchain_community.vectorstores import Chroma
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
 def main(model_path: str, pdf_path: str, question: str) -> None:
