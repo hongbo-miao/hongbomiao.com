@@ -5,6 +5,6 @@
 
 extern volatile sig_atomic_t is_running;
 
-void signal_handler(int signal);
+void handle_signal(int signal);
 
 #endif
