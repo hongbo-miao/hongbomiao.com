@@ -27,6 +27,13 @@ variable "production_department_db_departments" {
     }))
   }))
 }
+variable "production_hm_streamlit_db_departments" {
+  type = list(object({
+    name          = string
+    creator_names = list(string)
+    user_names    = list(string)
+  }))
+}
 variable "production_hm_kafka_db_departments" {
   type = list(object({
     name                                                      = string
