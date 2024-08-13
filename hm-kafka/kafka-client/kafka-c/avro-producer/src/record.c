@@ -1,7 +1,6 @@
-#include <avro.h>
-#include <stdio.h>
+#include "../include/record.h"
 
-int set_boolean_field(avro_value_t *record, const char *field_name, int value) {
+int set_boolean_field(avro_value_t *record, const char *field_name, bool value) {
   avro_value_t field;
   if (avro_value_get_by_name(record, field_name, &field, NULL) != 0) {
     return EXIT_FAILURE;
@@ -15,8 +14,7 @@ int set_boolean_field(avro_value_t *record, const char *field_name, int value) {
   return EXIT_SUCCESS;
 }
 
-int set_double_field(avro_value_t *record, const char *field_name,
-                     double value) {
+int set_double_field(avro_value_t *record, const char *field_name, double value) {
   avro_value_t field;
   if (avro_value_get_by_name(record, field_name, &field, NULL) != 0) {
     return EXIT_FAILURE;
@@ -30,8 +28,7 @@ int set_double_field(avro_value_t *record, const char *field_name,
   return EXIT_SUCCESS;
 }
 
-int set_long_field(avro_value_t *record, const char *field_name,
-                   int64_t value) {
+int set_long_field(avro_value_t *record, const char *field_name, int64_t value) {
   avro_value_t field;
   if (avro_value_get_by_name(record, field_name, &field, NULL) != 0) {
     return EXIT_FAILURE;
@@ -45,8 +42,7 @@ int set_long_field(avro_value_t *record, const char *field_name,
   return EXIT_SUCCESS;
 }
 
-int set_string_field(avro_value_t *record, const char *field_name,
-                     const char *value) {
+int set_string_field(avro_value_t *record, const char *field_name, const char *value) {
   avro_value_t field;
   if (avro_value_get_by_name(record, field_name, &field, NULL) != 0) {
     return EXIT_FAILURE;

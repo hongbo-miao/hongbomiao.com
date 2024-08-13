@@ -1,25 +1,25 @@
 #include <avro.h>
 #include <glib.h>
 #include <librdkafka/rdkafka.h>
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wignored-qualifiers"
 #include <libserdes/serdes-avro.h>
+#pragma GCC diagnostic pop
 #include <libserdes/serdes.h>
 #include <signal.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-#include "app/utils/app.c"
-#include "config.c"
-#include "kafka/utils/kafka.c"
-#include "kafka/utils/record.c"
-#include "kafka/utils/schema.c"
-
-volatile bool is_running = true;
+#include "../include/app.h"
+#include "../include/config.h"
+#include "../include/kafka.h"
+#include "../include/record.h"
+#include "../include/schema.h"
 
 int main(int argc, char **argv) {
   const char *confluent_schema_registry_url =
-      "https://confluent-schema-registry.internal.hongbomiao.com";
+    "https://confluent-schema-registry.internal.hongbomiao.com";
   const char *topic = "production.iot.device.json";
   const char *schema_name = "production.iot.device.json-value";
 
@@ -34,11 +34,9 @@ int main(int argc, char **argv) {
   }
 
   const char *config_file = argv[1];
-
   g_autoptr(GError) err = NULL;
   g_autoptr(GKeyFile) key_file = g_key_file_new();
-  if (!g_key_file_load_from_file(key_file, config_file, G_KEY_FILE_NONE,
-                                 &err)) {
+  if (!g_key_file_load_from_file(key_file, config_file, G_KEY_FILE_NONE, &err)) {
     g_error("Failed to load config file: %s", err->message);
   }
 
@@ -46,16 +44,16 @@ int main(int argc, char **argv) {
   load_config_group(conf, key_file, "default");
   rd_kafka_conf_set_dr_msg_cb(conf, delivery_report);
   producer = rd_kafka_new(RD_KAFKA_PRODUCER, conf, err_str, sizeof(err_str));
+  conf = NULL;
   if (!producer) {
     g_error("Failed to create new producer: %s", err_str);
   }
-  conf = NULL;
 
   signal(SIGINT, signal_handler);
   signal(SIGTERM, signal_handler);
 
-  serdes_conf = serdes_conf_new(NULL, 0, "schema.registry.url",
-                                confluent_schema_registry_url, NULL);
+  serdes_conf =
+    serdes_conf_new(NULL, 0, "schema.registry.url", confluent_schema_registry_url, NULL);
 
   serdes = serdes_new(serdes_conf, err_str, sizeof(err_str));
   if (!serdes) {
@@ -63,7 +61,7 @@ int main(int argc, char **argv) {
   }
 
   serdes_schema_t *serdes_schema =
-      serdes_schema_get(serdes, schema_name, -1, err_str, sizeof(err_str));
+    serdes_schema_get(serdes, schema_name, -1, err_str, sizeof(err_str));
   if (!serdes_schema) {
     g_error("Failed to retrieve serdes_schema: %s", err_str);
   }
@@ -72,8 +70,7 @@ int main(int argc, char **argv) {
   avro_schema_t avro_schema = serdes_schema_avro(serdes_schema);
   // print_avro_schema(avro_schema);
 
-  const char *device_ids[6] = {"device1", "device2", "device3", "device4",
-                               "device5"};
+  const char *device_ids[5] = {"device1", "device2", "device3", "device4", "device5"};
   const char *status_list[3] = {"online", "offline", "maintenance"};
   const char *locations[3] = {"locationA", "locationB", "locationC"};
   const char *types[3] = {"type1", "type2", "type3"};
@@ -86,16 +83,14 @@ int main(int argc, char **argv) {
     const char *status = status_list[random() % G_N_ELEMENTS(status_list)];
     const char *location = locations[random() % G_N_ELEMENTS(locations)];
     const char *type = types[random() % G_N_ELEMENTS(types)];
-    double temperature =
-        ((double)random() / RAND_MAX) * 100.0 - 50.0;  // [-50.0, 50.0]
-    double humidity = (random() % 101) / 100.0;        // [0.0, 1.0]
-    int battery = random() % 101;                      // [0, 100]
-    int signal_strength = random() % 101;              // [0, 100]
+    double temperature = ((double)random() / RAND_MAX) * 100.0 - 50.0;
+    double humidity = ((double)random() / RAND_MAX);
+    int battery = random() % 101;
+    int signal_strength = random() % 101;
     const char *mode = (random() % 2) ? "manual" : "auto";
-    bool active = (random() % 2) ? true : false;
+    bool active = (random() % 2);
 
-    avro_value_iface_t *record_class =
-        avro_generic_class_from_schema(avro_schema);
+    avro_value_iface_t *record_class = avro_generic_class_from_schema(avro_schema);
 
     avro_value_t record;
     avro_generic_value_new(record_class, &record);
@@ -131,24 +126,20 @@ int main(int argc, char **argv) {
 
     void *avro_payload = NULL;
     size_t avro_size;
-    serdes_err_t serdes_err =
-        serdes_schema_serialize_avro(serdes_schema, &record, &avro_payload,
-                                     &avro_size, err_str, sizeof(err_str));
+    serdes_err_t serdes_err = serdes_schema_serialize_avro(serdes_schema, &record, &avro_payload,
+                                                           &avro_size, err_str, sizeof(err_str));
     if (serdes_err != SERDES_ERR_OK) {
       g_error("Failed to serialize data: %s", serdes_err2str(serdes_err));
     }
 
     rd_kafka_resp_err_t rd_kafka_resp_err;
     rd_kafka_resp_err = rd_kafka_producev(
-        producer, RD_KAFKA_V_TOPIC(topic),
-        RD_KAFKA_V_MSGFLAGS(RD_KAFKA_MSG_F_COPY),
-        RD_KAFKA_V_KEY((void *)record_key, strlen(record_key)),
-        RD_KAFKA_V_VALUE(avro_payload, avro_size), RD_KAFKA_V_OPAQUE(NULL),
-        RD_KAFKA_V_END);
+      producer, RD_KAFKA_V_TOPIC(topic), RD_KAFKA_V_MSGFLAGS(RD_KAFKA_MSG_F_COPY),
+      RD_KAFKA_V_KEY((void *)record_key, strlen(record_key)),
+      RD_KAFKA_V_VALUE(avro_payload, avro_size), RD_KAFKA_V_OPAQUE(NULL), RD_KAFKA_V_END);
 
     if (rd_kafka_resp_err) {
-      g_error("Failed to produce to topic %s: %s", topic,
-              rd_kafka_err2str(rd_kafka_resp_err));
+      g_error("Failed to produce to topic %s: %s", topic, rd_kafka_err2str(rd_kafka_resp_err));
     }
 
     free(avro_payload);
