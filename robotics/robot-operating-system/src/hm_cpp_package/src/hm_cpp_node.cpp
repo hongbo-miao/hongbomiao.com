@@ -3,8 +3,8 @@
 class HMNode : public rclcpp::Node {
  public:
   HMNode() : Node("hm_cpp_node"), counter_(0) {
-    timer_ = this->create_wall_timer(std::chrono::seconds(1),
-                                     std::bind(&HMNode::timerCallback, this));
+    timer_ =
+      this->create_wall_timer(std::chrono::seconds(1), std::bind(&HMNode::timerCallback, this));
   }
 
  private:
