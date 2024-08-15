@@ -27,6 +27,10 @@ git-status:
 git-recover:
 	git reflog --no-abbrev
 	git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+git-remove-secret:
+	git log -S xxx
+	git log -p -S xxx > git_log.txt
+	git filter-repo --replace-text=<(echo 'xxx==>yyy') --refs=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx..HEAD --force
 
 # Git submodule
 git-submodule-add:
