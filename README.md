@@ -149,7 +149,6 @@ make kubernetes-clean
 
 - **Flask** - Web framework
 - **Flask-CORS** - Cross-Origin Resource Sharing (CORS)
-- **confluent-kafka** - Kafka client
 - **Gunicorn** - Python web server gateway interface (WSGI) HTTP server
 - **asyncpg** - PostgreSQL client
 - **Tenacity** - General-purpose retrying library
@@ -287,18 +286,24 @@ make kubernetes-clean
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
 - **Apache Kafka** - Distributed event streaming platform
-  - Schema registries
+  - Client
+    - **librdkafka** - Kafka C/C++ client
+      - **libserdes** - AVRO serialization and deserialization
+    - **confluent-kafka** - Kafka Python client
+  - Schema registry
     - **Confluent Schema Registry** - Schema Registry
     - **Apicurio Registry** - Schema Registry
-  - Connectors
+  - Connector
     - **Debezium** - Distributed change-data-capture (CDC) platform
-    - **kafka-connect-elasticsearch** - Elasticsearch sink connector
-    - **confluentinc-kafka-connect-jdbc** - JDBC source and sink connector
     - **debezium-connector-postgres** - PostgreSQL CDC source connector
+    - **confluentinc-kafka-connect-jdbc** - JDBC source and sink connector
+    - **confluentinc-kafka-connect-s3** - Amazon S3 Sink Connector
+    - **snowflake-kafka-connector** - Snowflake Sink Connector
+    - **kafka-connect-elasticsearch** - Elasticsearch sink connector
     - **http-connector-for-apache-kafka** - HTTP sink connector
     - **kafka-connect-avro-converter** - Confluent Avro converter
     - **apicurio-registry-distro-connect-converter** - Apicurio Avro converter
-  - Management tools
+  - Management tool
     - **Redpanda Console** - Kafka management
     - **AKHQ** - Kafka management
     - **UI for Apache Kafka** - Kafka management
@@ -367,6 +372,7 @@ make kubernetes-clean
 
 ### High-Performance Computing (HPC)
 
+- **JAX** - High-performance numerical computing
 - **AWS ParallelCluster** - High performance computing (HPC) cluster management
   - **NICE DCV** - Remote display
 - **AWS Batch** - Batch computing
