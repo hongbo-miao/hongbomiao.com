@@ -53,6 +53,7 @@ jobs:
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
       hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
+      hm-jax: ${{ steps.filter.outputs.hm-jax }}
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
       hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
@@ -193,6 +194,9 @@ jobs:
             hm-gradio-classify-image:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-gradio/applications/classify-image/**'
+            hm-jax:
+              - '.github/workflows/test.yml'
+              - 'high-performance-computing/hm-jax/**'
             hm-kubeflow-calculate:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-kubeflow/pipelines/calculate/**'
@@ -1313,7 +1317,7 @@ jobs:
         with:
           directory: machine-learning/hugging-face/analyze-sentiment
 
-  gradio-classify-image:
+  gradio-classify-image-test:
     name: Gradio (classify-image) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
@@ -1345,7 +1349,7 @@ jobs:
         with:
           directory: machine-learning/hm-gradio/applications/classify-image
 
-  streamlit-live-line-chart:
+  streamlit-live-line-chart-test:
     name: Streamlit (live-line-chart) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
@@ -1377,7 +1381,7 @@ jobs:
         with:
           directory: machine-learning/hm-streamlit/applications/live-line-chart
 
-  streamlit-map:
+  streamlit-map-test:
     name: Streamlit (map) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
@@ -1408,6 +1412,38 @@ jobs:
         uses: codecov/codecov-action@v4.5.0
         with:
           directory: machine-learning/hm-streamlit/applications/map
+
+  jax-test:
+    name: JAX | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-jax == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.7
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.1
+        with:
+          python-version-file: high-performance-computing/hm-jax/pyproject.toml
+          cache: poetry
+          cache-dependency-path: high-performance-computing/hm-jax/poetry.lock
+      - name: Install dependencies
+        working-directory: high-performance-computing/hm-jax
+        run: |
+          poetry install
+      - name: Test
+        working-directory: high-performance-computing/hm-jax
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.5.0
+        with:
+          directory: high-performance-computing/hm-jax
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
