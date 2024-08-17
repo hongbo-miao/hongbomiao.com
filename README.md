@@ -334,16 +334,18 @@ make kubernetes-clean
 
 ### Machine Learning (ML)
 
-- **PyTorch** - Machine learning framework
+- **PyTorch** - Machine learning
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
-- **Gradio** - Machine learning web application building
-- **Streamlit** - Data web application building
+- **Flax** - Neural network for JAX
+  - **Optax** - Gradient processing and optimization for JAX
 - **Lightning** - Deep Learning framework
 - **LangChain** - Large language model (LLM) framework
 - **NeuralForecast** - Neural forecasting
 - **GPT4All** - Large language models
 - **Transformers** - Machine learning models
+- **Gradio** - Machine learning web application building
+- **Streamlit** - Data web application building
 - **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
