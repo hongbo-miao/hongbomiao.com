@@ -50,6 +50,7 @@ jobs:
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
       hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
+      hm-flax: ${{ steps.filter.outputs.hm-flax }}
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
       hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
@@ -191,6 +192,9 @@ jobs:
             hm-aws-parallelcluster:
               - '.github/workflows/test.yml'
               - 'cloud-platform/aws/aws-parallelcluster/**'
+            hm-flax:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/hm-flax/**'
             hm-gradio-classify-image:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-gradio/applications/classify-image/**'
@@ -1444,6 +1448,38 @@ jobs:
         uses: codecov/codecov-action@v4.5.0
         with:
           directory: high-performance-computing/hm-jax
+
+  flax-test:
+    name: Flax | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-flax == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.7
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.1
+        with:
+          python-version-file: machine-learning/hm-flax/pyproject.toml
+          cache: poetry
+          cache-dependency-path: machine-learning/hm-flax/poetry.lock
+      - name: Install dependencies
+        working-directory: machine-learning/hm-flax
+        run: |
+          poetry install
+      - name: Test
+        working-directory: machine-learning/hm-flax
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.5.0
+        with:
+          directory: machine-learning/hm-flax
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
