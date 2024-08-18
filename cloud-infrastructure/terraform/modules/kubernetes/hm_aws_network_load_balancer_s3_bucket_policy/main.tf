@@ -10,7 +10,7 @@ data "aws_caller_identity" "main" {}
 
 # https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-access-logs.html
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy
-resource "aws_s3_bucket_policy" "hm_aws_network_load_balancer_s3_bucket_policy" {
+resource "aws_s3_bucket_policy" "network_load_balancer_s3_bucket_policy" {
   bucket = var.s3_bucket_name
   policy = jsonencode({
     Version = "2012-10-17",

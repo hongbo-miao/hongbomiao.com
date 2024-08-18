@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
-resource "aws_instance" "hm_amazon_ec2_instance" {
+resource "aws_instance" "main" {
   ami                    = var.instance_ami
   instance_type          = var.instance_type
   iam_instance_profile   = var.instance_profile

@@ -303,7 +303,7 @@ module "hm_sedona_route_53" {
 
 module "hm_sedona_cluster_studio_iam" {
   providers              = { aws = aws.production }
-  source                 = "../../../../modules/aws/hm_amazon_emr_studio_iam"
+  source                 = "../../../../modules/aws/hm_amazon_emr_studio_iam_role"
   amazon_emr_studio_name = "hm-sedona-emr-studio"
   s3_bucket_name         = data.terraform_remote_state.production_aws_data_terraform_remote_state.outputs.hm_production_bucket_name
   environment            = var.environment
@@ -323,7 +323,7 @@ module "hm_sedona_cluster_studio" {
 # AWS Glue DataBrew recipe job - ADS-B 2x Flight Trace - Write CSV to Parquet
 module "hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet_iam" {
   providers                      = { aws = aws.production }
-  source                         = "../../../../modules/aws/hm_aws_glue_databrew_iam"
+  source                         = "../../../../modules/aws/hm_aws_glue_databrew_iam_role"
   aws_glue_databrew_job_nickname = "write-adsb-csv-to-parquet"
   input_s3_bucket_name           = data.terraform_remote_state.production_aws_data_terraform_remote_state.outputs.hm_production_bucket_name
   output_s3_bucket_name          = data.terraform_remote_state.production_aws_data_terraform_remote_state.outputs.hm_production_bucket_name
@@ -364,7 +364,7 @@ module "hm_glue_databrew_recipe_job_write_adsb_2x_flight_trace_csv_to_parquet" {
 # AWS Glue DataBrew profile job - ADS-B 2x Flight Trace - Profile Parquet
 module "hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet_iam" {
   providers                      = { aws = aws.production }
-  source                         = "../../../../modules/aws/hm_aws_glue_databrew_iam"
+  source                         = "../../../../modules/aws/hm_aws_glue_databrew_iam_role"
   aws_glue_databrew_job_nickname = "profile-adsb-raw-parquet"
   input_s3_bucket_name           = data.terraform_remote_state.production_aws_data_terraform_remote_state.outputs.hm_production_bucket_name
   output_s3_bucket_name          = data.terraform_remote_state.production_aws_data_terraform_remote_state.outputs.hm_production_bucket_name
@@ -403,7 +403,7 @@ module "hm_glue_databrew_profile_job_profile_adsb_2x_flight_trace_raw_parquet" {
 # AWS Glue job - ADS-B 2x Flight Trace
 module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script_iam" {
   providers             = { aws = aws.production }
-  source                = "../../../../modules/aws/hm_aws_glue_iam"
+  source                = "../../../../modules/aws/hm_aws_glue_iam_role"
   aws_glue_job_nickname = "write-adsb-parquet-to-delta-table"
   input_s3_bucket_name  = data.terraform_remote_state.production_aws_data_terraform_remote_state.outputs.hm_production_bucket_name
   output_s3_bucket_name = data.terraform_remote_state.production_aws_data_terraform_remote_state.outputs.hm_production_bucket_name
@@ -473,7 +473,7 @@ module "hm_aws_batch_security_group" {
 }
 module "hm_aws_batch_compute_environment_iam" {
   providers                              = { aws = aws.production }
-  source                                 = "../../../../modules/aws/hm_aws_batch_compute_environment_iam"
+  source                                 = "../../../../modules/aws/hm_aws_batch_compute_environment_iam_role"
   aws_batch_compute_environment_nickname = "hm-batch-compute-env"
   environment                            = var.environment
   team                                   = var.team
@@ -501,7 +501,7 @@ module "hm_aws_batch_job_queue" {
 }
 module "hm_aws_batch_job_definition_iam" {
   providers                         = { aws = aws.production }
-  source                            = "../../../../modules/aws/hm_aws_batch_job_definition_iam"
+  source                            = "../../../../modules/aws/hm_aws_batch_job_definition_iam_role"
   aws_batch_job_definition_nickname = "hm-batch-job-def"
   environment                       = var.environment
   team                              = var.team
@@ -524,7 +524,7 @@ locals {
 }
 module "hm_amazon_sagemaker_notebook_instance_iam" {
   providers                               = { aws = aws.production }
-  source                                  = "../../../../modules/aws/hm_amazon_sagemaker_notebook_instance_iam"
+  source                                  = "../../../../modules/aws/hm_amazon_sagemaker_notebook_instance_iam_role"
   amazon_sagemaker_notebook_instance_name = local.amazon_sagemaker_notebook_instance_name
   environment                             = var.environment
   team                                    = var.team

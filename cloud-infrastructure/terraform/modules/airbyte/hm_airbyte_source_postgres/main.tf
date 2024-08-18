@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/airbytehq/airbyte/latest/docs/resources/source_postgres
-resource "airbyte_source_postgres" "hm_airbyte_source_postgres" {
+resource "airbyte_source_postgres" "main" {
   name         = var.name
   workspace_id = var.workspace_id
   configuration = {

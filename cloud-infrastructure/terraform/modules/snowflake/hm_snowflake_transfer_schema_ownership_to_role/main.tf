@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest/docs/resources/grant_ownership
-resource "snowflake_grant_ownership" "hm_snowflake_transfer_schema_ownership_to_role" {
+resource "snowflake_grant_ownership" "transfer_schema_ownership_to_role" {
   account_role_name   = var.snowflake_role_name
   outbound_privileges = "REVOKE"
   on {

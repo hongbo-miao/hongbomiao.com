@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_queue
-resource "aws_batch_job_queue" "hm_aws_batch_job_queue" {
+resource "aws_batch_job_queue" "main" {
   name                 = var.aws_batch_job_queue_name
   state                = "ENABLED"
   priority             = "0"

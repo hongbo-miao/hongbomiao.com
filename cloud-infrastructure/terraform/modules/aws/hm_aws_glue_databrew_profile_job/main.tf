@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/awscc/latest/docs/resources/databrew_job
-resource "awscc_databrew_job" "hm_aws_glue_databrew_profile_job" {
+resource "awscc_databrew_job" "glue_databrew_profile_job" {
   name         = var.aws_glue_databrew_profile_job_name
   role_arn     = var.iam_role_arn
   type         = "PROFILE"

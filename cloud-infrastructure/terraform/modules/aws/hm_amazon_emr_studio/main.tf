@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/emr_studio
-resource "aws_emr_studio" "hm_amazon_emr_studio" {
+resource "aws_emr_studio" "main" {
   name                        = var.amazon_emr_studio_name
   auth_mode                   = "IAM"
   default_s3_location         = var.s3_uri

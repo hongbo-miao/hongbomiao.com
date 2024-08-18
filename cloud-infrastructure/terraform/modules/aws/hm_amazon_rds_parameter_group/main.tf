@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_parameter_group
-resource "aws_db_parameter_group" "hm_amazon_rds_parameter_group" {
+resource "aws_db_parameter_group" "rds_parameter_group" {
   name   = var.parameter_group_name
   family = var.family
   parameter {

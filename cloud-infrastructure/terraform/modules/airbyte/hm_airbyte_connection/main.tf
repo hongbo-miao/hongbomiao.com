@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/airbytehq/airbyte/latest/docs/resources/connection
-resource "airbyte_connection" "hm_airbyte_connection" {
+resource "airbyte_connection" "main" {
   name                                 = "${var.destination_name}-connection"
   source_id                            = var.source_id
   destination_id                       = var.destination_id

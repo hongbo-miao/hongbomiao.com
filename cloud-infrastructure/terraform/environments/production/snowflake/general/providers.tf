@@ -1,4 +1,4 @@
 provider "snowflake" {
-  alias = "hm_production_terraform_read_write_role"
-  role  = "HM_PRODUCTION_TERRAFORM_READ_WRITE_ROLE"
+  alias = "production_terraform_role"
+  role  = "PRODUCTION_TERRAFORM_ROLE"
 }

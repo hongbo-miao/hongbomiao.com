@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition
-resource "aws_batch_job_definition" "hm_aws_batch_job_definition" {
+resource "aws_batch_job_definition" "amin" {
   name                  = var.aws_batch_job_definition_name
   type                  = "container"
   platform_capabilities = ["FARGATE"]
