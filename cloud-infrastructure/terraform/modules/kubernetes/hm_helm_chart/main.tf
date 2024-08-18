@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release
-resource "helm_release" "hm_helm_chart" {
+resource "helm_release" "main" {
   repository   = var.repository
   chart        = var.chart_name
   version      = var.chart_version

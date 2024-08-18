@@ -1,32 +1,32 @@
 locals {
   # https://www.javainuse.com/cron
-  production_engineering_iot_public_airbyte_connection_schedule_cron_expression = "0 11 * * * ? * US/Pacific"      # every hour at minute 11
-  production_engineering_jira_airbyte_connection_schedule_cron_expression       = "0 32 7-19/2 ? * 2-6 US/Pacific" # every 2 hour at minute 32, 7am - 7pm, Monday - Friday
+  engineering_iot_public_airbyte_connection_schedule_cron_expression = "0 11 * * * ? * US/Pacific"      # every hour at minute 11
+  engineering_jira_airbyte_connection_schedule_cron_expression       = "0 32 7-19/2 ? * 2-6 US/Pacific" # every 2 hour at minute 32, 7am - 7pm, Monday - Friday
 }
 
 # Snowflake
-data "aws_secretsmanager_secret" "snowflake_production_hm_airbyte_db_owner_secret" {
-  name = "hm/snowflake/production_hm_airbyte_db/owner"
+data "aws_secretsmanager_secret" "snowflake_hm_airbyte_db_owner_secret" {
+  name = "hm/snowflake/hm_airbyte_db/owner"
 }
-data "aws_secretsmanager_secret_version" "snowflake_production_hm_airbyte_db_owner_secret_version" {
-  secret_id = data.aws_secretsmanager_secret.snowflake_production_hm_airbyte_db_owner_secret.id
+data "aws_secretsmanager_secret_version" "snowflake_hm_airbyte_db_owner_secret_version" {
+  secret_id = data.aws_secretsmanager_secret.snowflake_hm_airbyte_db_owner_secret.id
 }
 
 # Source - Postgres: production-hm-postgres | Database: iot_db | Schema: motor
-data "aws_secretsmanager_secret" "production_hm_postgres_airbyte_user_secret" {
-  name = "production-hm-postgres/airbyte-user"
+data "aws_secretsmanager_secret" "hm_postgres_airbyte_user_secret" {
+  name = "${var.environment}-hm-postgres/airbyte-user"
 }
-data "aws_secretsmanager_secret_version" "production_hm_postgres_airbyte_user_secret_version" {
-  secret_id = data.aws_secretsmanager_secret.production_hm_postgres_airbyte_user_secret.id
+data "aws_secretsmanager_secret_version" "hm_postgres_airbyte_user_secret_version" {
+  secret_id = data.aws_secretsmanager_secret.hm_postgres_airbyte_user_secret.id
 }
-module "hm_airbyte_source_production_hm_postgres_iot_db_database_motor_schema" {
+module "airbyte_source_hm_postgres_iot_db_database_motor_schema" {
   source                 = "../../../modules/airbyte/hm_airbyte_source_postgres"
-  name                   = "production-hm-postgres-iot-db-motor"
+  name                   = "${var.environment}-hm-postgres-iot-db-motor"
   workspace_id           = var.airbyte_workspace_id
-  postgres_host          = "production-hm-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com"
+  postgres_host          = "${var.environment}-hm-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com"
   postgres_port          = 5432
-  postgres_user_name     = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["user_name"]
-  postgres_password      = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["password"]
+  postgres_user_name     = jsondecode(data.aws_secretsmanager_secret_version.hm_postgres_airbyte_user_secret_version.secret_string)["user_name"]
+  postgres_password      = jsondecode(data.aws_secretsmanager_secret_version.hm_postgres_airbyte_user_secret_version.secret_string)["password"]
   postgres_database      = "iot_db"
   postgres_schema        = "public"
   initial_waiting_time_s = 120
@@ -35,34 +35,34 @@ module "hm_airbyte_source_production_hm_postgres_iot_db_database_motor_schema" {
   #     tunnel_host = "xxx.xxx.xxx.xxx"
   #     tunnel_port = 22
   #     tunnel_user = "ubuntu"
-  #     ssh_key     = jsondecode(data.aws_secretsmanager_secret_version.production_hm_postgres_airbyte_user_secret_version.secret_string)["tunnel_ssh_private_key"]
+  #     ssh_key     = jsondecode(data.aws_secretsmanager_secret_version.hm_postgres_airbyte_user_secret_version.secret_string)["tunnel_ssh_private_key"]
   #   }
   # }
 }
 # Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_IOT_DB_MOTOR
-module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema" {
+module "airbyte_destination_snowflake_hm_airbyte_db_database_engineering_iot_db_database_motor_schema" {
   source                                = "../../../modules/airbyte/hm_airbyte_destination_snowflake"
-  name                                  = "production-engineering-motor"
+  name                                  = "${var.environment}-engineering-motor"
   workspace_id                          = var.airbyte_workspace_id
   snowflake_host                        = var.snowflake_host
-  snowflake_warehouse                   = "HM_PRODUCTION_HM_AIRBYTE_WH"
-  snowflake_database                    = "PRODUCTION_HM_AIRBYTE_DB"
+  snowflake_warehouse                   = "${upper(var.environment)}_HM_AIRBYTE_WH"
+  snowflake_database                    = "${upper(var.environment)}_HM_AIRBYTE_DB"
   snowflake_schema                      = "ENGINEERING_IOT_DB_MOTOR"
-  snowflake_role                        = "HM_PRODUCTION_HM_AIRBYTE_DB_OWNER_ROLE"
-  snowflake_user_name                   = "HM_PRODUCTION_HM_AIRBYTE_DB_OWNER_USER"
-  snowflake_user_private_key            = jsondecode(data.aws_secretsmanager_secret_version.snowflake_production_hm_airbyte_db_owner_secret_version.secret_string)["private_key"]
-  snowflake_user_private_key_passphrase = jsondecode(data.aws_secretsmanager_secret_version.snowflake_production_hm_airbyte_db_owner_secret_version.secret_string)["private_key_passphrase"]
+  snowflake_role                        = "${upper(var.environment)}_HM_AIRBYTE_DB_OWNER_ROLE"
+  snowflake_user_name                   = "${upper(var.environment)}_HM_AIRBYTE_DB_OWNER_SERVICE_ACCOUNT"
+  snowflake_user_private_key            = jsondecode(data.aws_secretsmanager_secret_version.snowflake_hm_airbyte_db_owner_secret_version.secret_string)["private_key"]
+  snowflake_user_private_key_passphrase = jsondecode(data.aws_secretsmanager_secret_version.snowflake_hm_airbyte_db_owner_secret_version.secret_string)["private_key_passphrase"]
 }
 # Connection
 # - Source - Postgres: production-hm-postgres | Database: iot_db | Schema: motor
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_IOT_DB_MOTOR
-module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema" {
+module "airbyte_connection_snowflake_hm_airbyte_db_database_engineering_iot_db_database_motor_schema" {
   source                               = "../../../modules/airbyte/hm_airbyte_connection"
-  source_id                            = module.hm_airbyte_source_production_hm_postgres_iot_db_database_motor_schema.id
-  destination_id                       = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.id
-  destination_name                     = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.name
+  source_id                            = module.airbyte_source_hm_postgres_iot_db_database_motor_schema.id
+  destination_id                       = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.id
+  destination_name                     = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.name
   schedule_type                        = "cron"
-  schedule_cron_expression             = local.production_engineering_iot_public_airbyte_connection_schedule_cron_expression
+  schedule_cron_expression             = local.engineering_iot_public_airbyte_connection_schedule_cron_expression
   non_breaking_schema_updates_behavior = "ignore"
   status                               = "active"
   streams = [
@@ -80,13 +80,13 @@ module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engine
     }
   ]
   depends_on = [
-    module.hm_airbyte_source_production_hm_postgres_iot_db_database_motor_schema,
-    module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_iot_db_database_motor_schema
+    module.airbyte_source_hm_postgres_iot_db_database_motor_schema,
+    module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_iot_db_database_motor_schema
   ]
 }
 
 # Source - CSV: cities
-module "hm_airbyte_source_csv_cities" {
+module "airbyte_source_csv_cities" {
   source       = "../../../modules/airbyte/hm_airbyte_source_csv"
   name         = "cities"
   workspace_id = var.airbyte_workspace_id
@@ -94,27 +94,27 @@ module "hm_airbyte_source_csv_cities" {
   url          = "https://people.sc.fsu.edu/~jburkardt/data/csv/cities.csv"
 }
 # Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_WORLD
-module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_world_schema" {
+module "airbyte_destination_snowflake_hm_airbyte_db_database_engineering_world_schema" {
   source                                = "../../../modules/airbyte/hm_airbyte_destination_snowflake"
-  name                                  = "production-engineering-world-cities"
+  name                                  = "${var.environment}-engineering-world-cities"
   workspace_id                          = var.airbyte_workspace_id
   snowflake_host                        = var.snowflake_host
-  snowflake_warehouse                   = "HM_PRODUCTION_HM_AIRBYTE_WH"
-  snowflake_database                    = "PRODUCTION_HM_AIRBYTE_DB"
+  snowflake_warehouse                   = "${upper(var.environment)}_HM_AIRBYTE_WH"
+  snowflake_database                    = "${upper(var.environment)}_HM_AIRBYTE_DB"
   snowflake_schema                      = "ENGINEERING_WORLD"
-  snowflake_role                        = "HM_PRODUCTION_HM_AIRBYTE_DB_OWNER_ROLE"
-  snowflake_user_name                   = "HM_PRODUCTION_HM_AIRBYTE_DB_OWNER_USER"
-  snowflake_user_private_key            = jsondecode(data.aws_secretsmanager_secret_version.snowflake_production_hm_airbyte_db_owner_secret_version.secret_string)["private_key"]
-  snowflake_user_private_key_passphrase = jsondecode(data.aws_secretsmanager_secret_version.snowflake_production_hm_airbyte_db_owner_secret_version.secret_string)["private_key_passphrase"]
+  snowflake_role                        = "${upper(var.environment)}_HM_AIRBYTE_DB_OWNER_ROLE"
+  snowflake_user_name                   = "${upper(var.environment)}_HM_AIRBYTE_DB_OWNER_SERVICE_ACCOUNT"
+  snowflake_user_private_key            = jsondecode(data.aws_secretsmanager_secret_version.snowflake_hm_airbyte_db_owner_secret_version.secret_string)["private_key"]
+  snowflake_user_private_key_passphrase = jsondecode(data.aws_secretsmanager_secret_version.snowflake_hm_airbyte_db_owner_secret_version.secret_string)["private_key_passphrase"]
 }
 # Connection
 # - Source - CSV: cities
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_WORLD
-module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engineering_world_schema" {
+module "airbyte_connection_snowflake_hm_airbyte_db_database_engineering_world_schema" {
   source                               = "../../../modules/airbyte/hm_airbyte_connection"
-  source_id                            = module.hm_airbyte_source_csv_cities.id
-  destination_id                       = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_world_schema.id
-  destination_name                     = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_world_schema.name
+  source_id                            = module.airbyte_source_csv_cities.id
+  destination_id                       = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_world_schema.id
+  destination_name                     = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_world_schema.name
   schedule_type                        = "manual"
   non_breaking_schema_updates_behavior = "ignore"
   status                               = "active"
@@ -125,8 +125,8 @@ module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engine
     }
   ]
   depends_on = [
-    module.hm_airbyte_source_csv_cities,
-    module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_world_schema
+    module.airbyte_source_csv_cities,
+    module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_world_schema
   ]
 }
 
@@ -137,7 +137,7 @@ data "aws_secretsmanager_secret" "hm_jira_secret" {
 data "aws_secretsmanager_secret_version" "hm_jira_secret_version" {
   secret_id = data.aws_secretsmanager_secret.hm_jira_secret.id
 }
-module "hm_airbyte_source_jira" {
+module "airbyte_source_jira" {
   source              = "../../../modules/airbyte/hm_airbyte_source_jira"
   name                = "jira"
   workspace_id        = var.airbyte_workspace_id
@@ -146,29 +146,29 @@ module "hm_airbyte_source_jira" {
   jira_user_api_token = jsondecode(data.aws_secretsmanager_secret_version.hm_jira_secret_version.secret_string)["user_api_token"]
 }
 # Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_JIRA
-module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema" {
+module "airbyte_destination_snowflake_hm_airbyte_db_database_engineering_jira_schema" {
   source                                = "../../../modules/airbyte/hm_airbyte_destination_snowflake"
-  name                                  = "production-engineering-jira"
+  name                                  = "${var.environment}-engineering-jira"
   workspace_id                          = var.airbyte_workspace_id
   snowflake_host                        = var.snowflake_host
-  snowflake_warehouse                   = "HM_PRODUCTION_HM_AIRBYTE_WH"
-  snowflake_database                    = "PRODUCTION_HM_AIRBYTE_DB"
+  snowflake_warehouse                   = "${upper(var.environment)}_HM_AIRBYTE_WH"
+  snowflake_database                    = "${upper(var.environment)}_HM_AIRBYTE_DB"
   snowflake_schema                      = "ENGINEERING_JIRA"
-  snowflake_role                        = "HM_PRODUCTION_HM_AIRBYTE_DB_OWNER_ROLE"
-  snowflake_user_name                   = "HM_PRODUCTION_HM_AIRBYTE_DB_OWNER_USER"
-  snowflake_user_private_key            = jsondecode(data.aws_secretsmanager_secret_version.snowflake_production_hm_airbyte_db_owner_secret_version.secret_string)["private_key"]
-  snowflake_user_private_key_passphrase = jsondecode(data.aws_secretsmanager_secret_version.snowflake_production_hm_airbyte_db_owner_secret_version.secret_string)["private_key_passphrase"]
+  snowflake_role                        = "${upper(var.environment)}_HM_AIRBYTE_DB_OWNER_ROLE"
+  snowflake_user_name                   = "${upper(var.environment)}_HM_AIRBYTE_DB_OWNER_SERVICE_ACCOUNT"
+  snowflake_user_private_key            = jsondecode(data.aws_secretsmanager_secret_version.snowflake_hm_airbyte_db_owner_secret_version.secret_string)["private_key"]
+  snowflake_user_private_key_passphrase = jsondecode(data.aws_secretsmanager_secret_version.snowflake_hm_airbyte_db_owner_secret_version.secret_string)["private_key_passphrase"]
 }
 # Connection
 # - Source - Jira
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: JIRA
-module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engineering_jira_schema" {
+module "airbyte_connection_snowflake_hm_airbyte_db_database_engineering_jira_schema" {
   source                               = "../../../modules/airbyte/hm_airbyte_connection"
-  source_id                            = module.hm_airbyte_source_jira.id
-  destination_id                       = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema.id
-  destination_name                     = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema.name
+  source_id                            = module.airbyte_source_jira.id
+  destination_id                       = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_jira_schema.id
+  destination_name                     = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_jira_schema.name
   schedule_type                        = "cron"
-  schedule_cron_expression             = local.production_engineering_jira_airbyte_connection_schedule_cron_expression
+  schedule_cron_expression             = local.engineering_jira_airbyte_connection_schedule_cron_expression
   non_breaking_schema_updates_behavior = "ignore"
   status                               = "active"
   streams = [
@@ -186,7 +186,7 @@ module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_engine
     }
   ]
   depends_on = [
-    module.hm_airbyte_source_jira,
-    module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_engineering_jira_schema
+    module.airbyte_source_jira,
+    module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_jira_schema
   ]
 }

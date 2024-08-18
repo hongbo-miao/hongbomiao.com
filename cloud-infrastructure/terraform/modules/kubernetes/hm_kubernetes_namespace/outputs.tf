@@ -1,3 +1,3 @@
 output "namespace" {
-  value = var.kubernetes_namespace
+  value = kubernetes_namespace.main.metadata.name
 }

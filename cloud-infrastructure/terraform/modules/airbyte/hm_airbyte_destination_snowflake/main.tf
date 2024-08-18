@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/airbytehq/airbyte/latest/docs/resources/destination_snowflake
-resource "airbyte_destination_snowflake" "hm_airbyte_destination_snowflake" {
+resource "airbyte_destination_snowflake" "main" {
   name         = var.name
   workspace_id = var.workspace_id
   configuration = {

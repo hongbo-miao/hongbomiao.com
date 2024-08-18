@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_compute_environment
-resource "aws_batch_compute_environment" "hm_aws_batch_compute_environment" {
+resource "aws_batch_compute_environment" "main" {
   compute_environment_name = var.aws_batch_compute_environment_name
   compute_resources {
     max_vcpus          = 256

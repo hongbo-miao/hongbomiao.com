@@ -1,43 +1,22 @@
-environment                             = "production"
-snowflake_public_schema_name            = "PUBLIC"
-production_database_data_retention_days = 90
-production_department_db_departments = [
+environment                  = "PRODUCTION"
+public_schema_name           = "PUBLIC"
+database_data_retention_days = 90
+department_db_departments = [
   {
     name = "ENGINEERING"
     schemas = [
-      {
-        name = "PUBLIC"
-      }
+      { name = "PUBLIC" }
     ]
   },
   {
     name = "PRODUCT"
     schemas = [
-      {
-        name = "PUBLIC"
-      },
-      {
-        name = "TRACKER"
-      }
-    ]
-  },
-  {
-    name = "FINANCE"
-    schemas = [
-      {
-        name = "PUBLIC"
-      }
+      { name = "PUBLIC" },
+      { name = "TRACKER" }
     ]
   }
 ]
-production_hm_streamlit_db_departments = [
-  {
-    name = "ENGINEERING"
-  },
-  {
-    name = "PRODUCT"
-  },
-  {
-    name = "FINANCE"
-  }
+hm_streamlit_db_departments = [
+  { name = "ENGINEERING" },
+  { name = "PRODUCT" }
 ]

@@ -8,7 +8,7 @@ terraform {
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glue_job
 # https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html
-resource "aws_glue_job" "hm_aws_glue_job" {
+resource "aws_glue_job" "main" {
   name              = var.aws_glue_job_name
   role_arn          = var.iam_role_arn
   glue_version      = "4.0"

@@ -1,45 +1,51 @@
 variable "environment" {
   type = string
 }
-variable "snowflake_public_schema_name" {
+variable "public_schema_name" {
   type = string
 }
-variable "production_department_warehouse_auto_suspend_min" {
+variable "department_warehouse_auto_suspend_min" {
   type = number
 }
-variable "production_airbyte_warehouse_auto_suspend_min" {
+variable "airbyte_warehouse_auto_suspend_min" {
   type = number
 }
-variable "production_kafka_warehouse_auto_suspend_min" {
+variable "kafka_warehouse_auto_suspend_min" {
   type = number
 }
-variable "production_streamlit_warehouse_auto_suspend_min" {
+variable "streamlit_warehouse_auto_suspend_min" {
   type = number
 }
-variable "production_department_db_departments" {
+variable "department_db_departments" {
   type = list(object({
     name             = string
-    admin_user_names = list(string)
+    admin_user_names = optional(list(string), [])
     schemas = list(object({
       name                  = string
-      read_only_user_names  = list(string)
-      read_write_user_names = list(string)
+      read_only_user_names  = optional(list(string), [])
+      read_write_user_names = optional(list(string), [])
+      # RSA public key without header and trailer
+      read_only_service_account_rsa_public_key = optional(string, null)
+      # RSA public key without header and trailer
+      read_write_service_account_rsa_public_key = optional(string, null)
     }))
   }))
 }
-variable "production_hm_streamlit_db_departments" {
+variable "hm_streamlit_db_departments" {
   type = list(object({
     name          = string
-    creator_names = list(string)
-    user_names    = list(string)
+    creator_names = optional(list(string), [])
+    user_names    = optional(list(string), [])
   }))
 }
-variable "production_hm_kafka_db_departments" {
+variable "hm_kafka_db_departments" {
   type = list(object({
-    name                                                      = string
-    read_write_user_rsa_public_key_without_header_and_trailer = string
+    name = string
+    # RSA public key without header and trailer
+    read_write_service_account_rsa_public_key = string
   }))
 }
-variable "production_hm_airbyte_db_owner_user_rsa_public_key_without_header_and_trailer" {
+# RSA public key without header and trailer
+variable "hm_airbyte_db_owner_service_account_rsa_public_key" {
   type = string
 }

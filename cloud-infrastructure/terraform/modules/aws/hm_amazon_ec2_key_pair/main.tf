@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/key_pair
-resource "aws_key_pair" "hm_amazon_ec2_key_pair" {
+resource "aws_key_pair" "main" {
   key_name   = var.key_name
   public_key = var.public_key
   tags = {

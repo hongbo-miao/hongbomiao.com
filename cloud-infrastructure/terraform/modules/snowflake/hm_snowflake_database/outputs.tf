@@ -1,3 +1,3 @@
 output "name" {
-  value = var.snowflake_database_name
+  value = snowflake_database.main.name
 }

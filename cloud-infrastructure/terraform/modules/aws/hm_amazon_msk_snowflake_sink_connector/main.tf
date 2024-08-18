@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/mskconnect_connector
-resource "aws_mskconnect_connector" "hm_amazon_msk_snowflake_sink_connector" {
+resource "aws_mskconnect_connector" "msk_snowflake_sink_connector" {
   name = var.amazon_msk_connector_name
   # https://docs.snowflake.com/en/user-guide/kafka-connector-install#label-kafka-properties
   # https://docs.snowflake.com/en/user-guide/data-load-snowpipe-streaming-kafka

@@ -1,13 +1,13 @@
 variable "environment" {
   type = string
 }
-variable "snowflake_public_schema_name" {
+variable "public_schema_name" {
   type = string
 }
-variable "production_database_data_retention_days" {
+variable "database_data_retention_days" {
   type = number
 }
-variable "production_department_db_departments" {
+variable "department_db_departments" {
   type = list(object({
     name = string
     schemas = list(object({
@@ -15,12 +15,12 @@ variable "production_department_db_departments" {
     }))
   }))
 }
-variable "production_hm_streamlit_db_departments" {
+variable "hm_streamlit_db_departments" {
   type = list(object({
     name = string
   }))
 }
-variable "production_hm_kafka_db_departments" {
+variable "hm_kafka_db_departments" {
   type = list(object({
     name = string
   }))

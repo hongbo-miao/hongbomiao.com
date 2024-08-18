@@ -7,6 +7,6 @@ variable "default_role" {
 variable "default_warehouse" {
   type = string
 }
-variable "rsa_public_key_without_header_and_trailer" {
+variable "rsa_public_key" {
   type = string
 }

@@ -4,7 +4,10 @@ variable "snowflake_schema_name" {
 variable "snowflake_database_name" {
   type = string
 }
-variable "is_managed" {
+variable "data_retention_days" {
+  type = number
+}
+variable "with_managed_access" {
   type    = bool
   default = true
 }

@@ -79,6 +79,8 @@ module "iot_kafka_cluster" {
 }
 # IoT Kafka - SASL/SCRAM
 data "aws_secretsmanager_secret" "iot_kafka_producer_secret" {
+  # https://docs.aws.amazon.com/msk/latest/developerguide/msk-password.html
+  # Secret name must begin with "AmazonMSK_"
   name = "AmazonMSK_hm/production-iot-kafka/producer"
 }
 module "iot_kafka_sasl_scram_secret_association" {

@@ -1,6 +1,6 @@
 output "arn" {
-  value = aws_msk_cluster.hm_amazon_msk_cluster.arn
+  value = aws_msk_cluster.main.arn
 }
 output "bootstrap_servers" {
-  value = aws_msk_cluster.hm_amazon_msk_cluster.bootstrap_brokers_sasl_iam
+  value = aws_msk_cluster.main.bootstrap_brokers_sasl_iam
 }
