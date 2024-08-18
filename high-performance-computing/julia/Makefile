@@ -1,0 +1,2 @@
+run:
+	julia src/main.jl

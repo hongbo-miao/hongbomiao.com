@@ -374,6 +374,7 @@ make kubernetes-clean
 
 ### High-Performance Computing (HPC)
 
+- **Julia** - High-performance dynamic programming language
 - **JAX** - High-performance numerical computing
 - **AWS ParallelCluster** - High performance computing (HPC) cluster management
   - **NICE DCV** - Remote display
