@@ -91,6 +91,7 @@ jobs:
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
       pack-unpack-data: ${{ steps.filter.outputs.pack-unpack-data }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
+      quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
       web: ${{ steps.filter.outputs.web }}
@@ -315,6 +316,9 @@ jobs:
             prometheus:
               - '.github/workflows/test.yml'
               - 'data-storage/prometheus/**'
+            quantum-computing:
+              - '.github/workflows/test.yml'
+              - 'quantum-computing/**'
             reinforcement-learning-cart-pole:
               - '.github/workflows/test.yml'
               - 'machine-learning/reinforcement-learning/cart-pole/**'
@@ -2280,6 +2284,38 @@ jobs:
         uses: codecov/codecov-action@v4.5.0
         with:
           directory: cloud-computing/hm-skypilot
+
+  quantum-computing-test:
+    name: Quantum Computing | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.quantum-computing == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.7
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.1
+        with:
+          python-version-file: quantum-computing/pyproject.toml
+          cache: poetry
+          cache-dependency-path: quantum-computing/poetry.lock
+      - name: Install dependencies
+        working-directory: quantum-computing
+        run: |
+          poetry install
+      - name: Test
+        working-directory: quantum-computing
+        run: |
+          poetry run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4.5.0
+        with:
+          directory: quantum-computing
 
   supervision-detect-objects-test:
     name: supervision (detect-objects) | Test
