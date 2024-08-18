@@ -13,12 +13,12 @@ locals {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile
-resource "aws_iam_instance_profile" "hm_kafka_manager_ec2_instance_profile" {
+resource "aws_iam_instance_profile" "kafka_manager_ec2_instance_profile" {
   name = "${local.aws_iam_instance_profile_name_prefix}-${var.kafka_manager_name}"
-  role = aws_iam_role.hm_kafka_manager_iam_role.name
+  role = aws_iam_role.kafka_manager_role.name
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
-resource "aws_iam_role" "hm_kafka_manager_iam_role" {
+resource "aws_iam_role" "kafka_manager_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.kafka_manager_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -39,9 +39,9 @@ resource "aws_iam_role" "hm_kafka_manager_iam_role" {
   }
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
-resource "aws_iam_role_policy" "hm_kafka_manager_iam_role_policy" {
+resource "aws_iam_role_policy" "kafka_manager_role_policy" {
   name = "${local.aws_iam_role_name_prefix}Policy-${var.kafka_manager_name}"
-  role = aws_iam_role.hm_kafka_manager_iam_role.name
+  role = aws_iam_role.kafka_manager_role.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

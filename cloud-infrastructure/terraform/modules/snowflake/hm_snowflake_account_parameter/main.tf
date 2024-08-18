@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest/docs/resources/account_parameter
-resource "snowflake_account_parameter" "hm_snowflake_account_parameter" {
+resource "snowflake_account_parameter" "main" {
   key   = var.key
   value = var.value
 }

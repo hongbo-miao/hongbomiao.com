@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance
-resource "aws_db_instance" "hm_amazon_rds_instance" {
+resource "aws_db_instance" "rds_instance" {
   identifier                            = var.amazon_rds_name
   engine                                = var.amazon_rds_engine
   engine_version                        = var.amazon_rds_engine_version

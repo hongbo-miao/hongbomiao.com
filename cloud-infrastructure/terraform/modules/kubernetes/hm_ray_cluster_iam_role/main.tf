@@ -10,7 +10,7 @@ locals {
   aws_iam_role_name_prefix = "RayClusterRole"
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
-resource "aws_iam_role" "hm_ray_cluster_iam_role" {
+resource "aws_iam_role" "ray_cluster_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.ray_cluster_service_account_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -37,9 +37,9 @@ resource "aws_iam_role" "hm_ray_cluster_iam_role" {
   }
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
-resource "aws_iam_role_policy" "hm_ray_cluster_iam_role_policy" {
+resource "aws_iam_role_policy" "ray_cluster_role_policy" {
   name = "${local.aws_iam_role_name_prefix}Policy-${var.ray_cluster_service_account_name}"
-  role = aws_iam_role.hm_ray_cluster_iam_role.name
+  role = aws_iam_role.ray_cluster_role.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

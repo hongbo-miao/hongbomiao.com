@@ -13,7 +13,7 @@ locals {
 }
 # https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
-resource "aws_iam_role" "hm_external_dns_iam_role" {
+resource "aws_iam_role" "external_dns_role" {
   name = local.aws_iam_role_name
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -41,9 +41,9 @@ resource "aws_iam_role" "hm_external_dns_iam_role" {
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 # https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md
-resource "aws_iam_role_policy" "hm_external_dns_iam_role_policy" {
+resource "aws_iam_role_policy" "external_dns_role_policy" {
   name = local.aws_iam_role_policy_name
-  role = aws_iam_role.hm_external_dns_iam_role.name
+  role = aws_iam_role.external_dns_role.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

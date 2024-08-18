@@ -15,7 +15,7 @@ locals {
 # Amazon EKS Access Entry - IAM role
 module "amazon_eks_access_entry_iam" {
   providers                    = { aws = aws.production }
-  source                       = "../../../../modules/kubernetes/hm_amazon_eks_access_entry_iam"
+  source                       = "../../../../modules/kubernetes/hm_amazon_eks_access_entry_iam_role"
   amazon_eks_access_entry_name = local.amazon_eks_cluster_name
   amazon_eks_cluster_name_hash = local.amazon_eks_cluster_name_hash
   environment                  = var.environment
@@ -189,14 +189,14 @@ module "karpenter" {
 # Gateway API
 # Gateway API - S3 bucket
 module "amazon_s3_bucket_eks_cluster_elastic_load_balancer" {
-  providers      = { aws = aws.engineering }
+  providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.amazon_eks_cluster_name}-elastic-load-balancer"
   environment    = var.environment
   team           = var.team
 }
 module "amazon_s3_bucket_eks_cluster_network_load_balancer_policy" {
-  providers      = { aws = aws.engineering }
+  providers      = { aws = aws.production }
   source         = "../../../../modules/kubernetes/hm_aws_network_load_balancer_s3_bucket_policy"
   s3_bucket_name = module.amazon_s3_bucket_eks_cluster_elastic_load_balancer.name
 }
@@ -366,7 +366,7 @@ module "amazon_s3_bucket_hm_airbyte" {
 # Airbyte - IAM user
 module "airbyte_iam_user" {
   providers         = { aws = aws.production }
-  source            = "../../../../modules/aws/hm_airbyte_iam_user"
+  source            = "../../../../modules/kubernetes/hm_airbyte_iam_user"
   aws_iam_user_name = "${var.environment}_hm_airbyte_user"
   s3_bucket_name    = module.amazon_s3_bucket_hm_airbyte.name
   environment       = var.environment

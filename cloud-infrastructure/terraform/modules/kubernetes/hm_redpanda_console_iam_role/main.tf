@@ -10,7 +10,7 @@ locals {
   aws_iam_role_name_prefix = "RedpandaConsoleRole"
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
-resource "aws_iam_role" "hm_redpanda_console_iam_role" {
+resource "aws_iam_role" "redpanda_console_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.redpanda_console_service_account_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -37,9 +37,9 @@ resource "aws_iam_role" "hm_redpanda_console_iam_role" {
   }
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
-resource "aws_iam_role_policy" "hm_redpanda_console_iam_role_policy" {
+resource "aws_iam_role_policy" "redpanda_console_role_policy" {
   name = "${local.aws_iam_role_name_prefix}Policy-${var.redpanda_console_service_account_name}"
-  role = aws_iam_role.hm_redpanda_console_iam_role.name
+  role = aws_iam_role.redpanda_console_role.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

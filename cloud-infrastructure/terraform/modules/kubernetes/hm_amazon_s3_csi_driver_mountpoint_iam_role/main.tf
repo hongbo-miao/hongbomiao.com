@@ -11,7 +11,7 @@ locals {
 }
 # https://docs.aws.amazon.com/eks/latest/userguide/s3-csi.html
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
-resource "aws_iam_role" "hm_amazon_s3_csi_driver_mountpoint_iam_role" {
+resource "aws_iam_role" "s3_csi_driver_mountpoint_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -74,7 +74,7 @@ resource "aws_iam_policy" "hm_amazon_s3_csi_driver_mountpoint_iam_policy" {
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role_policy_attachment" "hm_amazon_emr_studio_iam_role_policy_attachment" {
-  role       = aws_iam_role.hm_amazon_s3_csi_driver_mountpoint_iam_role.name
+  role       = aws_iam_role.s3_csi_driver_mountpoint_role.name
   policy_arn = aws_iam_policy.hm_amazon_s3_csi_driver_mountpoint_iam_policy.arn
 }
 

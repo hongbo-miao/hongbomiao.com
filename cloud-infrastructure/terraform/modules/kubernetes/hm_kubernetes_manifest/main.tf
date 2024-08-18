@@ -10,7 +10,7 @@ data "kubectl_path_documents" "main" {
   pattern = "${var.manifest_dir_path}/*.yaml"
 }
 # https://registry.terraform.io/providers/gavinbunney/kubectl/latest/docs/resources/kubectl_manifest
-resource "kubectl_manifest" "hm_kubernetes_manifest" {
+resource "kubectl_manifest" "main" {
   count = length(
     flatten(
       toset([

@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/msk_cluster
-resource "aws_msk_cluster" "hm_amazon_msk_cluster" {
+resource "aws_msk_cluster" "main" {
   cluster_name           = var.amazon_msk_cluster_name
   kafka_version          = var.kafka_version
   number_of_broker_nodes = var.kafka_broker_number

@@ -1,6 +1,6 @@
 output "name" {
-  value = aws_s3_bucket.hm_amazon_s3_bucket.id
+  value = aws_s3_bucket.main.id
 }
 output "arn" {
-  value = aws_s3_bucket.hm_amazon_s3_bucket.arn
+  value = aws_s3_bucket.main.arn
 }

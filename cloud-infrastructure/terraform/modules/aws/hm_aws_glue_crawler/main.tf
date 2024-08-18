@@ -8,7 +8,7 @@ terraform {
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glue_crawler
 # https://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html
-resource "aws_glue_crawler" "hm_aws_glue_crawler" {
+resource "aws_glue_crawler" "main" {
   name          = var.aws_glue_crawler_name
   role          = var.iam_role_arn
   database_name = var.aws_glue_database

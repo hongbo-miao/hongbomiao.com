@@ -7,7 +7,7 @@ terraform {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/mskconnect_connector
-resource "aws_mskconnect_connector" "hm_amazon_msk_s3_parquet_sink_connector" {
+resource "aws_mskconnect_connector" "msk_s3_parquet_sink_connector" {
   name = var.amazon_msk_connector_name
   # https://docs.confluent.io/kafka-connectors/s3-sink/current/configuration_options.html
   connector_configuration = {
