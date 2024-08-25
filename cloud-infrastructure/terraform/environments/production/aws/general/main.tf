@@ -61,19 +61,19 @@ data "aws_secretsmanager_secret_version" "hm_rds_secret_version" {
   secret_id = data.aws_secretsmanager_secret.hm_rds_secret.id
 }
 locals {
-  amazon_emr_cluster_name = "hm-trino"
+  trino_cluster_name = "hm-trino"
 }
 module "s3_object_hm_trino_set_up_script" {
   providers       = { aws = aws.production }
   source          = "../../../../modules/aws/hm_amazon_s3_object"
   s3_bucket_name  = data.terraform_remote_state.production_aws_data_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids
-  s3_key          = "amazon-emr/clusters/${local.amazon_emr_cluster_name}/bootstrap-actions/set_up.sh"
-  local_file_path = "files/amazon-emr/clusters/${local.amazon_emr_cluster_name}/bootstrap-actions/set_up.sh"
+  s3_key          = "amazon-emr/clusters/${local.trino_cluster_name}/bootstrap-actions/set_up.sh"
+  local_file_path = "files/amazon-emr/clusters/${local.trino_cluster_name}/bootstrap-actions/set_up.sh"
 }
 module "hm_trino_emr" {
   providers                                  = { aws = aws.production }
   source                                     = "../../../../modules/aws/hm_amazon_emr_cluster"
-  amazon_emr_cluster_name                    = local.amazon_emr_cluster_name
+  amazon_emr_cluster_name                    = local.trino_cluster_name
   amazon_emr_version                         = "emr-7.2.0"
   applications                               = ["HCatalog", "Trino"]
   primary_instance_target_on_demand_capacity = 3
@@ -112,7 +112,7 @@ module "hm_trino_emr" {
         "Classification": "trino-exchange-manager",
         "Properties": {
           "exchange-manager.name": "filesystem",
-          "exchange.base-directories": "s3://${data.terraform_remote_state.production_aws_data_terraform_remote_state.outputs.hm_production_bucket_name}/amazon-emr/clusters/${local.amazon_emr_cluster_name}/exchange-spooling",
+          "exchange.base-directories": "s3://${data.terraform_remote_state.production_aws_data_terraform_remote_state.outputs.hm_production_bucket_name}/amazon-emr/clusters/${local.trino_cluster_name}/exchange-spooling",
           "exchange.s3.region": "us-west-2"
         }
       },
