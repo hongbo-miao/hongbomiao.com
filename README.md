@@ -100,30 +100,36 @@ make kubernetes-clean
 - **[Mozilla Observatory](https://observatory.mozilla.org/analyze/www.hongbomiao.com)** - Security monitoring
 - **[UptimeRobot](https://stats.uptimerobot.com/RoOoGTvyWN)** - Uptime monitoring
 
-## Mobile - iOS
+## Mobile
+
+### Mobile - iOS
 
 - **SwiftUI** - UI framework
 - **XCTest** - Unit testing, performance testing
 - **Slather** - Code coverage reports generating
 
-## Mobile - Android
+### Mobile - Android
 
 - **AndroidX** - Android Jetpack
 - **JUnit** - Unit testing, instrumented testing
 
-## Mobile - React Native
+### Mobile - React Native
 
 - **Expo** - Universal native apps making platform
 - **React Native** - Mobile application framework
 - **UI Kitten** - UI library
 - **React Native Testing Library** - React Native component testing
 
-## Desktop - Qt
+## Desktop
+
+### Desktop - Qt
 
 - **Qt Quick** - Cross-platform application development framework
 - **QML** - Qt modeling language
 
-## API Server - Go
+## API Server
+
+### API Server - Go
 
 - **Gin** - Web framework
 - **gRPC** - Remote procedure call (RPC) framework
@@ -145,7 +151,7 @@ make kubernetes-clean
 - **jsonparser** - JSON parser
 - **zerolog** - Logging
 
-## API Server - Python
+### API Server - Python
 
 - **Flask** - Web framework
 - **Flask-CORS** - Cross-Origin Resource Sharing (CORS)
@@ -159,7 +165,7 @@ make kubernetes-clean
 - **Poetry** - Python package management
   - **Poe the Poet** - Poetry task runner
 
-## API Server - Node.js
+### API Server - Node.js
 
 - **Express** - Web framework
 - **GraphQL.js**, **express-graphql** - GraphQL
