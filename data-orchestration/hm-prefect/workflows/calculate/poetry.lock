@@ -830,13 +830,13 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "griffe"
-version = "0.47.0"
+version = "1.2.0"
 description = "Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "griffe-0.47.0-py3-none-any.whl", hash = "sha256:07a2fd6a8c3d21d0bbb0decf701d62042ccc8a576645c7f8799fe1f10de2b2de"},
-    {file = "griffe-0.47.0.tar.gz", hash = "sha256:95119a440a3c932b13293538bdbc405bee4c36428547553dc6b327e7e7d35e5a"},
+    {file = "griffe-1.2.0-py3-none-any.whl", hash = "sha256:a8b2fcb1ecdc5a412e646b0b4375eb20a5d2eac3a11dd8c10c56967a4097663c"},
+    {file = "griffe-1.2.0.tar.gz", hash = "sha256:1c9f6ef7455930f3f9b0c4145a961c90385d1e2cbc496f7796fbff560ec60d31"},
 ]
 
 [package.dependencies]
@@ -1438,22 +1438,22 @@ poetry-plugin = ["poetry (>=1.0,<2.0)"]
 
 [[package]]
 name = "prefect"
-version = "2.20.2"
+version = "2.20.3"
 description = "Workflow orchestration and management."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "prefect-2.20.2-py3-none-any.whl", hash = "sha256:051cdb20e62654cd9c03a4fc51f601b4080a35bc0be5cf9f2b99dfec1bbf4aff"},
-    {file = "prefect-2.20.2.tar.gz", hash = "sha256:7e65d36c58649977474db29bf91ecf2c79925bcbf5256288886c1ab86a67be4f"},
+    {file = "prefect-2.20.3-py3-none-any.whl", hash = "sha256:d8bccfa19b97dd485081fb25c30534d8d358396533668a0a715a9a3111b8ef76"},
+    {file = "prefect-2.20.3.tar.gz", hash = "sha256:4ba14e2727c45b15c93979037eb1026d7ace71716da07e109a5f0fbc2b94caf0"},
 ]
 
 [package.dependencies]
-aiosqlite = ">=0.17.0"
+aiosqlite = ">=0.17.0,<1.0.0"
 alembic = ">=1.7.5,<2.0.0"
 anyio = ">=4.4.0,<5.0.0"
 apprise = ">=1.8.0,<2.0.0"
 asgi-lifespan = ">=1.0,<3.0"
-asyncpg = ">=0.23"
+asyncpg = ">=0.23,<1.0.0"
 cachetools = ">=5.3,<6.0"
 click = ">=8.0,<8.2"
 cloudpickle = ">=2.0,<4.0"
@@ -1461,15 +1461,15 @@ coolname = ">=1.0.4,<3.0.0"
 croniter = ">=1.0.12,<3.0.0"
 cryptography = ">=36.0.1"
 dateparser = ">=1.1.1,<2.0.0"
-docker = ">=4.0"
+docker = ">=4.0,<8.0"
 exceptiongroup = ">=1.2.1"
 fsspec = ">=2022.5.0"
 graphviz = ">=0.20.1"
-griffe = ">=0.20.0,<0.48.0"
+griffe = ">=0.49.0,<2.0.0"
 httpcore = ">=1.0.5,<2.0.0"
 httpx = {version = ">=0.23,<0.23.2 || >0.23.2", extras = ["http2"]}
-humanize = ">=4.9.0"
-importlib-resources = ">=6.1.3,<6.2.0"
+humanize = ">=4.9.0,<5.0.0"
+importlib-resources = ">=6.1.3,<6.5.0"
 itsdangerous = "*"
 jinja2 = ">=3.0.0,<4.0.0"
 jinja2-humanize-extension = ">=0.4.0"
@@ -1498,7 +1498,7 @@ typer = ">=0.12.0,<0.12.2 || >0.12.2,<0.13.0"
 typing-extensions = ">=4.5.0,<5.0.0"
 ujson = ">=5.8.0,<6.0.0"
 uvicorn = ">=0.14.0,<0.29.0 || >0.29.0"
-websockets = ">=10.4,<13.0"
+websockets = ">=10.4,<14.0"
 
 [package.extras]
 aws = ["prefect-aws"]
@@ -1507,7 +1507,7 @@ bitbucket = ["prefect-bitbucket"]
 dask = ["prefect-dask"]
 databricks = ["prefect-databricks"]
 dbt = ["prefect-dbt"]
-dev = ["cairosvg", "codespell (>=2.2.6)", "ddtrace", "ipython", "ipython (==8.12.*)", "jinja2", "mike", "mkdocs", "mkdocs-gen-files", "mkdocs-material", "mkdocstrings-python", "mock", "moto (>=5)", "mypy (>=1.9.0)", "numpy", "pillow", "pluggy (>=1.4.0)", "pre-commit", "pytest (>7,<8)", "pytest-asyncio (>=0.18.2,!=0.22.0,<0.23.0)", "pytest-benchmark", "pytest-cov", "pytest-env", "pytest-flakefinder", "pytest-timeout", "pytest-xdist (<3.4.0)", "pytkdocs (>=0.14.2)", "pyyaml", "requests (<2.32.0)", "respx", "ruff", "setuptools (!=60.9.0)", "types-PyYAML", "types-cachetools", "vermin", "virtualenv", "watchfiles"]
+dev = ["cairosvg", "codespell (>=2.2.6)", "ipython", "ipython (==8.12.*)", "jinja2", "mike", "mkdocs", "mkdocs-gen-files", "mkdocs-material", "mkdocstrings-python", "mock", "moto (>=5)", "mypy (>=1.9.0)", "numpy", "pillow", "pluggy (>=1.4.0)", "pre-commit", "pytest (>7,<9)", "pytest-asyncio (>=0.18.2,!=0.22.0,<0.23.0)", "pytest-benchmark", "pytest-cov", "pytest-env", "pytest-flakefinder", "pytest-timeout", "pytest-xdist (<3.4.0)", "pytkdocs (>=0.14.2)", "pyyaml", "respx", "ruff", "setuptools (!=60.9.0)", "types-PyYAML", "types-cachetools", "vermin", "virtualenv", "watchfiles"]
 docker = ["prefect-docker"]
 email = ["prefect-email"]
 gcp = ["prefect-gcp"]
@@ -2700,4 +2700,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "0e7f02cd44ce6f4ad95b49071df4b3083d874f446f40131ef470a92c0d89185e"
+content-hash = "9180fb35e35801868be0824dac7fdff09dea20ee5526e2bc322a63b500360ff0"
