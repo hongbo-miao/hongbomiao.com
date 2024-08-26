@@ -702,48 +702,63 @@ make kubernetes-clean
 
 ### Communication Standards
 
-- **User Datagram Protocol (UDP)**
-- **Transmission Control Protocol (TCP)**
-- **The Internet Protocol (IP)**
-  - **IPv4**
-  - **IPv6**
-- **Hypertext Transfer Protocol (HTTP)**
-  - **Hypertext Transfer Protocol Secure (HTTPS)**
-  - **HTTP/1.1**
-  - **HTTP/2**
-  - **HTTP/3**
-- **WebSocket**
-- **Web Real-Time Communication (WebRTC)**
-- **Remote Procedure Call (RPC)**
-  - RPC frameworks
-    - **Apache Avro**
-    - **Apache Thrift**
-    - **gRPC Remote Procedure Calls (gRPC)**
-  - Binary data serialization formats
-    - **Avro**
-    - **Thrift**
-    - **Protocol Buffers (Protobuf)**
-- File transfer protocols
-  - **File Transfer Protocol (FTP)**
-    - **Secure File Transfer Protocol (SFTP)**
-  - **Server Message Block (SMB)**
-  - **Web Distributed Authoring and Versioning (WebDAV)**
-- Email protocols
-  - **Post Office Protocol (POP)**
-  - **Simple Mail Transfer Protocol (SMTP)**
-  - **Internet Message Access Protocol (IMAP)**
-- Serial protocols
-  - **Inter-Integrated Circuit (I²C)**
-  - **Serial Peripheral Interface (SPI)**
-  - **Controller Area Network (CAN)**
-- Time protocols
-  - **Network Time Protocol (NTP)**
-  - **Precision Time Protocol (PTP)**
-  - **IRIG-B Time Protocol**
-- **MQTT**
+- **Open Systems Interconnection (OSI) model**
+  - Layer 1: Physical layer
+    - Serial protocols
+      - **Inter-Integrated Circuit (I²C)**
+      - **Serial Peripheral Interface (SPI)**
+      - **Controller Area Network (CAN)**
+  - Layer 2: Data link layer
+    - Ethernet
+    - Wi-Fi
+  - Layer 3: Network layer
+    - **The Internet Protocol (IP)**
+      - **IPv4**
+      - **IPv6**
+    - Time protocols
+      - **Network Time Protocol (NTP)**
+      - **Precision Time Protocol (PTP)**
+      - **IRIG-B Time Protocol**
+  - Layer 4: Transport layer
+    - **User Datagram Protocol (UDP)**
+    - **Transmission Control Protocol (TCP)**
+    - **QUIC**
+  - Layer 5: Session layer
+    - **WebSocket**
+    - **Web Real-Time Communication (WebRTC)**
+  - Layer 6: Presentation layer
+    - **Remote Procedure Call (RPC)**
+      - RPC frameworks
+        - **Apache Avro**
+        - **Apache Thrift**
+        - **gRPC Remote Procedure Calls (gRPC)**
+      - Binary data serialization formats
+        - **Avro**
+        - **Thrift**
+        - **Protocol Buffers (Protobuf)**
+  - Layer 7: Application layer
+    - **Hypertext Transfer Protocol (HTTP)**
+      - **Hypertext Transfer Protocol Secure (HTTPS)**
+      - **HTTP/0.9** - TCP/IP
+      - **HTTP/1.0** - TCP/IP
+      - **HTTP/1.1** - TCP/IP
+      - **HTTP/2** - TCP/IP
+      - **HTTP/3** - QUIC + UDP
+    - File transfer protocols
+      - **File Transfer Protocol (FTP)**
+        - **Secure File Transfer Protocol (SFTP)**
+      - **Server Message Block (SMB)**
+      - **Web Distributed Authoring and Versioning (WebDAV)**
+    - Email protocols
+      - **Post Office Protocol (POP)**
+      - **Simple Mail Transfer Protocol (SMTP)**
+      - **Internet Message Access Protocol (IMAP)**
+    - **MQTT**
 
 ### Wireless Network Standards
 
+- **1G**
+- **2G**
 - **3G**
 - **3.9G** - Long-Term Evolution (LTE)
 - **4G** - Long-Term Evolution (LTE) Advanced
