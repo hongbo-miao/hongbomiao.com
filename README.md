@@ -483,10 +483,6 @@ make kubernetes-clean
 - **GitGuardian** - Git secret scanning
 - **xxHash** - Hash algorithm
 
-## Network Programmability
-
-- **P4** - Programming Protocol-independent Packet Processors
-
 ## Reverse Engineering
 
 - **hexedit** - File viewing and editing in hexadecimal and ASCII
@@ -697,7 +693,13 @@ make kubernetes-clean
 - **XML**
 - **YAML**
 
-## Communication Standards and Protocols
+## Network
+
+### Network Programmability
+
+- **P4** - Programming Protocol-independent Packet Processors
+
+### Communication Standards
 
 - **User Datagram Protocol (UDP)**
 - **Transmission Control Protocol (TCP)**
@@ -738,6 +740,16 @@ make kubernetes-clean
   - **Precision Time Protocol (PTP)**
   - **IRIG-B Time Protocol**
 - **MQTT**
+
+### Wireless Network Standards
+
+- **3G**
+- **3.9G** - Long-Term Evolution (LTE)
+- **4G** - Long-Term Evolution (LTE) Advanced
+- **4.5G** - Long-Term Evolution (LTE) Advanced Pro
+- **5G** - 5G New Radio (NR)
+- **5.5G** - 5G Advanced
+- **6G**
 
 ## Guidelines
 
