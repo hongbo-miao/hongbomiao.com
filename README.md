@@ -528,6 +528,7 @@ make kubernetes-clean
   - **PyVISA** - Virtual instrument software architecture (VISA) API library
 - **MATLAB** - Programming and numeric computing platform
   - **5G Toolbox** - 5G communications systems simulation, analysis, and testing
+    - **6G Exploration Library** - 6G communications systems simulation, analysis, and testing
   - **Aerospace Toolbox** - Aerospace vehicle motion analysis and visualization
   - **Automated Driving Toolbox** - ADAS and autonomous driving systems design, simulation, and testing
   - **Bioinformatics Toolbox** - Genomic and proteomic data analysis and visualization
