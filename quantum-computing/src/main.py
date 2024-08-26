@@ -1,3 +1,5 @@
+import logging
+
 from matplotlib import pyplot as plt
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import SparsePauliOp
@@ -33,18 +35,18 @@ def main():
 
     job = estimator.run([(isa_circuit, mapped_observables)])
     result = job.result()
-    print(result)
+    logging.info(f"{result = }")
 
     # Submitted one Pub, so this contains one inner result (and some metadata of its own),
     # which had five observables, so contains information on all five.
     pub_result = job.result()[0]
-    print(pub_result)
+    logging.info(f"{pub_result = }")
 
     values = pub_result.data.evs
-    print(values)
+    logging.info(f"{values = }")
 
     errors = pub_result.data.stds
-    print(errors)
+    logging.info(f"{errors = }")
 
     plt.plot(observables_labels, values, "-o")
     plt.xlabel("Observables")
@@ -53,4 +55,5 @@ def main():
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     main()
