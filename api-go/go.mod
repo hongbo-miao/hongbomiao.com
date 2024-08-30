@@ -26,7 +26,7 @@ require (
 	github.com/redis/go-redis/v9 v9.6.1
 	github.com/rs/zerolog v1.33.0
 	github.com/stretchr/testify v1.9.0
-	go.elastic.co/apm/module/apmgin/v2 v2.6.0
+	go.elastic.co/apm/module/apmgin/v2 v2.6.2
 	go.elastic.co/apm/module/apmgrpc/v2 v2.6.2
 	go.opencensus.io v0.24.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.54.0
