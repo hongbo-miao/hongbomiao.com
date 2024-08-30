@@ -1465,27 +1465,28 @@ files = [
 
 [[package]]
 name = "supervision"
-version = "0.22.0"
+version = "0.23.0"
 description = "A set of easy-to-use utils that will come in handy in any Computer Vision project"
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "supervision-0.22.0-py3-none-any.whl", hash = "sha256:f6125337fcaca8cc15bd0b14eedfc6072c2a9944889acc24106cc8f108a56775"},
-    {file = "supervision-0.22.0.tar.gz", hash = "sha256:fdb845d4884c4ccfafc1198cd88a08539cfa5f9eeba729de645e17d5e9b6560a"},
+    {file = "supervision-0.23.0-py3-none-any.whl", hash = "sha256:63cc16558df5e5d4799426f3b81a4aadd4915b6ff3f70ea75cb8ef9933ddb93b"},
+    {file = "supervision-0.23.0.tar.gz", hash = "sha256:635039616604f60d232dd00db9e3d149cf4df3d7817e59dddeb058ec51c04351"},
 ]
 
 [package.dependencies]
 defusedxml = ">=0.7.1,<0.8.0"
 matplotlib = ">=3.6.0"
-numpy = ">=1.21.2"
+numpy = {version = ">=1.23.3", markers = "python_full_version > \"3.10.0\""}
 opencv-python-headless = ">=4.5.5.64"
 pillow = ">=9.4"
 pyyaml = ">=5.3"
 scipy = {version = ">=1.10.0,<2.0.0", markers = "python_version >= \"3.9\""}
 
 [package.extras]
-assets = ["requests (>=2.26.0,<=2.32.3)", "tqdm (>=4.62.3,<=4.66.4)"]
+assets = ["requests (>=2.26.0,<=2.32.3)", "tqdm (>=4.62.3,<=4.66.5)"]
 desktop = ["opencv-python (>=4.5.5.64)"]
+metrics = ["pandas (>=2.0.0)", "pandas-stubs (>=2.0.0.230412)"]
 
 [[package]]
 name = "sympy"
@@ -1745,4 +1746,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.x"
-content-hash = "f2761709cc75141bc6f67ea0965b908f33c82e62c6392561e1828b056deb9b05"
+content-hash = "c29e719a513c172447e8c9e5dcba0c7cdf5a4935b1c40902e610e1c73afdd6d4"
