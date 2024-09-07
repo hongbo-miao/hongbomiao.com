@@ -8,7 +8,7 @@ COPY api-go ./
 RUN go build -o ./out/cmd/config_loader/ ./cmd/config_loader/main.go
 
 
-FROM docker.io/alpine:3.20.2 AS release
+FROM docker.io/alpine:3.20.3 AS release
 WORKDIR /usr/src/app
 ENV GIN_MODE=release
 
