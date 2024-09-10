@@ -13,7 +13,7 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/external/latest
     external = {
       source  = "hashicorp/external"
-      version = "2.3.3"
+      version = "2.3.4"
     }
     # https://registry.terraform.io/providers/hashicorp/helm/latest
     helm = {
