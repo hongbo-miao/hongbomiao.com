@@ -338,6 +338,56 @@ make kubernetes-clean
 - **Databricks** - Unified data analytics platform
 - **Palantir** - Data integration and analysis platform
 
+### Data Quality
+
+- Data drift
+  - Covariate shift
+  - Concept drift
+  - Univariate drift
+    - Jensen-Shannen distance - categorical and continuous
+    - Hellinger - categorical and continuous
+    - Wasserstein - continuous
+    - Kolgomorov-Smirnov - continuous
+    - L-infinity - categorical
+    - Chi2 - categorical
+  - Multivariate drift
+- Performance estimation
+  - Direct loss estimation (DLE) - Regression
+    - Mean absolute error (MAE)
+    - Mean absolute percentage error (MAPE)
+    - Mean squared error (MSE)
+    - Root mean squared error (RMSE)
+    - Mean squared logarithmic error (MSLE)
+    - Root mean squared logarithmic error (RMSLE)
+  - Confidence-based performance estimation (CBPE)- Classification
+    - Confusion matrix
+    - ROC AUC
+    - Accuracy
+    - Precision
+    - Recall
+    - F1 score
+- Regression analysis
+  - Linear regression
+  - Polynomial regression
+  - Lasso regression (L1 regularization)
+  - Ridge regression (L2 regularization)
+  - Elastic net (L1 + L2 regularization)
+  - Logistic regression
+  - Bayesian regression
+  - Stepwise regression
+  - Robust regression
+  - Ecological regression
+  - Quantile regression
+- Ensemble learning
+  - Bagging
+  - Boosting
+    - Adaptive boosting
+      - AdaBoost
+    - Gradient boosting
+      - CatBoost
+      - XGBoost
+  - Stacking
+
 ### Machine Learning (ML)
 
 - **PyTorch** - Machine learning
