@@ -712,13 +712,13 @@ files = [
 
 [[package]]
 name = "trino"
-version = "0.329.0"
+version = "0.330.0"
 description = "Client for the Trino distributed SQL Engine"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "trino-0.329.0-py3-none-any.whl", hash = "sha256:74b82a38f16193ad869e63fb837d651e66c044f19a817232787e27c5d44b671f"},
-    {file = "trino-0.329.0.tar.gz", hash = "sha256:1d976467726ec3d0fa120a64e61fdb8caf13295db207051e2cc267a952af989b"},
+    {file = "trino-0.330.0-py3-none-any.whl", hash = "sha256:535f612d754338cfefa4b3fe86b63c8c000d21cb5ea476ae4ec4390d5cc37659"},
+    {file = "trino-0.330.0.tar.gz", hash = "sha256:1e731be22bc6fb4ce6537287419c3d221faaa8d089f5a05b0f01ef25b860e96e"},
 ]
 
 [package.dependencies]
@@ -731,10 +731,10 @@ tzlocal = "*"
 [package.extras]
 all = ["requests-kerberos", "sqlalchemy (>=1.3)"]
 external-authentication-token-cache = ["keyring"]
-gssapi = ["requests-gssapi"]
+gssapi = ["krb5 (==0.5.1)", "requests-gssapi"]
 kerberos = ["requests-kerberos"]
 sqlalchemy = ["sqlalchemy (>=1.3)"]
-tests = ["black", "httpretty (<1.1)", "isort", "pre-commit", "pytest", "pytest-runner", "requests-gssapi", "requests-kerberos", "sqlalchemy (>=1.3)"]
+tests = ["black", "httpretty (<1.1)", "isort", "keyring", "krb5 (==0.5.1)", "pre-commit", "pytest", "pytest-runner", "requests-gssapi", "requests-kerberos", "sqlalchemy (>=1.3)"]
 
 [[package]]
 name = "typing-extensions"
@@ -794,4 +794,4 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.x"
-content-hash = "aaacea11af939207782d75d934e843589f326ba75d77a94c37b828d6cc3a0878"
+content-hash = "78a080d9611be1d2a40caa5c387e2827250b26d5b035c6e35e26867d66082fe4"
