@@ -1306,19 +1306,21 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "wandb"
-version = "0.17.9"
+version = "0.18.3"
 description = "A CLI and library for interacting with the Weights & Biases API."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "wandb-0.17.9-py3-none-any.whl", hash = "sha256:475da9aeb921f49352107d940a5d2a67e5bdc980d561fbdaf990309fe8faeaa4"},
-    {file = "wandb-0.17.9-py3-none-macosx_10_14_x86_64.whl", hash = "sha256:9c056e36f12e1a6e7a03cf2abc806264baad44697bda33b5d901a42dc39f1bf8"},
-    {file = "wandb-0.17.9-py3-none-macosx_11_0_arm64.whl", hash = "sha256:9038d7971a9e86a8cdac4802b43c3167d4f1a00f9f5504b5e323ddec71d2e55a"},
-    {file = "wandb-0.17.9-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a1968d294fc357c8a8cd82c76f8b063a43d4225139bc8d4390100d47978f8f22"},
-    {file = "wandb-0.17.9-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c1cbb833987e8fd9754e94cbb18bb0564b01bc9c743b67d499700192de0bd154"},
-    {file = "wandb-0.17.9-py3-none-win32.whl", hash = "sha256:a6b83dba8199923ce44da6360a174df6eb8430dc6912e29afb60ad882a4f2c18"},
-    {file = "wandb-0.17.9-py3-none-win_amd64.whl", hash = "sha256:c5dad3d8650ccc84323d86f211cd2af9a66e7ed23dc62c8a897fcb0f4337a394"},
-    {file = "wandb-0.17.9.tar.gz", hash = "sha256:744e27c17636c8f8bdce05c7fe9d17b4814a4196cff313b97b3bf92e7593d2ce"},
+    {file = "wandb-0.18.3-py3-none-any.whl", hash = "sha256:7da64f7da0ff7572439de10bfd45534e8811e71e78ac2ccc3b818f1c0f3a9aef"},
+    {file = "wandb-0.18.3-py3-none-macosx_10_13_x86_64.whl", hash = "sha256:6674d8a5c40c79065b9c7eb765136756d5ebc9457a5f9abc820a660fb23f8b67"},
+    {file = "wandb-0.18.3-py3-none-macosx_11_0_arm64.whl", hash = "sha256:741f566e409a2684d3047e4cc25e8e914d78196b901190937b24b6abb8b052e5"},
+    {file = "wandb-0.18.3-py3-none-macosx_11_0_x86_64.whl", hash = "sha256:8be5e877570b693001c52dcc2089e48e6a4dcbf15f3adf5c9349f95148b59d58"},
+    {file = "wandb-0.18.3-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d788852bd4739fa18de3918f309c3a955b5cef3247fae1c40df3a63af637e1a0"},
+    {file = "wandb-0.18.3-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ab81424eb207d78239a8d69c90521a70074fb81e3709055484e43c76fe44dc08"},
+    {file = "wandb-0.18.3-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:2c91315b8b62423eae18577d66a4b4bb8e4341a7d5c849cb2963e3b3dff0bf6d"},
+    {file = "wandb-0.18.3-py3-none-win32.whl", hash = "sha256:92a647dab783938ec87776a9fae8a13e72e6dad939c53e357cdea9d2570f0ad8"},
+    {file = "wandb-0.18.3-py3-none-win_amd64.whl", hash = "sha256:29cac2cfa3124241fed22cfedc9a52e1500275ee9bbb0b428ce4bf63c4723bf0"},
+    {file = "wandb-0.18.3.tar.gz", hash = "sha256:eb2574cea72bc908c6ce1b37edf7a889619e6e06e1b4714eecfe0662ded43c06"},
 ]
 
 [package.dependencies]
@@ -1327,8 +1329,8 @@ docker-pycreds = ">=0.4.0"
 gitpython = ">=1.0.0,<3.1.29 || >3.1.29"
 platformdirs = "*"
 protobuf = [
-    {version = ">=3.12.0,<4.21.0 || >4.21.0,<6", markers = "python_version < \"3.9\" and sys_platform == \"linux\""},
-    {version = ">=3.19.0,<4.21.0 || >4.21.0,<6", markers = "sys_platform != \"linux\""},
+    {version = ">=3.12.0,<4.21.0 || >4.21.0,<5.28.0 || >5.28.0,<6", markers = "python_version < \"3.9\" and sys_platform == \"linux\""},
+    {version = ">=3.19.0,<4.21.0 || >4.21.0,<5.28.0 || >5.28.0,<6", markers = "sys_platform != \"linux\""},
 ]
 psutil = ">=5.0.0"
 pyyaml = "*"
@@ -1345,7 +1347,7 @@ gcp = ["google-cloud-storage"]
 importers = ["filelock", "mlflow", "polars (<=1.2.1)", "rich", "tenacity"]
 kubeflow = ["google-cloud-storage", "kubernetes", "minio", "sh"]
 launch = ["awscli", "azure-containerregistry", "azure-identity", "azure-storage-blob", "boto3", "botocore", "chardet", "google-auth", "google-cloud-aiplatform", "google-cloud-artifact-registry", "google-cloud-compute", "google-cloud-storage", "iso8601", "jsonschema", "kubernetes", "kubernetes-asyncio", "nbconvert", "nbformat", "optuna", "pydantic", "pyyaml (>=6.0.0)", "tomli", "typing-extensions"]
-media = ["bokeh", "moviepy", "numpy", "pillow", "plotly (>=5.18.0)", "rdkit-pypi", "soundfile"]
+media = ["bokeh", "imageio", "moviepy", "numpy", "pillow", "plotly (>=5.18.0)", "rdkit", "soundfile"]
 models = ["cloudpickle"]
 perf = ["orjson"]
 sweeps = ["sweeps (>=0.2.0)"]
@@ -1368,4 +1370,4 @@ test = ["pytest (>=6.0.0)", "setuptools (>=65)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.8.x"
-content-hash = "e4e9d5c6bd018705e341c7c49bceb13bcc6dd8a0a48e9d306780cd277db5c43c"
+content-hash = "7aca4c53210e83862abc15cdd19ee183fe92f7dcb76cc96903d7cdeedf1dd0f2"
