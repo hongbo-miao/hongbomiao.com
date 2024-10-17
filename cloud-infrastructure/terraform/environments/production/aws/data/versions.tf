@@ -18,7 +18,7 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/helm/latest
     helm = {
       source  = "hashicorp/helm"
-      version = "2.15.0"
+      version = "2.16.1"
     }
     # https://registry.terraform.io/providers/hashicorp/kubernetes/latest
     kubernetes = {
