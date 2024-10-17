@@ -1,4 +1,4 @@
-FROM docker.io/node:22.8.0-alpine AS base
+FROM docker.io/node:22.9.0-alpine AS base
 WORKDIR /usr/src/app
 
 FROM base AS builder
