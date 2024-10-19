@@ -14,7 +14,7 @@ concurrency:
 jobs:
   detect-changes:
     name: Detect Changes
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     permissions:
@@ -344,7 +344,7 @@ jobs:
     name: Web | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -373,7 +373,7 @@ jobs:
     name: Web | End-to-End Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.web-cypress == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -413,7 +413,7 @@ jobs:
     name: Web | Lighthouse
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -445,7 +445,7 @@ jobs:
     name: Web | Visual Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20
     steps:
@@ -528,7 +528,7 @@ jobs:
     name: Mobile - Android | Lint
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
     steps:
@@ -549,7 +549,7 @@ jobs:
     name: Mobile - Android | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
     steps:
@@ -593,7 +593,7 @@ jobs:
     name: Mobile - React Native | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -622,7 +622,7 @@ jobs:
     name: API - Go | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -646,7 +646,7 @@ jobs:
     name: API - Node.js | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -675,7 +675,7 @@ jobs:
     name: API - Node.js | Mutation Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -702,7 +702,7 @@ jobs:
     name: API - Python | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-python == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -748,7 +748,7 @@ jobs:
     name: Airflow | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-airflow == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -780,7 +780,7 @@ jobs:
     name: Amazon SageMaker (pytorch-mnist) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.amazon-sagemaker-pytorch-mnist == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -812,7 +812,7 @@ jobs:
     name: Amazon SageMaker Triton ResNet 50 (Deploy) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.amazon-sagamaker-triton-resnet-50-deploy == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -844,7 +844,7 @@ jobs:
     name: Amazon SageMaker Triton ResNet 50 (Infer) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.amazon-sagamaker-triton-resnet-50-infer == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -876,7 +876,7 @@ jobs:
     name: AWS Glue (production spark-scripts) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.production-aws-glue-spark-scripts == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -908,7 +908,7 @@ jobs:
     name: AWS ParallelCluster | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-aws-parallelcluster == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -941,7 +941,7 @@ jobs:
     needs: detect-changes
     if: ${{ false }}
     # if: ${{ needs.detect-changes.outputs.call-matlab-function-in-python == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -977,7 +977,7 @@ jobs:
     name: Decode CAN Data | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.decode-can-data == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1009,7 +1009,7 @@ jobs:
     name: Format CAN Data | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.format-can-data == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1041,7 +1041,7 @@ jobs:
     name: Data Distribution Service | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.data-distribution-service == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1073,7 +1073,7 @@ jobs:
     name: dbt (hm-postgres) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.dbt-hm-postgres == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1105,7 +1105,7 @@ jobs:
     name: Delta Lake (read-delta-lake-by-amazon-athena) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-amazon-athena == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1137,7 +1137,7 @@ jobs:
     name: Delta Lake (read-delta-lake-by-trino) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-trino == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1169,7 +1169,7 @@ jobs:
     name: Delta Lake (write-to-delta-lake) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.delta-lake-write-to-delta-lake == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1201,7 +1201,7 @@ jobs:
     name: AutoGluon | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1233,7 +1233,7 @@ jobs:
     name: Feature Store | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1265,7 +1265,7 @@ jobs:
     name: GeoPandas | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1297,7 +1297,7 @@ jobs:
     name: Hugging Face (analyze-sentiment) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1329,7 +1329,7 @@ jobs:
     name: Gradio (classify-image) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1361,7 +1361,7 @@ jobs:
     name: Streamlit (live-line-chart) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1393,7 +1393,7 @@ jobs:
     name: Streamlit (map) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1425,7 +1425,7 @@ jobs:
     name: JAX | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-jax == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1457,7 +1457,7 @@ jobs:
     name: Flax | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-flax == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1489,7 +1489,7 @@ jobs:
     name: Kubeflow (calculate) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1521,7 +1521,7 @@ jobs:
     name: Kubeflow (classify-mnist) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1553,7 +1553,7 @@ jobs:
     name: LangChain (chat-pdf) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1585,7 +1585,7 @@ jobs:
     name: MLflow (classify-mnist) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1617,7 +1617,7 @@ jobs:
     name: MLflow (predict-diabetes) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1649,7 +1649,7 @@ jobs:
     name: Neural Forecasting (forecast-air-passenger-number) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1681,7 +1681,7 @@ jobs:
     name: National Instruments (ni-veristand) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.national-instruments-hm-ni-veristand == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1713,7 +1713,7 @@ jobs:
     name: National Instruments (pyvisa) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.national-instruments-hm-pyvisa == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1745,7 +1745,7 @@ jobs:
     name: National Instruments (tdms) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.national-instruments-hm-tdms == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1777,7 +1777,7 @@ jobs:
     name: Open3D | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-open3d == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1809,7 +1809,7 @@ jobs:
     name: AeroSandbox | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1841,7 +1841,7 @@ jobs:
     name: OpenAeroStruct | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1873,7 +1873,7 @@ jobs:
     name: Prefect (calculate) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1905,7 +1905,7 @@ jobs:
     name: Prefect (greet) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1937,7 +1937,7 @@ jobs:
     name: Prefect (ingest-data) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-ingest-data == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1969,7 +1969,7 @@ jobs:
     name: Prefect (print-platform) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2001,7 +2001,7 @@ jobs:
     name: Prowler | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prowler == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2033,7 +2033,7 @@ jobs:
     name: Pulumi | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-pulumi == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2065,7 +2065,7 @@ jobs:
     name: PyVista (mount-saint-helens) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2097,7 +2097,7 @@ jobs:
     name: Ray (calculate) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-ray-calculate == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2129,7 +2129,7 @@ jobs:
     name: Ray (process-flight-data) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-ray-process-flight-data == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2161,7 +2161,7 @@ jobs:
     name: Reinforcement Learning (cart-pole) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2193,7 +2193,7 @@ jobs:
     name: Serial | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-serial == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2225,7 +2225,7 @@ jobs:
     name: Pack Unpack Data | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.pack-unpack-data == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2257,7 +2257,7 @@ jobs:
     name: SkyPilot | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-skypilot == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2289,7 +2289,7 @@ jobs:
     name: Quantum Computing | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.quantum-computing == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2321,7 +2321,7 @@ jobs:
     name: supervision (detect-objects) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2353,7 +2353,7 @@ jobs:
     name: xxHash | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-xxhash == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2385,7 +2385,7 @@ jobs:
     name: Spark (analyze-coffee-customers) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2417,7 +2417,7 @@ jobs:
     name: Spark (find-retired-people-python) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2449,7 +2449,7 @@ jobs:
     name: Spark (find-retired-people-scala) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2470,7 +2470,7 @@ jobs:
     name: Spark (find-taxi-top-routes) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2502,7 +2502,7 @@ jobs:
     name: Spark (find-taxi-top-routes-sql) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes-sql == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2534,7 +2534,7 @@ jobs:
     name: Spark (ingest-from-s3-to-kafka) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2555,7 +2555,7 @@ jobs:
     name: Spark (recommend-movies) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2587,7 +2587,7 @@ jobs:
     name: Flink (stream-tweets) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2608,7 +2608,7 @@ jobs:
     name: OPA | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2626,10 +2626,10 @@ jobs:
     name: ROS | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.robot-operating-system == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20
-    container: ubuntu:jammy
+    container: ubuntu:noble
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.1
@@ -2647,7 +2647,7 @@ jobs:
     name: Prometheus | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.prometheus == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2661,7 +2661,7 @@ jobs:
     name: Grafana (hm-dashboard) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2693,7 +2693,7 @@ jobs:
     name: HM OPAL Client | Build
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-opal-client == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2713,7 +2713,7 @@ jobs:
     name: Rasa | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2729,7 +2729,7 @@ jobs:
     name: GNN | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2761,7 +2761,7 @@ jobs:
     name: GNN | Train
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20
     steps:
@@ -2793,7 +2793,7 @@ jobs:
     name: CNN | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -2825,7 +2825,7 @@ jobs:
     name: CNN | CML (Local) - Train
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20
     steps:
@@ -2866,7 +2866,7 @@ jobs:
 
   convolutional-neural-network-cml-cloud-set-up:
     name: CNN | CML (Cloud) - Set Up
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     needs: detect-changes
     if: ${{ false }}
@@ -2939,7 +2939,7 @@ jobs:
   code-review:
     name: Code Review
     if: ${{ false }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     permissions:

@@ -7,7 +7,7 @@ name: . Static Type Check
 jobs:
   detect-changes:
     name: Detect Changes
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     permissions:
@@ -58,7 +58,7 @@ jobs:
     name: Kotlin (mobile-android)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
     steps:
@@ -77,7 +77,7 @@ jobs:
 
   static-type-check-python:
     name: Python
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -154,7 +154,7 @@ jobs:
     name: Terraform (production/aws)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.terraform == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -175,7 +175,7 @@ jobs:
     name: Terraform (production/snowflake)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.terraform == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -196,7 +196,7 @@ jobs:
     name: TypeScript (api-node)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -221,7 +221,7 @@ jobs:
     name: TypeScript (ethereum)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -246,7 +246,7 @@ jobs:
     name: TypeScript (grafana-hm-panel-plugin)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -271,7 +271,7 @@ jobs:
     name: TypeScript (mobile-react-native)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -296,7 +296,7 @@ jobs:
     name: TypeScript (web)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -321,7 +321,7 @@ jobs:
     name: TypeScript (web-cypress)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:

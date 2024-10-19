@@ -10,7 +10,7 @@ name: Build
 jobs:
   detect-changes:
     name: Detect Changes
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 10
     permissions:
@@ -138,7 +138,7 @@ jobs:
     name: Build hm-web
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -174,7 +174,7 @@ jobs:
     name: Build hm-api-node
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -210,7 +210,7 @@ jobs:
     name: Build hm-api-python
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-python == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -246,7 +246,7 @@ jobs:
     name: Build hm-graphql-server
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -282,7 +282,7 @@ jobs:
     name: Build hm-grpc-server
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -318,7 +318,7 @@ jobs:
     name: Build hm-config-loader
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -354,7 +354,7 @@ jobs:
     name: Build hm-decision-logger
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -390,7 +390,7 @@ jobs:
     name: Build hm-prefect-calculate
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -426,7 +426,7 @@ jobs:
     name: Build hm-prefect-greet
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -462,7 +462,7 @@ jobs:
     name: Build hm-prefect-ingest-data
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-ingest-data == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -498,7 +498,7 @@ jobs:
     name: Build hm-prefect-print-platform
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -534,7 +534,7 @@ jobs:
     name: Build hm-spark-find-retired-people-python
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -570,7 +570,7 @@ jobs:
     name: Build hm-spark-find-retired-people-scala
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -606,7 +606,7 @@ jobs:
     name: Build hm-spark-ingest-from-s3-to-kafka
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -642,7 +642,7 @@ jobs:
     name: Build hm-kafka-iot-kafka-connect
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-kafka-iot-kafka-connect == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -678,7 +678,7 @@ jobs:
     name: Build hm-kafka-logging-kafka-connect
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-kafka-logging-kafka-connect == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -714,7 +714,7 @@ jobs:
     name: Build hm-kafka-opa-kafka-connect
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-kafka-opa-kafka-connect == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -750,7 +750,7 @@ jobs:
     name: Build hm-confluent-schema-registry
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-confluent-schema-registry == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -786,7 +786,7 @@ jobs:
     name: Build hm-opal-client
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-opal-client == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -822,7 +822,7 @@ jobs:
     name: Build hm-rasa-action-server
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -858,7 +858,7 @@ jobs:
     name: Build flink-stream-tweets
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -900,7 +900,7 @@ jobs:
     name: Build hm-keydb
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-keydb == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -943,7 +943,7 @@ jobs:
     name: Build hm-traefik
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-traefik == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -979,7 +979,7 @@ jobs:
     name: Build hm-alpine
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-alpine == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 60
     steps:
@@ -1015,7 +1015,7 @@ jobs:
     name: Upload pgbackrest
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-pgbackrest == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: production
     timeout-minutes: 10
     steps:
@@ -1038,7 +1038,7 @@ jobs:
     name: Deploy hm-api-node
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment:
       name: production-web
       url: https://www.hongbomiao.com
