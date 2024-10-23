@@ -171,6 +171,8 @@ cargo-update:
 	cargo update
 cargo-add:
 	cargo add xxx
+cargo-add-features:
+	cargo add xxx --features=xxx
 cargo-add-dev:
 	cargo add xxx --dev
 
