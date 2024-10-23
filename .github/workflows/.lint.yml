@@ -7,7 +7,7 @@ name: . Lint
 jobs:
   detect-changes:
     name: Detect Changes
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     permissions:
@@ -67,7 +67,7 @@ jobs:
 
   lint-ansible:
     name: Ansible
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -94,7 +94,7 @@ jobs:
 
   lint-c-cpp:
     name: C, C++
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -110,7 +110,7 @@ jobs:
 
   lint-cmake:
     name: CMake
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -134,7 +134,7 @@ jobs:
 
   lint-commit-message:
     name: Commit Message
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -147,7 +147,7 @@ jobs:
 
   lint-css:
     name: CSS
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -168,7 +168,7 @@ jobs:
 
   lint-dockerfile:
     name: Dockerfile
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -183,7 +183,7 @@ jobs:
     name: Go
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -205,7 +205,7 @@ jobs:
     name: JavaScript (api-node)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -230,7 +230,7 @@ jobs:
     name: JavaScript (ethereum)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -255,7 +255,7 @@ jobs:
     name: JavaScript (grafana-hm-panel-plugin)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -280,7 +280,7 @@ jobs:
     name: JavaScript (mobile-react-native)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -305,7 +305,7 @@ jobs:
     name: JavaScript (web)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -330,7 +330,7 @@ jobs:
     name: JavaScript (web-cypress)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -355,7 +355,7 @@ jobs:
     name: Kotlin (mobile-android)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
     steps:
@@ -376,7 +376,7 @@ jobs:
     name: Kubernetes Manifest
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kubernetes == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -402,7 +402,7 @@ jobs:
 
   lint-markdown:
     name: Markdown
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -423,7 +423,7 @@ jobs:
 
   lint-matlab:
     name: MATLAB
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -449,7 +449,7 @@ jobs:
     name: Protocol Buffers (api-go)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -467,7 +467,7 @@ jobs:
 
   lint-python:
     name: Python
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -497,7 +497,7 @@ jobs:
 
   lint-qml:
     name: QML
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
     steps:
@@ -514,7 +514,7 @@ jobs:
 
   lint-ruby:
     name: Ruby
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
     steps:
@@ -532,7 +532,7 @@ jobs:
     name: Scala (hm-spark-find-retired-people-scala)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -557,7 +557,7 @@ jobs:
     name: Scala (hm-spark-ingest-from-s3-to-kafka)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -580,7 +580,7 @@ jobs:
 
   lint-shell:
     name: Shell
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -592,7 +592,7 @@ jobs:
 
   lint-solidity:
     name: Solidity
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -613,7 +613,7 @@ jobs:
 
   lint-sql:
     name: SQL
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -652,7 +652,7 @@ jobs:
 
   lint-terraform:
     name: Terraform
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -666,7 +666,7 @@ jobs:
 
   lint-vhdl:
     name: VHDL
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -690,7 +690,7 @@ jobs:
 
   lint-xml:
     name: XML
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -711,7 +711,7 @@ jobs:
 
   lint-yaml:
     name: YAML
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
