@@ -20,10 +20,4 @@ resource "airbyte_connection" "main" {
   configurations = {
     streams = var.streams
   }
-  lifecycle {
-    ignore_changes = [
-      # https://github.com/airbytehq/terraform-provider-airbyte/issues/83
-      configurations.streams
-    ]
-  }
 }

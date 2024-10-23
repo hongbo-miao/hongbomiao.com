@@ -7,8 +7,8 @@ sealed-secrets-seal:
 		> kubernetes-manifests/hm-airbyte-secret.yaml
 
 argo-cd-app-create:
-	argocd app create hm-airbyte --file=argo-cd-manifests/hm-airbyte-application.yaml
+	argocd app create production-hm-airbyte --file=argo-cd-manifests/hm-airbyte-application.yaml
 argo-cd-app-update:
-	argocd app create hm-airbyte --file=argo-cd-manifests/hm-airbyte-application.yaml --upsert
+	argocd app create production-hm-airbyte --file=argo-cd-manifests/hm-airbyte-application.yaml --upsert
 argo-cd-app-delete:
-	argocd app delete hm-airbyte --yes
+	argocd app delete production-hm-airbyte --yes

@@ -3,7 +3,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hm-airbyte
+  name: production-hm-airbyte
   namespace: production-hm-argo-cd
   labels:
     app.kubernetes.io/name: hm-airbyte
@@ -256,7 +256,7 @@ spec:
             existingSecretPasswordKey: POSTGRES_PASSWORD
             jdbcUrl: jdbc:postgresql://production-hm-airbyte-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com:5432/airbyte_db?ssl=true&sslmode=require
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-      targetRevision: HEAD
+      targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/airbyte/kubernetes-manifests
   destination:
     namespace: production-hm-airbyte

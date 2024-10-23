@@ -2,13 +2,14 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: hm-netdata-storage-class
+  name: production-hm-netdata-storage-class
   annotations:
     # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
     argocd.argoproj.io/hook: PreSync
 provisioner: kubernetes.io/aws-ebs
 volumeBindingMode: Immediate
 reclaimPolicy: Retain
+allowVolumeExpansion: true
 # https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/docs/parameters.md
 parameters:
   csi.storage.k8s.io/fstype: ext4
