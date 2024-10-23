@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hm-cert-manager
+  name: production-hm-cert-manager
   namespace: production-hm-argo-cd
   labels:
     app.kubernetes.io/name: hm-cert-manager
@@ -68,7 +68,7 @@ spec:
                 cpu: 100m
                 memory: 256Mi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-      targetRevision: HEAD
+      targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/cert-manager/kubernetes-manifests
   destination:
     namespace: production-hm-cert-manager

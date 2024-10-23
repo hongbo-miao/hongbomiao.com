@@ -21,6 +21,7 @@ resource "airbyte_source_postgres" "main" {
       read_changes_using_write_ahead_log_cdc = {
         replication_slot                     = "airbyte_${var.postgres_schema}_logical_replication_slot"
         publication                          = "airbyte_${var.postgres_schema}_publication"
+        initial_load_timeout_hours           = 8
         initial_waiting_seconds              = var.initial_waiting_time_s
         queue_size                           = 10000
         heartbeat_action_query               = "insert into ${var.postgres_schema}._airbyte_heartbeat (id, timestamp) values (1, now()) on conflict (id) do update set timestamp = excluded.timestamp;"

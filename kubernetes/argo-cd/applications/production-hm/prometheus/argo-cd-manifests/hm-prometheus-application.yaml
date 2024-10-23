@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hm-prometheus
+  name: production-hm-prometheus
   namespace: production-hm-argo-cd
   labels:
     app.kubernetes.io/name: hm-prometheus
@@ -98,7 +98,7 @@ spec:
                 cpu: 100m
                 memory: 512Mi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-      targetRevision: HEAD
+      targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/prometheus/kubernetes-manifests
   destination:
     namespace: production-hm-prometheus

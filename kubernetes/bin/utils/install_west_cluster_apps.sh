@@ -11,5 +11,5 @@ argocd login localhost:31026 --username=admin --password="${ARGOCD_PASSWORD}" --
 kubectl apply --filename=kubernetes/manifests/argocd/hm-application.yaml
 argocd app sync hm-application --grpc-web --local=kubernetes/manifests/west
 pgrep kubectl | xargs kill -9
-# Delete: argocd app delete hm-application --yes
+# Delete: argocd app delete production-hm-application --yes
 echo "=================================================="

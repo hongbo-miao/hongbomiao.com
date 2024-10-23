@@ -45,6 +45,8 @@ show-cpu-details:
 	cat /proc/cpuinfo
 
 # Disk
+show-block-devices:
+	lsblk
 show-disk-free:
 	df --human-readable
 show-disk-usage:

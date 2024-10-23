@@ -1,6 +1,6 @@
 argo-cd-app-create:
-	argocd app create hm-redpanda-console --file=argo-cd-manifests/hm-redpanda-console-application.yaml
+	argocd app create production-hm-redpanda-console --file=argo-cd-manifests/hm-redpanda-console-application.yaml
 argo-cd-app-update:
-	argocd app create hm-redpanda-console --file=argo-cd-manifests/hm-redpanda-console-application.yaml --upsert
+	argocd app create production-hm-redpanda-console --file=argo-cd-manifests/hm-redpanda-console-application.yaml --upsert
 argo-cd-app-delete:
-	argocd app delete hm-redpanda-console --yes
+	argocd app delete production-hm-redpanda-console --yes

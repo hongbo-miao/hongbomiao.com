@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hm-opencost
+  name: production-hm-opencost
   namespace: production-hm-argo-cd
   labels:
     app.kubernetes.io/name: hm-opencost
@@ -43,7 +43,7 @@ spec:
                   cpu: 100m
                   memory: 256Mi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-      targetRevision: HEAD
+      targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/opencost/kubernetes-manifests
   destination:
     namespace: production-hm-opencost

@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hm-mlflow
+  name: production-hm-mlflow
   namespace: production-hm-argo-cd
   labels:
     app.kubernetes.io/name: hm-mlflow
@@ -73,7 +73,7 @@ spec:
             serveArtifacts: false
             useCredentialsInSecret: false
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-      targetRevision: HEAD
+      targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/mlflow/kubernetes-manifests
   destination:
     namespace: production-hm-mlflow

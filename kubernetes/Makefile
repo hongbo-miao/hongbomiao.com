@@ -459,7 +459,7 @@ argo-cd-sync-local-full:
 argo-cd-list:
 	argocd app list
 argo-cd-delete:
-	argocd app delete hm-application --yes
+	argocd app delete production-hm-application --yes
 kubectl-get-pods-argocd:
 	kubectl get pods --namespace=argocd
 kubectl-get-rolebindings-argocd:
