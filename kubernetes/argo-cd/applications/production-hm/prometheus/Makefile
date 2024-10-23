@@ -1,6 +1,6 @@
 argo-cd-app-create:
-	argocd app create hm-prometheus --file=argo-cd-manifests/hm-prometheus-application.yaml
+	argocd app create production-hm-prometheus --file=argo-cd-manifests/hm-prometheus-application.yaml
 argo-cd-app-update:
-	argocd app create hm-prometheus --file=argo-cd-manifests/hm-prometheus-application.yaml --upsert
+	argocd app create production-hm-prometheus --file=argo-cd-manifests/hm-prometheus-application.yaml --upsert
 argo-cd-app-delete:
-	argocd app delete hm-prometheus --yes
+	argocd app delete production-hm-prometheus --yes

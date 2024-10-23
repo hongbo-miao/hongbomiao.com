@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hm-netdata
+  name: production-hm-netdata
   namespace: production-hm-argo-cd
   labels:
     app.kubernetes.io/name: hm-netdata
@@ -22,11 +22,11 @@ spec:
             enabled: true
             database:
               persistence: true
-              storageclass: hm-netdata-storage-class
+              storageclass: production-hm-netdata-storage-class
               volumesize: 5Gi
             alarms:
               persistence: true
-              storageclass: hm-netdata-storage-class
+              storageclass: production-hm-netdata-storage-class
               volumesize: 1Gi
             resources:
               requests:
@@ -79,12 +79,12 @@ spec:
                 memory: 256Mi
             persistence:
               enabled: true
-              storageclass: hm-netdata-storage-class
+              storageclass: production-hm-netdata-storage-class
               volumesize: 1Gi
           ingress:
             enabled: false
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-      targetRevision: HEAD
+      targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/netadata/kubernetes-manifests
   destination:
     namespace: production-hm-netdata

@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hm-confluent-schema-registry
+  name: production-hm-confluent-schema-registry
   namespace: production-hm-argo-cd
   labels:
     app.kubernetes.io/name: hm-confluent-schema-registry
@@ -10,7 +10,7 @@ spec:
   project: production-hm
   source:
     repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-    targetRevision: HEAD
+    targetRevision: main
     path: kubernetes/argo-cd/applications/production-hm/confluent-schema-registry/kubernetes-manifests
   destination:
     namespace: production-hm-confluent-schema-registry

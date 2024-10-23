@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hm-kafbat-ui
+  name: production-hm-kafbat-ui
   namespace: production-hm-argo-cd
   labels:
     app.kubernetes.io/name: hm-kafbat-ui
@@ -46,7 +46,7 @@ spec:
               cpu: 300m
               memory: 2Gi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-      targetRevision: HEAD
+      targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/kafbat-ui/kubernetes-manifests
   destination:
     namespace: production-hm-kafbat-ui

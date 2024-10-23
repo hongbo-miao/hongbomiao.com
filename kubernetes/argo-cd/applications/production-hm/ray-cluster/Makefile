@@ -1,9 +1,9 @@
 argo-cd-app-create:
-	argocd app create hm-ray-cluster --file=argo-cd-manifests/hm-ray-cluster-application.yaml
+	argocd app create production-hm-ray-cluster --file=argo-cd-manifests/hm-ray-cluster-application.yaml
 argo-cd-app-update:
-	argocd app create hm-ray-cluster --file=argo-cd-manifests/hm-ray-cluster-application.yaml --upsert
+	argocd app create production-hm-ray-cluster --file=argo-cd-manifests/hm-ray-cluster-application.yaml --upsert
 argo-cd-app-delete:
-	argocd app delete hm-ray-cluster --yes
+	argocd app delete production-hm-ray-cluster --yes
 
 # https://docs.ray.io/en/latest/cluster/kubernetes/k8s-ecosystem/prometheus-grafana.html
 fetch-grafana-dashboards:

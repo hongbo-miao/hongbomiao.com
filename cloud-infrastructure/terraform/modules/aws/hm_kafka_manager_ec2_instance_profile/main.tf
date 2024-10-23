@@ -69,6 +69,7 @@ resource "aws_iam_role_policy" "kafka_manager_role_policy" {
         Effect = "Allow"
         Action = [
           "kafka-cluster:DescribeTopic",
+          "kafka-cluster:DescribeTopicDynamicConfiguration",
           "kafka-cluster:CreateTopic",
           "kafka-cluster:ReadData",
           "kafka-cluster:WriteData",

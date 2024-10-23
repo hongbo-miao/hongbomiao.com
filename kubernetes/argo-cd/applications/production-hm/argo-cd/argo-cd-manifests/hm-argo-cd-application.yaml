@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hm-argo-cd
+  name: production-hm-argo-cd
   namespace: production-hm-argo-cd
   labels:
     app.kubernetes.io/name: hm-argo-cd
@@ -10,7 +10,7 @@ spec:
   project: production-hm
   source:
     repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-    targetRevision: HEAD
+    targetRevision: main
     path: kubernetes/argo-cd/applications/production-hm/argo-cd/kubernetes-manifests
   destination:
     namespace: production-hm-argo-cd
