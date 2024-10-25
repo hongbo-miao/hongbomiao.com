@@ -20,8 +20,8 @@
 int main(int argc, char **argv) {
   const char *confluent_schema_registry_url =
     "https://confluent-schema-registry.internal.hongbomiao.com";
-  const char *topic = "production.iot.device.json";
-  const char *schema_name = "production.iot.device.json-value";
+  const char *topic = "production.iot.device.avro";
+  const char *schema_name = "production.iot.device.avro-value";
 
   rd_kafka_t *producer;
   rd_kafka_conf_t *conf;
