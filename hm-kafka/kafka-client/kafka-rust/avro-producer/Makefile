@@ -11,3 +11,6 @@ lint-rust-clippy:
 	cargo clippy
 lint-rust-clippy-fix:
 	cargo clippy --fix --allow-dirty --allow-staged
+
+cargo-update:
+	cargo update
