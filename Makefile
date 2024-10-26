@@ -92,7 +92,7 @@ conda-list-packages:
 pyenv-list-versions:
 	pyenv versions
 pyenv-install:
-	pyenv install 3.11
+	pyenv install 3.13
 pyenv-uninstall:
 	pyenv uninstall 3.11
 pyenv-local:
@@ -116,7 +116,7 @@ poetry-env-list:
 	# ~/Library/Caches/pypoetry/virtualenvs
 	poetry env list
 poetry-env-use:
-	poetry env use python3.12
+	poetry env use python3.13
 poetry-env-remove:
 	poetry env remove xxx
 poetry-update-lock-file:
