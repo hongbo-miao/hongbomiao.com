@@ -667,26 +667,6 @@ pandas = ["pandas"]
 pyspark = ["delta-spark", "numpy (==1.22.2)", "pyspark"]
 
 [[package]]
-name = "dnspython"
-version = "2.7.0"
-description = "DNS toolkit"
-optional = false
-python-versions = ">=3.9"
-files = [
-    {file = "dnspython-2.7.0-py3-none-any.whl", hash = "sha256:b4c34b7d10b51bcc3a5071e7b8dee77939f1e878477eeecc965e9835f63c6c86"},
-    {file = "dnspython-2.7.0.tar.gz", hash = "sha256:ce9c432eda0dc91cf618a5cedf1a4e142651196bbcd2c80e89ed5a907e5cfaf1"},
-]
-
-[package.extras]
-dev = ["black (>=23.1.0)", "coverage (>=7.0)", "flake8 (>=7)", "hypercorn (>=0.16.0)", "mypy (>=1.8)", "pylint (>=3)", "pytest (>=7.4)", "pytest-cov (>=4.1.0)", "quart-trio (>=0.11.0)", "sphinx (>=7.2.0)", "sphinx-rtd-theme (>=2.0.0)", "twine (>=4.0.0)", "wheel (>=0.42.0)"]
-dnssec = ["cryptography (>=43)"]
-doh = ["h2 (>=4.1.0)", "httpcore (>=1.0.0)", "httpx (>=0.26.0)"]
-doq = ["aioquic (>=1.0.0)"]
-idna = ["idna (>=3.7)"]
-trio = ["trio (>=0.23)"]
-wmi = ["wmi (>=1.5.1)"]
-
-[[package]]
 name = "docker"
 version = "7.1.0"
 description = "A Python library for the Docker Engine API."
@@ -709,21 +689,6 @@ ssh = ["paramiko (>=2.4.3)"]
 websockets = ["websocket-client (>=1.3.0)"]
 
 [[package]]
-name = "email-validator"
-version = "2.2.0"
-description = "A robust email address syntax and deliverability validation library."
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "email_validator-2.2.0-py3-none-any.whl", hash = "sha256:561977c2d73ce3611850a06fa56b414621e0c8faa9d66f2611407d87465da631"},
-    {file = "email_validator-2.2.0.tar.gz", hash = "sha256:cb690f344c617a714f22e66ae771445a1ceb46821152df8e165c5f9a364582b7"},
-]
-
-[package.dependencies]
-dnspython = ">=2.0.0"
-idna = ">=2.0.0"
-
-[[package]]
 name = "exceptiongroup"
 version = "1.2.2"
 description = "Backport of PEP 654 (exception groups)"
@@ -736,6 +701,26 @@ files = [
 
 [package.extras]
 test = ["pytest (>=6)"]
+
+[[package]]
+name = "fastapi"
+version = "0.115.3"
+description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "fastapi-0.115.3-py3-none-any.whl", hash = "sha256:8035e8f9a2b0aa89cea03b6c77721178ed5358e1aea4cd8570d9466895c0638c"},
+    {file = "fastapi-0.115.3.tar.gz", hash = "sha256:c091c6a35599c036d676fa24bd4a6e19fa30058d93d950216cdc672881f6f7db"},
+]
+
+[package.dependencies]
+pydantic = ">=1.7.4,<1.8 || >1.8,<1.8.1 || >1.8.1,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.1.0 || >2.1.0,<3.0.0"
+starlette = ">=0.40.0,<0.42.0"
+typing-extensions = ">=4.8.0"
+
+[package.extras]
+all = ["email-validator (>=2.0.0)", "fastapi-cli[standard] (>=0.0.5)", "httpx (>=0.23.0)", "itsdangerous (>=1.1.0)", "jinja2 (>=2.11.2)", "orjson (>=3.2.1)", "pydantic-extra-types (>=2.0.0)", "pydantic-settings (>=2.0.0)", "python-multipart (>=0.0.7)", "pyyaml (>=5.3.1)", "ujson (>=4.0.1,!=4.0.2,!=4.1.0,!=4.2.0,!=4.3.0,!=5.0.0,!=5.1.0)", "uvicorn[standard] (>=0.12.0)"]
+standard = ["email-validator (>=2.0.0)", "fastapi-cli[standard] (>=0.0.5)", "httpx (>=0.23.0)", "jinja2 (>=2.11.2)", "python-multipart (>=0.0.7)", "uvicorn[standard] (>=0.12.0)"]
 
 [[package]]
 name = "fsspec"
@@ -775,29 +760,6 @@ test = ["aiohttp (!=4.0.0a0,!=4.0.0a1)", "numpy", "pytest", "pytest-asyncio (!=0
 test-downstream = ["aiobotocore (>=2.5.4,<3.0.0)", "dask-expr", "dask[dataframe,test]", "moto[server] (>4,<5)", "pytest-timeout", "xarray"]
 test-full = ["adlfs", "aiohttp (!=4.0.0a0,!=4.0.0a1)", "cloudpickle", "dask", "distributed", "dropbox", "dropboxdrivefs", "fastparquet", "fusepy", "gcsfs", "jinja2", "kerchunk", "libarchive-c", "lz4", "notebook", "numpy", "ocifs", "pandas", "panel", "paramiko", "pyarrow", "pyarrow (>=1)", "pyftpdlib", "pygit2", "pytest", "pytest-asyncio (!=0.22.0)", "pytest-benchmark", "pytest-cov", "pytest-mock", "pytest-recording", "pytest-rerunfailures", "python-snappy", "requests", "smbprotocol", "tqdm", "urllib3", "zarr", "zstandard"]
 tqdm = ["tqdm"]
-
-[[package]]
-name = "google-auth"
-version = "2.35.0"
-description = "Google Authentication Library"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "google_auth-2.35.0-py2.py3-none-any.whl", hash = "sha256:25df55f327ef021de8be50bad0dfd4a916ad0de96da86cd05661c9297723ad3f"},
-    {file = "google_auth-2.35.0.tar.gz", hash = "sha256:f4c64ed4e01e8e8b646ef34c018f8bf3338df0c8e37d8b3bba40e7f574a3278a"},
-]
-
-[package.dependencies]
-cachetools = ">=2.0.0,<6.0"
-pyasn1-modules = ">=0.2.1"
-rsa = ">=3.1.4,<5"
-
-[package.extras]
-aiohttp = ["aiohttp (>=3.6.2,<4.0.0.dev0)", "requests (>=2.20.0,<3.0.0.dev0)"]
-enterprise-cert = ["cryptography", "pyopenssl"]
-pyopenssl = ["cryptography (>=38.0.3)", "pyopenssl (>=20.0.0)"]
-reauth = ["pyu2f (>=0.1.5)"]
-requests = ["requests (>=2.20.0,<3.0.0.dev0)"]
 
 [[package]]
 name = "graphviz"
@@ -1039,25 +1001,6 @@ files = [
 all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
 
 [[package]]
-name = "importlib-resources"
-version = "6.4.5"
-description = "Read resources from Python packages"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "importlib_resources-6.4.5-py3-none-any.whl", hash = "sha256:ac29d5f956f01d5e4bb63102a5a19957f1b9175e45649977264a1416783bb717"},
-    {file = "importlib_resources-6.4.5.tar.gz", hash = "sha256:980862a1d16c9e147a59603677fa2aa5fd82b87f223b6cb870695bcfce830065"},
-]
-
-[package.extras]
-check = ["pytest-checkdocs (>=2.4)", "pytest-ruff (>=0.2.1)"]
-cover = ["pytest-cov"]
-doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
-enabler = ["pytest-enabler (>=2.2)"]
-test = ["jaraco.test (>=5.4)", "pytest (>=6,!=8.1.*)", "zipp (>=3.17)"]
-type = ["pytest-mypy"]
-
-[[package]]
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
@@ -1066,17 +1009,6 @@ python-versions = ">=3.7"
 files = [
     {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
     {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
-]
-
-[[package]]
-name = "itsdangerous"
-version = "2.2.0"
-description = "Safely pass data to untrusted environments and back."
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "itsdangerous-2.2.0-py3-none-any.whl", hash = "sha256:c6242fc49e35958c8b15141343aa660db5fc54d4f13a1db01a3f5891b98700ef"},
-    {file = "itsdangerous-2.2.0.tar.gz", hash = "sha256:e0050c0b7da1eea53ffaf149c0cfbb5c6e2e2b69c4bef22c81fa6eb73e5f6173"},
 ]
 
 [[package]]
@@ -1181,32 +1113,6 @@ files = [
 
 [package.dependencies]
 referencing = ">=0.31.0"
-
-[[package]]
-name = "kubernetes"
-version = "29.0.0"
-description = "Kubernetes python client"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "kubernetes-29.0.0-py2.py3-none-any.whl", hash = "sha256:ab8cb0e0576ccdfb71886366efb102c6a20f268d817be065ce7f9909c631e43e"},
-    {file = "kubernetes-29.0.0.tar.gz", hash = "sha256:c4812e227ae74d07d53c88293e564e54b850452715a59a927e7e1bc6b9a60459"},
-]
-
-[package.dependencies]
-certifi = ">=14.05.14"
-google-auth = ">=1.0.1"
-oauthlib = ">=3.2.2"
-python-dateutil = ">=2.5.3"
-pyyaml = ">=5.4.1"
-requests = "*"
-requests-oauthlib = "*"
-six = ">=1.9.0"
-urllib3 = ">=1.24.2"
-websocket-client = ">=0.32.0,<0.40.0 || >0.40.0,<0.41.dev0 || >=0.43.dev0"
-
-[package.extras]
-adal = ["adal (>=1.0.2)"]
 
 [[package]]
 name = "mako"
@@ -1781,52 +1687,52 @@ poetry-plugin = ["poetry (>=1.0,<2.0)"]
 
 [[package]]
 name = "prefect"
-version = "2.20.9"
+version = "3.0.11"
 description = "Workflow orchestration and management."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "prefect-2.20.9-py3-none-any.whl", hash = "sha256:d72efc247cd2345b323f54a9bf7c1f6c410ac6f20d66796a31f001f5c1c40e58"},
-    {file = "prefect-2.20.9.tar.gz", hash = "sha256:927c4b649e28adee104b967ab8c44caf429c6f3ae052d19d3b28d6b130dd88d6"},
+    {file = "prefect-3.0.11-py3-none-any.whl", hash = "sha256:09d27c94eb6f745767b5811e4900b9120212a75a44e53bb8186aea0bffa1120f"},
+    {file = "prefect-3.0.11.tar.gz", hash = "sha256:9969cabe8d10080441c1f6e80ce3019ff0f998eafe2da26fd214cf76eaf86e96"},
 ]
 
 [package.dependencies]
 aiosqlite = ">=0.17.0,<1.0.0"
 alembic = ">=1.7.5,<2.0.0"
 anyio = ">=4.4.0,<5.0.0"
-apprise = ">=1.8.0,<2.0.0"
+apprise = ">=1.1.0,<2.0.0"
 asgi-lifespan = ">=1.0,<3.0"
 asyncpg = ">=0.23,<1.0.0"
 cachetools = ">=5.3,<6.0"
 click = ">=8.0,<8.2"
 cloudpickle = ">=2.0,<4.0"
 coolname = ">=1.0.4,<3.0.0"
-croniter = ">=1.0.12,<3.0.0"
+croniter = ">=1.0.12,<4.0.0"
 cryptography = ">=36.0.1"
 dateparser = ">=1.1.1,<2.0.0"
 docker = ">=4.0,<8.0"
-exceptiongroup = ">=1.2.1"
+exceptiongroup = ">=1.0.0"
+fastapi = ">=0.111.0,<1.0.0"
 fsspec = ">=2022.5.0"
 graphviz = ">=0.20.1"
 griffe = ">=0.49.0,<2.0.0"
 httpcore = ">=1.0.5,<2.0.0"
 httpx = {version = ">=0.23,<0.23.2 || >0.23.2", extras = ["http2"]}
 humanize = ">=4.9.0,<5.0.0"
-importlib-resources = ">=6.1.3,<6.5.0"
-itsdangerous = "*"
 jinja2 = ">=3.0.0,<4.0.0"
 jinja2-humanize-extension = ">=0.4.0"
 jsonpatch = ">=1.32,<2.0"
 jsonschema = ">=4.0.0,<5.0.0"
-kubernetes = ">=24.2.0,<30.0.0"
 orjson = ">=3.7,<4.0"
 packaging = ">=21.3,<24.3"
 pathspec = ">=0.8.0"
-pendulum = {version = ">=3.0.0,<4", markers = "python_version >= \"3.12\""}
-pydantic = {version = ">=1.10.0,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.1.0 || >2.1.0,<2.9.0", extras = ["email"]}
+pendulum = ">=3.0.0,<4"
+prometheus-client = ">=0.20.0"
+pydantic = ">=2.7,<3.0.0"
 pydantic-core = ">=2.12.0,<3.0.0"
+pydantic-extra-types = ">=2.8.2,<3.0.0"
+pydantic-settings = ">2.2.1"
 python-dateutil = ">=2.8.2,<3.0.0"
-python-multipart = ">=0.0.7"
 python-slugify = ">=5.0,<9.0"
 pytz = ">=2021.1,<2025"
 pyyaml = ">=5.4.1,<7.0.0"
@@ -1835,7 +1741,7 @@ rfc3339-validator = ">=0.1.4,<0.2.0"
 rich = ">=11.0,<14.0"
 "ruamel.yaml" = ">=0.17.0"
 sniffio = ">=1.3.0,<2.0.0"
-sqlalchemy = {version = ">=1.4.22,<1.4.33 || >1.4.33,<3.0.0", extras = ["asyncio"]}
+sqlalchemy = {version = ">=2.0,<3.0.0", extras = ["asyncio"]}
 toml = ">=0.10.0"
 typer = ">=0.12.0,<0.12.2 || >0.12.2,<0.13.0"
 typing-extensions = ">=4.5.0,<5.0.0"
@@ -1844,65 +1750,79 @@ uvicorn = ">=0.14.0,<0.29.0 || >0.29.0"
 websockets = ">=10.4,<14.0"
 
 [package.extras]
-aws = ["prefect-aws (<0.5.0)"]
-azure = ["prefect-azure (<0.4.0)"]
-bitbucket = ["prefect-bitbucket (<0.3.0)"]
-dask = ["prefect-dask (<0.3.0)"]
-databricks = ["prefect-databricks (<0.3.0)"]
-dbt = ["prefect-dbt (<0.6.0)"]
-dev = ["cairosvg", "codespell (>=2.2.6)", "ipython", "ipython (==8.12.*)", "jinja2", "mike", "mkdocs", "mkdocs-gen-files", "mkdocs-material", "mkdocstrings-python", "mock", "moto (>=5)", "mypy (>=1.9.0)", "numpy", "pillow", "pluggy (>=1.4.0)", "pre-commit", "pytest (>7,<9)", "pytest-asyncio (>=0.18.2,!=0.22.0,<0.23.0)", "pytest-benchmark", "pytest-cov", "pytest-env", "pytest-flakefinder", "pytest-timeout", "pytest-xdist (<3.4.0)", "pytkdocs (>=0.14.2)", "pyyaml", "respx", "ruff", "setuptools (!=60.9.0)", "types-PyYAML", "types-cachetools", "vermin", "virtualenv", "watchfiles"]
-docker = ["prefect-docker (<0.6.0)"]
-email = ["prefect-email (<0.4.0)"]
-gcp = ["prefect-gcp (<0.6.0)"]
-github = ["prefect-github (<0.3.0)"]
-gitlab = ["prefect-gitlab (<0.3.0)"]
-kubernetes = ["prefect-kubernetes (<0.5.0)"]
-ray = ["prefect-ray (<0.4.0)"]
-shell = ["prefect-shell (<0.3.0)"]
-slack = ["prefect-slack (<0.3.0)"]
-snowflake = ["prefect-snowflake (<0.28.0)"]
-sqlalchemy = ["prefect-sqlalchemy (<0.5.0)"]
+aws = ["prefect-aws (>=0.5.0rc1)"]
+azure = ["prefect-azure (>=0.4.0rc1)"]
+bitbucket = ["prefect-bitbucket (>=0.3.0rc1)"]
+dask = ["prefect-dask (>=0.3.0rc1)"]
+databricks = ["prefect-databricks (>=0.3.0rc1)"]
+dbt = ["prefect-dbt (>=0.6.0rc1)"]
+dev = ["cairosvg", "codespell (>=2.2.6)", "ipython", "jinja2", "mkdocs", "mkdocs-gen-files", "mkdocs-material", "mkdocstrings[python]", "moto (>=5)", "mypy (>=1.9.0)", "numpy", "pillow", "pluggy (>=1.4.0)", "pre-commit", "pytest (>=8.3)", "pytest-asyncio (>=0.24)", "pytest-benchmark", "pytest-codspeed", "pytest-cov", "pytest-env", "pytest-flakefinder", "pytest-timeout", "pytest-xdist (>=3.6.1)", "pyyaml", "redis (>=5.0.1)", "respx", "ruff", "setuptools", "types-PyYAML", "types-cachetools", "uv (>=0.4.5)", "vale", "vermin", "virtualenv", "watchfiles"]
+docker = ["prefect-docker (>=0.6.0rc1)"]
+email = ["prefect-email (>=0.4.0rc1)"]
+gcp = ["prefect-gcp (>=0.6.0rc1)"]
+github = ["prefect-github (>=0.3.0rc1)"]
+gitlab = ["prefect-gitlab (>=0.3.0rc1)"]
+kubernetes = ["prefect-kubernetes (>=0.4.0rc1)"]
+ray = ["prefect-ray (>=0.4.0rc1)"]
+redis = ["prefect-redis (>=0.2.0)"]
+shell = ["prefect-shell (>=0.3.0rc1)"]
+slack = ["prefect-slack (>=0.3.0rc1)"]
+snowflake = ["prefect-snowflake (>=0.28.0rc1)"]
+sqlalchemy = ["prefect-sqlalchemy (>=0.5.0rc1)"]
 
 [[package]]
 name = "prefect-aws"
-version = "0.4.19"
+version = "0.5.1"
 description = "Prefect integrations for interacting with Amazon Web Services."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "prefect_aws-0.4.19-py3-none-any.whl", hash = "sha256:9dfa51a73bf4f5442753a6eaec144f5182dfb5ae81ea14a948f90782949c9dc2"},
-    {file = "prefect_aws-0.4.19.tar.gz", hash = "sha256:3e05de232681f660483ee01224d802c7bd66918fdf368635bdc9262997892a96"},
+    {file = "prefect_aws-0.5.1-py3-none-any.whl", hash = "sha256:941ffb223a81287a71311b23e38da9f2b32489ecb3cb276dfb4b2eb48e6bf353"},
+    {file = "prefect_aws-0.5.1.tar.gz", hash = "sha256:5d32b9c1713c5ce07b0c5d50129ec54e0bce73ebcc80df83be72b90976626058"},
 ]
 
 [package.dependencies]
 boto3 = ">=1.24.53"
 botocore = ">=1.27.53"
-exceptiongroup = "*"
 mypy-boto3-s3 = ">=1.24.94"
 mypy-boto3-secretsmanager = ">=1.26.49"
-prefect = ">=2.20.0,<3.0.0"
+prefect = ">=3.0.0rc1"
 pyparsing = ">=3.1.1"
 tenacity = ">=8.0.0"
 
 [package.extras]
-dev = ["black", "boto3-stubs (>=1.24.39)", "coverage", "flake8", "interrogate", "isort", "mkdocs", "mkdocs-gen-files", "mkdocs-material", "mkdocstrings-python-legacy", "mock", "moto (>=3.1.16,<4.2.5)", "mypy", "pillow", "pre-commit", "pytest", "pytest-asyncio (>=0.18.2,!=0.22.0,<0.23.0)", "pytest-cov", "pytest-xdist", "types-boto3 (>=1.0.2)"]
+dev = ["black", "boto3-stubs (>=1.24.39)", "coverage", "flake8", "interrogate", "isort", "mkdocs", "mkdocs-gen-files", "mkdocs-material", "mkdocstrings-python-legacy", "moto (>=3.1.16,<4.2.5)", "mypy", "pillow", "pre-commit", "pytest", "pytest-asyncio (>=0.18.2,!=0.22.0,<0.23.0)", "pytest-cov", "pytest-env", "pytest-xdist", "types-boto3 (>=1.0.2)"]
 
 [[package]]
 name = "prefect-shell"
-version = "0.2.6"
+version = "0.3.0"
 description = "Prefect integrations for interacting with shell commands."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "prefect_shell-0.2.6-py3-none-any.whl", hash = "sha256:25aa01cefcaec173e4fe9a63c3ef39b8ebd998695bbead0100e4aaef201c4096"},
-    {file = "prefect_shell-0.2.6.tar.gz", hash = "sha256:5f73f57c8f8717fab29d91f0319a8b32db1cb33389a0da7c015490e6fec16d14"},
+    {file = "prefect_shell-0.3.0-py3-none-any.whl", hash = "sha256:cc5b85a9cfe8b19814688230b267de3f8aa22d7b406f7c1ad4ffd350044b46e3"},
+    {file = "prefect_shell-0.3.0.tar.gz", hash = "sha256:2a81d3194bf82ca6f7a7d988d90cf355d4ba0363a55f0f568326279f929be1e2"},
 ]
 
 [package.dependencies]
-prefect = ">=2.20.0,<3.0.0"
+prefect = ">=3.0.0rc1"
 
 [package.extras]
-dev = ["aiohttp", "coverage", "interrogate", "mkdocs", "mkdocs-gen-files", "mkdocs-material", "mkdocstrings[python]", "mock", "mypy", "pillow", "pre-commit", "pytest", "pytest-asyncio", "pytest-xdist"]
+dev = ["aiohttp", "coverage", "interrogate", "mkdocs", "mkdocs-gen-files", "mkdocs-material", "mkdocstrings[python]", "mypy", "pillow", "pre-commit", "pytest", "pytest-asyncio", "pytest-env", "pytest-xdist"]
+
+[[package]]
+name = "prometheus-client"
+version = "0.21.0"
+description = "Python client for the Prometheus monitoring system."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "prometheus_client-0.21.0-py3-none-any.whl", hash = "sha256:4fa6b4dd0ac16d58bb587c04b1caae65b8c5043e85f778f42f5f632f6af2e166"},
+    {file = "prometheus_client-0.21.0.tar.gz", hash = "sha256:96c83c606b71ff2b0a433c98889d275f51ffec6c5e267de37c7a2b5c9aa9233e"},
+]
+
+[package.extras]
+twisted = ["twisted"]
 
 [[package]]
 name = "pyarrow"
@@ -1956,31 +1876,6 @@ numpy = ">=1.16.6"
 test = ["cffi", "hypothesis", "pandas", "pytest", "pytz"]
 
 [[package]]
-name = "pyasn1"
-version = "0.6.1"
-description = "Pure-Python implementation of ASN.1 types and DER/BER/CER codecs (X.208)"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "pyasn1-0.6.1-py3-none-any.whl", hash = "sha256:0d632f46f2ba09143da3a8afe9e33fb6f92fa2320ab7e886e2d0f7672af84629"},
-    {file = "pyasn1-0.6.1.tar.gz", hash = "sha256:6f580d2bdd84365380830acf45550f2511469f673cb4a5ae3857a3170128b034"},
-]
-
-[[package]]
-name = "pyasn1-modules"
-version = "0.4.1"
-description = "A collection of ASN.1-based protocols modules"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "pyasn1_modules-0.4.1-py3-none-any.whl", hash = "sha256:49bfa96b45a292b711e986f222502c1c9a5e1f4e568fc30e2574a6c7d07838fd"},
-    {file = "pyasn1_modules-0.4.1.tar.gz", hash = "sha256:c28e2dbf9c06ad61c71a075c7e0f9fd0f1b0bb2d2ad4377f240d33ac2ab60a7c"},
-]
-
-[package.dependencies]
-pyasn1 = ">=0.4.6,<0.7.0"
-
-[[package]]
 name = "pycparser"
 version = "2.22"
 description = "C parser in Python"
@@ -2004,7 +1899,6 @@ files = [
 
 [package.dependencies]
 annotated-types = ">=0.4.0"
-email-validator = {version = ">=2.0.0", optional = true, markers = "extra == \"email\""}
 pydantic-core = "2.20.1"
 typing-extensions = {version = ">=4.6.1", markers = "python_version < \"3.13\""}
 
@@ -2113,6 +2007,48 @@ files = [
 typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 
 [[package]]
+name = "pydantic-extra-types"
+version = "2.9.0"
+description = "Extra Pydantic types."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pydantic_extra_types-2.9.0-py3-none-any.whl", hash = "sha256:f0bb975508572ba7bf3390b7337807588463b7248587e69f43b1ad7c797530d0"},
+    {file = "pydantic_extra_types-2.9.0.tar.gz", hash = "sha256:e061c01636188743bb69f368dcd391f327b8cfbfede2fe1cbb1211b06601ba3b"},
+]
+
+[package.dependencies]
+pydantic = ">=2.5.2"
+
+[package.extras]
+all = ["pendulum (>=3.0.0,<4.0.0)", "phonenumbers (>=8,<9)", "pycountry (>=23)", "python-ulid (>=1,<2)", "python-ulid (>=1,<3)", "pytz (>=2024.1)", "semver (>=3.0.2)", "tzdata (>=2024.1)"]
+pendulum = ["pendulum (>=3.0.0,<4.0.0)"]
+phonenumbers = ["phonenumbers (>=8,<9)"]
+pycountry = ["pycountry (>=23)"]
+python-ulid = ["python-ulid (>=1,<2)", "python-ulid (>=1,<3)"]
+semver = ["semver (>=3.0.2)"]
+
+[[package]]
+name = "pydantic-settings"
+version = "2.6.0"
+description = "Settings management using Pydantic"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pydantic_settings-2.6.0-py3-none-any.whl", hash = "sha256:4a819166f119b74d7f8c765196b165f95cc7487ce58ea27dec8a5a26be0970e0"},
+    {file = "pydantic_settings-2.6.0.tar.gz", hash = "sha256:44a1804abffac9e6a30372bb45f6cafab945ef5af25e66b1c634c01dd39e0188"},
+]
+
+[package.dependencies]
+pydantic = ">=2.7.0"
+python-dotenv = ">=0.21.0"
+
+[package.extras]
+azure-key-vault = ["azure-identity (>=1.16.0)", "azure-keyvault-secrets (>=4.8.0)"]
+toml = ["tomli (>=2.0.1)"]
+yaml = ["pyyaml (>=6.0.1)"]
+
+[[package]]
 name = "pygments"
 version = "2.18.0"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -2205,17 +2141,6 @@ files = [
 
 [package.extras]
 cli = ["click (>=5.0)"]
-
-[[package]]
-name = "python-multipart"
-version = "0.0.12"
-description = "A streaming multipart parser for Python"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "python_multipart-0.0.12-py3-none-any.whl", hash = "sha256:43dcf96cf65888a9cd3423544dd0d75ac10f7aa0c3c28a175bbcd00c9ce1aebf"},
-    {file = "python_multipart-0.0.12.tar.gz", hash = "sha256:045e1f98d719c1ce085ed7f7e1ef9d8ccc8c02ba02b5566d5f7521410ced58cb"},
-]
 
 [[package]]
 name = "python-slugify"
@@ -2647,20 +2572,6 @@ files = [
 ]
 
 [[package]]
-name = "rsa"
-version = "4.9"
-description = "Pure-Python RSA implementation"
-optional = false
-python-versions = ">=3.6,<4"
-files = [
-    {file = "rsa-4.9-py3-none-any.whl", hash = "sha256:90260d9058e514786967344d0ef75fa8727eed8a7d2e43ce9f4bcf1b536174f7"},
-    {file = "rsa-4.9.tar.gz", hash = "sha256:e38464a49c6c85d7f1351b0126661487a7e0a14a50f1675ec50eb34d4f20ef21"},
-]
-
-[package.dependencies]
-pyasn1 = ">=0.1.3"
-
-[[package]]
 name = "ruamel-yaml"
 version = "0.18.6"
 description = "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order"
@@ -2872,6 +2783,23 @@ postgresql-psycopg2cffi = ["psycopg2cffi"]
 postgresql-psycopgbinary = ["psycopg[binary] (>=3.0.7)"]
 pymysql = ["pymysql"]
 sqlcipher = ["sqlcipher3_binary"]
+
+[[package]]
+name = "starlette"
+version = "0.41.0"
+description = "The little ASGI library that shines."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "starlette-0.41.0-py3-none-any.whl", hash = "sha256:a0193a3c413ebc9c78bff1c3546a45bb8c8bcb4a84cae8747d650a65bd37210a"},
+    {file = "starlette-0.41.0.tar.gz", hash = "sha256:39cbd8768b107d68bfe1ff1672b38a2c38b49777de46d2a592841d58e3bf7c2a"},
+]
+
+[package.dependencies]
+anyio = ">=3.4.0,<5"
+
+[package.extras]
+full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.7)", "pyyaml"]
 
 [[package]]
 name = "tenacity"
@@ -3089,22 +3017,6 @@ h11 = ">=0.8"
 standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)", "pyyaml (>=5.1)", "uvloop (>=0.14.0,!=0.15.0,!=0.15.1)", "watchfiles (>=0.13)", "websockets (>=10.4)"]
 
 [[package]]
-name = "websocket-client"
-version = "1.8.0"
-description = "WebSocket client for Python with low level API options"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "websocket_client-1.8.0-py3-none-any.whl", hash = "sha256:17b44cc997f5c498e809b22cdf2d9c7a9e71c02c8cc2b6c56e7c2d1239bfa526"},
-    {file = "websocket_client-1.8.0.tar.gz", hash = "sha256:3239df9f44da632f96012472805d40a23281a991027ce11d2f45a6f24ac4c3da"},
-]
-
-[package.extras]
-docs = ["Sphinx (>=6.0)", "myst-parser (>=2.0.0)", "sphinx-rtd-theme (>=1.1.0)"]
-optional = ["python-socks", "wsaccel"]
-test = ["websockets"]
-
-[[package]]
 name = "websockets"
 version = "13.1"
 description = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
@@ -3202,4 +3114,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.12"
-content-hash = "9bacab02cd5cb7c31a1d2fd390ef536c2d62db0696f98da6a33c149cdbf06056"
+content-hash = "c47820fd630a7ad0f616959801611b11f816a37ab46f96c1e1ca306dd04efabe"
