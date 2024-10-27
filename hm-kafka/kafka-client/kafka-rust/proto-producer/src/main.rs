@@ -6,21 +6,10 @@ use rdkafka::ClientConfig;
 use schema_registry_converter::async_impl::easy_proto_raw::EasyProtoRawEncoder;
 use schema_registry_converter::async_impl::schema_registry::SrSettings;
 use schema_registry_converter::schema_registry_common::SubjectNameStrategy;
-use serde::Serialize;
+use serde_json::json;
 use std::env::args;
 use std::time::Duration;
 use tokio::time;
-
-#[derive(Serialize)]
-struct MotorData {
-    motor_id: String,
-    timestamp: String,
-    temperature1: f64,
-    temperature2: f64,
-    temperature3: f64,
-    temperature4: f64,
-    temperature5: f64,
-}
 
 fn create_producer(bootstrap_server: &str) -> FutureProducer {
     ClientConfig::new()
@@ -29,23 +18,23 @@ fn create_producer(bootstrap_server: &str) -> FutureProducer {
         .expect("Failed to create producer")
 }
 
-fn generate_sensor_data(motor_id: &str) -> MotorData {
+fn generate_motor_data(motor_id: &str) -> serde_json::Value {
     let mut rng = rand::thread_rng();
     let temperature = rng.gen_range(10.0..100.0);
-    MotorData {
-        motor_id: motor_id.to_string(),
-        timestamp: Utc::now().to_rfc3339(),
-        temperature1: temperature,
-        temperature2: temperature,
-        temperature3: temperature,
-        temperature4: temperature,
-        temperature5: temperature,
-    }
+    json!({
+        "motor_id": motor_id,
+        "timestamp": Utc::now().to_rfc3339(),
+        "temperature1": temperature,
+        "temperature2": temperature,
+        "temperature3": temperature,
+        "temperature4": temperature,
+        "temperature5": temperature
+    })
 }
 
 #[tokio::main]
 async fn main() {
-    println!("Starting IoT Data Generator...");
+    println!("Starting motor data Generator...");
 
     let bootstrap_server = args()
         .nth(1)
@@ -60,25 +49,20 @@ async fn main() {
     let topic = "production.iot.motor.proto";
 
     println!("Sending data to Kafka topic: {}", topic);
-    println!("Press Ctrl+C to stop");
 
-    let mut interval = time::interval(Duration::from_nanos(1000000));
+    let mut interval = time::interval(Duration::from_secs(1));
 
     loop {
         interval.tick().await;
 
         for motor_id in &motor_ids {
-            let sensor_data = generate_sensor_data(motor_id);
-
-            // Serialize the data to JSON bytes
+            let sensor_data = generate_motor_data(motor_id);
             let json_bytes =
                 serde_json::to_vec(&sensor_data).expect("Failed to serialize sensor data");
-
-            // Encode with schema registry format
             let proto_payload = encoder
                 .encode(
                     &json_bytes,
-                    "production.iot.MotorData",
+                    "production.iot.Motor",
                     SubjectNameStrategy::TopicNameStrategy(topic.to_string(), false),
                 )
                 .await
@@ -93,12 +77,7 @@ async fn main() {
                 )
                 .await
             {
-                Ok((partition, offset)) => {
-                    println!(
-                        "Sent data for motor {} to partition {} at offset {}",
-                        motor_id, partition, offset
-                    );
-                }
+                Ok(_) => {}
                 Err((err, _)) => {
                     eprintln!("Failed to send data for motor {}: {}", motor_id, err);
                 }
