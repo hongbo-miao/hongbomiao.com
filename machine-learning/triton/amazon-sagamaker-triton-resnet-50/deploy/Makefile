@@ -3,7 +3,7 @@ poetry-env-use:
 poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
-	poetry install --no-root
+	poetry install
 
 poetry-run-deploy:
 	poetry run poe deploy
