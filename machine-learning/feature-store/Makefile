@@ -3,7 +3,7 @@ poetry-env-use:
 poetry-update-lock-file:
 	poetry lock --no-update
 poetry-install:
-	poetry install --no-root
+	poetry install
 
 feast-init:
 	feast init driver_features
