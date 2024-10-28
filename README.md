@@ -299,6 +299,8 @@ make kubernetes-clean
   - Schema registry
     - **Confluent Schema Registry** - Schema Registry
     - **Apicurio Registry** - Schema Registry
+  - Replication
+    - **MirrorMaker** - Data replicating
   - Connector
     - **Debezium** - Distributed change-data-capture (CDC) platform
     - **debezium-connector-postgres** - PostgreSQL CDC source connector
