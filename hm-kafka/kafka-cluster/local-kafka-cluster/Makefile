@@ -7,6 +7,9 @@ kafka-start:
 zookeeper-status:
 	zkServer status
 
+kafka-version:
+	kafka-topics --version
+
 kafka-topic-create:
 	kafka-topics --bootstrap-server=localhost:9092 --create --topic=my-topic --partitions=3 --replication-factor=1
 kafka-topic-delete:

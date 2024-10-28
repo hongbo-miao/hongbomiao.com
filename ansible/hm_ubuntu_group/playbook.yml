@@ -99,3 +99,20 @@
         state: "{{ 'restarted' if pip_package.changed or systemd_unit.changed else 'started' }}"
         enabled: true
         daemon_reload: "{{ systemd_unit.changed }}"
+
+- name: Install Kafka
+  hosts: hm-ubuntu
+  become: yes
+  roles:
+    - role: dragomirr.kafka
+      kafka_version: 3.8.0
+      kafka_scala_version: 2.13
+      kafka_java_version: 17
+      kafka_install_dependencies: true
+      kafka_heap_size: 2G
+      kafka_topics:
+        - name: production.iot.motor.proto
+          replication_factor: 1
+          partitions: 1
+      kafka_additional_config:
+        message.max.bytes: 1048576 # 1 MiB
