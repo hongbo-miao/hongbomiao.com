@@ -1,0 +1,2 @@
+run:
+	connect-mirror-maker mirror-maker.properties
