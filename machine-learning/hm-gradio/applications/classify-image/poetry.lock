@@ -354,12 +354,12 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "5.3.0"
+version = "5.4.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "gradio-5.3.0-py3-none-any.whl", hash = "sha256:1613b0ab3cb0a582fe80e9d0dc7114a7045a90c494e94e34f907debb38179a33"},
+    {file = "gradio-5.4.0-py3-none-any.whl", hash = "sha256:e229e2a35f58010b208efabb56af5f4385813cf3f2845f7f0bc39819ff952fab"},
 ]
 
 [package.dependencies]
@@ -376,12 +376,13 @@ numpy = ">=1.0,<3.0"
 orjson = ">=3.0,<4.0"
 packaging = "*"
 pandas = ">=1.0,<3.0"
-pillow = ">=8.0,<11.0"
+pillow = ">=8.0,<12.0"
 pydantic = ">=2.0"
 pydub = "*"
-python-multipart = ">=0.0.9"
+python-multipart = "0.0.12"
 pyyaml = ">=5.0,<7.0"
 ruff = {version = ">=0.2.2", markers = "sys_platform != \"emscripten\""}
+safehttpx = ">=0.1.1,<1.0"
 semantic-version = ">=2.0,<3.0"
 starlette = {version = ">=0.40.0,<1.0", markers = "sys_platform != \"emscripten\""}
 tomlkit = "0.12.0"
@@ -1392,13 +1393,13 @@ six = ">=1.5"
 
 [[package]]
 name = "python-multipart"
-version = "0.0.16"
+version = "0.0.12"
 description = "A streaming multipart parser for Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "python_multipart-0.0.16-py3-none-any.whl", hash = "sha256:c2759b7b976ef3937214dfb592446b59dfaa5f04682a076f78b117c94776d87a"},
-    {file = "python_multipart-0.0.16.tar.gz", hash = "sha256:8dee37b88dab9b59922ca173c35acb627cc12ec74019f5cd4578369c6df36554"},
+    {file = "python_multipart-0.0.12-py3-none-any.whl", hash = "sha256:43dcf96cf65888a9cd3423544dd0d75ac10f7aa0c3c28a175bbcd00c9ce1aebf"},
+    {file = "python_multipart-0.0.12.tar.gz", hash = "sha256:045e1f98d719c1ce085ed7f7e1ef9d8ccc8c02ba02b5566d5f7521410ced58cb"},
 ]
 
 [[package]]
@@ -1539,6 +1540,23 @@ files = [
     {file = "ruff-0.7.1-py3-none-win_arm64.whl", hash = "sha256:19aa200ec824c0f36d0c9114c8ec0087082021732979a359d6f3c390a6ff2a37"},
     {file = "ruff-0.7.1.tar.gz", hash = "sha256:9d8a41d4aa2dad1575adb98a82870cf5db5f76b2938cf2206c22c940034a36f4"},
 ]
+
+[[package]]
+name = "safehttpx"
+version = "0.1.1"
+description = "A small Python library created to help developers protect their applications from Server Side Request Forgery (SSRF) attacks."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "safehttpx-0.1.1-py3-none-any.whl", hash = "sha256:1d93b64023c00d5c53ea70ea36e773b8a0dba5eaf1a1eb188856584a0a4cf4d1"},
+    {file = "safehttpx-0.1.1.tar.gz", hash = "sha256:6e1bedf7767213300da5e4cb7e823e98edc934f17ca192d2e585111a2b899149"},
+]
+
+[package.dependencies]
+httpx = "*"
+
+[package.extras]
+dev = ["pytest"]
 
 [[package]]
 name = "semantic-version"
@@ -1777,11 +1795,6 @@ files = [
     {file = "triton-3.0.0-1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:34e509deb77f1c067d8640725ef00c5cbfcb2052a1a3cb6a6d343841f92624eb"},
     {file = "triton-3.0.0-1-cp38-cp38-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:bcbf3b1c48af6a28011a5c40a5b3b9b5330530c3827716b5fbf6d7adcc1e53e9"},
     {file = "triton-3.0.0-1-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:6e5727202f7078c56f91ff13ad0c1abab14a0e7f2c87e91b12b6f64f3e8ae609"},
-    {file = "triton-3.0.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:39b052da883351fdf6be3d93cedae6db3b8e3988d3b09ed221bccecfa9612230"},
-    {file = "triton-3.0.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:cd34f19a8582af96e6291d4afce25dac08cb2a5d218c599163761e8e0827208e"},
-    {file = "triton-3.0.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0d5e10de8c011adeb7c878c6ce0dd6073b14367749e34467f1cff2bde1b78253"},
-    {file = "triton-3.0.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e8903767951bf86ec960b4fe4e21bc970055afc65e9d57e916d79ae3c93665e3"},
-    {file = "triton-3.0.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:41004fb1ae9a53fcb3e970745feb87f0e3c94c6ce1ba86e95fa3b8537894bef7"},
 ]
 
 [package.dependencies]
@@ -1950,4 +1963,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.12.0"
-content-hash = "79ff3839fa9da7e34006ec2ca21c3b5d006881e5d04aa9c888b521c880070ace"
+content-hash = "a5ab45f4bed8e62b9674767c8d27084f274d1e1d4fd8c7e09323a1e0503f59e3"
