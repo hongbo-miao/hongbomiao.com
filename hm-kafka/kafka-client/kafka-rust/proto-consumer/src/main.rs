@@ -1,13 +1,18 @@
+use prost::Message;
 use rdkafka::client::ClientContext;
 use rdkafka::config::ClientConfig;
 use rdkafka::consumer::{CommitMode, Consumer, ConsumerContext, Rebalance, StreamConsumer};
 use rdkafka::error::KafkaResult;
-use rdkafka::message::Message;
+use rdkafka::message::Message as KafkaMessage;
 use rdkafka::topic_partition_list::TopicPartitionList;
 use schema_registry_converter::async_impl::easy_proto_raw::EasyProtoRawDecoder;
 use schema_registry_converter::async_impl::schema_registry::SrSettings;
-use serde_json::Value;
 use std::env::args;
+
+pub mod iot {
+    include!(concat!(env!("OUT_DIR"), "/production.iot.rs"));
+}
+use iot::Motor;
 
 struct CustomContext;
 
@@ -17,9 +22,11 @@ impl ConsumerContext for CustomContext {
     fn pre_rebalance(&self, rebalance: &Rebalance) {
         println!("Pre rebalance {:?}", rebalance);
     }
+
     fn post_rebalance(&self, rebalance: &Rebalance) {
         println!("Post rebalance {:?}", rebalance);
     }
+
     fn commit_callback(&self, result: KafkaResult<()>, _offsets: &TopicPartitionList) {
         println!("Committing offsets: {:?}", result);
     }
@@ -42,6 +49,7 @@ async fn main() {
     let bootstrap_server = args()
         .nth(1)
         .unwrap_or_else(|| "localhost:9092".to_string());
+
     let consumer = create_consumer(&bootstrap_server, "proto-consumer-consumer-group");
     let schema_registry_url = "https://confluent-schema-registry.internal.hongbomiao.com";
     let sr_settings = SrSettings::new(schema_registry_url.to_string());
@@ -56,14 +64,26 @@ async fn main() {
     loop {
         match consumer.recv().await {
             Ok(msg) => {
-                match decoder.decode(msg.payload()).await {
-                    Ok(decoded) => match serde_json::from_slice::<Value>(&decoded.unwrap().bytes) {
-                        Ok(motor_data) => {
-                            println!("Received data: {:?}", motor_data);
+                if let Some(payload) = msg.payload() {
+                    match decoder.decode(Some(payload)).await {
+                        Ok(Some(decoded)) => {
+                            match Motor::decode(&*decoded.bytes) {
+                                Ok(motor) => {
+                                    println!("Received motor data:");
+                                    println!("  Motor ID: {:?}", motor.motor_id);
+                                    println!("  Timestamp: {:?}", motor.timestamp);
+                                    println!("  Temperature 1: {:?}", motor.temperature1);
+                                    println!("  Temperature 2: {:?}", motor.temperature2);
+                                    println!("  Temperature 3: {:?}", motor.temperature3);
+                                    println!("  Temperature 4: {:?}", motor.temperature4);
+                                    println!("  Temperature 5: {:?}", motor.temperature5);
+                                }
+                                Err(e) => eprintln!("Failed to decode motor data: {}", e),
+                            }
                         }
-                        Err(e) => eprintln!("Failed to deserialize motor data: {}", e),
-                    },
-                    Err(e) => eprintln!("Error decoding message: {}", e),
+                        Ok(None) => eprintln!("No data decoded"),
+                        Err(e) => eprintln!("Error decoding message: {}", e),
+                    }
                 }
                 consumer.commit_message(&msg, CommitMode::Async).unwrap();
             }

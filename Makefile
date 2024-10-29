@@ -177,6 +177,8 @@ cargo-add-features:
 	cargo add xxx --features=xxx
 cargo-add-dev:
 	cargo add xxx --dev
+cargo-add-build:
+	cargo add xxx --build
 
 # Lint
 lint-ansible:

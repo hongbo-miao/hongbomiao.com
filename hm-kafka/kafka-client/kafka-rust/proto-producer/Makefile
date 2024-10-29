@@ -1,3 +1,7 @@
+cargo-clean:
+	cargo clean
+cargo-build:
+	cargo build
 cargo-run:
 	cargo run
 cargo-run-release:

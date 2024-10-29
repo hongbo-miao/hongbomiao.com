@@ -1,4 +1,5 @@
 use chrono::Utc;
+use prost::Message;
 use rand::Rng;
 use rdkafka::producer::{FutureProducer, FutureRecord};
 use rdkafka::util::Timeout;
@@ -6,35 +7,42 @@ use rdkafka::ClientConfig;
 use schema_registry_converter::async_impl::easy_proto_raw::EasyProtoRawEncoder;
 use schema_registry_converter::async_impl::schema_registry::SrSettings;
 use schema_registry_converter::schema_registry_common::SubjectNameStrategy;
-use serde_json::json;
 use std::env::args;
+use std::io::Result;
 use std::time::Duration;
 use tokio::time;
+
+pub mod iot {
+    include!(concat!(env!("OUT_DIR"), "/production.iot.rs"));
+}
+use iot::Motor;
 
 fn create_producer(bootstrap_server: &str) -> FutureProducer {
     ClientConfig::new()
         .set("bootstrap.servers", bootstrap_server)
+        .set("batch.size", "20971520") // 20 MiB
+        .set("linger.ms", "5")
         .create()
         .expect("Failed to create producer")
 }
 
-fn generate_motor_data(motor_id: &str) -> serde_json::Value {
+fn generate_motor_data(motor_id: &str) -> Motor {
     let mut rng = rand::thread_rng();
     let temperature = rng.gen_range(10.0..100.0);
-    json!({
-        "motor_id": motor_id,
-        "timestamp": Utc::now().to_rfc3339(),
-        "temperature1": temperature,
-        "temperature2": temperature,
-        "temperature3": temperature,
-        "temperature4": temperature,
-        "temperature5": temperature
-    })
+    Motor {
+        motor_id: Some(motor_id.to_string()),
+        timestamp: Some(Utc::now().to_rfc3339()),
+        temperature1: Some(temperature),
+        temperature2: Some(temperature),
+        temperature3: Some(temperature),
+        temperature4: Some(temperature),
+        temperature5: Some(temperature),
+    }
 }
 
 #[tokio::main]
-async fn main() {
-    println!("Starting motor data Generator...");
+async fn main() -> Result<()> {
+    println!("Starting motor data generator...");
 
     let bootstrap_server = args()
         .nth(1)
@@ -44,43 +52,41 @@ async fn main() {
     let schema_registry_url = "https://confluent-schema-registry.internal.hongbomiao.com";
     let sr_settings = SrSettings::new(schema_registry_url.to_string());
     let encoder = EasyProtoRawEncoder::new(sr_settings);
-
-    let motor_ids = vec!["motor_001", "motor_002", "motor_003"];
+    let mut interval = time::interval(Duration::from_nanos(100));
+    let mut rng = rand::thread_rng();
     let topic = "production.iot.motor.proto";
+    let motor_ids = ["motor_001", "motor_002", "motor_003"];
 
     println!("Sending data to Kafka topic: {}", topic);
-
-    let mut interval = time::interval(Duration::from_secs(1));
-
     loop {
         interval.tick().await;
 
-        for motor_id in &motor_ids {
-            let sensor_data = generate_motor_data(motor_id);
-            let json_bytes =
-                serde_json::to_vec(&sensor_data).expect("Failed to serialize sensor data");
-            let proto_payload = encoder
-                .encode(
-                    &json_bytes,
-                    "production.iot.Motor",
-                    SubjectNameStrategy::TopicNameStrategy(topic.to_string(), false),
-                )
-                .await
-                .expect("Failed to encode with schema registry");
+        let motor_id = motor_ids[rng.gen_range(0..motor_ids.len())];
+        let motor = generate_motor_data(motor_id);
+        let mut buf = Vec::new();
+        motor.encode(&mut buf).unwrap();
 
-            match producer
-                .send(
-                    FutureRecord::to(topic)
-                        .payload(&proto_payload)
-                        .key(motor_id.as_bytes()),
-                    Timeout::After(Duration::from_secs(1)),
-                )
-                .await
-            {
-                Ok(_) => {}
-                Err((err, _)) => {
-                    eprintln!("Failed to send data for motor {}: {}", motor_id, err);
-                }
+        let proto_payload = encoder
+            .encode(
+                &buf,
+                "production.iot.Motor",
+                SubjectNameStrategy::TopicNameStrategy(topic.to_string(), false),
+            )
+            .await
+            .expect("Failed to encode with schema registry");
+
+        match producer
+            .send(
+                FutureRecord::to(topic)
+                    .payload(&proto_payload)
+                    .key(motor_id.as_bytes()),
+                Timeout::After(Duration::from_secs(1)),
+            )
+            .await
+        {
+            Ok(_) => {}
+            Err((err, _)) => {
+                eprintln!("Failed to send data for motor {}: {}", motor_id, err);
             }
         }
     }
