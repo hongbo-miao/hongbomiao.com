@@ -21,7 +21,11 @@ jobs:
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
+      kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
+      kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
       kubernetes: ${{ steps.filter.outputs.kubernetes }}
+      udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
+      udp-sender: ${{ steps.filter.outputs.udp-sender }}
       web: ${{ steps.filter.outputs.web }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
     steps:
@@ -49,6 +53,12 @@ jobs:
             hm-spark-ingest-from-s3-to-kafka:
               - '.github/workflows/.lint.yml'
               - 'data-processing/hm-spark/applications/ingest-from-s3-to-kafka/**'
+            kafka-rust-proto-consumer:
+              - '.github/workflows/.lint.yml'
+              - 'hm-kafka/kafka-client/kafka-rust/proto-consumer/**'
+            kafka-rust-proto-producer:
+              - '.github/workflows/.lint.yml'
+              - 'hm-kafka/kafka-client/kafka-rust/proto-producer/**'
             kubernetes:
               - '.github/workflows/.lint.yml'
               - 'kubernetes/manifests/**'
@@ -58,6 +68,12 @@ jobs:
             mobile-react-native:
               - '.github/workflows/.lint.yml'
               - 'mobile/mobile-react-native/**'
+            udp-receiver:
+              - '.github/workflows/.lint.yml'
+              - 'network-programmability/udp/udp-receiver/**'
+            udp-sender:
+              - '.github/workflows/.lint.yml'
+              - 'network-programmability/udp/udp-sender/**'
             web:
               - '.github/workflows/.lint.yml'
               - 'web/**'
@@ -511,6 +527,118 @@ jobs:
       - name: Lint QML
         run: |
           qmllint $(git ls-files "**/*.qml")
+
+  lint-rust-kafka-rust-proto-consumer:
+    name: Rust (kafka-rust-proto-consumer)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      # librdkafka is for rdkafka
+      - name: Install librdkafka
+        run: |
+          # https://github.com/edenhill/librdkafka#build-from-source
+          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
+          tar -x -f librdkafka.tar.gz
+          rm -f librdkafka.tar.gz
+          cd librdkafka-2.6.0
+          ./configure
+          make
+          sudo make install
+          sudo ldconfig
+          cd ..
+          rm -r -f librdkafka-2.6.0/
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 28.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Lint Rust
+        working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
+        run: |
+          cargo clippy
+          cargo fmt --all
+
+  lint-rust-kafka-rust-proto-producer:
+    name: Rust (kafka-rust-proto-producer)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      # librdkafka is for rdkafka
+      - name: Install librdkafka
+        run: |
+          # https://github.com/edenhill/librdkafka#build-from-source
+          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
+          tar -x -f librdkafka.tar.gz
+          rm -f librdkafka.tar.gz
+          cd librdkafka-2.6.0
+          ./configure
+          make
+          sudo make install
+          sudo ldconfig
+          cd ..
+          rm -r -f librdkafka-2.6.0/
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 28.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Lint Rust
+        working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
+        run: |
+          cargo clippy
+          cargo fmt --all
+
+  lint-rust-udp-receiver:
+    name: Rust (udp-receiver)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Lint Rust
+        working-directory: network-programmability/udp/udp-receiver
+        run: |
+          cargo clippy
+          cargo fmt --all
+
+  lint-rust-udp-sender:
+    name: Rust (udp-sender)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Lint Rust
+        working-directory: network-programmability/udp/udp-sender
+        run: |
+          cargo clippy
+          cargo fmt --all
 
   lint-ruby:
     name: Ruby
