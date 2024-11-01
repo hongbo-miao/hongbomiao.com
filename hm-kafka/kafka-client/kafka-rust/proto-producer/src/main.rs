@@ -30,8 +30,8 @@ fn generate_motor_data(motor_id: &str) -> Motor {
     let mut rng = rand::thread_rng();
     let temperature = rng.gen_range(10.0..100.0);
     Motor {
-        motor_id: Some(motor_id.to_string()),
-        timestamp: Some(Utc::now().to_rfc3339()),
+        id: Some(motor_id.to_string()),
+        timestamp: Utc::now().timestamp_nanos_opt(),
         temperature1: Some(temperature),
         temperature2: Some(temperature),
         temperature3: Some(temperature),
@@ -64,7 +64,7 @@ async fn main() -> Result<()> {
         let motor_id = motor_ids[rng.gen_range(0..motor_ids.len())];
         let motor = generate_motor_data(motor_id);
         let mut buf = Vec::new();
-        motor.encode(&mut buf).unwrap();
+        motor.encode(&mut buf)?;
 
         let proto_payload = encoder
             .encode(
