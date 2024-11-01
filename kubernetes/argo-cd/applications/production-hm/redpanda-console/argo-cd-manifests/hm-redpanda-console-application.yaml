@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://charts.redpanda.com
       # https://artifacthub.io/packages/helm/redpanda-data/console
-      targetRevision: 0.7.26
+      targetRevision: 0.7.30
       chart: console
       helm:
         releaseName: hm-redpanda-console
@@ -22,7 +22,7 @@ spec:
             registry: docker.redpanda.com
             repository: redpandadata/console
             # https://hub.docker.com/r/redpandadata/console/tags
-            tag: v2.6.1
+            tag: v2.7.2
           console:
             config:
               kafka:
@@ -40,6 +40,11 @@ spec:
                   enabled: true
                   urls:
                     - http://hm-confluent-schema-registry-service.production-hm-confluent-schema-registry.svc:8081
+                 protobuf:
+                    enabled: true
+                    schemaRegistry:
+                      enabled: true
+                      refreshInterval: 1m
           serviceAccount:
             create: true
             annotations:
