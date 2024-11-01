@@ -1165,6 +1165,17 @@ socks = ["socksio (==1.*)"]
 zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
+name = "httpx-sse"
+version = "0.4.0"
+description = "Consume Server-Sent Event (SSE) messages with HTTPX."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "httpx-sse-0.4.0.tar.gz", hash = "sha256:1e81a3a3070ce322add1d3529ed42eb5f70817f45ed6ec915ab753f961139721"},
+    {file = "httpx_sse-0.4.0-py3-none-any.whl", hash = "sha256:f329af6eae57eaa2bdfd962b42524764af68075ea87370a2de920af5341e318f"},
+]
+
+[[package]]
 name = "huggingface-hub"
 version = "0.26.1"
 description = "Client library to download and publish models, datasets and other repos on the huggingface.co hub"
@@ -1329,18 +1340,18 @@ adal = ["adal (>=1.0.2)"]
 
 [[package]]
 name = "langchain"
-version = "0.3.5"
+version = "0.3.6"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "langchain-0.3.5-py3-none-any.whl", hash = "sha256:f62ea88bb12e40b1b210cf059a5e564bfb17ee3194651944d5a013abb88d30ee"},
-    {file = "langchain-0.3.5.tar.gz", hash = "sha256:ff8f138e7e75c34ab155397853964494b212abda856b9c983dedc535249f29e8"},
+    {file = "langchain-0.3.6-py3-none-any.whl", hash = "sha256:6e453f6c26dfd8f800ba5eb3ecbd21d283d5b6ccad422179b2933a962c1a6563"},
+    {file = "langchain-0.3.6.tar.gz", hash = "sha256:0b0e2dc3be7b49eb3ca2aa21341bb204ed74450e34b3041345820454e21bcdc8"},
 ]
 
 [package.dependencies]
 aiohttp = ">=3.8.3,<4.0.0"
-langchain-core = ">=0.3.13,<0.4.0"
+langchain-core = ">=0.3.14,<0.4.0"
 langchain-text-splitters = ">=0.3.0,<0.4.0"
 langsmith = ">=0.1.17,<0.2.0"
 numpy = {version = ">=1.26.0,<2.0.0", markers = "python_version >= \"3.12\""}
@@ -1352,20 +1363,21 @@ tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<10"
 
 [[package]]
 name = "langchain-community"
-version = "0.3.3"
+version = "0.3.4"
 description = "Community contributed LangChain integrations."
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "langchain_community-0.3.3-py3-none-any.whl", hash = "sha256:319cfc2f923a066c91fbb8e02decd7814018af952b6b98298b8ac9d30ea1da56"},
-    {file = "langchain_community-0.3.3.tar.gz", hash = "sha256:bfb3f2b219aed21087e0ecb7d2ebd1c81401c02b92239e11645c822d5be63f80"},
+    {file = "langchain_community-0.3.4-py3-none-any.whl", hash = "sha256:67a44d3db8ba14a8abae67c8f611e6dc20002446439e761f673c7dffa506fb85"},
+    {file = "langchain_community-0.3.4.tar.gz", hash = "sha256:80c7e6491788449b8a6e7a31444ff8ebb5c32242f67a65aa33d56ad35a7b5b5c"},
 ]
 
 [package.dependencies]
 aiohttp = ">=3.8.3,<4.0.0"
 dataclasses-json = ">=0.5.7,<0.7"
-langchain = ">=0.3.4,<0.4.0"
-langchain-core = ">=0.3.12,<0.4.0"
+httpx-sse = ">=0.4.0,<0.5.0"
+langchain = ">=0.3.6,<0.4.0"
+langchain-core = ">=0.3.14,<0.4.0"
 langsmith = ">=0.1.125,<0.2.0"
 numpy = {version = ">=1.26.0,<2.0.0", markers = "python_version >= \"3.12\""}
 pydantic-settings = ">=2.4.0,<3.0.0"
@@ -1376,13 +1388,13 @@ tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<10"
 
 [[package]]
 name = "langchain-core"
-version = "0.3.13"
+version = "0.3.15"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "langchain_core-0.3.13-py3-none-any.whl", hash = "sha256:e79cfac046cab293c02047f081741f4a433ca5aa54a3973e179eaef147cdfba4"},
-    {file = "langchain_core-0.3.13.tar.gz", hash = "sha256:d3a6c838284ff73705dd0f24a36cd8b2fa34a348e6b357e6b3d58199ab063cde"},
+    {file = "langchain_core-0.3.15-py3-none-any.whl", hash = "sha256:3d4ca6dbb8ed396a6ee061063832a2451b0ce8c345570f7b086ffa7288e4fa29"},
+    {file = "langchain_core-0.3.15.tar.gz", hash = "sha256:b1a29787a4ffb7ec2103b4e97d435287201da7809b369740dd1e32f176325aba"},
 ]
 
 [package.dependencies]
@@ -3608,4 +3620,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.12.0"
-content-hash = "e122cb7c8d613f0dd59dfd3be66f3c1472f6bf54a6723f4b80da2925eb4e7965"
+content-hash = "15c374cfc768857ae2a25a46f77cef5db155e6255efa1ce8455e2c94f65cd1b6"
