@@ -547,7 +547,7 @@ jobs:
   lint-rust-kafka-rust-proto-consumer:
     name: Rust (kafka-rust-proto-consumer)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    if: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -585,7 +585,7 @@ jobs:
   lint-rust-kafka-rust-proto-producer:
     name: Rust (kafka-rust-proto-producer)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    if: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -623,7 +623,7 @@ jobs:
   lint-rust-udp-receiver:
     name: Rust (udp-receiver)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    if: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -641,7 +641,7 @@ jobs:
   lint-rust-udp-sender:
     name: Rust (udp-sender)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    if: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
