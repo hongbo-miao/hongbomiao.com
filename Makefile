@@ -242,14 +242,6 @@ lint-ruby:
 	bundle exec rubocop
 lint-ruby-fix:
 	bundle exec rubocop --autocorrect-all
-lint-rust-rustfmt:
-	cd hm-rust && cargo fmt --all -- --check
-lint-rust-rustfmt-fix:
-	cd hm-rust && cargo fmt --all
-lint-rust-clippy:
-	cd hm-rust && cargo clippy
-lint-rust-clippy-fix:
-	cd hm-rust && cargo clippy --fix --allow-dirty --allow-staged
 lint-scala:
 	cd data-processing/hm-spark/applications/find-retired-people-scala && sbt scalafmtCheckAll && sbt "scalafixAll --check"
 	cd data-processing/hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtCheckAll && sbt "scalafixAll --check"
