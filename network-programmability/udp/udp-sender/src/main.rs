@@ -5,9 +5,9 @@ use std::error::Error;
 use tokio::net::UdpSocket;
 
 #[derive(Serialize)]
-struct MotorData {
-    motor_id: Option<String>,
-    timestamp: Option<String>,
+struct Motor {
+    id: Option<String>,
+    timestamp: Option<i64>,
     temperature1: Option<f64>,
     temperature2: Option<f64>,
     temperature3: Option<f64>,
@@ -25,15 +25,15 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     for _ in 0..1_000_000 {
         let motor_id = motor_ids[rng.gen_range(0..motor_ids.len())];
-        let temperature = rng.gen_range(10.0..100.0);
-        let data = MotorData {
-            motor_id: Some(motor_id.to_string()),
-            timestamp: Some(Utc::now().to_rfc3339()),
-            temperature1: Some(temperature),
-            temperature2: Some(temperature),
-            temperature3: Some(temperature),
-            temperature4: Some(temperature),
-            temperature5: Some(temperature),
+        let temperature = Some(rng.gen_range(10.0..100.0));
+        let data = Motor {
+            id: Some(motor_id.to_string()),
+            timestamp: Utc::now().timestamp_nanos_opt(),
+            temperature1: temperature,
+            temperature2: temperature,
+            temperature3: temperature,
+            temperature4: temperature,
+            temperature5: temperature,
         };
         let json_data = serde_json::to_string(&data)?;
         socket.send_to(json_data.as_bytes(), receiver_addr).await?; // Send the data asynchronously
