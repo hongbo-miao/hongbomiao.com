@@ -70,7 +70,7 @@ async fn main() {
                             match Motor::decode(&*decoded.bytes) {
                                 Ok(motor) => {
                                     println!("Received motor data:");
-                                    println!("  Motor ID: {:?}", motor.motor_id);
+                                    println!("  Motor ID: {:?}", motor.id);
                                     println!("  Timestamp: {:?}", motor.timestamp);
                                     println!("  Temperature 1: {:?}", motor.temperature1);
                                     println!("  Temperature 2: {:?}", motor.temperature2);
