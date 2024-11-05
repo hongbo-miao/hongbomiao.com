@@ -1,23 +1,17 @@
 use chrono::Utc;
+use prost::Message;
 use rand::Rng;
-use serde::Serialize;
-use std::error::Error;
 use tokio::net::UdpSocket;
 
-#[derive(Serialize)]
-struct Motor {
-    id: Option<String>,
-    timestamp: Option<i64>,
-    temperature1: Option<f64>,
-    temperature2: Option<f64>,
-    temperature3: Option<f64>,
-    temperature4: Option<f64>,
-    temperature5: Option<f64>,
+pub mod iot {
+    include!(concat!(env!("OUT_DIR"), "/production.iot.rs"));
 }
 
+use iot::Motor;
+
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn Error>> {
-    let socket = UdpSocket::bind("0.0.0.0:0").await?; // Bind to any available address and port
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let socket = UdpSocket::bind("0.0.0.0:0").await?;
     let receiver_addr = "127.0.0.1:50537";
 
     let mut rng = rand::thread_rng();
@@ -26,7 +20,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     for _ in 0..1_000_000 {
         let motor_id = motor_ids[rng.gen_range(0..motor_ids.len())];
         let temperature = Some(rng.gen_range(10.0..100.0));
-        let data = Motor {
+        let motor = Motor {
             id: Some(motor_id.to_string()),
             timestamp: Utc::now().timestamp_nanos_opt(),
             temperature1: temperature,
@@ -35,8 +29,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
             temperature4: temperature,
             temperature5: temperature,
         };
-        let json_data = serde_json::to_string(&data)?;
-        socket.send_to(json_data.as_bytes(), receiver_addr).await?; // Send the data asynchronously
+
+        let mut buf = Vec::new();
+        motor.encode(&mut buf)?;
+
+        socket.send_to(&buf, receiver_addr).await?;
     }
 
     println!("Sent 1 million messages.");

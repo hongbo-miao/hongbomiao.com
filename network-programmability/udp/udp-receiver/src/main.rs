@@ -1,6 +1,12 @@
-use serde_json::Value;
+use prost::Message;
 use std::error::Error;
 use tokio::net::UdpSocket;
+
+pub mod iot {
+    include!(concat!(env!("OUT_DIR"), "/production.iot.rs"));
+}
+
+use iot::Motor;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -11,13 +17,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     loop {
         let (amt, src) = socket.recv_from(&mut buffer).await?;
-        let received = String::from_utf8_lossy(&buffer[..amt]);
-        match serde_json::from_str::<Value>(&received) {
-            Ok(json_data) => {
-                println!("Received from {}: {}", src, json_data);
+        match Motor::decode(&buffer[..amt]) {
+            Ok(motor) => {
+                println!("Received from {}: {:?}", src, motor);
             }
             Err(e) => {
-                eprintln!("Failed to parse JSON: {}", e);
+                eprintln!("Failed to decode protobuf message: {}", e);
             }
         }
     }
