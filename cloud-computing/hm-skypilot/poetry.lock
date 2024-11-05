@@ -5292,22 +5292,23 @@ files = [
 
 [[package]]
 name = "skypilot"
-version = "0.6.1"
+version = "0.7.0"
 description = "SkyPilot: An intercloud broker for the clouds"
 optional = false
 python-versions = "*"
 files = [
-    {file = "skypilot-0.6.1-py3-none-any.whl", hash = "sha256:5605ede40dd0d32a2421f1d6ca3bc0f89f16a51dd489e506dcdd212ce92873e5"},
-    {file = "skypilot-0.6.1.tar.gz", hash = "sha256:563fc2f60c98151801c1d8ef80b09140f37f3c78a36765acef24af5a1a876b17"},
+    {file = "skypilot-0.7.0-py3-none-any.whl", hash = "sha256:bd7d57a01b871d34dc51e74f6e4269e8394ca255a60a4dfa7736707e4c620e2a"},
+    {file = "skypilot-0.7.0.tar.gz", hash = "sha256:f06f9712338c75d7ad256628179fc6b1c77c4d0fdea0d350823494d5cfc4d033"},
 ]
 
 [package.dependencies]
 awscli = {version = ">=1.27.10", optional = true, markers = "extra == \"aws\""}
-azure-cli = {version = ">=2.31.0", optional = true, markers = "extra == \"azure\""}
-azure-core = {version = "*", optional = true, markers = "extra == \"azure\""}
-azure-identity = {version = ">=1.13.0", optional = true, markers = "extra == \"azure\""}
-azure-mgmt-network = {version = "*", optional = true, markers = "extra == \"azure\""}
-azure-storage-blob = {version = "*", optional = true, markers = "extra == \"azure\""}
+azure-cli = {version = ">=2.65.0", optional = true, markers = "extra == \"azure\""}
+azure-core = {version = ">=1.31.0", optional = true, markers = "extra == \"azure\""}
+azure-identity = {version = ">=1.19.0", optional = true, markers = "extra == \"azure\""}
+azure-mgmt-compute = {version = ">=33.0.0", optional = true, markers = "extra == \"azure\""}
+azure-mgmt-network = {version = ">=27.0.0", optional = true, markers = "extra == \"azure\""}
+azure-storage-blob = {version = ">=12.23.1", optional = true, markers = "extra == \"azure\""}
 boto3 = {version = ">=1.26.1", optional = true, markers = "extra == \"aws\""}
 botocore = {version = ">=1.29.10", optional = true, markers = "extra == \"aws\""}
 cachetools = "*"
@@ -5346,9 +5347,9 @@ urllib3 = {version = "<2", optional = true, markers = "extra == \"aws\""}
 wheel = "*"
 
 [package.extras]
-all = ["awscli (>=1.27.10)", "azure-cli (>=2.31.0)", "azure-core", "azure-identity (>=1.13.0)", "azure-mgmt-network", "azure-storage-blob", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "cudo-compute (>=0.1.10)", "docker", "google-api-python-client (>=2.69.0)", "google-cloud-storage", "grpcio (>=1.32.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.32.0,!=1.48.0,<=1.51.3)", "grpcio (>=1.42.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.42.0,!=1.48.0,<=1.51.3)", "ibm-cloud-sdk-core", "ibm-cos-sdk", "ibm-platform-services", "ibm-vpc", "kubernetes (>=20.0.0)", "msgraph-sdk", "oci", "protobuf (>=3.15.3,!=3.19.5)", "pydantic (<2.0.dev0 || >=2.5.dev0,<3)", "pyvmomi (==8.0.1.0.2)", "ray[default] (>=2.2.0,!=2.6.0)", "runpod (>=1.5.1)", "urllib3 (<2)"]
+all = ["awscli (>=1.27.10)", "azure-cli (>=2.65.0)", "azure-core (>=1.31.0)", "azure-identity (>=1.19.0)", "azure-mgmt-compute (>=33.0.0)", "azure-mgmt-network (>=27.0.0)", "azure-storage-blob (>=12.23.1)", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "cudo-compute (>=0.1.10)", "docker", "google-api-python-client (>=2.69.0)", "google-cloud-storage", "grpcio (>=1.32.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.32.0,!=1.48.0,<=1.51.3)", "grpcio (>=1.42.0,!=1.48.0,<=1.49.1)", "grpcio (>=1.42.0,!=1.48.0,<=1.51.3)", "ibm-cloud-sdk-core", "ibm-cos-sdk", "ibm-platform-services", "ibm-vpc", "kubernetes (>=20.0.0)", "msgraph-sdk", "oci", "protobuf (>=3.15.3,!=3.19.5)", "pydantic (<2.0.dev0 || >=2.5.dev0,<3)", "pyvmomi (==8.0.1.0.2)", "ray[default] (>=2.2.0,!=2.6.0)", "runpod (>=1.5.1)", "urllib3 (<2)"]
 aws = ["awscli (>=1.27.10)", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "urllib3 (<2)"]
-azure = ["azure-cli (>=2.31.0)", "azure-core", "azure-identity (>=1.13.0)", "azure-mgmt-network", "azure-storage-blob", "msgraph-sdk", "ray[default] (>=2.2.0,!=2.6.0)"]
+azure = ["azure-cli (>=2.65.0)", "azure-core (>=1.31.0)", "azure-identity (>=1.19.0)", "azure-mgmt-compute (>=33.0.0)", "azure-mgmt-network (>=27.0.0)", "azure-storage-blob (>=12.23.1)", "msgraph-sdk", "ray[default] (>=2.2.0,!=2.6.0)"]
 cloudflare = ["awscli (>=1.27.10)", "boto3 (>=1.26.1)", "botocore (>=1.29.10)", "colorama (<0.4.5)", "urllib3 (<2)"]
 cudo = ["cudo-compute (>=0.1.10)"]
 docker = ["docker", "ray[default] (>=2.2.0,!=2.6.0)"]
@@ -5794,4 +5795,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.11.0"
-content-hash = "813e46e5868b34e0a42c35a0ce1f5218f67bd3872b9594ff953e3589b1c88565"
+content-hash = "a6e260d4a3637cc71f8fd33b0c8a9133e7e38eaa3538550680cd6350d7e73c43"
