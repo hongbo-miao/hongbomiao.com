@@ -2704,6 +2704,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       - name: Test
@@ -2721,6 +2727,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       - name: Test
