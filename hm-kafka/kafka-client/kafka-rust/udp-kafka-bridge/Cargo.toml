@@ -1,0 +1,20 @@
+[package]
+name = "kakfa-rust-udp-kafka-bridge"
+version = "1.0.0"
+rust-version = "1.80"
+edition = "2021"
+
+[dependencies]
+apache-avro = "0.17.0"
+futures = "0.3.31"
+prost = "0.13.3"
+rdkafka = { version = "0.36.2", features = ["cmake-build", "dynamic-linking"] }
+schema_registry_converter = { version = "4.2.0", features = ["easy", "proto_raw"] }
+socket2 = "0.5.7"
+tokio = { version = "1.41.0", features = ["full"] }
+
+[dev-dependencies]
+clippy = "0.0.302"
+
+[build-dependencies]
+prost-build = "0.13.3"
