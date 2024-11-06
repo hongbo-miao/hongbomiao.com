@@ -23,6 +23,7 @@ jobs:
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
       kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
+      kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
       kubernetes: ${{ steps.filter.outputs.kubernetes }}
       udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
@@ -59,6 +60,9 @@ jobs:
             kafka-rust-proto-producer:
               - '.github/workflows/.lint.yml'
               - 'hm-kafka/kafka-client/kafka-rust/proto-producer/**'
+            kafka-rust-udp-kafka-bridge:
+              - '.github/workflows/.lint.yml'
+              - 'hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge/**'
             kubernetes:
               - '.github/workflows/.lint.yml'
               - 'kubernetes/manifests/**'
@@ -616,6 +620,44 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       - name: Lint Rust
         working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
+        run: |
+          cargo clippy
+          cargo fmt --all
+
+  lint-rust-kafka-rust-udp-kafka-bridge:
+    name: Rust (kafka-rust-udp-kafka-bridge)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      # librdkafka is for rdkafka
+      - name: Install librdkafka
+        run: |
+          # https://github.com/edenhill/librdkafka#build-from-source
+          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
+          tar -x -f librdkafka.tar.gz
+          rm -f librdkafka.tar.gz
+          cd librdkafka-2.6.0
+          ./configure
+          make
+          sudo make install
+          sudo ldconfig
+          cd ..
+          rm -r -f librdkafka-2.6.0/
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 28.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Lint Rust
+        working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
         run: |
           cargo clippy
           cargo fmt --all
