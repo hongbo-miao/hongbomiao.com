@@ -12,6 +12,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  auto-assign:
+    name: Auto Assign
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Auto assign
+        uses: kentaro-m/auto-assign-action@v2.0.0
+        with:
+          configuration-path: .github/auto-assign.yml
+
   detect-changes:
     name: Detect Changes
     runs-on: ubuntu-22.04
