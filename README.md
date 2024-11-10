@@ -57,7 +57,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/3946b33d-12c6-47bd-bf3b-c2f0e1b01973)
+![Architecture](https://github.com/user-attachments/assets/2c1513ce-29fb-4b2d-b2b0-cf4ed8c5b138)
 
 # 📦 Setup
 
@@ -398,9 +398,7 @@ make kubernetes-clean
 - **Flax** - Neural network for JAX
   - **Optax** - Gradient processing and optimization for JAX
 - **Lightning** - Deep Learning framework
-- **LangChain** - Large language model (LLM) framework
 - **NeuralForecast** - Neural forecasting
-- **GPT4All** - Large language models
 - **Transformers** - Machine learning models
 - **Gradio** - Machine learning web application building
 - **Streamlit** - Data web application building
@@ -414,6 +412,14 @@ make kubernetes-clean
 - **MLflow** - Machine learning experiment tracking
 - **Weights & Biases** - Machine learning experiment tracking
 - **Triton Inference Server** - Inference server
+
+#### Large language model (LLM)
+
+- **GPT4All** - LLM for local deployment
+- **LangChain** - LLM framework
+- **LiteLLM** - LLM gateway
+- **Open WebUI** - AI chat interface
+  - **Open WebUI** - OpenAI API plugin framework
 
 ## Computer Vision
 
@@ -456,6 +462,7 @@ make kubernetes-clean
 
 - **Amazon Web Services**
   - **Amazon Athena** - Serverless query service
+  - **Amazon Bedrock** - Generative AI model service
   - **Amazon CloudTrail** - Data governance, data compliance, data auditing
   - **Amazon DynamoDB** - NoSQL database
   - **Amazon EBS** - Block storage
