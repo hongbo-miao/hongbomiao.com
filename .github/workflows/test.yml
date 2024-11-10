@@ -66,7 +66,6 @@ jobs:
       hm-openaerostruct: ${{ steps.filter.outputs.hm-openaerostruct }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
       hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
-      hm-prefect-ingest-data: ${{ steps.filter.outputs.hm-prefect-ingest-data }}
       hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
       hm-prowler: ${{ steps.filter.outputs.hm-prowler }}
       hm-pulumi: ${{ steps.filter.outputs.hm-pulumi }}
@@ -247,9 +246,6 @@ jobs:
             hm-prefect-greet:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/greet/**'
-            hm-prefect-ingest-data:
-              - '.github/workflows/test.yml'
-              - 'data-orchestration/hm-prefect/workflows/ingest-data/**'
             hm-prowler:
               - '.github/workflows/test.yml'
               - 'cloud-security/hm-prowler/**'
@@ -1953,38 +1949,6 @@ jobs:
         uses: codecov/codecov-action@v4.6.0
         with:
           directory: data-orchestration/hm-prefect/workflows/greet
-
-  prefect-ingest-data-test:
-    name: Prefect (ingest-data) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect-ingest-data == 'true' }}
-    runs-on: ubuntu-22.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-orchestration/hm-prefect/workflows/ingest-data/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-orchestration/hm-prefect/workflows/ingest-data/poetry.lock
-      - name: Install dependencies
-        working-directory: data-orchestration/hm-prefect/workflows/ingest-data
-        run: |
-          poetry install
-      - name: Test
-        working-directory: data-orchestration/hm-prefect/workflows/ingest-data
-        run: |
-          poetry run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
-        with:
-          directory: data-orchestration/hm-prefect/workflows/ingest-data
 
   prefect-print-platform-test:
     name: Prefect (print-platform) | Test

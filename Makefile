@@ -319,7 +319,6 @@ static-type-check-python:
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-airflow
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.calculate
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.greet
-	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.ingest-data
 	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.print-platform
 	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.analyze-coffee-customers
 	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.find-retired-people-python
