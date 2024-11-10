@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hm-litellm-deployment
+  namespace: production-hm-litellm
+  labels:
+    app.kubernetes.io/name: hm-litellm-deployment
+    app.kubernetes.io/part-of: production-hm-litellm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hm-litellm
+  template:
+    metadata:
+      labels:
+        app: hm-litellm
+    spec:
+      serviceAccountName: hm-litellm-service-account
+      containers:
+        - name: litellm
+          image: ghcr.io/berriai/litellm:main-v1.52.3
+          ports:
+            - name: litellm
+              protocol: TCP
+              containerPort: 4000
+          command: ["litellm", "--port", "4000", "--config", "/app/config.yaml", "--detailed_debug"]
+          volumeMounts:
+            - name: litellm-volume
+              mountPath: /app/config.yaml
+              subPath: config.yaml
+          resources:
+            requests:
+              cpu: 50m
+              memory: 512Mi
+            limits:
+              cpu: 100m
+              memory: 1Gi
+      volumes:
+        - name: litellm-volume
+          configMap:
+            name: hm-litellm-config-map

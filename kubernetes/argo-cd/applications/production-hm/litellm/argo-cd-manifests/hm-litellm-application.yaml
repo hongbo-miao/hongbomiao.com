@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-litellm
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-litellm
+spec:
+  project: production-hm
+  source:
+    repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+    targetRevision: main
+    path: kubernetes/argo-cd/applications/production-hm/litellm/kubernetes-manifests
+  destination:
+    namespace: production-hm-litellm
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

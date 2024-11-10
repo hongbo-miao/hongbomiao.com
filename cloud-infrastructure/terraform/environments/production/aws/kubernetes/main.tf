@@ -691,3 +691,27 @@ module "kubernetes_namespace_hm_kafbat_ui" {
     module.amazon_eks_cluster
   ]
 }
+
+# LiteLLM
+# LiteLLM - IAM role
+module "hm_litellm_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/kubernetes/hm_litellm_iam_role"
+  litellm_service_account_name         = "hm-litellm-service-account"
+  litellm_namespace                    = "${var.environment}-hm-litellm"
+  amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
+  environment                          = var.environment
+  team                                 = var.team
+}
+# LiteLLM - Kubernetes namespace
+module "hm_kubernetes_namespace_hm_litellm" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-litellm"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
