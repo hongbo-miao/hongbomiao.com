@@ -1,0 +1,49 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-open-webui-pipelines
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-open-webui-pipelines
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://helm.openwebui.com
+      # https://artifacthub.io/packages/helm/open-webui/pipelines
+      targetRevision: 0.0.4
+      chart: pipelines
+      helm:
+        releaseName: hm-open-webui-pipelines
+        values: |
+          # https://github.com/open-webui/helm-charts/blob/main/charts/pipelines/values.yaml
+          ---
+          ingress:
+            enabled: false
+          persistence:
+            enabled: true
+            existingClaim: hm-open-webui-pipelines-persistent-volume-claim
+          extraEnvVars:
+            - name: PIPELINES_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hm-open-webui-pipelines-secret
+                  key: pipelines_api_key
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1Gi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/open-webui-pipelines/kubernetes-manifests
+  destination:
+    namespace: production-hm-open-webui-pipelines
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
