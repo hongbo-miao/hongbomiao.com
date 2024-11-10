@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hm-litellm-config-map
+  namespace: production-hm-litellm
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PreSync
+  labels:
+    app.kubernetes.io/name: hm-litellm-config-map
+    app.kubernetes.io/part-of: production-hm-litellm
+data:
+  config.yaml: |
+    # https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html
+    model_list:
+      # Claude Haiku
+      - model_name: claude-3-5-haiku
+        litellm_params:
+          model: anthropic.claude-3-5-haiku-20241022-v1:0
+      # Claude Opus
+      - model_name: claude-3-opus
+        litellm_params:
+          model: bedrock/anthropic.claude-3-opus-20240229-v1:0
+      # Claude Sonnet
+      - model_name: claude-3-5-sonnet
+        litellm_params:
+          model: bedrock/anthropic.claude-3-5-sonnet-20241022-v2:0
+    litellm_settings:
+      modify_params: True
