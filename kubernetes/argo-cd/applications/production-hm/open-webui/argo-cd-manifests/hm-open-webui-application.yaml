@@ -1,0 +1,109 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-open-webui
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-open-webui
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://helm.openwebui.com
+      # https://artifacthub.io/packages/helm/open-webui/open-webui
+      targetRevision: 3.4.3
+      chart: open-webui
+      helm:
+        releaseName: hm-open-webui
+        values: |
+          # https://github.com/open-webui/helm-charts/blob/main/charts/open-webui/values.yaml
+          ---
+          image:
+            repository: ghcr.io/open-webui/open-webui
+            # https://github.com/open-webui/open-webui/releases
+            tag: v0.3.35
+          ollama:
+            enabled: false
+          pipelines:
+            enabled: false
+          persistence:
+            enabled: true
+            existingClaim: hm-open-webui-persistent-volume-claim
+          # https://docs.openwebui.com/getting-started/env-configuration/
+          extraEnvVars:
+            - name: ENV
+              value: prod
+            - name: WEBUI_NAME
+              value: AI Chat
+            - name: WEBUI_URL
+              value: https://hm-open-webui.internal.hongbomiao.com
+            - name: OPENAI_API_BASE_URLS
+              value: http://hm-litellm-service.production-hm-litellm.svc:80;http://hm-open-webui-pipelines.production-hm-open-webui-pipelines.svc:9099
+            - name: OPENAI_API_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: hm-open-webui-secret
+                  key: openai_api_keys
+            - name: DEFAULT_MODELS
+              value: claude-3-5-sonnet
+            - name: SCARF_NO_ANALYTICS
+              value: "true"
+            - name: DO_NOT_TRACK
+              value: "true"
+            - name: CORS_ALLOW_ORIGIN
+              value: https://hm-open-webui.internal.hongbomiao.com
+            - name: WEBUI_SESSION_COOKIE_SAME_SITE
+              value: lax
+            - name: JWT_EXPIRES_IN
+              value: 1d
+            - name: ANONYMIZED_TELEMETRY
+              value: "false"
+            - name: ENABLE_COMMUNITY_SHARING
+              value: "false"
+            - name: ENABLE_MESSAGE_RATING
+              value: "false"
+            - name: ENABLE_EVALUATION_ARENA_MODELS
+              value: "false"
+            - name: ENABLE_ADMIN_CHAT_ACCESS
+              value: "false"
+            - name: ENABLE_ADMIN_EXPORT
+              value: "false"
+            - name: PDF_EXTRACT_IMAGES
+              value: "true"
+            - name: DEFAULT_USER_ROLE
+              value: user
+            - name: ENABLE_LOGIN_FORM
+              value: "false"
+            - name: ENABLE_OAUTH_SIGNUP
+              value: "true"
+            - name: OAUTH_MERGE_ACCOUNTS_BY_EMAIL
+              value: "true"
+            - name: GOOGLE_OAUTH_SCOPE
+              value: openid email profile
+            - name: GOOGLE_REDIRECT_URI
+              value: https://hm-open-webui.internal.hongbomiao.com/oauth/google/callback
+            - name: GOOGLE_CLIENT_ID
+              value: xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hm-open-webui-secret
+                  key: google_client_secret
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 4Gi
+            limits:
+              cpu: 4000m
+              memory: 8Gi
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/open-webui/kubernetes-manifests
+  destination:
+    namespace: production-hm-open-webui
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

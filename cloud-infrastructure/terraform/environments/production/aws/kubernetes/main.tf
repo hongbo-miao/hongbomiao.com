@@ -715,3 +715,27 @@ module "hm_kubernetes_namespace_hm_litellm" {
     module.amazon_eks_cluster
   ]
 }
+
+# Open WebUI
+# Open WebUI - Kubernetes namespace
+module "hm_kubernetes_namespace_hm_open_webui" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-open-webui"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+# Open WebUI Pipelines - Kubernetes namespace
+module "hm_kubernetes_namespace_hm_open_webui_pipelines" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-open-webui-pipelines"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}

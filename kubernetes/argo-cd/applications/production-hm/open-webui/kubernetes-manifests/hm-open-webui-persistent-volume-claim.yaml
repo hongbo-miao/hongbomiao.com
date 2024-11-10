@@ -1,0 +1,18 @@
+# https://github.com/open-webui/helm-charts/blob/main/charts/open-webui/values.yaml
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hm-open-webui-persistent-volume-claim
+  namespace: production-hm-open-webui
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PreSync
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: production-hm-open-webui-storage-class
+  volumeName: pvc-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
