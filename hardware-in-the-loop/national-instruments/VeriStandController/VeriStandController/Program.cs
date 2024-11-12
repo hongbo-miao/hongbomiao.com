@@ -6,60 +6,61 @@ namespace VeriStandController
 {
     internal class Program
     {
+        private const string GATEWAY_IP = "localhost";
+        private const string SYSTEM_DEFINITION_PATH = @"C:\Users\Public\Documents\National Instruments\NI VeriStand 2024\Examples\Stimulus Profile\Engine Demo\Engine Demo.nivssdf";
+        private const int TOTAL_MESSAGES = 100000;
+        private const int INTERVAL_MS = 5000;
+        private const int CONNECTION_TIMEOUT_MS = 60000;
+
         public static void Main(string[] args)
         {
-            // Create an array of channel names, as defined in the system definition file
-            string[] names = {
-                "Aliases/ActualRPM",
-                "Aliases/DesiredRPM"
-            };
-
-            // An array whose elements are the values of each channel
-            double[] values = new double[names.Length];
-
-            string gatewayIp = "localhost";
-            string systemDefinitionPath = @"C:\Users\Public\Documents\National Instruments\NI VeriStand 2024\Examples\Stimulus Profile\Engine Demo\Engine Demo.nivssdf";
-
-            Factory factory = new Factory();
-            IWorkspace2 workspace = factory.GetIWorkspace2(gatewayIp);
-
-            // Connect to the system and deploy the system definition file
-            workspace.ConnectToSystem(systemDefinitionPath, true, 60000); // ms
-
-            int totalMessages = 100000;
-            int messageCount = 0;
-            int messagesLast5Seconds = 0;
-
-            Stopwatch totalStopwatch = new Stopwatch();
-            Stopwatch intervalStopwatch = new Stopwatch();
-
-            totalStopwatch.Start();
-            intervalStopwatch.Start();
-
-            while (messageCount < totalMessages)
+            try
             {
-                workspace.GetMultipleChannelValues(names, out values);
-                messageCount++;
-                messagesLast5Seconds++;
+                var workspace = new Factory().GetIWorkspace2(GATEWAY_IP);
 
-                // Check if 5 seconds have passed
-                if (intervalStopwatch.ElapsedMilliseconds >= 5000)
+                // Get aliases and channels
+                string[] aliases, channels;
+                workspace.GetAliasList(out aliases, out channels);
+                Console.WriteLine($"[Config] Aliases: {string.Join(", ", aliases)} | Channels: {string.Join(", ", channels)}");
+
+                // Initialize values array and connect to system
+                double[] values = new double[aliases.Length];
+                workspace.ConnectToSystem(SYSTEM_DEFINITION_PATH, true, CONNECTION_TIMEOUT_MS);
+                Console.WriteLine("[Status] Data collection started");
+
+                // Setup monitoring variables
+                int messageCount = 0;
+                int messagesLastInterval = 0;
+                var totalStopwatch = Stopwatch.StartNew();
+                var intervalStopwatch = Stopwatch.StartNew();
+
+                // Main data collection loop
+                while (messageCount < TOTAL_MESSAGES)
                 {
-                    double messagesPerSecond = messagesLast5Seconds / (intervalStopwatch.ElapsedMilliseconds / 1000.0);
-                    Console.WriteLine($"Messages per second (last 5 seconds): {messagesPerSecond:F2}");
+                    workspace.GetMultipleChannelValues(aliases, out values);
+                    messageCount++;
+                    messagesLastInterval++;
 
-                    // Reset the 5-second counter
-                    messagesLast5Seconds = 0;
-                    intervalStopwatch.Restart();
+                    if (intervalStopwatch.ElapsedMilliseconds >= INTERVAL_MS)
+                    {
+                        double messagesPerSecond = messagesLastInterval / (intervalStopwatch.ElapsedMilliseconds / 1000.0);
+                        Console.WriteLine($"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {messageCount:N0} | Values: {string.Join(", ", values)}");
+
+                        messagesLastInterval = 0;
+                        intervalStopwatch.Restart();
+                    }
                 }
+
+                // Display final statistics
+                double totalTime = totalStopwatch.Elapsed.TotalSeconds;
+                double averageMessagesPerSecond = TOTAL_MESSAGES / totalTime;
+                Console.WriteLine($"[Complete] Runtime: {totalTime:F2}s | Avg Speed: {averageMessagesPerSecond:F2} msg/s | Total Messages: {TOTAL_MESSAGES:N0}");
             }
-
-            totalStopwatch.Stop();
-            double totalTime = totalStopwatch.ElapsedMilliseconds / 1000.0;
-            double averageMessagesPerSecond = totalMessages / totalTime;
-
-            Console.WriteLine($"\nTotal time: {totalTime:F2} seconds");
-            Console.WriteLine($"Average messages per second: {averageMessagesPerSecond:F2}");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] {ex.Message}");
+                Environment.Exit(1);
+            }
         }
     }
 }
