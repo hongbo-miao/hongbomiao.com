@@ -723,6 +723,7 @@ make kubernetes-clean
   - **C++**
   - **Embedded C**
   - **PsyC**
+- **C#**
 - **CSS**
 - **Docker**
 - **Go**
