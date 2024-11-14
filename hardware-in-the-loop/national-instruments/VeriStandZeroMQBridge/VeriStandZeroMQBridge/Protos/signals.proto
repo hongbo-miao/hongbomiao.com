@@ -1,0 +1,13 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "VeriStandZeroMQBridge";
+
+message Signals {
+  int64 timestamp = 1;
+  repeated Signal signals = 2;
+}
+
+message Signal {
+  string alias = 1;
+  double value = 2;
+}
