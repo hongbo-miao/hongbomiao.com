@@ -382,7 +382,7 @@ jobs:
         run: |
           npm run test:coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: web
 
@@ -537,7 +537,7 @@ jobs:
         run: |
           bundle exec slather
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: mobile/mobile-ios
 
@@ -631,7 +631,7 @@ jobs:
         run: |
           npm run test:coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: mobile/mobile-react-native
 
@@ -655,7 +655,7 @@ jobs:
         run: |
           go test ./... -race -coverprofile=coverage.txt -covermode=atomic
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: api-go
 
@@ -684,7 +684,7 @@ jobs:
         run: |
           npm run test:coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: api-node
 
@@ -757,7 +757,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: api-python
 
@@ -789,7 +789,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-orchestration/hm-airflow
 
@@ -821,7 +821,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
 
@@ -853,7 +853,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
 
@@ -885,7 +885,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
 
@@ -917,7 +917,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
 
@@ -949,7 +949,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: cloud-platform/aws/aws-parallelcluster
 
@@ -986,7 +986,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: matlab/call-matlab-function-in-python
 
@@ -1018,7 +1018,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: embedded/decode-can-data
 
@@ -1050,7 +1050,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: embedded/format-can-data
 
@@ -1082,7 +1082,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-distribution-service
 
@@ -1114,7 +1114,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-transformation/dbt/projects/dbt_hm_postgres
 
@@ -1146,7 +1146,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
 
@@ -1178,7 +1178,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-storage/delta-lake/read-delta-lake-by-trino
 
@@ -1210,7 +1210,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-storage/delta-lake/write-to-delta-lake
 
@@ -1242,7 +1242,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-autogluon
 
@@ -1274,7 +1274,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/feature-store
 
@@ -1306,7 +1306,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-analytics/hm-geopandas
 
@@ -1338,7 +1338,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hugging-face/analyze-sentiment
 
@@ -1370,7 +1370,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-gradio/applications/classify-image
 
@@ -1402,7 +1402,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-streamlit/applications/live-line-chart
 
@@ -1434,7 +1434,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-streamlit/applications/map
 
@@ -1466,7 +1466,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: high-performance-computing/hm-jax
 
@@ -1498,7 +1498,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-flax
 
@@ -1530,7 +1530,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-kubeflow/pipelines/calculate
 
@@ -1562,7 +1562,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
 
@@ -1594,7 +1594,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-langchain/applications/chat-pdf
 
@@ -1626,7 +1626,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-mlflow/experiments/classify-mnist
 
@@ -1658,7 +1658,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-mlflow/experiments/predict-diabetes
 
@@ -1690,7 +1690,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/neural-forecasting/forecast-air-passenger-number
 
@@ -1722,7 +1722,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
 
@@ -1754,7 +1754,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: hardware-in-the-loop/national-instruments/hm-pyvisa
 
@@ -1786,7 +1786,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: hardware-in-the-loop/national-instruments/hm-tdms
 
@@ -1818,7 +1818,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: computer-vision/hm-open3d
 
@@ -1850,7 +1850,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: aerospace/hm-aerosandbox
 
@@ -1882,7 +1882,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: aerospace/hm-openaerostruct
 
@@ -1914,7 +1914,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-orchestration/hm-prefect/workflows/calculate
 
@@ -1946,7 +1946,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-orchestration/hm-prefect/workflows/greet
 
@@ -1978,7 +1978,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-orchestration/hm-prefect/workflows/print-platform
 
@@ -2010,7 +2010,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: cloud-security/hm-prowler
 
@@ -2042,7 +2042,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: cloud-infrastructure/hm-pulumi
 
@@ -2074,7 +2074,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: computer-vision/hm-pyvista/mount-saint-helens
 
@@ -2106,7 +2106,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: cloud-computing/hm-ray/applications/calculate
 
@@ -2138,7 +2138,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: cloud-computing/hm-ray/applications/process-flight-data
 
@@ -2170,7 +2170,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/reinforcement-learning/cart-pole
 
@@ -2202,7 +2202,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: embedded/hm-serial
 
@@ -2234,7 +2234,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: embedded/pack-unpack-data
 
@@ -2266,7 +2266,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: cloud-computing/hm-skypilot
 
@@ -2298,7 +2298,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: quantum-computing
 
@@ -2330,7 +2330,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/hm-supervision/detect-objects
 
@@ -2362,7 +2362,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: hm-xxhash
 
@@ -2394,7 +2394,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-processing/hm-spark/applications/analyze-coffee-customers
 
@@ -2426,7 +2426,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-processing/hm-spark/applications/find-retired-people-python
 
@@ -2479,7 +2479,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-processing/hm-spark/applications/find-taxi-top-routes
 
@@ -2511,7 +2511,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
 
@@ -2564,7 +2564,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-processing/hm-spark/applications/recommend-movies
 
@@ -2827,7 +2827,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: data-visualization/grafana/hm-dashboard
 
@@ -2895,7 +2895,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/graph-neural-network
 
@@ -2959,7 +2959,7 @@ jobs:
         run: |
           poetry run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4.6.0
+        uses: codecov/codecov-action@v5.0.0
         with:
           directory: machine-learning/convolutional-neural-network
 
