@@ -762,6 +762,8 @@ make kubernetes-clean
 ### Network Programmability
 
 - **P4** - Programming Protocol-independent Packet Processors
+- **ZeroMQ** - High-performance asynchronous messaging library
+  - **NetMQ** - C# implementation of ZeroMQ
 
 ### Communication Standards
 
