@@ -13,7 +13,7 @@ use iot::Motor;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let start_time = Instant::now();
 
-    let message_count = 10_000_000;
+    let message_count = 1_000_000;
     let socket = UdpSocket::bind("0.0.0.0:0").await?;
     let receiver_addr = "127.0.0.1:50537";
     let mut rng = rand::thread_rng();
