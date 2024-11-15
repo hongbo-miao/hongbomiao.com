@@ -88,6 +88,7 @@ jobs:
       kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
       kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
+      kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
@@ -192,6 +193,9 @@ jobs:
             kafka-rust-udp-kafka-bridge:
               - '.github/workflows/test.yml'
               - 'hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge/**'
+            kafka-rust-zeromq-kafka-bridge:
+              - '.github/workflows/test.yml'
+              - 'hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge/**'
             national-instruments-hm-ni-veristand:
               - '.github/workflows/test.yml'
               - 'hardware-in-the-loop/national-instruments/hm-ni-veristand/**'
@@ -2697,6 +2701,43 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       - name: Test
         working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
+        run: |
+          cargo test --all-features
+
+  rust-kafka-rust-zeromq-kafka-bridge-test:
+    name: Kafka Rust - ZeroMQ Kafka Bridge | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      # librdkafka is for rdkafka
+      - name: Install librdkafka
+        run: |
+          # https://github.com/edenhill/librdkafka#build-from-source
+          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
+          tar -x -f librdkafka.tar.gz
+          rm -f librdkafka.tar.gz
+          cd librdkafka-2.6.0
+          ./configure
+          make
+          sudo make install
+          sudo ldconfig
+          cd ..
+          rm -r -f librdkafka-2.6.0/
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 28.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Test
+        working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
         run: |
           cargo test --all-features
 
