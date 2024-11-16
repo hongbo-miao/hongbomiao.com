@@ -21,6 +21,7 @@ jobs:
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
+      national-instruments-veristand-zeromq-bridge: ${{ steps.filter.outputs.national-instruments-veristand-zeromq-bridge }}
       kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
       kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
@@ -76,6 +77,9 @@ jobs:
             mobile-react-native:
               - '.github/workflows/.lint.yml'
               - 'mobile/mobile-react-native/**'
+            national-instruments-veristand-zeromq-bridge:
+              - '.github/workflows/.lint.yml'
+              - 'hardware-in-the-loop/national-instruments/veristand-zeromq-bridge/**'
             udp-receiver:
               - '.github/workflows/.lint.yml'
               - 'network-programmability/udp/udp-receiver/**'
@@ -115,6 +119,31 @@ jobs:
       - name: Lint Ansible
         run: |
           poetry run poe lint-ansible
+
+  lint-csharp-national-instruments-veristand-zeromq-bridge:
+    name: C# (national-instruments-veristand-zeromq-bridge)
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up NuGet
+        uses: nuget/setup-nuget@v2
+        with:
+          nuget-version: 6.12.1
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4.1.0
+        with:
+          global-json-file: hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge/global.json
+      - name: Install dependencies
+        working-directory: hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge
+        run: |
+          nuget restore VeriStandZeroMQBridge.sln
+      - name: Lint C#
+        working-directory: hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge
+        run: |
+          dotnet format VeriStandZeroMQBridge.sln --verify-no-changes
 
   lint-c-cpp:
     name: C, C++
