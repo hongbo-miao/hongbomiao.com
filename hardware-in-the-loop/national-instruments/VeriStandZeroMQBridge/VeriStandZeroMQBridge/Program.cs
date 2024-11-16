@@ -1,20 +1,21 @@
-using NetMQ;
-using NetMQ.Sockets;
-using NationalInstruments.VeriStand.ClientAPI;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 using Google.Protobuf;
+using NationalInstruments.VeriStand.ClientAPI;
+using NetMQ;
+using NetMQ.Sockets;
 using VeriStandZeroMQBridge;
 
 public class Program
 {
     private const string GATEWAY_IP = "localhost";
-    private const string SYSTEM_DEFINITION_PATH = @"C:\Users\Public\Documents\National Instruments\NI VeriStand 2024\Examples\Stimulus Profile\Engine Demo\Engine Demo.nivssdf";
+    private const string SYSTEM_DEFINITION_PATH =
+        @"C:\Users\Public\Documents\National Instruments\NI VeriStand 2024\Examples\Stimulus Profile\Engine Demo\Engine Demo.nivssdf";
     private const int TOTAL_MESSAGES = 200000;
     private const int INTERVAL_MS = 5000;
     private const int CONNECTION_TIMEOUT_MS = 60000;
@@ -37,10 +38,15 @@ public class Program
             try
             {
                 var workspace = new Factory().GetIWorkspace2(GATEWAY_IP);
-                string[] aliases, channels;
+                string[] aliases,
+                    channels;
                 workspace.GetAliasList(out aliases, out channels);
-                await Console.Out.WriteLineAsync($"[Config] Aliases Count: {aliases.Length} | Aliases: {string.Join(", ", aliases)}");
-                await Console.Out.WriteLineAsync($"[Config] Channels Count: {channels.Length} | Aliases: {string.Join(", ", channels)}");
+                await Console.Out.WriteLineAsync(
+                    $"[Config] Aliases Count: {aliases.Length} | Aliases: {string.Join(", ", aliases)}"
+                );
+                await Console.Out.WriteLineAsync(
+                    $"[Config] Channels Count: {channels.Length} | Aliases: {string.Join(", ", channels)}"
+                );
 
                 workspace.ConnectToSystem(SYSTEM_DEFINITION_PATH, true, CONNECTION_TIMEOUT_MS);
                 await Console.Out.WriteLineAsync("[Status] Data collection started");
@@ -86,9 +92,14 @@ public class Program
                 while (isRunning)
                 {
                     await Task.Delay(INTERVAL_MS);
-                    var currentMessagesLastInterval = Interlocked.Exchange(ref messagesLastInterval, 0);
+                    var currentMessagesLastInterval = Interlocked.Exchange(
+                        ref messagesLastInterval,
+                        0
+                    );
                     double messagesPerSecond = currentMessagesLastInterval / (INTERVAL_MS / 1000.0);
-                    await Console.Out.WriteLineAsync($"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {messageCount:N0} | Queue Size: {messageQueue.Count}");
+                    await Console.Out.WriteLineAsync(
+                        $"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {messageCount:N0} | Queue Size: {messageQueue.Count}"
+                    );
                 }
 
                 // Cleanup
@@ -98,7 +109,9 @@ public class Program
 
                 double totalTime = totalStopwatch.Elapsed.TotalSeconds;
                 double averageMessagesPerSecond = messageCount / totalTime;
-                await Console.Out.WriteLineAsync($"[Complete] Runtime: {totalTime:F2}s | Avg Speed: {averageMessagesPerSecond:F2} msg/s | Total Messages: {messageCount:N0}");
+                await Console.Out.WriteLineAsync(
+                    $"[Complete] Runtime: {totalTime:F2}s | Avg Speed: {averageMessagesPerSecond:F2} msg/s | Total Messages: {messageCount:N0}"
+                );
             }
             catch (Exception ex)
             {
@@ -118,11 +131,13 @@ public class Program
             var signals = new Signals
             {
                 Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-                Signals_ = { aliases.Zip(values, (alias, value) =>
-                    new Signal {
-                        Alias = alias,
-                        Value = value
-                    }) }
+                Signals_ =
+                {
+                    aliases.Zip(
+                        values,
+                        (alias, value) => new Signal { Alias = alias, Value = value }
+                    ),
+                },
             };
 
             byte[] data = signals.ToByteArray();

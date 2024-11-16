@@ -616,6 +616,8 @@ make kubernetes-clean
 ## Code
 
 - **ansible-lint** - Ansible linter
+- **dotnet format** - C# code formatter
+- **CSharpier** - C# code formatter
 - **ClangFormat** - C/C++ code formatter
 - **CMakeLint** - CMake linter
 - **Prettier** - Code formatter
