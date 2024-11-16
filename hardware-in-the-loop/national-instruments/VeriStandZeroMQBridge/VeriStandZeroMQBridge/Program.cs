@@ -5,6 +5,8 @@ using System;
 using System.Diagnostics;
 using Google.Protobuf;
 using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using VeriStandZeroMQBridge;
 
 public class Program
@@ -16,7 +18,7 @@ public class Program
     private const int CONNECTION_TIMEOUT_MS = 60000;
     private const string ZMQ_ADDRESS = "tcp://*:5555";
 
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         using (var publisher = new PublisherSocket())
         {
@@ -39,22 +41,28 @@ public class Program
                 var totalStopwatch = Stopwatch.StartNew();
                 var intervalStopwatch = Stopwatch.StartNew();
 
+                var tasks = new List<Task>();
+
                 while (messageCount < TOTAL_MESSAGES)
                 {
                     workspace.GetMultipleChannelValues(aliases, out values);
                     var signals = new Signals
                     {
-                      Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-                      Signals_ = { aliases.Zip(values, (alias, value) =>
-                        new Signal {
-                          Alias = alias,
-                          Value = value
-                        }) }
+                        Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                        Signals_ = { aliases.Zip(values, (alias, value) =>
+                            new Signal {
+                                Alias = alias,
+                                Value = value
+                            }) }
                     };
 
-                    // Serialize and send
+                    // Serialize and send asynchronously
                     byte[] data = signals.ToByteArray();
-                    publisher.SendFrame(data);
+                    var sendTask = Task.Run(() => publisher.SendFrame(data));
+                    tasks.Add(sendTask);
+
+                    // Clean up completed tasks
+                    tasks.RemoveAll(t => t.IsCompleted);
 
                     messageCount++;
                     messagesLastInterval++;
@@ -62,21 +70,23 @@ public class Program
                     if (intervalStopwatch.ElapsedMilliseconds >= INTERVAL_MS)
                     {
                         double messagesPerSecond = messagesLastInterval / (intervalStopwatch.ElapsedMilliseconds / 1000.0);
-                        Console.WriteLine($"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {messageCount:N0} | Value Count: {values.Length}");
-                        // Console.WriteLine($"Values: {string.Join(", ", values)}");
+                        await Console.Out.WriteLineAsync($"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {messageCount:N0} | Value Count: {values.Length}");
 
                         messagesLastInterval = 0;
                         intervalStopwatch.Restart();
                     }
                 }
 
+                // Wait for all remaining tasks to complete
+                await Task.WhenAll(tasks);
+
                 double totalTime = totalStopwatch.Elapsed.TotalSeconds;
                 double averageMessagesPerSecond = TOTAL_MESSAGES / totalTime;
-                Console.WriteLine($"[Complete] Runtime: {totalTime:F2}s | Avg Speed: {averageMessagesPerSecond:F2} msg/s | Total Messages: {TOTAL_MESSAGES:N0}");
+                await Console.Out.WriteLineAsync($"[Complete] Runtime: {totalTime:F2}s | Avg Speed: {averageMessagesPerSecond:F2} msg/s | Total Messages: {TOTAL_MESSAGES:N0}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] {ex.Message}");
+                await Console.Out.WriteLineAsync($"[ERROR] {ex.Message}");
                 Environment.Exit(1);
             }
         }
