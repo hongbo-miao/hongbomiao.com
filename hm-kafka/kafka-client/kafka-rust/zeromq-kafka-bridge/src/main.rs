@@ -126,8 +126,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
                         }
                     }));
                     handles.retain(|handle| !handle.is_finished());
-                    while handles.len() >= 2000 {
-                        futures::future::join_all(handles.drain(..1000)).await;
+                    while handles.len() >= 16 {
+                        futures::future::join_all(handles.drain(..8)).await;
                     }
                 },
                 _ = tokio::time::sleep(INACTIVITY_TIMEOUT) => {
