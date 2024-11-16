@@ -1,4 +1,4 @@
-﻿using NetMQ;
+using NetMQ;
 using NetMQ.Sockets;
 using NationalInstruments.VeriStand.ClientAPI;
 using System;
