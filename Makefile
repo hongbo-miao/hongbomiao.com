@@ -75,6 +75,19 @@ bundle-update:
 bundle-lock:
 	bundle lock --add-platform x86_64-linux
 
+# .NET
+dotnet-sdk-install:
+	winget install Microsoft.DotNet.SDK.8
+
+dotnet-tool-initialize:
+	dotnet new tool-manifest
+dotnet-tool-restore:
+	dotnet tool restore
+dotnet-tool-install:
+	dotnet tool install csharpier
+dotnet-tool-list:
+	dotnet tool list
+
 # Python
 conda-create:
 	conda create --name=xxx python=3.12 --yes

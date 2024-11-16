@@ -136,14 +136,16 @@ jobs:
         uses: actions/setup-dotnet@v4.1.0
         with:
           global-json-file: hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge/global.json
-      - name: Install dependencies
+      - name: Lint C# (format)
         working-directory: hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge
         run: |
           nuget restore VeriStandZeroMQBridge.sln
-      - name: Lint C#
+          dotnet format VeriStandZeroMQBridge.sln --verify-no-changes
+      - name: Lint C# (CSharpier)
         working-directory: hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge
         run: |
-          dotnet format VeriStandZeroMQBridge.sln --verify-no-changes
+          dotnet tool restore
+          dotnet csharpier --check .
 
   lint-c-cpp:
     name: C, C++
