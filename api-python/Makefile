@@ -1,27 +1,27 @@
-poetry-env-use:
-	poetry env use python3.12
-poetry-update-lock-file:
-	poetry lock --no-update
-poetry-install:
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
 	brew install librdkafka
 	export C_INCLUDE_PATH=/opt/homebrew/include
 	export LIBRARY_PATH=/opt/homebrew/lib
-	poetry install
+	uv sync --dev
 
-poetry-run-dev:
-	poetry run poe dev
-poetry-run-serve:
-	poetry run poe serve
-poetry-run-test:
-	poetry run poe test
-poetry-run-test-coverage:
-	poetry run poe test-coverage
-poetry-run-flask-help:
-	poetry run poe flask-help
-poetry-run-flask-list-routes:
-	poetry run poe flask-list-routes
-poetry-run-flask-greet:
-	poetry run poe flask-greet
+uv-run-dev:
+	uv run poe dev
+uv-run-serve:
+	uv run poe serve
+uv-run-test:
+	uv run poe test
+uv-run-test-coverage:
+	uv run poe test-coverage
+uv-run-flask-help:
+	uv run poe flask-help
+uv-run-flask-list-routes:
+	uv run poe flask-list-routes
+uv-run-flask-greet:
+	uv run poe flask-greet
 
 docker-build:
 	cd .. && \

@@ -1,19 +1,21 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "spark-scripts"
+version = "1.0.0"
+requires-python = "~=3.10.0"
+dependencies = [
+    "awsglue-local-dev==1.0.0",
+    "pyspark==3.5.3",
+]
 
-[tool.poetry.dependencies]
-python = "~3.10.0"
-awsglue-local-dev = "1.0.0"
-pyspark = "3.5.3"
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 test = "pytest --verbose --verbose"

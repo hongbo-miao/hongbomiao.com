@@ -1,29 +1,29 @@
-poetry-env-use:
-	poetry env use python3.13
-poetry-update-lock-file:
-	poetry lock --no-update
-poetry-install:
-	poetry install
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
+	uv sync --dev
 
-poetry-run-prefect-server-start:
-	poetry run poe prefect-server-start
-poetry-run-prefect-agent-start:
-	poetry run poe prefect-agent-start
+uv-run-prefect-server-start:
+	uv run poe prefect-server-start
+uv-run-prefect-agent-start:
+	uv run poe prefect-agent-start
 prefect-profile-use:
-	poetry run poe prefect-profile-use -- hm-prefect
+	uv run poe prefect-profile-use -- hm-prefect
 
-poetry-run-set-up:
-	poetry run poe set-up
-poetry-run-dev:
-	poetry run poe dev
-poetry-run-test:
-	poetry run poe test
-poetry-run-test-coverage:
-	poetry run poe test-coverage
-poetry-run-build:
-	poetry run poe build -- --work-queue=hm-kubernetes-queue
-poetry-run-run:
-	poetry run poe run
+uv-run-set-up:
+	uv run poe set-up
+uv-run-dev:
+	uv run poe dev
+uv-run-test:
+	uv run poe test
+uv-run-test-coverage:
+	uv run poe test-coverage
+uv-run-build:
+	uv run poe build -- --work-queue=hm-kubernetes-queue
+uv-run-run:
+	uv run poe run
 
 docker-build:
 	cd ../../../.. && \

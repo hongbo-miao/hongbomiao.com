@@ -1,20 +1,20 @@
-poetry-env-use:
-	poetry env use python3.10
-poetry-update-lock-file:
-	poetry lock --no-update
-poetry-install:
-	poetry install
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
+	uv sync --dev
 
-poetry-run-build:
-	poetry run poe build
-poetry-run-subscribe:
-	poetry run poe subscribe
-poetry-run-publish:
-	poetry run poe publish
-poetry-run-test:
-	poetry run poe test
-poetry-run-test-coverage:
-	poetry run poe test-coverage
+uv-run-build:
+	uv run poe build
+uv-run-subscribe:
+	uv run poe subscribe
+uv-run-publish:
+	uv run poe publish
+uv-run-test:
+	uv run poe test
+uv-run-test-coverage:
+	uv run poe test-coverage
 
 rti-convert:
 	rtiddsgen -convertToXml hm_message.idl -d .

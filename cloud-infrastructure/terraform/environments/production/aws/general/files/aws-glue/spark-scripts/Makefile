@@ -1,14 +1,14 @@
-poetry-env-use:
-	poetry env use python3.10
-poetry-update-lock-file:
-	poetry lock --no-update
-poetry-install:
-	poetry install
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
+	uv sync --dev
 
-poetry-run-test:
-	poetry run poe test
-poetry-run-test-coverage:
-	poetry run poe test-coverage
+uv-run-test:
+	uv run poe test
+uv-run-test-coverage:
+	uv run poe test-coverage
 
 upload-spark-scripts:
 	cd ../.. && \

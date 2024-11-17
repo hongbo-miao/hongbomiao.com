@@ -1,18 +1,20 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "hm-airflow"
+version = "1.0.0"
+requires-python = "~=3.11.0"
+dependencies = [
+    "apache-airflow[celery,s3]==2.10.3",
+]
 
-[tool.poetry.dependencies]
-python = "~3.11.0"
-apache-airflow = {version = "2.10.3", extras = ["celery", "s3"]}
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 test = "pytest --verbose --verbose"

@@ -101,24 +101,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: pyproject.toml
-          cache: poetry
-          cache-dependency-path: poetry.lock
       - name: Install dependencies
-        run: |
-          poetry install
+        run: uv sync --dev
       - name: Install dependencies from Ansible Galaxy
         run: |
-          poetry run poe ansible-galaxy-install -- --role-file=ansible/requirements.yml
+          uv run poe ansible-galaxy-install --role-file=ansible/requirements.yml
       - name: Lint Ansible
         run: |
-          poetry run poe lint-ansible
+          uv run poe lint-ansible
 
   lint-csharp-national-instruments-veristand-zeromq-bridge:
     name: C# (national-instruments-veristand-zeromq-bridge)
@@ -174,21 +174,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: pyproject.toml
-          cache: poetry
-          cache-dependency-path: poetry.lock
       - name: Install dependencies
         run: |
-          poetry install
+          uv sync --dev
       - name: Lint CMake
         run: |
-          poetry run poe lint-cmake
+          uv run poe lint-cmake
 
   lint-commit-message:
     name: Commit Message
@@ -487,21 +488,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: pyproject.toml
-          cache: poetry
-          cache-dependency-path: poetry.lock
       - name: Install dependencies
         run: |
-          poetry install
+          uv sync --dev
       - name: Lint MATLAB
         run: |
-          poetry run poe lint-matlab
+          uv run poe lint-matlab
 
   lint-protocol-buffers-api-go:
     name: Protocol Buffers (api-go)
@@ -531,27 +533,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: pyproject.toml
-          cache: poetry
-          cache-dependency-path: poetry.lock
       - name: Install dependencies
         run: |
-          poetry install
+          uv sync --dev
       - name: Lint Python (Black)
         run: |
-          poetry run poe lint-python-black
+          uv run poe lint-python-black
       - name: Lint Python (Ruff)
         run: |
-          poetry run poe lint-python-ruff
+          uv run poe lint-python-ruff
       - name: Lint Python (isort)
         run: |
-          poetry run poe lint-python-isort
+          uv run poe lint-python-isort
 
   lint-qml:
     name: QML
@@ -877,36 +880,37 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: pyproject.toml
-          cache: poetry
-          cache-dependency-path: poetry.lock
       - name: Install dependencies
         run: |
-          poetry install
+          uv sync --dev
       - name: Lint SQL
         run: |
-          # poetry run poe lint-sql -- --dialect=athena cloud-platform/aws/amazon-athena/queries
-          # poetry run poe lint-sql -- --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
-          # poetry run poe lint-sql -- --dialect=clickhouse data-storage/clickhouse/cpu_metrics
-          poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
-          poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
-          poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-          poetry run poe lint-sql -- --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
-          poetry run poe lint-sql -- --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
-          poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
-          poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/motor/migrations
-          # poetry run poe lint-sql -- --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
-          # poetry run poe lint-sql -- --dialect=snowflake data-storage/snowflake/queries
-          poetry run poe lint-sql -- --dialect=sparksql data-storage/delta-lake/queries
-          poetry run poe lint-sql -- --dialect=sqlite data-storage/sqlite/queries
-          # poetry run poe lint-sql -- --dialect=trino trino/queries
-          # poetry run poe lint-sql -- --dialect=tsql data-storage/microsoft-sql-server/queries
+          # uv run poe lint-sql --dialect=athena cloud-platform/aws/amazon-athena/queries
+          # uv run poe lint-sql --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
+          # uv run poe lint-sql --dialect=clickhouse data-storage/clickhouse/cpu_metrics
+          uv run poe lint-sql --dialect=postgres hasura-graphql-engine/migrations
+          uv run poe lint-sql --dialect=postgres hasura-graphql-engine/seeds
+          uv run poe lint-sql --dialect=postgres kubernetes/data/postgres/opa_db/migrations
+          uv run poe lint-sql --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
+          uv run poe lint-sql --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
+          uv run poe lint-sql --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
+          uv run poe lint-sql --dialect=postgres data-storage/timescaledb/motor/migrations
+          # uv run poe lint-sql --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
+          # uv run poe lint-sql --dialect=snowflake data-storage/snowflake/queries
+          uv run poe lint-sql --dialect=sparksql data-storage/delta-lake/queries
+          uv run poe lint-sql --dialect=sqlite data-storage/sqlite/queries
+          # uv run poe lint-sql --dialect=trino trino/queries
+          # uv run poe lint-sql --dialect=tsql data-storage/microsoft-sql-server/queries
 
   lint-terraform:
     name: Terraform
@@ -930,21 +934,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: pyproject.toml
-          cache: poetry
-          cache-dependency-path: poetry.lock
       - name: Install dependencies
         run: |
-          poetry install
+          uv sync --dev
       - name: Lint VHDL
         run: |
-          poetry run poe lint-vhdl
+          uv run poe lint-vhdl
 
   lint-xml:
     name: XML
@@ -975,18 +980,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: pyproject.toml
-          cache: poetry
-          cache-dependency-path: poetry.lock
       - name: Install dependencies
         run: |
-          poetry install
+          uv sync --dev
       - name: Lint YAML
         run: |
-          poetry run poe lint-yaml
+          uv run poe lint-yaml

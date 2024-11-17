@@ -1,23 +1,25 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "api-python"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+    "Flask==3.1.0",
+    "Flask-Cors==5.0.0",
+    "confluent-kafka==2.6.0",
+    "gunicorn==23.0.0",
+    "python-dotenv==1.0.1",
+    "sentry-sdk[flask]==2.18.0",
+]
 
-[tool.poetry.dependencies]
-python = "~3.13.0"
-Flask = "3.1.0"
-Flask-Cors = "5.0.0"
-confluent-kafka = "2.6.0"
-gunicorn = "23.0.0"
-python-dotenv = "1.0.1"
-sentry-sdk = {version = "2.18.0", extras = ["flask"]}
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 dev = "flask run"

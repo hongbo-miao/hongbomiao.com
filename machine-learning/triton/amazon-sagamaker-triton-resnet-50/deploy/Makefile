@@ -1,15 +1,15 @@
-poetry-env-use:
-	poetry env use python3.11
-poetry-update-lock-file:
-	poetry lock --no-update
-poetry-install:
-	poetry install
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
+	uv sync --dev
 
-poetry-run-deploy:
-	poetry run poe deploy
-poetry-run-undeploy:
-	poetry run poe undeploy
-poetry-run-test:
-	poetry run poe test
-poetry-run-test-coverage:
-	poetry run poe test-coverage
+uv-run-deploy:
+	uv run poe deploy
+uv-run-undeploy:
+	uv run poe undeploy
+uv-run-test:
+	uv run poe test
+uv-run-test-coverage:
+	uv run poe test-coverage

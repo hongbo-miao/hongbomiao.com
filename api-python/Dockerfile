@@ -28,7 +28,7 @@ RUN apk add --no-cache gcc libffi-dev musl-dev bash g++ make \
   && rm -r -f librdkafka-${LIBRDKAFKA_VERSION}/
 COPY ["api-python/pyproject.toml", "api-python/poetry.lock", "./"]
 RUN . /venv/bin/activate \
-  && poetry install --only=main --no-root
+  && uv sync --dev --only=main --no-root
 COPY api-python ./
 RUN . /venv/bin/activate \
   && poetry build

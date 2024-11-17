@@ -1,20 +1,22 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "analyze-coffee-customers"
+version = "1.0.0"
+requires-python = "~=3.12.0"
+dependencies = [
+    "apache-sedona[spark]==1.6.1",
+    "keplergl==0.3.2",
+    "pydeck==0.9.1",
+]
 
-[tool.poetry.dependencies]
-python = "~3.12.0"
-apache-sedona = {version = "1.6.1", extras = ["spark"]}
-keplergl = "0.3.2"
-pydeck = "0.9.1"
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 dev = "python src/main.py"
