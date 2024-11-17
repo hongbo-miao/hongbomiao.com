@@ -1,19 +1,21 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "calculate"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+    "prefect==3.1.2",
+    "pydantic==2.9.2",
+]
 
-[tool.poetry.dependencies]
-python = "~3.13.0"
-prefect = "3.1.2"
-pydantic = "2.9.2"
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 prefect-server-start = "prefect server start"

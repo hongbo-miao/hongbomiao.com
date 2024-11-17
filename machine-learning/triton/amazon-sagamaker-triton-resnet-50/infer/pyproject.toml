@@ -1,24 +1,26 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "infer"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+    "boto3==1.35.63",
+    "gevent==24.11.1",
+    "geventhttpclient==2.3.1",
+    "numpy==1.26.4",
+    "orjson==3.10.11",
+    "pillow==11.0.0",
+    "tritonclient==2.51.0",
+]
 
-[tool.poetry.dependencies]
-python = "~3.13.0"
-boto3 = "1.35.63"
-gevent = "24.11.1"
-geventhttpclient = "2.3.1"
-numpy = "1.26.4"
-orjson = "3.10.11"
-pillow = "11.0.0"
-tritonclient = "2.51.0"
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 dev = "python src/main.py"

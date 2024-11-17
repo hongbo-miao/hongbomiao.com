@@ -1,20 +1,22 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "quantum-computing"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+    "matplotlib==3.9.2",
+    "qiskit[visualization]==1.2.4",
+    "qiskit-ibm-runtime==0.33.2",
+]
 
-[tool.poetry.dependencies]
-python = "~3.13.0"
-matplotlib = "3.9.2"
-qiskit = {version = "1.2.4", extras = ["visualization"]}
-qiskit-ibm-runtime = "0.33.2"
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 dev = "python src/main.py"

@@ -83,71 +83,72 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: pyproject.toml
-          cache: poetry
-          cache-dependency-path: poetry.lock
       - name: Install dependencies
         run: |
-          poetry install
+          uv sync --dev
       - name: Static type check Python
         run: |
-          poetry run poe static-type-check-python -- --package=aerospace.hm-aerosandbox
-          poetry run poe static-type-check-python -- --package=aerospace.hm-openaerostruct
-          poetry run poe static-type-check-python -- --package=api-python
-          poetry run poe static-type-check-python -- --package=authorization.hm-opal-client
-          poetry run poe static-type-check-python -- --package=cloud-computing.hm-ray.applications.calculate
-          poetry run poe static-type-check-python -- --package=cloud-computing.hm-ray.applications.process-flight-data
-          poetry run poe static-type-check-python -- --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
-          poetry run poe static-type-check-python -- --package=computer-vision.hm-open3d
-          poetry run poe static-type-check-python -- --package=computer-vision.hm-pyvista.mount-saint-helens
-          poetry run poe static-type-check-python -- --package=data-analytics.hm-geopandas
-          poetry run poe static-type-check-python -- --package=data-distribution-service
-          poetry run poe static-type-check-python -- --package=data-orchestration.hm-airflow
-          poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.calculate
-          poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.greet
-          poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.print-platform
-          poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.analyze-coffee-customers
-          poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.find-retired-people-python
-          poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.find-taxi-top-routes
-          poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.find-taxi-top-routes-sql
-          poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.recommend-movies
-          poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena
-          poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-trino
-          poetry run poe static-type-check-python -- --package=data-storage.delta-lake.write-to-delta-lake
-          poetry run poe static-type-check-python -- --package=data-visualization.grafana.hm-dashboard
-          poetry run poe static-type-check-python -- --package=embedded.decode-can-data
-          poetry run poe static-type-check-python -- --package=embedded.format-can-data
-          poetry run poe static-type-check-python -- --package=embedded.hm-serial
-          poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-pyvisa
-          poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-tdms
-          poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-ni-veristand
-          poetry run poe static-type-check-python -- --package=hm-locust
-          poetry run poe static-type-check-python -- --package=hm-xxhash
-          poetry run poe static-type-check-python -- --package=machine-learning.convolutional-neural-network
-          poetry run poe static-type-check-python -- --package=machine-learning.feature-store
-          poetry run poe static-type-check-python -- --package=machine-learning.graph-neural-network
-          poetry run poe static-type-check-python -- --package=machine-learning.hm-gradio.applications.classify-image
-          poetry run poe static-type-check-python -- --package=machine-learning.hm-kubeflow.pipelines.calculate
-          poetry run poe static-type-check-python -- --package=machine-learning.hm-kubeflow.pipelines.classify-mnist
-          poetry run poe static-type-check-python -- --package=machine-learning.hm-langchain.applications.chat-pdf
-          poetry run poe static-type-check-python -- --package=machine-learning.hm-mlflow.experiments.classify-mnist
-          poetry run poe static-type-check-python -- --package=machine-learning.hm-mlflow.experiments.predict-diabetes
-          poetry run poe static-type-check-python -- --package=machine-learning.hm-rasa
-          poetry run poe static-type-check-python -- --package=machine-learning.hm-streamlit.applications.live-line-chart
-          poetry run poe static-type-check-python -- --package=machine-learning.hm-streamlit.applications.map
-          poetry run poe static-type-check-python -- --package=machine-learning.hm-supervision.detect-objects
-          poetry run poe static-type-check-python -- --package=machine-learning.hugging-face
-          poetry run poe static-type-check-python -- --package=machine-learning.neural-forecasting.forecast-air-passenger-number
-          poetry run poe static-type-check-python -- --package=machine-learning.reinforcement-learning.cart-pole
-          poetry run poe static-type-check-python -- --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.deploy
-          poetry run poe static-type-check-python -- --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.infer
-          poetry run poe static-type-check-python -- --package=quantum-computing
+          uv run poe static-type-check-python --package=aerospace.hm-aerosandbox
+          uv run poe static-type-check-python --package=aerospace.hm-openaerostruct
+          uv run poe static-type-check-python --package=api-python
+          uv run poe static-type-check-python --package=authorization.hm-opal-client
+          uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.calculate
+          uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.process-flight-data
+          uv run poe static-type-check-python --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
+          uv run poe static-type-check-python --package=computer-vision.hm-open3d
+          uv run poe static-type-check-python --package=computer-vision.hm-pyvista.mount-saint-helens
+          uv run poe static-type-check-python --package=data-analytics.hm-geopandas
+          uv run poe static-type-check-python --package=data-distribution-service
+          uv run poe static-type-check-python --package=data-orchestration.hm-airflow
+          uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.calculate
+          uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.greet
+          uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.print-platform
+          uv run poe static-type-check-python --package=data-processing.hm-spark.applications.analyze-coffee-customers
+          uv run poe static-type-check-python --package=data-processing.hm-spark.applications.find-retired-people-python
+          uv run poe static-type-check-python --package=data-processing.hm-spark.applications.find-taxi-top-routes
+          uv run poe static-type-check-python --package=data-processing.hm-spark.applications.find-taxi-top-routes-sql
+          uv run poe static-type-check-python --package=data-processing.hm-spark.applications.recommend-movies
+          uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena
+          uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-trino
+          uv run poe static-type-check-python --package=data-storage.delta-lake.write-to-delta-lake
+          uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
+          uv run poe static-type-check-python --package=embedded.decode-can-data
+          uv run poe static-type-check-python --package=embedded.format-can-data
+          uv run poe static-type-check-python --package=embedded.hm-serial
+          uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-pyvisa
+          uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-tdms
+          uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-ni-veristand
+          uv run poe static-type-check-python --package=hm-locust
+          uv run poe static-type-check-python --package=hm-xxhash
+          uv run poe static-type-check-python --package=machine-learning.convolutional-neural-network
+          uv run poe static-type-check-python --package=machine-learning.feature-store
+          uv run poe static-type-check-python --package=machine-learning.graph-neural-network
+          uv run poe static-type-check-python --package=machine-learning.hm-gradio.applications.classify-image
+          uv run poe static-type-check-python --package=machine-learning.hm-kubeflow.pipelines.calculate
+          uv run poe static-type-check-python --package=machine-learning.hm-kubeflow.pipelines.classify-mnist
+          uv run poe static-type-check-python --package=machine-learning.hm-langchain.applications.chat-pdf
+          uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.classify-mnist
+          uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.predict-diabetes
+          uv run poe static-type-check-python --package=machine-learning.hm-rasa
+          uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.live-line-chart
+          uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.map
+          uv run poe static-type-check-python --package=machine-learning.hm-supervision.detect-objects
+          uv run poe static-type-check-python --package=machine-learning.hugging-face
+          uv run poe static-type-check-python --package=machine-learning.neural-forecasting.forecast-air-passenger-number
+          uv run poe static-type-check-python --package=machine-learning.reinforcement-learning.cart-pole
+          uv run poe static-type-check-python --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.deploy
+          uv run poe static-type-check-python --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.infer
+          uv run poe static-type-check-python --package=quantum-computing
 
   static-type-check-terraform-production-aws:
     name: Terraform (production/aws)

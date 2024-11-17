@@ -25,5 +25,5 @@ def get_train_data_loader(batch_size, training_dir, is_distributed, **kwargs):
         batch_size=batch_size,
         shuffle=train_sampler is None,
         sampler=train_sampler,
-        **kwargs
+        **kwargs,
     )

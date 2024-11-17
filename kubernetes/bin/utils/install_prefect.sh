@@ -44,29 +44,29 @@ echo "=================================================="
 echo "# Start the workflow"
 # calculate
 # cd data-orchestration/hm-prefect/workflows/calculate
-# poetry run poe set-up
-# poetry run poe build -- --params='{"model":{"n":4}}' --work-queue=hm-kubernetes-queue
-# poetry run poe run
+# uv run poe set-up
+# uv run poe build -- --params='{"model":{"n":4}}' --work-queue=hm-kubernetes-queue
+# uv run poe run
 
 # greet
 # cd data-orchestration/hm-prefect/workflows/greet
-# poetry run poe set-up
-# poetry run poe build -- --params='{"user":{"first_name":"Hongbo","last_name":"Miao"}}' --work-queue=hm-kubernetes-queue
-# poetry run poe run
+# uv run poe set-up
+# uv run poe build -- --params='{"user":{"first_name":"Hongbo","last_name":"Miao"}}' --work-queue=hm-kubernetes-queue
+# uv run poe run
 
 # print-platform
 cd data-orchestration/hm-prefect/workflows/print-platform
-poetry run poe set-up
-poetry run poe build -- --work-queue=hm-kubernetes-queue
-# poetry run poe build -- --work-queue=hm-kubernetes-queue
-# poetry run poe build -- --work-queue=hm-local-queue
-poetry run poe run
+uv run poe set-up
+uv run poe build -- --work-queue=hm-kubernetes-queue
+# uv run poe build -- --work-queue=hm-kubernetes-queue
+# uv run poe build -- --work-queue=hm-local-queue
+uv run poe run
 
 # kubectl delete jobs --all --namespace=hm-prefect
 echo "=================================================="
 
 echo "# Start Prefect Agent in local"
-poetry run poe prefect-agent-start -- --work-queue=hm-local-queue
+uv run poe prefect-agent-start -- --work-queue=hm-local-queue
 echo "=================================================="
 
 echo "# Start Prefect Agents in Kubernetes"

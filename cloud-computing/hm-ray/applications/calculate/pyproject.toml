@@ -1,18 +1,20 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "calculate"
+version = "1.0.0"
+requires-python = "~=3.9.0"
+dependencies = [
+    "ray[default]==2.39.0",
+]
 
-[tool.poetry.dependencies]
-python = "~3.9.0"
-ray = {version = "2.39.0", extras = ["default"]}
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 submit = "python src/submit.py"

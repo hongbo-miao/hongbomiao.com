@@ -18,5 +18,5 @@ def get_test_data_loader(test_batch_size, training_dir, **kwargs):
         ),
         batch_size=test_batch_size,
         shuffle=True,
-        **kwargs
+        **kwargs,
     )
