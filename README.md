@@ -162,8 +162,8 @@ make kubernetes-clean
 - **pydantic** - Data validation
 - **HTTPX** - HTTP client
 - **pypdf** - PDF library
-- **Poetry** - Python package management
-  - **Poe the Poet** - Poetry task runner
+- **Poe the Poet** - Task runner
+- **uv** - Python package management
 
 ### API Server - Node.js
 
