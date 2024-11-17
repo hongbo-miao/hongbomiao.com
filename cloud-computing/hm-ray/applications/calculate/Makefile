@@ -1,9 +1,9 @@
-poetry-env-use:
-	poetry env use python3.9
-poetry-update-lock-file:
-	poetry lock --no-update
-poetry-install:
-	poetry install
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
+	uv sync --dev
 
-poetry-run-submit:
-	poetry run poe submit
+uv-run-submit:
+	uv run poe submit

@@ -1,24 +1,26 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "hm-open3d"
+version = "1.0.0"
+requires-python = "~=3.10.0"
+dependencies = [
+    "addict==2.4.0",
+    "open3d==0.18.0",
+    "pandas==2.2.3",
+    "Pillow==11.0.0",
+    "PyYAML==6.0.2",
+    "scikit-learn==1.5.2",
+    "tqdm==4.67.0",
+]
 
-[tool.poetry.dependencies]
-python = "~3.10.0"
-addict = "2.4.0"
-open3d = "0.18.0"
-pandas = "2.2.3"
-Pillow = "11.0.0"
-PyYAML = "6.0.2"
-scikit-learn = "1.5.2"
-tqdm = "4.67.0"
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 dev = "python src/main.py"

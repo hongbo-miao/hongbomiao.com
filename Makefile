@@ -149,19 +149,31 @@ poetry-check:
 poetry-cache-clear:
 	poetry cache clear pypi --all
 
+# uv
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
+	uv sync --dev
+uv-add:
+	uv add xxx
+uv-add-dev:
+	uv add xxx --dev
+
 # JupterLab
 jupyter-lab:
 	jupyter-lab
 
 # Jupyter Notebook
 jupyter-notebook-clean:
-	poetry run poe clean-jupyter-notebook -- cloud-platform/aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/notebook.ipynb
-	poetry run poe clean-jupyter-notebook -- cloud-platform/aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
-	poetry run poe clean-jupyter-notebook -- machine-learning/triton/amazon-sagamaker-triton-resnet-50/set_up/notebook.ipynb
+	uv run poe clean-jupyter-notebook cloud-platform/aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/notebook.ipynb
+	uv run poe clean-jupyter-notebook cloud-platform/aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
+	uv run poe clean-jupyter-notebook machine-learning/triton/amazon-sagamaker-triton-resnet-50/set_up/notebook.ipynb
 
 # SQLFluff
 sqlfluff-dialect-list:
-	poetry run poe sqlfluff-list-dialects
+	uv run poe sqlfluff-list-dialects
 
 # Rust
 rust-update:
@@ -195,11 +207,11 @@ cargo-add-build:
 
 # Lint
 lint-ansible:
-	poetry run poe lint-ansible
+	uv run poe lint-ansible
 lint-c-cpp-fix:
 	clang-format -i -style=file $$(git ls-files "**/*.c" "**/*.cpp" "**/*.cu" "**/*.h" "**/*.ino")
 lint-cmake:
-	poetry run poe lint-cmake
+	uv run poe lint-cmake
 lint-css:
 	npm run lint:css
 lint-css-fix:
@@ -232,23 +244,23 @@ lint-markdown:
 lint-markdown-fix:
 	npm run lint:markdown:fix
 lint-matlab:
-	poetry run poe lint-matlab
+	uv run poe lint-matlab
 lint-matlab-fix:
-	poetry run poe lint-matlab-fix
+	uv run poe lint-matlab-fix
 lint-protocol-buffers:
 	buf lint
 lint-python-black:
-	poetry run poe lint-python-black
+	uv run poe lint-python-black
 lint-python-black-fix:
-	poetry run poe lint-python-black-fix
+	uv run poe lint-python-black-fix
 lint-python-ruff:
-	poetry run poe lint-python-ruff
+	uv run poe lint-python-ruff
 lint-python-ruff-fix:
-	poetry run poe lint-python-ruff-fix
+	uv run poe lint-python-ruff-fix
 lint-python-isort:
-	poetry run poe lint-python-isort
+	uv run poe lint-python-isort
 lint-python-isort-fix:
-	poetry run poe lint-python-isort-fix
+	uv run poe lint-python-isort-fix
 lint-qml:
 	qmllint $$(git ls-files "**/*.qml")
 lint-ruby:
@@ -268,107 +280,107 @@ lint-solidity:
 lint-solidity-fix:
 	npm run lint:solidity:fix
 lint-sql:
-	poetry run poe lint-sql -- --dialect=athena cloud-platform/aws/amazon-athena/queries
-	poetry run poe lint-sql -- --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
-	poetry run poe lint-sql -- --dialect=clickhouse data-storage/clickhouse/cpu_metrics
-	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/migrations
-	poetry run poe lint-sql -- --dialect=postgres hasura-graphql-engine/seeds
-	poetry run poe lint-sql -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-	poetry run poe lint-sql -- --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
-	poetry run poe lint-sql -- --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
-	poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
-	poetry run poe lint-sql -- --dialect=postgres data-storage/timescaledb/motor/migrations
-	poetry run poe lint-sql -- --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
-	poetry run poe lint-sql -- --dialect=snowflake data-storage/snowflake/queries
-	poetry run poe lint-sql -- --dialect=sparksql data-storage/delta-lake/queries
-	poetry run poe lint-sql -- --dialect=sqlite data-storage/sqlite/queries
-	poetry run poe lint-sql -- --dialect=trino trino/queries
-	poetry run poe lint-sql -- --dialect=tsql data-storage/microsoft-sql-server/queries
+	uv run poe lint-sql --dialect=athena cloud-platform/aws/amazon-athena/queries
+	uv run poe lint-sql --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
+	uv run poe lint-sql --dialect=clickhouse data-storage/clickhouse/cpu_metrics
+	uv run poe lint-sql --dialect=postgres hasura-graphql-engine/migrations
+	uv run poe lint-sql --dialect=postgres hasura-graphql-engine/seeds
+	uv run poe lint-sql --dialect=postgres kubernetes/data/postgres/opa_db/migrations
+	uv run poe lint-sql --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
+	uv run poe lint-sql --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
+	uv run poe lint-sql --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
+	uv run poe lint-sql --dialect=postgres data-storage/timescaledb/motor/migrations
+	uv run poe lint-sql --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
+	uv run poe lint-sql --dialect=snowflake data-storage/snowflake/queries
+	uv run poe lint-sql --dialect=sparksql data-storage/delta-lake/queries
+	uv run poe lint-sql --dialect=sqlite data-storage/sqlite/queries
+	uv run poe lint-sql --dialect=trino trino/queries
+	uv run poe lint-sql --dialect=tsql data-storage/microsoft-sql-server/queries
 lint-sql-fix:
-	poetry run poe lint-sql-fix -- --dialect=athena cloud-platform/aws/amazon-athena/queries
-	poetry run poe lint-sql-fix -- --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
-	poetry run poe lint-sql-fix -- --dialect=clickhouse data-storage/clickhouse/cpu_metrics
-	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/migrations
-	poetry run poe lint-sql-fix -- --dialect=postgres hasura-graphql-engine/seeds
-	poetry run poe lint-sql-fix -- --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-	poetry run poe lint-sql-fix -- --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
-	poetry run poe lint-sql-fix -- --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
-	poetry run poe lint-sql-fix -- --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
-	poetry run poe lint-sql-fix -- --dialect=postgres data-storage/timescaledb/motor/migrations
-	poetry run poe lint-sql-fix -- --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
-	poetry run poe lint-sql-fix -- --dialect=snowflake data-storage/snowflake/queries
-	poetry run poe lint-sql-fix -- --dialect=sparksql queries
-	poetry run poe lint-sql-fix -- --dialect=sqlite data-storage/sqlite/queries
-	poetry run poe lint-sql-fix -- --dialect=trino trino/queries
-	poetry run poe lint-sql-fix -- --dialect=tsql data-storage/microsoft-sql-server/queries
+	uv run poe lint-sql-fix --dialect=athena cloud-platform/aws/amazon-athena/queries
+	uv run poe lint-sql-fix --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
+	uv run poe lint-sql-fix --dialect=clickhouse data-storage/clickhouse/cpu_metrics
+	uv run poe lint-sql-fix --dialect=postgres hasura-graphql-engine/migrations
+	uv run poe lint-sql-fix --dialect=postgres hasura-graphql-engine/seeds
+	uv run poe lint-sql-fix --dialect=postgres kubernetes/data/postgres/opa_db/migrations
+	uv run poe lint-sql-fix --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
+	uv run poe lint-sql-fix --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
+	uv run poe lint-sql-fix --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
+	uv run poe lint-sql-fix --dialect=postgres data-storage/timescaledb/motor/migrations
+	uv run poe lint-sql-fix --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
+	uv run poe lint-sql-fix --dialect=snowflake data-storage/snowflake/queries
+	uv run poe lint-sql-fix --dialect=sparksql queries
+	uv run poe lint-sql-fix --dialect=sqlite data-storage/sqlite/queries
+	uv run poe lint-sql-fix --dialect=trino trino/queries
+	uv run poe lint-sql-fix --dialect=tsql data-storage/microsoft-sql-server/queries
 lint-terraform:
 	terraform fmt -recursive -check
 lint-terraform-fix:
 	terraform fmt -recursive
 lint-vhdl:
-	poetry run poe lint-vhdl
+	uv run poe lint-vhdl
 lint-vhdl-fix:
-	poetry run poe lint-vhdl-fix
+	uv run poe lint-vhdl-fix
 lint-xml:
 	npm run lint:xml
 lint-xml-fix:
 	npm run lint:xml:fix
 lint-yaml:
-	poetry run poe lint-yaml
+	uv run poe lint-yaml
 
 # Static type check
 static-type-check-python:
-	poetry run poe static-type-check-python -- --package=aerospace.hm-aerosandbox
-	poetry run poe static-type-check-python -- --package=aerospace.hm-openaerostruct
-	poetry run poe static-type-check-python -- --package=api-python
-	poetry run poe static-type-check-python -- --package=authorization.hm-opal-client
-	poetry run poe static-type-check-python -- --package=cloud-computing.hm-ray.applications.calculate
-	poetry run poe static-type-check-python -- --package=cloud-computing.hm-ray.applications.process-flight-data
-	poetry run poe static-type-check-python -- --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
-	poetry run poe static-type-check-python -- --package=computer-vision.hm-open3d
-	poetry run poe static-type-check-python -- --package=computer-vision.hm-pyvista.mount-saint-helens
-	poetry run poe static-type-check-python -- --package=data-analytics.hm-geopandas
-	poetry run poe static-type-check-python -- --package=data-distribution-service
-	poetry run poe static-type-check-python -- --package=data-orchestration.hm-airflow
-	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.calculate
-	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.greet
-	poetry run poe static-type-check-python -- --package=data-orchestration.hm-prefect.workflows.print-platform
-	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.analyze-coffee-customers
-	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.find-retired-people-python
-	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.find-taxi-top-routes
-	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.find-taxi-top-routes-sql
-	poetry run poe static-type-check-python -- --package=data-processing.hm-spark.applications.recommend-movies
-	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena
-	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.read-delta-lake-by-trino
-	poetry run poe static-type-check-python -- --package=data-storage.delta-lake.write-to-delta-lake
-	poetry run poe static-type-check-python -- --package=data-visualization.grafana.hm-dashboard
-	poetry run poe static-type-check-python -- --package=embedded.decode-can-data
-	poetry run poe static-type-check-python -- --package=embedded.format-can-data
-	poetry run poe static-type-check-python -- --package=embedded.hm-serial
-	poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-pyvisa
-	poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-tdms
-	poetry run poe static-type-check-python -- --package=hardware-in-the-loop.national-instruments.hm-ni-veristand
-	poetry run poe static-type-check-python -- --package=hm-locust
-	poetry run poe static-type-check-python -- --package=hm-xxhash
-	poetry run poe static-type-check-python -- --package=machine-learning.convolutional-neural-network
-	poetry run poe static-type-check-python -- --package=machine-learning.feature-store
-	poetry run poe static-type-check-python -- --package=machine-learning.graph-neural-network
-	poetry run poe static-type-check-python -- --package=machine-learning.hm-gradio.applications.classify-image
-	poetry run poe static-type-check-python -- --package=machine-learning.hm-kubeflow.pipelines.calculate
-	poetry run poe static-type-check-python -- --package=machine-learning.hm-kubeflow.pipelines.classify-mnist
-	poetry run poe static-type-check-python -- --package=machine-learning.hm-langchain.applications.chat-pdf
-	poetry run poe static-type-check-python -- --package=machine-learning.hm-mlflow.experiments.classify-mnist
-	poetry run poe static-type-check-python -- --package=machine-learning.hm-mlflow.experiments.predict-diabetes
-	poetry run poe static-type-check-python -- --package=machine-learning.hm-rasa
-	poetry run poe static-type-check-python -- --package=machine-learning.hm-streamlit.applications.live-line-chart
-	poetry run poe static-type-check-python -- --package=machine-learning.hm-streamlit.applications.map
-	poetry run poe static-type-check-python -- --package=machine-learning.hm-supervision.detect-objects
-	poetry run poe static-type-check-python -- --package=machine-learning.hugging-face
-	poetry run poe static-type-check-python -- --package=machine-learning.neural-forecasting.forecast-air-passenger-number
-	poetry run poe static-type-check-python -- --package=machine-learning.reinforcement-learning.cart-pole
-	poetry run poe static-type-check-python -- --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.deploy
-	poetry run poe static-type-check-python -- --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.infer
-	poetry run poe static-type-check-python -- --package=quantum-computing
+	uv run poe static-type-check-python --package=aerospace.hm-aerosandbox
+	uv run poe static-type-check-python --package=aerospace.hm-openaerostruct
+	uv run poe static-type-check-python --package=api-python
+	uv run poe static-type-check-python --package=authorization.hm-opal-client
+	uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.calculate
+	uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.process-flight-data
+	uv run poe static-type-check-python --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
+	uv run poe static-type-check-python --package=computer-vision.hm-open3d
+	uv run poe static-type-check-python --package=computer-vision.hm-pyvista.mount-saint-helens
+	uv run poe static-type-check-python --package=data-analytics.hm-geopandas
+	uv run poe static-type-check-python --package=data-distribution-service
+	uv run poe static-type-check-python --package=data-orchestration.hm-airflow
+	uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.calculate
+	uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.greet
+	uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.print-platform
+	uv run poe static-type-check-python --package=data-processing.hm-spark.applications.analyze-coffee-customers
+	uv run poe static-type-check-python --package=data-processing.hm-spark.applications.find-retired-people-python
+	uv run poe static-type-check-python --package=data-processing.hm-spark.applications.find-taxi-top-routes
+	uv run poe static-type-check-python --package=data-processing.hm-spark.applications.find-taxi-top-routes-sql
+	uv run poe static-type-check-python --package=data-processing.hm-spark.applications.recommend-movies
+	uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena
+	uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-trino
+	uv run poe static-type-check-python --package=data-storage.delta-lake.write-to-delta-lake
+	uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
+	uv run poe static-type-check-python --package=embedded.decode-can-data
+	uv run poe static-type-check-python --package=embedded.format-can-data
+	uv run poe static-type-check-python --package=embedded.hm-serial
+	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-pyvisa
+	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-tdms
+	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-ni-veristand
+	uv run poe static-type-check-python --package=hm-locust
+	uv run poe static-type-check-python --package=hm-xxhash
+	uv run poe static-type-check-python --package=machine-learning.convolutional-neural-network
+	uv run poe static-type-check-python --package=machine-learning.feature-store
+	uv run poe static-type-check-python --package=machine-learning.graph-neural-network
+	uv run poe static-type-check-python --package=machine-learning.hm-gradio.applications.classify-image
+	uv run poe static-type-check-python --package=machine-learning.hm-kubeflow.pipelines.calculate
+	uv run poe static-type-check-python --package=machine-learning.hm-kubeflow.pipelines.classify-mnist
+	uv run poe static-type-check-python --package=machine-learning.hm-langchain.applications.chat-pdf
+	uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.classify-mnist
+	uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.predict-diabetes
+	uv run poe static-type-check-python --package=machine-learning.hm-rasa
+	uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.live-line-chart
+	uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.map
+	uv run poe static-type-check-python --package=machine-learning.hm-supervision.detect-objects
+	uv run poe static-type-check-python --package=machine-learning.hugging-face
+	uv run poe static-type-check-python --package=machine-learning.neural-forecasting.forecast-air-passenger-number
+	uv run poe static-type-check-python --package=machine-learning.reinforcement-learning.cart-pole
+	uv run poe static-type-check-python --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.deploy
+	uv run poe static-type-check-python --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.infer
+	uv run poe static-type-check-python --package=quantum-computing
 static-type-check-terraform:
 	cd cloud-infrastructure/terraform/environments/development/aws && terraform validate
 	cd cloud-infrastructure/terraform/environments/production/aws && terraform validate

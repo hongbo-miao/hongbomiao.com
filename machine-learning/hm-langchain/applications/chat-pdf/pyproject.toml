@@ -1,23 +1,25 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "chat-pdf"
+version = "1.0.0"
+requires-python = "~=3.12.0"
+dependencies = [
+    "chromadb==0.5.18",
+    "gpt4all==2.8.2",
+    "langchain==0.3.7",
+    "langchain-community==0.3.7",
+    "langchain-text-splitters==0.3.2",
+    "pypdf==5.1.0",
+]
 
-[tool.poetry.dependencies]
-python = "~3.12.0"
-chromadb = "0.5.18"
-gpt4all = "2.8.2"
-langchain = "0.3.7"
-langchain-community = "0.3.7"
-langchain-text-splitters = "0.3.2"
-pypdf = "5.1.0"
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 dev = "python src/main.py"

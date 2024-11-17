@@ -1,20 +1,22 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "predict-diabetes"
+version = "1.0.0"
+requires-python = "~=3.12.0"
+dependencies = [
+    "mlflow==2.17.2",
+    "scikit-learn==1.5.2",
+]
 
-[tool.poetry.dependencies]
-python = "~3.12.0"
-mlflow = "2.17.2"
-scikit-learn = "1.5.2"
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-python-dotenv = "1.0.1"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+    "python-dotenv==1.0.1",
+]
 
 [tool.poe.tasks]
 dev = "python src/main.py"

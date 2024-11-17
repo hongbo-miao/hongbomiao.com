@@ -1,18 +1,19 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "hm-prowler"
+version = "1.0.0"
+requires-python = "~=3.12.0"
+dependencies = []
 
-[tool.poetry.dependencies]
-python = "~3.12.0"
+[tool.uv]
+package = false
 
-[tool.poetry.group.dev.dependencies]
-poethepoet = "0.30.0"
-prowler = "4.5.3"
-pytest = "8.3.3"
-pytest-cov = "6.0.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "poethepoet==0.30.0",
+    "prowler==4.5.3",
+    "pytest==8.3.3",
+    "pytest-cov==6.0.0",
+]
 
 [tool.poe.tasks]
 test = "pytest --verbose --verbose"

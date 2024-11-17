@@ -1,35 +1,35 @@
-poetry-env-use:
-	poetry env use python3.11
-poetry-update-lock-file:
-	poetry lock --no-update
-poetry-install:
-	poetry install
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
+	uv sync --dev
 
-poetry-run-test:
-	poetry run poe test
-poetry-run-test-coverage:
-	poetry run poe test-coverage
+uv-run-test:
+	uv run poe test
+uv-run-test-coverage:
+	uv run poe test-coverage
 
 sky-launch:
-	poetry run sky launch skypilot.yaml \
+	uv run sky launch skypilot.yaml \
 		--cluster=hm-skypilot-cluster \
 		--idle-minutes-to-autostop=10 \
 		--yes
 sky-stop:
-	poetry run sky stop hm-skypilot-cluster --yes
+	uv run sky stop hm-skypilot-cluster --yes
 sky-terminate:
-	poetry run sky down hm-skypilot-cluster --yes
+	uv run sky down hm-skypilot-cluster --yes
 
 sky-check:
-	poetry run sky check
+	uv run sky check
 sky-status:
-	poetry run sky status
+	uv run sky status
 sky-ssh:
-	poetry run ssh hm-skypilot-cluster
+	uv run ssh hm-skypilot-cluster
 
 sky-show-gpus:
-	poetry run sky show-gpus
+	uv run sky show-gpus
 sky-show-gpus-price:
-	poetry run sky show-gpus --all
+	uv run sky show-gpus --all
 sky-show-gpus-price-a100-80gb-8:
-	poetry run sky show-gpus A100-80GB:8
+	uv run sky show-gpus A100-80GB:8

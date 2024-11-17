@@ -1,28 +1,30 @@
-[tool.poetry]
-package-mode = false
+[project]
+name = "hongbomiao.com"
+version = "1.0.0"
+requires-python = "~=3.13.0"
 
-[tool.poetry.dependencies]
-python = "~3.13.0"
+[tool.uv]
+package = false
+environments = ["platform_system != 'Windows'"]
 
-[tool.poetry.group.dev.dependencies]
-ansible = "10.6.0"
-ansible-lint = { version = "24.10.0", markers = "platform_system != 'Windows'" }
-autoflake = "2.3.1"
-black = {version = "24.10.0", extras = ["d", "jupyter"]}
-cmakelint = "1.4.3"
-isort = "5.13.2"
-miss-hit = "0.9.44"
-mypy = "1.13.0"
-nb-clean = "4.0.1"
-poethepoet = "0.30.0"
-ruff = "0.7.4"
-sqlfluff = "3.2.5"
-vsg = "3.27.0"
-yamllint = "1.35.1"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "ansible==10.6.0",
+    "ansible-lint==24.10.0",
+    "autoflake==2.3.1",
+    "black[d,jupyter]==24.10.0",
+    "cmakelint==1.4.3",
+    "isort==5.13.2",
+    "miss-hit==0.9.44",
+    "mypy==1.13.0",
+    "nb-clean==4.0.1",
+    "pip==24.3.1",
+    "poethepoet==0.30.0",
+    "ruff==0.7.4",
+    "sqlfluff==3.2.5",
+    "vsg==3.27.0",
+    "yamllint==1.35.1",
+]
 
 [tool.poe.tasks]
 clean-jupyter-notebook = "nb-clean clean"

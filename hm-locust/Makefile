@@ -1,12 +1,12 @@
-poetry-env-use:
-	poetry env use python3.12
-poetry-update-lock-file:
-	poetry lock --no-update
-poetry-install:
-	poetry install
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
+	uv sync --dev
 
 libmagic-install:
 	brew install libmagic
 
-poetry-run-dev:
-	poetry run poe dev
+uv-run-dev:
+	uv run poe dev

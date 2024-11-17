@@ -1,30 +1,30 @@
-poetry-env-use:
-	poetry env use python3.10
-poetry-update-lock-file:
-	poetry lock --no-update
-poetry-install:
-	poetry install
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
+	uv sync --dev
 
-poetry-run-train:
-	poetry run poe train
-poetry-run-test:
-	poetry run poe test
-poetry-run-test-story:
-	poetry run poe test -- --stories tests/test_stories.yml
-poetry-run-visualize:
-	poetry run poe visualize
+uv-run-train:
+	uv run poe train
+uv-run-test:
+	uv run poe test
+uv-run-test-story:
+	uv run poe test -- --stories tests/test_stories.yml
+uv-run-visualize:
+	uv run poe visualize
 
-poetry-run-start-rasa-server:
-	poetry run poe start-rasa-server
-poetry-run-start-action-server:
-	poetry run poe start-action-server
+uv-run-start-rasa-server:
+	uv run poe start-rasa-server
+uv-run-start-action-server:
+	uv run poe start-action-server
 
-poetry-run-telemetry-disable:
-	poetry run poe telemetry-disable
-poetry-run-shell:
-	poetry run poe shell
-poetry-run-interactive:
-	poetry run poe interactive
+uv-run-telemetry-disable:
+	uv run poe telemetry-disable
+uv-run-shell:
+	uv run poe shell
+uv-run-interactive:
+	uv run poe interactive
 
 # Docker
 docker-build:

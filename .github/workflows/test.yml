@@ -743,23 +743,24 @@ jobs:
           sudo ldconfig
           cd ..
           rm -r -f librdkafka-2.6.0/
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: api-python/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: api-python/pyproject.toml
-          cache: poetry
-          cache-dependency-path: api-python/poetry.lock
       - name: Install dependencies
         working-directory: api-python
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: api-python
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -775,23 +776,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-orchestration/hm-airflow/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-orchestration/hm-airflow/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-orchestration/hm-airflow/poetry.lock
       - name: Install dependencies
         working-directory: data-orchestration/hm-airflow
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-orchestration/hm-airflow
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -807,23 +809,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/poetry.lock
       - name: Install dependencies
         working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -839,23 +842,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/deploy
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -871,23 +875,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/triton/amazon-sagamaker-triton-resnet-50/infer
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -903,23 +908,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/poetry.lock
       - name: Install dependencies
         working-directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -935,23 +941,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: cloud-platform/aws/aws-parallelcluster/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: cloud-platform/aws/aws-parallelcluster/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-platform/aws/aws-parallelcluster/poetry.lock
       - name: Install dependencies
         working-directory: cloud-platform/aws/aws-parallelcluster
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: cloud-platform/aws/aws-parallelcluster
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -972,23 +979,24 @@ jobs:
         uses: matlab-actions/setup-matlab@v2.3.0
         with:
           release: R2024a
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: matlab/call-matlab-function-in-python/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: matlab/call-matlab-function-in-python/pyproject.toml
-          cache: poetry
-          cache-dependency-path: matlab/call-matlab-function-in-python/poetry.lock
       - name: Install dependencies
         working-directory: matlab/call-matlab-function-in-python
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: matlab/call-matlab-function-in-python
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1004,23 +1012,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: embedded/decode-can-data/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: embedded/decode-can-data/pyproject.toml
-          cache: poetry
-          cache-dependency-path: embedded/decode-can-data/poetry.lock
       - name: Install dependencies
         working-directory: embedded/decode-can-data
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: embedded/decode-can-data
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1036,23 +1045,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: embedded/format-can-data/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: embedded/format-can-data/pyproject.toml
-          cache: poetry
-          cache-dependency-path: embedded/format-can-data/poetry.lock
       - name: Install dependencies
         working-directory: embedded/format-can-data
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: embedded/format-can-data
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1068,23 +1078,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-distribution-service/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-distribution-service/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-distribution-service/poetry.lock
       - name: Install dependencies
         working-directory: data-distribution-service
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-distribution-service
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1100,23 +1111,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-transformation/dbt/projects/dbt_hm_postgres/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-transformation/dbt/projects/dbt_hm_postgres/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-transformation/dbt/projects/dbt_hm_postgres/poetry.lock
       - name: Install dependencies
         working-directory: data-transformation/dbt/projects/dbt_hm_postgres
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-transformation/dbt/projects/dbt_hm_postgres
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1132,23 +1144,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-amazon-athena/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-storage/delta-lake/read-delta-lake-by-amazon-athena/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-storage/delta-lake/read-delta-lake-by-amazon-athena/poetry.lock
       - name: Install dependencies
         working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1164,23 +1177,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-trino/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-storage/delta-lake/read-delta-lake-by-trino/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-storage/delta-lake/read-delta-lake-by-trino/poetry.lock
       - name: Install dependencies
         working-directory: data-storage/delta-lake/read-delta-lake-by-trino
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-storage/delta-lake/read-delta-lake-by-trino
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1196,23 +1210,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-storage/delta-lake/write-to-delta-lake/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-storage/delta-lake/write-to-delta-lake/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-storage/delta-lake/write-to-delta-lake/poetry.lock
       - name: Install dependencies
         working-directory: data-storage/delta-lake/write-to-delta-lake
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-storage/delta-lake/write-to-delta-lake
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1228,23 +1243,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-autogluon/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-autogluon/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-autogluon/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-autogluon
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-autogluon
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1260,23 +1276,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/feature-store/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/feature-store/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/feature-store/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/feature-store
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/feature-store
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1292,23 +1309,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-geopandas/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-analytics/hm-geopandas/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-analytics/hm-geopandas/poetry.lock
       - name: Install dependencies
         working-directory: data-analytics/hm-geopandas
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-analytics/hm-geopandas
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1324,23 +1342,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hugging-face/analyze-sentiment/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hugging-face/analyze-sentiment/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hugging-face/analyze-sentiment/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hugging-face/analyze-sentiment
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hugging-face/analyze-sentiment
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1356,23 +1375,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-gradio/applications/classify-image/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-gradio/applications/classify-image/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-gradio/applications/classify-image/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-gradio/applications/classify-image
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-gradio/applications/classify-image
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1388,23 +1408,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-streamlit/applications/live-line-chart/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-streamlit/applications/live-line-chart/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-streamlit/applications/live-line-chart/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-streamlit/applications/live-line-chart
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-streamlit/applications/live-line-chart
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1420,23 +1441,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-streamlit/applications/map/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-streamlit/applications/map/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-streamlit/applications/map/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-streamlit/applications/map
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-streamlit/applications/map
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1452,23 +1474,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: high-performance-computing/hm-jax/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: high-performance-computing/hm-jax/pyproject.toml
-          cache: poetry
-          cache-dependency-path: high-performance-computing/hm-jax/poetry.lock
       - name: Install dependencies
         working-directory: high-performance-computing/hm-jax
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: high-performance-computing/hm-jax
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1484,23 +1507,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-flax/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-flax/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-flax/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-flax
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-flax
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1516,23 +1540,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-kubeflow/pipelines/calculate/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-kubeflow/pipelines/calculate/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-kubeflow/pipelines/calculate/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-kubeflow/pipelines/calculate
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-kubeflow/pipelines/calculate
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1548,23 +1573,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-kubeflow/pipelines/classify-mnist/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-kubeflow/pipelines/classify-mnist/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-kubeflow/pipelines/classify-mnist/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1580,23 +1606,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-langchain/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-langchain/applications/chat-pdf/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-langchain/applications/chat-pdf/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-langchain/applications/chat-pdf
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-langchain/applications/chat-pdf
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1612,23 +1639,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-mlflow/experiments/classify-mnist/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-mlflow/experiments/classify-mnist/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-mlflow/experiments/classify-mnist/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-mlflow/experiments/classify-mnist
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-mlflow/experiments/classify-mnist
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1644,23 +1672,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-mlflow/experiments/predict-diabetes/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-mlflow/experiments/predict-diabetes/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-mlflow/experiments/predict-diabetes/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-mlflow/experiments/predict-diabetes
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-mlflow/experiments/predict-diabetes
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1676,23 +1705,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/neural-forecasting/forecast-air-passenger-number/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/neural-forecasting/forecast-air-passenger-number/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/neural-forecasting/forecast-air-passenger-number/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/neural-forecasting/forecast-air-passenger-number
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/neural-forecasting/forecast-air-passenger-number
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1708,23 +1738,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: hardware-in-the-loop/national-instruments/hm-ni-veristand/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: hardware-in-the-loop/national-instruments/hm-ni-veristand/pyproject.toml
-          cache: poetry
-          cache-dependency-path: hardware-in-the-loop/national-instruments/hm-ni-veristand/poetry.lock
       - name: Install dependencies
         working-directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: hardware-in-the-loop/national-instruments/hm-ni-veristand
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1740,23 +1771,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: hardware-in-the-loop/national-instruments/hm-pyvisa/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: hardware-in-the-loop/national-instruments/hm-pyvisa/pyproject.toml
-          cache: poetry
-          cache-dependency-path: hardware-in-the-loop/national-instruments/hm-pyvisa/poetry.lock
       - name: Install dependencies
         working-directory: hardware-in-the-loop/national-instruments/hm-pyvisa
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: hardware-in-the-loop/national-instruments/hm-pyvisa
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1772,23 +1804,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: hardware-in-the-loop/national-instruments/hm-tdms/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: hardware-in-the-loop/national-instruments/hm-tdms/pyproject.toml
-          cache: poetry
-          cache-dependency-path: hardware-in-the-loop/national-instruments/hm-tdms/poetry.lock
       - name: Install dependencies
         working-directory: hardware-in-the-loop/national-instruments/hm-tdms
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: hardware-in-the-loop/national-instruments/hm-tdms
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1804,23 +1837,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: computer-vision/hm-open3d/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: computer-vision/hm-open3d/pyproject.toml
-          cache: poetry
-          cache-dependency-path: computer-vision/hm-open3d/poetry.lock
       - name: Install dependencies
         working-directory: computer-vision/hm-open3d
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: computer-vision/hm-open3d
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1836,23 +1870,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: aerospace/hm-aerosandbox/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: aerospace/hm-aerosandbox/pyproject.toml
-          cache: poetry
-          cache-dependency-path: aerospace/hm-aerosandbox/poetry.lock
       - name: Install dependencies
         working-directory: aerospace/hm-aerosandbox
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: aerospace/hm-aerosandbox
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1868,23 +1903,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: aerospace/hm-openaerostruct/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: aerospace/hm-openaerostruct/pyproject.toml
-          cache: poetry
-          cache-dependency-path: aerospace/hm-openaerostruct/poetry.lock
       - name: Install dependencies
         working-directory: aerospace/hm-openaerostruct
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: aerospace/hm-openaerostruct
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1900,23 +1936,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-orchestration/hm-prefect/workflows/calculate/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-orchestration/hm-prefect/workflows/calculate/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-orchestration/hm-prefect/workflows/calculate/poetry.lock
       - name: Install dependencies
         working-directory: data-orchestration/hm-prefect/workflows/calculate
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-orchestration/hm-prefect/workflows/calculate
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1932,23 +1969,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-orchestration/hm-prefect/workflows/greet/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-orchestration/hm-prefect/workflows/greet/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-orchestration/hm-prefect/workflows/greet/poetry.lock
       - name: Install dependencies
         working-directory: data-orchestration/hm-prefect/workflows/greet
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-orchestration/hm-prefect/workflows/greet
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1964,23 +2002,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-orchestration/hm-prefect/workflows/print-platform/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-orchestration/hm-prefect/workflows/print-platform/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-orchestration/hm-prefect/workflows/print-platform/poetry.lock
       - name: Install dependencies
         working-directory: data-orchestration/hm-prefect/workflows/print-platform
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-orchestration/hm-prefect/workflows/print-platform
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -1996,23 +2035,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: cloud-security/hm-prowler/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: cloud-security/hm-prowler/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-security/hm-prowler/poetry.lock
       - name: Install dependencies
         working-directory: cloud-security/hm-prowler
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: cloud-security/hm-prowler
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2028,23 +2068,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: cloud-infrastructure/hm-pulumi/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: cloud-infrastructure/hm-pulumi/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-infrastructure/hm-pulumi/poetry.lock
       - name: Install dependencies
         working-directory: cloud-infrastructure/hm-pulumi
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: cloud-infrastructure/hm-pulumi
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2060,23 +2101,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: computer-vision/hm-pyvista/mount-saint-helens/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: computer-vision/hm-pyvista/mount-saint-helens/pyproject.toml
-          cache: poetry
-          cache-dependency-path: computer-vision/hm-pyvista/mount-saint-helens/poetry.lock
       - name: Install dependencies
         working-directory: computer-vision/hm-pyvista/mount-saint-helens
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: computer-vision/hm-pyvista/mount-saint-helens
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2092,23 +2134,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: cloud-computing/hm-ray/applications/calculate/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: cloud-computing/hm-ray/applications/calculate/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-computing/hm-ray/applications/calculate/poetry.lock
       - name: Install dependencies
         working-directory: cloud-computing/hm-ray/applications/calculate
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: cloud-computing/hm-ray/applications/calculate
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2124,23 +2167,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: cloud-computing/hm-ray/applications/process-flight-data/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: cloud-computing/hm-ray/applications/process-flight-data/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-computing/hm-ray/applications/process-flight-data/poetry.lock
       - name: Install dependencies
         working-directory: cloud-computing/hm-ray/applications/process-flight-data
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: cloud-computing/hm-ray/applications/process-flight-data
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2156,23 +2200,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/reinforcement-learning/cart-pole/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/reinforcement-learning/cart-pole/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/reinforcement-learning/cart-pole/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/reinforcement-learning/cart-pole
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/reinforcement-learning/cart-pole
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2188,23 +2233,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: embedded/hm-serial/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: embedded/hm-serial/pyproject.toml
-          cache: poetry
-          cache-dependency-path: embedded/hm-serial/poetry.lock
       - name: Install dependencies
         working-directory: embedded/hm-serial
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: embedded/hm-serial
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2220,23 +2266,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: embedded/pack-unpack-data/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: embedded/pack-unpack-data/pyproject.toml
-          cache: poetry
-          cache-dependency-path: embedded/pack-unpack-data/poetry.lock
       - name: Install dependencies
         working-directory: embedded/pack-unpack-data
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: embedded/pack-unpack-data
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2252,23 +2299,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: cloud-computing/hm-skypilot/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: cloud-computing/hm-skypilot/pyproject.toml
-          cache: poetry
-          cache-dependency-path: cloud-computing/hm-skypilot/poetry.lock
       - name: Install dependencies
         working-directory: cloud-computing/hm-skypilot
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: cloud-computing/hm-skypilot
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2284,23 +2332,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: quantum-computing/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: quantum-computing/pyproject.toml
-          cache: poetry
-          cache-dependency-path: quantum-computing/poetry.lock
       - name: Install dependencies
         working-directory: quantum-computing
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: quantum-computing
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2316,23 +2365,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-supervision/detect-objects/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/hm-supervision/detect-objects/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/hm-supervision/detect-objects/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/hm-supervision/detect-objects
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/hm-supervision/detect-objects
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2348,23 +2398,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: hm-xxhash/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: hm-xxhash/pyproject.toml
-          cache: poetry
-          cache-dependency-path: hm-xxhash/poetry.lock
       - name: Install dependencies
         working-directory: hm-xxhash
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: hm-xxhash
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2380,23 +2431,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-processing/hm-spark/applications/analyze-coffee-customers/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-processing/hm-spark/applications/analyze-coffee-customers/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-processing/hm-spark/applications/analyze-coffee-customers/poetry.lock
       - name: Install dependencies
         working-directory: data-processing/hm-spark/applications/analyze-coffee-customers
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-processing/hm-spark/applications/analyze-coffee-customers
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2412,23 +2464,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-processing/hm-spark/applications/find-retired-people-python/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-processing/hm-spark/applications/find-retired-people-python/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-processing/hm-spark/applications/find-retired-people-python/poetry.lock
       - name: Install dependencies
         working-directory: data-processing/hm-spark/applications/find-retired-people-python
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-processing/hm-spark/applications/find-retired-people-python
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2465,23 +2518,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-processing/hm-spark/applications/find-taxi-top-routes/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-processing/hm-spark/applications/find-taxi-top-routes/poetry.lock
       - name: Install dependencies
         working-directory: data-processing/hm-spark/applications/find-taxi-top-routes
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-processing/hm-spark/applications/find-taxi-top-routes
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2497,23 +2551,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-processing/hm-spark/applications/find-taxi-top-routes-sql/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes-sql/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-processing/hm-spark/applications/find-taxi-top-routes-sql/poetry.lock
       - name: Install dependencies
         working-directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2550,23 +2605,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-processing/hm-spark/applications/recommend-movies/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-processing/hm-spark/applications/recommend-movies/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-processing/hm-spark/applications/recommend-movies/poetry.lock
       - name: Install dependencies
         working-directory: data-processing/hm-spark/applications/recommend-movies
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-processing/hm-spark/applications/recommend-movies
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2850,23 +2906,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: data-visualization/grafana/hm-dashboard/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: data-visualization/grafana/hm-dashboard/pyproject.toml
-          cache: poetry
-          cache-dependency-path: data-visualization/grafana/hm-dashboard/poetry.lock
       - name: Install dependencies
         working-directory: data-visualization/grafana/hm-dashboard
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: data-visualization/grafana/hm-dashboard
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2918,23 +2975,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/graph-neural-network/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/graph-neural-network/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/graph-neural-network/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/graph-neural-network
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/graph-neural-network
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -2952,25 +3010,26 @@ jobs:
         uses: actions/checkout@v4.2.2
       - name: Set up CML
         uses: iterative/setup-cml@v2.0.1
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/graph-neural-network/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/graph-neural-network/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/graph-neural-network/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/graph-neural-network
         run: |
-          poetry install
+          uv sync --dev
       - name: Train model
         working-directory: machine-learning/graph-neural-network
         env:
           WANDB_MODE: offline
         run: |
-          poetry run poe dev -- --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
+          uv run poe dev --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
 
   convolutional-neural-network-test:
     name: CNN | Test
@@ -2982,23 +3041,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/convolutional-neural-network
         run: |
-          poetry install
+          uv sync --dev
       - name: Test
         working-directory: machine-learning/convolutional-neural-network
         run: |
-          poetry run poe test-coverage
+          uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.2
         with:
@@ -3016,26 +3076,27 @@ jobs:
         uses: actions/checkout@v4.2.2
       - name: Set up CML
         uses: iterative/setup-cml@v2.0.1
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
       - name: Install dependencies
         working-directory: machine-learning/convolutional-neural-network
         run: |
-          poetry install
+          uv sync --dev
       - name: Train model
         working-directory: machine-learning/convolutional-neural-network
         shell: bash -l {0}
         env:
           WANDB_MODE: offline
         run: |
-          poetry run poe dev -- --should_download_original_data=True
+          uv run poe dev --should_download_original_data=True
       - name: Write CML report
         working-directory: machine-learning/convolutional-neural-network
         shell: bash -l {0}
@@ -3081,33 +3142,34 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Install Poetry
-        run: |
-          pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3.2.3
+        with:
+          version: 0.5.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/convolutional-neural-network/pyproject.toml
-          cache: poetry
-          cache-dependency-path: machine-learning/convolutional-neural-network/poetry.lock
       - name: Install dependencies
         working-directory: convolutional-neural-network
         run: |
-          poetry install
+          uv sync --dev
       - name: Pull Data
         working-directory: convolutional-neural-network
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          poetry run poe dvc-pull
+          uv run poe dvc-pull
       - name: Train model
         working-directory: convolutional-neural-network
         shell: bash -l {0}
         env:
           WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
         run: |
-          poetry run poe dvc-repro
+          uv run poe dvc-repro
       - name: Write CML report
         working-directory: convolutional-neural-network
         shell: bash -l {0}
