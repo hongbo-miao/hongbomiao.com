@@ -21,25 +21,15 @@ public class Program
     private const int CONNECTION_TIMEOUT_MS = 60000;
     private const string ZMQ_ADDRESS = "tcp://*:5555";
     private const int NUM_PRODUCERS = 4;
-    private const int CHANNEL_CAPACITY = 10000;
 
     private static Channel<byte[]> channel;
     private static volatile bool isRunning = true;
-    private static readonly CancellationTokenSource cts = new CancellationTokenSource();
-
-    private class MessageCounters
-    {
-        public int TotalCount;
-        public int IntervalCount;
-    }
 
     public static async Task Main(string[] args)
     {
-        var options = new BoundedChannelOptions(CHANNEL_CAPACITY)
-        {
-            FullMode = BoundedChannelFullMode.Wait,
-        };
-        channel = Channel.CreateBounded<byte[]>(options);
+        channel = Channel.CreateUnbounded<byte[]>(
+            new UnboundedChannelOptions { SingleReader = true, SingleWriter = false }
+        );
 
         using (var publisher = new PublisherSocket())
         {
@@ -63,42 +53,57 @@ public class Program
                 await Console.Out.WriteLineAsync("[Status] Data collection started");
 
                 var totalStopwatch = Stopwatch.StartNew();
-                var counters = new MessageCounters();
+                var messageCount = 0;
+                var messagesLastInterval = 0;
 
                 // Start producer tasks
                 var producerTasks = new List<Task>();
                 for (int i = 0; i < NUM_PRODUCERS; i++)
                 {
-                    producerTasks.Add(ProducerTask(workspace, aliases));
+                    producerTasks.Add(Task.Run(() => ProducerTask(workspace, aliases)));
                 }
 
                 // Consumer task
-                var consumerTask = ConsumeAsync(publisher, counters);
+                var consumerTask = Task.Run(async () =>
+                {
+                    await foreach (var data in channel.Reader.ReadAllAsync())
+                    {
+                        publisher.SendFrame(data);
+
+                        Interlocked.Increment(ref messageCount);
+                        Interlocked.Increment(ref messagesLastInterval);
+
+                        if (messageCount >= TOTAL_MESSAGES)
+                        {
+                            isRunning = false;
+                            break;
+                        }
+                    }
+                });
 
                 // Monitoring task
                 while (isRunning)
                 {
                     await Task.Delay(INTERVAL_MS);
                     var currentMessagesLastInterval = Interlocked.Exchange(
-                        ref counters.IntervalCount,
+                        ref messagesLastInterval,
                         0
                     );
                     double messagesPerSecond = currentMessagesLastInterval / (INTERVAL_MS / 1000.0);
                     await Console.Out.WriteLineAsync(
-                        $"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {counters.TotalCount:N0}"
+                        $"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {messageCount:N0}"
                     );
                 }
 
                 // Cleanup
-                cts.Cancel();
                 channel.Writer.Complete();
                 await Task.WhenAll(producerTasks);
                 await consumerTask;
 
                 double totalTime = totalStopwatch.Elapsed.TotalSeconds;
-                double averageMessagesPerSecond = counters.TotalCount / totalTime;
+                double averageMessagesPerSecond = messageCount / totalTime;
                 await Console.Out.WriteLineAsync(
-                    $"[Complete] Runtime: {totalTime:F2}s | Avg Speed: {averageMessagesPerSecond:F2} msg/s | Total Messages: {counters.TotalCount:N0}"
+                    $"[Complete] Runtime: {totalTime:F2}s | Avg Speed: {averageMessagesPerSecond:F2} msg/s | Total Messages: {messageCount:N0}"
                 );
             }
             catch (Exception ex)
@@ -113,7 +118,7 @@ public class Program
     {
         double[] values = new double[aliases.Length];
 
-        while (isRunning && !cts.Token.IsCancellationRequested)
+        while (isRunning)
         {
             workspace.GetMultipleChannelValues(aliases, out values);
             var signals = new Signals
@@ -129,31 +134,7 @@ public class Program
             };
 
             byte[] data = signals.ToByteArray();
-            try
-            {
-                await channel.Writer.WriteAsync(data, cts.Token);
-            }
-            catch (OperationCanceledException)
-            {
-                break;
-            }
-        }
-    }
-
-    private static async Task ConsumeAsync(PublisherSocket publisher, MessageCounters counters)
-    {
-        await foreach (var data in channel.Reader.ReadAllAsync(cts.Token))
-        {
-            publisher.SendFrame(data);
-
-            Interlocked.Increment(ref counters.TotalCount);
-            Interlocked.Increment(ref counters.IntervalCount);
-
-            if (counters.TotalCount >= TOTAL_MESSAGES)
-            {
-                isRunning = false;
-                break;
-            }
+            await channel.Writer.WriteAsync(data);
         }
     }
 }
