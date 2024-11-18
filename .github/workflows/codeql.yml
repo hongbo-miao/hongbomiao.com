@@ -38,6 +38,24 @@ jobs:
       - name: CodeQL
         uses: github/codeql-action/analyze@v3.27.4
 
+  codeql-csharp:
+    name: C#
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3.27.4
+        with:
+          languages: csharp
+          tools: latest
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3.27.4
+      - name: CodeQL
+        uses: github/codeql-action/analyze@v3.27.4
+
   codeql-go:
     name: Go
     runs-on: ubuntu-22.04
