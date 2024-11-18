@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using NationalInstruments.VeriStand.ClientAPI;
@@ -16,19 +16,30 @@ public class Program
     private const string GATEWAY_IP = "localhost";
     private const string SYSTEM_DEFINITION_PATH =
         @"C:\Users\Public\Documents\National Instruments\NI VeriStand 2024\Examples\Stimulus Profile\Engine Demo\Engine Demo.nivssdf";
-    private const int TOTAL_MESSAGES = 200000;
+    private const int TOTAL_MESSAGES = 500000;
     private const int INTERVAL_MS = 5000;
     private const int CONNECTION_TIMEOUT_MS = 60000;
     private const string ZMQ_ADDRESS = "tcp://*:5555";
-    private const int NUM_PRODUCERS = 4; // Number of producer threads
-    private const int QUEUE_CAPACITY = 10000;
+    private const int NUM_PRODUCERS = 4;
+    private const int CHANNEL_CAPACITY = 10000;
 
-    private static BlockingCollection<byte[]> messageQueue;
+    private static Channel<byte[]> channel;
     private static volatile bool isRunning = true;
+    private static readonly CancellationTokenSource cts = new CancellationTokenSource();
+
+    private class MessageCounters
+    {
+        public int TotalCount;
+        public int IntervalCount;
+    }
 
     public static async Task Main(string[] args)
     {
-        messageQueue = new BlockingCollection<byte[]>(QUEUE_CAPACITY);
+        var options = new BoundedChannelOptions(CHANNEL_CAPACITY)
+        {
+            FullMode = BoundedChannelFullMode.Wait,
+        };
+        channel = Channel.CreateBounded<byte[]>(options);
 
         using (var publisher = new PublisherSocket())
         {
@@ -52,65 +63,42 @@ public class Program
                 await Console.Out.WriteLineAsync("[Status] Data collection started");
 
                 var totalStopwatch = Stopwatch.StartNew();
-                var messageCount = 0;
-                var messagesLastInterval = 0;
+                var counters = new MessageCounters();
 
                 // Start producer tasks
                 var producerTasks = new List<Task>();
                 for (int i = 0; i < NUM_PRODUCERS; i++)
                 {
-                    producerTasks.Add(Task.Run(() => ProducerTask(workspace, aliases)));
+                    producerTasks.Add(ProducerTask(workspace, aliases));
                 }
 
                 // Consumer task
-                var consumerTask = Task.Run(() =>
-                {
-                    while (!messageQueue.IsCompleted)
-                    {
-                        try
-                        {
-                            var data = messageQueue.Take();
-                            publisher.SendFrame(data);
-
-                            Interlocked.Increment(ref messageCount);
-                            Interlocked.Increment(ref messagesLastInterval);
-
-                            if (messageCount >= TOTAL_MESSAGES)
-                            {
-                                isRunning = false;
-                                break;
-                            }
-                        }
-                        catch (InvalidOperationException)
-                        {
-                            break;
-                        }
-                    }
-                });
+                var consumerTask = ConsumeAsync(publisher, counters);
 
                 // Monitoring task
                 while (isRunning)
                 {
                     await Task.Delay(INTERVAL_MS);
                     var currentMessagesLastInterval = Interlocked.Exchange(
-                        ref messagesLastInterval,
+                        ref counters.IntervalCount,
                         0
                     );
                     double messagesPerSecond = currentMessagesLastInterval / (INTERVAL_MS / 1000.0);
                     await Console.Out.WriteLineAsync(
-                        $"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {messageCount:N0} | Queue Size: {messageQueue.Count}"
+                        $"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {counters.TotalCount:N0}"
                     );
                 }
 
                 // Cleanup
-                messageQueue.CompleteAdding();
+                cts.Cancel();
+                channel.Writer.Complete();
                 await Task.WhenAll(producerTasks);
                 await consumerTask;
 
                 double totalTime = totalStopwatch.Elapsed.TotalSeconds;
-                double averageMessagesPerSecond = messageCount / totalTime;
+                double averageMessagesPerSecond = counters.TotalCount / totalTime;
                 await Console.Out.WriteLineAsync(
-                    $"[Complete] Runtime: {totalTime:F2}s | Avg Speed: {averageMessagesPerSecond:F2} msg/s | Total Messages: {messageCount:N0}"
+                    $"[Complete] Runtime: {totalTime:F2}s | Avg Speed: {averageMessagesPerSecond:F2} msg/s | Total Messages: {counters.TotalCount:N0}"
                 );
             }
             catch (Exception ex)
@@ -121,11 +109,11 @@ public class Program
         }
     }
 
-    private static void ProducerTask(IWorkspace2 workspace, string[] aliases)
+    private static async Task ProducerTask(IWorkspace2 workspace, string[] aliases)
     {
         double[] values = new double[aliases.Length];
 
-        while (isRunning)
+        while (isRunning && !cts.Token.IsCancellationRequested)
         {
             workspace.GetMultipleChannelValues(aliases, out values);
             var signals = new Signals
@@ -141,9 +129,30 @@ public class Program
             };
 
             byte[] data = signals.ToByteArray();
-            if (!messageQueue.TryAdd(data))
+            try
             {
-                Thread.Sleep(1); // Back off if the queue is full
+                await channel.Writer.WriteAsync(data, cts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                break;
+            }
+        }
+    }
+
+    private static async Task ConsumeAsync(PublisherSocket publisher, MessageCounters counters)
+    {
+        await foreach (var data in channel.Reader.ReadAllAsync(cts.Token))
+        {
+            publisher.SendFrame(data);
+
+            Interlocked.Increment(ref counters.TotalCount);
+            Interlocked.Increment(ref counters.IntervalCount);
+
+            if (counters.TotalCount >= TOTAL_MESSAGES)
+            {
+                isRunning = false;
+                break;
             }
         }
     }
