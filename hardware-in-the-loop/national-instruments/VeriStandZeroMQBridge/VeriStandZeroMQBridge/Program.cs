@@ -24,6 +24,8 @@ public class Program
 
     private static Channel<byte[]> channel;
     private static volatile bool isRunning = true;
+    private static int messageCount = 0;
+    private static int messagesLastInterval = 0;
 
     public static async Task Main(string[] args)
     {
@@ -46,15 +48,13 @@ public class Program
                     $"[Config] Aliases Count: {aliases.Length} | Aliases: {string.Join(", ", aliases)}"
                 );
                 await Console.Out.WriteLineAsync(
-                    $"[Config] Channels Count: {channels.Length} | Aliases: {string.Join(", ", channels)}"
+                    $"[Config] Channels Count: {channels.Length} | Channels: {string.Join(", ", channels)}"
                 );
 
                 workspace.ConnectToSystem(SYSTEM_DEFINITION_PATH, true, CONNECTION_TIMEOUT_MS);
                 await Console.Out.WriteLineAsync("[Status] Data collection started");
 
                 var totalStopwatch = Stopwatch.StartNew();
-                var messageCount = 0;
-                var messagesLastInterval = 0;
 
                 // Start producer tasks
                 var producerTasks = new List<Task>();
@@ -90,9 +90,20 @@ public class Program
                         0
                     );
                     double messagesPerSecond = currentMessagesLastInterval / (INTERVAL_MS / 1000.0);
-                    await Console.Out.WriteLineAsync(
+
+                    // Get current values
+                    double[] currentValues = new double[channels.Length];
+                    workspace.GetMultipleChannelValues(channels, out currentValues);
+
+                    var channelValues = string.Join(
+                        " | ",
+                        channels.Zip(currentValues, (alias, value) => $"{alias}:{value:F2}")
+                    );
+
+                    Console.WriteLine(
                         $"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {messageCount:N0}"
                     );
+                    Console.WriteLine($"[Update] Values: {channelValues}");
                 }
 
                 // Cleanup
