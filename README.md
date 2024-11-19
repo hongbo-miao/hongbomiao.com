@@ -14,20 +14,18 @@
     <a href="https://github.com/commitizen/cz-cli"><img alt="Commitizen friendly" src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" /></a>
   </p>
   <p>
-    <a href="https://goreportcard.com/report/github.com/hongbo-miao/hongbomiao.com/api-go"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/hongbo-miao/hongbomiao.com/api-go" /></a>
-    <a href="https://observatory.mozilla.org/analyze/www.hongbomiao.com"><img alt="Mozilla Observatory grade" src="https://img.shields.io/mozilla-observatory/grade/www.hongbomiao.com" /></a>
-    <a href="https://app.codacy.com/gh/hongbo-miao/hongbomiao.com/dashboard"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
-    <a href="https://codeclimate.com/github/hongbo-miao/hongbomiao.com"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/hongbo-miao/hongbomiao.com" /></a>
-    <a href="https://codeclimate.com/github/hongbo-miao/hongbomiao.com/trends/technical_debt"><img alt="Code Climate technical debt" src="https://img.shields.io/codeclimate/tech-debt/hongbo-miao/hongbomiao.com" /></a>
-  </p>
-  <p>
     <a href="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com/view?branch=main"><img alt="Code hits" src="https://hitsofcode.com/github/hongbo-miao/hongbomiao.com?branch=main&label=code%20hits" /></a>
     <a href="https://github.com/hongbo-miao/hongbomiao.com"><img alt="Code lines" src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/hongbo-miao/ecff3e2b8226a5c1406b0c2e2622e968/raw/code_line_count.json" /></a>
     <a href="https://github.com/hongbo-miao/hongbomiao.com"><img alt="Code size" src="https://img.shields.io/github/languages/code-size/hongbo-miao/hongbomiao.com" /></a>
     <a href="https://github.com/hongbo-miao/hongbomiao.com/graphs/contributors"><img alt="Commit activity" src="https://img.shields.io/github/commit-activity/y/hongbo-miao/hongbomiao.com"></a>
   </p>
   <p>
+    <a href="https://observatory.mozilla.org/analyze/www.hongbomiao.com"><img alt="Mozilla Observatory grade" src="https://img.shields.io/mozilla-observatory/grade/www.hongbomiao.com" /></a>
+    <a href="https://app.codacy.com/gh/hongbo-miao/hongbomiao.com/dashboard"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
+    <a href="https://goreportcard.com/report/github.com/hongbo-miao/hongbomiao.com/api-go"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/hongbo-miao/hongbomiao.com/api-go" /></a>
     <a href="https://codecov.io/gh/hongbo-miao/hongbomiao.com"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/hongbo-miao/hongbomiao.com" /></a>
+  </p>
+  <p>
     <a href="https://github.com/prettier/prettier"><img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" /></a>
     <a href="https://github.com/psf/black"><img alt="Code style" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
     <a href="https://github.com/hongbo-miao/hongbomiao.com/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com" /></a>
@@ -652,7 +650,7 @@ make kubernetes-clean
 - **@prettier/plugin-xml** - XML formatter
 - **yamllint** - YAML linter
 - **GitHub** - Version control
-- **[SonarCloud](https://sonarcloud.io/project/overview?id=hongbo-miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/gh/hongbo-miao/hongbomiao.com/dashboard)**, **[Code Climate](https://codeclimate.com/github/hongbo-miao/hongbomiao.com)** - Code reviews and analytics
+- **[SonarCloud](https://sonarcloud.io/project/overview?id=hongbo-miao_hongbomiao.com)**, **[Codacy](https://app.codacy.com/gh/hongbo-miao/hongbomiao.com/dashboard)** - Code reviews and analytics
 - **[Codecov](https://codecov.io/gh/hongbo-miao/hongbomiao.com)** - Code coverage reports
 - **[Depfu](https://depfu.com/github/hongbo-miao/hongbomiao.com?project_id=29781)** - Dependency monitoring
 - **[FOSSA](https://app.fossa.io/projects/git%2Bgithub.com%2Fhongbo-miao%2Fhongbomiao.com)** - License compliance
