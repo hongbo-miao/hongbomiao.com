@@ -44,7 +44,7 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jmespath" },
     { name = "python-dateutil" },
-    { name = "urllib3", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "urllib3", marker = "python_full_version == '3.10.*'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6e/db/11eb0bfd552d28872654663c0b8d9c3fc0e57ba88261b0b1877c990e1740/botocore-1.35.63.tar.gz", hash = "sha256:2b8196bab0a997d206c3d490b52e779ef47dffb68c57c685443f77293aca1589", size = 13038035 }
 wheels = [
@@ -123,7 +123,7 @@ wheels = [
 
 [package.optional-dependencies]
 toml = [
-    { name = "tomli", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "tomli", marker = "python_full_version == '3.10.*'" },
 ]
 
 [[package]]
@@ -499,7 +499,7 @@ name = "pandas"
 version = "2.2.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "numpy", marker = "python_full_version == '3.10.*'" },
     { name = "python-dateutil" },
     { name = "pytz" },
     { name = "tzdata" },
@@ -590,7 +590,7 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pastel" },
     { name = "pyyaml" },
-    { name = "tomli", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "tomli", marker = "python_full_version == '3.10.*'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/be/07/dfaed168414cf1e10f5c90860cdc29ffd871df80be81f3d7abd0451a4508/poethepoet-0.30.0.tar.gz", hash = "sha256:9f7ccda2d6525616ce989ca8ef973739fd668f50bef0b9d3631421d504d9ae4a", size = 60139 }
 wheels = [
@@ -651,7 +651,7 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "annotated-types" },
     { name = "pydantic-core" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "typing-extensions", marker = "python_full_version == '3.10.*'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a9/b7/d9e3f12af310e1120c21603644a1cd86f59060e040ec5c3a80b8f05fae30/pydantic-2.9.2.tar.gz", hash = "sha256:d155cef71265d1e9807ed1c32b4c8deec042a44a50a4188b25ac67ecd81a9c0f", size = 769917 }
 wheels = [
@@ -704,11 +704,11 @@ version = "8.3.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama", marker = "sys_platform == 'win32'" },
-    { name = "exceptiongroup", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "exceptiongroup", marker = "python_full_version == '3.10.*'" },
     { name = "iniconfig" },
     { name = "packaging" },
     { name = "pluggy" },
-    { name = "tomli", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "tomli", marker = "python_full_version == '3.10.*'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8b/6c/62bbd536103af674e227c41a8f3dcd022d591f6eed5facb5a0f31ee33bbc/pytest-8.3.3.tar.gz", hash = "sha256:70b98107bd648308a7952b06e6ca9a50bc660be218d53c257cc1fc94fda10181", size = 1442487 }
 wheels = [
@@ -768,7 +768,7 @@ dev = [
     { name = "poethepoet", specifier = "==0.30.0" },
     { name = "pytest", specifier = "==8.3.3" },
     { name = "pytest-cov", specifier = "==6.0.0" },
-    { name = "sagemaker", specifier = "==2.234.0" },
+    { name = "sagemaker", specifier = "==2.235.1" },
 ]
 
 [[package]]
@@ -842,7 +842,7 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "markdown-it-py" },
     { name = "pygments" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "typing-extensions", marker = "python_full_version == '3.10.*'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ab/3a/0316b28d0761c6734d6bc14e770d85506c986c85ffb239e688eeaab2c2bc/rich-13.9.4.tar.gz", hash = "sha256:439594978a49a09530cff7ebc4b5c7103ef57baf48d5ea3184f21d9a2befa098", size = 223149 }
 wheels = [
@@ -896,7 +896,7 @@ wheels = [
 
 [[package]]
 name = "sagemaker"
-version = "2.234.0"
+version = "2.235.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
@@ -922,14 +922,14 @@ dependencies = [
     { name = "tqdm" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/54/e5/8349718b5615c379c308c58cff78ce31ca49fa89769ef3bd77eae482edc0/sagemaker-2.234.0.tar.gz", hash = "sha256:20e252ae93ce92e9afe38361d021ebdf28539f6f05e412ff51ce22962119a375", size = 1134454 }
+sdist = { url = "https://files.pythonhosted.org/packages/70/57/20bd54788d5a654eb026e9b39482c99c658a6dda1bbb7ce00723b2304cca/sagemaker-2.235.1.tar.gz", hash = "sha256:d2e8ed208ff2d3eee0ae02fd03ae991eecee833f50f3dacb504d1a31cc18ba05", size = 1137132 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c0/d8/7bc6b84209e485a1b50f3f4506d502153af42d7e64c21fac99531dddb7fd/sagemaker-2.234.0-py3-none-any.whl", hash = "sha256:4f54c4c9625bb0fdc05ec1ea226a7bf3b0179b00cae7e3f0ea18375b884e9a40", size = 1561802 },
+    { url = "https://files.pythonhosted.org/packages/df/2a/c92e543e5ebb5bdeaa8208f714e62352ab456c800f93e4914788aab7d688/sagemaker-2.235.1-py3-none-any.whl", hash = "sha256:3b6d9d48e2a7f6ca1059da45356466f8d1a839cbcd329b51c160f2c6f2a4d575", size = 1565112 },
 ]
 
 [[package]]
 name = "sagemaker-core"
-version = "1.0.14"
+version = "1.0.15"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
@@ -941,9 +941,9 @@ dependencies = [
     { name = "pyyaml" },
     { name = "rich" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/06/7a/d8d57c6716e61d395fd5a0431bf729a286ead3d1dd25741c6b80651f7d10/sagemaker_core-1.0.14.tar.gz", hash = "sha256:e73b8adfb1ae2f82c948f4a976222acc9e13f0d051129b332a034d3e05908857", size = 375467 }
+sdist = { url = "https://files.pythonhosted.org/packages/32/05/dc2b258727382533651d0d191dc66089784d8d139528b060c7b23bb66126/sagemaker_core-1.0.15.tar.gz", hash = "sha256:134f74cae3a5413f95ae9874b057eeaa0ac60032964bf72aade2db2e86f22130", size = 375895 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c9/1c/4c67def9570b8666b870336adc16d6b514daa90f5da07a97ccd45e1c727d/sagemaker_core-1.0.14-py3-none-any.whl", hash = "sha256:b47804d56a5b29967e6f29510e978d8ed541536c44e5aecef4fdecfafaba6aaa", size = 389405 },
+    { url = "https://files.pythonhosted.org/packages/f5/6a/dee0b0f9e6edc8f0b9b07a234a430c2681d335be17d4bd7e38efa5f9f9a8/sagemaker_core-1.0.15-py3-none-any.whl", hash = "sha256:041d7d61d870b538c995a089c4c8a660ac9cab55190b0cc865d8edad26cd9f63", size = 389404 },
 ]
 
 [[package]]
@@ -1024,8 +1024,8 @@ dependencies = [
     { name = "nvidia-nccl-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
     { name = "nvidia-nvjitlink-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
     { name = "nvidia-nvtx-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
-    { name = "sympy", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
-    { name = "triton", marker = "platform_machine == 'x86_64' and platform_system == 'Linux' and python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "sympy", marker = "python_full_version == '3.10.*'" },
+    { name = "triton", marker = "platform_machine == 'x86_64' and platform_system == 'Linux' and python_full_version == '3.10.*'" },
     { name = "typing-extensions" },
 ]
 wheels = [
