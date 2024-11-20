@@ -18,7 +18,7 @@ type Config = {
     containerId: string;
   };
   lightstep: {
-    token: string | undefined;
+    token: string;
     traceURL: string;
   };
   sentryOptions: Sentry.BrowserOptions;
@@ -39,7 +39,7 @@ const config: Config = {
   sentryOptions: {
     dsn: 'https://a0ff55d9ee00403ca144425a33c318eb@o379185.ingest.sentry.io/4504195581018112',
     environment: NODE_ENV,
-    integrations: [new Sentry.BrowserTracing()],
+    integrations: [Sentry.browserTracingIntegration()],
     tracesSampleRate: 1.0,
   },
 };
