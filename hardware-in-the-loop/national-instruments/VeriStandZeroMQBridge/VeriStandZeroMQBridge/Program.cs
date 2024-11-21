@@ -60,7 +60,7 @@ public class Program
                 var producerTasks = new List<Task>();
                 for (int i = 0; i < NUM_PRODUCERS; i++)
                 {
-                    producerTasks.Add(Task.Run(() => ProducerTask(workspace, aliases)));
+                    producerTasks.Add(Task.Run(() => ProducerTask(workspace, channels)));
                 }
 
                 // Consumer task
@@ -97,13 +97,13 @@ public class Program
 
                     var channelValues = string.Join(
                         " | ",
-                        channels.Zip(currentValues, (alias, value) => $"{alias}:{value:F2}")
+                        channels.Zip(currentValues, (name, value) => $"{name}:{value:F2}")
                     );
 
                     Console.WriteLine(
                         $"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {messageCount:N0}"
                     );
-                    Console.WriteLine($"[Update] Values: {channelValues}");
+                    // Console.WriteLine($"[Update] Values: {channelValues}");
                 }
 
                 // Cleanup
@@ -125,21 +125,21 @@ public class Program
         }
     }
 
-    private static async Task ProducerTask(IWorkspace2 workspace, string[] aliases)
+    private static async Task ProducerTask(IWorkspace2 workspace, string[] channels)
     {
-        double[] values = new double[aliases.Length];
+        double[] values = new double[channels.Length];
 
         while (isRunning)
         {
-            workspace.GetMultipleChannelValues(aliases, out values);
+            workspace.GetMultipleChannelValues(channels, out values);
             var signals = new Signals
             {
                 Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 Signals_ =
                 {
-                    aliases.Zip(
+                    channels.Zip(
                         values,
-                        (alias, value) => new Signal { Alias = alias, Value = value }
+                        (name, value) => new Signal { Name = name, Value = value }
                     ),
                 },
             };
