@@ -325,6 +325,7 @@ make kubernetes-clean
 - **Metabase** - Data visualization
 - **Apache Superset** - Data visualization
 - **Tableau** - Data visualization
+- **IADS** - Data visualization
 
 ### Data Analytics
 
@@ -578,9 +579,9 @@ make kubernetes-clean
 ## Simulation
 
 - **AnyLogic** - Simulation modeling tool
-- **NI LabVIEW** - Graphical programming environment
-- **NI VeriStand** - Real-time testing and simulation
-  - **niveristand** - NI VeriStand API library
+- **LabVIEW** - Graphical programming environment
+- **VeriStand** - Real-time testing and simulation
+  - **niveristand** - VeriStand API library
   - **npTDMS** - TDMS files reading and writing
   - **PyVISA** - Virtual instrument software architecture (VISA) API library
 - **MATLAB** - Programming and numeric computing platform
@@ -860,13 +861,13 @@ The following presents a model of a radar-based air defense system. Bombers are 
 
 ![AnyLogic screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc2c8c2e-8acc-4df5-8a1a-fdf1da7c6f43)
 
-### NI LabVIEW - Graphical Programming Environment
+### LabVIEW - Graphical Programming Environment
 
-![NI LabVIEW screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/acf44d58-a3f4-433b-9045-f4d913b05dfd)
+![LabVIEW screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/acf44d58-a3f4-433b-9045-f4d913b05dfd)
 
-### NI VeriStand - Real-Time Testing and Simulation
+### VeriStand - Real-Time Testing and Simulation
 
-![NI VeriStand screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc7d0c92-7d55-4251-9d39-c53eaac699e2)
+![VeriStand screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc7d0c92-7d55-4251-9d39-c53eaac699e2)
 
 ### CoppeliaSim - Robot Simulation
 
