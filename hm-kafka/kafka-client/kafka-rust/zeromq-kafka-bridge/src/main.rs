@@ -10,8 +10,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 use tokio::sync::mpsc;
-use zeromq::{Socket, SocketRecv};
-use zeromq::SubSocket;
+use zeromq::{Socket, SocketRecv, SubSocket};
 pub mod production {
     pub mod iot {
         include!(concat!(env!("OUT_DIR"), "/production.iot.rs"));
