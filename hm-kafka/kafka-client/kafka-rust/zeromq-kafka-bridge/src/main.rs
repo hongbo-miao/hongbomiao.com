@@ -10,7 +10,8 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 use tokio::sync::mpsc;
-
+use zeromq::{Socket, SocketRecv};
+use zeromq::SubSocket;
 pub mod production {
     pub mod iot {
         include!(concat!(env!("OUT_DIR"), "/production.iot.rs"));
@@ -80,12 +81,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
     const LOW_CAPACITY_THRESHOLD: usize = CHANNEL_BUFFER_SIZE / 10;
     const INACTIVITY_TIMEOUT: Duration = Duration::from_secs(5);
 
-    // Set up ZMQ subscriber
-    let context = zmq::Context::new();
-    let socket = context.socket(zmq::SUB)?;
-    socket.connect("tcp://10.0.0.100:5555")?;
-    socket.set_subscribe(b"")?;
-    println!("Connected to ZMQ publisher");
+    // Set up ZeroMQ subscriber
+    let mut socket = SubSocket::new();
+    socket.connect("tcp://10.0.0.100:5555").await?;
+    socket.subscribe("").await?;
+    println!("Connected to ZeroMQ publisher");
 
     // Set up Kafka producer and Schema Registry encoder
     let bootstrap_server = "localhost:9092";
@@ -148,10 +148,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
-    // Main ZMQ receiving loop
+    // Main ZeroMQ receiving loop
     loop {
-        let msg = socket.recv_bytes(0)?;
-        match Signals::decode(&msg[..]) {
+        let msg = socket.recv().await?;
+        let default_bytes = prost::bytes::Bytes::new();
+        let bytes = msg.get(0).unwrap_or(&default_bytes);
+        match Signals::decode(&bytes[..]) {
             Ok(signals) => {
                 context.messages_received.fetch_add(1, Ordering::Relaxed);
                 if let Err(e) = tx.send(signals).await {
