@@ -257,7 +257,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "matplotlib", specifier = "==3.9.2" },
-    { name = "neuralforecast", specifier = "==1.7.5" },
+    { name = "neuralforecast", specifier = "==1.7.6" },
     { name = "pandas", specifier = "==2.2.3" },
 ]
 
@@ -536,7 +536,7 @@ wheels = [
 
 [[package]]
 name = "neuralforecast"
-version = "1.7.5"
+version = "1.7.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "coreforecast" },
@@ -549,9 +549,9 @@ dependencies = [
     { name = "torch" },
     { name = "utilsforecast" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8a/4d/25c99151e1b80508463b0e85ec3b2850bf66e4bb6798aa7e9dac4db4abfe/neuralforecast-1.7.5.tar.gz", hash = "sha256:df9c2c82d6e535c6abd1c27aba9539f210eb5ecf0b5e16e7e3b95756aebd46dc", size = 185332 }
+sdist = { url = "https://files.pythonhosted.org/packages/3f/86/44ec3f637ca5e2031eedaac3181826444a6d095d854be2948f7187e7b627/neuralforecast-1.7.6.tar.gz", hash = "sha256:098d5504c82ff9982373f6d2125b95ca139f05dbcab23ce929fb111995f0bd80", size = 188383 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ca/0f/ac9be2273a69dee476295f3558e8ce295d576fc8fb3a66772ad20c8a23e6/neuralforecast-1.7.5-py3-none-any.whl", hash = "sha256:9d494ceef85f1709c5dfe06533babf2dfb2a0f38185bef18ac4b4bc753da01c6", size = 254813 },
+    { url = "https://files.pythonhosted.org/packages/fc/e3/b92a24868144fa29c44ada3992900dd6135ccf6bb09f79c665c946894869/neuralforecast-1.7.6-py3-none-any.whl", hash = "sha256:c8440f681d277d2d65c3027dfde63c09001df8f0699b1c54b433bf0c996da43b", size = 259199 },
 ]
 
 [[package]]
@@ -724,7 +724,7 @@ name = "pandas"
 version = "2.2.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy" },
+    { name = "numpy", marker = "python_full_version >= '3.12.0' and python_full_version < '3.13'" },
     { name = "python-dateutil" },
     { name = "pytz" },
     { name = "tzdata" },
@@ -1046,7 +1046,7 @@ name = "sqlalchemy"
 version = "2.0.36"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "greenlet", marker = "platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'" },
+    { name = "greenlet", marker = "(platform_machine == 'AMD64' and python_full_version >= '3.12.0' and python_full_version < '3.13') or (platform_machine == 'WIN32' and python_full_version >= '3.12.0' and python_full_version < '3.13') or (platform_machine == 'aarch64' and python_full_version >= '3.12.0' and python_full_version < '3.13') or (platform_machine == 'amd64' and python_full_version >= '3.12.0' and python_full_version < '3.13') or (platform_machine == 'ppc64le' and python_full_version >= '3.12.0' and python_full_version < '3.13') or (platform_machine == 'win32' and python_full_version >= '3.12.0' and python_full_version < '3.13') or (platform_machine == 'x86_64' and python_full_version >= '3.12.0' and python_full_version < '3.13')" },
     { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/65/9cbc9c4c3287bed2499e05033e207473504dc4df999ce49385fb1f8b058a/sqlalchemy-2.0.36.tar.gz", hash = "sha256:7f2767680b6d2398aea7082e45a774b2b0767b5c8d8ffb9c8b683088ea9b29c5", size = 9574485 }
@@ -1109,9 +1109,9 @@ dependencies = [
     { name = "nvidia-nccl-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
     { name = "nvidia-nvjitlink-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
     { name = "nvidia-nvtx-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
-    { name = "setuptools" },
-    { name = "sympy" },
-    { name = "triton", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
+    { name = "setuptools", marker = "python_full_version >= '3.12.0' and python_full_version < '3.13'" },
+    { name = "sympy", marker = "python_full_version >= '3.12.0' and python_full_version < '3.13'" },
+    { name = "triton", marker = "platform_machine == 'x86_64' and platform_system == 'Linux' and python_full_version >= '3.12.0' and python_full_version < '3.13'" },
     { name = "typing-extensions" },
 ]
 wheels = [
