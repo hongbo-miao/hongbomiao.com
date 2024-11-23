@@ -1,8 +1,8 @@
 use rand::Rng;
-use std::time::{SystemTime, UNIX_EPOCH};
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpListener;
 use tokio::time::{sleep, Duration};
+use chrono::{Datelike, TimeZone, Utc};
 
 // Constants for packet structure
 const HEADER_SIZE_BYTE: i32 = 32;
@@ -31,6 +31,23 @@ impl Default for StreamConfig {
 fn calculate_packet_size_byte(signal_number: i32) -> i32 {
     let signal_pair_number = (signal_number + 1) / 2;
     HEADER_SIZE_BYTE + TIME_PAIR_SIZE_BYTE + (signal_pair_number * SIGNAL_PAIR_SIZE_BYTE)
+}
+
+fn get_year_start_ns() -> i64 {
+    let now = Utc::now();
+    let year_start = Utc.with_ymd_and_hms(now.year(), 1, 1, 0, 0, 0)
+        .unwrap()
+        .timestamp_nanos_opt()
+        .unwrap();
+    year_start
+}
+
+fn get_iads_time() -> i64 {
+    let year_start_ns = get_year_start_ns();
+    let current_ns = Utc::now()
+        .timestamp_nanos_opt()
+        .unwrap();
+    current_ns - year_start_ns
 }
 
 async fn send_data_stream(
@@ -65,20 +82,17 @@ async fn send_data_stream(
         }
         offset += HEADER_SIZE_BYTE as usize;
 
-        // Time tags and values
-        for tag in [1u16, 2u16] {
-            buffer[offset..offset + TAG_SIZE_BYTE as usize].copy_from_slice(&tag.to_le_bytes());
-            offset += TAG_SIZE_BYTE as usize;
-        }
+        // Time tags
+        buffer[offset..offset + TAG_SIZE_BYTE as usize].copy_from_slice(&1u16.to_le_bytes());
+        offset += TAG_SIZE_BYTE as usize;
+        buffer[offset..offset + TAG_SIZE_BYTE as usize].copy_from_slice(&2u16.to_le_bytes());
+        offset += TAG_SIZE_BYTE as usize;
 
-        // Get current absolute time in nanoseconds
-        let time_ns = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap()
-            .as_nanos() as i64;
+        // Time value (nanoseconds since start of year)
+        let iads_time = get_iads_time();
+        let time_high = ((iads_time >> 32) & 0xFFFFFFFF) as u32;
+        let time_low = (iads_time & 0xFFFFFFFF) as u32;
 
-        let time_high = (time_ns >> 32) as u32;
-        let time_low = (time_ns & 0xFFFFFFFF) as u32;
         buffer[offset..offset + VALUE_SIZE_BYTE as usize].copy_from_slice(&time_high.to_le_bytes());
         offset += VALUE_SIZE_BYTE as usize;
         buffer[offset..offset + VALUE_SIZE_BYTE as usize].copy_from_slice(&time_low.to_le_bytes());
