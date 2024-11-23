@@ -765,6 +765,7 @@ make kubernetes-clean
 - **P4** - Programming Protocol-independent Packet Processors
 - **ZeroMQ** - High-performance asynchronous messaging library
   - **NetMQ** - C# implementation of ZeroMQ
+  - **zmq.rs** - Rust implementation of ZeroMQ
 
 ### Communication Standards
 
