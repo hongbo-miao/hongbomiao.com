@@ -1,4 +1,5 @@
 use rand::Rng;
+use std::time::{SystemTime, UNIX_EPOCH};
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpListener;
 use tokio::time::{sleep, Duration};
@@ -41,10 +42,6 @@ async fn send_data_stream(
 
     // Calculate the interval in milliseconds from Hz
     let interval_ms = (1000.0 / config.rate_hz) as u64;
-    // Calculate time increment in nanoseconds from Hz
-    let time_increment_ns = (1.0 / config.rate_hz * 1_000_000_000.0) as i64;
-
-    let mut time_ns = 0i64;
     let mut packet_counter = 0i32;
     let mut buffer = vec![0u8; packet_size_byte as usize];
 
@@ -73,6 +70,12 @@ async fn send_data_stream(
             buffer[offset..offset + TAG_SIZE_BYTE as usize].copy_from_slice(&tag.to_le_bytes());
             offset += TAG_SIZE_BYTE as usize;
         }
+
+        // Get current absolute time in nanoseconds
+        let time_ns = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos() as i64;
 
         let time_high = (time_ns >> 32) as u32;
         let time_low = (time_ns & 0xFFFFFFFF) as u32;
@@ -107,7 +110,6 @@ async fn send_data_stream(
         }
 
         packet_counter += 1;
-        time_ns += time_increment_ns;
         sleep(Duration::from_millis(interval_ms)).await;
     }
 }
