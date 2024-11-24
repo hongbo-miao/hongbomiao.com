@@ -198,7 +198,7 @@ jobs:
               - 'mobile/mobile-react-native/**'
             national-instruments-veristand-zeromq-bridge:
               - '.github/workflows/.lint.yml'
-              - 'hardware-in-the-loop/national-instruments/veristand-zeromq-bridge/**'
+              - 'hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge/**'
             udp-receiver:
               - '.github/workflows/.lint.yml'
               - 'network-programmability/udp/udp-receiver/**'
@@ -254,6 +254,7 @@ jobs:
       - name: Set up NuGet
         uses: nuget/setup-nuget@v2
         with:
+          # https://www.nuget.org/packages/NuGet.Versioning#versions-body-tab
           nuget-version: 6.12.1
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4.1.0
@@ -727,6 +728,48 @@ jobs:
       - name: Lint Ruby
         run: |
           bundle exec rubocop
+
+  lint-rust-iads-data-producer:
+    name: Rust (iads-data-producer)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.iads-data-producer == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Lint Rust
+        working-directory: data-visualization/iads/iads-data-producer
+        run: |
+          cargo clippy
+          cargo fmt --all
+
+  lint-rust-zeromq-iads-bridge:
+    name: Rust (zeromq-iads-bridge)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.zeromq-iads-bridge == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 28.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Lint Rust
+        working-directory: data-visualization/iads/zeromq-iads-bridge
+        run: |
+          cargo clippy
+          cargo fmt --all
 
   lint-rust-kafka-rust-proto-consumer:
     name: Rust (kafka-rust-proto-consumer)
