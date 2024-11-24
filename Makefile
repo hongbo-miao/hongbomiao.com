@@ -62,7 +62,7 @@ ruby-build-upgrade:
 rbenv-list-latest-stable-versions:
 	rbenv install --list
 rbenv-install:
-	rbenv install 3.3.4
+	rbenv install 3.3.6
 
 bundle-init:
 	bundle init
