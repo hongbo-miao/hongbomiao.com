@@ -51,7 +51,7 @@ A personal research and development (R&D) lab that facilitates the sharing of kn
   <p>
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=dark" width="655" height="auto">
-      <img alt="Performance Stats of hongbo-miao/hongbomiao.com - Last 28 days" src="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=light" width="655" height="auto">
+      <img alt="OSS Insight repository performance statistics" src="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=light" width="655" height="auto">
     </picture>
   </p>
 </div>
