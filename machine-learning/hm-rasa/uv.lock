@@ -59,7 +59,7 @@ version = "3.9.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiosignal" },
-    { name = "async-timeout" },
+    { name = "async-timeout", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
     { name = "attrs" },
     { name = "frozenlist" },
     { name = "multidict" },
@@ -206,7 +206,7 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jmespath" },
     { name = "python-dateutil" },
-    { name = "urllib3" },
+    { name = "urllib3", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6e/db/11eb0bfd552d28872654663c0b8d9c3fc0e57ba88261b0b1877c990e1740/botocore-1.35.63.tar.gz", hash = "sha256:2b8196bab0a997d206c3d490b52e779ef47dffb68c57c685443f77293aca1589", size = 13038035 }
 wheels = [
@@ -653,7 +653,7 @@ dev = [
 requires-dist = [{ name = "rasa", specifier = "==3.6.20" }]
 
 [package.metadata.requires-dev]
-dev = [{ name = "poethepoet", specifier = "==0.30.0" }]
+dev = [{ name = "poethepoet", specifier = "==0.31.0" }]
 
 [[package]]
 name = "httptools"
@@ -675,7 +675,7 @@ name = "humanfriendly"
 version = "10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyreadline3", marker = "sys_platform == 'win32'" },
+    { name = "pyreadline3", marker = "sys_platform == 'win32' and python_full_version >= '3.10.0' and python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cc/3f/2c29224acb2e2df4d2046e4c73ee2662023c58ff5b113c4c1adac0886c43/humanfriendly-10.0.tar.gz", hash = "sha256:6b0b831ce8f15f7300721aa49829fc4e83921a9a301cc7f606be6686a2288ddc", size = 360702 }
 wheels = [
@@ -899,7 +899,7 @@ version = "0.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy", version = "1.22.3", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation != 'PyPy' and sys_platform == 'Windows'" },
-    { name = "numpy", version = "1.23.5", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'Windows' or platform_python_implementation == 'PyPy'" },
+    { name = "numpy", version = "1.23.5", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'Windows' and python_full_version >= '3.10.0' and python_full_version < '3.11') or (platform_python_implementation == 'PyPy' and python_full_version >= '3.10.0' and python_full_version < '3.11')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ab/79/717c5e22ad25d63ce3acdfe8ff8d64bdedec18914256c59b838218708b16/ml_dtypes-0.5.0.tar.gz", hash = "sha256:3e7d3a380fe73a63c884f06136f8baa7a5249cc8e9fdec677997dd78549f8128", size = 699367 }
 wheels = [
@@ -1087,16 +1087,16 @@ wheels = [
 
 [[package]]
 name = "poethepoet"
-version = "0.30.0"
+version = "0.31.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pastel" },
     { name = "pyyaml" },
-    { name = "tomli" },
+    { name = "tomli", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/be/07/dfaed168414cf1e10f5c90860cdc29ffd871df80be81f3d7abd0451a4508/poethepoet-0.30.0.tar.gz", hash = "sha256:9f7ccda2d6525616ce989ca8ef973739fd668f50bef0b9d3631421d504d9ae4a", size = 60139 }
+sdist = { url = "https://files.pythonhosted.org/packages/72/26/a7cf028b29b641148af3bd950d4c2e648fc220319f7e9e0e391d05992bff/poethepoet-0.31.0.tar.gz", hash = "sha256:b1cffb120149101b02ffa0583c6e61dfee53953a741df3dabf179836bdef97f5", size = 61992 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/25/98/12bff83ac39ba78ba4736c2f217bab294187de5d71ffbfeb3e126c230704/poethepoet-0.30.0-py3-none-any.whl", hash = "sha256:bf875741407a98da9e96f2f2d0b2c4c34f56d89939a7f53a4b6b3a64b546ec4e", size = 78036 },
+    { url = "https://files.pythonhosted.org/packages/c8/e7/05282936a052138cf9e122f5c67d24d39f69606b90d8f457fcfe6a5c4e01/poethepoet-0.31.0-py3-none-any.whl", hash = "sha256:5067c5adf9f228b8af1f3df7d57dc319ed8b3f153bf21faf99f7b74494174c3d", size = 80517 },
 ]
 
 [[package]]
@@ -1461,7 +1461,7 @@ dependencies = [
     { name = "colorhash" },
     { name = "confluent-kafka" },
     { name = "cryptography" },
-    { name = "dask" },
+    { name = "dask", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
     { name = "dnspython" },
     { name = "fbmessenger" },
     { name = "google-auth" },
@@ -1471,8 +1471,8 @@ dependencies = [
     { name = "matplotlib" },
     { name = "mattermostwrapper" },
     { name = "networkx" },
-    { name = "numpy", version = "1.22.3", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation != 'PyPy' and sys_platform == 'Windows'" },
-    { name = "numpy", version = "1.23.5", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'Windows' or platform_python_implementation == 'PyPy'" },
+    { name = "numpy", version = "1.22.3", source = { registry = "https://pypi.org/simple" }, marker = "platform_python_implementation != 'PyPy' and sys_platform == 'Windows' and python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "numpy", version = "1.23.5", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'Windows' and python_full_version >= '3.10.0' and python_full_version < '3.11') or (platform_python_implementation == 'PyPy' and python_full_version >= '3.10.0' and python_full_version < '3.11')" },
     { name = "packaging" },
     { name = "pluggy" },
     { name = "portalocker" },
@@ -1501,8 +1501,8 @@ dependencies = [
     { name = "sanic-cors" },
     { name = "sanic-jwt" },
     { name = "sanic-routing" },
-    { name = "scikit-learn" },
-    { name = "scipy" },
+    { name = "scikit-learn", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
+    { name = "scipy", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
     { name = "sentry-sdk" },
     { name = "setuptools" },
     { name = "sklearn-crfsuite" },
@@ -1560,7 +1560,7 @@ name = "redis"
 version = "4.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "async-timeout" },
+    { name = "async-timeout", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/73/88/63d802c2b18dd9eaa5b846cbf18917c6b2882f20efda398cc16a7500b02c/redis-4.6.0.tar.gz", hash = "sha256:585dc516b9eb042a619ef0a39c3d7d55fe81bdb4df09a52c9cdde0d07bf1aa7d", size = 4561721 }
 wheels = [
@@ -1660,7 +1660,7 @@ name = "ruamel-yaml"
 version = "0.17.21"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ruamel-yaml-clib", marker = "platform_python_implementation == 'CPython'" },
+    { name = "ruamel-yaml-clib", marker = "platform_python_implementation == 'CPython' and python_full_version >= '3.10.0' and python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/46/a9/6ed24832095b692a8cecc323230ce2ec3480015fbfa4b79941bd41b23a3c/ruamel.yaml-0.17.21.tar.gz", hash = "sha256:8b7ce697a2f212752a35c1ac414471dc16c424c9573be4926b56ff3f5d23b7af", size = 128123 }
 wheels = [
@@ -1789,7 +1789,7 @@ version = "1.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "certifi" },
-    { name = "urllib3" },
+    { name = "urllib3", marker = "python_full_version >= '3.10.0' and python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d3/64/a5e0b77e834bec753927853accef256f86e0c2695ed5d16a2048fe790679/sentry-sdk-1.14.0.tar.gz", hash = "sha256:273fe05adf052b40fd19f6d4b9a5556316807246bd817e5e3482930730726bb0", size = 139729 }
 wheels = [
@@ -1855,7 +1855,7 @@ name = "sqlalchemy"
 version = "1.4.54"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "greenlet", marker = "platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'" },
+    { name = "greenlet", marker = "(platform_machine == 'AMD64' and python_full_version >= '3.10.0' and python_full_version < '3.11') or (platform_machine == 'WIN32' and python_full_version >= '3.10.0' and python_full_version < '3.11') or (platform_machine == 'aarch64' and python_full_version >= '3.10.0' and python_full_version < '3.11') or (platform_machine == 'amd64' and python_full_version >= '3.10.0' and python_full_version < '3.11') or (platform_machine == 'ppc64le' and python_full_version >= '3.10.0' and python_full_version < '3.11') or (platform_machine == 'win32' and python_full_version >= '3.10.0' and python_full_version < '3.11') or (platform_machine == 'x86_64' and python_full_version >= '3.10.0' and python_full_version < '3.11')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ce/af/20290b55d469e873cba9d41c0206ab5461ff49d759989b3fe65010f9d265/sqlalchemy-1.4.54.tar.gz", hash = "sha256:4470fbed088c35dc20b78a39aaf4ae54fe81790c783b3264872a0224f437c31a", size = 8470350 }
 wheels = [
