@@ -359,7 +359,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=embedded.hm-serial
 	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-pyvisa
 	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-tdms
-	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-ni-veristand
+	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-veristand
 	uv run poe static-type-check-python --package=hm-locust
 	uv run poe static-type-check-python --package=hm-xxhash
 	uv run poe static-type-check-python --package=machine-learning.convolutional-neural-network
