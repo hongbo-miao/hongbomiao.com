@@ -11,21 +11,64 @@ using NetMQ;
 using NetMQ.Sockets;
 using VeriStandZeroMQBridge;
 
+public record DataQualityMetrics
+{
+    public int TotalReadAttempts { get; set; }
+    public int FailedReads { get; set; }
+    public int LastGoodValueUsageCount { get; set; }
+    public DateTime LastGoodValueTimestamp { get; set; }
+    public TimeSpan LongestLastGoodValuePeriod { get; set; }
+    public double LastGoodValuePercentage =>
+        TotalReadAttempts > 0 ? (LastGoodValueUsageCount * 100.0 / TotalReadAttempts) : 0;
+
+    public void Reset()
+    {
+        TotalReadAttempts = 0;
+        FailedReads = 0;
+        LastGoodValueUsageCount = 0;
+        LastGoodValueTimestamp = DateTime.MinValue;
+        LongestLastGoodValuePeriod = TimeSpan.Zero;
+    }
+
+    public override string ToString()
+    {
+        return $"Total Reads: {TotalReadAttempts}, "
+            + $"Failed: {FailedReads}, "
+            + $"Last Good Value Usage: {LastGoodValuePercentage:F2}%, "
+            + $"Longest Last Good Value Period: {LongestLastGoodValuePeriod.TotalMilliseconds:F0}ms";
+    }
+}
+
 public class Program
 {
     private const string GATEWAY_IP = "localhost";
     private const string SYSTEM_DEFINITION_PATH =
         @"C:\Users\Public\Documents\National Instruments\NI VeriStand 2024\Examples\Stimulus Profile\Engine Demo\Engine Demo.nivssdf";
-    private const int TOTAL_MESSAGES = 500000;
-    private const int INTERVAL_MS = 5000;
-    private const int CONNECTION_TIMEOUT_MS = 60000;
-    private const string ZMQ_ADDRESS = "tcp://*:5555";
-    private const int NUM_PRODUCERS = 4;
+    private const int VERISTAND_CONNECTION_TIMEOUT_MS = 60000;
+    private const string ZEROMQ_ADDRESS = "tcp://*:5555";
+    private const int PRODUCER_NUMBER = 4;
+    private const int TARGET_FREQUENCY_HZ = 5000;
+    private const double PERIOD_MS = 1000.0 / TARGET_FREQUENCY_HZ;
+    private const int CALIBRATION_TIME_MS = 5000;
 
     private static Channel<byte[]> channel;
     private static volatile bool isRunning = true;
     private static int messageCount = 0;
     private static int messagesLastInterval = 0;
+    private static readonly DataQualityMetrics metrics = new DataQualityMetrics();
+    private static long nextGlobalTimestampNs =
+        DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() * 1000;
+    private static readonly object timestampLock = new object();
+
+    private static long GetNextTimestamp()
+    {
+        lock (timestampLock)
+        {
+            long timestampNs = nextGlobalTimestampNs;
+            nextGlobalTimestampNs += (1000000 / TARGET_FREQUENCY_HZ);
+            return timestampNs * 1000; // Convert to nanoseconds
+        }
+    }
 
     public static async Task Main(string[] args)
     {
@@ -33,14 +76,14 @@ public class Program
             new UnboundedChannelOptions { SingleReader = true, SingleWriter = false }
         );
 
-        using (var publisher = new PublisherSocket())
+        using (PublisherSocket publisher = new PublisherSocket())
         {
-            publisher.Bind(ZMQ_ADDRESS);
-            await Console.Out.WriteLineAsync($"[ZMQ] Publisher bound to {ZMQ_ADDRESS}");
+            publisher.Bind(ZEROMQ_ADDRESS);
+            await Console.Out.WriteLineAsync($"[ZMQ] Publisher bound to {ZEROMQ_ADDRESS}");
 
             try
             {
-                var workspace = new Factory().GetIWorkspace2(GATEWAY_IP);
+                IWorkspace2 workspace = new Factory().GetIWorkspace2(GATEWAY_IP);
                 string[] aliases,
                     channels;
                 workspace.GetAliasList(out aliases, out channels);
@@ -51,65 +94,52 @@ public class Program
                     $"[Config] Channels Count: {channels.Length} | Channels: {string.Join(", ", channels)}"
                 );
 
-                workspace.ConnectToSystem(SYSTEM_DEFINITION_PATH, true, CONNECTION_TIMEOUT_MS);
+                workspace.ConnectToSystem(
+                    SYSTEM_DEFINITION_PATH,
+                    true,
+                    VERISTAND_CONNECTION_TIMEOUT_MS
+                );
                 await Console.Out.WriteLineAsync("[Status] Data collection started");
 
-                var totalStopwatch = Stopwatch.StartNew();
+                // Perform calibration once before starting producer tasks
+                double[] calibrationValues = new double[channels.Length];
+                double[] calibrationLastGoodValues = new double[channels.Length];
+                var calibrationResults = await PerformCalibration(
+                    workspace,
+                    channels,
+                    calibrationValues,
+                    calibrationLastGoodValues
+                );
 
-                // Start producer tasks
-                var producerTasks = new List<Task>();
-                for (int i = 0; i < NUM_PRODUCERS; i++)
+                Stopwatch totalStopwatch = Stopwatch.StartNew();
+
+                List<Task> producerTasks = new List<Task>();
+                for (int i = 0; i < PRODUCER_NUMBER; i++)
                 {
-                    producerTasks.Add(Task.Run(() => ProducerTask(workspace, channels)));
+                    producerTasks.Add(
+                        Task.Run(() => ProducerTask(workspace, channels, calibrationResults))
+                    );
                 }
 
-                // Consumer task
-                var consumerTask = Task.Run(async () =>
+                Task consumerTask = Task.Run(async () =>
                 {
-                    await foreach (var data in channel.Reader.ReadAllAsync())
+                    await foreach (byte[] data in channel.Reader.ReadAllAsync())
                     {
-                        publisher.SendFrame(data);
+                        // var signals = Signals.Parser.ParseFrom(data);
+                        // var datetime = DateTimeOffset
+                        //     .FromUnixTimeMilliseconds(signals.Timestamp / 1000000)
+                        //     .DateTime;
+                        // Console.WriteLine($"Timestamp: {signals.Timestamp} ({datetime})");
 
+                        publisher.SendFrame(data);
                         Interlocked.Increment(ref messageCount);
                         Interlocked.Increment(ref messagesLastInterval);
-
-                        if (messageCount >= TOTAL_MESSAGES)
-                        {
-                            isRunning = false;
-                            break;
-                        }
                     }
                 });
 
-                // Monitoring task
-                while (isRunning)
-                {
-                    await Task.Delay(INTERVAL_MS);
-                    var currentMessagesLastInterval = Interlocked.Exchange(
-                        ref messagesLastInterval,
-                        0
-                    );
-                    double messagesPerSecond = currentMessagesLastInterval / (INTERVAL_MS / 1000.0);
+                Task monitoringTask = Task.Run(MonitorFrequency);
 
-                    // Get current values
-                    double[] currentValues = new double[channels.Length];
-                    workspace.GetMultipleChannelValues(channels, out currentValues);
-
-                    var channelValues = string.Join(
-                        " | ",
-                        channels.Zip(currentValues, (name, value) => $"{name}:{value:F2}")
-                    );
-
-                    Console.WriteLine(
-                        $"[Update] Speed: {messagesPerSecond:F2} msg/s | Total: {messageCount:N0}"
-                    );
-                    // Console.WriteLine($"[Update] Values: {channelValues}");
-                }
-
-                // Cleanup
-                channel.Writer.Complete();
-                await Task.WhenAll(producerTasks);
-                await consumerTask;
+                await Task.WhenAll(producerTasks.Concat(new[] { consumerTask, monitoringTask }));
 
                 double totalTime = totalStopwatch.Elapsed.TotalSeconds;
                 double averageMessagesPerSecond = messageCount / totalTime;
@@ -125,27 +155,218 @@ public class Program
         }
     }
 
-    private static async Task ProducerTask(IWorkspace2 workspace, string[] channels)
+    private static Signals CreateSignalsMessage(
+        string[] channels,
+        double[] values,
+        bool useLastGoodValues,
+        double[] lastGoodValues
+    )
+    {
+        return new Signals
+        {
+            Timestamp = GetNextTimestamp(),
+            Signals_ =
+            {
+                channels.Zip(
+                    useLastGoodValues ? lastGoodValues : values,
+                    (name, value) =>
+                        new Signal
+                        {
+                            Name = name,
+                            Value = (float)value,
+                            IsLastGoodValue = useLastGoodValues,
+                        }
+                ),
+            },
+            SkippedTicks = 0,
+            UseLastGoodValues = useLastGoodValues,
+        };
+    }
+
+    private static async Task<(int readEveryNSampleCount, long periodTicks)> PerformCalibration(
+        IWorkspace2 workspace,
+        string[] channels,
+        double[] values,
+        double[] lastGoodValues
+    )
+    {
+        List<long> sampleTimes = new List<long>();
+        Stopwatch calibrationStopwatch = Stopwatch.StartNew();
+        long calibrationEndTime = CALIBRATION_TIME_MS * Stopwatch.Frequency / 1000;
+
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+        long periodTicks = (long)(PERIOD_MS * Stopwatch.Frequency / 1000.0);
+        long nextTick = stopwatch.ElapsedTicks;
+
+        Console.WriteLine("Starting calibration...");
+
+        while (calibrationStopwatch.ElapsedTicks < calibrationEndTime && isRunning)
+        {
+            if (stopwatch.ElapsedTicks >= nextTick)
+            {
+                long beforeRead = calibrationStopwatch.ElapsedTicks;
+
+                try
+                {
+                    workspace.GetMultipleChannelValues(channels, out values);
+                    long readTime = calibrationStopwatch.ElapsedTicks - beforeRead;
+                    sampleTimes.Add(readTime);
+                    Array.Copy(values, lastGoodValues, values.Length);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Calibration error: {ex.Message}");
+                }
+
+                nextTick += periodTicks;
+                HandlePreciseTiming(nextTick);
+            }
+        }
+
+        return CalculateCalibrationResults(sampleTimes);
+    }
+
+    private static (int readEveryNSampleCount, long periodTicks) CalculateCalibrationResults(
+        List<long> sampleTimes
+    )
+    {
+        long averageReadTime = (long)sampleTimes.Average();
+        long minReadTime = sampleTimes.Min();
+        long maxReadTime = sampleTimes.Max();
+        double stdDev = Math.Sqrt(sampleTimes.Average(v => Math.Pow(v - averageReadTime, 2)));
+        int sampleCount = sampleTimes.Count;
+
+        long[] sortedTimes = sampleTimes.OrderBy(x => x).ToArray();
+        long percentile95 = sortedTimes[(int)(sortedTimes.Length * 0.95)];
+        long minReadPeriodTicks = percentile95 * 2;
+        int actualReadFrequency = (int)(Stopwatch.Frequency / minReadPeriodTicks);
+        int readEveryNSampleCount = Math.Max(1, TARGET_FREQUENCY_HZ / actualReadFrequency);
+
+        Console.WriteLine("\n========== CALIBRATION RESULTS ==========");
+        Console.WriteLine($"Samples collected: {sampleCount}");
+        Console.WriteLine(
+            $"Average read time: {averageReadTime * 1000.0 / Stopwatch.Frequency:F3}ms"
+        );
+        Console.WriteLine($"Min read time: {minReadTime * 1000.0 / Stopwatch.Frequency:F3}ms");
+        Console.WriteLine($"Max read time: {maxReadTime * 1000.0 / Stopwatch.Frequency:F3}ms");
+        Console.WriteLine($"Standard deviation: {stdDev * 1000.0 / Stopwatch.Frequency:F3}ms");
+        Console.WriteLine($"Measured frequency: {Stopwatch.Frequency / averageReadTime:F1} Hz");
+        Console.WriteLine($"Safe read frequency: {actualReadFrequency} Hz");
+        Console.WriteLine($"Reading every {readEveryNSampleCount} samples");
+        Console.WriteLine("========================================\n");
+
+        return (readEveryNSampleCount, (long)(PERIOD_MS * Stopwatch.Frequency / 1000.0));
+    }
+
+    private static void HandlePreciseTiming(long nextTick)
+    {
+        long sleepTicks = nextTick - Stopwatch.GetTimestamp();
+        if (sleepTicks > 0)
+        {
+            long sleepMillis = sleepTicks * 1000 / Stopwatch.Frequency;
+            if (sleepMillis > 1)
+            {
+                Task.Delay(1).Wait();
+            }
+            SpinWait.SpinUntil(() => Stopwatch.GetTimestamp() >= nextTick);
+        }
+    }
+
+    private static async Task ProducerTask(
+        IWorkspace2 workspace,
+        string[] channels,
+        (int readEveryNSampleCount, long periodTicks) calibrationResults
+    )
     {
         double[] values = new double[channels.Length];
+        double[] lastGoodValues = new double[channels.Length];
+
+        var (readEveryNSampleCount, periodTicks) = calibrationResults;
+
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+        long nextTick = stopwatch.ElapsedTicks;
 
         while (isRunning)
         {
-            workspace.GetMultipleChannelValues(channels, out values);
-            var signals = new Signals
+            if (stopwatch.ElapsedTicks >= nextTick)
             {
-                Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-                Signals_ =
+                bool useLastGoodValues = false;
+                try
                 {
-                    channels.Zip(
-                        values,
-                        (name, value) => new Signal { Name = name, Value = value }
-                    ),
-                },
-            };
+                    if (metrics.TotalReadAttempts % readEveryNSampleCount == 0)
+                    {
+                        workspace.GetMultipleChannelValues(channels, out values);
+                        Array.Copy(values, lastGoodValues, values.Length);
+                        metrics.LastGoodValueTimestamp = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        useLastGoodValues = true;
+                    }
 
-            byte[] data = signals.ToByteArray();
-            await channel.Writer.WriteAsync(data);
+                    UpdateMetrics(useLastGoodValues);
+
+                    Signals signals = CreateSignalsMessage(
+                        channels,
+                        values,
+                        useLastGoodValues,
+                        lastGoodValues
+                    );
+                    byte[] data = signals.ToByteArray();
+                    await channel.Writer.WriteAsync(data);
+
+                    nextTick += periodTicks;
+                    HandlePreciseTiming(nextTick);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error during normal operation: {ex.Message}");
+                    metrics.FailedReads++;
+                    await Task.Delay(10);
+                }
+            }
+        }
+    }
+
+    private static void UpdateMetrics(bool useLastGoodValues)
+    {
+        metrics.TotalReadAttempts++;
+        if (useLastGoodValues)
+        {
+            metrics.LastGoodValueUsageCount++;
+            TimeSpan currentLgvPeriod = DateTime.UtcNow - metrics.LastGoodValueTimestamp;
+            if (currentLgvPeriod > metrics.LongestLastGoodValuePeriod)
+            {
+                metrics.LongestLastGoodValuePeriod = currentLgvPeriod;
+            }
+        }
+    }
+
+    private static void MonitorFrequency()
+    {
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+        int lastCount = 0;
+        long lastTime = 0;
+
+        while (isRunning)
+        {
+            Thread.Sleep(1000);
+
+            long currentTime = stopwatch.ElapsedMilliseconds;
+            int currentCount = messageCount;
+            int messages = currentCount - lastCount;
+            double actualFrequency = messages / ((currentTime - lastTime) / 1000.0);
+
+            Console.WriteLine($"Actual frequency: {actualFrequency:F2} Hz");
+            Console.WriteLine($"Target frequency: {TARGET_FREQUENCY_HZ} Hz");
+            Console.WriteLine($"Difference: {actualFrequency - TARGET_FREQUENCY_HZ:F2} Hz");
+            Console.WriteLine($"Data Quality: {metrics}");
+
+            lastCount = currentCount;
+            lastTime = currentTime;
         }
     }
 }
