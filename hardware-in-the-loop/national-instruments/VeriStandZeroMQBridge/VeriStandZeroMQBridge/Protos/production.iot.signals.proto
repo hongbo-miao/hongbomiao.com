@@ -3,12 +3,15 @@
 package production.iot;
 option csharp_namespace = "VeriStandZeroMQBridge";
 
+message Signal {
+  string name = 1;
+  float value = 2;
+  bool is_last_good_value = 3;
+}
+
 message Signals {
   int64 timestamp = 1;
   repeated Signal signals = 2;
-}
-
-message Signal {
-  string name = 1;
-  double value = 2;
+  int32 skipped_ticks = 3;
+  bool use_last_good_values = 4;
 }
