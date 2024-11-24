@@ -62,7 +62,7 @@ async fn process_message(
         .send(
             FutureRecord::to(&context.topic)
                 .payload(&proto_payload)
-                .key(&signals.timestamp.to_string()),
+                .key(&signals.timestamp_ns.to_string()),
             Timeout::After(Duration::from_secs(1)),
         )
         .await
@@ -74,7 +74,7 @@ async fn process_message(
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    println!("Starting ZMQ subscriber and Kafka producer...");
+    println!("Starting ZeroMQ subscriber and Kafka producer...");
 
     const CHANNEL_BUFFER_SIZE: usize = 100_000;
     const LOW_CAPACITY_THRESHOLD: usize = CHANNEL_BUFFER_SIZE / 10;
