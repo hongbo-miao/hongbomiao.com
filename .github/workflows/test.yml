@@ -84,6 +84,8 @@ jobs:
       hm-spark-recommend-movies: ${{ steps.filter.outputs.hm-spark-recommend-movies }}
       hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
+      iads-iads-data-producer: ${{ steps.filter.outputs.iads-iads-data-producer }}
+      iads-zeromq-iads-bridge: ${{ steps.filter.outputs.iads-zeromq-iads-bridge }}
       hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
       kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
@@ -313,6 +315,12 @@ jobs:
             hugging-face-analyze-sentiment:
               - '.github/workflows/test.yml'
               - 'machine-learning/hugging-face/analyze-sentiment/**'
+            iads-iads-data-producer:
+              - '.github/workflows/test.yml'
+              - 'data-visualization/iads/iads-data-producer/**'
+            iads-zeromq-iads-bridge:
+              - '.github/workflows/test.yml'
+              - 'data-visualization/iads/zeromq-iads-bridge/**'
             mobile-android:
               - '.github/workflows/test.yml'
               - 'mobile/mobile-android/**'
@@ -2649,8 +2657,8 @@ jobs:
         run: |
           mvn test
 
-  rust-kafka-rust-proto-consumer-test:
-    name: Kafka Rust - Proto Consumer | Test
+  kafka-rust-proto-consumer-test:
+    name: Kafka Rust (proto-consumer) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
     runs-on: ubuntu-22.04
@@ -2686,8 +2694,8 @@ jobs:
         run: |
           cargo test --all-features
 
-  rust-kafka-rust-proto-producer-test:
-    name: Kafka Rust - Proto Producer | Test
+  kafka-rust-proto-producer-test:
+    name: Kafka Rust (proto-producer) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
     runs-on: ubuntu-22.04
@@ -2723,8 +2731,8 @@ jobs:
         run: |
           cargo test --all-features
 
-  rust-kafka-rust-udp-kafka-bridge-test:
-    name: Kafka Rust - UDP Kafka Bridge | Test
+  kafka-rust-udp-kafka-bridge-test:
+    name: Kafka Rust (udp-kafka-bridge) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
     runs-on: ubuntu-22.04
@@ -2760,8 +2768,8 @@ jobs:
         run: |
           cargo test --all-features
 
-  rust-kafka-rust-zeromq-kafka-bridge-test:
-    name: Kafka Rust - ZeroMQ Kafka Bridge | Test
+  kafka-rust-zeromq-kafka-bridge-test:
+    name: Kafka Rust (zeromq-kafka-bridge) | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
     runs-on: ubuntu-22.04
@@ -2928,6 +2936,46 @@ jobs:
         uses: codecov/codecov-action@v5.0.7
         with:
           directory: data-visualization/grafana/hm-dashboard
+
+  iads-iads-data-producer-test:
+    name: IADS (iads-data-producer) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Test
+        working-directory: data-visualization/iads/iads-data-producer
+        run: |
+          cargo test --all-features
+
+  iads-zeromq-iads-bridge-test:
+    name: IADS (zeromq-iads-bridge) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 28.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Test
+        working-directory: data-visualization/iads/zeromq-iads-bridge
+        run: |
+          cargo test --all-features
 
   hm-opal-client-build:
     name: HM OPAL Client | Build

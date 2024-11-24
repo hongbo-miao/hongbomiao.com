@@ -75,6 +75,12 @@ pull_request_rules:
           - check-success=Lint / Ruby
           - check-skipped=Lint / Ruby
       - or:
+          - check-success=Lint / Rust (iads-data-producer)
+          - check-skipped=Lint / Rust (iads-data-producer)
+      - or:
+          - check-success=Lint / Rust (zeromq-iads-bridge)
+          - check-skipped=Lint / Rust (zeromq-iads-bridge)
+      - or:
           - check-success=Lint / Rust (kafka-rust-proto-consumer)
           - check-skipped=Lint / Rust (kafka-rust-proto-consumer)
       - or:
@@ -363,17 +369,17 @@ pull_request_rules:
           - check-success=Flink (stream-tweets) | Test
           - check-skipped=Flink (stream-tweets) | Test
       - or:
-          - check-success=Kafka Rust - Proto Consumer | Test
-          - check-skipped=Kafka Rust - Proto Consumer | Test
+          - check-success=Kafka Rust (proto-consumer) | Test
+          - check-skipped=Kafka Rust (proto-consumer) | Test
       - or:
-          - check-success=Kafka Rust - Proto Producer | Test
-          - check-skipped=Kafka Rust - Proto Producer | Test
+          - check-success=Kafka Rust (proto-producer) | Test
+          - check-skipped=Kafka Rust (proto-producer) | Test
       - or:
-          - check-success=Kafka Rust - UDP Kafka Bridge | Test
-          - check-skipped=Kafka Rust - UDP Kafka Bridge | Test
+          - check-success=Kafka Rust (udp-kafka-bridge) | Test
+          - check-skipped=Kafka Rust (udp-kafka-bridge) | Test
       - or:
-          - check-success=Kafka Rust - ZeroMQ Kafka Bridge | Test
-          - check-skipped=Kafka Rust - ZeroMQ Kafka Bridge | Test
+          - check-success=Kafka Rust (zeromq-kafka-bridge) | Test
+          - check-skipped=Kafka Rust (zeromq-kafka-bridge) | Test
       - or:
           - check-success=UDP Receiver | Test
           - check-skipped=UDP Receiver | Test
@@ -392,6 +398,9 @@ pull_request_rules:
       - or:
           - check-success=Grafana (hm-dashboard) | Test
           - check-skipped=Grafana (hm-dashboard) | Test
+      - or:
+          - check-success=IADS (zeromq-iads-bridge) | Test
+          - check-skipped=IADS (zeromq-iads-bridge) | Test
       - or:
           - check-success=HM OPAL Client | Build
           - check-skipped=HM OPAL Client | Build
