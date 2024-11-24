@@ -41,7 +41,11 @@
 
 ---
 
-# 🪴 Project Activity
+# 👩‍🚀 Introduction
+
+A personal research and development (R&D) lab that facilitates the sharing of knowledge.
+
+# 🪴 Activity
 
 <div align="center">
   <p>
@@ -51,10 +55,6 @@
     </picture>
   </p>
 </div>
-
-# 👩‍🚀 Introduction
-
-A personal research and development (R&D) lab that facilitates the sharing of knowledge.
 
 # 🚀 Architecture
 
