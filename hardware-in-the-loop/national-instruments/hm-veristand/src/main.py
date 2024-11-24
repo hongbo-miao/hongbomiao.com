@@ -40,5 +40,7 @@ def main(real_time_sequence_path: str) -> None:
 
 
 if __name__ == "__main__":
-    external_real_time_sequence_path = "c:\\hongbomiao.com\\hm-ni-veristand"
+    external_real_time_sequence_path = (
+        "c:\\hongbomiao.com\\hardware-in-the-loop\\national-instruments\\hm-veristand"
+    )
     main(external_real_time_sequence_path)
