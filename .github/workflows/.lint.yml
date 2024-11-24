@@ -21,7 +21,9 @@ jobs:
       dockerfile: ${{ steps.filter.outputs.dockerfile }}
       markdown: ${{ steps.filter.outputs.markdown }}
       matlab: ${{ steps.filter.outputs.matlab }}
+      python: ${{ steps.filter.outputs.python }}
       qml: ${{ steps.filter.outputs.qml }}
+      ruby: ${{ steps.filter.outputs.ruby }}
       shell: ${{ steps.filter.outputs.shell }}
       solidity: ${{ steps.filter.outputs.solidity }}
       sql: ${{ steps.filter.outputs.sql }}
@@ -97,6 +99,18 @@ jobs:
               - 'pyproject.toml'
               - 'uv.lock'
               - '**/*.m'
+            ruby:
+              - '.github/workflows/.lint.yml'
+              - 'Gemfile'
+              - 'Gemfile.lock'
+              # https://github.com/rubocop/rubocop/blob/master/config/default.yml
+              - '**/*.gemfile'
+              - '**/Vagrantfile'
+            python:
+              - '.github/workflows/.lint.yml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/*.py'
             qml:
               - '.github/workflows/.lint.yml'
               - '**/*.qml'
@@ -648,6 +662,8 @@ jobs:
 
   lint-python:
     name: Python
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.python == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -698,6 +714,8 @@ jobs:
 
   lint-ruby:
     name: Ruby
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.ruby == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 30
