@@ -13,6 +13,23 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
+      # Languages
+      ansible: ${{ steps.filter.outputs.ansible }}
+      c-cpp: ${{ steps.filter.outputs.c-cpp }}
+      cmake: ${{ steps.filter.outputs.cmake }}
+      css: ${{ steps.filter.outputs.css }}
+      dockerfile: ${{ steps.filter.outputs.dockerfile }}
+      markdown: ${{ steps.filter.outputs.markdown }}
+      matlab: ${{ steps.filter.outputs.matlab }}
+      qml: ${{ steps.filter.outputs.qml }}
+      shell: ${{ steps.filter.outputs.shell }}
+      solidity: ${{ steps.filter.outputs.solidity }}
+      sql: ${{ steps.filter.outputs.sql }}
+      terraform: ${{ steps.filter.outputs.terraform }}
+      vhdl: ${{ steps.filter.outputs.vhdl }}
+      xml: ${{ steps.filter.outputs.xml }}
+      yaml: ${{ steps.filter.outputs.yaml }}
+      # Applications
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       ethereum: ${{ steps.filter.outputs.ethereum }}
@@ -38,6 +55,94 @@ jobs:
         id: filter
         with:
           filters: |
+            # Languages
+            ansible:
+              - '.github/workflows/.lint.yml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/playbook.yml'
+            c-cpp:
+              - '.github/workflows/.lint.yml'
+              - '.clang-format'
+              - '**/*.c'
+              - '**/*.cpp'
+              - '**/*.cu'
+              - '**/*.h'
+              - '**/*.ino'
+            cmake:
+              - '.github/workflows/.lint.yml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/CMakeLists.txt'
+            css:
+              - '.github/workflows/.lint.yml'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'stylelint.config.js'
+              - '.stylelintignore'
+              - '**/*.css'
+            dockerfile:
+              - '.github/workflows/.lint.yml'
+              - '.hadolint.yaml'
+              - '**/Dockerfile*'
+            markdown:
+              - '.github/workflows/.lint.yml'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '**/*.md'
+            matlab:
+              - '.github/workflows/.lint.yml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/*.m'
+            qml:
+              - '.github/workflows/.lint.yml'
+              - '**/*.qml'
+            shell:
+              - '.github/workflows/.lint.yml'
+              - '**/*.sh'
+            solidity:
+              - '.github/workflows/.lint.yml'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '.solhint.json'
+              - '.solhintignore'
+              - '**/*.sol'
+            sql:
+              - '.github/workflows/.lint.yml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '.sqlfluff'
+              - '.sqlfluffignore'
+              - '**/*.sql'
+            terraform:
+              - '.github/workflows/.lint.yml'
+              - '**/*.tf'
+              - '**/*.tfvars'
+              - '**/.terraform.lock.hcl'
+            vhdl:
+              - '.github/workflows/.lint.yml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/*.vhd'
+            xml:
+              - '.github/workflows/.lint.yml'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'prettier.config.js'
+              - '.prettierignore'
+              - '**/*.xml'
+            yaml:
+              - '.github/workflows/.lint.yml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '.yamllint.yaml'
+              - '**/*.yaml'
+            # Applications
             api-go:
               - '.github/workflows/.lint.yml'
               - 'api-go/**'
@@ -95,6 +200,8 @@ jobs:
 
   lint-ansible:
     name: Ansible
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.ansible == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -122,6 +229,8 @@ jobs:
 
   lint-csharp-national-instruments-veristand-zeromq-bridge:
     name: C# (national-instruments-veristand-zeromq-bridge)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.national-instruments-veristand-zeromq-bridge == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -152,6 +261,8 @@ jobs:
 
   lint-c-cpp:
     name: C, C++
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.c-cpp == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -168,6 +279,8 @@ jobs:
 
   lint-cmake:
     name: CMake
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.cmake == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -206,6 +319,8 @@ jobs:
 
   lint-css:
     name: CSS
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.css == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -227,6 +342,8 @@ jobs:
 
   lint-dockerfile:
     name: Dockerfile
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.dockerfile == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -238,8 +355,8 @@ jobs:
         with:
           dockerfile: '**/Dockerfile*'
 
-  lint-go:
-    name: Go
+  lint-go-api-go:
+    name: Go (api-go)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-22.04
@@ -461,6 +578,8 @@ jobs:
 
   lint-markdown:
     name: Markdown
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.markdown == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -482,6 +601,8 @@ jobs:
 
   lint-matlab:
     name: MATLAB
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.matlab == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -558,6 +679,8 @@ jobs:
 
   lint-qml:
     name: QML
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.qml == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 30
@@ -841,6 +964,8 @@ jobs:
 
   lint-shell:
     name: Shell
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.shell == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -853,6 +978,8 @@ jobs:
 
   lint-solidity:
     name: Solidity
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.solidity == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -874,6 +1001,8 @@ jobs:
 
   lint-sql:
     name: SQL
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.sql == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -914,6 +1043,8 @@ jobs:
 
   lint-terraform:
     name: Terraform
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.terraform == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -928,6 +1059,8 @@ jobs:
 
   lint-vhdl:
     name: VHDL
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.vhdl == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -953,6 +1086,8 @@ jobs:
 
   lint-xml:
     name: XML
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.xml == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -974,6 +1109,8 @@ jobs:
 
   lint-yaml:
     name: YAML
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.yaml == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
