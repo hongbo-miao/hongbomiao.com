@@ -13,6 +13,9 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
+      # Languages
+      python: ${{ steps.filter.outputs.python }}
+      # Applications
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       ethereum: ${{ steps.filter.outputs.ethereum }}
@@ -29,6 +32,14 @@ jobs:
         id: filter
         with:
           filters: |
+            # Languages
+            python:
+              - '.github/workflows/.static-type-check.yml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - 'mypy.ini'
+              - '**/*.py'
+            # Applications
             api-node:
               - '.github/workflows/.static-type-check.yml'
               - 'api-node/**'
@@ -77,6 +88,8 @@ jobs:
 
   static-type-check-python:
     name: Python
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.python == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
