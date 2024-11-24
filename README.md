@@ -43,7 +43,14 @@
 
 # 🪴 Project Activity
 
-![Repobeats analytics](https://repobeats.axiom.co/api/embed/5ea3f5ccba6439bdc337ee75ade22bc3525e3d9c.svg)
+<div align="center">
+  <p>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=dark" width="655" height="auto">
+      <img alt="Performance Stats of hongbo-miao/hongbomiao.com - Last 28 days" src="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=light" width="655" height="auto">
+    </picture>
+  </p>
+</div>
 
 # 👩‍🚀 Introduction
 
