@@ -21,15 +21,6 @@ public record DataQualityMetrics
     public double LastGoodValuePercentage =>
         TotalReadAttempts > 0 ? (LastGoodValueUsageCount * 100.0 / TotalReadAttempts) : 0;
 
-    public void Reset()
-    {
-        TotalReadAttempts = 0;
-        FailedReads = 0;
-        LastGoodValueUsageCount = 0;
-        LastGoodValueTimestamp = DateTime.MinValue;
-        LongestLastGoodValuePeriod = TimeSpan.Zero;
-    }
-
     public override string ToString()
     {
         return $"Total Reads: {TotalReadAttempts}, "
@@ -47,9 +38,8 @@ public class Program
     private const int VERISTAND_CONNECTION_TIMEOUT_MS = 60000;
     private const string ZEROMQ_ADDRESS = "tcp://*:5555";
     private const int PRODUCER_NUMBER = 4;
-    private const int TARGET_FREQUENCY_HZ = 5000;
-    private const double PERIOD_MS = 1000.0 / TARGET_FREQUENCY_HZ;
-    private const int CALIBRATION_TIME_MS = 5000;
+    private const int TARGET_FREQUENCY_HZ = 100;
+    private const int CALIBRATION_TIME_S = 2;
 
     private static Channel<byte[]> channel;
     private static volatile bool isRunning = true;
@@ -59,6 +49,11 @@ public class Program
     private static long nextGlobalTimestampNs =
         DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() * 1000;
     private static readonly object timestampLock = new object();
+
+    private static string SanitizeSignalName(string name)
+    {
+        return new string(name.Where(c => char.IsLetterOrDigit(c)).ToArray());
+    }
 
     private static long GetNextTimestamp()
     {
@@ -79,7 +74,7 @@ public class Program
         using (PublisherSocket publisher = new PublisherSocket())
         {
             publisher.Bind(ZEROMQ_ADDRESS);
-            await Console.Out.WriteLineAsync($"[ZMQ] Publisher bound to {ZEROMQ_ADDRESS}");
+            await Console.Out.WriteLineAsync($"[ZeroMQ] Publisher bound to {ZEROMQ_ADDRESS}");
 
             try
             {
@@ -127,9 +122,9 @@ public class Program
                     {
                         // var signals = Signals.Parser.ParseFrom(data);
                         // var datetime = DateTimeOffset
-                        //     .FromUnixTimeMilliseconds(signals.Timestamp / 1000000)
+                        //     .FromUnixTimeMilliseconds(signals.TimestampNs / 1000000)
                         //     .DateTime;
-                        // Console.WriteLine($"Timestamp: {signals.Timestamp} ({datetime})");
+                        // Console.WriteLine($"Timestamp: {signals.TimestampNs} ({datetime})");
 
                         publisher.SendFrame(data);
                         Interlocked.Increment(ref messageCount);
@@ -164,7 +159,7 @@ public class Program
     {
         return new Signals
         {
-            Timestamp = GetNextTimestamp(),
+            TimestampNs = GetNextTimestamp(),
             Signals_ =
             {
                 channels.Zip(
@@ -172,14 +167,15 @@ public class Program
                     (name, value) =>
                         new Signal
                         {
-                            Name = name,
+                            Name = SanitizeSignalName(name),
                             Value = (float)value,
                             IsLastGoodValue = useLastGoodValues,
                         }
                 ),
             },
-            SkippedTicks = 0,
-            UseLastGoodValues = useLastGoodValues,
+            SkippedTickNumber = 0,
+            IsUsingLastGoodValues = useLastGoodValues,
+            FrequencyHz = TARGET_FREQUENCY_HZ,
         };
     }
 
@@ -192,11 +188,11 @@ public class Program
     {
         List<long> sampleTimes = new List<long>();
         Stopwatch calibrationStopwatch = Stopwatch.StartNew();
-        long calibrationEndTime = CALIBRATION_TIME_MS * Stopwatch.Frequency / 1000;
+        long calibrationEndTime = CALIBRATION_TIME_S * Stopwatch.Frequency;
 
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
-        long periodTicks = (long)(PERIOD_MS * Stopwatch.Frequency / 1000.0);
+        long periodTicks = Stopwatch.Frequency / TARGET_FREQUENCY_HZ;
         long nextTick = stopwatch.ElapsedTicks;
 
         Console.WriteLine("Starting calibration...");
@@ -256,7 +252,7 @@ public class Program
         Console.WriteLine($"Reading every {readEveryNSampleCount} samples");
         Console.WriteLine("========================================\n");
 
-        return (readEveryNSampleCount, (long)(PERIOD_MS * Stopwatch.Frequency / 1000.0));
+        return (readEveryNSampleCount, Stopwatch.Frequency / TARGET_FREQUENCY_HZ);
     }
 
     private static void HandlePreciseTiming(long nextTick)
