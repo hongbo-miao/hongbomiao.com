@@ -164,7 +164,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "poethepoet", specifier = "==0.30.0" },
+    { name = "poethepoet", specifier = "==0.31.0" },
     { name = "pytest", specifier = "==8.3.3" },
     { name = "pytest-cov", specifier = "==6.0.0" },
 ]
@@ -240,7 +240,7 @@ wheels = [
 
 [package.optional-dependencies]
 toml = [
-    { name = "tomli", marker = "python_full_version <= '3.11' and python_full_version >= '3.11.0' and python_full_version < '3.12'" },
+    { name = "tomli", marker = "python_full_version <= '3.11' and python_full_version == '3.11.*'" },
 ]
 
 [[package]]
@@ -953,7 +953,7 @@ name = "pandas"
 version = "2.2.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy", marker = "python_full_version >= '3.11.0' and python_full_version < '3.12'" },
+    { name = "numpy", marker = "python_full_version == '3.11.*'" },
     { name = "python-dateutil" },
     { name = "pytz" },
     { name = "tzdata" },
@@ -1017,15 +1017,15 @@ wheels = [
 
 [[package]]
 name = "poethepoet"
-version = "0.30.0"
+version = "0.31.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pastel" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/be/07/dfaed168414cf1e10f5c90860cdc29ffd871df80be81f3d7abd0451a4508/poethepoet-0.30.0.tar.gz", hash = "sha256:9f7ccda2d6525616ce989ca8ef973739fd668f50bef0b9d3631421d504d9ae4a", size = 60139 }
+sdist = { url = "https://files.pythonhosted.org/packages/72/26/a7cf028b29b641148af3bd950d4c2e648fc220319f7e9e0e391d05992bff/poethepoet-0.31.0.tar.gz", hash = "sha256:b1cffb120149101b02ffa0583c6e61dfee53953a741df3dabf179836bdef97f5", size = 61992 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/25/98/12bff83ac39ba78ba4736c2f217bab294187de5d71ffbfeb3e126c230704/poethepoet-0.30.0-py3-none-any.whl", hash = "sha256:bf875741407a98da9e96f2f2d0b2c4c34f56d89939a7f53a4b6b3a64b546ec4e", size = 78036 },
+    { url = "https://files.pythonhosted.org/packages/c8/e7/05282936a052138cf9e122f5c67d24d39f69606b90d8f457fcfe6a5c4e01/poethepoet-0.31.0-py3-none-any.whl", hash = "sha256:5067c5adf9f228b8af1f3df7d57dc319ed8b3f153bf21faf99f7b74494174c3d", size = 80517 },
 ]
 
 [[package]]
@@ -1355,7 +1355,7 @@ name = "sqlalchemy"
 version = "2.0.36"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "greenlet", marker = "(platform_machine == 'AMD64' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'WIN32' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'aarch64' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'amd64' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'ppc64le' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'win32' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'x86_64' and python_full_version >= '3.11.0' and python_full_version < '3.12')" },
+    { name = "greenlet", marker = "(platform_machine == 'AMD64' and python_full_version == '3.11.*') or (platform_machine == 'WIN32' and python_full_version == '3.11.*') or (platform_machine == 'aarch64' and python_full_version == '3.11.*') or (platform_machine == 'amd64' and python_full_version == '3.11.*') or (platform_machine == 'ppc64le' and python_full_version == '3.11.*') or (platform_machine == 'win32' and python_full_version == '3.11.*') or (platform_machine == 'x86_64' and python_full_version == '3.11.*')" },
     { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/65/9cbc9c4c3287bed2499e05033e207473504dc4df999ce49385fb1f8b058a/sqlalchemy-2.0.36.tar.gz", hash = "sha256:7f2767680b6d2398aea7082e45a774b2b0767b5c8d8ffb9c8b683088ea9b29c5", size = 9574485 }
@@ -1431,8 +1431,8 @@ dependencies = [
     { name = "nvidia-nccl-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
     { name = "nvidia-nvjitlink-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
     { name = "nvidia-nvtx-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
-    { name = "sympy", marker = "python_full_version >= '3.11.0' and python_full_version < '3.12'" },
-    { name = "triton", marker = "platform_machine == 'x86_64' and platform_system == 'Linux' and python_full_version >= '3.11.0' and python_full_version < '3.12'" },
+    { name = "sympy", marker = "python_full_version == '3.11.*'" },
+    { name = "triton", marker = "platform_machine == 'x86_64' and platform_system == 'Linux' and python_full_version == '3.11.*'" },
     { name = "typing-extensions" },
 ]
 wheels = [
@@ -1541,14 +1541,14 @@ dependencies = [
     { name = "docker-pycreds" },
     { name = "gitpython" },
     { name = "platformdirs" },
-    { name = "protobuf", marker = "python_full_version >= '3.11.0' and python_full_version < '3.12'" },
+    { name = "protobuf", marker = "python_full_version == '3.11.*'" },
     { name = "psutil" },
     { name = "pyyaml" },
     { name = "requests" },
     { name = "sentry-sdk" },
     { name = "setproctitle" },
     { name = "setuptools" },
-    { name = "typing-extensions", marker = "python_full_version >= '3.11.0' and python_full_version < '3.12'" },
+    { name = "typing-extensions", marker = "python_full_version == '3.11.*'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d5/10/81cd2519a92c5dc76f0a3553daa32bc58875e05abae6eca4509e65c87d63/wandb-0.18.7.tar.gz", hash = "sha256:00f9891558d4833ee47f21ce6c603499f0bd1a7ce117ff55ee1a041e9094f9a2", size = 9505273 }
 wheels = [
