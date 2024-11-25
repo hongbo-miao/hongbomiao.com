@@ -6,9 +6,9 @@ cargo-test:
 	cargo test --all-features
 cargo-build:
 	cargo build
-cargo-run:
+cargo-run-development:
 	cargo run
-cargo-run-release:
+cargo-run-production:
 	cargo run --release
 
 lint-rust-rustfmt:
