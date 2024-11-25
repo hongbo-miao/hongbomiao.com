@@ -1,10 +1,7 @@
 use prost::Message;
-use rdkafka::client::ClientContext;
 use rdkafka::config::ClientConfig;
-use rdkafka::consumer::{CommitMode, Consumer, ConsumerContext, Rebalance, StreamConsumer};
-use rdkafka::error::KafkaResult;
+use rdkafka::consumer::{CommitMode, Consumer, StreamConsumer};
 use rdkafka::message::Message as KafkaMessage;
-use rdkafka::topic_partition_list::TopicPartitionList;
 use schema_registry_converter::async_impl::easy_proto_raw::EasyProtoRawDecoder;
 use schema_registry_converter::async_impl::schema_registry::SrSettings;
 use std::env::args;
@@ -14,32 +11,14 @@ pub mod iot {
 }
 use iot::Motor;
 
-struct CustomContext;
-
-impl ClientContext for CustomContext {}
-
-impl ConsumerContext for CustomContext {
-    fn pre_rebalance(&self, rebalance: &Rebalance) {
-        println!("Pre rebalance {:?}", rebalance);
-    }
-
-    fn post_rebalance(&self, rebalance: &Rebalance) {
-        println!("Post rebalance {:?}", rebalance);
-    }
-
-    fn commit_callback(&self, result: KafkaResult<()>, _offsets: &TopicPartitionList) {
-        println!("Committing offsets: {:?}", result);
-    }
-}
-
-fn create_consumer(bootstrap_server: &str, group_id: &str) -> StreamConsumer<CustomContext> {
+fn create_consumer(bootstrap_server: &str, group_id: &str) -> StreamConsumer {
     ClientConfig::new()
         .set("bootstrap.servers", bootstrap_server)
         .set("group.id", group_id)
         .set("enable.auto.commit", "true")
         .set("auto.offset.reset", "earliest")
         .set("session.timeout.ms", "6000")
-        .create_with_context(CustomContext)
+        .create()
         .expect("Failed to create consumer")
 }
 
