@@ -7,6 +7,7 @@ use prost::Message;
 use zeromq::{Socket, SocketRecv, SubSocket};
 use tokio::net::TcpListener;
 use chrono::{DateTime, Datelike, TimeZone, Utc};
+use std::env;
 
 pub mod production {
     pub mod iot {
@@ -21,19 +22,37 @@ const IADS_VALUE_SIZE_BYTE: i32 = 4;
 const IADS_TIME_PAIR_SIZE_BYTE: i32 = (IADS_TAG_SIZE_BYTE * 2) + (IADS_VALUE_SIZE_BYTE * 2);
 const IADS_SIGNAL_PAIR_SIZE_BYTE: i32 = (IADS_TAG_SIZE_BYTE * 2) + (IADS_VALUE_SIZE_BYTE * 2);
 
-struct StreamConfig {
-    port: u16,
-    zmq_address: String,
-    last_iads_time: i64,
+#[derive(Debug)]
+struct Config {
+    zeromq_host: String,
+    zeromq_port: u16,
+    iads_port: u16,
 }
 
-impl Default for StreamConfig {
-    fn default() -> Self {
-        StreamConfig {
-            port: 49000,
-            zmq_address: "tcp://10.0.0.100:5555".to_string(),
-            last_iads_time: 0,
+impl Config {
+    fn load() -> Self {
+        // Load the appropriate .env file
+        #[cfg(debug_assertions)]
+        dotenvy::from_filename(".env.development").ok();
+        #[cfg(not(debug_assertions))]
+        dotenvy::from_filename(".env.production").ok();
+
+        Self {
+            zeromq_host: env::var("ZEROMQ_HOST")
+                .expect("ZEROMQ_HOST must be set in environment"),
+            zeromq_port: env::var("ZEROMQ_PORT")
+                .expect("ZEROMQ_PORT must be set in environment")
+                .parse()
+                .expect("ZEROMQ_PORT must be a valid port number"),
+            iads_port: env::var("IADS_PORT")
+                .expect("IADS_PORT must be set in environment")
+                .parse()
+                .expect("IADS_PORT must be a valid port number"),
         }
+    }
+
+    fn get_zeromq_address(&self) -> String {
+        format!("tcp://{}:{}", self.zeromq_host, self.zeromq_port)
     }
 }
 
@@ -57,9 +76,9 @@ fn generate_parameter_definition(signals: &Signals) -> Result<(), Box<dyn Error>
     Ok(())
 }
 
-async fn wait_for_first_message(zmq_address: &str) -> Result<Signals, Box<dyn Error>> {
+async fn wait_for_first_message(get_zeromq_address: &str) -> Result<Signals, Box<dyn Error>> {
     let mut subscriber = SubSocket::new();
-    subscriber.connect(zmq_address).await?;
+    subscriber.connect(get_zeromq_address).await?;
     subscriber.subscribe("").await?;
 
     let msg = subscriber.recv().await?;
@@ -86,16 +105,17 @@ fn convert_epoch_to_iads_time(epoch_ns: i64) -> i64 {
     current_ns - year_start_ns
 }
 
-async fn process_zmq_data(
+async fn process_zeromq_data(
     mut iads_stream: TcpStream,
-    config: &mut StreamConfig,
+    config: &Config,
 ) -> Result<(), Box<dyn Error>> {
     let mut subscriber = SubSocket::new();
-    subscriber.connect(&config.zmq_address).await?;
+    subscriber.connect(&config.get_zeromq_address()).await?;
     subscriber.subscribe("").await?;
 
     let mut packet_counter = 0i32;
     let mut buffer = Vec::new();
+    let mut last_iads_time = 0i64;
 
     // Handshake with IADS
     iads_stream.write_all(&[1u8]).await?;
@@ -149,15 +169,15 @@ async fn process_zmq_data(
         let iads_time = convert_epoch_to_iads_time(signals.timestamp_ns);
 
         // Print time interval information
-        if config.last_iads_time != 0 {
-            let interval = iads_time - config.last_iads_time;
+        if last_iads_time != 0 {
+            let interval = iads_time - last_iads_time;
             println!("IADS Time: {}, Interval: {} ns ({} ms)",
                      iads_time,
                      interval,
                      interval / 1_000_000
             );
         }
-        config.last_iads_time = iads_time;
+        last_iads_time = iads_time;
 
         let time_high = ((iads_time >> 32) & 0xFFFFFFFF) as u32;
         let time_low = (iads_time & 0xFFFFFFFF) as u32;
@@ -200,23 +220,24 @@ async fn process_zmq_data(
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    let mut config = StreamConfig::default();
+    let config = Config::load();
+    println!("{:#?}", config);
 
     // Wait for first message and generate parameter definition file
     println!("Waiting for first ZeroMQ message to generate parameter definition file...");
-    let first_signals = wait_for_first_message(&config.zmq_address).await?;
+    let first_signals = wait_for_first_message(&config.get_zeromq_address()).await?;
     generate_parameter_definition(&first_signals)?;
     println!("Parameter definition file generated successfully");
 
-    let listener = TcpListener::bind(("0.0.0.0", config.port)).await?;
-    println!("Listening for IADS connection on port {}", config.port);
-    println!("Subscribing to ZeroMQ at {}", config.zmq_address);
+    let listener = TcpListener::bind(("0.0.0.0", config.iads_port)).await?;
+    println!("Listening for IADS connection on port {}", config.iads_port);
+    println!("Subscribing to ZeroMQ at {}", config.get_zeromq_address());
 
     loop {
         match listener.accept().await {
             Ok((stream, _)) => {
                 println!("IADS client connected");
-                if let Err(e) = process_zmq_data(stream, &mut config).await {
+                if let Err(e) = process_zeromq_data(stream, &config).await {
                     println!("Error processing data: {}", e);
                 }
                 println!("IADS client disconnected");

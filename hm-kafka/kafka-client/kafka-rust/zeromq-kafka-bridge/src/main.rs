@@ -11,12 +11,57 @@ use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 use tokio::sync::mpsc;
 use zeromq::{Socket, SocketRecv, SubSocket};
+use std::env;
+
 pub mod production {
     pub mod iot {
         include!(concat!(env!("OUT_DIR"), "/production.iot.rs"));
     }
 }
 use production::iot::Signals;
+
+#[derive(Debug)]
+struct Config {
+    zeromq_host: String,
+    zeromq_port: u16,
+    kafka_bootstrap_servers: String,
+    schema_registry_url: String,
+    kafka_topic: String,
+    channel_buffer_size: usize,
+}
+
+impl Config {
+    fn load() -> Self {
+        // Load the appropriate .env file
+        #[cfg(debug_assertions)]
+        dotenvy::from_filename(".env.development").ok();
+        #[cfg(not(debug_assertions))]
+        dotenvy::from_filename(".env.production").ok();
+
+        Self {
+            zeromq_host: env::var("ZEROMQ_HOST")
+                .expect("ZEROMQ_HOST must be set in environment"),
+            zeromq_port: env::var("ZEROMQ_PORT")
+                .expect("ZEROMQ_PORT must be set in environment")
+                .parse()
+                .expect("ZEROMQ_PORT must be a valid port number"),
+            kafka_bootstrap_servers: env::var("KAFKA_BOOTSTRAP_SERVERS")
+                .expect("KAFKA_BOOTSTRAP_SERVERS must be set in environment"),
+            schema_registry_url: env::var("SCHEMA_REGISTRY_URL")
+                .expect("SCHEMA_REGISTRY_URL must be set in environment"),
+            kafka_topic: env::var("KAFKA_TOPIC")
+                .expect("KAFKA_TOPIC must be set in environment"),
+            channel_buffer_size: env::var("CHANNEL_BUFFER_SIZE")
+                .expect("CHANNEL_BUFFER_SIZE must be set in environment")
+                .parse()
+                .expect("CHANNEL_BUFFER_SIZE must be a valid number"),
+        }
+    }
+
+    fn get_zeromq_address(&self) -> String {
+        format!("tcp://{}:{}", self.zeromq_host, self.zeromq_port)
+    }
+}
 
 struct ProcessingContext {
     producer: FutureProducer,
@@ -46,7 +91,6 @@ async fn process_message(
 ) -> Result<(), Box<dyn Error + Send + Sync>> {
     let mut buf = Vec::new();
     signals.encode(&mut buf)?;
-
     let proto_payload = context
         .encoder
         .encode(
@@ -74,31 +118,30 @@ async fn process_message(
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    let config = Config::load();
+    println!("{:#?}", config);
+
     println!("Starting ZeroMQ subscriber and Kafka producer...");
 
-    const CHANNEL_BUFFER_SIZE: usize = 100_000;
-    const LOW_CAPACITY_THRESHOLD: usize = CHANNEL_BUFFER_SIZE / 10;
+    const LOW_CAPACITY_THRESHOLD: usize = 10000; // 10% of default channel buffer size
     const INACTIVITY_TIMEOUT: Duration = Duration::from_secs(5);
 
     // Set up ZeroMQ subscriber
     let mut socket = SubSocket::new();
-    socket.connect("tcp://10.0.0.100:5555").await?;
+    socket.connect(&config.get_zeromq_address()).await?;
     socket.subscribe("").await?;
     println!("Connected to ZeroMQ publisher");
 
     // Set up Kafka producer and Schema Registry encoder
-    let bootstrap_server = "localhost:9092";
-    let producer = create_producer(bootstrap_server);
-    let schema_registry_url = "https://confluent-schema-registry.internal.hongbomiao.com";
-    let sr_settings = SrSettings::new(schema_registry_url.to_string());
+    let producer = create_producer(&config.kafka_bootstrap_servers);
+    let sr_settings = SrSettings::new(config.schema_registry_url.clone());
     let encoder = EasyProtoRawEncoder::new(sr_settings);
-    let topic = "production.iot.signals.proto".to_string();
 
     // Create processing context
     let context = Arc::new(ProcessingContext {
         producer,
         encoder,
-        topic,
+        topic: config.kafka_topic.clone(),
         messages_sent: AtomicUsize::new(0),
         messages_received: AtomicUsize::new(0),
         last_count: AtomicUsize::new(0),
@@ -106,14 +149,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     });
 
     // Create channel for message processing
-    let (tx, mut rx) = mpsc::channel::<Signals>(CHANNEL_BUFFER_SIZE);
+    let (tx, mut rx) = mpsc::channel::<Signals>(config.channel_buffer_size);
 
     // Spawn message processing task
     let processing_context = context.clone();
     tokio::spawn(async move {
         let mut last_message_time = Instant::now();
         let mut handles = Vec::new();
-
         loop {
             tokio::select! {
                 Some(signals) = rx.recv() => {
@@ -169,13 +211,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
         if received % 10_000 == 0 {
             let sent = context.messages_sent.load(Ordering::Relaxed);
             let current_capacity = tx.capacity();
-
             let now = Instant::now();
             let mut last_time = context.last_time.lock().unwrap();
             let elapsed = now.duration_since(*last_time);
             let interval_count = received - context.last_count.swap(received, Ordering::Relaxed);
             let interval_speed = interval_count as f64 / elapsed.as_secs_f64();
-
             *last_time = now;
             drop(last_time);
 
@@ -185,7 +225,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                 sent,
                 received - sent,
                 current_capacity,
-                (current_capacity as f64 / CHANNEL_BUFFER_SIZE as f64) * 100.0,
+                (current_capacity as f64 / config.channel_buffer_size as f64) * 100.0,
                 interval_speed
             );
 
