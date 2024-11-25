@@ -43,18 +43,11 @@
 
 # 👩‍🚀 Introduction
 
+<img align="right" alt="Trinh Minh Triet" src="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=dark" width="512" height="auto" />
+
 A personal research and development (R&D) lab that facilitates the sharing of knowledge.
 
-# 🪴 Activity
-
-<div align="center">
-  <p>
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=dark" width="655" height="auto">
-      <img alt="OSS Insight repository performance statistics" src="https://next.ossinsight.io/widgets/official/compose-last-28-days-stats/thumbnail.png?repo_id=172822195&image_size=auto&color_scheme=light" width="655" height="auto">
-    </picture>
-  </p>
-</div>
+<br><br><br>
 
 # 🚀 Architecture
 
