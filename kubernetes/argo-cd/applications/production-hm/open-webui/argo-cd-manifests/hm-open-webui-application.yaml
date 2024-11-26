@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://helm.openwebui.com
       # https://artifacthub.io/packages/helm/open-webui/open-webui
-      targetRevision: 3.4.3
+      targetRevision: 4.0.4
       chart: open-webui
       helm:
         releaseName: hm-open-webui
@@ -21,7 +21,7 @@ spec:
           image:
             repository: ghcr.io/open-webui/open-webui
             # https://github.com/open-webui/open-webui/releases
-            tag: v0.3.35
+            tag: v0.4.5
           ollama:
             enabled: false
           pipelines:
@@ -29,6 +29,8 @@ spec:
           persistence:
             enabled: true
             existingClaim: hm-open-webui-persistent-volume-claim
+          serviceAccount:
+            enable: false
           # https://docs.openwebui.com/getting-started/env-configuration/
           extraEnvVars:
             - name: ENV
