@@ -19,14 +19,13 @@ public class Configuration
     public string SystemDefinitionPath { get; set; }
     public uint VeriStandConnectionTimeoutMs { get; set; }
     public int ZeroMQPort { get; set; }
-    public string ZeroMQAddress => $"tcp://*:{ZeroMQPort}";
     public int ProducerNumber { get; set; }
     public int TargetFrequencyHz { get; set; }
     public int CalibrationTimeS { get; set; }
 
     public static Configuration Load()
     {
-        string env = Environment.GetEnvironmentVariable("APP_ENVIRONMENT") ?? "Development";
+        string env = Environment.GetEnvironmentVariable("APP_ENVIRONMENT") ?? "development";
         string envFile = $".env.{env.ToLower()}";
 
         if (!File.Exists(envFile))
@@ -125,6 +124,26 @@ public class Program
     private static long nextGlobalTimestampNs =
         DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() * 1000;
     private static readonly object timestampLock = new object();
+    private static SystemState lastKnownState;
+
+    private static bool GetIsVeriStandActive(IWorkspace2 workspace)
+    {
+        SystemState currentState;
+        string systemDefinitionFile;
+        string[] targets;
+        workspace.GetSystemState(out currentState, out systemDefinitionFile, out targets);
+
+        // Only log if the state has changed
+        if (currentState != lastKnownState)
+        {
+            Console.WriteLine(
+                $"[VeriStand State] State changed from {lastKnownState} to {currentState}"
+            );
+            lastKnownState = currentState;
+        }
+
+        return currentState.ToString() == "Active";
+    }
 
     private static long GetNextTimestamp()
     {
@@ -138,11 +157,19 @@ public class Program
 
     public static async Task Main(string[] args)
     {
+        // Add console cancel handler
+        Console.CancelKeyPress += (sender, e) =>
+        {
+            e.Cancel = true; // Prevent immediate termination
+            isRunning = false;
+            Console.WriteLine("\n[Shutdown] Graceful shutdown initiated...");
+        };
+
         try
         {
             config = Configuration.Load();
             await Console.Out.WriteLineAsync(
-                $"[Config] Loaded configuration for environment: {Environment.GetEnvironmentVariable("APP_ENVIRONMENT") ?? "Development"}"
+                $"[Config] Loaded configuration for environment: {Environment.GetEnvironmentVariable("APP_ENVIRONMENT") ?? "development"}"
             );
 
             channel = Channel.CreateUnbounded<byte[]>(
@@ -151,16 +178,29 @@ public class Program
 
             using (PublisherSocket publisher = new PublisherSocket())
             {
-                publisher.Bind(config.ZeroMQAddress);
-                await Console.Out.WriteLineAsync(
-                    $"[ZMQ] Publisher bound to {config.ZeroMQAddress}"
-                );
+                string zeroMQUrl = $"tcp://*:{config.ZeroMQPort}";
+                publisher.Bind(zeroMQUrl);
+                await Console.Out.WriteLineAsync($"[ZMQ] Publisher bound to {zeroMQUrl}");
 
                 try
                 {
                     IWorkspace2 workspace = new Factory().GetIWorkspace2(
                         config.VeristandGatewayHost
                     );
+
+                    workspace.ConnectToSystem(
+                        config.SystemDefinitionPath,
+                        true,
+                        config.VeriStandConnectionTimeoutMs
+                    );
+
+                    if (!GetIsVeriStandActive(workspace))
+                    {
+                        throw new Exception("VeriStand is not active. Cannot start streaming.");
+                    }
+
+                    await Console.Out.WriteLineAsync("[Status] Data collection started");
+
                     string[] aliases,
                         channels;
                     workspace.GetAliasList(out aliases, out channels);
@@ -171,13 +211,6 @@ public class Program
                         $"[Config] Channels Count: {channels.Length} | Channels: {string.Join(", ", channels)}"
                     );
 
-                    workspace.ConnectToSystem(
-                        config.SystemDefinitionPath,
-                        true,
-                        config.VeriStandConnectionTimeoutMs
-                    );
-                    await Console.Out.WriteLineAsync("[Status] Data collection started");
-
                     double[] calibrationValues = new double[channels.Length];
                     double[] calibrationLastGoodValues = new double[channels.Length];
                     var calibrationResults = await PerformCalibration(
@@ -186,8 +219,6 @@ public class Program
                         calibrationValues,
                         calibrationLastGoodValues
                     );
-
-                    Stopwatch totalStopwatch = Stopwatch.StartNew();
 
                     List<Task> producerTasks = new List<Task>();
                     for (int i = 0; i < config.ProducerNumber; i++)
@@ -201,11 +232,21 @@ public class Program
                     {
                         await foreach (byte[] data in channel.Reader.ReadAllAsync())
                         {
+                            if (!isRunning)
+                                break;
+
                             // Signals signals = Signals.Parser.ParseFrom(data);
                             // DateTime datetime = DateTimeOffset
                             //     .FromUnixTimeMilliseconds(signals.TimestampNs / 1000000)
                             //     .DateTime;
-                            // Console.WriteLine($"Timestamp: {signals.TimestampNs} ({datetime})");
+                            // Console.WriteLine(
+                            //     $"Timestamp: {signals.TimestampNs} ({datetime:HH:mm:ss.fff})"
+                            // );
+                            // string signalValues = string.Join(
+                            //     " | ",
+                            //     signals.Signals_.Select(s => $"{s.Name}: {s.Value:F3}")
+                            // );
+                            // Console.WriteLine($"Signal values: {signalValues}");
 
                             publisher.SendFrame(data);
                             Interlocked.Increment(ref messageCount);
@@ -217,12 +258,6 @@ public class Program
 
                     await Task.WhenAll(
                         producerTasks.Concat(new[] { consumerTask, monitoringTask })
-                    );
-
-                    double totalTime = totalStopwatch.Elapsed.TotalSeconds;
-                    double averageMessagesPerSecond = messageCount / totalTime;
-                    await Console.Out.WriteLineAsync(
-                        $"[Complete] Runtime: {totalTime:F2}s | Avg Speed: {averageMessagesPerSecond:F2} msg/s | Total Messages: {messageCount:N0}"
                     );
                 }
                 catch (Exception ex)
@@ -287,6 +322,11 @@ public class Program
 
         while (calibrationStopwatch.ElapsedTicks < calibrationEndTime && isRunning)
         {
+            if (!GetIsVeriStandActive(workspace))
+            {
+                throw new Exception("VeriStand became inactive during calibration.");
+            }
+
             if (stopwatch.ElapsedTicks >= nextTick)
             {
                 long beforeRead = calibrationStopwatch.ElapsedTicks;
@@ -372,8 +412,39 @@ public class Program
         stopwatch.Start();
         long nextTick = stopwatch.ElapsedTicks;
 
+        int stateCheckCounter = 0;
+        const int STATE_CHECK_INTERVAL = 1000; // Check state every 1000 iterations
+        const int RECOVERY_WAIT_MS = 1000; // Wait 1 second before trying to recover
+
         while (isRunning)
         {
+            if (++stateCheckCounter >= STATE_CHECK_INTERVAL)
+            {
+                if (!GetIsVeriStandActive(workspace))
+                {
+                    await Console.Out.WriteLineAsync(
+                        "[Producer] VeriStand is not active. Waiting for recovery..."
+                    );
+
+                    // Wait for VeriStand to become active again
+                    while (isRunning)
+                    {
+                        await Task.Delay(RECOVERY_WAIT_MS);
+                        if (GetIsVeriStandActive(workspace))
+                        {
+                            await Console.Out.WriteLineAsync(
+                                "[Producer] VeriStand is active again. Resuming stream..."
+                            );
+                            // Reset the stopwatch and nextTick to ensure proper timing after recovery
+                            stopwatch.Restart();
+                            nextTick = stopwatch.ElapsedTicks;
+                            break;
+                        }
+                    }
+                }
+                stateCheckCounter = 0;
+            }
+
             if (stopwatch.ElapsedTicks >= nextTick)
             {
                 bool isUsingLastGoodValues = false;
@@ -439,18 +510,23 @@ public class Program
         {
             Thread.Sleep(1000);
 
-            long currentTime = stopwatch.ElapsedMilliseconds;
-            int currentCount = messageCount;
-            int messages = currentCount - lastCount;
-            double actualFrequency = messages / ((currentTime - lastTime) / 1000.0);
+            if (lastKnownState.ToString() == "Active")
+            {
+                long currentTime = stopwatch.ElapsedMilliseconds;
+                int currentCount = messageCount;
+                int messages = currentCount - lastCount;
+                double actualFrequency = messages / ((currentTime - lastTime) / 1000.0);
 
-            Console.WriteLine($"Actual frequency: {actualFrequency:F2} Hz");
-            Console.WriteLine($"Target frequency: {config.TargetFrequencyHz} Hz");
-            Console.WriteLine($"Difference: {actualFrequency - config.TargetFrequencyHz:F2} Hz");
-            Console.WriteLine($"Data Quality: {metrics}");
+                Console.WriteLine($"Actual frequency: {actualFrequency:F2} Hz");
+                Console.WriteLine($"Target frequency: {config.TargetFrequencyHz} Hz");
+                Console.WriteLine(
+                    $"Difference: {actualFrequency - config.TargetFrequencyHz:F2} Hz"
+                );
+                Console.WriteLine($"Data Quality: {metrics}");
 
-            lastCount = currentCount;
-            lastTime = currentTime;
+                lastCount = currentCount;
+                lastTime = currentTime;
+            }
         }
     }
 }
