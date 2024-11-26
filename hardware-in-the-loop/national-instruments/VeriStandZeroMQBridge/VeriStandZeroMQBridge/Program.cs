@@ -42,7 +42,7 @@ public class Configuration
             SystemDefinitionPath = Environment.GetEnvironmentVariable("SYSTEM_DEFINITION_PATH"),
             VeriStandConnectionTimeoutMs = uint.Parse(
                 Environment.GetEnvironmentVariable("VERISTAND_CONNECTION_TIMEOUT_MS")
-            ), // Changed to uint.Parse
+            ),
             ZeroMQPort = int.Parse(Environment.GetEnvironmentVariable("ZEROMQ_PORT")),
             ProducerNumber = int.Parse(Environment.GetEnvironmentVariable("PRODUCER_NUMBER")),
             TargetFrequencyHz = int.Parse(
@@ -55,18 +55,18 @@ public class Configuration
 
 public record DataQualityMetrics
 {
-    public int TotalReadAttempts { get; set; }
-    public int FailedReads { get; set; }
+    public int TotalReadAttemptCount { get; set; }
+    public int FailedReadCount { get; set; }
     public int LastGoodValueUsageCount { get; set; }
     public DateTime LastGoodValueTimestamp { get; set; }
     public TimeSpan LongestLastGoodValuePeriod { get; set; }
     public double LastGoodValuePercentage =>
-        TotalReadAttempts > 0 ? (LastGoodValueUsageCount * 100.0 / TotalReadAttempts) : 0;
+        TotalReadAttemptCount > 0 ? (LastGoodValueUsageCount * 100.0 / TotalReadAttemptCount) : 0;
 
     public override string ToString()
     {
-        return $"Total Reads: {TotalReadAttempts}, "
-            + $"Failed: {FailedReads}, "
+        return $"Total Reads: {TotalReadAttemptCount}, "
+            + $"Failed: {FailedReadCount}, "
             + $"Last Good Value Usage: {LastGoodValuePercentage:F2}%, "
             + $"Longest Last Good Value Period: {LongestLastGoodValuePeriod.TotalMilliseconds:F0}ms";
     }
@@ -239,11 +239,10 @@ public class Program
         }
     }
 
-    // ... rest of your existing methods, replacing const references with config properties ...
     private static Signals CreateSignalsMessage(
         string[] channels,
         double[] values,
-        bool useLastGoodValues,
+        bool isUsingLastGoodValues,
         double[] lastGoodValues
     )
     {
@@ -253,18 +252,17 @@ public class Program
             Signals_ =
             {
                 channels.Zip(
-                    useLastGoodValues ? lastGoodValues : values,
+                    isUsingLastGoodValues ? lastGoodValues : values,
                     (name, value) =>
                         new Signal
                         {
                             Name = StringSanitizer.SanitizeSignalName(name),
                             Value = (float)value,
-                            IsLastGoodValue = useLastGoodValues,
                         }
                 ),
             },
             SkippedTickNumber = 0,
-            IsUsingLastGoodValues = useLastGoodValues,
+            IsUsingLastGoodValues = isUsingLastGoodValues,
             FrequencyHz = config.TargetFrequencyHz,
         };
     }
@@ -378,10 +376,10 @@ public class Program
         {
             if (stopwatch.ElapsedTicks >= nextTick)
             {
-                bool useLastGoodValues = false;
+                bool isUsingLastGoodValues = false;
                 try
                 {
-                    if (metrics.TotalReadAttempts % readEveryNSampleCount == 0)
+                    if (metrics.TotalReadAttemptCount % readEveryNSampleCount == 0)
                     {
                         workspace.GetMultipleChannelValues(channels, out values);
                         Array.Copy(values, lastGoodValues, values.Length);
@@ -389,15 +387,15 @@ public class Program
                     }
                     else
                     {
-                        useLastGoodValues = true;
+                        isUsingLastGoodValues = true;
                     }
 
-                    UpdateMetrics(useLastGoodValues);
+                    UpdateMetrics(isUsingLastGoodValues);
 
                     Signals signals = CreateSignalsMessage(
                         channels,
                         values,
-                        useLastGoodValues,
+                        isUsingLastGoodValues,
                         lastGoodValues
                     );
                     byte[] data = signals.ToByteArray();
@@ -409,17 +407,17 @@ public class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error during normal operation: {ex.Message}");
-                    metrics.FailedReads++;
+                    metrics.FailedReadCount++;
                     await Task.Delay(10);
                 }
             }
         }
     }
 
-    private static void UpdateMetrics(bool useLastGoodValues)
+    private static void UpdateMetrics(bool isUsingLastGoodValues)
     {
-        metrics.TotalReadAttempts++;
-        if (useLastGoodValues)
+        metrics.TotalReadAttemptCount++;
+        if (isUsingLastGoodValues)
         {
             metrics.LastGoodValueUsageCount++;
             TimeSpan currentLgvPeriod = DateTime.UtcNow - metrics.LastGoodValueTimestamp;
