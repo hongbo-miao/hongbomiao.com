@@ -55,12 +55,8 @@ resource "aws_iam_role_policy" "hm_litellm_iam_role_policy" {
         Resource = [
           # Claude Haiku
           "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-haiku-20241022-v1:0",
-          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-haiku-20240307-v1:0",
-          # Claude Opus
-          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-opus-20240229-v1:0",
           # Claude Sonnet
-          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0",
-          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0"
+          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0"
         ]
       }
     ]
