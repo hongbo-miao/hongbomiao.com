@@ -12,18 +12,32 @@ wheels = [
 
 [[package]]
 name = "accelerate"
-version = "0.21.0"
+version = "0.34.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "huggingface-hub" },
     { name = "numpy" },
     { name = "packaging" },
     { name = "psutil" },
     { name = "pyyaml" },
+    { name = "safetensors" },
     { name = "torch" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c0/c9/faac7906ce9690087dd7c0d0957498951cd0ce7355134dc8fa2969daf9ad/accelerate-0.21.0.tar.gz", hash = "sha256:e2959a0bf74d97c0b3c0e036ed96065142a060242281d27970d4c4e34f11ca59", size = 228709 }
+sdist = { url = "https://files.pythonhosted.org/packages/4d/82/5712c44a5a5ef7c4d375363b179a099e834491221ece02e81a1209b08233/accelerate-0.34.2.tar.gz", hash = "sha256:98c1ebe1f5a45c0a3af02dc60b5bb8b7d58d60c3326a326a06ce6d956b18ca5b", size = 328806 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/70/f9/c381bcdd0c3829d723aa14eec8e75c6c377b4ca61ec68b8093d9f35fc7a7/accelerate-0.21.0-py3-none-any.whl", hash = "sha256:e2609d37f2c6a56e36a0612feae6ff6d9daac9759f4899432b86b1dc97024ebb", size = 244153 },
+    { url = "https://files.pythonhosted.org/packages/b0/5e/80cee674cdbe529ef008721d7eebb50ae5def4314211d82123aa23e828f8/accelerate-0.34.2-py3-none-any.whl", hash = "sha256:d69159e2c4e4a473d14443b27d2d732929254e826b3ab4813b3785b5ac616c7c", size = 324366 },
+]
+
+[[package]]
+name = "adagio"
+version = "0.2.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "triad" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f8/d7/c02a080407e133cf404a2b63bb3de1495c65d7af0501c313731a545d39ca/adagio-0.2.6.tar.gz", hash = "sha256:0c32768f3aba0e05273b36f9420a482034f2510f059171040d7e98ba34128d7a", size = 23653 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f4/40/3592ba5232475778ab690cdbfbc38e73886c26c361a82484b49fab427e60/adagio-0.2.6-py3-none-any.whl", hash = "sha256:1bb8317d41bfff8b11373bc03c9859ff166c498214bb2b7ce1e21638c0babb2c", size = 19073 },
 ]
 
 [[package]]
@@ -92,6 +106,20 @@ wheels = [
 ]
 
 [[package]]
+name = "alembic"
+version = "1.14.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "mako" },
+    { name = "sqlalchemy" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/00/1e/8cb8900ba1b6360431e46fb7a89922916d3a1b017a8908a7c0499cc7e5f6/alembic-1.14.0.tar.gz", hash = "sha256:b00892b53b3642d0b8dbedba234dbf1924b69be83a9a769d5a624b01094e304b", size = 1916172 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cb/06/8b505aea3d77021b18dcbd8133aa1418f1a1e37e432a465b14c46b2c0eaa/alembic-1.14.0-py3-none-any.whl", hash = "sha256:99bd884ca390466db5e27ffccff1d179ec5c05c965cfefc0607e69f9e411cb25", size = 233482 },
+]
+
+[[package]]
 name = "annotated-types"
 version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -107,6 +135,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/3e/38/7859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e/antlr4-python3-runtime-4.9.3.tar.gz", hash = "sha256:f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b", size = 117034 }
 
 [[package]]
+name = "appdirs"
+version = "1.4.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d7/d8/05696357e0311f5b5c316d7b95f46c669dd9c15aaeecbb48c7d0aeb88c40/appdirs-1.4.4.tar.gz", hash = "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41", size = 13470 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3b/00/2344469e2084fb287c2e0b57b72910309874c3245463acd6cf5e3db69324/appdirs-1.4.4-py2.py3-none-any.whl", hash = "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128", size = 9566 },
+]
+
+[[package]]
 name = "attrs"
 version = "24.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -117,40 +154,39 @@ wheels = [
 
 [[package]]
 name = "autogluon"
-version = "1.1.1"
+version = "1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "autogluon-core", extra = ["all"] },
     { name = "autogluon-features" },
     { name = "autogluon-multimodal" },
     { name = "autogluon-tabular", extra = ["all"] },
-    { name = "autogluon-timeseries", extra = ["all"] },
+    { name = "autogluon-timeseries" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/43/1e/97856e23c5caae21284cae4b68c055f7f2656b204b62acb0b9b23ddbf06f/autogluon-1.1.1.tar.gz", hash = "sha256:ea99dc665f1a889026b5b6b56cbcc875bcccf6e9c5324736b5dde80d3f5a1cc7", size = 5271 }
+sdist = { url = "https://files.pythonhosted.org/packages/9a/1d/f9d9cbfcbd7806933e4a70d3092a1661f5eeb87c3bea221638ab40e49da8/autogluon-1.2.tar.gz", hash = "sha256:d4f568498a561b02e007642e28dfc602e6e07076273f82dd4ebddea23ddf9315", size = 5275 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/09/a9/0ff0018db2048058d04541279cb31e1364515b2e0fc804c954ac33cbb870/autogluon-1.1.1-py3-none-any.whl", hash = "sha256:d9c25fd5f9856259510e5193957abf3ede0226052bd5a1ab1b1436ca9ac3fef3", size = 9688 },
+    { url = "https://files.pythonhosted.org/packages/8d/fe/68319a9a9c9479536d16c82ad402628fab2c41fdfe83677fddce961b1061/autogluon-1.2-py3-none-any.whl", hash = "sha256:5bfc1da32779e66aff891bd314e66342a38dfb87b68b6fcd76c35dc7f758a07f", size = 9644 },
 ]
 
 [[package]]
 name = "autogluon-common"
-version = "1.1.1"
+version = "1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
     { name = "numpy" },
     { name = "pandas" },
     { name = "psutil" },
-    { name = "setuptools" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fd/79/a3e2a8610e7553a8e0e12689b8297963e9e6951154912ec1bc3113d966eb/autogluon.common-1.1.1.tar.gz", hash = "sha256:ca3a4a76b62c8820c1dfc5b587818a9237e77a68e5bbc593062a4a467c316411", size = 54661 }
+sdist = { url = "https://files.pythonhosted.org/packages/0b/e6/f474a51b8ae19805131a2a9ec636feee321660d360a87cecb59cfe6270a2/autogluon.common-1.2.tar.gz", hash = "sha256:282c785bf705773ecec390cc2c78b61dd23dcd3c6d6e8ab718a8073feb654a3c", size = 57535 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/43/8f/c1844dd06604c085ada16dcfbd7ad71fc7f9b9ea15365aeacf4da5c9d8e3/autogluon.common-1.1.1-py3-none-any.whl", hash = "sha256:98d22bd998654279758a2be0714c53f73d7d2953f6b92f94b86b2757b6167973", size = 64591 },
+    { url = "https://files.pythonhosted.org/packages/3c/7e/d194fb8ba5d3e105c21e1edeb03e393f9da8cc42899a4a407e4ea1f746b0/autogluon.common-1.2-py3-none-any.whl", hash = "sha256:354b25811af72a1debd3b7e44caaf68372cd3ce1741fb73fb762e72e96e5965b", size = 68156 },
 ]
 
 [[package]]
 name = "autogluon-core"
-version = "1.1.1"
+version = "1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "autogluon-common" },
@@ -164,24 +200,26 @@ dependencies = [
     { name = "scipy" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/35/90/bff45ec2305688cd56b1c4ef3a0e45ecb5a54b3e2e4c8ff042565903a4bb/autogluon.core-1.1.1.tar.gz", hash = "sha256:c4951d817211de31da5cb9b6bcc0ace1c127b1f4fbb66320a9bef650cf07b459", size = 205224 }
+sdist = { url = "https://files.pythonhosted.org/packages/be/16/7130871835f864d084a2496081b8605220b02e19a3e351066c626903db55/autogluon.core-1.2.tar.gz", hash = "sha256:7ded6469e133cb3771cf3bf0f78c599f68dd960049e878adda1b407399e00b3b", size = 233095 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5c/bb/cd3d9dbb736acf75bf711ee76401a95339807bf9c478eff7b977bd23ecc6/autogluon.core-1.1.1-py3-none-any.whl", hash = "sha256:59e0bf416e993d6400ee5072b49af3eb9e1ffafcd93dd6289b2a18110f872830", size = 234753 },
+    { url = "https://files.pythonhosted.org/packages/e7/5d/a4d08081f66def32c2c04c691cae0a4cfa1a2f717b4828cf0a69cfbd16d9/autogluon.core-1.2-py3-none-any.whl", hash = "sha256:59bbc791ccd1e42296df3d2730d981a1ac901121b54981b20a9ed08ffa3dc5e1", size = 266228 },
 ]
 
 [package.optional-dependencies]
 all = [
     { name = "hyperopt" },
+    { name = "pyarrow" },
     { name = "ray", extra = ["default", "tune"] },
 ]
 raytune = [
     { name = "hyperopt" },
+    { name = "pyarrow" },
     { name = "ray", extra = ["default", "tune"] },
 ]
 
 [[package]]
 name = "autogluon-features"
-version = "1.1.1"
+version = "1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "autogluon-common" },
@@ -189,14 +227,14 @@ dependencies = [
     { name = "pandas" },
     { name = "scikit-learn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/66/b1/49b70a57189f4f803f9fddf4d53da42fea58b4125f67de2059548c8abb3a/autogluon.features-1.1.1.tar.gz", hash = "sha256:4ffa723b688f11ffbd41e7feb3f5d7320c67857b96205b6f7acfbbee98e38273", size = 47856 }
+sdist = { url = "https://files.pythonhosted.org/packages/17/82/5f32458bde6ee0d6f5ddd030be9be7c98da74ec707b269d17c04d13fc143/autogluon.features-1.2.tar.gz", hash = "sha256:b35d011fd0a0307090577013a2f31783900ed67690129f86b9710f6f7783c230", size = 48362 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c9/18/c6749ba777564d735218023c0a38a80d03ba2ec61165b5144eb35d6c0588/autogluon.features-1.1.1-py3-none-any.whl", hash = "sha256:6e32dc77ff165721aa1ea4063e8dc9bf56ab401bbcd6f4d97165fdf21f26090d", size = 63449 },
+    { url = "https://files.pythonhosted.org/packages/ef/6e/a3c151f0ce5d19ff0818e53ec2b43ec6e0c13eefad15fe74eacf6a4a4db7/autogluon.features-1.2-py3-none-any.whl", hash = "sha256:ba52a9ef9be4102549353833083667fa19dc694eb53aafa50e8e6217ecfdf115", size = 64053 },
 ]
 
 [[package]]
 name = "autogluon-multimodal"
-version = "1.1.1"
+version = "1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "accelerate" },
@@ -211,7 +249,6 @@ dependencies = [
     { name = "lightning" },
     { name = "nlpaug" },
     { name = "nltk" },
-    { name = "nptyping" },
     { name = "numpy" },
     { name = "nvidia-ml-py3" },
     { name = "omegaconf" },
@@ -235,14 +272,14 @@ dependencies = [
     { name = "tqdm" },
     { name = "transformers", extra = ["sentencepiece"] },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5b/b0/6c66f825d26c38da6d1bce228fa56a656085e56ff1381bae0b13f85e389d/autogluon.multimodal-1.1.1.tar.gz", hash = "sha256:2deb9a9432c3c17cb6ee68067fbebb609adefa88681de0cb58ca7066beccd3eb", size = 335568 }
+sdist = { url = "https://files.pythonhosted.org/packages/ee/e1/0ddf187806b95842913094f9122da75bd8af3863cdf77c4312696b386115/autogluon.multimodal-1.2.tar.gz", hash = "sha256:454da30737c9c3ae841fb6aac7d4b620132e7c8da19f106dfc669d76b509e086", size = 338126 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/eb/6a/6d1262221b2dcaab29a1c387057b9cf5f6296a21ffa6bf872573fe48c749/autogluon.multimodal-1.1.1-py3-none-any.whl", hash = "sha256:c802ea8023ff6500f44a575c8546d7cd6260ed6f8014d2640082d453579583a3", size = 427961 },
+    { url = "https://files.pythonhosted.org/packages/f9/39/3033b2c24c3514e84f86b6d5df31a378fa5fc16da271f3b9eb898f959696/autogluon.multimodal-1.2-py3-none-any.whl", hash = "sha256:c196c51a99a3293f79b3012a4f2bbf13dbc7d92aecddc8277b739fb936522922", size = 429984 },
 ]
 
 [[package]]
 name = "autogluon-tabular"
-version = "1.1.1"
+version = "1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "autogluon-core" },
@@ -253,22 +290,27 @@ dependencies = [
     { name = "scikit-learn" },
     { name = "scipy" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/09/85/30059d9b0077d0a529b06a9b92bb723f772c15dbb3d13b8c89152e6809d2/autogluon.tabular-1.1.1.tar.gz", hash = "sha256:9c86c436871314bcebfe2b8f63e4da6560e7bf8bd82d9fbbfa184e3484e73e3a", size = 262785 }
+sdist = { url = "https://files.pythonhosted.org/packages/87/92/a2f3939317972809a367c0d7071a144f6ea09553794f9391d830eb28a069/autogluon.tabular-1.2.tar.gz", hash = "sha256:f53a9bad01cb1620459abca8043c081b60826837d6f882b2e8f6bb32d2d6997a", size = 294028 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7a/25/0e022e7a1dce34bd6b9e015d19e3ac317869439864a5e34995a65050c720/autogluon.tabular-1.1.1-py3-none-any.whl", hash = "sha256:8806cea41c90dcdc3b7bb8afc92ef94981cef36a6284a7b0604d9bedf784aa32", size = 312097 },
+    { url = "https://files.pythonhosted.org/packages/68/59/8605a57f9a087efc2aa4d4022a99dfb3ed0ffcfa8df258685937c000fac7/autogluon.tabular-1.2-py3-none-any.whl", hash = "sha256:2efc17a59269c10af5c2f1970d762ba0d3ee2c964700e362af0b3ab3dc57fb36", size = 352170 },
 ]
 
 [package.optional-dependencies]
 all = [
     { name = "autogluon-core", extra = ["all"] },
-    { name = "catboost", marker = "sys_platform != 'darwin'" },
+    { name = "catboost" },
+    { name = "einops" },
     { name = "fastai" },
+    { name = "huggingface-hub", extra = ["torch"] },
     { name = "lightgbm" },
+    { name = "numpy" },
+    { name = "spacy" },
     { name = "torch" },
     { name = "xgboost" },
 ]
 catboost = [
-    { name = "catboost", marker = "sys_platform != 'darwin'" },
+    { name = "catboost" },
+    { name = "numpy" },
 ]
 lightgbm = [
     { name = "lightgbm" },
@@ -279,13 +321,15 @@ xgboost = [
 
 [[package]]
 name = "autogluon-timeseries"
-version = "1.1.1"
+version = "1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "accelerate" },
     { name = "autogluon-common" },
     { name = "autogluon-core", extra = ["raytune"] },
     { name = "autogluon-tabular", extra = ["catboost", "lightgbm", "xgboost"] },
+    { name = "coreforecast" },
+    { name = "fugue" },
     { name = "gluonts" },
     { name = "joblib" },
     { name = "lightning" },
@@ -303,14 +347,9 @@ dependencies = [
     { name = "transformers", extra = ["sentencepiece"] },
     { name = "utilsforecast" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/80/26/32a2ed43619a5e7b60d5c1325c494b1fa2bf9612830ae9a860084c007885/autogluon.timeseries-1.1.1.tar.gz", hash = "sha256:325620c29773957c7f8bdab641fbec7200cec009565c82c601270aeeb316b261", size = 125801 }
+sdist = { url = "https://files.pythonhosted.org/packages/36/16/9ad986cda27ca7e03fe10b309feac6c691833f1bec01940cf0e5171e7151/autogluon.timeseries-1.2.tar.gz", hash = "sha256:bbeec2c5257e9b1d6d76c73b87626b8c3059dda8b242501a535fb6258e0732dd", size = 147063 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/31/5f/c763c00a4a10632b739d76fa4a239530d899cca3875ce4392c8c48c8e56c/autogluon.timeseries-1.1.1-py3-none-any.whl", hash = "sha256:34029fc7062e8a6785fe88a89e75dfa40b7c02c0139c8c4c6dc1c91ece14e09a", size = 148201 },
-]
-
-[package.optional-dependencies]
-all = [
-    { name = "optimum", extra = ["onnxruntime"] },
+    { url = "https://files.pythonhosted.org/packages/40/28/4eac82e268595b42c5695befa3f2991d7f3d66496d32345d8f7bd176da2f/autogluon.timeseries-1.2-py3-none-any.whl", hash = "sha256:5d6154075de2ef7137a52ef7eda0529ca0ebfb79f0dc60b9e5b7464df4a7df85", size = 174686 },
 ]
 
 [[package]]
@@ -402,6 +441,7 @@ dependencies = [
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d8/15/df409f6da7d3b41ef46231173e3cfc0d19f4b4931f799801402d51636636/catboost-1.2.7.tar.gz", hash = "sha256:3ed1658bd22c250a12f9c55cf238d654d7a87d9b45f063ec39965a8884a7e9d3", size = 71540826 }
 wheels = [
+    { url = "https://files.pythonhosted.org/packages/8c/fa/676389207a5f2561f0d8ad87972291a649928f33777c76b6d108c81ac037/catboost-1.2.7-cp311-cp311-macosx_11_0_universal2.whl", hash = "sha256:815d31854cdd10feb7243b8f7d49bd8c40d8d402b3ebf4f8f35b113f0accf47e", size = 27050412 },
     { url = "https://files.pythonhosted.org/packages/90/2b/87091ea3838dd0a71e3adb5e218da9c5ed24e0e7c0ddeefa52ffe32a8233/catboost-1.2.7-cp311-cp311-manylinux2014_aarch64.whl", hash = "sha256:3fa272379b7a834c0677d22e3ccbb27f792db17f69a4ca052aaa9ba806a8098c", size = 98277801 },
     { url = "https://files.pythonhosted.org/packages/74/0c/cff2c8fa0ccac3df0589334846d470c76295f7f3a0cc5954d87d81b1bdcc/catboost-1.2.7-cp311-cp311-manylinux2014_x86_64.whl", hash = "sha256:45b2e6f8d52fd6bbe02d1dee57c9950ab974a5e30af841020359cf7fb198bcbc", size = 98732749 },
     { url = "https://files.pythonhosted.org/packages/1c/e1/78e635a1e5f0066bd02a1ecfd658ad09fe30d275c65c2d0dd76fe253e648/catboost-1.2.7-cp311-cp311-win_amd64.whl", hash = "sha256:99819152f9ae149adadfe95c17c8912eb450adf66cff7dcc34865e7b7bc5b31d", size = 101742806 },
@@ -480,18 +520,6 @@ wheels = [
 ]
 
 [[package]]
-name = "coloredlogs"
-version = "15.0.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "humanfriendly" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/cc/c7/eed8f27100517e8c0e6b923d5f0845d0cb99763da6fdee00478f91db7325/coloredlogs-15.0.1.tar.gz", hash = "sha256:7c991aa71a4577af2f82600d8f8f3a89f936baeaf9b50a9c197da014e5bf16b0", size = 278520 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a7/06/3d6badcf13db419e25b07041d9c7b4a2c331d3f4e7134445ec5df57714cd/coloredlogs-15.0.1-py2.py3-none-any.whl", hash = "sha256:612ee75c546f53e92e70049c9dbfcc18c935a2b9a53b66085ce9ef6a6e5c0934", size = 46018 },
-]
-
-[[package]]
 name = "colorful"
 version = "0.5.6"
 source = { registry = "https://pypi.org/simple" }
@@ -501,6 +529,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/fa/5f/38e40c3bc4107c39e4062d943026b8ee25154cb4b185b882f274a1ab65da/colorful-0.5.6.tar.gz", hash = "sha256:b56d5c01db1dac4898308ea889edcb113fbee3e6ec5df4bacffd61d5241b5b8d", size = 209280 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b3/61/39e7db0cb326c9c8f6a49fad4fc9c2f1241f05a4e10f0643fc31ce26a7e0/colorful-0.5.6-py2.py3-none-any.whl", hash = "sha256:eab8c1c809f5025ad2b5238a50bd691e26850da8cac8f90d660ede6ea1af9f1e", size = 201369 },
+]
+
+[[package]]
+name = "colorlog"
+version = "6.9.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d3/7a/359f4d5df2353f26172b3cc39ea32daa39af8de522205f512f458923e677/colorlog-6.9.0.tar.gz", hash = "sha256:bfba54a1b93b94f54e1f4fe48395725a3d92fd2a4af702f6bd70946bdc0c6ac2", size = 16624 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e3/51/9b208e85196941db2f0654ad0357ca6388ab3ed67efdbfc799f35d1f83aa/colorlog-6.9.0-py3-none-any.whl", hash = "sha256:5906e71acd67cb07a71e779c47c4bcb45fb8c2993eebe9e5adcd6a6f1b283eff", size = 11424 },
 ]
 
 [[package]]
@@ -535,6 +575,22 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/e2/4a/c788d0bdbf32c8113c2354493ed291f924d4793c4a2e85b69e737a21a658/contourpy-1.3.1-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:31c1b55c1f34f80557d3830d3dd93ba722ce7e33a0b472cba0ec3b6535684d8f", size = 1325995 },
     { url = "https://files.pythonhosted.org/packages/a6/e6/a2f351a90d955f8b0564caf1ebe4b1451a3f01f83e5e3a414055a5b8bccb/contourpy-1.3.1-cp311-cp311-win32.whl", hash = "sha256:f611e628ef06670df83fce17805c344710ca5cde01edfdc72751311da8585375", size = 174396 },
     { url = "https://files.pythonhosted.org/packages/a8/7e/cd93cab453720a5d6cb75588cc17dcdc08fc3484b9de98b885924ff61900/contourpy-1.3.1-cp311-cp311-win_amd64.whl", hash = "sha256:b2bdca22a27e35f16794cf585832e542123296b4687f9fd96822db6bae17bfc9", size = 219787 },
+]
+
+[[package]]
+name = "coreforecast"
+version = "0.0.12"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c5/03/004ad209ecbc459e8030816c3909ab4998ffdf97d2b0195e36c53a1db69f/coreforecast-0.0.12.tar.gz", hash = "sha256:52af687933d0d6a61a8fabdc656b3fc2b62ac55cd44739e5ebb456afdd759bd3", size = 43034 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ff/df/41b1e28a7dc978a0ead0c0b803bf2b2a95de8658eb1c0e3a4e5fbb222110/coreforecast-0.0.12-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:51a13bb737e06276b79a6e70016b9361b69859cc7020ea779116ba6bcd72c2d5", size = 125896 },
+    { url = "https://files.pythonhosted.org/packages/95/c1/3b2fbcb6e92994f44279e74cad4a093679b461eed91791fd626da8c45f72/coreforecast-0.0.12-py3-none-macosx_11_0_arm64.whl", hash = "sha256:761a73c0c15df7008852f55cae6f0001e069447ee28b7d1f1fe14825497a91d1", size = 110287 },
+    { url = "https://files.pythonhosted.org/packages/ab/bc/dcee69a93ca250cec4f700c7a398b1e396c4f7b78aad01591d8b1b5fd3b1/coreforecast-0.0.12-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:25eb7670c4b29324c8ddc52454038ade843ced8882009b11085ed5dca7bbf0f9", size = 181696 },
+    { url = "https://files.pythonhosted.org/packages/76/1f/396b32dfe83034db97c8ac63e669ddc5a18e4f960b2a8b399ad8dcd13168/coreforecast-0.0.12-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:befcf2991a0f605c110462ea38ec8d115799f44d26e733cd2baa590f0aaea889", size = 196718 },
+    { url = "https://files.pythonhosted.org/packages/01/bb/8c44f08b356dc33abe5c24f9ca6a1c3b9f2423dd1dc050bc6a6a63861585/coreforecast-0.0.12-py3-none-win_amd64.whl", hash = "sha256:1e50d085cd40d4aeec957edbc50b230ae6df5985b946c9f2ad02f6cc2cb79a9c", size = 101826 },
 ]
 
 [[package]]
@@ -634,6 +690,15 @@ wheels = [
 ]
 
 [[package]]
+name = "einops"
+version = "0.8.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/79/ca/9f5dcb8bead39959454c3912266bedc4c315839cee0e0ca9f4328f4588c1/einops-0.8.0.tar.gz", hash = "sha256:63486517fed345712a8385c100cb279108d9d47e6ae59099b07657e983deae85", size = 58861 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/44/5a/f0b9ad6c0a9017e62d4735daaeb11ba3b6c009d69a26141b258cd37b5588/einops-0.8.0-py3-none-any.whl", hash = "sha256:9572fb63046264a862693b0a87088af3bdc8c068fde03de63453cbbde245465f", size = 43223 },
+]
+
+[[package]]
 name = "evaluate"
 version = "0.4.3"
 source = { registry = "https://pypi.org/simple" }
@@ -725,15 +790,6 @@ wheels = [
 ]
 
 [[package]]
-name = "flatbuffers"
-version = "24.3.25"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/a9/74/2df95ef84b214d2bee0886d572775a6f38793f5ca6d7630c3239c91104ac/flatbuffers-24.3.25.tar.gz", hash = "sha256:de2ec5b203f21441716617f38443e0a8ebf3d25bf0d9c0bb0ce68fa00ad546a4", size = 22139 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/41/f0/7e988a019bc54b2dbd0ad4182ef2d53488bb02e58694cd79d61369e85900/flatbuffers-24.3.25-py2.py3-none-any.whl", hash = "sha256:8dbdec58f935f3765e4f7f3cf635ac3a77f83568138d6a2311f524ec96364812", size = 26784 },
-]
-
-[[package]]
 name = "fonttools"
 version = "4.55.0"
 source = { registry = "https://pypi.org/simple" }
@@ -775,6 +831,20 @@ wheels = [
 ]
 
 [[package]]
+name = "fs"
+version = "2.4.16"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "appdirs" },
+    { name = "setuptools" },
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5d/a9/af5bfd5a92592c16cdae5c04f68187a309be8a146b528eac3c6e30edbad2/fs-2.4.16.tar.gz", hash = "sha256:ae97c7d51213f4b70b6a958292530289090de3a7e15841e108fbe144f069d313", size = 187441 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b9/5c/a3d95dc1ec6cdeb032d789b552ecc76effa3557ea9186e1566df6aac18df/fs-2.4.16-py2.py3-none-any.whl", hash = "sha256:660064febbccda264ae0b6bace80a8d1be9e089e0a5eb2427b7d517f9a91545c", size = 135261 },
+]
+
+[[package]]
 name = "fsspec"
 version = "2024.10.0"
 source = { registry = "https://pypi.org/simple" }
@@ -786,6 +856,19 @@ wheels = [
 [package.optional-dependencies]
 http = [
     { name = "aiohttp" },
+]
+
+[[package]]
+name = "fugue"
+version = "0.9.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "adagio" },
+    { name = "triad" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/91/a1/eca331442c758f8a6f23792dd10a51fb827fad1204805d6c70f02a35ee00/fugue-0.9.1.tar.gz", hash = "sha256:fb0f9a4780147ac8438be96efc50593e2d771d1cbf528ac56d3bcecd39915b50", size = 224340 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ec/38/46a0ef179f7279207a3263afeb8da4dd73f44d00b6cc999c96a39112d284/fugue-0.9.1-py3-none-any.whl", hash = "sha256:5b91e55e6f243af6e2b901dc37914d954d8f0231627b68007850879f8848a3a3", size = 278186 },
 ]
 
 [[package]]
@@ -881,6 +964,23 @@ wheels = [
 ]
 
 [[package]]
+name = "greenlet"
+version = "3.1.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/2f/ff/df5fede753cc10f6a5be0931204ea30c35fa2f2ea7a35b25bdaf4fe40e46/greenlet-3.1.1.tar.gz", hash = "sha256:4ce3ac6cdb6adf7946475d7ef31777c26d94bccc377e070a7986bd2d5c515467", size = 186022 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/28/62/1c2665558618553c42922ed47a4e6d6527e2fa3516a8256c2f431c5d0441/greenlet-3.1.1-cp311-cp311-macosx_11_0_universal2.whl", hash = "sha256:e4d333e558953648ca09d64f13e6d8f0523fa705f51cae3f03b5983489958c70", size = 272479 },
+    { url = "https://files.pythonhosted.org/packages/76/9d/421e2d5f07285b6e4e3a676b016ca781f63cfe4a0cd8eaecf3fd6f7a71ae/greenlet-3.1.1-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:09fc016b73c94e98e29af67ab7b9a879c307c6731a2c9da0db5a7d9b7edd1159", size = 640404 },
+    { url = "https://files.pythonhosted.org/packages/e5/de/6e05f5c59262a584e502dd3d261bbdd2c97ab5416cc9c0b91ea38932a901/greenlet-3.1.1-cp311-cp311-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:d5e975ca70269d66d17dd995dafc06f1b06e8cb1ec1e9ed54c1d1e4a7c4cf26e", size = 652813 },
+    { url = "https://files.pythonhosted.org/packages/49/93/d5f93c84241acdea15a8fd329362c2c71c79e1a507c3f142a5d67ea435ae/greenlet-3.1.1-cp311-cp311-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:3b2813dc3de8c1ee3f924e4d4227999285fd335d1bcc0d2be6dc3f1f6a318ec1", size = 648517 },
+    { url = "https://files.pythonhosted.org/packages/15/85/72f77fc02d00470c86a5c982b8daafdf65d38aefbbe441cebff3bf7037fc/greenlet-3.1.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e347b3bfcf985a05e8c0b7d462ba6f15b1ee1c909e2dcad795e49e91b152c383", size = 647831 },
+    { url = "https://files.pythonhosted.org/packages/f7/4b/1c9695aa24f808e156c8f4813f685d975ca73c000c2a5056c514c64980f6/greenlet-3.1.1-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:9e8f8c9cb53cdac7ba9793c276acd90168f416b9ce36799b9b885790f8ad6c0a", size = 602413 },
+    { url = "https://files.pythonhosted.org/packages/76/70/ad6e5b31ef330f03b12559d19fda2606a522d3849cde46b24f223d6d1619/greenlet-3.1.1-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:62ee94988d6b4722ce0028644418d93a52429e977d742ca2ccbe1c4f4a792511", size = 1129619 },
+    { url = "https://files.pythonhosted.org/packages/f4/fb/201e1b932e584066e0f0658b538e73c459b34d44b4bd4034f682423bc801/greenlet-3.1.1-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:1776fd7f989fc6b8d8c8cb8da1f6b82c5814957264d1f6cf818d475ec2bf6395", size = 1155198 },
+    { url = "https://files.pythonhosted.org/packages/12/da/b9ed5e310bb8b89661b80cbcd4db5a067903bbcd7fc854923f5ebb4144f0/greenlet-3.1.1-cp311-cp311-win_amd64.whl", hash = "sha256:48ca08c771c268a768087b408658e216133aecd835c0ded47ce955381105ba39", size = 298930 },
+]
+
+[[package]]
 name = "grpcio"
 version = "1.68.0"
 source = { registry = "https://pypi.org/simple" }
@@ -915,7 +1015,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "autogluon", specifier = "==1.1.1" },
+    { name = "autogluon", specifier = "==1.2" },
     { name = "pandas", specifier = "==2.2.3" },
 ]
 
@@ -944,16 +1044,10 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/60/bf/cea0b9720c32fa01b0c4ec4b16b9f4ae34ca106b202ebbae9f03ab98cd8f/huggingface_hub-0.26.2-py3-none-any.whl", hash = "sha256:98c2a5a8e786c7b2cb6fdeb2740893cba4d53e312572ed3d8afafda65b128c46", size = 447536 },
 ]
 
-[[package]]
-name = "humanfriendly"
-version = "10.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pyreadline3", marker = "sys_platform == 'win32'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/cc/3f/2c29224acb2e2df4d2046e4c73ee2662023c58ff5b113c4c1adac0886c43/humanfriendly-10.0.tar.gz", hash = "sha256:6b0b831ce8f15f7300721aa49829fc4e83921a9a301cc7f606be6686a2288ddc", size = 360702 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/f0/0f/310fb31e39e2d734ccaa2c0fb981ee41f7bd5056ce9bc29b2248bd569169/humanfriendly-10.0-py2.py3-none-any.whl", hash = "sha256:1697e1a8a8f550fd43c2865cd84542fc175a61dcb779b6fee18cf6b6ccba1477", size = 86794 },
+[package.optional-dependencies]
+torch = [
+    { name = "safetensors", extra = ["torch"] },
+    { name = "torch" },
 ]
 
 [[package]]
@@ -1197,6 +1291,18 @@ wheels = [
 ]
 
 [[package]]
+name = "mako"
+version = "1.3.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "markupsafe" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fa/0b/29bc5a230948bf209d3ed3165006d257e547c02c3c2a96f6286320dfe8dc/mako-1.3.6.tar.gz", hash = "sha256:9ec3a1583713479fae654f83ed9fa8c9a4c16b7bb0daba0e6bbebff50c0d983d", size = 390206 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/48/22/bc14c6f02e6dccaafb3eba95764c8f096714260c2aa5f76f654fd16a23dd/Mako-1.3.6-py3-none-any.whl", hash = "sha256:a91198468092a2f1a0de86ca92690fb0cfc43ca90ee17e15d93662b4c04b241a", size = 78557 },
+]
+
+[[package]]
 name = "marisa-trie"
 version = "1.2.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1306,18 +1412,23 @@ wheels = [
 
 [[package]]
 name = "mlforecast"
-version = "0.10.0"
+version = "0.13.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "cloudpickle" },
+    { name = "coreforecast" },
+    { name = "fsspec" },
     { name = "numba" },
+    { name = "optuna" },
+    { name = "packaging" },
     { name = "pandas" },
     { name = "scikit-learn" },
     { name = "utilsforecast" },
     { name = "window-ops" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/99/42/673718f3390c38dd97d5155297f7dcc02f456327c5f7ea328c40ef01366f/mlforecast-0.10.0.tar.gz", hash = "sha256:c65acff268b62f49bc2826a93fc4bc8615f2569c7ba35d02354cc79b7ea313f4", size = 47286 }
+sdist = { url = "https://files.pythonhosted.org/packages/89/d8/8cef1aefed168b22f16551bc16a908ef154d34d85f2a02796e6abf1628c9/mlforecast-0.13.4.tar.gz", hash = "sha256:ca55bd7ed1a167f7c6d23554816aa539e2f678a4758d11be7fad7a288f815ee6", size = 70843 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b5/70/2615d699d2680d71b0c83e217bf108e3aaf8897357097843186d465cb74f/mlforecast-0.10.0-py3-none-any.whl", hash = "sha256:9fd787d50de9acc2090767121af7b6e634c4ad4fb8fb9763f458d2e39f18367b", size = 47628 },
+    { url = "https://files.pythonhosted.org/packages/c2/31/725d92f22fc36e710654051f5ce36c00d78528ea48c6db49875fdf55bb27/mlforecast-0.13.4-py3-none-any.whl", hash = "sha256:a33be2671e3914f2271deb1a59ab8f50a8c02c617726fdc3232c4f38fdb4e992", size = 70968 },
 ]
 
 [[package]]
@@ -1441,7 +1552,7 @@ wheels = [
 
 [[package]]
 name = "nltk"
-version = "3.9.1"
+version = "3.8.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -1449,21 +1560,9 @@ dependencies = [
     { name = "regex" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/3c/87/db8be88ad32c2d042420b6fd9ffd4a149f9a0d7f0e86b3f543be2eeeedd2/nltk-3.9.1.tar.gz", hash = "sha256:87d127bd3de4bd89a4f81265e5fa59cb1b199b27440175370f7417d2bc7ae868", size = 2904691 }
+sdist = { url = "https://files.pythonhosted.org/packages/57/49/51af17a2b0d850578d0022408802aa452644d40281a6c6e82f7cb0235ddb/nltk-3.8.1.zip", hash = "sha256:1834da3d0682cba4f2cede2f9aad6b0fafb6461ba451db0efb6f9c39798d64d3", size = 4620388 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4d/66/7d9e26593edda06e8cb531874633f7c2372279c3b0f46235539fe546df8b/nltk-3.9.1-py3-none-any.whl", hash = "sha256:4fa26829c5b00715afe3061398a8989dc643b92ce7dd93fb4585a70930d168a1", size = 1505442 },
-]
-
-[[package]]
-name = "nptyping"
-version = "2.4.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "numpy" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/65/99/fbc6c585dfef7803886a137820cc557e54472dcbf1c2ef34e033640964e9/nptyping-2.4.1.tar.gz", hash = "sha256:57ba684ee5fc5eb681ee04270ee94adb879e4372ce6b640defa08ace8e1df295", size = 20055 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b2/c1/e6f8c5f28f9b3bdb5c9c1d349a51941a30f90347b82bd5594363e81cf3ff/nptyping-2.4.1-py3-none-any.whl", hash = "sha256:23e8164b1e2c55e872f392ca7516b9b1b0cb400b03b70accaa63998b4106b0b3", size = 36003 },
+    { url = "https://files.pythonhosted.org/packages/a6/0a/0d20d2c0f16be91b9fa32a77b76c60f9baf6eba419e5ef5deca17af9c582/nltk-3.8.1-py3-none-any.whl", hash = "sha256:fd5c9109f976fa86bcadba8f91e47f5e9293bd034474752e92a520f81c93dda5", size = 1510663 },
 ]
 
 [[package]]
@@ -1628,43 +1727,6 @@ wheels = [
 ]
 
 [[package]]
-name = "onnx"
-version = "1.17.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "numpy" },
-    { name = "protobuf" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/9a/54/0e385c26bf230d223810a9c7d06628d954008a5e5e4b73ee26ef02327282/onnx-1.17.0.tar.gz", hash = "sha256:48ca1a91ff73c1d5e3ea2eef20ae5d0e709bb8a2355ed798ffc2169753013fd3", size = 12165120 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/e5/a9/8d1b1d53aec70df53e0f57e9f9fcf47004276539e29230c3d5f1f50719ba/onnx-1.17.0-cp311-cp311-macosx_12_0_universal2.whl", hash = "sha256:d6fc3a03fc0129b8b6ac03f03bc894431ffd77c7d79ec023d0afd667b4d35869", size = 16647991 },
-    { url = "https://files.pythonhosted.org/packages/7b/e3/cc80110e5996ca61878f7b4c73c7a286cd88918ff35eacb60dc75ab11ef5/onnx-1.17.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:f01a4b63d4e1d8ec3e2f069e7b798b2955810aa434f7361f01bc8ca08d69cce4", size = 15908949 },
-    { url = "https://files.pythonhosted.org/packages/b1/2f/91092557ed478e323a2b4471e2081fdf88d1dd52ae988ceaf7db4e4506ff/onnx-1.17.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4a183c6178be001bf398260e5ac2c927dc43e7746e8638d6c05c20e321f8c949", size = 16048190 },
-    { url = "https://files.pythonhosted.org/packages/ac/59/9ea23fc22d0bb853133f363e6248e31bcbc6c1c90543a3938c00412ac02a/onnx-1.17.0-cp311-cp311-win32.whl", hash = "sha256:081ec43a8b950171767d99075b6b92553901fa429d4bc5eb3ad66b36ef5dbe3a", size = 14424299 },
-    { url = "https://files.pythonhosted.org/packages/51/a5/19b0dfcb567b62e7adf1a21b08b23224f0c2d13842aee4d0abc6f07f9cf5/onnx-1.17.0-cp311-cp311-win_amd64.whl", hash = "sha256:95c03e38671785036bb704c30cd2e150825f6ab4763df3a4f1d249da48525957", size = 14529142 },
-]
-
-[[package]]
-name = "onnxruntime"
-version = "1.20.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "coloredlogs" },
-    { name = "flatbuffers" },
-    { name = "numpy" },
-    { name = "packaging" },
-    { name = "protobuf" },
-    { name = "sympy" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/43/d3/3b7e17266a4d360af0a93965021ef8192d833233658a9d59501fbaf1341a/onnxruntime-1.20.0-cp311-cp311-macosx_13_0_universal2.whl", hash = "sha256:3398354e9145c68edc09dbc72265401150027e76716ae758e8d9b52e6a7ddca0", size = 30979965 },
-    { url = "https://files.pythonhosted.org/packages/ef/db/f9f3a2cac589f557c1227d27e288eeb248830613dd1a5b5c17f26894e802/onnxruntime-1.20.0-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:8a831b720d0a7be8241a230cb06f592e8bb66652d7cea54ce02d83769651fdee", size = 11946136 },
-    { url = "https://files.pythonhosted.org/packages/53/d8/93706484c8e0db2dfde8559e74b5a9ab74d203a0471671121188c212f7cb/onnxruntime-1.20.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:041fefe60af844ebd90f344c84f908201490555cd0a6d78dd0a7acdc27b59972", size = 13318583 },
-    { url = "https://files.pythonhosted.org/packages/e6/0a/274c6f967ba5ebaca3bac63b021ab0d69023ebef492cb6fbb5b613101102/onnxruntime-1.20.0-cp311-cp311-win32.whl", hash = "sha256:83da64d2824809d0f6977db8bfc5091f742c26f09dfd66a3934e673780f5f87a", size = 9804364 },
-    { url = "https://files.pythonhosted.org/packages/cc/3b/c77a44f4d9bb8a8c776e6c5bed19d0f86ce843495aab80cd34aaba596f5d/onnxruntime-1.20.0-cp311-cp311-win_amd64.whl", hash = "sha256:bfa390046332f5fca6f8af8c9d17164621ac52e66b11518e187278b19364800c", size = 11320070 },
-]
-
-[[package]]
 name = "opencensus"
 version = "0.11.4"
 source = { registry = "https://pypi.org/simple" }
@@ -1736,31 +1798,21 @@ wheels = [
 ]
 
 [[package]]
-name = "optimum"
-version = "1.17.1"
+name = "optuna"
+version = "4.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "coloredlogs" },
-    { name = "datasets" },
-    { name = "huggingface-hub" },
+    { name = "alembic" },
+    { name = "colorlog" },
     { name = "numpy" },
     { name = "packaging" },
-    { name = "sympy" },
-    { name = "torch" },
-    { name = "transformers", extra = ["sentencepiece"] },
+    { name = "pyyaml" },
+    { name = "sqlalchemy" },
+    { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8a/61/f5673fb2b8daacabfc1c61a52b5c9647c436fdd0f2f03837e1d20122e0d8/optimum-1.17.1.tar.gz", hash = "sha256:e59af717e8691b11903fe2cfb8c6efd6f6798b0417f3e70d231e578a02448ceb", size = 312240 }
+sdist = { url = "https://files.pythonhosted.org/packages/6d/e0/52f8b3dfa4bd61e80778ec9f287fe5beafc11af31e6d4cb8f182634f5937/optuna-4.1.0.tar.gz", hash = "sha256:b364e87a2038f9946c5e2770c130597538aac528b4a82c1cab5267f337ea7679", size = 438362 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5d/7a/1cc655edf289cdb533b0ea1d2f382d344248a53ad21eb8e34deb4551684b/optimum-1.17.1-py3-none-any.whl", hash = "sha256:508bc55db3c9434f4e8d5a30c39a46ac63c4cdb45bcc5a641b6c1c77cae88d23", size = 407099 },
-]
-
-[package.optional-dependencies]
-onnxruntime = [
-    { name = "datasets" },
-    { name = "evaluate" },
-    { name = "onnx" },
-    { name = "onnxruntime" },
-    { name = "protobuf" },
+    { url = "https://files.pythonhosted.org/packages/e8/30/35111dae435c640694d616a611b7ff6b2482cfd977f8f572ff960a321d66/optuna-4.1.0-py3-none-any.whl", hash = "sha256:1763856b01c9238594d9d21db92611aac9980e9a6300bd658a7c6464712c704e", size = 364429 },
 ]
 
 [[package]]
@@ -2152,15 +2204,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pyreadline3"
-version = "3.5.4"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0f/49/4cea918a08f02817aabae639e3d0ac046fef9f9180518a3ad394e22da148/pyreadline3-3.5.4.tar.gz", hash = "sha256:8d57d53039a1c75adba8e50dd3d992b28143480816187ea5efbd5c78e6c885b7", size = 99839 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/5a/dc/491b7661614ab97483abf2056be1deee4dc2490ecbf7bff9ab5cdbac86e1/pyreadline3-3.5.4-py3-none-any.whl", hash = "sha256:eaf8e6cc3c49bcccf145fc6067ba8643d1df34d604a1ec0eccbf7a18e6d3fae6", size = 83178 },
-]
-
-[[package]]
 name = "pysocks"
 version = "1.7.1"
 source = { registry = "https://pypi.org/simple" }
@@ -2492,6 +2535,12 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/6d/41/948c96c8a7e9fef57c2e051f1871c108a6dbbc6d285598bdb1d89b98617c/safetensors-0.4.5-cp311-none-win_amd64.whl", hash = "sha256:cbd39cae1ad3e3ef6f63a6f07296b080c951f24cec60188378e43d3713000c04", size = 285973 },
 ]
 
+[package.optional-dependencies]
+torch = [
+    { name = "numpy" },
+    { name = "torch" },
+]
+
 [[package]]
 name = "scikit-image"
 version = "0.20.0"
@@ -2684,6 +2733,27 @@ wheels = [
 ]
 
 [[package]]
+name = "sqlalchemy"
+version = "2.0.36"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "greenlet", marker = "platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/50/65/9cbc9c4c3287bed2499e05033e207473504dc4df999ce49385fb1f8b058a/sqlalchemy-2.0.36.tar.gz", hash = "sha256:7f2767680b6d2398aea7082e45a774b2b0767b5c8d8ffb9c8b683088ea9b29c5", size = 9574485 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/00/4e/5a67963fd7cbc1beb8bd2152e907419f4c940ef04600b10151a751fe9e06/SQLAlchemy-2.0.36-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:fd3a55deef00f689ce931d4d1b23fa9f04c880a48ee97af488fd215cf24e2a6c", size = 2093782 },
+    { url = "https://files.pythonhosted.org/packages/b3/24/30e33b6389ebb5a17df2a4243b091bc709fb3dfc9a48c8d72f8e037c943d/SQLAlchemy-2.0.36-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:4f5e9cd989b45b73bd359f693b935364f7e1f79486e29015813c338450aa5a71", size = 2084180 },
+    { url = "https://files.pythonhosted.org/packages/10/1e/70e9ed2143a27065246be40f78637ad5160ea0f5fd32f8cab819a31ff54d/SQLAlchemy-2.0.36-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d0ddd9db6e59c44875211bc4c7953a9f6638b937b0a88ae6d09eb46cced54eff", size = 3202469 },
+    { url = "https://files.pythonhosted.org/packages/b4/5f/95e0ed74093ac3c0db6acfa944d4d8ac6284ef5e1136b878a327ea1f975a/SQLAlchemy-2.0.36-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2519f3a5d0517fc159afab1015e54bb81b4406c278749779be57a569d8d1bb0d", size = 3202464 },
+    { url = "https://files.pythonhosted.org/packages/91/95/2cf9b85a6bc2ee660e40594dffe04e777e7b8617fd0c6d77a0f782ea96c9/SQLAlchemy-2.0.36-cp311-cp311-musllinux_1_2_aarch64.whl", hash = "sha256:59b1ee96617135f6e1d6f275bbe988f419c5178016f3d41d3c0abb0c819f75bb", size = 3139508 },
+    { url = "https://files.pythonhosted.org/packages/92/ea/f0c01bc646456e4345c0fb5a3ddef457326285c2dc60435b0eb96b61bf31/SQLAlchemy-2.0.36-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:39769a115f730d683b0eb7b694db9789267bcd027326cccc3125e862eb03bfd8", size = 3159837 },
+    { url = "https://files.pythonhosted.org/packages/a6/93/c8edbf153ee38fe529773240877bf1332ed95328aceef6254288f446994e/SQLAlchemy-2.0.36-cp311-cp311-win32.whl", hash = "sha256:66bffbad8d6271bb1cc2f9a4ea4f86f80fe5e2e3e501a5ae2a3dc6a76e604e6f", size = 2064529 },
+    { url = "https://files.pythonhosted.org/packages/b1/03/d12b7c1d36fd80150c1d52e121614cf9377dac99e5497af8d8f5b2a8db64/SQLAlchemy-2.0.36-cp311-cp311-win_amd64.whl", hash = "sha256:23623166bfefe1487d81b698c423f8678e80df8b54614c2bf4b4cfcd7c711959", size = 2089874 },
+    { url = "https://files.pythonhosted.org/packages/b8/49/21633706dd6feb14cd3f7935fc00b60870ea057686035e1a99ae6d9d9d53/SQLAlchemy-2.0.36-py3-none-any.whl", hash = "sha256:fddbe92b4760c6f5d48162aef14824add991aeda8ddadb3c31d56eb15ca69f8e", size = 1883787 },
+]
+
+[[package]]
 name = "srsly"
 version = "2.4.8"
 source = { registry = "https://pypi.org/simple" }
@@ -2701,21 +2771,28 @@ wheels = [
 
 [[package]]
 name = "statsforecast"
-version = "1.4.0"
+version = "1.7.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "matplotlib" },
+    { name = "cloudpickle" },
+    { name = "coreforecast" },
+    { name = "fugue" },
     { name = "numba" },
     { name = "numpy" },
     { name = "pandas" },
-    { name = "plotly" },
     { name = "scipy" },
     { name = "statsmodels" },
+    { name = "threadpoolctl" },
     { name = "tqdm" },
+    { name = "utilsforecast" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/33/3a/694c0c8b71b51411a0aeaf935eea264ffd4311787ed20ea456216acd93bb/statsforecast-1.4.0.tar.gz", hash = "sha256:f468bbd80266601a296a77580521ebfd310a0dbe301153bd170812fce7691740", size = 92176 }
+sdist = { url = "https://files.pythonhosted.org/packages/38/ef/4f5157b9c1749ec13d12d721bc8af0dda90c5c4f0c75948db31d93b71829/statsforecast-1.7.8.tar.gz", hash = "sha256:44a89372e1761bba90ded17ccd6fd3504012d219e8ceb4c453d78be910e92287", size = 2880799 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f3/c0/919650a54c12434b5166d7ef16db6a8d8c303bff2b8c74119f1ee30fdc3c/statsforecast-1.4.0-py3-none-any.whl", hash = "sha256:01a46892412b9af044e42b27f773172d7f70d1a1cfad0a1147426ecdd8bc28e1", size = 91967 },
+    { url = "https://files.pythonhosted.org/packages/b3/9e/f71462cc00622b653bd9d1865b08840140267389f6fe50adcf9c8a5935fe/statsforecast-1.7.8-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:737c99fff0e881fb1713e7f38e5d3b523a6451650564706eef91ce647d5a8d74", size = 289388 },
+    { url = "https://files.pythonhosted.org/packages/fb/81/98990339028ee547a1d5b155f411d42b29df5cb6bad80830accb665dad09/statsforecast-1.7.8-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:725ebea30e9098c812dfbc85dc31a5b459d46d3b81e68212899894770f27648a", size = 275071 },
+    { url = "https://files.pythonhosted.org/packages/a8/0f/62317fadd4b5d9e1fe0b88d352cbad2e254a5c9ebfbba6d379d2096a8110/statsforecast-1.7.8-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:aa02344b08e71497ddc562b023ab627b3703f035fd703dad3e5a0f6e94cb8c7f", size = 305897 },
+    { url = "https://files.pythonhosted.org/packages/8b/0a/fd4477e16c0d9509d503891dbba2baf73f4b17426850c3c02350a18ab049/statsforecast-1.7.8-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:84bc52363d66ece211e6d196eb764fceb097384a192031be866bea02f7e62c4d", size = 315839 },
+    { url = "https://files.pythonhosted.org/packages/de/7c/4e56c0c5aa11f73cebd5e49ec55cc7be6799c559a290d2eac893cef18394/statsforecast-1.7.8-cp311-cp311-win_amd64.whl", hash = "sha256:da74148ab2e398ad4310c12fa34517477ad20fc49b935f63c330da2e94380c9f", size = 254717 },
 ]
 
 [[package]]
@@ -3039,6 +3116,23 @@ sentencepiece = [
 ]
 
 [[package]]
+name = "triad"
+version = "0.9.8"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fs" },
+    { name = "fsspec" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "pyarrow" },
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/88/28/fca2981080bfb44e317b3fc6cc4119a0abf14f18e707a612764fcad28790/triad-0.9.8.tar.gz", hash = "sha256:5b67673124891981daf8afbab44b2e6358932ca35ef3ff38a25bc3e0f6f03f17", size = 56086 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4f/c6/4aedce0522bb3c72f2d770e7e4c18b0e1f7716d2c70a865e94c89ebcf7e6/triad-0.9.8-py3-none-any.whl", hash = "sha256:2c0ba7d83977c6d4e7b59e3cc70727f858014ef7676c62d184aa8e63f7bef5de", size = 62340 },
+]
+
+[[package]]
 name = "triton"
 version = "2.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -3093,15 +3187,16 @@ wheels = [
 
 [[package]]
 name = "utilsforecast"
-version = "0.0.10"
+version = "0.2.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy" },
+    { name = "packaging" },
     { name = "pandas" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/04/f4/f60f34c4fda71c611da1d2766f68826e38c4e2ab0e36dc5cb2ad6bcbd4fe/utilsforecast-0.0.10.tar.gz", hash = "sha256:08c01d57a7d221bb0dc34ed72279b6a97795de441adfbe11f4a84ad2ce635c72", size = 28705 }
+sdist = { url = "https://files.pythonhosted.org/packages/04/6d/ac27ff105228245a0df4d8458348d371b21b46aa24f9cd3db67f31d509e9/utilsforecast-0.2.4.tar.gz", hash = "sha256:72f07adb99c6cd638322832bc0229d6d0e3acd97ac4c94cd832bc012ac4ef0cf", size = 39640 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b4/5d/b45ccc2de8abfb7ef7ff67bc535c742e8f0d8735ecbb9ef5fcf777c6676a/utilsforecast-0.0.10-py3-none-any.whl", hash = "sha256:83cfbf352d5c42c1a26a5adfe2922dfcb0650b7338ff0b72396f07f3854f5311", size = 30828 },
+    { url = "https://files.pythonhosted.org/packages/ac/13/793879e8c7a2766c25d56e9e9043b5224a41423979b29f00b4c60d451b03/utilsforecast-0.2.4-py3-none-any.whl", hash = "sha256:f4357aaec9757e79ffbadad5318e0aa067c57ea51a4802b71d630761adf73f0b", size = 40286 },
 ]
 
 [[package]]
