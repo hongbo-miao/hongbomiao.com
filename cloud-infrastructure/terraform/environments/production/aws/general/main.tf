@@ -74,8 +74,8 @@ module "hm_trino_emr" {
   providers                                  = { aws = aws.production }
   source                                     = "../../../../modules/aws/hm_amazon_emr_cluster"
   amazon_emr_cluster_name                    = local.trino_cluster_name
-  amazon_emr_version                         = "emr-7.2.0"
-  applications                               = ["HCatalog", "Trino"]
+  amazon_emr_version                         = "emr-7.5.0"
+  applications                               = ["Trino"]
   primary_instance_target_on_demand_capacity = 3
   primary_instance_type                      = "c7g.4xlarge"
   primary_instance_ebs_volume_size_gb        = 16
