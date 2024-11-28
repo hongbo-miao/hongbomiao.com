@@ -61,13 +61,14 @@ fn generate_parameter_definition(signals: &Signals) -> Result<(), Box<dyn Error>
     let frequency = signals.frequency_hz as f32;
 
     // Write timestamp parameters
-    writeln!(file, "1 TimestampUpperWord {:.1} 1 SystemParamType = MajorTime", frequency)?;
-    writeln!(file, "2 TimestampLowerWord {:.1} 1 SystemParamType = MinorTime", frequency)?;
+    writeln!(file, "1 IrigTimestampUpperWord {:.1} 1 SystemParamType = MajorTime", frequency)?; // Code 1 for 32-bit unsigned integer
+    writeln!(file, "2 IrigTimestampLowerWord {:.1} 1 SystemParamType = MinorTime", frequency)?;
+    writeln!(file, "3 EpochUnixTimestampNs {:.1} 4", frequency)?; // Code 4 for 64-bit unsigned integer
 
     // Write signal parameters
     for (i, signal) in signals.signals.iter().enumerate() {
-        writeln!(file, "{} {} {:.1} 2",
-                 i + 3,
+        writeln!(file, "{} {} {:.1} 2", // Code 2 for 32-bit single precision floating point
+                 i + 4,
                  signal.name,
                  frequency
         )?;
@@ -91,7 +92,7 @@ async fn wait_for_first_message(get_zeromq_address: &str) -> Result<Signals, Box
 
 fn calculate_packet_size_byte(signal_number: i32) -> i32 {
     let signal_pair_number = (signal_number + 1) / 2;
-    IADS_HEADER_SIZE_BYTE + IADS_TIME_PAIR_SIZE_BYTE + (signal_pair_number * IADS_SIGNAL_PAIR_SIZE_BYTE)
+    IADS_HEADER_SIZE_BYTE + IADS_TIME_PAIR_SIZE_BYTE + 12 + (signal_pair_number * IADS_SIGNAL_PAIR_SIZE_BYTE)
 }
 
 fn convert_epoch_to_iads_time(epoch_ns: i64) -> i64 {
@@ -171,7 +172,8 @@ async fn process_zeromq_data(
         // Print time interval information
         if last_iads_time != 0 {
             let interval = iads_time - last_iads_time;
-            println!("IADS Time: {}, Interval: {} ns ({} ms)",
+            println!("Epoch Time: {}, IADS Time: {}, Interval: {} ns ({} ms)",
+                     signals.timestamp_ns,
                      iads_time,
                      interval,
                      interval / 1_000_000
@@ -186,14 +188,23 @@ async fn process_zeromq_data(
         buffer[offset..offset + 4].copy_from_slice(&time_low.to_le_bytes());
         offset += 4;
 
+        // Write EpochUnixTimestampNs as 64-bit value
+        let tag1 = 3u16;
+        buffer[offset..offset + 2].copy_from_slice(&tag1.to_le_bytes());
+        offset += 2;
+        buffer[offset..offset + 2].copy_from_slice(&0u16.to_le_bytes()); // Padding
+        offset += 2;
+        buffer[offset..offset + 8].copy_from_slice(&signals.timestamp_ns.to_le_bytes());
+        offset += 8;
+
         // Write signal data in pairs
         for (i, signals_chunk) in signals.signals.chunks(2).enumerate() {
             // Write tags for pair
-            let tag1 = (3 + i * 2) as u16;
             let tag2 = (4 + i * 2) as u16;
-            buffer[offset..offset + 2].copy_from_slice(&tag1.to_le_bytes());
-            offset += 2;
+            let tag3 = (5 + i * 2) as u16;
             buffer[offset..offset + 2].copy_from_slice(&tag2.to_le_bytes());
+            offset += 2;
+            buffer[offset..offset + 2].copy_from_slice(&tag3.to_le_bytes());
             offset += 2;
 
             // Write first value

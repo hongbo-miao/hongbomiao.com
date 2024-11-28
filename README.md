@@ -60,16 +60,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ![Architecture](https://github.com/user-attachments/assets/2c1513ce-29fb-4b2d-b2b0-cf4ed8c5b138)
 
-# 📦 Setup
-
-```shell
-make kubernetes-set-up
-```
-
-```shell
-make kubernetes-clean
-```
-
 # 🧱 Tech Stack
 
 ## Web
@@ -297,6 +287,7 @@ make kubernetes-clean
     - **librdkafka** - Kafka C/C++ client
       - **libserdes** - AVRO serialization and deserialization
     - **confluent-kafka** - Kafka Python client
+    - **rust-rdkafka** - Kafka Rust client
   - Schema registry
     - **Confluent Schema Registry** - Schema Registry
     - **Apicurio Registry** - Schema Registry
