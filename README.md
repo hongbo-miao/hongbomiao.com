@@ -120,6 +120,12 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## API Server
 
+### API Server - Rust
+
+- **axum** - Web framework
+- **tokio** - Asynchronous runtime
+- **tracing** - Tracing
+
 ### API Server - Go
 
 - **Gin** - Web framework
