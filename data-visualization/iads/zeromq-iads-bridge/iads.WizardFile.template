@@ -1,0 +1,48 @@
+IadsPropertyBag Version1.0
+Root
+{
+  RTStation
+  {
+    CDS
+    {
+      Version 1.0
+    }
+    DataSourceType Custom
+    maxTppBitSize 0ø3
+    maxCdsBitSize 0ø3
+    DataSourcePort 49000
+    DataSourceHost localhost
+    SetupFile {IADS_PARAMETER_DEFINITION_PATH}
+    OutputDir {IADS_OUTPUT_DIR}
+    PreventArchiveOverwrite 0
+    DisableCDSarchiving 0
+    ForceConfigFileExt TRUE
+    ConfigFile {IADS_CONFIG_FILE_PATH}
+    ConfigStartupMode APPEND_AND_PURGE
+    EnableOverwriteMsgBox 0
+    IadsTppSetup
+    {
+      Version 9.2.6
+      MinorVersion 11
+      IADSStartingConfig {IADS_CONFIG_FILE_PATH}
+      IADSConfigStartupMode APPEND_AND_PURGE
+      IADSDataDirectory {IADS_OUTPUT_DIR}
+      DisableCDSarchiving false
+      Support16Bit false
+      IsCompositeDS false
+      SmartEU
+      {
+        DoConcat false
+        DoAnalogScaling false
+        DoUartKey false
+        DoTTCConcatKey false
+      }
+    }
+  }
+  OpConsole
+  {
+    isIadsTppDataSource FALSE
+    isIadsGERMDataSource FALSE
+    isIadsPTDSDataSource FALSE
+  }
+}

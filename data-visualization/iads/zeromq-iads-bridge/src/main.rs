@@ -1,13 +1,16 @@
-use std::error::Error;
-use std::fs::File;
-use std::io::Write;
-use tokio::io::AsyncWriteExt;
-use tokio::net::TcpStream;
-use prost::Message;
-use zeromq::{Socket, SocketRecv, SubSocket};
-use tokio::net::TcpListener;
 use chrono::{DateTime, Datelike, TimeZone, Utc};
+use prost::Message;
 use std::env;
+use std::error::Error;
+use std::path::{Path, PathBuf};
+use std::process::Command;
+use tempfile::TempDir;
+use tokio::fs;
+use tokio::fs::File;
+use tokio::io::AsyncWriteExt;
+use tokio::net::TcpListener;
+use tokio::net::TcpStream;
+use zeromq::{Socket, SocketRecv, SubSocket};
 
 pub mod production {
     pub mod iot {
@@ -27,6 +30,12 @@ struct Config {
     zeromq_host: String,
     zeromq_port: u16,
     iads_port: u16,
+    iads_exe_path: PathBuf,
+    iads_wizard_file_name: String,
+    iads_parameter_definition_file_name: String,
+    iads_config_file_path: PathBuf,
+    iads_output_dir: PathBuf,
+    temp_dir: TempDir,
 }
 
 impl Config {
@@ -38,8 +47,7 @@ impl Config {
         dotenvy::from_filename(".env.production").ok();
 
         Self {
-            zeromq_host: env::var("ZEROMQ_HOST")
-                .expect("ZEROMQ_HOST must be set in environment"),
+            zeromq_host: env::var("ZEROMQ_HOST").expect("ZEROMQ_HOST must be set in environment"),
             zeromq_port: env::var("ZEROMQ_PORT")
                 .expect("ZEROMQ_PORT must be set in environment")
                 .parse()
@@ -48,6 +56,21 @@ impl Config {
                 .expect("IADS_PORT must be set in environment")
                 .parse()
                 .expect("IADS_PORT must be a valid port number"),
+            iads_exe_path: PathBuf::from(
+                env::var("IADS_EXE_PATH").expect("IADS_EXE_PATH must be set in environment"),
+            ),
+            iads_wizard_file_name: env::var("IADS_WIZARD_FILE_NAME")
+                .expect("IADS_WIZARD_FILE_NAME must be set in environment"),
+            iads_parameter_definition_file_name: env::var("IADS_PARAMETER_DEFINITION_FILE_NAME")
+                .expect("IADS_PARAMETER_DEFINITION_FILE_NAME must be set in environment"),
+            iads_config_file_path: PathBuf::from(
+                env::var("IADS_CONFIG_FILE_PATH")
+                    .expect("IADS_CONFIG_FILE_PATH must be set in environment"),
+            ),
+            iads_output_dir: PathBuf::from(
+                env::var("IADS_OUTPUT_DIR").expect("IADS_OUTPUT_DIR must be set in environment"),
+            ),
+            temp_dir: TempDir::new().expect("Failed to create temp directory"),
         }
     }
 
@@ -56,24 +79,43 @@ impl Config {
     }
 }
 
-fn generate_parameter_definition(signals: &Signals) -> Result<(), Box<dyn Error>> {
-    let mut file = File::create("iadsParameterDefinition.prn")?;
+async fn generate_parameter_definition(
+    signals: &Signals,
+    setup_file: &Path,
+) -> Result<(), Box<dyn Error>> {
+    let mut file = File::create(setup_file).await?;
     let frequency = signals.frequency_hz as f32;
 
-    // Write timestamp parameters
-    writeln!(file, "1 IrigTimestampUpperWord {:.1} 1 SystemParamType = MajorTime", frequency)?; // Code 1 for 32-bit unsigned integer
-    writeln!(file, "2 IrigTimestampLowerWord {:.1} 1 SystemParamType = MinorTime", frequency)?;
-    writeln!(file, "3 EpochUnixTimestampNs {:.1} 4", frequency)?; // Code 4 for 64-bit unsigned integer
+    // Write IRIG timestamp
+    // Code 1 for 32-bit unsigned integer
+    file.write_all(
+        format!(
+            "1 IrigTimestampUpperWord {:.1} 1 SystemParamType = MajorTime\n",
+            frequency
+        )
+        .as_bytes(),
+    )
+    .await?;
+    file.write_all(
+        format!(
+            "2 IrigTimestampLowerWord {:.1} 1 SystemParamType = MinorTime\n",
+            frequency
+        )
+        .as_bytes(),
+    )
+    .await?;
+
+    // Write epoch unix timestamp
+    // Code 4 for 64-bit unsigned integer
+    file.write_all(format!("3 EpochUnixTimestampNs {:.1} 4\n", frequency).as_bytes())
+        .await?;
 
     // Write signal parameters
     for (i, signal) in signals.signals.iter().enumerate() {
-        writeln!(file, "{} {} {:.1} 2", // Code 2 for 32-bit single precision floating point
-                 i + 4,
-                 signal.name,
-                 frequency
-        )?;
+        // Code 2 for 32-bit single precision floating point
+        file.write_all(format!("{} {} {:.1} 2\n", i + 4, signal.name, frequency).as_bytes())
+            .await?;
     }
-
     Ok(())
 }
 
@@ -92,12 +134,16 @@ async fn wait_for_first_message(get_zeromq_address: &str) -> Result<Signals, Box
 
 fn calculate_packet_size_byte(signal_number: i32) -> i32 {
     let signal_pair_number = (signal_number + 1) / 2;
-    IADS_HEADER_SIZE_BYTE + IADS_TIME_PAIR_SIZE_BYTE + 12 + (signal_pair_number * IADS_SIGNAL_PAIR_SIZE_BYTE)
+    IADS_HEADER_SIZE_BYTE
+        + IADS_TIME_PAIR_SIZE_BYTE
+        + 12
+        + (signal_pair_number * IADS_SIGNAL_PAIR_SIZE_BYTE)
 }
 
 fn convert_epoch_to_iads_time(epoch_ns: i64) -> i64 {
     let now = Utc::now();
-    let year_start_ns = Utc.with_ymd_and_hms(now.year(), 1, 1, 0, 0, 0)
+    let year_start_ns = Utc
+        .with_ymd_and_hms(now.year(), 1, 1, 0, 0, 0)
         .unwrap()
         .timestamp_nanos_opt()
         .unwrap();
@@ -172,11 +218,12 @@ async fn process_zeromq_data(
         // Print time interval information
         if last_iads_time != 0 {
             let interval = iads_time - last_iads_time;
-            println!("Epoch Time: {}, IADS Time: {}, Interval: {} ns ({} ms)",
-                     signals.timestamp_ns,
-                     iads_time,
-                     interval,
-                     interval / 1_000_000
+            println!(
+                "Epoch Time: {}, IADS Time: {}, Interval: {} ns ({} ms)",
+                signals.timestamp_ns,
+                iads_time,
+                interval,
+                interval / 1_000_000
             );
         }
         last_iads_time = iads_time;
@@ -229,6 +276,28 @@ async fn process_zeromq_data(
     Ok(())
 }
 
+async fn update_wizard_file(
+    wizard_file_path: &Path,
+    iads_config_file_path: &Path,
+    setup_file: &Path,
+    output_dir: &Path,
+) -> Result<(), Box<dyn Error>> {
+    let wizard_file_content = fs::read_to_string("iads.WizardFile.template").await?;
+    let updated_content = wizard_file_content
+        .replace(
+            "{IADS_CONFIG_FILE_PATH}",
+            iads_config_file_path.to_str().unwrap_or(""),
+        )
+        .replace(
+            "{IADS_PARAMETER_DEFINITION_PATH}",
+            setup_file.to_str().unwrap_or(""),
+        )
+        .replace("{IADS_OUTPUT_DIR}", output_dir.to_str().unwrap_or(""));
+
+    fs::write(wizard_file_path, updated_content).await?;
+    Ok(())
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     let config = Config::load();
@@ -237,8 +306,33 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Wait for first message and generate parameter definition file
     println!("Waiting for first ZeroMQ message to generate parameter definition file...");
     let first_signals = wait_for_first_message(&config.get_zeromq_address()).await?;
-    generate_parameter_definition(&first_signals)?;
+
+    let iads_parameter_definition_path = config
+        .temp_dir
+        .path()
+        .join(&config.iads_parameter_definition_file_name);
+    generate_parameter_definition(&first_signals, &iads_parameter_definition_path).await?;
     println!("Parameter definition file generated successfully");
+
+    // Update wizard file
+    let wizard_file_path = config.temp_dir.path().join(&config.iads_wizard_file_name);
+    update_wizard_file(
+        &wizard_file_path,
+        &config.iads_config_file_path,
+        &iads_parameter_definition_path,
+        &config.iads_output_dir,
+    )
+    .await?;
+    println!(
+        "WizardFile updated successfully with config path: {}",
+        config.iads_config_file_path.display()
+    );
+
+    // Start IADS
+    Command::new(&config.iads_exe_path)
+        .args(["/rtstation", "Custom", wizard_file_path.to_str().unwrap()])
+        .spawn()
+        .expect("Failed to start IADS Client Workstation");
 
     let listener = TcpListener::bind(("0.0.0.0", config.iads_port)).await?;
     println!("Listening for IADS connection on port {}", config.iads_port);
