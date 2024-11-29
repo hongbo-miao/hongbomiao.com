@@ -1,2 +1,4 @@
 iads-start:
+	"C:\Program Files\IADS\ClientWorkstation\Iads.exe" /rtstation
 	"C:\Program Files\IADS\ClientWorkstation\Iads.exe" /rtstation /noMessageFlash
+	"C:\Program Files\IADS\ClientWorkstation\Iads.exe" /rtstation Custom C:\iads\iads.WizardFile
