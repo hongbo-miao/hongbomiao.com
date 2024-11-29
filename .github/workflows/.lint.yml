@@ -198,7 +198,7 @@ jobs:
               - 'mobile/mobile-react-native/**'
             national-instruments-veristand-zeromq-bridge:
               - '.github/workflows/.lint.yml'
-              - 'hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge/**'
+              - 'hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/**'
             udp-receiver:
               - '.github/workflows/.lint.yml'
               - 'network-programmability/udp/udp-receiver/**'
@@ -259,18 +259,18 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4.1.0
         with:
-          global-json-file: hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge/global.json
+          global-json-file: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/global.json
       - name: Install dependencies
-        working-directory: hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge
+        working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
         run: |
           nuget restore VeriStandZeroMQBridge.sln
           dotnet tool restore
       - name: Lint C# (format)
-        working-directory: hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge
+        working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
         run: |
           dotnet format VeriStandZeroMQBridge.sln --verify-no-changes
       - name: Lint C# (CSharpier)
-        working-directory: hardware-in-the-loop/national-instruments/VeriStandZeroMQBridge
+        working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
         run: |
           dotnet csharpier --check .
 

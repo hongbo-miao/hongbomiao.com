@@ -2,7 +2,7 @@ use axum::{
     routing::get,
     Router,
 };
-use tracing::{info, instrument};
+use tracing::info;
 
 #[tokio::main]
 async fn main() {
