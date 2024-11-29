@@ -27,8 +27,8 @@ fn create_producer(bootstrap_server: &str) -> FutureProducer {
 }
 
 fn generate_motor_data(motor_id: &str) -> Motor {
-    let mut rng = rand::thread_rng();
-    let temperature = rng.gen_range(10.0..100.0);
+    let mut rng = rand::rng();
+    let temperature = rng.random_range(10.0..100.0);
     Motor {
         id: Some(motor_id.to_string()),
         timestamp: Utc::now().timestamp_nanos_opt(),
@@ -53,7 +53,7 @@ async fn main() -> Result<()> {
     let sr_settings = SrSettings::new(schema_registry_url.to_string());
     let encoder = EasyProtoRawEncoder::new(sr_settings);
     let mut interval = time::interval(Duration::from_nanos(100));
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     let topic = "production.iot.motor.proto";
     let motor_ids = ["motor_001", "motor_002", "motor_003"];
 
@@ -61,7 +61,7 @@ async fn main() -> Result<()> {
     loop {
         interval.tick().await;
 
-        let motor_id = motor_ids[rng.gen_range(0..motor_ids.len())];
+        let motor_id = motor_ids[rng.random_range(0..motor_ids.len())];
         let motor = generate_motor_data(motor_id);
         let mut buf = Vec::new();
         motor.encode(&mut buf)?;

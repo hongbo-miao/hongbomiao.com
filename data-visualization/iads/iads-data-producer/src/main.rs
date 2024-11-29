@@ -55,7 +55,7 @@ async fn send_data_stream(
     config: &StreamConfig,
 ) -> std::io::Result<()> {
     let packet_size_byte = calculate_packet_size_byte(config.signal_number);
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
 
     // Calculate the interval in milliseconds from Hz
     let interval_ms = (1000.0 / config.rate_hz) as u64;
@@ -109,8 +109,8 @@ async fn send_data_stream(
             offset += TAG_SIZE_BYTE as usize;
 
             // Random values
-            let value1: f32 = rng.gen_range(0.0..100.0);
-            let value2: f32 = rng.gen_range(0.0..100.0);
+            let value1: f32 = rng.random_range(0.0..100.0);
+            let value2: f32 = rng.random_range(0.0..100.0);
 
             buffer[offset..offset + VALUE_SIZE_BYTE as usize].copy_from_slice(&value1.to_le_bytes());
             offset += VALUE_SIZE_BYTE as usize;

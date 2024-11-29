@@ -16,12 +16,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let message_count = 1_000_000;
     let socket = UdpSocket::bind("0.0.0.0:0").await?;
     let receiver_addr = "127.0.0.1:50537";
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     let motor_ids = ["motor_001", "motor_002", "motor_003"];
 
     for _ in 0..message_count {
-        let motor_id = motor_ids[rng.gen_range(0..motor_ids.len())];
-        let temperature = Some(rng.gen_range(10.0..100.0));
+        let motor_id = motor_ids[rng.random_range(0..motor_ids.len())];
+        let temperature = Some(rng.random_range(10.0..100.0));
         let motor = Motor {
             id: Some(motor_id.to_string()),
             timestamp: Utc::now().timestamp_nanos_opt(),
