@@ -1,8 +1,11 @@
 use chrono::{DateTime, Datelike, TimeZone, Utc};
 use prost::Message;
+use serde::Serialize;
 use std::env;
 use std::error::Error;
+use std::net::SocketAddr;
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 use tempfile::TempDir;
 use tokio::fs;
 use tokio::fs::File;
@@ -10,6 +13,7 @@ use tokio::io::AsyncWriteExt;
 use tokio::net::TcpListener;
 use tokio::net::TcpStream;
 use tokio::process::Command;
+use tokio::sync::RwLock;
 use zeromq::{Socket, SocketRecv, SubSocket};
 
 pub mod production {
@@ -25,11 +29,21 @@ const IADS_VALUE_SIZE_BYTE: i32 = 4;
 const IADS_TIME_PAIR_SIZE_BYTE: i32 = (IADS_TAG_SIZE_BYTE * 2) + (IADS_VALUE_SIZE_BYTE * 2);
 const IADS_SIGNAL_PAIR_SIZE_BYTE: i32 = (IADS_TAG_SIZE_BYTE * 2) + (IADS_VALUE_SIZE_BYTE * 2);
 
+#[derive(Debug, Clone, Serialize)]
+struct IadsStatus {
+    is_iads_connected: bool,
+    iads_last_updated_timestamp_ns: i64,
+    iads_processed_message_count: i32,
+}
+
+type SharedIadsStatus = Arc<RwLock<IadsStatus>>;
+
 #[derive(Debug)]
 struct Config {
     zeromq_host: String,
     zeromq_port: u16,
     iads_port: u16,
+    api_server_port: u16,
     iads_exe_path: PathBuf,
     iads_wizard_file_name: String,
     iads_parameter_definition_file_name: String,
@@ -70,6 +84,10 @@ impl Config {
                 env::var("IADS_DATA_OUTPUT_DIR")
                     .expect("IADS_DATA_OUTPUT_DIR must be set in environment"),
             ),
+            api_server_port: env::var("API_SERVER_PORT")
+                .expect("API_SERVER_PORT must be set in environment")
+                .parse()
+                .expect("API_SERVER_PORT must be a valid port number"),
             temp_dir: TempDir::new().expect("Failed to create temp directory"),
         }
     }
@@ -77,6 +95,25 @@ impl Config {
     fn get_zeromq_address(&self) -> String {
         format!("tcp://{}:{}", self.zeromq_host, self.zeromq_port)
     }
+}
+
+async fn get_iads_status(
+    axum::extract::State(shared_iads_status): axum::extract::State<SharedIadsStatus>,
+) -> axum::Json<IadsStatus> {
+    let iads_status = shared_iads_status.read().await;
+    axum::Json(iads_status.clone())
+}
+
+async fn run_api_server(shared_iads_status: SharedIadsStatus, api_server_port: u16) {
+    let app = axum::Router::new()
+        .route("/status", axum::routing::get(get_iads_status))
+        .with_state(shared_iads_status);
+
+    let addr = SocketAddr::from(([0, 0, 0, 0], api_server_port));
+    println!("API server listening on {}", addr);
+
+    let listener = TcpListener::bind(addr).await.unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
 
 async fn generate_parameter_definition(
@@ -105,9 +142,9 @@ async fn generate_parameter_definition(
     )
     .await?;
 
-    // Write epoch unix timestamp
+    // Write unix timestamp
     // Code 4 for 64-bit unsigned integer
-    file.write_all(format!("3 EpochUnixTimestampNs {:.1} 4\n", frequency).as_bytes())
+    file.write_all(format!("3 UnixTimestampNs {:.1} 4\n", frequency).as_bytes())
         .await?;
 
     // Write signal parameters
@@ -116,6 +153,7 @@ async fn generate_parameter_definition(
         file.write_all(format!("{} {} {:.1} 2\n", i + 4, signal.name, frequency).as_bytes())
             .await?;
     }
+
     Ok(())
 }
 
@@ -127,8 +165,8 @@ async fn wait_for_first_message(get_zeromq_address: &str) -> Result<Signals, Box
     let msg = subscriber.recv().await?;
     let default_bytes = prost::bytes::Bytes::new();
     let bytes = msg.get(0).unwrap_or(&default_bytes);
-
     let signals = Signals::decode(&bytes[..])?;
+
     Ok(signals)
 }
 
@@ -140,14 +178,14 @@ fn calculate_packet_size_byte(signal_number: i32) -> i32 {
         + (signal_pair_number * IADS_SIGNAL_PAIR_SIZE_BYTE)
 }
 
-fn convert_epoch_to_iads_time(epoch_ns: i64) -> i64 {
+fn convert_unix_to_iads_time(unix_timestamp_ns: i64) -> i64 {
     let now = Utc::now();
     let year_start_ns = Utc
         .with_ymd_and_hms(now.year(), 1, 1, 0, 0, 0)
         .unwrap()
         .timestamp_nanos_opt()
         .unwrap();
-    let datetime = DateTime::<Utc>::from_timestamp_nanos(epoch_ns);
+    let datetime = DateTime::<Utc>::from_timestamp_nanos(unix_timestamp_ns);
     let current_ns = datetime.timestamp_nanos_opt().unwrap();
     current_ns - year_start_ns
 }
@@ -155,6 +193,7 @@ fn convert_epoch_to_iads_time(epoch_ns: i64) -> i64 {
 async fn process_zeromq_data(
     mut iads_stream: TcpStream,
     config: &Config,
+    shared_iads_status: SharedIadsStatus,
 ) -> Result<(), Box<dyn Error>> {
     let mut subscriber = SubSocket::new();
     subscriber.connect(&config.get_zeromq_address()).await?;
@@ -182,6 +221,17 @@ async fn process_zeromq_data(
             }
         };
 
+        // Update IADS status
+        {
+            let mut iads_status = shared_iads_status.write().await;
+            iads_status.iads_last_updated_timestamp_ns =
+                Utc::now().timestamp_nanos_opt().unwrap_or_else(|| {
+                    println!("Warning: Timestamp overflow occurred, using 0 as fallback");
+                    0
+                });
+            iads_status.iads_processed_message_count = packet_counter;
+        }
+
         let signal_count = signals.signals.len();
 
         // Print signal information for the first message or when count changes
@@ -190,14 +240,13 @@ async fn process_zeromq_data(
             println!("Timestamp: {} ns", signals.timestamp_ns);
             println!("Signal Names:");
             for (i, signal) in signals.signals.iter().enumerate() {
-                println!("  {}: {} = {}", i, signal.name, signal.value);
+                println!(" {}: {} = {}", i, signal.name, signal.value);
             }
             println!("\nStarting data processing...\n");
         }
 
         let packet_size = calculate_packet_size_byte(signal_count as i32);
         buffer.resize(packet_size as usize, 0);
-
         let mut offset = 0usize;
 
         // Write IADS header
@@ -213,13 +262,13 @@ async fn process_zeromq_data(
         }
 
         // Write time values
-        let iads_time = convert_epoch_to_iads_time(signals.timestamp_ns);
+        let iads_time = convert_unix_to_iads_time(signals.timestamp_ns);
 
         // Print time interval information
         if last_iads_time != 0 {
             let interval = iads_time - last_iads_time;
             println!(
-                "Epoch Time: {}, IADS Time: {}, Interval: {} ns ({} ms)",
+                "Unix Time: {}, IADS Time: {}, Interval: {} ns ({} ms)",
                 signals.timestamp_ns,
                 iads_time,
                 interval,
@@ -235,7 +284,7 @@ async fn process_zeromq_data(
         buffer[offset..offset + 4].copy_from_slice(&time_low.to_le_bytes());
         offset += 4;
 
-        // Write EpochUnixTimestampNs as 64-bit value
+        // Write UnixTimestampNs as 64-bit value
         let tag1 = 3u16;
         buffer[offset..offset + 2].copy_from_slice(&tag1.to_le_bytes());
         offset += 2;
@@ -305,6 +354,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let config = Config::load();
     println!("{:#?}", config);
 
+    // Initialize shared status
+    let shared_iads_status = Arc::new(RwLock::new(IadsStatus {
+        is_iads_connected: false,
+        iads_last_updated_timestamp_ns: 0,
+        iads_processed_message_count: 0,
+    }));
+
+    // Start API server
+    let api_shared_status = shared_iads_status.clone();
+    tokio::spawn(async move {
+        run_api_server(api_shared_status, config.api_server_port).await;
+    });
+
     // Wait for first ZeroMQ message and generate parameter definition file
     println!("Waiting for first ZeroMQ message to generate parameter definition file...");
     let first_signals = wait_for_first_message(&config.get_zeromq_address()).await?;
@@ -358,8 +420,20 @@ async fn main() -> Result<(), Box<dyn Error>> {
         match listener.accept().await {
             Ok((stream, _)) => {
                 println!("IADS client connected");
-                if let Err(e) = process_zeromq_data(stream, &config).await {
+                {
+                    let mut iads_status = shared_iads_status.write().await;
+                    iads_status.is_iads_connected = true;
+                }
+
+                if let Err(e) =
+                    process_zeromq_data(stream, &config, shared_iads_status.clone()).await
+                {
                     println!("Error processing data: {}", e);
+                }
+
+                {
+                    let mut iads_status = shared_iads_status.write().await;
+                    iads_status.is_iads_connected = false;
                 }
                 println!("IADS client disconnected...");
             }
