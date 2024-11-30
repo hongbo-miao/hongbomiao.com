@@ -123,8 +123,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### API Server - Rust
 
 - **axum** - Web framework
-- **tokio** - Asynchronous runtime
-- **tracing** - Tracing
+- **Tokio** - Asynchronous runtime
+- **Tracing** - Tracing
+- **dotenvy** - Environment variables loading
+- **Tower HTTP** - HTTP middleware and utilities
 
 ### API Server - Go
 
