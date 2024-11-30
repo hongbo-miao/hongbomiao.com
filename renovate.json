@@ -1,5 +1,7 @@
 {
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended"
+  ],
   "lockFileMaintenance": {
     "enabled": true,
     "commitMessageExtra": "({{packageFile}})"
@@ -19,7 +21,10 @@
     },
     {
       "description": "Group Python packages",
-      "matchPackageNames": ["docker.io/python", "python"],
+      "matchPackageNames": [
+        "docker.io/python",
+        "python"
+      ],
       "groupName": "python packages"
     },
     {
@@ -34,27 +39,40 @@
     },
     {
       "description": "Group PyTorch packages",
-      "matchPackageNames": ["torch", "torchvision"],
+      "matchPackageNames": [
+        "torch",
+        "torchvision"
+      ],
       "groupName": "torch packages"
     },
     {
       "description": "Group stylelint packages",
-      "matchPackageNames": ["stylelint", "stylelint-prettier"],
+      "matchPackageNames": [
+        "stylelint",
+        "stylelint-prettier"
+      ],
       "groupName": "stylelint packages"
     },
     {
       "description": "Use custom regex versioning for Bitnami Docker images",
-      "matchPackageNames": ["docker.io/bitnami/spark"],
+      "matchPackageNames": [
+        "docker.io/bitnami/spark"
+      ],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(:?-(?<compatibility>.+)(?<build>\\d+)-r(?<revision>\\d+))?$"
     },
     {
       "description": "Only allow Node.js upgrades to LTS versions",
-      "matchPackageNames": ["docker.io/node", "node"],
+      "matchPackageNames": [
+        "docker.io/node",
+        "node"
+      ],
       "allowedVersions": "/^(\\d*[02468])\\..+$/"
     },
     {
       "description": "Only allow .NET SDK upgrades to LTS versions",
-      "matchPackageNames": ["dotnet-sdk"],
+      "matchPackageNames": [
+        "dotnet-sdk"
+      ],
       "allowedVersions": "/^(\\d*[02468])\\..+$/"
     }
   ]
