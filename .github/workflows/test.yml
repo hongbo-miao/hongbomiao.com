@@ -511,7 +511,7 @@ jobs:
     name: Mobile - iOS | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
-    runs-on: macos-13
+    runs-on: macos-14
     environment: test
     timeout-minutes: 90
     env:
@@ -524,7 +524,7 @@ jobs:
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1.6.0
         with:
-          xcode-version: '14.2'
+          xcode-version: 16.1.0
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -536,7 +536,7 @@ jobs:
           xcodebuild build-for-testing \
             -project HMMobile.xcodeproj \
             -scheme HMMobile \
-            -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
+            -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
       - name: Test
         uses: wandalen/wretry.action@v3.7.3
         with:
@@ -545,7 +545,7 @@ jobs:
             xcodebuild test-without-building \
               -project HMMobile.xcodeproj \
               -scheme HMMobile \
-              -destination "platform=iOS Simulator,name=iPhone 14 Pro,OS=16.2"
+              -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
           attempt_limit: 3
           attempt_delay: 2000
       - name: Convert coverage to Cobertura XML format
@@ -571,6 +571,7 @@ jobs:
         uses: actions/setup-java@v4.5.0
         with:
           distribution: corretto
+          # https://developer.android.com/build/jdks#compileSdk
           java-version: '17'
           cache: gradle
       - name: Lint
@@ -592,6 +593,7 @@ jobs:
         uses: actions/setup-java@v4.5.0
         with:
           distribution: corretto
+          # https://developer.android.com/build/jdks#compileSdk
           java-version: '17'
           cache: gradle
       - name: Test
@@ -603,6 +605,8 @@ jobs:
     name: Mobile - Android | Instrumented Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+    # Ubuntu displays the message: "You're running a Linux VM where hardware acceleration is not available. Please consider using a macOS VM instead to take advantage of native hardware acceleration support provided by HAXM."
+    # https://github.com/ReactiveCircus/android-emulator-runner#a-note-on-vm-acceleration-and-why-we-dont-need-haxm-anymore
     runs-on: macos-13
     environment: test
     timeout-minutes: 30
@@ -613,13 +617,15 @@ jobs:
         uses: actions/setup-java@v4.5.0
         with:
           distribution: corretto
+          # https://developer.android.com/build/jdks#compileSdk
           java-version: '17'
           cache: gradle
       - name: Instrumented Test
         uses: reactivecircus/android-emulator-runner@v2.33.0
         with:
           working-directory: mobile/mobile-android
-          api-level: 29
+          arch: x86_64
+          api-level: 34
           script: ./gradlew connectedAndroidTest
 
   mobile-react-native-test:
