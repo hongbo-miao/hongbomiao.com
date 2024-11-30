@@ -130,7 +130,7 @@ type Config = {
   postgresConnection: Knex.StaticConnectionConfig;
   seedUser: PostgresInputUser;
   lightstep: {
-    token: string | undefined;
+    token: string;
     traceURL: string;
   };
   sentryOptions: Sentry.NodeOptions;
