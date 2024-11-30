@@ -16,13 +16,11 @@ async fn main() {
     #[cfg(not(debug_assertions))]
     dotenvy::from_filename(".env.production").ok();
 
-    // Read port from environment variable, with fallback to 3000
     let port = env::var("PORT")
         .expect("PORT must be set in environment")
         .parse::<u16>()
         .expect("PORT must be a valid number");
 
-    // Create CORS middleware
     let cors = CorsLayer::new()
         .allow_methods([Method::GET, Method::POST])
         .allow_origin(Any)
