@@ -34,6 +34,7 @@ jobs:
       # Applications
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
+      api-rust: ${{ steps.filter.outputs.api-rust }}
       ethereum: ${{ steps.filter.outputs.ethereum }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
@@ -165,6 +166,9 @@ jobs:
             api-node:
               - '.github/workflows/.lint.yml'
               - 'api-node/**'
+            api-rust:
+              - '.github/workflows/.lint.yml'
+              - 'api-rust/**'
             ethereum:
               - '.github/workflows/.lint.yml'
               - 'ethereum/**'
@@ -736,6 +740,31 @@ jobs:
       - name: Lint Ruby
         run: |
           bundle exec rubocop
+
+  lint-rust-api-rust:
+    name: Rust (api-rust)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.iads-api-rust == 'true' }}
+    runs-on: ubuntu-22.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: api-rust
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: api-rust
+        run: |
+          cargo fmt --all
+      - name: Lint Rust (Clippy)
+        working-directory: api-rust
+        run: |
+          cargo clippy
 
   lint-rust-iads-data-producer:
     name: Rust (iads-data-producer)
