@@ -1,9 +1,12 @@
 use axum::{routing::get, serve, Router};
 use http::Method;
-use tokio::net::TcpListener;
-use tower_http::cors::{Any, CorsLayer};
-use tracing::info;
 use std::env;
+use tokio::net::TcpListener;
+use tower_http::{
+    compression::CompressionLayer,
+    cors::{Any, CorsLayer},
+};
+use tracing::info;
 
 #[tokio::main]
 async fn main() {
@@ -28,9 +31,12 @@ async fn main() {
 
     let app = Router::new()
         .route("/", get(root))
-        .layer(cors);
+        .layer(cors)
+        .layer(CompressionLayer::new());
 
-    let listener = TcpListener::bind(format!("0.0.0.0:{}", port)).await.unwrap();
+    let listener = TcpListener::bind(format!("0.0.0.0:{}", port))
+        .await
+        .unwrap();
     info!("Server listening on port {}", port);
 
     serve(listener, app).await.unwrap();
