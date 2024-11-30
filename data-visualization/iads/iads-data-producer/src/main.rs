@@ -35,11 +35,10 @@ fn calculate_packet_size_byte(signal_number: i32) -> i32 {
 
 fn get_year_start_ns() -> i64 {
     let now = Utc::now();
-    let year_start = Utc.with_ymd_and_hms(now.year(), 1, 1, 0, 0, 0)
+    Utc.with_ymd_and_hms(now.year(), 1, 1, 0, 0, 0)
         .unwrap()
         .timestamp_nanos_opt()
-        .unwrap();
-    year_start
+        .unwrap()
 }
 
 fn get_iads_time() -> i64 {

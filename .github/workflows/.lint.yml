@@ -38,6 +38,8 @@ jobs:
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
+      iads-iads-data-producer: ${{ steps.filter.outputs.iads-iads-data-producer }}
+      iads-zeromq-iads-bridge: ${{ steps.filter.outputs.iads-zeromq-iads-bridge }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
       national-instruments-veristand-zeromq-bridge: ${{ steps.filter.outputs.national-instruments-veristand-zeromq-bridge }}
@@ -175,6 +177,12 @@ jobs:
             hm-spark-ingest-from-s3-to-kafka:
               - '.github/workflows/.lint.yml'
               - 'data-processing/hm-spark/applications/ingest-from-s3-to-kafka/**'
+            iads-iads-data-producer:
+              - '.github/workflows/.lint.yml'
+              - 'data-visualization/iads/iads-data-producer/**'
+            iads-zeromq-iads-bridge:
+              - '.github/workflows/.lint.yml'
+              - 'data-visualization/iads/zeromq-iads-bridge/**'
             kafka-rust-proto-consumer:
               - '.github/workflows/.lint.yml'
               - 'hm-kafka/kafka-client/kafka-rust/proto-consumer/**'
@@ -732,7 +740,7 @@ jobs:
   lint-rust-iads-data-producer:
     name: Rust (iads-data-producer)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.iads-data-producer == 'true' }}
+    if: ${{ needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -741,16 +749,23 @@ jobs:
         uses: actions/checkout@v4.2.2
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Lint Rust
+      - name: Install dependencies
+        working-directory: data-visualization/iads/iads-data-producer
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: data-visualization/iads/iads-data-producer
+        run: |
+          cargo fmt --all
+      - name: Lint Rust (Clippy)
         working-directory: data-visualization/iads/iads-data-producer
         run: |
           cargo clippy
-          cargo fmt --all
 
   lint-rust-zeromq-iads-bridge:
     name: Rust (zeromq-iads-bridge)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.zeromq-iads-bridge == 'true' }}
+    if: ${{ needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
     runs-on: ubuntu-22.04
     environment: test
     timeout-minutes: 10
@@ -765,11 +780,18 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Lint Rust
+      - name: Install dependencies
+        working-directory: data-visualization/iads/zeromq-iads-bridge
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: data-visualization/iads/zeromq-iads-bridge
+        run: |
+          cargo fmt --all
+      - name: Lint Rust (Clippy)
         working-directory: data-visualization/iads/zeromq-iads-bridge
         run: |
           cargo clippy
-          cargo fmt --all
 
   lint-rust-kafka-rust-proto-consumer:
     name: Rust (kafka-rust-proto-consumer)
@@ -803,11 +825,18 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Lint Rust
+      - name: Install dependencies
+        working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
+        run: |
+          cargo fmt --all
+      - name: Lint Rust (Clippy)
         working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
         run: |
           cargo clippy
-          cargo fmt --all
 
   lint-rust-kafka-rust-proto-producer:
     name: Rust (kafka-rust-proto-producer)
@@ -841,11 +870,18 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Lint Rust
+      - name: Install dependencies
+        working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
+        run: |
+          cargo fmt --all
+      - name: Lint Rust (Clippy)
         working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
         run: |
           cargo clippy
-          cargo fmt --all
 
   lint-rust-kafka-rust-udp-kafka-bridge:
     name: Rust (kafka-rust-udp-kafka-bridge)
@@ -879,11 +915,18 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Lint Rust
+      - name: Install dependencies
+        working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
+        run: |
+          cargo fmt --all
+      - name: Lint Rust (Clippy)
         working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
         run: |
           cargo clippy
-          cargo fmt --all
 
   lint-rust-kafka-rust-zeromq-kafka-bridge:
     name: Rust (kafka-rust-zeromq-kafka-bridge)
@@ -917,11 +960,18 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Lint Rust
+      - name: Install dependencies
+        working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+        run: |
+          cargo fmt --all
+      - name: Lint Rust (Clippy)
         working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
         run: |
           cargo clippy
-          cargo fmt --all
 
   lint-rust-udp-receiver:
     name: Rust (udp-receiver)
@@ -941,11 +991,18 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Lint Rust
+      - name: Install dependencies
+        working-directory: network-programmability/udp/udp-receiver
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: network-programmability/udp/udp-receiver
+        run: |
+          cargo fmt --all
+      - name: Lint Rust (Clippy)
         working-directory: network-programmability/udp/udp-receiver
         run: |
           cargo clippy
-          cargo fmt --all
 
   lint-rust-udp-sender:
     name: Rust (udp-sender)
@@ -965,11 +1022,18 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Lint Rust
+      - name: Install dependencies
+        working-directory: network-programmability/udp/udp-sender
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: network-programmability/udp/udp-sender
+        run: |
+          cargo fmt --all
+      - name: Lint Rust (Clippy)
         working-directory: network-programmability/udp/udp-sender
         run: |
           cargo clippy
-          cargo fmt --all
 
   lint-scala-hm-spark-find-retired-people-scala:
     name: Scala (hm-spark-find-retired-people-scala)
