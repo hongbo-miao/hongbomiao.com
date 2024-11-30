@@ -126,7 +126,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Tokio** - Asynchronous runtime
 - **Tracing** - Tracing
 - **dotenvy** - Environment variables loading
-- **Tower HTTP** - HTTP middleware and utilities
+- **Tower HTTP** - HTTP middleware and utilities (compression, CORS, timeout, trace)
 
 ### API Server - Go
 
