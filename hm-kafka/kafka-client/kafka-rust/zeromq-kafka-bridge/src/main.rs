@@ -32,7 +32,6 @@ struct Config {
 
 impl Config {
     fn load() -> Self {
-        // Load the appropriate .env file
         #[cfg(debug_assertions)]
         dotenvy::from_filename(".env.development").ok();
         #[cfg(not(debug_assertions))]

@@ -3,13 +3,13 @@ use prost::Message;
 use std::env;
 use std::error::Error;
 use std::path::{Path, PathBuf};
-use std::process::Command;
 use tempfile::TempDir;
 use tokio::fs;
 use tokio::fs::File;
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpListener;
 use tokio::net::TcpStream;
+use tokio::process::Command;
 use zeromq::{Socket, SocketRecv, SubSocket};
 
 pub mod production {
@@ -34,13 +34,12 @@ struct Config {
     iads_wizard_file_name: String,
     iads_parameter_definition_file_name: String,
     iads_config_file_path: PathBuf,
-    iads_output_dir: PathBuf,
+    iads_data_output_dir: PathBuf,
     temp_dir: TempDir,
 }
 
 impl Config {
     fn load() -> Self {
-        // Load the appropriate .env file
         #[cfg(debug_assertions)]
         dotenvy::from_filename(".env.development").ok();
         #[cfg(not(debug_assertions))]
@@ -67,8 +66,9 @@ impl Config {
                 env::var("IADS_CONFIG_FILE_PATH")
                     .expect("IADS_CONFIG_FILE_PATH must be set in environment"),
             ),
-            iads_output_dir: PathBuf::from(
-                env::var("IADS_OUTPUT_DIR").expect("IADS_OUTPUT_DIR must be set in environment"),
+            iads_data_output_dir: PathBuf::from(
+                env::var("IADS_DATA_OUTPUT_DIR")
+                    .expect("IADS_DATA_OUTPUT_DIR must be set in environment"),
             ),
             temp_dir: TempDir::new().expect("Failed to create temp directory"),
         }
@@ -277,24 +277,26 @@ async fn process_zeromq_data(
 }
 
 async fn update_wizard_file(
-    wizard_file_path: &Path,
+    iads_port: u16,
+    iads_wizard_file_path: &Path,
+    iads_parameter_definition_file_path: &Path,
     iads_config_file_path: &Path,
-    setup_file: &Path,
     output_dir: &Path,
 ) -> Result<(), Box<dyn Error>> {
     let wizard_file_content = fs::read_to_string("iads.WizardFile.template").await?;
     let updated_content = wizard_file_content
+        .replace("{IADS_PORT}", &iads_port.to_string())
         .replace(
             "{IADS_CONFIG_FILE_PATH}",
             iads_config_file_path.to_str().unwrap_or(""),
         )
         .replace(
-            "{IADS_PARAMETER_DEFINITION_PATH}",
-            setup_file.to_str().unwrap_or(""),
+            "{IADS_PARAMETER_DEFINITION_FILE_PATH}",
+            iads_parameter_definition_file_path.to_str().unwrap_or(""),
         )
-        .replace("{IADS_OUTPUT_DIR}", output_dir.to_str().unwrap_or(""));
+        .replace("{IADS_DATA_OUTPUT_DIR}", output_dir.to_str().unwrap_or(""));
 
-    fs::write(wizard_file_path, updated_content).await?;
+    fs::write(iads_wizard_file_path, updated_content).await?;
     Ok(())
 }
 
@@ -303,24 +305,25 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let config = Config::load();
     println!("{:#?}", config);
 
-    // Wait for first message and generate parameter definition file
+    // Wait for first ZeroMQ message and generate parameter definition file
     println!("Waiting for first ZeroMQ message to generate parameter definition file...");
     let first_signals = wait_for_first_message(&config.get_zeromq_address()).await?;
 
-    let iads_parameter_definition_path = config
+    let iads_parameter_definition_file_path = config
         .temp_dir
         .path()
         .join(&config.iads_parameter_definition_file_name);
-    generate_parameter_definition(&first_signals, &iads_parameter_definition_path).await?;
+    generate_parameter_definition(&first_signals, &iads_parameter_definition_file_path).await?;
     println!("Parameter definition file generated successfully");
 
-    // Update wizard file
-    let wizard_file_path = config.temp_dir.path().join(&config.iads_wizard_file_name);
+    // Update IADS wizard file
+    let iads_wizard_file_path = config.temp_dir.path().join(&config.iads_wizard_file_name);
     update_wizard_file(
-        &wizard_file_path,
+        config.iads_port,
+        &iads_wizard_file_path,
+        &iads_parameter_definition_file_path,
         &config.iads_config_file_path,
-        &iads_parameter_definition_path,
-        &config.iads_output_dir,
+        &config.iads_data_output_dir,
     )
     .await?;
     println!(
@@ -328,12 +331,25 @@ async fn main() -> Result<(), Box<dyn Error>> {
         config.iads_config_file_path.display()
     );
 
-    // Start IADS
-    Command::new(&config.iads_exe_path)
-        .args(["/rtstation", "Custom", wizard_file_path.to_str().unwrap()])
+    // Start IADS process
+    let mut child = Command::new(&config.iads_exe_path)
+        .args([
+            "/rtstation",
+            "Custom",
+            iads_wizard_file_path.to_str().unwrap(),
+        ])
         .spawn()
-        .expect("Failed to start IADS Client Workstation");
+        .expect("Failed to start IADS");
 
+    tokio::spawn(async move {
+        if let Err(e) = child.wait().await {
+            eprintln!("IADS process exited with error: {}", e);
+        } else {
+            println!("IADS process exited gracefully.");
+        }
+    });
+
+    // Start the TCP listener
     let listener = TcpListener::bind(("0.0.0.0", config.iads_port)).await?;
     println!("Listening for IADS connection on port {}", config.iads_port);
     println!("Subscribing to ZeroMQ at {}", config.get_zeromq_address());
@@ -345,9 +361,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
                 if let Err(e) = process_zeromq_data(stream, &config).await {
                     println!("Error processing data: {}", e);
                 }
-                println!("IADS client disconnected");
+                println!("IADS client disconnected...");
             }
-            Err(e) => println!("Accept failed: {}", e),
+            Err(e) => eprintln!("Error accepting connection: {}", e),
         }
     }
 }

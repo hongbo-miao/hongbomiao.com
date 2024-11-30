@@ -2689,6 +2689,10 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
+        run: |
+          cargo build
       - name: Test
         working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
         run: |
@@ -2726,6 +2730,10 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
+        run: |
+          cargo build
       - name: Test
         working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
         run: |
@@ -2763,6 +2771,10 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
+        run: |
+          cargo build
       - name: Test
         working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
         run: |
@@ -2800,6 +2812,10 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+        run: |
+          cargo build
       - name: Test
         working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
         run: |
@@ -2823,6 +2839,10 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: network-programmability/udp/udp-receiver
+        run: |
+          cargo build
       - name: Test
         working-directory: network-programmability/udp/udp-receiver
         run: |
@@ -2846,6 +2866,10 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: network-programmability/udp/udp-sender
+        run: |
+          cargo build
       - name: Test
         working-directory: network-programmability/udp/udp-sender
         run: |
@@ -2949,6 +2973,10 @@ jobs:
         uses: actions/checkout@v4.2.2
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: data-visualization/iads/iads-data-producer
+        run: |
+          cargo build
       - name: Test
         working-directory: data-visualization/iads/iads-data-producer
         run: |
@@ -2972,6 +3000,10 @@ jobs:
           version: 28.3
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: data-visualization/iads/zeromq-iads-bridge
+        run: |
+          cargo build
       - name: Test
         working-directory: data-visualization/iads/zeromq-iads-bridge
         run: |
