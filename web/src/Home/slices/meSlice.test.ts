@@ -1,4 +1,4 @@
-import meReducer, { queryMeSucceed } from './meReducer';
+import meReducer, { queryMeSucceed } from './meSlice';
 
 describe('meSlice', () => {
   const initialState = {
