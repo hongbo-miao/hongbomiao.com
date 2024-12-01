@@ -26,13 +26,12 @@ function App() {
     const prepare = async () => {
       try {
         await Font.loadAsync({
-          // eslint-disable-next-line global-require
+          // eslint-disable-next-line @typescript-eslint/no-require-imports,no-undef
           NeoSansProRegular: require('./assets/fonts/NeoSansProRegular.otf'),
-          // eslint-disable-next-line global-require
+          // eslint-disable-next-line @typescript-eslint/no-require-imports,no-undef
           NeoSansProBold: require('./assets/fonts/NeoSansProBold.otf'),
         });
       } catch (err) {
-        // eslint-disable-next-line no-console
         console.warn(err);
       } finally {
         setIsAppReady(true);
@@ -59,7 +58,6 @@ function App() {
     return null;
   }
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <ApplicationProvider {...eva} theme={eva.light}>
       <View style={styles.container} onLayout={onLayoutRootView}>
         <StatusBar />

@@ -1,11 +1,12 @@
 import eslint from '@eslint/js';
-import eslintPlugin from '@typescript-eslint/eslint-plugin';
+import eslintPluginTypescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
-import airbnbBase from 'eslint-config-airbnb-base';
+import airbnb from 'eslint-config-airbnb';
+import eslintConfigPrettier from 'eslint-config-prettier';
 import prettierConfig from 'eslint-config-prettier';
-import cypressPlugin from 'eslint-plugin-cypress';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
+import reactPlugin from 'eslint-plugin-react';
 import globals from 'globals';
 
 export default [
@@ -13,20 +14,20 @@ export default [
     // https://eslint.org/docs/latest/use/configure/ignore#the-eslintignore-file
     ignores: [
       // Anywhere
-      '**/**.aliases',
-      '**/**.asv',
-      '**/**.cache',
-      '**/**.cf',
-      '**/**.DotSettings.user',
-      '**/**.ghw',
-      '**/**.iml',
-      '**/**.lvlps',
-      '**/**.mexmaca64',
-      '**/**.mexmaci64',
-      '**/**.slxc',
-      '**/**.swc',
-      '**/**.tfstate',
-      '**/**.unsealed.yaml',
+      '**/*.aliases',
+      '**/*.asv',
+      '**/*.cache',
+      '**/*.cf',
+      '**/*.DotSettings.user',
+      '**/*.ghw',
+      '**/*.iml',
+      '**/*.lvlps',
+      '**/*.mexmaca64',
+      '**/*.mexmaci64',
+      '**/*.slxc',
+      '**/*.swc',
+      '**/*.tfstate',
+      '**/*.unsealed.yaml',
       '**/.DS_Store',
       '**/.env.development.local',
       '**/.env.production.local',
@@ -48,13 +49,13 @@ export default [
       '**/target',
 
       // Directories
-      'cypress/fixtures/example.json',
-      'cypress/screenshots',
+      '.expo',
+      'coverage',
     ],
   },
   eslint.configs.recommended,
   {
-    files: ['**/*.{js,ts}'],
+    files: ['**/*.{js,ts,tsx}'],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
@@ -65,31 +66,31 @@ export default [
         },
       },
       globals: {
-        ...globals.node,
-        ...globals.mocha,
-        cy: 'readonly',
-        Cypress: 'readonly',
-        expect: 'readonly',
+        ...globals.browser,
+        ...globals.jest,
       },
     },
     plugins: {
-      '@typescript-eslint': eslintPlugin,
-      cypress: cypressPlugin,
+      '@typescript-eslint': eslintPluginTypescript,
       import: importPlugin,
       prettier: prettierPlugin,
+      react: reactPlugin,
     },
     settings: {
       'import/resolver': {
         node: {
-          extensions: ['.js', '.ts'],
+          extensions: ['.js', '.ts', '.tsx'],
         },
+      },
+      react: {
+        version: 'detect',
       },
     },
     rules: {
-      ...eslintPlugin.configs.recommended.rules,
-      ...cypressPlugin.configs.recommended.rules,
-      ...airbnbBase.rules,
-      ...prettierConfig.rules,
+      ...eslintPluginTypescript.configs.recommended.rules,
+      ...airbnb.rules,
+      ...reactPlugin.configs.recommended.rules,
+      ...eslintConfigPrettier.rules,
       'import/extensions': [
         'error',
         'ignorePackages',
@@ -116,6 +117,13 @@ export default [
         },
       ],
       'multiline-comment-style': ['error', 'starred-block'],
+      'react/jsx-filename-extension': [
+        1,
+        {
+          extensions: ['.tsx'],
+        },
+      ],
+      'react/prop-types': 'off',
       'spaced-comment': [
         'error',
         'always',
@@ -123,7 +131,19 @@ export default [
           markers: ['/'],
         },
       ],
+      // Note must disable the base rule as it can report incorrect errors
+      'no-use-before-define': 'off',
+      '@typescript-eslint/no-use-before-define': ['error'],
+      'no-shadow': 'off',
+      '@typescript-eslint/no-shadow': 'error',
     },
   },
-  prettierConfig, // Make sure prettierConfig is last
+  {
+    files: ['**/*.{ts,tsx}'],
+    rules: {
+      ...eslintConfigPrettier.rules,
+      'prettier/prettier': 'error',
+    },
+  },
+  prettierConfig // Make sure prettierConfig is last
 ];

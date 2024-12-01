@@ -7,7 +7,6 @@ import HmHome from './Home';
 describe('<HmHome />', () => {
   test('Home', () => {
     const { getByTestId, toJSON } = render(
-      // eslint-disable-next-line react/jsx-props-no-spreading
       <ApplicationProvider {...eva} theme={eva.light}>
         <HmHome />
       </ApplicationProvider>,
