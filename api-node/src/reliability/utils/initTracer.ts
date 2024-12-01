@@ -9,26 +9,24 @@ import { PinoInstrumentation } from '@opentelemetry/instrumentation-pino';
 import { Resource } from '@opentelemetry/resources';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/sdk-trace-base';
 import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
+import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import config from '../../config';
 import isDevelopment from '../../shared/utils/isDevelopment';
 import isProduction from '../../shared/utils/isProduction';
 
 const initTracer = (): void => {
-  const tracerProvider = new NodeTracerProvider({
-    resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: 'hm-api-trace-service',
-    }),
-  });
+  const spanProcessors = [];
 
   if (isDevelopment()) {
-    tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
-    tracerProvider.addSpanProcessor(new BatchSpanProcessor(new OTLPTraceExporter()));
+    spanProcessors.push(
+      new BatchSpanProcessor(new ConsoleSpanExporter()),
+      new BatchSpanProcessor(new OTLPTraceExporter()),
+    );
   }
 
   if (isProduction()) {
     const { token, traceURL } = config.lightstep;
-    tracerProvider.addSpanProcessor(
+    spanProcessors.push(
       new BatchSpanProcessor(
         new OTLPTraceExporter({
           url: traceURL,
@@ -39,6 +37,13 @@ const initTracer = (): void => {
       ),
     );
   }
+
+  const tracerProvider = new NodeTracerProvider({
+    resource: new Resource({
+      [ATTR_SERVICE_NAME]: 'hm-api-trace-service',
+    }),
+    spanProcessors,
+  });
 
   tracerProvider.register();
 
