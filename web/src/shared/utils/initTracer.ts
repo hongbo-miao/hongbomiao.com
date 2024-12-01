@@ -5,26 +5,24 @@ import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xm
 import { Resource } from '@opentelemetry/resources';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/sdk-trace-base';
 import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
+import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 import config from '../../config';
 import isDevelopment from './isDevelopment';
 import isProduction from './isProduction';
 
 const initTracer = (): void => {
-  const tracerProvider = new WebTracerProvider({
-    resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: 'hm-web-trace-service',
-    }),
-  });
+  const spanProcessors = [];
 
   if (isDevelopment()) {
-    tracerProvider.addSpanProcessor(new BatchSpanProcessor(new ConsoleSpanExporter()));
-    tracerProvider.addSpanProcessor(new BatchSpanProcessor(new OTLPTraceExporter()));
+    spanProcessors.push(
+      new BatchSpanProcessor(new ConsoleSpanExporter()),
+      new BatchSpanProcessor(new OTLPTraceExporter()),
+    );
   }
 
   if (isProduction()) {
     const { token, traceURL } = config.lightstep;
-    tracerProvider.addSpanProcessor(
+    spanProcessors.push(
       new BatchSpanProcessor(
         new OTLPTraceExporter({
           url: traceURL,
@@ -36,8 +34,14 @@ const initTracer = (): void => {
     );
   }
 
-  tracerProvider.register();
+  const tracerProvider = new WebTracerProvider({
+    resource: new Resource({
+      [ATTR_SERVICE_NAME]: 'hm-web-trace-service',
+    }),
+    spanProcessors,
+  });
 
+  tracerProvider.register();
   registerInstrumentations({
     instrumentations: [new DocumentLoadInstrumentation(), new XMLHttpRequestInstrumentation()],
   });
