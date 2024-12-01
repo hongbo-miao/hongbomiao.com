@@ -1,5 +1,5 @@
 import { Resource } from '@opentelemetry/resources';
-import { MeterProvider } from '@opentelemetry/sdk-metrics-base';
+import { MeterProvider } from '@opentelemetry/sdk-metrics';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 
 const serviceName = 'hm-api-node-metric-service';
