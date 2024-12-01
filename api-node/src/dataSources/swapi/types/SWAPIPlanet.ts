@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 type SWAPIPlanet = {
   name: string;
   rotation_period: string;
