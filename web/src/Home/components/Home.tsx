@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import config from '../../config';
 import HealthAction from '../../health/actions/HealthAction';
 import pingSubscription from '../../health/queries/pingSubscription';
@@ -8,7 +8,6 @@ import HmImage from '../../shared/components/Image';
 import HmSparkles from '../../shared/components/Sparkles';
 import RootState from '../../shared/types/RootState';
 import analytics from '../../shared/utils/analytics';
-import MeAction from '../actions/MeAction';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import springWaltzMP3 from '../audio/spring-waltz.mp3';
@@ -19,27 +18,16 @@ import magicPNG from '../images/magic.png';
 import HmFooter from './Footer';
 import styles from './Home.module.css';
 
-const connector = connect(
-  (state: RootState) => ({
-    me: state.me,
-  }),
-  {
-    queryMe: MeAction.queryMe,
-    subscribePing: HealthAction.subscribePing,
-  },
-);
-
-type Props = ConnectedProps<typeof connector>;
-
-function Home(props: Props) {
-  const { me, subscribePing } = props;
+function Home() {
+  const dispatch = useDispatch();
+  const me = useSelector((state: RootState) => state.me);
 
   React.useEffect(() => {
     // queryMe(meQuery);
-    subscribePing(pingSubscription);
+    dispatch(HealthAction.subscribePing(pingSubscription));
 
     analytics.page();
-  }, [subscribePing]);
+  }, [dispatch]);
 
   const { bio, name } = me;
 
@@ -77,4 +65,4 @@ function Home(props: Props) {
   );
 }
 
-export default connector(Home);
+export default Home;
