@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <a href="https://www.hongbomiao.com"><img width="100" src="https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/650b632a-383f-4e84-8227-bf1fac268d45" alt="Butterfly" /></a>
+    <a href="https://www.hongbomiao.com"><img width="100" src="https://github.com/user-attachments/assets/e8aea682-a3ee-4004-9e4f-991770af3f88" alt="Butterfly" /></a>
   </p>
   <h2>Personal R&D Lab</h2>
   <p>Making magic happen</p>
