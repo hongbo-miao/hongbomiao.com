@@ -10,7 +10,7 @@ import RootState from '../../shared/types/RootState';
 import analytics from '../../shared/utils/analytics';
 import MeAction from '../actions/MeAction';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+// @ts-expect-error
 import springWaltzMP3 from '../audio/spring-waltz.mp3';
 import hatAVIF from '../images/hat.avif';
 import hatPNG from '../images/hat.png';
