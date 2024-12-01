@@ -12,7 +12,7 @@ import schema from '../schemas/schema';
 
 const graphQLMiddleware = graphqlHTTP((req, res, params) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   const { variables } = params;
   return {
     context: {

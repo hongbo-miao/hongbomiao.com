@@ -8,14 +8,10 @@ from locust import HttpUser, between, task
 
 class WebsiteUser(HttpUser):
     wait_time = between(5, 15)
-
-    csrf_token = ""
     jwt_token = ""
 
     def on_start(self):
-        # Get CSRF token
         res = self.client.get("/", verify=False)
-        self.csrf_token = res.cookies["__Host-csrfToken"]
 
         # Get JWT token
         query = """
@@ -66,7 +62,6 @@ class WebsiteUser(HttpUser):
             "/api/upload-file",
             headers={
                 "Authorization": f"Bearer {self.jwt_token}",
-                "X-CSRF-Token": self.csrf_token,
             },
             files=files,
             verify=False,
