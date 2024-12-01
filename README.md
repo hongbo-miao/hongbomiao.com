@@ -179,7 +179,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **ioredis** - Redis client
 - **rate-limiter-flexible** - Rate limiting
 - **expressjs/cors** - Cross-Origin Resource Sharing (CORS)
-- **csurf** - CSRF protection
 - **jsonwebtoken**, **express-jwt** - JSON Web Token (JWT)
 - **bcrypt** - Password hashing
 - **axios** - HTTP client

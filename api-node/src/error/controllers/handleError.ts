@@ -6,7 +6,7 @@ const handleError = (err: Error, req: Request, res: Response, next: NextFunction
   logger.error({ err }, 'handleError');
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   switch (err.code) {
     // multer
     case 'LIMIT_FILE_SIZE': {
@@ -20,9 +20,8 @@ const handleError = (err: Error, req: Request, res: Response, next: NextFunction
       break;
     }
 
-    // express-jwt, csurf
-    case 'credentials_required':
-    case 'EBADCSRFTOKEN': {
+    // express-jwt
+    case 'credentials_required': {
       res.statusCode = 403;
       break;
     }
@@ -39,7 +38,7 @@ const handleError = (err: Error, req: Request, res: Response, next: NextFunction
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   res.end(res.sentry);
 };
 

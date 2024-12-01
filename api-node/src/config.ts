@@ -10,7 +10,7 @@ dotenvFlow.config();
 
 const {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   argv: { hideHTTPLog, prettifyLog },
 } = yargs(hideBin(process.argv));
 
