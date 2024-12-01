@@ -3,7 +3,7 @@ import {
   subscribePing as subscribePingSliceAction,
   receivePingSucceed as receivePingSucceedSliceAction,
   receivePingFailed as receivePingFailedSliceAction,
-} from '../reducers/healthReducer';
+} from '../slices/healthSlice';
 import GraphQLPing from '../types/GraphQLPing';
 
 type SubscribePing = ReturnType<typeof subscribePingSliceAction>;
