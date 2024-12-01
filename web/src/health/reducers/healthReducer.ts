@@ -1,24 +1,37 @@
-import { Reducer } from 'redux';
-import HealthActionType from '../actionTypes/HealthActionType';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import GraphQLResponse from '../../shared/types/GraphQLResponse';
+import GraphQLPing from '../types/GraphQLPing';
 import HealthState from '../types/HealthState';
 
 const initialState: HealthState = {};
 
-// eslint-disable-next-line default-param-last
-const healthReducer: Reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case HealthActionType.RECEIVE_PING_SUCCEED: {
-      const { res } = action.payload;
-      return {
-        ...state,
-        ping: res.data.ping,
-      };
-    }
+const healthSlice = createSlice({
+  name: 'health',
+  initialState,
+  reducers: {
+    subscribePing: {
+      reducer: () => {},
+      prepare: (payload: { query: string }) => ({ payload }),
+    },
+    receivePingSucceed: {
+      reducer: (state, action: PayloadAction<{ res: GraphQLResponse<GraphQLPing> }>) => {
+        const { res } = action.payload;
+        if (res.data.ping == null) {
+          return state;
+        }
+        return {
+          ...state,
+          ping: res.data.ping,
+        };
+      },
+      prepare: (payload: { res: GraphQLResponse<GraphQLPing> }) => ({ payload }),
+    },
+    receivePingFailed: {
+      reducer: () => {},
+      prepare: (payload: { error: Error }) => ({ payload }),
+    },
+  },
+});
 
-    default: {
-      return state;
-    }
-  }
-};
-
-export default healthReducer;
+export const { subscribePing, receivePingSucceed, receivePingFailed } = healthSlice.actions;
+export default healthSlice.reducer;

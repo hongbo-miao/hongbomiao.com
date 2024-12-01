@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from '@reduxjs/toolkit';
 import meReducer from '../../Home/reducers/meReducer';
 import healthReducer from '../../health/reducers/healthReducer';
 

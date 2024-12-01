@@ -1,27 +1,28 @@
-import { Reducer } from 'redux';
-import MeActionType from '../actionTypes/MeActionType';
-import MeState from '../types/MeState';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+interface MeState {
+  name: string;
+  bio: string;
+}
 
 const initialState: MeState = {
   name: 'Hongbo Miao',
   bio: 'Making magic happen',
 };
 
-// eslint-disable-next-line default-param-last
-const meReducer: Reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case MeActionType.QUERY_ME_SUCCEED: {
+const meSlice = createSlice({
+  name: 'me',
+  initialState,
+  reducers: {
+    queryMeSucceed(state, action: PayloadAction<{ res: { response: { data: { me: Partial<MeState> } } } }>) {
       const { res } = action.payload;
       return {
         ...state,
         ...(res.response.data.me || {}),
       };
-    }
+    },
+  },
+});
 
-    default: {
-      return state;
-    }
-  }
-};
-
-export default meReducer;
+export const { queryMeSucceed } = meSlice.actions;
+export default meSlice.reducer;
