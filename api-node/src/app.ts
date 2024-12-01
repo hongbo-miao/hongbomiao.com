@@ -2,7 +2,6 @@ import path from 'path';
 import * as Sentry from '@sentry/node';
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import requestID from 'express-request-id';
 import responseTime from 'response-time';
 import favicon from 'serve-favicon';
 import handleError from './error/controllers/handleError';
@@ -30,7 +29,6 @@ const app = express()
   .use(reportToMiddleware())
   .use(networkErrorLoggingMiddleware())
   .use(helmetMiddleware())
-  .use(requestID())
   .use(responseTime())
   .use(indexRouter)
   .use(favicon(path.join(__dirname, '../public/favicon.ico')))
