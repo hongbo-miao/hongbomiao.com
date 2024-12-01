@@ -1,6 +1,7 @@
 import eslint from '@eslint/js';
 import eslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
+import airbnbBase from 'eslint-config-airbnb-base';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
@@ -90,6 +91,7 @@ export default [
     },
     rules: {
       ...eslintPlugin.configs.recommended.rules,
+      ...airbnbBase.rules,
       ...jestPlugin.configs.recommended.rules,
       ...securityPlugin.configs.recommended.rules,
       ...eslintConfigPrettier.rules,
