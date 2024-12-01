@@ -216,7 +216,7 @@ jobs:
               - 'machine-learning/hm-autogluon/**'
             hm-aws-parallelcluster:
               - '.github/workflows/test.yml'
-              - 'cloud-platform/aws/aws-parallelcluster/**'
+              - 'cloud-platform/aws/aws-parallelcluster/pcluster/**'
             hm-flax:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-flax/**'
@@ -985,23 +985,23 @@ jobs:
         with:
           version: 0.5.2
           enable-cache: true
-          cache-dependency-glob: cloud-platform/aws/aws-parallelcluster/uv.lock
+          cache-dependency-glob: cloud-platform/aws/aws-parallelcluster/pcluster/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: cloud-platform/aws/aws-parallelcluster/pyproject.toml
+          python-version-file: cloud-platform/aws/aws-parallelcluster/pcluster/pyproject.toml
       - name: Install dependencies
-        working-directory: cloud-platform/aws/aws-parallelcluster
+        working-directory: cloud-platform/aws/aws-parallelcluster/pcluster
         run: |
           uv sync --dev
       - name: Test
-        working-directory: cloud-platform/aws/aws-parallelcluster
+        working-directory: cloud-platform/aws/aws-parallelcluster/pcluster
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.0.7
         with:
-          directory: cloud-platform/aws/aws-parallelcluster
+          directory: cloud-platform/aws/aws-parallelcluster/pcluster
 
   call-matlab-function-in-python:
     name: Call MATLAB Function in Python | Test
