@@ -1,6 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 import WEBSITES from '../../Home/fixtures/WEBSITES';
 import HmSocialList from './SocialList';
 
