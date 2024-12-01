@@ -187,6 +187,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Network Error Logging** - HTTP header `NEL`
 - **response-time** - HTTP header `X-Response-Time`
 - **connect-timeout** - Request timeout
+- **request-ip** - IP address retrieving
 - **Terminus** - Health check and graceful shutdown
 - **pino** - Logging
 - **dotenv-flow** - Environment variables loading
