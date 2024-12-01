@@ -1,5 +1,5 @@
-import pg from '../pg';
-import PostgresUser from '../types/PostgresUser';
+import pg from '../pg.js';
+import PostgresUser from '../types/PostgresUser.js';
 
 const updateName = async (id: string, firstName: string, lastName: string): Promise<PostgresUser> => {
   const [firstUser] = await pg('users')

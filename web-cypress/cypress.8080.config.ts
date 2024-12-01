@@ -4,7 +4,7 @@ export default defineConfig({
   env: {
     domain: 'http://localhost',
     webPort: '3000',
-    serverPort: '5000',
+    serverPort: '58136',
   },
   video: false,
   e2e: {

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
-import pg from '../pg';
-import PostgresInputUser from '../types/PostgresInputUser';
-import PostgresUser from '../types/PostgresUser';
+import pg from '../pg.js';
+import PostgresInputUser from '../types/PostgresInputUser.js';
+import PostgresUser from '../types/PostgresUser.js';
 
 const insertUser = async (user: PostgresInputUser): Promise<PostgresUser> => {
   const { email, password, firstName, lastName, bio } = user;

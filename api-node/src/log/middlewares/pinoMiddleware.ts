@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import pinoHTTP from 'pino-http';
-import config from '../../config';
-import logger from '../utils/logger';
+import config from '../../config.js';
+import logger from '../utils/logger.js';
 
 const pinoMiddleware = (): RequestHandler => {
   return pinoHTTP({

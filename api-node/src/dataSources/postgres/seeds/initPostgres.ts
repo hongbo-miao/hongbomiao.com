@@ -1,4 +1,4 @@
-import initUsers from './initUsers';
+import initUsers from './initUsers.js';
 
 const initPostgres = async (): Promise<void> => {
   await initUsers();

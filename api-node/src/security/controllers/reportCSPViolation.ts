@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import logger from '../../log/utils/logger';
-import meter from '../../reliability/utils/meter';
+import logger from '../../log/utils/logger.js';
+import meter from '../../reliability/utils/meter.js';
 
 const cspViolationCounter = meter.createCounter('cspViolationCounter', {
   description: 'Count CSP violations',

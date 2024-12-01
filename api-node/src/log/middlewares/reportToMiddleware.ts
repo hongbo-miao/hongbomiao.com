@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import reportTo, { Endpoint } from 'report-to';
-import config from '../../config';
-import isProduction from '../../shared/utils/isProduction';
+import config from '../../config.js';
+import isProduction from '../../shared/utils/isProduction.js';
 
 const REPORT_TO_ENDPOINT: Endpoint = isProduction()
   ? {

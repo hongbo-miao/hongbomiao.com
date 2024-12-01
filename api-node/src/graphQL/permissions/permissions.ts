@@ -1,5 +1,5 @@
 import { rule, shield } from 'graphql-shield';
-import isDevelopment from '../../shared/utils/isDevelopment';
+import isDevelopment from '../../shared/utils/isDevelopment.js';
 
 const isAuthenticated = rule()(async (parentValue, args, context) => {
   const { myId } = context;

@@ -1,9 +1,9 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import helmet from 'helmet';
 import lodashUniq from 'lodash.uniq';
-import config from '../../config';
-import isProduction from '../../shared/utils/isProduction';
-import createCSPNonce from '../utils/createCSPNonce';
+import config from '../../config.js';
+import isProduction from '../../shared/utils/isProduction.js';
+import createCSPNonce from '../utils/createCSPNonce.js';
 
 const CSP_CONNECT_SRC = isProduction() ? config.prodCSPConnectSrc : config.devCSPConnectSrc;
 const CSP_REPORT_URI = isProduction() ? config.reportURI.cspReportURI : '/api/violation/report-csp-violation';
