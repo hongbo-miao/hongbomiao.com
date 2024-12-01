@@ -186,7 +186,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Helmet** - HTTP header `Content-Security-Policy`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
 - **Report To** - HTTP header `Report-To`
 - **Network Error Logging** - HTTP header `NEL`
-- **express-request-id** - HTTP header `X-Request-ID`
 - **response-time** - HTTP header `X-Response-Time`
 - **connect-timeout** - Request timeout
 - **Terminus** - Health check and graceful shutdown
