@@ -1,6 +1,7 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import Redis from 'ioredis';
 import { BurstyRateLimiter, RateLimiterMemory, RateLimiterRedis } from 'rate-limiter-flexible';
+import { getClientIp } from 'request-ip';
 
 const BURST_POINTS_RATE = 2.5;
 const BURST_DURATION_RATE = 10;
@@ -54,8 +55,9 @@ const rateLimitMiddleware = (
   const rateLimiter = new BurstyRateLimiter(redisRateLimiter, burstRedisRateLimiter);
 
   return (req: Request, res: Response, next: NextFunction) => {
+    const ip = getClientIp(req) || 'unknown';
     return rateLimiter
-      .consume(req.ip)
+      .consume(ip)
       .then(() => {
         next();
       })
