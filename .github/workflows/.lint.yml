@@ -7,7 +7,7 @@ name: . Lint
 jobs:
   detect-changes:
     name: Detect Changes
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     permissions:
@@ -228,7 +228,7 @@ jobs:
     name: Ansible
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.ansible == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -257,14 +257,14 @@ jobs:
     name: C# (national-instruments-veristand-zeromq-bridge)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.national-instruments-veristand-zeromq-bridge == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: windows-2022
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
       - name: Set up NuGet
-        uses: nuget/setup-nuget@v2
+        uses: nuget/setup-nuget@v2.0.1
         with:
           # https://www.nuget.org/packages/NuGet.Versioning#versions-body-tab
           nuget-version: 6.12.1
@@ -290,7 +290,7 @@ jobs:
     name: C, C++
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.c-cpp == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -308,7 +308,7 @@ jobs:
     name: CMake
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.cmake == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -333,7 +333,7 @@ jobs:
 
   lint-commit-message:
     name: Commit Message
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -346,7 +346,7 @@ jobs:
     name: CSS
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.css == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -369,7 +369,7 @@ jobs:
     name: Dockerfile
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.dockerfile == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -384,7 +384,7 @@ jobs:
     name: Go (api-go)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -406,7 +406,7 @@ jobs:
     name: JavaScript (api-node)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -431,7 +431,7 @@ jobs:
     name: JavaScript (ethereum)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -456,7 +456,7 @@ jobs:
     name: JavaScript (grafana-hm-panel-plugin)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -481,7 +481,7 @@ jobs:
     name: JavaScript (mobile-react-native)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -506,7 +506,7 @@ jobs:
     name: JavaScript (web)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -531,7 +531,7 @@ jobs:
     name: JavaScript (web-cypress)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -556,7 +556,7 @@ jobs:
     name: Kotlin (mobile-android)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
     steps:
@@ -577,7 +577,7 @@ jobs:
     name: Kubernetes Manifest
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kubernetes == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -605,7 +605,7 @@ jobs:
     name: Markdown
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.markdown == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -628,7 +628,7 @@ jobs:
     name: MATLAB
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.matlab == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -655,7 +655,7 @@ jobs:
     name: Protocol Buffers (api-go)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -675,7 +675,7 @@ jobs:
     name: Python
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.python == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -708,7 +708,7 @@ jobs:
     name: QML
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.qml == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
     steps:
@@ -727,7 +727,7 @@ jobs:
     name: Ruby
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.ruby == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
     steps:
@@ -745,7 +745,7 @@ jobs:
     name: Rust (api-rust)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.iads-api-rust == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -770,7 +770,7 @@ jobs:
     name: Rust (iads-data-producer)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -795,7 +795,7 @@ jobs:
     name: Rust (zeromq-iads-bridge)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -826,7 +826,7 @@ jobs:
     name: Rust (kafka-rust-proto-consumer)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -871,7 +871,7 @@ jobs:
     name: Rust (kafka-rust-proto-producer)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -916,7 +916,7 @@ jobs:
     name: Rust (kafka-rust-udp-kafka-bridge)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -961,7 +961,7 @@ jobs:
     name: Rust (kafka-rust-zeromq-kafka-bridge)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1006,7 +1006,7 @@ jobs:
     name: Rust (udp-receiver)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1037,7 +1037,7 @@ jobs:
     name: Rust (udp-sender)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1068,7 +1068,7 @@ jobs:
     name: Scala (hm-spark-find-retired-people-scala)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1080,6 +1080,8 @@ jobs:
           distribution: corretto
           java-version: '17'
           cache: sbt
+      - name: Set up sbt
+        uses: sbt/setup-sbt@v1.1.4
       - name: Lint Scala (Scalafmt)
         working-directory: data-processing/hm-spark/applications/find-retired-people-scala
         run: |
@@ -1093,7 +1095,7 @@ jobs:
     name: Scala (hm-spark-ingest-from-s3-to-kafka)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1105,6 +1107,8 @@ jobs:
           distribution: corretto
           java-version: '17'
           cache: sbt
+      - name: Set up sbt
+        uses: sbt/setup-sbt@v1.1.4
       - name: Lint Scala (Scalafmt)
         working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
         run: |
@@ -1118,7 +1122,7 @@ jobs:
     name: Shell
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.shell == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1132,7 +1136,7 @@ jobs:
     name: Solidity
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.solidity == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1155,7 +1159,7 @@ jobs:
     name: SQL
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.sql == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1197,7 +1201,7 @@ jobs:
     name: Terraform
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.terraform == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1213,7 +1217,7 @@ jobs:
     name: VHDL
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.vhdl == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1240,7 +1244,7 @@ jobs:
     name: XML
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.xml == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
@@ -1263,7 +1267,7 @@ jobs:
     name: YAML
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.yaml == 'true' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
