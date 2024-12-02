@@ -1,7 +1,7 @@
-import config from '../../config';
-import findUserByEmail from '../../dataSources/postgres/utils/findUserByEmail';
-import formatUser from '../../dataSources/postgres/utils/formatUser';
-import GraphQLMe from '../types/GraphQLMe';
+import config from '../../config.js';
+import findUserByEmail from '../../dataSources/postgres/utils/findUserByEmail.js';
+import formatUser from '../../dataSources/postgres/utils/formatUser.js';
+import GraphQLMe from '../types/GraphQLMe.js';
 
 const getMe = async (): Promise<GraphQLMe | null> => {
   const { email } = config.seedUser;

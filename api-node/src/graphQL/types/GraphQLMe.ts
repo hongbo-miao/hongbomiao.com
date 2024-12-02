@@ -1,4 +1,4 @@
-import GraphQLUser from './GraphQLUser';
+import GraphQLUser from './GraphQLUser.js';
 
 type GraphQLMe = GraphQLUser & {
   email: string;

@@ -28,5 +28,5 @@ COPY --from=web-builder /usr/src/app/build ./public
 COPY --from=api-node-builder /usr/src/app/build ./build
 COPY --from=api-node-builder /usr/src/app/node_modules ./node_modules
 COPY --from=api-node-builder /usr/src/app/package.json ./
-EXPOSE 5000
+EXPOSE 58136
 CMD ["dumb-init", "node", "build/index.js"]

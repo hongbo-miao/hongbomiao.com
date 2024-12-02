@@ -4,7 +4,7 @@ import { RedisOptions } from 'ioredis';
 import { Knex } from 'knex';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import PostgresInputUser from './dataSources/postgres/types/PostgresInputUser';
+import PostgresInputUser from './dataSources/postgres/types/PostgresInputUser.js';
 
 dotenvFlow.config();
 

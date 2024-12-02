@@ -2,18 +2,14 @@ import { graphqlHTTP } from 'express-graphql';
 import { NoSchemaIntrospectionCustomRule } from 'graphql';
 import depthLimit from 'graphql-depth-limit';
 import { applyMiddleware } from 'graphql-middleware';
-import queryComplexity, { simpleEstimator } from 'graphql-query-complexity';
-import logger from '../../log/utils/logger';
-import verifyJWTTokenAndExtractMyID from '../../security/utils/verifyJWTTokenAndExtractMyID';
-import isProduction from '../../shared/utils/isProduction';
-import dataLoaders from '../dataLoaders/dataLoaders';
-import permissions from '../permissions/permissions';
-import schema from '../schemas/schema';
+import logger from '../../log/utils/logger.js';
+import verifyJWTTokenAndExtractMyID from '../../security/utils/verifyJWTTokenAndExtractMyID.js';
+import isProduction from '../../shared/utils/isProduction.js';
+import dataLoaders from '../dataLoaders/dataLoaders.js';
+import permissions from '../permissions/permissions.js';
+import schema from '../schemas/schema.js';
 
-const graphQLMiddleware = graphqlHTTP((req, res, params) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  const { variables } = params;
+const graphQLMiddleware = graphqlHTTP(req => {
   return {
     context: {
       dataLoaders: dataLoaders(),
@@ -31,14 +27,6 @@ const graphQLMiddleware = graphqlHTTP((req, res, params) => {
     validationRules: [
       ...(isProduction() ? [NoSchemaIntrospectionCustomRule] : []),
       depthLimit(5),
-      queryComplexity({
-        estimators: [simpleEstimator({ defaultComplexity: 1 })],
-        maximumComplexity: 1000,
-        variables,
-        onComplete: (complexity: number) => {
-          logger.info({ complexity }, 'queryComplexity');
-        },
-      }),
     ],
   };
 });

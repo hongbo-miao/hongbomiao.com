@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import sendIndexPage from '../controllers/sendIndexPage';
+import sendIndexPage from '../controllers/sendIndexPage.js';
 
 const indexRouter = Router().get('/', sendIndexPage);
 

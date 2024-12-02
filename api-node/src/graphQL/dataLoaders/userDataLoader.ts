@@ -1,7 +1,7 @@
 import DataLoader from 'dataloader';
-import findUserByID from '../../dataSources/postgres/utils/findUserByID';
-import formatUser from '../../dataSources/postgres/utils/formatUser';
-import GraphQLUser from '../types/GraphQLUser';
+import findUserByID from '../../dataSources/postgres/utils/findUserByID.js';
+import formatUser from '../../dataSources/postgres/utils/formatUser.js';
+import GraphQLUser from '../types/GraphQLUser.js';
 
 const userDataLoader = (): DataLoader<string, GraphQLUser | null> =>
   new DataLoader(async (ids: ReadonlyArray<string>) => {

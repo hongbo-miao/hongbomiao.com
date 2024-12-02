@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
-import config from '../../../config';
-import findUserByEmail from '../utils/findUserByEmail';
-import formatUser from '../utils/formatUser';
-import insertUsers from '../utils/insertUsers';
+import config from '../../../config.js';
+import findUserByEmail from '../utils/findUserByEmail.js';
+import formatUser from '../utils/formatUser.js';
+import insertUsers from '../utils/insertUsers.js';
 
 const initUsers = async (): Promise<void> => {
   const { email, password, firstName, lastName, bio } = config.seedUser;

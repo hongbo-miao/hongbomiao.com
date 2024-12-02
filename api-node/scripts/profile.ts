@@ -1,9 +1,8 @@
-import profileIndexPage from './profile/profileIndexPage';
-import profileMe from './profile/profileMe';
+import profileIndexPage from './profile/profileIndexPage.js';
+import profileMe from './profile/profileMe.js';
 
 const promises = [profileIndexPage(), profileMe()];
 
 Promise.all(promises).then((results) => {
-  // eslint-disable-next-line no-console
   console.log(results);
 });

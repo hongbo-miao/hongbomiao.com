@@ -1,9 +1,9 @@
 import timeout from 'connect-timeout';
 import express, { Router } from 'express';
 import multer from 'multer';
-import authMiddleware from '../../security/middlewares/authMiddleware';
-import violationRouter from '../../security/routers/violationRouter';
-import uploadFile from '../../storage/controllers/uploadFile';
+import authMiddleware from '../../security/middlewares/authMiddleware.js';
+import violationRouter from '../../security/routers/violationRouter.js';
+import uploadFile from '../../storage/controllers/uploadFile.js';
 
 const parseForm = express.urlencoded({ extended: false });
 const upload = multer({

@@ -1,9 +1,9 @@
 import cors from 'cors';
 import { RequestHandler } from 'express';
-import config from '../../config';
-import logger from '../../log/utils/logger';
-import meter from '../../reliability/utils/meter';
-import isProduction from '../../shared/utils/isProduction';
+import config from '../../config.js';
+import logger from '../../log/utils/logger.js';
+import meter from '../../reliability/utils/meter.js';
+import isProduction from '../../shared/utils/isProduction.js';
 
 const ALLOW_LIST = isProduction() ? config.prodCORSAllowOrigins : config.devCORSAllowOrigins;
 

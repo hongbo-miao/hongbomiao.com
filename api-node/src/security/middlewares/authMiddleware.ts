@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { expressjwt as jwt } from 'express-jwt';
-import config from '../../config';
+import config from '../../config.js';
 
 const authMiddleware = (): RequestHandler => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

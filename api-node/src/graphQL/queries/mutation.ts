@@ -1,11 +1,11 @@
 import { GraphQLID, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
 import { GraphQLUpload } from 'graphql-upload';
-import formatUser from '../../dataSources/postgres/utils/formatUser';
-import updateName from '../../dataSources/postgres/utils/updateName';
-import getJWTToken from '../../security/utils/getJWTToken';
-import FileGraphQLType from '../graphQLTypes/FileGraphQLType';
-import SignInGraphQLType from '../graphQLTypes/SignInGraphQLType';
-import UserGraphQLType from '../graphQLTypes/UserGraphQLType';
+import formatUser from '../../dataSources/postgres/utils/formatUser.js';
+import updateName from '../../dataSources/postgres/utils/updateName.js';
+import getJWTToken from '../../security/utils/getJWTToken.js';
+import FileGraphQLType from '../graphQLTypes/FileGraphQLType.js';
+import SignInGraphQLType from '../graphQLTypes/SignInGraphQLType.js';
+import UserGraphQLType from '../graphQLTypes/UserGraphQLType.js';
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',

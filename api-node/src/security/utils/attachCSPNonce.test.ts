@@ -1,4 +1,4 @@
-import attachCSPNonce from './attachCSPNonce';
+import attachCSPNonce from './attachCSPNonce.js';
 
 describe('attachCSPNonce', () => {
   test('should attach nonce', () => {

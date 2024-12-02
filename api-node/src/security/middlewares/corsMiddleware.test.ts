@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'supertest';
-import corsMiddleware from './corsMiddleware';
+import corsMiddleware from './corsMiddleware.js';
 
 describe('corsMiddleware', () => {
   const allowOrigins = ['https://www.hongbomiao.com'];

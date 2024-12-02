@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import logger from '../../log/utils/logger';
+import logger from '../../log/utils/logger.js';
 
 const reportTo = (req: Request, res: Response): void => {
   logger.warn(req.body, 'reportTo');

@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
-import fetchPlanetByID from '../../dataSources/swapi/utils/fetchPlanetByID';
-import GraphQLPlanet from '../types/GraphQLPlanet';
+import fetchPlanetByID from '../../dataSources/swapi/utils/fetchPlanetByID.js';
+import GraphQLPlanet from '../types/GraphQLPlanet.js';
 
 const planetDataLoader = (): DataLoader<string, GraphQLPlanet | null> =>
   new DataLoader(async (ids: ReadonlyArray<string>) => {
