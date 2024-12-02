@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import GraphQLResponse from '../../shared/types/GraphQLResponse';
 import GraphQLPing from '../types/GraphQLPing';
 import HealthState from '../types/HealthState';

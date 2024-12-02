@@ -9,7 +9,6 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import HmApp from './App/components/App';
 import reportWebVitals from './shared/libs/reportWebVitals';
-import * as serviceWorkerRegistration from './shared/libs/serviceWorkerRegistration';
 import initSentry from './shared/utils/initSentry';
 import queryClient from './shared/utils/queryClient';
 import store from './shared/utils/store';
@@ -18,7 +17,6 @@ initSentry();
 
 const container = document.getElementById('root');
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = createRoot(container!);
 
 root.render(
@@ -31,13 +29,6 @@ root.render(
     </Provider>
   </Sentry.ErrorBoundary>,
 );
-
-/*
- * If you want your app to work offline and load faster, you can change
- * unregister() to register() below. Note this comes with some pitfalls.
- * Learn more about service workers: https://cra.link/PWA
- */
-serviceWorkerRegistration.unregister();
 
 /*
  * If you want to start measuring performance in your app, pass a function

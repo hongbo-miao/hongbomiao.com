@@ -1,4 +1,5 @@
-import { Epic, ofType } from 'redux-observable';
+import type { Epic } from 'redux-observable';
+import { ofType } from 'redux-observable';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import GraphQLResponse from '../../shared/types/GraphQLResponse';

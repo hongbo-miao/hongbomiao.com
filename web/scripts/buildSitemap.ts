@@ -1,8 +1,12 @@
 import { promises as fsp } from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { EnumChangefreq, SitemapItemLoose, SitemapStreamOptions } from 'sitemap';
-import Paths from '../src/shared/utils/paths';
-import generateSitemap from './generateSitemap';
+import Paths from '../src/shared/utils/paths.js';
+import generateSitemap from './generateSitemap.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const buildSitemap = async (): Promise<void> => {
   const options: SitemapStreamOptions = {

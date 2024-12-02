@@ -2,11 +2,15 @@ import eslint from '@eslint/js';
 import eslintPluginTypescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import airbnb from 'eslint-config-airbnb';
-import eslintConfigPrettier from 'eslint-config-prettier';
 import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
+import jestPlugin from 'eslint-plugin-jest';
+import jestDomPlugin from 'eslint-plugin-jest-dom';
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import prettierPlugin from 'eslint-plugin-prettier';
 import reactPlugin from 'eslint-plugin-react';
+import securityPlugin from 'eslint-plugin-security';
+import testingLibraryPlugin from 'eslint-plugin-testing-library';
 import globals from 'globals';
 
 export default [
@@ -49,8 +53,7 @@ export default [
       '**/target',
 
       // Directories
-      '.expo',
-      'coverage',
+      'tmp',
     ],
   },
   eslint.configs.recommended,
@@ -59,7 +62,7 @@ export default [
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
-        ecmaVersion: 2024,
+        ecmaVersion: 2022,
         sourceType: 'module',
         ecmaFeatures: {
           jsx: true,
@@ -67,14 +70,20 @@ export default [
       },
       globals: {
         ...globals.browser,
+        ...globals.node,
         ...globals.jest,
       },
     },
     plugins: {
       '@typescript-eslint': eslintPluginTypescript,
       import: importPlugin,
+      jest: jestPlugin,
+      'jest-dom': jestDomPlugin,
+      'jsx-a11y': jsxA11yPlugin,
       prettier: prettierPlugin,
       react: reactPlugin,
+      security: securityPlugin,
+      'testing-library': testingLibraryPlugin,
     },
     settings: {
       'import/resolver': {
@@ -89,8 +98,13 @@ export default [
     rules: {
       ...eslintPluginTypescript.configs.recommended.rules,
       ...airbnb.rules,
+      ...importPlugin.configs.recommended.rules,
+      ...jestPlugin.configs.recommended.rules,
+      ...jestDomPlugin.configs.recommended.rules,
+      ...jsxA11yPlugin.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
-      ...eslintConfigPrettier.rules,
+      ...securityPlugin.configs['recommended-legacy'].rules,
+      ...testingLibraryPlugin.configs.react.rules,
       'import/extensions': [
         'error',
         'ignorePackages',
@@ -116,6 +130,7 @@ export default [
           'newlines-between': 'never',
         },
       ],
+      'jest/expect-expect': 'off',
       'multiline-comment-style': ['error', 'starred-block'],
       'react/jsx-filename-extension': [
         1,
@@ -124,6 +139,7 @@ export default [
         },
       ],
       'react/prop-types': 'off',
+      'security/detect-non-literal-fs-filename': 'off',
       'spaced-comment': [
         'error',
         'always',
@@ -139,12 +155,12 @@ export default [
       '@typescript-eslint/no-shadow': 'error',
     },
   },
+  // scripts
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['scripts/**/*.ts'],
     rules: {
-      ...eslintConfigPrettier.rules,
-      'prettier/prettier': 'error',
+      'import/no-unresolved': 'off',
     },
   },
-  prettierConfig // Make sure prettierConfig is last
+  prettierConfig, // Make sure prettierConfig is last
 ];

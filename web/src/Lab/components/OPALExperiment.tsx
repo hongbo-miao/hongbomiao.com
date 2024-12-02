@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-console */
-
 import React from 'react';
 import adoptDog from '../queries/adoptDog';
 import getDog from '../queries/getDog';
@@ -9,7 +6,9 @@ import styles from './OPALExperiment.module.css';
 import HmPreAuth from './PreAuth';
 
 function OPALExperiment() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [readDogData, setReadDogData] = React.useState<any>(undefined);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [adoptDogData, setAdoptDogData] = React.useState<any>(undefined);
 
   const onReadDog = async () => {

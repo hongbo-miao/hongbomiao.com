@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
 
 type Props = {

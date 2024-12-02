@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 import config from '../../config';
 import Me from '../types/Me';
 import axiosInstance from '../utils/axiosInstance';
@@ -33,14 +33,11 @@ const useAuth = (): UseAuth => {
       });
 
       if (res?.data?.data?.signIn?.jwtToken === null || res?.data?.data?.signIn?.jwtToken === '') {
-        // eslint-disable-next-line no-console
         console.log('Failed to sign in.');
         return;
       }
-
       updateMe(res?.data?.data?.signIn);
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error('signIn', err);
     }
   };
@@ -65,14 +62,14 @@ const useAuth = (): UseAuth => {
       });
 
       if (res?.data?.data?.signUp?.jwtToken === null || res?.data?.data?.signUp?.jwtToken === '') {
-        // eslint-disable-next-line no-console
+
         console.log('Failed to sign up.');
         return;
       }
 
       updateMe(res?.data?.data?.signUp);
     } catch (err) {
-      // eslint-disable-next-line no-console
+
       console.error(err);
     }
   };
