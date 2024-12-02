@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 import LocalStorage from '../../auth/utils/LocalStorage';
 import axiosInstance from '../../auth/utils/axiosInstance';
 import getAuthHeaders from '../../auth/utils/getAuthHeaders';
