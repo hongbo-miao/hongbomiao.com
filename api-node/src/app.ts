@@ -19,7 +19,6 @@ import redis from './security/utils/redis.js';
 import apiRouter from './shared/routers/apiRouter.js';
 
 const app = express()
-  .use(Sentry.Handlers.requestHandler()) // Must be the first middleware on the app
   .use(express.json())
   .use(cookieParser())
   .use(pinoMiddleware())
@@ -35,8 +34,8 @@ const app = express()
   .use(rateLimitMiddleware(redis))
   .use('/graphql', graphQLUploadMiddleware, graphQLMiddleware)
   .use('/api', apiRouter)
-  .use(redirectToIndexRouter)
-  .use(Sentry.Handlers.errorHandler()) // Must be before any other error middleware and after all controllers
-  .use(handleError);
+  .use(redirectToIndexRouter);
+Sentry.setupExpressErrorHandler(app) // Must be after all routes and before any and other error-handling middlewares
+app.use(handleError)
 
 export default app;
