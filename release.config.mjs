@@ -1,5 +1,5 @@
 // https://semantic-release.gitbook.io/semantic-release/usage/configuration
 
-module.exports = {
+export default {
   branches: ['main'],
 };
