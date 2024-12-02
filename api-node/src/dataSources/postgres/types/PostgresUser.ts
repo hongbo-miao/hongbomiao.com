@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 type PostgresUser = {
   id: string;
   email: string;

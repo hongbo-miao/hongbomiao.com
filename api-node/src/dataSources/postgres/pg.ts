@@ -1,5 +1,5 @@
-import { knex } from 'knex';
-import config from '../../config';
+import knex from 'knex';
+import config from '../../config.js';
 
 const pg = knex({
   client: 'pg',

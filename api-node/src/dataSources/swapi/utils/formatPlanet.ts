@@ -1,7 +1,7 @@
-import GraphQLPlanet from '../../../graphQL/types/GraphQLPlanet';
-import SWAPIPlanet from '../types/SWAPIPlanet';
-import convertToNumber from './convertToNumber';
-import splitStringToArray from './splitStringToArray';
+import GraphQLPlanet from '../../../graphQL/types/GraphQLPlanet.js';
+import SWAPIPlanet from '../types/SWAPIPlanet.js';
+import convertToNumber from './convertToNumber.js';
+import splitStringToArray from './splitStringToArray.js';
 
 const formatPlanet = (id: string, planet: SWAPIPlanet): GraphQLPlanet | null => {
   if (planet == null) return null;

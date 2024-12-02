@@ -1,7 +1,7 @@
-import logger from '../../log/utils/logger';
-import checkAPIHealth from './checkAPIHealth';
-import checkPostgresHealth from './checkPostgresHealth';
-import checkRedisHealth from './checkRedisHealth';
+import logger from '../../log/utils/logger.js';
+import checkAPIHealth from './checkAPIHealth.js';
+import checkPostgresHealth from './checkPostgresHealth.js';
+import checkRedisHealth from './checkRedisHealth.js';
 
 type HealthStatus = 'ok' | 'error';
 type Health = Record<string, HealthStatus>;

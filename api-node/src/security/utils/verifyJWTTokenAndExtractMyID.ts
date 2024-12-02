@@ -1,5 +1,5 @@
 import jsonwebtoken, { JwtPayload } from 'jsonwebtoken';
-import config from '../../config';
+import config from '../../config.js';
 
 type DecodedToken = JwtPayload & {
   id: string;

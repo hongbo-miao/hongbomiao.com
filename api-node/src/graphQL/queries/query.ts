@@ -1,11 +1,11 @@
 import { GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLObjectType } from 'graphql';
-import FibonacciGraphQLType from '../graphQLTypes/FibonacciGraphQLType';
-import MeGraphQLType from '../graphQLTypes/MeGraphQLType';
-import PlanetGraphQLType from '../graphQLTypes/PlanetGraphQLType';
-import StarshipGraphQLType from '../graphQLTypes/StarshipGraphQLType';
-import UserGraphQLType from '../graphQLTypes/UserGraphQLType';
-import getFibonacci from '../utils/getFibonacci';
-import getMe from '../utils/getMe';
+import FibonacciGraphQLType from '../graphQLTypes/FibonacciGraphQLType.js';
+import MeGraphQLType from '../graphQLTypes/MeGraphQLType.js';
+import PlanetGraphQLType from '../graphQLTypes/PlanetGraphQLType.js';
+import StarshipGraphQLType from '../graphQLTypes/StarshipGraphQLType.js';
+import UserGraphQLType from '../graphQLTypes/UserGraphQLType.js';
+import getFibonacci from '../utils/getFibonacci.js';
+import getMe from '../utils/getMe.js';
 
 const query = new GraphQLObjectType({
   name: 'Query',

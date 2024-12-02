@@ -1,7 +1,7 @@
 import DataLoader from 'dataloader';
-import planetDataLoader from './planetDataLoader';
-import starshipDataLoader from './starshipDataLoader';
-import userDataLoader from './userDataLoader';
+import planetDataLoader from './planetDataLoader.js';
+import starshipDataLoader from './starshipDataLoader.js';
+import userDataLoader from './userDataLoader.js';
 
 const dataLoaders = (): Record<string, DataLoader<string, unknown>> => ({
   planet: planetDataLoader(),

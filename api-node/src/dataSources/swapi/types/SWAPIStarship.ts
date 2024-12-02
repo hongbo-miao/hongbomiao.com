@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 type SWAPIStarship = {
   name: string;
   model: string;

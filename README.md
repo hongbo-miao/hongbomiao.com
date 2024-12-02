@@ -166,6 +166,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### API Server - Node.js
 
+- **SWC** - JavaScript compiler
 - **Express** - Web framework
 - **GraphQL.js**, **express-graphql** - GraphQL
   - **graphql-ws**, **graphql-subscriptions** - GraphQL subscriptions

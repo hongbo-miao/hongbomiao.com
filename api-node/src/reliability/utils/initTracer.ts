@@ -10,9 +10,9 @@ import { Resource } from '@opentelemetry/resources';
 import { BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/sdk-trace-base';
 import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
-import config from '../../config';
-import isDevelopment from '../../shared/utils/isDevelopment';
-import isProduction from '../../shared/utils/isProduction';
+import config from '../../config.js';
+import isDevelopment from '../../shared/utils/isDevelopment.js';
+import isProduction from '../../shared/utils/isProduction.js';
 
 const initTracer = (): void => {
   const spanProcessors = [];

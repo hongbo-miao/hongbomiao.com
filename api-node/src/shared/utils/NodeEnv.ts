@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-shadow
 enum NodeEnv {
   development = 'development',
   production = 'production',

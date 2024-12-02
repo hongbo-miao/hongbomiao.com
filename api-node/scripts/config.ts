@@ -7,7 +7,7 @@ type Config = {
 };
 
 const config: Config = {
-  serverURL: 'http://localhost:5000',
+  serverURL: 'http://localhost:58136',
   autocannon: {
     connections: 5,
     amount: 500,

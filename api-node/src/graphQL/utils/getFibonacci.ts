@@ -1,5 +1,5 @@
 import validator from 'validator';
-import calcFibonacci from './calcFibonacci';
+import calcFibonacci from './calcFibonacci.js';
 
 type Fibonacci = {
   n: number;

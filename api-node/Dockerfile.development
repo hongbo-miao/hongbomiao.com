@@ -21,5 +21,5 @@ COPY ["api-node/package.json", "api-node/package-lock.json", "api-node/.npmrc", 
 RUN npm ci
 COPY --from=web-builder /usr/src/app/build ./public
 COPY api-node ./
-EXPOSE 5000
+EXPOSE 58136
 CMD ["npm", "run", "dev"]

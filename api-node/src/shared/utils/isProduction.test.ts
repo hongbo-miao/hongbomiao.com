@@ -1,5 +1,5 @@
-import NodeEnv from './NodeEnv';
-import isProduction from './isProduction';
+import NodeEnv from './NodeEnv.js';
+import isProduction from './isProduction.js';
 
 describe('isProduction', () => {
   test('return true for production', () => {
