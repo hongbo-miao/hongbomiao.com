@@ -61,7 +61,6 @@ function HMPanel(props: Props) {
 }
 
 function addQueryClientProvider(Component: React.FC<Props>) {
-  // eslint-disable-next-line react/display-name
   return (props: Props) => (
     <QueryClientProvider client={queryClient}>
       <Component {...props} />
