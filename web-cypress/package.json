@@ -4,20 +4,21 @@
   "engines": {
     "node": "22.x"
   },
+  "type": "module",
   "scripts": {
-    "tsc": "tsc --noEmit",
-    "lint:javascript": "eslint . --ext .js,.ts,.tsx",
-    "lint:javascript:fix": "eslint . --ext .js,.ts,.tsx --fix",
-    "test:cypress:gui:8080": "cypress open --config-file=cypress.8080.config.ts",
-    "test:cypress:gui:58136": "cypress open --config-file=cypress.58136.config.ts",
-    "test:cypress:headless:8080": "wait-on http://localhost:8080 && cypress run --config-file=cypress.8080.config.ts",
-    "test:cypress:headless:58136": "wait-on http://localhost:58136 && cypress run --config-file=cypress.58136.config.ts"
+    "tsc": "tsc",
+    "lint:javascript": "eslint .",
+    "lint:javascript:fix": "eslint . --fix",
+    "test:cypress:gui:8080": "cypress open --config-file=cypress.8080.config.mjs",
+    "test:cypress:gui:58136": "cypress open --config-file=cypress.58136.config.mjs",
+    "test:cypress:headless:8080": "wait-on http://localhost:8080 && cypress run --config-file=cypress.8080.config.mjs",
+    "test:cypress:headless:58136": "wait-on http://localhost:58136 && cypress run --config-file=cypress.58136.config.mjs"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "8.16.0",
     "@typescript-eslint/parser": "8.16.0",
     "cypress": "13.16.0",
-    "eslint": "8.57.1",
+    "eslint": "9.16.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-cypress": "4.1.0",
@@ -27,5 +28,9 @@
     "prettier": "3.4.1",
     "typescript": "5.7.2",
     "wait-on": "8.0.1"
+  },
+  "dependencies": {
+    "@eslint/js": "9.16.0",
+    "globals": "15.13.0"
   }
 }
