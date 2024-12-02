@@ -1,7 +1,8 @@
 import eslint from '@eslint/js';
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsparser from '@typescript-eslint/parser';
+import eslintPlugin from '@typescript-eslint/eslint-plugin';
+import typescriptParser from '@typescript-eslint/parser';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import jestPlugin from 'eslint-plugin-jest';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -58,9 +59,9 @@ export default [
   },
   eslint.configs.recommended,
   {
-    files: ['**/*.{js,ts,tsx}'],
+    files: ['**/*.{js,ts}'],
     languageOptions: {
-      parser: tsparser,
+      parser: typescriptParser,
       parserOptions: {
         ecmaVersion: 2024,
         sourceType: 'module',
@@ -74,7 +75,7 @@ export default [
       },
     },
     plugins: {
-      '@typescript-eslint': tseslint,
+      '@typescript-eslint': eslintPlugin,
       import: importPlugin,
       jest: jestPlugin,
       prettier: prettierPlugin,
@@ -83,12 +84,12 @@ export default [
     settings: {
       'import/resolver': {
         node: {
-          extensions: ['.js', '.ts', '.tsx'],
+          extensions: ['.js', '.ts'],
         },
       },
     },
     rules: {
-      ...tseslint.configs.recommended.rules,
+      ...eslintPlugin.configs.recommended.rules,
       ...jestPlugin.configs.recommended.rules,
       ...securityPlugin.configs.recommended.rules,
       ...eslintConfigPrettier.rules,
@@ -129,4 +130,5 @@ export default [
       ],
     },
   },
+  prettierConfig // Make sure prettierConfig is last
 ];

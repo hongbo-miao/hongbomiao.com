@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 import React, { Dispatch, SetStateAction } from 'react';
 
 type Props = {
-  children: JSX.Element;
+  children: React.JSX.Element;
   action: string;
   resource: string;
   getDecision: (action: string, resource: string) => Promise<AxiosResponse | null>;
