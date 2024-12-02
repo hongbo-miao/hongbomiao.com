@@ -1,5 +1,5 @@
 import { GraphQLID, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
-import { GraphQLUpload } from 'graphql-upload';
+import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
 import formatUser from '../../dataSources/postgres/utils/formatUser.js';
 import updateName from '../../dataSources/postgres/utils/updateName.js';
 import getJWTToken from '../../security/utils/getJWTToken.js';

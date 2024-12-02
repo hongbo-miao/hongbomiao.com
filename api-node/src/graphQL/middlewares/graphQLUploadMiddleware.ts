@@ -1,4 +1,4 @@
-import { graphqlUploadExpress } from 'graphql-upload';
+import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs';
 
 const graphQLUploadMiddleware = graphqlUploadExpress({
   maxFileSize: 1e6, // 1MB
