@@ -1,6 +1,9 @@
 // https://stylelint.io/user-guide/configure
 
-module.exports = {
+/**
+ * @type {import("stylelint").Config}
+ */
+export default {
   extends: [
     'stylelint-config-standard', // stylelint-config-standard
     'stylelint-config-recess-order', // stylelint-config-recess-order

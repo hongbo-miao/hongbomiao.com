@@ -1,6 +1,9 @@
 // https://prettier.io/docs/en/configuration.html
 
-module.exports = {
+/**
+ * @type {import("prettier").Config}
+ */
+export default {
   semi: true,
   trailingComma: 'all',
   singleQuote: true,
