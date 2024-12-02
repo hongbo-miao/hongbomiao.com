@@ -1,3 +1,3 @@
-import buildSitemap from './buildSitemap';
+import buildSitemap from './buildSitemap.js';
 
 buildSitemap();

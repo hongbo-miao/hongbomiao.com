@@ -1,4 +1,5 @@
-import { Epic, ofType } from 'redux-observable';
+import type { Epic } from 'redux-observable';
+import { ofType } from 'redux-observable';
 import { of } from 'rxjs';
 import { AjaxError, AjaxResponse } from 'rxjs/ajax';
 import { catchError, map, switchMap } from 'rxjs/operators';
