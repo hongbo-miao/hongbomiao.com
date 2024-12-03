@@ -65,6 +65,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Web
 
 - **React** - Web framework
+- **Vite** - JavaScript build tool and development server
 - **Redux** - State container
 - **React Query** - Hooks for fetching, caching and updating asynchronous data
 - **redux-observable** - Side effects
