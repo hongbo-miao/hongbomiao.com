@@ -1,8 +1,9 @@
 FROM docker.io/python:3.13.0-alpine AS base
 WORKDIR /usr/src/app
 ENV PYTHONFAULTHANDLER=1 \
-  PYTHONUNBUFFERED=1
-
+  PYTHONUNBUFFERED=1 \
+  PYTHONOPTIMIZE=2 \
+  PYTHONDONTWRITEBYTECODE=1
 
 FROM base AS builder
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
@@ -10,7 +11,6 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   UV_COMPILE_BYTECODE=1 \
   UV_LINK_MODE=copy
 ARG LIBRDKAFKA_VERSION=2.6.1
-
 # gcc, g++, make, bash are for building librdkafka
 # hadolint ignore=DL3003
 RUN apk add --no-cache gcc g++ make bash \
@@ -26,7 +26,6 @@ RUN apk add --no-cache gcc g++ make bash \
   && make install \
   && cd .. \
   && rm -r -f librdkafka-${LIBRDKAFKA_VERSION}/
-
 COPY --from=ghcr.io/astral-sh/uv:0.5.5-python3.13-alpine /usr/local/bin/uv /bin/
 COPY ["api-python/pyproject.toml", "api-python/uv.lock", "./"]
 RUN . /venv/bin/activate \
@@ -35,8 +34,8 @@ COPY api-python ./
 RUN . /venv/bin/activate \
   && uv build \
   && pip install --no-cache-dir dist/*.whl \
-  && pip wheel --no-cache-dir --no-deps --wheel-dir /wheels dist/*.whl
-
+  && pip wheel --no-cache-dir --no-deps --wheel-dir /wheels dist/*.whl \
+  && apk del gcc g++ make bash
 
 FROM base AS release
 COPY --from=builder /venv/ /venv/
@@ -51,7 +50,8 @@ COPY --from=builder /venv/ /venv/
 COPY --from=builder /usr/local/lib/ /usr/local/lib/
 COPY --from=builder /wheels/ /wheels/
 RUN . /venv/bin/activate \
-  && pip install --no-cache-dir /wheels/*.whl
+  && pip install --no-cache-dir /wheels/*.whl \
+  && rm -r -f /wheels
 COPY ["api-python/docker-entrypoint.sh", "./"]
 EXPOSE 35903
 ENTRYPOINT ["./docker-entrypoint.sh"]
