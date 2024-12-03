@@ -26,10 +26,15 @@ const useSeed = (): UseSeed => {
   const [seed, setSeed] = React.useState<Seed>(initialSeed);
   const queryClient = useQueryClient();
 
-  useQuery([queryKeys.seed], () => getSeed(), {
-    onSuccess: (axiosResponse) => {
-      const newSeed = { ...seed, ...axiosResponse?.data };
-      return setSeed(newSeed);
+  useQuery({
+    queryKey: [queryKeys.seed],
+    queryFn: () => getSeed(),
+    select: (axiosResponse: AxiosResponse<{ data: { seed: Seed } }> | null) => {
+      if (axiosResponse) {
+        const newSeed = { ...seed, ...axiosResponse?.data };
+        return setSeed(newSeed);
+      }
+      return axiosResponse;
     },
   });
 
