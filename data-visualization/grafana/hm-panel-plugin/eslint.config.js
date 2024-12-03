@@ -5,6 +5,7 @@ const grafanaConfig = require("@grafana/eslint-config/flat");
  */
 module.exports = [
   {
+    // https://eslint.org/docs/latest/use/configure/ignore#the-eslintignore-file
     ignores: [
       // Anywhere
       '**/*.aliases',
@@ -40,6 +41,9 @@ module.exports = [
       '**/node_modules',
       '**/slprj',
       '**/target',
+
+      // Directories
+      'dist',
     ],
   },
   {
