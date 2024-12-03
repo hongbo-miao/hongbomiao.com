@@ -16,9 +16,11 @@ function SignIn() {
   const { signIn } = useAuth();
   const { me } = useMe();
 
-  const mutation = useMutation((data: FormValues) => {
-    const { email, password } = data;
-    return signIn(email, password);
+  const mutation = useMutation({
+    mutationFn: (data: FormValues) => {
+      const { email, password } = data;
+      return signIn(email, password);
+    },
   });
 
   const {

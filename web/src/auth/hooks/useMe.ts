@@ -35,11 +35,16 @@ const useMe = (): UseMe => {
   const [me, setMe] = React.useState<Me | null>(LocalStorage.getMe());
   const queryClient = useQueryClient();
 
-  useQuery([queryKeys.me], () => getMe(me), {
+  useQuery<AxiosResponse<{ data: { me: Me } }> | null, Error>({
+    queryKey: [queryKeys.me],
+    queryFn: () => getMe(me),
     enabled: me != null,
-    onSuccess: (axiosResponse) => {
-      const newMe = { ...me, ...axiosResponse?.data?.data?.me };
-      return setMe(newMe);
+    select: (axiosResponse: AxiosResponse<{ data: { me: Me } }> | null) => {
+      if (axiosResponse) {
+        const newMe = { ...me, ...axiosResponse?.data?.data?.me };
+        setMe(newMe);
+      }
+      return axiosResponse;
     },
   });
 
@@ -53,8 +58,7 @@ const useMe = (): UseMe => {
   const clearMe = () => {
     setMe(null);
     LocalStorage.clearMe();
-    queryClient.setQueryData([queryKeys.me], null);
-    queryClient.removeQueries([queryKeys.me]);
+    queryClient.resetQueries({ queryKey: [queryKeys.me] });
   };
 
   return { me, updateMe, clearMe };
