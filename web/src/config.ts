@@ -1,12 +1,12 @@
 import * as Sentry from '@sentry/react';
 
-const { NODE_ENV, REACT_APP_SERVER_WS_PROTOCOL } = process.env;
+const { MODE, VITE_SERVER_WS_PROTOCOL } = import.meta.env;
 
-if (NODE_ENV !== 'development' && NODE_ENV !== 'production' && NODE_ENV !== 'test') {
-  throw new Error('Failed to read NODE_ENV.');
+if (MODE !== 'development' && MODE !== 'production' && MODE !== 'test') {
+  throw new Error('Failed to read MODE.');
 }
-if (REACT_APP_SERVER_WS_PROTOCOL == null || REACT_APP_SERVER_WS_PROTOCOL === '') {
-  throw new Error('Failed to read REACT_APP_SERVER_WS_PROTOCOL.');
+if (VITE_SERVER_WS_PROTOCOL == null || VITE_SERVER_WS_PROTOCOL === '') {
+  throw new Error('Failed to read VITE_SERVER_WS_PROTOCOL.');
 }
 
 type Config = {
@@ -25,10 +25,10 @@ type Config = {
 };
 
 const config: Config = {
-  nodeEnv: NODE_ENV,
+  nodeEnv: MODE,
   githubURL: 'https://github.com/hongbo-miao/hongbomiao.com',
-  graphqlServerGraphQLURL: NODE_ENV === 'development' ? 'http://localhost:31800/graphql' : '/graphql-server/graphql',
-  webSocketGraphQLURL: `${REACT_APP_SERVER_WS_PROTOCOL}://${window.location.host}/graphql`,
+  graphqlServerGraphQLURL: MODE === 'development' ? 'http://localhost:31800/graphql' : '/graphql-server/graphql',
+  webSocketGraphQLURL: `${VITE_SERVER_WS_PROTOCOL}://${window.location.host}/graphql`,
   googleTagManagerOptions: {
     containerId: 'GTM-MKMQ55P',
   },
@@ -38,7 +38,7 @@ const config: Config = {
   },
   sentryOptions: {
     dsn: 'https://a0ff55d9ee00403ca144425a33c318eb@o379185.ingest.sentry.io/4504195581018112',
-    environment: NODE_ENV,
+    environment: MODE,
     integrations: [Sentry.browserTracingIntegration()],
     tracesSampleRate: 1.0,
   },
