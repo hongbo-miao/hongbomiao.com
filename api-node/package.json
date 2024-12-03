@@ -7,12 +7,11 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && swc src --out-dir build/ --extensions .ts && cp -R public/ build/public/",
+    "build": "tsc && swc src --out-dir build/ --extensions=.ts && cp -R public/ build/public/",
     "build:scripts": "tsc && swc scripts --out-dir build/scripts --extensions .ts",
     "build:web": "bash bin/build_web.sh",
     "debug": "npm run build && NODE_ENV=development node --inspect-brk build/src/index.js",
     "dev": "nodemon --ext ts --exec 'npm run build && NODE_ENV=development node build/src/index.js -- --hideHTTPLog --prettifyLog'",
-    "dev:log": "nodemon --ext ts --exec 'NODE_ENV=development babel-node src/index.ts --extensions .ts -- --prettifyLog'",
     "serve": "NODE_ENV=production node build/src/index.js",
     "tsc": "tsc",
     "lint:javascript": "eslint .",
@@ -86,11 +85,6 @@
     "yargs": "17.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "7.25.9",
-    "@babel/core": "7.26.0",
-    "@babel/node": "7.26.0",
-    "@babel/preset-env": "7.26.0",
-    "@babel/preset-typescript": "7.26.0",
     "@eslint/js": "9.16.0",
     "@stryker-mutator/core": "8.6.0",
     "@stryker-mutator/jest-runner": "8.6.0",
