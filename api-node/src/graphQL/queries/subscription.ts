@@ -15,7 +15,7 @@ const subscription = new GraphQLObjectType({
         return source.ping;
       },
       subscribe: () => {
-        return pubsub.asyncIterator('ping');
+        return pubsub.subscribe('ping', () => {});
       },
     },
   },
