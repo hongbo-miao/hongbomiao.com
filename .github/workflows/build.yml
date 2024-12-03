@@ -1022,6 +1022,9 @@ jobs:
           git config --global user.name "Hongbo Miao"
           git config --global user.email "3375461+hongbo-miao@users.noreply.github.com"
           git commit --message="chore(api-node): build web"
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.13.15
         with:
