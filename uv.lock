@@ -60,14 +60,14 @@ wheels = [
 
 [[package]]
 name = "ansible"
-version = "11.0.0"
+version = "11.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ansible-core", marker = "platform_system != 'Windows'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ad/81/782a5a5c344e62e66cfb0e684396dfbe14c632b0356ebf72a83838c0a484/ansible-11.0.0.tar.gz", hash = "sha256:d6b3929f9954e49387870a4da290dbfa38a1f56ea6d4bf24c9a2765d2897db79", size = 40739296 }
+sdist = { url = "https://files.pythonhosted.org/packages/5c/54/dc559b305948e9c234f79ef00f7aed52d7c127c8616c0c2f3f336103ccdd/ansible-11.1.0.tar.gz", hash = "sha256:d01b425990d960d2a33fc378e1b73dbca1c0e28bc22f4056ab6b3c8e9ae74fba", size = 41299850 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/91/53/ffd4549bc348f75300889523ba076bc425645fac9aba8112aa60bc9d9e84/ansible-11.0.0-py3-none-any.whl", hash = "sha256:367f6acc8e927575f1ce31c3f3c23f0ed15b1d03086997803226cd948745dce2", size = 49188806 },
+    { url = "https://files.pythonhosted.org/packages/d2/75/4c0583e76a3c2eac0c8d878568fd18c8a66f3da8888dca712cae14b195ac/ansible-11.1.0-py3-none-any.whl", hash = "sha256:bbaf7073993f019fc0293fc8b76c7b215081831957c28eb020f12c270a16e8f0", size = 51414573 },
 ]
 
 [[package]]
@@ -88,7 +88,7 @@ wheels = [
 
 [[package]]
 name = "ansible-core"
-version = "2.18.0"
+version = "2.18.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography", marker = "platform_system != 'Windows'" },
@@ -97,9 +97,9 @@ dependencies = [
     { name = "pyyaml", marker = "platform_system != 'Windows'" },
     { name = "resolvelib", marker = "platform_system != 'Windows'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fd/5e/0d5a28caca8fc598b199f3710fffc010a6094dfabcf38f7f3c0abb50451a/ansible_core-2.18.0.tar.gz", hash = "sha256:87fbebbfe8d961e9b153e84b4438ba3a327dbfdcd4ad05a6065d9ff5d9d02e7b", size = 3064903 }
+sdist = { url = "https://files.pythonhosted.org/packages/42/46/15836f1f48e2682bd5d04f7b3e2cb27e17626bec3cd7a4f2a7b0ccefbbd2/ansible_core-2.18.1.tar.gz", hash = "sha256:14cac1f92bbdae881cb0616eddeb17925e8cb507e486087975e724533d9de74f", size = 3069965 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/73/14/c70341980b7636dfdbc03b0762102d2a69739bc5d7687a0476739007aad4/ansible_core-2.18.0-py3-none-any.whl", hash = "sha256:d28818df3741d6cd744dab5e4ff9c658daa94ba71c8e15a12dbe9eeab30a658f", size = 2212552 },
+    { url = "https://files.pythonhosted.org/packages/d7/24/dd43ac6d09c8adab1368171853989bf0c84a653a35f57eaeee0411e91bb7/ansible_core-2.18.1-py3-none-any.whl", hash = "sha256:4a312e416e09c7271188d6b8e2b1062fc6834fefd6a1814d0e02fb8aadb3e1ba", size = 2214624 },
 ]
 
 [[package]]
@@ -119,7 +119,7 @@ dependencies = [
     { name = "rich", marker = "platform_system != 'Windows'" },
     { name = "ruamel-yaml", marker = "platform_system != 'Windows'" },
     { name = "subprocess-tee", marker = "platform_system != 'Windows'" },
-    { name = "wcmatch", marker = "platform_system != 'Windows'" },
+    { name = "wcmatch", marker = "platform_system != 'Windows' and python_full_version >= '3.13.0' and python_full_version < '3.14'" },
     { name = "yamllint", marker = "platform_system != 'Windows'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7b/2a/5f85804b10cfda961c27d6ea110327e53e43d667fc5d071faa3017f948ad/ansible_lint-24.10.0.tar.gz", hash = "sha256:59b396bcd9be734f9ae40796e9660c267ae85f1f13e47811fd8abdc6aaffea5c", size = 537358 }
@@ -389,7 +389,7 @@ dev = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "ansible", specifier = "==11.0.0" },
+    { name = "ansible", specifier = "==11.1.0" },
     { name = "ansible-lint", specifier = "==24.10.0" },
     { name = "autoflake", specifier = "==2.3.1" },
     { name = "black", extras = ["d", "jupyter"], specifier = "==24.10.0" },
