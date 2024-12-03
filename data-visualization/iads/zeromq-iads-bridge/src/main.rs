@@ -1,3 +1,5 @@
+use axum::http::StatusCode;
+use axum::response::IntoResponse;
 use chrono::{DateTime, Datelike, TimeZone, Utc};
 use prost::Message;
 use serde::Serialize;
@@ -14,6 +16,10 @@ use tokio::net::TcpListener;
 use tokio::net::TcpStream;
 use tokio::process::Command;
 use tokio::sync::RwLock;
+use windows::core::{HSTRING, PCWSTR};
+use windows::Win32::System::Com::IDispatch;
+use windows::Win32::System::Com::{CLSIDFromProgID, CoCreateInstance, CLSCTX_ALL};
+use windows::Win32::System::Com::{CoInitializeEx, COINIT_MULTITHREADED};
 use zeromq::{Socket, SocketRecv, SubSocket};
 
 pub mod production {
@@ -104,9 +110,56 @@ async fn get_iads_status(
     axum::Json(iads_status.clone())
 }
 
+async fn stop_iads() -> Result<(), Box<dyn Error>> {
+    unsafe {
+        CoInitializeEx(None, COINIT_MULTITHREADED).ok()?;
+        let prog_id: HSTRING = "Iads.Application".into();
+        let clsid = CLSIDFromProgID(PCWSTR::from_raw(prog_id.as_ptr()))?;
+        let iads: IDispatch = CoCreateInstance(&clsid, None, CLSCTX_ALL)?;
+
+        // Quit
+        let method_name: HSTRING = "Quit".into();
+        let mut disp_id = 0;
+        let names = [PCWSTR::from_raw(method_name.as_ptr())];
+        let result = iads.GetIDsOfNames(
+            &windows::core::GUID::zeroed(),
+            names.as_ptr(),
+            1,
+            0,
+            &mut disp_id,
+        );
+
+        if result.is_ok() {
+            let params = windows::Win32::System::Com::DISPPARAMS::default();
+            let mut result = std::mem::zeroed();
+            let _ = iads.Invoke(
+                disp_id,
+                &windows::core::GUID::zeroed(),
+                0,
+                windows::Win32::System::Com::DISPATCH_METHOD,
+                &params,
+                Some(&mut result),
+                None,
+                None,
+            );
+        }
+
+        Ok(())
+    }
+}
+
 async fn run_api_server(shared_iads_status: SharedIadsStatus, api_server_port: u16) {
     let app = axum::Router::new()
         .route("/status", axum::routing::get(get_iads_status))
+        .route(
+            "/stop",
+            axum::routing::post(|| async {
+                match stop_iads().await {
+                    Ok(_) => (StatusCode::OK, "IADS stopped successfully").into_response(),
+                    Err(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()).into_response(),
+                }
+            }),
+        )
         .with_state(shared_iads_status);
 
     let addr = SocketAddr::from(([0, 0, 0, 0], api_server_port));
