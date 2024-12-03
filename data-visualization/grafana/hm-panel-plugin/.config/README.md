@@ -56,11 +56,11 @@ set up the Jest DOM for the testing library and to apply some polyfills. ([link 
 
 #### ESM errors with Jest
 
-A common issue found with the current jest config involves importing an npm package which only offers an ESM build. These packages cause jest to error with `SyntaxError: Cannot use import statement outside a module`. To work around this we provide a list of known packages to pass to the `[transformIgnorePatterns](https://jestjs.io/docs/configuration#transformignorepatterns-arraystring)` jest configuration property. If need be this can be extended in the following way:
+A common issue with the current jest config involves importing an npm package that only offers an ESM build. These packages cause jest to error with `SyntaxError: Cannot use import statement outside a module`. To work around this, we provide a list of known packages to pass to the `[transformIgnorePatterns](https://jestjs.io/docs/configuration#transformignorepatterns-arraystring)` jest configuration property. If need be, this can be extended in the following way:
 
 ```javascript
 process.env.TZ = 'UTC';
-const { grafanaESModules, nodeModulesToTransform } = require('./jest/utils');
+const { grafanaESModules, nodeModulesToTransform } = require('./config/jest/utils');
 
 module.exports = {
   // Jest configuration provided by Grafana
@@ -139,3 +139,26 @@ We need to update the `scripts` in the `package.json` to use the extended Webpac
 -"dev": "webpack -w -c ./.config/webpack/webpack.config.ts --env development",
 +"dev": "webpack -w -c ./webpack.config.ts --env development",
 ```
+
+### Configure grafana image to use when running docker
+
+By default, `grafana-enterprise` will be used as the docker image for all docker related commands. If you want to override this behavior, simply alter the `docker-compose.yaml` by adding the following build arg `grafana_image`.
+
+**Example:**
+
+```yaml
+version: '3.7'
+
+services:
+  grafana:
+    container_name: 'myorg-basic-app'
+    build:
+      context: ./.config
+      args:
+        grafana_version: ${GRAFANA_VERSION:-9.1.2}
+        grafana_image: ${GRAFANA_IMAGE:-grafana}
+```
+
+In this example, we assign the environment variable `GRAFANA_IMAGE` to the build arg `grafana_image` with a default value of `grafana`. This will allow you to set the value while running the docker compose commands, which might be convenient in some scenarios.
+
+---

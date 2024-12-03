@@ -3,12 +3,23 @@
 ---
 services:
   grafana:
-    container_name: 'hm-panel-plugin'
+    user: root
+    container_name: hm-panel-plugin
     build:
       context: ./.config
       args:
-        grafana_version: 9.2.3
+        grafana_image: ${GRAFANA_IMAGE:-grafana-enterprise}
+        grafana_version: ${GRAFANA_VERSION:-11.3.1}
+        development: ${DEVELOPMENT:-false}
     ports:
-      - "3000:3000"
+      - 3000:3000/tcp
     volumes:
       - ./dist:/var/lib/grafana/plugins/hm-panel-plugin
+      - ./provisioning:/etc/grafana/provisioning
+      - .:/root/hm-panel-plugin
+    environment:
+      NODE_ENV: development
+      GF_LOG_FILTERS: plugin.hm-panel-plugin:debug
+      GF_LOG_LEVEL: debug
+      GF_DATAPROXY_LOGGING: 1
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: hm-panel-plugin
