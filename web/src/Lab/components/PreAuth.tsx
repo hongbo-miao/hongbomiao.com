@@ -12,7 +12,10 @@ type Props = {
 
 function PreAuth(props: Props) {
   const { children, action, resource, getDecision, setData } = props;
-  const { data } = useQuery([action, resource], () => getDecision(action, resource));
+  const { data } = useQuery({
+    queryKey: [action, resource],
+    queryFn: () => getDecision(action, resource),
+  });
 
   React.useEffect(() => {
     setData(data?.data);
