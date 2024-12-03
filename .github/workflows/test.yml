@@ -2997,6 +2997,35 @@ jobs:
         with:
           directory: data-visualization/grafana/hm-dashboard
 
+  grafana-hm-panel-plugin-test:
+    name: Grafana (hm-panel-plugin) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: data-visualization/grafana/hm-panel-plugin/.nvmrc
+          cache: npm
+          cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
+      - name: Install dependencies
+        working-directory: data-visualization/grafana/hm-panel-plugin
+        run: |
+          npm ci
+      - name: Test
+        working-directory: data-visualization/grafana/hm-panel-plugin
+        run: |
+          npm run test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.0.7
+        with:
+          directory: data-visualization/grafana/hm-panel-plugin
+
   iads-iads-data-producer-test:
     name: IADS (iads-data-producer) | Test
     needs: detect-changes

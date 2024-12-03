@@ -1,5 +1,4 @@
-// Just a stub test
-describe('placeholder test', () => {
+describe('dummy test', () => {
   it('should return true', () => {
     expect(true).toBeTruthy();
   });
