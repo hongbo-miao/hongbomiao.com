@@ -3,7 +3,7 @@ import { defineConfig } from 'cypress';
 export default defineConfig({
   env: {
     domain: 'http://localhost',
-    webPort: '3000',
+    webPort: '11413',
     serverPort: '58136',
   },
   video: false,
