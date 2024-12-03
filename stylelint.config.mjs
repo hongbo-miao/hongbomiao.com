@@ -14,6 +14,7 @@ export default {
     // stylelint-config-standard
     'keyframes-name-pattern': null,
     'selector-class-pattern': null,
+    'import-notation': null,
 
     // stylelint-high-performance-animation
     'plugin/no-low-performance-animation-properties': true,

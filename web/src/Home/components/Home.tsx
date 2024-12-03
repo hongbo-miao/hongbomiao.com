@@ -8,8 +8,6 @@ import HmImage from '../../shared/components/Image';
 import HmSparkles from '../../shared/components/Sparkles';
 import RootState from '../../shared/types/RootState';
 import analytics from '../../shared/utils/analytics';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import springWaltzMP3 from '../audio/spring-waltz.mp3';
 import hatAVIF from '../images/hat.avif';
 import hatPNG from '../images/hat.png';
