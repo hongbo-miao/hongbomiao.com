@@ -53,6 +53,7 @@ jobs:
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
       web: ${{ steps.filter.outputs.web }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
+      windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -223,6 +224,9 @@ jobs:
             web-cypress:
               - '.github/workflows/.lint.yml'
               - 'web-cypress/**'
+            windows-calculator:
+              - '.github/workflows/.lint.yml'
+              - 'operating-system/windows/calculator/**'
 
   lint-ansible:
     name: Ansible
@@ -1061,6 +1065,31 @@ jobs:
           cargo fmt --all
       - name: Lint Rust (Clippy)
         working-directory: network-programmability/udp/udp-sender
+        run: |
+          cargo clippy
+
+  lint-rust-windows-calculator:
+    name: Rust (windows-calculator)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.windows-calculator == 'true' }}
+    runs-on: windows-2022
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: operating-system/windows/calculator
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: operating-system/windows/calculator
+        run: |
+          cargo fmt --all
+      - name: Lint Rust (Clippy)
+        working-directory: operating-system/windows/calculator
         run: |
           cargo clippy
 
