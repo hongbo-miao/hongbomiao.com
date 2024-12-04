@@ -105,6 +105,7 @@ jobs:
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
       web: ${{ steps.filter.outputs.web }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
+      windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -364,6 +365,9 @@ jobs:
             web-cypress:
               - '.github/workflows/test.yml'
               - 'web-cypress/**'
+            windows-calculator:
+              - '.github/workflows/test.yml'
+              - 'operating-system/windows/calculator/**'
 
   lint:
     name: Lint
@@ -3071,6 +3075,27 @@ jobs:
           cargo build
       - name: Test
         working-directory: data-visualization/iads/zeromq-iads-bridge
+        run: |
+          cargo test --all-features
+
+  windows-calculator-test:
+    name: Windows (calculator) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.windows-calculator == 'true' }}
+    runs-on: windows-2022
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: operating-system/windows/calculator
+        run: |
+          cargo build
+      - name: Test
+        working-directory: operating-system/windows/calculator
         run: |
           cargo test --all-features
 
