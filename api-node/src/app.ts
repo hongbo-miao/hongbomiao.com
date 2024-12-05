@@ -1,3 +1,4 @@
+import { requestID } from "@gfx687/express-request-id";
 import * as Sentry from '@sentry/node';
 import cookieParser from 'cookie-parser';
 import express from 'express';
@@ -27,6 +28,7 @@ const app = express()
   .use(reportToMiddleware())
   .use(networkErrorLoggingMiddleware())
   .use(helmetMiddleware())
+  .use(requestID())
   .use(responseTime())
   .use(indexRouter)
   .use(favicon('public/favicon.ico'))
