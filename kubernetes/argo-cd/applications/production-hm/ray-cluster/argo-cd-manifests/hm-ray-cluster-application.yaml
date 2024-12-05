@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://ray-project.github.io/kuberay-helm
       # https://github.com/ray-project/kuberay/releases
-      targetRevision: 1.1.1
+      targetRevision: 1.2.2
       chart: ray-cluster
       helm:
         releaseName: hm-ray-cluster
@@ -20,7 +20,7 @@ spec:
           ---
           image:
             repository: docker.io/rayproject/ray
-            tag: 2.32.0
+            tag: 2.40.0-py312-cpu
           head:
             serviceAccountName: hm-ray-cluster-service-account
             containerEnv:

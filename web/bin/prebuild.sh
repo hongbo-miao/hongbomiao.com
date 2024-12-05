@@ -1,7 +1,8 @@
 #!/bin/sh
 set -e
 
-babel scripts --out-dir tmp --extensions '.ts,.tsx'
-babel src/shared/utils/paths.ts --out-file src/shared/utils/paths.js
-node tmp/runBuildSitemap.js
-rm src/shared/utils/paths.js
+rm -r -f tmp
+swc scripts --out-dir=tmp --extensions='.ts,.tsx'
+swc src/shared/utils/paths.ts --out-file=tmp/src/shared/utils/paths.js
+node --experimental-specifier-resolution=node tmp/scripts/runBuildSitemap.js
+rm -r -f tmp

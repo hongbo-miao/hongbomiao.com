@@ -4,14 +4,15 @@ const config: StorybookConfig = {
   stories: ['../src/**/*.stories.tsx'],
   addons: [
     '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
     '@chromatic-com/storybook',
   ],
   framework: {
     name: '@storybook/react-vite',
     options: {},
   },
-  staticDirs: ['../public'],
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+  },
 };
 
 export default config;
