@@ -748,7 +748,7 @@ jobs:
   lint-rust-api-rust:
     name: Rust (api-rust)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.iads-api-rust == 'true' }}
+    if: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
