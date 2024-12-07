@@ -9,6 +9,7 @@ import jestDomPlugin from 'eslint-plugin-jest-dom';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import prettierPlugin from 'eslint-plugin-prettier';
 import reactPlugin from 'eslint-plugin-react';
+import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import securityPlugin from 'eslint-plugin-security';
 import testingLibraryPlugin from 'eslint-plugin-testing-library';
 import globals from 'globals';
@@ -50,6 +51,7 @@ export default [
       '**/coverage',
       '**/node_modules',
       '**/slprj',
+      '**/storybook-static',
       '**/target',
 
       // Directories
@@ -82,6 +84,7 @@ export default [
       'jsx-a11y': jsxA11yPlugin,
       prettier: prettierPlugin,
       react: reactPlugin,
+      'react-refresh': reactRefreshPlugin,
       security: securityPlugin,
       'testing-library': testingLibraryPlugin,
     },
@@ -103,6 +106,7 @@ export default [
       ...jestDomPlugin.configs.recommended.rules,
       ...jsxA11yPlugin.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
+      ...reactRefreshPlugin.configs.vite.rules,
       ...securityPlugin.configs['recommended-legacy'].rules,
       ...testingLibraryPlugin.configs.react.rules,
       'import/extensions': [
@@ -139,6 +143,7 @@ export default [
         },
       ],
       'react/prop-types': 'off',
+      'react-refresh/only-export-components': "error",
       'security/detect-non-literal-fs-filename': 'off',
       'spaced-comment': [
         'error',

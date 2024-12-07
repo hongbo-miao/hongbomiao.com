@@ -37,6 +37,7 @@ def process_config(iads_config_path: Path) -> None:
         # Execute queries
         execute_query(iads_config, "select * from Desktops")
         execute_query(iads_config, "select System.RowNumber from Desktops")
+        execute_query(iads_config, "select Parameter from ParameterDefaults")
 
         iads_config.Close(True)
     except Exception as e:
