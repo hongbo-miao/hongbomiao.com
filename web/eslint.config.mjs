@@ -1,6 +1,7 @@
 import eslint from '@eslint/js';
 import eslintPluginTypescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
+import tanstackQueryPlugin from '@tanstack/eslint-plugin-query';
 import airbnb from 'eslint-config-airbnb';
 import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
@@ -64,7 +65,7 @@ export default [
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
-        ecmaVersion: 2022,
+        ecmaVersion: 2024,
         sourceType: 'module',
         ecmaFeatures: {
           jsx: true,
@@ -77,6 +78,7 @@ export default [
       },
     },
     plugins: {
+      '@tanstack/query': tanstackQueryPlugin,
       '@typescript-eslint': eslintPluginTypescript,
       import: importPlugin,
       jest: jestPlugin,
@@ -107,7 +109,8 @@ export default [
       ...jsxA11yPlugin.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
       ...reactRefreshPlugin.configs.vite.rules,
-      ...securityPlugin.configs['recommended-legacy'].rules,
+      ...tanstackQueryPlugin.configs.recommended.rules,
+      ...securityPlugin.configs.recommended.rules,
       ...testingLibraryPlugin.configs.react.rules,
       'import/extensions': [
         'error',

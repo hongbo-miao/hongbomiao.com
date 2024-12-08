@@ -36,7 +36,7 @@ const useMe = (): UseMe => {
   const queryClient = useQueryClient();
 
   useQuery<AxiosResponse<{ data: { me: Me } }> | null, Error>({
-    queryKey: [queryKeys.me],
+    queryKey: [me],
     queryFn: () => getMe(me),
     enabled: me != null,
     select: (axiosResponse: AxiosResponse<{ data: { me: Me } }> | null) => {
@@ -52,7 +52,7 @@ const useMe = (): UseMe => {
     const newMe = { ...me, ...deltaMe };
     setMe(newMe);
     LocalStorage.setMe(newMe);
-    queryClient.setQueryData([queryKeys.me], newMe);
+    queryClient.setQueryData([me], newMe);
   };
 
   const clearMe = () => {
