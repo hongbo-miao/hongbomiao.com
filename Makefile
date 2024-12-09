@@ -1,17 +1,3 @@
-# Kubernetes
-kubernetes-set-up:
-	bash kubernetes/bin/set_up.sh
-kubernetes-clean:
-	bash kubernetes/bin/clean.sh
-
-# Local
-local-set-up:
-	bash bin/set_up.sh
-local-build:
-	bash bin/build.sh
-local-clean:
-	bash bin/clean.sh
-
 # Docker
 docker-login:
 	docker login
@@ -27,20 +13,6 @@ docker-rmi:
 	docker rmi --force IMAGE_ID
 docker-prune:
 	docker system prune
-
-# Docker Compose
-docker-compose-build:
-	docker compose --file=docker-compose.development.yaml build
-	docker compose --file=docker-compose.cypress.yaml build
-docker-compose-up:
-	docker compose --file=docker-compose.development.yaml up --detach
-	docker compose --file=docker-compose.cypress.yaml up --detach
-docker-compose-stop:
-	docker compose --file=docker-compose.development.yaml stop
-	docker compose --file=docker-compose.cypress.yaml stop
-docker-compose-down:
-	docker compose --file=docker-compose.development.yaml down --volumes
-	docker compose --file=docker-compose.cypress.yaml down --volumes
 
 # Node.js
 nvm-install:
