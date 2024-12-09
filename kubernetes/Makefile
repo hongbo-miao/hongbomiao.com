@@ -1,3 +1,8 @@
+set-up:
+	bash bin/set_up.sh
+clean:
+	bash bin/clean.sh
+
 set-up-multipass:
 	sh bin/set_up_multipass.sh
 set-up-k3d:

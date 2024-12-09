@@ -15,3 +15,17 @@ docker-push-production:
 docker-run-production:
 	cd .. && \
 	docker run --publish=58136:58136 --name=hm-api-node --rm --env-file=api-node/.env.production.local.example ghcr.io/hongbo-miao/hm-api-node:latest
+
+# Docker Compose
+docker-compose-build:
+	docker compose --file=docker-compose.development.yaml build
+	docker compose --file=docker-compose.cypress.yaml build
+docker-compose-up:
+	docker compose --file=docker-compose.development.yaml up --detach
+	docker compose --file=docker-compose.cypress.yaml up --detach
+docker-compose-stop:
+	docker compose --file=docker-compose.development.yaml stop
+	docker compose --file=docker-compose.cypress.yaml stop
+docker-compose-down:
+	docker compose --file=docker-compose.development.yaml down --volumes
+	docker compose --file=docker-compose.cypress.yaml down --volumes
