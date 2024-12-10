@@ -23,6 +23,7 @@ module.exports = [
       '**/*.tfstate',
       '**/*.unsealed.yaml',
       '**/.DS_Store',
+      '**/*.duckdb',
       '**/.env.development.local',
       '**/.env.production.local',
       '**/.gitkeep',
