@@ -24,7 +24,7 @@ def save_to_duckdb(df: pd.DataFrame, db_path: str) -> None:
 def query_from_duckdb(db_path: str, age: int) -> list[tuple[str, int]]:
     with duckdb.connect(db_path) as conn:
         return conn.execute(
-            "SELECT name, age FROM people WHERE age > ?", [age]
+            "select name, age from people where age > ?", [age]
         ).fetchall()
 
 
