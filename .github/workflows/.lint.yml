@@ -184,10 +184,10 @@ jobs:
               - 'data-processing/hm-spark/applications/ingest-from-s3-to-kafka/**'
             iads-iads-data-producer:
               - '.github/workflows/.lint.yml'
-              - 'data-visualization/iads/iads-data-producer/**'
+              - 'data-visualization/iads/iads-rtstation/iads-data-producer/**'
             iads-zeromq-iads-bridge:
               - '.github/workflows/.lint.yml'
-              - 'data-visualization/iads/zeromq-iads-bridge/**'
+              - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
             kafka-rust-proto-consumer:
               - '.github/workflows/.lint.yml'
               - 'hm-kafka/kafka-client/kafka-rust/proto-consumer/**'
@@ -783,15 +783,15 @@ jobs:
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       - name: Install dependencies
-        working-directory: data-visualization/iads/iads-data-producer
+        working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
         run: |
           cargo build
       - name: Lint Rust (rustfmt)
-        working-directory: data-visualization/iads/iads-data-producer
+        working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
         run: |
           cargo fmt --all
       - name: Lint Rust (Clippy)
-        working-directory: data-visualization/iads/iads-data-producer
+        working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
         run: |
           cargo clippy
 
@@ -814,15 +814,15 @@ jobs:
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       - name: Install dependencies
-        working-directory: data-visualization/iads/zeromq-iads-bridge
+        working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
         run: |
           cargo build
       - name: Lint Rust (rustfmt)
-        working-directory: data-visualization/iads/zeromq-iads-bridge
+        working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
         run: |
           cargo fmt --all
       - name: Lint Rust (Clippy)
-        working-directory: data-visualization/iads/zeromq-iads-bridge
+        working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
         run: |
           cargo clippy
 
