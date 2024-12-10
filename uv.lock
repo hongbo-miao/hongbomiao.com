@@ -119,21 +119,12 @@ dependencies = [
     { name = "rich", marker = "platform_system != 'Windows'" },
     { name = "ruamel-yaml", marker = "platform_system != 'Windows'" },
     { name = "subprocess-tee", marker = "platform_system != 'Windows'" },
-    { name = "wcmatch", marker = "platform_system != 'Windows'" },
+    { name = "wcmatch", marker = "platform_system != 'Windows' and python_full_version >= '3.13.0' and python_full_version < '3.14'" },
     { name = "yamllint", marker = "platform_system != 'Windows'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7b/2a/5f85804b10cfda961c27d6ea110327e53e43d667fc5d071faa3017f948ad/ansible_lint-24.10.0.tar.gz", hash = "sha256:59b396bcd9be734f9ae40796e9660c267ae85f1f13e47811fd8abdc6aaffea5c", size = 537358 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/89/63/dd527d1f2f5308ebf6fb65482f1375a168af915c18298b6273e976fcfac2/ansible_lint-24.10.0-py3-none-any.whl", hash = "sha256:1c4f4c3a79cc983edab9deb09cc898285cbee30658112d66f72cc9f67932d616", size = 308616 },
-]
-
-[[package]]
-name = "appdirs"
-version = "1.4.4"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d7/d8/05696357e0311f5b5c316d7b95f46c669dd9c15aaeecbb48c7d0aeb88c40/appdirs-1.4.4.tar.gz", hash = "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41", size = 13470 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/3b/00/2344469e2084fb287c2e0b57b72910309874c3245463acd6cf5e3db69324/appdirs-1.4.4-py2.py3-none-any.whl", hash = "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128", size = 9566 },
 ]
 
 [[package]]
@@ -401,7 +392,7 @@ dev = [
     { name = "pip", specifier = "==24.3.1" },
     { name = "poethepoet", specifier = "==0.31.1" },
     { name = "ruff", specifier = "==0.8.2" },
-    { name = "sqlfluff", specifier = "==3.2.5" },
+    { name = "sqlfluff", specifier = "==3.3.0" },
     { name = "vsg", specifier = "==3.28.0" },
     { name = "yamllint", specifier = "==1.35.1" },
 ]
@@ -1005,25 +996,25 @@ wheels = [
 
 [[package]]
 name = "sqlfluff"
-version = "3.2.5"
+version = "3.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "appdirs", marker = "platform_system != 'Windows'" },
     { name = "chardet", marker = "platform_system != 'Windows'" },
     { name = "click", marker = "platform_system != 'Windows'" },
     { name = "colorama", marker = "platform_system != 'Windows'" },
     { name = "diff-cover", marker = "platform_system != 'Windows'" },
     { name = "jinja2", marker = "platform_system != 'Windows'" },
     { name = "pathspec", marker = "platform_system != 'Windows'" },
+    { name = "platformdirs", marker = "platform_system != 'Windows'" },
     { name = "pytest", marker = "platform_system != 'Windows'" },
     { name = "pyyaml", marker = "platform_system != 'Windows'" },
     { name = "regex", marker = "platform_system != 'Windows'" },
     { name = "tblib", marker = "platform_system != 'Windows'" },
     { name = "tqdm", marker = "platform_system != 'Windows'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/33/31/9ad9e98fc8d7bfd739204b0ee20f81840332754abe6f80ed53bb40875764/sqlfluff-3.2.5.tar.gz", hash = "sha256:39822db2c6ad7dac9f6e43d36a3d086c503c051b09665d14a5bdf644770f6ef6", size = 831305 }
+sdist = { url = "https://files.pythonhosted.org/packages/6d/1f/d4d5f97110a917e01c4f5c921852eb11a3b69d6c5decdbb6ddd5658ccdcd/sqlfluff-3.3.0.tar.gz", hash = "sha256:ea0b752c0b8f4602a56fa5b381eb5c806799e4941df8fc0aad0842c9d4283e03", size = 858267 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b1/46/c748afebe5978abc90e8af20c17fb70fca237e8cbc5da1ed448208e51881/sqlfluff-3.2.5-py3-none-any.whl", hash = "sha256:ae9ff821986b5b0dd1ea858392db7f0eb80343c2cdeee7900fa031f581e04643", size = 836737 },
+    { url = "https://files.pythonhosted.org/packages/be/0d/466f9d4fb3f204c5638d63693dafd2d0c014ac40b2cac15b7a99cf551f20/sqlfluff-3.3.0-py3-none-any.whl", hash = "sha256:83c29db0e7773bb5075543e2049a919632f6ced8a2b475d6a69879da52b03097", size = 867038 },
 ]
 
 [[package]]
