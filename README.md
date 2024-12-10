@@ -650,6 +650,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **ShellCheck** - Shell linter
 - **solhint** - Solidity linter
 - **SQLFluff** - SQL code formatter and linter
+- **Taplo** - TOML code formatter
 - **terraform** - Terraform code formatter
 - **tsc** - TypeScript static type checker
 - **VHDL Style Guide (VSG)** - VHDL code formatter

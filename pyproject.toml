@@ -9,31 +9,31 @@ environments = ["platform_system != 'Windows'"]
 
 [dependency-groups]
 dev = [
-    "ansible==11.1.0",
-    "ansible-lint==24.10.0",
-    "autoflake==2.3.1",
-    "black[d,jupyter]==24.10.0",
-    "cmakelint==1.4.3",
-    "isort==5.13.2",
-    "miss-hit==0.9.44",
-    "mypy==1.13.0",
-    "nb-clean==4.0.1",
-    "pip==24.3.1",
-    "poethepoet==0.31.1",
-    "ruff==0.8.2",
-    "sqlfluff==3.2.5",
-    "vsg==3.28.0",
-    "yamllint==1.35.1",
+  "ansible==11.1.0",
+  "ansible-lint==24.10.0",
+  "autoflake==2.3.1",
+  "black[d,jupyter]==24.10.0",
+  "cmakelint==1.4.3",
+  "isort==5.13.2",
+  "miss-hit==0.9.44",
+  "mypy==1.13.0",
+  "nb-clean==4.0.1",
+  "pip==24.3.1",
+  "poethepoet==0.31.1",
+  "ruff==0.8.2",
+  "sqlfluff==3.2.5",
+  "vsg==3.28.0",
+  "yamllint==1.35.1",
 ]
 
 [tool.poe.tasks]
 clean-jupyter-notebook = "nb-clean clean"
 ansible-galaxy-install = "ansible-galaxy install"
 sqlfluff-list-dialects = "sqlfluff dialects"
-lint-ansible = {shell = "ansible-lint $(git ls-files '**/playbook.yml')"}
-lint-cmake = {shell = "cmakelint $(git ls-files '**/CMakeLists.txt')"}
-lint-matlab = {shell = "mh_style $(git ls-files '**/*.m')"}
-lint-matlab-fix = {shell = "mh_style --fix $(git ls-files '**/*.m')"}
+lint-ansible = { shell = "ansible-lint $(git ls-files '**/playbook.yml')" }
+lint-cmake = { shell = "cmakelint $(git ls-files '**/CMakeLists.txt')" }
+lint-matlab = { shell = "mh_style $(git ls-files '**/*.m')" }
+lint-matlab-fix = { shell = "mh_style --fix $(git ls-files '**/*.m')" }
 lint-python-autoflake = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --check --recursive ."
 lint-python-autoflake-fix = "autoflake --remove-all-unused-imports --remove-unused-variables --remove-duplicate-keys --in-place --recursive ."
 lint-python-black = "black --check ."
@@ -44,7 +44,7 @@ lint-python-isort = "isort --check-only ."
 lint-python-isort-fix = "isort ."
 lint-sql = "sqlfluff lint"
 lint-sql-fix = "sqlfluff fix --force"
-lint-vhdl = {shell = "vsg --filename $(git ls-files '**/*.vhd')"}
-lint-vhdl-fix = {shell = "vsg --filename $(git ls-files '**/*.vhd') --fix"}
+lint-vhdl = { shell = "vsg --filename $(git ls-files '**/*.vhd')" }
+lint-vhdl-fix = { shell = "vsg --filename $(git ls-files '**/*.vhd') --fix" }
 lint-yaml = "yamllint ."
 static-type-check-python = "mypy --install-types --non-interactive"
