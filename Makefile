@@ -332,6 +332,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena
 	uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-trino
 	uv run poe static-type-check-python --package=data-storage.delta-lake.write-to-delta-lake
+	uv run poe static-type-check-python --package=data-storage.hm-duckdb
 	uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
 	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-config-reader
 	uv run poe static-type-check-python --package=embedded.decode-can-data
