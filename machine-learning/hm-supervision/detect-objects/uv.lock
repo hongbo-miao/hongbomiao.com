@@ -132,7 +132,7 @@ dev = [
 requires-dist = [
     { name = "opencv-python", specifier = "==4.10.0.84" },
     { name = "supervision", specifier = "==0.25.0" },
-    { name = "ultralytics", specifier = "==8.3.48" },
+    { name = "ultralytics", specifier = "==8.3.49" },
 ]
 
 [package.metadata.requires-dev]
@@ -433,7 +433,7 @@ name = "opencv-python"
 version = "4.10.0.84"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy" },
+    { name = "numpy", marker = "python_full_version >= '3.12.0' and python_full_version < '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/4a/e7/b70a2d9ab205110d715906fc8ec83fbb00404aeb3a37a0654fdb68eb0c8c/opencv-python-4.10.0.84.tar.gz", hash = "sha256:72d234e4582e9658ffea8e9cae5b63d488ad06994ef12d81dc303b17472f3526", size = 95103981 }
 wheels = [
@@ -459,7 +459,7 @@ name = "pandas"
 version = "2.2.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy" },
+    { name = "numpy", marker = "python_full_version >= '3.12.0' and python_full_version < '3.13'" },
     { name = "python-dateutil" },
     { name = "pytz" },
     { name = "tzdata" },
@@ -695,14 +695,14 @@ name = "supervision"
 version = "0.25.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "contourpy" },
+    { name = "contourpy", marker = "python_full_version >= '3.12.0' and python_full_version < '3.13'" },
     { name = "defusedxml" },
     { name = "matplotlib" },
-    { name = "numpy" },
+    { name = "numpy", marker = "python_full_version >= '3.12.0' and python_full_version < '3.13'" },
     { name = "opencv-python" },
     { name = "pillow" },
     { name = "pyyaml" },
-    { name = "scipy" },
+    { name = "scipy", marker = "python_full_version >= '3.12.0' and python_full_version < '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/45/5b/2c6ff2d81398966727a2e534f478f1bbc480f1a65d8d788ec72f0f874b5a/supervision-0.25.0.tar.gz", hash = "sha256:4d5f15a7e8f683527f4bc2a74b78c938b1213d1a6748cdf33d15a57bcc9b1bd0", size = 146582 }
 wheels = [
@@ -742,9 +742,9 @@ dependencies = [
     { name = "nvidia-nccl-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
     { name = "nvidia-nvjitlink-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
     { name = "nvidia-nvtx-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
-    { name = "setuptools" },
-    { name = "sympy" },
-    { name = "triton", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
+    { name = "setuptools", marker = "python_full_version >= '3.12.0' and python_full_version < '3.13'" },
+    { name = "sympy", marker = "python_full_version >= '3.12.0' and python_full_version < '3.13'" },
+    { name = "triton", marker = "platform_machine == 'x86_64' and platform_system == 'Linux' and python_full_version >= '3.12.0' and python_full_version < '3.13'" },
     { name = "typing-extensions" },
 ]
 wheels = [
@@ -813,7 +813,7 @@ wheels = [
 
 [[package]]
 name = "ultralytics"
-version = "8.3.48"
+version = "8.3.49"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "matplotlib" },
@@ -832,9 +832,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "ultralytics-thop" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ef/b8/df0acdedcd6b542dc94afc5395829815a3a27c0a90a9bf796b37291205ee/ultralytics-8.3.48.tar.gz", hash = "sha256:9a632386776039f717e785baa7aba03963bbed2cdb6adf4cc17463cf03fa9433", size = 779110 }
+sdist = { url = "https://files.pythonhosted.org/packages/1a/7b/3f1dbc51c5afca63c84297a4ca7cf577a8b01eb6e6a9d6d66c3a4516d54c/ultralytics-8.3.49.tar.gz", hash = "sha256:528946873e8d4f5193a6a838685c9a59424d12c106757d2d3a6ef1451444279e", size = 779006 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5f/c9/05b981ec183e4d3eb507aa5637fde4b33fb84200aaaa3d757134a5bf2703/ultralytics-8.3.48-py3-none-any.whl", hash = "sha256:ee947bc6562762fc998ff24c0c660a8cc501713b38d891992a443b2d146a5483", size = 898824 },
+    { url = "https://files.pythonhosted.org/packages/d0/a3/87a9d3c9d1e873d922409d18faa2a77c18e3f7a32757fdaca16bb7a889f3/ultralytics-8.3.49-py3-none-any.whl", hash = "sha256:552447b00b24f373c2f3b65ac62ad6b9636daff0dcb859a51deb4c1f5883576e", size = 898708 },
 ]
 
 [[package]]
