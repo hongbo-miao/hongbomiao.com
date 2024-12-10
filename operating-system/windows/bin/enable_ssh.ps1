@@ -9,7 +9,7 @@ Set-Service -Name sshd -StartupType 'Automatic'
 Start-Service sshd
 
 # Check if sshd service is running and waiting for connections on port 22
-netstat -nao | find /i '":22"'
+netstat -nao | findstr ":22"
 
 # Check if the firewall allows inbound connection to port 22
 Get-NetFirewallRule -Name *OpenSSH-Server* |select Name, DisplayName, Description, Enabled
