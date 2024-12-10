@@ -249,6 +249,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **InfluxDB Enterprise** - Distributed time-series database
 - **Prometheus** - Time-series database
 - **Loki** - Log aggregation system
+- **DuckDB** - Embedded analytical SQL database
 - **Apache Cassandra** - Distributed wide-column NoSQL database
 - **Qdrant** - Distributed vector database
 - **Chroma** - Distributed vector database

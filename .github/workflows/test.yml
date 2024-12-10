@@ -52,6 +52,7 @@ jobs:
       national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
       hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
       hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
+      hm-duckdb: ${{ steps.filter.outputs.hm-duckdb }}
       hm-flax: ${{ steps.filter.outputs.hm-flax }}
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
@@ -219,6 +220,9 @@ jobs:
             hm-aws-parallelcluster:
               - '.github/workflows/test.yml'
               - 'cloud-platform/aws/aws-parallelcluster/pcluster/**'
+            hm-duckdb:
+              - '.github/workflows/test.yml'
+              - 'data-storage/hm-duckdb/**'
             hm-flax:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-flax/**'
@@ -1279,6 +1283,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.1
         with:
           directory: data-storage/delta-lake/write-to-delta-lake
+
+  duckdb-test:
+    name: DuckDB | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-duckdb == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4.2.0
+        with:
+          version: 0.5.6
+          enable-cache: true
+          cache-dependency-glob: data-storage/hm-duckdb/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/hm-duckdb/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/hm-duckdb
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/hm-duckdb
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.1
+        with:
+          directory: data-storage/hm-duckdb
 
   autogluon-test:
     name: AutoGluon | Test
