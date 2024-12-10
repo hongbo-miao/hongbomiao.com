@@ -28,6 +28,7 @@ jobs:
       solidity: ${{ steps.filter.outputs.solidity }}
       sql: ${{ steps.filter.outputs.sql }}
       terraform: ${{ steps.filter.outputs.terraform }}
+      toml: ${{ steps.filter.outputs.toml }}
       vhdl: ${{ steps.filter.outputs.vhdl }}
       xml: ${{ steps.filter.outputs.xml }}
       yaml: ${{ steps.filter.outputs.yaml }}
@@ -141,6 +142,10 @@ jobs:
               - '**/*.tf'
               - '**/*.tfvars'
               - '**/.terraform.lock.hcl'
+            toml:
+              - '.github/workflows/.lint.yml'
+              - 'taplo.toml'
+              - '**/*.toml'
             vhdl:
               - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
@@ -1241,6 +1246,27 @@ jobs:
       - name: Lint Terraform
         run: |
           terraform fmt -recursive -check
+
+  lint-toml:
+    name: TOML
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.toml == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Lint Protocol Buffers
+        working-directory: api-go
+        run: |
+          docker run \
+            --rm \
+            --volume="$(pwd):/workspace" \
+            --workdir=/workspace \
+            tamasfe/taplo \
+            fmt \
+              --check
 
   lint-vhdl:
     name: VHDL
