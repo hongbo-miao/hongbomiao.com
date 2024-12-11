@@ -66,10 +66,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **React** - Web framework
 - **Vite** - JavaScript build tool and development server
-- **Redux** - State container
-- **React Query** - Hooks for fetching, caching and updating asynchronous data
-- **redux-observable** - Side effects
 - **RxJS** - Asynchronous programming with observable streams
+- **TanStack Query** - Hooks for fetching, caching and updating asynchronous data
 - **graphql-tag** - GraphQL query parsing
 - **Bulma** - CSS framework
 - **PurgeCSS** - Unused CSS removing
@@ -77,7 +75,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **React Testing Library** - React component testing
 - **Storybook** - Visual testing
   - **[Chromatic](https://www.chromatic.com/builds?appId=5d626a63a601530020759b10)** - Storybook reviewing
-- **rxjs/testing** - Marble testing
 - **Cypress** - End-to-end testing
 - **Lighthouse CI** - Performance, accessibility, search engine optimization (SEO), progressive web app (PWA) analysis
 - **Sentry** - Error tracking
@@ -680,6 +677,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Testing
 
 - **Unit testing**
+- **Marble testing**
 - **Snapshot testing**
 - **Visual testing**
 - **Instrumented testing**

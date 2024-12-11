@@ -8,6 +8,11 @@ import LocalStorage from '../utils/LocalStorage';
 import axiosInstance from '../utils/axiosInstance';
 import getAuthHeaders from '../utils/getAuthHeaders';
 
+const initialState: Me = {
+  name: 'Hongbo Miao',
+  bio: 'Making magic happen',
+};
+
 const getMe = async (me: Me | null): Promise<AxiosResponse<{ data: { me: Me } }> | null> => {
   if (me == null) return null;
   return axiosInstance({
@@ -26,13 +31,13 @@ const getMe = async (me: Me | null): Promise<AxiosResponse<{ data: { me: Me } }>
 };
 
 interface UseMe {
-  me: Me | null;
+  me: Me;
   updateMe: (me: Me) => void;
   clearMe: () => void;
 }
 
 const useMe = (): UseMe => {
-  const [me, setMe] = React.useState<Me | null>(LocalStorage.getMe());
+  const [me, setMe] = React.useState<Me>(() => LocalStorage.getMe() ?? initialState);
   const queryClient = useQueryClient();
 
   useQuery<AxiosResponse<{ data: { me: Me } }> | null, Error>({
@@ -56,7 +61,7 @@ const useMe = (): UseMe => {
   };
 
   const clearMe = () => {
-    setMe(null);
+    setMe({});
     LocalStorage.clearMe();
     queryClient.resetQueries({ queryKey: [queryKeys.me] });
   };
