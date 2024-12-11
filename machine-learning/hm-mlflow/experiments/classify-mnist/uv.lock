@@ -165,7 +165,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "lightning", specifier = "==2.4.0" },
-    { name = "mlflow", specifier = "==2.18.0" },
+    { name = "mlflow", specifier = "==2.19.0" },
     { name = "torch", specifier = "==2.5.1" },
     { name = "torchvision", specifier = "==0.20.1" },
     { name = "wandb", specifier = "==0.19.0" },
@@ -249,7 +249,7 @@ wheels = [
 
 [package.optional-dependencies]
 toml = [
-    { name = "tomli", marker = "python_full_version <= '3.11'" },
+    { name = "tomli", marker = "python_full_version <= '3.11' and python_full_version >= '3.11.0' and python_full_version < '3.12'" },
 ]
 
 [[package]]
@@ -679,7 +679,7 @@ wheels = [
 
 [[package]]
 name = "mlflow"
-version = "2.18.0"
+version = "2.19.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "alembic" },
@@ -699,14 +699,14 @@ dependencies = [
     { name = "sqlalchemy" },
     { name = "waitress", marker = "platform_system == 'Windows'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b9/4e/cff7f16684073cba17cd8c4b838d974b3f1a1fc02d38a7f2081b85e0c7e5/mlflow-2.18.0.tar.gz", hash = "sha256:90f0d04b02e35c0f2fccc88e892e37b84871cb4f766acd3ef904c1c30be63ee3", size = 26750827 }
+sdist = { url = "https://files.pythonhosted.org/packages/cd/76/f623312328a8b642fba8b9683e07904ee9f9c59b9e58528e9a9f5bbdcfea/mlflow-2.19.0.tar.gz", hash = "sha256:b860e9d2599a32460968a0a90efdf960b6a6237a08bff44cc5508830017cf70e", size = 26813362 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f2/17/d24ec693ef27ce33f68414872f1f79ad3da62922edc6c6239a6de5336e5a/mlflow-2.18.0-py3-none-any.whl", hash = "sha256:844a5c26ce8f83bbb5e038a7ce5a47be62edee89ad13ecf98ae2dbf0db9fa58f", size = 27330396 },
+    { url = "https://files.pythonhosted.org/packages/c2/39/e051e58f35077500fea62adb67c0ff32cab768a5bbc1e0d8c682e30d56ee/mlflow-2.19.0-py3-none-any.whl", hash = "sha256:875364a9c37d2e6e5b6256a3cee314e1e6ada0c253f46b6fcb37d986a2dc2514", size = 27397174 },
 ]
 
 [[package]]
 name = "mlflow-skinny"
-version = "2.18.0"
+version = "2.19.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cachetools" },
@@ -723,9 +723,9 @@ dependencies = [
     { name = "requests" },
     { name = "sqlparse" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f9/89/3fbcf0e415678029b783d6951373443aa64cb352c4959374f08903710690/mlflow_skinny-2.18.0.tar.gz", hash = "sha256:87e83f56c362a520196b2f0292b24efdca7f8b2068a6a6941f2ec9feb9bfd914", size = 5445516 }
+sdist = { url = "https://files.pythonhosted.org/packages/93/69/53c19be8f05574b9955a2930d0c9b04403d5dd35afce05fbe664b5bfbbfc/mlflow_skinny-2.19.0.tar.gz", hash = "sha256:55a464082ecd48961f73f9a0a58b8d44bf2e77bd32632998f1dffd43ef48623c", size = 5503927 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2e/1b/20128a015405fdfda2dce38b975acf19cd532f4c8dc4231fd088fb8553dd/mlflow_skinny-2.18.0-py3-none-any.whl", hash = "sha256:b924730b38cf9a7400737aa3e011c97edf978eed354bb0eb89ccb1f9e42764dc", size = 5793030 },
+    { url = "https://files.pythonhosted.org/packages/05/95/75f59715e39aa2224e5ecd8c52d5a305467e16a843ade2235a215599a1fa/mlflow_skinny-2.19.0-py3-none-any.whl", hash = "sha256:72c652545460db09dc5716241d2fcd9a211b7875444632fbe2d0b62a1f057694", size = 5854771 },
 ]
 
 [[package]]
@@ -962,7 +962,7 @@ name = "pandas"
 version = "2.2.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy" },
+    { name = "numpy", marker = "python_full_version >= '3.11.0' and python_full_version < '3.12'" },
     { name = "python-dateutil" },
     { name = "pytz" },
     { name = "tzdata" },
@@ -1400,7 +1400,7 @@ name = "sqlalchemy"
 version = "2.0.36"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "greenlet", marker = "platform_machine == 'AMD64' or platform_machine == 'WIN32' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'ppc64le' or platform_machine == 'win32' or platform_machine == 'x86_64'" },
+    { name = "greenlet", marker = "(platform_machine == 'AMD64' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'WIN32' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'aarch64' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'amd64' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'ppc64le' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'win32' and python_full_version >= '3.11.0' and python_full_version < '3.12') or (platform_machine == 'x86_64' and python_full_version >= '3.11.0' and python_full_version < '3.12')" },
     { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/65/9cbc9c4c3287bed2499e05033e207473504dc4df999ce49385fb1f8b058a/sqlalchemy-2.0.36.tar.gz", hash = "sha256:7f2767680b6d2398aea7082e45a774b2b0767b5c8d8ffb9c8b683088ea9b29c5", size = 9574485 }
@@ -1486,8 +1486,8 @@ dependencies = [
     { name = "nvidia-nccl-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
     { name = "nvidia-nvjitlink-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
     { name = "nvidia-nvtx-cu12", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
-    { name = "sympy" },
-    { name = "triton", marker = "platform_machine == 'x86_64' and platform_system == 'Linux'" },
+    { name = "sympy", marker = "python_full_version >= '3.11.0' and python_full_version < '3.12'" },
+    { name = "triton", marker = "platform_machine == 'x86_64' and platform_system == 'Linux' and python_full_version >= '3.11.0' and python_full_version < '3.12'" },
     { name = "typing-extensions" },
 ]
 wheels = [
@@ -1596,7 +1596,7 @@ dependencies = [
     { name = "docker-pycreds" },
     { name = "gitpython" },
     { name = "platformdirs" },
-    { name = "protobuf" },
+    { name = "protobuf", marker = "python_full_version >= '3.11.0' and python_full_version < '3.12'" },
     { name = "psutil" },
     { name = "pydantic" },
     { name = "pyyaml" },
@@ -1604,7 +1604,7 @@ dependencies = [
     { name = "sentry-sdk" },
     { name = "setproctitle" },
     { name = "setuptools" },
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "python_full_version >= '3.11.0' and python_full_version < '3.12'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ab/cc/3322f2c4d85b84a18cb93e97ecad216fe6a59ec39118a82bdfed7872f660/wandb-0.19.0.tar.gz", hash = "sha256:cfacf2cc323561909e7572e772a4a5f849f28248a4529247b199466171cd84f8", size = 11821728 }
 wheels = [
