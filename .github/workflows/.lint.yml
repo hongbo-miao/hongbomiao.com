@@ -1257,14 +1257,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Lint Protocol Buffers
-        working-directory: api-go
+      - name: Lint TOML
         run: |
           docker run \
             --rm \
             --volume="$(pwd):/workspace" \
             --workdir=/workspace \
-            tamasfe/taplo \
+            tamasfe/taplo:latest \
             fmt \
               --check
 
