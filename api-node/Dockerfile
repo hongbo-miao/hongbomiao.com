@@ -25,8 +25,9 @@ FROM api-node-base AS release
 RUN apk add --no-cache dumb-init
 ENV NODE_ENV production
 USER node
-COPY --from=api-node-builder /usr/src/app/build ./build
-COPY --from=api-node-builder /usr/src/app/node_modules ./node_modules
-COPY --from=api-node-builder /usr/src/app/package.json ./
+COPY --from=api-node-builder --chown=node:node /usr/src/app/public ./public
+COPY --from=api-node-builder --chown=node:node /usr/src/app/build ./build
+COPY --from=api-node-builder --chown=node:node /usr/src/app/node_modules ./node_modules
+COPY --from=api-node-builder --chown=node:node /usr/src/app/package.json ./
 EXPOSE 58136
-CMD ["dumb-init", "node", "build/index.js"]
+CMD ["dumb-init", "node", "build/src/index.js"]
