@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import useMe from '../../auth/hooks/useMe';
 import config from '../../config';
-import HealthAction from '../../health/actions/HealthAction';
-import pingSubscription from '../../health/queries/pingSubscription';
+import useHealthSubscription from '../../health/hooks/useHealthSubscription';
 import HmAudioPlayer from '../../shared/components/AudioPlayer';
 import HmImage from '../../shared/components/Image';
 import HmSparkles from '../../shared/components/Sparkles';
-import RootState from '../../shared/types/RootState';
 import analytics from '../../shared/utils/analytics';
 import springWaltzMP3 from '../audio/spring-waltz.mp3';
 import hatAVIF from '../images/hat.avif';
@@ -17,15 +15,12 @@ import HmFooter from './Footer';
 import styles from './Home.module.css';
 
 function Home() {
-  const dispatch = useDispatch();
-  const me = useSelector((state: RootState) => state.me);
+  const { me } = useMe();
+  useHealthSubscription();
 
   React.useEffect(() => {
-    // queryMe(meQuery);
-    dispatch(HealthAction.subscribePing(pingSubscription));
-
     analytics.page();
-  }, [dispatch]);
+  }, []);
 
   const { bio, name } = me;
 

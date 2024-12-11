@@ -146,7 +146,7 @@ const config: Config = {
   devCORSAllowOrigins: [
     ...sharedCORSAllowOrigins,
     `${HTTP_PROTOCOL}://${HOST}:80`,
-    `${HTTP_PROTOCOL}://${HOST}:3000`,
+    `${HTTP_PROTOCOL}://${HOST}:62470`,
     'https://www.k8s-hongbomiao.com',
   ],
   prodCORSAllowOrigins: [...sharedCORSAllowOrigins, 'https://www.hongbomiao.com'],
