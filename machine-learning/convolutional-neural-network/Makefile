@@ -6,10 +6,11 @@ uv-install-dependencies:
 	uv sync --dev
 
 uv-run-dev:
+	uv run poe dev
+uv-run-dev-wandb-offline:
 	export WANDB_MODE=offline && \
 	uv run poe dev
-uv-run-dev-should-download-original-data:
-	export WANDB_MODE=offline && \
+uv-run-dev-download-original-data:
 	uv run poe dev --should_download_original_data=True
 uv-run-test:
 	uv run poe test
