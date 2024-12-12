@@ -3271,7 +3271,7 @@ jobs:
       - name: Train model
         working-directory: machine-learning/graph-neural-network
         env:
-          WANDB_MODE: offline
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
         run: |
           uv run poe dev --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
 
@@ -3338,7 +3338,7 @@ jobs:
         working-directory: machine-learning/convolutional-neural-network
         shell: bash -l {0}
         env:
-          WANDB_MODE: offline
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
         run: |
           uv run poe dev --should_download_original_data=True
       - name: Write CML report

@@ -8,7 +8,6 @@ uv-install-dependencies:
 uv-run-dev:
 	uv run poe dev --dataset=ogbg-molhiv --gnn=gcn
 uv-run-dev-debug:
-	export WANDB_MODE=offline && \
 	uv run poe dev --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
 uv-run-test:
 	uv run poe test
