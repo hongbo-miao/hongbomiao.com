@@ -1,19 +1,16 @@
 mod graphql;
-use crate::graphql::{create_schema, graphiql, graphql_handler};
+mod handlers;
 use axum::routing::{get, post};
-use axum::{serve, Router};
+use axum::Router;
+use graphql::{create_schema, graphiql, graphql_handler};
 use http::Method;
+use std::net::SocketAddr;
 use std::{env, time::Duration};
-use tokio::net::TcpListener;
 use tower_http::compression::CompressionLayer;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::timeout::TimeoutLayer;
 use tower_http::trace::TraceLayer;
 use tracing::info;
-
-async fn root() -> &'static str {
-    "ok"
-}
 
 #[tokio::main]
 async fn main() {
@@ -30,7 +27,6 @@ async fn main() {
         .expect("PORT must be set in environment")
         .parse::<u16>()
         .expect("PORT must be a valid number");
-
     let compression = CompressionLayer::new();
     let timeout = TimeoutLayer::new(Duration::from_secs(10));
     let cors = CorsLayer::new()
@@ -38,23 +34,25 @@ async fn main() {
         .allow_origin(Any)
         .allow_headers(Any);
     let trace = TraceLayer::new_for_http();
-
     let schema = create_schema();
 
     let app = Router::new()
-        .route("/", get(root))
+        .route("/", get(handlers::root::root))
         .route("/graphiql", get(graphiql))
         .route("/graphql", post(graphql_handler))
+        .route_service(
+            "/ws",
+            async_graphql_axum::GraphQLSubscription::new(schema.clone()),
+        )
         .with_state(schema)
         .layer(compression)
         .layer(timeout)
         .layer(cors)
         .layer(trace);
 
-    let listener = TcpListener::bind(format!("0.0.0.0:{}", port))
+    let addr = SocketAddr::from(([0, 0, 0, 0], port));
+    info!("Listening on {}", addr);
+    axum::serve(tokio::net::TcpListener::bind(&addr).await.unwrap(), app)
         .await
         .unwrap();
-    info!("Server listening on port {}", port);
-
-    serve(listener, app).await.unwrap();
 }
