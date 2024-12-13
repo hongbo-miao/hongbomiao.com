@@ -1,3 +1,8 @@
+// https://jestjs.io/docs/next/configuration
+
+/**
+ * @type {import('jest').Config}
+ */
 export default {
   testEnvironment: 'node',
   testPathIgnorePatterns: ['<rootDir>/build'],

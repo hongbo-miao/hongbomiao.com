@@ -8,7 +8,7 @@ const WEBSITES: ReadonlyArray<Website> = [
   {
     name: 'Pinterest',
     src: pinterestLogo,
-    url: 'https://www.pinterest.com/hongbo_miao/',
+    url: 'https://www.pinterest.com/hongbo_miao',
   },
   {
     name: 'GitHub',
@@ -23,7 +23,7 @@ const WEBSITES: ReadonlyArray<Website> = [
   {
     name: 'LinkedIn',
     src: linkedinLogo,
-    url: 'https://www.linkedin.com/in/hongbomiao/',
+    url: 'https://www.linkedin.com/in/hongbomiao',
   },
 ];
 

@@ -1,3 +1,8 @@
+// https://jestjs.io/docs/next/configuration
+
+/**
+ * @type {import('jest').Config}
+ */
 export default {
   preset: 'jest-expo',
   // https://docs.expo.dev/develop/unit-testing/
