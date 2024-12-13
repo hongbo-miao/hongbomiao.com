@@ -2,4 +2,4 @@
 set -e
 
 . /venv/bin/activate
-gunicorn 'flaskr:create_app()' --bind=:35903 --workers=5
+exec uvicorn main:app --host=0.0.0.0 --port=35903

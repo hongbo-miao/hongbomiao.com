@@ -3,12 +3,12 @@ name = "api-python"
 version = "1.0.0"
 requires-python = "~=3.13.0"
 dependencies = [
-  "Flask==3.1.0",
-  "Flask-Cors==5.0.0",
+  "fastapi==0.115.6",
+  "uvicorn==0.32.1",
   "confluent-kafka==2.6.1",
-  "gunicorn==23.0.0",
   "python-dotenv==1.0.1",
-  "sentry-sdk[flask]==2.19.2",
+  "sentry-sdk[fastapi]==2.19.2",
+  "pydantic-settings==2.7.0",
 ]
 
 [dependency-groups]
@@ -16,16 +16,14 @@ dev = [
   "poethepoet==0.31.1",
   "pytest==8.3.4",
   "pytest-cov==6.0.0",
+  "httpx==0.27.0",
 ]
 
 [tool.uv]
 package = false
 
 [tool.poe.tasks]
-dev = "flask run"
-test = "pytest --verbose --verbose"
+dev = "uvicorn main:app --reload --port=35903"
+serve = "uvicorn main:app --host=0.0.0.0 --port=35903"
+test = "pytest"
 test-coverage = "pytest --cov=. --cov-report=xml"
-serve = "gunicorn 'flaskr:create_app()' --bind=:35903 --workers=5"
-flask-help = "flask --help"
-flask-list-routes = "flask routes"
-flask-greet = "flask greet"

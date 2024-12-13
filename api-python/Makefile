@@ -16,12 +16,6 @@ uv-run-test:
 	uv run poe test
 uv-run-test-coverage:
 	uv run poe test-coverage
-uv-run-flask-help:
-	uv run poe flask-help
-uv-run-flask-list-routes:
-	uv run poe flask-list-routes
-uv-run-flask-greet:
-	uv run poe flask-greet
 
 docker-build:
 	cd .. && \

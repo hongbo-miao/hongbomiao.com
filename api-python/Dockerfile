@@ -52,6 +52,6 @@ COPY --from=builder /wheels/ /wheels/
 RUN . /venv/bin/activate \
   && pip install --no-cache-dir /wheels/*.whl \
   && rm -r -f /wheels
-COPY ["api-python/docker-entrypoint.sh", "./"]
+COPY ["api-python/", "./"]
 EXPOSE 35903
 ENTRYPOINT ["./docker-entrypoint.sh"]
