@@ -2,6 +2,8 @@ cargo-clean:
 	cargo clean
 cargo-update:
 	cargo update
+cargo-check:
+	cargo check
 cargo-test:
 	cargo test --all-features
 cargo-build:
