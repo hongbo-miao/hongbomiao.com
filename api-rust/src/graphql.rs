@@ -1,12 +1,15 @@
-pub mod resolvers;
-pub mod schema;
-use self::schema::Query;
-use async_graphql::{EmptyMutation, EmptySubscription, Schema};
-use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
-use axum::extract::State;
-use axum::response::IntoResponse;
+mod mutation;
+mod query;
+mod subscription;
 
-pub type ApiSchema = Schema<Query, EmptyMutation, EmptySubscription>;
+use self::mutation::Mutation;
+use self::query::Query;
+use self::subscription::Subscription;
+use async_graphql::Schema;
+use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
+use axum::{extract::State, response::IntoResponse};
+
+type ApiSchema = Schema<Query, Mutation, Subscription>;
 
 pub async fn graphql_handler(
     State(schema): State<ApiSchema>,
@@ -19,10 +22,14 @@ pub async fn graphiql() -> impl IntoResponse {
     axum::response::Html(
         async_graphql::http::GraphiQLSource::build()
             .endpoint("/graphql")
+            .subscription_endpoint("/ws")
             .finish(),
     )
 }
 
 pub fn create_schema() -> ApiSchema {
-    Schema::new(Query, EmptyMutation, EmptySubscription)
+    Schema::build(Query, Mutation, Subscription)
+        .limit_depth(100)
+        .limit_complexity(1000)
+        .finish()
 }

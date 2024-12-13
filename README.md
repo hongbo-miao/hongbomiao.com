@@ -125,7 +125,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Tracing** - Tracing
 - **dotenvy** - Environment variables loading
 - **Tower HTTP** - HTTP middleware and utilities (compression, CORS, timeout, trace)
-- **async-graphql** - GraphQL
+- **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
 
 ### API Server - Go
 
@@ -168,11 +168,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **SWC** - JavaScript compiler
 - **Express** - Web framework
 - **GraphQL.js**, **graphql-http** - GraphQL
-  - **graphql-ws**, **graphql-subscriptions** - GraphQL subscriptions
+  - **graphql-ws**, **graphql-subscriptions** - GraphQL subscription
   - **graphql-upload** - GraphQL upload
   - **graphql-shield** - GraphQL permissions
   - **graphql-depth-limit** - GraphQL depth limit
-  - **graphql-query-complexity** - GraphQL query complexity analysis
+  - **graphql-query-complexity** - GraphQL complexity limit
 - **DataLoader** - Batching and caching
 - **Knex.js** - SQL query builder
 - **node-postgres** - PostgreSQL client
