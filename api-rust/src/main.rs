@@ -1,14 +1,19 @@
-use axum::{routing::get, serve, Router};
+mod graphql;
+use crate::graphql::{create_schema, graphiql, graphql_handler};
+use axum::routing::{get, post};
+use axum::{serve, Router};
 use http::Method;
 use std::{env, time::Duration};
 use tokio::net::TcpListener;
+use tower_http::compression::CompressionLayer;
+use tower_http::cors::{Any, CorsLayer};
+use tower_http::timeout::TimeoutLayer;
 use tower_http::trace::TraceLayer;
-use tower_http::{
-    compression::CompressionLayer,
-    cors::{Any, CorsLayer},
-    timeout::TimeoutLayer,
-};
 use tracing::info;
+
+async fn root() -> &'static str {
+    "ok"
+}
 
 #[tokio::main]
 async fn main() {
@@ -34,8 +39,13 @@ async fn main() {
         .allow_headers(Any);
     let trace = TraceLayer::new_for_http();
 
+    let schema = create_schema();
+
     let app = Router::new()
         .route("/", get(root))
+        .route("/graphiql", get(graphiql))
+        .route("/graphql", post(graphql_handler))
+        .with_state(schema)
         .layer(compression)
         .layer(timeout)
         .layer(cors)
@@ -47,8 +57,4 @@ async fn main() {
     info!("Server listening on port {}", port);
 
     serve(listener, app).await.unwrap();
-}
-
-async fn root() -> &'static str {
-    "Hello, World!"
 }

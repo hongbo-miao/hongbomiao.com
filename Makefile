@@ -160,7 +160,7 @@ rust-version:
 	rustc --version
 
 rustup-set-default-rust-version:
-	rustup default 1.80.1
+	rustup default 1.82.0
 rustup-update:
 	rustup self update
 rustup-add:
@@ -174,6 +174,8 @@ cargo-update-lock-file:
 	cargo generate-lockfile
 cargo-update:
 	cargo update
+cargo-check:
+	cargo check
 cargo-add:
 	cargo add xxx
 cargo-add-features:
