@@ -1,3 +1,5 @@
+// https://stryker-mutator.io/docs/stryker-js/config-file
+
 /**
  * @type {import('@stryker-mutator/api/core').PartialStrykerOptions}
  */

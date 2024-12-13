@@ -1,3 +1,5 @@
+// https://eslint.org/docs/latest/use/configure/configuration-files
+
 import eslint from '@eslint/js';
 import eslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
@@ -8,6 +10,9 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import securityPlugin from 'eslint-plugin-security';
 import globals from 'globals';
 
+/**
+ * @type {Array<import('eslint').Linter.Config>}
+ */
 export default [
   {
     // https://eslint.org/docs/latest/use/configure/ignore#the-eslintignore-file

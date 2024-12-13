@@ -1,3 +1,5 @@
+// https://eslint.org/docs/latest/use/configure/configuration-files
+
 const grafanaConfig = require("@grafana/eslint-config/flat");
 
 /**
