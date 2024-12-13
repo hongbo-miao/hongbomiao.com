@@ -296,9 +296,9 @@ lint-terraform:
 lint-terraform-fix:
 	terraform fmt -recursive
 lint-toml:
-	 taplo fmt --check
+	taplo fmt --check
 lint-toml-fix:
-	 taplo fmt
+	taplo fmt
 lint-vhdl:
 	uv run poe lint-vhdl
 lint-vhdl-fix:
