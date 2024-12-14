@@ -31,3 +31,13 @@ docker-push:
 	docker push ghcr.io/hongbo-miao/hm-api-rust:latest
 docker-run:
 	docker run --publish=36147:36147 --name=hm-api-rust --rm ghcr.io/hongbo-miao/hm-api-rust:latest
+
+uv-install-python::
+	uv python install
+uv-update-lock-file:
+	uv lock
+uv-install-dependencies:
+	uv sync --dev
+
+uv-run-download-model:
+	uv run poe download-model
