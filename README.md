@@ -122,10 +122,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **axum** - Web framework
 - **Tokio** - Asynchronous runtime
+- **Tower HTTP** - HTTP middleware and utilities (compression, CORS, timeout, trace)
+- **tower-governor** - Rate limiting
+- **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
 - **Tracing** - Tracing
 - **dotenvy** - Environment variables loading
-- **Tower HTTP** - HTTP middleware and utilities (compression, CORS, timeout, trace)
-- **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
 
 ### API Server - Go
 
