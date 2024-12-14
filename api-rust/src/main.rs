@@ -1,11 +1,16 @@
 mod graphql;
 mod handlers;
 use axum::routing::{get, post};
-use axum::Router;
+use axum::{Router, BoxError};
+use axum::http::StatusCode;
+use axum::error_handling::HandleErrorLayer;
 use graphql::{create_schema, graphiql, graphql_handler};
 use http::Method;
 use std::net::SocketAddr;
 use std::{env, time::Duration};
+use tower::ServiceBuilder;
+use tower::buffer::BufferLayer;
+use tower::limit::RateLimitLayer;
 use tower_http::compression::CompressionLayer;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::timeout::TimeoutLayer;
@@ -34,6 +39,15 @@ async fn main() {
         .allow_origin(Any)
         .allow_headers(Any);
     let trace = TraceLayer::new_for_http();
+    let rate_limit = ServiceBuilder::new()
+        .layer(HandleErrorLayer::new(|err: BoxError| async move {
+            (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                format!("Unhandled error: {}", err),
+            )
+        }))
+        .layer(BufferLayer::new(1024))
+        .layer(RateLimitLayer::new(3, Duration::from_secs(60)));
     let schema = create_schema();
 
     let app = Router::new()
@@ -48,7 +62,8 @@ async fn main() {
         .layer(compression)
         .layer(timeout)
         .layer(cors)
-        .layer(trace);
+        .layer(trace)
+        .layer(rate_limit);
 
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
     info!("Listening on {}", addr);
