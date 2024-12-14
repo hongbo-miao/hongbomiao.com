@@ -15,3 +15,7 @@ impl Query {
         }
     }
 }
+
+#[cfg(test)]
+#[path = "query_test.rs"]
+mod tests;
