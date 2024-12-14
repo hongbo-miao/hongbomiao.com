@@ -1,11 +1,16 @@
 from confluent_kafka import cimpl
+from utils.logger import logger
 
 
 def delivery_report(err: cimpl.KafkaError, msg: cimpl.Message):
     if err is not None:
-        print(f"Message delivery failed: {err}")
+        logger.error(f"Message delivery failed: {err}")
     else:
-        print(
+        logger.info(
             "Message delivery succeed.",
-            {"topic": msg.topic(), "partition": msg.partition(), "value": msg.value()},
+            extra={
+                "topic": msg.topic(),
+                "partition": msg.partition(),
+                "value": msg.value(),
+            },
         )

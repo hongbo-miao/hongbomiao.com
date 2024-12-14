@@ -6,11 +6,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import health, motor, seed
 from sentry_sdk.integrations.fastapi import FastApiIntegration
+from utils.logger import logger
 
 settings = Settings()
 
-logger = logging.getLogger("uvicorn")
 logger.setLevel(logging.INFO)
+logger.info(f"{settings = }")
 
 sentry_sdk.init(
     dsn=settings.SENTRY_DSN,

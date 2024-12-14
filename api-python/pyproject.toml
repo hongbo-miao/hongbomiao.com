@@ -23,7 +23,7 @@ dev = [
 package = false
 
 [tool.poe.tasks]
-dev = "uvicorn main:app --reload --port=35903"
-serve = "uvicorn main:app --host=0.0.0.0 --port=35903"
-test = "pytest"
+dev = { cmd = "uvicorn main:app --port=35903 --reload", env = { ENV = "development" } }
+serve = { cmd = "uvicorn main:app --port=35903", env = { ENV = "production" } }
+test = { cmd = "pytest", env = { ENV = "test" } }
 test-coverage = "pytest --cov=. --cov-report=xml"
