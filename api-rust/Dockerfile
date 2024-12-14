@@ -2,9 +2,7 @@ FROM docker.io/rust:1.83.0-alpine AS base
 WORKDIR /usr/src/app
 
 FROM base AS builder
-RUN apk add --no-cache \
-    musl-dev \
-    pkgconfig
+RUN apk add --no-cache musl-dev
 COPY api-rust/Cargo.toml api-rust/Cargo.lock ./
 COPY api-rust/src/ src/
 RUN cargo build --release
