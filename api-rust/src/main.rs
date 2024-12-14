@@ -1,16 +1,15 @@
 mod graphql;
 mod handlers;
 use axum::routing::{get, post};
-use axum::{Router, BoxError};
-use axum::http::StatusCode;
-use axum::error_handling::HandleErrorLayer;
+use axum::Router;
 use graphql::{create_schema, graphiql, graphql_handler};
 use http::Method;
 use std::net::SocketAddr;
+use std::sync::Arc;
 use std::{env, time::Duration};
-use tower::ServiceBuilder;
-use tower::buffer::BufferLayer;
-use tower::limit::RateLimitLayer;
+use tower_governor::governor::GovernorConfigBuilder;
+use tower_governor::key_extractor::SmartIpKeyExtractor;
+use tower_governor::GovernorLayer;
 use tower_http::compression::CompressionLayer;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::timeout::TimeoutLayer;
@@ -39,15 +38,15 @@ async fn main() {
         .allow_origin(Any)
         .allow_headers(Any);
     let trace = TraceLayer::new_for_http();
-    let rate_limit = ServiceBuilder::new()
-        .layer(HandleErrorLayer::new(|err: BoxError| async move {
-            (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                format!("Unhandled error: {}", err),
-            )
-        }))
-        .layer(BufferLayer::new(1024))
-        .layer(RateLimitLayer::new(3, Duration::from_secs(60)));
+    let governor_conf = Arc::new(
+        GovernorConfigBuilder::default()
+            .per_second(20)
+            .burst_size(50)
+            .key_extractor(SmartIpKeyExtractor)
+            .finish()
+            .unwrap(),
+    );
+
     let schema = create_schema();
 
     let app = Router::new()
@@ -63,11 +62,17 @@ async fn main() {
         .layer(timeout)
         .layer(cors)
         .layer(trace)
-        .layer(rate_limit);
+        .layer(GovernorLayer {
+            config: governor_conf,
+        });
 
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
     info!("Listening on {}", addr);
-    axum::serve(tokio::net::TcpListener::bind(&addr).await.unwrap(), app)
-        .await
-        .unwrap();
+    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
+    axum::serve(
+        listener,
+        app.into_make_service_with_connect_info::<SocketAddr>(),
+    )
+    .await
+    .unwrap();
 }
