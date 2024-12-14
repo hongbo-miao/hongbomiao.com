@@ -6,8 +6,10 @@ cargo-check:
 	cargo check
 cargo-test:
 	cargo test --all-features
-cargo-build:
+cargo-build-development:
 	cargo build
+cargo-build-production:
+	cargo build --release
 cargo-run-development:
 	cargo run
 cargo-run-production:
