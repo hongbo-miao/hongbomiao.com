@@ -151,9 +151,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### API Server - Python
 
-- **Flask** - Web framework
-- **Flask-CORS** - Cross-Origin Resource Sharing (CORS)
-- **Gunicorn** - Python web server gateway interface (WSGI) HTTP server
+- **FastAPI** - Web framework
+- **Uvicorn** - Asynchronous server gateway interface (ASGI) server
 - **asyncpg** - PostgreSQL client
 - **Tenacity** - General-purpose retrying library
 - **pytest** - Unit testing
