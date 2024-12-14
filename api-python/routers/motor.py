@@ -1,0 +1,40 @@
+import json
+import random
+import time
+
+from config import Settings
+from confluent_kafka import Producer
+from fastapi import APIRouter, Depends
+from utils.kafka_util import delivery_report
+
+router = APIRouter()
+settings = Settings()
+
+
+def get_producer():
+    producer = Producer({"bootstrap.servers": settings.KAFKA_BOOTSTRAP_SERVERS})
+    try:
+        yield producer
+    finally:
+        producer.flush()
+
+
+@router.post("/generate-motor-data", tags=["motor"])
+async def generate_motor_data(
+    producer: Producer = Depends(get_producer),
+) -> dict[str, bool]:
+    for _ in range(5):
+        data = {
+            "timestamp": time.time() * 1000,
+            "current": random.uniform(0, 10),
+            "voltage": random.uniform(0, 20),
+            "temperature": random.uniform(0, 50) + 25,
+        }
+        producer.poll(0)
+        producer.produce(
+            "hm.motor",
+            json.dumps(data).encode("utf-8"),
+            callback=delivery_report,
+        )
+        time.sleep(1)
+    return {"body": True}
