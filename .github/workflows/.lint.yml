@@ -281,6 +281,9 @@ jobs:
         uses: actions/setup-dotnet@v4.1.0
         with:
           global-json-file: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/global.json
+        env:
+          # https://github.com/dotnet/sdk/issues/44957
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/.dotnet
       - name: Install dependencies
         working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
         run: |
