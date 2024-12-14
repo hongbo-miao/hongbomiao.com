@@ -1,7 +1,6 @@
 mod mutation;
 mod query;
 mod subscription;
-
 use self::mutation::Mutation;
 use self::query::Query;
 use self::subscription::Subscription;
