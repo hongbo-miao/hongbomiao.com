@@ -51,6 +51,10 @@ async fn main() {
 
     let app = Router::new()
         .route("/", get(handlers::root::root))
+        .route(
+            "/classify-image",
+            post(handlers::root::classify_image_resnet),
+        )
         .route("/graphiql", get(graphiql))
         .route("/graphql", post(graphql_handler))
         .route_service(

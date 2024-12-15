@@ -125,6 +125,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Tower HTTP** - HTTP middleware and utilities (compression, CORS, timeout, trace)
 - **tower-governor** - Rate limiting
 - **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
+- **tch-rs** - Rust bindings for LibTorch (C++ API of PyTorch)
 - **Tracing** - Tracing
 - **dotenvy** - Environment variables loading
 
