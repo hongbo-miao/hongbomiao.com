@@ -122,10 +122,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **axum** - Web framework
 - **Tokio** - Asynchronous runtime
-- **Tower HTTP** - HTTP middleware and utilities (compression, CORS, timeout, trace)
+- **tower-http** - HTTP middleware and utilities (compression, CORS, timeout, trace)
 - **tower-governor** - Rate limiting
 - **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
-- **tch-rs** - Rust bindings for LibTorch (C++ API of PyTorch)
+- **tch-rs** - Rust LibTorch (C++ API of PyTorch) bindings
+- **opencv-rust** - Rust OpenCV bindings
 - **Tracing** - Tracing
 - **dotenvy** - Environment variables loading
 
