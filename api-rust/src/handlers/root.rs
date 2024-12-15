@@ -1,6 +1,10 @@
 use axum::extract::Multipart;
 use axum::Json;
-use image::imageops::FilterType;
+use opencv::{
+    core::{Mat, MatTraitConst, Size, CV_32F},
+    imgcodecs::IMREAD_COLOR,
+    imgproc::{resize, INTER_LINEAR},
+};
 use serde::Serialize;
 use std::{fs, path::Path};
 use tch::{CModule, Device, Kind, Tensor};
@@ -36,42 +40,64 @@ fn load_labels() -> Result<Vec<String>, String> {
 }
 
 fn process_image(image_data: &[u8]) -> Result<Tensor, String> {
-    // Load image from bytes
-    let img =
-        image::load_from_memory(image_data).map_err(|e| format!("Failed to load image: {}", e))?;
+    // Load image from bytes using OpenCV
+    let img_vec = Mat::from_slice(image_data)
+        .map_err(|e| format!("Failed to create Mat from bytes: {}", e))?;
+    let img = opencv::imgcodecs::imdecode(&img_vec, IMREAD_COLOR)
+        .map_err(|e| format!("Failed to decode image: {}", e))?;
 
     // Resize maintaining aspect ratio so that the smallest side is 256
-    let (width, height) = (img.width(), img.height());
+    let (width, height) = (img.cols(), img.rows());
     let scale = 256.0 / width.min(height) as f32;
-    let new_width = (width as f32 * scale).round() as u32;
-    let new_height = (height as f32 * scale).round() as u32;
-    let mut resized = img.resize(new_width, new_height, FilterType::Triangle);
+    let new_width = (width as f32 * scale).round() as i32;
+    let new_height = (height as f32 * scale).round() as i32;
+    let mut resized = Mat::default();
+    resize(
+        &img,
+        &mut resized,
+        Size::new(new_width, new_height),
+        0.0,
+        0.0,
+        INTER_LINEAR,
+    )
+    .map_err(|e| format!("Failed to resize image: {}", e))?;
 
     // Center crop to 224x224
-    let left = (new_width.saturating_sub(IMAGE_SIZE)) / 2;
-    let top = (new_height.saturating_sub(IMAGE_SIZE)) / 2;
-    let cropped = resized.crop(left, top, IMAGE_SIZE, IMAGE_SIZE);
+    let left = (new_width.saturating_sub(IMAGE_SIZE as i32)) / 2;
+    let top = (new_height.saturating_sub(IMAGE_SIZE as i32)) / 2;
+    let roi = opencv::core::Rect::new(left, top, IMAGE_SIZE as i32, IMAGE_SIZE as i32);
+    let mut cropped_mat = Mat::default();
+    let roi_mat = resized
+        .roi(roi)
+        .map_err(|e| format!("Failed to get ROI: {}", e))?;
+    roi_mat
+        .copy_to(&mut cropped_mat)
+        .map_err(|e| format!("Failed to crop image: {}", e))?;
 
-    // Convert to RGB if not already
-    let rgb_img = cropped.to_rgb8();
+    // Convert to float and normalize
+    let mut float_mat = Mat::default();
+    cropped_mat
+        .convert_to(&mut float_mat, CV_32F, 1.0 / 255.0, 0.0)
+        .map_err(|e| format!("Failed to convert to float: {}", e))?;
 
-    // Convert to float tensor and normalize
-    let mut r_channel = Vec::with_capacity((IMAGE_SIZE * IMAGE_SIZE) as usize);
-    let mut g_channel = Vec::with_capacity((IMAGE_SIZE * IMAGE_SIZE) as usize);
-    let mut b_channel = Vec::with_capacity((IMAGE_SIZE * IMAGE_SIZE) as usize);
+    // Split channels and create tensor
+    let mut channels = opencv::core::Vector::<Mat>::new();
+    opencv::core::split(&float_mat, &mut channels)
+        .map_err(|e| format!("Failed to split channels: {}", e))?;
 
-    // First separate into channels
-    for pixel in rgb_img.pixels() {
-        r_channel.push((pixel[0] as f32) / 255.0);
-        g_channel.push((pixel[1] as f32) / 255.0);
-        b_channel.push((pixel[2] as f32) / 255.0);
-    }
-
-    // Combine channels in correct order
     let mut tensor_data = Vec::with_capacity((IMAGE_SIZE * IMAGE_SIZE * 3) as usize);
-    tensor_data.extend_from_slice(&r_channel);
-    tensor_data.extend_from_slice(&g_channel);
-    tensor_data.extend_from_slice(&b_channel);
+    for i in 0..3 {
+        let channel = channels.get(i).unwrap();
+        let mut channel_data = vec![0f32; (IMAGE_SIZE * IMAGE_SIZE) as usize];
+        unsafe {
+            std::ptr::copy_nonoverlapping(
+                channel.data() as *const f32,
+                channel_data.as_mut_ptr(),
+                channel_data.len(),
+            );
+        }
+        tensor_data.extend_from_slice(&channel_data);
+    }
 
     // Create tensor with shape [1, 3, 224, 224]
     let tensor = Tensor::from_slice(&tensor_data)
@@ -118,7 +144,8 @@ pub async fn classify_image_resnet(
     let labels = load_labels()?;
 
     // Load the TorchScript model and convert to float
-    let model = CModule::load(format!("{}/{}", MODEL_PATH, WEIGHTS_FILE_NAME)).map_err(|e| format!("Failed to load model: {}", e))?;
+    let model = CModule::load(format!("{}/{}", MODEL_PATH, WEIGHTS_FILE_NAME))
+        .map_err(|e| format!("Failed to load model: {}", e))?;
 
     // Run inference
     let output = model
