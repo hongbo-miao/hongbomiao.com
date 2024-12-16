@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use chrono::Utc;
 use prost::Message;
 use rand::Rng;

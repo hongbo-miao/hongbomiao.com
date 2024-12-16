@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use prost::Message;
 use rdkafka::producer::{FutureProducer, FutureRecord};
 use rdkafka::util::Timeout;
