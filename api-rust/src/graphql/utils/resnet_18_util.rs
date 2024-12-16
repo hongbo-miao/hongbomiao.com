@@ -1,6 +1,7 @@
 use opencv::core::{Mat, MatTraitConst, Size, CV_32F};
 use opencv::imgcodecs::IMREAD_COLOR;
 use opencv::imgproc::{resize, INTER_LINEAR};
+use opencv::prelude::MatTraitConstManual;
 use std::fs;
 use tch::{CModule, Device, Kind, Tensor};
 
@@ -71,14 +72,10 @@ pub fn process_image(image_data: &[u8]) -> Result<Tensor, String> {
     let mut tensor_data = Vec::with_capacity((IMAGE_SIZE * IMAGE_SIZE * 3) as usize);
     for i in 0..3 {
         let channel = channels.get(i).unwrap();
-        let mut channel_data = vec![0f32; (IMAGE_SIZE * IMAGE_SIZE) as usize];
-        unsafe {
-            std::ptr::copy_nonoverlapping(
-                channel.data() as *const f32,
-                channel_data.as_mut_ptr(),
-                channel_data.len(),
-            );
-        }
+        let channel_data = channel
+            .data_typed::<f32>()
+            .map_err(|e| format!("Failed to get typed data: {}", e))?
+            .to_vec();
         tensor_data.extend_from_slice(&channel_data);
     }
 
