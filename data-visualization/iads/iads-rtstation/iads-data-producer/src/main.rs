@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use rand::Rng;
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpListener;

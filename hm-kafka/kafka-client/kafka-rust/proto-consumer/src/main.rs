@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use prost::Message;
 use rdkafka::config::ClientConfig;
 use rdkafka::consumer::{CommitMode, Consumer, StreamConsumer};
