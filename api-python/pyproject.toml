@@ -25,5 +25,5 @@ package = false
 [tool.poe.tasks]
 dev = { cmd = "uvicorn main:app --port=35903 --reload", env = { ENV = "development" } }
 serve = { cmd = "uvicorn main:app --port=35903", env = { ENV = "production" } }
-test = { cmd = "pytest", env = { ENV = "test" } }
+test = { cmd = "pytest --verbose --verbose", env = { ENV = "test" } }
 test-coverage = "pytest --cov=. --cov-report=xml"

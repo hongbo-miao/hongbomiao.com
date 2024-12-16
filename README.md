@@ -415,7 +415,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Kubeflow** - Machine learning platform
 - **MLflow** - Machine learning experiment tracking
 - **Weights & Biases** - Machine learning experiment tracking
-- **Triton Inference Server** - Inference server
+- **NVIDIA Data Loading Library (DALI)** - GPU-accelerated data loading and preprocessing pipeline
+- **NVIDIA Triton Inference Server** - Inference server
 
 #### Large language model (LLM)
 
