@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 use prost::Message;
 use socket2::{Socket, Domain, Type};
 use std::error::Error;
