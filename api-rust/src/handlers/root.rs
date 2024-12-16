@@ -1,12 +1,10 @@
 use axum::extract::Multipart;
 use axum::Json;
-use opencv::{
-    core::{Mat, MatTraitConst, Size, CV_32F},
-    imgcodecs::IMREAD_COLOR,
-    imgproc::{resize, INTER_LINEAR},
-};
+use opencv::core::{Mat, MatTraitConst, Size, CV_32F};
+use opencv::imgcodecs::IMREAD_COLOR;
+use opencv::imgproc::{resize, INTER_LINEAR};
 use serde::Serialize;
-use std::{fs, path::Path};
+use std::fs;
 use tch::{CModule, Device, Kind, Tensor};
 
 const MODEL_PATH: &str = "models";
@@ -22,15 +20,6 @@ pub struct ClassificationResponse {
 
 pub async fn root() -> &'static str {
     "ok"
-}
-
-async fn ensure_model_dir() -> Result<(), String> {
-    if !Path::new(MODEL_PATH).exists() {
-        tokio::fs::create_dir_all(MODEL_PATH)
-            .await
-            .map_err(|e| format!("Failed to create model directory: {}", e))?;
-    }
-    Ok(())
 }
 
 fn load_labels() -> Result<Vec<String>, String> {
@@ -121,8 +110,6 @@ fn process_image(image_data: &[u8]) -> Result<Tensor, String> {
 pub async fn classify_image_resnet(
     mut multipart: Multipart,
 ) -> Result<Json<ClassificationResponse>, String> {
-    ensure_model_dir().await?;
-
     // Get image from multipart form
     let mut image_data = Vec::new();
     while let Some(field) = multipart.next_field().await.map_err(|e| e.to_string())? {
