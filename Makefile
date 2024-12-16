@@ -350,6 +350,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=hm-locust
 	uv run poe static-type-check-python --package=hm-xxhash
 	uv run poe static-type-check-python --package=machine-learning.convolutional-neural-network
+	uv run poe static-type-check-python --package=machine-learning.dali
 	uv run poe static-type-check-python --package=machine-learning.feature-store
 	uv run poe static-type-check-python --package=machine-learning.graph-neural-network
 	uv run poe static-type-check-python --package=machine-learning.hm-gradio.applications.classify-image
