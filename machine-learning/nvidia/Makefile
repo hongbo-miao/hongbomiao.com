@@ -1,0 +1,2 @@
+nvidia-smi:
+	nvidia-smi
