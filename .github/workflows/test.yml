@@ -88,6 +88,7 @@ jobs:
       hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
       iads-iads-config-reader: ${{ steps.filter.outputs.iads-iads-config-reader }}
+      iads-iads-data-reader: ${{ steps.filter.outputs.iads-iads-data-reader }}
       iads-iads-data-producer: ${{ steps.filter.outputs.iads-iads-data-producer }}
       iads-zeromq-iads-bridge: ${{ steps.filter.outputs.iads-zeromq-iads-bridge }}
       hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
@@ -332,6 +333,9 @@ jobs:
             iads-iads-config-reader:
               - '.github/workflows/test.yml'
               - 'data-visualization/iads/iads-iads-config-reader/**'
+            iads-iads-data-reader:
+              - '.github/workflows/test.yml'
+              - 'data-visualization/iads/iads-iads-data-reader/**'
             iads-iads-data-producer:
               - '.github/workflows/test.yml'
               - 'data-visualization/iads/iads-rtstation/iads-data-producer/**'
@@ -3144,6 +3148,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.1
         with:
           directory: data-visualization/iads/iads-data-manager/iads-config-reader
+
+  iads-iads-data-reader-test:
+    name: IADS (iads-data-reader) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.iads-iads-data-reader == 'true' }}
+    runs-on: windows-2022
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4.2.0
+        with:
+          version: 0.5.9
+          enable-cache: true
+          cache-dependency-glob: data-visualization/iads/iads-data-manager/iads-data-reader/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-visualization/iads/iads-data-manager/iads-data-reader/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-visualization/iads/iads-data-manager/iads-data-reader
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-visualization/iads/iads-data-manager/iads-data-reader
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.1
+        with:
+          directory: data-visualization/iads/iads-data-manager/iads-data-reader
 
   iads-iads-data-producer-test:
     name: IADS (iads-data-producer) | Test
