@@ -547,6 +547,13 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **GitGuardian** - Git secret scanning
 - **xxHash** - Hash algorithm
 
+## System Tools
+
+- **Rclone** - Sync program
+- **restic** - Backup program
+- **Vim** - Text editor
+- **Zellij** - Terminal multiplexer
+
 ## Reverse Engineering
 
 - **hexedit** - File viewing and editing in hexadecimal and ASCII
@@ -573,8 +580,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **ASTERIOS** - Real-time, safety-critical applications development
 - **RTI Connext** - Real-time, distributed systems framework
   - **RTI Connext DDS** - Data distribution service (DDS)
-- **Rclone** - Sync program
-- **restic** - Backup program
 - **OpenSCAD** - 3D CAD Modeller
 - **Arduino Uno** - Microcontroller board
 - **BeagleBone Black** - Microcontroller board
