@@ -1,0 +1,4 @@
+ouch-compress:
+	ouch compress /path/to/folder folder.tar.zst
+ouch-decompress:
+	ouch decompress folder.tar.zst
