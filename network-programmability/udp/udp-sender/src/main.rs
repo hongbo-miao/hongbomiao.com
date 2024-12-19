@@ -26,7 +26,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let temperature = Some(rng.random_range(10.0..100.0));
         let motor = Motor {
             id: Some(motor_id.to_string()),
-            timestamp: Utc::now().timestamp_nanos_opt(),
+            timestamp_ns: Utc::now().timestamp_nanos_opt(),
             temperature1: temperature,
             temperature2: temperature,
             temperature3: temperature,
