@@ -26,6 +26,15 @@ dev = [
 package = false
 environments = ["platform_system != 'Windows'"]
 
+# https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-format
+[tool.black]
+extend-exclude = '''
+(
+  # Anywhere
+  .*_pb2.py
+)
+'''
+
 [tool.poe.tasks]
 clean-jupyter-notebook = "nb-clean clean"
 ansible-galaxy-install = "ansible-galaxy install"

@@ -51,13 +51,13 @@ async fn main() {
                             match Motor::decode(&*decoded.bytes) {
                                 Ok(motor) => {
                                     println!("Received motor data:");
-                                    println!("  Motor ID: {:?}", motor.id);
-                                    println!("  Timestamp: {:?}", motor.timestamp);
-                                    println!("  Temperature 1: {:?}", motor.temperature1);
-                                    println!("  Temperature 2: {:?}", motor.temperature2);
-                                    println!("  Temperature 3: {:?}", motor.temperature3);
-                                    println!("  Temperature 4: {:?}", motor.temperature4);
-                                    println!("  Temperature 5: {:?}", motor.temperature5);
+                                    println!("  id: {:?}", motor.id);
+                                    println!("  timestamp_ns: {:?}", motor.timestamp_ns);
+                                    println!("  temperature1: {:?}", motor.temperature1);
+                                    println!("  temperature2: {:?}", motor.temperature2);
+                                    println!("  temperature3: {:?}", motor.temperature3);
+                                    println!("  temperature4: {:?}", motor.temperature4);
+                                    println!("  temperature5: {:?}", motor.temperature5);
                                 }
                                 Err(e) => eprintln!("Failed to decode motor data: {}", e),
                             }

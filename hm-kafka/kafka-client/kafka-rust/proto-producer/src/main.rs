@@ -31,7 +31,7 @@ fn generate_motor_data(motor_id: &str) -> Motor {
     let temperature = rng.random_range(10.0..100.0);
     Motor {
         id: Some(motor_id.to_string()),
-        timestamp: Utc::now().timestamp_nanos_opt(),
+        timestamp_ns: Utc::now().timestamp_nanos_opt(),
         temperature1: Some(temperature),
         temperature2: Some(temperature),
         temperature3: Some(temperature),
