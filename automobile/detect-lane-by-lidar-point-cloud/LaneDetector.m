@@ -458,7 +458,7 @@ classdef LaneDetector < handle
             nonGround = select(pc, outliers);
             [labels, numClusters] = pcsegdist(nonGround, 1);
 
-            % Remove all the outlier from the ground occuring because of possible obstacles
+            % Remove all the outlier from the ground occurring because of possible obstacles
             for i = 1:numClusters
                 tmp = nonGround.Location(labels == i, :);
                 xmin = min(tmp(:, 1));
