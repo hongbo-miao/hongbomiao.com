@@ -70,6 +70,7 @@ jobs:
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
       hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
       hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
+      hm-protobuf: ${{ steps.filter.outputs.hm-protobuf }}
       hm-prowler: ${{ steps.filter.outputs.hm-prowler }}
       hm-pulumi: ${{ steps.filter.outputs.hm-pulumi }}
       hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
@@ -276,6 +277,9 @@ jobs:
             hm-prefect-print-platform:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/print-platform/**'
+            hm-protobuf:
+              - '.github/workflows/test.yml'
+              - 'data-storage/hm-protobuf/**'
             hm-pyvista-mount-saint-helens:
               - '.github/workflows/test.yml'
               - 'computer-vision/hm-pyvista/mount-saint-helens/**'
@@ -1327,6 +1331,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.1
         with:
           directory: data-storage/hm-duckdb
+
+  protobuf-test:
+    name: Protobuf | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-protobuf == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4.2.0
+        with:
+          version: 0.5.9
+          enable-cache: true
+          cache-dependency-glob: data-storage/hm-protobuf/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/hm-protobuf/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/hm-protobuf
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/hm-protobuf
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.1
+        with:
+          directory: data-storage/hm-protobuf
 
   autogluon-test:
     name: AutoGluon | Test

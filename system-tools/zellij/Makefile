@@ -5,6 +5,6 @@ zellij-session-list:
 zellij-session-new:
 	zellij --session=my-session
 zellij-session-attach:
-	zellij attach hongbo
+	zellij attach my-session
 zellij-session-dettach:
 	# ctrl + o, d
