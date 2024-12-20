@@ -1,0 +1,32 @@
+[project]
+name = "mineru"
+version = "1.0.0"
+requires-python = "~=3.11.0"
+dependencies = [
+  "detectron2@git+https://github.com/facebookresearch/detectron2.git",
+  "doclayout-yolo==0.0.2",
+  "magic-pdf==0.10.6",
+  "opencv-python==4.10.0.84",
+  "paddlepaddle==2.6.2",
+  "pillow==11.0.0",
+  "pycocotools==2.0.8",
+  "timm==0.9.16",
+  "torch==2.5.1",
+  "ultralytics==8.3.51",
+  "unimernet==0.2.2"
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.31.1",
+  "pytest==8.3.4",
+  "pytest-cov==6.0.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
