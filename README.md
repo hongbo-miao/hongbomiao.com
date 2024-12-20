@@ -336,9 +336,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **NumPy** - Scientific computing library
 - **pandas** - Data analysis library
-  - **GeoPandas** - Geographic data library
-  - **AWS SDK for pandas** - pandas on AWS
+  - **GeoPandas** - Spatial data library
+  - **AWS SDK for pandas** - pandas integration with AWS services
   - **Modin** - pandas workflows scaling
+  - **cuDF** - GPU-powered DataFrame library
+  - **Polars** - Multithreaded, vectorized, query-engine-powered DataFrame library
 - **JupyterLab** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
 - **Databricks** - Unified data analytics platform
