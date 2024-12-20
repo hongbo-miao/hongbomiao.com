@@ -324,7 +324,10 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=cloud-platform.aws.aws-parallelcluster.pcluster
 	uv run poe static-type-check-python --package=computer-vision.hm-open3d
 	uv run poe static-type-check-python --package=computer-vision.hm-pyvista.mount-saint-helens
+	uv run poe static-type-check-python --package=data-analytics.hm-cudf
 	uv run poe static-type-check-python --package=data-analytics.hm-geopandas
+	uv run poe static-type-check-python --package=data-analytics.hm-pandas
+	uv run poe static-type-check-python --package=data-analytics.hm-polars
 	uv run poe static-type-check-python --package=data-distribution-service
 	uv run poe static-type-check-python --package=data-orchestration.hm-airflow
 	uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.calculate
