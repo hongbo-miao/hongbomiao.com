@@ -1,2 +1,2 @@
 dev:
-	nvcc main.cu --output-file=main && ./main
+	nvcc src/main.cu --output-file=main && ./main

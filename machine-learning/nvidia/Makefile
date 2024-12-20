@@ -1,4 +1,7 @@
-check-gpu-device:
+gpu-device:
 	nvidia-smi
-check-cuda-version:
+
+cuda-install:
+	sudo apt-get --yes install cuda-12-2
+cuda-version:
 	nvcc --version
