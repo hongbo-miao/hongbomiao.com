@@ -47,7 +47,10 @@ jobs:
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
       hm-aerosandbox: ${{ steps.filter.outputs.hm-aerosandbox }}
       hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
+      hm-cudf: ${{ steps.filter.outputs.hm-cudf }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
+      hm-pandas: ${{ steps.filter.outputs.hm-pandas }}
+      hm-polars: ${{ steps.filter.outputs.hm-polars }}
       national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
@@ -196,9 +199,18 @@ jobs:
             hm-airflow:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-airflow/**'
+            hm-cudf:
+              - '.github/workflows/test.yml'
+              - 'data-analytics/hm-cudf/**'
             hm-geopandas:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-geopandas/**'
+            hm-pandas:
+              - '.github/workflows/test.yml'
+              - 'data-analytics/hm-pandas/**'
+            hm-polars:
+              - '.github/workflows/test.yml'
+              - 'data-analytics/hm-polars/**'
             kafka-rust-proto-consumer:
               - '.github/workflows/test.yml'
               - 'hm-kafka/kafka-client/kafka-rust/proto-consumer/**'
@@ -1464,6 +1476,105 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: machine-learning/feature-store
+
+  pandas-test:
+    name: pandas | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-pandas == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4.2.0
+        with:
+          version: 0.5.9
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-pandas/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-pandas/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-pandas
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-pandas
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-pandas
+
+  cudf-test:
+    name: cuDF | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-cudf == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4.2.0
+        with:
+          version: 0.5.9
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-cudf/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-cudf/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-cudf
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-cudf
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-cudf
+
+  polars-test:
+    name: Polars | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-polars == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4.2.0
+        with:
+          version: 0.5.9
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-polars/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-polars/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-polars
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-polars
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-polars
 
   geopandas-test:
     name: GeoPandas | Test
