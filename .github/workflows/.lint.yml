@@ -19,6 +19,7 @@ jobs:
       cmake: ${{ steps.filter.outputs.cmake }}
       css: ${{ steps.filter.outputs.css }}
       dockerfile: ${{ steps.filter.outputs.dockerfile }}
+      html: ${{ steps.filter.outputs.html }}
       markdown: ${{ steps.filter.outputs.markdown }}
       matlab: ${{ steps.filter.outputs.matlab }}
       python: ${{ steps.filter.outputs.python }}
@@ -83,6 +84,7 @@ jobs:
               - '**/CMakeLists.txt'
             css:
               - '.github/workflows/.lint.yml'
+              - '.node-version'
               - '.npmrc'
               - 'package.json'
               - 'package-lock.json'
@@ -93,8 +95,16 @@ jobs:
               - '.github/workflows/.lint.yml'
               - '.hadolint.yaml'
               - '**/Dockerfile*'
+            html:
+              - '.github/workflows/.lint.yml'
+              - '.node-version'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '**/*.html'
             markdown:
               - '.github/workflows/.lint.yml'
+              - '.node-version'
               - '.npmrc'
               - 'package.json'
               - 'package-lock.json'
@@ -124,6 +134,7 @@ jobs:
               - '**/*.sh'
             solidity:
               - '.github/workflows/.lint.yml'
+              - '.node-version'
               - '.npmrc'
               - 'package.json'
               - 'package-lock.json'
@@ -153,6 +164,7 @@ jobs:
               - '**/*.vhd'
             xml:
               - '.github/workflows/.lint.yml'
+              - '.node-version'
               - '.npmrc'
               - 'package.json'
               - 'package-lock.json'
@@ -414,6 +426,29 @@ jobs:
           working-directory: api-go
           args: --timeout=10m
 
+  lint-html:
+    name: HTML
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.html == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Lint HTML
+        run: |
+          npm run lint:html
+
   lint-javascript-api-node:
     name: JavaScript (api-node)
     needs: detect-changes
@@ -515,7 +550,7 @@ jobs:
           npm run lint:javascript
 
   lint-javascript-web:
-    name: HTML, JavaScript (web)
+    name: JavaScript (web)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-24.04
@@ -534,10 +569,10 @@ jobs:
         working-directory: web
         run: |
           npm ci
-      - name: Lint HTML, JavaScript
+      - name: Lint JavaScript
         working-directory: web
         run: |
-          npm run lint:html-javascript
+          npm run lint:javascript
 
   lint-javascript-web-cypress:
     name: JavaScript (web-cypress)
