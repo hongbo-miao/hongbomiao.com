@@ -1,10 +1,8 @@
 // https://eslint.org/docs/latest/use/configure/configuration-files
 
 import eslint from '@eslint/js';
-import htmlPlugin from '@html-eslint/eslint-plugin';
-import htmlParser from "@html-eslint/parser";
 import tanstackQueryPlugin from '@tanstack/eslint-plugin-query';
-import eslintPluginTypescript from '@typescript-eslint/eslint-plugin';
+import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import airbnb from 'eslint-config-airbnb';
 import prettierConfig from 'eslint-config-prettier';
@@ -87,7 +85,7 @@ export default [
     },
     plugins: {
       '@tanstack/query': tanstackQueryPlugin,
-      '@typescript-eslint': eslintPluginTypescript,
+      '@typescript-eslint': typescriptEslintPlugin,
       import: importPlugin,
       jest: jestPlugin,
       'jest-dom': jestDomPlugin,
@@ -113,7 +111,7 @@ export default [
       },
     },
     rules: {
-      ...eslintPluginTypescript.configs.recommended.rules,
+      ...typescriptEslintPlugin.configs.recommended.rules,
       ...airbnb.rules,
       ...importPlugin.configs.recommended.rules,
       ...jestPlugin.configs.recommended.rules,
@@ -173,19 +171,6 @@ export default [
       '@typescript-eslint/no-use-before-define': ['error'],
       'no-shadow': 'off',
       '@typescript-eslint/no-shadow': 'error',
-    },
-  },
-  {
-    files: ["**/*.html"],
-    plugins: {
-      '@html-eslint': htmlPlugin,
-    },
-    rules: {
-      ...htmlPlugin.configs["flat/recommended"].rules,
-      "@html-eslint/indent": ["error", 2],
-    },
-    languageOptions: {
-      parser: htmlParser,
     },
   },
   // scripts
