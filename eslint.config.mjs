@@ -2,6 +2,7 @@
 
 import htmlPlugin from '@html-eslint/eslint-plugin';
 import htmlParser from "@html-eslint/parser";
+import jsonPlugin from "@eslint/json";
 
 /**
  * @type {Array<import('eslint').Linter.Config>}
@@ -160,6 +161,8 @@ export default [
 
       // eslint.config.mjs specific
       '**/*.mjs',
+      '**/package-lock.json',
+      '**/tsconfig.json',
     ],
   },
   {
@@ -173,6 +176,36 @@ export default [
     rules: {
       ...htmlPlugin.configs["flat/recommended"].rules,
       "@html-eslint/indent": ["error", 2],
+    },
+  },
+  {
+    files: ["**/*.json"],
+    language: "json/json",
+    plugins: {
+      json: jsonPlugin,
+    },
+    rules: {
+      ...jsonPlugin.configs.recommended.rules,
+    },
+  },
+  {
+    files: ["**/*.jsonc"],
+    language: "json/jsonc",
+    plugins: {
+      json: jsonPlugin,
+    },
+    rules: {
+      ...jsonPlugin.configs.recommended.rules,
+    },
+  },
+  {
+    files: ["**/*.json5"],
+    language: "json/json5",
+    plugins: {
+      json: jsonPlugin,
+    },
+    rules: {
+      ...jsonPlugin.configs.recommended.rules,
     },
   },
 ];
