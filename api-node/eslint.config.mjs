@@ -66,7 +66,7 @@ export default [
   },
   eslint.configs.recommended,
   {
-    files: ['**/*.{js,ts}'],
+    files: ['**/*.{mjs,ts}'],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
@@ -91,7 +91,11 @@ export default [
     settings: {
       'import/resolver': {
         node: {
-          extensions: ['.js', '.ts'],
+          extensions: ['.mjs', '.ts'],
+        },
+        typescript: {
+          alwaysTryTypes: true,
+          project: 'tsconfig.json'
         },
       },
     },
