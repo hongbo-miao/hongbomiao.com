@@ -20,6 +20,7 @@ jobs:
       css: ${{ steps.filter.outputs.css }}
       dockerfile: ${{ steps.filter.outputs.dockerfile }}
       html: ${{ steps.filter.outputs.html }}
+      json: ${{ steps.filter.outputs.json }}
       markdown: ${{ steps.filter.outputs.markdown }}
       matlab: ${{ steps.filter.outputs.matlab }}
       python: ${{ steps.filter.outputs.python }}
@@ -102,6 +103,13 @@ jobs:
               - 'package.json'
               - 'package-lock.json'
               - '**/*.html'
+            json:
+              - '.github/workflows/.lint.yml'
+              - '.node-version'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '**/*.json'
             markdown:
               - '.github/workflows/.lint.yml'
               - '.node-version'
@@ -598,6 +606,29 @@ jobs:
         working-directory: web-cypress
         run: |
           npm run lint:javascript
+
+  lint-json:
+    name: JSON
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.json == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Lint JSON
+        run: |
+          npm run lint:json
 
   lint-kotlin-mobile-android:
     name: Kotlin (mobile-android)

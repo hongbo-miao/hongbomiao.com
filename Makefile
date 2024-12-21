@@ -202,6 +202,10 @@ lint-html:
 	npm run lint:html
 lint-html-fix:
 	npm run lint:html:fix
+lint-json:
+	npm run lint:json
+lint-json-fix:
+	npm run lint:json:fix
 lint-kotlin:
 	cd mobile-android && ./gradlew ktlintCheck
 lint-kotlin-fix:

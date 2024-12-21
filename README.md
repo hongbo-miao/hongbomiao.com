@@ -640,7 +640,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **gofmt** - Go code formatter
 - **golangci-lint** - Go linter
 - **ESLint** - JavaScript linter
-  - **HTML ESLint** - HTML linter
+  - **@html-eslint** - HTML linter
+  - **@eslint/json** - JSON linter
 - **Ktlint** - Kotlin code formatter and linter
 - **detekt** - Kotlin static type checker
 - **Kubeconform** - Kubernetes manifest linter
