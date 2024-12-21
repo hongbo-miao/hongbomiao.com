@@ -1,10 +1,10 @@
 version = 1
 requires-python = ">=3.13.0, <3.14"
 resolution-markers = [
-    "platform_system != 'Windows'",
+    "sys_platform != 'win32'",
 ]
 supported-markers = [
-    "platform_system != 'Windows'",
+    "sys_platform != 'win32'",
 ]
 
 [[package]]
@@ -21,13 +21,13 @@ name = "aiohttp"
 version = "3.11.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "aiohappyeyeballs", marker = "platform_system != 'Windows'" },
-    { name = "aiosignal", marker = "platform_system != 'Windows'" },
-    { name = "attrs", marker = "platform_system != 'Windows'" },
-    { name = "frozenlist", marker = "platform_system != 'Windows'" },
-    { name = "multidict", marker = "platform_system != 'Windows'" },
-    { name = "propcache", marker = "platform_system != 'Windows'" },
-    { name = "yarl", marker = "platform_system != 'Windows'" },
+    { name = "aiohappyeyeballs", marker = "sys_platform != 'win32'" },
+    { name = "aiosignal", marker = "sys_platform != 'win32'" },
+    { name = "attrs", marker = "sys_platform != 'win32'" },
+    { name = "frozenlist", marker = "sys_platform != 'win32'" },
+    { name = "multidict", marker = "sys_platform != 'win32'" },
+    { name = "propcache", marker = "sys_platform != 'win32'" },
+    { name = "yarl", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/94/c4/3b5a937b16f6c2a0ada842a9066aad0b7a5708427d4a202a07bf09c67cbb/aiohttp-3.11.10.tar.gz", hash = "sha256:b1fc6b45010a8d0ff9e88f9f2418c6fd408c99c211257334aff41597ebece42e", size = 7668832 }
 wheels = [
@@ -51,7 +51,7 @@ name = "aiosignal"
 version = "1.3.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "frozenlist", marker = "platform_system != 'Windows'" },
+    { name = "frozenlist", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ba/b5/6d55e80f6d8a08ce22b982eafa278d823b541c925f11ee774b0b9c43473d/aiosignal-1.3.2.tar.gz", hash = "sha256:a8c255c66fafb1e499c9351d0bf32ff2d8a0321595ebac3b93713656d2436f54", size = 19424 }
 wheels = [
@@ -63,7 +63,7 @@ name = "ansible"
 version = "11.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ansible-core", marker = "platform_system != 'Windows'" },
+    { name = "ansible-core", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5c/54/dc559b305948e9c234f79ef00f7aed52d7c127c8616c0c2f3f336103ccdd/ansible-11.1.0.tar.gz", hash = "sha256:d01b425990d960d2a33fc378e1b73dbca1c0e28bc22f4056ab6b3c8e9ae74fba", size = 41299850 }
 wheels = [
@@ -75,11 +75,11 @@ name = "ansible-compat"
 version = "24.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ansible-core", marker = "platform_system != 'Windows'" },
-    { name = "jsonschema", marker = "platform_system != 'Windows'" },
-    { name = "packaging", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
-    { name = "subprocess-tee", marker = "platform_system != 'Windows'" },
+    { name = "ansible-core", marker = "sys_platform != 'win32'" },
+    { name = "jsonschema", marker = "sys_platform != 'win32'" },
+    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "subprocess-tee", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/59/f9/c48f3a140e3afad144a720f5c29aa8b34087926b2e2fc8778d4d4b5b6323/ansible_compat-24.10.0.tar.gz", hash = "sha256:0ad873e0dae8b2de79bc33ced813d6c92c716c4d7b82f9a4693e1fd57f43776e", size = 81818 }
 wheels = [
@@ -91,11 +91,11 @@ name = "ansible-core"
 version = "2.18.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography", marker = "platform_system != 'Windows'" },
-    { name = "jinja2", marker = "platform_system != 'Windows'" },
-    { name = "packaging", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
-    { name = "resolvelib", marker = "platform_system != 'Windows'" },
+    { name = "cryptography", marker = "sys_platform != 'win32'" },
+    { name = "jinja2", marker = "sys_platform != 'win32'" },
+    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "resolvelib", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/46/15836f1f48e2682bd5d04f7b3e2cb27e17626bec3cd7a4f2a7b0ccefbbd2/ansible_core-2.18.1.tar.gz", hash = "sha256:14cac1f92bbdae881cb0616eddeb17925e8cb507e486087975e724533d9de74f", size = 3069965 }
 wheels = [
@@ -107,19 +107,19 @@ name = "ansible-lint"
 version = "24.12.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ansible-compat", marker = "platform_system != 'Windows'" },
-    { name = "ansible-core", marker = "platform_system != 'Windows'" },
-    { name = "black", marker = "platform_system != 'Windows'" },
-    { name = "filelock", marker = "platform_system != 'Windows'" },
-    { name = "importlib-metadata", marker = "platform_system != 'Windows'" },
-    { name = "jsonschema", marker = "platform_system != 'Windows'" },
-    { name = "packaging", marker = "platform_system != 'Windows'" },
-    { name = "pathspec", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
-    { name = "ruamel-yaml", marker = "platform_system != 'Windows'" },
-    { name = "subprocess-tee", marker = "platform_system != 'Windows'" },
-    { name = "wcmatch", marker = "platform_system != 'Windows'" },
-    { name = "yamllint", marker = "platform_system != 'Windows'" },
+    { name = "ansible-compat", marker = "sys_platform != 'win32'" },
+    { name = "ansible-core", marker = "sys_platform != 'win32'" },
+    { name = "black", marker = "sys_platform != 'win32'" },
+    { name = "filelock", marker = "sys_platform != 'win32'" },
+    { name = "importlib-metadata", marker = "sys_platform != 'win32'" },
+    { name = "jsonschema", marker = "sys_platform != 'win32'" },
+    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "pathspec", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "ruamel-yaml", marker = "sys_platform != 'win32'" },
+    { name = "subprocess-tee", marker = "sys_platform != 'win32'" },
+    { name = "wcmatch", marker = "sys_platform != 'win32'" },
+    { name = "yamllint", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7d/52/131fdc2305536a6482265dc2de01279cbb138716e86ead5c3d8357430695/ansible_lint-24.12.2.tar.gz", hash = "sha256:f636309c4e7f724fc1a544df529c4c2354f54cf35ede11d750366afb1158a464", size = 548046 }
 wheels = [
@@ -149,7 +149,7 @@ name = "autoflake"
 version = "2.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyflakes", marker = "platform_system != 'Windows'" },
+    { name = "pyflakes", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2a/cb/486f912d6171bc5748c311a2984a301f4e2d054833a1da78485866c71522/autoflake-2.3.1.tar.gz", hash = "sha256:c98b75dc5b0a86459c4f01a1d32ac7eb4338ec4317a4469515ff1e687ecd909e", size = 27642 }
 wheels = [
@@ -161,11 +161,11 @@ name = "black"
 version = "24.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", marker = "platform_system != 'Windows'" },
-    { name = "mypy-extensions", marker = "platform_system != 'Windows'" },
-    { name = "packaging", marker = "platform_system != 'Windows'" },
-    { name = "pathspec", marker = "platform_system != 'Windows'" },
-    { name = "platformdirs", marker = "platform_system != 'Windows'" },
+    { name = "click", marker = "sys_platform != 'win32'" },
+    { name = "mypy-extensions", marker = "sys_platform != 'win32'" },
+    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "pathspec", marker = "sys_platform != 'win32'" },
+    { name = "platformdirs", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d8/0d/cc2fb42b8c50d80143221515dd7e4766995bd07c56c9a3ed30baf080b6dc/black-24.10.0.tar.gz", hash = "sha256:846ea64c97afe3bc677b761787993be4991810ecc7a4a937816dd6bddedc4875", size = 645813 }
 wheels = [
@@ -177,11 +177,11 @@ wheels = [
 
 [package.optional-dependencies]
 d = [
-    { name = "aiohttp", marker = "platform_system != 'Windows'" },
+    { name = "aiohttp", marker = "sys_platform != 'win32'" },
 ]
 jupyter = [
-    { name = "ipython", marker = "platform_system != 'Windows'" },
-    { name = "tokenize-rt", marker = "platform_system != 'Windows'" },
+    { name = "ipython", marker = "sys_platform != 'win32'" },
+    { name = "tokenize-rt", marker = "sys_platform != 'win32'" },
 ]
 
 [[package]]
@@ -198,7 +198,7 @@ name = "cffi"
 version = "1.17.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "platform_system != 'Windows'" },
+    { name = "pycparser", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fc/97/c783634659c2920c3fc70419e3af40972dbaf758daa229a7d6ea6135c90d/cffi-1.17.1.tar.gz", hash = "sha256:1c39c6016c32bc48dd54561950ebd6836e1670f2ae46128f67cf49e789c52824", size = 516621 }
 wheels = [
@@ -254,7 +254,7 @@ name = "cryptography"
 version = "44.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and platform_system != 'Windows'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/91/4c/45dfa6829acffa344e3967d6006ee4ae8be57af746ae2eba1c431949b32c/cryptography-44.0.0.tar.gz", hash = "sha256:cd4e834f340b4293430701e772ec543b0fbe6c2dea510a5286fe0acabe153a02", size = 710657 }
 wheels = [
@@ -290,10 +290,10 @@ name = "diff-cover"
 version = "9.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "chardet", marker = "platform_system != 'Windows'" },
-    { name = "jinja2", marker = "platform_system != 'Windows'" },
-    { name = "pluggy", marker = "platform_system != 'Windows'" },
-    { name = "pygments", marker = "platform_system != 'Windows'" },
+    { name = "chardet", marker = "sys_platform != 'win32'" },
+    { name = "jinja2", marker = "sys_platform != 'win32'" },
+    { name = "pluggy", marker = "sys_platform != 'win32'" },
+    { name = "pygments", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/36/b0/f3ccf97926f6e5cc76d5ece42f3c685d75673d1886fcec62886b8b00c51a/diff_cover-9.2.1.tar.gz", hash = "sha256:5fa5b2d71ccf5d16cd222a71c2ca069d9bf5fa3d657f6fac9b4d9c23379323bf", size = 94964 }
 wheels = [
@@ -356,21 +356,21 @@ source = { virtual = "." }
 
 [package.dev-dependencies]
 dev = [
-    { name = "ansible", marker = "platform_system != 'Windows'" },
-    { name = "ansible-lint", marker = "platform_system != 'Windows'" },
-    { name = "autoflake", marker = "platform_system != 'Windows'" },
-    { name = "black", extra = ["d", "jupyter"], marker = "platform_system != 'Windows'" },
-    { name = "cmakelint", marker = "platform_system != 'Windows'" },
-    { name = "isort", marker = "platform_system != 'Windows'" },
-    { name = "miss-hit", marker = "platform_system != 'Windows'" },
-    { name = "mypy", marker = "platform_system != 'Windows'" },
-    { name = "nb-clean", marker = "platform_system != 'Windows'" },
-    { name = "pip", marker = "platform_system != 'Windows'" },
-    { name = "poethepoet", marker = "platform_system != 'Windows'" },
-    { name = "ruff", marker = "platform_system != 'Windows'" },
-    { name = "sqlfluff", marker = "platform_system != 'Windows'" },
-    { name = "vsg", marker = "platform_system != 'Windows'" },
-    { name = "yamllint", marker = "platform_system != 'Windows'" },
+    { name = "ansible", marker = "sys_platform != 'win32'" },
+    { name = "ansible-lint", marker = "sys_platform != 'win32'" },
+    { name = "autoflake", marker = "sys_platform != 'win32'" },
+    { name = "black", extra = ["d", "jupyter"], marker = "sys_platform != 'win32'" },
+    { name = "cmakelint", marker = "sys_platform != 'win32'" },
+    { name = "isort", marker = "sys_platform != 'win32'" },
+    { name = "miss-hit", marker = "sys_platform != 'win32'" },
+    { name = "mypy", marker = "sys_platform != 'win32'" },
+    { name = "nb-clean", marker = "sys_platform != 'win32'" },
+    { name = "pip", marker = "sys_platform != 'win32'" },
+    { name = "poethepoet", marker = "sys_platform != 'win32'" },
+    { name = "ruff", marker = "sys_platform != 'win32'" },
+    { name = "sqlfluff", marker = "sys_platform != 'win32'" },
+    { name = "vsg", marker = "sys_platform != 'win32'" },
+    { name = "yamllint", marker = "sys_platform != 'win32'" },
 ]
 
 [package.metadata]
@@ -384,7 +384,7 @@ dev = [
     { name = "cmakelint", specifier = "==1.4.3" },
     { name = "isort", specifier = "==5.13.2" },
     { name = "miss-hit", specifier = "==0.9.44" },
-    { name = "mypy", specifier = "==1.13.0" },
+    { name = "mypy", specifier = "==1.14.0" },
     { name = "nb-clean", specifier = "==4.0.1" },
     { name = "pip", specifier = "==24.3.1" },
     { name = "poethepoet", specifier = "==0.31.1" },
@@ -408,7 +408,7 @@ name = "importlib-metadata"
 version = "8.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "zipp", marker = "platform_system != 'Windows'" },
+    { name = "zipp", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cd/12/33e59336dca5be0c398a7482335911a33aa0e20776128f038019f1a95f1b/importlib_metadata-8.5.0.tar.gz", hash = "sha256:71522656f0abace1d072b9e5481a48f07c138e00f079c38c8f883823f9c26bd7", size = 55304 }
 wheels = [
@@ -429,15 +429,14 @@ name = "ipython"
 version = "8.30.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "platform_system != 'Windows' and sys_platform == 'win32'" },
-    { name = "decorator", marker = "platform_system != 'Windows'" },
-    { name = "jedi", marker = "platform_system != 'Windows'" },
-    { name = "matplotlib-inline", marker = "platform_system != 'Windows'" },
-    { name = "pexpect", marker = "platform_system != 'Windows' and sys_platform != 'emscripten' and sys_platform != 'win32'" },
-    { name = "prompt-toolkit", marker = "platform_system != 'Windows'" },
-    { name = "pygments", marker = "platform_system != 'Windows'" },
-    { name = "stack-data", marker = "platform_system != 'Windows'" },
-    { name = "traitlets", marker = "platform_system != 'Windows'" },
+    { name = "decorator", marker = "sys_platform != 'win32'" },
+    { name = "jedi", marker = "sys_platform != 'win32'" },
+    { name = "matplotlib-inline", marker = "sys_platform != 'win32'" },
+    { name = "pexpect", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
+    { name = "prompt-toolkit", marker = "sys_platform != 'win32'" },
+    { name = "pygments", marker = "sys_platform != 'win32'" },
+    { name = "stack-data", marker = "sys_platform != 'win32'" },
+    { name = "traitlets", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d8/8b/710af065ab8ed05649afa5bd1e07401637c9ec9fb7cfda9eac7e91e9fbd4/ipython-8.30.0.tar.gz", hash = "sha256:cb0a405a306d2995a5cbb9901894d240784a9f341394c6ba3f4fe8c6eb89ff6e", size = 5592205 }
 wheels = [
@@ -458,7 +457,7 @@ name = "jedi"
 version = "0.19.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "parso", marker = "platform_system != 'Windows'" },
+    { name = "parso", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/72/3a/79a912fbd4d8dd6fbb02bf69afd3bb72cf0c729bb3063c6f4498603db17a/jedi-0.19.2.tar.gz", hash = "sha256:4770dc3de41bde3966b02eb84fbcf557fb33cce26ad23da12c742fb50ecb11f0", size = 1231287 }
 wheels = [
@@ -470,7 +469,7 @@ name = "jinja2"
 version = "3.1.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markupsafe", marker = "platform_system != 'Windows'" },
+    { name = "markupsafe", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ed/55/39036716d19cab0747a5020fc7e907f362fbf48c984b14e62127f7e68e5d/jinja2-3.1.4.tar.gz", hash = "sha256:4a3aee7acbbe7303aede8e9648d13b8bf88a429282aa6122a993f0ac800cb369", size = 240245 }
 wheels = [
@@ -482,10 +481,10 @@ name = "jsonschema"
 version = "4.23.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs", marker = "platform_system != 'Windows'" },
-    { name = "jsonschema-specifications", marker = "platform_system != 'Windows'" },
-    { name = "referencing", marker = "platform_system != 'Windows'" },
-    { name = "rpds-py", marker = "platform_system != 'Windows'" },
+    { name = "attrs", marker = "sys_platform != 'win32'" },
+    { name = "jsonschema-specifications", marker = "sys_platform != 'win32'" },
+    { name = "referencing", marker = "sys_platform != 'win32'" },
+    { name = "rpds-py", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/38/2e/03362ee4034a4c917f697890ccd4aec0800ccf9ded7f511971c75451deec/jsonschema-4.23.0.tar.gz", hash = "sha256:d71497fef26351a33265337fa77ffeb82423f3ea21283cd9467bb03999266bc4", size = 325778 }
 wheels = [
@@ -497,7 +496,7 @@ name = "jsonschema-specifications"
 version = "2024.10.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "referencing", marker = "platform_system != 'Windows'" },
+    { name = "referencing", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/10/db/58f950c996c793472e336ff3655b13fbcf1e3b359dcf52dcf3ed3b52c352/jsonschema_specifications-2024.10.1.tar.gz", hash = "sha256:0f38b83639958ce1152d02a7f062902c41c8fd20d558b0c34344292d417ae272", size = 15561 }
 wheels = [
@@ -509,9 +508,8 @@ name = "jupyter-core"
 version = "5.7.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "platformdirs", marker = "platform_system != 'Windows'" },
-    { name = "pywin32", marker = "platform_python_implementation != 'PyPy' and platform_system != 'Windows' and sys_platform == 'win32'" },
-    { name = "traitlets", marker = "platform_system != 'Windows'" },
+    { name = "platformdirs", marker = "sys_platform != 'win32'" },
+    { name = "traitlets", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/00/11/b56381fa6c3f4cc5d2cf54a7dbf98ad9aa0b339ef7a601d6053538b079a7/jupyter_core-5.7.2.tar.gz", hash = "sha256:aa5f8d32bbf6b431ac830496da7392035d6f61b4f54872f15c4bd2a9c3f536d9", size = 87629 }
 wheels = [
@@ -547,7 +545,7 @@ name = "matplotlib-inline"
 version = "0.1.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "traitlets", marker = "platform_system != 'Windows'" },
+    { name = "traitlets", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/99/5b/a36a337438a14116b16480db471ad061c36c3694df7c2084a0da7ba538b7/matplotlib_inline-0.1.7.tar.gz", hash = "sha256:8423b23ec666be3d16e16b60bdd8ac4e86e840ebd1dd11a30b9f117f2fa0ab90", size = 8159 }
 wheels = [
@@ -559,7 +557,7 @@ name = "miss-hit"
 version = "0.9.44"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "miss-hit-core", marker = "platform_system != 'Windows'" },
+    { name = "miss-hit-core", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/32/d3/6abf1c9257468be7242b18cb975206780bd14c165cdb44c98d3ff0794685/miss_hit-0.9.44.tar.gz", hash = "sha256:c0705b07bc4bdb54f803889c721058871cadfe20c7dc650867818b2d45e7a4ae", size = 51991 }
 wheels = [
@@ -599,19 +597,19 @@ wheels = [
 
 [[package]]
 name = "mypy"
-version = "1.13.0"
+version = "1.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "mypy-extensions", marker = "platform_system != 'Windows'" },
-    { name = "typing-extensions", marker = "platform_system != 'Windows'" },
+    { name = "mypy-extensions", marker = "sys_platform != 'win32'" },
+    { name = "typing-extensions", marker = "sys_platform != 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e8/21/7e9e523537991d145ab8a0a2fd98548d67646dc2aaaf6091c31ad883e7c1/mypy-1.13.0.tar.gz", hash = "sha256:0291a61b6fbf3e6673e3405cfcc0e7650bebc7939659fdca2702958038bd835e", size = 3152532 }
+sdist = { url = "https://files.pythonhosted.org/packages/8c/7b/08046ef9330735f536a09a2e31b00f42bccdb2795dcd979636ba43bb2d63/mypy-1.14.0.tar.gz", hash = "sha256:822dbd184d4a9804df5a7d5335a68cf7662930e70b8c1bc976645d1509f9a9d6", size = 3215684 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/11/bb/ab4cfdc562cad80418f077d8be9b4491ee4fb257440da951b85cbb0a639e/mypy-1.13.0-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:a7b44178c9760ce1a43f544e595d35ed61ac2c3de306599fa59b38a6048e1aa7", size = 11069721 },
-    { url = "https://files.pythonhosted.org/packages/59/3b/a393b1607cb749ea2c621def5ba8c58308ff05e30d9dbdc7c15028bca111/mypy-1.13.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:5d5092efb8516d08440e36626f0153b5006d4088c1d663d88bf79625af3d1d62", size = 10063996 },
-    { url = "https://files.pythonhosted.org/packages/d1/1f/6b76be289a5a521bb1caedc1f08e76ff17ab59061007f201a8a18cc514d1/mypy-1.13.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:de2904956dac40ced10931ac967ae63c5089bd498542194b436eb097a9f77bc8", size = 12584043 },
-    { url = "https://files.pythonhosted.org/packages/a6/83/5a85c9a5976c6f96e3a5a7591aa28b4a6ca3a07e9e5ba0cec090c8b596d6/mypy-1.13.0-cp313-cp313-musllinux_1_1_x86_64.whl", hash = "sha256:7bfd8836970d33c2105562650656b6846149374dc8ed77d98424b40b09340ba7", size = 13036996 },
-    { url = "https://files.pythonhosted.org/packages/3b/86/72ce7f57431d87a7ff17d442f521146a6585019eb8f4f31b7c02801f78ad/mypy-1.13.0-py3-none-any.whl", hash = "sha256:9c250883f9fd81d212e0952c92dbfcc96fc237f4b7c92f56ac81fd48460b3e5a", size = 2647043 },
+    { url = "https://files.pythonhosted.org/packages/13/33/8380efd0ebdfdfac7fc0bf065f03a049800ca1e6c296ec1afc634340d992/mypy-1.14.0-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:e9f6f4c0b27401d14c483c622bc5105eff3911634d576bbdf6695b9a7c1ba741", size = 11251509 },
+    { url = "https://files.pythonhosted.org/packages/15/6d/4e1c21c60fee11af7d8e4f2902a29886d1387d6a836be16229eb3982a963/mypy-1.14.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:56b2280cedcb312c7a79f5001ae5325582d0d339bce684e4a529069d0e7ca1e7", size = 10244282 },
+    { url = "https://files.pythonhosted.org/packages/8b/cf/7a8ae5c0161edae15d25c2c67c68ce8b150cbdc45aefc13a8be271ee80b2/mypy-1.14.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:342de51c48bab326bfc77ce056ba08c076d82ce4f5a86621f972ed39970f94d8", size = 12867676 },
+    { url = "https://files.pythonhosted.org/packages/9c/d0/71f7bbdcc7cfd0f2892db5b13b1e8857673f2cc9e0c30e3e4340523dc186/mypy-1.14.0-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:00df23b42e533e02a6f0055e54de9a6ed491cd8b7ea738647364fd3a39ea7efc", size = 12964189 },
+    { url = "https://files.pythonhosted.org/packages/39/32/0214608af400cdf8f5102144bb8af10d880675c65ed0b58f7e0e77175d50/mypy-1.14.0-py3-none-any.whl", hash = "sha256:2238d7f93fc4027ed1efc944507683df3ba406445a2b6c96e79666a045aadfab", size = 2752803 },
 ]
 
 [[package]]
@@ -628,7 +626,7 @@ name = "nb-clean"
 version = "4.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nbformat", marker = "platform_system != 'Windows'" },
+    { name = "nbformat", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/28/81/2ef0aaf3df03ec4146a92d62ce9b9533d368431791c7e5cb8e027068794a/nb_clean-4.0.1.tar.gz", hash = "sha256:f4af1bec3f25e7b18eb09024947bcc809efc97fd68bec482d219c304d850809f", size = 24170 }
 wheels = [
@@ -640,10 +638,10 @@ name = "nbformat"
 version = "5.10.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "fastjsonschema", marker = "platform_system != 'Windows'" },
-    { name = "jsonschema", marker = "platform_system != 'Windows'" },
-    { name = "jupyter-core", marker = "platform_system != 'Windows'" },
-    { name = "traitlets", marker = "platform_system != 'Windows'" },
+    { name = "fastjsonschema", marker = "sys_platform != 'win32'" },
+    { name = "jsonschema", marker = "sys_platform != 'win32'" },
+    { name = "jupyter-core", marker = "sys_platform != 'win32'" },
+    { name = "traitlets", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6d/fd/91545e604bc3dad7dca9ed03284086039b294c6b3d75c0d2fa45f9e9caf3/nbformat-5.10.4.tar.gz", hash = "sha256:322168b14f937a5d11362988ecac2a4952d3d8e3a2cbeb2319584631226d5b3a", size = 142749 }
 wheels = [
@@ -691,7 +689,7 @@ name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ptyprocess", marker = "platform_system != 'Windows'" },
+    { name = "ptyprocess", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/92/cc564bf6381ff43ce1f4d06852fc19a2f11d180f23dc32d9588bee2f149d/pexpect-4.9.0.tar.gz", hash = "sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f", size = 166450 }
 wheels = [
@@ -730,8 +728,8 @@ name = "poethepoet"
 version = "0.31.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pastel", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
+    { name = "pastel", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8f/96/15bce512c8027696b20586b18ac4b239afe8d312dbaa2a0099e8fb8f8424/poethepoet-0.31.1.tar.gz", hash = "sha256:d6b66074edf85daf115bb916eae0afd6387d19e1562e1c9ef7d61d5c585696aa", size = 61520 }
 wheels = [
@@ -743,7 +741,7 @@ name = "prompt-toolkit"
 version = "3.0.48"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "wcwidth", marker = "platform_system != 'Windows'" },
+    { name = "wcwidth", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2d/4f/feb5e137aff82f7c7f3248267b97451da3644f6cdc218edfe549fb354127/prompt_toolkit-3.0.48.tar.gz", hash = "sha256:d6623ab0477a80df74e646bdbc93621143f5caf104206aa29294d53de1a03d90", size = 424684 }
 wheels = [
@@ -823,20 +821,14 @@ name = "pytest"
 version = "8.3.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "platform_system != 'Windows' and sys_platform == 'win32'" },
-    { name = "iniconfig", marker = "platform_system != 'Windows'" },
-    { name = "packaging", marker = "platform_system != 'Windows'" },
-    { name = "pluggy", marker = "platform_system != 'Windows'" },
+    { name = "iniconfig", marker = "sys_platform != 'win32'" },
+    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "pluggy", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/05/35/30e0d83068951d90a01852cb1cef56e5d8a09d20c7f511634cc2f7e0372a/pytest-8.3.4.tar.gz", hash = "sha256:965370d062bce11e73868e0335abac31b4d3de0e82f4007408d242b4f8610761", size = 1445919 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/11/92/76a1c94d3afee238333bc0a42b82935dd8f9cf8ce9e336ff87ee14d9e1cf/pytest-8.3.4-py3-none-any.whl", hash = "sha256:50e16d954148559c9a74109af1eaf0c945ba2d8f30f0a3d3335edde19788b6f6", size = 343083 },
 ]
-
-[[package]]
-name = "pywin32"
-version = "308"
-source = { registry = "https://pypi.org/simple" }
 
 [[package]]
 name = "pyyaml"
@@ -858,8 +850,8 @@ name = "referencing"
 version = "0.35.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs", marker = "platform_system != 'Windows'" },
-    { name = "rpds-py", marker = "platform_system != 'Windows'" },
+    { name = "attrs", marker = "sys_platform != 'win32'" },
+    { name = "rpds-py", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/99/5b/73ca1f8e72fff6fa52119dbd185f73a907b1989428917b24cff660129b6d/referencing-0.35.1.tar.gz", hash = "sha256:25b42124a6c8b632a425174f24087783efb348a6f1e0008e63cd4466fedf703c", size = 62991 }
 wheels = [
@@ -962,18 +954,18 @@ name = "sqlfluff"
 version = "3.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "chardet", marker = "platform_system != 'Windows'" },
-    { name = "click", marker = "platform_system != 'Windows'" },
-    { name = "colorama", marker = "platform_system != 'Windows'" },
-    { name = "diff-cover", marker = "platform_system != 'Windows'" },
-    { name = "jinja2", marker = "platform_system != 'Windows'" },
-    { name = "pathspec", marker = "platform_system != 'Windows'" },
-    { name = "platformdirs", marker = "platform_system != 'Windows'" },
-    { name = "pytest", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
-    { name = "regex", marker = "platform_system != 'Windows'" },
-    { name = "tblib", marker = "platform_system != 'Windows'" },
-    { name = "tqdm", marker = "platform_system != 'Windows'" },
+    { name = "chardet", marker = "sys_platform != 'win32'" },
+    { name = "click", marker = "sys_platform != 'win32'" },
+    { name = "colorama", marker = "sys_platform != 'win32'" },
+    { name = "diff-cover", marker = "sys_platform != 'win32'" },
+    { name = "jinja2", marker = "sys_platform != 'win32'" },
+    { name = "pathspec", marker = "sys_platform != 'win32'" },
+    { name = "platformdirs", marker = "sys_platform != 'win32'" },
+    { name = "pytest", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "regex", marker = "sys_platform != 'win32'" },
+    { name = "tblib", marker = "sys_platform != 'win32'" },
+    { name = "tqdm", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6d/1f/d4d5f97110a917e01c4f5c921852eb11a3b69d6c5decdbb6ddd5658ccdcd/sqlfluff-3.3.0.tar.gz", hash = "sha256:ea0b752c0b8f4602a56fa5b381eb5c806799e4941df8fc0aad0842c9d4283e03", size = 858267 }
 wheels = [
@@ -985,9 +977,9 @@ name = "stack-data"
 version = "0.6.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "asttokens", marker = "platform_system != 'Windows'" },
-    { name = "executing", marker = "platform_system != 'Windows'" },
-    { name = "pure-eval", marker = "platform_system != 'Windows'" },
+    { name = "asttokens", marker = "sys_platform != 'win32'" },
+    { name = "executing", marker = "sys_platform != 'win32'" },
+    { name = "pure-eval", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/28/e3/55dcc2cfbc3ca9c29519eb6884dd1415ecb53b0e934862d3559ddcb7e20b/stack_data-0.6.3.tar.gz", hash = "sha256:836a778de4fec4dcd1dcd89ed8abff8a221f58308462e1c4aa2a3cf30148f0b9", size = 44707 }
 wheels = [
@@ -1053,7 +1045,7 @@ name = "vsg"
 version = "3.28.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/63/2b/c59c28f007da366204134d37d91899ad5d25a8efca3672a639f6118af304/vsg-3.28.0-py3-none-any.whl", hash = "sha256:29ea895566c0564eb53950ad9b1e8a6b4a66d96675a6eb22b064ca8f70d9ea9f", size = 984900 },
@@ -1064,7 +1056,7 @@ name = "wcmatch"
 version = "10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "bracex", marker = "platform_system != 'Windows'" },
+    { name = "bracex", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/41/ab/b3a52228538ccb983653c446c1656eddf1d5303b9cb8b9aef6a91299f862/wcmatch-10.0.tar.gz", hash = "sha256:e72f0de09bba6a04e0de70937b0cf06e55f36f37b3deb422dfaf854b867b840a", size = 115578 }
 wheels = [
@@ -1085,8 +1077,8 @@ name = "yamllint"
 version = "1.35.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pathspec", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
+    { name = "pathspec", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/da/06/d8cee5c3dfd550cc0a466ead8b321138198485d1034130ac1393cc49d63e/yamllint-1.35.1.tar.gz", hash = "sha256:7a003809f88324fd2c877734f2d575ee7881dd9043360657cc8049c809eba6cd", size = 134583 }
 wheels = [
@@ -1098,9 +1090,9 @@ name = "yarl"
 version = "1.18.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "idna", marker = "platform_system != 'Windows'" },
-    { name = "multidict", marker = "platform_system != 'Windows'" },
-    { name = "propcache", marker = "platform_system != 'Windows'" },
+    { name = "idna", marker = "sys_platform != 'win32'" },
+    { name = "multidict", marker = "sys_platform != 'win32'" },
+    { name = "propcache", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b7/9d/4b94a8e6d2b51b599516a5cb88e5bc99b4d8d4583e468057eaa29d5f0918/yarl-1.18.3.tar.gz", hash = "sha256:ac1801c45cbf77b6c99242eeff4fffb5e4e73a800b5c4ad4fc0be5def634d2e1", size = 181062 }
 wheels = [
