@@ -122,6 +122,7 @@ export default [
       'kubernetes/data/model-server/model-store',
       'kubernetes/data/opal-server',
       'kubernetes/data/yugabyte',
+      'kubernetes/manifests-raw',
       'machine-learning/convolutional-neural-network/output/models',
       'machine-learning/convolutional-neural-network/output/reports',
       'machine-learning/convolutional-neural-network/wandb',
