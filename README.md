@@ -647,6 +647,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Kubeconform** - Kubernetes manifest linter
 - **markdownlint-cli2** - Markdown linter
 - **MISS_HIT** - MATLAB code formatter
+- **textlint** - Natural language linter
 - **Buf** - Protocol Buffers linter
 - **Black** - Python code formatter
 - **autoflake**, **isort**, **Ruff** - Python linter

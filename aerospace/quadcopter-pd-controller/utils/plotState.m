@@ -35,7 +35,7 @@ function [h_fig] = plotState(h_fig, state, time, name, type, view)
 
     figure(h_fig);
     if strcmp(view, 'sep')
-        % Plot seperate
+        % Plot separate
 
         for i = 1:3
             subplot(3, 1, i);
