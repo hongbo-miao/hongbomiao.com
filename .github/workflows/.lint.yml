@@ -515,7 +515,7 @@ jobs:
           npm run lint:javascript
 
   lint-javascript-web:
-    name: JavaScript (web)
+    name: HTML, JavaScript (web)
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.web == 'true' }}
     runs-on: ubuntu-24.04
@@ -534,10 +534,10 @@ jobs:
         working-directory: web
         run: |
           npm ci
-      - name: Lint JavaScript
+      - name: Lint HTML, JavaScript
         working-directory: web
         run: |
-          npm run lint:javascript
+          npm run lint:html-javascript
 
   lint-javascript-web-cypress:
     name: JavaScript (web-cypress)

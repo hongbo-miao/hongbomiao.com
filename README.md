@@ -639,7 +639,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **hadolint** - Dockerfile linter
 - **gofmt** - Go code formatter
 - **golangci-lint** - Go linter
-- **ESLint** - JavaScript linter
+- **ESLint** - HTML, JavaScript linter
 - **Ktlint** - Kotlin code formatter and linter
 - **detekt** - Kotlin static type checker
 - **Kubeconform** - Kubernetes manifest linter

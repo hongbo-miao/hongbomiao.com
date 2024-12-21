@@ -1,9 +1,11 @@
 // https://eslint.org/docs/latest/use/configure/configuration-files
 
 import eslint from '@eslint/js';
+import htmlPlugin from '@html-eslint/eslint-plugin';
+import htmlParser from "@html-eslint/parser";
+import tanstackQueryPlugin from '@tanstack/eslint-plugin-query';
 import eslintPluginTypescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
-import tanstackQueryPlugin from '@tanstack/eslint-plugin-query';
 import airbnb from 'eslint-config-airbnb';
 import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
@@ -67,7 +69,7 @@ export default [
   },
   eslint.configs.recommended,
   {
-    files: ['**/*.{js,ts,tsx}'],
+    files: ['**/*.{cjs,mjs,ts,tsx}'],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
@@ -99,7 +101,11 @@ export default [
     settings: {
       'import/resolver': {
         node: {
-          extensions: ['.js', '.ts', '.tsx'],
+          extensions: ['.cjs', '.mjs', '.ts', '.tsx'],
+        },
+        typescript: {
+          alwaysTryTypes: true,
+          project: 'tsconfig.json'
         },
       },
       react: {
@@ -167,6 +173,19 @@ export default [
       '@typescript-eslint/no-use-before-define': ['error'],
       'no-shadow': 'off',
       '@typescript-eslint/no-shadow': 'error',
+    },
+  },
+  {
+    files: ["**/*.html"],
+    plugins: {
+      '@html-eslint': htmlPlugin,
+    },
+    rules: {
+      ...htmlPlugin.configs["flat/recommended"].rules,
+      "@html-eslint/indent": ["error", 2],
+    },
+    languageOptions: {
+      parser: htmlParser,
     },
   },
   // scripts

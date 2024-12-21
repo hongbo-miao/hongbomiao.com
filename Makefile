@@ -198,10 +198,6 @@ lint-css-fix:
 	npm run lint:css:fix
 lint-dockerfile:
 	hadolint $$(git ls-files "**/Dockerfile*")
-lint-javascript:
-	npm run lint:javascript
-lint-javascript-fix:
-	npm run lint:javascript:fix
 lint-kotlin:
 	cd mobile-android && ./gradlew ktlintCheck
 lint-kotlin-fix:
