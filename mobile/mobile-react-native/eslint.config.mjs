@@ -1,7 +1,7 @@
 // https://eslint.org/docs/latest/use/configure/configuration-files
 
 import eslint from '@eslint/js';
-import eslintPluginTypescript from '@typescript-eslint/eslint-plugin';
+import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import airbnb from 'eslint-config-airbnb';
 import eslintConfigPrettier from 'eslint-config-prettier';
@@ -77,7 +77,7 @@ export default [
       },
     },
     plugins: {
-      '@typescript-eslint': eslintPluginTypescript,
+      '@typescript-eslint': typescriptEslintPlugin,
       import: importPlugin,
       prettier: prettierPlugin,
       react: reactPlugin,
@@ -97,7 +97,7 @@ export default [
       },
     },
     rules: {
-      ...eslintPluginTypescript.configs.recommended.rules,
+      ...typescriptEslintPlugin.configs.recommended.rules,
       ...airbnb.rules,
       ...reactPlugin.configs.recommended.rules,
       ...eslintConfigPrettier.rules,
