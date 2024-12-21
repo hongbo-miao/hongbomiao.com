@@ -4,15 +4,16 @@ set -e
 # https://docs.timescale.com/install/latest/self-hosted/installation-debian/
 
 echo "# Install TimescaleDB"
-sudo apt install --yes gnupg postgresql-common apt-transport-https lsb-release wget
+sudo apt-get update
+sudo apt-get install --yes gnupg postgresql-common apt-transport-https lsb-release wget
 sudo YES=yes /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
 echo "deb https://packagecloud.io/timescale/timescaledb/ubuntu/ $(lsb_release -c -s) main" | sudo tee /etc/apt/sources.list.d/timescaledb.list
 wget --quiet -O - https://packagecloud.io/timescale/timescaledb/gpgkey | sudo apt-key add -
 echo "=================================================="
 
 echo "# Install psql"
-sudo apt update
-sudo apt install --yes timescaledb-2-postgresql-14
+sudo apt-get update
+sudo apt-get install --yes timescaledb-2-postgresql-14
 sudo systemctl restart postgresql
 sudo -u postgres psql
 # Set password to `passw0rd`: \password postgres

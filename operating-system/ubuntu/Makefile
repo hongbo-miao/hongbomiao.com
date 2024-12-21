@@ -22,7 +22,7 @@ which:
 
 # Install
 apt-update:
-	sudo apt update
+	sudo apt-get update
 apt-install:
 	sudo apt --yes xxx
 snap-install:
