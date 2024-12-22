@@ -23,6 +23,7 @@ jobs:
       json: ${{ steps.filter.outputs.json }}
       markdown: ${{ steps.filter.outputs.markdown }}
       matlab: ${{ steps.filter.outputs.matlab }}
+      natural-language: ${{ steps.filter.outputs.natural-language }}
       python: ${{ steps.filter.outputs.python }}
       qml: ${{ steps.filter.outputs.qml }}
       ruby: ${{ steps.filter.outputs.ruby }}
@@ -122,6 +123,54 @@ jobs:
               - 'pyproject.toml'
               - 'uv.lock'
               - '**/*.m'
+            natural-language:
+              - '.github/workflows/.lint.yml'
+              - '.node-version'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '.textlintrc.json'
+              - '.textlintignore'
+              - '**/*.c'
+              - '**/*.cjs'
+              - '**/*.cpp'
+              - '**/*.cs'
+              - '**/*.csproj'
+              - '**/*.dbc'
+              - '**/*.go'
+              - '**/*.gradle'
+              - '**/*.h'
+              - '**/*.ino'
+              - '**/*.ipynb'
+              - '**/*.java'
+              - '**/*.jl'
+              - '**/*.js'
+              - '**/*.json'
+              - '**/*.kt'
+              - '**/*.kts'
+              - '**/*.m'
+              - '**/*.md'
+              - '**/*.mjs'
+              - '**/*.p4'
+              - '**/*.py'
+              - '**/*.rego'
+              - '**/*.rs'
+              - '**/*.scad'
+              - '**/*.scala'
+              - '**/*.sh'
+              - '**/*.sln'
+              - '**/*.sol'
+              - '**/*.sql'
+              - '**/*.swift'
+              - '**/*.tf'
+              - '**/*.toml'
+              - '**/*.ts'
+              - '**/*.tsx'
+              - '**/*.vhd'
+              - '**/*.WizardFile'
+              - '**/*.xml'
+              - '**/*.yaml'
+              - '**/*.yml'
             ruby:
               - '.github/workflows/.lint.yml'
               - 'Gemfile'
@@ -728,6 +777,29 @@ jobs:
       - name: Lint MATLAB
         run: |
           uv run poe lint-matlab
+
+  lint-natural-language:
+    name: Natural Language
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.natural-language == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Lint natural language
+        run: |
+          npm run lint:natural-language
 
   lint-protocol-buffers-api-go:
     name: Protocol Buffers (api-go)
