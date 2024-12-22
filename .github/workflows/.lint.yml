@@ -77,7 +77,9 @@ jobs:
               - '**/*.c'
               - '**/*.cpp'
               - '**/*.cu'
+              - '**/*.cuh'
               - '**/*.h'
+              - '**/*.hpp'
               - '**/*.ino'
             cmake:
               - '.github/workflows/.lint.yml'
@@ -136,10 +138,13 @@ jobs:
               - '**/*.cpp'
               - '**/*.cs'
               - '**/*.csproj'
+              - '**/*.cu'
+              - '**/*.cuh'
               - '**/*.dbc'
               - '**/*.go'
               - '**/*.gradle'
               - '**/*.h'
+              - '**/*.hpp'
               - '**/*.ino'
               - '**/*.ipynb'
               - '**/*.java'
@@ -315,7 +320,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.0.1
         with:
-          version: 0.5.9
+          version: 0.5.11
           enable-cache: true
           cache-dependency-glob: uv.lock
       - name: Set up Python
@@ -377,13 +382,37 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Lint C, C++
+      - name: Lint C, C++ (ClangFormat)
         uses: DoozyX/clang-format-lint-action@v0.18.2
         with:
           source: .
-          extensions: c,cpp,cu,h,ino
+          extensions: c,cpp,cu,cuh,h,hpp,ino
           clangFormatVersion: 18
           style: file
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.0.1
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: pyproject.toml
+      - name: Install dependencies
+        run: |
+          uv sync --dev
+      - name: Lint C, C++ (cpplint)
+        run: |
+          uv run poe lint-c-cpp-cpplint --repository=asterios/led-blinker --extensions=c,h --recursive asterios/led-blinker
+          uv run poe lint-c-cpp-cpplint --repository=embedded/freertos --extensions=ino --recursive embedded/freertos
+          uv run poe lint-c-cpp-cpplint --repository=hm-kafka/kafka-client/kafka-c/avro-producer --extensions=c,h --recursive hm-kafka/kafka-client/kafka-c/avro-producer
+          uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
+          uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
+          uv run poe lint-c-cpp-cpplint --repository=parallel-computing/cuda --extensions=cu,cuh --recursive parallel-computing/cuda
+          uv run poe lint-c-cpp-cpplint --repository=reverse-engineering/hello-c --extensions=c,h --recursive reverse-engineering/hello-c
+          uv run poe lint-c-cpp-cpplint --repository=reverse-engineering/hello-cpp --extensions=cpp,hpp --recursive reverse-engineering/hello-cpp
+          uv run poe lint-c-cpp-cpplint --repository=robotics/robot-operating-system/src/hm_cpp_package --extensions=cpp,hpp --recursive robotics/robot-operating-system
 
   lint-cmake:
     name: CMake
@@ -398,7 +427,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.0.1
         with:
-          version: 0.5.9
+          version: 0.5.11
           enable-cache: true
           cache-dependency-glob: uv.lock
       - name: Set up Python
@@ -764,7 +793,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.0.1
         with:
-          version: 0.5.9
+          version: 0.5.11
           enable-cache: true
           cache-dependency-glob: uv.lock
       - name: Set up Python
@@ -834,7 +863,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.0.1
         with:
-          version: 0.5.9
+          version: 0.5.11
           enable-cache: true
           cache-dependency-glob: uv.lock
       - name: Set up Python
@@ -1347,7 +1376,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.0.1
         with:
-          version: 0.5.9
+          version: 0.5.11
           enable-cache: true
           cache-dependency-glob: uv.lock
       - name: Set up Python
@@ -1425,7 +1454,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.0.1
         with:
-          version: 0.5.9
+          version: 0.5.11
           enable-cache: true
           cache-dependency-glob: uv.lock
       - name: Set up Python
@@ -1475,7 +1504,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.0.1
         with:
-          version: 0.5.9
+          version: 0.5.11
           enable-cache: true
           cache-dependency-glob: uv.lock
       - name: Set up Python

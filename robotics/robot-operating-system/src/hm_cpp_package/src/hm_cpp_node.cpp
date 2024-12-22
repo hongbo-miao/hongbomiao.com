@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "rclcpp/rclcpp.hpp"
 
 class HMNode : public rclcpp::Node {
