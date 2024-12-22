@@ -1,5 +1,5 @@
 gpp:
-	g++ -o main main.cpp
+	g++ -o main src/main.cpp
 run:
 	./main
 

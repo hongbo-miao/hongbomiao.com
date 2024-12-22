@@ -188,7 +188,17 @@ cargo-add-build:
 # Lint
 lint-ansible:
 	uv run poe lint-ansible
-lint-c-cpp-fix:
+lint-c-cpp-cpplint:
+	uv run poe lint-c-cpp-cpplint --repository=asterios/led-blinker --extensions=c,h --recursive asterios/led-blinker
+	uv run poe lint-c-cpp-cpplint --repository=embedded/freertos --extensions=ino --recursive embedded/freertos
+	uv run poe lint-c-cpp-cpplint --repository=hm-kafka/kafka-client/kafka-c/avro-producer --extensions=c,h --recursive hm-kafka/kafka-client/kafka-c/avro-producer
+	uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
+	uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
+	uv run poe lint-c-cpp-cpplint --repository=parallel-computing/cuda --extensions=cu,cuh --recursive parallel-computing/cuda
+	uv run poe lint-c-cpp-cpplint --repository=reverse-engineering/hello-c --extensions=c,h --recursive reverse-engineering/hello-c
+	uv run poe lint-c-cpp-cpplint --repository=reverse-engineering/hello-cpp --extensions=cpp,hpp --recursive reverse-engineering/hello-cpp
+	uv run poe lint-c-cpp-cpplint --repository=robotics/robot-operating-system/src/hm_cpp_package --extensions=cpp,hpp --recursive robotics/robot-operating-system
+lint-c-cpp-clang-format-fix:
 	clang-format -i -style=file $$(git ls-files "**/*.c" "**/*.cpp" "**/*.cu" "**/*.h" "**/*.ino")
 lint-cmake:
 	uv run poe lint-cmake

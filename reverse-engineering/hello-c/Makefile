@@ -1,5 +1,5 @@
 gcc:
-	gcc -o main main.c
+	gcc -o main src/main.c
 run:
 	./main
 

@@ -632,6 +632,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **dotnet format** - C# code formatter
 - **CSharpier** - C# code formatter
 - **ClangFormat** - C/C++ code formatter
+- **cpplint** - C/C++ linter
 - **CMakeLint** - CMake linter
 - **Prettier** - Code formatter
 - **commitlint** - Commit message linter
@@ -740,9 +741,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Languages
 
 - **C**
-  - **C++**
   - **Embedded C**
   - **PsyC**
+- **C++**
+  - **CUDA C++**
 - **C#**
 - **CSS**
 - **Docker**

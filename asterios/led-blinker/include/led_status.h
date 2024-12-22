@@ -1,5 +1,6 @@
-#ifndef LED_STATUS__
-#define LED_STATUS__
+#ifndef INCLUDE_LED_STATUS_H_
+#define INCLUDE_LED_STATUS_H_
+
 /* This include is necessary to include the definition of the type
  * `t_ast_clock_tick` */
 #include <asterios.h>
@@ -31,4 +32,4 @@ enum led_status { ON, OFF, SET_ON, SET_OFF };
 void display_status(unsigned int interval_length, t_ast_clock_tick date,
                     unsigned int date_increment, enum led_status status);
 
-#endif /* LED_STATUS__ */
+#endif  // INCLUDE_LED_STATUS_H_
