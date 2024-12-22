@@ -1,5 +1,5 @@
-#ifndef APP_H
-#define APP_H
+#ifndef INCLUDE_APP_H_
+#define INCLUDE_APP_H_
 
 #include <signal.h>
 
@@ -7,4 +7,4 @@ extern volatile sig_atomic_t is_running;
 
 void handle_signal(int signal);
 
-#endif
+#endif  // INCLUDE_APP_H_
