@@ -1,0 +1,25 @@
+[project]
+name = "query-protobuf"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+  "duckdb==1.1.3",
+  "pandas==2.2.3",
+  "protobuf==5.29.2",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.31.1",
+  "pytest==8.3.4",
+  "pytest-cov==6.0.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
+generate-descriptor = "protoc -o data/motor_descriptor.pb src/protos/production.iot.motor.proto"
