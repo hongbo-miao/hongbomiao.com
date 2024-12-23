@@ -1,10 +1,13 @@
+import logging
+from pathlib import Path
+
 from config import Config
 from llama_index.core import Settings, SimpleDirectoryReader, VectorStoreIndex
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.litellm import LiteLLM
 
 
-def chat_with_pdf(pdf_path, question):
+def chat_with_pdf(pdf_path: Path, question: str) -> str:
     config = Config()
 
     Settings.embed_model = HuggingFaceEmbedding(
@@ -19,13 +22,14 @@ def chat_with_pdf(pdf_path, question):
     documents = SimpleDirectoryReader(input_files=[pdf_path]).load_data()
     index = VectorStoreIndex.from_documents(documents)
     query_engine = index.as_query_engine()
-
-    response = query_engine.query(question)
-    return response.response
+    res = query_engine.query(question)
+    return res.response
 
 
 if __name__ == "__main__":
-    pdf_path = "data/paper.pdf"
+    logging.basicConfig(level=logging.INFO)
+
+    pdf_path = Path("data/paper.pdf")
     question = "Could you please summarize this PDF? Thank you!"
-    summary = chat_with_pdf(pdf_path, question)
-    print(summary)
+    answer = chat_with_pdf(pdf_path, question)
+    logging.info(answer)

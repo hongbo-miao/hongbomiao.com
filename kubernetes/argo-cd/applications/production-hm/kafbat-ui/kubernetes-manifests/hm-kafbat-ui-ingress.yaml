@@ -10,7 +10,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
     # https://kubernetes-sigs.github.io/external-dns/latest/annotations/annotations
-    external-dns.alpha.kubernetes.io/hostname: hm-kafbat-ui.internal.hongbomiao.com
+    external-dns.alpha.kubernetes.io/hostname: kafbat-ui.internal.hongbomiao.com
     # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
     argocd.argoproj.io/hook: PostSync
   labels:
@@ -18,7 +18,7 @@ metadata:
     app.kubernetes.io/part-of: production-hm-kafbat-ui
 spec:
   rules:
-    - host: hm-kafbat-ui.internal.hongbomiao.com
+    - host: kafbat-ui.internal.hongbomiao.com
       http:
         paths:
           - path: /
@@ -30,5 +30,5 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - hm-kafbat-ui.internal.hongbomiao.com
+        - kafbat-ui.internal.hongbomiao.com
       secretName: production-hm-kafbat-ui-certificate
