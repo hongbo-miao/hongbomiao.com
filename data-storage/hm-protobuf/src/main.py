@@ -64,12 +64,9 @@ def generate_motor_data(point_number: int) -> list[motor_pb2.Motor]:
     motors = ["motor001", "motor002", "motor003"]
     start_time_ns = time.time_ns()
     interval_ns = 1_000_000_000
-
     data: list[motor_pb2.Motor] = []
-
     for i in range(point_number):
         timestamp_ns: int = start_time_ns + (i * interval_ns)
-
         motor = motor_pb2.Motor()
         motor.id = random.choice(motors)
         motor.timestamp_ns = timestamp_ns
@@ -78,9 +75,7 @@ def generate_motor_data(point_number: int) -> list[motor_pb2.Motor]:
         motor.temperature3 = random.uniform(10.0, 100.0)
         motor.temperature4 = random.uniform(10.0, 100.0)
         motor.temperature5 = random.uniform(10.0, 100.0)
-
         data.append(motor)
-
     return data
 
 
