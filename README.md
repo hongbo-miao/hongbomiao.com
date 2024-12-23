@@ -422,11 +422,12 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 #### Large language model (LLM)
 
-- **GPT4All** - LLM for local deployment
-- **LangChain** - LLM framework
+- **LlamaIndex** - LLM application framework
+- **LangChain** - LLM application framework
+- **GPT4All** - Local LLM models
 - **LiteLLM** - LLM gateway
 - **Open WebUI** - AI chat interface
-  - **Open WebUI** - OpenAI API plugin framework
+  - **Open WebUI Pipelines** - OpenAI API plugin framework
 
 ## Computer Vision
 
