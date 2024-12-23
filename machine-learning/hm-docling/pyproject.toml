@@ -1,0 +1,27 @@
+[project]
+name = "hm-docling"
+version = "1.0.0"
+requires-python = "~=3.12.0"
+dependencies = [
+  "docling==2.14.0",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.31.1",
+  "pytest==8.3.4",
+  "pytest-cov==6.0.0",
+]
+
+[tool.uv]
+package = false
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

@@ -11,7 +11,9 @@ show-history:
 	Get-History
 show-connection:
 	netstat
-which:
+show-current-user:
+	whoami
+show-command-location:
 	where.exe xxx
 
 show-powershell-version:

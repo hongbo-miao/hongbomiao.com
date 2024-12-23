@@ -56,6 +56,7 @@ jobs:
       national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
       hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
       hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
+      hm-docling: ${{ steps.filter.outputs.hm-docling }}
       hm-duckdb-query-duckdb: ${{ steps.filter.outputs.hm-duckdb-query-duckdb }}
       hm-duckdb-query-protobuf: ${{ steps.filter.outputs.hm-duckdb-query-protobuf }}
       hm-flax: ${{ steps.filter.outputs.hm-flax }}
@@ -240,6 +241,9 @@ jobs:
             hm-aws-parallelcluster:
               - '.github/workflows/test.yml'
               - 'cloud-platform/aws/aws-parallelcluster/pcluster/**'
+            hm-docling:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/hm-docling/**'
             hm-duckdb-query-duckdb:
               - '.github/workflows/test.yml'
               - 'data-storage/hm-duckdb/query-duckdb/**'
@@ -1914,6 +1918,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
+
+  docling-test:
+    name: Docling | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-docling == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.0.1
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-docling/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/hm-docling/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hm-docling
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-docling
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/hm-docling
 
   langchain-chat-pdf-test:
     name: LangChain (chat-pdf) | Test
