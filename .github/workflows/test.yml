@@ -66,6 +66,7 @@ jobs:
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
       hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
+      hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
       hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
@@ -263,6 +264,9 @@ jobs:
             hm-langchain-chat-pdf:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-langchain/applications/chat-pdf/**'
+            hm-llama-index-chat-pdf:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/hm-llama-index/applications/chat-pdf/**'
             hm-mlflow-classify-mnist:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-mlflow/experiments/classify-mnist/**'
@@ -1943,6 +1947,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: machine-learning/hm-langchain/applications/chat-pdf
+
+  llama-index-chat-pdf-test:
+    name: LlamaIndex (chat-pdf) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-llama-index-chat-pdf == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.0.1
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-llama-index/applications/chat-pdf/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/hm-llama-index/applications/chat-pdf/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hm-llama-index/applications/chat-pdf
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-llama-index/applications/chat-pdf
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/hm-llama-index/applications/chat-pdf
 
   mlflow-classify-mnist-test:
     name: MLflow (classify-mnist) | Test

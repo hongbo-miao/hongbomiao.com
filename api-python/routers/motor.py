@@ -2,17 +2,17 @@ import json
 import random
 import time
 
-from config import Settings
+from config import Config
 from confluent_kafka import Producer
 from fastapi import APIRouter, Depends
 from utils.kafka_util import delivery_report
 
 router = APIRouter()
-settings = Settings()
+config = Config()
 
 
 def get_producer():
-    producer = Producer({"bootstrap.servers": settings.KAFKA_BOOTSTRAP_SERVERS})
+    producer = Producer({"bootstrap.servers": config.KAFKA_BOOTSTRAP_SERVERS})
     try:
         yield producer
     finally:

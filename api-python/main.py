@@ -1,23 +1,23 @@
 import logging
 
 import sentry_sdk
-from config import Settings
+from config import Config
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import health, motor, seed
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 from utils.logger import logger
 
-settings = Settings()
+config = Config()
 
 logger.setLevel(logging.INFO)
-logger.info(f"{settings = }")
+logger.info(f"{config = }")
 
 sentry_sdk.init(
-    dsn=settings.SENTRY_DSN,
+    dsn=config.SENTRY_DSN,
     integrations=[FastApiIntegration()],
     traces_sample_rate=1.0,
-    environment=settings.ENV,
+    environment=config.ENV,
 )
 
 app = FastAPI()

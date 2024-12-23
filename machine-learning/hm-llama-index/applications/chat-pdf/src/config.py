@@ -2,6 +2,8 @@ import os
 
 from pydantic_settings import BaseSettings
 
+os.environ["TOKENIZERS_PARALLELISM"] = "true"
+
 
 def get_env_file() -> str:
     env = os.getenv("ENV")
@@ -9,10 +11,8 @@ def get_env_file() -> str:
 
 
 class Config(BaseSettings):
-    ENV: str
-    SENTRY_DSN: str
-    KAFKA_BOOTSTRAP_SERVERS: str
-
+    TOKENIZERS_PARALLELISM: bool
+    OPENAI_API_KEY: str
     model_config = {
         "env_file": get_env_file(),
     }
