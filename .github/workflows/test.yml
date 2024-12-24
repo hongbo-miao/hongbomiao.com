@@ -103,6 +103,7 @@ jobs:
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
       kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
       kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
+      mineru: ${{ steps.filter.outputs.mineru }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
@@ -370,6 +371,9 @@ jobs:
             iads-zeromq-iads-bridge:
               - '.github/workflows/test.yml'
               - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
+            mineru:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/mineru/**'
             mobile-android:
               - '.github/workflows/test.yml'
               - 'mobile/mobile-android/**'
@@ -1918,6 +1922,45 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
+
+  mineru-test:
+    name: MinerU | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.mineru == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: machine-learning/mineru/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/mineru/pyproject.toml
+      - name: Install Detectron2
+        working-directory: machine-learning/mineru
+        run: |
+          uv venv
+          uv pip install torch
+          uv pip install --no-build-isolation git+https://github.com/facebookresearch/detectron2.git
+      - name: Install dependencies
+        working-directory: machine-learning/mineru
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/mineru
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/mineru
 
   docling-test:
     name: Docling | Test
