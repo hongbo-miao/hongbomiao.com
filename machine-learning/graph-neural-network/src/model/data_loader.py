@@ -1,5 +1,5 @@
 from ogb.graphproppred import PygGraphPropPredDataset
-from torch_geometric.data import DataLoader
+from torch_geometric.loader import DataLoader
 
 
 def fetch_dataset(config):
@@ -11,8 +11,8 @@ def fetch_dataset(config):
     elif config.feature == "simple":
         print("using simple feature")
         # only retain the top two node/edge features
-        dataset.data.x = dataset.data.x[:, :2]
-        dataset.data.edge_attr = dataset.data.edge_attr[:, :2]
+        dataset.x = dataset.x[:, :2]
+        dataset.edge_attr = dataset.edge_attr[:, :2]
 
     split_idx = dataset.get_idx_split()
 
