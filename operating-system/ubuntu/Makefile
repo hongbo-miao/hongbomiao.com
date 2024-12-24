@@ -17,7 +17,9 @@ show-usb-devices:
 	lsusb
 show-kernel-ring-buffer-messages:
 	sudo dmesg
-which:
+show-current-user:
+	whoami
+show-command-location:
 	which xxx
 
 # Install
