@@ -424,6 +424,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **LlamaIndex** - LLM application framework
 - **LangChain** - LLM application framework
+- **Docling** - LLM application framework
 - **GPT4All** - Local LLM models
 - **LiteLLM** - LLM gateway
 - **Open WebUI** - AI chat interface
