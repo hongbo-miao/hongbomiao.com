@@ -132,6 +132,7 @@ export default [
       'machine-learning/hm-autogluon/AutogluonModels',
       'machine-learning/hm-docling/data',
       'machine-learning/hm-langchain/applications/*/data',
+      'machine-learning/hm-langgraph/applications/*/data',
       'machine-learning/hm-llama-index/applications/*/data',
       'machine-learning/hm-mlflow/experiments/*/data',
       'machine-learning/hm-mlflow/experiments/*/lightning_logs',

@@ -421,7 +421,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 #### Large language model (LLM)
 
-- **LlamaIndex** - LLM application framework
+- **LlamaIndex** - LLM data framework
+- **LangGraph** - LLM workflows library
 - **LangChain** - LLM application framework
 - **MinerU** - Document data extraction
 - **Docling** - Document data extraction
