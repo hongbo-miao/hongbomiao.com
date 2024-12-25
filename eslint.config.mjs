@@ -130,6 +130,7 @@ export default [
       'machine-learning/graph-neural-network/dataset',
       'machine-learning/graph-neural-network/wandb',
       'machine-learning/hm-autogluon/AutogluonModels',
+      'machine-learning/hm-docling/data',
       'machine-learning/hm-langchain/applications/*/data',
       'machine-learning/hm-llama-index/applications/*/data',
       'machine-learning/hm-mlflow/experiments/*/data',

@@ -29,6 +29,6 @@ if __name__ == "__main__":
     # https://gpt4all.io/index.html
     external_model_path = "data/ggml-model-gpt4all-falcon-q4_0.bin"
     external_pdf_path = "data/my.pdf"
-    external_question = "Could you please summarize this PDF? Thank you!"
+    external_question = "Could you please summarize this PDF?"
 
     main(external_model_path, external_pdf_path, external_question)
