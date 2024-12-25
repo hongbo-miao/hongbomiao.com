@@ -8,51 +8,56 @@ from magic_pdf.model.doc_analyze_by_custom_model import doc_analyze
 
 
 def process_pdf(pdf_file_path: Path, output_dir_path: Path) -> None:
-    pdf_flle_stem = pdf_file_path.stem
+    pdf_file_stem = pdf_file_path.stem
     output_dir_path.mkdir(parents=True, exist_ok=True)
     logging.info(f"Processing PDF: {pdf_file_path}")
 
     image_writer = FileBasedDataWriter(str(output_dir_path))
     markdown_writer = FileBasedDataWriter(str(output_dir_path))
-    image_dir = output_dir_path.name
+    image_dir_name = output_dir_path.name
 
     # Read PDF file into memory
-    reader1 = FileBasedDataReader("")
-    pdf_bytes = reader1.read(str(pdf_file_path))
-    ds = PymuDocDataset(pdf_bytes)
+    file_reader = FileBasedDataReader("")
+    pdf_bytes = file_reader.read(str(pdf_file_path))
+    dataset = PymuDocDataset(pdf_bytes)
 
     # Process PDF based on type
-    pdf_type = ds.classify()
-    logging.info(f"Processing PDF using {pdf_type} mode")
+    pdf_parse_method = dataset.classify()
+    logging.info(f"Processing PDF using {pdf_parse_method} mode")
 
-    if pdf_type == SupportedPdfParseMethod.OCR:
-        infer_result = ds.apply(doc_analyze, ocr=True)
+    if pdf_parse_method == SupportedPdfParseMethod.OCR:
+        infer_result = dataset.apply(doc_analyze, ocr=True)
         pipe_result = infer_result.pipe_ocr_mode(image_writer)
     else:
-        infer_result = ds.apply(doc_analyze, ocr=False)
+        infer_result = dataset.apply(doc_analyze, ocr=False)
         pipe_result = infer_result.pipe_txt_mode(image_writer)
 
     # Generate outputs
-    model_output = str(output_dir_path / f"{pdf_flle_stem}_model.pdf")
-    layout_output = str(output_dir_path / f"{pdf_flle_stem}_layout.pdf")
-    spans_output = str(output_dir_path / f"{pdf_flle_stem}_spans.pdf")
-    markdown_output = f"{pdf_flle_stem}.md"
-    content_list_output = f"{pdf_flle_stem}_content_list.json"
+    model_output_path = output_dir_path / Path(f"{pdf_file_stem}_model.pdf")
+    layout_output_path = output_dir_path / Path(f"{pdf_file_stem}_layout.pdf")
+    spans_output_path = output_dir_path / Path(f"{pdf_file_stem}_spans.pdf")
+    markdown_output_name = f"{pdf_file_stem}.md"
+    content_list_output_name = f"{pdf_file_stem}_content_list.json"
 
-    infer_result.draw_model(model_output)
-    pipe_result.draw_layout(layout_output)
-    pipe_result.draw_span(spans_output)
-    pipe_result.dump_md(markdown_writer, markdown_output, image_dir)
-    pipe_result.dump_content_list(markdown_writer, content_list_output, image_dir)
+    infer_result.draw_model(str(model_output_path))
+    pipe_result.draw_layout(str(layout_output_path))
+    pipe_result.draw_span(str(spans_output_path))
+    pipe_result.dump_md(markdown_writer, markdown_output_name, image_dir_name)
+    pipe_result.dump_content_list(
+        markdown_writer, content_list_output_name, image_dir_name
+    )
 
-    logging.info(f"All outputs saved to: {output_dir_path}")
     logging.info("Processing completed successfully")
 
 
 def main() -> None:
-    pdf_file_path = Path("data/file.pdf")
-    output_dir_path = Path("output")
-    process_pdf(pdf_file_path, output_dir_path)
+    data_dir = Path("data")
+    pdf_paths = data_dir.glob("**/*.pdf")
+    base_output_dir = Path("output")
+
+    for pdf_path in pdf_paths:
+        output_dir_path = base_output_dir / pdf_path.stem
+        process_pdf(pdf_path, output_dir_path)
 
 
 if __name__ == "__main__":
