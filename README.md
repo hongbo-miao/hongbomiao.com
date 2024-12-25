@@ -161,7 +161,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **pytest** - Unit testing
 - **pydantic** - Data validation
 - **HTTPX** - HTTP client
-- **pypdf** - PDF library
 - **Poe the Poet** - Task runner
 - **uv** - Python package management
 
@@ -424,8 +423,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **LlamaIndex** - LLM application framework
 - **LangChain** - LLM application framework
-- **MinerU** - Data extraction
-- **Docling** - Data extraction
+- **MinerU** - Document data extraction
+- **Docling** - Document data extraction
+- **pypdf** - PDF manipulation
 - **GPT4All** - Local LLM models
 - **LiteLLM** - LLM gateway
 - **Open WebUI** - AI chat interface
@@ -598,9 +598,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **AnyLogic** - Simulation modeling tool
 - **LabVIEW** - Graphical programming environment
 - **VeriStand** - Real-time testing and simulation
-  - **niveristand** - VeriStand API library
-  - **npTDMS** - TDMS files reading and writing
-  - **PyVISA** - Virtual instrument software architecture (VISA) API library
+- **CoppeliaSim** - Robot simulation
+- **OpenFOAM** - Computational fluid dynamics (CFD)
+- **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
+- **AeroSandbox** - Aircraft design and optimization
 - **MATLAB** - Programming and numeric computing platform
   - **5G Toolbox** - 5G communications systems simulation, analysis, and testing
     - **6G Exploration Library** - 6G communications systems simulation, analysis, and testing
@@ -615,7 +616,6 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Signal Processing Toolbox** - Signal processing and analysis
   - **Simulink** - Simulation and model-based designing
     - **Simscape** - Multidomain physical systems simulation
-- **CoppeliaSim** - Robot simulation
 
 ## Aerospace
 
