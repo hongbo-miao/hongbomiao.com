@@ -28,8 +28,8 @@ def main() -> None:
         temperature=0.7,
     )
 
-    pdf_path = Path("data/paper.pdf")
-    question = "Could you please summarize this PDF? Thank you!"
+    pdf_path = Path("data/file.pdf")
+    question = "Could you please summarize this PDF?"
     answer = chat_with_pdf(pdf_path, question)
     logging.info(answer)
 
