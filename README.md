@@ -244,12 +244,12 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **ClickHouse** - Column-oriented SQL database
 - **YugabyteDB** - Distributed SQL database
 - **TimescaleDB** - Time-series SQL database
-- **InfluxDB** - Time-series database
-  - **InfluxDB Enterprise** - Distributed time-series database
 - **Prometheus** - Time-series database
+- **InfluxDB** - Distributed time-series database
 - **Loki** - Log aggregation system
 - **DuckDB** - Embedded analytical SQL database
 - **Apache Cassandra** - Distributed wide-column NoSQL database
+- **LanceDB** - Embedded vector database
 - **Qdrant** - Distributed vector database
 - **Chroma** - Distributed vector database
 - **Dgraph** - Distributed graph database

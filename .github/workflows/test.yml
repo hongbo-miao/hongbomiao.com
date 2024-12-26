@@ -66,6 +66,7 @@ jobs:
       hm-jax: ${{ steps.filter.outputs.hm-jax }}
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
+      hm-lancedb: ${{ steps.filter.outputs.hm-lancedb }}
       hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
       hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
       hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
@@ -267,6 +268,9 @@ jobs:
             hm-kubeflow-classify-mnist:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-kubeflow/pipelines/classify-mnist/**'
+            hm-lancedb:
+              - '.github/workflows/test.yml'
+              - 'data-storage/hm-lancedb/**'
             hm-langchain-chat-pdf:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-langchain/applications/chat-pdf/**'
@@ -1397,6 +1401,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: data-storage/hm-duckdb/query-protobuf
+
+  lancedb-test:
+    name: LanceDB | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-lancedb == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: data-storage/hm-lancedb/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/hm-lancedb/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/hm-lancedb
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/hm-lancedb
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/hm-lancedb
 
   protobuf-test:
     name: Protobuf | Test
