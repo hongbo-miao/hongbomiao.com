@@ -1,0 +1,31 @@
+[project]
+name = "hm-imagebind"
+version = "1.0.0"
+requires-python = "~=3.10.0"
+dependencies = [
+  "httpx==0.28.1",
+  "gradio==5.9.1",
+  "imagebind",
+  "mayavi",
+  "lancedb==0.17.0",
+  "pandas==2.2.1",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.31.1",
+  "pytest==8.3.4",
+  "pytest-cov==6.0.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+imagebind = { git = "https://github.com/raghavdixit99/ImageBind.git" }
+mayavi = { git = "https://github.com/enthought/mayavi.git" }
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
