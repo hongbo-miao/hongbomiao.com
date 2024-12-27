@@ -235,7 +235,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **Trino** - Distributed SQL query engine
 - **PostgreSQL** - Object-relational database
-  - **Postgres Operator** - PostgreSQL high-availability (HA) template
+  - **Patroni** - PostgreSQL high-availability (HA) template
   - **Postgres Operator** - PostgreSQL cluster provisioning
   - **pgAdmin** - PostgreSQL management tool
 - **MySQL** - Relational database
@@ -248,6 +248,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **InfluxDB** - Distributed time-series database
 - **Loki** - Log aggregation system
 - **DuckDB** - Embedded analytical SQL database
+- **RocksDB** - Embedded key-value store
+- **Redis** - Distributed in-memory key-value store
+  - **Valkey** - Fork of Redis
+  - **KeyDB** - Multithreaded fork of Redis
 - **Apache Cassandra** - Distributed wide-column NoSQL database
 - **LanceDB** - Embedded vector database
 - **Qdrant** - Distributed vector database
@@ -255,8 +259,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
   - **Kibana** - Elasticsearch visualization
-- **Redis** - Distributed in-memory key–value database
-  - **KeyDB** - Multithreaded fork of Redis
 - **MinIO** - Object storage
 - **Apache ZooKeeper** - Distributed coordination system
 - **Apache Hadoop** - Software utility collection
@@ -405,6 +407,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Lightning** - Deep Learning framework
 - **NeuralForecast** - Neural forecasting
 - **Transformers** - Machine learning models
+- **Faiss** - Vector search and similarity library
 - **Gradio** - Machine learning web application building
 - **Streamlit** - Data web application building
 - **AutoGluon** - Automated machine learning (AutoML) library
