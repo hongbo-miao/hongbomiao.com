@@ -360,6 +360,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=data-storage.hm-duckdb.query-protobuf
 	uv run poe static-type-check-python --package=data-storage.hm-lancedb
 	uv run poe static-type-check-python --package=data-storage.hm-protobuf
+	uv run poe static-type-check-python --package=data-storage.lance
 	uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
 	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-config-reader
 	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-data-reader

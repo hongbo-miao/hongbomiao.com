@@ -102,6 +102,7 @@ jobs:
       iads-iads-data-producer: ${{ steps.filter.outputs.iads-iads-data-producer }}
       iads-zeromq-iads-bridge: ${{ steps.filter.outputs.iads-zeromq-iads-bridge }}
       hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
+      lance: ${{ steps.filter.outputs.lance }}
       kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
       kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
@@ -383,6 +384,9 @@ jobs:
             iads-zeromq-iads-bridge:
               - '.github/workflows/test.yml'
               - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
+            lance:
+              - '.github/workflows/test.yml'
+              - 'data-storage/lance/**'
             mineru:
               - '.github/workflows/test.yml'
               - 'machine-learning/mineru/**'
@@ -1405,6 +1409,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: data-storage/hm-duckdb/query-protobuf
+
+  lance-test:
+    name: Lance | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.lance == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: data-storage/lance/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/lance/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/lance
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/lance
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/lance
 
   lancedb-test:
     name: LanceDB | Test

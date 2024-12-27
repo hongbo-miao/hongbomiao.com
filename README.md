@@ -231,6 +231,12 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Data
 
+## Data Format
+
+- **Protocol Buffers (Protobuf)** - Data serialization format
+- **Apache Parquet** - Columnar file format for big data
+- **Lance** - Columnar file format for machine learning
+
 ### Database, Data Warehouse, Data Lakehouse
 
 - **Trino** - Distributed SQL query engine
