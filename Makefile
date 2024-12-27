@@ -139,7 +139,7 @@ uv-add:
 uv-add-dev:
 	uv add xxx --dev
 
-# JupterLab
+# JupyterLab
 jupyter-lab:
 	jupyter-lab
 
@@ -147,7 +147,7 @@ jupyter-lab:
 jupyter-notebook-clean:
 	uv run poe clean-jupyter-notebook cloud-platform/aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/notebook.ipynb
 	uv run poe clean-jupyter-notebook cloud-platform/aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
-	uv run poe clean-jupyter-notebook machine-learning/triton/amazon-sagamaker-triton-resnet-50/set_up/notebook.ipynb
+	uv run poe clean-jupyter-notebook machine-learning/triton/amazon-sagemaker-triton-resnet-50/set_up/notebook.ipynb
 
 # SQLFluff
 sqlfluff-dialect-list:
@@ -392,8 +392,8 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=machine-learning.mineru
 	uv run poe static-type-check-python --package=machine-learning.neural-forecasting.forecast-air-passenger-number
 	uv run poe static-type-check-python --package=machine-learning.reinforcement-learning.cart-pole
-	uv run poe static-type-check-python --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.deploy
-	uv run poe static-type-check-python --package=machine-learning.triton.amazon-sagamaker-triton-resnet-50.infer
+	uv run poe static-type-check-python --package=machine-learning.triton.amazon-sagemaker-triton-resnet-50.deploy
+	uv run poe static-type-check-python --package=machine-learning.triton.amazon-sagemaker-triton-resnet-50.infer
 	uv run poe static-type-check-python --package=quantum-computing
 static-type-check-terraform:
 	cd cloud-infrastructure/terraform/environments/development/aws && terraform validate
