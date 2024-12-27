@@ -336,6 +336,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.process-flight-data
 	uv run poe static-type-check-python --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
 	uv run poe static-type-check-python --package=cloud-platform.aws.aws-parallelcluster.pcluster
+	uv run poe static-type-check-python --package=computer-vision.hm-imagebind
 	uv run poe static-type-check-python --package=computer-vision.hm-open3d
 	uv run poe static-type-check-python --package=computer-vision.hm-pyvista.mount-saint-helens
 	uv run poe static-type-check-python --package=data-analytics.hm-cudf
@@ -357,6 +358,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=data-storage.delta-lake.write-to-delta-lake
 	uv run poe static-type-check-python --package=data-storage.hm-duckdb.query-duckdb
 	uv run poe static-type-check-python --package=data-storage.hm-duckdb.query-protobuf
+	uv run poe static-type-check-python --package=data-storage.hm-lancedb
 	uv run poe static-type-check-python --package=data-storage.hm-protobuf
 	uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
 	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-config-reader
@@ -372,9 +374,9 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=hm-xxhash
 	uv run poe static-type-check-python --package=machine-learning.convolutional-neural-network
 	uv run poe static-type-check-python --package=machine-learning.dali
-	uv run poe static-type-check-python --package=machine-learning.hm-docling
 	uv run poe static-type-check-python --package=machine-learning.feature-store
 	uv run poe static-type-check-python --package=machine-learning.graph-neural-network
+	uv run poe static-type-check-python --package=machine-learning.hm-docling
 	uv run poe static-type-check-python --package=machine-learning.hm-gradio.applications.classify-image
 	uv run poe static-type-check-python --package=machine-learning.hm-kubeflow.pipelines.calculate
 	uv run poe static-type-check-python --package=machine-learning.hm-kubeflow.pipelines.classify-mnist

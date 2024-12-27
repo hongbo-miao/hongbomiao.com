@@ -5,14 +5,13 @@ import polars as pl
 from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
 
-registry = get_registry()
-func = registry.get("sentence-transformers").create(name="all-MiniLM-L6-v2")
+EMBEDDINGS = get_registry().get("sentence-transformers").create(name="all-MiniLM-L6-v2")
 
 
 class Quotes(LanceModel):
     name: str
-    line: str = func.SourceField()
-    vector: Vector = func.VectorField()
+    line: str = EMBEDDINGS.SourceField()
+    vector: Vector(EMBEDDINGS.ndims()) = EMBEDDINGS.VectorField()  # type: ignore
 
 
 def create_and_populate_table(
@@ -30,7 +29,7 @@ def perform_semantic_search(table: lancedb.table.Table, query: str) -> pl.DataFr
 def main():
     url = "https://raw.githubusercontent.com/Abhiram970/RickBot/refs/heads/main/Rick_and_Morty.csv"
     df = pl.read_csv(url)
-    db = lancedb.connect("~/.lancedb")
+    db = lancedb.connect("/tmp/lancedb")
     table = create_and_populate_table(db, df)
 
     query = "What is the meaning of life?"
