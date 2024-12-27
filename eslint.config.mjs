@@ -82,6 +82,8 @@ export default [
       'cloud-security/hm-prowler/output',
       'computational-fluid-dynamics/openfoam/simulations/*/0.*',
       'computational-fluid-dynamics/openfoam/simulations/*/constant/polyMesh',
+      'computer-vision/hm-imagebind/.checkpoints',
+      'computer-vision/hm-imagebind/data',
       'data-analytics/hm-geopandas/data',
       'data-ingestion/fluent-bit/*/data',
       'data-ingestion/vector/*/data',

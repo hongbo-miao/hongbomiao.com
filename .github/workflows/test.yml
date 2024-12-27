@@ -63,6 +63,7 @@ jobs:
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
       hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
+      hm-imagebind: ${{ steps.filter.outputs.hm-imagebind }}
       hm-jax: ${{ steps.filter.outputs.hm-jax }}
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
@@ -259,6 +260,9 @@ jobs:
             hm-gradio-classify-image:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-gradio/applications/classify-image/**'
+            hm-imagebind:
+              - '.github/workflows/test.yml'
+              - 'computer-vision/hm-imagebind/**'
             hm-jax:
               - '.github/workflows/test.yml'
               - 'high-performance-computing/hm-jax/**'
@@ -2332,6 +2336,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: hardware-in-the-loop/national-instruments/veristand/hm-veristand
+
+  imagebind-test:
+    name: ImageBind | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: computer-vision/hm-imagebind/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: computer-vision/hm-imagebind/pyproject.toml
+      - name: Install dependencies
+        working-directory: computer-vision/hm-imagebind
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: computer-vision/hm-imagebind
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: computer-vision/hm-imagebind
 
   open3d-test:
     name: Open3D | Test
