@@ -62,14 +62,25 @@ def main() -> None:
     )
 
     # Find 5 nearest neighbors
-    # Note: For better accuracy, you can use nprobes (5-10% of dataset) and refine_factor
     k = 5
+
+    # nprobes:
+    #   The number of probes determines the distribution of vector space.
+    #   While a higher number enhances search accuracy, it also results in slower performance.
+    #   Typically, setting nprobes to cover 5–10% of the dataset proves effective in achieving high recall with minimal latency.
+    #
+    # refine_factor:
+    #   Refine the results by reading extra elements and re-ranking them in memory.
+    #   A higher number makes the search more accurate but also slower.
     results = dataset.to_table(
+        prefilter=True,
         nearest={
             "column": "vector",
             "k": k,
             "q": query_vector,
-        }
+            "nprobes": 500,
+            "refine_factor": 10,
+        },
     ).to_pandas()
 
     logging.info("Nearest neighbors (distances show similarity, lower = more similar):")
