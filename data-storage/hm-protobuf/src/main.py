@@ -5,7 +5,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-import pandas as pd
+import polars as pl
 from protos.production.iot import motor_pb2
 
 
@@ -27,7 +27,7 @@ class ProtobufReader:
     def __init__(self, filename: Path) -> None:
         self.file = open(filename, "rb")
 
-    def get_dataframe(self) -> pd.DataFrame:
+    def get_dataframe(self) -> pl.DataFrame:
         data: list[dict[str, Any]] = []
         while True:
             size_data: bytes = self.file.read(4)
@@ -53,7 +53,7 @@ class ProtobufReader:
             }
             data.append(row)
 
-        df: pd.DataFrame = pd.DataFrame(data)
+        df: pl.DataFrame = pl.DataFrame(data)
         return df
 
     def close(self) -> None:
@@ -92,7 +92,7 @@ def main() -> None:
 
     # Read data
     reader: ProtobufReader = ProtobufReader(motor_data_path)
-    df: pd.DataFrame = reader.get_dataframe()
+    df: pl.DataFrame = reader.get_dataframe()
     reader.close()
     logging.info(df)
 
