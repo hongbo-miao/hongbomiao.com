@@ -5,7 +5,7 @@ from pathlib import Path
 
 import can
 import cantools
-import pandas as pd
+import polars as pl
 
 
 def load_dbc_dict(dbc_path_dict: dict[str, Path]) -> dict[str, cantools.db.Database]:
@@ -100,5 +100,9 @@ if __name__ == "__main__":
 
     for unit_type_and_unit_id, data in unit_type_and_unit_id_dict.items():
         parquet_path = data_dir_path / Path(f"{unit_type_and_unit_id}.parquet")
-        df = pd.DataFrame(data)
-        df.to_parquet(parquet_path, engine="pyarrow")
+        df = pl.DataFrame(data)
+        df.write_parquet(
+            parquet_path,
+            compression="zstd",
+            compression_level=19,
+        )
