@@ -365,7 +365,6 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
 	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-config-reader
 	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-data-reader
-	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-data-reader
 	uv run poe static-type-check-python --package=embedded.decode-can-data
 	uv run poe static-type-check-python --package=embedded.format-can-data
 	uv run poe static-type-check-python --package=embedded.hm-serial
