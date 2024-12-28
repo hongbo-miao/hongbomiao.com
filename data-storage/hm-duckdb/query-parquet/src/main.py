@@ -10,7 +10,7 @@ def main(parquet_path: Path) -> None:
             select *
             from read_parquet('{parquet_path}')
         """
-        df = conn.execute(query).df()
+        df = conn.execute(query).pl()
         logging.info(df)
 
 

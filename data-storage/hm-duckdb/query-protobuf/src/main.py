@@ -16,7 +16,7 @@ def main() -> None:
             )
             order by timestamp_ns
         """
-        df = conn.execute(query).df()
+        df = conn.execute(query).pl()
         logging.info(df)
 
 
