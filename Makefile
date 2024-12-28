@@ -357,6 +357,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-trino
 	uv run poe static-type-check-python --package=data-storage.delta-lake.write-to-delta-lake
 	uv run poe static-type-check-python --package=data-storage.hm-duckdb.query-duckdb
+	uv run poe static-type-check-python --package=data-storage.hm-duckdb.query-lance
 	uv run poe static-type-check-python --package=data-storage.hm-duckdb.query-parquet
 	uv run poe static-type-check-python --package=data-storage.hm-duckdb.query-protobuf
 	uv run poe static-type-check-python --package=data-storage.hm-lancedb
