@@ -66,6 +66,7 @@ jobs:
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
       hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
       hm-imagebind: ${{ steps.filter.outputs.hm-imagebind }}
+      open-clip: ${{ steps.filter.outputs.open-clip }}
       hm-jax: ${{ steps.filter.outputs.hm-jax }}
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
@@ -272,6 +273,9 @@ jobs:
             hm-imagebind:
               - '.github/workflows/test.yml'
               - 'computer-vision/hm-imagebind/**'
+            open-clip:
+              - '.github/workflows/test.yml'
+              - 'computer-vision/open-clip/**'
             hm-jax:
               - '.github/workflows/test.yml'
               - 'high-performance-computing/hm-jax/**'
@@ -2480,6 +2484,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: computer-vision/hm-imagebind
+
+  open-clip-test:
+    name: OpenCLIP | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: computer-vision/open-clip/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: computer-vision/open-clip/pyproject.toml
+      - name: Install dependencies
+        working-directory: computer-vision/open-clip
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: computer-vision/open-clip
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: computer-vision/open-clip
 
   open3d-test:
     name: Open3D | Test
