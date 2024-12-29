@@ -127,6 +127,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
 - **tch-rs** - Rust LibTorch (C++ API of PyTorch) bindings
 - **opencv-rust** - Rust OpenCV bindings
+- **openai-api-rs** - OpenAI API library
 - **Tracing** - Tracing
 - **dotenvy** - Environment variables loading
 
@@ -156,11 +157,12 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **FastAPI** - Web framework
 - **Uvicorn** - Asynchronous server gateway interface (ASGI) server
-- **asyncpg** - PostgreSQL client
+- **asyncpg** - PostgreSQL client library
+- **openai** - OpenAI API library
 - **Tenacity** - General-purpose retrying library
-- **pytest** - Unit testing
 - **pydantic** - Data validation
 - **HTTPX** - HTTP client
+- **pytest** - Unit testing
 - **Poe the Poet** - Task runner
 - **uv** - Python package management
 
@@ -176,7 +178,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **graphql-query-complexity** - GraphQL complexity limit
 - **DataLoader** - Batching and caching
 - **Knex.js** - SQL query builder
-- **node-postgres** - PostgreSQL client
+- **node-postgres** - PostgreSQL client library
 - **ioredis** - Redis client
 - **rate-limiter-flexible** - Rate limiting
 - **expressjs/cors** - Cross-Origin Resource Sharing (CORS)
