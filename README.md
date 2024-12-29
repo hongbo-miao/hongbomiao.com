@@ -443,7 +443,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Computer Vision
 
-- **ImageBind** - Multimodal embedding model for images, video, audio, text, depth, thermal, and inertial measurement units (IMUs)
+- **ImageBind** - Multimodal embedding model for images, text, audio, video, depth, thermal, and inertial measurement units (IMUs)
+- **OpenCLIP** - Multimodal embedding model for images and text
 - **OpenCV** - Computer vision library
 - **supervision** - Computer vision library
 - **Ultralytics YOLOv8** - Object detection model

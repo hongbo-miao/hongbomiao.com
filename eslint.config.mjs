@@ -84,6 +84,7 @@ export default [
       'computational-fluid-dynamics/openfoam/simulations/*/constant/polyMesh',
       'computer-vision/hm-imagebind/.checkpoints',
       'computer-vision/hm-imagebind/data',
+      'computer-vision/open-clip/data',
       'data-analytics/hm-geopandas/data',
       'data-ingestion/fluent-bit/*/data',
       'data-ingestion/vector/*/data',
