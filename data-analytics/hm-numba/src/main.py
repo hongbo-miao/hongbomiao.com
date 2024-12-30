@@ -6,8 +6,15 @@ import numpy as np
 from numba import cuda
 
 
+def sum_of_squares_python(n: int) -> float:
+    total = 0.0
+    for i in range(n):
+        total += i * i
+    return total
+
+
 @nb.jit(nopython=True)
-def sum_of_squares_numba(n: int) -> float:
+def sum_of_squares_cpu_numba(n: int) -> float:
     total: float = 0.0
     for i in range(n):
         total += i * i
@@ -21,7 +28,7 @@ def sum_of_squares_cuda_kernel(n: int, result: cuda.devicearray.DeviceNDArray) -
         cuda.atomic.add(result, 0, idx * idx)
 
 
-def sum_of_squares_gpu(n: int) -> float:
+def sum_of_squares_gpu_numba(n: int) -> float:
     # Allocate memory on GPU
     result = cuda.device_array(1, dtype=np.float64)
     cuda.to_device(np.array([0.0], dtype=np.float64), to=result)
@@ -37,39 +44,32 @@ def sum_of_squares_gpu(n: int) -> float:
     return result.copy_to_host()[0]
 
 
-def sum_of_squares_python(n: int) -> float:
-    total = 0.0
-    for i in range(n):
-        total += i * i
-    return total
-
-
 def main() -> None:
     n = 10_000_000
 
     # Python version
     start_time = time.time()
-    result_python = sum_of_squares_python(n)
+    python_result = sum_of_squares_python(n)
     python_time = time.time() - start_time
-    logging.info(f"Python result: {result_python}")
+    logging.info(f"Python result: {python_result}")
     logging.info(f"Python time: {python_time} seconds")
 
     # CPU Numba version
     start_time = time.time()
-    result_numba = sum_of_squares_numba(n)
-    numba_time = time.time() - start_time
-    logging.info(f"CPU Numba result: {result_numba}")
-    logging.info(f"CPU Numba time: {numba_time} seconds")
-    logging.info(f"CPU Numba speedup vs Python: {python_time / numba_time}x")
+    cpu_numba_result = sum_of_squares_cpu_numba(n)
+    cpu_numba_time = time.time() - start_time
+    logging.info(f"CPU Numba result: {cpu_numba_result}")
+    logging.info(f"CPU Numba time: {cpu_numba_time} seconds")
+    logging.info(f"CPU Numba speedup vs Python: {python_time / cpu_numba_time}x")
 
-    # GPU version
+    # GPU Numba version
     try:
         start_time = time.time()
-        result_gpu = sum_of_squares_gpu(n)
-        gpu_time = time.time() - start_time
-        logging.info(f"GPU result: {result_gpu}")
-        logging.info(f"GPU time: {gpu_time} seconds")
-        logging.info(f"GPU speedup vs Python: {python_time / gpu_time}x")
+        gpu_numba_result = sum_of_squares_gpu_numba(n)
+        gpu_numba_time = time.time() - start_time
+        logging.info(f"GPU Numba result: {gpu_numba_result}")
+        logging.info(f"GPU Numba time: {gpu_numba_time} seconds")
+        logging.info(f"GPU Numba speedup vs Python: {python_time / gpu_numba_time}x")
     except cuda.CudaSupportError:
         logging.warning("CUDA GPU is not available")
 
