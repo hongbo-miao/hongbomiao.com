@@ -341,6 +341,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=computer-vision.hm-open3d
 	uv run poe static-type-check-python --package=computer-vision.hm-pyvista.mount-saint-helens
 	uv run poe static-type-check-python --package=data-analytics.hm-cudf
+	uv run poe static-type-check-python --package=data-analytics.hm-cupy
 	uv run poe static-type-check-python --package=data-analytics.hm-geopandas
 	uv run poe static-type-check-python --package=data-analytics.hm-numba
 	uv run poe static-type-check-python --package=data-analytics.hm-pandas
