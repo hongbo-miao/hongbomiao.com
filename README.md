@@ -343,8 +343,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Data Analytics
 
-- **NumPy** - Scientific computing library
+- **NumPy** - Array computation library
   - **Numba** - NumPy-aware Just-in-time (JIT) compiler
+  - **Cupy** - GPU-accelerated array computation library
 - **pandas** - Data analysis library
   - **GeoPandas** - Spatial data library
   - **AWS SDK for pandas** - pandas integration with AWS services
