@@ -48,6 +48,7 @@ jobs:
       hm-aerosandbox: ${{ steps.filter.outputs.hm-aerosandbox }}
       hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
       hm-cudf: ${{ steps.filter.outputs.hm-cudf }}
+      hm-cupy: ${{ steps.filter.outputs.hm-cupy }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
       hm-numba: ${{ steps.filter.outputs.hm-numba }}
       hm-pandas: ${{ steps.filter.outputs.hm-pandas }}
@@ -214,6 +215,9 @@ jobs:
             hm-cudf:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-cudf/**'
+            hm-cupy:
+              - '.github/workflows/test.yml'
+              - 'data-analytics/hm-cupy/**'
             hm-geopandas:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-geopandas/**'
@@ -1822,6 +1826,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: data-analytics/hm-geopandas
+
+  cupy-test:
+    name: CuPy | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-cupy == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-cupy/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-cupy/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-cupy
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-cupy
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-cupy
 
   numba-test:
     name: Numba | Test
