@@ -49,6 +49,7 @@ jobs:
       hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
       hm-cudf: ${{ steps.filter.outputs.hm-cudf }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
+      hm-numba: ${{ steps.filter.outputs.hm-numba }}
       hm-pandas: ${{ steps.filter.outputs.hm-pandas }}
       hm-polars: ${{ steps.filter.outputs.hm-polars }}
       national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
@@ -216,6 +217,9 @@ jobs:
             hm-geopandas:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-geopandas/**'
+            hm-numba:
+              - '.github/workflows/test.yml'
+              - 'data-analytics/hm-numba/**'
             hm-pandas:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-pandas/**'
@@ -1818,6 +1822,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: data-analytics/hm-geopandas
+
+  numba-test:
+    name: Numba | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-numba == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-numba/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-numba/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-numba
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-numba
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-numba
 
   hugging-face-analyze-sentiment-test:
     name: Hugging Face (analyze-sentiment) | Test
