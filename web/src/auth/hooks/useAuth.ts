@@ -62,14 +62,12 @@ const useAuth = (): UseAuth => {
       });
 
       if (res?.data?.data?.signUp?.jwtToken === null || res?.data?.data?.signUp?.jwtToken === '') {
-
         console.log('Failed to sign up.');
         return;
       }
 
       updateMe(res?.data?.data?.signUp);
     } catch (err) {
-
       console.error(err);
     }
   };

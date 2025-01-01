@@ -4,10 +4,9 @@ import eslint from '@eslint/js';
 import eslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import airbnbBase from 'eslint-config-airbnb-base';
-import prettierConfig from 'eslint-config-prettier';
 import cypressPlugin from 'eslint-plugin-cypress';
 import importPlugin from 'eslint-plugin-import';
-import prettierPlugin from 'eslint-plugin-prettier';
+import prettierPluginRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 
 /**
@@ -81,7 +80,6 @@ export default [
       '@typescript-eslint': eslintPlugin,
       cypress: cypressPlugin,
       import: importPlugin,
-      prettier: prettierPlugin,
     },
     settings: {
       'import/resolver': {
@@ -90,7 +88,7 @@ export default [
         },
         typescript: {
           alwaysTryTypes: true,
-          project: 'tsconfig.json'
+          project: 'tsconfig.json',
         },
       },
     },
@@ -98,7 +96,6 @@ export default [
       ...eslintPlugin.configs.recommended.rules,
       ...cypressPlugin.configs.recommended.rules,
       ...airbnbBase.rules,
-      ...prettierConfig.rules,
       'import/extensions': [
         'error',
         'ignorePackages',
@@ -134,5 +131,5 @@ export default [
       ],
     },
   },
-  prettierConfig, // Make sure prettierConfig is last
+  prettierPluginRecommended, // Make sure this is last
 ];

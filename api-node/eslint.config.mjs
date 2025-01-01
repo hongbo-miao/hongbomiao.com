@@ -4,11 +4,9 @@ import eslint from '@eslint/js';
 import eslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import airbnbBase from 'eslint-config-airbnb-base';
-import eslintConfigPrettier from 'eslint-config-prettier';
-import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import jestPlugin from 'eslint-plugin-jest';
-import prettierPlugin from 'eslint-plugin-prettier';
+import prettierPluginRecommended from 'eslint-plugin-prettier/recommended';
 import securityPlugin from 'eslint-plugin-security';
 import globals from 'globals';
 
@@ -84,7 +82,6 @@ export default [
       '@typescript-eslint': eslintPlugin,
       import: importPlugin,
       jest: jestPlugin,
-      prettier: prettierPlugin,
       security: securityPlugin,
     },
     settings: {
@@ -94,7 +91,7 @@ export default [
         },
         typescript: {
           alwaysTryTypes: true,
-          project: 'tsconfig.json'
+          project: 'tsconfig.json',
         },
       },
     },
@@ -103,7 +100,6 @@ export default [
       ...airbnbBase.rules,
       ...jestPlugin.configs.recommended.rules,
       ...securityPlugin.configs.recommended.rules,
-      ...eslintConfigPrettier.rules,
       'import/extensions': [
         'error',
         'ignorePackages',
@@ -141,5 +137,5 @@ export default [
       ],
     },
   },
-  prettierConfig // Make sure prettierConfig is last
+  prettierPluginRecommended, // Make sure this is last
 ];

@@ -18,4 +18,4 @@ export default defineConfig({
       reporter: ['text', 'html'],
     },
   },
-})
+});
