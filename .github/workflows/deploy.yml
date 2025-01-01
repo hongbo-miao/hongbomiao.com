@@ -1,0 +1,26 @@
+---
+name: Deploy
+
+'on':
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: 9 11 * * *
+
+jobs:
+  deploy-hm-api-node:
+    name: Deploy hm-api-node
+    runs-on: ubuntu-24.04
+    environment:
+      name: production
+      url: https://www.hongbomiao.com
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Deploy to Render
+        env:
+          render_deploy_hook_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          curl "$render_deploy_hook_url"

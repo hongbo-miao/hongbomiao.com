@@ -6,7 +6,7 @@ name: Build
     branches:
       - main
   schedule:
-    - cron: 0 11 * * *
+    - cron: 12 11 * * *
 
 jobs:
   detect-changes:
@@ -1034,21 +1034,3 @@ jobs:
         with:
           name: pgbackrest
           path: pgbackrest
-
-  deploy-hm-api-node:
-    name: Deploy hm-api-node
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-24.04
-    environment:
-      name: production-web
-      url: https://www.hongbomiao.com
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Deploy to Render
-        env:
-          render_deploy_hook_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-        run: |
-          curl "$render_deploy_hook_url"
