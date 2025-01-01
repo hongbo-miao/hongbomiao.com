@@ -5,10 +5,12 @@ import geodatasets
 import geopandas
 from matplotlib import pyplot as plt
 
+logger = logging.getLogger(__name__)
+
 
 def main() -> None:
     gdf = geopandas.read_file(geodatasets.get_path("geoda.chicago_commpop"))
-    logging.info(gdf.head())
+    logger.info(gdf.head())
     gdf.to_parquet(Path("data/chicago_commpop.parquet"))
     gdf.plot(
         column="POP2010",
@@ -26,5 +28,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

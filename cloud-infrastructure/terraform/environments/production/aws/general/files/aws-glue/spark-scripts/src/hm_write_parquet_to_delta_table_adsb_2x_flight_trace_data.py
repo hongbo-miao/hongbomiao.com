@@ -9,7 +9,10 @@ from pyspark.context import SparkContext
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import col, concat, date_format, from_unixtime, lit, when
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 raw_parquet_paths = [
     "s3://hm-production-bucket/data/raw-parquet/adsb_2x_flight_trace_data/"
@@ -142,7 +145,7 @@ s3_node = glue_context.create_dynamic_frame.from_options(
 df = s3_node.toDF()
 
 if df.isEmpty():
-    logging.info("DataFrame is empty.")
+    logger.info("DataFrame is empty.")
     job.commit()
     os._exit(os.EX_OK)
 

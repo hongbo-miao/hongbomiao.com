@@ -10,6 +10,7 @@ from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
 from lancedb.table import Table
 
+logger = logging.getLogger(__name__)
 EMBEDDINGS = get_registry().get("imagebind").create()
 DATA_DIR = Path("data")
 
@@ -54,7 +55,7 @@ class ImageBindSearch:
         if response.status_code == 200:
             with open(local_file_path, "wb") as file:
                 file.write(response.content)
-                logging.info(f"Downloaded file: {local_file_path}")
+                logger.info(f"Downloaded file: {local_file_path}")
             return local_file_path
         else:
             raise RuntimeError(f"Download failed: {response}")
@@ -164,5 +165,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

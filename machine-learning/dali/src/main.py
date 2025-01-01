@@ -8,6 +8,8 @@ import torch
 from nvidia.dali import pipeline_def
 from nvidia.dali.plugin.pytorch import DALIGenericIterator
 
+logger = logging.getLogger(__name__)
+
 
 def download_sample_images(data_path: Path) -> None:
     # Create main directory if it doesn not exist
@@ -28,10 +30,10 @@ def download_sample_images(data_path: Path) -> None:
             filename = f"image_{i}.jpg"
             filepath = class_dir / filename
             if not filepath.exists():
-                logging.info(f"Downloading {url} to {filepath}")
+                logger.info(f"Downloading {url} to {filepath}")
                 urllib.request.urlretrieve(url, str(filepath))
         except Exception as e:
-            logging.error(f"Error downloading {url}: {e}")
+            logger.exception(f"Error downloading {url}: {e}")
 
 
 @pipeline_def(batch_size=2, num_threads=2, device_id=None)
@@ -69,7 +71,7 @@ def main() -> None:
     # Get total number of samples
     num_samples = get_num_samples(data_path)
     if num_samples == 0:
-        logging.error("No images available in the directory.")
+        logger.exception("No images available in the directory.")
         return
 
     pipe = image_pipeline(
@@ -84,18 +86,20 @@ def main() -> None:
         auto_reset=True,
     )
 
-    logging.info("Pipeline created successfully!")
-    logging.info(f"Ready to process images from {data_path}")
+    logger.info("Pipeline created successfully!")
+    logger.info(f"Ready to process images from {data_path}")
 
     try:
         for i, data in enumerate(dali_iter):
             images: torch.Tensor = data[0]["data"]
             labels: torch.Tensor = data[0]["label"]
-            logging.info(f"Batch {i}: Image shape: {images.shape}, Labels: {labels}")
+            logger.info(f"Batch {i}: Image shape: {images.shape}, Labels: {labels}")
     except StopIteration:
-        logging.info("Finished processing all images.")
+        logger.info("Finished processing all images.")
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

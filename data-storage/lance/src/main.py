@@ -4,6 +4,8 @@ import lance
 import numpy as np
 from lance.vector import vec_to_table
 
+logger = logging.getLogger(__name__)
+
 
 def main() -> None:
     # Create sample vectors (minimum 5000 recommended for meaningful indexing)
@@ -23,7 +25,7 @@ def main() -> None:
     # Save to Lance dataset
     uri = "/tmp/lancedb/vectors.lance"
     dataset = lance.write_dataset(vector_table, uri, mode="overwrite")
-    logging.info(
+    logger.info(
         "Dataset saved to %s with %d vectors of dimension %d",
         uri,
         num_vectors,
@@ -50,14 +52,14 @@ def main() -> None:
         # - Trade-off: more sub-vectors = better compression but potentially lower accuracy
         num_sub_vectors=16,
     )
-    logging.info("Created vector similarity index")
+    logger.info("Created vector similarity index")
 
     # Read back the dataset
     dataset = lance.dataset(uri)
 
     # Perform vector similarity search
     query_vector = vectors[1]
-    logging.info(
+    logger.info(
         "Performing similarity search for vector with pattern [1.0]*32 + [2.0]*32 + [3.0]*32 + [4.0]*32"
     )
 
@@ -83,14 +85,16 @@ def main() -> None:
         },
     ).to_pandas()
 
-    logging.info("Nearest neighbors (distances show similarity, lower = more similar):")
+    logger.info("Nearest neighbors (distances show similarity, lower = more similar):")
     for idx, row in results.iterrows():
         vector_preview = np.array(row["vector"])
-        logging.info(
+        logger.info(
             f"Result {idx + 1}/{k}: Distance: {row['_distance']:.4f}, Vector preview: {vector_preview[:8]}..."
         )
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

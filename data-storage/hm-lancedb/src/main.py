@@ -5,6 +5,8 @@ import polars as pl
 from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
 
+logger = logging.getLogger(__name__)
+
 EMBEDDINGS = get_registry().get("sentence-transformers").create(name="all-MiniLM-L6-v2")
 
 
@@ -34,11 +36,13 @@ def main():
 
     query = "What is the meaning of life?"
     df = perform_semantic_search(table, query)
-    logging.info("Question: %s", query)
-    logging.info("Answer: %s", df["line"][0])
-    logging.info(df)
+    logger.info("Question: %s", query)
+    logger.info("Answer: %s", df["line"][0])
+    logger.info(df)
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

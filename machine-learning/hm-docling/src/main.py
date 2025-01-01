@@ -9,6 +9,8 @@ from docling.datamodel.pipeline_options import (
 )
 from docling.document_converter import DocumentConverter, PdfFormatOption
 
+logger = logging.getLogger(__name__)
+
 
 def main() -> None:
     data_dir = Path("data")
@@ -38,11 +40,13 @@ def main() -> None:
             # Write markdown to file
             markdown_path = pdf_path.with_suffix(".md")
             markdown_path.write_text(markdown_content, encoding="utf-8")
-            logging.info(f"Converted {pdf_path.name}")
+            logger.info(f"Converted {pdf_path.name}")
         except Exception as e:
-            logging.info(f"Error processing {pdf_path.name}: {e}")
+            logger.info(f"Error processing {pdf_path.name}: {e}")
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

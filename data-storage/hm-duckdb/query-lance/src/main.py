@@ -4,6 +4,8 @@ from pathlib import Path
 import duckdb
 import lancedb
 
+logger = logging.getLogger(__name__)
+
 
 def main(database_path: Path) -> None:
     sample_data = [
@@ -34,11 +36,13 @@ def main(database_path: Path) -> None:
             order by average_review_score desc
         """
         df = conn.execute(query).pl()
-        logging.info(df)
+        logger.info(df)
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
 
     database_path = Path("/tmp/lancedb/products")
     main(database_path)

@@ -5,24 +5,26 @@ from typing import Any
 import pythoncom
 import win32com.client
 
+logger = logging.getLogger(__name__)
+
 
 def show_version_from_file(iads_config: Any, iads_config_path: Path) -> None:
     try:
         version = iads_config.VersionFromFile(iads_config_path)
-        logging.info(f"{version = }")
+        logger.info(f"{version = }")
     except Exception as e:
-        logging.error(f"{iads_config_path = }, {e = }")
+        logger.exception(f"{iads_config_path = }, {e = }")
 
 
 def execute_query(iads_config: Any, query: str) -> None:
     try:
-        logging.info(f"{query = }")
+        logger.info(f"{query = }")
         results: list[Any] | None = iads_config.Query(query)
         if results:
             for result in results:
-                logging.info(f"{result = }")
+                logger.info(f"{result = }")
     except Exception as e:
-        logging.error(f"{e = }")
+        logger.exception(f"{e = }")
 
 
 def process_config(iads_config_path: Path) -> None:
@@ -40,7 +42,7 @@ def process_config(iads_config_path: Path) -> None:
 
         iads_config.Close(True)
     except Exception as e:
-        logging.error(f"{e = }")
+        logger.exception(f"{e = }")
     finally:
         # Clean up COM resources
         if iads_config:
@@ -54,5 +56,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

@@ -12,6 +12,8 @@ import pandas as pd
 import pythoncom
 import win32com.client
 
+logger = logging.getLogger(__name__)
+
 
 class IadsUtil:
     IADS_CONFIG_FILE_NAME = "pfConfig"
@@ -22,7 +24,7 @@ class IadsUtil:
 
     @staticmethod
     def get_iads_signals(iads_config: Any, query: str) -> set[str]:
-        logging.info(f"Executing: {query}")
+        logger.info(f"Executing: {query}")
         results = iads_config.Query(query)
         if not results:
             return set()
@@ -31,7 +33,7 @@ class IadsUtil:
         signal_set = {s.rstrip("\x00") for s in results}
         if len(signal_set) < len(results):
             duplicated_signal_set = {s for s in signal_set if results.count(s) > 1}
-            logging.warning(f"Duplicate signals found: {duplicated_signal_set}")
+            logger.warning(f"Duplicate signals found: {duplicated_signal_set}")
         return signal_set
 
     @staticmethod
@@ -98,7 +100,7 @@ class IadsUtil:
             irig_end_time,
             str(parquet_file_path),
         ]
-        logging.info(f"Executing command: {' '.join(cmd)}")
+        logger.info(f"Executing command: {' '.join(cmd)}")
         result = subprocess.run(cmd, capture_output=True, text=True)
         if result.returncode == 0:
             return parquet_file_path
@@ -128,11 +130,11 @@ class IadsUtil:
         try:
             with tempfile.TemporaryDirectory() as tmp_dir:
                 tmp_dir_path = Path(tmp_dir)
-                logging.info(f"Created temporary directory: {tmp_dir_path}")
+                logger.info(f"Created temporary directory: {tmp_dir_path}")
 
                 # Copy IADS config file
                 temp_iads_config_path = IadsUtil.copy_iads_config(iads_config_path)
-                logging.info(
+                logger.info(
                     f"Created a copy of IADS config file: {temp_iads_config_path}"
                 )
 
@@ -147,11 +149,11 @@ class IadsUtil:
 
                 # Create signal group
                 group_name = "AllSignals"
-                logging.info(
+                logger.info(
                     f"Creating signal group with query. group_name = '{group_name}'"
                 )
                 IadsUtil.create_iads_signal_group(iads_config, signal_set, group_name)
-                logging.info(f"Signal group '{group_name}' created successfully")
+                logger.info(f"Signal group '{group_name}' created successfully")
 
                 # Get IRIG times and year
                 irig_start_time, irig_end_time, year = IadsUtil.get_irig_times(
@@ -167,7 +169,7 @@ class IadsUtil:
                     tmp_dir_path,
                     iads_manager_exe_path,
                 )
-                logging.info("Export parquet completed successfully")
+                logger.info("Export parquet completed successfully")
 
                 # Read the exported parquet file
                 df = pd.read_parquet(parquet_file_path)
@@ -180,13 +182,13 @@ class IadsUtil:
                         irig_time_ns, year, timezone
                     )
                 )
-                logging.info(
+                logger.info(
                     f"Added {IadsUtil.UNIX_TIME_COLUMN_NAME} column with Unix time in nanoseconds ({year = })"
                 )
                 return df
 
         except Exception as e:
-            logging.error(f"{e = }")
+            logger.exception(f"{e = }")
             return None
 
         finally:
@@ -195,15 +197,17 @@ class IadsUtil:
 
             if temp_iads_config_path is not None:
                 temp_iads_config_path.unlink()
-                logging.info(f"Delete the temporary pfConfig: {temp_iads_config_path}")
+                logger.info(f"Delete the temporary pfConfig: {temp_iads_config_path}")
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     iads_data_path = Path(r"C:\iads_data")
     iads_manager_exe_path = Path(
         r"C:\Program Files\IADS\DataManager\IadsDataManager.exe"
     )
     timezone = "America/Los_Angeles"
     df = IadsUtil.get_iads_dataframe(iads_manager_exe_path, iads_data_path, timezone)
-    logging.info(f"{df = }")
+    logger.info(f"{df = }")
