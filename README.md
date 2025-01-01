@@ -27,7 +27,7 @@
   </p>
   <p>
     <a href="https://github.com/prettier/prettier"><img alt="Code style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg" /></a>
-    <a href="https://github.com/psf/black"><img alt="Code style" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
+    <a href="https://github.com/astral-sh/ruff"><img alt="Code style" src="https://img.shields.io/badge/code%20style-ruff-261230.svg" /></a>
     <a href="https://github.com/hongbo-miao/hongbomiao.com/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/hongbo-miao/hongbomiao.com" /></a>
   </p>
   <p>
