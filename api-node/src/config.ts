@@ -149,7 +149,7 @@ const config: Config = {
     `${HTTP_PROTOCOL}://${HOST}:62470`,
     'https://www.k8s-hongbomiao.com',
   ],
-  prodCORSAllowOrigins: [...sharedCORSAllowOrigins, 'https://www.hongbomiao.com'],
+  prodCORSAllowOrigins: [...sharedCORSAllowOrigins, 'https://hongbomiao-com.onrender.com', 'https://www.hongbomiao.com'],
   devCSPConnectSrc: [...sharedCSPConnectSrc, `${WS_PROTOCOL}://${HOST}:80`, 'wss://www.k8s-hongbomiao.com'],
   prodCSPConnectSrc: [
     ...sharedCSPConnectSrc,
