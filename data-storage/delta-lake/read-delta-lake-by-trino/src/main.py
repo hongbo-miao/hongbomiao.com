@@ -1,6 +1,7 @@
 import config
 import pandas as pd
 from sqlalchemy import create_engine, text
+
 from trino.sqlalchemy import URL
 
 

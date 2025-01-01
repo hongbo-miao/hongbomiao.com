@@ -157,7 +157,19 @@ exclude = [
   "web/public/sitemap.xml",
   "web/storybook-static",
   "web/tmp",
+
+  # Ruff specific
+  "**/*_pb2.py",
 ]
 
 [lint]
+# https://docs.astral.sh/ruff/rules/
+select = [
+  # pycodestyle
+  "E",
+  # Pyflakes
+  "F",
+  # isort
+  "I",
+]
 ignore = ["E501"]

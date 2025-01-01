@@ -345,7 +345,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **NumPy** - Array computation library
   - **Numba** - NumPy-aware Just-in-time (JIT) compiler
-  - **Cupy** - GPU-accelerated array computation library
+  - **CuPy** - GPU-accelerated array computation library
 - **pandas** - Data analysis library
   - **GeoPandas** - Spatial data library
   - **AWS SDK for pandas** - pandas integration with AWS services
@@ -669,8 +669,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **MISS_HIT** - MATLAB code formatter
 - **textlint** - Natural language linter
 - **Buf** - Protocol Buffers linter
-- **Black** - Python code formatter
-- **autoflake**, **isort**, **Ruff** - Python linter
+- **Ruff** - Python code formatter and linter
 - **Mypy** - Python static type checker
 - **qmllint** - QML linter
 - **opa** - Rego code formatter

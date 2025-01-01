@@ -873,15 +873,9 @@ jobs:
       - name: Install dependencies
         run: |
           uv sync --dev
-      - name: Lint Python (Black)
+      - name: Lint Python
         run: |
-          uv run poe lint-python-black
-      - name: Lint Python (Ruff)
-        run: |
-          uv run poe lint-python-ruff
-      - name: Lint Python (isort)
-        run: |
-          uv run poe lint-python-isort
+          uv run poe lint-python
 
   lint-qml:
     name: QML

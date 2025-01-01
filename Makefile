@@ -243,18 +243,10 @@ lint-matlab-fix:
 	uv run poe lint-matlab-fix
 lint-protocol-buffers:
 	buf lint
-lint-python-black:
-	uv run poe lint-python-black
-lint-python-black-fix:
-	uv run poe lint-python-black-fix
-lint-python-ruff:
-	uv run poe lint-python-ruff
-lint-python-ruff-fix:
-	uv run poe lint-python-ruff-fix
-lint-python-isort:
-	uv run poe lint-python-isort
-lint-python-isort-fix:
-	uv run poe lint-python-isort-fix
+lint-python:
+	uv run poe lint-python
+lint-python-fix:
+	uv run poe lint-python-fix
 lint-qml:
 	qmllint $$(git ls-files "**/*.qml")
 lint-ruby:
