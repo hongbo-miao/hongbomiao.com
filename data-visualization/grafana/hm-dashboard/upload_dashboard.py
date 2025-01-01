@@ -8,6 +8,8 @@ import requests
 from grafanalib._gen import DashboardEncoder
 from grafanalib.core import Dashboard
 
+logger = logging.getLogger(__name__)
+
 
 def upload_to_grafana(dashboard: Dashboard) -> None:
     dashboard_json = json.dumps(
@@ -27,12 +29,14 @@ def upload_to_grafana(dashboard: Dashboard) -> None:
         },
         verify=True,
     )
-    logging.info(res.status_code)
-    logging.info(res.content)
+    logger.info(res.status_code)
+    logger.info(res.content)
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     module = importlib.machinery.SourceFileLoader(
         "hm_dashboard",
         pathlib.Path(__file__).parent.joinpath("hm.dashboard.py").resolve().as_posix(),

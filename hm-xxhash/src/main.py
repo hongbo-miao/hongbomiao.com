@@ -3,6 +3,8 @@ from pathlib import Path
 
 import xxhash
 
+logger = logging.getLogger(__name__)
+
 
 def get_file_xxh128(file_path: Path) -> str:
     hash = xxhash.xxh128()
@@ -18,9 +20,11 @@ def get_file_xxh128(file_path: Path) -> str:
 def main() -> None:
     file_path = Path("src/main.py")
     xxh128 = get_file_xxh128(file_path)
-    logging.info(xxh128)
+    logger.info(xxh128)
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

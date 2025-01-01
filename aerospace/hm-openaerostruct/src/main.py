@@ -7,6 +7,8 @@ from openaerostruct.geometry.geometry_group import Geometry
 from openaerostruct.geometry.utils import generate_mesh
 from openmdao.api import n2
 
+logger = logging.getLogger(__name__)
+
 
 def main() -> None:
     # Create a dictionary to store options about the mesh
@@ -102,5 +104,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

@@ -8,6 +8,8 @@ from typing import Any
 import polars as pl
 from protos.production.iot import motor_pb2
 
+logger = logging.getLogger(__name__)
+
 
 class ProtobufWriter:
     def __init__(self, filename: Path) -> None:
@@ -94,9 +96,11 @@ def main() -> None:
     reader: ProtobufReader = ProtobufReader(motor_data_path)
     df: pl.DataFrame = reader.get_dataframe()
     reader.close()
-    logging.info(df)
+    logger.info(df)
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

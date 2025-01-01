@@ -7,6 +7,8 @@ from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 from qiskit_ibm_runtime import EstimatorV2 as Estimator
 from qiskit_ibm_runtime.fake_provider import FakeAlmadenV2
 
+logger = logging.getLogger(__name__)
+
 
 def main():
     # Create a new circuit with two qubits
@@ -35,18 +37,18 @@ def main():
 
     job = estimator.run([(isa_circuit, mapped_observables)])
     result = job.result()
-    logging.info(f"{result = }")
+    logger.info(f"{result = }")
 
     # Submitted one Pub, so this contains one inner result (and some metadata of its own),
     # which had five observables, so contains information on all five.
     pub_result = job.result()[0]
-    logging.info(f"{pub_result = }")
+    logger.info(f"{pub_result = }")
 
     values = pub_result.data.evs
-    logging.info(f"{values = }")
+    logger.info(f"{values = }")
 
     errors = pub_result.data.stds
-    logging.info(f"{errors = }")
+    logger.info(f"{errors = }")
 
     plt.plot(observables_labels, values, "-o")
     plt.xlabel("Observables")
@@ -55,5 +57,7 @@ def main():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

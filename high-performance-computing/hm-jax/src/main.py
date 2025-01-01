@@ -4,6 +4,8 @@ import jax.numpy as jnp
 import matplotlib.pyplot as plt
 from jax import grad, jit, random
 
+logger = logging.getLogger(__name__)
+
 
 # The linear model
 def predict(w: float, b: float, X: jnp.ndarray) -> jnp.ndarray:
@@ -59,7 +61,7 @@ def main() -> None:
         current_loss = loss_fn(w, b, X, y)
         losses.append(current_loss)
         if i % 10 == 0:
-            logging.info(
+            logger.info(
                 f"Iteration {i}: loss = {current_loss:.4f}, w = {w:.4f}, b = {b:.4f}"
             )
 
@@ -78,5 +80,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()
