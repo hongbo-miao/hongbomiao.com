@@ -4,6 +4,8 @@ import time
 import cupy as cp
 import numpy as np
 
+logger = logging.getLogger(__name__)
+
 
 def sum_of_squares_numpy(n: int) -> float:
     array = np.arange(n)
@@ -22,22 +24,24 @@ def main() -> None:
     start_time = time.time()
     result_numpy = sum_of_squares_numpy(n)
     numpy_time = time.time() - start_time
-    logging.info(f"NumPy result: {result_numpy}")
-    logging.info(f"NumPy time: {numpy_time} seconds")
+    logger.info(f"NumPy result: {result_numpy}")
+    logger.info(f"NumPy time: {numpy_time} seconds")
 
     try:
         # CuPy version
         start_time = time.time()
         result_cupy = sum_of_squares_cupy(n)
         cupy_time = time.time() - start_time
-        logging.info(f"CuPy result: {result_cupy}")
-        logging.info(f"CuPy time: {cupy_time} seconds")
-        logging.info(f"CuPy speedup vs NumPy: {numpy_time / cupy_time}x")
+        logger.info(f"CuPy result: {result_cupy}")
+        logger.info(f"CuPy time: {cupy_time} seconds")
+        logger.info(f"CuPy speedup vs NumPy: {numpy_time / cupy_time}x")
 
     except cp.cuda.runtime.CUDARuntimeError:
-        logging.warning("CUDA GPU is not available")
+        logger.warning("CUDA GPU is not available")
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

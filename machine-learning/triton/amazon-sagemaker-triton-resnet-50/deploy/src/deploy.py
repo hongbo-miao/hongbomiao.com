@@ -5,6 +5,8 @@ import boto3
 import sagemaker
 from botocore.client import BaseClient
 
+logger = logging.getLogger(__name__)
+
 
 def check_endpoint_status(
     sagemaker_client: BaseClient, sagemaker_endpoint_name: str
@@ -74,7 +76,7 @@ def deploy() -> None:
             "Mode": "MultiModel",
         },
     )
-    logging.info(f'Model Arn: {res["ModelArn"]}')
+    logger.info(f'Model Arn: {res["ModelArn"]}')
 
     # Create an endpoint config
     res = sagemaker_client.create_endpoint_config(
@@ -89,14 +91,14 @@ def deploy() -> None:
             }
         ],
     )
-    logging.info(f'Endpoint Config Arn: {res["EndpointConfigArn"]}')
+    logger.info(f'Endpoint Config Arn: {res["EndpointConfigArn"]}')
 
     # Create an endpoint
     res = sagemaker_client.create_endpoint(
         EndpointName=sagemaker_endpoint_name,
         EndpointConfigName=sagemaker_endpoint_config_name,
     )
-    logging.info(f'Endpoint Arn: {res["EndpointArn"]}')
+    logger.info(f'Endpoint Arn: {res["EndpointArn"]}')
 
     check_endpoint_status(sagemaker_client, sagemaker_endpoint_name)
 
@@ -138,5 +140,7 @@ def deploy() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     deploy()

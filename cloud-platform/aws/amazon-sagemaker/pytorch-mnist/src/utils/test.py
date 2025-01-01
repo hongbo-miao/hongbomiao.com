@@ -5,6 +5,8 @@ import torch.nn.functional as F
 import torch.utils.data
 import torch.utils.data.distributed
 
+logger = logging.getLogger(__name__)
+
 
 def test(model, test_loader, device):
     model.eval()
@@ -21,7 +23,7 @@ def test(model, test_loader, device):
             correct += pred.eq(target.view_as(pred)).sum().item()
 
     test_loss /= len(test_loader.dataset)
-    logging.info(
+    logger.info(
         "Test set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n".format(
             test_loss,
             correct,

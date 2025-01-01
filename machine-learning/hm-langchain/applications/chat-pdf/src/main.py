@@ -7,6 +7,8 @@ from langchain_community.llms import GPT4All
 from langchain_community.vectorstores import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+logger = logging.getLogger(__name__)
+
 
 def main(model_path: str, pdf_path: str, question: str) -> None:
     loader = PyPDFLoader(file_path=pdf_path)
@@ -20,11 +22,13 @@ def main(model_path: str, pdf_path: str, question: str) -> None:
         llm=llm, chain_type="stuff", retriever=vectorstore.as_retriever()
     )
     answer = qa.run(question)
-    logging.info(answer)
+    logger.info(answer)
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
 
     # https://gpt4all.io/index.html
     external_model_path = "data/ggml-model-gpt4all-falcon-q4_0.bin"

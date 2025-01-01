@@ -6,11 +6,13 @@ from magic_pdf.data.data_reader_writer import FileBasedDataReader, FileBasedData
 from magic_pdf.data.dataset import PymuDocDataset
 from magic_pdf.model.doc_analyze_by_custom_model import doc_analyze
 
+logger = logging.getLogger(__name__)
+
 
 def process_pdf(pdf_file_path: Path, output_dir_path: Path) -> None:
     pdf_file_stem = pdf_file_path.stem
     output_dir_path.mkdir(parents=True, exist_ok=True)
-    logging.info(f"Processing PDF: {pdf_file_path}")
+    logger.info(f"Processing PDF: {pdf_file_path}")
 
     image_writer = FileBasedDataWriter(str(output_dir_path))
     markdown_writer = FileBasedDataWriter(str(output_dir_path))
@@ -23,7 +25,7 @@ def process_pdf(pdf_file_path: Path, output_dir_path: Path) -> None:
 
     # Process PDF based on type
     pdf_parse_method = dataset.classify()
-    logging.info(f"Processing PDF using {pdf_parse_method} mode")
+    logger.info(f"Processing PDF using {pdf_parse_method} mode")
 
     if pdf_parse_method == SupportedPdfParseMethod.OCR:
         infer_result = dataset.apply(doc_analyze, ocr=True)
@@ -47,7 +49,7 @@ def process_pdf(pdf_file_path: Path, output_dir_path: Path) -> None:
         markdown_writer, content_list_output_name, image_dir_name
     )
 
-    logging.info("Processing completed successfully")
+    logger.info("Processing completed successfully")
 
 
 def main() -> None:
@@ -61,5 +63,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

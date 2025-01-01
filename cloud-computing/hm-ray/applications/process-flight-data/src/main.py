@@ -7,6 +7,8 @@ import mlflow
 import pandas as pd
 import ray
 
+logger = logging.getLogger(__name__)
+
 
 @ray.remote
 def process_flight_data(
@@ -36,10 +38,12 @@ def process_flight_data(
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
 
     ray.init()
-    logging.info(ray.cluster_resources())
+    logger.info(ray.cluster_resources())
 
     mlflow_tracking_server_host = config.MLFLOW_TRACKING_SERVER_HOST
     mlflow_tracking_server_user_name = config.MLFLOW_TRACKING_USERNAME
@@ -88,7 +92,7 @@ if __name__ == "__main__":
 
     results = ray.get(tasks)
     for i, df_head in enumerate(results):
-        logging.info(f"Experiment {i}")
-        logging.info(f"{df_head = }")
+        logger.info(f"Experiment {i}")
+        logger.info(f"{df_head = }")
 
     ray.shutdown()

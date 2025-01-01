@@ -5,6 +5,8 @@ import numba as nb
 import numpy as np
 from numba import cuda
 
+logger = logging.getLogger(__name__)
+
 
 def sum_of_squares_python(n: int) -> float:
     total = 0.0
@@ -51,29 +53,31 @@ def main() -> None:
     start_time = time.time()
     python_result = sum_of_squares_python(n)
     python_time = time.time() - start_time
-    logging.info(f"Python result: {python_result}")
-    logging.info(f"Python time: {python_time} seconds")
+    logger.info(f"Python result: {python_result}")
+    logger.info(f"Python time: {python_time} seconds")
 
     # CPU Numba version
     start_time = time.time()
     cpu_numba_result = sum_of_squares_cpu_numba(n)
     cpu_numba_time = time.time() - start_time
-    logging.info(f"CPU Numba result: {cpu_numba_result}")
-    logging.info(f"CPU Numba time: {cpu_numba_time} seconds")
-    logging.info(f"CPU Numba speedup vs Python: {python_time / cpu_numba_time}x")
+    logger.info(f"CPU Numba result: {cpu_numba_result}")
+    logger.info(f"CPU Numba time: {cpu_numba_time} seconds")
+    logger.info(f"CPU Numba speedup vs Python: {python_time / cpu_numba_time}x")
 
     # GPU Numba version
     try:
         start_time = time.time()
         gpu_numba_result = sum_of_squares_gpu_numba(n)
         gpu_numba_time = time.time() - start_time
-        logging.info(f"GPU Numba result: {gpu_numba_result}")
-        logging.info(f"GPU Numba time: {gpu_numba_time} seconds")
-        logging.info(f"GPU Numba speedup vs Python: {python_time / gpu_numba_time}x")
+        logger.info(f"GPU Numba result: {gpu_numba_result}")
+        logger.info(f"GPU Numba time: {gpu_numba_time} seconds")
+        logger.info(f"GPU Numba speedup vs Python: {python_time / gpu_numba_time}x")
     except cuda.CudaSupportError:
-        logging.warning("CUDA GPU is not available")
+        logger.warning("CUDA GPU is not available")
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

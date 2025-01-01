@@ -14,13 +14,15 @@ from utils.get_train_data_loader import get_train_data_loader
 from utils.save_model import save_model
 from utils.test import test
 
+logger = logging.getLogger(__name__)
+
 
 def train(args):
     is_distributed = len(args.hosts) > 1 and args.backend is not None
-    logging.info("Distributed training:", is_distributed)
+    logger.info("Distributed training:", is_distributed)
 
     use_cuda = args.num_gpus > 0
-    logging.info("Number of gpus available:", args.num_gpus)
+    logger.info("Number of gpus available:", args.num_gpus)
     kwargs = {"num_workers": 1, "pin_memory": True} if use_cuda else {}
     device = torch.device("cuda" if use_cuda else "cpu")
 
@@ -33,7 +35,7 @@ def train(args):
         dist.init_process_group(
             backend=args.backend, rank=host_rank, world_size=world_size
         )
-        logging.info(
+        logger.info(
             "Initialized the distributed environment: '{}' backend on {} nodes. ".format(
                 args.backend, dist.get_world_size()
             )
@@ -52,7 +54,7 @@ def train(args):
     )
     test_loader = get_test_data_loader(args.test_batch_size, args.data_dir, **kwargs)
 
-    logging.info(
+    logger.info(
         "Processes {}/{} ({:.0f}%) of train data".format(
             len(train_loader.sampler),
             len(train_loader.dataset),
@@ -60,7 +62,7 @@ def train(args):
         )
     )
 
-    logging.info(
+    logger.info(
         "Processes {}/{} ({:.0f}%) of test data".format(
             len(test_loader.sampler),
             len(test_loader.dataset),
@@ -91,7 +93,7 @@ def train(args):
                 average_gradients(model)
             optimizer.step()
             if batch_idx % args.log_interval == 0:
-                logging.info(
+                logger.info(
                     "Train Epoch: {} [{}/{} ({:.0f}%)] Loss: {:.6f}".format(
                         epoch,
                         batch_idx * len(data),

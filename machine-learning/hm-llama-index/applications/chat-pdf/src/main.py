@@ -6,6 +6,8 @@ from llama_index.core import Settings, SimpleDirectoryReader, VectorStoreIndex
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.litellm import LiteLLM
 
+logger = logging.getLogger(__name__)
+
 
 def chat_with_pdf(pdf_path: Path, question: str) -> str:
     documents = SimpleDirectoryReader(input_files=[pdf_path]).load_data()
@@ -31,9 +33,11 @@ def main() -> None:
     pdf_path = Path("data/file.pdf")
     question = "Could you please summarize this PDF?"
     answer = chat_with_pdf(pdf_path, question)
-    logging.info(answer)
+    logger.info(answer)
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

@@ -7,6 +7,8 @@ import aerosandbox.numpy as np
 import aerosandbox.tools.pretty_plots as p
 import matplotlib.pyplot as plt
 
+logger = logging.getLogger(__name__)
+
 
 def main() -> None:
     wing_airfoil = asb.Airfoil("sd7037")
@@ -110,7 +112,7 @@ def main() -> None:
     )
     aero = vlm.run()
     for k, v in aero.items():
-        logging.info(f"{k.rjust(4)} : {v}")
+        logger.info(f"{k.rjust(4)} : {v}")
     vlm.draw(show_kwargs=dict(jupyter_backend="static"))
 
     # Operating Point Optimization
@@ -126,7 +128,7 @@ def main() -> None:
     opti.minimize(-L_over_D)
     sol = opti.solve()
     best_alpha = sol(alpha)
-    logging.info(f"Alpha for max L/D: {best_alpha:.3f} deg")
+    logger.info(f"Alpha for max L/D: {best_alpha:.3f} deg")
 
     # Aerodynamic Shape Optimization
     opti = asb.Opti()
@@ -183,5 +185,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

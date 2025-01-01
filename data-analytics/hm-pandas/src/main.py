@@ -6,6 +6,8 @@ from pathlib import Path
 import httpx
 import pandas as pd
 
+logger = logging.getLogger(__name__)
+
 
 def download_data(transaction_path: Path) -> None:
     transaction_url = (
@@ -29,18 +31,18 @@ def main() -> None:
     start_time = time.time()
     transactions = pd.read_parquet(transaction_path)
     load_time = time.time() - start_time
-    logging.info(f"Data loading time: {load_time:.2f} seconds")
+    logger.info(f"Data loading time: {load_time:.2f} seconds")
 
     # Print DataFrame info
-    logging.info(transactions.columns)
-    logging.info(transactions.head())
+    logger.info(transactions.columns)
+    logger.info(transactions.head())
 
     # Time the sum calculation
     start_time = time.time()
     total_amount = transactions["AMOUNT"].sum()
     sum_time = time.time() - start_time
-    logging.info(f"Total transaction amount: {total_amount}")
-    logging.info(f"Sum calculation time: {sum_time:.2f} seconds")
+    logger.info(f"Total transaction amount: {total_amount}")
+    logger.info(f"Sum calculation time: {sum_time:.2f} seconds")
 
     # Time the group by operations
     start_time = time.time()
@@ -56,16 +58,18 @@ def main() -> None:
         )
     )
     group_by_time = time.time() - start_time
-    logging.info("Category statistics:")
-    logging.info(category_stats)
-    logging.info(f"Group by operations time: {group_by_time:.2f} seconds")
+    logger.info("Category statistics:")
+    logger.info(category_stats)
+    logger.info(f"Group by operations time: {group_by_time:.2f} seconds")
 
     # Print total execution time
-    logging.info(
+    logger.info(
         f"Total execution time: {load_time + sum_time + group_by_time:.2f} seconds"
     )
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
     main()

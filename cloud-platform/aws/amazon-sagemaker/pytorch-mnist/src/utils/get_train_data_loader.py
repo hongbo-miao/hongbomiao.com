@@ -5,9 +5,11 @@ import torch.utils.data
 import torch.utils.data.distributed
 from torchvision import datasets, transforms
 
+logger = logging.getLogger(__name__)
+
 
 def get_train_data_loader(batch_size, training_dir, is_distributed, **kwargs):
-    logging.info("Get train data loader")
+    logger.info("Get train data loader")
     dataset = datasets.MNIST(
         training_dir,
         train=True,
