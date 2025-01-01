@@ -5,12 +5,11 @@ import tanstackQueryPlugin from '@tanstack/eslint-plugin-query';
 import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import airbnb from 'eslint-config-airbnb';
-import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
 import jestPlugin from 'eslint-plugin-jest';
 import jestDomPlugin from 'eslint-plugin-jest-dom';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
-import prettierPlugin from 'eslint-plugin-prettier';
+import prettierPluginRecommended from 'eslint-plugin-prettier/recommended';
 import reactPlugin from 'eslint-plugin-react';
 import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import securityPlugin from 'eslint-plugin-security';
@@ -89,7 +88,6 @@ export default [
       jest: jestPlugin,
       'jest-dom': jestDomPlugin,
       'jsx-a11y': jsxA11yPlugin,
-      prettier: prettierPlugin,
       react: reactPlugin,
       'react-refresh': reactRefreshPlugin,
       security: securityPlugin,
@@ -102,7 +100,7 @@ export default [
         },
         typescript: {
           alwaysTryTypes: true,
-          project: 'tsconfig.json'
+          project: 'tsconfig.json',
         },
       },
       react: {
@@ -155,7 +153,7 @@ export default [
         },
       ],
       'react/prop-types': 'off',
-      'react-refresh/only-export-components': "error",
+      'react-refresh/only-export-components': 'error',
       'security/detect-non-literal-fs-filename': 'off',
       'spaced-comment': [
         'error',
@@ -179,5 +177,5 @@ export default [
       'import/no-unresolved': 'off',
     },
   },
-  prettierConfig, // Make sure prettierConfig is last
+  prettierPluginRecommended, // Make sure this is last
 ];
