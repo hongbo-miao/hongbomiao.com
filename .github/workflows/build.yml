@@ -1047,29 +1047,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.1.0
+      - name: Deploy to Render
+        uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          node-version-file: web/.node-version
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Build web
-        run: |
-          cd api-node
-          npm run build:web
-          cd ..
-          rm -f .gitignore
-          git add .
-          git config --global user.name "Hongbo Miao"
-          git config --global user.email "3375461+hongbo-miao@users.noreply.github.com"
-          git commit --message="chore(api-node): build web"
-      - name: Install Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.13.15
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: production-web
-          heroku_email: hongbo.miao@outlook.com
-          appdir: api-node
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
+          wait-for-success: true
