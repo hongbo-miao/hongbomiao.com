@@ -15,10 +15,7 @@ const graphQLMiddleware = createHandler({
     dataLoaders: dataLoaders(),
     myId: verifyJWTTokenAndExtractMyID((raw as Request).headers.authorization),
   }),
-  validationRules: [
-    ...(isProduction() ? [NoSchemaIntrospectionCustomRule] : []),
-    depthLimit(5),
-  ],
+  validationRules: [...(isProduction() ? [NoSchemaIntrospectionCustomRule] : []), depthLimit(5)],
 });
 
 export default graphQLMiddleware;
