@@ -3,15 +3,15 @@ import meNamesFragment from './meNamesFragment';
 
 const meQuery = print(
   parse(`
-  query Me {
-    me {
-      name
-      bio
-      ...meNames
+    query Me {
+      me {
+        name
+        bio
+        ...meNames
+      }
     }
-  }
-  ${meNamesFragment}
-`),
+    ${meNamesFragment}
+  `),
 );
 
 export default meQuery;
