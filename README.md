@@ -346,13 +346,13 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **NumPy** - Array computation library
   - **Numba** - NumPy-aware Just-in-time (JIT) compiler
   - **CuPy** - GPU-accelerated array computation library
-- **NetworkX** - Network analysis and visualization
 - **pandas** - Data analysis library
   - **GeoPandas** - Spatial data library
   - **AWS SDK for pandas** - pandas integration with AWS services
   - **Modin** - pandas workflows scaling
   - **cuDF** - GPU-powered DataFrame library
   - **Polars** - Multithreaded, vectorized, query-engine-powered DataFrame library
+- **NetworkX** - Network analysis library
 - **JupyterLab** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
 - **Databricks** - Unified data analytics platform

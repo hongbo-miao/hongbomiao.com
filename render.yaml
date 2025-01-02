@@ -1,0 +1,59 @@
+# https://render.com/docs/blueprint-spec
+
+---
+version: "1"
+services:
+  - type: web
+    name: hongbomiao.com
+    repo: https://github.com/hongbo-miao/hongbomiao.com
+    plan: free
+    region: oregon
+    autoDeploy: false
+    runtime: docker
+    dockerContext: .
+    dockerfilePath: api-node/Dockerfile
+    healthCheckPath: /health
+    domains:
+      - hongbomiao.com
+      - www.hongbomiao.com
+    envVars:
+      - key: HOST
+        sync: false
+      - key: HTTP_PROTOCOL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: LIGHTSTEP_TOKEN
+        sync: false
+      - key: NPM_CONFIG_PRODUCTION
+        sync: false
+      - key: PORT
+        sync: false
+      - key: POSTGRES_DB
+        sync: false
+      - key: POSTGRES_HOST
+        sync: false
+      - key: POSTGRES_PASSWORD
+        sync: false
+      - key: POSTGRES_PORT
+        sync: false
+      - key: POSTGRES_USER
+        sync: false
+      - key: REDIS_HOST
+        sync: false
+      - key: REDIS_PASSWORD
+        sync: false
+      - key: REDIS_PORT
+        sync: false
+      - key: SEED_USER_BIO
+        sync: false
+      - key: SEED_USER_EMAIL
+        sync: false
+      - key: SEED_USER_FIRST_NAME
+        sync: false
+      - key: SEED_USER_LAST_NAME
+        sync: false
+      - key: SEED_USER_PASSWORD
+        sync: false
+      - key: WS_PROTOCOL
+        sync: false
