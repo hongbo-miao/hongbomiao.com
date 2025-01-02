@@ -5,6 +5,9 @@ from pathlib import Path
 
 import torch
 from diffusers import DPMSolverMultistepScheduler, StableDiffusionPipeline
+from diffusers.pipelines.stable_diffusion.safety_checker import (
+    StableDiffusionSafetyChecker,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -19,11 +22,17 @@ class StableDiffusionGenerator:
         return "cpu"
 
     @staticmethod
-    def create_pipeline(model_id: str) -> StableDiffusionPipeline:
+    def create_pipeline(
+        model_id: str, is_safety_checker_enabled: bool = True
+    ) -> StableDiffusionPipeline:
         pipe = StableDiffusionPipeline.from_pretrained(
             model_id,
             torch_dtype=torch.float16,
-            safety_checker=None,
+            safety_checker=StableDiffusionSafetyChecker.from_pretrained(
+                "CompVis/stable-diffusion-safety-checker", torch_dtype=torch.float16
+            )
+            if is_safety_checker_enabled
+            else None,
         )
 
         # Use DPM++ 2M Karras scheduler
@@ -39,7 +48,7 @@ class StableDiffusionGenerator:
         return pipe
 
     @staticmethod
-    def generate(
+    def generate_images(
         pipe: StableDiffusionPipeline,
         prompt: str,
         output_dir: Path,
@@ -84,10 +93,11 @@ class StableDiffusionGenerator:
 
 def main():
     pipe = StableDiffusionGenerator.create_pipeline(
-        model_id="stabilityai/stable-diffusion-2-1"
+        model_id="stabilityai/stable-diffusion-2-1",
+        is_safety_checker_enabled=True,
     )
 
-    StableDiffusionGenerator.generate(
+    StableDiffusionGenerator.generate_images(
         pipe=pipe,
         prompt="A beautiful sunset over mountains, highly detailed, majestic",
         negative_prompt="blur, low quality, bad anatomy, worst quality, low resolution, watermark, text, signature, copyright, logo, brand name",
