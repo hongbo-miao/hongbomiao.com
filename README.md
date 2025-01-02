@@ -68,7 +68,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Vite** - JavaScript build tool and development server
 - **TanStack Query** - Hooks for fetching, caching and updating asynchronous data
 - **RxJS** - Asynchronous programming with observable streams
-- **graphql-tag** - GraphQL query parsing
 - **Bulma** - CSS framework
 - **PurgeCSS** - Unused CSS removing
 - **Jest** - Unit testing, snapshot testing

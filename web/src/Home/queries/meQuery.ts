@@ -1,8 +1,8 @@
-import { print } from 'graphql';
-import { gql } from 'graphql-tag';
+import { print, parse } from 'graphql';
 import meNamesFragment from './meNamesFragment';
 
-const meQuery = print(gql`
+const meQuery = print(
+  parse(`
   query Me {
     me {
       name
@@ -11,6 +11,7 @@ const meQuery = print(gql`
     }
   }
   ${meNamesFragment}
-`);
+`),
+);
 
 export default meQuery;

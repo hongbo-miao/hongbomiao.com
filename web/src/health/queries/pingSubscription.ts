@@ -1,10 +1,11 @@
-import { print } from 'graphql';
-import { gql } from 'graphql-tag';
+import { print, parse } from 'graphql';
 
-const pingSubscription = print(gql`
+const pingSubscription = print(
+  parse(`
   subscription {
     ping
   }
-`);
+`),
+);
 
 export default pingSubscription;
