@@ -416,6 +416,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Optax** - Gradient processing and optimization for JAX
 - **Lightning** - Deep Learning framework
 - **NeuralForecast** - Neural forecasting
+- **Diffusers** - Diffusion models
+  - **Stable Diffusion** - Text-to-image generation model
 - **Transformers** - Machine learning models
 - **Faiss** - Vector search and similarity library
 - **Gradio** - Machine learning web application building
@@ -444,7 +446,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Open WebUI** - AI chat interface
   - **Open WebUI Pipelines** - OpenAI API plugin framework
 - **GPT4All** - Local LLM models
-- **Stable Diffusion** - Text-to-image generation model
 
 ## Computer Vision
 
