@@ -440,10 +440,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **MinerU** - Document data extraction
 - **Docling** - Document data extraction
 - **pypdf** - PDF manipulation
-- **GPT4All** - Local LLM models
 - **LiteLLM** - LLM gateway
 - **Open WebUI** - AI chat interface
   - **Open WebUI Pipelines** - OpenAI API plugin framework
+- **GPT4All** - Local LLM models
+- **Stable Diffusion** - Text-to-image generation model
 
 ## Computer Vision
 
