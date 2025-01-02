@@ -121,6 +121,7 @@ jobs:
       prometheus: ${{ steps.filter.outputs.prometheus }}
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
+      stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
       reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
       udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
@@ -437,6 +438,9 @@ jobs:
             robot-operating-system:
               - '.github/workflows/test.yml'
               - 'robotics/robot-operating-system/**'
+            stable-diffusion:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/stable-diffusion/**'
             udp-receiver:
               - '.github/workflows/test.yml'
               - 'network-programmability/udp/udp-receiver/**'
@@ -2987,6 +2991,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: machine-learning/reinforcement-learning/cart-pole
+
+  stable-diffusion-test:
+    name: Stable Diffusion | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.11
+          enable-cache: true
+          cache-dependency-glob: machine-learning/stable-diffusion/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/stable-diffusion/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/stable-diffusion
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/stable-diffusion
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/stable-diffusion
 
   serial-test:
     name: Serial | Test
