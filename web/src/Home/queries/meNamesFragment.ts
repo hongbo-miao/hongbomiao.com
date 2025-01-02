@@ -1,10 +1,10 @@
-import { gql } from 'graphql-tag';
+import { parse } from 'graphql';
 
-const meNamesFragment = gql`
+const meNamesFragment = parse(`
   fragment meNames on Me {
     firstName
     lastName
   }
-`;
+`);
 
 export default meNamesFragment;
