@@ -682,7 +682,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Scalafmt** - Scala code formatter
 - **Scalafix** - Scala linter
 - **ShellCheck** - Shell linter
-- **solhint** - Solidity linter
+- **Solhint** - Solidity linter
 - **SQLFluff** - SQL code formatter and linter
 - **Taplo** - TOML code formatter
 - **terraform** - Terraform code formatter
