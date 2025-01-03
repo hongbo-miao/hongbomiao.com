@@ -1,0 +1,34 @@
+[project]
+name = "hm-sglang"
+version = "1.0.0"
+requires-python = "~=3.12.0"
+dependencies = [
+  "flashinfer",
+  "sglang[all]==0.4.1.post3",
+]
+
+[dependency-groups]
+dev = [
+  "huggingface-hub==0.27.0",
+  "poethepoet==0.32.0",
+  "pytest==8.3.4",
+  "pytest-cov==6.0.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+flashinfer = { index = "flashinfer" }
+
+[[tool.uv.index]]
+name = "flashinfer"
+url = "https://flashinfer.ai/whl/cu124/torch2.4"
+
+[tool.poe.tasks]
+download-model = "python src/download_model.py"
+launch-server = "python -m sglang.launch_server --model-path=Qwen/Qwen2.5-0.5B-Instruct --port=19863"
+
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

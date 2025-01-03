@@ -69,7 +69,6 @@ jobs:
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
       hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
       hm-imagebind: ${{ steps.filter.outputs.hm-imagebind }}
-      open-clip: ${{ steps.filter.outputs.open-clip }}
       hm-jax: ${{ steps.filter.outputs.hm-jax }}
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
@@ -93,6 +92,7 @@ jobs:
       hm-ray-calculate: ${{ steps.filter.outputs.hm-ray-calculate }}
       hm-ray-process-flight-data: ${{ steps.filter.outputs.hm-ray-process-flight-data }}
       hm-serial: ${{ steps.filter.outputs.hm-serial }}
+      hm-sglang: ${{ steps.filter.outputs.hm-sglang }}
       hm-skypilot: ${{ steps.filter.outputs.hm-skypilot }}
       hm-spark-analyze-coffee-customers: ${{ steps.filter.outputs.hm-spark-analyze-coffee-customers }}
       hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
@@ -118,6 +118,7 @@ jobs:
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
+      open-clip: ${{ steps.filter.outputs.open-clip }}
       pack-unpack-data: ${{ steps.filter.outputs.pack-unpack-data }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
@@ -286,9 +287,6 @@ jobs:
             hm-imagebind:
               - '.github/workflows/test.yml'
               - 'computer-vision/hm-imagebind/**'
-            open-clip:
-              - '.github/workflows/test.yml'
-              - 'computer-vision/open-clip/**'
             hm-jax:
               - '.github/workflows/test.yml'
               - 'high-performance-computing/hm-jax/**'
@@ -358,6 +356,9 @@ jobs:
             hm-serial:
               - '.github/workflows/test.yml'
               - 'embedded/hm-serial/**'
+            hm-sglang:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/hm-sglang/**'
             hm-skypilot:
               - '.github/workflows/test.yml'
               - 'cloud-computing/hm-skypilot/**'
@@ -427,6 +428,9 @@ jobs:
             neural-forecasting-forecast-air-passenger-number:
               - '.github/workflows/test.yml'
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
+            open-clip:
+              - '.github/workflows/test.yml'
+              - 'computer-vision/open-clip/**'
             pack-unpack-data:
               - '.github/workflows/test.yml'
               - 'embedded/pack-unpack-data/**'
@@ -860,7 +864,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: api-python/uv.lock
       - name: Set up Python
@@ -918,7 +922,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-orchestration/hm-airflow/uv.lock
       - name: Set up Python
@@ -951,7 +955,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/uv.lock
       - name: Set up Python
@@ -984,7 +988,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/triton/amazon-sagemaker-triton-resnet-50/deploy/uv.lock
       - name: Set up Python
@@ -1017,7 +1021,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/triton/amazon-sagemaker-triton-resnet-50/infer/uv.lock
       - name: Set up Python
@@ -1050,7 +1054,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/uv.lock
       - name: Set up Python
@@ -1083,7 +1087,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: cloud-platform/aws/aws-parallelcluster/pcluster/uv.lock
       - name: Set up Python
@@ -1121,7 +1125,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: matlab/call-matlab-function-in-python/uv.lock
       - name: Set up Python
@@ -1154,7 +1158,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: embedded/decode-can-data/uv.lock
       - name: Set up Python
@@ -1187,7 +1191,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: embedded/format-can-data/uv.lock
       - name: Set up Python
@@ -1220,7 +1224,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-distribution-service/uv.lock
       - name: Set up Python
@@ -1253,7 +1257,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-transformation/dbt/projects/dbt_hm_postgres/uv.lock
       - name: Set up Python
@@ -1286,7 +1290,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-amazon-athena/uv.lock
       - name: Set up Python
@@ -1319,7 +1323,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-trino/uv.lock
       - name: Set up Python
@@ -1352,7 +1356,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-storage/delta-lake/write-to-delta-lake/uv.lock
       - name: Set up Python
@@ -1385,7 +1389,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-storage/hm-duckdb/query-duckdb/uv.lock
       - name: Set up Python
@@ -1418,7 +1422,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-storage/hm-duckdb/query-lance/uv.lock
       - name: Set up Python
@@ -1451,7 +1455,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-storage/hm-duckdb/query-parquet/uv.lock
       - name: Set up Python
@@ -1484,7 +1488,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-storage/hm-duckdb/query-protobuf/uv.lock
       - name: Set up Python
@@ -1517,7 +1521,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-storage/lance/uv.lock
       - name: Set up Python
@@ -1550,7 +1554,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-storage/hm-lancedb/uv.lock
       - name: Set up Python
@@ -1583,7 +1587,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-storage/hm-protobuf/uv.lock
       - name: Set up Python
@@ -1603,6 +1607,435 @@ jobs:
         with:
           directory: data-storage/hm-protobuf
 
+  cupy-test:
+    name: CuPy | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-cupy == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-cupy/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-cupy/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-cupy
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-cupy
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-cupy
+
+  numba-test:
+    name: Numba | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-numba == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-numba/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-numba/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-numba
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-numba
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-numba
+
+  pandas-test:
+    name: pandas | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-pandas == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-pandas/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-pandas/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-pandas
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-pandas
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-pandas
+
+  cudf-test:
+    name: cuDF | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-cudf == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-cudf/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-cudf/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-cudf
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-cudf
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-cudf
+
+  polars-test:
+    name: Polars | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-polars == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-polars/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-polars/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-polars
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-polars
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-polars
+
+  geopandas-test:
+    name: GeoPandas | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-geopandas/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-geopandas/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-geopandas
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-geopandas
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-geopandas
+
+  networkx-test:
+    name: NetworkX | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-networkx == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-networkx/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-analytics/hm-networkx/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-networkx
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-networkx
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-analytics/hm-networkx
+
+  hugging-face-analyze-sentiment-test:
+    name: Hugging Face (analyze-sentiment) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hugging-face/analyze-sentiment/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/hugging-face/analyze-sentiment/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hugging-face/analyze-sentiment
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hugging-face/analyze-sentiment
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/hugging-face/analyze-sentiment
+
+  gradio-classify-image-test:
+    name: Gradio (classify-image) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-gradio/applications/classify-image/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/hm-gradio/applications/classify-image/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hm-gradio/applications/classify-image
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-gradio/applications/classify-image
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/hm-gradio/applications/classify-image
+
+  streamlit-live-line-chart-test:
+    name: Streamlit (live-line-chart) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-streamlit/applications/live-line-chart/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/hm-streamlit/applications/live-line-chart/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hm-streamlit/applications/live-line-chart
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-streamlit/applications/live-line-chart
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/hm-streamlit/applications/live-line-chart
+
+  streamlit-map-test:
+    name: Streamlit (map) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-streamlit/applications/map/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/hm-streamlit/applications/map/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hm-streamlit/applications/map
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-streamlit/applications/map
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/hm-streamlit/applications/map
+
+  jax-test:
+    name: JAX | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-jax == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: high-performance-computing/hm-jax/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: high-performance-computing/hm-jax/pyproject.toml
+      - name: Install dependencies
+        working-directory: high-performance-computing/hm-jax
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: high-performance-computing/hm-jax
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: high-performance-computing/hm-jax
+
+  flax-test:
+    name: Flax | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-flax == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-flax/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/hm-flax/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hm-flax
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-flax
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/hm-flax
+
   autogluon-test:
     name: AutoGluon | Test
     needs: detect-changes
@@ -1616,7 +2049,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-autogluon/uv.lock
       - name: Set up Python
@@ -1650,7 +2083,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/dali/uv.lock
       - name: Set up Python
@@ -1683,7 +2116,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/feature-store/uv.lock
       - name: Set up Python
@@ -1703,10 +2136,10 @@ jobs:
         with:
           directory: machine-learning/feature-store
 
-  cupy-test:
-    name: CuPy | Test
+  sglang-test:
+    name: SGLang | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-cupy == 'true' }}
+    if: ${{ needs.detect-changes.outputs.hm-sglang == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1716,421 +2149,25 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
-          cache-dependency-glob: data-analytics/hm-cupy/uv.lock
+          cache-dependency-glob: machine-learning/hm-sglang/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: data-analytics/hm-cupy/pyproject.toml
+          python-version-file: machine-learning/hm-sglang/pyproject.toml
       - name: Install dependencies
-        working-directory: data-analytics/hm-cupy
+        working-directory: machine-learning/hm-sglang
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-analytics/hm-cupy
+        working-directory: machine-learning/hm-sglang
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: data-analytics/hm-cupy
-
-  numba-test:
-    name: Numba | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-numba == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-numba/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-numba/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-numba
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-numba
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-numba
-
-  pandas-test:
-    name: pandas | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-pandas == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-pandas/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-pandas/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-pandas
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-pandas
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-pandas
-
-  cudf-test:
-    name: cuDF | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-cudf == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-cudf/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-cudf/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-cudf
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-cudf
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-cudf
-
-  polars-test:
-    name: Polars | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-polars == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-polars/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-polars/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-polars
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-polars
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-polars
-
-  geopandas-test:
-    name: GeoPandas | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-geopandas/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-geopandas/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-geopandas
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-geopandas
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-geopandas
-
-  networkx-test:
-    name: NetworkX | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-networkx == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-networkx/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-networkx/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-networkx
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-networkx
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-networkx
-
-  hugging-face-analyze-sentiment-test:
-    name: Hugging Face (analyze-sentiment) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: machine-learning/hugging-face/analyze-sentiment/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: machine-learning/hugging-face/analyze-sentiment/pyproject.toml
-      - name: Install dependencies
-        working-directory: machine-learning/hugging-face/analyze-sentiment
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/hugging-face/analyze-sentiment
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: machine-learning/hugging-face/analyze-sentiment
-
-  gradio-classify-image-test:
-    name: Gradio (classify-image) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: machine-learning/hm-gradio/applications/classify-image/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: machine-learning/hm-gradio/applications/classify-image/pyproject.toml
-      - name: Install dependencies
-        working-directory: machine-learning/hm-gradio/applications/classify-image
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/hm-gradio/applications/classify-image
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: machine-learning/hm-gradio/applications/classify-image
-
-  streamlit-live-line-chart-test:
-    name: Streamlit (live-line-chart) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: machine-learning/hm-streamlit/applications/live-line-chart/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: machine-learning/hm-streamlit/applications/live-line-chart/pyproject.toml
-      - name: Install dependencies
-        working-directory: machine-learning/hm-streamlit/applications/live-line-chart
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/hm-streamlit/applications/live-line-chart
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: machine-learning/hm-streamlit/applications/live-line-chart
-
-  streamlit-map-test:
-    name: Streamlit (map) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: machine-learning/hm-streamlit/applications/map/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: machine-learning/hm-streamlit/applications/map/pyproject.toml
-      - name: Install dependencies
-        working-directory: machine-learning/hm-streamlit/applications/map
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/hm-streamlit/applications/map
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: machine-learning/hm-streamlit/applications/map
-
-  jax-test:
-    name: JAX | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-jax == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: high-performance-computing/hm-jax/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: high-performance-computing/hm-jax/pyproject.toml
-      - name: Install dependencies
-        working-directory: high-performance-computing/hm-jax
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: high-performance-computing/hm-jax
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: high-performance-computing/hm-jax
-
-  flax-test:
-    name: Flax | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-flax == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.13
-          enable-cache: true
-          cache-dependency-glob: machine-learning/hm-flax/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: machine-learning/hm-flax/pyproject.toml
-      - name: Install dependencies
-        working-directory: machine-learning/hm-flax
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/hm-flax
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: machine-learning/hm-flax
+          directory: machine-learning/hm-sglang
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
@@ -2145,7 +2182,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-kubeflow/pipelines/calculate/uv.lock
       - name: Set up Python
@@ -2178,7 +2215,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-kubeflow/pipelines/classify-mnist/uv.lock
       - name: Set up Python
@@ -2211,7 +2248,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/mineru/uv.lock
       - name: Set up Python
@@ -2250,7 +2287,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-docling/uv.lock
       - name: Set up Python
@@ -2283,7 +2320,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-langchain/applications/chat-pdf/uv.lock
       - name: Set up Python
@@ -2316,7 +2353,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-langgraph/applications/chat-pdf/uv.lock
       - name: Set up Python
@@ -2349,7 +2386,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-llama-index/applications/chat-pdf/uv.lock
       - name: Set up Python
@@ -2382,7 +2419,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-mlflow/experiments/classify-mnist/uv.lock
       - name: Set up Python
@@ -2415,7 +2452,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-mlflow/experiments/predict-diabetes/uv.lock
       - name: Set up Python
@@ -2448,7 +2485,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/neural-forecasting/forecast-air-passenger-number/uv.lock
       - name: Set up Python
@@ -2481,7 +2518,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: hardware-in-the-loop/national-instruments/hm-pyvisa/uv.lock
       - name: Set up Python
@@ -2514,7 +2551,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: hardware-in-the-loop/national-instruments/hm-tdms/uv.lock
       - name: Set up Python
@@ -2547,7 +2584,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: hardware-in-the-loop/national-instruments/veristand/hm-veristand/uv.lock
       - name: Set up Python
@@ -2580,7 +2617,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: computer-vision/hm-imagebind/uv.lock
       - name: Set up Python
@@ -2613,7 +2650,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: computer-vision/open-clip/uv.lock
       - name: Set up Python
@@ -2646,7 +2683,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: computer-vision/hm-open3d/uv.lock
       - name: Set up Python
@@ -2679,7 +2716,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: aerospace/hm-aerosandbox/uv.lock
       - name: Set up Python
@@ -2712,7 +2749,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: aerospace/hm-openaerostruct/uv.lock
       - name: Set up Python
@@ -2745,7 +2782,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-orchestration/hm-prefect/workflows/calculate/uv.lock
       - name: Set up Python
@@ -2778,7 +2815,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-orchestration/hm-prefect/workflows/greet/uv.lock
       - name: Set up Python
@@ -2811,7 +2848,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-orchestration/hm-prefect/workflows/print-platform/uv.lock
       - name: Set up Python
@@ -2844,7 +2881,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: cloud-security/hm-prowler/uv.lock
       - name: Set up Python
@@ -2877,7 +2914,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: cloud-infrastructure/hm-pulumi/uv.lock
       - name: Set up Python
@@ -2910,7 +2947,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: computer-vision/hm-pyvista/mount-saint-helens/uv.lock
       - name: Set up Python
@@ -2943,7 +2980,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: cloud-computing/hm-ray/applications/calculate/uv.lock
       - name: Set up Python
@@ -2976,7 +3013,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: cloud-computing/hm-ray/applications/process-flight-data/uv.lock
       - name: Set up Python
@@ -3009,7 +3046,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/reinforcement-learning/cart-pole/uv.lock
       - name: Set up Python
@@ -3042,7 +3079,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/stable-diffusion/uv.lock
       - name: Set up Python
@@ -3075,7 +3112,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: embedded/hm-serial/uv.lock
       - name: Set up Python
@@ -3108,7 +3145,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: embedded/pack-unpack-data/uv.lock
       - name: Set up Python
@@ -3141,7 +3178,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: cloud-computing/hm-skypilot/uv.lock
       - name: Set up Python
@@ -3174,7 +3211,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: quantum-computing/uv.lock
       - name: Set up Python
@@ -3207,7 +3244,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-supervision/detect-objects/uv.lock
       - name: Set up Python
@@ -3240,7 +3277,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: hm-xxhash/uv.lock
       - name: Set up Python
@@ -3273,7 +3310,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/analyze-coffee-customers/uv.lock
       - name: Set up Python
@@ -3306,7 +3343,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/find-retired-people-python/uv.lock
       - name: Set up Python
@@ -3362,7 +3399,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/find-taxi-top-routes/uv.lock
       - name: Set up Python
@@ -3395,7 +3432,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/find-taxi-top-routes-sql/uv.lock
       - name: Set up Python
@@ -3451,7 +3488,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/recommend-movies/uv.lock
       - name: Set up Python
@@ -3777,7 +3814,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-visualization/grafana/hm-dashboard/uv.lock
       - name: Set up Python
@@ -3839,7 +3876,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-visualization/iads/iads-data-manager/iads-config-reader/uv.lock
       - name: Set up Python
@@ -3872,7 +3909,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: data-visualization/iads/iads-data-manager/iads-data-reader/uv.lock
       - name: Set up Python
@@ -4010,7 +4047,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/graph-neural-network/uv.lock
       - name: Set up Python
@@ -4045,7 +4082,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/graph-neural-network/uv.lock
       - name: Set up Python
@@ -4076,7 +4113,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
       - name: Set up Python
@@ -4111,7 +4148,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
       - name: Set up Python
@@ -4179,7 +4216,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.13
+          version: 0.5.14
           enable-cache: true
           cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
       - name: Set up Python
