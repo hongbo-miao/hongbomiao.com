@@ -443,6 +443,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **MinerU** - Document data extraction
 - **Docling** - Document data extraction
 - **pypdf** - PDF manipulation
+- **SGLang** - Large language model (LLM) and visual language model (VLM) serving framework
 - **LiteLLM** - LLM gateway
 - **Open WebUI** - AI chat interface
   - **Open WebUI Pipelines** - OpenAI API plugin framework
