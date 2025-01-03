@@ -1,6 +1,7 @@
 // https://prettier.io/docs/en/configuration.html
 
 {
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: ['config:recommended'],
   lockFileMaintenance: {
     enabled: true,
@@ -10,8 +11,10 @@
   semanticCommitScope: '{{#if parentDir}}{{parentDir}}{{else}}deps{{/if}}',
   prHourlyLimit: 0,
   packageRules: [
+    // Group packages
     {
       description: 'Group GraphQL packages',
+      groupName: 'graphql packages',
       matchPackageNames: [
         '@types/graphql-depth-limit',
         '@types/graphql-upload',
@@ -23,19 +26,19 @@
         'graphql-upload',
         'graphql-ws',
       ],
-      groupName: 'graphql packages',
     },
     {
       description: 'Group LangChain packages',
+      groupName: 'langchain packages',
       matchPackageNames: [
         'langchain',
         'langchain-community',
         'langchain-text-splitters',
       ],
-      groupName: 'langchain packages',
     },
     {
       description: 'Group OpenTelemetry packages',
+      groupName: 'opentelemetry packages',
       matchPackageNames: [
         '@opentelemetry/api',
         '@opentelemetry/exporter-trace-otlp-http',
@@ -56,57 +59,60 @@
         '@opentelemetry/sdk-metrics',
         '@opentelemetry/sdk-trace-node',
       ],
-      groupName: 'opentelemetry packages',
     },
     {
       description: 'Group Prefect packages',
+      groupName: 'prefect packages',
       matchPackageNames: [
         'docker.io/prefecthq/prefect',
         'prefect',
         'prefect-aws',
         'prefect-shell',
       ],
-      groupName: 'prefect packages',
     },
     {
       description: 'Group Python packages',
+      groupName: 'python packages',
       matchPackageNames: [
         'docker.io/python',
         'python',
       ],
-      groupName: 'python packages',
     },
     {
       description: 'Group PyTorch packages',
+      groupName: 'torch packages',
       matchPackageNames: [
         'torch',
         'torchvision',
       ],
-      groupName: 'torch packages',
     },
     {
       description: 'Group ESLint packages',
+      groupName: 'eslint packages',
       matchPackageNames: [
         '@eslint/js',
         '@grafana/eslint-config',
+        '@eslint/json',
+        '@html-eslint/eslint-plugin',
+        '@html-eslint/parser',
         '@tanstack/eslint-plugin-query',
         '@typescript-eslint/eslint-plugin',
         '@typescript-eslint/parser',
-        'eslint',
-        'eslint-config-airbnb',
         'eslint-config-airbnb-base',
+        'eslint-config-airbnb',
         'eslint-config-prettier',
         'eslint-plugin-import',
         'eslint-plugin-jsx-a11y',
         'eslint-plugin-prettier',
-        'eslint-plugin-react',
         'eslint-plugin-react-refresh',
+        'eslint-plugin-react',
         'eslint-plugin-security',
+        'eslint',
       ],
-      groupName: 'eslint packages',
     },
     {
-      description: 'Group stylelint packages',
+      description: 'Group Stylelint packages',
+      groupName: 'stylelint packages',
       matchPackageNames: [
         'stylelint',
         'stylelint-config-prettier',
@@ -115,7 +121,22 @@
         'stylelint-high-performance-animation',
         'stylelint-prettier',
       ],
-      groupName: 'stylelint packages',
+    },
+    {
+      description: 'Group Solhint packages',
+      groupName: 'solhint packages',
+      matchPackageNames: [
+        'prettier-plugin-solidity',
+        'solhint',
+      ],
+    },
+    {
+      description: 'Group Prettier packages',
+      groupName: 'prettier packages',
+      matchPackageNames: [
+        '@prettier/plugin-xml',
+        'prettier',
+      ],
     },
     {
       description: 'Use custom regex versioning for Bitnami Docker images',
@@ -124,8 +145,9 @@
       ],
       versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(:?-(?<compatibility>.+)(?<build>\\d+)-r(?<revision>\\d+))?$',
     },
+    // Only allow to upgrade to LTS versions
     {
-      description: 'Only allow Node.js upgrades to LTS versions',
+      description: 'Only allow Node.js to upgrade to LTS versions',
       matchPackageNames: [
         'docker.io/node',
         'node',
@@ -133,7 +155,7 @@
       allowedVersions: '/^(\\d*[02468])\\..+$/',
     },
     {
-      description: 'Only allow .NET SDK upgrades to LTS versions',
+      description: 'Only allow .NET SDK to upgrade to LTS versions',
       matchPackageNames: [
         'dotnet-sdk',
       ],
