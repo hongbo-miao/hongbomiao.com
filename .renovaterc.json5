@@ -1,4 +1,4 @@
-// https://prettier.io/docs/en/configuration.html
+// https://docs.renovatebot.com/configuration-options/
 
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
@@ -11,9 +11,8 @@
   semanticCommitScope: '{{#if parentDir}}{{parentDir}}{{else}}deps{{/if}}',
   prHourlyLimit: 0,
   packageRules: [
-    // Group packages
     {
-      description: 'Group GraphQL packages',
+      // Group GraphQL packages
       groupName: 'graphql packages',
       matchPackageNames: [
         '@types/graphql-depth-limit',
@@ -28,7 +27,7 @@
       ],
     },
     {
-      description: 'Group LangChain packages',
+      // Group LangChain packages
       groupName: 'langchain packages',
       matchPackageNames: [
         'langchain',
@@ -37,7 +36,7 @@
       ],
     },
     {
-      description: 'Group OpenTelemetry packages',
+      // Group OpenTelemetry packages
       groupName: 'opentelemetry packages',
       matchPackageNames: [
         '@opentelemetry/api',
@@ -61,7 +60,7 @@
       ],
     },
     {
-      description: 'Group Prefect packages',
+      // Group Prefect packages
       groupName: 'prefect packages',
       matchPackageNames: [
         'docker.io/prefecthq/prefect',
@@ -71,7 +70,7 @@
       ],
     },
     {
-      description: 'Group Python packages',
+      // Group Python packages
       groupName: 'python packages',
       matchPackageNames: [
         'docker.io/python',
@@ -79,7 +78,7 @@
       ],
     },
     {
-      description: 'Group PyTorch packages',
+      // Group PyTorch packages
       groupName: 'torch packages',
       matchPackageNames: [
         'torch',
@@ -87,7 +86,7 @@
       ],
     },
     {
-      description: 'Group ESLint packages',
+      // Group ESLint packages
       groupName: 'eslint packages',
       matchPackageNames: [
         '@eslint/js',
@@ -111,7 +110,7 @@
       ],
     },
     {
-      description: 'Group Stylelint packages',
+      // Group Stylelint packages
       groupName: 'stylelint packages',
       matchPackageNames: [
         'stylelint',
@@ -123,7 +122,7 @@
       ],
     },
     {
-      description: 'Group Solhint packages',
+      // Group Solhint packages
       groupName: 'solhint packages',
       matchPackageNames: [
         'prettier-plugin-solidity',
@@ -131,7 +130,7 @@
       ],
     },
     {
-      description: 'Group Prettier packages',
+      // Group Prettier packages
       groupName: 'prettier packages',
       matchPackageNames: [
         '@prettier/plugin-xml',
@@ -139,27 +138,26 @@
       ],
     },
     {
-      description: 'Use custom regex versioning for Bitnami Docker images',
+      // Use custom regex versioning for Bitnami Docker images
+      versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(:?-(?<compatibility>.+)(?<build>\\d+)-r(?<revision>\\d+))?$',
       matchPackageNames: [
         'docker.io/bitnami/spark',
       ],
-      versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(:?-(?<compatibility>.+)(?<build>\\d+)-r(?<revision>\\d+))?$',
     },
-    // Only allow to upgrade to LTS versions
     {
-      description: 'Only allow Node.js to upgrade to LTS versions',
+      // Only allow Node.js to upgrade to LTS versions
+      allowedVersions: '/^(\\d*[02468])\\..+$/',
       matchPackageNames: [
         'docker.io/node',
         'node',
       ],
-      allowedVersions: '/^(\\d*[02468])\\..+$/',
     },
     {
-      description: 'Only allow .NET SDK to upgrade to LTS versions',
+      // Only allow .NET SDK to upgrade to LTS versions
+      allowedVersions: '/^(\\d*[02468])\\..+$/',
       matchPackageNames: [
         'dotnet-sdk',
       ],
-      allowedVersions: '/^(\\d*[02468])\\..+$/',
     },
   ],
 }
