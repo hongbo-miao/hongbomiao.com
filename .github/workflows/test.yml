@@ -64,6 +64,7 @@ jobs:
       hm-duckdb-query-lance: ${{ steps.filter.outputs.hm-duckdb-query-lance }}
       hm-duckdb-query-parquet: ${{ steps.filter.outputs.hm-duckdb-query-parquet }}
       hm-duckdb-query-protobuf: ${{ steps.filter.outputs.hm-duckdb-query-protobuf }}
+      hm-faster-whisper: ${{ steps.filter.outputs.hm-faster-whisper }}
       hm-flax: ${{ steps.filter.outputs.hm-flax }}
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
@@ -278,6 +279,9 @@ jobs:
             hm-duckdb-query-protobuf:
               - '.github/workflows/test.yml'
               - 'data-storage/hm-duckdb/query-protobuf/**'
+            hm-faster-whisper:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/hm-faster-whisper/**'
             hm-flax:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-flax/**'
@@ -3065,6 +3069,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: machine-learning/reinforcement-learning/cart-pole
+
+  faster-whisper-test:
+    name: Faster Whisper | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-faster-whisper == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-faster-whisper/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/hm-faster-whisper/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hm-faster-whisper
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-faster-whisper
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/hm-faster-whisper
 
   stable-diffusion-test:
     name: Stable Diffusion | Test

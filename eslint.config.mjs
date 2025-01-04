@@ -134,6 +134,8 @@ export default [
       'machine-learning/graph-neural-network/wandb',
       'machine-learning/hm-autogluon/AutogluonModels',
       'machine-learning/hm-docling/data',
+      'machine-learning/hm-faster-whisper/data',
+      'machine-learning/hm-faster-whisper/output',
       'machine-learning/hm-langchain/applications/*/data',
       'machine-learning/hm-langgraph/applications/*/data',
       'machine-learning/hm-llama-index/applications/*/data',
