@@ -417,6 +417,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Optax** - Gradient processing and optimization for JAX
 - **Lightning** - Deep Learning framework
 - **NeuralForecast** - Neural forecasting
+- **Faster Whisper** - Speech recognition model
 - **Diffusers** - Diffusion models
   - **Stable Diffusion** - Text-to-image generation model
 - **Transformers** - Machine learning models
