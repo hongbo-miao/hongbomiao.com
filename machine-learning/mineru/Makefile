@@ -5,6 +5,9 @@ uv-update-lock-file:
 uv-install-dependencies:
 	uv sync --dev
 
+download-model:
+	# https://github.com/opendatalab/MinerU/blob/master/docs/how_to_download_models_en.md#download-the-model-from-hugging-face
+
 uv-run-dev:
 	uv run poe dev
 uv-run-test:
