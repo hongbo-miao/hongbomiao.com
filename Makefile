@@ -374,6 +374,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=machine-learning.feature-store
 	uv run poe static-type-check-python --package=machine-learning.graph-neural-network
 	uv run poe static-type-check-python --package=machine-learning.hm-docling
+	uv run poe static-type-check-python --package=machine-learning.hm-faster-whisper
 	uv run poe static-type-check-python --package=machine-learning.hm-gradio.applications.classify-image
 	uv run poe static-type-check-python --package=machine-learning.hm-kubeflow.pipelines.calculate
 	uv run poe static-type-check-python --package=machine-learning.hm-kubeflow.pipelines.classify-mnist
