@@ -465,7 +465,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Parallel Computing
 
-- **CUDA** - Parallel computing
+- **CUDA** - Parallel computing language
 
 ### High-Performance Computing (HPC)
 
@@ -780,6 +780,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Scala**
 - **JavaScript**
   - **TypeScript**
+- **Lua**
 - **Makefile**
 - **Markdown**
 - **MATLAB**
@@ -792,11 +793,12 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Shell**
 - **Solidity**
 - **SQL**
+  - **ANSI SQL**
   - **LogQL**
   - **PromQL**
   - **SedonaSQL**
-  - **Spark SQL**
   - **Snowflake SQL**
+  - **Spark SQL**
 - **Swift**
 - **VHDL**
 - **XML**

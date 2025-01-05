@@ -143,10 +143,10 @@ jobs:
               - 'cloud-platform/aws/amazon-sagemaker/pytorch-mnist/**'
             amazon-sagemaker-triton-resnet-50-deploy:
               - '.github/workflows/test.yml'
-              - 'machine-learning/triton/amazon-sagemaker-triton-resnet-50/deploy/**'
+              - 'machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/**'
             amazon-sagemaker-triton-resnet-50-infer:
               - '.github/workflows/test.yml'
-              - 'machine-learning/triton/amazon-sagemaker-triton-resnet-50/infer/**'
+              - 'machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/**'
             api-go:
               - '.github/workflows/test.yml'
               - 'api-go/**'
@@ -994,23 +994,23 @@ jobs:
         with:
           version: 0.5.14
           enable-cache: true
-          cache-dependency-glob: machine-learning/triton/amazon-sagemaker-triton-resnet-50/deploy/uv.lock
+          cache-dependency-glob: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: machine-learning/triton/amazon-sagemaker-triton-resnet-50/deploy/pyproject.toml
+          python-version-file: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/triton/amazon-sagemaker-triton-resnet-50/deploy
+        working-directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/triton/amazon-sagemaker-triton-resnet-50/deploy
+        working-directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: machine-learning/triton/amazon-sagemaker-triton-resnet-50/deploy
+          directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy
 
   amazon-sagemaker-triton-resnet-50-infer-test:
     name: Amazon SageMaker Triton ResNet 50 (Infer) | Test
@@ -1027,23 +1027,23 @@ jobs:
         with:
           version: 0.5.14
           enable-cache: true
-          cache-dependency-glob: machine-learning/triton/amazon-sagemaker-triton-resnet-50/infer/uv.lock
+          cache-dependency-glob: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: machine-learning/triton/amazon-sagemaker-triton-resnet-50/infer/pyproject.toml
+          python-version-file: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/triton/amazon-sagemaker-triton-resnet-50/infer
+        working-directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/triton/amazon-sagemaker-triton-resnet-50/infer
+        working-directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: machine-learning/triton/amazon-sagemaker-triton-resnet-50/infer
+          directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer
 
   production-aws-glue-spark-scripts-test:
     name: AWS Glue (production spark-scripts) | Test
