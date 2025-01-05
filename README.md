@@ -463,6 +463,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Computing
 
+### Compiler Infrastructure
+
+- **LLVM** - Compiler infrastructure
+
 ### Parallel Computing
 
 - **CUDA** - Parallel computing language
@@ -782,6 +786,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **JavaScript**
   - **TypeScript**
 - **LabVIEW**
+- **LLVM Intermediate Representation (IR)**
 - **Lua**
 - **Makefile**
 - **Markdown**
