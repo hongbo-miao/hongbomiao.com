@@ -599,9 +599,13 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Solidity** - Contract-oriented programming language
 - **solc-js** - JavaScript bindings for the Solidity compiler
 
+## Digital Design
+
+- **Verilog** - Hardware description language
+- **VHDL** - Hardware description language
+
 ## Embedded, IoT, Hardware
 
-- **VHDL** - Very High Speed Integrated Circuits Program (VHSIC) hardware description language
 - **pySerial** - Serial communication library
 - **cantools** - Controller Area Network (CAN) bus tools
 - **python-can** - Controller Area Network (CAN) bus library
@@ -808,6 +812,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Snowflake SQL**
   - **Spark SQL**
 - **Swift**
+- **Verilog**
 - **VHDL**
 - **XML**
 - **YAML**
@@ -998,7 +1003,7 @@ The toroidal propeller allows a small multirotor aircraft to operate more quietl
 
 ![OpenSCAD screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/00b3e679-66a7-4d9c-8d68-c31c124e0a54)
 
-### VHDL - Very High Speed Integrated Circuits Program (VHSIC) Hardware Description Language
+### VHDL - Hardware Description Language
 
 The VHDL waveforms are displayed in GTKWave.
 
