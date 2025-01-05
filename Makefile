@@ -190,6 +190,7 @@ lint-ansible:
 	uv run poe lint-ansible
 lint-c-cpp-cpplint:
 	uv run poe lint-c-cpp-cpplint --repository=asterios/led-blinker --extensions=c,h --recursive asterios/led-blinker
+	uv run poe lint-c-cpp-cpplint --repository=compiler-infrastructure/llvm --extensions=cpp,hpp --recursive compiler-infrastructure/llvm
 	uv run poe lint-c-cpp-cpplint --repository=embedded/freertos --extensions=ino --recursive embedded/freertos
 	uv run poe lint-c-cpp-cpplint --repository=hm-kafka/kafka-client/kafka-c/avro-producer --extensions=c,h --recursive hm-kafka/kafka-client/kafka-c/avro-producer
 	uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
