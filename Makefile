@@ -394,6 +394,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=machine-learning.stable-diffusion
 	uv run poe static-type-check-python --package=machine-learning.triton-inference-server.amazon-sagemaker-triton-resnet-50.deploy
 	uv run poe static-type-check-python --package=machine-learning.triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
+	uv run poe static-type-check-python --package=parallel-computing.hm-triton
 	uv run poe static-type-check-python --package=quantum-computing
 static-type-check-terraform:
 	cd cloud-infrastructure/terraform/environments/development/aws && terraform validate

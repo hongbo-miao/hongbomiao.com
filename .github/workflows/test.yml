@@ -103,6 +103,7 @@ jobs:
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
       hm-spark-recommend-movies: ${{ steps.filter.outputs.hm-spark-recommend-movies }}
       hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
+      hm-triton: ${{ steps.filter.outputs.hm-triton }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
       iads-iads-config-reader: ${{ steps.filter.outputs.iads-iads-config-reader }}
       iads-iads-data-reader: ${{ steps.filter.outputs.iads-iads-data-reader }}
@@ -396,6 +397,9 @@ jobs:
             hm-supervision-detect-objects:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-supervision/detect-objects/**'
+            hm-triton:
+              - '.github/workflows/test.yml'
+              - 'parallel-computing/hm-triton/**'
             hm-xxhash:
               - '.github/workflows/test.yml'
               - 'hm-xxhash/**'
@@ -3300,6 +3304,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: machine-learning/hm-supervision/detect-objects
+
+  triton-test:
+    name: Triton | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-triton == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: parallel-computing/hm-triton/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: parallel-computing/hm-triton/pyproject.toml
+      - name: Install dependencies
+        working-directory: parallel-computing/hm-triton
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: parallel-computing/hm-triton
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: parallel-computing/hm-triton
 
   xxhash-test:
     name: xxHash | Test
