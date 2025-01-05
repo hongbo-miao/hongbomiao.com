@@ -29,36 +29,27 @@ jobs:
       api-python: ${{ steps.filter.outputs.api-python }}
       api-rust: ${{ steps.filter.outputs.api-rust }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
-      dali: ${{ steps.filter.outputs.dali }}
-      decode-can-data: ${{ steps.filter.outputs.decode-can-data }}
-      development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
-      production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
-      format-can-data: ${{ steps.filter.outputs.format-can-data }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
+      dali: ${{ steps.filter.outputs.dali }}
       data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
+      decode-can-data: ${{ steps.filter.outputs.decode-can-data }}
       delta-lake-read-delta-lake-by-amazon-athena: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-amazon-athena }}
       delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
       delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
+      development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
       flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
+      format-can-data: ${{ steps.filter.outputs.format-can-data }}
       grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
       hm-aerosandbox: ${{ steps.filter.outputs.hm-aerosandbox }}
       hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
-      hm-cudf: ${{ steps.filter.outputs.hm-cudf }}
-      hm-cupy: ${{ steps.filter.outputs.hm-cupy }}
-      hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
-      hm-networkx: ${{ steps.filter.outputs.hm-networkx }}
-      hm-numba: ${{ steps.filter.outputs.hm-numba }}
-      hm-pandas: ${{ steps.filter.outputs.hm-pandas }}
-      hm-polars: ${{ steps.filter.outputs.hm-polars }}
-      national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
-      national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
-      national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
       hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
       hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
+      hm-cudf: ${{ steps.filter.outputs.hm-cudf }}
+      hm-cupy: ${{ steps.filter.outputs.hm-cupy }}
       hm-docling: ${{ steps.filter.outputs.hm-docling }}
       hm-duckdb-query-duckdb: ${{ steps.filter.outputs.hm-duckdb-query-duckdb }}
       hm-duckdb-query-lance: ${{ steps.filter.outputs.hm-duckdb-query-lance }}
@@ -66,9 +57,8 @@ jobs:
       hm-duckdb-query-protobuf: ${{ steps.filter.outputs.hm-duckdb-query-protobuf }}
       hm-faster-whisper: ${{ steps.filter.outputs.hm-faster-whisper }}
       hm-flax: ${{ steps.filter.outputs.hm-flax }}
+      hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
-      hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
-      hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
       hm-imagebind: ${{ steps.filter.outputs.hm-imagebind }}
       hm-jax: ${{ steps.filter.outputs.hm-jax }}
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
@@ -79,9 +69,13 @@ jobs:
       hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
       hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
+      hm-networkx: ${{ steps.filter.outputs.hm-networkx }}
+      hm-numba: ${{ steps.filter.outputs.hm-numba }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-open3d: ${{ steps.filter.outputs.hm-open3d }}
       hm-openaerostruct: ${{ steps.filter.outputs.hm-openaerostruct }}
+      hm-pandas: ${{ steps.filter.outputs.hm-pandas }}
+      hm-polars: ${{ steps.filter.outputs.hm-polars }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
       hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
       hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
@@ -98,39 +92,45 @@ jobs:
       hm-spark-analyze-coffee-customers: ${{ steps.filter.outputs.hm-spark-analyze-coffee-customers }}
       hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
-      hm-spark-find-taxi-top-routes: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes }}
       hm-spark-find-taxi-top-routes-sql: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes-sql }}
+      hm-spark-find-taxi-top-routes: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes }}
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
       hm-spark-recommend-movies: ${{ steps.filter.outputs.hm-spark-recommend-movies }}
+      hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
+      hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
       hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
-      iads-iads-config-reader: ${{ steps.filter.outputs.iads-iads-config-reader }}
-      iads-iads-data-reader: ${{ steps.filter.outputs.iads-iads-data-reader }}
-      iads-iads-data-producer: ${{ steps.filter.outputs.iads-iads-data-producer }}
-      iads-zeromq-iads-bridge: ${{ steps.filter.outputs.iads-zeromq-iads-bridge }}
       hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
-      lance: ${{ steps.filter.outputs.lance }}
+      iads-iads-config-reader: ${{ steps.filter.outputs.iads-iads-config-reader }}
+      iads-iads-data-producer: ${{ steps.filter.outputs.iads-iads-data-producer }}
+      iads-iads-data-reader: ${{ steps.filter.outputs.iads-iads-data-reader }}
+      iads-zeromq-iads-bridge: ${{ steps.filter.outputs.iads-zeromq-iads-bridge }}
       kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
       kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
       kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
+      lance: ${{ steps.filter.outputs.lance }}
       mineru: ${{ steps.filter.outputs.mineru }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
+      national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
+      national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
+      national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
       open-clip: ${{ steps.filter.outputs.open-clip }}
       pack-unpack-data: ${{ steps.filter.outputs.pack-unpack-data }}
+      production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
+      reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
-      reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
       udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
-      web: ${{ steps.filter.outputs.web }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
+      web: ${{ steps.filter.outputs.web }}
       windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
     steps:
       - name: Checkout
@@ -396,7 +396,7 @@ jobs:
               - 'machine-learning/hm-streamlit/applications/map/**'
             hm-supervision-detect-objects:
               - '.github/workflows/test.yml'
-              - 'machine-learning/hm-supervision/detect-objects/**'
+              - 'computer-vision/hm-supervision/detect-objects/**'
             hm-triton:
               - '.github/workflows/test.yml'
               - 'parallel-computing/hm-triton/**'
@@ -2612,6 +2612,39 @@ jobs:
         with:
           directory: hardware-in-the-loop/national-instruments/veristand/hm-veristand
 
+  supervision-detect-objects-test:
+    name: supervision (detect-objects) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.14
+          enable-cache: true
+          cache-dependency-glob: computer-vision/hm-supervision/detect-objects/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: computer-vision/hm-supervision/detect-objects/pyproject.toml
+      - name: Install dependencies
+        working-directory: computer-vision/hm-supervision/detect-objects
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: computer-vision/hm-supervision/detect-objects
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: computer-vision/hm-supervision/detect-objects
+
   imagebind-test:
     name: ImageBind | Test
     needs: detect-changes
@@ -3271,39 +3304,6 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: quantum-computing
-
-  supervision-detect-objects-test:
-    name: supervision (detect-objects) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.14
-          enable-cache: true
-          cache-dependency-glob: machine-learning/hm-supervision/detect-objects/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: machine-learning/hm-supervision/detect-objects/pyproject.toml
-      - name: Install dependencies
-        working-directory: machine-learning/hm-supervision/detect-objects
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/hm-supervision/detect-objects
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: machine-learning/hm-supervision/detect-objects
 
   triton-test:
     name: Triton | Test

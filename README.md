@@ -781,6 +781,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Scala**
 - **JavaScript**
   - **TypeScript**
+- **LabVIEW**
 - **Lua**
 - **Makefile**
 - **Markdown**
