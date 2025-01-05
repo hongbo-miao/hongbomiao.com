@@ -466,6 +466,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Parallel Computing
 
 - **CUDA** - Parallel computing language
+- **Triton** - Parallel computing language
 
 ### High-Performance Computing (HPC)
 
@@ -786,6 +787,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **MATLAB**
 - **Protocol Buffers**
 - **Python**
+  - **Triton**
 - **QML**
 - **Rego**
 - **Ruby**
