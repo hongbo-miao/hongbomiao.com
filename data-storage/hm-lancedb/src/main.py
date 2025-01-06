@@ -13,7 +13,7 @@ EMBEDDINGS = get_registry().get("sentence-transformers").create(name="all-MiniLM
 class Quotes(LanceModel):
     name: str
     line: str = EMBEDDINGS.SourceField()
-    vector: Vector(EMBEDDINGS.ndims()) = EMBEDDINGS.VectorField()  # type: ignore
+    vector: Vector(EMBEDDINGS.ndims()) = EMBEDDINGS.VectorField()  # type: ignore[valid-type]
 
 
 def create_and_populate_table(
