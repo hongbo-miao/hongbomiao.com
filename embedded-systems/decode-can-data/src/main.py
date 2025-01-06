@@ -3,7 +3,7 @@ import time
 from collections import defaultdict
 from decimal import Decimal
 from pathlib import Path
-from typing import Any, DefaultDict
+from typing import Any
 
 import can
 import cantools
@@ -146,7 +146,7 @@ class CanUtils:
         )
         message_count = 0
         blf_size_bytes = blf_path.stat().st_size
-        buffer: DefaultDict[str, list[dict[str, Any]]] = defaultdict(list)
+        buffer: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
 
         with can.BLFReader(blf_path) as reader:
             for frame in reader:

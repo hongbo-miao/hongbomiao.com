@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Dict, List, Text
+from typing import Any
 
 from rasa_sdk import Action, FormValidationAction, Tracker
 from rasa_sdk.executor import CollectingDispatcher
@@ -7,30 +7,30 @@ from rasa_sdk.types import DomainDict
 
 
 class ActionShowTime(Action):
-    def name(self) -> Text:
+    def name(self) -> str:
         return "action_get_current_time"
 
     def run(
         self,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> List[Dict[Text, Any]]:
+        domain: dict[str, Any],
+    ) -> list[dict[str, Any]]:
         now = datetime.now()
         dispatcher.utter_message(text=f"{now}")
         return []
 
 
 class ActionGetShirtSize(Action):
-    def name(self) -> Text:
+    def name(self) -> str:
         return "action_get_my_favorite_color"
 
     def run(
         self,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> List[Dict[Text, Any]]:
+        domain: dict[str, Any],
+    ) -> list[dict[str, Any]]:
         my_favorite_color = tracker.get_slot("my_favorite_color")
         if not my_favorite_color:
             dispatcher.utter_message(text="I don't know your favorite color.")
@@ -46,7 +46,7 @@ ALLOWED_PIZZA_TYPES = ["cheese", "hawaiian", "pepperoni"]
 
 
 class ValidateSimplePizzaForm(FormValidationAction):
-    def name(self) -> Text:
+    def name(self) -> str:
         return "validate_pizza_form"
 
     def validate_pizza_size(
@@ -55,7 +55,7 @@ class ValidateSimplePizzaForm(FormValidationAction):
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict,
-    ) -> Dict[Text, Any]:
+    ) -> dict[str, Any]:
         if slot_value.lower() not in ALLOWED_PIZZA_SIZES:
             dispatcher.utter_message(
                 text=f"We only accept pizza sizes: {'/'.join(ALLOWED_PIZZA_SIZES)}."
@@ -70,7 +70,7 @@ class ValidateSimplePizzaForm(FormValidationAction):
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict,
-    ) -> Dict[Text, Any]:
+    ) -> dict[str, Any]:
         if slot_value not in ALLOWED_PIZZA_TYPES:
             dispatcher.utter_message(
                 text=f"We only serve {'/'.join(ALLOWED_PIZZA_TYPES)}."

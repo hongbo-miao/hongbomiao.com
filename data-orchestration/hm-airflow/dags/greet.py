@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Dict
 
 from airflow import DAG
 from airflow.decorators import task, task_group
@@ -17,18 +16,18 @@ with DAG(
 ) as dag:
 
     @task(task_id="get_name")
-    def get_name(params=None) -> Dict[str, str]:
+    def get_name(params=None) -> dict[str, str]:
         return {
             "first_name": params["first_name"],
             "last_name": params["last_name"],
         }
 
     @task(task_id="transform_first_name")
-    def transform_first_name(name: Dict[str, str]) -> str:
+    def transform_first_name(name: dict[str, str]) -> str:
         return name["first_name"][0]
 
     @task
-    def transform_last_name(name: Dict[str, str]) -> str:
+    def transform_last_name(name: dict[str, str]) -> str:
         return name["last_name"][0]
 
     @task
@@ -47,7 +46,7 @@ with DAG(
         return f'Hello {initials}, {dt.strftime("at %H:%M on %B %d, %Y")}!'
 
     @task_group
-    def initials_group_function(name: Dict[str, str]) -> str:
+    def initials_group_function(name: dict[str, str]) -> str:
         return get_initials(transform_first_name(name), transform_last_name(name))
 
     my_name = get_name()
