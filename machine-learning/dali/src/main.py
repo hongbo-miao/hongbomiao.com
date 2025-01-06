@@ -2,10 +2,8 @@ import logging
 import urllib.request
 from pathlib import Path
 
-import nvidia.dali.fn as fn
-import nvidia.dali.types as types
 import torch
-from nvidia.dali import pipeline_def
+from nvidia.dali import fn, pipeline_def, types
 from nvidia.dali.plugin.pytorch import DALIGenericIterator
 
 logger = logging.getLogger(__name__)

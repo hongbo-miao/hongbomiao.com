@@ -3,7 +3,7 @@ from pathlib import Path
 
 import httpx
 import torch
-import torchvision.models as models
+from torchvision import models
 
 logger = logging.getLogger(__name__)
 

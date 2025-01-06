@@ -1,5 +1,5 @@
 import torch
-import torchvision.models as models
+from torchvision import models
 
 
 def main() -> None:
