@@ -37,7 +37,7 @@ class MultimodalSearchSchema(LanceModel):
     text: str
     image_path: str = EMBEDDINGS.SourceField()
     audio_path: str
-    vector: Vector(EMBEDDINGS.ndims()) = EMBEDDINGS.VectorField()  # type: ignore
+    vector: Vector(EMBEDDINGS.ndims()) = EMBEDDINGS.VectorField()  # type: ignore[valid-type]
 
 
 class ImageBindSearch:
