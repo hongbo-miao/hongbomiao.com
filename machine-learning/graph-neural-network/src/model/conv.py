@@ -12,7 +12,7 @@ class GINConv(MessagePassing):
         emb_dim (int): node embedding dimensionality
         """
 
-        super(GINConv, self).__init__(aggr="add")
+        super().__init__(aggr="add")
         self.mlp = torch.nn.Sequential(
             torch.nn.Linear(emb_dim, 2 * emb_dim),
             torch.nn.BatchNorm1d(2 * emb_dim),
@@ -40,7 +40,7 @@ class GINConv(MessagePassing):
 # GCN convolution along the graph structure
 class GCNConv(MessagePassing):
     def __init__(self, emb_dim):
-        super(GCNConv, self).__init__(aggr="add")
+        super().__init__(aggr="add")
         self.linear = torch.nn.Linear(emb_dim, emb_dim)
         self.root_emb = torch.nn.Embedding(1, emb_dim)
         self.bond_encoder = BondEncoder(emb_dim=emb_dim)
@@ -96,7 +96,7 @@ class GNN_node(torch.nn.Module):
         num_layer (int): number of GNN message passing layers
         """
 
-        super(GNN_node, self).__init__()
+        super().__init__()
         self.num_layer = num_layer
         self.drop_ratio = drop_ratio
         self.jk = jk
@@ -178,7 +178,7 @@ class GNN_node_Virtualnode(torch.nn.Module):
         emb_dim (int): node embedding dimensionality
         """
 
-        super(GNN_node_Virtualnode, self).__init__()
+        super().__init__()
         self.num_layer = num_layer
         self.drop_ratio = drop_ratio
         self.jk = jk

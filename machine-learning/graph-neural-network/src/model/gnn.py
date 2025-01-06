@@ -27,7 +27,7 @@ class GNN(torch.nn.Module):
         virtual_node (bool): whether to add virtual node or not
         """
 
-        super(GNN, self).__init__()
+        super().__init__()
 
         self.num_layer = num_layer
         self.drop_ratio = drop_ratio

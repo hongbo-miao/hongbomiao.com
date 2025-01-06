@@ -11,7 +11,7 @@ from utils.writer import write_params
 
 
 def main():
-    with open("params.yaml", "r") as f:
+    with open("params.yaml") as f:
         params = yaml.safe_load(f)
 
     write_params(params)
