@@ -1,7 +1,7 @@
 module.exports = {
   ci: {
     collect: {
-      staticDistDir: './build',
+      staticDistDir: './dist',
     },
     assert: {
       preset: 'lighthouse:recommended',

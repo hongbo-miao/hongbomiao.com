@@ -19,7 +19,7 @@ WORKDIR /usr/src/app
 FROM api-node-base AS api-node-builder
 COPY ["api-node/package.json", "api-node/package-lock.json", "api-node/.npmrc", "./"]
 RUN npm ci
-COPY --from=web-builder /usr/src/app/build ./public
+COPY --from=web-builder /usr/src/app/dist ./public
 COPY api-node ./
 EXPOSE 58136
 CMD ["npm", "run", "dev"]

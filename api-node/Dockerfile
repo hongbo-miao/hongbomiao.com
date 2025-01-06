@@ -5,9 +5,7 @@ FROM web-base AS web-builder
 COPY ["web/package.json", "web/package-lock.json", "web/.npmrc", "./"]
 RUN npm ci
 COPY web ./
-# Skip lint check during react-scripts build
-RUN rm -f ./.eslintrc.js \
-  && npm run build \
+RUN npm run build \
   && npm prune --production
 
 FROM docker.io/node:22.12.0-alpine AS api-node-base
@@ -17,7 +15,7 @@ FROM api-node-base AS api-node-builder
 COPY ["api-node/package.json", "api-node/package-lock.json", "api-node/.npmrc", "./"]
 RUN npm ci
 COPY api-node ./
-COPY --from=web-builder /usr/src/app/build ./public
+COPY --from=web-builder /usr/src/app/dist ./public
 RUN npm run build \
   && npm prune --production
 
