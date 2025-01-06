@@ -622,6 +622,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Raspberry Pi 4 Model B** - Single-board computer (SBC)
 - **Jetson Nano** - Single-board computer (SBC)
 - **Jetson TX2** - Single-board computer (SBC)
+- **RISC-V** - Open standard instruction set architecture (ISA)
 
 ## Simulation
 
