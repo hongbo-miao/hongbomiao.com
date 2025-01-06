@@ -4,7 +4,7 @@ import sentry_sdk
 from config import Config
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import health, motor, seed
+from routers import health, motor
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 from utils.logger import logger
 
@@ -30,4 +30,3 @@ app.add_middleware(
 )
 app.include_router(health.router)
 app.include_router(motor.router)
-app.include_router(seed.router)

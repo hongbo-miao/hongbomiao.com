@@ -8,10 +8,10 @@ from kfp import client, dsl
 def train():
     import lightning as L
     import torch
-    import torch.nn as nn
     import torch.nn.functional as F
-    import torch.utils.data as data
     import torchvision
+    from torch import nn
+    from torch.utils import data
 
     class LitAutoEncoder(L.LightningModule):
         def __init__(self):

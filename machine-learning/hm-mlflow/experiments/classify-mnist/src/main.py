@@ -1,12 +1,12 @@
 import lightning as L
 import mlflow
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
-import torch.utils.data as data
 import torchvision
 from args import get_args
 from lightning.pytorch.loggers.wandb import WandbLogger
+from torch import nn
+from torch.utils import data
 
 
 class LitAutoEncoder(L.LightningModule):

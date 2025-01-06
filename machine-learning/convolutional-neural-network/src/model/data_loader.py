@@ -1,7 +1,7 @@
 import torch
 import torchvision
-import torchvision.transforms as transforms
 from args import get_args
+from torchvision import transforms
 
 args = get_args()
 transform = transforms.Compose(
