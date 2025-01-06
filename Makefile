@@ -191,7 +191,7 @@ lint-ansible:
 lint-c-cpp-cpplint:
 	uv run poe lint-c-cpp-cpplint --repository=asterios/led-blinker --extensions=c,h --recursive asterios/led-blinker
 	uv run poe lint-c-cpp-cpplint --repository=compiler-infrastructure/llvm --extensions=cpp,hpp --recursive compiler-infrastructure/llvm
-	uv run poe lint-c-cpp-cpplint --repository=embedded/freertos --extensions=ino --recursive embedded/freertos
+	uv run poe lint-c-cpp-cpplint --repository=embedded-systems/freertos --extensions=ino --recursive embedded-systems/freertos
 	uv run poe lint-c-cpp-cpplint --repository=hm-kafka/kafka-client/kafka-c/avro-producer --extensions=c,h --recursive hm-kafka/kafka-client/kafka-c/avro-producer
 	uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
 	uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
@@ -363,9 +363,9 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
 	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-config-reader
 	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-data-reader
-	uv run poe static-type-check-python --package=embedded.decode-can-data
-	uv run poe static-type-check-python --package=embedded.format-can-data
-	uv run poe static-type-check-python --package=embedded.hm-serial
+	uv run poe static-type-check-python --package=embedded-systems.decode-can-data
+	uv run poe static-type-check-python --package=embedded-systems.format-can-data
+	uv run poe static-type-check-python --package=embedded-systems.hm-serial
 	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-pyvisa
 	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-tdms
 	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.veristand.hm-veristand

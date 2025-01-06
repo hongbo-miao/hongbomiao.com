@@ -168,7 +168,7 @@ jobs:
               - 'machine-learning/dali/**'
             decode-can-data:
               - '.github/workflows/test.yml'
-              - 'embedded/decode-can-data/**'
+              - 'embedded-systems/decode-can-data/**'
             development-aws-glue-spark-scripts:
               - '.github/workflows/test.yml'
               - 'cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts/**'
@@ -177,7 +177,7 @@ jobs:
               - 'cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/**'
             format-can-data:
               - '.github/workflows/test.yml'
-              - 'embedded/format-can-data/**'
+              - 'embedded-systems/format-can-data/**'
             convolutional-neural-network:
               - '.github/workflows/test.yml'
               - 'machine-learning/convolutional-neural-network/**'
@@ -360,7 +360,7 @@ jobs:
               - 'cloud-computing/hm-ray/applications/process-flight-data/**'
             hm-serial:
               - '.github/workflows/test.yml'
-              - 'embedded/hm-serial/**'
+              - 'embedded-systems/hm-serial/**'
             hm-sglang:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-sglang/**'
@@ -441,7 +441,7 @@ jobs:
               - 'computer-vision/open-clip/**'
             pack-unpack-data:
               - '.github/workflows/test.yml'
-              - 'embedded/pack-unpack-data/**'
+              - 'embedded-systems/pack-unpack-data/**'
             prometheus:
               - '.github/workflows/test.yml'
               - 'data-storage/prometheus/**'
@@ -1168,23 +1168,23 @@ jobs:
         with:
           version: 0.5.14
           enable-cache: true
-          cache-dependency-glob: embedded/decode-can-data/uv.lock
+          cache-dependency-glob: embedded-systems/decode-can-data/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: embedded/decode-can-data/pyproject.toml
+          python-version-file: embedded-systems/decode-can-data/pyproject.toml
       - name: Install dependencies
-        working-directory: embedded/decode-can-data
+        working-directory: embedded-systems/decode-can-data
         run: |
           uv sync --dev
       - name: Test
-        working-directory: embedded/decode-can-data
+        working-directory: embedded-systems/decode-can-data
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: embedded/decode-can-data
+          directory: embedded-systems/decode-can-data
 
   format-can-data-test:
     name: Format CAN Data | Test
@@ -1201,23 +1201,23 @@ jobs:
         with:
           version: 0.5.14
           enable-cache: true
-          cache-dependency-glob: embedded/format-can-data/uv.lock
+          cache-dependency-glob: embedded-systems/format-can-data/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: embedded/format-can-data/pyproject.toml
+          python-version-file: embedded-systems/format-can-data/pyproject.toml
       - name: Install dependencies
-        working-directory: embedded/format-can-data
+        working-directory: embedded-systems/format-can-data
         run: |
           uv sync --dev
       - name: Test
-        working-directory: embedded/format-can-data
+        working-directory: embedded-systems/format-can-data
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: embedded/format-can-data
+          directory: embedded-systems/format-can-data
 
   data-distribution-service-test:
     name: Data Distribution Service | Test
@@ -3188,23 +3188,23 @@ jobs:
         with:
           version: 0.5.14
           enable-cache: true
-          cache-dependency-glob: embedded/hm-serial/uv.lock
+          cache-dependency-glob: embedded-systems/hm-serial/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: embedded/hm-serial/pyproject.toml
+          python-version-file: embedded-systems/hm-serial/pyproject.toml
       - name: Install dependencies
-        working-directory: embedded/hm-serial
+        working-directory: embedded-systems/hm-serial
         run: |
           uv sync --dev
       - name: Test
-        working-directory: embedded/hm-serial
+        working-directory: embedded-systems/hm-serial
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: embedded/hm-serial
+          directory: embedded-systems/hm-serial
 
   pack-unpack-data-test:
     name: Pack Unpack Data | Test
@@ -3221,23 +3221,23 @@ jobs:
         with:
           version: 0.5.14
           enable-cache: true
-          cache-dependency-glob: embedded/pack-unpack-data/uv.lock
+          cache-dependency-glob: embedded-systems/pack-unpack-data/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: embedded/pack-unpack-data/pyproject.toml
+          python-version-file: embedded-systems/pack-unpack-data/pyproject.toml
       - name: Install dependencies
-        working-directory: embedded/pack-unpack-data
+        working-directory: embedded-systems/pack-unpack-data
         run: |
           uv sync --dev
       - name: Test
-        working-directory: embedded/pack-unpack-data
+        working-directory: embedded-systems/pack-unpack-data
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: embedded/pack-unpack-data
+          directory: embedded-systems/pack-unpack-data
 
   skypilot-test:
     name: SkyPilot | Test
