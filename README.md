@@ -780,7 +780,9 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **CUDA C++**
 - **C#**
 - **CSS**
+- **Cypher**
 - **Docker**
+- **Flux**
 - **Go**
 - **GraphQL**
 - **HCL**
@@ -790,12 +792,16 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Scala**
 - **JavaScript**
   - **TypeScript**
+- **Julia**
 - **LabVIEW**
 - **LLVM Intermediate Representation (IR)**
 - **Lua**
 - **Makefile**
 - **Markdown**
 - **MATLAB**
+- **OpenSCAD**
+- **P4**
+- **PowerShell**
 - **Protocol Buffers**
 - **Python**
   - **Triton**
@@ -808,6 +814,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **SQL**
   - **ANSI SQL**
   - **LogQL**
+  - **PL/pgSQL**
   - **PromQL**
   - **SedonaSQL**
   - **Snowflake SQL**
