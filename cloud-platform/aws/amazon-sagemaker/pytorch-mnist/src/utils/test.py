@@ -14,13 +14,13 @@ def test(model, test_loader, device):
     correct = 0
     with torch.no_grad():
         for data, target in test_loader:
-            data, target = data.to(device), target.to(device)
-            output = model(data)
+            device_data, device_target = data.to(device), target.to(device)
+            output = model(device_data)
             # sum up batch loss
-            test_loss += F.nll_loss(output, target, size_average=False).item()
+            test_loss += F.nll_loss(output, device_target, size_average=False).item()
             # get the index of the max log-probability
             pred = output.max(1, keepdim=True)[1]
-            correct += pred.eq(target.view_as(pred)).sum().item()
+            correct += pred.eq(device_target.view_as(pred)).sum().item()
 
     test_loss /= len(test_loader.dataset)
     logger.info(

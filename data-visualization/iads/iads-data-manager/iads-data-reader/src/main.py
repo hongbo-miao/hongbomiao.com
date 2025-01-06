@@ -101,7 +101,7 @@ class IadsUtil:
             str(parquet_file_path),
         ]
         logger.info(f"Executing command: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = subprocess.run(cmd, capture_output=True, text=True, check=False)
         if result.returncode == 0:
             return parquet_file_path
         else:

@@ -1,11 +1,11 @@
 import numpy as np
 import torch
-import torch.optim as optim
 import wandb
 from args import get_args
 from model.data_loader import fetch_dataset, get_dataloaders
 from model.gnn import GNN
 from ogb.graphproppred import Evaluator
+from torch import optim
 from tqdm import tqdm
 
 cls_criterion = torch.nn.BCEWithLogitsLoss()
@@ -17,24 +17,24 @@ def train(model, device, loader, optimizer, task_type):
     total_loss = 0
 
     for step, batch in enumerate(tqdm(loader, desc="Iteration")):
-        batch = batch.to(device)
+        device_batch = batch.to(device)
 
-        if batch.x.shape[0] == 1 or batch.batch[-1] == 0:
+        if device_batch.x.shape[0] == 1 or device_batch.batch[-1] == 0:
             pass
         else:
-            pred = model(batch)
+            pred = model(device_batch)
             optimizer.zero_grad()
             # ignore nan targets (unlabeled) when computing training loss.
-            is_labeled = batch.y == batch.y
+            is_labeled = device_batch.y == device_batch.y
             if "classification" in task_type:
                 loss = cls_criterion(
                     pred.to(torch.float32)[is_labeled],
-                    batch.y.to(torch.float32)[is_labeled],
+                    device_batch.y.to(torch.float32)[is_labeled],
                 )
             else:
                 loss = reg_criterion(
                     pred.to(torch.float32)[is_labeled],
-                    batch.y.to(torch.float32)[is_labeled],
+                    device_batch.y.to(torch.float32)[is_labeled],
                 )
             loss.backward()
             total_loss += loss.item()
@@ -49,15 +49,15 @@ def evaluate(model, device, loader, evaluator):
     y_pred = []
 
     for step, batch in enumerate(tqdm(loader, desc="Iteration")):
-        batch = batch.to(device)
+        device_batch = batch.to(device)
 
-        if batch.x.shape[0] == 1:
+        if device_batch.x.shape[0] == 1:
             pass
         else:
             with torch.no_grad():
-                pred = model(batch)
+                pred = model(device_batch)
 
-            y_true.append(batch.y.view(pred.shape).detach().cpu())
+            y_true.append(device_batch.y.view(pred.shape).detach().cpu())
             y_pred.append(pred.detach().cpu())
 
     y_true = torch.cat(y_true, dim=0).numpy()
@@ -93,44 +93,45 @@ def main():
         val_loader = dataloaders["val"]
         test_loader = dataloaders["test"]
 
-        if config.gnn == "gin":
-            model = GNN(
-                gnn_type="gin",
-                num_tasks=dataset.num_tasks,
-                num_layer=config.num_layer,
-                emb_dim=config.emb_dim,
-                drop_ratio=config.drop_ratio,
-                virtual_node=False,
-            ).to(device)
-        elif config.gnn == "gin-virtual":
-            model = GNN(
-                gnn_type="gin",
-                num_tasks=dataset.num_tasks,
-                num_layer=config.num_layer,
-                emb_dim=config.emb_dim,
-                drop_ratio=config.drop_ratio,
-                virtual_node=True,
-            ).to(device)
-        elif config.gnn == "gcn":
-            model = GNN(
-                gnn_type="gcn",
-                num_tasks=dataset.num_tasks,
-                num_layer=config.num_layer,
-                emb_dim=config.emb_dim,
-                drop_ratio=config.drop_ratio,
-                virtual_node=False,
-            ).to(device)
-        elif config.gnn == "gcn-virtual":
-            model = GNN(
-                gnn_type="gcn",
-                num_tasks=dataset.num_tasks,
-                num_layer=config.num_layer,
-                emb_dim=config.emb_dim,
-                drop_ratio=config.drop_ratio,
-                virtual_node=True,
-            ).to(device)
-        else:
-            raise ValueError("Invalid GNN type")
+        match config.gnn:
+            case "gin":
+                model = GNN(
+                    gnn_type="gin",
+                    num_tasks=dataset.num_tasks,
+                    num_layer=config.num_layer,
+                    emb_dim=config.emb_dim,
+                    drop_ratio=config.drop_ratio,
+                    virtual_node=False,
+                ).to(device)
+            case "gin-virtual":
+                model = GNN(
+                    gnn_type="gin",
+                    num_tasks=dataset.num_tasks,
+                    num_layer=config.num_layer,
+                    emb_dim=config.emb_dim,
+                    drop_ratio=config.drop_ratio,
+                    virtual_node=True,
+                ).to(device)
+            case "gcn":
+                model = GNN(
+                    gnn_type="gcn",
+                    num_tasks=dataset.num_tasks,
+                    num_layer=config.num_layer,
+                    emb_dim=config.emb_dim,
+                    drop_ratio=config.drop_ratio,
+                    virtual_node=False,
+                ).to(device)
+            case "gcn-virtual":
+                model = GNN(
+                    gnn_type="gcn",
+                    num_tasks=dataset.num_tasks,
+                    num_layer=config.num_layer,
+                    emb_dim=config.emb_dim,
+                    drop_ratio=config.drop_ratio,
+                    virtual_node=True,
+                ).to(device)
+            case _:
+                raise ValueError("Invalid GNN type")
 
         wb.watch(model)
 
