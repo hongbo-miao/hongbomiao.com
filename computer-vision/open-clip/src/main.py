@@ -20,7 +20,7 @@ EMBEDDINGS = (
 
 
 class Pets(LanceModel):
-    vector: Vector(EMBEDDINGS.ndims()) = EMBEDDINGS.VectorField()  # type: ignore
+    vector: Vector(EMBEDDINGS.ndims()) = EMBEDDINGS.VectorField()  # type: ignore[valid-type]
     image_uri: str = EMBEDDINGS.SourceField()
 
 
