@@ -169,6 +169,7 @@ export default [
       'web-cypress/cypress/screenshots',
       'web/.eslintcache',
       'web/.lighthouseci',
+      'web/dist',
       'web/public/sitemap.xml',
       'web/storybook-static',
       'web/tmp',
