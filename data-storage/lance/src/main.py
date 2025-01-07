@@ -8,16 +8,18 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
+    rng = np.random.default_rng()
+
     # Create sample vectors (minimum 5000 recommended for meaningful indexing)
     num_vectors = 5000  # Increased from 1000 to meet minimum recommendation
     vector_dim = 128  # Dimension of each vector (common for embeddings)
-    vectors = np.random.randn(num_vectors, vector_dim)
+    vectors = rng.standard_normal((num_vectors, vector_dim))
 
     # Create some distinct vectors at the beginning for demonstration
     # Make the first vector have a clear pattern
     vectors[0] = np.array([1.0] * 32 + [2.0] * 32 + [3.0] * 32 + [4.0] * 32)
     # Make the second vector similar to the first but with some variation
-    vectors[1] = vectors[0] + np.random.randn(vector_dim) * 0.1
+    vectors[1] = vectors[0] + rng.standard_normal(vector_dim) * 0.1
 
     # Convert to Lance table
     vector_table = vec_to_table(vectors)
