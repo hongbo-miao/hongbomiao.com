@@ -14,8 +14,8 @@ def download_sample_images(data_path: Path) -> None:
     data_path.mkdir(parents=True, exist_ok=True)
 
     # Create a class subdirectory (e.g., "class0")
-    class_dir = data_path / "class0"
-    class_dir.mkdir(parents=True, exist_ok=True)
+    class_dir_path = data_path / Path("class0")
+    class_dir_path.mkdir(parents=True, exist_ok=True)
 
     # Sample image URLs
     image_urls: list[str] = [
@@ -23,15 +23,14 @@ def download_sample_images(data_path: Path) -> None:
     ]
 
     # Download images into the class subdirectory
-    for i, url in enumerate(image_urls):
-        try:
-            filename = f"image_{i}.jpg"
-            filepath = class_dir / filename
+    try:
+        for i, url in enumerate(image_urls):
+            filepath = class_dir_path / f"image_{i}.jpg"
             if not filepath.exists():
                 logger.info(f"Downloading {url} to {filepath}")
                 urllib.request.urlretrieve(url, str(filepath))
-        except Exception:
-            logger.exception(f"Error downloading {url}")
+    except Exception:
+        logger.exception(f"Error downloading {url}")
 
 
 @pipeline_def(batch_size=2, num_threads=2, device_id=None)
