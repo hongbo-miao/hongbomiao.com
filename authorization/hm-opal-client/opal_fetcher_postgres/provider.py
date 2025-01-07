@@ -1,6 +1,7 @@
 # https://github.com/permitio/opal-fetcher-postgres
 
 import json
+from typing import Any, ClassVar
 
 import asyncpg
 from asyncpg.exceptions import DataError
@@ -38,12 +39,11 @@ class PostgresFetchEvent(FetchEvent):
 
 
 class PostgresFetchProvider(BaseFetchProvider):
-    RETRY_CONFIG = {
+    RETRY_CONFIG: ClassVar[dict[str, Any]] = {
         "wait": wait.wait_random_exponential(),
         "stop": stop.stop_after_attempt(10),
-        "retry": retry_unless_exception_type(
-            DataError
-        ),  # query error (i.e: invalid table, etc)
+        # query error (i.e: invalid table, etc)
+        "retry": retry_unless_exception_type(DataError),
         "reraise": True,
     }
 

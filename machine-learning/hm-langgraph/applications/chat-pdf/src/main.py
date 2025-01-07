@@ -100,8 +100,8 @@ def retrieve_context(
         relevant_chunks = [chunks[idx] for idx in indices[0]]
         state["context"] = "\n".join(relevant_chunks)
         logger.info("Context retrieval completed")
-    except Exception as e:
-        logger.error(f"Error in retrieve_context: {str(e)}", exc_info=True)
+    except Exception:
+        logger.exception("Error in retrieve_context.")
         raise
     else:
         return state
@@ -128,8 +128,8 @@ def generate_answer(state: MessagesState) -> MessagesState:
             ],
         )
         state["answer"] = response.choices[0].message.content
-    except Exception as e:
-        logger.error(f"Error in generate_answer: {str(e)}", exc_info=True)
+    except Exception:
+        logger.exception("Error in generate_answer.")
         raise
     else:
         return state
