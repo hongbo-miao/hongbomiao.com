@@ -80,7 +80,7 @@ class ImageBindSearch:
             {"text": a, "audio_path": str(b), "image_path": str(c)}
             for a, b, c in zip(TEXT_LIST, audio_paths, image_paths)
         ]
-        db = lancedb.connect("/tmp/lancedb")
+        db = lancedb.connect("data/lancedb")
         self.table = db.create_table(
             "imagebind",
             schema=MultimodalSearchSchema,

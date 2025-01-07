@@ -32,7 +32,7 @@ def perform_semantic_search(table: lancedb.table.Table, query: str) -> pl.DataFr
 def main():
     url = "https://raw.githubusercontent.com/Abhiram970/RickBot/refs/heads/main/Rick_and_Morty.csv"
     df = pl.read_csv(url)
-    db = lancedb.connect("/tmp/lancedb")
+    db = lancedb.connect("data/lancedb")
     table = create_and_populate_table(db, df)
 
     query = "What is the meaning of life?"

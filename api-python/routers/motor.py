@@ -1,6 +1,6 @@
 import asyncio
 import json
-import random
+import secrets
 import time
 from typing import Annotated
 
@@ -28,9 +28,9 @@ async def generate_motor_data(
     for _ in range(5):
         data = {
             "timestamp": time.time() * 1000,
-            "current": random.uniform(0, 10),
-            "voltage": random.uniform(0, 20),
-            "temperature": random.uniform(0, 50) + 25,
+            "current": secrets.SystemRandom().uniform(0, 10),
+            "voltage": secrets.SystemRandom().uniform(0, 20),
+            "temperature": secrets.SystemRandom().uniform(0, 50) + 25,
         }
         producer.poll(0)
         producer.produce(

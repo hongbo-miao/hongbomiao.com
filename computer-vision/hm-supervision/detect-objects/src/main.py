@@ -1,5 +1,5 @@
 import logging
-import random
+import secrets
 from pathlib import Path
 
 import cv2
@@ -12,9 +12,9 @@ class_colors = {}
 
 
 def generate_random_color() -> tuple[int, int, int]:
-    r = random.randint(0, 255)
-    g = random.randint(0, 255)
-    b = random.randint(0, 255)
+    r = secrets.randbelow(256)
+    g = secrets.randbelow(256)
+    b = secrets.randbelow(256)
     return r, g, b
 
 

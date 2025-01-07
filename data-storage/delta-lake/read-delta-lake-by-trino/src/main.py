@@ -51,7 +51,7 @@ def main():
             join te on t0._time = te._time
             join tf on t0._time = tf._time
             order by _time asc
-            """,
+            """,  # noqa: S608
         )
         res = conn.execute(sql_query, {"event_id": event_id})
         df = pd.DataFrame(res.fetchall(), columns=res.keys())
