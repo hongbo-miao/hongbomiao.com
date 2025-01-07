@@ -73,7 +73,9 @@ def main():
     args = get_args()
 
     with wandb.init(
-        entity="hongbo-miao", project="graph-neural-network", config=args
+        entity="hongbo-miao",
+        project="graph-neural-network",
+        config=args,
     ) as wb:
         config = wb.config
 
@@ -146,7 +148,11 @@ def main():
             print(f"=====Epoch {epoch}")
             print("Training...")
             train_loss = train(
-                model, device, train_loader, optimizer, dataset.task_type
+                model,
+                device,
+                train_loader,
+                optimizer,
+                dataset.task_type,
             )
 
             print("Evaluating...")
@@ -162,7 +168,7 @@ def main():
                     "train_perf": train_perf,
                     "val_perf": val_perf,
                     "test_perf": test_perf,
-                }
+                },
             )
 
             train_curve.append(train_perf[dataset.eval_metric])

@@ -19,7 +19,8 @@ def sum_list(numbers: list[int]) -> int:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     ray.init()
     logger.info(ray.cluster_resources())

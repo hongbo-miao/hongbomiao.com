@@ -36,7 +36,7 @@ class ActionGetShirtSize(Action):
             dispatcher.utter_message(text="I don't know your favorite color.")
         else:
             dispatcher.utter_message(
-                text=f"Your favorite color is {my_favorite_color}!"
+                text=f"Your favorite color is {my_favorite_color}!",
             )
         return []
 
@@ -58,7 +58,7 @@ class ValidateSimplePizzaForm(FormValidationAction):
     ) -> dict[str, Any]:
         if slot_value.lower() not in ALLOWED_PIZZA_SIZES:
             dispatcher.utter_message(
-                text=f"We only accept pizza sizes: {'/'.join(ALLOWED_PIZZA_SIZES)}."
+                text=f"We only accept pizza sizes: {'/'.join(ALLOWED_PIZZA_SIZES)}.",
             )
             return {"pizza_size": None}
         dispatcher.utter_message(text=f"OK! You want to have a {slot_value} pizza.")
@@ -73,7 +73,7 @@ class ValidateSimplePizzaForm(FormValidationAction):
     ) -> dict[str, Any]:
         if slot_value not in ALLOWED_PIZZA_TYPES:
             dispatcher.utter_message(
-                text=f"We only serve {'/'.join(ALLOWED_PIZZA_TYPES)}."
+                text=f"We only serve {'/'.join(ALLOWED_PIZZA_TYPES)}.",
             )
             return {"pizza_type": None}
         dispatcher.utter_message(text=f"OK! You want to have a {slot_value} pizza.")

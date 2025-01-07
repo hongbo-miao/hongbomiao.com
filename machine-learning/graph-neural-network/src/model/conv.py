@@ -26,7 +26,7 @@ class GINConv(MessagePassing):
         edge_embedding = self.bond_encoder(edge_attr)
         out = self.mlp(
             (1 + self.eps) * x
-            + self.propagate(edge_index, x=x, edge_attr=edge_embedding)
+            + self.propagate(edge_index, x=x, edge_attr=edge_embedding),
         )
         return out
 
@@ -62,7 +62,10 @@ class GCNConv(MessagePassing):
         norm = deg_inv_sqrt[n1] * deg_inv_sqrt[n2]  # [N]
 
         return self.propagate(
-            edge_index, x=x, edge_attr=edge_embedding, norm=norm
+            edge_index,
+            x=x,
+            edge_attr=edge_embedding,
+            norm=norm,
         ) + F.relu(x + self.root_emb.weight) * 1.0 / deg.view(-1, 1)
 
     def message(self, x_j, edge_attr, norm):
@@ -221,7 +224,7 @@ class GNN_node_Virtualnode(torch.nn.Module):
                     torch.nn.Linear(2 * emb_dim, emb_dim),
                     torch.nn.BatchNorm1d(emb_dim),
                     torch.nn.ReLU(),
-                )
+                ),
             )
 
     def forward(self, batched_data):
@@ -234,7 +237,9 @@ class GNN_node_Virtualnode(torch.nn.Module):
 
         # virtual node embeddings for graphs
         virtualnode_embedding = self.virtualnode_embedding(
-            torch.zeros(batch[-1].item() + 1).to(edge_index.dtype).to(edge_index.device)
+            torch.zeros(batch[-1].item() + 1)
+            .to(edge_index.dtype)
+            .to(edge_index.device),
         )
 
         h_list = [self.atom_encoder(x)]

@@ -52,7 +52,8 @@ def main(model_path: Path, image_path: Path) -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     data_dir_path = Path("data")
     external_model_path = data_dir_path / Path("yolov8x.pt")

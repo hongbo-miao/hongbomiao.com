@@ -54,7 +54,7 @@ def main() -> None:
                 "AMOUNT_sum": "total_amount",
                 "AMOUNT_mean": "avg_amount",
                 "AMOUNT_count": "transaction_count",
-            }
+            },
         )
     )
     group_by_time = time.time() - start_time
@@ -64,12 +64,13 @@ def main() -> None:
 
     # Print total execution time
     logger.info(
-        f"Total execution time: {load_time + sum_time + group_by_time:.2f} seconds"
+        f"Total execution time: {load_time + sum_time + group_by_time:.2f} seconds",
     )
 
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

@@ -11,7 +11,7 @@ def undeploy() -> None:
 
     sagemaker_client.delete_model(ModelName=sagemaker_model_name)
     sagemaker_client.delete_endpoint_config(
-        EndpointConfigName=sagemaker_endpoint_config_name
+        EndpointConfigName=sagemaker_endpoint_config_name,
     )
     sagemaker_client.delete_endpoint(EndpointName=sagemaker_endpoint_name)
 

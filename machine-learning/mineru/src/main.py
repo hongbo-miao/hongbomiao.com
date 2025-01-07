@@ -46,7 +46,9 @@ def process_pdf(pdf_file_path: Path, output_dir_path: Path) -> None:
     pipe_result.draw_span(str(spans_output_path))
     pipe_result.dump_md(markdown_writer, markdown_output_name, image_dir_name)
     pipe_result.dump_content_list(
-        markdown_writer, content_list_output_name, image_dir_name
+        markdown_writer,
+        content_list_output_name,
+        image_dir_name,
     )
 
     logger.info("Processing completed successfully")
@@ -64,6 +66,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

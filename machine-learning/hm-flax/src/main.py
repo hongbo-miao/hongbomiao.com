@@ -24,7 +24,8 @@ class CNN(nn.Module):
 
 
 def create_train_state(
-    rng: jax.random.PRNGKey, learning_rate: float
+    rng: jax.random.PRNGKey,
+    learning_rate: float,
 ) -> train_state.TrainState:
     cnn = CNN()
     params = cnn.init(rng, jnp.ones([1, 28, 28, 1]))["params"]
@@ -38,7 +39,10 @@ def cross_entropy_loss(logits: jnp.ndarray, labels: jnp.ndarray) -> jnp.ndarray:
 
 
 def loss_fn(
-    params: dict[str, Any], apply_fn: Any, images: jnp.ndarray, labels: jnp.ndarray
+    params: dict[str, Any],
+    apply_fn: Any,
+    images: jnp.ndarray,
+    labels: jnp.ndarray,
 ) -> tuple[jnp.ndarray, jnp.ndarray]:
     logits = apply_fn({"params": params}, images)
     loss = cross_entropy_loss(logits, labels)
@@ -47,11 +51,15 @@ def loss_fn(
 
 @jax.jit
 def train_step(
-    state: train_state.TrainState, batch: dict[str, jnp.ndarray]
+    state: train_state.TrainState,
+    batch: dict[str, jnp.ndarray],
 ) -> tuple[train_state.TrainState, jnp.ndarray]:
     grad_fn = jax.value_and_grad(loss_fn, has_aux=True)
     (loss, logits), grads = grad_fn(
-        state.params, state.apply_fn, batch["image"], batch["label"]
+        state.params,
+        state.apply_fn,
+        batch["image"],
+        batch["label"],
     )
     state = state.apply_gradients(grads=grads)
     return state, loss

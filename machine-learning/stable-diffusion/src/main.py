@@ -23,13 +23,15 @@ class StableDiffusionGenerator:
 
     @staticmethod
     def create_pipeline(
-        model_id: str, is_safety_checker_enabled: bool = True
+        model_id: str,
+        is_safety_checker_enabled: bool = True,
     ) -> StableDiffusionPipeline:
         pipe = StableDiffusionPipeline.from_pretrained(
             model_id,
             torch_dtype=torch.float16,
             safety_checker=StableDiffusionSafetyChecker.from_pretrained(
-                "CompVis/stable-diffusion-safety-checker", torch_dtype=torch.float16
+                "CompVis/stable-diffusion-safety-checker",
+                torch_dtype=torch.float16,
             )
             if is_safety_checker_enabled
             else None,
@@ -37,7 +39,9 @@ class StableDiffusionGenerator:
 
         # Use DPM++ 2M Karras scheduler
         pipe.scheduler = DPMSolverMultistepScheduler.from_config(
-            pipe.scheduler.config, algorithm_type="dpmsolver++", use_karras_sigmas=True
+            pipe.scheduler.config,
+            algorithm_type="dpmsolver++",
+            use_karras_sigmas=True,
         )
 
         device = StableDiffusionGenerator.get_device()
@@ -115,6 +119,7 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

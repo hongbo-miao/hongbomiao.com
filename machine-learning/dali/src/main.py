@@ -19,7 +19,7 @@ def download_sample_images(data_path: Path) -> None:
 
     # Sample image URLs
     image_urls: list[str] = [
-        "https://raw.githubusercontent.com/pytorch/hub/master/images/dog.jpg"
+        "https://raw.githubusercontent.com/pytorch/hub/master/images/dog.jpg",
     ]
 
     # Download images into the class subdirectory
@@ -36,7 +36,9 @@ def download_sample_images(data_path: Path) -> None:
 @pipeline_def(batch_size=2, num_threads=2, device_id=None)
 def image_pipeline(data_path: Path):
     jpegs, labels = fn.readers.file(
-        file_root=data_path, random_shuffle=True, initial_fill=2
+        file_root=data_path,
+        random_shuffle=True,
+        initial_fill=2,
     )
 
     images = fn.decoders.image(jpegs, device="cpu")
@@ -72,7 +74,9 @@ def main() -> None:
         return
 
     pipe = image_pipeline(
-        data_path=data_path, batch_size=BATCH_SIZE, num_threads=NUM_THREADS
+        data_path=data_path,
+        batch_size=BATCH_SIZE,
+        num_threads=NUM_THREADS,
     )
     pipe.build()
 
@@ -97,6 +101,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

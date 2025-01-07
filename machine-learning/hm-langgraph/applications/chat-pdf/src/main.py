@@ -15,7 +15,8 @@ from openai import OpenAI
 from sentence_transformers import SentenceTransformer
 
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -38,7 +39,7 @@ def process_pdf(pdf_path: Path) -> list[str]:
     converter = DocumentConverter(
         allowed_formats=[InputFormat.PDF],
         format_options={
-            InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)
+            InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options),
         },
     )
     logger.info("Converting PDF to Markdown")
@@ -143,7 +144,8 @@ def create_graph(
     graph = (
         Graph()
         .add_node(
-            "retrieve", lambda state: retrieve_context(state, index, chunks, model)
+            "retrieve",
+            lambda state: retrieve_context(state, index, chunks, model),
         )
         .add_node("answer", generate_answer)
         .add_edge("retrieve", "answer")
@@ -161,7 +163,7 @@ def chat_with_pdf(pdf_path: Path, question: str) -> str:
 
         # Create initial state
         initial_state = MessagesState(
-            {"question": question, "context": "", "answer": ""}
+            {"question": question, "context": "", "answer": ""},
         )
 
         # Create and run graph

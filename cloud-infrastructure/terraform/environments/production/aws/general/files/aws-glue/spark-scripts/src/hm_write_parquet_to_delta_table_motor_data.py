@@ -8,7 +8,8 @@ from awsglue.utils import getResolvedOptions
 from pyspark.context import SparkContext
 
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -46,7 +47,7 @@ additional_options = {
     "mergeSchema": "true",
 }
 df.write.format("delta").options(**additional_options).partitionBy(*partitions).mode(
-    "overwrite"
+    "overwrite",
 ).save()
 
 job.commit()

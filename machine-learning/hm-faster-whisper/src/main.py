@@ -8,7 +8,9 @@ logger = logging.getLogger(__name__)
 
 def main(audio_path: Path, transcription_file: Path) -> None:
     model = WhisperModel(
-        model_size_or_path="medium", device="cpu", compute_type="float32"
+        model_size_or_path="medium",
+        device="cpu",
+        compute_type="float32",
     )
 
     segments, info = model.transcribe(
@@ -34,7 +36,8 @@ def main(audio_path: Path, transcription_file: Path) -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
     data_dir_path = Path("data")
