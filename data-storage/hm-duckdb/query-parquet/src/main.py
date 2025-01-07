@@ -11,7 +11,7 @@ def main(parquet_path: Path) -> None:
         query = f"""
             select *
             from read_parquet('{parquet_path}')
-        """
+        """  # noqa: S608
         df = conn.execute(query).pl()
         logger.info(df)
 

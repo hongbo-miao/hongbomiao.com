@@ -28,7 +28,7 @@ def download_sample_images(data_path: Path) -> None:
             filepath = class_dir_path / f"image_{i}.jpg"
             if not filepath.exists():
                 logger.info(f"Downloading {url} to {filepath}")
-                urllib.request.urlretrieve(url, str(filepath))
+                urllib.request.urlretrieve(url, str(filepath))  # noqa: S310
     except Exception:
         logger.exception(f"Error downloading {url}")
 

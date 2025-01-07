@@ -4,7 +4,7 @@ import logging
 import pathlib
 
 import config
-import requests
+import httpx
 from grafanalib._gen import DashboardEncoder
 from grafanalib.core import Dashboard
 
@@ -20,17 +20,17 @@ def upload_to_grafana(dashboard: Dashboard) -> None:
         },
         cls=DashboardEncoder,
     )
-    res = requests.post(
-        f"{config.GRAFANA_SERVER_URL}/api/dashboards/db",
-        data=dashboard_json,
-        headers={
-            "Authorization": f"Bearer {config.GRAFANA_SERVICE_ACCOUNT_TOKEN}",
-            "Content-Type": "application/json",
-        },
-        verify=True,
-    )
-    logger.info(res.status_code)
-    logger.info(res.content)
+    with httpx.Client() as client:
+        res = client.post(
+            f"{config.GRAFANA_SERVER_URL}/api/dashboards/db",
+            content=dashboard_json,
+            headers={
+                "Authorization": f"Bearer {config.GRAFANA_SERVICE_ACCOUNT_TOKEN}",
+                "Content-Type": "application/json",
+            },
+        )
+        logger.info(res.status_code)
+        logger.info(res.content)
 
 
 if __name__ == "__main__":

@@ -16,16 +16,13 @@ def generate_launch_description():
     )
     spawn_turtle = ExecuteProcess(
         cmd=[
-            [
-                FindExecutable(name="ros2"),
-                " service call ",
-                hm_namespace,
-                "/spawn ",
-                "turtlesim/srv/Spawn ",
-                "\"{x: 2.0, y: 2.0, theta: 0.0, name: 'turtle_robot'}\"",
-            ],
+            FindExecutable(name="ros2"),
+            "service",
+            "call",
+            f"{hm_namespace}/spawn",
+            "turtlesim/srv/Spawn",
+            '{"x": 2.0, "y": 2.0, "theta": 0.0, "name": "turtle_robot"}',
         ],
-        shell=True,
     )
 
     target_control_node = Node(

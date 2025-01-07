@@ -28,7 +28,7 @@ class Pets(LanceModel):
 
 
 def main():
-    db = lancedb.connect("/tmp/lancedb")
+    db = lancedb.connect("data/lancedb")
 
     # Create or get the table
     if "pets" in db:

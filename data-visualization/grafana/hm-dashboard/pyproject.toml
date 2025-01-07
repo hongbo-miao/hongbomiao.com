@@ -4,7 +4,7 @@ version = "1.0.0"
 requires-python = "~=3.13.0"
 dependencies = [
   "grafanalib==0.7.1",
-  "requests==2.32.3",
+  "httpx==0.28.1",
 ]
 
 [dependency-groups]
@@ -21,5 +21,5 @@ package = false
 test = "pytest --verbose --verbose"
 test-coverage = "pytest --cov=. --cov-report=xml"
 
-generate-dashboard = "generate-dashboard --output=frontend.json hm.dashboard.py"
-upload-dashboard = "python upload_dashboard.py"
+generate-dashboard = "generate-dashboard src/hm.dashboard.py --output=output/frontend.json"
+upload-dashboard = "python src/upload_dashboard.py"

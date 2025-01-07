@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 
 import lance
 import numpy as np
@@ -25,7 +26,7 @@ def main() -> None:
     vector_table = vec_to_table(vectors)
 
     # Save to Lance dataset
-    uri = "/tmp/lancedb/vectors.lance"
+    uri = Path("data/lancedb/vectors.lance")
     dataset = lance.write_dataset(vector_table, uri, mode="overwrite")
     logger.info(
         "Dataset saved to %s with %d vectors of dimension %d",

@@ -93,6 +93,7 @@ exclude = [
   "data-storage/hm-protobuf/data",
   "data-transformation/dbt/projects/*/dbt_packages",
   "data-transformation/dbt/projects/*/logs",
+  "data-visualization/grafana/hm-dashboard/output",
   "data-visualization/grafana/hm-panel-plugin/.config",
   "data-visualization/metabase/plugins",
   "desktop-qt/CMakeLists.txt.user",
@@ -188,10 +189,12 @@ select = [
   "PGH",   # pygrep-hooks
   "PL",    # Pylint
   "RUF",   # Ruff
+  "S",     # flake8-bandit
   "TRY",   # tryceratops
   "UP",    # pyupgrade
 ]
 ignore = [
+  "S101",
   "D100",
   "D101",
   "D102",

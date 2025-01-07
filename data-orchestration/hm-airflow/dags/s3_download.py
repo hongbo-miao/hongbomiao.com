@@ -31,6 +31,6 @@ with DAG(
     file_name = download_from_s3(
         bucket="hm-production-bucket",
         key="hm-airflow/taxi.csv",
-        local_path="/tmp/",
+        local_path="/tmp/",  # noqa: S108
     )
     rename_file(file_name, "taxi.csv")
