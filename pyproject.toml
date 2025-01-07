@@ -34,7 +34,7 @@ lint-cmake = { shell = "cmakelint $(git ls-files '**/CMakeLists.txt')" }
 lint-matlab = { shell = "mh_style $(git ls-files '**/*.m')" }
 lint-matlab-fix = { shell = "mh_style --fix $(git ls-files '**/*.m')" }
 lint-python = { shell = "ruff format --check && ruff check" }
-lint-python-fix = { shell = "ruff format && ruff check --fix" }
+lint-python-fix = { shell = "ruff format && ruff check --fix --unsafe-fixes" }
 lint-sql = "sqlfluff lint"
 lint-sql-fix = "sqlfluff fix --force"
 lint-vhdl = { shell = "vsg --filename $(git ls-files '**/*.vhd')" }

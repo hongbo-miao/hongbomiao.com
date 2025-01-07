@@ -87,8 +87,8 @@ class StableDiffusionGenerator:
                 path = output_dir / f"{timestamp}_{idx}.png"
                 image.save(path)
 
-        except Exception as e:
-            logger.exception(f"Error generating images: {e}")
+        except Exception:
+            logger.exception("Error generating images")
 
 
 def main():
