@@ -1,7 +1,7 @@
 import logging
 
 import torch
-import torch.nn.functional as F
+import torch.nn.functional as F  # noqa: N812
 import torch.utils.data
 import torch.utils.data.distributed
 

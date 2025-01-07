@@ -124,8 +124,8 @@ def main() -> None:
         align_trailing_vortices_with_wind=False,
     )
     aero = vlm.run()
-    L_over_D = aero["CL"] / aero["CD"]
-    opti.minimize(-L_over_D)
+    l_over_d = aero["CL"] / aero["CD"]
+    opti.minimize(-l_over_d)
     sol = opti.solve()
     best_alpha = sol(alpha)
     logger.info(f"Alpha for max L/D: {best_alpha:.3f} deg")

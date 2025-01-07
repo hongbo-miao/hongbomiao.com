@@ -1,5 +1,5 @@
 import torch
-from model.conv import GNN_node, GNN_node_Virtualnode
+from model.conv import GNNNode, GNNVirtualNode
 from torch_geometric.nn import (
     GlobalAttention,
     Set2Set,
@@ -41,7 +41,7 @@ class GNN(torch.nn.Module):
 
         # GNN to generate node embeddings
         if virtual_node:
-            self.gnn_node = GNN_node_Virtualnode(
+            self.gnn_node = GNNVirtualNode(
                 num_layer,
                 emb_dim,
                 jk=jk,
@@ -50,7 +50,7 @@ class GNN(torch.nn.Module):
                 gnn_type=gnn_type,
             )
         else:
-            self.gnn_node = GNN_node(
+            self.gnn_node = GNNNode(
                 num_layer,
                 emb_dim,
                 jk=jk,

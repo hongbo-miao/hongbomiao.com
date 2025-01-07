@@ -1,5 +1,5 @@
 import torch
-import torch.nn.functional as F
+import torch.nn.functional as F  # noqa: N812
 from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder
 from torch_geometric.nn import MessagePassing, global_add_pool
 from torch_geometric.utils import degree
@@ -8,10 +8,6 @@ from torch_geometric.utils import degree
 # GIN convolution along the graph structure
 class GINConv(MessagePassing):
     def __init__(self, emb_dim):
-        """
-        emb_dim (int): node embedding dimensionality
-        """
-
         super().__init__(aggr="add")
         self.mlp = torch.nn.Sequential(
             torch.nn.Linear(emb_dim, 2 * emb_dim),
@@ -78,13 +74,7 @@ class GCNConv(MessagePassing):
         return aggr_out
 
 
-# GNN to generate node embedding
-class GNN_node(torch.nn.Module):
-    """
-    Output:
-        node representations
-    """
-
+class GNNNode(torch.nn.Module):
     def __init__(
         self,
         num_layer,
@@ -94,11 +84,6 @@ class GNN_node(torch.nn.Module):
         residual=False,
         gnn_type="gin",
     ):
-        """
-        emb_dim (int): node embedding dimensionality
-        num_layer (int): number of GNN message passing layers
-        """
-
         super().__init__()
         self.num_layer = num_layer
         self.drop_ratio = drop_ratio
@@ -162,12 +147,7 @@ class GNN_node(torch.nn.Module):
 
 
 # Virtual GNN to generate node embedding
-class GNN_node_Virtualnode(torch.nn.Module):
-    """
-    Output:
-        node representations
-    """
-
+class GNNVirtualNode(torch.nn.Module):
     def __init__(
         self,
         num_layer,
@@ -177,10 +157,6 @@ class GNN_node_Virtualnode(torch.nn.Module):
         residual=False,
         gnn_type="gin",
     ):
-        """
-        emb_dim (int): node embedding dimensionality
-        """
-
         super().__init__()
         self.num_layer = num_layer
         self.drop_ratio = drop_ratio
