@@ -1,3 +1,4 @@
+import asyncio
 import json
 import random
 import time
@@ -37,5 +38,5 @@ async def generate_motor_data(
             json.dumps(data).encode("utf-8"),
             callback=delivery_report,
         )
-        time.sleep(1)
+        await asyncio.sleep(1)
     return {"body": True}

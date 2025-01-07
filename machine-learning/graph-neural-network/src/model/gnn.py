@@ -22,11 +22,6 @@ class GNN(torch.nn.Module):
         jk="last",
         graph_pooling="mean",
     ):
-        """
-        num_tasks (int): number of labels to be predicted
-        virtual_node (bool): whether to add virtual node or not
-        """
-
         super().__init__()
 
         self.num_layer = num_layer
