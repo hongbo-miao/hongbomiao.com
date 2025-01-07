@@ -64,8 +64,9 @@ class IadsUtil:
                     year = date.year
 
         if not irig_start_time or not irig_end_time or year is None:
+            msg = "Could not find start time, end time, or year in archive info file"
             raise ValueError(
-                "Could not find start time, end time, or year in archive info file",
+                msg,
             )
 
         return irig_start_time, irig_end_time, year
@@ -107,7 +108,8 @@ class IadsUtil:
         if result.returncode == 0:
             return parquet_file_path
         else:
-            raise ValueError(f"Error output: {result}")
+            msg = f"Error output: {result}"
+            raise ValueError(msg)
 
     @staticmethod
     def convert_irig_to_unix_time_ns(

@@ -92,7 +92,8 @@ class GNNNode(torch.nn.Module):
         self.residual = residual
 
         if self.num_layer < 2:
-            raise ValueError("Number of GNN layers must be greater than 1.")
+            msg = "Number of GNN layers must be greater than 1."
+            raise ValueError(msg)
 
         self.atom_encoder = AtomEncoder(emb_dim)
 
@@ -106,7 +107,8 @@ class GNNNode(torch.nn.Module):
             elif gnn_type == "gcn":
                 self.convs.append(GCNConv(emb_dim))
             else:
-                raise ValueError(f"Undefined GNN type called {gnn_type}")
+                msg = f"Undefined GNN type called {gnn_type}"
+                raise ValueError(msg)
 
             self.batch_norms.append(torch.nn.BatchNorm1d(emb_dim))
 
@@ -164,7 +166,8 @@ class GNNVirtualNode(torch.nn.Module):
         self.residual = residual
 
         if self.num_layer < 2:
-            raise ValueError("Number of GNN layers must be greater than 1.")
+            msg = "Number of GNN layers must be greater than 1."
+            raise ValueError(msg)
 
         self.atom_encoder = AtomEncoder(emb_dim)
 
@@ -186,7 +189,8 @@ class GNNVirtualNode(torch.nn.Module):
             elif gnn_type == "gcn":
                 self.convs.append(GCNConv(emb_dim))
             else:
-                raise ValueError(f"Undefined GNN type called {gnn_type}")
+                msg = f"Undefined GNN type called {gnn_type}"
+                raise ValueError(msg)
 
             self.batch_norms.append(torch.nn.BatchNorm1d(emb_dim))
 
