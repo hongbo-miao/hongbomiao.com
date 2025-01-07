@@ -12,8 +12,8 @@ def show_version_from_file(iads_config: Any, iads_config_path: Path) -> None:
     try:
         version = iads_config.VersionFromFile(iads_config_path)
         logger.info(f"{version = }")
-    except Exception as e:
-        logger.exception(f"{iads_config_path = }, {e = }")
+    except Exception:
+        logger.exception(f"{iads_config_path = }")
 
 
 def execute_query(iads_config: Any, query: str) -> None:
@@ -23,8 +23,8 @@ def execute_query(iads_config: Any, query: str) -> None:
         if results:
             for result in results:
                 logger.info(f"{result = }")
-    except Exception as e:
-        logger.exception(f"{e = }")
+    except Exception:
+        logger.exception("Failed to process IADS config")
 
 
 def process_config(iads_config_path: Path) -> None:
@@ -41,8 +41,8 @@ def process_config(iads_config_path: Path) -> None:
         execute_query(iads_config, "select Parameter from ParameterDefaults")
 
         iads_config.Close(True)
-    except Exception as e:
-        logger.exception(f"{e = }")
+    except Exception:
+        logger.exception("Failed to close IADS config")
     finally:
         # Clean up COM resources
         if iads_config:

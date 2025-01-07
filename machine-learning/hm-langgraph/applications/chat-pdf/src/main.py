@@ -100,10 +100,11 @@ def retrieve_context(
         relevant_chunks = [chunks[idx] for idx in indices[0]]
         state["context"] = "\n".join(relevant_chunks)
         logger.info("Context retrieval completed")
-        return state
     except Exception as e:
         logger.error(f"Error in retrieve_context: {str(e)}", exc_info=True)
         raise
+    else:
+        return state
 
 
 def generate_answer(state: MessagesState) -> MessagesState:
@@ -127,10 +128,11 @@ def generate_answer(state: MessagesState) -> MessagesState:
             ],
         )
         state["answer"] = response.choices[0].message.content
-        return state
     except Exception as e:
         logger.error(f"Error in generate_answer: {str(e)}", exc_info=True)
         raise
+    else:
+        return state
 
 
 def create_graph(
@@ -138,7 +140,7 @@ def create_graph(
     chunks: list[str],
     model: SentenceTransformer,
 ) -> Graph:
-    workflow = (
+    graph = (
         Graph()
         .add_node(
             "retrieve", lambda state: retrieve_context(state, index, chunks, model)
@@ -148,7 +150,7 @@ def create_graph(
         .set_entry_point("retrieve")
         .set_finish_point("answer")
     )
-    return workflow.compile()
+    return graph.compile()
 
 
 def chat_with_pdf(pdf_path: Path, question: str) -> str:
@@ -163,14 +165,15 @@ def chat_with_pdf(pdf_path: Path, question: str) -> str:
         )
 
         # Create and run graph
-        workflow = create_graph(index, chunks, model)
-        for event in workflow.stream(initial_state):
+        graph = create_graph(index, chunks, model)
+        for event in graph.stream(initial_state):
             if "answer" in event:
                 return event["answer"]
-        raise ValueError("No answer was found for the given question")
-    except Exception as e:
-        logger.error(f"Error in chat_with_pdf: {str(e)}")
+    except Exception:
+        logger.exception("Error in chat_with_pdf")
         raise
+    else:
+        return "No answer was found for the given question"
 
 
 if __name__ == "__main__":

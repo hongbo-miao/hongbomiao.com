@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def download_sample_images(data_path: Path) -> None:
-    # Create main directory if it doesn not exist
+    # Create main directory if it does not exist
     data_path.mkdir(parents=True, exist_ok=True)
 
     # Create a class subdirectory (e.g., "class0")
@@ -30,8 +30,8 @@ def download_sample_images(data_path: Path) -> None:
             if not filepath.exists():
                 logger.info(f"Downloading {url} to {filepath}")
                 urllib.request.urlretrieve(url, str(filepath))
-        except Exception as e:
-            logger.exception(f"Error downloading {url}: {e}")
+        except Exception:
+            logger.exception(f"Error downloading {url}")
 
 
 @pipeline_def(batch_size=2, num_threads=2, device_id=None)
