@@ -146,7 +146,6 @@ class GNNNode(torch.nn.Module):
         return node_representation
 
 
-# Virtual GNN to generate node embedding
 class GNNVirtualNode(torch.nn.Module):
     def __init__(
         self,
