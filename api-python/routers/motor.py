@@ -1,6 +1,7 @@
 import json
 import random
 import time
+from typing import Annotated
 
 from config import Config
 from confluent_kafka import Producer
@@ -21,7 +22,7 @@ def get_producer():
 
 @router.post("/generate-motor-data", tags=["motor"])
 async def generate_motor_data(
-    producer: Producer = Depends(get_producer),
+    producer: Annotated[Producer, Depends(get_producer)],
 ) -> dict[str, bool]:
     for _ in range(5):
         data = {
