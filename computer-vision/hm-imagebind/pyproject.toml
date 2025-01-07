@@ -3,11 +3,12 @@ name = "hm-imagebind"
 version = "1.0.0"
 requires-python = "~=3.10.0"
 dependencies = [
-  "httpx==0.28.1",
   "gradio==5.9.1",
+  "httpx==0.28.1",
   "imagebind",
-  "mayavi",
   "lancedb==0.17.0",
+  "mayavi==4.8.2",
+  "numpy==1.26.4",
 ]
 
 [dependency-groups]
@@ -21,8 +22,7 @@ dev = [
 package = false
 
 [tool.uv.sources]
-imagebind = { git = "https://github.com/raghavdixit99/ImageBind.git" }
-mayavi = { git = "https://github.com/enthought/mayavi.git" }
+imagebind = { git = "https://github.com/facebookresearch/ImageBind" }
 
 [tool.poe.tasks]
 dev = "python src/main.py"
