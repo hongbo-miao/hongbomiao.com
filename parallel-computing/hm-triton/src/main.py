@@ -39,9 +39,6 @@ def vector_add_kernel(
 
 
 def vector_add(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
-    # Assert vectors are same size and on correct device
-    assert x.shape == y.shape
-    assert x.is_cuda and y.is_cuda
     n_elements: int = x.shape[0]
 
     # Allocate output

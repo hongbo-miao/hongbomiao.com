@@ -1,5 +1,5 @@
 import logging
-import random
+import secrets
 import struct
 import time
 from pathlib import Path
@@ -70,13 +70,14 @@ def generate_motor_data(point_number: int) -> list[motor_pb2.Motor]:
     for i in range(point_number):
         timestamp_ns: int = start_time_ns + (i * interval_ns)
         motor = motor_pb2.Motor()
-        motor.id = random.choice(motors)
+        system_random = secrets.SystemRandom()
+        motor.id = system_random.choice(motors)
         motor.timestamp_ns = timestamp_ns
-        motor.temperature1 = random.uniform(10.0, 100.0)
-        motor.temperature2 = random.uniform(10.0, 100.0)
-        motor.temperature3 = random.uniform(10.0, 100.0)
-        motor.temperature4 = random.uniform(10.0, 100.0)
-        motor.temperature5 = random.uniform(10.0, 100.0)
+        motor.temperature1 = system_random.uniform(10.0, 100.0)
+        motor.temperature2 = system_random.uniform(10.0, 100.0)
+        motor.temperature3 = system_random.uniform(10.0, 100.0)
+        motor.temperature4 = system_random.uniform(10.0, 100.0)
+        motor.temperature5 = system_random.uniform(10.0, 100.0)
         data.append(motor)
     return data
 

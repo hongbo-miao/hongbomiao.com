@@ -47,5 +47,5 @@ if __name__ == "__main__":
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
-    database_path = Path("/tmp/lancedb/products")
+    database_path = Path("data/lancedb/products")
     main(database_path)

@@ -1,5 +1,5 @@
 import logging
-import random
+import secrets
 from datetime import datetime
 from pathlib import Path
 
@@ -68,7 +68,7 @@ class StableDiffusionGenerator:
 
         # Set up seed for reproducibility
         if seed is None:
-            seed = random.randint(0, 2**32 - 1)
+            seed = secrets.randbelow(2**32)
 
         device = StableDiffusionGenerator.get_device()
         generator = torch.Generator(device).manual_seed(seed)

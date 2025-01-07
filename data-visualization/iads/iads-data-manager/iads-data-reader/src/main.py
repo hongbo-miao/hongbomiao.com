@@ -43,7 +43,7 @@ class IadsUtil:
         group_name: str,
     ) -> None:
         signals = ",".join(signal_set)
-        iads_config.Query(f"update DataGroups set * = |||{group_name}|{signals}|")
+        iads_config.Query(f"update DataGroups set * = |||{group_name}|{signals}|")  # noqa: S608
         iads_config.Save()
 
     @staticmethod
@@ -103,7 +103,7 @@ class IadsUtil:
             str(parquet_file_path),
         ]
         logger.info(f"Executing command: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+        result = subprocess.run(cmd, capture_output=True, text=True, check=False)  # noqa: S603
         if result.returncode == 0:
             return parquet_file_path
         else:

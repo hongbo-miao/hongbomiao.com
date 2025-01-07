@@ -106,6 +106,7 @@ export default [
       'data-storage/hm-protobuf/data',
       'data-transformation/dbt/projects/*/dbt_packages',
       'data-transformation/dbt/projects/*/logs',
+      'data-visualization/grafana/hm-dashboard/output',
       'data-visualization/grafana/hm-panel-plugin/.config',
       'data-visualization/metabase/plugins',
       'desktop-qt/CMakeLists.txt.user',
