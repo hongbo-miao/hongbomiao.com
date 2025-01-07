@@ -58,7 +58,8 @@ class ImageBindSearch:
                 logger.info(f"Downloaded file: {local_file_path}")
             return local_file_path
         else:
-            raise RuntimeError(f"Download failed: {response}")
+            msg = f"Download failed: {response}"
+            raise RuntimeError(msg)
 
     @staticmethod
     def download_all_files() -> tuple[list[Path], list[Path]]:
@@ -90,8 +91,9 @@ class ImageBindSearch:
 
     def search_by_image(self, input_image: Any) -> tuple[str, Path]:
         if self.table is None:
+            msg = "Database not initialized. Call initialize_database first."
             raise RuntimeError(
-                "Database not initialized. Call initialize_database first.",
+                msg,
             )
         result = (
             self.table.search(input_image, vector_column_name="vector")
@@ -102,8 +104,9 @@ class ImageBindSearch:
 
     def search_by_text(self, input_text: str) -> tuple[Path, Path]:
         if self.table is None:
+            msg = "Database not initialized. Call initialize_database first."
             raise RuntimeError(
-                "Database not initialized. Call initialize_database first.",
+                msg,
             )
         result = (
             self.table.search(input_text, vector_column_name="vector")
@@ -114,8 +117,9 @@ class ImageBindSearch:
 
     def search_by_audio(self, input_audio: Any) -> tuple[Path, str]:
         if self.table is None:
+            msg = "Database not initialized. Call initialize_database first."
             raise RuntimeError(
-                "Database not initialized. Call initialize_database first.",
+                msg,
             )
         result = (
             self.table.search(input_audio, vector_column_name="vector")

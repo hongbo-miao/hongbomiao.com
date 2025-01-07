@@ -39,7 +39,7 @@ def train(args):
         )
         logger.info(
             f"Initialized the distributed environment: '{args.backend}' backend on {dist.get_world_size()} nodes. "
-            + f"Current host rank is {dist.get_rank()}. Number of gpus: {args.num_gpus}",
+            f"Current host rank is {dist.get_rank()}. Number of gpus: {args.num_gpus}",
         )
 
     # set the seed for generating random numbers

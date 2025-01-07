@@ -133,7 +133,8 @@ def main():
                     virtual_node=True,
                 ).to(device)
             case _:
-                raise ValueError("Invalid GNN type")
+                msg = "Invalid GNN type"
+                raise ValueError(msg)
 
         wb.watch(model)
 
