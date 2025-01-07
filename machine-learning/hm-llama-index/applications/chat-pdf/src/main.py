@@ -21,7 +21,7 @@ def main() -> None:
     config = Config()
 
     Settings.embed_model = HuggingFaceEmbedding(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
     )
     Settings.llm = LiteLLM(
         api_base="https://litellm.internal.hongbomiao.com",
@@ -38,6 +38,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

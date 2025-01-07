@@ -11,7 +11,7 @@ def generate_iot_tdms(data_dirname: str, tdms_filename: str, row_count: int) -> 
         properties={
             "author": "Hongbo Miao",
             "description": "IoT data",
-        }
+        },
     )
 
     motor_group_name = "motor"
@@ -42,13 +42,22 @@ def generate_iot_tdms(data_dirname: str, tdms_filename: str, row_count: int) -> 
         properties={"units": "s"},
     )
     current_channel = ChannelObject(
-        motor_group_name, "current", current_data, properties={"units": "A"}
+        motor_group_name,
+        "current",
+        current_data,
+        properties={"units": "A"},
     )
     voltage_channel = ChannelObject(
-        motor_group_name, "voltage", voltage_data, properties={"units": "V"}
+        motor_group_name,
+        "voltage",
+        voltage_data,
+        properties={"units": "V"},
     )
     temperature_channel = ChannelObject(
-        motor_group_name, "temperature", temperature_data, properties={"units": "C"}
+        motor_group_name,
+        "temperature",
+        temperature_data,
+        properties={"units": "C"},
     )
 
     with TdmsWriter(tdms_path) as tdms_writer:
@@ -60,5 +69,5 @@ def generate_iot_tdms(data_dirname: str, tdms_filename: str, row_count: int) -> 
                 current_channel,
                 voltage_channel,
                 temperature_channel,
-            ]
+            ],
         )

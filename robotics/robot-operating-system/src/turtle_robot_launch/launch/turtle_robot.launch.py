@@ -23,7 +23,7 @@ def generate_launch_description():
                 "/spawn ",
                 "turtlesim/srv/Spawn ",
                 "\"{x: 2.0, y: 2.0, theta: 0.0, name: 'turtle_robot'}\"",
-            ]
+            ],
         ],
         shell=True,
     )
@@ -50,9 +50,9 @@ def generate_launch_description():
                         LogInfo(msg="Turtlesim started, spawning turtle"),
                         spawn_turtle,
                     ],
-                )
+                ),
             ),
             target_control_node,
             turtle_robot_control_node,
-        ]
+        ],
     )

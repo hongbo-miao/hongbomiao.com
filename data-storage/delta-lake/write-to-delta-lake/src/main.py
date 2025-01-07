@@ -32,7 +32,7 @@ def main(row_count: int):
             ("current", pa.float64()),
             ("voltage", pa.float64()),
             ("temperature", pa.float64()),
-        ]
+        ],
     )
     write_deltalake(
         config.s3_path,

@@ -13,7 +13,7 @@ def main(duckdb_path: Path) -> None:
             "name": ["Alice", "Bob", "Charlie", "David", "Eve"],
             "age": [25, 30, 35, 28, 22],
             "city": ["New York", "London", "Paris", "Tokyo", "Berlin"],
-        }
+        },
     )
     logger.info(people)
     with duckdb.connect(duckdb_path) as conn:
@@ -27,7 +27,8 @@ def main(duckdb_path: Path) -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
     duckdb_path = Path("data/people.duckdb")

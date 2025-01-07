@@ -10,12 +10,13 @@ from pyspark.sql import DataFrame
 from pyspark.sql.functions import col, concat, date_format, from_unixtime, lit, when
 
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
 raw_parquet_paths = [
-    "s3://hm-production-bucket/data/raw-parquet/adsb_2x_flight_trace_data/"
+    "s3://hm-production-bucket/data/raw-parquet/adsb_2x_flight_trace_data/",
 ]
 delta_table_path = (
     "s3://hm-production-bucket/data/delta-tables/adsb_2x_flight_trace_data/"
@@ -46,18 +47,23 @@ def add_time_column(
 
 
 def add_date_column(
-    df: DataFrame, time_column_name: str, date_column_name: str
+    df: DataFrame,
+    time_column_name: str,
+    date_column_name: str,
 ) -> DataFrame:
     return df.withColumn(
         date_column_name,
         date_format(
-            from_unixtime(col(time_column_name) / lit(1000000000.0)), "yyyy-MM-dd"
+            from_unixtime(col(time_column_name) / lit(1000000000.0)),
+            "yyyy-MM-dd",
         ),
     )
 
 
 def add_dbflags_columns(
-    df: DataFrame, flag_column_name: str, columns_and_masks: list[tuple[str, int]]
+    df: DataFrame,
+    flag_column_name: str,
+    columns_and_masks: list[tuple[str, int]],
 ) -> DataFrame:
     for column_name, mask in columns_and_masks:
         df = df.withColumn(
@@ -68,7 +74,9 @@ def add_dbflags_columns(
 
 
 def add_trace_flags_columns(
-    df: DataFrame, flag_column_name: str, columns_and_masks: list[tuple[str, int]]
+    df: DataFrame,
+    flag_column_name: str,
+    columns_and_masks: list[tuple[str, int]],
 ) -> DataFrame:
     for column_name, mask in columns_and_masks:
         if column_name in [
@@ -78,14 +86,15 @@ def add_trace_flags_columns(
             df = df.withColumn(
                 column_name,
                 when(
-                    (col(flag_column_name).bitwiseAND(mask)) > 0, "geometric"
+                    (col(flag_column_name).bitwiseAND(mask)) > 0,
+                    "geometric",
                 ).otherwise("barometric"),
             )
         else:
             df = df.withColumn(
                 column_name,
                 when((col(flag_column_name).bitwiseAND(mask)) > 0, True).otherwise(
-                    False
+                    False,
                 ),
             )
     return df
@@ -101,7 +110,8 @@ def add_trace_on_ground_column(
         df = df.withColumn(
             trace_on_ground_column_name,
             when(
-                col(trace_altitude_ft_column_name) == lit(ground_value), True
+                col(trace_altitude_ft_column_name) == lit(ground_value),
+                True,
             ).otherwise(False),
         )
     return df
@@ -235,7 +245,10 @@ df = add_trace_flags_columns(df, "trace_flags", trace_flags_columns_and_masks)
 # Add "_coordinate"
 coordinate_column_name = "_coordinate"
 df = add_coordinate_column(
-    df, "trace_longitude_deg", "trace_latitude_deg", coordinate_column_name
+    df,
+    "trace_longitude_deg",
+    "trace_latitude_deg",
+    coordinate_column_name,
 )
 
 # Add "_time"
@@ -251,7 +264,7 @@ additional_options = {
     "mergeSchema": "true",
 }
 df.write.format("delta").options(**additional_options).partitionBy(*partitions).mode(
-    "append"
+    "append",
 ).save()
 
 job.commit()

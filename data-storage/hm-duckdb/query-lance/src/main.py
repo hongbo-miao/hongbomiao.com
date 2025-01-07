@@ -22,7 +22,9 @@ def main(database_path: Path) -> None:
     ]
     db = lancedb.connect(str(database_path))
     product_table = db.create_table(
-        "product_catalog", data=sample_data, mode="overwrite"
+        "product_catalog",
+        data=sample_data,
+        mode="overwrite",
     ).to_lance()
 
     with duckdb.connect() as conn:
@@ -41,7 +43,8 @@ def main(database_path: Path) -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
     database_path = Path("/tmp/lancedb/products")

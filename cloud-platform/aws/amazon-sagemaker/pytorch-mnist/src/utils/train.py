@@ -33,11 +33,13 @@ def train(args):
         host_rank = args.hosts.index(args.current_host)
         os.environ["RANK"] = str(host_rank)
         dist.init_process_group(
-            backend=args.backend, rank=host_rank, world_size=world_size
+            backend=args.backend,
+            rank=host_rank,
+            world_size=world_size,
         )
         logger.info(
             f"Initialized the distributed environment: '{args.backend}' backend on {dist.get_world_size()} nodes. "
-            + f"Current host rank is {dist.get_rank()}. Number of gpus: {args.num_gpus}"
+            + f"Current host rank is {dist.get_rank()}. Number of gpus: {args.num_gpus}",
         )
 
     # set the seed for generating random numbers
@@ -46,16 +48,19 @@ def train(args):
         torch.cuda.manual_seed(args.seed)
 
     train_loader = get_train_data_loader(
-        args.batch_size, args.data_dir, is_distributed, **kwargs
+        args.batch_size,
+        args.data_dir,
+        is_distributed,
+        **kwargs,
     )
     test_loader = get_test_data_loader(args.test_batch_size, args.data_dir, **kwargs)
 
     logger.info(
-        f"Processes {len(train_loader.sampler)}/{len(train_loader.dataset)} ({100.0 * len(train_loader.sampler) / len(train_loader.dataset):.0f}%) of train data"
+        f"Processes {len(train_loader.sampler)}/{len(train_loader.dataset)} ({100.0 * len(train_loader.sampler) / len(train_loader.dataset):.0f}%) of train data",
     )
 
     logger.info(
-        f"Processes {len(test_loader.sampler)}/{len(test_loader.dataset)} ({100.0 * len(test_loader.sampler) / len(test_loader.dataset):.0f}%) of test data"
+        f"Processes {len(test_loader.sampler)}/{len(test_loader.dataset)} ({100.0 * len(test_loader.sampler) / len(test_loader.dataset):.0f}%) of test data",
     )
 
     model = Net().to(device)
@@ -82,7 +87,7 @@ def train(args):
             optimizer.step()
             if batch_idx % args.log_interval == 0:
                 logger.info(
-                    f"Train Epoch: {epoch} [{batch_idx * len(device_data)}/{len(train_loader.sampler)} ({100.0 * batch_idx / len(train_loader):.0f}%)] Loss: {loss.item():.6f}"
+                    f"Train Epoch: {epoch} [{batch_idx * len(device_data)}/{len(train_loader.sampler)} ({100.0 * batch_idx / len(train_loader):.0f}%)] Loss: {loss.item():.6f}",
                 )
         test(model, test_loader, device)
     save_model(model, args.model_dir)

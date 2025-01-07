@@ -40,9 +40,9 @@ def main() -> None:
                         "timestamp": [current_time],
                         "value1": [new_data_point[0]],
                         "value2": [new_data_point[1]],
-                    }
+                    },
                 ),
-            ]
+            ],
         )
 
         # Remove old timestamps if the DataFrame exceeds the maximum size

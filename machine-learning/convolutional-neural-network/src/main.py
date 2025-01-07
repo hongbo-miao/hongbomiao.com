@@ -17,7 +17,9 @@ def main():
     write_params(params)
 
     with wandb.init(
-        entity="hongbo-miao", project="convolutional-neural-network", config=params
+        entity="hongbo-miao",
+        project="convolutional-neural-network",
+        config=params,
     ) as wb:
         config = wb.config
         net = Net().to(device)
@@ -38,7 +40,7 @@ def main():
                     "train_loss": train_loss,
                     "train_acc": train_acc,
                     "val_acc": val_acc,
-                }
+                },
             )
             if val_acc > max_val_acc:
                 print("Found better model.")

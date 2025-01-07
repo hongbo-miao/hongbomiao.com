@@ -80,11 +80,13 @@ def main() -> None:
 
     # Perform the connections with the modified names within the 'aero_states' group
     problem.model.connect(
-        name + ".mesh", point_name + ".aero_states." + name + "_def_mesh"
+        name + ".mesh",
+        point_name + ".aero_states." + name + "_def_mesh",
     )
 
     problem.model.connect(
-        name + ".t_over_c", point_name + "." + name + "_perf." + "t_over_c"
+        name + ".t_over_c",
+        point_name + "." + name + "_perf." + "t_over_c",
     )
 
     # Import the Scipy Optimizer and set the driver of the problem to use it, which defaults to an SLSQP optimization method
@@ -105,6 +107,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

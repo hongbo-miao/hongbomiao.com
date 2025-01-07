@@ -72,7 +72,9 @@ class ImageBindSearch:
             return audio_paths, image_paths
 
     def initialize_database(
-        self, audio_paths: list[Path], image_paths: list[Path]
+        self,
+        audio_paths: list[Path],
+        image_paths: list[Path],
     ) -> None:
         inputs = [
             {"text": a, "audio_path": str(b), "image_path": str(c)}
@@ -80,14 +82,16 @@ class ImageBindSearch:
         ]
         db = lancedb.connect("/tmp/lancedb")
         self.table = db.create_table(
-            "imagebind", schema=MultimodalSearchSchema, mode="overwrite"
+            "imagebind",
+            schema=MultimodalSearchSchema,
+            mode="overwrite",
         )
         self.table.add(inputs)
 
     def search_by_image(self, input_image: Any) -> tuple[str, Path]:
         if self.table is None:
             raise RuntimeError(
-                "Database not initialized. Call initialize_database first."
+                "Database not initialized. Call initialize_database first.",
             )
         result = (
             self.table.search(input_image, vector_column_name="vector")
@@ -99,7 +103,7 @@ class ImageBindSearch:
     def search_by_text(self, input_text: str) -> tuple[Path, Path]:
         if self.table is None:
             raise RuntimeError(
-                "Database not initialized. Call initialize_database first."
+                "Database not initialized. Call initialize_database first.",
             )
         result = (
             self.table.search(input_text, vector_column_name="vector")
@@ -111,7 +115,7 @@ class ImageBindSearch:
     def search_by_audio(self, input_audio: Any) -> tuple[Path, str]:
         if self.table is None:
             raise RuntimeError(
-                "Database not initialized. Call initialize_database first."
+                "Database not initialized. Call initialize_database first.",
             )
         result = (
             self.table.search(input_audio, vector_column_name="vector")
@@ -121,7 +125,9 @@ class ImageBindSearch:
         return Path(result.image_path), result.text
 
     def create_gradio_interface(
-        self, audio_paths: list[Path], image_paths: list[Path]
+        self,
+        audio_paths: list[Path],
+        image_paths: list[Path],
     ) -> gr.TabbedInterface:
         image_to_text_audio = gr.Interface(
             fn=self.search_by_image,
@@ -166,6 +172,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

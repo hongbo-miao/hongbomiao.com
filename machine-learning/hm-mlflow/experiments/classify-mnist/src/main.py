@@ -13,10 +13,14 @@ class LitAutoEncoder(L.LightningModule):
     def __init__(self):
         super().__init__()
         self.encoder = nn.Sequential(
-            nn.Linear(28 * 28, 128), nn.ReLU(), nn.Linear(128, 3)
+            nn.Linear(28 * 28, 128),
+            nn.ReLU(),
+            nn.Linear(128, 3),
         )
         self.decoder = nn.Sequential(
-            nn.Linear(3, 128), nn.ReLU(), nn.Linear(128, 28 * 28)
+            nn.Linear(3, 128),
+            nn.ReLU(),
+            nn.Linear(128, 28 * 28),
         )
 
     def forward(self, x):
@@ -57,7 +61,7 @@ def main():
             [
                 torchvision.transforms.transforms.ToTensor(),
                 torchvision.transforms.transforms.Normalize((0.1307,), (0.3081,)),
-            ]
+            ],
         ),
     )
     train_dataset, val_dataset = data.random_split(dataset, [55000, 5000])
@@ -71,7 +75,9 @@ def main():
         logger=wandb_logger,
     )
     trainer.fit(
-        autoencoder, data.DataLoader(train_dataset), data.DataLoader(val_dataset)
+        autoencoder,
+        data.DataLoader(train_dataset),
+        data.DataLoader(val_dataset),
     )
 
 

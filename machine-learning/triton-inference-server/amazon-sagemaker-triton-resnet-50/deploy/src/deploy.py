@@ -9,11 +9,12 @@ logger = logging.getLogger(__name__)
 
 
 def check_endpoint_status(
-    sagemaker_client: BaseClient, sagemaker_endpoint_name: str
+    sagemaker_client: BaseClient,
+    sagemaker_endpoint_name: str,
 ) -> None:
     while (
         status := sagemaker_client.describe_endpoint(
-            EndpointName=sagemaker_endpoint_name
+            EndpointName=sagemaker_endpoint_name,
         )["EndpointStatus"]
     ) == "Creating":
         print(f"Status: {status}")
@@ -88,7 +89,7 @@ def deploy() -> None:
                 "InitialInstanceCount": 1,
                 "ModelName": sagemaker_model_name,
                 "VariantName": "AllTraffic",
-            }
+            },
         ],
     )
     logger.info(f'Endpoint Config Arn: {res["EndpointConfigArn"]}')
@@ -141,6 +142,7 @@ def deploy() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     deploy()

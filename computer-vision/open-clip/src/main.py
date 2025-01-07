@@ -14,7 +14,10 @@ EMBEDDINGS = (
     get_registry()
     .get("open-clip")
     .create(
-        name="ViT-B-32", pretrained="laion2b_s34b_b79k", batch_size=64, device="cpu"
+        name="ViT-B-32",
+        pretrained="laion2b_s34b_b79k",
+        batch_size=64,
+        device="cpu",
     )
 )
 
@@ -60,6 +63,7 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

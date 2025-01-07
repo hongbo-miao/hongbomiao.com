@@ -10,7 +10,7 @@ def main():
 
     demo_crop_data = o3d.data.DemoCropPointCloud()
     vol = o3d.visualization.read_selection_polygon_volume(
-        demo_crop_data.cropped_json_path
+        demo_crop_data.cropped_json_path,
     )
     chair = vol.crop_point_cloud(pcd)
 

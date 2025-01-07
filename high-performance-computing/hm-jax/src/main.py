@@ -21,7 +21,11 @@ def loss_fn(w: float, b: float, X: jnp.ndarray, y: jnp.ndarray) -> float:
 # JIT compile the update step for efficiency
 @jit
 def update(
-    w: float, b: float, X: jnp.ndarray, y: jnp.ndarray, learning_rate: float
+    w: float,
+    b: float,
+    X: jnp.ndarray,
+    y: jnp.ndarray,
+    learning_rate: float,
 ) -> tuple[float, float]:
     dw, db = grad(loss_fn, argnums=(0, 1))(w, b, X, y)
     w -= learning_rate * dw
@@ -62,7 +66,7 @@ def main() -> None:
         losses.append(current_loss)
         if i % 10 == 0:
             logger.info(
-                f"Iteration {i}: loss = {current_loss:.4f}, w = {w:.4f}, b = {b:.4f}"
+                f"Iteration {i}: loss = {current_loss:.4f}, w = {w:.4f}, b = {b:.4f}",
             )
 
     # Plot the results
@@ -81,6 +85,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

@@ -19,7 +19,9 @@ def main(model_path: str, pdf_path: str, question: str) -> None:
     vectorstore = Chroma.from_documents(docs, embeddings)
     llm = GPT4All(model=model_path, max_tokens=2048)
     qa = RetrievalQA.from_chain_type(
-        llm=llm, chain_type="stuff", retriever=vectorstore.as_retriever()
+        llm=llm,
+        chain_type="stuff",
+        retriever=vectorstore.as_retriever(),
     )
     answer = qa.run(question)
     logger.info(answer)
@@ -27,7 +29,8 @@ def main(model_path: str, pdf_path: str, question: str) -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
     # https://gpt4all.io/index.html

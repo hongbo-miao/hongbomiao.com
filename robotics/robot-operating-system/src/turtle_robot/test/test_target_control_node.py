@@ -25,7 +25,7 @@ def generate_test_description():
             [
                 target_control_node,
                 launch_testing.actions.ReadyToTest(),
-            ]
+            ],
         ),
         {"target_control_node": target_control_node},
     )

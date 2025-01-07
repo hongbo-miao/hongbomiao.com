@@ -17,7 +17,8 @@ class Quotes(LanceModel):
 
 
 def create_and_populate_table(
-    db: lancedb.connect, df: pl.DataFrame
+    db: lancedb.connect,
+    df: pl.DataFrame,
 ) -> lancedb.table.Table:
     table = db.create_table("quotes", schema=Quotes, mode="overwrite")
     table.add(df)
@@ -43,6 +44,7 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 class CanUtils:
     @staticmethod
     def get_dbc_schema(
-        dbc_dict: dict[str, cantools.db.Database], unit_type: str
+        dbc_dict: dict[str, cantools.db.Database],
+        unit_type: str,
     ) -> pa.Schema:
         all_fields = {
             "arbitration_id": pa.int64(),
@@ -51,7 +52,7 @@ class CanUtils:
         unit = unit_dict[str(frame.channel)]
         unit_type = unit["type"]
         message_definition = dbc_dict[unit_type].get_message_by_frame_id(
-            frame.arbitration_id
+            frame.arbitration_id,
         )
         raw_message = message_definition.decode(frame.data)
         message: dict[str, bool | int | float | str] = {}
@@ -67,7 +68,7 @@ class CanUtils:
                 message[field_name] = float(signal_value)
             else:
                 logger.warning(
-                    f"Unexpected field type in schema: {field_type} for {field_name}"
+                    f"Unexpected field type in schema: {field_type} for {field_name}",
                 )
                 message[field_name] = signal_value
 
@@ -83,7 +84,7 @@ class CanUtils:
                 "_can_id": str(frame.arbitration_id),
                 "_can_logger_channel_id": str(frame.channel),
                 "_unit_id": unit["id"],
-            }
+            },
         )
         return unit_type, message
 
@@ -151,20 +152,26 @@ class CanUtils:
         with can.BLFReader(blf_path) as reader:
             for frame in reader:
                 unit_type, message = CanUtils.process_frame(
-                    frame, dbc_dict, unit_dict, schema_dict
+                    frame,
+                    dbc_dict,
+                    unit_dict,
+                    schema_dict,
                 )
                 buffer[unit_type].append(message)
 
                 if len(buffer[unit_type]) >= buffer_size:
                     CanUtils.write_batch(
-                        buffer[unit_type], unit_type, schema_dict, writer_dict
+                        buffer[unit_type],
+                        unit_type,
+                        schema_dict,
+                        writer_dict,
                     )
                     buffer[unit_type] = []
 
                 if message_count % 1_000_000 == 0:
                     current_bytes = reader.file.tell()
                     logger.info(
-                        f"Decoded: {round(current_bytes * 100.0 / blf_size_bytes)} %, {message_count = }"
+                        f"Decoded: {round(current_bytes * 100.0 / blf_size_bytes)} %, {message_count = }",
                     )
                 message_count += 1
 
@@ -182,7 +189,8 @@ class CanUtils:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     data_dir_path = Path("data")
     blf_path = data_dir_path / Path("can.blf")
