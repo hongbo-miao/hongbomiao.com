@@ -187,8 +187,8 @@ class IadsUtil:
                 )
                 return df
 
-        except Exception as e:
-            logger.exception(f"{e = }")
+        except Exception:
+            logger.exception("Failed to process data")
             return None
 
         finally:
