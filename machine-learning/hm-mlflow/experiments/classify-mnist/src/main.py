@@ -1,7 +1,7 @@
-import lightning as L
+import lightning as L  # noqa: N812
 import mlflow
 import torch
-import torch.nn.functional as F
+import torch.nn.functional as F  # noqa: N812
 import torchvision
 from args import get_args
 from lightning.pytorch.loggers.wandb import WandbLogger

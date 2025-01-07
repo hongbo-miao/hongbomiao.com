@@ -13,18 +13,18 @@ def vector_add_kernel(
     y_ptr,  # Pointer to second vector
     output_ptr,  # Pointer to output vector
     n_elements,  # Number of elements in the vectors
-    BLOCK_SIZE: tl.constexpr,  # Number of elements each program should process
+    block_size: tl.constexpr,  # Number of elements each program should process
 ) -> None:
     # Program ID
     pid = tl.program_id(axis=0)
 
     # Calculate the start index for this program instance
-    block_start = pid * BLOCK_SIZE
+    block_start = pid * block_size
 
     # Create an offset array for this block
-    offsets = block_start + tl.arange(0, BLOCK_SIZE)
+    offsets = block_start + tl.arange(0, block_size)
 
-    # Create a mask to handle the case where array size isn't multiple of BLOCK_SIZE
+    # Create a mask to handle the case where array size isn't multiple of block_size
     mask = offsets < n_elements
 
     # Load data using the mask
@@ -48,10 +48,10 @@ def vector_add(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
     output: torch.Tensor = torch.empty_like(x)
 
     # Define block size (can be tuned for performance)
-    BLOCK_SIZE: int = 128
+    block_size: int = 128
 
     # Calculate grid size
-    grid: tuple[int, ...] = (triton.cdiv(n_elements, BLOCK_SIZE),)
+    grid: tuple[int, ...] = (triton.cdiv(n_elements, block_size),)
 
     # Launch kernel
     vector_add_kernel[grid](
@@ -59,7 +59,7 @@ def vector_add(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         y,  # Triton automatically converts tensor to pointer
         output,  # Triton automatically converts tensor to pointer
         n_elements,
-        BLOCK_SIZE,
+        block_size,
     )
 
     return output

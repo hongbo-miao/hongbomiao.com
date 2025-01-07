@@ -1,4 +1,4 @@
-import torch.nn.functional as F
+import torch.nn.functional as F  # noqa: N812  # noqa: N812
 from torch import nn
 
 

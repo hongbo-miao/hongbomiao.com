@@ -8,11 +8,11 @@ logger = logging.getLogger(__name__)
 
 def create_network() -> nx.Graph:
     # Initialize a new undirected graph
-    G = nx.Graph()
+    graph = nx.Graph()
 
     # Add nodes
     nodes = ["A", "B", "C", "D", "E"]
-    G.add_nodes_from(nodes)
+    graph.add_nodes_from(nodes)
 
     # Add edges with weights
     edges = [
@@ -23,55 +23,55 @@ def create_network() -> nx.Graph:
         ("A", "E", 6),
         ("B", "E", 3),
     ]
-    G.add_weighted_edges_from(edges)
-    return G
+    graph.add_weighted_edges_from(edges)
+    return graph
 
 
-def analyze_network(G: nx.Graph) -> None:
+def analyze_network(graph: nx.Graph) -> None:
     # Calculate and print basic network metrics
     logger.info("Network Analysis:")
-    logger.info(f"Number of nodes: {G.number_of_nodes()}")
-    logger.info(f"Number of edges: {G.number_of_edges()}")
+    logger.info(f"Number of nodes: {graph.number_of_nodes()}")
+    logger.info(f"Number of edges: {graph.number_of_edges()}")
 
     # Calculate degree for each node
     logger.info("Node degrees:")
-    for node in G.nodes():
-        logger.info(f"Node {node}: {G.degree(node)}")
+    for node in graph.nodes():
+        logger.info(f"Node {node}: {graph.degree(node)}")
 
     # Calculate betweenness centrality
-    betweenness = nx.betweenness_centrality(G)
+    betweenness = nx.betweenness_centrality(graph)
     logger.info("Betweenness centrality:")
     for node, bc in betweenness.items():
         logger.info(f"Node {node}: {bc:.3f}")
 
     # Calculate shortest paths
     logger.info("Shortest paths from node A:")
-    for target in G.nodes():
+    for target in graph.nodes():
         if target != "A":
-            path = nx.shortest_path(G, "A", target, weight="weight")
-            distance = nx.shortest_path_length(G, "A", target, weight="weight")
+            path = nx.shortest_path(graph, "A", target, weight="weight")
+            distance = nx.shortest_path_length(graph, "A", target, weight="weight")
             logger.info(f"A to {target}: {path} (distance: {distance})")
 
 
-def visualize_network(G: nx.Graph) -> None:
+def visualize_network(graph: nx.Graph) -> None:
     """
     Create and display a visualization of the network.
     """
     plt.figure(figsize=(10, 8))
-    pos = nx.spring_layout(G)
+    pos = nx.spring_layout(graph)
 
     # Draw nodes
-    nx.draw_networkx_nodes(G, pos, node_color="lightblue", node_size=500)
+    nx.draw_networkx_nodes(graph, pos, node_color="lightblue", node_size=500)
 
     # Draw edges
-    nx.draw_networkx_edges(G, pos)
+    nx.draw_networkx_edges(graph, pos)
 
     # Draw labels
-    nx.draw_networkx_labels(G, pos)
+    nx.draw_networkx_labels(graph, pos)
 
     # Draw edge labels
-    edge_labels = nx.get_edge_attributes(G, "weight")
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
+    edge_labels = nx.get_edge_attributes(graph, "weight")
+    nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels)
 
     plt.title("Network Graph")
     plt.axis("off")

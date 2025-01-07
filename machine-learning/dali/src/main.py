@@ -60,8 +60,8 @@ def get_num_samples(data_path: Path) -> int:
 
 
 def main() -> None:
-    BATCH_SIZE: int = 2
-    NUM_THREADS: int = 2
+    batch_size: int = 2
+    num_threads: int = 2
 
     # Create data directory and download sample images
     data_path = Path("data")
@@ -75,8 +75,8 @@ def main() -> None:
 
     pipe = image_pipeline(
         data_path=data_path,
-        batch_size=BATCH_SIZE,
-        num_threads=NUM_THREADS,
+        batch_size=batch_size,
+        num_threads=num_threads,
     )
     pipe.build()
 

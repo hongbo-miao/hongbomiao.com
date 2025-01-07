@@ -6,9 +6,9 @@ from kfp import client, dsl
     packages_to_install=["torch==2.0.0", "torchvision==0.15.1", "lightning==2.0.5"],
 )
 def train():
-    import lightning as L
+    import lightning as L  # noqa: N812
     import torch
-    import torch.nn.functional as F
+    import torch.nn.functional as F  # noqa: N812
     import torchvision
     from torch import nn
     from torch.utils import data
