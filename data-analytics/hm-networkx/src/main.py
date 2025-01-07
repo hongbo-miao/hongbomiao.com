@@ -54,9 +54,6 @@ def analyze_network(graph: nx.Graph) -> None:
 
 
 def visualize_network(graph: nx.Graph) -> None:
-    """
-    Create and display a visualization of the network.
-    """
     plt.figure(figsize=(10, 8))
     pos = nx.spring_layout(graph)
 
@@ -79,9 +76,6 @@ def visualize_network(graph: nx.Graph) -> None:
 
 
 def main() -> None:
-    """
-    Main function to execute the network analysis.
-    """
     graph = create_network()
     analyze_network(graph)
     visualize_network(graph)
