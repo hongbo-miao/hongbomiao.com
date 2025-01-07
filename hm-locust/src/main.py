@@ -26,7 +26,8 @@ class WebsiteUser(HttpUser):
             "password": config.seed_user_password,
         }
         res = self.client.post(
-            "/graphql", json={"query": query, "variables": variables}
+            "/graphql",
+            json={"query": query, "variables": variables},
         )
         content = json.loads(res.content)
         self.jwt_token = content["data"]["signIn"]["jwtToken"]

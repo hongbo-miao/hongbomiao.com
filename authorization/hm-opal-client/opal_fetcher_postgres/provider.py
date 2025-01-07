@@ -24,12 +24,14 @@ class PostgresConnectionParams(BaseModel):
 class PostgresFetcherConfig(FetcherConfig):
     fetcher: str = "PostgresFetchProvider"
     connection_params: PostgresConnectionParams | None = Field(
-        None, description="can be overridden or complement parts of the DSN"
+        None,
+        description="can be overridden or complement parts of the DSN",
     )
     query: str = Field(..., description="the query")
     fetch_one: bool = Field(False, description="fetch only one row")
     dict_key: str | None = Field(
-        None, description="array of dict will map to dict with provided dict_key"
+        None,
+        description="array of dict will map to dict with provided dict_key",
     )
 
 
@@ -68,11 +70,15 @@ class PostgresFetchProvider(BaseFetchProvider):
         )
 
         self._connection: asyncpg.Connection = await asyncpg.connect(
-            dsn, **connection_params
+            dsn,
+            **connection_params,
         )
 
         await self._connection.set_type_codec(
-            "jsonb", encoder=json.dumps, decoder=json.loads, schema="pg_catalog"
+            "jsonb",
+            encoder=json.dumps,
+            decoder=json.loads,
+            schema="pg_catalog",
         )
 
         self._transaction: Transaction = self._connection.transaction(readonly=True)

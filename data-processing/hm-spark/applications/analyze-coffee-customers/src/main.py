@@ -27,13 +27,13 @@ def main() -> None:
         """
         select st_point(cast(points._c0 as double), cast(points._c1 as double)) as point
         from points
-        """
+        """,
     ).createOrReplaceTempView("points1")
     sedona.sql(
         """
         select st_point(cast(points._c0 as double), cast(points._c1 as double)) as point
         from points
-        """
+        """,
     ).createOrReplaceTempView("points2")
 
     df = sedona.sql(
@@ -45,7 +45,7 @@ def main() -> None:
         from points1, points2
         where 0.0 < st_distance(points1.point, points2.point) and st_distance(points1.point, points2.point) < 2.0
         order by distance asc
-        """
+        """,
     )
     df.show()
 

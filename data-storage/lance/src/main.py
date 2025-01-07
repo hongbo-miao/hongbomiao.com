@@ -60,7 +60,7 @@ def main() -> None:
     # Perform vector similarity search
     query_vector = vectors[1]
     logger.info(
-        "Performing similarity search for vector with pattern [1.0]*32 + [2.0]*32 + [3.0]*32 + [4.0]*32"
+        "Performing similarity search for vector with pattern [1.0]*32 + [2.0]*32 + [3.0]*32 + [4.0]*32",
     )
 
     # Find 5 nearest neighbors
@@ -89,12 +89,13 @@ def main() -> None:
     for idx, row in results.iterrows():
         vector_preview = np.array(row["vector"])
         logger.info(
-            f"Result {idx + 1}/{k}: Distance: {row['_distance']:.4f}, Vector preview: {vector_preview[:8]}..."
+            f"Result {idx + 1}/{k}: Distance: {row['_distance']:.4f}, Vector preview: {vector_preview[:8]}...",
         )
 
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

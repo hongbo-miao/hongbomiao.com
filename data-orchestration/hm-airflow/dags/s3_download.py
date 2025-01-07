@@ -17,7 +17,9 @@ with DAG(
     def download_from_s3(key: str, bucket: str, local_path: str) -> str:
         hook = S3Hook("s3_connection")
         file_path = hook.download_file(
-            key=key, bucket_name=bucket, local_path=local_path
+            key=key,
+            bucket_name=bucket,
+            local_path=local_path,
         )
         return file_path
 

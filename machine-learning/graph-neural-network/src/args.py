@@ -3,10 +3,13 @@ import argparse
 
 def get_args():
     parser = argparse.ArgumentParser(
-        description="GNN baselines on ogbgmol* data with Pytorch Geometrics"
+        description="GNN baselines on ogbgmol* data with Pytorch Geometrics",
     )
     parser.add_argument(
-        "--device", type=int, default=0, help="which gpu to use if any (default: 0)"
+        "--device",
+        type=int,
+        default=0,
+        help="which gpu to use if any (default: 0)",
     )
     parser.add_argument(
         "--gnn",
@@ -15,10 +18,16 @@ def get_args():
         help="GNN gin, gin-virtual, or gcn, or gcn-virtual (default: gin-virtual)",
     )
     parser.add_argument(
-        "--lr", type=float, default=0.001, help="Learning rate (default: 0.001)"
+        "--lr",
+        type=float,
+        default=0.001,
+        help="Learning rate (default: 0.001)",
     )
     parser.add_argument(
-        "--drop_ratio", type=float, default=0.5, help="dropout ratio (default: 0.5)"
+        "--drop_ratio",
+        type=float,
+        default=0.5,
+        help="dropout ratio (default: 0.5)",
     )
     parser.add_argument(
         "--num_layer",
@@ -45,7 +54,10 @@ def get_args():
         help="number of epochs to train (default: 100)",
     )
     parser.add_argument(
-        "--num_workers", type=int, default=0, help="number of workers (default: 0)"
+        "--num_workers",
+        type=int,
+        default=0,
+        help="number of workers (default: 0)",
     )
     parser.add_argument(
         "--dataset",
@@ -54,9 +66,15 @@ def get_args():
         help="dataset name (default: ogbg-molhiv)",
     )
     parser.add_argument(
-        "--feature", type=str, default="full", help="full feature or simple feature"
+        "--feature",
+        type=str,
+        default="full",
+        help="full feature or simple feature",
     )
     parser.add_argument(
-        "--filename", type=str, default="", help="filename to output result (default: )"
+        "--filename",
+        type=str,
+        default="",
+        help="filename to output result (default: )",
     )
     return parser.parse_args()

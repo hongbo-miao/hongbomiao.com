@@ -19,7 +19,9 @@ def main():
     x_train, x_test, y_train, y_test = train_test_split(diabetes.data, diabetes.target)
 
     random_forest_regressor = RandomForestRegressor(
-        n_estimators=100, max_depth=6, max_features=3
+        n_estimators=100,
+        max_depth=6,
+        max_features=3,
     )
     random_forest_regressor.fit(x_train, y_train)
 
@@ -29,6 +31,7 @@ def main():
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

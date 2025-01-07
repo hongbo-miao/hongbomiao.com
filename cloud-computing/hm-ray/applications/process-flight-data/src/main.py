@@ -20,7 +20,7 @@ def process_flight_data(
     experiment_number: int,
 ) -> pd.DataFrame:
     mlflow.set_tracking_uri(
-        f"https://{mlflow_tracking_server_user_name}:{mlflow_tracking_server_password}@{mlflow_tracking_server_host}"
+        f"https://{mlflow_tracking_server_user_name}:{mlflow_tracking_server_password}@{mlflow_tracking_server_host}",
     )
     mlflow.set_experiment(mlflow_experiment_name)
 
@@ -39,7 +39,8 @@ def process_flight_data(
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
     ray.init()

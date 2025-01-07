@@ -10,7 +10,7 @@ def main():
     field_names = ["current", "voltage", "temperature"]
 
     engine = create_engine(
-        URL(host=config.trino_host, port=config.trino_port, user=config.trino_user)
+        URL(host=config.trino_host, port=config.trino_port, user=config.trino_user),
     )
     with engine.connect() as conn:
         column_names = ", ".join(field_names)
@@ -51,7 +51,7 @@ def main():
             join te on t0._time = te._time
             join tf on t0._time = tf._time
             order by _time asc
-            """
+            """,
         )
         res = conn.execute(sql_query, {"event_id": event_id})
         df = pd.DataFrame(res.fetchall(), columns=res.keys())

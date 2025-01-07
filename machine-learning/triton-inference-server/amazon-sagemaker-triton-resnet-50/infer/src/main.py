@@ -18,10 +18,15 @@ def main() -> None:
     input_name = "input"
     output_name = "output"
     request_body, header_length = get_sample_image_binary(
-        image_path, input_name, output_name
+        image_path,
+        input_name,
+        output_name,
     )
     result = predict_by_tensorrt_model(
-        sagemaker_runtime_client, endpoint_name, request_body, header_length
+        sagemaker_runtime_client,
+        endpoint_name,
+        request_body,
+        header_length,
     )
     logger.info(result.as_numpy(output_name))
 
@@ -29,16 +34,22 @@ def main() -> None:
     input_name = "INPUT__0"
     output_name = "OUTPUT__0"
     request_body, header_length = get_sample_image_binary(
-        image_path, input_name, output_name
+        image_path,
+        input_name,
+        output_name,
     )
     result = predict_by_pytorch_model(
-        sagemaker_runtime_client, endpoint_name, request_body, header_length
+        sagemaker_runtime_client,
+        endpoint_name,
+        request_body,
+        header_length,
     )
     logger.info(result.as_numpy(output_name))
 
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

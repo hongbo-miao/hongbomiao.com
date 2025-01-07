@@ -38,7 +38,9 @@ class IadsUtil:
 
     @staticmethod
     def create_iads_signal_group(
-        iads_config: Any, signal_set: set[str], group_name: str
+        iads_config: Any,
+        signal_set: set[str],
+        group_name: str,
     ) -> None:
         signals = ",".join(signal_set)
         iads_config.Query(f"update DataGroups set * = |||{group_name}|{signals}|")
@@ -63,7 +65,7 @@ class IadsUtil:
 
         if not irig_start_time or not irig_end_time or year is None:
             raise ValueError(
-                "Could not find start time, end time, or year in archive info file"
+                "Could not find start time, end time, or year in archive info file",
             )
 
         return irig_start_time, irig_end_time, year
@@ -87,7 +89,7 @@ class IadsUtil:
         iads_manager_exe_path: Path,
     ) -> Path:
         parquet_file_path = parquet_output_dir_path / Path(
-            f"{iads_config_path.parent.name}.parquet"
+            f"{iads_config_path.parent.name}.parquet",
         )
         cmd = [
             str(iads_manager_exe_path),
@@ -109,18 +111,22 @@ class IadsUtil:
 
     @staticmethod
     def convert_irig_to_unix_time_ns(
-        irig_time_ns: int, year: int, timezone: str
+        irig_time_ns: int,
+        year: int,
+        timezone: str,
     ) -> int:
         # Get Unix timestamp for Jan 1 of the specified year in the given timezone
         local_time = datetime(year, 1, 1, 0, 0, 0, tzinfo=ZoneInfo(timezone))
         year_start_ns = int(
-            Decimal(str(local_time.timestamp())) * Decimal("1000000000")
+            Decimal(str(local_time.timestamp())) * Decimal("1000000000"),
         )
         return year_start_ns + irig_time_ns
 
     @staticmethod
     def get_iads_dataframe(
-        iads_manager_exe_path: Path, iads_data_path: Path, timezone: str
+        iads_manager_exe_path: Path,
+        iads_data_path: Path,
+        timezone: str,
     ) -> pd.DataFrame:
         iads_config_path = iads_data_path / Path(IadsUtil.IADS_CONFIG_FILE_NAME)
         iads_metadata_path = iads_data_path / Path(IadsUtil.IADS_METADATA_FILE_NAME)
@@ -135,7 +141,7 @@ class IadsUtil:
                 # Copy IADS config file
                 temp_iads_config_path = IadsUtil.copy_iads_config(iads_config_path)
                 logger.info(
-                    f"Created a copy of IADS config file: {temp_iads_config_path}"
+                    f"Created a copy of IADS config file: {temp_iads_config_path}",
                 )
 
                 # Get IADS config
@@ -150,14 +156,14 @@ class IadsUtil:
                 # Create signal group
                 group_name = "AllSignals"
                 logger.info(
-                    f"Creating signal group with query. group_name = '{group_name}'"
+                    f"Creating signal group with query. group_name = '{group_name}'",
                 )
                 IadsUtil.create_iads_signal_group(iads_config, signal_set, group_name)
                 logger.info(f"Signal group '{group_name}' created successfully")
 
                 # Get IRIG times and year
                 irig_start_time, irig_end_time, year = IadsUtil.get_irig_times(
-                    iads_metadata_path
+                    iads_metadata_path,
                 )
 
                 # Export to parquet
@@ -179,11 +185,13 @@ class IadsUtil:
                     IadsUtil.IRIG_TIME_COLUMN_NAME
                 ].apply(
                     lambda irig_time_ns: IadsUtil.convert_irig_to_unix_time_ns(
-                        irig_time_ns, year, timezone
-                    )
+                        irig_time_ns,
+                        year,
+                        timezone,
+                    ),
                 )
                 logger.info(
-                    f"Added {IadsUtil.UNIX_TIME_COLUMN_NAME} column with Unix time in nanoseconds ({year = })"
+                    f"Added {IadsUtil.UNIX_TIME_COLUMN_NAME} column with Unix time in nanoseconds ({year = })",
                 )
                 return df
 
@@ -202,11 +210,12 @@ class IadsUtil:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     iads_data_path = Path(r"C:\iads_data")
     iads_manager_exe_path = Path(
-        r"C:\Program Files\IADS\DataManager\IadsDataManager.exe"
+        r"C:\Program Files\IADS\DataManager\IadsDataManager.exe",
     )
     timezone = "America/Los_Angeles"
     df = IadsUtil.get_iads_dataframe(iads_manager_exe_path, iads_data_path, timezone)

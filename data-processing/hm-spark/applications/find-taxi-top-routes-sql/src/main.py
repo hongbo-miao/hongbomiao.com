@@ -60,7 +60,7 @@ def main(
         from t2
         inner join zones on t2.dolocationid = zones.locationid
         order by t2.total desc
-        """
+        """,
     )
     print((top_routes.count(), len(top_routes.columns)))
     top_routes.show(truncate=False)

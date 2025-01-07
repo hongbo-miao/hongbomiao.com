@@ -9,7 +9,7 @@ def main() -> None:
 
     # Download human-readable labels for ImageNet
     res = httpx.get(
-        "https://raw.githubusercontent.com/gradio-app/mobilenet-example/master/labels.txt"
+        "https://raw.githubusercontent.com/gradio-app/mobilenet-example/master/labels.txt",
     )
     labels = res.text.split("\n")
 

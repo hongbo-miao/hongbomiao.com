@@ -15,7 +15,7 @@ def get_test_data_loader(test_batch_size, training_dir, **kwargs):
             training_dir,
             train=False,
             transform=transforms.Compose(
-                [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
+                [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))],
             ),
         ),
         batch_size=test_batch_size,

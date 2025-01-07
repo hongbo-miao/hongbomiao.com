@@ -14,7 +14,7 @@ entity_df = pd.DataFrame.from_dict(
             datetime.now() - timedelta(minutes=36),
             datetime.now() - timedelta(minutes=73),
         ],
-    }
+    },
 )
 
 store = FeatureStore(repo_path="./driver_features")
@@ -29,7 +29,12 @@ training_df = store.get_historical_features(
 ).to_df()
 
 with option_context(
-    "display.max_rows", 10, "display.max_columns", None, "display.width", 500
+    "display.max_rows",
+    10,
+    "display.max_columns",
+    None,
+    "display.width",
+    500,
 ):
     print("----- Feature schema -----\n")
     print(training_df.info())

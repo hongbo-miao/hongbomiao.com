@@ -25,7 +25,7 @@ def main() -> None:
     converter = DocumentConverter(
         allowed_formats=[InputFormat.PDF],
         format_options={
-            InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)
+            InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options),
         },
     )
 
@@ -47,6 +47,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
     )
     main()

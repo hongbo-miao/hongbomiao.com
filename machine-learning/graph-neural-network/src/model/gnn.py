@@ -73,7 +73,7 @@ class GNN(torch.nn.Module):
                     torch.nn.BatchNorm1d(2 * emb_dim),
                     torch.nn.ReLU(),
                     torch.nn.Linear(2 * emb_dim, 1),
-                )
+                ),
             )
         elif self.graph_pooling == "set2set":
             self.pool = Set2Set(emb_dim, processing_steps=2)

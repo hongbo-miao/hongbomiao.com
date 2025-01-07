@@ -33,7 +33,8 @@ def main(data_dirname: str, ratings_filename: str, movies_filename: str):
     top_movie_count = 5
 
     recommendations = model.recommendForUserSubset(
-        ratings_df.select("userId").distinct(), top_movie_count
+        ratings_df.select("userId").distinct(),
+        top_movie_count,
     )
 
     recommendations_exploded = (

@@ -13,10 +13,15 @@ class TurtleRobotControlNode(Node):
         self._turtle_robot_pose = None
         self._target_pose = None
         self._cmd_vel_publisher = self.create_publisher(
-            Twist, "turtle_robot/cmd_vel", 10
+            Twist,
+            "turtle_robot/cmd_vel",
+            10,
         )
         self.create_subscription(
-            Pose, "turtle_robot/pose", self.subscribe_turtle_robot_pose, 10
+            Pose,
+            "turtle_robot/pose",
+            self.subscribe_turtle_robot_pose,
+            10,
         )
         self.create_subscription(Pose, "turtle1/pose", self.subscribe_target_pose, 10)
         self.create_timer(0.01, self.control_loop)

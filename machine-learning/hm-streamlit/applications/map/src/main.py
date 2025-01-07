@@ -12,7 +12,7 @@ def get_data() -> pd.DataFrame:
             "longitude": generator.standard_normal(1000) / 50.0 + -122.4,
             "size": generator.standard_normal(1000) * 100.0,
             "color": generator.standard_normal((1000, 4)).tolist(),
-        }
+        },
     )
 
 
