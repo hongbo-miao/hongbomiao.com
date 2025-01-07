@@ -3,7 +3,7 @@ import os
 
 import torch
 import torch.distributed as dist
-import torch.nn.functional as F
+import torch.nn.functional as F  # noqa: N812
 import torch.utils.data
 import torch.utils.data.distributed
 from models.net import Net
