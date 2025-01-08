@@ -9,10 +9,10 @@ logger = logging.getLogger(__name__)
 
 @triton.jit
 def vector_add_kernel(
-    x_ptr,  # Pointer to first vector
-    y_ptr,  # Pointer to second vector
-    output_ptr,  # Pointer to output vector
-    n_elements,  # Number of elements in the vectors
+    x_ptr,  # Pointer to first vector  # noqa: ANN001
+    y_ptr,  # Pointer to second vector  # noqa: ANN001
+    output_ptr,  # Pointer to output vector  # noqa: ANN001
+    n_elements: int,  # Number of elements in the vectors
     block_size: tl.constexpr,  # Number of elements each program should process
 ) -> None:
     # Program ID

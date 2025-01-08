@@ -4,6 +4,7 @@ from pathlib import Path
 
 import torch
 from nvidia.dali import fn, pipeline_def, types
+from nvidia.dali.pipeline import Pipeline
 from nvidia.dali.plugin.pytorch import DALIGenericIterator
 
 logger = logging.getLogger(__name__)
@@ -34,7 +35,7 @@ def download_sample_images(data_path: Path) -> None:
 
 
 @pipeline_def(batch_size=2, num_threads=2, device_id=None)
-def image_pipeline(data_path: Path):
+def image_pipeline(data_path: Path) -> Pipeline:
     jpegs, labels = fn.readers.file(
         file_root=data_path,
         random_shuffle=True,

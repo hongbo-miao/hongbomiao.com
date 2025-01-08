@@ -737,6 +737,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **End-to-end testing**
 - **Contract testing**
 - **Mutation testing**
+- **Penetration testing**
+- **Ethical testing**
 - **Performance testing**
 - **Permutation testing**
 - **Holdout testing**

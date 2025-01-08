@@ -10,7 +10,7 @@ from utils.device import device
 from utils.writer import write_params
 
 
-def main():
+def main() -> None:
     with open("params.yaml") as f:
         params = yaml.safe_load(f)
 

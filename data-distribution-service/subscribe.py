@@ -4,14 +4,14 @@ import rti.connextdds as dds
 
 
 class Listener(dds.DynamicData.NoOpDataReaderListener):
-    def on_data_available(self, reader: dds.DynamicData.DataReader):
+    def on_data_available(self, reader: dds.DynamicData.DataReader) -> None:
         with reader.take() as samples:
             for sample in samples:
                 if sample.info.valid:
                     print(sample.data)
 
 
-def subscriber_main(domain_id: int):
+def subscriber_main(domain_id: int) -> None:
     participant = dds.DomainParticipant(domain_id)
 
     hm_type = dds.QosProvider("hm_message.xml").type("HMMessage")

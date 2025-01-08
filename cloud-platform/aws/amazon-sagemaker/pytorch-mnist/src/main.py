@@ -8,7 +8,7 @@ from utils.get_args import get_args
 from utils.train import train
 
 
-def model_fn(model_dir):
+def model_fn(model_dir: str) -> Net:
     if torch.cuda.is_available():
         device = "cuda"
     elif torch.backends.mps.is_available():

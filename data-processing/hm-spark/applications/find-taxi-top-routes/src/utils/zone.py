@@ -1,7 +1,7 @@
 from pyspark.sql import DataFrame, SparkSession
 
 
-def load_zones(spark: SparkSession, zone_data_path: str):
+def load_zones(spark: SparkSession, zone_data_path: str) -> DataFrame:
     return (
         spark.read.format("csv")
         .option("inferSchema", True)

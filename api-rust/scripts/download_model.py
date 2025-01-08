@@ -8,7 +8,7 @@ from torchvision import models
 logger = logging.getLogger(__name__)
 
 
-def download_labels():
+def download_labels() -> None:
     labels_url = (
         "https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt"
     )
@@ -24,7 +24,7 @@ def download_labels():
         logger.info("Labels file already exists")
 
 
-def download_resnet18():
+def download_resnet18() -> None:
     model_path = Path("models/resnet18.ot")
 
     if not model_path.exists():

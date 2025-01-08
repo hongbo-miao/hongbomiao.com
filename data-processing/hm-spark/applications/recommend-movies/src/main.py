@@ -3,7 +3,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, explode
 
 
-def main(data_dirname: str, ratings_filename: str, movies_filename: str):
+def main(data_dirname: str, ratings_filename: str, movies_filename: str) -> None:
     spark = SparkSession.builder.getOrCreate()
 
     ratings_df = spark.read.csv(

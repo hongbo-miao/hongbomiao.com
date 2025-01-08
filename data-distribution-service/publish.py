@@ -3,7 +3,7 @@ import time
 import rti.connextdds as dds
 
 
-def publisher_main(dds_domain_id: int, total_count: int):
+def publisher_main(dds_domain_id: int, total_count: int) -> None:
     participant = dds.DomainParticipant(domain_id=dds_domain_id)
     hm_type = dds.QosProvider("hm_message.xml").type("HMMessage")
 

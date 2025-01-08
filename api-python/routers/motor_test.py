@@ -7,7 +7,7 @@ client = TestClient(app)
 
 
 @patch("routers.motor.Producer")
-def test_generate_motor_data(mock_producer):
+def test_generate_motor_data(mock_producer: MagicMock) -> None:
     mock_producer_instance = MagicMock()
     mock_producer.return_value = mock_producer_instance
 

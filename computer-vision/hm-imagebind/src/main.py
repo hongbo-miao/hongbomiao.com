@@ -1,11 +1,11 @@
 import logging
 from pathlib import Path
-from typing import Any
 
 import gradio as gr
 import httpx
 import lancedb
 import lancedb.embeddings.imagebind
+import torch
 from lancedb.embeddings import get_registry
 from lancedb.pydantic import LanceModel, Vector
 from lancedb.table import Table
@@ -41,7 +41,7 @@ class MultimodalSearchSchema(LanceModel):
 
 
 class ImageBindSearch:
-    def __init__(self):
+    def __init__(self) -> None:
         self.table: Table | None = None
 
     @staticmethod
@@ -89,7 +89,7 @@ class ImageBindSearch:
         )
         self.table.add(inputs)
 
-    def search_by_image(self, input_image: Any) -> tuple[str, Path]:
+    def search_by_image(self, input_image: torch.Tensor) -> tuple[str, Path]:
         if self.table is None:
             msg = "Database not initialized. Call initialize_database first."
             raise RuntimeError(
@@ -115,7 +115,7 @@ class ImageBindSearch:
         )
         return Path(result.image_path), Path(result.audio_path)
 
-    def search_by_audio(self, input_audio: Any) -> tuple[Path, str]:
+    def search_by_audio(self, input_audio: torch.Tensor) -> tuple[Path, str]:
         if self.table is None:
             msg = "Database not initialized. Call initialize_database first."
             raise RuntimeError(

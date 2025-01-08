@@ -5,7 +5,7 @@ from kfp import client, dsl
     base_image="docker.io/python:3.10",
     packages_to_install=["torch==2.0.0", "torchvision==0.15.1", "lightning==2.0.5"],
 )
-def train():
+def train() -> None:
     import lightning as L  # noqa: N812
     import torch
     import torch.nn.functional as F  # noqa: N812
@@ -14,7 +14,7 @@ def train():
     from torch.utils import data
 
     class LitAutoEncoder(L.LightningModule):
-        def __init__(self):
+        def __init__(self) -> None:
             super().__init__()
             self.encoder = nn.Sequential(
                 nn.Linear(28 * 28, 128),
@@ -27,11 +27,13 @@ def train():
                 nn.Linear(128, 28 * 28),
             )
 
-        def forward(self, x):
+        def forward(self, x: torch.Tensor) -> torch.Tensor:
             embedding = self.encoder(x)
             return embedding
 
-        def training_step(self, batch, batch_idx):
+        def training_step(
+            self, batch: tuple[torch.Tensor, torch.Tensor], batch_idx: int
+        ) -> torch.Tensor:
             x, y = batch
             x = x.view(x.size(0), -1)
             z = self.encoder(x)
@@ -40,7 +42,7 @@ def train():
             self.log("train_loss", loss)
             return loss
 
-        def configure_optimizers(self):
+        def configure_optimizers(self) -> torch.optim.Optimizer:
             optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
             return optimizer
 
@@ -71,7 +73,7 @@ def train():
 
 
 @dsl.pipeline
-def classify_fashion_mnist():
+def classify_fashion_mnist() -> None:
     train()
 
 

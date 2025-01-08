@@ -51,11 +51,11 @@ class ValidateSimplePizzaForm(FormValidationAction):
 
     def validate_pizza_size(
         self,
-        slot_value: Any,
+        slot_value: str,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict,
-    ) -> dict[str, Any]:
+    ) -> dict[str, str | None]:
         if slot_value.lower() not in ALLOWED_PIZZA_SIZES:
             dispatcher.utter_message(
                 text=f"We only accept pizza sizes: {'/'.join(ALLOWED_PIZZA_SIZES)}.",
@@ -66,11 +66,11 @@ class ValidateSimplePizzaForm(FormValidationAction):
 
     def validate_pizza_type(
         self,
-        slot_value: Any,
+        slot_value: str,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict,
-    ) -> dict[str, Any]:
+    ) -> dict[str, str | None]:
         if slot_value not in ALLOWED_PIZZA_TYPES:
             dispatcher.utter_message(
                 text=f"We only serve {'/'.join(ALLOWED_PIZZA_TYPES)}.",

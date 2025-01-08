@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, text
 from trino.sqlalchemy import URL
 
 
-def main():
+def main() -> None:
     event_id = "ad7953cd-6d49-4929-8180-99555bebc255"
     field_names = ["current", "voltage", "temperature"]
 

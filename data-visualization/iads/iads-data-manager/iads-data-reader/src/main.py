@@ -23,7 +23,7 @@ class IadsUtil:
     PARQUET_ZSTD_COMPRESSION_LEVEL = 19
 
     @staticmethod
-    def get_iads_signals(iads_config: Any, query: str) -> set[str]:
+    def get_iads_signals(iads_config: Any, query: str) -> set[str]:  # noqa: ANN401
         logger.info(f"Executing: {query}")
         results = iads_config.Query(query)
         if not results:
@@ -38,7 +38,7 @@ class IadsUtil:
 
     @staticmethod
     def create_iads_signal_group(
-        iads_config: Any,
+        iads_config: Any,  # noqa: ANN401
         signal_set: set[str],
         group_name: str,
     ) -> None:

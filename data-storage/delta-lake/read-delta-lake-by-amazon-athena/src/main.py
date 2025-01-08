@@ -5,7 +5,7 @@ import awswrangler as wr
 logger = logging.getLogger(__name__)
 
 
-def main():
+def main() -> None:
     df = wr.athena.read_sql_query(
         "select * from motor limit 10;",
         database="production_hm_iot_db",
