@@ -5,7 +5,7 @@ from launch.substitutions import FindExecutable
 from launch_ros.actions import Node
 
 
-def generate_launch_description():
+def generate_launch_description() -> LaunchDescription:
     hm_namespace = "hm"
 
     turtlesim_node = Node(

@@ -10,7 +10,7 @@ from torch.utils import data
 
 
 class LitAutoEncoder(L.LightningModule):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.encoder = nn.Sequential(
             nn.Linear(28 * 28, 128),
@@ -23,11 +23,13 @@ class LitAutoEncoder(L.LightningModule):
             nn.Linear(128, 28 * 28),
         )
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         embedding = self.encoder(x)
         return embedding
 
-    def training_step(self, batch, batch_idx):
+    def training_step(
+        self, batch: tuple[torch.Tensor, torch.Tensor], batch_idx: int
+    ) -> torch.Tensor:
         x, y = batch
         x = x.view(x.size(0), -1)
         z = self.encoder(x)
@@ -36,12 +38,12 @@ class LitAutoEncoder(L.LightningModule):
         self.log("train_loss", loss)
         return loss
 
-    def configure_optimizers(self):
+    def configure_optimizers(self) -> torch.optim.Optimizer:
         optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
         return optimizer
 
 
-def main():
+def main() -> None:
     project_name = "classify-mnist"
 
     # W&B

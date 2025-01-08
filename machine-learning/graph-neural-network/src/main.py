@@ -5,14 +5,21 @@ from args import get_args
 from model.data_loader import fetch_dataset, get_dataloaders
 from model.gnn import GNN
 from ogb.graphproppred import Evaluator
-from torch import optim
+from torch import nn, optim
+from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 cls_criterion = torch.nn.BCEWithLogitsLoss()
 reg_criterion = torch.nn.MSELoss()
 
 
-def train(model, device, loader, optimizer, task_type):
+def train(
+    model: nn.Module,
+    device: str,
+    loader: DataLoader,
+    optimizer: torch.optim.Optimizer,
+    task_type: str,
+) -> float:
     model.train()
     total_loss = 0
 
@@ -43,7 +50,9 @@ def train(model, device, loader, optimizer, task_type):
     return total_loss
 
 
-def evaluate(model, device, loader, evaluator):
+def evaluate(
+    model: nn.Module, device: str, loader: DataLoader, evaluator: Evaluator
+) -> dict:
     model.eval()
     y_true = []
     y_pred = []
@@ -68,7 +77,7 @@ def evaluate(model, device, loader, evaluator):
     return evaluator.eval(input_dict)
 
 
-def main():
+def main() -> None:
     # Training settings
     args = get_args()
 

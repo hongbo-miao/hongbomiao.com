@@ -8,7 +8,7 @@ import win32com.client
 logger = logging.getLogger(__name__)
 
 
-def show_version_from_file(iads_config: Any, iads_config_path: Path) -> None:
+def show_version_from_file(iads_config: Any, iads_config_path: Path) -> None:  # noqa: ANN401
     try:
         version = iads_config.VersionFromFile(iads_config_path)
         logger.info(f"{version = }")
@@ -16,7 +16,7 @@ def show_version_from_file(iads_config: Any, iads_config_path: Path) -> None:
         logger.exception(f"{iads_config_path = }")
 
 
-def execute_query(iads_config: Any, query: str) -> None:
+def execute_query(iads_config: Any, query: str) -> None:  # noqa: ANN401
     try:
         logger.info(f"{query = }")
         results: list[Any] | None = iads_config.Query(query)

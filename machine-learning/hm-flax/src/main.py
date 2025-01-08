@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Callable
 
 import flax.linen as nn
 import jax
@@ -40,7 +40,7 @@ def cross_entropy_loss(logits: jnp.ndarray, labels: jnp.ndarray) -> jnp.ndarray:
 
 def loss_fn(
     params: dict[str, Any],
-    apply_fn: Any,
+    apply_fn: Callable[[dict[str, Any], jnp.ndarray], jnp.ndarray],
     images: jnp.ndarray,
     labels: jnp.ndarray,
 ) -> tuple[jnp.ndarray, jnp.ndarray]:

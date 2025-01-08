@@ -1,8 +1,11 @@
+import argparse
+
+import torch
 from ogb.graphproppred import PygGraphPropPredDataset
 from torch_geometric.loader import DataLoader
 
 
-def fetch_dataset(config):
+def fetch_dataset(config: argparse.Namespace) -> PygGraphPropPredDataset:
     # automatic data loading and splitting
     dataset = PygGraphPropPredDataset(name=config.dataset)
 
@@ -19,7 +22,11 @@ def fetch_dataset(config):
     return dataset, split_idx
 
 
-def get_dataloaders(dataset, split_idx, config):
+def get_dataloaders(
+    dataset: PygGraphPropPredDataset,
+    split_idx: dict[str, torch.Tensor],
+    config: argparse.Namespace,
+) -> dict[str, DataLoader]:
     train_loader = DataLoader(
         dataset[split_idx["train"]],
         batch_size=config.batch_size,

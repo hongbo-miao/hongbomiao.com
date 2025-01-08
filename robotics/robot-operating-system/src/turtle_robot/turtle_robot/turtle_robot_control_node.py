@@ -7,12 +7,14 @@ from turtlesim.msg import Pose
 
 
 class TurtleRobotControlNode(Node):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("turtle_robot_control_node")
         self.get_logger().info("turtle_robot_control_node")
-        self._turtle_robot_pose = None
-        self._target_pose = None
-        self._cmd_vel_publisher = self.create_publisher(
+        self._turtle_robot_pose: Pose | None = None
+        self._target_pose: Pose | None = None
+        from rclpy.publisher import Publisher
+
+        self._cmd_vel_publisher: Publisher[Twist] = self.create_publisher(
             Twist,
             "turtle_robot/cmd_vel",
             10,
@@ -26,14 +28,14 @@ class TurtleRobotControlNode(Node):
         self.create_subscription(Pose, "turtle1/pose", self.subscribe_target_pose, 10)
         self.create_timer(0.01, self.control_loop)
 
-    def subscribe_turtle_robot_pose(self, msg):
+    def subscribe_turtle_robot_pose(self, msg: Pose) -> None:
         self._turtle_robot_pose = msg
 
-    def subscribe_target_pose(self, msg):
+    def subscribe_target_pose(self, msg: Pose) -> None:
         self._target_pose = msg
 
-    def control_loop(self):
-        if self._turtle_robot_pose is None:
+    def control_loop(self) -> None:
+        if self._turtle_robot_pose is None or self._target_pose is None:
             return
 
         dist_x = self._target_pose.x - self._turtle_robot_pose.x
@@ -61,7 +63,7 @@ class TurtleRobotControlNode(Node):
         self._cmd_vel_publisher.publish(msg)
 
 
-def main(args=None):
+def main(args: list[str] | None = None) -> None:
     rclpy.init(args=args)
     node = TurtleRobotControlNode()
     rclpy.spin(node)

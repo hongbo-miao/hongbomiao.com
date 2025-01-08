@@ -173,6 +173,7 @@ exclude = [
 [lint]
 select = [
   "AIR",   # Airflow
+  "ANN",   # flake8-annotations
   "ASYNC", # flake8-async
   "C90",   # mccabe
   "COM",   # flake8-commas
@@ -197,9 +198,11 @@ select = [
   "S",     # flake8-bandit
   "TRY",   # tryceratops
   "UP",    # pyupgrade
+  "W",     # pycodestyle
+  "YTT",   # flake8-2020
 ]
 ignore = [
-  "S101",
+  "COM812",
   "D100",
   "D101",
   "D102",
@@ -210,9 +213,10 @@ ignore = [
   "D203",
   "D212",
   "E501",
+  "ISC001",
   "PLR0913",
   "PLR0915",
   "PLR2004",
+  "S101",
   "TRY003",
-  "COM812",
 ]

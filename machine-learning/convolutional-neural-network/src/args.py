@@ -1,7 +1,7 @@
 import argparse
 
 
-def get_args():
+def get_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--should_download_original_data",

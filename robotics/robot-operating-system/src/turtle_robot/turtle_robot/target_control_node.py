@@ -8,7 +8,7 @@ from turtlesim.msg import Pose
 
 
 class TargetControlNode(Node):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("target_control_node")
         self.get_logger().info("target_control_node")
         self._target_pose = None
@@ -16,10 +16,10 @@ class TargetControlNode(Node):
         self.create_subscription(Pose, "turtle1/pose", self.subscribe_target_pose, 10)
         self.create_timer(1.0, self.control_loop)
 
-    def subscribe_target_pose(self, msg):
+    def subscribe_target_pose(self, msg: Pose) -> None:
         self._target_pose = msg
 
-    def control_loop(self):
+    def control_loop(self) -> None:
         if self._target_pose is None:
             return
 
@@ -47,7 +47,7 @@ class TargetControlNode(Node):
         self._cmd_vel_publisher.publish(msg)
 
 
-def main(args=None):
+def main(args: list[str] | None = None) -> None:
     rclpy.init(args=args)
     node = TargetControlNode()
     rclpy.spin(node)

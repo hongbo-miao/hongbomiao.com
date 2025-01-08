@@ -1,26 +1,31 @@
 import logging
+from typing import Any
 
 import torch
-import torch.utils.data
-import torch.utils.data.distributed
+from torch.utils.data import DataLoader, Dataset
+from torch.utils.data.distributed import DistributedSampler
 from torchvision import datasets, transforms
 
 logger = logging.getLogger(__name__)
 
 
-def get_train_data_loader(batch_size, training_dir, is_distributed, **kwargs):
+def get_train_data_loader(
+    batch_size: int,
+    training_dir: str,
+    is_distributed: bool,
+    **kwargs: Any,  # noqa: ANN401
+) -> DataLoader:
     logger.info("Get train data loader")
-    dataset = datasets.MNIST(
+    dataset: Dataset = datasets.MNIST(
         training_dir,
         train=True,
         transform=transforms.Compose(
             [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))],
         ),
     )
-    train_sampler = (
-        torch.utils.data.distributed.DistributedSampler(dataset)
-        if is_distributed
-        else None
+
+    train_sampler: DistributedSampler | None = (
+        DistributedSampler(dataset) if is_distributed else None
     )
     return torch.utils.data.DataLoader(
         dataset,

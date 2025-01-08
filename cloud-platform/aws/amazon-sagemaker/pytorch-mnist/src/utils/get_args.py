@@ -3,7 +3,7 @@ import json
 import os
 
 
-def get_args():
+def get_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--batch-size",

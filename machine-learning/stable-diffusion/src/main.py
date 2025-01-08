@@ -95,7 +95,7 @@ class StableDiffusionGenerator:
             logger.exception("Error generating images")
 
 
-def main():
+def main() -> None:
     pipe = StableDiffusionGenerator.create_pipeline(
         model_id="stabilityai/stable-diffusion-2-1",
         is_safety_checker_enabled=True,

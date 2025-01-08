@@ -1,14 +1,14 @@
 import logging
 import os
+from pathlib import Path
 
 import torch
-import torch.utils.data
-import torch.utils.data.distributed
+from torch.nn import Module
 
 logger = logging.getLogger(__name__)
 
 
-def save_model(model, model_dir):
+def save_model(model: Module, model_dir_path: Path) -> None:
     logger.info("Save the model.")
-    path = os.path.join(model_dir, "model.pth")
+    path = os.path.join(model_dir_path, "model.pth")
     torch.save(model.cpu().state_dict(), path)

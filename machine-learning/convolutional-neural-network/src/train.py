@@ -1,4 +1,15 @@
-def train(net, data_loader, device, optimizer, criterion):
+from torch import nn
+from torch.optim import Optimizer
+from torch.utils.data import DataLoader
+
+
+def train(
+    net: nn.Module,
+    data_loader: DataLoader,
+    device: str,
+    optimizer: Optimizer,
+    criterion: nn.Module,
+) -> float:
     net.train()
     running_loss = 0.0
 
