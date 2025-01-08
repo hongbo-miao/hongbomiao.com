@@ -1,13 +1,15 @@
 import torch
 import torch.nn.functional as F  # noqa: N812
 from ogb.graphproppred.mol_encoder import AtomEncoder, BondEncoder
+from torch import Tensor
+from torch_geometric.data import Data
 from torch_geometric.nn import MessagePassing, global_add_pool
 from torch_geometric.utils import degree
 
 
 # GIN convolution along the graph structure
 class GINConv(MessagePassing):
-    def __init__(self, emb_dim):
+    def __init__(self, emb_dim: int) -> None:
         super().__init__(aggr="add")
         self.mlp = torch.nn.Sequential(
             torch.nn.Linear(emb_dim, 2 * emb_dim),
@@ -18,7 +20,7 @@ class GINConv(MessagePassing):
         self.eps = torch.nn.Parameter(torch.Tensor([0]))
         self.bond_encoder = BondEncoder(emb_dim=emb_dim)
 
-    def forward(self, x, edge_index, edge_attr):
+    def forward(self, x: Tensor, edge_index: Tensor, edge_attr: Tensor) -> Tensor:
         edge_embedding = self.bond_encoder(edge_attr)
         out = self.mlp(
             (1 + self.eps) * x
@@ -26,22 +28,22 @@ class GINConv(MessagePassing):
         )
         return out
 
-    def message(self, x_j, edge_attr):
+    def message(self, x_j: Tensor, edge_attr: Tensor) -> Tensor:
         return F.relu(x_j + edge_attr)
 
-    def update(self, aggr_out):
+    def update(self, aggr_out: Tensor) -> Tensor:
         return aggr_out
 
 
 # GCN convolution along the graph structure
 class GCNConv(MessagePassing):
-    def __init__(self, emb_dim):
+    def __init__(self, emb_dim: int) -> None:
         super().__init__(aggr="add")
         self.linear = torch.nn.Linear(emb_dim, emb_dim)
         self.root_emb = torch.nn.Embedding(1, emb_dim)
         self.bond_encoder = BondEncoder(emb_dim=emb_dim)
 
-    def forward(self, x, edge_index, edge_attr):
+    def forward(self, x: Tensor, edge_index: Tensor, edge_attr: Tensor) -> Tensor:
         # x: [N, in_channels]
         # edge_index: [2, E]
         # edge_attr: [E, 2]
@@ -64,12 +66,12 @@ class GCNConv(MessagePassing):
             norm=norm,
         ) + F.relu(x + self.root_emb.weight) * 1.0 / deg.view(-1, 1)
 
-    def message(self, x_j, edge_attr, norm):
+    def message(self, x_j: Tensor, edge_attr: Tensor, norm: Tensor) -> Tensor:
         # x_j: [E, out_channels]
         # edge_attr: [E, out_channels]
         return norm.view(-1, 1) * F.relu(x_j + edge_attr)
 
-    def update(self, aggr_out):
+    def update(self, aggr_out: Tensor) -> Tensor:
         # aggr_out: [N, out_channels]
         return aggr_out
 
@@ -77,13 +79,13 @@ class GCNConv(MessagePassing):
 class GNNNode(torch.nn.Module):
     def __init__(
         self,
-        num_layer,
-        emb_dim,
-        drop_ratio=0.5,
-        jk="last",
-        residual=False,
-        gnn_type="gin",
-    ):
+        num_layer: int,
+        emb_dim: int,
+        drop_ratio: float = 0.5,
+        jk: str = "last",
+        residual: bool = False,
+        gnn_type: str = "gin",
+    ) -> None:
         super().__init__()
         self.num_layer = num_layer
         self.drop_ratio = drop_ratio
@@ -112,7 +114,7 @@ class GNNNode(torch.nn.Module):
 
             self.batch_norms.append(torch.nn.BatchNorm1d(emb_dim))
 
-    def forward(self, batched_data):
+    def forward(self, batched_data: Data) -> torch.Tensor:
         x, edge_index, edge_attr = (
             batched_data.x,
             batched_data.edge_index,
@@ -151,13 +153,13 @@ class GNNNode(torch.nn.Module):
 class GNNVirtualNode(torch.nn.Module):
     def __init__(
         self,
-        num_layer,
-        emb_dim,
-        drop_ratio=0.5,
-        jk="last",
-        residual=False,
-        gnn_type="gin",
-    ):
+        num_layer: int,
+        emb_dim: int,
+        drop_ratio: float = 0.5,
+        jk: str = "last",
+        residual: bool = False,
+        gnn_type: str = "gin",
+    ) -> None:
         super().__init__()
         self.num_layer = num_layer
         self.drop_ratio = drop_ratio
@@ -206,7 +208,7 @@ class GNNVirtualNode(torch.nn.Module):
                 ),
             )
 
-    def forward(self, batched_data):
+    def forward(self, batched_data: Data) -> torch.Tensor:
         x, edge_index, edge_attr, batch = (
             batched_data.x,
             batched_data.edge_index,

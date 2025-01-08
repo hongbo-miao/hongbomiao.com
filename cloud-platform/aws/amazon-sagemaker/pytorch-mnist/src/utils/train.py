@@ -1,5 +1,7 @@
+import argparse
 import logging
 import os
+from pathlib import Path
 
 import torch
 import torch.distributed as dist
@@ -17,7 +19,7 @@ from utils.test import test
 logger = logging.getLogger(__name__)
 
 
-def train(args):
+def train(args: argparse.Namespace) -> None:
     is_distributed = len(args.hosts) > 1 and args.backend is not None
     logger.info(f"Distributed training: {is_distributed}")
 
@@ -90,4 +92,4 @@ def train(args):
                     f"Train Epoch: {epoch} [{batch_idx * len(device_data)}/{len(train_loader.sampler)} ({100.0 * batch_idx / len(train_loader):.0f}%)] Loss: {loss.item():.6f}",
                 )
         test(model, test_loader, device)
-    save_model(model, args.model_dir)
+    save_model(model, Path(args.model_dir))

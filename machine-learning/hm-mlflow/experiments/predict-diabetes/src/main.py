@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 logger = logging.getLogger(__name__)
 
 
-def main():
+def main() -> None:
     mlflow.set_tracking_uri(config.MLFLOW_TRACKING_SERVER_URL)
     mlflow.set_experiment(config.MLFLOW_EXPERIMENT_NAME)
 

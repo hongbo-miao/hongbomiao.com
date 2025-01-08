@@ -12,7 +12,7 @@ def multiply(a: int, b: int) -> int:
 
 
 @dsl.pipeline
-def calculate(a: int, b: int):
+def calculate(a: int, b: int) -> None:
     add_task = add(a=a, b=b)
     multiply(a=add_task.output, b=10)
 

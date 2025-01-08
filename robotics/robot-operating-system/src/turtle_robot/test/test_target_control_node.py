@@ -2,29 +2,30 @@ import pathlib
 import sys
 import unittest
 
-import launch
-import launch_ros
-import launch_testing
 import pytest
 import rclpy
+from launch import LaunchDescription
+from launch_ros.actions import Node
+from launch_testing.actions import ReadyToTest
+from rclpy.publisher import Publisher
 from turtlesim.msg import Pose
 
 
 @pytest.mark.rostest
-def generate_test_description():
+def generate_test_description() -> LaunchDescription:
     src_path = pathlib.Path(__file__).parent.parent
 
-    target_control_node = launch_ros.actions.Node(
+    target_control_node = Node(
         executable=sys.executable,
         arguments=[src_path.joinpath("turtle_robot/target_control_node.py").as_posix()],
         additional_env={"PYTHONUNBUFFERED": "1"},
     )
 
     return (
-        launch.LaunchDescription(
+        LaunchDescription(
             [
                 target_control_node,
-                launch_testing.actions.ReadyToTest(),
+                ReadyToTest(),
             ],
         ),
         {"target_control_node": target_control_node},
@@ -33,21 +34,25 @@ def generate_test_description():
 
 class TestTargetControlNodeLink(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         rclpy.init()
 
     @classmethod
-    def tearDownClass(cls):
+    def tearDownClass(cls) -> None:
         rclpy.shutdown()
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.node = rclpy.create_node("target_control_test_node")
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         self.node.destroy_node()
 
-    def test_target_control_node(self, target_control_node, proc_output):
-        pose_pub = self.node.create_publisher(Pose, "turtle1/pose", 10)
+    def test_target_control_node(
+        self,
+        target_control_node: Node,
+        proc_output: tuple[bytes, bytes],
+    ) -> None:
+        pose_pub: Publisher = self.node.create_publisher(Pose, "turtle1/pose", 10)
 
         try:
             assert True

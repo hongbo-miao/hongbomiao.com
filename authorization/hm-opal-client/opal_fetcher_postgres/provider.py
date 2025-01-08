@@ -1,6 +1,7 @@
 # https://github.com/permitio/opal-fetcher-postgres
 
 import json
+from types import TracebackType
 from typing import Any, ClassVar
 
 import asyncpg
@@ -59,7 +60,7 @@ class PostgresFetchProvider(BaseFetchProvider):
     def parse_event(self, event: FetchEvent) -> PostgresFetchEvent:
         return PostgresFetchEvent(**event.dict(exclude={"config"}), config=event.config)
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> "PostgresFetchProvider":
         # self._event: PostgresFetchEvent  # type casting
 
         dsn: str = self._event.url
@@ -69,7 +70,7 @@ class PostgresFetchProvider(BaseFetchProvider):
             else self._event.config.connection_params.dict(exclude_none=True)
         )
 
-        self._connection: asyncpg.Connection = await asyncpg.connect(
+        self._connection = await asyncpg.connect(
             dsn,
             **connection_params,
         )
@@ -81,31 +82,42 @@ class PostgresFetchProvider(BaseFetchProvider):
             schema="pg_catalog",
         )
 
-        self._transaction: Transaction = self._connection.transaction(readonly=True)
+        self._transaction = self._connection.transaction(readonly=True)
         await self._transaction.__aenter__()
 
         return self
 
-    async def __aexit__(self, exc_type=None, exc_val=None, tb=None):
+    async def __aexit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        tb: TracebackType | None,
+    ) -> None:
         if self._transaction is not None:
             await self._transaction.__aexit__(exc_type, exc_val, tb)
         if self._connection is not None:
             await self._connection.close()
 
-    async def _fetch_(self):
+    async def _fetch_(self) -> list[asyncpg.Record]:
         if self._event.config is None:
             logger.warning("Incomplete fetcher config!")
-            return
+            return []
 
         logger.debug(f"{self.__class__.__name__} fetching from {self._url}")
 
         if self._event.config.fetch_one:
+            if self._connection is None:
+                return []
             row = await self._connection.fetchrow(self._event.config.query)
             return [row]
         else:
+            if self._connection is None:
+                return []
             return await self._connection.fetch(self._event.config.query)
 
-    async def _process_(self, records: list[asyncpg.Record]):
+    async def _process_(
+        self, records: list[asyncpg.Record]
+    ) -> dict[str, asyncpg.Record] | list[asyncpg.Record]:
         if self._event.config is not None and self._event.config.fetch_one:
             if records and len(records) > 0:
                 return dict(records[0])

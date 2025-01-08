@@ -29,7 +29,7 @@ def perform_semantic_search(table: lancedb.table.Table, query: str) -> pl.DataFr
     return table.search(query).limit(5).to_polars()
 
 
-def main():
+def main() -> None:
     url = "https://raw.githubusercontent.com/Abhiram970/RickBot/refs/heads/main/Rick_and_Morty.csv"
     df = pl.read_csv(url)
     db = lancedb.connect("data/lancedb")

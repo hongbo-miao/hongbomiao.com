@@ -10,7 +10,7 @@ from qiskit_ibm_runtime.fake_provider import FakeAlmadenV2
 logger = logging.getLogger(__name__)
 
 
-def main():
+def main() -> None:
     # Create a new circuit with two qubits
     qc = QuantumCircuit(2)
 

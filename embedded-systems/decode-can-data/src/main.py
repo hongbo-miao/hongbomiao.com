@@ -113,8 +113,8 @@ class CanUtils:
     @staticmethod
     def initialize_writer_dict(
         schema_dict: dict[str, pa.Schema],
-        parquet_compression_method,
-        parquet_compression_level,
+        parquet_compression_method: str,
+        parquet_compression_level: int,
         output_dir: Path,
     ) -> dict[str, pq.ParquetWriter]:
         writer_dict = {}

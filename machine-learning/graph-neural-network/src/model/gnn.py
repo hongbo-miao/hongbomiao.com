@@ -1,5 +1,7 @@
 import torch
 from model.conv import GNNNode, GNNVirtualNode
+from torch import Tensor
+from torch_geometric.data import Data
 from torch_geometric.nn import (
     GlobalAttention,
     Set2Set,
@@ -12,16 +14,16 @@ from torch_geometric.nn import (
 class GNN(torch.nn.Module):
     def __init__(
         self,
-        num_tasks,
-        num_layer=5,
-        emb_dim=300,
-        gnn_type="gin",
-        virtual_node=True,
-        residual=False,
-        drop_ratio=0.5,
-        jk="last",
-        graph_pooling="mean",
-    ):
+        num_tasks: int,
+        num_layer: int = 5,
+        emb_dim: int = 300,
+        gnn_type: str = "gin",
+        virtual_node: bool = True,
+        residual: bool = False,
+        drop_ratio: float = 0.5,
+        jk: str = "last",
+        graph_pooling: str = "mean",
+    ) -> None:
         super().__init__()
 
         self.num_layer = num_layer
@@ -82,7 +84,7 @@ class GNN(torch.nn.Module):
         else:
             self.graph_pred_linear = torch.nn.Linear(self.emb_dim, self.num_tasks)
 
-    def forward(self, batched_data):
+    def forward(self, batched_data: Data) -> Tensor:
         h_node = self.gnn_node(batched_data)
         h_graph = self.pool(h_node, batched_data.batch)
         return self.graph_pred_linear(h_graph)

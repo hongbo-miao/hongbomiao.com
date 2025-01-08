@@ -13,7 +13,7 @@ router = APIRouter()
 config = Config()
 
 
-def get_producer():
+def get_producer() -> Producer:
     producer = Producer({"bootstrap.servers": config.KAFKA_BOOTSTRAP_SERVERS})
     try:
         yield producer

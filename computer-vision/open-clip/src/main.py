@@ -27,7 +27,7 @@ class Pets(LanceModel):
     image_uri: str = EMBEDDINGS.SourceField()
 
 
-def main():
+def main() -> None:
     db = lancedb.connect("data/lancedb")
 
     # Create or get the table

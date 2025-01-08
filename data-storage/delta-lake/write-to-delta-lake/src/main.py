@@ -7,7 +7,7 @@ import pyarrow as pa
 from deltalake.writer import write_deltalake
 
 
-def main(row_count: int):
+def main(row_count: int) -> None:
     generator = np.random.default_rng(42)
     timestamp = np.array([time.time() + i * 0.01 for i in range(row_count)])
     current = generator.standard_normal(row_count) * 10.0

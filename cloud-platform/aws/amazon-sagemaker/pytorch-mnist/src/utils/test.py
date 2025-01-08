@@ -2,15 +2,15 @@ import logging
 
 import torch
 import torch.nn.functional as F  # noqa: N812
-import torch.utils.data
-import torch.utils.data.distributed
+from torch.nn import Module
+from torch.utils.data import DataLoader
 
 logger = logging.getLogger(__name__)
 
 
-def test(model, test_loader, device):
+def test(model: Module, test_loader: DataLoader, device: str | torch.device) -> None:
     model.eval()
-    test_loss = 0
+    test_loss = 0.0
     correct = 0
     with torch.no_grad():
         for data, target in test_loader:

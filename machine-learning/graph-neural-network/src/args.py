@@ -1,7 +1,7 @@
 import argparse
 
 
-def get_args():
+def get_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="GNN baselines on ogbgmol* data with Pytorch Geometrics",
     )

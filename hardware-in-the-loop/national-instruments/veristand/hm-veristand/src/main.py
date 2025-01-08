@@ -6,7 +6,7 @@ from niveristand.library import wait
 @nivs_rt_sequence
 @NivsParam("engine_power", BooleanValue(0), NivsParam.BY_REF)
 @NivsParam("desired_rpm", DoubleValue(0), NivsParam.BY_REF)
-def engine_demo_basic(engine_power, desired_rpm) -> None:
+def engine_demo_basic(engine_power, desired_rpm) -> None:  # noqa: ANN001
     engine_power_chan = ChannelReference("Aliases/EnginePower")
     desired_rpm_chan = ChannelReference("Aliases/DesiredRPM")
     engine_power_chan.value = engine_power.value
