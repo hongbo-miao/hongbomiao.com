@@ -308,6 +308,10 @@ lint-toml:
 	taplo fmt --check
 lint-toml-fix:
 	taplo fmt
+lint-verilog:
+	verible-verilog-lint $$(git ls-files "**/*.v") && verible-verilog-format --verify $$(git ls-files "**/*.v")
+lint-verilog-fix:
+	verible-verilog-lint --autofix=inplace $$(git ls-files "**/*.v") && verible-verilog-format --inplace $$(git ls-files "**/*.v")
 lint-vhdl:
 	uv run poe lint-vhdl
 lint-vhdl-fix:
