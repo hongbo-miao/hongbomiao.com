@@ -32,7 +32,9 @@ def train() -> None:
             return embedding
 
         def training_step(
-            self, batch: tuple[torch.Tensor, torch.Tensor], batch_idx: int
+            self,
+            batch: tuple[torch.Tensor, torch.Tensor],
+            batch_idx: int,
         ) -> torch.Tensor:
             x, y = batch
             x = x.view(x.size(0), -1)

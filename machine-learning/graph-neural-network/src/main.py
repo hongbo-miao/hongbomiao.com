@@ -51,7 +51,10 @@ def train(
 
 
 def evaluate(
-    model: nn.Module, device: str, loader: DataLoader, evaluator: Evaluator
+    model: nn.Module,
+    device: str,
+    loader: DataLoader,
+    evaluator: Evaluator,
 ) -> dict:
     model.eval()
     y_true = []
