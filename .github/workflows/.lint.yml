@@ -32,6 +32,7 @@ jobs:
       sql: ${{ steps.filter.outputs.sql }}
       terraform: ${{ steps.filter.outputs.terraform }}
       toml: ${{ steps.filter.outputs.toml }}
+      verilog: ${{ steps.filter.outputs.verilog }}
       vhdl: ${{ steps.filter.outputs.vhdl }}
       xml: ${{ steps.filter.outputs.xml }}
       yaml: ${{ steps.filter.outputs.yaml }}
@@ -219,6 +220,11 @@ jobs:
               - '.github/workflows/.lint.yml'
               - 'taplo.toml'
               - '**/*.toml'
+            verilog:
+              - '.github/workflows/.lint.yml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/*.v'
             vhdl:
               - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
@@ -1435,6 +1441,34 @@ jobs:
             tamasfe/taplo:latest \
             fmt \
               --check
+
+  lint-verilog:
+    name: Verilog
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.verilog == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Lint Verilog
+        run: |
+          git ls-files "**/*.v" | \
+            xargs docker run \
+              --rm \
+              --volume="$(pwd):/workspace" \
+              --workdir=/workspace \
+              hdlc/verible:latest \
+              verible-verilog-lint
+          git ls-files "**/*.v" | \
+            xargs docker run \
+              --rm \
+              --volume="$(pwd):/workspace" \
+              --workdir=/workspace \
+              hdlc/verible:latest \
+              verible-verilog-format \
+                --verify
 
   lint-vhdl:
     name: VHDL
