@@ -78,7 +78,7 @@ def deploy() -> None:
             "Mode": "MultiModel",
         },
     )
-    logger.info(f'Model Arn: {res["ModelArn"]}')
+    logger.info(f"Model Arn: {res['ModelArn']}")
 
     # Create an endpoint config
     res = sagemaker_client.create_endpoint_config(
@@ -93,14 +93,14 @@ def deploy() -> None:
             },
         ],
     )
-    logger.info(f'Endpoint Config Arn: {res["EndpointConfigArn"]}')
+    logger.info(f"Endpoint Config Arn: {res['EndpointConfigArn']}")
 
     # Create an endpoint
     res = sagemaker_client.create_endpoint(
         EndpointName=sagemaker_endpoint_name,
         EndpointConfigName=sagemaker_endpoint_config_name,
     )
-    logger.info(f'Endpoint Arn: {res["EndpointArn"]}')
+    logger.info(f"Endpoint Arn: {res['EndpointArn']}")
 
     check_endpoint_status(sagemaker_client, sagemaker_endpoint_name)
 
