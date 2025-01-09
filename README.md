@@ -699,6 +699,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Taplo** - TOML code formatter
 - **terraform** - Terraform code formatter
 - **tsc** - TypeScript static type checker
+- **Verible** - Verilog code formatter and linter
 - **VHDL Style Guide (VSG)** - VHDL code formatter
 - **@prettier/plugin-xml** - XML formatter
 - **yamllint** - YAML linter
