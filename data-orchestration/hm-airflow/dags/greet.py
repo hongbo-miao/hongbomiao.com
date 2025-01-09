@@ -53,7 +53,7 @@ with DAG(
             msg = "Failed to get time from xcom"
             raise ValueError(msg)
         dt = datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
-        return f'Hello {initials}, {dt.strftime("at %H:%M on %B %d, %Y")}!'
+        return f"Hello {initials}, {dt.strftime('at %H:%M on %B %d, %Y')}!"
 
     @task_group
     def initials_group_function(name: dict[str, str]) -> str:
