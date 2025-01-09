@@ -1,4 +1,4 @@
-FROM docker.io/node:22.12.0-alpine AS web-base
+FROM docker.io/node:22.13.0-alpine AS web-base
 WORKDIR /usr/src/app
 
 FROM web-base AS web-builder
@@ -8,7 +8,7 @@ COPY web ./
 RUN npm run build \
   && npm prune --production
 
-FROM docker.io/node:22.12.0-alpine AS api-node-base
+FROM docker.io/node:22.13.0-alpine AS api-node-base
 WORKDIR /usr/src/app
 
 FROM api-node-base AS api-node-builder
