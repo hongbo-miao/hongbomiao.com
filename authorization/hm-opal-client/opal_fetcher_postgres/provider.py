@@ -116,7 +116,8 @@ class PostgresFetchProvider(BaseFetchProvider):
             return await self._connection.fetch(self._event.config.query)
 
     async def _process_(
-        self, records: list[asyncpg.Record]
+        self,
+        records: list[asyncpg.Record],
     ) -> dict[str, asyncpg.Record] | list[asyncpg.Record]:
         if self._event.config is not None and self._event.config.fetch_one:
             if records and len(records) > 0:
