@@ -8,7 +8,7 @@ COPY api-go ./
 RUN go build -o ./out/cmd/graphql_server/ ./cmd/graphql_server/main.go
 
 
-FROM docker.io/alpine:3.21.1 AS release
+FROM docker.io/alpine:3.21.2 AS release
 WORKDIR /usr/src/app
 ENV GIN_MODE=release
 
