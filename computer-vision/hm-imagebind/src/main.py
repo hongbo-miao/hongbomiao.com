@@ -45,7 +45,7 @@ class ImageBindSearch:
         self.table: Table | None = None
 
     @staticmethod
-    def download_file(client: httpx.Client, url: str, is_audio: bool = True) -> Path:
+    def download_file(client: httpx.Client, url: str, is_audio: bool) -> Path:
         filename = url.split("/")[-1]
         if not is_audio:
             filename = f"{filename}.jpg"
@@ -65,10 +65,12 @@ class ImageBindSearch:
     def download_all_files() -> tuple[list[Path], list[Path]]:
         with httpx.Client(follow_redirects=True) as client:
             audio_paths = [
-                ImageBindSearch.download_file(client, url, True) for url in AUDIO_URLS
+                ImageBindSearch.download_file(client, url, is_audio=True)
+                for url in AUDIO_URLS
             ]
             image_paths = [
-                ImageBindSearch.download_file(client, url, False) for url in IMAGE_URLS
+                ImageBindSearch.download_file(client, url, is_audio=False)
+                for url in IMAGE_URLS
             ]
             return audio_paths, image_paths
 

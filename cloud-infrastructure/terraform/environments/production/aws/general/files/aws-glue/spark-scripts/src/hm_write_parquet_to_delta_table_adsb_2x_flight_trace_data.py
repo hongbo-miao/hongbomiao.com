@@ -68,7 +68,7 @@ def add_dbflags_columns(
     for column_name, mask in columns_and_masks:
         df = df.withColumn(
             column_name,
-            when((col(flag_column_name).bitwiseAND(mask)) > 0, True).otherwise(False),
+            when((col(flag_column_name).bitwiseAND(mask)) > 0, True).otherwise(False),  # noqa: FBT003
         )
     return df
 
@@ -93,8 +93,8 @@ def add_trace_flags_columns(
         else:
             df = df.withColumn(
                 column_name,
-                when((col(flag_column_name).bitwiseAND(mask)) > 0, True).otherwise(
-                    False,
+                when((col(flag_column_name).bitwiseAND(mask)) > 0, True).otherwise(  # noqa: FBT003
+                    False,  # noqa: FBT003
                 ),
             )
     return df
@@ -111,8 +111,8 @@ def add_trace_on_ground_column(
             trace_on_ground_column_name,
             when(
                 col(trace_altitude_ft_column_name) == lit(ground_value),
-                True,
-            ).otherwise(False),
+                True,  # noqa: FBT003
+            ).otherwise(False),  # noqa: FBT003
         )
     return df
 

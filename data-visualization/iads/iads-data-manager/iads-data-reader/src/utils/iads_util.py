@@ -171,7 +171,7 @@ class IadsUtil:
                 # Get IADS config
                 pythoncom.CoInitialize()
                 iads_config = win32com.client.Dispatch("IadsConfigInterface.IadsConfig")
-                iads_config.Open(str(temp_iads_config_path), False)
+                iads_config.Open(str(temp_iads_config_path), False)  # noqa: FBT003
 
                 # Get signals
                 query = "select Parameter from ParameterDefaults"

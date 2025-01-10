@@ -185,7 +185,7 @@ class GNNVirtualNode(torch.nn.Module):
         # List of MLPs to transform virtual node at every layer
         self.mlp_virtualnode_list = torch.nn.ModuleList()
 
-        for layer in range(num_layer):
+        for _layer in range(num_layer):
             if gnn_type == "gin":
                 self.convs.append(GINConv(emb_dim))
             elif gnn_type == "gcn":
@@ -196,7 +196,7 @@ class GNNVirtualNode(torch.nn.Module):
 
             self.batch_norms.append(torch.nn.BatchNorm1d(emb_dim))
 
-        for layer in range(num_layer - 1):
+        for _layer in range(num_layer - 1):
             self.mlp_virtualnode_list.append(
                 torch.nn.Sequential(
                     torch.nn.Linear(emb_dim, 2 * emb_dim),
