@@ -113,7 +113,7 @@ def main() -> None:
     aero = vlm.run()
     for k, v in aero.items():
         logger.info(f"{k.rjust(4)} : {v}")
-    vlm.draw(show_kwargs=dict(jupyter_backend="static"))
+    vlm.draw(show_kwargs={"jupyter_backend": "static"})
 
     # Operating Point Optimization
     opti = asb.Opti()
@@ -161,7 +161,7 @@ def main() -> None:
     opti.minimize(aero["CD"])
     sol = opti.solve()
     vlm = sol(vlm)
-    vlm.draw(show_kwargs=dict(jupyter_backend="static"))
+    vlm.draw(show_kwargs={"jupyter_backend": "static"})
 
     # Compare our optimized solution with known analytic solution (an elliptical lift distribution)
     plt.plot(
