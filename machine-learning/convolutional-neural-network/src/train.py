@@ -13,7 +13,7 @@ def train(
     net.train()
     running_loss = 0.0
 
-    for i, data in enumerate(data_loader, 0):
+    for _i, data in enumerate(data_loader, 0):
         inputs, labels = data
 
         inputs = inputs.to(device)

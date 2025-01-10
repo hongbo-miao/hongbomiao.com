@@ -13,10 +13,10 @@ def main() -> None:
     )
     labels = res.text.split("\n")
 
-    def predict(input: torch.Tensor) -> dict[str, float]:
-        input = transforms.ToTensor()(input).unsqueeze(0)
+    def predict(image_tensor: torch.Tensor) -> dict[str, float]:
+        image_tensor = transforms.ToTensor()(image_tensor).unsqueeze(0)
         with torch.no_grad():
-            prediction = torch.nn.functional.softmax(model(input)[0], dim=0)
+            prediction = torch.nn.functional.softmax(model(image_tensor)[0], dim=0)
             confidences = {labels[i]: float(prediction[i]) for i in range(1000)}
         return confidences
 

@@ -23,7 +23,7 @@ def train(
     model.train()
     total_loss = 0
 
-    for step, batch in enumerate(tqdm(loader, desc="Iteration")):
+    for _step, batch in enumerate(tqdm(loader, desc="Iteration")):
         device_batch = batch.to(device)
 
         if device_batch.x.shape[0] == 1 or device_batch.batch[-1] == 0:
@@ -60,7 +60,7 @@ def evaluate(
     y_true = []
     y_pred = []
 
-    for step, batch in enumerate(tqdm(loader, desc="Iteration")):
+    for _step, batch in enumerate(tqdm(loader, desc="Iteration")):
         device_batch = batch.to(device)
 
         if device_batch.x.shape[0] == 1:

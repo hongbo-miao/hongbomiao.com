@@ -18,7 +18,7 @@ def engine_demo_basic(engine_power, desired_rpm) -> None:  # noqa: ANN001
 
 @nivs_rt_sequence
 def run_engine_demo() -> None:
-    engine_demo_basic(BooleanValue(True), DoubleValue(2500))
+    engine_demo_basic(BooleanValue(True), DoubleValue(2500))  # noqa: FBT003
 
 
 def run_non_deterministic() -> None:

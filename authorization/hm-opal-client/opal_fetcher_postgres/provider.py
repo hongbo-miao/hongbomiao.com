@@ -29,7 +29,7 @@ class PostgresFetcherConfig(FetcherConfig):
         description="can be overridden or complement parts of the DSN",
     )
     query: str = Field(..., description="the query")
-    fetch_one: bool = Field(False, description="fetch only one row")
+    fetch_one: bool = Field(False, description="fetch only one row")  # noqa: FBT003
     dict_key: str | None = Field(
         None,
         description="array of dict will map to dict with provided dict_key",
