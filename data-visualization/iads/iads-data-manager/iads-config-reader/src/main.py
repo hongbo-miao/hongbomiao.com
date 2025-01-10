@@ -34,13 +34,13 @@ def process_config(iads_config_path: Path) -> None:
         iads_config = win32com.client.Dispatch("IadsConfigInterface.IadsConfig")
 
         show_version_from_file(iads_config, iads_config_path)
-        iads_config.Open(iads_config_path, True)
+        iads_config.Open(iads_config_path, True)  # noqa: FBT003
 
         execute_query(iads_config, "select * from Desktops")
         execute_query(iads_config, "select System.RowNumber from Desktops")
         execute_query(iads_config, "select Parameter from ParameterDefaults")
 
-        iads_config.Close(True)
+        iads_config.Close(True)  # noqa: FBT003
     except Exception:
         logger.exception("Failed to close IADS config")
     finally:

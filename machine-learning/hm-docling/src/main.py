@@ -41,8 +41,8 @@ def main() -> None:
             markdown_path = pdf_path.with_suffix(".md")
             markdown_path.write_text(markdown_content, encoding="utf-8")
             logger.info(f"Converted {pdf_path.name}")
-    except Exception as e:
-        logger.info(f"Error processing PDFs: {e}")
+    except Exception:
+        logger.exception("Error processing PDFs")
 
 
 if __name__ == "__main__":

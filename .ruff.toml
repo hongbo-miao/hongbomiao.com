@@ -173,9 +173,12 @@ exclude = [
 # https://docs.astral.sh/ruff/rules/
 [lint]
 select = [
+  "A",     # flake8-builtins
   "AIR",   # Airflow
   "ANN",   # flake8-annotations
   "ASYNC", # flake8-async
+  "B",     # flake8-bugbear
+  "BLE",   # flake8-blind-except
   "C90",   # mccabe
   "COM",   # flake8-commas
   "D",     # pydocstyle
@@ -183,6 +186,7 @@ select = [
   "EM",    # flake8-errmsg
   "EXE",   # flake8-executable
   "F",     # Pyflakes
+  "FBT",   # flake8-boolean-trap
   "FAST",  # FastAPI
   "FLY",   # flynt
   "FURB",  # Refurb
@@ -213,6 +217,8 @@ ignore = [
   "D203",    # Conflicts with D211
   "D212",
   "E501",
+  "FBT001",
+  "FBT002",
   "ISC001",
   "PLR0913",
   "PLR0915",
