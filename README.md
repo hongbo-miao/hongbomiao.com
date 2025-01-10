@@ -721,7 +721,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **CodeReview BOT** - Code reviewing
 - **Mergify** - Automatically merging
 - **Stale** - Stale issues and pull requests closing
-- **ImgBot** - Image compression
 - **semantic-release** - Version management and package publishing
 
 ## Testing
