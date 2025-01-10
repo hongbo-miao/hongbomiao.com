@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import UTC, datetime
 
 import numpy as np
 import polars as pl
@@ -23,7 +23,7 @@ def main() -> None:
     placeholder = st.empty()
 
     while True:
-        current_time = datetime.now()
+        current_time = datetime.now(tz=UTC)
         new_data_point = (
             generator.standard_normal(2) / 10.0 + prev_values
             if prev_values is not None

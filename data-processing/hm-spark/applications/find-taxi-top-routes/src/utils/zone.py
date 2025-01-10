@@ -11,6 +11,6 @@ def load_zones(spark: SparkSession, zone_data_path: str) -> DataFrame:
 
 
 def preprocess_zones(df: DataFrame) -> DataFrame:
-    column_names = list(map(lambda x: x.lower(), df.columns))
+    column_names = [x.lower() for x in df.columns]
     df = df.toDF(*column_names)
     return df.drop("objectid")

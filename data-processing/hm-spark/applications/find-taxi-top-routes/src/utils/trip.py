@@ -8,5 +8,5 @@ def load_trips(spark: SparkSession, data_paths: list[str]) -> DataFrame:
 
 
 def preprocess_trips(df: DataFrame) -> DataFrame:
-    column_names = list(map(lambda x: x.lower(), df.columns))
+    column_names = [x.lower() for x in df.columns]
     return df.toDF(*column_names)

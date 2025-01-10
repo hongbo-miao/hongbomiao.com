@@ -104,7 +104,7 @@ class CanUtils:
         unit_dict: dict[str, dict[str, str]],
     ) -> dict[str, pa.Schema]:
         schema_dict = {}
-        unique_types = set(unit["type"] for unit in unit_dict.values())
+        unique_types = {unit["type"] for unit in unit_dict.values()}
         for unit_type in unique_types:
             if unit_type not in schema_dict:
                 schema_dict[unit_type] = CanUtils.get_dbc_schema(dbc_dict, unit_type)

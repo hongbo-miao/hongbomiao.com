@@ -3,7 +3,7 @@ import re
 import shutil
 import subprocess
 import tempfile
-from datetime import datetime
+from datetime import UTC, datetime
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
@@ -61,7 +61,7 @@ class IadsUtil:
                 elif line.startswith("FlightDate"):
                     # Parse date using datetime (format: MM/DD/YY)
                     date_str = line.split("=")[1].strip()
-                    date = datetime.strptime(date_str, "%m/%d/%y")
+                    date = datetime.strptime(date_str, "%m/%d/%y").astimezone(UTC)
                     year = date.year
 
         if not irig_start_time or not irig_end_time or year is None:
