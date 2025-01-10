@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 
 from rasa_sdk import Action, FormValidationAction, Tracker
@@ -16,7 +16,7 @@ class ActionShowTime(Action):
         tracker: Tracker,
         domain: dict[str, Any],
     ) -> list[dict[str, Any]]:
-        now = datetime.now()
+        now = datetime.now(tz=UTC)
         dispatcher.utter_message(text=f"{now}")
         return []
 

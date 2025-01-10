@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 from airflow.decorators import task, task_group
 from airflow.models import DAG
@@ -7,7 +7,7 @@ from airflow.operators.bash import BashOperator
 
 with DAG(
     "greet",
-    start_date=datetime(2022, 1, 1),
+    start_date=datetime(2022, 1, 1, tzinfo=UTC),
     schedule_interval="@once",
     catchup=False,
     params={
@@ -52,7 +52,7 @@ with DAG(
         if time is None:
             msg = "Failed to get time from xcom"
             raise ValueError(msg)
-        dt = datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
+        dt = datetime.strptime(time, "%Y-%m-%d %H:%M:%S").astimezone(UTC)
         return f"Hello {initials}, {dt.strftime('at %H:%M on %B %d, %Y')}!"
 
     @task_group

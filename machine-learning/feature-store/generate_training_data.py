@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 import pandas as pd
 from feast import FeatureStore
@@ -10,9 +10,9 @@ entity_df = pd.DataFrame.from_dict(
         "driver_id": [1001, 1002, 1003],
         "label_driver_reported_satisfaction": [1, 5, 3],
         "event_timestamp": [
-            datetime.now() - timedelta(minutes=11),
-            datetime.now() - timedelta(minutes=36),
-            datetime.now() - timedelta(minutes=73),
+            datetime.now(tz=UTC) - timedelta(minutes=11),
+            datetime.now(tz=UTC) - timedelta(minutes=36),
+            datetime.now(tz=UTC) - timedelta(minutes=73),
         ],
     },
 )

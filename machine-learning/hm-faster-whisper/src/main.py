@@ -17,7 +17,7 @@ def main(audio_path: Path, transcription_file: Path) -> None:
         audio_path,
         beam_size=5,
         vad_filter=True,
-        vad_parameters=dict(min_silence_duration_ms=500, speech_pad_ms=400),
+        vad_parameters={"min_silence_duration_ms": 500, "speech_pad_ms": 400},
         language="en",
         task="transcribe",
         initial_prompt=None,
