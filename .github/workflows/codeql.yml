@@ -26,7 +26,7 @@ jobs:
           version: 6.6.1
           cache: true
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.0
+        uses: github/codeql-action/init@v3.28.1
         with:
           languages: c-cpp
           tools: latest
@@ -34,9 +34,9 @@ jobs:
         run: |
           rm -f $(git ls-files "**/Makefile")
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.28.0
+        uses: github/codeql-action/autobuild@v3.28.1
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.28.0
+        uses: github/codeql-action/analyze@v3.28.1
 
   codeql-csharp:
     name: C#
@@ -47,14 +47,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.0
+        uses: github/codeql-action/init@v3.28.1
         with:
           languages: csharp
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.28.0
+        uses: github/codeql-action/autobuild@v3.28.1
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.28.0
+        uses: github/codeql-action/analyze@v3.28.1
 
   codeql-go:
     name: Go
@@ -65,14 +65,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.0
+        uses: github/codeql-action/init@v3.28.1
         with:
           languages: go
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.28.0
+        uses: github/codeql-action/autobuild@v3.28.1
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.28.0
+        uses: github/codeql-action/analyze@v3.28.1
 
   codeql-java-kotlin:
     name: Java, Kotlin
@@ -89,14 +89,14 @@ jobs:
           java-version: '17'
           cache: gradle
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.0
+        uses: github/codeql-action/init@v3.28.1
         with:
           languages: java-kotlin
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.28.0
+        uses: github/codeql-action/autobuild@v3.28.1
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.28.0
+        uses: github/codeql-action/analyze@v3.28.1
 
   codeql-javascript-typescript:
     name: JavaScript, TypeScript
@@ -107,14 +107,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.0
+        uses: github/codeql-action/init@v3.28.1
         with:
           languages: javascript-typescript
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.28.0
+        uses: github/codeql-action/autobuild@v3.28.1
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.28.0
+        uses: github/codeql-action/analyze@v3.28.1
 
   codeql-python:
     name: Python
@@ -125,14 +125,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.0
+        uses: github/codeql-action/init@v3.28.1
         with:
           languages: python
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.28.0
+        uses: github/codeql-action/autobuild@v3.28.1
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.28.0
+        uses: github/codeql-action/analyze@v3.28.1
 
   codeql-ruby:
     name: Ruby
@@ -143,14 +143,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.0
+        uses: github/codeql-action/init@v3.28.1
         with:
           languages: ruby
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.28.0
+        uses: github/codeql-action/autobuild@v3.28.1
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.28.0
+        uses: github/codeql-action/analyze@v3.28.1
 
   codeql-swift:
     name: Swift
@@ -161,11 +161,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3.28.0
+        uses: github/codeql-action/init@v3.28.1
         with:
           languages: swift
           tools: latest
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3.28.0
+        uses: github/codeql-action/autobuild@v3.28.1
       - name: CodeQL
-        uses: github/codeql-action/analyze@v3.28.0
+        uses: github/codeql-action/analyze@v3.28.1
