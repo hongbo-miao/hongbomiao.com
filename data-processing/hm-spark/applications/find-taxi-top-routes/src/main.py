@@ -1,7 +1,11 @@
+import logging
+
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import count, desc
 from utils.trip import load_trips, preprocess_trips
 from utils.zone import load_zones, preprocess_zones
+
+logger = logging.getLogger(__name__)
 
 
 def main(data_dirname: str, trip_filenames: list[str], zone_filename: str) -> None:
@@ -14,11 +18,11 @@ def main(data_dirname: str, trip_filenames: list[str], zone_filename: str) -> No
     zones = load_zones(spark, zone_data_path)
 
     trips = preprocess_trips(trips)
-    print((trips.count(), len(trips.columns)))
+    logger.info((trips.count(), len(trips.columns)))
     trips.show()
 
     zones = preprocess_zones(zones)
-    print((zones.count(), len(zones.columns)))
+    logger.info((zones.count(), len(zones.columns)))
     zones.show()
 
     top_routes = (
@@ -35,13 +39,18 @@ def main(data_dirname: str, trip_filenames: list[str], zone_filename: str) -> No
         .drop("locationid", "shape_area", "shape_leng", "the_geom")
         .orderBy(desc("total"))
     )
-    print((top_routes.count(), len(top_routes.columns)))
+    logger.info((top_routes.count(), len(top_routes.columns)))
     top_routes.show(truncate=False)
 
     spark.stop()
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
+
     # https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
     external_data_dirname = "data"
     external_trip_filenames = [

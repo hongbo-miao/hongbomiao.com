@@ -1,6 +1,10 @@
+import logging
+
 from niveristand import NivsParam, nivs_rt_sequence, realtimesequencetools
 from niveristand.clientapi import BooleanValue, ChannelReference, DoubleValue
 from niveristand.library import wait
+
+logger = logging.getLogger(__name__)
 
 
 @nivs_rt_sequence
@@ -22,15 +26,15 @@ def run_engine_demo() -> None:
 
 
 def run_non_deterministic() -> None:
-    print("Started non-deterministic")
+    logger.info("Started non-deterministic")
     run_engine_demo()
-    print("Finished non-deterministic")
+    logger.info("Finished non-deterministic")
 
 
 def run_deterministic() -> None:
-    print("Started deterministic")
+    logger.info("Started deterministic")
     realtimesequencetools.run_py_as_rtseq(run_engine_demo)
-    print("Finished deterministic")
+    logger.info("Finished deterministic")
 
 
 def main(real_time_sequence_path: str) -> None:
@@ -40,6 +44,10 @@ def main(real_time_sequence_path: str) -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
     external_real_time_sequence_path = (
         "c:\\hongbomiao.com\\hardware-in-the-loop\\national-instruments\\hm-veristand"
     )

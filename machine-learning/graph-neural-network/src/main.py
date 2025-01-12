@@ -1,3 +1,5 @@
+import logging
+
 import numpy as np
 import torch
 import wandb
@@ -9,6 +11,7 @@ from torch import nn, optim
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+logger = logging.getLogger(__name__)
 cls_criterion = torch.nn.BCEWithLogitsLoss()
 reg_criterion = torch.nn.MSELoss()
 
@@ -158,8 +161,8 @@ def main() -> None:
         max_perf_metric_val = 0.0
 
         for epoch in range(1, config.epochs + 1):
-            print(f"=====Epoch {epoch}")
-            print("Training...")
+            logger.info(f"=====Epoch {epoch}")
+            logger.info("Training...")
             train_loss = train(
                 model,
                 device,
@@ -168,12 +171,14 @@ def main() -> None:
                 dataset.task_type,
             )
 
-            print("Evaluating...")
+            logger.info("Evaluating...")
             train_perf = evaluate(model, device, train_loader, evaluator)
             val_perf = evaluate(model, device, val_loader, evaluator)
             test_perf = evaluate(model, device, test_loader, evaluator)
 
-            print({"Train": train_perf, "Validation": val_perf, "Test": test_perf})
+            logger.info(
+                {"Train": train_perf, "Validation": val_perf, "Test": test_perf},
+            )
             wb.log(
                 {
                     "epoch": epoch,
@@ -190,7 +195,7 @@ def main() -> None:
 
             # Save model
             if val_perf[dataset.eval_metric] > max_perf_metric_val:
-                print("Found better model.")
+                logger.info("Found better model.")
                 max_perf_metric_val = val_perf[dataset.eval_metric]
                 torch.save(model.state_dict(), "model.pt")
                 wb.save("model.pt")
@@ -202,9 +207,9 @@ def main() -> None:
             best_val_epoch = np.argmin(np.array(val_curve))
             best_train = min(train_curve)
 
-        print("Finished training!")
-        print(f"Best validation score: {val_curve[best_val_epoch]}")
-        print(f"Test score: {test_curve[best_val_epoch]}")
+        logger.info("Finished training!")
+        logger.info(f"Best validation score: {val_curve[best_val_epoch]}")
+        logger.info(f"Test score: {test_curve[best_val_epoch]}")
 
         if not config.filename == "":
             torch.save(
@@ -219,4 +224,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
     main()
