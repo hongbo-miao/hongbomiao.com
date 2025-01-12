@@ -1,8 +1,11 @@
+import logging
 from datetime import UTC, datetime, timedelta
 
 import pandas as pd
 from feast import FeatureStore
 from pandas import option_context
+
+logger = logging.getLogger(__name__)
 
 # The entity dataframe is the dataframe we want to enrich with feature values
 entity_df = pd.DataFrame.from_dict(
@@ -36,9 +39,7 @@ with option_context(
     "display.width",
     500,
 ):
-    print("----- Feature schema -----\n")
-    print(training_df.info())
-
-    print()
-    print("----- Example features -----\n")
-    print(training_df.head())
+    logger.info("----- Feature schema -----")
+    logger.info(training_df.info())
+    logger.info("----- Example features -----")
+    logger.info(training_df.head())

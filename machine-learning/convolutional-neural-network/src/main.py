@@ -1,3 +1,5 @@
+import logging
+
 import torch
 import wandb
 import yaml
@@ -8,6 +10,8 @@ from torch import nn, optim
 from train import train
 from utils.device import device
 from utils.writer import write_params
+
+logger = logging.getLogger(__name__)
 
 
 def main() -> None:
@@ -33,7 +37,7 @@ def main() -> None:
             train_acc = evaluate(net, train_data_loader, device)
             val_acc = evaluate(net, val_data_loader, device)
 
-            print({"Train": train_acc, "Validation": val_acc})
+            logger.info({"Train": train_acc, "Validation": val_acc})
             wb.log(
                 {
                     "epoch": epoch,
@@ -43,7 +47,7 @@ def main() -> None:
                 },
             )
             if val_acc > max_val_acc:
-                print("Found better model.")
+                logger.info("Found better model.")
                 max_val_acc = val_acc
 
                 filename = "output/models/model.pt"
@@ -52,4 +56,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
     main()
