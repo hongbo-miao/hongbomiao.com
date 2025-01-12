@@ -27,7 +27,7 @@ def main(model_path: Path, image_path: Path) -> None:
     class_names = model.names
 
     for detection in detections:
-        print(detection)
+        logger.info(detection)
         xyxy, _, _, class_id, _, _ = detection
 
         x0, y0, x1, y1 = xyxy

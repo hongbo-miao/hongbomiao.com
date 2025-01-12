@@ -23,7 +23,7 @@ def main() -> None:
     question = "Can you explain how large language models work and what makes them effective for tasks like natural language understanding and generation?"
     answer = get_answer(question)
     logger.info(f"Q: {question}")
-    print(f"A: {answer}")
+    logger.info(f"A: {answer}")
 
 
 if __name__ == "__main__":

@@ -1,8 +1,12 @@
+import logging
+
 import config
 import pandas as pd
 from sqlalchemy import create_engine, text
 
 from trino.sqlalchemy import URL
+
+logger = logging.getLogger(__name__)
 
 
 def main() -> None:
@@ -55,8 +59,12 @@ def main() -> None:
         )
         res = conn.execute(sql_query, {"event_id": event_id})
         df = pd.DataFrame(res.fetchall(), columns=res.keys())
-        print(df)
+        logger.info(df)
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
     main()

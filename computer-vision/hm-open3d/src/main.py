@@ -1,12 +1,16 @@
+import logging
+
 import numpy as np
 import open3d as o3d
+
+logger = logging.getLogger(__name__)
 
 
 def main() -> None:
     ply_point_cloud = o3d.data.PLYPointCloud()
     pcd = o3d.io.read_point_cloud(ply_point_cloud.path)
-    print(pcd)
-    print(np.asarray(pcd.points))
+    logger.info(pcd)
+    logger.info(np.asarray(pcd.points))
 
     demo_crop_data = o3d.data.DemoCropPointCloud()
     vol = o3d.visualization.read_selection_polygon_volume(
@@ -35,4 +39,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
     main()

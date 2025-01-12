@@ -17,9 +17,8 @@ def check_endpoint_status(
             EndpointName=sagemaker_endpoint_name,
         )["EndpointStatus"]
     ) == "Creating":
-        print(f"Status: {status}")
+        logger.info(f"{status = }")
         time.sleep(30)
-    print(f"Status: {status}")
 
 
 def deploy() -> None:

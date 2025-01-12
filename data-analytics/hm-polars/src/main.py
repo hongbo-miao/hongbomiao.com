@@ -24,7 +24,7 @@ def download_data(transaction_path: Path) -> None:
 def main() -> None:
     # Download data if not exists
     transaction_path = Path(tempfile.gettempdir()) / "transactions.parquet"
-    print(f"File location: {transaction_path}")
+    logger.info(f"File location: {transaction_path}")
     download_data(transaction_path)
 
     gpu_engine = pl.GPUEngine(

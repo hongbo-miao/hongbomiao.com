@@ -1,6 +1,9 @@
+import logging
 import time
 
 import rti.connextdds as dds
+
+logger = logging.getLogger(__name__)
 
 
 class Listener(dds.DynamicData.NoOpDataReaderListener):
@@ -8,7 +11,7 @@ class Listener(dds.DynamicData.NoOpDataReaderListener):
         with reader.take() as samples:
             for sample in samples:
                 if sample.info.valid:
-                    print(sample.data)
+                    logger.info(sample.data)
 
 
 def subscriber_main(domain_id: int) -> None:
@@ -25,5 +28,10 @@ def subscriber_main(domain_id: int) -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
+
     dds_domain_id = 0
     subscriber_main(dds_domain_id)

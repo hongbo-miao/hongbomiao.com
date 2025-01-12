@@ -1,5 +1,9 @@
+import logging
+
 import pandas as pd
 from pandas import option_context
+
+logger = logging.getLogger(__name__)
 
 with option_context(
     "display.max_rows",
@@ -10,4 +14,4 @@ with option_context(
     500,
 ):
     df = pd.read_parquet("driver_features/data/driver_stats.parquet")
-    print(df)
+    logger.info(df)

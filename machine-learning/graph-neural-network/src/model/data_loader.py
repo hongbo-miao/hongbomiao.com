@@ -1,8 +1,11 @@
 import argparse
+import logging
 
 import torch
 from ogb.graphproppred import PygGraphPropPredDataset
 from torch_geometric.loader import DataLoader
+
+logger = logging.getLogger(__name__)
 
 
 def fetch_dataset(config: argparse.Namespace) -> PygGraphPropPredDataset:
@@ -12,7 +15,7 @@ def fetch_dataset(config: argparse.Namespace) -> PygGraphPropPredDataset:
     if config.feature == "full":
         pass
     elif config.feature == "simple":
-        print("using simple feature")
+        logger.info("using simple feature")
         # only retain the top two node/edge features
         dataset.x = dataset.x[:, :2]
         dataset.edge_attr = dataset.edge_attr[:, :2]

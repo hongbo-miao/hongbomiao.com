@@ -1,6 +1,8 @@
-from pprint import pprint
+import logging
 
 from feast import FeatureStore
+
+logger = logging.getLogger(__name__)
 
 store = FeatureStore(repo_path="./driver_features")
 
@@ -17,4 +19,4 @@ features = store.get_online_features(
     ],
 ).to_dict()
 
-pprint(features)
+logger.info(features)

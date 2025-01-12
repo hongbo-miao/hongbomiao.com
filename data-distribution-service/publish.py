@@ -1,6 +1,9 @@
+import logging
 import time
 
 import rti.connextdds as dds
+
+logger = logging.getLogger(__name__)
 
 
 def publisher_main(dds_domain_id: int, total_count: int) -> None:
@@ -17,7 +20,7 @@ def publisher_main(dds_domain_id: int, total_count: int) -> None:
     while count < total_count:
         sample["count"] = count
         sample["name"] = "odd" if count % 2 == 1 else "even"
-        print(sample)
+        logger.info(sample)
         writer.write(sample, handle)
         time.sleep(1)
         count += 1
@@ -26,6 +29,11 @@ def publisher_main(dds_domain_id: int, total_count: int) -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
+
     external_dds_domain_id = 0
     external_total_count = 100
     publisher_main(external_dds_domain_id, external_total_count)

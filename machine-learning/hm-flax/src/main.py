@@ -1,3 +1,4 @@
+import logging
 from typing import Any, Callable
 
 import flax.linen as nn
@@ -5,6 +6,8 @@ import jax
 import jax.numpy as jnp
 import optax
 from flax.training import train_state
+
+logger = logging.getLogger(__name__)
 
 
 class CNN(nn.Module):
@@ -75,13 +78,17 @@ def main() -> None:
             "label": jax.random.randint(rng, (32,), 0, 10),
         }
         state, loss = train_step(state, batch)
-        print(f"Epoch {epoch}, Loss: {loss}")
+        logger.info(f"Epoch {epoch}, Loss: {loss}")
 
     test_image = jax.random.normal(rng, (1, 28, 28, 1))
     logits = state.apply_fn({"params": state.params}, test_image)
     predicted_class = jnp.argmax(logits, axis=-1)
-    print(f"Predicted class: {predicted_class}")
+    logger.info(f"Predicted class: {predicted_class}")
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
     main()
