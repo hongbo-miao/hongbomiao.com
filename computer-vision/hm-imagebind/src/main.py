@@ -49,11 +49,11 @@ class ImageBindSearch:
         filename = url.split("/")[-1]
         if not is_audio:
             filename = f"{filename}.jpg"
-        local_file_path = DATA_DIR / filename
+        local_file_path = DATA_DIR / Path(filename)
 
         response = client.get(url)
         if response.status_code == 200:
-            with open(local_file_path, "wb") as file:
+            with local_file_path.open("wb") as file:
                 file.write(response.content)
                 logger.info(f"Downloaded file: {local_file_path}")
             return local_file_path

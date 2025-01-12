@@ -1,5 +1,5 @@
 import json
-import os
+from pathlib import Path
 
 import config
 import magic
@@ -51,19 +51,20 @@ class WebsiteUser(HttpUser):
 
     @task
     def upload_file(self) -> None:
-        file_path = "src/fixture/image.png"
-        file_name = os.path.basename(file_path)
-        file = open(file_path, "rb")
+        file_path = Path("src/fixture/image.png")
+        file_name = file_path.name
         mime = magic.Magic(mime=True)
         file_mimetype = mime.from_file(file_path)
-        files = {
-            "file": (file_name, file, file_mimetype),
-        }
-        self.client.post(
-            "/api/upload-file",
-            headers={
-                "Authorization": f"Bearer {self.jwt_token}",
-            },
-            files=files,
-            verify=False,
-        )
+
+        with file_path.open("rb") as file:
+            files = {
+                "file": (file_name, file, file_mimetype),
+            }
+            self.client.post(
+                "/api/upload-file",
+                headers={
+                    "Authorization": f"Bearer {self.jwt_token}",
+                },
+                files=files,
+                verify=False,
+            )

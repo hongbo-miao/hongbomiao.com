@@ -26,7 +26,13 @@ def train(args: argparse.Namespace) -> None:
     use_cuda = args.num_gpus > 0
     logger.info(f"Number of gpus available: {args.num_gpus}")
     kwargs = {"num_workers": 1, "pin_memory": True} if use_cuda else {}
-    device = torch.device("cuda" if use_cuda else "cpu")
+
+    if torch.cuda.is_available():
+        device = "cuda"
+    elif torch.backends.mps.is_available():
+        device = "mps"
+    else:
+        device = "cpu"
 
     if is_distributed:
         # Initialize the distributed environment.
