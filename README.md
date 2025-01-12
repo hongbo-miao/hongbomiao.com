@@ -488,6 +488,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Ray** - Distributed computing framework
 - **SkyPilot** - Sky computing
 
+### Scientific Computing
+
+- **SunPy** - Solar physics data analysis
+
 ### Quantum Computing
 
 - **Qiskit** - Quantum computing
