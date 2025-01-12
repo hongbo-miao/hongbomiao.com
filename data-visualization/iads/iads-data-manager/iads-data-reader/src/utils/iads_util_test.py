@@ -45,7 +45,10 @@ Tail = HM
 FlightDate = 2025-01-01
 """
         test_file.write_text(test_content)
-        with pytest.raises(ValueError):
+        with pytest.raises(
+            ValueError,
+            match="time data '2025-01-01' does not match format '%m/%d/%y'",
+        ):
             IadsUtil.get_irig_times(test_file)
 
     def test_get_irig_times_invalid_time_range(self, tmp_path: Path) -> None:
@@ -113,7 +116,7 @@ FlightDate = 01/01/25
             IadsUtil.get_irig_times(test_file)
 
     @pytest.mark.parametrize(
-        "start_time,end_time",
+        ("start_time", "end_time"),
         [
             ("---:--:--:--.---", "---:--:--:--.---"),
             ("abc:12:34:56.789", "def:12:34:56.789"),

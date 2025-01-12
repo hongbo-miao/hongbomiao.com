@@ -24,8 +24,7 @@ class LitAutoEncoder(L.LightningModule):
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        embedding = self.encoder(x)
-        return embedding
+        return self.encoder(x)
 
     def training_step(
         self,
@@ -41,8 +40,7 @@ class LitAutoEncoder(L.LightningModule):
         return loss
 
     def configure_optimizers(self) -> torch.optim.Optimizer:
-        optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
-        return optimizer
+        return torch.optim.Adam(self.parameters(), lr=1e-3)
 
 
 def main() -> None:

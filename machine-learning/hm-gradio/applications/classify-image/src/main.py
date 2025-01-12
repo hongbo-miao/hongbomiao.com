@@ -17,8 +17,7 @@ def main() -> None:
         image_tensor = transforms.ToTensor()(image_tensor).unsqueeze(0)
         with torch.no_grad():
             prediction = torch.nn.functional.softmax(model(image_tensor)[0], dim=0)
-            confidences = {labels[i]: float(prediction[i]) for i in range(1000)}
-        return confidences
+            return {labels[i]: float(prediction[i]) for i in range(1000)}
 
     gr.Interface(
         fn=predict,
