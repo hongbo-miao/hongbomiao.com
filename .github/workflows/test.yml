@@ -98,6 +98,7 @@ jobs:
       hm-spark-recommend-movies: ${{ steps.filter.outputs.hm-spark-recommend-movies }}
       hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
       hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
+      hm-sunpy: ${{ steps.filter.outputs.hm-sunpy }}
       hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
@@ -394,6 +395,9 @@ jobs:
             hm-streamlit-map:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-streamlit/applications/map/**'
+            hm-sunpy:
+              - '.github/workflows/test.yml'
+              - 'scientific-computing/hm-sunpy/**'
             hm-supervision-detect-objects:
               - '.github/workflows/test.yml'
               - 'computer-vision/hm-supervision/detect-objects/**'
@@ -872,7 +876,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: api-python/uv.lock
       - name: Set up Python
@@ -930,7 +934,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-orchestration/hm-airflow/uv.lock
       - name: Set up Python
@@ -963,7 +967,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/uv.lock
       - name: Set up Python
@@ -996,7 +1000,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/uv.lock
       - name: Set up Python
@@ -1029,7 +1033,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/uv.lock
       - name: Set up Python
@@ -1062,7 +1066,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/uv.lock
       - name: Set up Python
@@ -1095,7 +1099,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: cloud-platform/aws/aws-parallelcluster/pcluster/uv.lock
       - name: Set up Python
@@ -1133,7 +1137,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: matlab/call-matlab-function-in-python/uv.lock
       - name: Set up Python
@@ -1166,7 +1170,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: embedded-systems/decode-can-data/uv.lock
       - name: Set up Python
@@ -1199,7 +1203,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: embedded-systems/format-can-data/uv.lock
       - name: Set up Python
@@ -1232,7 +1236,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-distribution-service/uv.lock
       - name: Set up Python
@@ -1265,7 +1269,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-transformation/dbt/projects/dbt_hm_postgres/uv.lock
       - name: Set up Python
@@ -1298,7 +1302,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-amazon-athena/uv.lock
       - name: Set up Python
@@ -1331,7 +1335,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-trino/uv.lock
       - name: Set up Python
@@ -1364,7 +1368,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-storage/delta-lake/write-to-delta-lake/uv.lock
       - name: Set up Python
@@ -1397,7 +1401,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-storage/hm-duckdb/query-duckdb/uv.lock
       - name: Set up Python
@@ -1430,7 +1434,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-storage/hm-duckdb/query-lance/uv.lock
       - name: Set up Python
@@ -1463,7 +1467,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-storage/hm-duckdb/query-parquet/uv.lock
       - name: Set up Python
@@ -1496,7 +1500,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-storage/hm-duckdb/query-protobuf/uv.lock
       - name: Set up Python
@@ -1529,7 +1533,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-storage/lance/uv.lock
       - name: Set up Python
@@ -1562,7 +1566,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-storage/hm-lancedb/uv.lock
       - name: Set up Python
@@ -1595,7 +1599,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-storage/hm-protobuf/uv.lock
       - name: Set up Python
@@ -1628,7 +1632,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-analytics/hm-cupy/uv.lock
       - name: Set up Python
@@ -1661,7 +1665,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-analytics/hm-numba/uv.lock
       - name: Set up Python
@@ -1694,7 +1698,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-analytics/hm-pandas/uv.lock
       - name: Set up Python
@@ -1727,7 +1731,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-analytics/hm-cudf/uv.lock
       - name: Set up Python
@@ -1760,7 +1764,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-analytics/hm-polars/uv.lock
       - name: Set up Python
@@ -1793,7 +1797,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-analytics/hm-geopandas/uv.lock
       - name: Set up Python
@@ -1826,7 +1830,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-analytics/hm-networkx/uv.lock
       - name: Set up Python
@@ -1859,7 +1863,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hugging-face/analyze-sentiment/uv.lock
       - name: Set up Python
@@ -1892,7 +1896,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-gradio/applications/classify-image/uv.lock
       - name: Set up Python
@@ -1925,7 +1929,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-streamlit/applications/live-line-chart/uv.lock
       - name: Set up Python
@@ -1958,7 +1962,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-streamlit/applications/map/uv.lock
       - name: Set up Python
@@ -1991,7 +1995,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: high-performance-computing/hm-jax/uv.lock
       - name: Set up Python
@@ -2024,7 +2028,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-flax/uv.lock
       - name: Set up Python
@@ -2057,7 +2061,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-autogluon/uv.lock
       - name: Set up Python
@@ -2091,7 +2095,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/dali/uv.lock
       - name: Set up Python
@@ -2124,7 +2128,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/feature-store/uv.lock
       - name: Set up Python
@@ -2157,7 +2161,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-sglang/uv.lock
       - name: Set up Python
@@ -2190,7 +2194,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-kubeflow/pipelines/calculate/uv.lock
       - name: Set up Python
@@ -2223,7 +2227,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-kubeflow/pipelines/classify-mnist/uv.lock
       - name: Set up Python
@@ -2256,7 +2260,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/mineru/uv.lock
       - name: Set up Python
@@ -2295,7 +2299,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-docling/uv.lock
       - name: Set up Python
@@ -2328,7 +2332,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-langchain/applications/chat-pdf/uv.lock
       - name: Set up Python
@@ -2361,7 +2365,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-langgraph/applications/chat-pdf/uv.lock
       - name: Set up Python
@@ -2394,7 +2398,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-llama-index/applications/chat-pdf/uv.lock
       - name: Set up Python
@@ -2427,7 +2431,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-mlflow/experiments/classify-mnist/uv.lock
       - name: Set up Python
@@ -2460,7 +2464,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-mlflow/experiments/predict-diabetes/uv.lock
       - name: Set up Python
@@ -2493,7 +2497,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/neural-forecasting/forecast-air-passenger-number/uv.lock
       - name: Set up Python
@@ -2526,7 +2530,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: hardware-in-the-loop/national-instruments/hm-pyvisa/uv.lock
       - name: Set up Python
@@ -2559,7 +2563,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: hardware-in-the-loop/national-instruments/hm-tdms/uv.lock
       - name: Set up Python
@@ -2592,7 +2596,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: hardware-in-the-loop/national-instruments/veristand/hm-veristand/uv.lock
       - name: Set up Python
@@ -2625,7 +2629,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: computer-vision/hm-supervision/detect-objects/uv.lock
       - name: Set up Python
@@ -2658,7 +2662,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: computer-vision/hm-imagebind/uv.lock
       - name: Set up Python
@@ -2691,7 +2695,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: computer-vision/open-clip/uv.lock
       - name: Set up Python
@@ -2724,7 +2728,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: computer-vision/hm-open3d/uv.lock
       - name: Set up Python
@@ -2757,7 +2761,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: aerospace/hm-aerosandbox/uv.lock
       - name: Set up Python
@@ -2790,7 +2794,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: aerospace/hm-openaerostruct/uv.lock
       - name: Set up Python
@@ -2823,7 +2827,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-orchestration/hm-prefect/workflows/calculate/uv.lock
       - name: Set up Python
@@ -2856,7 +2860,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-orchestration/hm-prefect/workflows/greet/uv.lock
       - name: Set up Python
@@ -2889,7 +2893,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-orchestration/hm-prefect/workflows/print-platform/uv.lock
       - name: Set up Python
@@ -2922,7 +2926,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: cloud-security/hm-prowler/uv.lock
       - name: Set up Python
@@ -2955,7 +2959,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: cloud-infrastructure/hm-pulumi/uv.lock
       - name: Set up Python
@@ -2988,7 +2992,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: computer-vision/hm-pyvista/mount-saint-helens/uv.lock
       - name: Set up Python
@@ -3021,7 +3025,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: cloud-computing/hm-ray/applications/calculate/uv.lock
       - name: Set up Python
@@ -3054,7 +3058,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: cloud-computing/hm-ray/applications/process-flight-data/uv.lock
       - name: Set up Python
@@ -3087,7 +3091,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/reinforcement-learning/cart-pole/uv.lock
       - name: Set up Python
@@ -3120,7 +3124,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/hm-faster-whisper/uv.lock
       - name: Set up Python
@@ -3153,7 +3157,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/stable-diffusion/uv.lock
       - name: Set up Python
@@ -3186,7 +3190,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: embedded-systems/hm-serial/uv.lock
       - name: Set up Python
@@ -3219,7 +3223,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: embedded-systems/pack-unpack-data/uv.lock
       - name: Set up Python
@@ -3252,7 +3256,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: cloud-computing/hm-skypilot/uv.lock
       - name: Set up Python
@@ -3272,39 +3276,6 @@ jobs:
         with:
           directory: cloud-computing/hm-skypilot
 
-  quantum-computing-test:
-    name: Quantum Computing | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.quantum-computing == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.1.0
-        with:
-          version: 0.5.14
-          enable-cache: true
-          cache-dependency-glob: quantum-computing/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: quantum-computing/pyproject.toml
-      - name: Install dependencies
-        working-directory: quantum-computing
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: quantum-computing
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: quantum-computing
-
   triton-test:
     name: Triton | Test
     needs: detect-changes
@@ -3318,7 +3289,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: parallel-computing/hm-triton/uv.lock
       - name: Set up Python
@@ -3338,6 +3309,72 @@ jobs:
         with:
           directory: parallel-computing/hm-triton
 
+  quantum-computing-test:
+    name: Quantum Computing | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.quantum-computing == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.18
+          enable-cache: true
+          cache-dependency-glob: quantum-computing/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: quantum-computing/pyproject.toml
+      - name: Install dependencies
+        working-directory: quantum-computing
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: quantum-computing
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: quantum-computing
+
+  sunpy-test:
+    name: SunPy | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-sunpy == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.18
+          enable-cache: true
+          cache-dependency-glob: scientific-computing/hm-sunpy/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: scientific-computing/hm-sunpy/pyproject.toml
+      - name: Install dependencies
+        working-directory: scientific-computing/hm-sunpy
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: scientific-computing/hm-sunpy
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: scientific-computing/hm-sunpy
+
   xxhash-test:
     name: xxHash | Test
     needs: detect-changes
@@ -3351,7 +3388,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: hm-xxhash/uv.lock
       - name: Set up Python
@@ -3384,7 +3421,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/analyze-coffee-customers/uv.lock
       - name: Set up Python
@@ -3417,7 +3454,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/find-retired-people-python/uv.lock
       - name: Set up Python
@@ -3473,7 +3510,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/find-taxi-top-routes/uv.lock
       - name: Set up Python
@@ -3506,7 +3543,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/find-taxi-top-routes-sql/uv.lock
       - name: Set up Python
@@ -3562,7 +3599,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-processing/hm-spark/applications/recommend-movies/uv.lock
       - name: Set up Python
@@ -3889,7 +3926,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-visualization/grafana/hm-dashboard/uv.lock
       - name: Set up Python
@@ -3951,7 +3988,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-visualization/iads/iads-data-manager/iads-config-reader/uv.lock
       - name: Set up Python
@@ -3984,7 +4021,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: data-visualization/iads/iads-data-manager/iads-data-reader/uv.lock
       - name: Set up Python
@@ -4122,7 +4159,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/graph-neural-network/uv.lock
       - name: Set up Python
@@ -4157,7 +4194,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/graph-neural-network/uv.lock
       - name: Set up Python
@@ -4188,7 +4225,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
       - name: Set up Python
@@ -4223,7 +4260,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
       - name: Set up Python
@@ -4291,7 +4328,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5.1.0
         with:
-          version: 0.5.14
+          version: 0.5.18
           enable-cache: true
           cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
       - name: Set up Python

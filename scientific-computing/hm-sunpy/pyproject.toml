@@ -1,0 +1,24 @@
+[project]
+name = "hm-sunpy"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+  "matplotlib==3.10.0",
+  "scipy==1.15.1",
+  "sunpy[all]==6.0.4",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.32.1",
+  "pytest==8.3.4",
+  "pytest-cov==6.0.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
