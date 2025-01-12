@@ -10,8 +10,6 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 import pandas as pd
-import pythoncom
-import win32com.client
 
 logger = logging.getLogger(__name__)
 
@@ -79,15 +77,15 @@ class IadsUtil:
         ):
             msg = "Invalid time format in archive info file"
             raise ValueError(msg)
-        elif irig_start_time > max_irig_time:
+        if irig_start_time > max_irig_time:
             msg = (
                 f"Start time '{irig_start_time}' cannot be bigger than {max_irig_time}"
             )
             raise ValueError(msg)
-        elif irig_end_time == "000:00:00:00.000" or irig_end_time > max_irig_time:
+        if irig_end_time == "000:00:00:00.000" or irig_end_time > max_irig_time:
             msg = f"End time '{irig_end_time}' cannot be 000:00:00:00.000 or bigger than {max_irig_time}"
             raise ValueError(msg)
-        elif irig_end_time <= irig_start_time:
+        if irig_end_time <= irig_start_time:
             msg = f"End time '{irig_end_time}' must be greater than start time '{irig_start_time}'"
             raise ValueError(msg)
 
@@ -129,9 +127,8 @@ class IadsUtil:
         result = subprocess.run(cmd, capture_output=True, text=True, check=False)  # noqa: S603
         if result.returncode == 0:
             return parquet_file_path
-        else:
-            msg = f"Error output: {result}"
-            raise ValueError(msg)
+        msg = f"Error output: {result}"
+        raise ValueError(msg)
 
     @staticmethod
     def convert_irig_to_unix_time_ns(
@@ -152,6 +149,9 @@ class IadsUtil:
         iads_data_path: Path,
         timezone: str,
     ) -> pd.DataFrame:
+        import pythoncom
+        import win32com.client
+
         iads_config_path = iads_data_path / Path(IadsUtil.IADS_CONFIG_FILE_NAME)
         iads_metadata_path = iads_data_path / Path(IadsUtil.IADS_METADATA_FILE_NAME)
         iads_config: Any | None = None

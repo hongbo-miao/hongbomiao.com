@@ -16,12 +16,11 @@ with DAG(
     @task
     def download_from_s3(key: str, bucket: str, local_path: str) -> str:
         hook = S3Hook("s3_connection")
-        file_path = hook.download_file(
+        return hook.download_file(
             key=key,
             bucket_name=bucket,
             local_path=local_path,
         )
-        return file_path
 
     @task
     def rename_file(file_path: str, new_file_name: str) -> None:
