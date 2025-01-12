@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 
 import torch
 import wandb
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    with open("params.yaml") as f:
+    with Path("params.yaml").open("r") as f:
         params = yaml.safe_load(f)
 
     write_params(params)

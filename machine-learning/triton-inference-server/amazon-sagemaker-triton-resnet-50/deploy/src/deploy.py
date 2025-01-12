@@ -60,7 +60,7 @@ def deploy() -> None:
         "af-south-1": "774647643957",
     }
     region = boto3.Session().region_name
-    if region not in aws_account_id_dict.keys():
+    if region not in aws_account_id_dict:
         msg = "Unsupported region"
         raise ValueError(msg)
     base = "amazonaws.com.cn" if region.startswith("cn-") else "amazonaws.com"

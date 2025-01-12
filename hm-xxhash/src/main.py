@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def get_file_xxh128(file_path: Path) -> str:
     xxh128_hash = xxhash.xxh128()
-    with open(file_path, "rb") as file:
+    with file_path.open("rb") as file:
         while True:
             data = file.read(8192)  # Read 8192 bytes at a time to use less memory
             if not data:
