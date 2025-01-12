@@ -22,11 +22,10 @@ class GINConv(MessagePassing):
 
     def forward(self, x: Tensor, edge_index: Tensor, edge_attr: Tensor) -> Tensor:
         edge_embedding = self.bond_encoder(edge_attr)
-        out = self.mlp(
+        return self.mlp(
             (1 + self.eps) * x
             + self.propagate(edge_index, x=x, edge_attr=edge_embedding),
         )
-        return out
 
     def message(self, x_j: Tensor, edge_attr: Tensor) -> Tensor:
         return F.relu(x_j + edge_attr)

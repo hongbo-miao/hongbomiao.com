@@ -110,10 +110,9 @@ class PostgresFetchProvider(BaseFetchProvider):
                 return []
             row = await self._connection.fetchrow(self._event.config.query)
             return [row]
-        else:
-            if self._connection is None:
-                return []
-            return await self._connection.fetch(self._event.config.query)
+        if self._connection is None:
+            return []
+        return await self._connection.fetch(self._event.config.query)
 
     async def _process_(
         self,
@@ -123,10 +122,9 @@ class PostgresFetchProvider(BaseFetchProvider):
             if records and len(records) > 0:
                 return dict(records[0])
             return {}
-        else:
-            if self._event.config.dict_key is None:
-                return [dict(record) for record in records]
-            return {
-                dict(record)[self._event.config.dict_key]: dict(record)
-                for record in records
-            }
+        if self._event.config.dict_key is None:
+            return [dict(record) for record in records]
+        return {
+            dict(record)[self._event.config.dict_key]: dict(record)
+            for record in records
+        }

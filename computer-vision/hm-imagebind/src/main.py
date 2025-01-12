@@ -57,9 +57,8 @@ class ImageBindSearch:
                 file.write(response.content)
                 logger.info(f"Downloaded file: {local_file_path}")
             return local_file_path
-        else:
-            msg = f"Download failed: {response}"
-            raise RuntimeError(msg)
+        msg = f"Download failed: {response}"
+        raise RuntimeError(msg)
 
     @staticmethod
     def download_all_files() -> tuple[list[Path], list[Path]]:
@@ -156,11 +155,10 @@ class ImageBindSearch:
             examples=audio_paths,
             flagging_mode="never",
         )
-        gradio_interface = gr.TabbedInterface(
+        return gr.TabbedInterface(
             [image_to_text_audio, text_to_image_audio, audio_to_image_text],
             ["Image to Text/Audio", "Text to Image/Audio", "Audio to Image/Text"],
         )
-        return gradio_interface
 
 
 def main() -> None:
