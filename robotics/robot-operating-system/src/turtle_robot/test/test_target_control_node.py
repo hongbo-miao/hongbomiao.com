@@ -49,8 +49,8 @@ class TestTargetControlNodeLink(unittest.TestCase):
 
     def test_target_control_node(
         self,
-        target_control_node: Node,
-        proc_output: tuple[bytes, bytes],
+        _target_control_node: Node,  # noqa: PT019
+        _proc_output: tuple[bytes, bytes],  # noqa: PT019
     ) -> None:
         pose_pub: Publisher = self.node.create_publisher(Pose, "turtle1/pose", 10)
 

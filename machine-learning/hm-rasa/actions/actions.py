@@ -13,8 +13,8 @@ class ActionShowTime(Action):
     def run(
         self,
         dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: dict[str, Any],
+        _tracker: Tracker,
+        _domain: dict[str, Any],
     ) -> list[dict[str, Any]]:
         now = datetime.now(tz=UTC)
         dispatcher.utter_message(text=f"{now}")
@@ -29,7 +29,7 @@ class ActionGetShirtSize(Action):
         self,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
-        domain: dict[str, Any],
+        _domain: dict[str, Any],
     ) -> list[dict[str, Any]]:
         my_favorite_color = tracker.get_slot("my_favorite_color")
         if not my_favorite_color:
@@ -53,8 +53,8 @@ class ValidateSimplePizzaForm(FormValidationAction):
         self,
         slot_value: str,
         dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: DomainDict,
+        _tracker: Tracker,
+        _domain: DomainDict,
     ) -> dict[str, str | None]:
         if slot_value.lower() not in ALLOWED_PIZZA_SIZES:
             dispatcher.utter_message(
@@ -68,8 +68,8 @@ class ValidateSimplePizzaForm(FormValidationAction):
         self,
         slot_value: str,
         dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: DomainDict,
+        _tracker: Tracker,
+        _domain: DomainDict,
     ) -> dict[str, str | None]:
         if slot_value not in ALLOWED_PIZZA_TYPES:
             dispatcher.utter_message(

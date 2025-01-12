@@ -3,16 +3,17 @@ import math
 import rclpy
 from geometry_msgs.msg import Twist
 from rclpy.node import Node
+from rclpy.publisher import Publisher
 from turtlesim.msg import Pose
 
 
 class TurtleRobotControlNode(Node):
     def __init__(self) -> None:
         super().__init__("turtle_robot_control_node")
+
         self.get_logger().info("turtle_robot_control_node")
         self._turtle_robot_pose: Pose | None = None
         self._target_pose: Pose | None = None
-        from rclpy.publisher import Publisher
 
         self._cmd_vel_publisher: Publisher[Twist] = self.create_publisher(
             Twist,

@@ -211,7 +211,7 @@ def main() -> None:
         logger.info(f"Best validation score: {val_curve[best_val_epoch]}")
         logger.info(f"Test score: {test_curve[best_val_epoch]}")
 
-        if not config.filename == "":
+        if config.filename != "":
             torch.save(
                 {
                     "Val": val_curve[best_val_epoch],

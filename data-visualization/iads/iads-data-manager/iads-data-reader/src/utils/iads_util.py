@@ -50,7 +50,7 @@ class IadsUtil:
         irig_start_time = ""
         irig_end_time = ""
         year = None
-        with open(iads_metadata_path) as file:
+        with Path(iads_metadata_path).open() as file:
             for line in file:
                 if line.startswith("ArchiveStartTime"):
                     irig_start_time = line.split("=")[1].strip()

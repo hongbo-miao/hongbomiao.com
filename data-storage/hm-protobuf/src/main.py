@@ -11,33 +11,27 @@ from protos.production.iot import motor_pb2
 logger = logging.getLogger(__name__)
 
 
-class ProtobufWriter:
-    def __init__(self, filename: Path) -> None:
-        self.file = open(filename, "wb")
-
-    def write_message(self, proto_message: motor_pb2.Motor) -> None:
+def write_protobuf_message(
+    filename: Path,
+    proto_message: motor_pb2.Motor,
+) -> None:
+    with filename.open("ab") as file:
         size: int = proto_message.ByteSize()
-        self.file.write(struct.pack("<I", size))
-        self.file.write(proto_message.SerializeToString())
-        self.file.flush()
-
-    def close(self) -> None:
-        self.file.close()
+        file.write(struct.pack("<I", size))
+        file.write(proto_message.SerializeToString())
+        file.flush()
 
 
-class ProtobufReader:
-    def __init__(self, filename: Path) -> None:
-        self.file = open(filename, "rb")
-
-    def get_dataframe(self) -> pl.DataFrame:
-        data: list[dict[str, Any]] = []
+def read_protobuf_messages(filename: Path) -> pl.DataFrame:
+    data: list[dict[str, Any]] = []
+    with filename.open("rb") as file:
         while True:
-            size_data: bytes = self.file.read(4)
+            size_data: bytes = file.read(4)
             if not size_data:
                 break
             size: int = struct.unpack("<I", size_data)[0]
 
-            message_data: bytes = self.file.read(size)
+            message_data: bytes = file.read(size)
             if len(message_data) != size:
                 break
 
@@ -54,12 +48,7 @@ class ProtobufReader:
                 "temperature5": motor.temperature5,
             }
             data.append(row)
-
-        df: pl.DataFrame = pl.DataFrame(data)
-        return df
-
-    def close(self) -> None:
-        self.file.close()
+    return pl.DataFrame(data)
 
 
 def generate_motor_data(point_number: int) -> list[motor_pb2.Motor]:
@@ -83,20 +72,16 @@ def generate_motor_data(point_number: int) -> list[motor_pb2.Motor]:
 
 
 def main() -> None:
+    # Generate data
     motor_data_path: Path = Path("data/motor_data.pb")
     point_number: int = 20
 
-    # Generate data
-    writer: ProtobufWriter = ProtobufWriter(motor_data_path)
-    data: list[motor_pb2.Motor] = generate_motor_data(point_number)
-    for motor in data:
-        writer.write_message(motor)
-    writer.close()
+    motor_data: list[motor_pb2.Motor] = generate_motor_data(point_number)
+    for motor in motor_data:
+        write_protobuf_message(motor_data_path, motor)
 
     # Read data
-    reader: ProtobufReader = ProtobufReader(motor_data_path)
-    df: pl.DataFrame = reader.get_dataframe()
-    reader.close()
+    df = read_protobuf_messages(motor_data_path)
     logger.info(df)
 
 

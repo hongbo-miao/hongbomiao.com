@@ -1,5 +1,4 @@
 import logging
-import os
 from pathlib import Path
 
 import torch
@@ -10,5 +9,5 @@ logger = logging.getLogger(__name__)
 
 def save_model(model: Module, model_dir_path: Path) -> None:
     logger.info("Save the model.")
-    path = os.path.join(model_dir_path, "model.pth")
+    path = model_dir_path / Path("model.pth")
     torch.save(model.cpu().state_dict(), path)

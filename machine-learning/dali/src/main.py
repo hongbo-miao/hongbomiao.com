@@ -2,7 +2,6 @@ import logging
 import urllib.request
 from pathlib import Path
 
-import torch
 from nvidia.dali import fn, pipeline_def, types
 from nvidia.dali.pipeline import Pipeline
 from nvidia.dali.plugin.pytorch import DALIGenericIterator
@@ -93,8 +92,8 @@ def main() -> None:
 
     try:
         for i, data in enumerate(dali_iter):
-            images: torch.Tensor = data[0]["data"]
-            labels: torch.Tensor = data[0]["label"]
+            images = data[0]["data"]
+            labels = data[0]["label"]
             logger.info(f"Batch {i}: Image shape: {images.shape}, Labels: {labels}")
     except StopIteration:
         logger.info("Finished processing all images.")

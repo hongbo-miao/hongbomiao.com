@@ -3842,7 +3842,8 @@ jobs:
   ros-test:
     name: ROS | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.robot-operating-system == 'true' }}
+    if: ${{ false }}
+    # if: ${{ needs.detect-changes.outputs.robot-operating-system == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20

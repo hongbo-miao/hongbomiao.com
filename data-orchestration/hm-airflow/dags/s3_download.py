@@ -1,4 +1,3 @@
-import os
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -25,7 +24,7 @@ with DAG(
     @task
     def rename_file(file_path: str, new_file_name: str) -> None:
         path = Path(file_path)
-        os.rename(src=file_path, dst=path.parent.joinpath(new_file_name))
+        path.rename(path.parent.joinpath(new_file_name))
 
     file_name = download_from_s3(
         bucket="hm-production-bucket",
