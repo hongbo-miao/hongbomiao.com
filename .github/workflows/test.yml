@@ -49,6 +49,7 @@ jobs:
       hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
       hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
       hm-cudf: ${{ steps.filter.outputs.hm-cudf }}
+      hm-cuml: ${{ steps.filter.outputs.hm-cuml }}
       hm-cupy: ${{ steps.filter.outputs.hm-cupy }}
       hm-docling: ${{ steps.filter.outputs.hm-docling }}
       hm-duckdb-query-duckdb: ${{ steps.filter.outputs.hm-duckdb-query-duckdb }}
@@ -86,6 +87,7 @@ jobs:
       hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
       hm-ray-calculate: ${{ steps.filter.outputs.hm-ray-calculate }}
       hm-ray-process-flight-data: ${{ steps.filter.outputs.hm-ray-process-flight-data }}
+      hm-scikit-learn: ${{ steps.filter.outputs.hm-scikit-learn }}
       hm-serial: ${{ steps.filter.outputs.hm-serial }}
       hm-sglang: ${{ steps.filter.outputs.hm-sglang }}
       hm-skypilot: ${{ steps.filter.outputs.hm-skypilot }}
@@ -221,6 +223,9 @@ jobs:
             hm-cudf:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-cudf/**'
+            hm-cuml:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/hm-cuml/**'
             hm-cupy:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-cupy/**'
@@ -359,6 +364,9 @@ jobs:
             hm-ray-process-flight-data:
               - '.github/workflows/test.yml'
               - 'cloud-computing/hm-ray/applications/process-flight-data/**'
+            hm-scikit-learn:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/hm-scikit-learn/**'
             hm-serial:
               - '.github/workflows/test.yml'
               - 'embedded-systems/hm-serial/**'
@@ -1849,6 +1857,72 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: data-analytics/hm-networkx
+
+  scikit-learn-test:
+    name: scikit-learn | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-scikit-learn == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.18
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-scikit-learn/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/hm-scikit-learn/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hm-scikit-learn
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-scikit-learn
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/hm-scikit-learn
+
+  cuml-test:
+    name: cuML | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-cuml == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.18
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-cuml/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/hm-cuml/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hm-cuml
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-cuml
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/hm-cuml
 
   hugging-face-analyze-sentiment-test:
     name: Hugging Face (analyze-sentiment) | Test

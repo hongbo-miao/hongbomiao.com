@@ -379,6 +379,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=machine-learning.dali
 	uv run poe static-type-check-python --package=machine-learning.feature-store
 	uv run poe static-type-check-python --package=machine-learning.graph-neural-network
+	uv run poe static-type-check-python --package=machine-learning.hm-cuml
 	uv run poe static-type-check-python --package=machine-learning.hm-docling
 	uv run poe static-type-check-python --package=machine-learning.hm-faster-whisper
 	uv run poe static-type-check-python --package=machine-learning.hm-gradio.applications.classify-image
@@ -389,6 +390,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.classify-mnist
 	uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.predict-diabetes
 	uv run poe static-type-check-python --package=machine-learning.hm-rasa
+	uv run poe static-type-check-python --package=machine-learning.hm-scikit-learn
 	uv run poe static-type-check-python --package=machine-learning.hm-sglang
 	uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.live-line-chart
 	uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.map
