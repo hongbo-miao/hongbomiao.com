@@ -1,0 +1,24 @@
+[project]
+name = "hm-cuml"
+version = "1.0.0"
+requires-python = "~=3.12.0"
+dependencies = [
+  "cudf-cu12==24.12.0",
+  "cuml-cu12==24.12.0",
+  "scikit-learn==1.6.1",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.32.1",
+  "pytest==8.3.4",
+  "pytest-cov==6.0.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

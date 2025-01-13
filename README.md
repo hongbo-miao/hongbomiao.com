@@ -410,6 +410,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Machine Learning (ML)
 
+- **scikit-learn** - Machine learning library
+  - **cuML** - GPU-accelerated machine learning library
 - **PyTorch** - Machine learning
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
