@@ -58,6 +58,7 @@ jobs:
       hm-duckdb-query-protobuf: ${{ steps.filter.outputs.hm-duckdb-query-protobuf }}
       hm-faster-whisper: ${{ steps.filter.outputs.hm-faster-whisper }}
       hm-flax: ${{ steps.filter.outputs.hm-flax }}
+      hm-genesis: ${{ steps.filter.outputs.hm-genesis }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
       hm-imagebind: ${{ steps.filter.outputs.hm-imagebind }}
@@ -229,6 +230,9 @@ jobs:
             hm-cupy:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-cupy/**'
+            hm-genesis:
+              - '.github/workflows/test.yml'
+              - 'physics/hm-genesis/**'
             hm-geopandas:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-geopandas/**'
@@ -3249,7 +3253,41 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
+
           directory: machine-learning/stable-diffusion
+
+  genesis-test:
+    name: Genesis | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.hm-genesis == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.1.0
+        with:
+          version: 0.5.18
+          enable-cache: true
+          cache-dependency-glob: physics/hm-genesis/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: physics/hm-genesis/pyproject.toml
+      - name: Install dependencies
+        working-directory: physics/hm-genesis
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: physics/hm-genesis
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: physics/hm-genesis
 
   serial-test:
     name: Serial | Test
