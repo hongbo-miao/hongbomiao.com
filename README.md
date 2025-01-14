@@ -630,6 +630,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Jetson TX2** - Single-board computer (SBC)
 - **RISC-V** - Open standard instruction set architecture (ISA)
 
+## Physics
+
+- **Genesis** - Physics platform for robotics, embodied AI, physical AI applications
+
 ## Simulation
 
 - **AnyLogic** - Simulation modeling tool
