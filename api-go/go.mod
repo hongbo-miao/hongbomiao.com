@@ -29,7 +29,7 @@ require (
 	github.com/rs/zerolog v1.33.0
 	github.com/stretchr/testify v1.10.0
 	go.elastic.co/apm/module/apmgin/v2 v2.6.2
-	go.elastic.co/apm/module/apmgrpc/v2 v2.6.2
+	go.elastic.co/apm/module/apmgrpc/v2 v2.6.3
 	go.opencensus.io v0.24.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.58.0
 	go.uber.org/atomic v1.11.0
@@ -101,8 +101,8 @@ require (
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	github.com/yashtewari/glob-intersection v0.2.0 // indirect
-	go.elastic.co/apm/module/apmhttp/v2 v2.6.2 // indirect
-	go.elastic.co/apm/v2 v2.6.2 // indirect
+	go.elastic.co/apm/module/apmhttp/v2 v2.6.3 // indirect
+	go.elastic.co/apm/v2 v2.6.3 // indirect
 	go.elastic.co/fastjson v1.1.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel v1.33.0 // indirect
