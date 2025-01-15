@@ -472,6 +472,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Parallel Computing
 
 - **CUDA** - Parallel computing language
+- **Taichi** - Parallel computing language
 - **Triton** - Parallel computing language
 
 ### High-Performance Computing (HPC)
@@ -816,6 +817,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **PowerShell**
 - **Protocol Buffers**
 - **Python**
+  - **Taichi**
   - **Triton**
 - **QML**
 - **Rego**
