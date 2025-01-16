@@ -112,7 +112,7 @@ export default [
       'data-visualization/metabase/plugins',
       'desktop-qt/CMakeLists.txt.user',
       'digital-design/verilog/output',
-      'embedded-systems/decode-can-data/data',
+      'embedded-systems/decode-can-blf-data/data',
       'hardware-in-the-loop/national-instruments/hm-tdms/data',
       'hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/packages',
       'hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/VeriStandZeroMQBridge/bin',
