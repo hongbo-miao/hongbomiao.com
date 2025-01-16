@@ -13,7 +13,7 @@ import pyarrow.parquet as pq
 logger = logging.getLogger(__name__)
 
 
-class CanUtils:
+class BlfUtil:
     @staticmethod
     def get_dbc_schema(
         dbc_dict: dict[str, cantools.db.Database],
@@ -107,7 +107,7 @@ class CanUtils:
         unique_types = {unit["type"] for unit in unit_dict.values()}
         for unit_type in unique_types:
             if unit_type not in schema_dict:
-                schema_dict[unit_type] = CanUtils.get_dbc_schema(dbc_dict, unit_type)
+                schema_dict[unit_type] = BlfUtil.get_dbc_schema(dbc_dict, unit_type)
         return schema_dict
 
     @staticmethod
@@ -138,8 +138,8 @@ class CanUtils:
         parquet_compression_method: str,
         parquet_compression_level: int,
     ) -> None:
-        schema_dict = CanUtils.initialize_schema_dict(dbc_dict, unit_dict)
-        writer_dict = CanUtils.initialize_writer_dict(
+        schema_dict = BlfUtil.initialize_schema_dict(dbc_dict, unit_dict)
+        writer_dict = BlfUtil.initialize_writer_dict(
             schema_dict,
             parquet_compression_method,
             parquet_compression_level,
@@ -151,7 +151,7 @@ class CanUtils:
 
         with can.BLFReader(blf_path) as reader:
             for frame in reader:
-                unit_type, message = CanUtils.process_frame(
+                unit_type, message = BlfUtil.process_frame(
                     frame,
                     dbc_dict,
                     unit_dict,
@@ -160,7 +160,7 @@ class CanUtils:
                 buffer[unit_type].append(message)
 
                 if len(buffer[unit_type]) >= buffer_size:
-                    CanUtils.write_batch(
+                    BlfUtil.write_batch(
                         buffer[unit_type],
                         unit_type,
                         schema_dict,
@@ -178,7 +178,7 @@ class CanUtils:
         # Write remaining messages in buffer
         for unit_type, messages in buffer.items():
             if messages:
-                CanUtils.write_batch(messages, unit_type, schema_dict, writer_dict)
+                BlfUtil.write_batch(messages, unit_type, schema_dict, writer_dict)
                 buffer[unit_type] = []
 
         for writer in writer_dict.values():
@@ -219,7 +219,7 @@ if __name__ == "__main__":
         unit_type: cantools.db.load_file(dbc_path)
         for unit_type, dbc_path in dbc_path_dict.items()
     }
-    CanUtils.process_file(
+    BlfUtil.process_file(
         blf_path,
         dbc_dict,
         unit_dict,

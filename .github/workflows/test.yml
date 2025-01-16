@@ -33,7 +33,7 @@ jobs:
       dali: ${{ steps.filter.outputs.dali }}
       data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
-      decode-can-data: ${{ steps.filter.outputs.decode-can-data }}
+      decode-can-blf-data: ${{ steps.filter.outputs.decode-can-blf-data }}
       delta-lake-read-delta-lake-by-amazon-athena: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-amazon-athena }}
       delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
       delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
@@ -171,9 +171,9 @@ jobs:
             dali:
               - '.github/workflows/test.yml'
               - 'machine-learning/dali/**'
-            decode-can-data:
+            decode-can-blf-data:
               - '.github/workflows/test.yml'
-              - 'embedded-systems/decode-can-data/**'
+              - 'embedded-systems/decode-can-blf-data/**'
             development-aws-glue-spark-scripts:
               - '.github/workflows/test.yml'
               - 'cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts/**'
@@ -1173,10 +1173,10 @@ jobs:
         with:
           directory: matlab/call-matlab-function-in-python
 
-  decode-can-data-test:
+  decode-can-blf-data-test:
     name: Decode CAN Data | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.decode-can-data == 'true' }}
+    if: ${{ needs.detect-changes.outputs.decode-can-blf-data == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1188,23 +1188,23 @@ jobs:
         with:
           version: 0.5.18
           enable-cache: true
-          cache-dependency-glob: embedded-systems/decode-can-data/uv.lock
+          cache-dependency-glob: embedded-systems/decode-can-blf-data/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: embedded-systems/decode-can-data/pyproject.toml
+          python-version-file: embedded-systems/decode-can-blf-data/pyproject.toml
       - name: Install dependencies
-        working-directory: embedded-systems/decode-can-data
+        working-directory: embedded-systems/decode-can-blf-data
         run: |
           uv sync --dev
       - name: Test
-        working-directory: embedded-systems/decode-can-data
+        working-directory: embedded-systems/decode-can-blf-data
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: embedded-systems/decode-can-data
+          directory: embedded-systems/decode-can-blf-data
 
   format-can-data-test:
     name: Format CAN Data | Test
