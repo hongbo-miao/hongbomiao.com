@@ -240,8 +240,11 @@ pull_request_rules:
       #     - check-success=Call MATLAB Function in Python | Test
       #     - check-skipped=Call MATLAB Function in Python | Test
       - or:
-          - check-success=Decode CAN Data | Test
-          - check-skipped=Decode CAN Data | Test
+          - check-success=Decode CAN BLF Data | Test
+          - check-skipped=Decode CAN BLF Data | Test
+      - or:
+          - check-success=Decode CAN TRC Data | Test
+          - check-skipped=Decode CAN TRC Data | Test
       - or:
           - check-success=Format CAN Data | Test
           - check-skipped=Format CAN Data | Test
