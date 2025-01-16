@@ -368,6 +368,7 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-config-reader
 	uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-data-reader
 	uv run poe static-type-check-python --package=embedded-systems.decode-can-blf-data
+	uv run poe static-type-check-python --package=embedded-systems.decode-can-trc-data
 	uv run poe static-type-check-python --package=embedded-systems.format-can-data
 	uv run poe static-type-check-python --package=embedded-systems.hm-serial
 	uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-pyvisa
