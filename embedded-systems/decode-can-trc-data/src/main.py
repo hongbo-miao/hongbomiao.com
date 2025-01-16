@@ -13,7 +13,7 @@ import pyarrow.parquet as pq
 logger = logging.getLogger(__name__)
 
 
-class BlfUtil:
+class TrcUtil:
     @staticmethod
     def get_dbc_schema(
         dbc_dict: dict[str, cantools.db.Database],
@@ -51,15 +51,15 @@ class BlfUtil:
         unique_types = {unit["type"] for unit in unit_dict.values()}
         for unit_type in unique_types:
             if unit_type not in schema_dict:
-                schema_dict[unit_type] = BlfUtil.get_dbc_schema(dbc_dict, unit_type)
+                schema_dict[unit_type] = TrcUtil.get_dbc_schema(dbc_dict, unit_type)
         return schema_dict
 
     @staticmethod
     def initialize_writer_dict(
         schema_dict: dict[str, pa.Schema],
+        output_dir: Path,
         parquet_compression_method: str,
         parquet_compression_level: int,
-        output_dir: Path,
     ) -> dict[str, pq.ParquetWriter]:
         writer_dict = {}
         for unit_type, schema in schema_dict.items():
@@ -78,12 +78,12 @@ class BlfUtil:
         dbc_dict: dict[str, cantools.db.Database],
         unit_dict: dict[str, dict[str, str]],
         schema_dict: dict[str, pa.Schema],
-    ) -> tuple[str, dict[str, bool | int | float | str]]:
+    ) -> tuple[str, str, dict[str, bool | int | float | str]]:
         unit = unit_dict[str(frame.channel)]
         unit_type = unit["type"]
-        message_definition = dbc_dict[unit_type].get_message_by_frame_id(
-            frame.arbitration_id,
-        )
+        can_unit_id = unit["id"]
+        dbc = dbc_dict[unit_type]
+        message_definition = dbc.get_message_by_frame_id(frame.arbitration_id)
         raw_message = message_definition.decode(frame.data)
         message: dict[str, bool | int | float | str] = {}
 
@@ -104,19 +104,18 @@ class BlfUtil:
 
         message.update(
             {
-                "arbitration_id": int(frame.arbitration_id),
-                "channel": int(frame.channel),
-                "dlc": int(frame.dlc),
-                "is_extended_id": bool(frame.is_extended_id),
-                "timestamp": float(frame.timestamp),
-                # Avoid `int(frame.timestamp * 1e9` as it leads to time drift due to floating-point arithmetic
+                "arbitration_id": frame.arbitration_id,
+                "channel": frame.channel,
+                "dlc": frame.dlc,
+                "is_extended_id": frame.is_extended_id,
+                "timestamp": frame.timestamp,
                 "_time": int(Decimal(str(frame.timestamp)) * Decimal("1e9")),
                 "_can_id": str(frame.arbitration_id),
                 "_can_logger_channel_id": str(frame.channel),
-                "_unit_id": unit["id"],
+                "_unit_id": can_unit_id,
             },
         )
-        return unit_type, message
+        return unit_type, can_unit_id, message
 
     @staticmethod
     def write_batch(
@@ -130,7 +129,7 @@ class BlfUtil:
 
     @staticmethod
     def process_file(
-        blf_path: Path,
+        trc_path: Path,
         dbc_dict: dict[str, cantools.db.Database],
         unit_dict: dict[str, dict[str, str]],
         output_dir: Path,
@@ -138,20 +137,20 @@ class BlfUtil:
         parquet_compression_method: str,
         parquet_compression_level: int,
     ) -> None:
-        schema_dict = BlfUtil.initialize_schema_dict(dbc_dict, unit_dict)
-        writer_dict = BlfUtil.initialize_writer_dict(
+        schema_dict = TrcUtil.initialize_schema_dict(dbc_dict, unit_dict)
+        writer_dict = TrcUtil.initialize_writer_dict(
             schema_dict,
+            output_dir,
             parquet_compression_method,
             parquet_compression_level,
-            output_dir,
         )
+
         message_count = 0
-        blf_size_bytes = blf_path.stat().st_size
         buffer: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
 
-        with can.BLFReader(blf_path) as reader:
+        with can.TRCReader(trc_path) as reader:
             for frame in reader:
-                unit_type, message = BlfUtil.process_frame(
+                unit_type, unit_id, message = TrcUtil.process_frame(
                     frame,
                     dbc_dict,
                     unit_dict,
@@ -160,7 +159,7 @@ class BlfUtil:
                 buffer[unit_type].append(message)
 
                 if len(buffer[unit_type]) >= buffer_size:
-                    BlfUtil.write_batch(
+                    TrcUtil.write_batch(
                         buffer[unit_type],
                         unit_type,
                         schema_dict,
@@ -169,17 +168,13 @@ class BlfUtil:
                     buffer[unit_type] = []
 
                 if message_count % 1_000_000 == 0:
-                    current_bytes = reader.file.tell()
-                    logger.info(
-                        f"Decoded: {round(current_bytes * 100.0 / blf_size_bytes)} %, {message_count = }",
-                    )
+                    logger.info(f"Decoded: {message_count = }")
                 message_count += 1
 
         # Write remaining messages in buffer
         for unit_type, messages in buffer.items():
             if messages:
-                BlfUtil.write_batch(messages, unit_type, schema_dict, writer_dict)
-                buffer[unit_type] = []
+                TrcUtil.write_batch(messages, unit_type, schema_dict, writer_dict)
 
         # Close all writers
         for writer in writer_dict.values():
@@ -194,7 +189,7 @@ if __name__ == "__main__":
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
     data_dir_path = Path("data")
-    blf_path = data_dir_path / Path("can.blf")
+    trc_path = data_dir_path / Path("can.trc")
     output_dir = data_dir_path / Path("output")
     output_dir.mkdir(exist_ok=True)
 
@@ -217,8 +212,8 @@ if __name__ == "__main__":
     }
 
     start_time = time.time()
-    BlfUtil.process_file(
-        blf_path,
+    TrcUtil.process_file(
+        trc_path,
         dbc_dict,
         unit_dict,
         output_dir,
