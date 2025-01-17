@@ -402,11 +402,12 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=machine-learning.stable-diffusion
 	uv run poe static-type-check-python --package=machine-learning.triton-inference-server.amazon-sagemaker-triton-resnet-50.deploy
 	uv run poe static-type-check-python --package=machine-learning.triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
+	uv run poe static-type-check-python --package=parallel-computing.hm-taichi.count-primes
+	uv run poe static-type-check-python --package=parallel-computing.hm-taichi.fluid-solver
 	uv run poe static-type-check-python --package=parallel-computing.hm-triton
 	uv run poe static-type-check-python --package=physics.hm-genesis
 	uv run poe static-type-check-python --package=quantum-computing
 	uv run poe static-type-check-python --package=scientific-computing.hm-sunpy
-	uv run poe static-type-check-python --package=parallel-computing.hm-taichi.count-primes
 static-type-check-terraform:
 	cd cloud-infrastructure/terraform/environments/development/aws && terraform validate
 	cd cloud-infrastructure/terraform/environments/production/aws && terraform validate

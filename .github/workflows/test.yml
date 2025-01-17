@@ -133,6 +133,7 @@ jobs:
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
       taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
+      taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
       udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
@@ -481,6 +482,9 @@ jobs:
             taichi-count-primes:
               - '.github/workflows/test.yml'
               - 'parallel-computing/hm-taichi/count-primes/**'
+            taichi-fluid-solver:
+              - '.github/workflows/test.yml'
+              - 'parallel-computing/hm-taichi/fluid-solver/**'
             udp-receiver:
               - '.github/workflows/test.yml'
               - 'network-programmability/udp/udp-receiver/**'
@@ -3461,6 +3465,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: parallel-computing/hm-taichi/count-primes
+
+  taichi-fluid-solver-test:
+    name: Taichi (fluid-solver) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.taichi-fluid-solver == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: parallel-computing/hm-taichi/fluid-solver/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: parallel-computing/hm-taichi/fluid-solver/pyproject.toml
+      - name: Install dependencies
+        working-directory: parallel-computing/hm-taichi/fluid-solver
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: parallel-computing/hm-taichi/fluid-solver
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: parallel-computing/hm-taichi/fluid-solver
 
   triton-test:
     name: Triton | Test
