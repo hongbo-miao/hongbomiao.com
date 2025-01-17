@@ -6,7 +6,6 @@ uv-install-dependencies:
 	uv sync --dev
 
 uv-run-dev:
-	export LD_LIBRARY_PATH=/usr/lib/wsl/lib && \
 	export PYOPENGL_PLATFORM=glx && \
 	uv run poe dev
 uv-run-test:
