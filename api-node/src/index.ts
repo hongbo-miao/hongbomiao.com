@@ -3,7 +3,7 @@ import './reliability/utils/initTracer.js';
 import http from 'http';
 import { execute, subscribe } from 'graphql';
 import { applyMiddleware } from 'graphql-middleware';
-import { useServer } from 'graphql-ws/lib/use/ws';
+import { useServer } from 'graphql-ws/use/ws';
 import { WebSocketServer } from 'ws';
 import app from './app.js';
 import config from './config.js';
