@@ -35,7 +35,7 @@ docker-run:
 brew-install-opencv::
 	brew install opencv
 
-uv-install-python::
+uv-install-python:
 	uv python install
 uv-update-lock-file:
 	uv lock

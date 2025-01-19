@@ -1,9 +1,11 @@
-uv-install-python::
+uv-install-python:
 	uv python install
 uv-update-lock-file:
 	uv lock
 uv-install-dependencies:
-	uv sync --dev
+	uv sync --extra=build
+	uv sync --extra=build --extra=compile
+	uv sync --extra=build --extra=compile --dev
 
 download-model:
 	# https://github.com/opendatalab/MinerU/blob/master/docs/how_to_download_models_en.md#download-the-model-from-hugging-face

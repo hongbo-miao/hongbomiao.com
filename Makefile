@@ -128,7 +128,7 @@ poetry-cache-clear:
 	poetry cache clear pypi --all
 
 # uv
-uv-install-python::
+uv-install-python:
 	uv python install
 uv-update-lock-file:
 	uv lock

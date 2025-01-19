@@ -2427,16 +2427,12 @@ jobs:
         uses: actions/setup-python@v5.3.0
         with:
           python-version-file: machine-learning/mineru/pyproject.toml
-      - name: Install Detectron2
-        working-directory: machine-learning/mineru
-        run: |
-          uv venv
-          uv pip install torch
-          uv pip install --no-build-isolation git+https://github.com/facebookresearch/detectron2.git
       - name: Install dependencies
         working-directory: machine-learning/mineru
         run: |
-          uv sync --dev
+          uv sync --extra=build
+          uv sync --extra=build --extra=compile
+          uv sync --extra=build --extra=compile --dev
       - name: Test
         working-directory: machine-learning/mineru
         run: |
