@@ -32,7 +32,7 @@ docker-push:
 docker-run:
 	docker run --publish=36147:36147 --name=hm-api-rust --rm ghcr.io/hongbo-miao/hm-api-rust:latest
 
-brew-install-opencv::
+brew-install-opencv:
 	brew install opencv
 
 uv-install-python:

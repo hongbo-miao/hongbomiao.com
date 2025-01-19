@@ -10,7 +10,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   PIP_NO_CACHE_DIR=1 \
   UV_COMPILE_BYTECODE=1 \
   UV_LINK_MODE=copy
-ARG LIBRDKAFKA_VERSION=2.6.1
+ARG LIBRDKAFKA_VERSION=2.8.0
 # gcc, g++, make, bash are for building librdkafka
 # hadolint ignore=DL3003
 RUN apk add --no-cache gcc g++ make bash \
