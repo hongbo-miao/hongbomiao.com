@@ -437,6 +437,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Weights & Biases** - Machine learning experiment tracking
 - **NVIDIA Data Loading Library (DALI)** - GPU-accelerated data loading and preprocessing pipeline
 - **NVIDIA Triton Inference Server** - Inference server
+- **NVIDIA Modulus** - Physics-informed machine learning framework
 
 #### Large language model (LLM)
 

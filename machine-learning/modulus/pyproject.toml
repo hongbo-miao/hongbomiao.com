@@ -1,0 +1,27 @@
+[project]
+name = "modulus"
+version = "1.0.0"
+requires-python = "~=3.10.0"
+dependencies = [
+  "nvidia-modulus[launch]==0.9.0",
+]
+
+[project.optional-dependencies]
+build = ["torch"]
+compile = ["nvidia-modulus.sym"]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.32.1",
+  "pytest==8.3.4",
+  "pytest-cov==6.0.0",
+]
+
+[tool.uv]
+package = false
+no-build-isolation-package = ["nvidia-modulus.sym"]
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

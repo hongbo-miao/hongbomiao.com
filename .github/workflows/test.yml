@@ -120,6 +120,7 @@ jobs:
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
+      modulus: ${{ steps.filter.outputs.modulus }}
       national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
@@ -455,6 +456,9 @@ jobs:
             mobile-react-native:
               - '.github/workflows/test.yml'
               - 'mobile/mobile-react-native/**'
+            modulus:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/modulus/**'
             neural-forecasting-forecast-air-passenger-number:
               - '.github/workflows/test.yml'
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
@@ -2237,6 +2241,39 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: machine-learning/dali
+
+  modulus-test:
+    name: Modulus | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.modulus == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: machine-learning/modulus/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: machine-learning/modulus/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/modulus
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/modulus
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: machine-learning/modulus
 
   feature-store-test:
     name: Feature Store | Test
