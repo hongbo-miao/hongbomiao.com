@@ -35,7 +35,7 @@ redis-cli-lua-script-run:
 	redis-cli --eval greet.lua hm-name , Hello
 
 redis-cli-lua-script-load:
-	redis-cli SCRIPT LOAD "$$(cat greet.lua)"
+	redis-cli SCRIPT LOAD "$(cat greet.lua)"
 redis-cli-lua-script-run-by-hash:
 	redis-cli EVALSHA c72b1fc2261c116957bbc839b558190a23d1cbb3 1 hm-name "Hello"
 redis-cli-lua-script-exists:
@@ -104,15 +104,15 @@ keydb-start-multi-master:
 		--requirepass passw0rd \
 		--masterauth passw0rd
 keydb-cli-lua-script-load:
-	keydb-cli --pass passw0rd SCRIPT LOAD "$$(cat greet.lua)"
+	keydb-cli --pass passw0rd SCRIPT LOAD "$(cat greet.lua)"
 
 # KeyDB - Docker
 keydb-docker-build:
 	cd ../.. && \
 	rm -f /tmp/cid.txt && \
 	docker create --cidfile=/tmp/cid.txt redislabs/redisgraph:latest && \
-	docker cp $$(cat /tmp/cid.txt):/usr/lib/redis/modules/redisgraph.so ./keydb/modules/ && \
-	docker container rm $$(cat /tmp/cid.txt) && \
+	docker cp $(cat /tmp/cid.txt):/usr/lib/redis/modules/redisgraph.so ./keydb/modules/ && \
+	docker container rm $(cat /tmp/cid.txt) && \
 	rm -f /tmp/cid.txt && \
 	docker build --file=data-storage/keydb/Dockerfile --tag=ghcr.io/hongbo-miao/hm-keydb:latest .
 keydb-docker-push:
