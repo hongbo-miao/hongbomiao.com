@@ -1,9 +1,9 @@
 migrate-up:
 	POSTGRESQL_URL="postgresql://admin:passw0rd@localhost:5432/hm_db?sslmode=disable&search_path=public" && \
-	migrate -database "$${POSTGRESQL_URL}" -path migrations up
+	migrate -database "${POSTGRESQL_URL}" -path migrations up
 migrate-down:
 	POSTGRESQL_URL="postgresql://admin:passw0rd@localhost:5432/hm_db?sslmode=disable&search_path=public" && \
-	migrate -database "$${POSTGRESQL_URL}" -path migrations up
+	migrate -database "${POSTGRESQL_URL}" -path migrations up
 migrate-force:
 	POSTGRESQL_URL="postgresql://admin:passw0rd@localhost:5432/hm_db?sslmode=disable&search_path=public" && \
-	migrate -database "$${POSTGRESQL_URL}" -path migrations force xxx
+	migrate -database "${POSTGRESQL_URL}" -path migrations force xxx
