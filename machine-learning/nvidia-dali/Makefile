@@ -7,8 +7,6 @@ uv-install-dependencies:
 
 uv-run-dev:
 	uv run poe dev
-uv-run-serve:
-	uv run poe serve
 uv-run-test:
 	uv run poe test
 uv-run-test-coverage:

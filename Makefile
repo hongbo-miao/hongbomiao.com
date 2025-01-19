@@ -147,7 +147,7 @@ jupyter-lab:
 jupyter-notebook-clean:
 	uv run poe clean-jupyter-notebook cloud-platform/aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/notebook.ipynb
 	uv run poe clean-jupyter-notebook cloud-platform/aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
-	uv run poe clean-jupyter-notebook machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/set_up/notebook.ipynb
+	uv run poe clean-jupyter-notebook machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/set_up/notebook.ipynb
 
 # SQLFluff
 sqlfluff-dialect-list:
@@ -377,7 +377,6 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=hm-locust
 	uv run poe static-type-check-python --package=hm-xxhash
 	uv run poe static-type-check-python --package=machine-learning.convolutional-neural-network
-	uv run poe static-type-check-python --package=machine-learning.dali
 	uv run poe static-type-check-python --package=machine-learning.feature-store
 	uv run poe static-type-check-python --package=machine-learning.graph-neural-network
 	uv run poe static-type-check-python --package=machine-learning.hm-cuml
@@ -397,12 +396,13 @@ static-type-check-python:
 	uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.map
 	uv run poe static-type-check-python --package=machine-learning.hugging-face
 	uv run poe static-type-check-python --package=machine-learning.mineru
-	uv run poe static-type-check-python --package=machine-learning.modulus
 	uv run poe static-type-check-python --package=machine-learning.neural-forecasting.forecast-air-passenger-number
+	uv run poe static-type-check-python --package=machine-learning.nvidia-dali
+	uv run poe static-type-check-python --package=machine-learning.nvidia-modulus
+	uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.deploy
+	uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
 	uv run poe static-type-check-python --package=machine-learning.reinforcement-learning.cart-pole
 	uv run poe static-type-check-python --package=machine-learning.stable-diffusion
-	uv run poe static-type-check-python --package=machine-learning.triton-inference-server.amazon-sagemaker-triton-resnet-50.deploy
-	uv run poe static-type-check-python --package=machine-learning.triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
 	uv run poe static-type-check-python --package=parallel-computing.hm-taichi.count-primes
 	uv run poe static-type-check-python --package=parallel-computing.hm-taichi.fluid-solver
 	uv run poe static-type-check-python --package=parallel-computing.hm-triton
