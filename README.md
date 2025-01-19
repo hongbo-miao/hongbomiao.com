@@ -593,6 +593,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **restic** - Encrypted backup program
 - **Vim** - Terminal-based text editor
 - **Zellij** - Terminal multiplexer
+- **just** - Command runner for managing project-specific tasks
 
 ## Reverse Engineering
 
