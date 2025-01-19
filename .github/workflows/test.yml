@@ -30,7 +30,6 @@ jobs:
       api-rust: ${{ steps.filter.outputs.api-rust }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
-      dali: ${{ steps.filter.outputs.dali }}
       data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
       decode-can-blf-data: ${{ steps.filter.outputs.decode-can-blf-data }}
@@ -120,11 +119,12 @@ jobs:
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
-      modulus: ${{ steps.filter.outputs.modulus }}
       national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
+      nvidia-dali: ${{ steps.filter.outputs.nvidia-dali }}
+      nvidia-modulus: ${{ steps.filter.outputs.nvidia-modulus }}
       open-clip: ${{ steps.filter.outputs.open-clip }}
       pack-unpack-data: ${{ steps.filter.outputs.pack-unpack-data }}
       production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
@@ -152,10 +152,10 @@ jobs:
               - 'cloud-platform/aws/amazon-sagemaker/pytorch-mnist/**'
             amazon-sagemaker-triton-resnet-50-deploy:
               - '.github/workflows/test.yml'
-              - 'machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/**'
+              - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/**'
             amazon-sagemaker-triton-resnet-50-infer:
               - '.github/workflows/test.yml'
-              - 'machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/**'
+              - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/**'
             api-go:
               - '.github/workflows/test.yml'
               - 'api-go/**'
@@ -171,9 +171,6 @@ jobs:
             call-matlab-function-in-python:
               - '.github/workflows/test.yml'
               - 'matlab/call-matlab-function-in-python/**'
-            dali:
-              - '.github/workflows/test.yml'
-              - 'machine-learning/dali/**'
             decode-can-blf-data:
               - '.github/workflows/test.yml'
               - 'embedded-systems/decode-can-blf-data/**'
@@ -228,6 +225,12 @@ jobs:
             hm-airflow:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-airflow/**'
+            hm-autogluon:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/hm-autogluon/**'
+            hm-aws-parallelcluster:
+              - '.github/workflows/test.yml'
+              - 'cloud-platform/aws/aws-parallelcluster/pcluster/**'
             hm-cudf:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-cudf/**'
@@ -237,51 +240,6 @@ jobs:
             hm-cupy:
               - '.github/workflows/test.yml'
               - 'data-analytics/hm-cupy/**'
-            hm-genesis:
-              - '.github/workflows/test.yml'
-              - 'physics/hm-genesis/**'
-            hm-geopandas:
-              - '.github/workflows/test.yml'
-              - 'data-analytics/hm-geopandas/**'
-            hm-networkx:
-              - '.github/workflows/test.yml'
-              - 'data-analytics/hm-networkx/**'
-            hm-numba:
-              - '.github/workflows/test.yml'
-              - 'data-analytics/hm-numba/**'
-            hm-pandas:
-              - '.github/workflows/test.yml'
-              - 'data-analytics/hm-pandas/**'
-            hm-polars:
-              - '.github/workflows/test.yml'
-              - 'data-analytics/hm-polars/**'
-            kafka-rust-proto-consumer:
-              - '.github/workflows/test.yml'
-              - 'hm-kafka/kafka-client/kafka-rust/proto-consumer/**'
-            kafka-rust-proto-producer:
-              - '.github/workflows/test.yml'
-              - 'hm-kafka/kafka-client/kafka-rust/proto-producer/**'
-            kafka-rust-udp-kafka-bridge:
-              - '.github/workflows/test.yml'
-              - 'hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge/**'
-            kafka-rust-zeromq-kafka-bridge:
-              - '.github/workflows/test.yml'
-              - 'hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge/**'
-            national-instruments-hm-pyvisa:
-              - '.github/workflows/test.yml'
-              - 'hardware-in-the-loop/national-instruments/hm-pyvisa/**'
-            national-instruments-hm-tdms:
-              - '.github/workflows/test.yml'
-              - 'hardware-in-the-loop/national-instruments/hm-tdms/**'
-            national-instruments-hm-veristand:
-              - '.github/workflows/test.yml'
-              - 'hardware-in-the-loop/national-instruments/veristand/hm-veristand/**'
-            hm-autogluon:
-              - '.github/workflows/test.yml'
-              - 'machine-learning/hm-autogluon/**'
-            hm-aws-parallelcluster:
-              - '.github/workflows/test.yml'
-              - 'cloud-platform/aws/aws-parallelcluster/pcluster/**'
             hm-docling:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-docling/**'
@@ -303,6 +261,12 @@ jobs:
             hm-flax:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-flax/**'
+            hm-genesis:
+              - '.github/workflows/test.yml'
+              - 'physics/hm-genesis/**'
+            hm-geopandas:
+              - '.github/workflows/test.yml'
+              - 'data-analytics/hm-geopandas/**'
             hm-gradio-classify-image:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-gradio/applications/classify-image/**'
@@ -336,6 +300,12 @@ jobs:
             hm-mlflow-predict-diabetes:
               - '.github/workflows/test.yml'
               - 'machine-learning/hm-mlflow/experiments/predict-diabetes/**'
+            hm-networkx:
+              - '.github/workflows/test.yml'
+              - 'data-analytics/hm-networkx/**'
+            hm-numba:
+              - '.github/workflows/test.yml'
+              - 'data-analytics/hm-numba/**'
             hm-opal-client:
               - '.github/workflows/test.yml'
               - 'authorization/hm-opal-client/**'
@@ -345,24 +315,30 @@ jobs:
             hm-openaerostruct:
               - '.github/workflows/test.yml'
               - 'computer-vision/hm-openaerostruct/**'
+            hm-pandas:
+              - '.github/workflows/test.yml'
+              - 'data-analytics/hm-pandas/**'
+            hm-polars:
+              - '.github/workflows/test.yml'
+              - 'data-analytics/hm-polars/**'
             hm-prefect-calculate:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/calculate/**'
             hm-prefect-greet:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/greet/**'
-            hm-prowler:
-              - '.github/workflows/test.yml'
-              - 'cloud-security/hm-prowler/**'
-            hm-pulumi:
-              - '.github/workflows/test.yml'
-              - 'cloud-infrastructure/hm-pulumi/**'
             hm-prefect-print-platform:
               - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/print-platform/**'
             hm-protobuf:
               - '.github/workflows/test.yml'
               - 'data-storage/hm-protobuf/**'
+            hm-prowler:
+              - '.github/workflows/test.yml'
+              - 'cloud-security/hm-prowler/**'
+            hm-pulumi:
+              - '.github/workflows/test.yml'
+              - 'cloud-infrastructure/hm-pulumi/**'
             hm-pyvista-mount-saint-helens:
               - '.github/workflows/test.yml'
               - 'computer-vision/hm-pyvista/mount-saint-helens/**'
@@ -441,6 +417,18 @@ jobs:
             iads-zeromq-iads-bridge:
               - '.github/workflows/test.yml'
               - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
+            kafka-rust-proto-consumer:
+              - '.github/workflows/test.yml'
+              - 'hm-kafka/kafka-client/kafka-rust/proto-consumer/**'
+            kafka-rust-proto-producer:
+              - '.github/workflows/test.yml'
+              - 'hm-kafka/kafka-client/kafka-rust/proto-producer/**'
+            kafka-rust-udp-kafka-bridge:
+              - '.github/workflows/test.yml'
+              - 'hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge/**'
+            kafka-rust-zeromq-kafka-bridge:
+              - '.github/workflows/test.yml'
+              - 'hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge/**'
             lance:
               - '.github/workflows/test.yml'
               - 'data-storage/lance/**'
@@ -456,12 +444,24 @@ jobs:
             mobile-react-native:
               - '.github/workflows/test.yml'
               - 'mobile/mobile-react-native/**'
-            modulus:
+            national-instruments-hm-pyvisa:
               - '.github/workflows/test.yml'
-              - 'machine-learning/modulus/**'
+              - 'hardware-in-the-loop/national-instruments/hm-pyvisa/**'
+            national-instruments-hm-tdms:
+              - '.github/workflows/test.yml'
+              - 'hardware-in-the-loop/national-instruments/hm-tdms/**'
+            national-instruments-hm-veristand:
+              - '.github/workflows/test.yml'
+              - 'hardware-in-the-loop/national-instruments/veristand/hm-veristand/**'
             neural-forecasting-forecast-air-passenger-number:
               - '.github/workflows/test.yml'
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
+            nvidia-dali:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/nvidia-dali/**'
+            nvidia-modulus:
+              - '.github/workflows/test.yml'
+              - 'machine-learning/nvidia-modulus/**'
             open-clip:
               - '.github/workflows/test.yml'
               - 'computer-vision/open-clip/**'
@@ -1030,23 +1030,23 @@ jobs:
         with:
           version: 0.5.20
           enable-cache: true
-          cache-dependency-glob: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/uv.lock
+          cache-dependency-glob: machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/pyproject.toml
+          python-version-file: machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy
+        working-directory: machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy
+        working-directory: machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy
+          directory: machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy
 
   amazon-sagemaker-triton-resnet-50-infer-test:
     name: Amazon SageMaker Triton ResNet 50 (Infer) | Test
@@ -1063,23 +1063,23 @@ jobs:
         with:
           version: 0.5.20
           enable-cache: true
-          cache-dependency-glob: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/uv.lock
+          cache-dependency-glob: machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/pyproject.toml
+          python-version-file: machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer
+        working-directory: machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer
+        working-directory: machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: machine-learning/triton-inference-server/amazon-sagemaker-triton-resnet-50/infer
+          directory: machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer
 
   production-aws-glue-spark-scripts-test:
     name: AWS Glue (production spark-scripts) | Test
@@ -2208,11 +2208,11 @@ jobs:
         with:
           directory: machine-learning/hm-autogluon
 
-  dali-test:
-    name: DALI | Test
+  nvidia-dali-test:
+    name: NVIDIA DALI | Test
     needs: detect-changes
     if: ${{ false }}
-    # if: ${{ needs.detect-changes.outputs.dali == 'true' }}
+    # if: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2224,23 +2224,23 @@ jobs:
         with:
           version: 0.5.20
           enable-cache: true
-          cache-dependency-glob: machine-learning/dali/uv.lock
+          cache-dependency-glob: machine-learning/nvidia-dali/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: machine-learning/dali/pyproject.toml
+          python-version-file: machine-learning/nvidia-dali/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/dali
+        working-directory: machine-learning/nvidia-dali
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/dali
+        working-directory: machine-learning/nvidia-dali
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: machine-learning/dali
+          directory: machine-learning/nvidia-dali
 
   modulus-test:
     name: Modulus | Test
@@ -2257,23 +2257,23 @@ jobs:
         with:
           version: 0.5.20
           enable-cache: true
-          cache-dependency-glob: machine-learning/modulus/uv.lock
+          cache-dependency-glob: machine-learning/nvidia-modulus/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: machine-learning/modulus/pyproject.toml
+          python-version-file: machine-learning/nvidia-modulus/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/modulus
+        working-directory: machine-learning/nvidia-modulus
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/modulus
+        working-directory: machine-learning/nvidia-modulus
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: machine-learning/modulus
+          directory: machine-learning/nvidia-modulus
 
   feature-store-test:
     name: Feature Store | Test
