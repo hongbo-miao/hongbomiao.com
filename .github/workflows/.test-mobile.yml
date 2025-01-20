@@ -1,0 +1,162 @@
+---
+name: . Test Mobile
+
+'on':
+  workflow_call:
+    inputs:
+      mobile-android:
+        required: true
+        type: boolean
+      mobile-ios:
+        required: true
+        type: boolean
+      mobile-react-native:
+        required: true
+        type: boolean
+
+jobs:
+  mobile-android-lint:
+    name: Mobile - Android | Lint
+    if: ${{ inputs.mobile-android }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Java
+        uses: actions/setup-java@v4.6.0
+        with:
+          distribution: corretto
+          # https://developer.android.com/build/jdks#compileSdk
+          java-version: '17'
+          cache: gradle
+      - name: Lint
+        working-directory: mobile/mobile-android
+        run: |
+          ./gradlew lint
+
+  mobile-android-test:
+    name: Mobile - Android | Test
+    if: ${{ inputs.mobile-android }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Java
+        uses: actions/setup-java@v4.6.0
+        with:
+          distribution: corretto
+          # https://developer.android.com/build/jdks#compileSdk
+          java-version: '17'
+          cache: gradle
+      - name: Test
+        working-directory: mobile/mobile-android
+        run: |
+          ./gradlew test
+
+  mobile-android-instrumented-test:
+    name: Mobile - Android | Instrumented Test
+    if: ${{ inputs.mobile-android }}
+    # Ubuntu displays the message: "You're running a Linux VM where hardware acceleration is not available. Please consider using a macOS VM instead to take advantage of native hardware acceleration support provided by HAXM."
+    # https://github.com/ReactiveCircus/android-emulator-runner#a-note-on-vm-acceleration-and-why-we-dont-need-haxm-anymore
+    runs-on: macos-13
+    environment: test
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Java
+        uses: actions/setup-java@v4.6.0
+        with:
+          distribution: corretto
+          # https://developer.android.com/build/jdks#compileSdk
+          java-version: '17'
+          cache: gradle
+      - name: Instrumented Test
+        uses: reactivecircus/android-emulator-runner@v2.33.0
+        with:
+          working-directory: mobile/mobile-android
+          arch: x86_64
+          api-level: 35
+          script: ./gradlew connectedAndroidTest
+
+
+  mobile-ios-test:
+    name: Mobile - iOS | Test
+    if: ${{ inputs.mobile-ios }}
+    runs-on: macos-14
+    environment: test
+    timeout-minutes: 90
+    env:
+      # To use a Gemfile which is not at the root
+      # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
+      BUNDLE_GEMFILE: ${{ github.workspace }}/mobile/mobile-ios/Gemfile
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1.6.0
+        with:
+          xcode-version: 16.1.0
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          working-directory: mobile/mobile-ios
+          bundler-cache: true
+      - name: Build
+        working-directory: mobile/mobile-ios
+        run: |
+          xcodebuild build-for-testing \
+            -project HMMobile.xcodeproj \
+            -scheme HMMobile \
+            -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
+      - name: Test
+        uses: wandalen/wretry.action@v3.8.0
+        with:
+          current_path: mobile/mobile-ios
+          command: |
+            xcodebuild test-without-building \
+              -project HMMobile.xcodeproj \
+              -scheme HMMobile \
+              -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
+          attempt_limit: 3
+          attempt_delay: 2000
+      - name: Convert coverage to Cobertura XML format
+        working-directory: mobile/mobile-ios
+        run: |
+          bundle exec slather
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: mobile/mobile-ios
+
+  mobile-react-native-test:
+    name: Mobile - React Native | Test
+    if: ${{ inputs.mobile-react-native }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: mobile/mobile-react-native/.node-version
+          cache: npm
+          cache-dependency-path: mobile/mobile-react-native/package-lock.json
+      - name: Install dependencies
+        working-directory: mobile/mobile-react-native
+        run: |
+          npm ci
+      - name: Test
+        working-directory: mobile/mobile-react-native
+        run: |
+          npm run test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: mobile/mobile-react-native
