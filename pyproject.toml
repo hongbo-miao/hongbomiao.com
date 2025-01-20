@@ -32,8 +32,8 @@ sqlfluff-list-dialects = "sqlfluff dialects"
 lint-ansible = { shell = "ansible-lint $(git ls-files '**/playbook.yml')" }
 lint-c-cpp-cpplint = "cpplint"
 lint-cmake = { shell = "cmakelint $(git ls-files '**/CMakeLists.txt')" }
-lint-justfile = { shell = "git ls-files '**/justfile' | xargs --verbose -I {} just --fmt --check --unstable --justfile={}" }
-lint-justfile-fix = { shell = "git ls-files '**/justfile' | xargs --verbose -I {} just --fmt --unstable --justfile={}" }
+lint-justfile = { shell = "git ls-files '**/justfile' justfile | xargs --verbose -I {} just --fmt --check --unstable --justfile={}" }
+lint-justfile-fix = { shell = "git ls-files '**/justfile' justfile | xargs --verbose -I {} just --fmt --unstable --justfile={}" }
 lint-matlab = { shell = "mh_style $(git ls-files '**/*.m')" }
 lint-matlab-fix = { shell = "mh_style --fix $(git ls-files '**/*.m')" }
 lint-python = { shell = "ruff check && ruff format --check" }
