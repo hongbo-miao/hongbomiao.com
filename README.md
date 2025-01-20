@@ -1075,7 +1075,7 @@ The VHDL waveforms are displayed in GTKWave.
 
 ### ComfyUI - Node-based interface for diffusion model workflows
 
-![ComfyUI screenshot](https://github.com/user-attachments/assets/6ed0a0b8-0132-4f1f-a155-5a3a750a4306)
+![ComfyUI screenshot](https://github.com/user-attachments/assets/1c3e5b19-e261-48c9-94bf-6e8daedfece4)
 
 ### Vertex AI - AutoML
 
