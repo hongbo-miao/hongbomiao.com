@@ -1,104 +1,127 @@
 ros-run-cpp-talker-listener:
-	ros2 run demo_nodes_cpp talker
-	ros2 run demo_nodes_cpp listener
+    ros2 run demo_nodes_cpp talker
+    ros2 run demo_nodes_cpp listener
+
 ros-run-python-talker-listener:
-	ros2 run demo_nodes_py talker
-	ros2 run demo_nodes_py listener
+    ros2 run demo_nodes_py talker
+    ros2 run demo_nodes_py listener
+
 ros-run-turtlesim:
-	ros2 run turtlesim turtlesim_node
-	ros2 run turtlesim turtle_teleop_key
+    ros2 run turtlesim turtlesim_node
+    ros2 run turtlesim turtle_teleop_key
 
 ros2-pkg-create-cpp-package:
-	cd src && ros2 pkg create --build-type=ament_cmake --node-name=hm_cpp_node --dependencies=rclcpp hm_cpp_package
+    cd src && ros2 pkg create --build-type=ament_cmake --node-name=hm_cpp_node --dependencies=rclcpp hm_cpp_package
+
 ros2-pkg-create-python-package:
-	cd src && ros2 pkg create --build-type=ament_python --node-name=hm_python_node --dependencies=rclpy hm_python_package
+    cd src && ros2 pkg create --build-type=ament_python --node-name=hm_python_node --dependencies=rclpy hm_python_package
+
 ros2-pkg-create-launch-package:
-	cd src && ros2 pkg create turtle_robot_launch
+    cd src && ros2 pkg create turtle_robot_launch
+
 ros2-pkg-create-interface:
-	cd src && ros2 pkg create hm_python_package
+    cd src && ros2 pkg create hm_python_package
 
 ros2-set-up:
-	source install/set_up.sh
+    source install/set_up.sh
 
 colcon-build:
-	colcon build
+    colcon build
+
 colcon-build-package:
-	colcon build --packages-select=hm_cpp_package
-	colcon build --packages-select=hm_python_package
-	colcon build --packages-select=turtle_robot
-	colcon build --packages-select=turtle_robot_launch
+    colcon build --packages-select=hm_cpp_package
+    colcon build --packages-select=hm_python_package
+    colcon build --packages-select=turtle_robot
+    colcon build --packages-select=turtle_robot_launch
+
 colcon-build-package-python-debug:
-	# `--symlink-install` helps avoid rebuilding for Python, but not for C++
-	colcon build --packages-select=hm_python_package --symlink-install
-	colcon build --packages-select=turtle_robot --symlink-install
+    # `--symlink-install` helps avoid rebuilding for Python, but not for C++
+    colcon build --packages-select=hm_python_package --symlink-install
+    colcon build --packages-select=turtle_robot --symlink-install
 
 ros2-run:
-	ros2 run hm_cpp_package hm_cpp_node
-	ros2 run hm_python_package hm_python_node
-	ros2 run turtle_robot target_control_node
-	ros2 run turtle_robot turtle_robot_control_node
+    ros2 run hm_cpp_package hm_cpp_node
+    ros2 run hm_python_package hm_python_node
+    ros2 run turtle_robot target_control_node
+    ros2 run turtle_robot turtle_robot_control_node
+
 ros2-run-remap:
-	ros2 run xxx_package xxx_node --ros-args --remap __node:=new_node
-	ros2 run xxx_package xxx_node --ros-args --remap xxx_topic:=new_topic
-	ros2 run xxx_package xxx_node --ros-args --remap xxx_service:=new_service
-	ros2 run xxx_package xxx_node --ros-args --param xxx_param:=42
+    ros2 run xxx_package xxx_node --ros-args --remap __node:=new_node
+    ros2 run xxx_package xxx_node --ros-args --remap xxx_topic:=new_topic
+    ros2 run xxx_package xxx_node --ros-args --remap xxx_service:=new_service
+    ros2 run xxx_package xxx_node --ros-args --param xxx_param:=42
+
 ros2-launch:
-	ros2 launch turtle_robot_launch turtle_robot.launch.py
+    ros2 launch turtle_robot_launch turtle_robot.launch.py
 
 launch-test:
-	launch_test src/turtle_robot/test/test_target_control_node.py
+    launch_test src/turtle_robot/test/test_target_control_node.py
 
 colcon-test:
-	colcon test --return-code-on-test-failure
+    colcon test --return-code-on-test-failure
+
 colcon-test-package:
-	colcon test --packages-select=hm_cpp_package --return-code-on-test-failure
-	colcon test --packages-select=hm_python_package --return-code-on-test-failure
-	# Log: robotics/robot-operating-system/log/latest_test/turtle_robot/stdout_stderr.log
-	colcon test --packages-select=turtle_robot --return-code-on-test-failure
+    colcon test --packages-select=hm_cpp_package --return-code-on-test-failure
+    colcon test --packages-select=hm_python_package --return-code-on-test-failure
+    # Log: robotics/robot-operating-system/log/latest_test/turtle_robot/stdout_stderr.log
+    colcon test --packages-select=turtle_robot --return-code-on-test-failure
 
 ros2-service-list:
-	ros2 service list
+    ros2 service list
+
 ros2-service-type:
-	ros2 service type /clear
+    ros2 service type /clear
+
 ros2-service-call:
-	ros2 service call /clear std_srvs/srv/Empty
-	ros2 service call /spawn turtlesim/srv/Spawn "{x: 2.0, y: 2.0, theta: 0.0, name: 'turtle_robot'}"
+    ros2 service call /clear std_srvs/srv/Empty
+    ros2 service call /spawn turtlesim/srv/Spawn "{x: 2.0, y: 2.0, theta: 0.0, name: 'turtle_robot'}"
 
 ros2-node-list:
-	ros2 node list
+    ros2 node list
+
 ros2-node-info:
-	ros2 node info /turtlesim
+    ros2 node info /turtlesim
 
 ros2-topic-list:
-	ros2 topic list
+    ros2 topic list
+
 ros2-topic-echo:
-	ros2 topic echo /turtle1/cmd_vel
+    ros2 topic echo /turtle1/cmd_vel
+
 ros2-topic-info:
-	ros2 topic info /turtle1/cmd_vel
+    ros2 topic info /turtle1/cmd_vel
+
 ros2-topic-health:
-	ros2 topic hz /turtle1/cmd_vel
+    ros2 topic hz /turtle1/cmd_vel
+
 ros2-topic-publish:
-	ros2 topic pub -r 10 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}"
+    ros2 topic pub -r 10 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}"
 
 ros2-bag-record:
-	ros2 bag record /turtle1/cmd_vel --output my_bag
-	ros2 bag record /turtle1/cmd_vel /turtle2/cmd_vel --output my_bag
-	ros2 bag record --all --output my_bag
+    ros2 bag record /turtle1/cmd_vel --output my_bag
+    ros2 bag record /turtle1/cmd_vel /turtle2/cmd_vel --output my_bag
+    ros2 bag record --all --output my_bag
+
 ros2-bag-info:
-	ros2 bag info my_bag
+    ros2 bag info my_bag
+
 ros2-bag-play:
-	ros2 bag play my_bag
+    ros2 bag play my_bag
 
 ros2-interface-list:
-	ros2 interface list
+    ros2 interface list
+
 ros2-interface-package-list:
-	ros2 interface package turtlebot3_msgs
+    ros2 interface package turtlebot3_msgs
+
 ros2-interface-show:
-	ros2 interface show geometry_msgs/msg/Twist
+    ros2 interface show geometry_msgs/msg/Twist
 
 ros2-pkg-list:
-	ros2 pkg list
+    ros2 pkg list
+
 ros2-param-list:
-	ros2 param list
+    ros2 param list
+
 ros2-param-get:
-	ros2 param get /turtlesim use_sim_time
+    ros2 param get /turtlesim use_sim_time

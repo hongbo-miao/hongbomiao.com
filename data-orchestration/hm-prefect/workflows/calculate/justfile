@@ -1,33 +1,42 @@
 uv-install-python:
-	uv python install
+    uv python install
+
 uv-update-lock-file:
-	uv lock
+    uv lock
+
 uv-install-dependencies:
-	uv sync --dev
+    uv sync --dev
 
 uv-run-prefect-server-start:
-	uv run poe prefect-server-start
+    uv run poe prefect-server-start
+
 uv-run-prefect-agent-start:
-	uv run poe prefect-agent-start
+    uv run poe prefect-agent-start
+
 prefect-profile-use:
-	uv run poe prefect-profile-use -- hm-prefect
+    uv run poe prefect-profile-use -- hm-prefect
 
 uv-run-set-up:
-	uv run poe set-up
+    uv run poe set-up
+
 uv-run-dev:
-	uv run poe dev
+    uv run poe dev
+
 uv-run-test:
-	uv run poe test
+    uv run poe test
+
 uv-run-test-coverage:
-	uv run poe test-coverage
+    uv run poe test-coverage
+
 uv-run-build:
-	uv run poe build --params='{"model":{"n":4}}' --work-queue=hm-kubernetes-queue
+    uv run poe build --params='{"model":{"n":4}}' --work-queue=hm-kubernetes-queue
+
 uv-run-run:
-	uv run poe run
+    uv run poe run
 
 docker-build:
-	cd ../../../.. && \
-	docker build --file=data-orchestration/hm-prefect/workflows/calculate/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-calculate:latest .
-docker-push:
-	docker push ghcr.io/hongbo-miao/hm-prefect-calculate:latest
+    cd ../../../.. && \
+    docker build --file=data-orchestration/hm-prefect/workflows/calculate/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-calculate:latest .
 
+docker-push:
+    docker push ghcr.io/hongbo-miao/hm-prefect-calculate:latest

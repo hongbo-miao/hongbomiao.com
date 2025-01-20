@@ -1,51 +1,59 @@
 # Kafka
 amazon-msk-kafka-cluster-list:
-	aws kafka list-clusters
+    aws kafka list-clusters
+
 amazon-msk-kafka-cluster-describe:
-	aws kafka describe-cluster --cluster-arn=arn:aws:kafka:us-west-2:272394222652:cluster/hm-msk-cluster/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-xx
+    aws kafka describe-cluster --cluster-arn=arn:aws:kafka:us-west-2:272394222652:cluster/hm-msk-cluster/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-xx
+
 amazon-msk-kafka-cluster-broker-list:
-	aws kafka get-bootstrap-brokers --cluster-arn=arn:aws:kafka:us-west-2:272394222652:cluster/hm-msk-cluster/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-xx
+    aws kafka get-bootstrap-brokers --cluster-arn=arn:aws:kafka:us-west-2:272394222652:cluster/hm-msk-cluster/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-xx
 
 # EC2
 kafka-topic-list:
-	bin/kafka-topics.sh \
-		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
-		--command-config=config/iam-client.properties \
-		--list
+    bin/kafka-topics.sh \
+        --bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
+        --command-config=config/iam-client.properties \
+        --list
+
 kafka-topic-list-debug:
-	KAFKA_OPTS=-Dlog4j.configuration=file:config/log4j.properties \
-	bin/kafka-topics.sh \
-		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
-		--command-config=config/iam-client.properties \
-		--list
+    KAFKA_OPTS=-Dlog4j.configuration=file:config/log4j.properties \
+    bin/kafka-topics.sh \
+        --bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
+        --command-config=config/iam-client.properties \
+        --list
+
 kafka-topic-create:
-	KAFKA_HEAP_OPTS="-Xmx2g" \
-	bin/kafka-topics.sh \
-		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
-		--command-config=config/iam-client.properties \
-		--create \
-		--topic=my-topic \
-		--partitions=3 \
-		--replication-factor=2
+    KAFKA_HEAP_OPTS="-Xmx2g" \
+    bin/kafka-topics.sh \
+        --bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
+        --command-config=config/iam-client.properties \
+        --create \
+        --topic=my-topic \
+        --partitions=3 \
+        --replication-factor=2
+
 kafka-topic-delete:
-	bin/kafka-topics.sh \
-		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
-		--command-config=config/iam-client.properties \
-		--delete \
-		--topic=my-topic
+    bin/kafka-topics.sh \
+        --bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
+        --command-config=config/iam-client.properties \
+        --delete \
+        --topic=my-topic
+
 kafka-topic-producer:
-	bin/kafka-console-producer.sh \
-		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
-		--producer.config=config/iam-client.properties \
-		--topic=my-topic
+    bin/kafka-console-producer.sh \
+        --bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
+        --producer.config=config/iam-client.properties \
+        --topic=my-topic
+
 kafka-topic-consume:
-	bin/kafka-console-consumer.sh \
-		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
-		--consumer.config=config/iam-client.properties \
-		--topic=my-topic \
-		--property=print.key=true
+    bin/kafka-console-consumer.sh \
+        --bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
+        --consumer.config=config/iam-client.properties \
+        --topic=my-topic \
+        --property=print.key=true
+
 kafka-consumer-group-list:
-	bin/kafka-consumer-groups.sh \
-		--bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
-		--command-config=config/iam-client.properties \
-		--list
+    bin/kafka-consumer-groups.sh \
+        --bootstrap-server=b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098 \
+        --command-config=config/iam-client.properties \
+        --list

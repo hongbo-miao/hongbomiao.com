@@ -1,19 +1,23 @@
 aws-glue-job-run:
-	aws glue start-job-run --job-name=hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data
+    aws glue start-job-run --job-name=hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data
 
 aws-glue-crawler-crawler-get:
-	aws glue get-crawler --name=hm-delta-lake-crawler-iot
+    aws glue get-crawler --name=hm-delta-lake-crawler-iot
+
 aws-glue-crawler-connection-get:
-	aws glue get-connection --name=hm-postgres-connection
+    aws glue get-connection --name=hm-postgres-connection
 
 aws-glue-partition-index-list:
-	aws glue get-partition-indexes --database-name=production_hm_delta_db --table-name=motor
+    aws glue get-partition-indexes --database-name=production_hm_delta_db --table-name=motor
+
 aws-glue-partition-index-create:
-	aws glue create-partition-index --database-name=production_hm_delta_db --table-name=motor --partition-index=Keys=_event_id,IndexName=_event_id_idx
+    aws glue create-partition-index --database-name=production_hm_delta_db --table-name=motor --partition-index=Keys=_event_id,IndexName=_event_id_idx
+
 aws-glue-partition-index-delete:
-	aws glue delete-partition-index --database-name=production_hm_delta_db --table-name=motor --index-name=_event_id_idx
+    aws glue delete-partition-index --database-name=production_hm_delta_db --table-name=motor --index-name=_event_id_idx
 
 create-adsb-db-delta-tables:
-	bash bin/create_adsb_db_delta_tables.sh
+    bash bin/create_adsb_db_delta_tables.sh
+
 create-iot-db-delta-tables:
-	bash bin/create_iot_db_delta_tables.sh
+    bash bin/create_iot_db_delta_tables.sh

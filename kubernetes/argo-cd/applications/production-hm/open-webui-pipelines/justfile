@@ -1,14 +1,16 @@
 sealed-secrets-seal:
-	cat secrets/hm-open-webui-pipelines-secret.unsealed.yaml | \
-	kubeseal \
-		--controller-namespace=production-hm-sealed-secrets \
-		--controller-name=hm-sealed-secrets \
-		--format=yaml \
-		> kubernetes-manifests/hm-open-webui-pipelines-secret.yaml
+    cat secrets/hm-open-webui-pipelines-secret.unsealed.yaml | \
+    kubeseal \
+        --controller-namespace=production-hm-sealed-secrets \
+        --controller-name=hm-sealed-secrets \
+        --format=yaml \
+        > kubernetes-manifests/hm-open-webui-pipelines-secret.yaml
 
 argo-cd-app-create:
-	argocd app create production-hm-open-webui-pipelines --file=argo-cd-manifests/hm-open-webui-pipelines-application.yaml
+    argocd app create production-hm-open-webui-pipelines --file=argo-cd-manifests/hm-open-webui-pipelines-application.yaml
+
 argo-cd-app-update:
-	argocd app create production-hm-open-webui-pipelines --file=argo-cd-manifests/hm-open-webui-pipelines-application.yaml --upsert
+    argocd app create production-hm-open-webui-pipelines --file=argo-cd-manifests/hm-open-webui-pipelines-application.yaml --upsert
+
 argo-cd-app-delete:
-	argocd app delete production-hm-open-webui-pipelines --yes
+    argocd app delete production-hm-open-webui-pipelines --yes

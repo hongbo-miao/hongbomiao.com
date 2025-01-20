@@ -1,59 +1,77 @@
 git-add:
-	git add .
+    git add .
+
 git-commit:
-	git commit --message="xxx"
+    git commit --message="xxx"
 
 git-branch-show-head:
-	cat .git/HEAD
+    cat .git/HEAD
+
 git-branch-switch:
-	git switch branch-name
+    git switch branch-name
+
 git-branch-create-and-switch:
-	git switch -c branch-name
+    git switch -c branch-name
+
 git-branch-create-by-commit-hash:
-	git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 git-branch-list-local:
-	git branch
+    git branch
+
 git-branch-list-remote:
-	git branch -r
+    git branch -r
+
 git-fetch-branches:
-	git fetch --all
+    git fetch --all
+
 git-pull-rebase:
-	git pull --rebase
+    git pull --rebase
 
 git-log:
-	git log
+    git log
+
 git-status:
-	git status
+    git status
+
 git-recover:
-	git reflog --no-abbrev
-	git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    git reflog --no-abbrev
+    git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 git-remove-secret:
-	git log -S xxx
-	git log -p -S xxx > git_log.txt
-	git filter-repo --replace-text=<(echo 'xxx==>yyy') --refs=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx..HEAD --force
+    git log -S xxx
+    git log -p -S xxx > git_log.txt
+    git filter-repo --replace-text=<(echo 'xxx==>yyy') --refs=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx..HEAD --force
 
 # Git submodule
 git-submodule-add:
-	git submodule add https://github.com/hongbo-miao/hongbomiao.com.git
+    git submodule add https://github.com/hongbo-miao/hongbomiao.com.git
+
 git-submodule-remove:
-	git rm hongbomiao.com
+    git rm hongbomiao.com
+
 git-submodule-move:
-	git mv hongbomiao.com submodules/hongbomiao.com
+    git mv hongbomiao.com submodules/hongbomiao.com
 
 # Git LFS
 git-lfs-install:
-	git lfs install
+    git lfs install
+
 git-lfs-track:
-	git lfs track "*.mp4"
+    git lfs track "*.mp4"
+
 git-lfs-untrack:
-	git lfs untrack "*.mp4"
+    git lfs untrack "*.mp4"
+
 git-lfs-status:
-	git lfs status
+    git lfs status
+
 git-lfs-list:
-	git lfs ls-files
+    git lfs ls-files
 
 # Gitleaks
 gitleaks-install:
-	brew install gitleaks
+    brew install gitleaks
+
 gitleaks-detect:
-	gitleaks detect --source=. --verbose
+    gitleaks detect --source=. --verbose

@@ -1,58 +1,71 @@
 # Config
 rclone-config:
-	rclone config
+    rclone config
+
 rclone-config-show-path:
-	rclone config file
+    rclone config file
+
 rclone-config-show-full-content:
-	# cat ~/.config/rclone/rclone.conf
-	rclone config show
+    # cat ~/.config/rclone/rclone.conf
+    rclone config show
+
 rclone-config-show-redacted-content:
-	rclone config redacted
+    rclone config redacted
+
 rclone-config-create-sftp:
-	rclone config create hm-ubuntu sftp user=parallels host=10.211.55.4 port=22 key_file=~/.ssh/id_ed25519
-	rclone config create hm-ubuntu sftp user=parallels host=10.211.55.4 port=22 pass='xxx'
+    rclone config create hm-ubuntu sftp user=parallels host=10.211.55.4 port=22 key_file=~/.ssh/id_ed25519
+    rclone config create hm-ubuntu sftp user=parallels host=10.211.55.4 port=22 pass='xxx'
+
 rclone-config-create-s3:
-	rclone config create hm-s3 s3 provider=AWS region=us-west-2 storage_class=STANDARD access_key_id=xxx secret_access_key=xxx
-	rclone config create hm-s3 s3 provider=AWS region=us-west-2 storage_class=STANDARD env_auth=true
+    rclone config create hm-s3 s3 provider=AWS region=us-west-2 storage_class=STANDARD access_key_id=xxx secret_access_key=xxx
+    rclone config create hm-s3 s3 provider=AWS region=us-west-2 storage_class=STANDARD env_auth=true
+
 clone-config-delete:
-	rclone config delete hm-s3
+    rclone config delete hm-s3
 
 # List
 rclone-list-files-no-modification-time:
-	rclone ls hm-ubuntu:/tmp/rclone-backup
+    rclone ls hm-ubuntu:/tmp/rclone-backup
 
 rclone-list-files:
-	rclone lsl hm-ubuntu:/tmp/rclone-backup
+    rclone lsl hm-ubuntu:/tmp/rclone-backup
+
 rclone-list-files-s3:
-	rclone lsl hm-s3:hm-production-bucket/rclone-backup
+    rclone lsl hm-s3:hm-production-bucket/rclone-backup
+
 rclone-list-files-min-age:
-	rclone lsl hm-ubuntu:/tmp/rclone-backup --min-age=1w
+    rclone lsl hm-ubuntu:/tmp/rclone-backup --min-age=1w
+
 rclone-list-files-exclude:
-	rclone lsl hm-ubuntu:/tmp/rclone-backup --exclude="*.log"
+    rclone lsl hm-ubuntu:/tmp/rclone-backup --exclude="*.log"
+
 rclone-list-files-include:
-	rclone lsl hm-ubuntu:/tmp/rclone-backup --include="*.log"
+    rclone lsl hm-ubuntu:/tmp/rclone-backup --include="*.log"
+
 rclone-list-files-filter:
-	rclone lsl hm-ubuntu:/tmp/rclone-backup --filter="+ statistics.log" --filter="- *.log"
+    rclone lsl hm-ubuntu:/tmp/rclone-backup --filter="+ statistics.log" --filter="- *.log"
 
 rclone-list-directories:
-	rclone lsd hm-ubuntu:/tmp/rclone-backup
+    rclone lsd hm-ubuntu:/tmp/rclone-backup
 
 # Copy
 rclone-copy:
-	rclone copy --progress /tmp/rclone-backup hm-ubuntu:/tmp/rclone-backup
-	rclone copy --progress /tmp/rclone-backup hm-s3:hm-production-bucket/rclone-backup
-	rclone copy --progress hm-ubuntu:/tmp/rclone-backup /tmp/rclone-backup
-	rclone copy --progress hm-ubuntu:/tmp/rclone-backup hm-ubuntu:/tmp/rclone-backup-big
-	rclone copy --progress hm-ubuntu:/tmp/rclone-backup hm-s3:hm-production-bucket/rclone-backup
+    rclone copy --progress /tmp/rclone-backup hm-ubuntu:/tmp/rclone-backup
+    rclone copy --progress /tmp/rclone-backup hm-s3:hm-production-bucket/rclone-backup
+    rclone copy --progress hm-ubuntu:/tmp/rclone-backup /tmp/rclone-backup
+    rclone copy --progress hm-ubuntu:/tmp/rclone-backup hm-ubuntu:/tmp/rclone-backup-big
+    rclone copy --progress hm-ubuntu:/tmp/rclone-backup hm-s3:hm-production-bucket/rclone-backup
+
 rclone-sync:
-	rclone sync --progress hm-ubuntu:/tmp/rclone-backup /tmp/rclone-backup
+    rclone sync --progress hm-ubuntu:/tmp/rclone-backup /tmp/rclone-backup
 
 # Mount
 rclone-mount:
-	rclone mount hm-s3:hm-production-bucket/rclone-backup /tmp/rclone-backup
+    rclone mount hm-s3:hm-production-bucket/rclone-backup /tmp/rclone-backup
 
 # Server
 rclone-rcd:
-	rclone rcd
+    rclone rcd
+
 rclone-rcd-ui:
-	rclone rcd --rc-web-gui --rc-addr=:5572 --rc-user=admin --rc-pass=passw0rd
+    rclone rcd --rc-web-gui --rc-addr=:5572 --rc-user=admin --rc-pass=passw0rd

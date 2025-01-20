@@ -1,34 +1,45 @@
 terraform-init:
-	terraform init
-	terraform init -upgrade
-	terraform init -reconfigure
-	terraform init -backend=false
+    terraform init
+    terraform init -upgrade
+    terraform init -reconfigure
+    terraform init -backend=false
+
 terraform-plan:
-	terraform plan
-	terraform plan -parallelism=8
+    terraform plan
+    terraform plan -parallelism=8
+
 terraform-apply:
-	terraform apply
-	terraform apply -auto-approve
-	terraform apply -parallelism=8
+    terraform apply
+    terraform apply -auto-approve
+    terraform apply -parallelism=8
+
 terraform-refresh:
-	terraform refresh
+    terraform refresh
+
 terraform-destroy:
-	terraform destroy
+    terraform destroy
 
 terraform-get:
-	terraform get
-terraform-graph: # http://www.webgraphviz.com
-	terraform graph
+    terraform get
+
+terraform-graph:
+    terraform graph
+
 terraform-login:
-	terraform login
+    terraform login
+
 terraform-validate:
-	terraform validate
+    terraform validate
+
 terraform-show:
-	terraform show
+    terraform show
+
 terraform-state-list:
-	terraform state list
+    terraform state list
+
 terraform-output:
-	terraform output
+    terraform output
+
 terraform-console:
-	terraform console
-	# substr(module.snowflake_development_hm_kafka_db_product_read_write_user_rsa_key.public_key_pem, 27, 747)
+    terraform console
+    # substr(module.snowflake_development_hm_kafka_db_product_read_write_user_rsa_key.public_key_pem, 27, 747)
