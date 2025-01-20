@@ -52,37 +52,6 @@ wheels = [
 ]
 
 [[package]]
-name = "dali"
-version = "1.0.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "numpy" },
-    { name = "nvidia-dali-cuda120" },
-    { name = "torch" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "poethepoet" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "numpy", specifier = "==2.2.2" },
-    { name = "nvidia-dali-cuda120", specifier = "==1.44.0" },
-    { name = "torch", specifier = "==2.5.1" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "poethepoet", specifier = "==0.32.1" },
-    { name = "pytest", specifier = "==8.3.4" },
-    { name = "pytest-cov", specifier = "==6.0.0" },
-]
-
-[[package]]
 name = "dm-tree"
 version = "0.1.8"
 source = { registry = "https://pypi.org/simple" }
@@ -186,6 +155,7 @@ wheels = [
 name = "numpy"
 version = "2.2.2"
 source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/d0/c12ddfd3a02274be06ffc71f3efc6d0e457b0409c4481596881e748cb264/numpy-2.2.2.tar.gz", hash = "sha256:ed6906f61834d687738d25988ae117683705636936cc605be0bb208b23df4d8f", size = 20233295 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e1/fe/df5624001f4f5c3e0b78e9017bfab7fdc18a8d3b3d3161da3d64924dd659/numpy-2.2.2-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:b208cfd4f5fe34e1535c08983a1a6803fdbc7a1e86cf13dd0c61de0b51a0aadc", size = 20899188 },
     { url = "https://files.pythonhosted.org/packages/a9/80/d349c3b5ed66bd3cb0214be60c27e32b90a506946857b866838adbe84040/numpy-2.2.2-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:d0bbe7dd86dca64854f4b6ce2ea5c60b51e36dfd597300057cf473d3615f2369", size = 14113972 },
@@ -293,6 +263,37 @@ dependencies = [
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/db/f7/97a9ea26ed4bbbfc2d470994b8b4f338ef663be97b8f677519ac195e113d/nvidia_cusparse_cu12-12.3.1.170-py3-none-manylinux2014_x86_64.whl", hash = "sha256:ea4f11a2904e2a8dc4b1833cc1b5181cde564edd0d5cd33e3c168eff2d1863f1", size = 207454763 },
+]
+
+[[package]]
+name = "nvidia-dali"
+version = "1.0.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "numpy" },
+    { name = "nvidia-dali-cuda120" },
+    { name = "torch" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "poethepoet" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "numpy", specifier = "==2.2.2" },
+    { name = "nvidia-dali-cuda120", specifier = "==1.44.0" },
+    { name = "torch", specifier = "==2.5.1" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "poethepoet", specifier = "==0.32.1" },
+    { name = "pytest", specifier = "==8.3.4" },
+    { name = "pytest-cov", specifier = "==6.0.0" },
 ]
 
 [[package]]
