@@ -1073,7 +1073,7 @@ The VHDL waveforms are displayed in GTKWave.
 
 ## Machine Learning
 
-### ComfyUI - Node-based interface for diffusion model workflows
+### ComfyUI - Node-Based Interface for Diffusion Model Workflows
 
 ![ComfyUI screenshot](https://github.com/user-attachments/assets/1c3e5b19-e261-48c9-94bf-6e8daedfece4)
 
