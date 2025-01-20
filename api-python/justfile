@@ -1,26 +1,33 @@
 uv-install-python:
-	uv python install
+    uv python install
+
 uv-update-lock-file:
-	uv lock
+    uv lock
+
 uv-install-dependencies:
-	brew install librdkafka
-	export C_INCLUDE_PATH=/opt/homebrew/include
-	export LIBRARY_PATH=/opt/homebrew/lib
-	uv sync --dev
+    brew install librdkafka
+    export C_INCLUDE_PATH=/opt/homebrew/include
+    export LIBRARY_PATH=/opt/homebrew/lib
+    uv sync --dev
 
 uv-run-dev:
-	uv run poe dev
+    uv run poe dev
+
 uv-run-serve:
-	uv run poe serve
+    uv run poe serve
+
 uv-run-test:
-	uv run poe test
+    uv run poe test
+
 uv-run-test-coverage:
-	uv run poe test-coverage
+    uv run poe test-coverage
 
 docker-build:
-	cd .. && \
-	docker build --file=api-python/Dockerfile --tag=ghcr.io/hongbo-miao/hm-api-python:latest .
+    cd .. && \
+    docker build --file=api-python/Dockerfile --tag=ghcr.io/hongbo-miao/hm-api-python:latest .
+
 docker-push:
-	docker push ghcr.io/hongbo-miao/hm-api-python:latest
+    docker push ghcr.io/hongbo-miao/hm-api-python:latest
+
 docker-run:
-	docker run --publish=35903:35903 --name=hm-api-python --rm ghcr.io/hongbo-miao/hm-api-python:latest
+    docker run --publish=35903:35903 --name=hm-api-python --rm ghcr.io/hongbo-miao/hm-api-python:latest

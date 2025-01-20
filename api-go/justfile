@@ -1,82 +1,103 @@
 run-graphql-server:
-	go run cmd/graphql_server/main.go
+    go run cmd/graphql_server/main.go
+
 run-grpc-server:
-	go run cmd/grpc_server/main.go
+    go run cmd/grpc_server/main.go
+
 run-config-loader:
-	go run cmd/config_loader/main.go
+    go run cmd/config_loader/main.go
+
 run-decision-logger:
-	go run cmd/decision_logger/main.go
+    go run cmd/decision_logger/main.go
 
 go-mod-init:
-	go mod init github.com/hongbo-miao/hongbomiao.com
+    go mod init github.com/hongbo-miao/hongbomiao.com
+
 go-mod-tidy:
-	go mod tidy
+    go mod tidy
+
 go-test:
-	go test ./...
+    go test ./...
+
 go-test-coverage:
-	go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+    go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+
 go-fmt:
-	gofmt .
+    gofmt .
+
 go-fmt-check:
-	gofmt -l .
+    gofmt -l .
+
 go-lint:
-	golangci-lint run ./...
+    golangci-lint run ./...
 
 # Protocol Buffers
 proto-generate:
-	protoc api/graphql_server/proto/greet/v1/greet.proto --go_out=plugins=grpc:.
-	protoc api/graphql_server/proto/torchserve/v1/inference.proto --go_out=plugins=grpc:.
-	protoc api/graphql_server/proto/torchserve/v1/management.proto --go_out=plugins=grpc:.
+    protoc api/graphql_server/proto/greet/v1/greet.proto --go_out=plugins=grpc:.
+    protoc api/graphql_server/proto/torchserve/v1/inference.proto --go_out=plugins=grpc:.
+    protoc api/graphql_server/proto/torchserve/v1/management.proto --go_out=plugins=grpc:.
+
 proto-lint:
-	buf lint
+    buf lint
 
 # OPA
 opa-test:
-	opa test internal/graphql_server/policies/*.rego -v
+    opa test internal/graphql_server/policies/*.rego -v
+
 opa-test-coverage:
-	opa test internal/graphql_server/policies/*.rego --coverage --format=json
+    opa test internal/graphql_server/policies/*.rego --coverage --format=json
+
 opa-fmt:
-	opa fmt internal/graphql_server/policies/*.rego -w
+    opa fmt internal/graphql_server/policies/*.rego -w
+
 opa-check:
-	opa check internal/graphql_server/policies/*.rego
+    opa check internal/graphql_server/policies/*.rego
 
 # Decision Logger
 decision-logger-gzip-call:
-	echo '{"foo": "bar"}' | gzip | curl --verbose --include --data-binary @- -H "Content-Encoding: gzip" http://localhost:41797/logs
+    echo '{"foo": "bar"}' | gzip | curl --verbose --include --data-binary @- -H "Content-Encoding: gzip" http://localhost:41797/logs
 
 # Config Loader
 config-loader-generate-cert-and-key:
-	openssl req -x509 -newkey=rsa:4096 -nodes -out=config/config_loader/server.crt -keyout=config/config_loader/server.key -days=3650 -subj="/C=US/ST=CA/CN=hongbomiao.com"
+    openssl req -x509 -newkey=rsa:4096 -nodes -out=config/config_loader/server.crt -keyout=config/config_loader/server.key -days=3650 -subj="/C=US/ST=CA/CN=hongbomiao.com"
 
 # Docker
 docker-build-config-loader:
-	cd .. && \
-	docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-config-loader:latest .
+    cd .. && \
+    docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-config-loader:latest .
+
 docker-push-config-loader:
-	docker push ghcr.io/hongbo-miao/hm-config-loader:latest
+    docker push ghcr.io/hongbo-miao/hm-config-loader:latest
+
 docker-run-config-loader:
-	docker run --publish=26660:26660 --name=hm-config-loader --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-config-loader
+    docker run --publish=26660:26660 --name=hm-config-loader --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-config-loader
 
 docker-build-decision-logger:
-	cd .. && \
-	docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-decision-logger:latest .
+    cd .. && \
+    docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-decision-logger:latest .
+
 docker-push-decision-logger:
-	docker push ghcr.io/hongbo-miao/hm-decision-logger:latest
+    docker push ghcr.io/hongbo-miao/hm-decision-logger:latest
+
 docker-run-decision-logger:
-	docker run --publish=41797:41797 --name=hm-decision-logger --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-decision-logger
+    docker run --publish=41797:41797 --name=hm-decision-logger --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-decision-logger
 
 docker-build-graphql-server:
-	cd .. && \
-	docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-graphql-server:latest .
+    cd .. && \
+    docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-graphql-server:latest .
+
 docker-push-graphql-server:
-	docker push ghcr.io/hongbo-miao/hm-graphql-server:latest
+    docker push ghcr.io/hongbo-miao/hm-graphql-server:latest
+
 docker-run-graphql-server:
-	docker run --publish=31800:31800 --name=hm-graphql-server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-graphql-server
+    docker run --publish=31800:31800 --name=hm-graphql-server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-graphql-server
 
 docker-build-grpc-server:
-	cd .. && \
-	docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-grpc-server:latest .
+    cd .. && \
+    docker build --file=api-go/build/package/config_loader/Dockerfile --tag=ghcr.io/hongbo-miao/hm-grpc-server:latest .
+
 docker-push-grpc-server:
-	docker push ghcr.io/hongbo-miao/hm-grpc-server:latest
+    docker push ghcr.io/hongbo-miao/hm-grpc-server:latest
+
 docker-run-grpc-server:
-	docker run --publish=45237:45237 --name=hm-grpc-server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-grpc-server
+    docker run --publish=45237:45237 --name=hm-grpc-server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-grpc-server

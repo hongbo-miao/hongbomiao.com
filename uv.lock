@@ -254,6 +254,7 @@ dev = [
     { name = "pip", marker = "sys_platform != 'win32'" },
     { name = "poethepoet", marker = "sys_platform != 'win32'" },
     { name = "ruff", marker = "sys_platform != 'win32'" },
+    { name = "rust-just", marker = "sys_platform != 'win32'" },
     { name = "sqlfluff", marker = "sys_platform != 'win32'" },
     { name = "vsg", marker = "sys_platform != 'win32'" },
     { name = "yamllint", marker = "sys_platform != 'win32'" },
@@ -273,6 +274,7 @@ dev = [
     { name = "pip", specifier = "==24.3.1" },
     { name = "poethepoet", specifier = "==0.32.1" },
     { name = "ruff", specifier = "==0.9.2" },
+    { name = "rust-just", specifier = "==1.38.0" },
     { name = "sqlfluff", specifier = "==3.3.0" },
     { name = "vsg", specifier = "==3.30.0" },
     { name = "yamllint", specifier = "==1.35.1" },
@@ -666,6 +668,26 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/e5/fd/57df1a0543182f79a1236e82a79c68ce210efb00e97c30657d5bdb12b478/ruff-0.9.2-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:b338edc4610142355ccf6b87bd356729b62bf1bc152a2fad5b0c7dc04af77bfe", size = 11479141 },
     { url = "https://files.pythonhosted.org/packages/dc/16/bc3fd1d38974f6775fc152a0554f8c210ff80f2764b43777163c3c45d61b/ruff-0.9.2-py3-none-musllinux_1_2_i686.whl", hash = "sha256:492a5e44ad9b22a0ea98cf72e40305cbdaf27fac0d927f8bc9e1df316dcc96eb", size = 12014073 },
     { url = "https://files.pythonhosted.org/packages/47/6b/e4ca048a8f2047eb652e1e8c755f384d1b7944f69ed69066a37acd4118b0/ruff-0.9.2-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:af1e9e9fe7b1f767264d26b1075ac4ad831c7db976911fa362d09b2d0356426a", size = 12435758 },
+]
+
+[[package]]
+name = "rust-just"
+version = "1.38.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/33/5c/b043e498dc10fcbc02cd06e776ca9e3ef9d888afa8ed6963588964147f76/rust_just-1.38.0.tar.gz", hash = "sha256:05d092602075b4ef244dee4a94267f998a66523ca39b8ac8320630c82662dac9", size = 1387350 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d8/6b/5f416dfdee8ab1c3e73088dca4e10ac14956239f8c289f4f1b2ffda6511a/rust_just-1.38.0-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:cae21f93bd10223b6e5b50be32aab2b449e46ce1cdf2c8e576b2d85a751fee79", size = 1758552 },
+    { url = "https://files.pythonhosted.org/packages/53/45/fe3a456cd39e674c27149b907f802c89e21ad5fa8617178f5d765fbc6495/rust_just-1.38.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:b64d750ded84f71fcd49271d88e162e0cbb111e9383b1dc9aa8b8a157e92fd06", size = 1628336 },
+    { url = "https://files.pythonhosted.org/packages/c2/46/a4fa7b053af1c80942049f2f22b8a91298776292cdb0cbd2d66b2faa9560/rust_just-1.38.0-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:443548c03f1dcf46b82347c10f2ef3faf75cf6bee1fc382f9b6bea2b92c59516", size = 1754360 },
+    { url = "https://files.pythonhosted.org/packages/44/16/b53cc27a514bd60928338fc61437bf5e6b45d80a4ba88321f882f355e155/rust_just-1.38.0-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:573ba5bcf94f446ef0e269ab99e3d2de201193dc41906339ca346cbc9ef336fd", size = 1770210 },
+    { url = "https://files.pythonhosted.org/packages/45/ea/98235bb6d63ae11fba81e6f1d936b3e54e14d4fbf3430d9598b1407942c1/rust_just-1.38.0-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:744e2fe7a33f5cbf02a04bda7c07d9e0e4e924c7a47e35096cb034a45609b18a", size = 1893101 },
+    { url = "https://files.pythonhosted.org/packages/72/a7/5ee28651daf9c0f214cf9d0f1d90e5c78e1b2561c12a8a716431081a52be/rust_just-1.38.0-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:4a1687535ce940149b825ca12a6afe485fcbd8d55766e5e18fef95a4c820c189", size = 1947836 },
+    { url = "https://files.pythonhosted.org/packages/2a/96/f352440ccb18a2848bd5aacd309f80fc63b42413a13a651885d248500efd/rust_just-1.38.0-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:b7bd519d9d03460b6c32b5d2a082af5080a63e836e8e291c875a62ce3fb2c187", size = 2423371 },
+    { url = "https://files.pythonhosted.org/packages/9c/bc/df996131791814f476f10441a5122fa28d8849dc3d77ceaea8ede0ea4eda/rust_just-1.38.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3d0018f1cf151161307e7c3f340da290819fc2c5cf240c20a0f6b4de71884a14", size = 1877732 },
+    { url = "https://files.pythonhosted.org/packages/ca/25/c6290d129faae0c872869a119e7946e4ae8738b2aa073e40734b5001ade5/rust_just-1.38.0-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:b71eae6d358d0d7fb10f9ba7add658da0a3fc00d9e4d1473741901a0c8920450", size = 1769910 },
+    { url = "https://files.pythonhosted.org/packages/f8/a3/6640b29f0bb080c3ffcfe10c7a5e9ba05dd244d0d030204079ca650f1443/rust_just-1.38.0-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:5c0dd27a3616745d5d30e7dc59b1f539c95821da0b3a27bae1837a6202ea0bd4", size = 1799174 },
+    { url = "https://files.pythonhosted.org/packages/92/8c/df133ec92d583232a3a78030eb538b093d51a8c9b4b8fd4054a1015e2411/rust_just-1.38.0-py3-none-musllinux_1_2_i686.whl", hash = "sha256:ac4965aefc741faaa3106b6c8d6231353e067ce93582677cebc338ae25637430", size = 1887808 },
+    { url = "https://files.pythonhosted.org/packages/3a/e8/4ba3b2405db0864f9ea5cee2aaa7c057d5ee6c122e996428e9c2b749ddf0/rust_just-1.38.0-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:c626588d64b5fd39bbe5072c6ddd0e0f443b1682a4143be45429046f42be66e3", size = 1938453 },
 ]
 
 [[package]]

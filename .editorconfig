@@ -10,16 +10,16 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.gradle]
-indent_size = 4
-indent_style = space
-
 [{*.c,*.cpp,*.cu,*.cuh,*.h,*.hpp,*.ino}]
 indent_size = 2
 indent_style = space
 
 [*.cs]
 indent_size = 4
+indent_style = space
+
+[{*.cjs,*.js,*.mjs,*.ts,*.tsx}]
+indent_size = 2
 indent_style = space
 
 [{*.csproj,*.xml}]
@@ -29,6 +29,14 @@ indent_style = space
 [*.dbc]
 indent_size = 4
 indent_style = tab
+
+[{*.go,go.mod}]
+indent_size = 4
+indent_style = tab
+
+[*.gradle]
+indent_size = 4
+indent_style = space
 
 [{*.ipynb,*.py}]
 indent_size = 4
@@ -42,10 +50,6 @@ indent_style = space
 indent_size = 4
 indent_style = space
 
-[{*.cjs,*.js,*.mjs,*.ts,*.tsx}]
-indent_size = 2
-indent_style = space
-
 [*.json]
 indent_size = 2
 indent_style = space
@@ -56,6 +60,10 @@ indent_style = space
 
 [*.m]
 indent_size = 4
+indent_style = space
+
+[*.p4]
+indent_size = 2
 indent_style = space
 
 [*.rego]
@@ -110,6 +118,10 @@ indent_style = space
 indent_size = 2
 indent_style = space
 
+[*.WizardFile]
+indent_size = 2
+indent_style = space
+
 [{*.yaml,*.yml}]
 indent_size = 2
 indent_style = space
@@ -122,18 +134,6 @@ indent_style = tab
 indent_size = 2
 indent_style = space
 
-[{go.mod,*.go}]
+[justfile]
 indent_size = 4
-indent_style = tab
-
-[Makefile]
-indent_size = 4
-indent_style = tab
-
-[*.p4]
-indent_size = 2
-indent_style = space
-
-[*.WizardFile]
-indent_size = 2
 indent_style = space

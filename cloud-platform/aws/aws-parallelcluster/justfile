@@ -1,13 +1,16 @@
 slurm-job-submit:
-	sbatch --wrap="srun jobs/hello.sh"
-	sbatch --wrap="srun jobs/hello.sh" --nodes=2
-	sbatch --wrap="srun jobs/hello.sh" --nodes=3 --partition=spot-queue --constraint="[c7gn.16xlarge*1&c7gn.metal*2]"
+    sbatch --wrap="srun jobs/hello.sh"
+    sbatch --wrap="srun jobs/hello.sh" --nodes=2
+    sbatch --wrap="srun jobs/hello.sh" --nodes=3 --partition=spot-queue --constraint="[c7gn.16xlarge*1&c7gn.metal*2]"
+
 slurm-queue-view:
-	squeue
+    squeue
+
 slurm-module-list-available:
-	module avail
+    module avail
+
 slurm-module-list-loaded:
-	module list
+    module list
 
 open-mpi-version:
-	mpirun --version
+    mpirun --version

@@ -1,39 +1,50 @@
 uv-install-python:
-	uv python install
+    uv python install
+
 uv-update-lock-file:
-	uv lock
+    uv lock
+
 uv-install-dependencies:
-	uv sync --dev
+    uv sync --dev
 
 feast-init:
-	feast init driver_features
+    feast init driver_features
+
 download-driver-stats:
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/hongbo-miao/hm-driver-stats/main/driver_stats.parquet > features/data/driver_stats.parquet
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/hongbo-miao/hm-driver-stats/main/driver_stats.parquet > features/data/driver_stats.parquet
 
 uv-run-test:
-	uv run poe test
+    uv run poe test
+
 uv-run-test-coverage:
-	uv run poe test-coverage
+    uv run poe test-coverage
 
 uv-run-inspect-raw-data:
-	uv run poe inspect-raw-data
+    uv run poe inspect-raw-data
+
 # Scan python files in the current directory for feature view/entity definitions, registers the objects, and deploys infrastructure.
 uv-run-feast-apply:
-	uv run poe feast-apply
+    uv run poe feast-apply
+
 # Generate training data
 uv-run-generate-training-data:
-	uv run poe generate-training-data
+    uv run poe generate-training-data
+
 # Load features into your online store
 uv-run-materialize-features:
-	uv run poe materialize-features
+    uv run poe materialize-features
+
 # Inspect materialized features
 uv-run-inspect-features:
-	uv run poe inspect-features
+    uv run poe inspect-features
+
 # Fetch feature vectors for inference
 uv-run-fetch-features:
-	uv run poe fetch-features
+    uv run poe fetch-features
+
 # Fetch feature vectors for inference by feature service
 uv-run-fetch-features-by-service:
-	uv run poe fetch-features-by-service
+    uv run poe fetch-features-by-service
+
 uv-run-feast-ui:
-	uv run poe feast-ui
+    uv run poe feast-ui

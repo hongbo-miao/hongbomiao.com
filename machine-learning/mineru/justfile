@@ -1,18 +1,22 @@
 uv-install-python:
-	uv python install
+    uv python install
+
 uv-update-lock-file:
-	uv lock
+    uv lock
+
 uv-install-dependencies:
-	uv sync --extra=build
-	uv sync --extra=build --extra=compile
-	uv sync --extra=build --extra=compile --dev
+    uv sync --extra=build
+    uv sync --extra=build --extra=compile
+    uv sync --extra=build --extra=compile --dev
 
 download-model:
-	# https://github.com/opendatalab/MinerU/blob/master/docs/how_to_download_models_en.md#download-the-model-from-hugging-face
+    # https://github.com/opendatalab/MinerU/blob/master/docs/how_to_download_models_en.md#download-the-model-from-hugging-face
 
 uv-run-dev:
-	uv run poe dev
+    uv run poe dev
+
 uv-run-test:
-	uv run poe test
+    uv run poe test
+
 uv-run-test-coverage:
-	uv run poe test-coverage
+    uv run poe test-coverage

@@ -1,29 +1,35 @@
 uv-install-python:
-	uv python install
+    uv python install
+
 uv-update-lock-file:
-	uv lock
+    uv lock
+
 uv-install-dependencies:
-	uv sync --dev
+    uv sync --dev
 
 uv-run-test:
-	uv run poe test
+    uv run poe test
+
 uv-run-test-coverage:
-	uv run poe test-coverage
+    uv run poe test-coverage
 
 pulumi-login:
-	pulumi login s3://hongbomiao-pulumi-bucket
+    pulumi login s3://hongbomiao-pulumi-bucket
+
 pulumi-init:
-	pulumi new aws-python
+    pulumi new aws-python
 
 pulumi-up:
-	export PULUMI_CONFIG_PASSPHRASE_FILE="passphrase.txt" && pulumi up
+    export PULUMI_CONFIG_PASSPHRASE_FILE="passphrase.txt" && pulumi up
+
 pulumi-down:
-	export PULUMI_CONFIG_PASSPHRASE_FILE="passphrase.txt" && pulumi destroy
+    export PULUMI_CONFIG_PASSPHRASE_FILE="passphrase.txt" && pulumi destroy
 
 pulumi-stack-list:
-	pulumi stack ls
+    pulumi stack ls
+
 pulumi-stack-init:
-	pulumi stack init development
+    pulumi stack init development
 
 pulumi-convert:
-	pulumi convert --from=terraform --language=python --out=my-pulumi --generate-only
+    pulumi convert --from=terraform --language=python --out=my-pulumi --generate-only

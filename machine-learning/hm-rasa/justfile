@@ -1,34 +1,43 @@
 uv-install-python:
-	uv python install
+    uv python install
+
 uv-update-lock-file:
-	uv lock
+    uv lock
+
 uv-install-dependencies:
-	uv sync --dev
+    uv sync --dev
 
 uv-run-train:
-	uv run poe train
+    uv run poe train
+
 uv-run-test:
-	uv run poe test
+    uv run poe test
+
 uv-run-test-story:
-	uv run poe test -- --stories tests/test_stories.yml
+    uv run poe test -- --stories tests/test_stories.yml
+
 uv-run-visualize:
-	uv run poe visualize
+    uv run poe visualize
 
 uv-run-start-rasa-server:
-	uv run poe start-rasa-server
+    uv run poe start-rasa-server
+
 uv-run-start-action-server:
-	uv run poe start-action-server
+    uv run poe start-action-server
 
 uv-run-telemetry-disable:
-	uv run poe telemetry-disable
+    uv run poe telemetry-disable
+
 uv-run-shell:
-	uv run poe shell
+    uv run poe shell
+
 uv-run-interactive:
-	uv run poe interactive
+    uv run poe interactive
 
 # Docker
 docker-build:
-	cd ../.. && \
-	docker build --file=machine-learning/hm-rasa/Dockerfile --tag=ghcr.io/hongbo-miao/hm-rasa-action-server:latest .
+    cd ../.. && \
+    docker build --file=machine-learning/hm-rasa/Dockerfile --tag=ghcr.io/hongbo-miao/hm-rasa-action-server:latest .
+
 docker-push:
-	docker push hongbomiao/hm-rasa-action-server:latest
+    docker push hongbomiao/hm-rasa-action-server:latest

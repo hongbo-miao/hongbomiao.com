@@ -1,84 +1,93 @@
 kubernetes-kafka-topic-list:
-	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
-		bin/kafka-topics.sh \
-			--bootstrap-server=localhost:9092 \
-			--list
+    kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+        bin/kafka-topics.sh \
+            --bootstrap-server=localhost:9092 \
+            --list
+
 kubernetes-kafka-topic-delete:
-	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
-		bin/kafka-topics.sh \
-			--bootstrap-server=localhost:9092 \
-			--delete \
-			--topic=my-topic
+    kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+        bin/kafka-topics.sh \
+            --bootstrap-server=localhost:9092 \
+            --delete \
+            --topic=my-topic
+
 kubernetes-kafka-topic-describe:
-	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
-		bin/kafka-topics.sh \
-			--bootstrap-server=localhost:9092 \
-			--describe \
-			--topic=my-topic
+    kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+        bin/kafka-topics.sh \
+            --bootstrap-server=localhost:9092 \
+            --describe \
+            --topic=my-topic
+
 kubernetes-kafka-topic-message-count:
-	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
-		bin/kafka-run-class.sh \
-			kafka.tools.GetOffsetShell \
-			--bootstrap-server=localhost:9092 \
-			--topic=my-topic \
-			--time=-1
+    kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+        bin/kafka-run-class.sh \
+            kafka.tools.GetOffsetShell \
+            --bootstrap-server=localhost:9092 \
+            --topic=my-topic \
+            --time=-1
 
 kubernetes-kafka-console-producer:
-	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
-		bin/kafka-console-producer.sh \
-			--bootstrap-server=localhost:9092 \
-			--topic=my-topic
+    kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+        bin/kafka-console-producer.sh \
+            --bootstrap-server=localhost:9092 \
+            --topic=my-topic
+
 kubernetes-kafka-topic-consume:
-	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
-		bin/kafka-console-consumer.sh \
-			--bootstrap-server=localhost:9092 \
-			--topic=my-topic \
-			--property=print.key=true
+    kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+        bin/kafka-console-consumer.sh \
+            --bootstrap-server=localhost:9092 \
+            --topic=my-topic \
+            --property=print.key=true
+
 kubernetes-kafka-topic-consume-from-beginning:
-	kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
-		bin/kafka-console-consumer.sh \
-			--bootstrap-server=localhost:9092 \
-			--topic=my-topic \
-			--property=print.key=true \
-			--from-beginning
+    kubectl exec hm-kafka-kafka-0 --namespace=hm-kafka --container=kafka --stdin --tty -- \
+        bin/kafka-console-consumer.sh \
+            --bootstrap-server=localhost:9092 \
+            --topic=my-topic \
+            --property=print.key=true \
+            --from-beginning
 
 kubernetes-kafka-avro-console-produce:
-	kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
-		kafka-avro-console-producer \
+    kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
+        kafka-avro-console-producer \
             --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
             --topic=my-avro-topic \
             --property=schema.registry.url=http://localhost:8081 \
             --property=value.schema='{"type": "record", "name": "myrecord", "fields": [{"name": "f1", "type": "string"}]}'
-	# {"f1": "hi"}
+    # {"f1": "hi"}
+
 kubernetes-kafka-avro-console-consume:
-	kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
-		kafka-avro-console-consumer \
+    kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
+        kafka-avro-console-consumer \
             --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
             --topic=my-avro-topic \
             --property=schema.registry.url=http://localhost:8081
+
 kubernetes-kafka-avro-console-consumer-from-beginning:
-	kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
-		kafka-avro-console-consumer \
+    kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
+        kafka-avro-console-consumer \
             --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
             --topic=my-avro-topic \
             --property=schema.registry.url=http://localhost:8081 \
             --from-beginning
 
 keytool-list-hm-kafka-kafka-truststore:
-	cd .. && \
-	keytool \
-		-list \
-		-keystore kubernetes/data/hm-kafka/hm-kafka/kafka-truststore.jks \
-		-storepass m1Uaf4Crxzoo2Zxp
+    cd .. && \
+    keytool \
+        -list \
+        -keystore kubernetes/data/hm-kafka/hm-kafka/kafka-truststore.jks \
+        -storepass m1Uaf4Crxzoo2Zxp
+
 keytool-list-opa-kafka-connect-elasticsearch-keystore:
-	cd .. && \
-	keytool \
-		-list \
-		-keystore kubernetes/data/hm-kafka/opa-kafka-connect/elasticsearch-keystore.jks \
-		-storepass MPx57vkACsRWKVap
+    cd .. && \
+    keytool \
+        -list \
+        -keystore kubernetes/data/hm-kafka/opa-kafka-connect/elasticsearch-keystore.jks \
+        -storepass MPx57vkACsRWKVap
+
 keytool-list-logging-kafka-connect-elasticsearch-keystore:
-	cd .. && \
-	keytool \
-		-list \
-		-keystore kubernetes/data/hm-kafka/logging-kafka-connect/elasticsearch-keystore.jks \
-		-storepass MPx57vkACsRWKVap
+    cd .. && \
+    keytool \
+        -list \
+        -keystore kubernetes/data/hm-kafka/logging-kafka-connect/elasticsearch-keystore.jks \
+        -storepass MPx57vkACsRWKVap
