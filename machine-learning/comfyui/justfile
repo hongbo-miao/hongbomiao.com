@@ -1,0 +1,11 @@
+run:
+	docker run \
+		--interactive \
+		--tty \
+    --rm \
+    --name=hm-comfyui \
+    --gpus=all \
+    --publish=8188:8188 \
+    --volume="$(pwd)/storage:/root" \
+    --env=CLI_ARGS="" \
+    docker.io/yanwk/comfyui-boot:cu124-megapak
