@@ -21,6 +21,7 @@ jobs:
       dockerfile: ${{ steps.filter.outputs.dockerfile }}
       html: ${{ steps.filter.outputs.html }}
       json: ${{ steps.filter.outputs.json }}
+      justfile: ${{ steps.filter.outputs.justfile }}
       markdown: ${{ steps.filter.outputs.markdown }}
       matlab: ${{ steps.filter.outputs.matlab }}
       natural-language: ${{ steps.filter.outputs.natural-language }}
@@ -114,6 +115,11 @@ jobs:
               - 'package.json'
               - 'package-lock.json'
               - '**/*.json'
+            justfile:
+              - '.github/workflows/.lint.yml'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/justfile'
             markdown:
               - '.github/workflows/.lint.yml'
               - '.node-version'
@@ -714,6 +720,33 @@ jobs:
       - name: Lint JSON
         run: |
           npm run lint:json
+
+  lint-justfile:
+    name: justfile
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.justfile == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: pyproject.toml
+      - name: Install dependencies
+        run: |
+          uv sync --dev
+      - name: Lint justfile
+        run: |
+          uv run poe lint-justfile
 
   lint-kotlin-mobile-android:
     name: Kotlin (mobile-android)

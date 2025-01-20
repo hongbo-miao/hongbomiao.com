@@ -691,6 +691,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **@html-eslint** - HTML linter
 - **ESLint** - JavaScript linter
 - **@eslint/json** - JSON linter
+- **Just** - justfile code formatter
 - **Ktlint** - Kotlin code formatter and linter
 - **detekt** - Kotlin static type checker
 - **Kubeconform** - Kubernetes manifest linter

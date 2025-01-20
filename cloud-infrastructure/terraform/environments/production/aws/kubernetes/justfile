@@ -1,7 +1,8 @@
 terraform-init:
-	terraform init -backend=false
+    terraform init -backend=false
 
 download-gateway-api-custom-resource-definition:
-	curl --silent --fail --show-error --location https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/experimental-install.yaml > files/gateway-api/manifests/experimental-install.yaml
+    curl --silent --fail --show-error --location https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/experimental-install.yaml > files/gateway-api/manifests/experimental-install.yaml
+
 download-cert-manager-custom-resource-definition:
-	curl --silent --fail --show-error --location https://github.com/cert-manager/cert-manager/releases/download/v1.15.1/cert-manager.crds.yaml > files/cert-manager/manifests/cert-manager.crds.yaml
+    curl --silent --fail --show-error --location https://github.com/cert-manager/cert-manager/releases/download/v1.15.1/cert-manager.crds.yaml > files/cert-manager/manifests/cert-manager.crds.yaml

@@ -1,42 +1,42 @@
 # Argo CD
 download-argocd:
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml > argocd/argocd.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml > argocd/argocd.yaml
 
 # Dgraph
 download-dgraph:
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml > dgraph/dgraph.yaml
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml > dgraph/dgraph-ha.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-single/dgraph-single.yaml > dgraph/dgraph.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/dgraph-io/dgraph/master/contrib/config/kubernetes/dgraph-ha/dgraph-ha.yaml > dgraph/dgraph-ha.yaml
 
 # Fluent Bit
 download-fluent-bit:
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-service-account.yaml > fluentbit/fluent-bit-service-account.yaml
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-1.22.yaml > fluentbit/fluent-bit-role-1.22.yaml
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-binding-1.22.yaml > fluentbit/fluent-bit-role-binding-1.22.yaml
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml > fluentbit/fluent-bit-configmap.yaml
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds.yaml > fluentbit/fluent-bit-ds.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-service-account.yaml > fluentbit/fluent-bit-service-account.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-1.22.yaml > fluentbit/fluent-bit-role-1.22.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/fluent-bit-role-binding-1.22.yaml > fluentbit/fluent-bit-role-binding-1.22.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-configmap.yaml > fluentbit/fluent-bit-configmap.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/fluent/fluent-bit-kubernetes-logging/master/output/elasticsearch/fluent-bit-ds.yaml > fluentbit/fluent-bit-ds.yaml
 
 # Hasura
 download-hasura:
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/hasura/graphql-engine/stable/install-manifests/kubernetes/deployment.yaml > hasura/hasura-deployment.yaml
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/hasura/graphql-engine/stable/install-manifests/kubernetes/svc.yaml > hasura/hasura-service.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/hasura/graphql-engine/stable/install-manifests/kubernetes/deployment.yaml > hasura/hasura-deployment.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/hasura/graphql-engine/stable/install-manifests/kubernetes/svc.yaml > hasura/hasura-service.yaml
 
 # Kafka
 download-kafka:
-	curl --silent --fail --show-error --location https://strimzi.io/install/latest?namespace=hm-kafka > kafka/strimzi-cluster-operator.yaml
-	curl --silent --fail --show-error --location https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml > kafka/kafka-persistent-single.yaml
-	curl --silent --fail --show-error --location https://strimzi.io/examples/latest/kafka/kafka-persistent.yaml > kafka/kafka-persistent.yaml
+    curl --silent --fail --show-error --location https://strimzi.io/install/latest?namespace=hm-kafka > kafka/strimzi-cluster-operator.yaml
+    curl --silent --fail --show-error --location https://strimzi.io/examples/latest/kafka/kafka-persistent-single.yaml > kafka/kafka-persistent-single.yaml
+    curl --silent --fail --show-error --location https://strimzi.io/examples/latest/kafka/kafka-persistent.yaml > kafka/kafka-persistent.yaml
 
 # Karpenter
 download-karpenter:
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/aws/karpenter/"${KARPENTER_VERSION}"/website/content/en/preview/getting-started/getting-started-with-karpenter/prometheus-values.yaml > karpenter/prometheus-values.yaml
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/aws/karpenter/"${KARPENTER_VERSION}"/website/content/en/preview/getting-started/getting-started-with-karpenter/grafana-values.yaml > karpenter/grafana-values.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/aws/karpenter/"${KARPENTER_VERSION}"/website/content/en/preview/getting-started/getting-started-with-karpenter/prometheus-values.yaml > karpenter/prometheus-values.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/aws/karpenter/"${KARPENTER_VERSION}"/website/content/en/preview/getting-started/getting-started-with-karpenter/grafana-values.yaml > karpenter/grafana-values.yaml
 
 # MinIO
 # Manifests: https://github.com/minio/operator/tree/master/examples/kustomization
 
 # Superset
 download-superset:
-	curl --silent --fail --show-error --location https://raw.githubusercontent.com/apache/superset/master/helm/superset/values.yaml > superset/helm/values.yaml
+    curl --silent --fail --show-error --location https://raw.githubusercontent.com/apache/superset/master/helm/superset/values.yaml > superset/helm/values.yaml
 
 # Yugabyte
 # Docs: https://docs.yugabyte.com/latest/deploy/kubernetes/single-zone/oss/yugabyte-operator/#deploy-a-yugabytedb-cluster-with-this-operator

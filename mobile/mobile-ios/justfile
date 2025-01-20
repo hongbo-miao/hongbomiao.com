@@ -1,26 +1,32 @@
 build:
-	xcodebuild build-for-testing \
-		-project HMMobile.xcodeproj \
-		-scheme HMMobile \
-		-destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
+    xcodebuild build-for-testing \
+        -project HMMobile.xcodeproj \
+        -scheme HMMobile \
+        -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
+
 test:
-	xcodebuild test-without-building \
-		-project HMMobile.xcodeproj \
-		-scheme HMMobile \
-		-destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
+    xcodebuild test-without-building \
+        -project HMMobile.xcodeproj \
+        -scheme HMMobile \
+        -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
+
 build-test:
-	xcodebuild test \
-		-project HMMobile.xcodeproj \
-		-scheme HMMobile \
-		-destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
+    xcodebuild test \
+        -project HMMobile.xcodeproj \
+        -scheme HMMobile \
+        -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
 
 bundle-install:
-	bundle install
+    bundle install
+
 bundle-add:
-	bundle add xxx
+    bundle add xxx
+
 bundle-update:
-	bundle update
+    bundle update
+
 bundle-add-platform:
-	bundle lock --add-platform x86_64-darwin-21
+    bundle lock --add-platform x86_64-darwin-21
+
 bundle-exec-test-coverage:
-	bundle exec slather
+    bundle exec slather
