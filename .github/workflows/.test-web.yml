@@ -1,0 +1,146 @@
+---
+name: . Test Web
+
+'on':
+  workflow_call:
+    inputs:
+      api-node:
+        required: true
+        type: boolean
+      web-cypress:
+        required: true
+        type: boolean
+      web:
+        required: true
+        type: boolean
+
+jobs:
+  web-test:
+    name: Web | Test
+    if: ${{ inputs.web }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: web/.node-version
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install dependencies
+        working-directory: web
+        run: |
+          npm ci
+      - name: Test
+        working-directory: web
+        run: |
+          npm run test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: web
+
+  web-end-to-end-test:
+    name: Web | End-to-End Test
+    if: ${{ inputs.api-node || inputs.web || inputs.web-cypress }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: web-cypress/.node-version
+          cache: npm
+          cache-dependency-path: web-cypress/package-lock.json
+      - name: Install dependencies
+        working-directory: web-cypress
+        run: |
+          npm ci
+      - name: Pull Docker images
+        working-directory: api-node
+        run: |
+          docker compose --file=docker-compose.cypress.yaml pull
+      - name: Cache Docker images
+        uses: jpribyl/action-docker-layer-caching@v0.1.1
+        continue-on-error: true
+      - name: Start Docker
+        working-directory: api-node
+        run: |
+          docker compose --file=docker-compose.cypress.yaml up --detach
+      - name: Cypress
+        working-directory: web-cypress
+        run: |
+          npm run test:cypress:headless:58136
+      - name: Stop Docker
+        working-directory: api-node
+        run: |
+          docker compose --file=docker-compose.cypress.yaml down
+
+  web-lighthouse:
+    name: Web | Lighthouse
+    if: ${{ inputs.web }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: web/.node-version
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install dependencies
+        working-directory: web
+        run: |
+          npm ci
+      - name: Build
+        working-directory: web
+        run: |
+          npm run build
+      - name: Lighthouse
+        working-directory: web
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        run: |
+          npm run lighthouse
+
+  # https://www.chromatic.com/docs/github-actions
+  web-visual-test:
+    name: Web | Visual Test
+    if: ${{ inputs.web }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          # Required to retrieve git history
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: web/.node-version
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install dependencies
+        working-directory: web
+        run: |
+          npm ci
+      - name: Build
+        working-directory: web
+        run: |
+          npm run build
+          npm run storybook:build
+      - name: Publish storybook to Chromatic
+        working-directory: web
+        run: |
+          npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes

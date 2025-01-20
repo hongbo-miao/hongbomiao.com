@@ -1,0 +1,166 @@
+---
+name: . Test API
+
+'on':
+  workflow_call:
+    inputs:
+      api-go:
+        required: true
+        type: boolean
+      api-node:
+        required: true
+        type: boolean
+      api-python:
+        required: true
+        type: boolean
+      api-rust:
+        required: true
+        type: boolean
+
+jobs:
+  api-go-test:
+    name: API - Go | Test
+    if: ${{ inputs.api-go }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Go
+        uses: actions/setup-go@v5.2.0
+        with:
+          go-version-file: api-go/go.mod
+          cache-dependency-path: api-go/go.sum
+      - name: Test
+        working-directory: api-go
+        run: |
+          go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: api-go
+
+  api-node-test:
+    name: API - Node.js | Test
+    if: ${{ inputs.api-node }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: api-node/.node-version
+          cache: npm
+          cache-dependency-path: api-node/package-lock.json
+      - name: Install dependencies
+        working-directory: api-node
+        run: |
+          npm ci
+      - name: Test
+        working-directory: api-node
+        run: |
+          npm run test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: api-node
+
+  api-node-mutation-test:
+    name: API - Node.js | Mutation Test
+    if: ${{ inputs.api-node }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: api-node/.node-version
+          cache: npm
+          cache-dependency-path: api-node/package-lock.json
+      - name: Install dependencies
+        working-directory: api-node
+        run: |
+          npm ci
+      - name: Stryker
+        working-directory: api-node
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+        run: |
+          npm run test:stryker
+
+  api-python-test:
+    name: API - Python | Test
+    if: ${{ inputs.api-python }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      # librdkafka is for confluent-kafka
+      - name: Install librdkafka
+        run: |
+          # https://github.com/confluentinc/librdkafka#build-from-source
+          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
+          tar -x -f librdkafka.tar.gz
+          rm -f librdkafka.tar.gz
+          cd librdkafka-2.6.0
+          ./configure
+          make
+          sudo make install
+          sudo ldconfig
+          cd ..
+          rm -r -f librdkafka-2.6.0/
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: api-python/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: api-python/pyproject.toml
+      - name: Install dependencies
+        working-directory: api-python
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: api-python
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: api-python
+
+  api-rust-test:
+    name: API - Rust | Test
+    if: ${{ inputs.api-rust }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install OpenCV
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes libopencv-dev
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: api-rust
+        run: |
+          cargo build
+      - name: Test
+        working-directory: api-rust
+        run: |
+          cargo test --all-features
