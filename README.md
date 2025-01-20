@@ -420,8 +420,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Lightning** - Deep Learning framework
 - **NeuralForecast** - Neural forecasting
 - **Faster Whisper** - Speech recognition model
-- **Diffusers** - Diffusion models
-  - **Stable Diffusion** - Text-to-image generation model
 - **Transformers** - Machine learning models
 - **Faiss** - Vector search and similarity library
 - **Gradio** - Machine learning web application building
@@ -439,19 +437,22 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **NVIDIA Triton Inference Server** - Inference server
 - **NVIDIA Modulus** - Physics-informed machine learning framework
 
-#### Large language model (LLM)
+#### Generative AI (GenAI)
 
-- **LlamaIndex** - LLM data framework
-- **LangGraph** - LLM workflows library
-- **LangChain** - LLM application framework
+- **LlamaIndex** - Large language model (LLM) data framework
+- **LangGraph** - Large language model (LLM) workflows library
+- **LangChain** - Large language model (LLM) application framework
 - **MinerU** - Document data extraction
 - **Docling** - Document data extraction
 - **pypdf** - PDF manipulation
 - **SGLang** - Large language model (LLM) and visual language model (VLM) serving framework
-- **LiteLLM** - LLM gateway
+- **LiteLLM** - Large language model (LLM) gateway
 - **Open WebUI** - AI chat interface
   - **Open WebUI Pipelines** - OpenAI API plugin framework
-- **GPT4All** - Local LLM models
+- **GPT4All** - Local large language model (LLM) models
+- **Diffusers** - Diffusion models
+  - **Stable Diffusion** - Text-to-image generation model
+- **ComfyUI** - Node-based interface for diffusion model workflows
 
 ## Computer Vision
 
@@ -1070,6 +1071,10 @@ The VHDL waveforms are displayed in GTKWave.
 ![Flink screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/df4d0cd7-86da-4682-b097-88ca7ee1b7a7)
 
 ## Machine Learning
+
+### ComfyUI - Node-based interface for diffusion model workflows
+
+![ComfyUI screenshot](https://github.com/user-attachments/assets/6ed0a0b8-0132-4f1f-a155-5a3a750a4306)
 
 ### Vertex AI - AutoML
 
