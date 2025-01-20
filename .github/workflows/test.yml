@@ -508,305 +508,43 @@ jobs:
   lint:
     name: Lint
     uses: ./.github/workflows/.lint.yml
+    secrets: inherit
 
   static-type-check:
     name: Static Type Check
     uses: ./.github/workflows/.static-type-check.yml
+    secrets: inherit
 
   test-mobile:
     name: Test Mobile
     uses: ./.github/workflows/.test-mobile.yml
+    secrets: inherit
     needs: detect-changes
     with:
       mobile-android: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
       mobile-ios: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
       mobile-react-native: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
 
-  web-test:
-    name: Web | Test
+  test-web:
+    name: Test Web
+    uses: ./.github/workflows/.test-web.yml
+    secrets: inherit
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version-file: web/.node-version
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Test
-        working-directory: web
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: web
+    with:
+      api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+      web-cypress: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
+      web: ${{ needs.detect-changes.outputs.web == 'true' }}
 
-  web-end-to-end-test:
-    name: Web | End-to-End Test
+  test-api:
+    name: Test API
+    uses: ./.github/workflows/.test-api.yml
+    secrets: inherit
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' || needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.web-cypress == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version-file: web-cypress/.node-version
-          cache: npm
-          cache-dependency-path: web-cypress/package-lock.json
-      - name: Install dependencies
-        working-directory: web-cypress
-        run: |
-          npm ci
-      - name: Pull Docker images
-        working-directory: api-node
-        run: |
-          docker compose --file=docker-compose.cypress.yaml pull
-      - name: Cache Docker images
-        uses: jpribyl/action-docker-layer-caching@v0.1.1
-        continue-on-error: true
-      - name: Start Docker
-        working-directory: api-node
-        run: |
-          docker compose --file=docker-compose.cypress.yaml up --detach
-      - name: Cypress
-        working-directory: web-cypress
-        run: |
-          npm run test:cypress:headless:58136
-      - name: Stop Docker
-        working-directory: api-node
-        run: |
-          docker compose --file=docker-compose.cypress.yaml down
-
-  web-lighthouse:
-    name: Web | Lighthouse
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version-file: web/.node-version
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Build
-        working-directory: web
-        run: |
-          npm run build
-      - name: Lighthouse
-        working-directory: web
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-        run: |
-          npm run lighthouse
-
-  # https://www.chromatic.com/docs/github-actions
-  web-visual-test:
-    name: Web | Visual Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 20
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-        with:
-          # Required to retrieve git history
-          fetch-depth: 0
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version-file: web/.node-version
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Build
-        working-directory: web
-        run: |
-          npm run build
-          npm run storybook:build
-      - name: Publish storybook to Chromatic
-        working-directory: web
-        run: |
-          npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
-
-  api-go-test:
-    name: API - Go | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Go
-        uses: actions/setup-go@v5.2.0
-        with:
-          go-version-file: api-go/go.mod
-          cache-dependency-path: api-go/go.sum
-      - name: Test
-        working-directory: api-go
-        run: |
-          go test ./... -race -coverprofile=coverage.txt -covermode=atomic
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: api-go
-
-  api-node-test:
-    name: API - Node.js | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version-file: api-node/.node-version
-          cache: npm
-          cache-dependency-path: api-node/package-lock.json
-      - name: Install dependencies
-        working-directory: api-node
-        run: |
-          npm ci
-      - name: Test
-        working-directory: api-node
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: api-node
-
-  api-node-mutation-test:
-    name: API - Node.js | Mutation Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version-file: api-node/.node-version
-          cache: npm
-          cache-dependency-path: api-node/package-lock.json
-      - name: Install dependencies
-        working-directory: api-node
-        run: |
-          npm ci
-      - name: Stryker
-        working-directory: api-node
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: |
-          npm run test:stryker
-
-  api-python-test:
-    name: API - Python | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-python == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      # librdkafka is for confluent-kafka
-      - name: Install librdkafka
-        run: |
-          # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd librdkafka-2.6.0
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f librdkafka-2.6.0/
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: api-python/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: api-python/pyproject.toml
-      - name: Install dependencies
-        working-directory: api-python
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: api-python
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: api-python
-
-  api-rust-test:
-    name: API - Rust | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install OpenCV
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes libopencv-dev
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Install dependencies
-        working-directory: api-rust
-        run: |
-          cargo build
-      - name: Test
-        working-directory: api-rust
-        run: |
-          cargo test --all-features
+    with:
+      api-go: ${{ needs.detect-changes.outputs.api-go == 'true' }}
+      api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+      api-python: ${{ needs.detect-changes.outputs.api-python == 'true' }}
+      api-rust: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
 
   airflow-test:
     name: Airflow | Test
