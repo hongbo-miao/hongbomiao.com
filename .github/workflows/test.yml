@@ -470,6 +470,21 @@ jobs:
       api-python: ${{ needs.detect-changes.outputs.api-python == 'true' }}
       api-rust: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
 
+  test-data-processing:
+    name: Test Data Processing
+    uses: ./.github/workflows/.test-data-processing.yml
+    secrets: inherit
+    needs: detect-changes
+    with:
+      flink-stream-tweets: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
+      hm-spark-analyze-coffee-customers: ${{ needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
+      hm-spark-find-retired-people-python: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
+      hm-spark-find-retired-people-scala: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
+      hm-spark-find-taxi-top-routes-sql: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes-sql == 'true' }}
+      hm-spark-find-taxi-top-routes: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
+      hm-spark-ingest-from-s3-to-kafka: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
+      hm-spark-recommend-movies: ${{ needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
+
   test-data-storage:
     name: Test Data Storage
     uses: ./.github/workflows/.test-data-storage.yml
@@ -1797,238 +1812,6 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: hm-xxhash
-
-  spark-analyze-coffee-customers-test:
-    name: Spark (analyze-coffee-customers) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-processing/hm-spark/applications/analyze-coffee-customers/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-processing/hm-spark/applications/analyze-coffee-customers/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-processing/hm-spark/applications/analyze-coffee-customers
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/analyze-coffee-customers
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-processing/hm-spark/applications/analyze-coffee-customers
-
-  spark-find-retired-people-python-test:
-    name: Spark (find-retired-people-python) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-processing/hm-spark/applications/find-retired-people-python/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-processing/hm-spark/applications/find-retired-people-python/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-processing/hm-spark/applications/find-retired-people-python
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/find-retired-people-python
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-processing/hm-spark/applications/find-retired-people-python
-
-  spark-find-retired-people-scala-test:
-    name: Spark (find-retired-people-scala) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Java
-        uses: actions/setup-java@v4.6.0
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: sbt
-      - name: Set up sbt
-        uses: sbt/setup-sbt@v1.1.5
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/find-retired-people-scala
-        run: |
-          sbt test
-
-  spark-find-taxi-top-routes-test:
-    name: Spark (find-taxi-top-routes) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-processing/hm-spark/applications/find-taxi-top-routes/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-processing/hm-spark/applications/find-taxi-top-routes
-
-  spark-find-taxi-top-routes-sql-test:
-    name: Spark (find-taxi-top-routes-sql) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-find-taxi-top-routes-sql == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-processing/hm-spark/applications/find-taxi-top-routes-sql/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-processing/hm-spark/applications/find-taxi-top-routes-sql/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
-
-  spark-ingest-from-s3-to-kafka-test:
-    name: Spark (ingest-from-s3-to-kafka) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Java
-        uses: actions/setup-java@v4.6.0
-        with:
-          distribution: corretto
-          java-version: '17'
-          cache: sbt
-      - name: Set up sbt
-        uses: sbt/setup-sbt@v1.1.5
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
-        run: |
-          sbt test
-
-  spark-recommend-movies-test:
-    name: Spark (recommend-movies) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-processing/hm-spark/applications/recommend-movies/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-processing/hm-spark/applications/recommend-movies/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-processing/hm-spark/applications/recommend-movies
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-processing/hm-spark/applications/recommend-movies
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-processing/hm-spark/applications/recommend-movies
-
-  flink-stream-tweets-test:
-    name: Flink (stream-tweets) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Java
-        uses: actions/setup-java@v4.6.0
-        with:
-          distribution: corretto
-          java-version: '11'
-          cache: maven
-      - name: Test
-        working-directory: data-processing/flink/applications/stream-tweets
-        run: |
-          mvn test
 
   kafka-rust-proto-consumer-test:
     name: Kafka Rust (proto-consumer) | Test
