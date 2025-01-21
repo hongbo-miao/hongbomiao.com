@@ -488,6 +488,20 @@ jobs:
       lance: ${{ needs.detect-changes.outputs.lance == 'true' }}
       prometheus: ${{ needs.detect-changes.outputs.prometheus == 'true' }}
 
+  test-data-analytics:
+    name: Test Data Analytics
+    uses: ./.github/workflows/.test-data-analytics.yml
+    secrets: inherit
+    needs: detect-changes
+    with:
+      hm-cudf: ${{ needs.detect-changes.outputs.hm-cudf == 'true' }}
+      hm-cupy: ${{ needs.detect-changes.outputs.hm-cupy == 'true' }}
+      hm-geopandas: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
+      hm-networkx: ${{ needs.detect-changes.outputs.hm-networkx == 'true' }}
+      hm-numba: ${{ needs.detect-changes.outputs.hm-numba == 'true' }}
+      hm-pandas: ${{ needs.detect-changes.outputs.hm-pandas == 'true' }}
+      hm-polars: ${{ needs.detect-changes.outputs.hm-polars == 'true' }}
+
   test-machine-learning:
     name: Test Machine Learning
     uses: ./.github/workflows/.test-machine-learning.yml
@@ -859,237 +873,6 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: data-transformation/dbt/projects/dbt_hm_postgres
-
-  cupy-test:
-    name: CuPy | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-cupy == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-cupy/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-cupy/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-cupy
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-cupy
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-cupy
-
-  numba-test:
-    name: Numba | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-numba == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-numba/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-numba/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-numba
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-numba
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-numba
-
-  pandas-test:
-    name: pandas | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-pandas == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-pandas/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-pandas/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-pandas
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-pandas
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-pandas
-
-  cudf-test:
-    name: cuDF | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-cudf == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-cudf/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-cudf/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-cudf
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-cudf
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-cudf
-
-  polars-test:
-    name: Polars | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-polars == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-polars/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-polars/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-polars
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-polars
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-polars
-
-  geopandas-test:
-    name: GeoPandas | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-geopandas == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-geopandas/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-geopandas/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-geopandas
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-geopandas
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-geopandas
-
-  networkx-test:
-    name: NetworkX | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-networkx == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-analytics/hm-networkx/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-analytics/hm-networkx/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-analytics/hm-networkx
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-analytics/hm-networkx
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-analytics/hm-networkx
 
   jax-test:
     name: JAX | Test
