@@ -39,6 +39,7 @@ jobs:
 
   api-go-test:
     name: API - Go | Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-go }}
     runs-on: ubuntu-24.04
     environment: test
@@ -62,6 +63,7 @@ jobs:
 
   api-node-test:
     name: API - Node.js | Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node }}
     runs-on: ubuntu-24.04
     environment: test
@@ -90,6 +92,7 @@ jobs:
 
   api-node-mutation-test:
     name: API - Node.js | Mutation Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node }}
     runs-on: ubuntu-24.04
     environment: test
@@ -116,6 +119,7 @@ jobs:
 
   api-python-test:
     name: API - Python | Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-python }}
     runs-on: ubuntu-24.04
     environment: test
@@ -162,6 +166,7 @@ jobs:
 
   api-rust-test:
     name: API - Rust | Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-rust }}
     runs-on: ubuntu-24.04
     environment: test
