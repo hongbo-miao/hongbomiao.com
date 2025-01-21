@@ -470,6 +470,17 @@ jobs:
       api-python: ${{ needs.detect-changes.outputs.api-python == 'true' }}
       api-rust: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
 
+  test-data-orchestration:
+    name: Test Data Orchestration
+    uses: ./.github/workflows/.test-data-orchestration.yml
+    secrets: inherit
+    needs: detect-changes
+    with:
+      hm-airflow: ${{ needs.detect-changes.outputs.hm-airflow == 'true' }}
+      hm-prefect-calculate: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
+      hm-prefect-greet: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
+      hm-prefect-print-platform: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
+
   test-data-processing:
     name: Test Data Processing
     uses: ./.github/workflows/.test-data-processing.yml
@@ -557,39 +568,6 @@ jobs:
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
       reinforcement-learning-cart-pole: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
-
-  airflow-test:
-    name: Airflow | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-airflow == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-orchestration/hm-airflow/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-orchestration/hm-airflow/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-orchestration/hm-airflow
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-orchestration/hm-airflow
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-orchestration/hm-airflow
 
   amazon-sagemaker-pytorch-mnist-test:
     name: Amazon SageMaker (pytorch-mnist) | Test
@@ -1222,105 +1200,6 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: aerospace/hm-openaerostruct
-
-  prefect-calculate-test:
-    name: Prefect (calculate) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-orchestration/hm-prefect/workflows/calculate/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-orchestration/hm-prefect/workflows/calculate/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-orchestration/hm-prefect/workflows/calculate
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-orchestration/hm-prefect/workflows/calculate
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-orchestration/hm-prefect/workflows/calculate
-
-  prefect-greet-test:
-    name: Prefect (greet) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-orchestration/hm-prefect/workflows/greet/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-orchestration/hm-prefect/workflows/greet/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-orchestration/hm-prefect/workflows/greet
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-orchestration/hm-prefect/workflows/greet
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-orchestration/hm-prefect/workflows/greet
-
-  prefect-print-platform-test:
-    name: Prefect (print-platform) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-orchestration/hm-prefect/workflows/print-platform/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-orchestration/hm-prefect/workflows/print-platform/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-orchestration/hm-prefect/workflows/print-platform
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-orchestration/hm-prefect/workflows/print-platform
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-orchestration/hm-prefect/workflows/print-platform
 
   prowler-test:
     name: Prowler | Test
