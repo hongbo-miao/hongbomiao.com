@@ -324,6 +324,39 @@ pull_request_rules:
           - check-success=Test Machine Learning / CNN | CML (Local) - Train
           - check-skipped=Test Machine Learning / CNN | CML (Local) - Train
       - or:
+          - check-success=Test Data Storage / Delta Lake (read-delta-lake-by-amazon-athena) | Test
+          - check-skipped=Test Data Storage / Delta Lake (read-delta-lake-by-amazon-athena) | Test
+      - or:
+          - check-success=Test Data Storage / Delta Lake (read-delta-lake-by-trino) | Test
+          - check-skipped=Test Data Storage / Delta Lake (read-delta-lake-by-trino) | Test
+      - or:
+          - check-success=Test Data Storage / Delta Lake (write-to-delta-lake) | Test
+          - check-skipped=Test Data Storage / Delta Lake (write-to-delta-lake) | Test
+      - or:
+          - check-success=Test Data Storage / DuckDB (query-duckdb) | Test
+          - check-skipped=Test Data Storage / DuckDB (query-duckdb) | Test
+      - or:
+          - check-success=Test Data Storage / DuckDB (query-lance) | Test
+          - check-skipped=Test Data Storage / DuckDB (query-lance) | Test
+      - or:
+          - check-success=Test Data Storage / DuckDB (query-parquet) | Test
+          - check-skipped=Test Data Storage / DuckDB (query-parquet) | Test
+      - or:
+          - check-success=Test Data Storage / DuckDB (query-protobuf) | Test
+          - check-skipped=Test Data Storage / DuckDB (query-protobuf) | Test
+      - or:
+          - check-success=Test Data Storage / Lance | Test
+          - check-skipped=Test Data Storage / Lance | Test
+      - or:
+          - check-success=Test Data Storage / LanceDB | Test
+          - check-skipped=Test Data Storage / LanceDB | Test
+      - or:
+          - check-success=Test Data Storage / Protobuf | Test
+          - check-skipped=Test Data Storage / Protobuf | Test
+      - or:
+          - check-success=Test Data Storage / Prometheus | Test
+          - check-skipped=Test Data Storage / Prometheus | Test
+      - or:
           - check-success=Airflow | Test
           - check-skipped=Airflow | Test
       - or:
@@ -353,36 +386,6 @@ pull_request_rules:
       - or:
           - check-success=dbt (hm-postgres) | Test
           - check-skipped=dbt (hm-postgres) | Test
-      - or:
-          - check-success=Delta Lake (read-delta-lake-by-amazon-athena) | Test
-          - check-skipped=Delta Lake (read-delta-lake-by-amazon-athena) | Test
-      - or:
-          - check-success=Delta Lake (read-delta-lake-by-trino) | Test
-          - check-skipped=Delta Lake (read-delta-lake-by-trino) | Test
-      - or:
-          - check-success=Delta Lake (write-to-delta-lake) | Test
-          - check-skipped=Delta Lake (write-to-delta-lake) | Test
-      - or:
-          - check-success=DuckDB (query-duckdb) | Test
-          - check-skipped=DuckDB (query-duckdb) | Test
-      - or:
-          - check-success=DuckDB (query-lance) | Test
-          - check-skipped=DuckDB (query-lance) | Test
-      - or:
-          - check-success=DuckDB (query-parquet) | Test
-          - check-skipped=DuckDB (query-parquet) | Test
-      - or:
-          - check-success=DuckDB (query-protobuf) | Test
-          - check-skipped=DuckDB (query-protobuf) | Test
-      - or:
-          - check-success=Lance | Test
-          - check-skipped=Lance | Test
-      - or:
-          - check-success=LanceDB | Test
-          - check-skipped=LanceDB | Test
-      - or:
-          - check-success=Protobuf | Test
-          - check-skipped=Protobuf | Test
       - or:
           - check-success=CuPy | Test
           - check-skipped=CuPy | Test
@@ -530,9 +533,6 @@ pull_request_rules:
       - or:
           - check-success=ROS | Test
           - check-skipped=ROS | Test
-      - or:
-          - check-success=Prometheus | Test
-          - check-skipped=Prometheus | Test
       - or:
           - check-success=Grafana (hm-dashboard) | Test
           - check-skipped=Grafana (hm-dashboard) | Test

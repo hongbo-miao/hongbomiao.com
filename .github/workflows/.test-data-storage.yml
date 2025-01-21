@@ -1,0 +1,403 @@
+---
+name: . Test Data Storage
+
+'on':
+  workflow_call:
+    inputs:
+      delta-lake-read-delta-lake-by-amazon-athena:
+        required: true
+        type: boolean
+      delta-lake-read-delta-lake-by-trino:
+        required: true
+        type: boolean
+      delta-lake-write-to-delta-lake:
+        required: true
+        type: boolean
+      hm-duckdb-query-duckdb:
+        required: true
+        type: boolean
+      hm-duckdb-query-lance:
+        required: true
+        type: boolean
+      hm-duckdb-query-parquet:
+        required: true
+        type: boolean
+      hm-duckdb-query-protobuf:
+        required: true
+        type: boolean
+      lance:
+        required: true
+        type: boolean
+      hm-lancedb:
+        required: true
+        type: boolean
+      hm-protobuf:
+        required: true
+        type: boolean
+      prometheus:
+        required: true
+        type: boolean
+
+jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - uses: dorny/paths-filter@v3.0.2
+        id: filter
+        with:
+          filters: |
+            workflow:
+              - '.github/workflows/.test-data-storage.yml'
+
+  delta-lake-read-delta-lake-by-amazon-athena-test:
+    name: Delta Lake (read-delta-lake-by-amazon-athena) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.delta-lake-read-delta-lake-by-amazon-athena }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-amazon-athena/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/delta-lake/read-delta-lake-by-amazon-athena/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+
+  delta-lake-read-delta-lake-by-trino-test:
+    name: Delta Lake (read-delta-lake-by-trino) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.delta-lake-read-delta-lake-by-trino }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-trino/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/delta-lake/read-delta-lake-by-trino/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/delta-lake/read-delta-lake-by-trino
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/delta-lake/read-delta-lake-by-trino
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/delta-lake/read-delta-lake-by-trino
+
+  delta-lake-write-to-delta-lake-test:
+    name: Delta Lake (write-to-delta-lake) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.delta-lake-write-to-delta-lake }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/delta-lake/write-to-delta-lake/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/delta-lake/write-to-delta-lake/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/delta-lake/write-to-delta-lake
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/delta-lake/write-to-delta-lake
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/delta-lake/write-to-delta-lake
+
+  duckdb-query-duckdb-test:
+    name: DuckDB (query-duckdb) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-duckdb-query-duckdb }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/hm-duckdb/query-duckdb/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/hm-duckdb/query-duckdb/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/hm-duckdb/query-duckdb
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/hm-duckdb/query-duckdb
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/hm-duckdb/query-duckdb
+
+  duckdb-query-lance-test:
+    name: DuckDB (query-lance) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-duckdb-query-lance }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/hm-duckdb/query-lance/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/hm-duckdb/query-lance/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/hm-duckdb/query-lance
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/hm-duckdb/query-lance
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/hm-duckdb/query-lance
+
+  duckdb-query-parquet-test:
+    name: DuckDB (query-parquet) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-duckdb-query-parquet }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/hm-duckdb/query-parquet/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/hm-duckdb/query-parquet/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/hm-duckdb/query-parquet
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/hm-duckdb/query-parquet
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/hm-duckdb/query-parquet
+
+  duckdb-query-protobuf-test:
+    name: DuckDB (query-protobuf) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-duckdb-query-protobuf }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/hm-duckdb/query-protobuf/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/hm-duckdb/query-protobuf/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/hm-duckdb/query-protobuf
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/hm-duckdb/query-protobuf
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/hm-duckdb/query-protobuf
+
+  lance-test:
+    name: Lance | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.lance }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/lance/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/lance/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/lance
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/lance
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/lance
+
+  lancedb-test:
+    name: LanceDB | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-lancedb }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/hm-lancedb/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/hm-lancedb/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/hm-lancedb
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/hm-lancedb
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/hm-lancedb
+
+  protobuf-test:
+    name: Protobuf | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-protobuf }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/hm-protobuf/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/hm-protobuf/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/hm-protobuf
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/hm-protobuf
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-storage/hm-protobuf
+
+  prometheus-test:
+    name: Prometheus | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.prometheus }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Test
+        run: |
+          docker build --file=data-storage/prometheus/Dockerfile.test .
