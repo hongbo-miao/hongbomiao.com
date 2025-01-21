@@ -582,6 +582,18 @@ jobs:
       reinforcement-learning-cart-pole: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
 
+  test-computer-vision:
+    name: Test Computer Vision
+    uses: ./.github/workflows/.test-computer-vision.yml
+    secrets: inherit
+    needs: detect-changes
+    with:
+      hm-imagebind: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
+      hm-open3d: ${{ needs.detect-changes.outputs.hm-open3d == 'true' }}
+      hm-pyvista-mount-saint-helens: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
+      hm-supervision-detect-objects: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
+      open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
+
   amazon-sagemaker-pytorch-mnist-test:
     name: Amazon SageMaker (pytorch-mnist) | Test
     needs: detect-changes
@@ -1016,138 +1028,6 @@ jobs:
         with:
           directory: hardware-in-the-loop/national-instruments/veristand/hm-veristand
 
-  supervision-detect-objects-test:
-    name: supervision (detect-objects) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: computer-vision/hm-supervision/detect-objects/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: computer-vision/hm-supervision/detect-objects/pyproject.toml
-      - name: Install dependencies
-        working-directory: computer-vision/hm-supervision/detect-objects
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: computer-vision/hm-supervision/detect-objects
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: computer-vision/hm-supervision/detect-objects
-
-  imagebind-test:
-    name: ImageBind | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-imagebind == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: computer-vision/hm-imagebind/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: computer-vision/hm-imagebind/pyproject.toml
-      - name: Install dependencies
-        working-directory: computer-vision/hm-imagebind
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: computer-vision/hm-imagebind
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: computer-vision/hm-imagebind
-
-  open-clip-test:
-    name: OpenCLIP | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.open-clip == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: computer-vision/open-clip/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: computer-vision/open-clip/pyproject.toml
-      - name: Install dependencies
-        working-directory: computer-vision/open-clip
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: computer-vision/open-clip
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: computer-vision/open-clip
-
-  open3d-test:
-    name: Open3D | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-open3d == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: computer-vision/hm-open3d/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: computer-vision/hm-open3d/pyproject.toml
-      - name: Install dependencies
-        working-directory: computer-vision/hm-open3d
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: computer-vision/hm-open3d
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: computer-vision/hm-open3d
-
   aerosandbox-test:
     name: AeroSandbox | Test
     needs: detect-changes
@@ -1279,39 +1159,6 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: cloud-infrastructure/hm-pulumi
-
-  pyvista-mount-saint-helens-test:
-    name: PyVista (mount-saint-helens) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: computer-vision/hm-pyvista/mount-saint-helens/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: computer-vision/hm-pyvista/mount-saint-helens/pyproject.toml
-      - name: Install dependencies
-        working-directory: computer-vision/hm-pyvista/mount-saint-helens
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: computer-vision/hm-pyvista/mount-saint-helens
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: computer-vision/hm-pyvista/mount-saint-helens
 
   ray-calculate-test:
     name: Ray (calculate) | Test
