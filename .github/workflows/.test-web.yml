@@ -15,9 +15,28 @@ name: . Test Web
         type: boolean
 
 jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - uses: dorny/paths-filter@v3.0.2
+        id: filter
+        with:
+          filters: |
+            workflow:
+              - '.github/workflows/.test-web.yml'
+
   web-test:
     name: Web | Test
-    if: ${{ inputs.web }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -45,7 +64,7 @@ jobs:
 
   web-end-to-end-test:
     name: Web | End-to-End Test
-    if: ${{ inputs.api-node || inputs.web || inputs.web-cypress }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node || inputs.web || inputs.web-cypress }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -84,7 +103,7 @@ jobs:
 
   web-lighthouse:
     name: Web | Lighthouse
-    if: ${{ inputs.web }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -115,7 +134,7 @@ jobs:
   # https://www.chromatic.com/docs/github-actions
   web-visual-test:
     name: Web | Visual Test
-    if: ${{ inputs.web }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20
