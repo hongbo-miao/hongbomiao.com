@@ -3,6 +3,70 @@ name: . Lint
 
 'on':
   workflow_call:
+    inputs:
+      api-go:
+        required: true
+        type: boolean
+      api-node:
+        required: true
+        type: boolean
+      api-rust:
+        required: true
+        type: boolean
+      ethereum:
+        required: true
+        type: boolean
+      grafana-hm-panel-plugin:
+        required: true
+        type: boolean
+      hm-spark-find-retired-people-scala:
+        required: true
+        type: boolean
+      hm-spark-ingest-from-s3-to-kafka:
+        required: true
+        type: boolean
+      iads-iads-data-producer:
+        required: true
+        type: boolean
+      iads-zeromq-iads-bridge:
+        required: true
+        type: boolean
+      kafka-rust-proto-consumer:
+        required: true
+        type: boolean
+      kafka-rust-proto-producer:
+        required: true
+        type: boolean
+      kafka-rust-udp-kafka-bridge:
+        required: true
+        type: boolean
+      kafka-rust-zeromq-kafka-bridge:
+        required: true
+        type: boolean
+      mobile-android:
+        required: true
+        type: boolean
+      mobile-react-native:
+        required: true
+        type: boolean
+      national-instruments-veristand-zeromq-bridge:
+        required: true
+        type: boolean
+      udp-receiver:
+        required: true
+        type: boolean
+      udp-sender:
+        required: true
+        type: boolean
+      web-cypress:
+        required: true
+        type: boolean
+      web:
+        required: true
+        type: boolean
+      windows-calculator:
+        required: true
+        type: boolean
 
 jobs:
   detect-changes:
@@ -22,6 +86,7 @@ jobs:
       html: ${{ steps.filter.outputs.html }}
       json: ${{ steps.filter.outputs.json }}
       justfile: ${{ steps.filter.outputs.justfile }}
+      kubernetes: ${{ steps.filter.outputs.kubernetes }}
       markdown: ${{ steps.filter.outputs.markdown }}
       matlab: ${{ steps.filter.outputs.matlab }}
       natural-language: ${{ steps.filter.outputs.natural-language }}
@@ -37,29 +102,6 @@ jobs:
       vhdl: ${{ steps.filter.outputs.vhdl }}
       xml: ${{ steps.filter.outputs.xml }}
       yaml: ${{ steps.filter.outputs.yaml }}
-      # Applications
-      api-go: ${{ steps.filter.outputs.api-go }}
-      api-node: ${{ steps.filter.outputs.api-node }}
-      api-rust: ${{ steps.filter.outputs.api-rust }}
-      ethereum: ${{ steps.filter.outputs.ethereum }}
-      grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
-      hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
-      hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
-      iads-iads-data-producer: ${{ steps.filter.outputs.iads-iads-data-producer }}
-      iads-zeromq-iads-bridge: ${{ steps.filter.outputs.iads-zeromq-iads-bridge }}
-      mobile-android: ${{ steps.filter.outputs.mobile-android }}
-      mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
-      national-instruments-veristand-zeromq-bridge: ${{ steps.filter.outputs.national-instruments-veristand-zeromq-bridge }}
-      kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
-      kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
-      kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
-      kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
-      kubernetes: ${{ steps.filter.outputs.kubernetes }}
-      udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
-      udp-sender: ${{ steps.filter.outputs.udp-sender }}
-      web: ${{ steps.filter.outputs.web }}
-      web-cypress: ${{ steps.filter.outputs.web-cypress }}
-      windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -120,6 +162,9 @@ jobs:
               - 'pyproject.toml'
               - 'uv.lock'
               - '**/justfile'
+            kubernetes:
+              - '.github/workflows/.lint.yml'
+              - 'kubernetes/manifests/**'
             markdown:
               - '.github/workflows/.lint.yml'
               - '.node-version'
@@ -194,6 +239,7 @@ jobs:
               - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
               - 'uv.lock'
+              - '.ruff.toml'
               - '**/*.py'
             qml:
               - '.github/workflows/.lint.yml'
@@ -251,73 +297,6 @@ jobs:
               - 'uv.lock'
               - '.yamllint.yaml'
               - '**/*.yaml'
-            # Applications
-            api-go:
-              - '.github/workflows/.lint.yml'
-              - 'api-go/**'
-            api-node:
-              - '.github/workflows/.lint.yml'
-              - 'api-node/**'
-            api-rust:
-              - '.github/workflows/.lint.yml'
-              - 'api-rust/**'
-            ethereum:
-              - '.github/workflows/.lint.yml'
-              - 'ethereum/**'
-            grafana-hm-panel-plugin:
-              - '.github/workflows/.lint.yml'
-              - 'data-visualization/grafana/hm-panel-plugin/**'
-            hm-spark-find-retired-people-scala:
-              - '.github/workflows/.lint.yml'
-              - 'data-processing/hm-spark/applications/find-retired-people-scala/**'
-            hm-spark-ingest-from-s3-to-kafka:
-              - '.github/workflows/.lint.yml'
-              - 'data-processing/hm-spark/applications/ingest-from-s3-to-kafka/**'
-            iads-iads-data-producer:
-              - '.github/workflows/.lint.yml'
-              - 'data-visualization/iads/iads-rtstation/iads-data-producer/**'
-            iads-zeromq-iads-bridge:
-              - '.github/workflows/.lint.yml'
-              - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
-            kafka-rust-proto-consumer:
-              - '.github/workflows/.lint.yml'
-              - 'hm-kafka/kafka-client/kafka-rust/proto-consumer/**'
-            kafka-rust-proto-producer:
-              - '.github/workflows/.lint.yml'
-              - 'hm-kafka/kafka-client/kafka-rust/proto-producer/**'
-            kafka-rust-udp-kafka-bridge:
-              - '.github/workflows/.lint.yml'
-              - 'hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge/**'
-            kafka-rust-zeromq-kafka-bridge:
-              - '.github/workflows/.lint.yml'
-              - 'hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge/**'
-            kubernetes:
-              - '.github/workflows/.lint.yml'
-              - 'kubernetes/manifests/**'
-            mobile-android:
-              - '.github/workflows/.lint.yml'
-              - 'mobile/mobile-android/**'
-            mobile-react-native:
-              - '.github/workflows/.lint.yml'
-              - 'mobile/mobile-react-native/**'
-            national-instruments-veristand-zeromq-bridge:
-              - '.github/workflows/.lint.yml'
-              - 'hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/**'
-            udp-receiver:
-              - '.github/workflows/.lint.yml'
-              - 'network-programmability/udp/udp-receiver/**'
-            udp-sender:
-              - '.github/workflows/.lint.yml'
-              - 'network-programmability/udp/udp-sender/**'
-            web:
-              - '.github/workflows/.lint.yml'
-              - 'web/**'
-            web-cypress:
-              - '.github/workflows/.lint.yml'
-              - 'web-cypress/**'
-            windows-calculator:
-              - '.github/workflows/.lint.yml'
-              - 'operating-system/windows/calculator/**'
 
   lint-ansible:
     name: Ansible
@@ -350,8 +329,7 @@ jobs:
 
   lint-csharp-national-instruments-veristand-zeromq-bridge:
     name: C# (national-instruments-veristand-zeromq-bridge)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.national-instruments-veristand-zeromq-bridge == 'true' }}
+    if: ${{ inputs.national-instruments-veristand-zeromq-bridge }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -505,8 +483,7 @@ jobs:
 
   lint-go-api-go:
     name: Go (api-go)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
+    if: ${{ inputs.api-go }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -550,8 +527,7 @@ jobs:
 
   lint-javascript-api-node:
     name: JavaScript (api-node)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    if: ${{ inputs.api-node }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -575,8 +551,7 @@ jobs:
 
   lint-javascript-ethereum:
     name: JavaScript (ethereum)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
+    if: ${{ inputs.ethereum }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -600,8 +575,7 @@ jobs:
 
   lint-javascript-grafana-hm-panel-plugin:
     name: JavaScript (grafana-hm-panel-plugin)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+    if: ${{ inputs.grafana-hm-panel-plugin }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -625,8 +599,7 @@ jobs:
 
   lint-javascript-mobile-react-native:
     name: JavaScript (mobile-react-native)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
+    if: ${{ inputs.mobile-react-native }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -650,8 +623,7 @@ jobs:
 
   lint-javascript-web:
     name: JavaScript (web)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
+    if: ${{ inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -675,8 +647,7 @@ jobs:
 
   lint-javascript-web-cypress:
     name: JavaScript (web-cypress)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
+    if: ${{ inputs.web-cypress }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -750,8 +721,7 @@ jobs:
 
   lint-kotlin-mobile-android:
     name: Kotlin (mobile-android)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+    if: ${{ inputs.mobile-android }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
@@ -956,8 +926,7 @@ jobs:
 
   lint-rust-api-rust:
     name: Rust (api-rust)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
+    if: ${{ inputs.api-rust }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -985,8 +954,7 @@ jobs:
 
   lint-rust-iads-data-producer:
     name: Rust (iads-data-producer)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
+    if: ${{ inputs.iads-iads-data-producer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1010,8 +978,7 @@ jobs:
 
   lint-rust-zeromq-iads-bridge:
     name: Rust (zeromq-iads-bridge)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
+    if: ${{ inputs.iads-zeromq-iads-bridge }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -1041,8 +1008,7 @@ jobs:
 
   lint-rust-kafka-rust-proto-consumer:
     name: Rust (kafka-rust-proto-consumer)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
+    if: ${{ inputs.kafka-rust-proto-consumer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1086,8 +1052,7 @@ jobs:
 
   lint-rust-kafka-rust-proto-producer:
     name: Rust (kafka-rust-proto-producer)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
+    if: ${{ inputs.kafka-rust-proto-producer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1131,8 +1096,7 @@ jobs:
 
   lint-rust-kafka-rust-udp-kafka-bridge:
     name: Rust (kafka-rust-udp-kafka-bridge)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
+    if: ${{ inputs.kafka-rust-udp-kafka-bridge }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1176,8 +1140,7 @@ jobs:
 
   lint-rust-kafka-rust-zeromq-kafka-bridge:
     name: Rust (kafka-rust-zeromq-kafka-bridge)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
+    if: ${{ inputs.kafka-rust-zeromq-kafka-bridge }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1221,8 +1184,7 @@ jobs:
 
   lint-rust-udp-receiver:
     name: Rust (udp-receiver)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
+    if: ${{ inputs.udp-receiver }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1252,8 +1214,7 @@ jobs:
 
   lint-rust-udp-sender:
     name: Rust (udp-sender)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
+    if: ${{ inputs.udp-sender }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1283,8 +1244,7 @@ jobs:
 
   lint-rust-windows-calculator:
     name: Rust (windows-calculator)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.windows-calculator == 'true' }}
+    if: ${{ inputs.windows-calculator }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -1308,8 +1268,7 @@ jobs:
 
   lint-scala-hm-spark-find-retired-people-scala:
     name: Scala (hm-spark-find-retired-people-scala)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
+    if: ${{ inputs.hm-spark-find-retired-people-scala }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1335,8 +1294,7 @@ jobs:
 
   lint-scala-hm-spark-ingest-from-s3-to-kafka:
     name: Scala (hm-spark-ingest-from-s3-to-kafka)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
+    if: ${{ inputs.hm-spark-ingest-from-s3-to-kafka }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

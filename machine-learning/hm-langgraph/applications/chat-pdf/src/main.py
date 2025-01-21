@@ -14,10 +14,6 @@ from langgraph.graph import Graph, MessagesState
 from openai import OpenAI
 from sentence_transformers import SentenceTransformer
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-)
 logger = logging.getLogger(__name__)
 
 
@@ -179,6 +175,10 @@ def chat_with_pdf(pdf_path: Path, question: str) -> str:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
     pdf_path = Path("data/file.pdf")
     question = "Could you please summarize this PDF?"
     answer = chat_with_pdf(pdf_path, question)
