@@ -374,8 +374,8 @@ jobs:
         run: |
           uv run poe lint-c-cpp-cpplint --repository=asterios/led-blinker --extensions=c,h --recursive asterios/led-blinker
           uv run poe lint-c-cpp-cpplint --repository=compiler-infrastructure/llvm --extensions=cpp,hpp --recursive compiler-infrastructure/llvm
+          uv run poe lint-c-cpp-cpplint --repository=data-processing/kafka/kafka-client/kafka-c/avro-producer --extensions=c,h --recursive data-processing/kafka/kafka-client/kafka-c/avro-producer
           uv run poe lint-c-cpp-cpplint --repository=embedded-systems/freertos --extensions=ino --recursive embedded-systems/freertos
-          uv run poe lint-c-cpp-cpplint --repository=hm-kafka/kafka-client/kafka-c/avro-producer --extensions=c,h --recursive hm-kafka/kafka-client/kafka-c/avro-producer
           uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
           uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
           uv run poe lint-c-cpp-cpplint --repository=parallel-computing/cuda --extensions=cu,cuh --recursive parallel-computing/cuda
@@ -1009,16 +1009,16 @@ jobs:
       - name: Install librdkafka
         run: |
           # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
+          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.8.0.tar.gz
           tar -x -f librdkafka.tar.gz
           rm -f librdkafka.tar.gz
-          cd librdkafka-2.6.0
+          cd librdkafka-2.8.0
           ./configure
           make
           sudo make install
           sudo ldconfig
           cd ..
-          rm -r -f librdkafka-2.6.0/
+          rm -r -f librdkafka-2.8.0/
       # protoc is for prost
       - name: Install protoc
         uses: arduino/setup-protoc@v3.0.0
@@ -1028,15 +1028,15 @@ jobs:
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       - name: Install dependencies
-        working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
         run: |
           cargo build
       - name: Lint Rust (rustfmt)
-        working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
         run: |
           cargo fmt --all
       - name: Lint Rust (Clippy)
-        working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
         run: |
           cargo clippy
 
@@ -1054,16 +1054,16 @@ jobs:
       - name: Install librdkafka
         run: |
           # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
+          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.8.0.tar.gz
           tar -x -f librdkafka.tar.gz
           rm -f librdkafka.tar.gz
-          cd librdkafka-2.6.0
+          cd librdkafka-2.8.0
           ./configure
           make
           sudo make install
           sudo ldconfig
           cd ..
-          rm -r -f librdkafka-2.6.0/
+          rm -r -f librdkafka-2.8.0/
       # protoc is for prost
       - name: Install protoc
         uses: arduino/setup-protoc@v3.0.0
@@ -1073,15 +1073,15 @@ jobs:
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       - name: Install dependencies
-        working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-producer
         run: |
           cargo build
       - name: Lint Rust (rustfmt)
-        working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-producer
         run: |
           cargo fmt --all
       - name: Lint Rust (Clippy)
-        working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-producer
         run: |
           cargo clippy
 
@@ -1099,16 +1099,16 @@ jobs:
       - name: Install librdkafka
         run: |
           # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
+          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.8.0.tar.gz
           tar -x -f librdkafka.tar.gz
           rm -f librdkafka.tar.gz
-          cd librdkafka-2.6.0
+          cd librdkafka-2.8.0
           ./configure
           make
           sudo make install
           sudo ldconfig
           cd ..
-          rm -r -f librdkafka-2.6.0/
+          rm -r -f librdkafka-2.8.0/
       # protoc is for prost
       - name: Install protoc
         uses: arduino/setup-protoc@v3.0.0
@@ -1118,15 +1118,15 @@ jobs:
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       - name: Install dependencies
-        working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
         run: |
           cargo build
       - name: Lint Rust (rustfmt)
-        working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
         run: |
           cargo fmt --all
       - name: Lint Rust (Clippy)
-        working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
         run: |
           cargo clippy
 
@@ -1144,16 +1144,16 @@ jobs:
       - name: Install librdkafka
         run: |
           # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
+          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.8.0.tar.gz
           tar -x -f librdkafka.tar.gz
           rm -f librdkafka.tar.gz
-          cd librdkafka-2.6.0
+          cd librdkafka-2.8.0
           ./configure
           make
           sudo make install
           sudo ldconfig
           cd ..
-          rm -r -f librdkafka-2.6.0/
+          rm -r -f librdkafka-2.8.0/
       # protoc is for prost
       - name: Install protoc
         uses: arduino/setup-protoc@v3.0.0
@@ -1163,15 +1163,15 @@ jobs:
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
       - name: Install dependencies
-        working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
         run: |
           cargo build
       - name: Lint Rust (rustfmt)
-        working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
         run: |
           cargo fmt --all
       - name: Lint Rust (Clippy)
-        working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+        working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
         run: |
           cargo clippy
 
