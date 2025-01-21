@@ -1,0 +1,170 @@
+---
+name: . Test Data Orchestration
+
+'on':
+  workflow_call:
+    inputs:
+      hm-airflow:
+        required: true
+        type: boolean
+      hm-prefect-calculate:
+        required: true
+        type: boolean
+      hm-prefect-greet:
+        required: true
+        type: boolean
+      hm-prefect-print-platform:
+        required: true
+        type: boolean
+
+jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - uses: dorny/paths-filter@v3.0.2
+        id: filter
+        with:
+          filters: |
+            workflow:
+              - '.github/workflows/.test-data-orchestration.yml'
+
+  airflow-test:
+    name: Airflow | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-airflow }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-orchestration/hm-airflow/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-orchestration/hm-airflow/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-orchestration/hm-airflow
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-orchestration/hm-airflow
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-orchestration/hm-airflow
+
+  prefect-calculate-test:
+    name: Prefect (calculate) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-prefect-calculate }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-orchestration/hm-prefect/workflows/calculate/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-orchestration/hm-prefect/workflows/calculate/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-orchestration/hm-prefect/workflows/calculate
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-orchestration/hm-prefect/workflows/calculate
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-orchestration/hm-prefect/workflows/calculate
+
+  prefect-greet-test:
+    name: Prefect (greet) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-prefect-greet }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-orchestration/hm-prefect/workflows/greet/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-orchestration/hm-prefect/workflows/greet/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-orchestration/hm-prefect/workflows/greet
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-orchestration/hm-prefect/workflows/greet
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-orchestration/hm-prefect/workflows/greet
+
+  prefect-print-platform-test:
+    name: Prefect (print-platform) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-prefect-print-platform }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-orchestration/hm-prefect/workflows/print-platform/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-orchestration/hm-prefect/workflows/print-platform/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-orchestration/hm-prefect/workflows/print-platform
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-orchestration/hm-prefect/workflows/print-platform
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: data-orchestration/hm-prefect/workflows/print-platform
