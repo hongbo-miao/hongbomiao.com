@@ -366,7 +366,7 @@ jobs:
             nvidia-dali:
               - 'machine-learning/nvidia-dali/**'
             nvidia-modulus:
-              - 'machine-learning/nvidia-modulus/**'
+              - 'machine-learning/hm-nvidia-modulus/**'
             open-clip:
               - 'computer-vision/open-clip/**'
             pack-unpack-data:
@@ -1778,23 +1778,23 @@ jobs:
         with:
           version: 0.5.20
           enable-cache: true
-          cache-dependency-glob: machine-learning/nvidia-modulus/uv.lock
+          cache-dependency-glob: machine-learning/hm-nvidia-modulus/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.3.0
         with:
-          python-version-file: machine-learning/nvidia-modulus/pyproject.toml
+          python-version-file: machine-learning/hm-nvidia-modulus/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/nvidia-modulus
+        working-directory: machine-learning/hm-nvidia-modulus
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/nvidia-modulus
+        working-directory: machine-learning/hm-nvidia-modulus
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
         with:
-          directory: machine-learning/nvidia-modulus
+          directory: machine-learning/hm-nvidia-modulus
 
   feature-store-test:
     name: Feature Store | Test
