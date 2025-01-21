@@ -77,15 +77,15 @@ jobs:
             hm-kafka-iot-kafka-connect:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-kafka/kafka-connect-cluster/iot-kafka-connect/**'
+              - 'data-processing/kafka/kafka-connect-cluster/iot-kafka-connect/**'
             hm-kafka-logging-kafka-connect:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-kafka/kafka-connect-cluster/logging-kafka-connect/**'
+              - 'data-processing/kafka/kafka-connect-cluster/logging-kafka-connect/**'
             hm-kafka-opa-kafka-connect:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'hm-kafka/kafka-connect-cluster/opa-kafka-connect/**'
+              - 'data-processing/kafka/kafka-connect-cluster/opa-kafka-connect/**'
             hm-keydb:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -667,7 +667,7 @@ jobs:
           action: docker/build-push-action@v5.1.0
           with: |
             context: .
-            file: ./hm-kafka/kafka-connect-cluster/iot-kafka-connect/Dockerfile
+            file: ./data-processing/kafka/kafka-connect-cluster/iot-kafka-connect/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-kafka-iot-kafka-connect:latest
             cache-from: type=gha
@@ -703,7 +703,7 @@ jobs:
           action: docker/build-push-action@v5.1.0
           with: |
             context: .
-            file: ./hm-kafka/kafka-connect-cluster/logging-kafka-connect/Dockerfile
+            file: ./data-processing/kafka/kafka-connect-cluster/logging-kafka-connect/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest
             cache-from: type=gha
@@ -739,7 +739,7 @@ jobs:
           action: docker/build-push-action@v5.1.0
           with: |
             context: .
-            file: ./hm-kafka/kafka-connect-cluster/opa-kafka-connect/Dockerfile
+            file: ./data-processing/kafka/kafka-connect-cluster/opa-kafka-connect/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-kafka-opa-kafka-connect:latest
             cache-from: type=gha
