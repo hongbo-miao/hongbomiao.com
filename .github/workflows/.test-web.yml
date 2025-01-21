@@ -36,6 +36,7 @@ jobs:
 
   web-test:
     name: Web | Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
@@ -64,6 +65,7 @@ jobs:
 
   web-end-to-end-test:
     name: Web | End-to-End Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node || inputs.web || inputs.web-cypress }}
     runs-on: ubuntu-24.04
     environment: test
@@ -103,6 +105,7 @@ jobs:
 
   web-lighthouse:
     name: Web | Lighthouse
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
@@ -134,6 +137,7 @@ jobs:
   # https://www.chromatic.com/docs/github-actions
   web-visual-test:
     name: Web | Visual Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test

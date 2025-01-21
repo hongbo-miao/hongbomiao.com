@@ -306,6 +306,7 @@ jobs:
 
   lint-csharp-national-instruments-veristand-zeromq-bridge:
     name: C# (national-instruments-veristand-zeromq-bridge)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.national-instruments-veristand-zeromq-bridge }}
     runs-on: windows-2025
     environment: test
@@ -460,6 +461,7 @@ jobs:
 
   lint-go-api-go:
     name: Go (api-go)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-go }}
     runs-on: ubuntu-24.04
     environment: test
@@ -504,6 +506,7 @@ jobs:
 
   lint-javascript-api-node:
     name: JavaScript (api-node)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node }}
     runs-on: ubuntu-24.04
     environment: test
@@ -528,6 +531,7 @@ jobs:
 
   lint-javascript-ethereum:
     name: JavaScript (ethereum)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.ethereum }}
     runs-on: ubuntu-24.04
     environment: test
@@ -552,6 +556,7 @@ jobs:
 
   lint-javascript-grafana-hm-panel-plugin:
     name: JavaScript (grafana-hm-panel-plugin)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.grafana-hm-panel-plugin }}
     runs-on: ubuntu-24.04
     environment: test
@@ -576,6 +581,7 @@ jobs:
 
   lint-javascript-mobile-react-native:
     name: JavaScript (mobile-react-native)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-react-native }}
     runs-on: ubuntu-24.04
     environment: test
@@ -600,6 +606,7 @@ jobs:
 
   lint-javascript-web:
     name: JavaScript (web)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
@@ -624,6 +631,7 @@ jobs:
 
   lint-javascript-web-cypress:
     name: JavaScript (web-cypress)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web-cypress }}
     runs-on: ubuntu-24.04
     environment: test
@@ -698,6 +706,7 @@ jobs:
 
   lint-kotlin-mobile-android:
     name: Kotlin (mobile-android)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-android }}
     runs-on: ubuntu-24.04
     environment: test
@@ -903,6 +912,7 @@ jobs:
 
   lint-rust-api-rust:
     name: Rust (api-rust)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-rust }}
     runs-on: ubuntu-24.04
     environment: test
@@ -931,6 +941,7 @@ jobs:
 
   lint-rust-iads-data-producer:
     name: Rust (iads-data-producer)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.iads-iads-data-producer }}
     runs-on: ubuntu-24.04
     environment: test
@@ -955,6 +966,7 @@ jobs:
 
   lint-rust-zeromq-iads-bridge:
     name: Rust (zeromq-iads-bridge)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.iads-zeromq-iads-bridge }}
     runs-on: windows-2025
     environment: test
@@ -985,6 +997,7 @@ jobs:
 
   lint-rust-kafka-rust-proto-consumer:
     name: Rust (kafka-rust-proto-consumer)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-proto-consumer }}
     runs-on: ubuntu-24.04
     environment: test
@@ -1029,6 +1042,7 @@ jobs:
 
   lint-rust-kafka-rust-proto-producer:
     name: Rust (kafka-rust-proto-producer)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-proto-producer }}
     runs-on: ubuntu-24.04
     environment: test
@@ -1073,6 +1087,7 @@ jobs:
 
   lint-rust-kafka-rust-udp-kafka-bridge:
     name: Rust (kafka-rust-udp-kafka-bridge)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-udp-kafka-bridge }}
     runs-on: ubuntu-24.04
     environment: test
@@ -1117,6 +1132,7 @@ jobs:
 
   lint-rust-kafka-rust-zeromq-kafka-bridge:
     name: Rust (kafka-rust-zeromq-kafka-bridge)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-zeromq-kafka-bridge }}
     runs-on: ubuntu-24.04
     environment: test
@@ -1161,6 +1177,7 @@ jobs:
 
   lint-rust-udp-receiver:
     name: Rust (udp-receiver)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.udp-receiver }}
     runs-on: ubuntu-24.04
     environment: test
@@ -1191,6 +1208,7 @@ jobs:
 
   lint-rust-udp-sender:
     name: Rust (udp-sender)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.udp-sender }}
     runs-on: ubuntu-24.04
     environment: test
@@ -1221,6 +1239,7 @@ jobs:
 
   lint-rust-windows-calculator:
     name: Rust (windows-calculator)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.windows-calculator }}
     runs-on: windows-2025
     environment: test
@@ -1245,6 +1264,7 @@ jobs:
 
   lint-scala-hm-spark-find-retired-people-scala:
     name: Scala (hm-spark-find-retired-people-scala)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-find-retired-people-scala }}
     runs-on: ubuntu-24.04
     environment: test
@@ -1271,6 +1291,7 @@ jobs:
 
   lint-scala-hm-spark-ingest-from-s3-to-kafka:
     name: Scala (hm-spark-ingest-from-s3-to-kafka)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-ingest-from-s3-to-kafka }}
     runs-on: ubuntu-24.04
     environment: test

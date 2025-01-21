@@ -36,6 +36,7 @@ jobs:
 
   mobile-android-lint:
     name: Mobile - Android | Lint
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-android }}
     runs-on: ubuntu-24.04
     environment: test
@@ -57,6 +58,7 @@ jobs:
 
   mobile-android-test:
     name: Mobile - Android | Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-android }}
     runs-on: ubuntu-24.04
     environment: test
@@ -78,6 +80,7 @@ jobs:
 
   mobile-android-instrumented-test:
     name: Mobile - Android | Instrumented Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-android }}
     # Ubuntu displays the message: "You're running a Linux VM where hardware acceleration is not available. Please consider using a macOS VM instead to take advantage of native hardware acceleration support provided by HAXM."
     # https://github.com/ReactiveCircus/android-emulator-runner#a-note-on-vm-acceleration-and-why-we-dont-need-haxm-anymore
@@ -105,6 +108,7 @@ jobs:
 
   mobile-ios-test:
     name: Mobile - iOS | Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-ios }}
     runs-on: macos-14
     environment: test
@@ -154,6 +158,7 @@ jobs:
 
   mobile-react-native-test:
     name: Mobile - React Native | Test
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-react-native }}
     runs-on: ubuntu-24.04
     environment: test
