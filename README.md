@@ -587,7 +587,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **GitGuardian** - Git secret scanning
 - **xxHash** - Hash algorithm
 
-## System Tools
+## System Tool
 
 - **Ouch!** - Compressing and decompressing program
 - **Rclone** - Cloud storage sync program
@@ -614,7 +614,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Verilog** - Hardware description language
 - **VHDL** - Hardware description language
 
-## Embedded Systems
+## Embedded System
 
 - **pySerial** - Serial communication library
 - **cantools** - Controller Area Network (CAN) bus tools
@@ -1003,7 +1003,7 @@ OpenFOAM simulation results viewed by ParaView.
 
 ![Simscape screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
 
-## Embedded Systems
+## Embedded System
 
 ### ASTERIOS - Real-Time, Safety-Critical Applications Development
 

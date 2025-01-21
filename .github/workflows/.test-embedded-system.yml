@@ -1,0 +1,206 @@
+---
+name: . Test Embedded System
+
+'on':
+  workflow_call:
+    inputs:
+      decode-can-blf-data:
+        required: true
+        type: boolean
+      decode-can-trc-data:
+        required: true
+        type: boolean
+      format-can-data:
+        required: true
+        type: boolean
+      hm-serial:
+        required: true
+        type: boolean
+      pack-unpack-data:
+        required: true
+        type: boolean
+
+jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - uses: dorny/paths-filter@v3.0.2
+        id: filter
+        with:
+          filters: |
+            workflow:
+              - '.github/workflows/.test-embedded-system.yml'
+
+  decode-can-blf-data-test:
+    name: Decode CAN BLF Data | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.decode-can-blf-data }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: embedded-system/decode-can-blf-data/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: embedded-system/decode-can-blf-data/pyproject.toml
+      - name: Install dependencies
+        working-directory: embedded-system/decode-can-blf-data
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: embedded-system/decode-can-blf-data
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: embedded-system/decode-can-blf-data
+
+  decode-can-trc-data-test:
+    name: Decode CAN TRC Data | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.decode-can-trc-data }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: embedded-system/decode-can-trc-data/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: embedded-system/decode-can-trc-data/pyproject.toml
+      - name: Install dependencies
+        working-directory: embedded-system/decode-can-trc-data
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: embedded-system/decode-can-trc-data
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: embedded-system/decode-can-trc-data
+
+  format-can-data-test:
+    name: Format CAN Data | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.format-can-data }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: embedded-system/format-can-data/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: embedded-system/format-can-data/pyproject.toml
+      - name: Install dependencies
+        working-directory: embedded-system/format-can-data
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: embedded-system/format-can-data
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: embedded-system/format-can-data
+
+  serial-test:
+    name: Serial | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-serial }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: embedded-system/hm-serial/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: embedded-system/hm-serial/pyproject.toml
+      - name: Install dependencies
+        working-directory: embedded-system/hm-serial
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: embedded-system/hm-serial
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: embedded-system/hm-serial
+
+  pack-unpack-data-test:
+    name: Pack Unpack Data | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.pack-unpack-data }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: embedded-system/pack-unpack-data/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: embedded-system/pack-unpack-data/pyproject.toml
+      - name: Install dependencies
+        working-directory: embedded-system/pack-unpack-data
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: embedded-system/pack-unpack-data
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: embedded-system/pack-unpack-data

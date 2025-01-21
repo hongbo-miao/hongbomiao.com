@@ -251,7 +251,7 @@ lint-c-cpp-cpplint:
     uv run poe lint-c-cpp-cpplint --repository=asterios/led-blinker --extensions=c,h --recursive asterios/led-blinker
     uv run poe lint-c-cpp-cpplint --repository=compiler-infrastructure/llvm --extensions=cpp,hpp --recursive compiler-infrastructure/llvm
     uv run poe lint-c-cpp-cpplint --repository=data-processing/kafka/kafka-client/kafka-c/avro-producer --extensions=c,h --recursive data-processing/kafka/kafka-client/kafka-c/avro-producer
-    uv run poe lint-c-cpp-cpplint --repository=embedded-systems/freertos --extensions=ino --recursive embedded-systems/freertos
+    uv run poe lint-c-cpp-cpplint --repository=embedded-system/freertos --extensions=ino --recursive embedded-system/freertos
     uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
     uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
     uv run poe lint-c-cpp-cpplint --repository=parallel-computing/cuda --extensions=cu,cuh --recursive parallel-computing/cuda
@@ -472,10 +472,10 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
     uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-config-reader
     uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-data-reader
-    uv run poe static-type-check-python --package=embedded-systems.decode-can-blf-data
-    uv run poe static-type-check-python --package=embedded-systems.decode-can-trc-data
-    uv run poe static-type-check-python --package=embedded-systems.format-can-data
-    uv run poe static-type-check-python --package=embedded-systems.hm-serial
+    uv run poe static-type-check-python --package=embedded-system.decode-can-blf-data
+    uv run poe static-type-check-python --package=embedded-system.decode-can-trc-data
+    uv run poe static-type-check-python --package=embedded-system.format-can-data
+    uv run poe static-type-check-python --package=embedded-system.hm-serial
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-pyvisa
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-tdms
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.veristand.hm-veristand

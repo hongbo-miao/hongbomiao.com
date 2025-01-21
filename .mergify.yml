@@ -237,6 +237,9 @@ pull_request_rules:
           - check-success=Test Data Orchestration / Prefect (print-platform) | Test
           - check-skipped=Test Data Orchestration / Prefect (print-platform) | Test
       - or:
+          - check-success=Test Data Transformation / dbt (hm-postgres) | Test
+          - check-skipped=Test Data Transformation / dbt (hm-postgres) | Test
+      - or:
           - check-success=Test Data Processing / Spark (analyze-coffee-customers) | Test
           - check-skipped=Test Data Processing / Spark (analyze-coffee-customers) | Test
       - or:
@@ -344,6 +347,48 @@ pull_request_rules:
       - or:
           - check-success=Test Data Analytics / NetworkX | Test
           - check-skipped=Test Data Analytics / NetworkX | Test
+      - or:
+          - check-success=Test Computing / SunPy | Test
+          - check-skipped=Test Computing / SunPy | Test
+      - or:
+          - check-success=Test Computing / Taichi (count-primes) | Test
+          - check-skipped=Test Computing / Taichi (count-primes) | Test
+      - or:
+          - check-success=Test Computing / Taichi (fluid-solver) | Test
+          - check-skipped=Test Computing / Taichi (fluid-solver) | Test
+      - or:
+          - check-success=Test Computing / Triton | Test
+          - check-skipped=Test Computing / Triton | Test
+      - or:
+          - check-success=Test Computing / JAX | Test
+          - check-skipped=Test Computing / JAX | Test
+      - or:
+          - check-success=Test Computing / Quantum Computing | Test
+          - check-skipped=Test Computing / Quantum Computing | Test
+      - or:
+          - check-success=Test Computing / Ray (calculate) | Test
+          - check-skipped=Test Computing / Ray (calculate) | Test
+      - or:
+          - check-success=Test Computing / Ray (process-flight-data) | Test
+          - check-skipped=Test Computing / Ray (process-flight-data) | Test
+      - or:
+          - check-success=Test Computing / SkyPilot | Test
+          - check-skipped=Test Computing / SkyPilot | Test
+      - or:
+          - check-success=Test Cloud / Amazon SageMaker (pytorch-mnist) | Test
+          - check-skipped=Test Cloud / Amazon SageMaker (pytorch-mnist) | Test
+      - or:
+          - check-success=Test Cloud / AWS ParallelCluster | Test
+          - check-skipped=Test Cloud / AWS ParallelCluster | Test
+      - or:
+          - check-success=Test Cloud / Pulumi | Test
+          - check-skipped=Test Cloud / Pulumi | Test
+      - or:
+          - check-success=Test Cloud / AWS Glue (production spark-scripts) | Test
+          - check-skipped=Test Cloud / AWS Glue (production spark-scripts) | Test
+      - or:
+          - check-success=Test Cloud / Prowler | Test
+          - check-skipped=Test Cloud / Prowler | Test
       - or:
           - check-success=Test Machine Learning / Amazon SageMaker Triton ResNet 50 (Deploy) | Test
           - check-skipped=Test Machine Learning / Amazon SageMaker Triton ResNet 50 (Deploy) | Test
@@ -456,104 +501,62 @@ pull_request_rules:
           - check-success=Test Computer Vision / PyVista (mount-saint-helens) | Test
           - check-skipped=Test Computer Vision / PyVista (mount-saint-helens) | Test
       - or:
-          - check-success=Amazon SageMaker (pytorch-mnist) | Test
-          - check-skipped=Amazon SageMaker (pytorch-mnist) | Test
+          - check-success=Test Network Programmability / UDP Receiver | Test
+          - check-skipped=Test Network Programmability / UDP Receiver | Test
       - or:
-          - check-success=AWS Glue (production spark-scripts) | Test
-          - check-skipped=AWS Glue (production spark-scripts) | Test
+          - check-success=Test Network Programmability / UDP Sender | Test
+          - check-skipped=Test Network Programmability / UDP Sender | Test
       - or:
-          - check-success=AWS ParallelCluster | Test
-          - check-skipped=AWS ParallelCluster | Test
+          - check-success=Test Operating System / Windows (calculator) | Test
+          - check-skipped=Test Operating System / Windows (calculator) | Test
+      - or:
+          - check-success=Test Embedded System / Decode CAN BLF Data | Test
+          - check-skipped=Test Embedded System / Decode CAN BLF Data | Test
+      - or:
+          - check-success=Test Embedded System / Decode CAN TRC Data | Test
+          - check-skipped=Test Embedded System / Decode CAN TRC Data | Test
+      - or:
+          - check-success=Test Embedded System / Format CAN Data | Test
+          - check-skipped=Test Embedded System / Format CAN Data | Test
+      - or:
+          - check-success=Test Embedded System / Serial | Test
+          - check-skipped=Test Embedded System / Serial | Test
+      - or:
+          - check-success=Test Embedded System / Pack Unpack Data | Test
+          - check-skipped=Test Embedded System / Pack Unpack Data | Test
+      - or:
+          - check-success=Test Hardware-in-the-Loop / National Instruments (pyvisa) | Test
+          - check-skipped=Test Hardware-in-the-Loop / National Instruments (pyvisa) | Test
+      - or:
+          - check-success=Test Hardware-in-the-Loop / National Instruments (tdms) | Test
+          - check-skipped=Test Hardware-in-the-Loop / National Instruments (tdms) | Test
+      - or:
+          - check-success=Test Hardware-in-the-Loop / National Instruments (ni-veristand) | Test
+          - check-skipped=Test Hardware-in-the-Loop / National Instruments (ni-veristand) | Test
+      - or:
+          - check-success=Test Aerospace / AeroSandbox | Test
+          - check-skipped=Test Aerospace / AeroSandbox | Test
+      - or:
+          - check-success=Test Aerospace / OpenAeroStruct | Test
+          - check-skipped=Test Aerospace / OpenAeroStruct | Test
+      - or:
+          - check-success=Genesis | Test
+          - check-skipped=Genesis | Test
       # - or:
       #     - check-success=Call MATLAB Function in Python | Test
       #     - check-skipped=Call MATLAB Function in Python | Test
       - or:
-          - check-success=Decode CAN BLF Data | Test
-          - check-skipped=Decode CAN BLF Data | Test
-      - or:
-          - check-success=Decode CAN TRC Data | Test
-          - check-skipped=Decode CAN TRC Data | Test
-      - or:
-          - check-success=Format CAN Data | Test
-          - check-skipped=Format CAN Data | Test
-      - or:
           - check-success=Data Distribution Service | Test
           - check-skipped=Data Distribution Service | Test
       - or:
-          - check-success=dbt (hm-postgres) | Test
-          - check-skipped=dbt (hm-postgres) | Test
-      - or:
-          - check-success=JAX | Test
-          - check-skipped=JAX | Test
-      - or:
-          - check-success=National Instruments (ni-veristand) | Test
-          - check-skipped=National Instruments (ni-veristand) | Test
-      - or:
-          - check-success=National Instruments (pyvisa) | Test
-          - check-skipped=National Instruments (pyvisa) | Test
-      - or:
-          - check-success=National Instruments (tdms) | Test
-          - check-skipped=National Instruments (tdms) | Test
-      - or:
-          - check-success=AeroSandbox | Test
-          - check-skipped=AeroSandbox | Test
-      - or:
-          - check-success=OpenAeroStruct | Test
-          - check-skipped=OpenAeroStruct | Test
-      - or:
-          - check-success=Prowler | Test
-          - check-skipped=Prowler | Test
-      - or:
-          - check-success=Pulumi | Test
-          - check-skipped=Pulumi | Test
-      - or:
-          - check-success=Ray (calculate) | Test
-          - check-skipped=Ray (calculate) | Test
-      - or:
-          - check-success=Ray (process-flight-data) | Test
-          - check-skipped=Ray (process-flight-data) | Test
-      - or:
-          - check-success=Genesis | Test
-          - check-skipped=Genesis | Test
-      - or:
-          - check-success=Serial | Test
-          - check-skipped=Serial | Test
-      - or:
-          - check-success=Pack Unpack Data | Test
-          - check-skipped=Pack Unpack Data | Test
-      - or:
-          - check-success=SkyPilot | Test
-          - check-skipped=SkyPilot | Test
-      - or:
-          - check-success=Taichi (count-primes) | Test
-          - check-skipped=Taichi (count-primes) | Test
-      - or:
-          - check-success=Taichi (fluid-solver) | Test
-          - check-skipped=Taichi (fluid-solver) | Test
-      - or:
-          - check-success=Triton | Test
-          - check-skipped=Triton | Test
-      - or:
-          - check-success=SunPy | Test
-          - check-skipped=SunPy | Test
-      - or:
           - check-success=xxHash | Test
           - check-skipped=xxHash | Test
-      - or:
-          - check-success=UDP Receiver | Test
-          - check-skipped=UDP Receiver | Test
-      - or:
-          - check-success=UDP Sender | Test
-          - check-skipped=UDP Sender | Test
       - or:
           - check-success=OPA | Test
           - check-skipped=OPA | Test
       - or:
           - check-success=ROS | Test
           - check-skipped=ROS | Test
-      - or:
-          - check-success=Windows (calculator) | Test
-          - check-skipped=Windows (calculator) | Test
       - or:
           - check-success=HM OPAL Client | Build
           - check-skipped=HM OPAL Client | Build

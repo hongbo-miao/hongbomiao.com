@@ -1,0 +1,212 @@
+---
+name: . Test Cloud
+
+'on':
+  workflow_call:
+    inputs:
+      # Cloud Platform
+      amazon-sagemaker-pytorch-mnist:
+        required: true
+        type: boolean
+      hm-aws-parallelcluster:
+        required: true
+        type: boolean
+      # Cloud Infrastructure
+      hm-pulumi:
+        required: true
+        type: boolean
+      production-aws-glue-spark-scripts:
+        required: true
+        type: boolean
+      # Cloud Security
+      hm-prowler:
+        required: true
+        type: boolean
+
+jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - uses: dorny/paths-filter@v3.0.2
+        id: filter
+        with:
+          filters: |
+            workflow:
+              - '.github/workflows/.test-cloud.yml'
+
+  # Cloud Platform
+  amazon-sagemaker-pytorch-mnist-test:
+    name: Amazon SageMaker (pytorch-mnist) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.amazon-sagemaker-pytorch-mnist }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/pyproject.toml
+      - name: Install dependencies
+        working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
+
+  # Cloud Infrastructure
+  aws-parallelcluster-test:
+    name: AWS ParallelCluster | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-aws-parallelcluster }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: cloud-platform/aws/aws-parallelcluster/pcluster/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: cloud-platform/aws/aws-parallelcluster/pcluster/pyproject.toml
+      - name: Install dependencies
+        working-directory: cloud-platform/aws/aws-parallelcluster/pcluster
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: cloud-platform/aws/aws-parallelcluster/pcluster
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: cloud-platform/aws/aws-parallelcluster/pcluster
+
+  pulumi-test:
+    name: Pulumi | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-pulumi }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: cloud-infrastructure/hm-pulumi/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: cloud-infrastructure/hm-pulumi/pyproject.toml
+      - name: Install dependencies
+        working-directory: cloud-infrastructure/hm-pulumi
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: cloud-infrastructure/hm-pulumi
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: cloud-infrastructure/hm-pulumi
+
+  production-aws-glue-spark-scripts-test:
+    name: AWS Glue (production spark-scripts) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.production-aws-glue-spark-scripts }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/pyproject.toml
+      - name: Install dependencies
+        working-directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
+
+  # Cloud Security
+  prowler-test:
+    name: Prowler | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-prowler }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: cloud-security/hm-prowler/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: cloud-security/hm-prowler/pyproject.toml
+      - name: Install dependencies
+        working-directory: cloud-security/hm-prowler
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: cloud-security/hm-prowler
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: cloud-security/hm-prowler
