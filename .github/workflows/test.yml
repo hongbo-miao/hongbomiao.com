@@ -21,6 +21,7 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
       amazon-sagemaker-pytorch-mnist: ${{ steps.filter.outputs.amazon-sagemaker-pytorch-mnist }}
       amazon-sagemaker-triton-resnet-50-deploy: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-deploy }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-infer }}
@@ -149,368 +150,250 @@ jobs:
         id: filter
         with:
           filters: |
-            amazon-sagemaker-pytorch-mnist:
+            workflow:
               - '.github/workflows/test.yml'
+            amazon-sagemaker-pytorch-mnist:
               - 'cloud-platform/aws/amazon-sagemaker/pytorch-mnist/**'
             amazon-sagemaker-triton-resnet-50-deploy:
-              - '.github/workflows/test.yml'
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/**'
             amazon-sagemaker-triton-resnet-50-infer:
-              - '.github/workflows/test.yml'
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/**'
             api-go:
-              - '.github/workflows/test.yml'
               - 'api-go/**'
             api-node:
-              - '.github/workflows/test.yml'
               - 'api-node/**'
             api-python:
-              - '.github/workflows/test.yml'
               - 'api-python/**'
             api-rust:
-              - '.github/workflows/test.yml'
               - 'api-rust/**'
             call-matlab-function-in-python:
-              - '.github/workflows/test.yml'
               - 'matlab/call-matlab-function-in-python/**'
             decode-can-blf-data:
-              - '.github/workflows/test.yml'
               - 'embedded-systems/decode-can-blf-data/**'
             decode-can-trc-data:
-              - '.github/workflows/test.yml'
               - 'embedded-systems/decode-can-trc-data/**'
             development-aws-glue-spark-scripts:
-              - '.github/workflows/test.yml'
               - 'cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts/**'
             production-aws-glue-spark-scripts:
-              - '.github/workflows/test.yml'
               - 'cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/**'
             ethereum:
               - '.github/workflows/.lint.yml'
               - 'ethereum/**'
             format-can-data:
-              - '.github/workflows/test.yml'
               - 'embedded-systems/format-can-data/**'
             convolutional-neural-network:
-              - '.github/workflows/test.yml'
               - 'machine-learning/convolutional-neural-network/**'
             data-distribution-service:
-              - '.github/workflows/test.yml'
               - 'data-distribution-service/**'
             dbt-hm-postgres:
-              - '.github/workflows/test.yml'
               - 'data-transformation/dbt/projects/dbt_hm_postgres/**'
             delta-lake-read-delta-lake-by-amazon-athena:
-              - '.github/workflows/test.yml'
               - 'data-storage/delta-lake/read-delta-lake-by-amazon-athena/**'
             delta-lake-read-delta-lake-by-trino:
-              - '.github/workflows/test.yml'
               - 'data-storage/delta-lake/read-delta-lake-by-trino/**'
             delta-lake-write-to-delta-lake:
-              - '.github/workflows/test.yml'
               - 'data-storage/delta-lake/write-to-delta-lake/**'
             feature-store:
-              - '.github/workflows/test.yml'
               - 'machine-learning/feature-store/**'
             flink-stream-tweets:
-              - '.github/workflows/test.yml'
               - 'data-processing/flink/applications/stream-tweets/**'
             grafana-hm-dashboard:
-              - '.github/workflows/test.yml'
               - 'data-visualization/grafana/hm-dashboard/**'
             grafana-hm-panel-plugin:
-              - '.github/workflows/test.yml'
               - 'data-visualization/grafana/hm-panel-plugin/**'
             graph-neural-network:
-              - '.github/workflows/test.yml'
               - 'machine-learning/graph-neural-network/**'
             hm-aerosandbox:
-              - '.github/workflows/test.yml'
               - 'aerospace/hm-aerosandbox/**'
             hm-airflow:
-              - '.github/workflows/test.yml'
               - 'data-orchestration/hm-airflow/**'
             hm-autogluon:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-autogluon/**'
             hm-aws-parallelcluster:
-              - '.github/workflows/test.yml'
               - 'cloud-platform/aws/aws-parallelcluster/pcluster/**'
             hm-cudf:
-              - '.github/workflows/test.yml'
               - 'data-analytics/hm-cudf/**'
             hm-cuml:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-cuml/**'
             hm-cupy:
-              - '.github/workflows/test.yml'
               - 'data-analytics/hm-cupy/**'
             hm-docling:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-docling/**'
             hm-duckdb-query-duckdb:
-              - '.github/workflows/test.yml'
               - 'data-storage/hm-duckdb/query-duckdb/**'
             hm-duckdb-query-lance:
-              - '.github/workflows/test.yml'
               - 'data-storage/hm-duckdb/query-lance/**'
             hm-duckdb-query-parquet:
-              - '.github/workflows/test.yml'
               - 'data-storage/hm-duckdb/query-parquet/**'
             hm-duckdb-query-protobuf:
-              - '.github/workflows/test.yml'
               - 'data-storage/hm-duckdb/query-protobuf/**'
             hm-faster-whisper:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-faster-whisper/**'
             hm-flax:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-flax/**'
             hm-genesis:
-              - '.github/workflows/test.yml'
               - 'physics/hm-genesis/**'
             hm-geopandas:
-              - '.github/workflows/test.yml'
               - 'data-analytics/hm-geopandas/**'
             hm-gradio-classify-image:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-gradio/applications/classify-image/**'
             hm-imagebind:
-              - '.github/workflows/test.yml'
               - 'computer-vision/hm-imagebind/**'
             hm-jax:
-              - '.github/workflows/test.yml'
               - 'high-performance-computing/hm-jax/**'
             hm-kubeflow-calculate:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-kubeflow/pipelines/calculate/**'
             hm-kubeflow-classify-mnist:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-kubeflow/pipelines/classify-mnist/**'
             hm-lancedb:
-              - '.github/workflows/test.yml'
               - 'data-storage/hm-lancedb/**'
             hm-langchain-chat-pdf:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-langchain/applications/chat-pdf/**'
             hm-langgraph-chat-pdf:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-langgraph/applications/chat-pdf/**'
             hm-llama-index-chat-pdf:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-llama-index/applications/chat-pdf/**'
             hm-mlflow-classify-mnist:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-mlflow/experiments/classify-mnist/**'
             hm-mlflow-predict-diabetes:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-mlflow/experiments/predict-diabetes/**'
             hm-networkx:
-              - '.github/workflows/test.yml'
               - 'data-analytics/hm-networkx/**'
             hm-numba:
-              - '.github/workflows/test.yml'
               - 'data-analytics/hm-numba/**'
             hm-opal-client:
-              - '.github/workflows/test.yml'
               - 'authorization/hm-opal-client/**'
             hm-open3d:
-              - '.github/workflows/test.yml'
               - 'computer-vision/hm-open3d/**'
             hm-openaerostruct:
-              - '.github/workflows/test.yml'
               - 'computer-vision/hm-openaerostruct/**'
             hm-pandas:
-              - '.github/workflows/test.yml'
               - 'data-analytics/hm-pandas/**'
             hm-polars:
-              - '.github/workflows/test.yml'
               - 'data-analytics/hm-polars/**'
             hm-prefect-calculate:
-              - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/calculate/**'
             hm-prefect-greet:
-              - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/greet/**'
             hm-prefect-print-platform:
-              - '.github/workflows/test.yml'
               - 'data-orchestration/hm-prefect/workflows/print-platform/**'
             hm-protobuf:
-              - '.github/workflows/test.yml'
               - 'data-storage/hm-protobuf/**'
             hm-prowler:
-              - '.github/workflows/test.yml'
               - 'cloud-security/hm-prowler/**'
             hm-pulumi:
-              - '.github/workflows/test.yml'
               - 'cloud-infrastructure/hm-pulumi/**'
             hm-pyvista-mount-saint-helens:
-              - '.github/workflows/test.yml'
               - 'computer-vision/hm-pyvista/mount-saint-helens/**'
             hm-rasa:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-rasa/**'
             hm-ray-calculate:
-              - '.github/workflows/test.yml'
               - 'cloud-computing/hm-ray/applications/calculate/**'
             hm-ray-process-flight-data:
-              - '.github/workflows/test.yml'
               - 'cloud-computing/hm-ray/applications/process-flight-data/**'
             hm-scikit-learn:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-scikit-learn/**'
             hm-serial:
-              - '.github/workflows/test.yml'
               - 'embedded-systems/hm-serial/**'
             hm-sglang:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-sglang/**'
             hm-skypilot:
-              - '.github/workflows/test.yml'
               - 'cloud-computing/hm-skypilot/**'
             hm-spark-analyze-coffee-customers:
-              - '.github/workflows/test.yml'
               - 'data-processing/hm-spark/applications/analyze-coffee-customers/**'
             hm-spark-find-retired-people-python:
-              - '.github/workflows/test.yml'
               - 'data-processing/hm-spark/applications/find-retired-people-python/**'
             hm-spark-find-retired-people-scala:
-              - '.github/workflows/test.yml'
               - 'data-processing/hm-spark/applications/find-retired-people-scala/**'
             hm-spark-find-taxi-top-routes:
-              - '.github/workflows/test.yml'
               - 'data-processing/hm-spark/applications/find-taxi-top-routes/**'
             hm-spark-find-taxi-top-routes-sql:
-              - '.github/workflows/test.yml'
               - 'data-processing/hm-spark/applications/find-taxi-top-routes-sql/**'
             hm-spark-ingest-from-s3-to-kafka:
-              - '.github/workflows/test.yml'
               - 'data-processing/hm-spark/applications/ingest-from-s3-to-kafka/**'
             hm-spark-recommend-movies:
-              - '.github/workflows/test.yml'
               - 'data-processing/hm-spark/applications/recommend-movies/**'
             hm-streamlit-live-line-chart:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-streamlit/applications/live-line-chart/**'
             hm-streamlit-map:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hm-streamlit/applications/map/**'
             hm-sunpy:
-              - '.github/workflows/test.yml'
               - 'scientific-computing/hm-sunpy/**'
             hm-supervision-detect-objects:
-              - '.github/workflows/test.yml'
               - 'computer-vision/hm-supervision/detect-objects/**'
             hm-triton:
-              - '.github/workflows/test.yml'
               - 'parallel-computing/hm-triton/**'
             hm-xxhash:
-              - '.github/workflows/test.yml'
               - 'hm-xxhash/**'
             hugging-face-analyze-sentiment:
-              - '.github/workflows/test.yml'
               - 'machine-learning/hugging-face/analyze-sentiment/**'
             iads-iads-config-reader:
-              - '.github/workflows/test.yml'
               - 'data-visualization/iads/iads-iads-config-reader/**'
             iads-iads-data-reader:
-              - '.github/workflows/test.yml'
               - 'data-visualization/iads/iads-iads-data-reader/**'
             iads-iads-data-producer:
-              - '.github/workflows/test.yml'
               - 'data-visualization/iads/iads-rtstation/iads-data-producer/**'
             iads-zeromq-iads-bridge:
-              - '.github/workflows/test.yml'
               - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
             kafka-rust-proto-consumer:
-              - '.github/workflows/test.yml'
               - 'hm-kafka/kafka-client/kafka-rust/proto-consumer/**'
             kafka-rust-proto-producer:
-              - '.github/workflows/test.yml'
               - 'hm-kafka/kafka-client/kafka-rust/proto-producer/**'
             kafka-rust-udp-kafka-bridge:
-              - '.github/workflows/test.yml'
               - 'hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge/**'
             kafka-rust-zeromq-kafka-bridge:
-              - '.github/workflows/test.yml'
               - 'hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge/**'
             lance:
-              - '.github/workflows/test.yml'
               - 'data-storage/lance/**'
             mineru:
-              - '.github/workflows/test.yml'
               - 'machine-learning/mineru/**'
             mobile-android:
-              - '.github/workflows/test.yml'
               - 'mobile/mobile-android/**'
             mobile-ios:
-              - '.github/workflows/test.yml'
               - 'mobile/mobile-ios/**'
             mobile-react-native:
-              - '.github/workflows/test.yml'
               - 'mobile/mobile-react-native/**'
             national-instruments-hm-pyvisa:
-              - '.github/workflows/test.yml'
               - 'hardware-in-the-loop/national-instruments/hm-pyvisa/**'
             national-instruments-hm-tdms:
-              - '.github/workflows/test.yml'
               - 'hardware-in-the-loop/national-instruments/hm-tdms/**'
             national-instruments-hm-veristand:
-              - '.github/workflows/test.yml'
               - 'hardware-in-the-loop/national-instruments/veristand/hm-veristand/**'
             national-instruments-veristand-zeromq-bridge:
-              - '.github/workflows/test.yml'
               - 'hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/**'
             neural-forecasting-forecast-air-passenger-number:
-              - '.github/workflows/test.yml'
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
             nvidia-dali:
-              - '.github/workflows/test.yml'
               - 'machine-learning/nvidia-dali/**'
             nvidia-modulus:
-              - '.github/workflows/test.yml'
               - 'machine-learning/nvidia-modulus/**'
             open-clip:
-              - '.github/workflows/test.yml'
               - 'computer-vision/open-clip/**'
             pack-unpack-data:
-              - '.github/workflows/test.yml'
               - 'embedded-systems/pack-unpack-data/**'
             prometheus:
-              - '.github/workflows/test.yml'
               - 'data-storage/prometheus/**'
             quantum-computing:
-              - '.github/workflows/test.yml'
               - 'quantum-computing/**'
             reinforcement-learning-cart-pole:
-              - '.github/workflows/test.yml'
               - 'machine-learning/reinforcement-learning/cart-pole/**'
             robot-operating-system:
-              - '.github/workflows/test.yml'
               - 'robotics/robot-operating-system/**'
             stable-diffusion:
-              - '.github/workflows/test.yml'
               - 'machine-learning/stable-diffusion/**'
             taichi-count-primes:
-              - '.github/workflows/test.yml'
               - 'parallel-computing/hm-taichi/count-primes/**'
             taichi-fluid-solver:
-              - '.github/workflows/test.yml'
               - 'parallel-computing/hm-taichi/fluid-solver/**'
             udp-receiver:
-              - '.github/workflows/test.yml'
               - 'network-programmability/udp/udp-receiver/**'
             udp-sender:
-              - '.github/workflows/test.yml'
               - 'network-programmability/udp/udp-sender/**'
             web:
-              - '.github/workflows/test.yml'
               - 'web/**'
             web-cypress:
-              - '.github/workflows/test.yml'
               - 'web-cypress/**'
             windows-calculator:
-              - '.github/workflows/test.yml'
               - 'operating-system/windows/calculator/**'
 
   lint:
@@ -590,7 +473,7 @@ jobs:
   airflow-test:
     name: Airflow | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-airflow == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-airflow == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -623,7 +506,7 @@ jobs:
   amazon-sagemaker-pytorch-mnist-test:
     name: Amazon SageMaker (pytorch-mnist) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.amazon-sagemaker-pytorch-mnist == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.amazon-sagemaker-pytorch-mnist == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -656,7 +539,7 @@ jobs:
   amazon-sagemaker-triton-resnet-50-deploy-test:
     name: Amazon SageMaker Triton ResNet 50 (Deploy) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-deploy == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-deploy == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -689,7 +572,7 @@ jobs:
   amazon-sagemaker-triton-resnet-50-infer-test:
     name: Amazon SageMaker Triton ResNet 50 (Infer) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -722,7 +605,7 @@ jobs:
   production-aws-glue-spark-scripts-test:
     name: AWS Glue (production spark-scripts) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.production-aws-glue-spark-scripts == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.production-aws-glue-spark-scripts == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -755,7 +638,7 @@ jobs:
   aws-parallelcluster-test:
     name: AWS ParallelCluster | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-aws-parallelcluster == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-aws-parallelcluster == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -789,7 +672,7 @@ jobs:
     name: Call MATLAB Function in Python | Test
     needs: detect-changes
     if: ${{ false }}
-    # if: ${{ needs.detect-changes.outputs.call-matlab-function-in-python == 'true' }}
+    # if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.call-matlab-function-in-python == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -826,7 +709,7 @@ jobs:
   decode-can-blf-data-test:
     name: Decode CAN BLF Data | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.decode-can-blf-data == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.decode-can-blf-data == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -859,7 +742,7 @@ jobs:
   decode-can-trc-data-test:
     name: Decode CAN TRC Data | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.decode-can-trc-data == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.decode-can-trc-data == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -892,7 +775,7 @@ jobs:
   format-can-data-test:
     name: Format CAN Data | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.format-can-data == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.format-can-data == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -925,7 +808,7 @@ jobs:
   data-distribution-service-test:
     name: Data Distribution Service | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.data-distribution-service == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.data-distribution-service == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -958,7 +841,7 @@ jobs:
   dbt-hm-postgres-test:
     name: dbt (hm-postgres) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.dbt-hm-postgres == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.dbt-hm-postgres == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -991,7 +874,7 @@ jobs:
   delta-lake-read-delta-lake-by-amazon-athena-test:
     name: Delta Lake (read-delta-lake-by-amazon-athena) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-amazon-athena == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.delta-lake-read-delta-lake-by-amazon-athena == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1024,7 +907,7 @@ jobs:
   delta-lake-read-delta-lake-by-trino-test:
     name: Delta Lake (read-delta-lake-by-trino) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-trino == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.delta-lake-read-delta-lake-by-trino == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1057,7 +940,7 @@ jobs:
   delta-lake-write-to-delta-lake-test:
     name: Delta Lake (write-to-delta-lake) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.delta-lake-write-to-delta-lake == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.delta-lake-write-to-delta-lake == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1090,7 +973,7 @@ jobs:
   duckdb-query-duckdb-test:
     name: DuckDB (query-duckdb) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-duckdb-query-duckdb == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-duckdb-query-duckdb == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1123,7 +1006,7 @@ jobs:
   duckdb-query-lance-test:
     name: DuckDB (query-lance) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-duckdb-query-lance == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-duckdb-query-lance == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1156,7 +1039,7 @@ jobs:
   duckdb-query-parquet-test:
     name: DuckDB (query-parquet) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-duckdb-query-parquet == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-duckdb-query-parquet == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1189,7 +1072,7 @@ jobs:
   duckdb-query-protobuf-test:
     name: DuckDB (query-protobuf) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-duckdb-query-protobuf == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-duckdb-query-protobuf == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1222,7 +1105,7 @@ jobs:
   lance-test:
     name: Lance | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.lance == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.lance == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1255,7 +1138,7 @@ jobs:
   lancedb-test:
     name: LanceDB | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-lancedb == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-lancedb == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1288,7 +1171,7 @@ jobs:
   protobuf-test:
     name: Protobuf | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-protobuf == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-protobuf == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1321,7 +1204,7 @@ jobs:
   cupy-test:
     name: CuPy | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-cupy == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-cupy == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1354,7 +1237,7 @@ jobs:
   numba-test:
     name: Numba | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-numba == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-numba == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1387,7 +1270,7 @@ jobs:
   pandas-test:
     name: pandas | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-pandas == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-pandas == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1420,7 +1303,7 @@ jobs:
   cudf-test:
     name: cuDF | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-cudf == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-cudf == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1453,7 +1336,7 @@ jobs:
   polars-test:
     name: Polars | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-polars == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-polars == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1486,7 +1369,7 @@ jobs:
   geopandas-test:
     name: GeoPandas | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-geopandas == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1519,7 +1402,7 @@ jobs:
   networkx-test:
     name: NetworkX | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-networkx == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-networkx == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1552,7 +1435,7 @@ jobs:
   scikit-learn-test:
     name: scikit-learn | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-scikit-learn == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-scikit-learn == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1585,7 +1468,7 @@ jobs:
   cuml-test:
     name: cuML | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-cuml == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-cuml == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1618,7 +1501,7 @@ jobs:
   hugging-face-analyze-sentiment-test:
     name: Hugging Face (analyze-sentiment) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1651,7 +1534,7 @@ jobs:
   gradio-classify-image-test:
     name: Gradio (classify-image) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1684,7 +1567,7 @@ jobs:
   streamlit-live-line-chart-test:
     name: Streamlit (live-line-chart) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1717,7 +1600,7 @@ jobs:
   streamlit-map-test:
     name: Streamlit (map) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1750,7 +1633,7 @@ jobs:
   jax-test:
     name: JAX | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-jax == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-jax == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1783,7 +1666,7 @@ jobs:
   flax-test:
     name: Flax | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-flax == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-flax == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1816,7 +1699,7 @@ jobs:
   autogluon-test:
     name: AutoGluon | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-autogluon == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1850,7 +1733,7 @@ jobs:
     name: NVIDIA DALI | Test
     needs: detect-changes
     if: ${{ false }}
-    # if: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
+    # if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.nvidia-dali == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1883,7 +1766,7 @@ jobs:
   modulus-test:
     name: Modulus | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.modulus == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.modulus == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1916,7 +1799,7 @@ jobs:
   feature-store-test:
     name: Feature Store | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.feature-store == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1949,7 +1832,7 @@ jobs:
   sglang-test:
     name: SGLang | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-sglang == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-sglang == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1982,7 +1865,7 @@ jobs:
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2015,7 +1898,7 @@ jobs:
   kubeflow-classify-mnist-test:
     name: Kubeflow (classify-mnist) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2048,7 +1931,7 @@ jobs:
   mineru-test:
     name: MinerU | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mineru == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.mineru == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2083,7 +1966,7 @@ jobs:
   docling-test:
     name: Docling | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-docling == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-docling == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2116,7 +1999,7 @@ jobs:
   langchain-chat-pdf-test:
     name: LangChain (chat-pdf) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2149,7 +2032,7 @@ jobs:
   langgraph-chat-pdf-test:
     name: LangGraph (chat-pdf) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-langgraph-chat-pdf == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-langgraph-chat-pdf == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2182,7 +2065,7 @@ jobs:
   llama-index-chat-pdf-test:
     name: LlamaIndex (chat-pdf) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-llama-index-chat-pdf == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-llama-index-chat-pdf == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2215,7 +2098,7 @@ jobs:
   mlflow-classify-mnist-test:
     name: MLflow (classify-mnist) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2248,7 +2131,7 @@ jobs:
   mlflow-predict-diabetes-test:
     name: MLflow (predict-diabetes) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2281,7 +2164,7 @@ jobs:
   neural-forecasting-forecast-air-passenger-number-test:
     name: Neural Forecasting (forecast-air-passenger-number) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2314,7 +2197,7 @@ jobs:
   national-instruments-hm-pyvisa-test:
     name: National Instruments (pyvisa) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.national-instruments-hm-pyvisa == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.national-instruments-hm-pyvisa == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2347,7 +2230,7 @@ jobs:
   national-instruments-hm-tdms-test:
     name: National Instruments (tdms) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.national-instruments-hm-tdms == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.national-instruments-hm-tdms == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2380,7 +2263,7 @@ jobs:
   national-instruments-hm-veristand-test:
     name: National Instruments (ni-veristand) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.national-instruments-hm-veristand == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.national-instruments-hm-veristand == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2413,7 +2296,7 @@ jobs:
   supervision-detect-objects-test:
     name: supervision (detect-objects) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2446,7 +2329,7 @@ jobs:
   imagebind-test:
     name: ImageBind | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-imagebind == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2479,7 +2362,7 @@ jobs:
   open-clip-test:
     name: OpenCLIP | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.open-clip == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2512,7 +2395,7 @@ jobs:
   open3d-test:
     name: Open3D | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-open3d == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-open3d == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2545,7 +2428,7 @@ jobs:
   aerosandbox-test:
     name: AeroSandbox | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2578,7 +2461,7 @@ jobs:
   openaerostruct-test:
     name: OpenAeroStruct | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2611,7 +2494,7 @@ jobs:
   prefect-calculate-test:
     name: Prefect (calculate) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2644,7 +2527,7 @@ jobs:
   prefect-greet-test:
     name: Prefect (greet) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2677,7 +2560,7 @@ jobs:
   prefect-print-platform-test:
     name: Prefect (print-platform) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2710,7 +2593,7 @@ jobs:
   prowler-test:
     name: Prowler | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-prowler == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-prowler == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2743,7 +2626,7 @@ jobs:
   pulumi-test:
     name: Pulumi | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-pulumi == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-pulumi == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2776,7 +2659,7 @@ jobs:
   pyvista-mount-saint-helens-test:
     name: PyVista (mount-saint-helens) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2809,7 +2692,7 @@ jobs:
   ray-calculate-test:
     name: Ray (calculate) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-ray-calculate == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-ray-calculate == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2842,7 +2725,7 @@ jobs:
   ray-process-flight-data-test:
     name: Ray (process-flight-data) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-ray-process-flight-data == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-ray-process-flight-data == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2875,7 +2758,7 @@ jobs:
   reinforcement-learning-cart-pole-test:
     name: Reinforcement Learning (cart-pole) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2908,7 +2791,7 @@ jobs:
   faster-whisper-test:
     name: Faster Whisper | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-faster-whisper == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-faster-whisper == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2941,7 +2824,7 @@ jobs:
   stable-diffusion-test:
     name: Stable Diffusion | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.stable-diffusion == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -2975,7 +2858,7 @@ jobs:
   genesis-test:
     name: Genesis | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-genesis == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-genesis == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3008,7 +2891,7 @@ jobs:
   serial-test:
     name: Serial | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-serial == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-serial == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3041,7 +2924,7 @@ jobs:
   pack-unpack-data-test:
     name: Pack Unpack Data | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.pack-unpack-data == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.pack-unpack-data == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3074,7 +2957,7 @@ jobs:
   skypilot-test:
     name: SkyPilot | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-skypilot == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-skypilot == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3107,7 +2990,7 @@ jobs:
   taichi-count-primes-test:
     name: Taichi (count-primes) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.taichi-count-primes == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.taichi-count-primes == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3140,7 +3023,7 @@ jobs:
   taichi-fluid-solver-test:
     name: Taichi (fluid-solver) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.taichi-fluid-solver == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.taichi-fluid-solver == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3173,7 +3056,7 @@ jobs:
   triton-test:
     name: Triton | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-triton == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-triton == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3206,7 +3089,7 @@ jobs:
   quantum-computing-test:
     name: Quantum Computing | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.quantum-computing == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.quantum-computing == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3239,7 +3122,7 @@ jobs:
   sunpy-test:
     name: SunPy | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-sunpy == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-sunpy == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3272,7 +3155,7 @@ jobs:
   xxhash-test:
     name: xxHash | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-xxhash == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-xxhash == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3305,7 +3188,7 @@ jobs:
   spark-analyze-coffee-customers-test:
     name: Spark (analyze-coffee-customers) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3338,7 +3221,7 @@ jobs:
   spark-find-retired-people-python-test:
     name: Spark (find-retired-people-python) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3371,7 +3254,7 @@ jobs:
   spark-find-retired-people-scala-test:
     name: Spark (find-retired-people-scala) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3394,7 +3277,7 @@ jobs:
   spark-find-taxi-top-routes-test:
     name: Spark (find-taxi-top-routes) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3427,7 +3310,7 @@ jobs:
   spark-find-taxi-top-routes-sql-test:
     name: Spark (find-taxi-top-routes-sql) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes-sql == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-find-taxi-top-routes-sql == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3460,7 +3343,7 @@ jobs:
   spark-ingest-from-s3-to-kafka-test:
     name: Spark (ingest-from-s3-to-kafka) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3483,7 +3366,7 @@ jobs:
   spark-recommend-movies-test:
     name: Spark (recommend-movies) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3516,7 +3399,7 @@ jobs:
   flink-stream-tweets-test:
     name: Flink (stream-tweets) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3537,7 +3420,7 @@ jobs:
   kafka-rust-proto-consumer-test:
     name: Kafka Rust (proto-consumer) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3578,7 +3461,7 @@ jobs:
   kafka-rust-proto-producer-test:
     name: Kafka Rust (proto-producer) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3619,7 +3502,7 @@ jobs:
   kafka-rust-udp-kafka-bridge-test:
     name: Kafka Rust (udp-kafka-bridge) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3660,7 +3543,7 @@ jobs:
   kafka-rust-zeromq-kafka-bridge-test:
     name: Kafka Rust (zeromq-kafka-bridge) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3701,7 +3584,7 @@ jobs:
   udp-receiver-test:
     name: UDP Receiver | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.udp-receiver == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3728,7 +3611,7 @@ jobs:
   udp-sender-test:
     name: UDP Sender | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.udp-sender == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3755,7 +3638,7 @@ jobs:
   opa-test:
     name: OPA | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3774,7 +3657,7 @@ jobs:
     name: ROS | Test
     needs: detect-changes
     if: ${{ false }}
-    # if: ${{ needs.detect-changes.outputs.robot-operating-system == 'true' }}
+    # if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.robot-operating-system == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20
@@ -3796,7 +3679,7 @@ jobs:
   prometheus-test:
     name: Prometheus | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.prometheus == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.prometheus == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3810,7 +3693,7 @@ jobs:
   grafana-hm-dashboard-test:
     name: Grafana (hm-dashboard) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3843,7 +3726,7 @@ jobs:
   grafana-hm-panel-plugin-test:
     name: Grafana (hm-panel-plugin) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3872,7 +3755,7 @@ jobs:
   iads-iads-config-reader-test:
     name: IADS (iads-config-reader) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.iads-iads-config-reader == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.iads-iads-config-reader == 'true' }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -3905,7 +3788,7 @@ jobs:
   iads-iads-data-reader-test:
     name: IADS (iads-data-reader) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.iads-iads-data-reader == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.iads-iads-data-reader == 'true' }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -3938,7 +3821,7 @@ jobs:
   iads-iads-data-producer-test:
     name: IADS (iads-data-producer) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -3959,7 +3842,7 @@ jobs:
   iads-zeromq-iads-bridge-test:
     name: IADS (zeromq-iads-bridge) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -3986,7 +3869,7 @@ jobs:
   windows-calculator-test:
     name: Windows (calculator) | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.windows-calculator == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.windows-calculator == 'true' }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -4007,7 +3890,7 @@ jobs:
   hm-opal-client-build:
     name: HM OPAL Client | Build
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-opal-client == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-opal-client == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -4027,7 +3910,7 @@ jobs:
   rasa-test:
     name: Rasa | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-rasa == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -4043,7 +3926,7 @@ jobs:
   graph-neural-network-test:
     name: GNN | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.graph-neural-network == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -4076,7 +3959,7 @@ jobs:
   graph-neural-network-train:
     name: GNN | Train
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.graph-neural-network == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20
@@ -4109,7 +3992,7 @@ jobs:
   convolutional-neural-network-test:
     name: CNN | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -4142,7 +4025,7 @@ jobs:
   convolutional-neural-network-cml-local-train:
     name: CNN | CML (Local) - Train
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20

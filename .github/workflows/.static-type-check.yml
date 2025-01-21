@@ -39,6 +39,7 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
       python: ${{ steps.filter.outputs.python }}
       terraform: ${{ steps.filter.outputs.terraform }}
     steps:
@@ -48,19 +49,19 @@ jobs:
         id: filter
         with:
           filters: |
-            python:
+            workflow:
               - '.github/workflows/.static-type-check.yml'
+            python:
               - 'pyproject.toml'
               - 'uv.lock'
               - '.mypy.ini'
               - '**/*.py'
             terraform:
-              - '.github/workflows/.static-type-check.yml'
               - 'cloud-infrastructure/terraform/**'
 
   static-type-check-kotlin-mobile-android:
     name: Kotlin (mobile-android)
-    if: ${{ inputs.mobile-android }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-android }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
@@ -81,7 +82,7 @@ jobs:
   static-type-check-python:
     name: Python
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.python == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.python == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -191,7 +192,7 @@ jobs:
   static-type-check-terraform-production-airbyte:
     name: Terraform (production/airbyte)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.terraform == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.terraform == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -212,7 +213,7 @@ jobs:
   static-type-check-terraform-production-aws:
     name: Terraform (production/aws)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.terraform == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.terraform == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -233,7 +234,7 @@ jobs:
   static-type-check-terraform-production-snowflake:
     name: Terraform (production/snowflake)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.terraform == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.terraform == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -253,7 +254,7 @@ jobs:
 
   static-type-check-typescript-api-node:
     name: TypeScript (api-node)
-    if: ${{ inputs.api-node }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -277,7 +278,7 @@ jobs:
 
   static-type-check-typescript-ethereum:
     name: TypeScript (ethereum)
-    if: ${{ inputs.ethereum }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.ethereum }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -301,7 +302,7 @@ jobs:
 
   static-type-check-typescript-grafana-hm-panel-plugin:
     name: TypeScript (grafana-hm-panel-plugin)
-    if: ${{ inputs.grafana-hm-panel-plugin }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.grafana-hm-panel-plugin }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -325,7 +326,7 @@ jobs:
 
   static-type-check-typescript-mobile-react-native:
     name: TypeScript (mobile-react-native)
-    if: ${{ inputs.mobile-react-native }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-react-native }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -349,7 +350,7 @@ jobs:
 
   static-type-check-typescript-web:
     name: TypeScript (web)
-    if: ${{ inputs.web }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -373,7 +374,7 @@ jobs:
 
   static-type-check-typescript-web-cypress:
     name: TypeScript (web-cypress)
-    if: ${{ inputs.web-cypress }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web-cypress }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
