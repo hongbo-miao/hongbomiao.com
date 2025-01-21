@@ -532,6 +532,19 @@ jobs:
       hm-pandas: ${{ needs.detect-changes.outputs.hm-pandas == 'true' }}
       hm-polars: ${{ needs.detect-changes.outputs.hm-polars == 'true' }}
 
+  test-data-visualization:
+    name: Test Data Visualization
+    uses: ./.github/workflows/.test-data-visualization.yml
+    secrets: inherit
+    needs: detect-changes
+    with:
+      grafana-hm-dashboard: ${{ needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
+      grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+      iads-iads-config-reader: ${{ needs.detect-changes.outputs.iads-iads-config-reader == 'true' }}
+      iads-iads-data-producer: ${{ needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
+      iads-iads-data-reader: ${{ needs.detect-changes.outputs.iads-iads-data-reader == 'true' }}
+      iads-zeromq-iads-bridge: ${{ needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
+
   test-machine-learning:
     name: Test Machine Learning
     uses: ./.github/workflows/.test-machine-learning.yml
@@ -1790,182 +1803,6 @@ jobs:
         with:
           package-name: turtle_robot
           target-ros2-distro: jazzy
-
-  grafana-hm-dashboard-test:
-    name: Grafana (hm-dashboard) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-visualization/grafana/hm-dashboard/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-visualization/grafana/hm-dashboard/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-visualization/grafana/hm-dashboard
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-visualization/grafana/hm-dashboard
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-visualization/grafana/hm-dashboard
-
-  grafana-hm-panel-plugin-test:
-    name: Grafana (hm-panel-plugin) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version-file: data-visualization/grafana/hm-panel-plugin/.node-version
-          cache: npm
-          cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
-      - name: Install dependencies
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          npm ci
-      - name: Test
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          npm run test:coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-visualization/grafana/hm-panel-plugin
-
-  iads-iads-config-reader-test:
-    name: IADS (iads-config-reader) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.iads-iads-config-reader == 'true' }}
-    runs-on: windows-2025
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-visualization/iads/iads-data-manager/iads-config-reader/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-visualization/iads/iads-data-manager/iads-config-reader/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-visualization/iads/iads-data-manager/iads-config-reader
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-visualization/iads/iads-data-manager/iads-config-reader
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-visualization/iads/iads-data-manager/iads-config-reader
-
-  iads-iads-data-reader-test:
-    name: IADS (iads-data-reader) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.iads-iads-data-reader == 'true' }}
-    runs-on: windows-2025
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5.2.1
-        with:
-          version: 0.5.20
-          enable-cache: true
-          cache-dependency-glob: data-visualization/iads/iads-data-manager/iads-data-reader/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version-file: data-visualization/iads/iads-data-manager/iads-data-reader/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-visualization/iads/iads-data-manager/iads-data-reader
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-visualization/iads/iads-data-manager/iads-data-reader
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.1.2
-        with:
-          directory: data-visualization/iads/iads-data-manager/iads-data-reader
-
-  iads-iads-data-producer-test:
-    name: IADS (iads-data-producer) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Install dependencies
-        working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
-        run: |
-          cargo build
-      - name: Test
-        working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
-        run: |
-          cargo test --all-features
-
-  iads-zeromq-iads-bridge-test:
-    name: IADS (zeromq-iads-bridge) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
-    runs-on: windows-2025
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Install dependencies
-        working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
-        run: |
-          cargo build
-      - name: Test
-        working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
-        run: |
-          cargo test --all-features
 
   windows-calculator-test:
     name: Windows (calculator) | Test
