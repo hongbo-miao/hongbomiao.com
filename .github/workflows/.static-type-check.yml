@@ -61,6 +61,7 @@ jobs:
 
   static-type-check-kotlin-mobile-android:
     name: Kotlin (mobile-android)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-android }}
     runs-on: ubuntu-24.04
     environment: test
@@ -254,6 +255,7 @@ jobs:
 
   static-type-check-typescript-api-node:
     name: TypeScript (api-node)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node }}
     runs-on: ubuntu-24.04
     environment: test
@@ -278,6 +280,7 @@ jobs:
 
   static-type-check-typescript-ethereum:
     name: TypeScript (ethereum)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.ethereum }}
     runs-on: ubuntu-24.04
     environment: test
@@ -302,6 +305,7 @@ jobs:
 
   static-type-check-typescript-grafana-hm-panel-plugin:
     name: TypeScript (grafana-hm-panel-plugin)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.grafana-hm-panel-plugin }}
     runs-on: ubuntu-24.04
     environment: test
@@ -326,6 +330,7 @@ jobs:
 
   static-type-check-typescript-mobile-react-native:
     name: TypeScript (mobile-react-native)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-react-native }}
     runs-on: ubuntu-24.04
     environment: test
@@ -350,6 +355,7 @@ jobs:
 
   static-type-check-typescript-web:
     name: TypeScript (web)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
@@ -374,6 +380,7 @@ jobs:
 
   static-type-check-typescript-web-cypress:
     name: TypeScript (web-cypress)
+    needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web-cypress }}
     runs-on: ubuntu-24.04
     environment: test
