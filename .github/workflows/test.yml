@@ -38,6 +38,7 @@ jobs:
       delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
       delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
       development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
+      ethereum: ${{ steps.filter.outputs.ethereum }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
       flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
       format-can-data: ${{ steps.filter.outputs.format-can-data }}
@@ -122,6 +123,7 @@ jobs:
       national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
+      national-instruments-veristand-zeromq-bridge: ${{ steps.filter.outputs.national-instruments-veristand-zeromq-bridge }}
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
       nvidia-dali: ${{ steps.filter.outputs.nvidia-dali }}
       nvidia-modulus: ${{ steps.filter.outputs.nvidia-modulus }}
@@ -183,6 +185,9 @@ jobs:
             production-aws-glue-spark-scripts:
               - '.github/workflows/test.yml'
               - 'cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/**'
+            ethereum:
+              - '.github/workflows/.lint.yml'
+              - 'ethereum/**'
             format-can-data:
               - '.github/workflows/test.yml'
               - 'embedded-systems/format-can-data/**'
@@ -453,6 +458,9 @@ jobs:
             national-instruments-hm-veristand:
               - '.github/workflows/test.yml'
               - 'hardware-in-the-loop/national-instruments/veristand/hm-veristand/**'
+            national-instruments-veristand-zeromq-bridge:
+              - '.github/workflows/test.yml'
+              - 'hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/**'
             neural-forecasting-forecast-air-passenger-number:
               - '.github/workflows/test.yml'
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
@@ -509,6 +517,29 @@ jobs:
     name: Lint
     uses: ./.github/workflows/.lint.yml
     secrets: inherit
+    needs: detect-changes
+    with:
+      api-go: ${{ needs.detect-changes.outputs.api-go == 'true' }}
+      api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+      api-rust: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
+      ethereum: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
+      grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+      hm-spark-find-retired-people-scala: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
+      hm-spark-ingest-from-s3-to-kafka: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
+      iads-iads-data-producer: ${{ needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
+      iads-zeromq-iads-bridge: ${{ needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
+      kafka-rust-proto-consumer: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
+      kafka-rust-proto-producer: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
+      kafka-rust-udp-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
+      kafka-rust-zeromq-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
+      mobile-android: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+      mobile-react-native: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
+      national-instruments-veristand-zeromq-bridge: ${{ needs.detect-changes.outputs.national-instruments-veristand-zeromq-bridge == 'true' }}
+      udp-receiver: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
+      udp-sender: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
+      web-cypress: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
+      web: ${{ needs.detect-changes.outputs.web == 'true' }}
+      windows-calculator: ${{ needs.detect-changes.outputs.windows-calculator == 'true' }}
 
   static-type-check:
     name: Static Type Check
