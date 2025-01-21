@@ -77,6 +77,7 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
       ansible: ${{ steps.filter.outputs.ansible }}
       c-cpp: ${{ steps.filter.outputs.c-cpp }}
       cmake: ${{ steps.filter.outputs.cmake }}
@@ -108,13 +109,13 @@ jobs:
         id: filter
         with:
           filters: |
-            ansible:
+            workflow:
               - '.github/workflows/.lint.yml'
+            ansible:
               - 'pyproject.toml'
               - 'uv.lock'
               - '**/playbook.yml'
             c-cpp:
-              - '.github/workflows/.lint.yml'
               - '.clang-format'
               - '**/*.c'
               - '**/*.cpp'
@@ -124,12 +125,10 @@ jobs:
               - '**/*.hpp'
               - '**/*.ino'
             cmake:
-              - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
               - 'uv.lock'
               - '**/CMakeLists.txt'
             css:
-              - '.github/workflows/.lint.yml'
               - '.node-version'
               - '.npmrc'
               - 'package.json'
@@ -138,45 +137,37 @@ jobs:
               - '.stylelintrc.mjs'
               - '**/*.css'
             dockerfile:
-              - '.github/workflows/.lint.yml'
               - '.hadolint.yaml'
               - '**/Dockerfile*'
             html:
-              - '.github/workflows/.lint.yml'
               - '.node-version'
               - '.npmrc'
               - 'package.json'
               - 'package-lock.json'
               - '**/*.html'
             json:
-              - '.github/workflows/.lint.yml'
               - '.node-version'
               - '.npmrc'
               - 'package.json'
               - 'package-lock.json'
               - '**/*.json'
             justfile:
-              - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
               - 'uv.lock'
               - '**/justfile'
             kubernetes:
-              - '.github/workflows/.lint.yml'
               - 'kubernetes/manifests/**'
             markdown:
-              - '.github/workflows/.lint.yml'
               - '.node-version'
               - '.npmrc'
               - 'package.json'
               - 'package-lock.json'
               - '**/*.md'
             matlab:
-              - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
               - 'uv.lock'
               - '**/*.m'
             natural-language:
-              - '.github/workflows/.lint.yml'
               - '.node-version'
               - '.npmrc'
               - 'package.json'
@@ -227,26 +218,21 @@ jobs:
               - '**/*.yaml'
               - '**/*.yml'
             ruby:
-              - '.github/workflows/.lint.yml'
               - 'Gemfile'
               - 'Gemfile.lock'
               # https://github.com/rubocop/rubocop/blob/master/config/default.yml
               - '**/*.gemfile'
               - '**/Vagrantfile'
             python:
-              - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
               - 'uv.lock'
               - '.ruff.toml'
               - '**/*.py'
             qml:
-              - '.github/workflows/.lint.yml'
               - '**/*.qml'
             shell:
-              - '.github/workflows/.lint.yml'
               - '**/*.sh'
             solidity:
-              - '.github/workflows/.lint.yml'
               - '.node-version'
               - '.npmrc'
               - 'package.json'
@@ -255,33 +241,27 @@ jobs:
               - '.solhintignore'
               - '**/*.sol'
             sql:
-              - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
               - 'uv.lock'
               - '.sqlfluff'
               - '.sqlfluffignore'
               - '**/*.sql'
             terraform:
-              - '.github/workflows/.lint.yml'
               - '**/*.tf'
               - '**/*.tfvars'
               - '**/.terraform.lock.hcl'
             toml:
-              - '.github/workflows/.lint.yml'
               - 'taplo.toml'
               - '**/*.toml'
             verilog:
-              - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
               - 'uv.lock'
               - '**/*.v'
             vhdl:
-              - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
               - 'uv.lock'
               - '**/*.vhd'
             xml:
-              - '.github/workflows/.lint.yml'
               - '.node-version'
               - '.npmrc'
               - 'package.json'
@@ -290,7 +270,6 @@ jobs:
               - '.prettierrc.mjs'
               - '**/*.xml'
             yaml:
-              - '.github/workflows/.lint.yml'
               - 'pyproject.toml'
               - 'uv.lock'
               - '.yamllint.yaml'
@@ -299,7 +278,7 @@ jobs:
   lint-ansible:
     name: Ansible
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.ansible == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.ansible == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -327,7 +306,7 @@ jobs:
 
   lint-csharp-national-instruments-veristand-zeromq-bridge:
     name: C# (national-instruments-veristand-zeromq-bridge)
-    if: ${{ inputs.national-instruments-veristand-zeromq-bridge }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.national-instruments-veristand-zeromq-bridge }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -363,7 +342,7 @@ jobs:
   lint-c-cpp:
     name: C, C++
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.c-cpp == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.c-cpp == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -406,7 +385,7 @@ jobs:
   lint-cmake:
     name: CMake
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.cmake == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.cmake == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -444,7 +423,7 @@ jobs:
   lint-css:
     name: CSS
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.css == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.css == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -467,7 +446,7 @@ jobs:
   lint-dockerfile:
     name: Dockerfile
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.dockerfile == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.dockerfile == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -481,7 +460,7 @@ jobs:
 
   lint-go-api-go:
     name: Go (api-go)
-    if: ${{ inputs.api-go }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-go }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -503,7 +482,7 @@ jobs:
   lint-html:
     name: HTML
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.html == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.html == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -525,7 +504,7 @@ jobs:
 
   lint-javascript-api-node:
     name: JavaScript (api-node)
-    if: ${{ inputs.api-node }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -549,7 +528,7 @@ jobs:
 
   lint-javascript-ethereum:
     name: JavaScript (ethereum)
-    if: ${{ inputs.ethereum }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.ethereum }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -573,7 +552,7 @@ jobs:
 
   lint-javascript-grafana-hm-panel-plugin:
     name: JavaScript (grafana-hm-panel-plugin)
-    if: ${{ inputs.grafana-hm-panel-plugin }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.grafana-hm-panel-plugin }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -597,7 +576,7 @@ jobs:
 
   lint-javascript-mobile-react-native:
     name: JavaScript (mobile-react-native)
-    if: ${{ inputs.mobile-react-native }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-react-native }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -621,7 +600,7 @@ jobs:
 
   lint-javascript-web:
     name: JavaScript (web)
-    if: ${{ inputs.web }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -645,7 +624,7 @@ jobs:
 
   lint-javascript-web-cypress:
     name: JavaScript (web-cypress)
-    if: ${{ inputs.web-cypress }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web-cypress }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -670,7 +649,7 @@ jobs:
   lint-json:
     name: JSON
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.json == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.json == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -693,7 +672,7 @@ jobs:
   lint-justfile:
     name: justfile
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.justfile == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.justfile == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -719,7 +698,7 @@ jobs:
 
   lint-kotlin-mobile-android:
     name: Kotlin (mobile-android)
-    if: ${{ inputs.mobile-android }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-android }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
@@ -740,7 +719,7 @@ jobs:
   lint-kubernetes-manifest:
     name: Kubernetes Manifest
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.kubernetes == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.kubernetes == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -768,7 +747,7 @@ jobs:
   lint-markdown:
     name: Markdown
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.markdown == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.markdown == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -791,7 +770,7 @@ jobs:
   lint-matlab:
     name: MATLAB
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.matlab == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.matlab == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -818,7 +797,7 @@ jobs:
   lint-natural-language:
     name: Natural Language
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.natural-language == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.natural-language == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -841,7 +820,7 @@ jobs:
   lint-protocol-buffers-api-go:
     name: Protocol Buffers (api-go)
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-go == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -861,7 +840,7 @@ jobs:
   lint-python:
     name: Python
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.python == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.python == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -888,7 +867,7 @@ jobs:
   lint-qml:
     name: QML
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.qml == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.qml == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
@@ -907,7 +886,7 @@ jobs:
   lint-ruby:
     name: Ruby
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.ruby == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.ruby == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
@@ -924,7 +903,7 @@ jobs:
 
   lint-rust-api-rust:
     name: Rust (api-rust)
-    if: ${{ inputs.api-rust }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-rust }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -952,7 +931,7 @@ jobs:
 
   lint-rust-iads-data-producer:
     name: Rust (iads-data-producer)
-    if: ${{ inputs.iads-iads-data-producer }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.iads-iads-data-producer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -976,7 +955,7 @@ jobs:
 
   lint-rust-zeromq-iads-bridge:
     name: Rust (zeromq-iads-bridge)
-    if: ${{ inputs.iads-zeromq-iads-bridge }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.iads-zeromq-iads-bridge }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -1006,7 +985,7 @@ jobs:
 
   lint-rust-kafka-rust-proto-consumer:
     name: Rust (kafka-rust-proto-consumer)
-    if: ${{ inputs.kafka-rust-proto-consumer }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-proto-consumer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1050,7 +1029,7 @@ jobs:
 
   lint-rust-kafka-rust-proto-producer:
     name: Rust (kafka-rust-proto-producer)
-    if: ${{ inputs.kafka-rust-proto-producer }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-proto-producer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1094,7 +1073,7 @@ jobs:
 
   lint-rust-kafka-rust-udp-kafka-bridge:
     name: Rust (kafka-rust-udp-kafka-bridge)
-    if: ${{ inputs.kafka-rust-udp-kafka-bridge }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-udp-kafka-bridge }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1138,7 +1117,7 @@ jobs:
 
   lint-rust-kafka-rust-zeromq-kafka-bridge:
     name: Rust (kafka-rust-zeromq-kafka-bridge)
-    if: ${{ inputs.kafka-rust-zeromq-kafka-bridge }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-zeromq-kafka-bridge }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1182,7 +1161,7 @@ jobs:
 
   lint-rust-udp-receiver:
     name: Rust (udp-receiver)
-    if: ${{ inputs.udp-receiver }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.udp-receiver }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1212,7 +1191,7 @@ jobs:
 
   lint-rust-udp-sender:
     name: Rust (udp-sender)
-    if: ${{ inputs.udp-sender }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.udp-sender }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1242,7 +1221,7 @@ jobs:
 
   lint-rust-windows-calculator:
     name: Rust (windows-calculator)
-    if: ${{ inputs.windows-calculator }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.windows-calculator }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -1266,7 +1245,7 @@ jobs:
 
   lint-scala-hm-spark-find-retired-people-scala:
     name: Scala (hm-spark-find-retired-people-scala)
-    if: ${{ inputs.hm-spark-find-retired-people-scala }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-find-retired-people-scala }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1292,7 +1271,7 @@ jobs:
 
   lint-scala-hm-spark-ingest-from-s3-to-kafka:
     name: Scala (hm-spark-ingest-from-s3-to-kafka)
-    if: ${{ inputs.hm-spark-ingest-from-s3-to-kafka }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-ingest-from-s3-to-kafka }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1319,7 +1298,7 @@ jobs:
   lint-shell:
     name: Shell
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.shell == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.shell == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1333,7 +1312,7 @@ jobs:
   lint-solidity:
     name: Solidity
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.solidity == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.solidity == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1356,7 +1335,7 @@ jobs:
   lint-sql:
     name: SQL
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.sql == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.sql == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1398,7 +1377,7 @@ jobs:
   lint-terraform:
     name: Terraform
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.terraform == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.terraform == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1414,7 +1393,7 @@ jobs:
   lint-toml:
     name: TOML
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.toml == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.toml == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1434,7 +1413,7 @@ jobs:
   lint-verilog:
     name: Verilog
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.verilog == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.verilog == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1462,7 +1441,7 @@ jobs:
   lint-vhdl:
     name: VHDL
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.vhdl == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.vhdl == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1489,7 +1468,7 @@ jobs:
   lint-xml:
     name: XML
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.xml == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.xml == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1512,7 +1491,7 @@ jobs:
   lint-yaml:
     name: YAML
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.yaml == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.yaml == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

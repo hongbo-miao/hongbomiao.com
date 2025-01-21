@@ -18,9 +18,28 @@ name: . Test API
         type: boolean
 
 jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - uses: dorny/paths-filter@v3.0.2
+        id: filter
+        with:
+          filters: |
+            workflow:
+              - '.github/workflows/.test-api.yml'
+
   api-go-test:
     name: API - Go | Test
-    if: ${{ inputs.api-go }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-go }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -43,7 +62,7 @@ jobs:
 
   api-node-test:
     name: API - Node.js | Test
-    if: ${{ inputs.api-node }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -71,7 +90,7 @@ jobs:
 
   api-node-mutation-test:
     name: API - Node.js | Mutation Test
-    if: ${{ inputs.api-node }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -97,7 +116,7 @@ jobs:
 
   api-python-test:
     name: API - Python | Test
-    if: ${{ inputs.api-python }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-python }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -143,7 +162,7 @@ jobs:
 
   api-rust-test:
     name: API - Rust | Test
-    if: ${{ inputs.api-rust }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-rust }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
