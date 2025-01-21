@@ -494,6 +494,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.hm-langgraph.applications.chat-pdf
     uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.classify-mnist
     uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.predict-diabetes
+    uv run poe static-type-check-python --package=machine-learning.hm-nvidia-modulus
     uv run poe static-type-check-python --package=machine-learning.hm-rasa
     uv run poe static-type-check-python --package=machine-learning.hm-scikit-learn
     uv run poe static-type-check-python --package=machine-learning.hm-sglang
@@ -503,7 +504,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.mineru
     uv run poe static-type-check-python --package=machine-learning.neural-forecasting.forecast-air-passenger-number
     uv run poe static-type-check-python --package=machine-learning.nvidia-dali
-    uv run poe static-type-check-python --package=machine-learning.nvidia-modulus
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.deploy
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
     uv run poe static-type-check-python --package=machine-learning.reinforcement-learning.cart-pole
