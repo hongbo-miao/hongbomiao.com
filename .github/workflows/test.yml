@@ -338,13 +338,13 @@ jobs:
             iads-zeromq-iads-bridge:
               - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
             kafka-rust-proto-consumer:
-              - 'hm-kafka/kafka-client/kafka-rust/proto-consumer/**'
+              - 'data-processing/kafka/kafka-client/kafka-rust/proto-consumer/**'
             kafka-rust-proto-producer:
-              - 'hm-kafka/kafka-client/kafka-rust/proto-producer/**'
+              - 'data-processing/kafka/kafka-client/kafka-rust/proto-producer/**'
             kafka-rust-udp-kafka-bridge:
-              - 'hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge/**'
+              - 'data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge/**'
             kafka-rust-zeromq-kafka-bridge:
-              - 'hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge/**'
+              - 'data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge/**'
             lance:
               - 'data-storage/lance/**'
             mineru:
@@ -484,6 +484,10 @@ jobs:
       hm-spark-find-taxi-top-routes: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
       hm-spark-ingest-from-s3-to-kafka: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
       hm-spark-recommend-movies: ${{ needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
+      kafka-rust-proto-consumer: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
+      kafka-rust-proto-producer: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
+      kafka-rust-udp-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
+      kafka-rust-zeromq-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
 
   test-data-storage:
     name: Test Data Storage
@@ -1812,170 +1816,6 @@ jobs:
         uses: codecov/codecov-action@v5.1.2
         with:
           directory: hm-xxhash
-
-  kafka-rust-proto-consumer-test:
-    name: Kafka Rust (proto-consumer) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      # librdkafka is for rdkafka
-      - name: Install librdkafka
-        run: |
-          # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd librdkafka-2.6.0
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f librdkafka-2.6.0/
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Install dependencies
-        working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
-        run: |
-          cargo build
-      - name: Test
-        working-directory: hm-kafka/kafka-client/kafka-rust/proto-consumer
-        run: |
-          cargo test --all-features
-
-  kafka-rust-proto-producer-test:
-    name: Kafka Rust (proto-producer) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      # librdkafka is for rdkafka
-      - name: Install librdkafka
-        run: |
-          # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd librdkafka-2.6.0
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f librdkafka-2.6.0/
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Install dependencies
-        working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
-        run: |
-          cargo build
-      - name: Test
-        working-directory: hm-kafka/kafka-client/kafka-rust/proto-producer
-        run: |
-          cargo test --all-features
-
-  kafka-rust-udp-kafka-bridge-test:
-    name: Kafka Rust (udp-kafka-bridge) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      # librdkafka is for rdkafka
-      - name: Install librdkafka
-        run: |
-          # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd librdkafka-2.6.0
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f librdkafka-2.6.0/
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Install dependencies
-        working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
-        run: |
-          cargo build
-      - name: Test
-        working-directory: hm-kafka/kafka-client/kafka-rust/udp-kafka-bridge
-        run: |
-          cargo test --all-features
-
-  kafka-rust-zeromq-kafka-bridge-test:
-    name: Kafka Rust (zeromq-kafka-bridge) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      # librdkafka is for rdkafka
-      - name: Install librdkafka
-        run: |
-          # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/refs/tags/v2.6.0.tar.gz
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd librdkafka-2.6.0
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f librdkafka-2.6.0/
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
-      - name: Install dependencies
-        working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
-        run: |
-          cargo build
-      - name: Test
-        working-directory: hm-kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
-        run: |
-          cargo test --all-features
 
   udp-receiver-test:
     name: UDP Receiver | Test
