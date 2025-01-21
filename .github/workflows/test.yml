@@ -545,6 +545,16 @@ jobs:
     name: Static Type Check
     uses: ./.github/workflows/.static-type-check.yml
     secrets: inherit
+    needs: detect-changes
+    with:
+      api-go: ${{ needs.detect-changes.outputs.api-go == 'true' }}
+      api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+      ethereum: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
+      grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+      mobile-android: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+      mobile-react-native: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
+      web-cypress: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
+      web: ${{ needs.detect-changes.outputs.web == 'true' }}
 
   test-mobile:
     name: Test Mobile

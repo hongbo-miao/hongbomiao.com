@@ -77,7 +77,6 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
-      # Languages
       ansible: ${{ steps.filter.outputs.ansible }}
       c-cpp: ${{ steps.filter.outputs.c-cpp }}
       cmake: ${{ steps.filter.outputs.cmake }}
@@ -109,7 +108,6 @@ jobs:
         id: filter
         with:
           filters: |
-            # Languages
             ansible:
               - '.github/workflows/.lint.yml'
               - 'pyproject.toml'

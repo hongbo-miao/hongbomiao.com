@@ -1,8 +1,34 @@
 ---
 name: . Static Type Check
 
+
 'on':
   workflow_call:
+    inputs:
+      api-go:
+        required: true
+        type: boolean
+      api-node:
+        required: true
+        type: boolean
+      ethereum:
+        required: true
+        type: boolean
+      grafana-hm-panel-plugin:
+        required: true
+        type: boolean
+      mobile-android:
+        required: true
+        type: boolean
+      mobile-react-native:
+        required: true
+        type: boolean
+      web-cypress:
+        required: true
+        type: boolean
+      web:
+        required: true
+        type: boolean
 
 jobs:
   detect-changes:
@@ -13,18 +39,8 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
-      # Languages
       python: ${{ steps.filter.outputs.python }}
-      # Applications
-      api-go: ${{ steps.filter.outputs.api-go }}
-      api-node: ${{ steps.filter.outputs.api-node }}
-      ethereum: ${{ steps.filter.outputs.ethereum }}
-      grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
-      mobile-android: ${{ steps.filter.outputs.mobile-android }}
-      mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
       terraform: ${{ steps.filter.outputs.terraform }}
-      web: ${{ steps.filter.outputs.web }}
-      web-cypress: ${{ steps.filter.outputs.web-cypress }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -32,43 +48,19 @@ jobs:
         id: filter
         with:
           filters: |
-            # Languages
             python:
               - '.github/workflows/.static-type-check.yml'
               - 'pyproject.toml'
               - 'uv.lock'
               - '.mypy.ini'
               - '**/*.py'
-            # Applications
-            api-node:
-              - '.github/workflows/.static-type-check.yml'
-              - 'api-node/**'
-            ethereum:
-              - '.github/workflows/.static-type-check.yml'
-              - 'ethereum/**'
-            grafana-hm-panel-plugin:
-              - '.github/workflows/.static-type-check.yml'
-              - 'data-visualization/grafana/hm-panel-plugin/**'
-            mobile-android:
-              - '.github/workflows/.static-type-check.yml'
-              - 'mobile/mobile-android/**'
-            mobile-react-native:
-              - '.github/workflows/.static-type-check.yml'
-              - 'mobile/mobile-react-native/**'
             terraform:
               - '.github/workflows/.static-type-check.yml'
               - 'cloud-infrastructure/terraform/**'
-            web:
-              - '.github/workflows/.static-type-check.yml'
-              - 'web/**'
-            web-cypress:
-              - '.github/workflows/.static-type-check.yml'
-              - 'web-cypress/**'
 
   static-type-check-kotlin-mobile-android:
     name: Kotlin (mobile-android)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
+    if: ${{ inputs.mobile-android }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
@@ -196,6 +188,27 @@ jobs:
           uv run poe static-type-check-python --package=quantum-computing
           uv run poe static-type-check-python --package=scientific-computing.hm-sunpy
 
+  static-type-check-terraform-production-airbyte:
+    name: Terraform (production/airbyte)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.terraform == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Initialize Terraform
+        working-directory: cloud-infrastructure/terraform/environments/production/airbyte
+        run: |
+          terraform init -backend=false
+      - name: Static type check Terraform
+        working-directory: cloud-infrastructure/terraform/environments/production/airbyte
+        run: |
+          terraform validate
+
   static-type-check-terraform-production-aws:
     name: Terraform (production/aws)
     needs: detect-changes
@@ -240,8 +253,7 @@ jobs:
 
   static-type-check-typescript-api-node:
     name: TypeScript (api-node)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+    if: ${{ inputs.api-node }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -265,8 +277,7 @@ jobs:
 
   static-type-check-typescript-ethereum:
     name: TypeScript (ethereum)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
+    if: ${{ inputs.ethereum }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -290,8 +301,7 @@ jobs:
 
   static-type-check-typescript-grafana-hm-panel-plugin:
     name: TypeScript (grafana-hm-panel-plugin)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+    if: ${{ inputs.grafana-hm-panel-plugin }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -315,8 +325,7 @@ jobs:
 
   static-type-check-typescript-mobile-react-native:
     name: TypeScript (mobile-react-native)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
+    if: ${{ inputs.mobile-react-native }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -340,8 +349,7 @@ jobs:
 
   static-type-check-typescript-web:
     name: TypeScript (web)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web == 'true' }}
+    if: ${{ inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -365,8 +373,7 @@ jobs:
 
   static-type-check-typescript-web-cypress:
     name: TypeScript (web-cypress)
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
+    if: ${{ inputs.web-cypress }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
