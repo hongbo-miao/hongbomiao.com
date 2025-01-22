@@ -1,0 +1,50 @@
+---
+name: . Test Operating System
+
+'on':
+  workflow_call:
+    inputs:
+      windows-calculator:
+        required: true
+        type: boolean
+
+jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - uses: dorny/paths-filter@v3.0.2
+        id: filter
+        with:
+          filters: |
+            workflow:
+              - '.github/workflows/.test-operating-system.yml'
+
+  windows-calculator-test:
+    name: Windows (calculator) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.windows-calculator }}
+    runs-on: windows-2025
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: operating-system/windows/calculator
+        run: |
+          cargo build
+      - name: Test
+        working-directory: operating-system/windows/calculator
+        run: |
+          cargo test --all-features

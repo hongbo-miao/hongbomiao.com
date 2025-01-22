@@ -1,0 +1,360 @@
+---
+name: . Test Computing
+
+'on':
+  workflow_call:
+    inputs:
+      # Scientific Computing
+      hm-sunpy:
+        required: true
+        type: boolean
+      # Parallel Computing
+      hm-triton:
+        required: true
+        type: boolean
+      taichi-count-primes:
+        required: true
+        type: boolean
+      taichi-fluid-solver:
+        required: true
+        type: boolean
+      # High-Performance Computing
+      hm-jax:
+        required: true
+        type: boolean
+      # Quantum Computing
+      quantum-computing:
+        required: true
+        type: boolean
+      # Cloud Computing
+      hm-ray-calculate:
+        required: true
+        type: boolean
+      hm-ray-process-flight-data:
+        required: true
+        type: boolean
+      hm-skypilot:
+        required: true
+        type: boolean
+
+jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    outputs:
+      workflow: ${{ steps.filter.outputs.workflow }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - uses: dorny/paths-filter@v3.0.2
+        id: filter
+        with:
+          filters: |
+            workflow:
+              - '.github/workflows/.test-computing.yml'
+
+  # Scientific Computing
+  sunpy-test:
+    name: SunPy | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-sunpy }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: scientific-computing/hm-sunpy/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: scientific-computing/hm-sunpy/pyproject.toml
+      - name: Install dependencies
+        working-directory: scientific-computing/hm-sunpy
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: scientific-computing/hm-sunpy
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: scientific-computing/hm-sunpy
+
+  # Parallel Computing
+  taichi-count-primes-test:
+    name: Taichi (count-primes) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.taichi-count-primes }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: parallel-computing/hm-taichi/count-primes/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: parallel-computing/hm-taichi/count-primes/pyproject.toml
+      - name: Install dependencies
+        working-directory: parallel-computing/hm-taichi/count-primes
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: parallel-computing/hm-taichi/count-primes
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: parallel-computing/hm-taichi/count-primes
+
+  taichi-fluid-solver-test:
+    name: Taichi (fluid-solver) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.taichi-fluid-solver }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: parallel-computing/hm-taichi/fluid-solver/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: parallel-computing/hm-taichi/fluid-solver/pyproject.toml
+      - name: Install dependencies
+        working-directory: parallel-computing/hm-taichi/fluid-solver
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: parallel-computing/hm-taichi/fluid-solver
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: parallel-computing/hm-taichi/fluid-solver
+
+  triton-test:
+    name: Triton | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-triton }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: parallel-computing/hm-triton/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: parallel-computing/hm-triton/pyproject.toml
+      - name: Install dependencies
+        working-directory: parallel-computing/hm-triton
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: parallel-computing/hm-triton
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: parallel-computing/hm-triton
+
+  # High-Performance Computing
+  jax-test:
+    name: JAX | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-jax }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: high-performance-computing/hm-jax/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: high-performance-computing/hm-jax/pyproject.toml
+      - name: Install dependencies
+        working-directory: high-performance-computing/hm-jax
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: high-performance-computing/hm-jax
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: high-performance-computing/hm-jax
+
+  # Quantum Computing
+  quantum-computing-test:
+    name: Quantum Computing | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.quantum-computing }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: quantum-computing/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: quantum-computing/pyproject.toml
+      - name: Install dependencies
+        working-directory: quantum-computing
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: quantum-computing
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: quantum-computing
+
+  # Cloud Computing
+  ray-calculate-test:
+    name: Ray (calculate) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-ray-calculate }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: cloud-computing/hm-ray/applications/calculate/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: cloud-computing/hm-ray/applications/calculate/pyproject.toml
+      - name: Install dependencies
+        working-directory: cloud-computing/hm-ray/applications/calculate
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: cloud-computing/hm-ray/applications/calculate
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: cloud-computing/hm-ray/applications/calculate
+
+  ray-process-flight-data-test:
+    name: Ray (process-flight-data) | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-ray-process-flight-data }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: cloud-computing/hm-ray/applications/process-flight-data/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: cloud-computing/hm-ray/applications/process-flight-data/pyproject.toml
+      - name: Install dependencies
+        working-directory: cloud-computing/hm-ray/applications/process-flight-data
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: cloud-computing/hm-ray/applications/process-flight-data
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: cloud-computing/hm-ray/applications/process-flight-data
+
+  skypilot-test:
+    name: SkyPilot | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-skypilot }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: cloud-computing/hm-skypilot/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: cloud-computing/hm-skypilot/pyproject.toml
+      - name: Install dependencies
+        working-directory: cloud-computing/hm-skypilot
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: cloud-computing/hm-skypilot
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          directory: cloud-computing/hm-skypilot
