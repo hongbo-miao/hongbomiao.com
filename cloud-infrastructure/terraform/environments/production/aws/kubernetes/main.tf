@@ -56,7 +56,7 @@ module "amazon_s3_csi_driver_mountpoint_iam_role" {
 module "amazon_eks_cluster" {
   providers       = { aws = aws.production }
   source          = "terraform-aws-modules/eks/aws"
-  version         = "20.33.0"
+  version         = "20.33.1"
   cluster_name    = local.amazon_eks_cluster_name
   cluster_version = "1.30"
   cluster_addons = {
