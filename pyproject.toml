@@ -26,7 +26,7 @@ package = false
 environments = ["platform_system != 'Windows'"]
 
 [tool.poe.tasks]
-clean-jupyter-notebook = "nb-clean clean"
+clean-jupyter-notebook = { shell = "nb-clean clean $(git ls-files '**/*.ipynb')" }
 ansible-galaxy-install = "ansible-galaxy install"
 sqlfluff-list-dialects = "sqlfluff dialects"
 lint-ansible = { shell = "ansible-lint $(git ls-files '**/playbook.yml')" }
