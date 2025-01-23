@@ -192,9 +192,7 @@ jupyter-lab:
 
 # Jupyter Notebook
 jupyter-notebook-clean:
-    uv run poe clean-jupyter-notebook cloud-platform/aws/amazon-emr/hm-amazon-emr-cluster-sedona/studio/hm-studio/notebook.ipynb
-    uv run poe clean-jupyter-notebook cloud-platform/aws/amazon-sagemaker/pytorch-mnist/notebook.ipynb
-    uv run poe clean-jupyter-notebook machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/set_up/notebook.ipynb
+    uv run poe clean-jupyter-notebook
 
 # SQLFluff
 sqlfluff-dialect-list:
