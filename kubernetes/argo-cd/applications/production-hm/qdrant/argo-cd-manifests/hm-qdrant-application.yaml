@@ -18,6 +18,13 @@ spec:
         values: |
           # https://github.com/qdrant/qdrant-helm/blob/main/charts/qdrant/values.yaml
           ---
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 4Gi
           persistence:
             accessModes: ["ReadWriteOnce"]
             size: 100Gi
