@@ -1,0 +1,35 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-qdrant
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-qdrant
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://qdrant.github.io/qdrant-helm
+      # https://artifacthub.io/packages/helm/qdrant/qdrant
+      targetRevision: 1.13.0
+      chart: qdrant
+      helm:
+        releaseName: hm-qdrant
+        values: |
+          # https://github.com/qdrant/qdrant-helm/blob/main/charts/qdrant/values.yaml
+          ---
+          persistence:
+            accessModes: ["ReadWriteOnce"]
+            size: 100Gi
+            storageClassName: production-hm-qdrant-storage-class
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/qdrant/kubernetes-manifests
+  destination:
+    namespace: production-hm-qdrant
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
