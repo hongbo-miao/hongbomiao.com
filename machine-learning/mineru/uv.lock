@@ -672,7 +672,7 @@ wheels = [
 
 [[package]]
 name = "doclayout-yolo"
-version = "0.0.2"
+version = "0.0.2b1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "albumentations" },
@@ -691,9 +691,9 @@ dependencies = [
     { name = "torchvision" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/19/e8/319217d955dfdca67846d24865a8114b23b98301832adfd540a2bb8f9150/doclayout_yolo-0.0.2.tar.gz", hash = "sha256:c7ab629a8fd45eff6fb6c361cce65362b8326203fae891e17a95d731ce5c94c1", size = 598193 }
+sdist = { url = "https://files.pythonhosted.org/packages/b2/57/ae02a0ec96cc2c47dc8fea26cdc18c5c62338631bf03738062a76a9223d7/doclayout_yolo-0.0.2b1.tar.gz", hash = "sha256:ec6d5e124133f69b064013284985ebb61a1e753c12bc63c70a46d6e0ba66e9d9", size = 602811 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/32/f7/b6255e19d49a216af0d98d125eeec66e91821a20f2fe3d02456abb248309/doclayout_yolo-0.0.2-py3-none-any.whl", hash = "sha256:9155d74be92c3a2441ac3dcd7263760637045480b8a4b71bde807976f9e47671", size = 708156 },
+    { url = "https://files.pythonhosted.org/packages/3e/f8/bab8c287088276b26b68dd07de9b355b0ca0582a0d32d7a26b08a56e18e8/doclayout_yolo-0.0.2b1-py3-none-any.whl", hash = "sha256:45a15b33847911f48292ffc739694314e4c09b184d2921731c63af6066da2959", size = 711238 },
 ]
 
 [[package]]
@@ -1375,7 +1375,7 @@ wheels = [
 
 [[package]]
 name = "magic-pdf"
-version = "1.0.1"
+version = "1.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
@@ -1391,8 +1391,9 @@ dependencies = [
     { name = "torch" },
     { name = "transformers" },
 ]
+sdist = { url = "https://files.pythonhosted.org/packages/6f/8f/bc41212f820eeaa59737fda241cc46251ca239a94b640cb225448cb8912e/magic_pdf-1.1.0.tar.gz", hash = "sha256:c0b3bae7927c7e7223785641ceb1e19bb2eefc2a464627f0676f54872c163a81", size = 3916662 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/26/e4/dba99555b624c9b5d729eda84a94f36f2f6c2e416f81c1b31d5bf2d2379f/magic_pdf-1.0.1-py3-none-any.whl", hash = "sha256:e817618927d451c310d51f057d36a26dd0407d8bf11a8eecb61dfee18d41642c", size = 3915001 },
+    { url = "https://files.pythonhosted.org/packages/97/05/bcdb5a8e449236c132867350ef8f98b43b09d26e124ab48ec24d614407ee/magic_pdf-1.1.0-py3-none-any.whl", hash = "sha256:b40012d88dc625b230f37eb60fb57ba1d77f7e587ebd533daf49698f1357a2e9", size = 3927777 },
 ]
 
 [package.optional-dependencies]
@@ -1535,14 +1536,14 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "detectron2", marker = "extra == 'compile'", git = "https://github.com/facebookresearch/detectron2.git?branch=main" },
-    { name = "magic-pdf", extras = ["full"], marker = "extra == 'compile'", specifier = "==1.0.1" },
+    { name = "magic-pdf", extras = ["full"], marker = "extra == 'compile'", specifier = "==1.1.0" },
     { name = "setuptools", marker = "extra == 'build'" },
     { name = "torch", marker = "extra == 'build'" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "poethepoet", specifier = "==0.32.1" },
+    { name = "poethepoet", specifier = "==0.32.2" },
     { name = "pytest", specifier = "==8.3.4" },
     { name = "pytest-cov", specifier = "==6.0.0" },
 ]
@@ -1552,8 +1553,8 @@ name = "mkl"
 version = "2021.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "intel-openmp" },
-    { name = "tbb" },
+    { name = "intel-openmp", marker = "platform_system == 'Windows'" },
+    { name = "tbb", marker = "platform_system == 'Windows'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ce/c6/892fe3bc91e811b78e4f85653864f2d92541d5e5c306b0cb3c2311e9ca64/mkl-2021.4.0-py2.py3-none-win32.whl", hash = "sha256:439c640b269a5668134e3dcbcea4350459c4a8bc46469669b2d67e07e3d330e8", size = 129048357 },
@@ -1689,7 +1690,7 @@ name = "nvidia-cudnn-cu12"
 version = "8.9.2.26"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas-cu12" },
+    { name = "nvidia-cublas-cu12", marker = "platform_machine != 'aarch64' and platform_system == 'Linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ff/74/a2e2be7fb83aaedec84f391f082cf765dfb635e7caa9b49065f73e4835d8/nvidia_cudnn_cu12-8.9.2.26-py3-none-manylinux1_x86_64.whl", hash = "sha256:5ccb288774fdfb07a7e7025ffec286971c06d8d7b4fb162525334616d7629ff9", size = 731725872 },
@@ -1716,9 +1717,9 @@ name = "nvidia-cusolver-cu12"
 version = "11.4.5.107"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas-cu12" },
-    { name = "nvidia-cusparse-cu12" },
-    { name = "nvidia-nvjitlink-cu12" },
+    { name = "nvidia-cublas-cu12", marker = "platform_machine != 'aarch64' and platform_system == 'Linux'" },
+    { name = "nvidia-cusparse-cu12", marker = "platform_machine != 'aarch64' and platform_system == 'Linux'" },
+    { name = "nvidia-nvjitlink-cu12", marker = "platform_machine != 'aarch64' and platform_system == 'Linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bc/1d/8de1e5c67099015c834315e333911273a8c6aaba78923dd1d1e25fc5f217/nvidia_cusolver_cu12-11.4.5.107-py3-none-manylinux1_x86_64.whl", hash = "sha256:8a7ec542f0412294b15072fa7dab71d31334014a69f953004ea7a118206fe0dd", size = 124161928 },
@@ -1729,7 +1730,7 @@ name = "nvidia-cusparse-cu12"
 version = "12.1.0.106"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12" },
+    { name = "nvidia-nvjitlink-cu12", marker = "platform_machine != 'aarch64' and platform_system == 'Linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/65/5b/cfaeebf25cd9fdec14338ccb16f6b2c4c7fa9163aefcf057d86b9cc248bb/nvidia_cusparse_cu12-12.1.0.106-py3-none-manylinux1_x86_64.whl", hash = "sha256:f3b50f42cf363f86ab21f720998517a659a48131e8d538dc02f8768237bd884c", size = 195958278 },
@@ -2152,15 +2153,15 @@ wheels = [
 
 [[package]]
 name = "poethepoet"
-version = "0.32.1"
+version = "0.32.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pastel" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d1/10/11f929bad564b2dbc5c119ecf0f37456ac24538bb4a70c76f140a2aa695a/poethepoet-0.32.1.tar.gz", hash = "sha256:471e1a025812dcd3d2997e30989681be5ab0a49232ee5fba94859629671c9584", size = 61391 }
+sdist = { url = "https://files.pythonhosted.org/packages/ee/c6/4bc7e21166726fc96f82f58b31fd032fdf8864d3aa17e2622578cb96c24d/poethepoet-0.32.2.tar.gz", hash = "sha256:1d68871dac1b191e27bd68fea57d0e01e9afbba3fcd01dbe6f6bc3fcb071fe4c", size = 61381 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/85/a5/fc26dd508f33809bdd3823a0170e492fe44ad7e097c32c4a52e16cf3ecb0/poethepoet-0.32.1-py3-none-any.whl", hash = "sha256:d1e0a52a2f677870fac17dfb26bfe4910242756ac821443ef31f90ad26227c2d", size = 81729 },
+    { url = "https://files.pythonhosted.org/packages/b1/1f/4e7a9b6b33a085172a826d1f9d0a19a2e77982298acea13d40442f14ef28/poethepoet-0.32.2-py3-none-any.whl", hash = "sha256:97e165de8e00b07d33fd8d72896fad8b20ccafcd327b1118bb6a3da26af38d33", size = 81726 },
 ]
 
 [[package]]
@@ -2375,17 +2376,17 @@ wheels = [
 
 [[package]]
 name = "pymupdf"
-version = "1.25.1"
+version = "1.24.14"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c3/88/76c076c152be6d29a792defc3b3bff73de7f690e55f978b66adf6dbb8a1a/pymupdf-1.25.1.tar.gz", hash = "sha256:6725bec0f37c2380d926f792c262693c926af7cc1aa5aa2b8207e771867f015a", size = 60979390 }
+sdist = { url = "https://files.pythonhosted.org/packages/e0/6b/6bd735144a190d26dcc23f98b4aae0e09b259cc4c87bba266a39b7b91f56/PyMuPDF-1.24.14.tar.gz", hash = "sha256:0eed9f998525eaf39706dbf2d0cf3162150f0f526e4a36b1748ffa50bde581ae", size = 56242747 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/92/7b/e7205ea48f547122c226a34f5452bc72915b6d06d7925970b8dd3493baf1/pymupdf-1.25.1-cp39-abi3-macosx_10_9_x86_64.whl", hash = "sha256:793f9f6d51029e97851c711b3f6d9fe912313d95a306fbe8b1866f301d0e2bd3", size = 19364135 },
-    { url = "https://files.pythonhosted.org/packages/0e/b6/2ad245dcbbb1abae9eeb8de5049b27c12c9ee8590c6c769499e386164bd6/pymupdf-1.25.1-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:15e6f4013ad0a029a2221920f9d2081f56dc43259dabfdf5cad7fbf1cee4b5a7", size = 18598176 },
-    { url = "https://files.pythonhosted.org/packages/32/bf/d7697604ea2b1fe299c7bdf4b57e3549693ce73f75c44e890cfd34837d23/pymupdf-1.25.1-cp39-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:a39afbd80381f43e30d6eb2ec4613f465f507ac2b76070abdd2da8724f32ef36", size = 19458090 },
-    { url = "https://files.pythonhosted.org/packages/77/15/7bf672afb99002ad813aeb4886cc601bb9a4629210d9a3906a8d5650a941/pymupdf-1.25.1-cp39-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:b63f8e9e65b0bda48f9217efd4d2a8c6d7a739dd28baf460c1ae78439b9af489", size = 20021618 },
-    { url = "https://files.pythonhosted.org/packages/8c/e3/1a7a8400f1688c3c782478635ca929f85facd266157e4b90d650766bc49d/pymupdf-1.25.1-cp39-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:a687bd387589e30abd810a78a23341f57f43fa16a4d8d8c0b870bb6d89607343", size = 21144453 },
-    { url = "https://files.pythonhosted.org/packages/a1/d1/440b267842a1374f8d55c508302882f2ef7dd0f859514f060e1618ef97aa/pymupdf-1.25.1-cp39-abi3-win32.whl", hash = "sha256:fc7dbc1aa9e298a4c81084e389c9623c26fcaa232c71efaa073af150069e2221", size = 15112052 },
-    { url = "https://files.pythonhosted.org/packages/46/72/8c5bbf817aacebe21a454f3ade8ee4b5b17afe698bb73d65c4ca23a89a87/pymupdf-1.25.1-cp39-abi3-win_amd64.whl", hash = "sha256:e2b0b73c0aab0f863e5132c93cfa4607e8129feb1afa3d544b2cf7f172c50b5a", size = 16559080 },
+    { url = "https://files.pythonhosted.org/packages/62/ce/972b080c526af80577ffaa49676c05361ba152de94de3af339a2f3ac07c2/PyMuPDF-1.24.14-cp39-abi3-macosx_10_9_x86_64.whl", hash = "sha256:b3ad7a4f4b607ff97f2e1b8111823dd3797dbb381ec851c3ae4695fea6f68478", size = 19167365 },
+    { url = "https://files.pythonhosted.org/packages/2c/11/8d6f4c8fca86b93759e430c4b0b7b66f8067d58893d6fe0a193420d14453/PyMuPDF-1.24.14-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:755906af4b4d693552ae5469ba682075853f4dc8a70639affd1bd6c049c5d900", size = 18417324 },
+    { url = "https://files.pythonhosted.org/packages/51/69/518e6c088e20a5ded1fc658d4aec1e54c0f98f2d62d91362bd4231df9ecf/PyMuPDF-1.24.14-cp39-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:37f24108e2e18150fb8d512dcccdfa1e3d9b9dd203ffaa7ffb959bb20aea40b4", size = 19303826 },
+    { url = "https://files.pythonhosted.org/packages/27/bf/203d06c68660d5535db65b6c54cacd35b950945c11c1c4546d674f270892/PyMuPDF-1.24.14-cp39-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:0de4f5ed903c2be6d0abcccdc796368939b51ce03916eb53292916e3b6ea65d6", size = 19833056 },
+    { url = "https://files.pythonhosted.org/packages/77/ed/40eb23cf5e91de0510dfedb7d9feedeab5ce9691544ad09599e124a0a333/PyMuPDF-1.24.14-cp39-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:2d1b5c47df2f8055de5dedfbd3189c742188261a8c257f406378382adac94cff", size = 20963535 },
+    { url = "https://files.pythonhosted.org/packages/87/2b/46af7461bd299c3f52bc5455332cc82608cea1667cd692652505fdf9308e/PyMuPDF-1.24.14-cp39-abi3-win32.whl", hash = "sha256:60a7ee7db3e0d3a4dcbe6df2781ba4487acb7e515c64ea9c857504f44effcb25", size = 14965671 },
+    { url = "https://files.pythonhosted.org/packages/25/b2/82d70d9f5aea5a33e770f37e6db43ed08b5dc71b3526c5d7051689d1031e/PyMuPDF-1.24.14-cp39-abi3-win_amd64.whl", hash = "sha256:3d1f1ec2fe0249484afde7a0fc02589f19aaeb47c42939d23ae1d012aa1bc59b", size = 16257645 },
 ]
 
 [[package]]
@@ -2546,17 +2547,17 @@ wheels = [
 
 [[package]]
 name = "rapid-table"
-version = "0.3.0"
+version = "1.0.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy" },
     { name = "onnxruntime" },
     { name = "opencv-python" },
     { name = "pillow" },
-    { name = "pyyaml" },
+    { name = "requests" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4a/cb/def6329492bd5ff5265a79043fea612c2218ce0ece3c700525d5b47abd29/rapid_table-0.3.0-py3-none-any.whl", hash = "sha256:35aa6fbfd3aa3627312f5471c0f8a5f809d42ca7d204e4974080607012b4be55", size = 7156892 },
+    { url = "https://files.pythonhosted.org/packages/18/27/efc46a249b5d5de7bb7a6becf99abfc9c458bfe5ceaa863f6c63a17a3ad1/rapid_table-1.0.3-py3-none-any.whl", hash = "sha256:4ed75cd8592d1985bc9fb5c48b126f213e416661aa154f370fbd4940efd2b87d", size = 7165902 },
 ]
 
 [[package]]
