@@ -1077,6 +1077,10 @@ The VHDL waveforms are displayed in GTKWave.
 
 ![ComfyUI screenshot](https://github.com/user-attachments/assets/1c3e5b19-e261-48c9-94bf-6e8daedfece4)
 
+### Qdrant - Distributed Vector Database
+
+![Qdrant screenshot](https://github.com/user-attachments/assets/9cf6fda0-65e3-45fe-90ac-6937a06bfabe)
+
 ### Vertex AI - AutoML
 
 ![Vertex AI screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/96afa9b3-5393-487d-9eca-8251110f5ddf)
