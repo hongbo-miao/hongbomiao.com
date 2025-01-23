@@ -57,7 +57,7 @@ jobs:
         run: |
           go test ./... -race -coverprofile=coverage.txt -covermode=atomic
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.2.0
+        uses: codecov/codecov-action@v5.3.0
         with:
           directory: api-go
 
@@ -86,7 +86,7 @@ jobs:
         run: |
           npm run test:coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.2.0
+        uses: codecov/codecov-action@v5.3.0
         with:
           directory: api-node
 
@@ -160,7 +160,7 @@ jobs:
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.2.0
+        uses: codecov/codecov-action@v5.3.0
         with:
           directory: api-python
 
