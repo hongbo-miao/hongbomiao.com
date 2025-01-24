@@ -102,7 +102,7 @@
 
 - name: Install Kafka
   hosts: hm-ubuntu
-  become: yes
+  become: true
   roles:
     - role: dragomirr.kafka
       kafka_version: 3.8.0
@@ -115,4 +115,4 @@
           replication_factor: 1
           partitions: 1
       kafka_additional_config:
-        message.max.bytes: 1048576 # 1 MiB
+        message.max.bytes: 1048576  # 1 MiB
