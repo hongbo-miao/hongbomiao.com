@@ -592,6 +592,32 @@ module "kubernetes_namespace_hm_prometheus" {
   ]
 }
 
+# Qdrant
+# Qdrant - Kubernetes namespace
+module "kubernetes_namespace_hm_qdrant" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-qdrant"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
+# Valkey
+# Valkey - Kubernetes namespace
+module "kubernetes_namespace_hm_valkey" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-valkey"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # Netdata
 # Netdata - Kubernetes namespace
 module "kubernetes_namespace_hm_netdata" {
