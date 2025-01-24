@@ -34,6 +34,7 @@ jobs:
       data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
       decode-can-blf-data: ${{ steps.filter.outputs.decode-can-blf-data }}
+      decode-can-mf4-data: ${{ steps.filter.outputs.decode-can-mf4-data }}
       decode-can-trc-data: ${{ steps.filter.outputs.decode-can-trc-data }}
       delta-lake-read-delta-lake-by-amazon-athena: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-amazon-athena }}
       delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
@@ -170,6 +171,8 @@ jobs:
               - 'matlab/call-matlab-function-in-python/**'
             decode-can-blf-data:
               - 'embedded-system/decode-can-blf-data/**'
+            decode-can-mf4-data:
+              - 'embedded-system/decode-can-mf4-data/**'
             decode-can-trc-data:
               - 'embedded-system/decode-can-trc-data/**'
             development-aws-glue-spark-scripts:
@@ -662,6 +665,7 @@ jobs:
     needs: detect-changes
     with:
       decode-can-blf-data: ${{ needs.detect-changes.outputs.decode-can-blf-data == 'true' }}
+      decode-can-mf4-data: ${{ needs.detect-changes.outputs.decode-can-mf4-data == 'true' }}
       decode-can-trc-data: ${{ needs.detect-changes.outputs.decode-can-trc-data == 'true' }}
       format-can-data: ${{ needs.detect-changes.outputs.format-can-data == 'true' }}
       hm-serial: ${{ needs.detect-changes.outputs.hm-serial == 'true' }}
