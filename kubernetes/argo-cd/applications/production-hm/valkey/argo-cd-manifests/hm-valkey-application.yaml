@@ -1,0 +1,55 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-valkey
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-valkey
+spec:
+  project: production-hm
+  sources:
+    - repoURL: registry-1.docker.io/bitnamicharts
+      # https://artifacthub.io/packages/helm/bitnami/valkey
+      targetRevision: 2.2.3
+      chart: valkey
+      helm:
+        releaseName: hm-valkey
+        values: |
+          # https://github.com/bitnami/charts/blob/main/bitnami/valkey/values.yaml
+          ---
+          primary:
+            persistence:
+              accessModes: ["ReadWriteOnce"]
+              size: 8Gi
+              storageClass: production-hm-valkey-storage-class
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 1500m
+                memory: 1Gi
+          replica:
+            persistence:
+              accessModes: ["ReadWriteOnce"]
+              size: 8Gi
+              storageClass: production-hm-valkey-storage-class
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 1500m
+                memory: 1Gi
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/valkey/kubernetes-manifests
+  destination:
+    namespace: production-hm-valkey
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
