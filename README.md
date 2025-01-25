@@ -238,6 +238,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Apache Arrow** - Columnar memory format for big data
 - **Apache Parquet** - Columnar file format for big data
 - **Lance** - Columnar file format for machine learning
+- **HDF5** - Hierarchical data format
+- **BLF** - Binary log format
+- **TRC** - PEAK-System trace capture
+- **MF4** - Measurement data format (MDF)
 
 ### Database, Data Warehouse, Data Lakehouse
 

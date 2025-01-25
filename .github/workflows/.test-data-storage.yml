@@ -25,13 +25,16 @@ name: . Test Data Storage
       hm-duckdb-query-protobuf:
         required: true
         type: boolean
-      lance:
+      hm-hdf5:
         required: true
         type: boolean
       hm-lancedb:
         required: true
         type: boolean
       hm-protobuf:
+        required: true
+        type: boolean
+      lance:
         required: true
         type: boolean
       prometheus:
@@ -387,6 +390,39 @@ jobs:
         uses: codecov/codecov-action@v5.3.0
         with:
           directory: data-storage/hm-protobuf
+
+  hdf5-test:
+    name: HDF5 | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-hdf5 }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-storage/hm-hdf5/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.3.0
+        with:
+          python-version-file: data-storage/hm-hdf5/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-storage/hm-hdf5
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/hm-hdf5
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.3.0
+        with:
+          directory: data-storage/hm-hdf5
 
   prometheus-test:
     name: Prometheus | Test
