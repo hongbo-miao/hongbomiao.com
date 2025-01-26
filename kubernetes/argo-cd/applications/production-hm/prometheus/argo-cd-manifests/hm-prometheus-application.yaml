@@ -8,19 +8,38 @@ metadata:
     app.kubernetes.io/name: hm-prometheus
 spec:
   project: production-hm
-  sources:
-    - repoURL: https://prometheus-community.github.io/helm-charts
-      # https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
-      targetRevision: 60.1.0
-      chart: kube-prometheus-stack
-      helm:
-        releaseName: hm-prometheus
-        values: |
-          # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
-          ---
-          alertmanager:
-            enabled: true
-            alertmanagerSpec:
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    # https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
+    targetRevision: 68.3.2
+    chart: kube-prometheus-stack
+    helm:
+      releaseName: hm-prometheus
+      values: |
+        # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+        ---
+        alertmanager:
+          enabled: true
+          alertmanagerSpec:
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+        prometheusOperator:
+          enabled: true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+          admissionWebhooks:
+            patch:
+              enabled: true
               resources:
                 requests:
                   cpu: 50m
@@ -28,8 +47,7 @@ spec:
                 limits:
                   cpu: 100m
                   memory: 256Mi
-          prometheusOperator:
-            enabled: true
+          prometheusConfigReloader:
             resources:
               requests:
                 cpu: 50m
@@ -37,69 +55,34 @@ spec:
               limits:
                 cpu: 100m
                 memory: 256Mi
-            admissionWebhooks:
-              patch:
-                enabled: true
-                resources:
-                  requests:
-                    cpu: 50m
-                    memory: 128Mi
-                  limits:
-                    cpu: 100m
-                    memory: 256Mi
-            prometheusConfigReloader:
-              resources:
-                requests:
-                  cpu: 50m
-                  memory: 128Mi
-                limits:
-                  cpu: 100m
-                  memory: 256Mi
-          prometheus:
-            enabled: true
-            prometheusSpec:
-              resources:
-                requests:
-                  cpu: 100m
-                  memory: 512Mi
-                limits:
-                  cpu: 200m
-                  memory: 1Gi
-          prometheus-node-exporter:
+        prometheus:
+          enabled: true
+          prometheusSpec:
             resources:
               requests:
-                cpu: 50m
-                memory: 128Mi
-              limits:
-                cpu: 100m
-                memory: 256Mi
-          kube-state-metrics:
-            resources:
-              requests:
-                cpu: 50m
-                memory: 128Mi
-              limits:
-                cpu: 100m
-                memory: 256Mi
-          grafana:
-            enabled: true
-            grafana.ini:
-              security:
-                # For Ray: https://docs.ray.io/en/latest/cluster/kubernetes/k8s-ecosystem/prometheus-grafana.html
-                allow_embedding: true
-              auth.anonymous:
-                enabled: true
-                org_role: Viewer
-            resources:
-              requests:
-                cpu: 50m
-                memory: 256Mi
-              limits:
                 cpu: 100m
                 memory: 512Mi
-    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
-      targetRevision: main
-      path: kubernetes/argo-cd/applications/production-hm/prometheus/kubernetes-manifests
+              limits:
+                cpu: 200m
+                memory: 1Gi
+        prometheus-node-exporter:
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+        kube-state-metrics:
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+        grafana:
+          enabled: false
   destination:
     namespace: production-hm-prometheus
     server: https://kubernetes.default.svc

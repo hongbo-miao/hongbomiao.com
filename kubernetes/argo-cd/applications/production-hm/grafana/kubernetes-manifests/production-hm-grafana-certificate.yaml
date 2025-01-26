@@ -3,19 +3,19 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: staging-hm-grafana-certificate
-  namespace: production-hm-prometheus
+  name: production-hm-grafana-certificate
+  namespace: production-hm-grafana
   annotations:
     # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
     argocd.argoproj.io/hook: PreSync
 spec:
   commonName: grafana.internal.hongbomiao.com
-  secretName: staging-hm-grafana-certificate
+  secretName: production-hm-grafana-certificate
   dnsNames:
     - grafana.internal.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
-    name: staging-lets-encrypt-cluster-issuer
+    name: production-lets-encrypt-cluster-issuer
   # https://letsencrypt.org/certificates
   privateKey:
     algorithm: ECDSA

@@ -592,6 +592,19 @@ module "kubernetes_namespace_hm_prometheus" {
   ]
 }
 
+# Grafana
+# Grafana - Kubernetes namespace
+module "kubernetes_namespace_hm_grafana" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-grafana"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # Qdrant
 # Qdrant - Kubernetes namespace
 module "kubernetes_namespace_hm_qdrant" {
@@ -744,7 +757,7 @@ module "hm_litellm_iam_role" {
   team                                 = var.team
 }
 # LiteLLM - Kubernetes namespace
-module "hm_kubernetes_namespace_hm_litellm" {
+module "kubernetes_namespace_hm_litellm" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-litellm"
   labels = {
@@ -757,7 +770,7 @@ module "hm_kubernetes_namespace_hm_litellm" {
 
 # Open WebUI
 # Open WebUI - Kubernetes namespace
-module "hm_kubernetes_namespace_hm_open_webui" {
+module "kubernetes_namespace_hm_open_webui" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-open-webui"
   labels = {
@@ -768,7 +781,7 @@ module "hm_kubernetes_namespace_hm_open_webui" {
   ]
 }
 # Open WebUI Pipelines - Kubernetes namespace
-module "hm_kubernetes_namespace_hm_open_webui_pipelines" {
+module "kubernetes_namespace_hm_open_webui_pipelines" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-open-webui-pipelines"
   labels = {
