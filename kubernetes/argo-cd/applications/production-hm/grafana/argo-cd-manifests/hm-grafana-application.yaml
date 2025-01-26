@@ -33,11 +33,16 @@ spec:
             datasources.yaml:
               apiVersion: 1
               datasources:
-              - name: Prometheus
-                type: prometheus
-                url: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus:9090
-                access: proxy
-                isDefault: true
+                - name: Prometheus
+                  type: prometheus
+                  url: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus:9090
+                  access: proxy
+                  isDefault: true
+                - name: Loki
+                  type: loki
+                  url: http://hm-loki-gateway.production-hm-loki:80
+                  access: proxy
+                  isDefault: false
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1
