@@ -19,6 +19,7 @@ spec:
           # https://github.com/bitnami/charts/blob/main/bitnami/valkey/values.yaml
           ---
           primary:
+            replicaCount: 1
             persistence:
               accessModes: ["ReadWriteOnce"]
               size: 8Gi
@@ -31,6 +32,7 @@ spec:
                 cpu: 1500m
                 memory: 1Gi
           replica:
+            replicaCount: 3
             persistence:
               accessModes: ["ReadWriteOnce"]
               size: 8Gi
