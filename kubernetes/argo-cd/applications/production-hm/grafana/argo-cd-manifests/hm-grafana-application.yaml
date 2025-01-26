@@ -1,0 +1,84 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-grafana
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-grafana
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://grafana.github.io/helm-charts
+      # https://artifacthub.io/packages/helm/grafana/grafana
+      targetRevision: 8.8.5
+      chart: grafana
+      helm:
+        releaseName: hm-grafana
+        values: |
+          # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+          ---
+          grafana.ini:
+            security:
+              # For Ray: https://docs.ray.io/en/latest/cluster/kubernetes/k8s-ecosystem/prometheus-grafana.html
+              allow_embedding: true
+            auth.anonymous:
+              enabled: true
+              org_role: Viewer
+          sidecar:
+            dashboards:
+              enabled: true
+              searchNamespace: ALL
+          datasources:
+            datasources.yaml:
+              apiVersion: 1
+              datasources:
+              - name: Prometheus
+                type: prometheus
+                url: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus:9090
+                access: proxy
+                isDefault: true
+          dashboardProviders:
+            dashboardproviders.yaml:
+              apiVersion: 1
+              providers:
+                - name: grafana-dashboards-kubernetes
+                  orgId: 1
+                  folder: Kubernetes
+                  type: file
+                  disableDeletion: true
+                  editable: false
+                  options:
+                    path: /var/lib/grafana/dashboards/grafana-dashboards-kubernetes
+          dashboards:
+            grafana-dashboards-kubernetes:
+              k8s-system-api-server:
+                url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+              k8s-system-coredns:
+                url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+              k8s-views-global:
+                url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+              k8s-views-namespaces:
+                url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+              k8s-views-nodes:
+                url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+              k8s-views-pods:
+                url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+          resources:
+            requests:
+              cpu: 50m
+              memory: 256Mi
+            limits:
+              cpu: 100m
+              memory: 512Mi
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/grafana/kubernetes-manifests
+  destination:
+    namespace: production-hm-grafana
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

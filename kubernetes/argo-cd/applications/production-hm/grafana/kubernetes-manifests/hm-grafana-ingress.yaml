@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hm-grafana-ingress
-  namespace: production-hm-prometheus
+  namespace: production-hm-grafana
   annotations:
     kubernetes.io/ingress.class: traefik
     # https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-ingress
@@ -13,7 +13,7 @@ metadata:
     argocd.argoproj.io/hook: PostSync
   labels:
     app.kubernetes.io/name: hm-grafana-ingress
-    app.kubernetes.io/part-of: production-hm-prometheus
+    app.kubernetes.io/part-of: production-hm-grafana
 spec:
   rules:
     - host: grafana.internal.hongbomiao.com
@@ -23,7 +23,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: hm-prometheus-grafana
+                name: hm-grafana
                 port:
                   number: 80
   tls:
