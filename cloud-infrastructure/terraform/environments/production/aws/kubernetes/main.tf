@@ -618,6 +618,19 @@ module "kubernetes_namespace_hm_valkey" {
   ]
 }
 
+# Loki
+# Loki - Kubernetes namespace
+module "kubernetes_namespace_hm_loki" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-loki"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # Netdata
 # Netdata - Kubernetes namespace
 module "kubernetes_namespace_hm_netdata" {
