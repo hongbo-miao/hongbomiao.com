@@ -42,28 +42,45 @@ spec:
             dashboardproviders.yaml:
               apiVersion: 1
               providers:
-                - name: grafana-dashboards-kubernetes
+                - name: kubernetes-dashboards
                   orgId: 1
                   folder: Kubernetes
                   type: file
                   disableDeletion: true
                   editable: false
                   options:
-                    path: /var/lib/grafana/dashboards/grafana-dashboards-kubernetes
+                    path: /var/lib/grafana/dashboards/kubernetes-dashboards
+                - name: ray-dashboards
+                  orgId: 1
+                  folder: Ray
+                  type: file
+                  disableDeletion: true
+                  editable: false
+                  options:
+                    path: /var/lib/grafana/dashboards/ray-dashboards
           dashboards:
-            grafana-dashboards-kubernetes:
-              k8s-system-api-server:
+            kubernetes-dashboards:
+              kubernetes-system-api-server-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
-              k8s-system-coredns:
+              kubernetes-system-coredns-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
-              k8s-views-global:
+              kubernetes-views-global-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
-              k8s-views-namespaces:
+              kubernetes-views-namespaces-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
-              k8s-views-nodes:
+              kubernetes-views-nodes-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
-              k8s-views-pods:
+              kubernetes-views-pods-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+            ray-dashboards:
+              ray-data-grafana-dashboard:
+                url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/data_grafana_dashboard.json
+              ray-default-grafana-dashboard:
+                url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/default_grafana_dashboard.json
+              ray-serve-deployment-grafana-dashboard:
+                url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/serve_deployment_grafana_dashboard.json
+              ray-serve-grafana-dashboard:
+                url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/serve_grafana_dashboard.json
           resources:
             requests:
               cpu: 50m
