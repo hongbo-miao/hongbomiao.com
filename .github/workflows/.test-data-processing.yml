@@ -4,6 +4,11 @@ name: . Test Data Processing
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       flink-stream-tweets:
         required: true
         type: boolean
@@ -42,29 +47,9 @@ name: . Test Data Processing
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-data-processing.yml'
-
   spark-analyze-coffee-customers-test:
     name: Spark (analyze-coffee-customers) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-analyze-coffee-customers }}
+    if: ${{ inputs.workflow || inputs.hm-spark-analyze-coffee-customers }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -96,8 +81,7 @@ jobs:
 
   spark-find-retired-people-python-test:
     name: Spark (find-retired-people-python) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-find-retired-people-python }}
+    if: ${{ inputs.workflow || inputs.hm-spark-find-retired-people-python }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -129,8 +113,7 @@ jobs:
 
   spark-find-retired-people-scala-test:
     name: Spark (find-retired-people-scala) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-find-retired-people-scala }}
+    if: ${{ inputs.workflow || inputs.hm-spark-find-retired-people-scala }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -152,8 +135,7 @@ jobs:
 
   spark-find-taxi-top-routes-test:
     name: Spark (find-taxi-top-routes) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-find-taxi-top-routes }}
+    if: ${{ inputs.workflow || inputs.hm-spark-find-taxi-top-routes }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -185,8 +167,7 @@ jobs:
 
   spark-find-taxi-top-routes-sql-test:
     name: Spark (find-taxi-top-routes-sql) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-find-taxi-top-routes-sql }}
+    if: ${{ inputs.workflow || inputs.hm-spark-find-taxi-top-routes-sql }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -218,8 +199,7 @@ jobs:
 
   spark-ingest-from-s3-to-kafka-test:
     name: Spark (ingest-from-s3-to-kafka) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-ingest-from-s3-to-kafka }}
+    if: ${{ inputs.workflow || inputs.hm-spark-ingest-from-s3-to-kafka }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -241,8 +221,7 @@ jobs:
 
   spark-recommend-movies-test:
     name: Spark (recommend-movies) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-spark-recommend-movies }}
+    if: ${{ inputs.workflow || inputs.hm-spark-recommend-movies }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -274,8 +253,7 @@ jobs:
 
   flink-stream-tweets-test:
     name: Flink (stream-tweets) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.flink-stream-tweets }}
+    if: ${{ inputs.workflow || inputs.flink-stream-tweets }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -295,8 +273,7 @@ jobs:
 
   kafka-rust-proto-consumer-test:
     name: Kafka Rust (proto-consumer) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-proto-consumer }}
+    if: ${{ inputs.workflow || inputs.kafka-rust-proto-consumer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -336,8 +313,7 @@ jobs:
 
   kafka-rust-proto-producer-test:
     name: Kafka Rust (proto-producer) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-proto-producer }}
+    if: ${{ inputs.workflow || inputs.kafka-rust-proto-producer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -377,8 +353,7 @@ jobs:
 
   kafka-rust-udp-kafka-bridge-test:
     name: Kafka Rust (udp-kafka-bridge) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-udp-kafka-bridge }}
+    if: ${{ inputs.workflow || inputs.kafka-rust-udp-kafka-bridge }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -418,8 +393,7 @@ jobs:
 
   kafka-rust-zeromq-kafka-bridge-test:
     name: Kafka Rust (zeromq-kafka-bridge) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.kafka-rust-zeromq-kafka-bridge }}
+    if: ${{ inputs.workflow || inputs.kafka-rust-zeromq-kafka-bridge }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

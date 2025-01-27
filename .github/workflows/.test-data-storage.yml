@@ -4,6 +4,11 @@ name: . Test Data Storage
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       delta-lake-read-delta-lake-by-amazon-athena:
         required: true
         type: boolean
@@ -42,29 +47,9 @@ name: . Test Data Storage
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-data-storage.yml'
-
   delta-lake-read-delta-lake-by-amazon-athena-test:
     name: Delta Lake (read-delta-lake-by-amazon-athena) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.delta-lake-read-delta-lake-by-amazon-athena }}
+    if: ${{ inputs.workflow || inputs.delta-lake-read-delta-lake-by-amazon-athena }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -96,8 +81,7 @@ jobs:
 
   delta-lake-read-delta-lake-by-trino-test:
     name: Delta Lake (read-delta-lake-by-trino) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.delta-lake-read-delta-lake-by-trino }}
+    if: ${{ inputs.workflow || inputs.delta-lake-read-delta-lake-by-trino }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -129,8 +113,7 @@ jobs:
 
   delta-lake-write-to-delta-lake-test:
     name: Delta Lake (write-to-delta-lake) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.delta-lake-write-to-delta-lake }}
+    if: ${{ inputs.workflow || inputs.delta-lake-write-to-delta-lake }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -162,8 +145,7 @@ jobs:
 
   duckdb-query-duckdb-test:
     name: DuckDB (query-duckdb) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-duckdb-query-duckdb }}
+    if: ${{ inputs.workflow || inputs.hm-duckdb-query-duckdb }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -195,8 +177,7 @@ jobs:
 
   duckdb-query-lance-test:
     name: DuckDB (query-lance) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-duckdb-query-lance }}
+    if: ${{ inputs.workflow || inputs.hm-duckdb-query-lance }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -228,8 +209,7 @@ jobs:
 
   duckdb-query-parquet-test:
     name: DuckDB (query-parquet) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-duckdb-query-parquet }}
+    if: ${{ inputs.workflow || inputs.hm-duckdb-query-parquet }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -261,8 +241,7 @@ jobs:
 
   duckdb-query-protobuf-test:
     name: DuckDB (query-protobuf) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-duckdb-query-protobuf }}
+    if: ${{ inputs.workflow || inputs.hm-duckdb-query-protobuf }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -294,8 +273,7 @@ jobs:
 
   lance-test:
     name: Lance | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.lance }}
+    if: ${{ inputs.workflow || inputs.lance }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -327,8 +305,7 @@ jobs:
 
   lancedb-test:
     name: LanceDB | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-lancedb }}
+    if: ${{ inputs.workflow || inputs.hm-lancedb }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -360,8 +337,7 @@ jobs:
 
   protobuf-test:
     name: Protobuf | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-protobuf }}
+    if: ${{ inputs.workflow || inputs.hm-protobuf }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -393,8 +369,7 @@ jobs:
 
   hdf5-test:
     name: HDF5 | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-hdf5 }}
+    if: ${{ inputs.workflow || inputs.hm-hdf5 }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -426,8 +401,7 @@ jobs:
 
   prometheus-test:
     name: Prometheus | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.prometheus }}
+    if: ${{ inputs.workflow || inputs.prometheus }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

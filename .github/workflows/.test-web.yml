@@ -4,6 +4,11 @@ name: . Test Web
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       api-node:
         required: true
         type: boolean
@@ -15,29 +20,9 @@ name: . Test Web
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-web.yml'
-
   web-test:
     name: Web | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
+    if: ${{ inputs.workflow || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -65,8 +50,7 @@ jobs:
 
   web-end-to-end-test:
     name: Web | End-to-End Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.api-node || inputs.web || inputs.web-cypress }}
+    if: ${{ inputs.workflow || inputs.api-node || inputs.web || inputs.web-cypress }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -105,8 +89,7 @@ jobs:
 
   web-lighthouse:
     name: Web | Lighthouse
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
+    if: ${{ inputs.workflow || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -137,8 +120,7 @@ jobs:
   # https://www.chromatic.com/docs/github-actions
   web-visual-test:
     name: Web | Visual Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.web }}
+    if: ${{ inputs.workflow || inputs.web }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20

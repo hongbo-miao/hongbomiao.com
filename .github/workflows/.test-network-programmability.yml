@@ -4,6 +4,11 @@ name: . Test Network Programmability
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       udp-receiver:
         required: true
         type: boolean
@@ -12,29 +17,9 @@ name: . Test Network Programmability
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-network-programmability.yml'
-
   udp-receiver-test:
     name: UDP Receiver | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.udp-receiver }}
+    if: ${{ inputs.workflow || inputs.udp-receiver }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -60,8 +45,7 @@ jobs:
 
   udp-sender-test:
     name: UDP Sender | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.udp-sender }}
+    if: ${{ inputs.workflow || inputs.udp-sender }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

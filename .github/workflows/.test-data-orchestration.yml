@@ -4,6 +4,11 @@ name: . Test Data Orchestration
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       hm-airflow:
         required: true
         type: boolean
@@ -18,29 +23,9 @@ name: . Test Data Orchestration
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-data-orchestration.yml'
-
   airflow-test:
     name: Airflow | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-airflow }}
+    if: ${{ inputs.workflow || inputs.hm-airflow }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -72,8 +57,7 @@ jobs:
 
   prefect-calculate-test:
     name: Prefect (calculate) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-prefect-calculate }}
+    if: ${{ inputs.workflow || inputs.hm-prefect-calculate }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -105,8 +89,7 @@ jobs:
 
   prefect-greet-test:
     name: Prefect (greet) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-prefect-greet }}
+    if: ${{ inputs.workflow || inputs.hm-prefect-greet }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -138,8 +121,7 @@ jobs:
 
   prefect-print-platform-test:
     name: Prefect (print-platform) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-prefect-print-platform }}
+    if: ${{ inputs.workflow || inputs.hm-prefect-print-platform }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

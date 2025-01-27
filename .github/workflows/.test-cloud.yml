@@ -4,6 +4,11 @@ name: . Test Cloud
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       # Cloud Platform
       amazon-sagemaker-pytorch-mnist:
         required: true
@@ -24,30 +29,10 @@ name: . Test Cloud
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-cloud.yml'
-
   # Cloud Platform
   amazon-sagemaker-pytorch-mnist-test:
     name: Amazon SageMaker (pytorch-mnist) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.amazon-sagemaker-pytorch-mnist }}
+    if: ${{ inputs.workflow || inputs.amazon-sagemaker-pytorch-mnist }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -80,8 +65,7 @@ jobs:
   # Cloud Infrastructure
   aws-parallelcluster-test:
     name: AWS ParallelCluster | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-aws-parallelcluster }}
+    if: ${{ inputs.workflow || inputs.hm-aws-parallelcluster }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -113,8 +97,7 @@ jobs:
 
   pulumi-test:
     name: Pulumi | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-pulumi }}
+    if: ${{ inputs.workflow || inputs.hm-pulumi }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -146,8 +129,7 @@ jobs:
 
   production-aws-glue-spark-scripts-test:
     name: AWS Glue (production spark-scripts) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.production-aws-glue-spark-scripts }}
+    if: ${{ inputs.workflow || inputs.production-aws-glue-spark-scripts }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -180,8 +162,7 @@ jobs:
   # Cloud Security
   prowler-test:
     name: Prowler | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-prowler }}
+    if: ${{ inputs.workflow || inputs.hm-prowler }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

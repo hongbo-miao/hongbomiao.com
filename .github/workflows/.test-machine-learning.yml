@@ -4,6 +4,11 @@ name: . Test Machine Learning
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       amazon-sagemaker-triton-resnet-50-deploy:
         required: true
         type: boolean
@@ -96,29 +101,9 @@ name: . Test Machine Learning
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-machine-learning.yml'
-
   amazon-sagemaker-triton-resnet-50-deploy-test:
     name: Amazon SageMaker Triton ResNet 50 (Deploy) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.amazon-sagemaker-triton-resnet-50-deploy }}
+    if: ${{ inputs.workflow || inputs.amazon-sagemaker-triton-resnet-50-deploy }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -150,8 +135,7 @@ jobs:
 
   amazon-sagemaker-triton-resnet-50-infer-test:
     name: Amazon SageMaker Triton ResNet 50 (Infer) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.amazon-sagemaker-triton-resnet-50-infer }}
+    if: ${{ inputs.workflow || inputs.amazon-sagemaker-triton-resnet-50-infer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -183,8 +167,7 @@ jobs:
 
   scikit-learn-test:
     name: scikit-learn | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-scikit-learn }}
+    if: ${{ inputs.workflow || inputs.hm-scikit-learn }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -216,8 +199,7 @@ jobs:
 
   cuml-test:
     name: cuML | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-cuml }}
+    if: ${{ inputs.workflow || inputs.hm-cuml }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -249,8 +231,7 @@ jobs:
 
   hugging-face-analyze-sentiment-test:
     name: Hugging Face (analyze-sentiment) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hugging-face-analyze-sentiment }}
+    if: ${{ inputs.workflow || inputs.hugging-face-analyze-sentiment }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -282,8 +263,7 @@ jobs:
 
   gradio-classify-image-test:
     name: Gradio (classify-image) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-gradio-classify-image }}
+    if: ${{ inputs.workflow || inputs.hm-gradio-classify-image }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -315,8 +295,7 @@ jobs:
 
   streamlit-live-line-chart-test:
     name: Streamlit (live-line-chart) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-streamlit-live-line-chart }}
+    if: ${{ inputs.workflow || inputs.hm-streamlit-live-line-chart }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -348,8 +327,7 @@ jobs:
 
   streamlit-map-test:
     name: Streamlit (map) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-streamlit-map }}
+    if: ${{ inputs.workflow || inputs.hm-streamlit-map }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -381,8 +359,7 @@ jobs:
 
   flax-test:
     name: Flax | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-flax }}
+    if: ${{ inputs.workflow || inputs.hm-flax }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -414,8 +391,7 @@ jobs:
 
   autogluon-test:
     name: AutoGluon | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-autogluon }}
+    if: ${{ inputs.workflow || inputs.hm-autogluon }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -447,9 +423,8 @@ jobs:
 
   nvidia-dali-test:
     name: NVIDIA DALI | Test
-    needs: detect-changes
     if: ${{ false }}
-    # if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.nvidia-dali }}
+    # if: ${{ inputs.workflow || inputs.nvidia-dali }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -481,8 +456,7 @@ jobs:
 
   modulus-test:
     name: NVIDIA Modulus | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-nvidia-modulus }}
+    if: ${{ inputs.workflow || inputs.hm-nvidia-modulus }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -514,8 +488,7 @@ jobs:
 
   feature-store-test:
     name: Feature Store | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.feature-store }}
+    if: ${{ inputs.workflow || inputs.feature-store }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -547,8 +520,7 @@ jobs:
 
   sglang-test:
     name: SGLang | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-sglang }}
+    if: ${{ inputs.workflow || inputs.hm-sglang }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -580,8 +552,7 @@ jobs:
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-kubeflow-calculate }}
+    if: ${{ inputs.workflow || inputs.hm-kubeflow-calculate }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -613,8 +584,7 @@ jobs:
 
   kubeflow-classify-mnist-test:
     name: Kubeflow (classify-mnist) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-kubeflow-classify-mnist }}
+    if: ${{ inputs.workflow || inputs.hm-kubeflow-classify-mnist }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -646,8 +616,7 @@ jobs:
 
   mineru-test:
     name: MinerU | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mineru }}
+    if: ${{ inputs.workflow || inputs.mineru }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -681,8 +650,7 @@ jobs:
 
   docling-test:
     name: Docling | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-docling }}
+    if: ${{ inputs.workflow || inputs.hm-docling }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -714,8 +682,7 @@ jobs:
 
   langchain-chat-pdf-test:
     name: LangChain (chat-pdf) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-langchain-chat-pdf }}
+    if: ${{ inputs.workflow || inputs.hm-langchain-chat-pdf }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -747,8 +714,7 @@ jobs:
 
   langgraph-chat-pdf-test:
     name: LangGraph (chat-pdf) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-langgraph-chat-pdf }}
+    if: ${{ inputs.workflow || inputs.hm-langgraph-chat-pdf }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -780,8 +746,7 @@ jobs:
 
   llama-index-chat-pdf-test:
     name: LlamaIndex (chat-pdf) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-llama-index-chat-pdf }}
+    if: ${{ inputs.workflow || inputs.hm-llama-index-chat-pdf }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -813,8 +778,7 @@ jobs:
 
   mlflow-classify-mnist-test:
     name: MLflow (classify-mnist) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-mlflow-classify-mnist }}
+    if: ${{ inputs.workflow || inputs.hm-mlflow-classify-mnist }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -846,8 +810,7 @@ jobs:
 
   mlflow-predict-diabetes-test:
     name: MLflow (predict-diabetes) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-mlflow-predict-diabetes }}
+    if: ${{ inputs.workflow || inputs.hm-mlflow-predict-diabetes }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -879,8 +842,7 @@ jobs:
 
   neural-forecasting-forecast-air-passenger-number-test:
     name: Neural Forecasting (forecast-air-passenger-number) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.neural-forecasting-forecast-air-passenger-number }}
+    if: ${{ inputs.workflow || inputs.neural-forecasting-forecast-air-passenger-number }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -912,8 +874,7 @@ jobs:
 
   reinforcement-learning-cart-pole-test:
     name: Reinforcement Learning (cart-pole) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.reinforcement-learning-cart-pole }}
+    if: ${{ inputs.workflow || inputs.reinforcement-learning-cart-pole }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -945,8 +906,7 @@ jobs:
 
   faster-whisper-test:
     name: Faster Whisper | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-faster-whisper }}
+    if: ${{ inputs.workflow || inputs.hm-faster-whisper }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -978,8 +938,7 @@ jobs:
 
   stable-diffusion-test:
     name: Stable Diffusion | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.stable-diffusion }}
+    if: ${{ inputs.workflow || inputs.stable-diffusion }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1011,8 +970,7 @@ jobs:
 
   rasa-test:
     name: Rasa | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-rasa }}
+    if: ${{ inputs.workflow || inputs.hm-rasa }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1027,8 +985,7 @@ jobs:
 
   graph-neural-network-test:
     name: GNN | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.graph-neural-network }}
+    if: ${{ inputs.workflow || inputs.graph-neural-network }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1060,8 +1017,7 @@ jobs:
 
   graph-neural-network-train:
     name: GNN | Train
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.graph-neural-network }}
+    if: ${{ inputs.workflow || inputs.graph-neural-network }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20
@@ -1093,8 +1049,7 @@ jobs:
 
   convolutional-neural-network-test:
     name: CNN | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.convolutional-neural-network }}
+    if: ${{ inputs.workflow || inputs.convolutional-neural-network }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1126,8 +1081,7 @@ jobs:
 
   convolutional-neural-network-cml-local-train:
     name: CNN | CML (Local) - Train
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.convolutional-neural-network }}
+    if: ${{ inputs.workflow || inputs.convolutional-neural-network }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 20
@@ -1172,7 +1126,6 @@ jobs:
     name: CNN | CML (Cloud) - Set Up
     runs-on: ubuntu-24.04
     environment: test
-    needs: detect-changes
     if: ${{ false }}
     steps:
       - name: Checkout

@@ -4,6 +4,11 @@ name: . Test Data Visualization
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       grafana-hm-dashboard:
         required: true
         type: boolean
@@ -24,29 +29,9 @@ name: . Test Data Visualization
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-data-visualization.yml'
-
   grafana-hm-dashboard-test:
     name: Grafana (hm-dashboard) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.grafana-hm-dashboard }}
+    if: ${{ inputs.workflow || inputs.grafana-hm-dashboard }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -78,8 +63,7 @@ jobs:
 
   grafana-hm-panel-plugin-test:
     name: Grafana (hm-panel-plugin) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.grafana-hm-panel-plugin }}
+    if: ${{ inputs.workflow || inputs.grafana-hm-panel-plugin }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -107,8 +91,7 @@ jobs:
 
   iads-iads-config-reader-test:
     name: IADS (iads-config-reader) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.iads-iads-config-reader }}
+    if: ${{ inputs.workflow || inputs.iads-iads-config-reader }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -140,8 +123,7 @@ jobs:
 
   iads-iads-data-reader-test:
     name: IADS (iads-data-reader) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.iads-iads-data-reader }}
+    if: ${{ inputs.workflow || inputs.iads-iads-data-reader }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
@@ -173,8 +155,7 @@ jobs:
 
   iads-iads-data-producer-test:
     name: IADS (iads-data-producer) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.iads-iads-data-producer }}
+    if: ${{ inputs.workflow || inputs.iads-iads-data-producer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -194,8 +175,7 @@ jobs:
 
   iads-zeromq-iads-bridge-test:
     name: IADS (zeromq-iads-bridge) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.iads-zeromq-iads-bridge }}
+    if: ${{ inputs.workflow || inputs.iads-zeromq-iads-bridge }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10

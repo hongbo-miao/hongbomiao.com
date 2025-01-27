@@ -4,6 +4,11 @@ name: . Test Hardware-in-the-Loop
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       national-instruments-hm-pyvisa:
         required: true
         type: boolean
@@ -15,29 +20,9 @@ name: . Test Hardware-in-the-Loop
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-hardware-in-the-loop.yml'
-
   national-instruments-hm-pyvisa-test:
     name: National Instruments (pyvisa) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.national-instruments-hm-pyvisa }}
+    if: ${{ inputs.workflow || inputs.national-instruments-hm-pyvisa }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -69,8 +54,7 @@ jobs:
 
   national-instruments-hm-tdms-test:
     name: National Instruments (tdms) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.national-instruments-hm-tdms }}
+    if: ${{ inputs.workflow || inputs.national-instruments-hm-tdms }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -102,8 +86,7 @@ jobs:
 
   national-instruments-hm-veristand-test:
     name: National Instruments (ni-veristand) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.national-instruments-hm-veristand }}
+    if: ${{ inputs.workflow || inputs.national-instruments-hm-veristand }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
