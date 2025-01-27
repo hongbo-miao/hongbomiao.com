@@ -4,6 +4,11 @@ name: . Test Computer Vision
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       hm-imagebind:
         required: true
         type: boolean
@@ -21,29 +26,9 @@ name: . Test Computer Vision
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-computer-vision.yml'
-
   supervision-detect-objects-test:
     name: supervision (detect-objects) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-supervision-detect-objects }}
+    if: ${{ inputs.workflow || inputs.hm-supervision-detect-objects }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -75,8 +60,7 @@ jobs:
 
   imagebind-test:
     name: ImageBind | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-imagebind }}
+    if: ${{ inputs.workflow || inputs.hm-imagebind }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -108,8 +92,7 @@ jobs:
 
   open-clip-test:
     name: OpenCLIP | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.open-clip }}
+    if: ${{ inputs.workflow || inputs.open-clip }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -141,8 +124,7 @@ jobs:
 
   open3d-test:
     name: Open3D | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-open3d }}
+    if: ${{ inputs.workflow || inputs.hm-open3d }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -174,8 +156,7 @@ jobs:
 
   pyvista-mount-saint-helens-test:
     name: PyVista (mount-saint-helens) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-pyvista-mount-saint-helens }}
+    if: ${{ inputs.workflow || inputs.hm-pyvista-mount-saint-helens }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

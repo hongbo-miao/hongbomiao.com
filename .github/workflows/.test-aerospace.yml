@@ -4,6 +4,11 @@ name: . Test Aerospace
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       hm-aerosandbox:
         required: true
         type: boolean
@@ -12,29 +17,9 @@ name: . Test Aerospace
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-aerospace.yml'
-
   aerosandbox-test:
     name: AeroSandbox | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-aerosandbox }}
+    if: ${{ inputs.workflow || inputs.hm-aerosandbox }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -66,8 +51,7 @@ jobs:
 
   openaerostruct-test:
     name: OpenAeroStruct | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-openaerostruct }}
+    if: ${{ inputs.workflow || inputs.hm-openaerostruct }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

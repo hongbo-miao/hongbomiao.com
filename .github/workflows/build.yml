@@ -16,29 +16,6 @@ jobs:
     timeout-minutes: 10
     permissions:
       pull-requests: read
-    outputs:
-      api-go: ${{ steps.filter.outputs.api-go }}
-      api-node: ${{ steps.filter.outputs.api-node }}
-      api-python: ${{ steps.filter.outputs.api-python }}
-      api-rust: ${{ steps.filter.outputs.api-rust }}
-      flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
-      hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
-      hm-confluent-schema-registry: ${{ steps.filter.outputs.hm-confluent-schema-registry }}
-      hm-kafka-iot-kafka-connect: ${{ steps.filter.outputs.hm-kafka-iot-kafka-connect }}
-      hm-kafka-logging-kafka-connect: ${{ steps.filter.outputs.hm-kafka-logging-kafka-connect }}
-      hm-kafka-opa-kafka-connect: ${{ steps.filter.outputs.hm-kafka-opa-kafka-connect }}
-      hm-keydb: ${{ steps.filter.outputs.hm-keydb }}
-      hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
-      hm-pgbackrest: ${{ steps.filter.outputs.hm-pgbackrest }}
-      hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
-      hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
-      hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
-      hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
-      hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
-      hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
-      hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
-      hm-traefik: ${{ steps.filter.outputs.hm-traefik }}
-      web: ${{ steps.filter.outputs.web }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -134,6 +111,29 @@ jobs:
               - '.dockerignore'
               - '.github/workflows/build.yml'
               - 'web/**'
+    outputs:
+      api-go: ${{ steps.filter.outputs.api-go }}
+      api-node: ${{ steps.filter.outputs.api-node }}
+      api-python: ${{ steps.filter.outputs.api-python }}
+      api-rust: ${{ steps.filter.outputs.api-rust }}
+      flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
+      hm-alpine: ${{ steps.filter.outputs.hm-alpine }}
+      hm-confluent-schema-registry: ${{ steps.filter.outputs.hm-confluent-schema-registry }}
+      hm-kafka-iot-kafka-connect: ${{ steps.filter.outputs.hm-kafka-iot-kafka-connect }}
+      hm-kafka-logging-kafka-connect: ${{ steps.filter.outputs.hm-kafka-logging-kafka-connect }}
+      hm-kafka-opa-kafka-connect: ${{ steps.filter.outputs.hm-kafka-opa-kafka-connect }}
+      hm-keydb: ${{ steps.filter.outputs.hm-keydb }}
+      hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
+      hm-pgbackrest: ${{ steps.filter.outputs.hm-pgbackrest }}
+      hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
+      hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
+      hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
+      hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
+      hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
+      hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
+      hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
+      hm-traefik: ${{ steps.filter.outputs.hm-traefik }}
+      web: ${{ steps.filter.outputs.web }}
 
   build-hm-web:
     name: Build hm-web

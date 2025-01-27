@@ -4,6 +4,11 @@ name: . Test Computing
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       # Scientific Computing
       hm-sunpy:
         required: true
@@ -38,30 +43,10 @@ name: . Test Computing
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-computing.yml'
-
   # Scientific Computing
   sunpy-test:
     name: SunPy | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-sunpy }}
+    if: ${{ inputs.workflow || inputs.hm-sunpy }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -94,8 +79,7 @@ jobs:
   # Parallel Computing
   taichi-count-primes-test:
     name: Taichi (count-primes) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.taichi-count-primes }}
+    if: ${{ inputs.workflow || inputs.taichi-count-primes }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -127,8 +111,7 @@ jobs:
 
   taichi-fluid-solver-test:
     name: Taichi (fluid-solver) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.taichi-fluid-solver }}
+    if: ${{ inputs.workflow || inputs.taichi-fluid-solver }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -160,8 +143,7 @@ jobs:
 
   triton-test:
     name: Triton | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-triton }}
+    if: ${{ inputs.workflow || inputs.hm-triton }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -194,8 +176,7 @@ jobs:
   # High-Performance Computing
   jax-test:
     name: JAX | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-jax }}
+    if: ${{ inputs.workflow || inputs.hm-jax }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -228,8 +209,7 @@ jobs:
   # Quantum Computing
   quantum-computing-test:
     name: Quantum Computing | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.quantum-computing }}
+    if: ${{ inputs.workflow || inputs.quantum-computing }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -262,8 +242,7 @@ jobs:
   # Cloud Computing
   ray-calculate-test:
     name: Ray (calculate) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-ray-calculate }}
+    if: ${{ inputs.workflow || inputs.hm-ray-calculate }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -295,8 +274,7 @@ jobs:
 
   ray-process-flight-data-test:
     name: Ray (process-flight-data) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-ray-process-flight-data }}
+    if: ${{ inputs.workflow || inputs.hm-ray-process-flight-data }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -328,8 +306,7 @@ jobs:
 
   skypilot-test:
     name: SkyPilot | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-skypilot }}
+    if: ${{ inputs.workflow || inputs.hm-skypilot }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

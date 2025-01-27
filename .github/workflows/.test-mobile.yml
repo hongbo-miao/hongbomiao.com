@@ -4,6 +4,11 @@ name: . Test Mobile
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       mobile-android:
         required: true
         type: boolean
@@ -15,29 +20,9 @@ name: . Test Mobile
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-mobile.yml'
-
   mobile-android-lint:
     name: Mobile - Android | Lint
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-android }}
+    if: ${{ inputs.workflow || inputs.mobile-android }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
@@ -58,8 +43,7 @@ jobs:
 
   mobile-android-test:
     name: Mobile - Android | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-android }}
+    if: ${{ inputs.workflow || inputs.mobile-android }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 30
@@ -80,8 +64,7 @@ jobs:
 
   mobile-android-instrumented-test:
     name: Mobile - Android | Instrumented Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-android }}
+    if: ${{ inputs.workflow || inputs.mobile-android }}
     # Ubuntu displays the message: "You're running a Linux VM where hardware acceleration is not available. Please consider using a macOS VM instead to take advantage of native hardware acceleration support provided by HAXM."
     # https://github.com/ReactiveCircus/android-emulator-runner#a-note-on-vm-acceleration-and-why-we-dont-need-haxm-anymore
     runs-on: macos-13
@@ -108,8 +91,7 @@ jobs:
 
   mobile-ios-test:
     name: Mobile - iOS | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-ios }}
+    if: ${{ inputs.workflow || inputs.mobile-ios }}
     runs-on: macos-14
     environment: test
     timeout-minutes: 90
@@ -158,8 +140,7 @@ jobs:
 
   mobile-react-native-test:
     name: Mobile - React Native | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.mobile-react-native }}
+    if: ${{ inputs.workflow || inputs.mobile-react-native }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

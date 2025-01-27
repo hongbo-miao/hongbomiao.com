@@ -4,6 +4,11 @@ name: . Test Embedded System
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       decode-can-blf-data:
         required: true
         type: boolean
@@ -24,29 +29,9 @@ name: . Test Embedded System
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-embedded-system.yml'
-
   decode-can-blf-data-test:
     name: Decode CAN BLF Data | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.decode-can-blf-data }}
+    if: ${{ inputs.workflow || inputs.decode-can-blf-data }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -78,8 +63,7 @@ jobs:
 
   decode-can-mf4-data-test:
     name: Decode CAN MF4 Data | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.decode-can-mf4-data }}
+    if: ${{ inputs.workflow || inputs.decode-can-mf4-data }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -111,8 +95,7 @@ jobs:
 
   decode-can-trc-data-test:
     name: Decode CAN TRC Data | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.decode-can-trc-data }}
+    if: ${{ inputs.workflow || inputs.decode-can-trc-data }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -144,8 +127,7 @@ jobs:
 
   format-can-data-test:
     name: Format CAN Data | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.format-can-data }}
+    if: ${{ inputs.workflow || inputs.format-can-data }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -177,8 +159,7 @@ jobs:
 
   serial-test:
     name: Serial | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.hm-serial }}
+    if: ${{ inputs.workflow || inputs.hm-serial }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -210,8 +191,7 @@ jobs:
 
   pack-unpack-data-test:
     name: Pack Unpack Data | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.pack-unpack-data }}
+    if: ${{ inputs.workflow || inputs.pack-unpack-data }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
