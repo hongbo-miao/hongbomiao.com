@@ -20,6 +20,11 @@ spec:
           # https://grafana.com/docs/loki/latest/setup/install/helm/install-scalable/
           ---
           deploymentMode: SimpleScalable
+          serviceAccount:
+            create: true
+            name: hm-loki
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/LokiRole-hm-loki
           loki:
             auth_enabled: false
             schemaConfig:
@@ -31,14 +36,41 @@ spec:
                   index:
                     prefix: loki_index_
                     period: 24h
+            storage_config:
+              aws:
+                region: us-west-2
+                bucketnames: production-hm-loki-chunk-data-bucket
+                s3forcepathstyle: false
+            pattern_ingester:
+              enabled: true
             ingester:
               chunk_encoding: zstd
+            limits_config:
+              allow_structured_metadata: true
+              volume_enabled: true
+              retention_period: 2160h
+            querier:
+              max_concurrent: 4
+            compactor:
+              retention_enabled: true
+              delete_request_store: s3
+            ruler:
+              enable_api: true
+              storage:
+                type: s3
+                s3:
+                  region: us-west-2
+                  bucketnames: production-hm-loki-ruler-data-bucket
+                  s3forcepathstyle: false
+                alertmanager_url: http://hm-prometheus-kube-pr-alertmanager.production-hm-prometheus:9093
             storage:
               type: s3
+              s3:
+                region: us-west-2
               bucketNames:
-                  chunks: production-hm-loki-chunk-data-bucket
-                  ruler: production-hm-loki-ruler-data-bucket
-                  admin: production-hm-loki-admin-data-bucket
+                chunks: production-hm-loki-chunk-data-bucket
+                ruler: production-hm-loki-ruler-data-bucket
+                admin: production-hm-loki-admin-data-bucket
           backend:
             replicas: 3
             persistence:
