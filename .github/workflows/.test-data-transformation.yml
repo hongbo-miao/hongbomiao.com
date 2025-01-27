@@ -4,34 +4,19 @@ name: . Test Data Transformation
 'on':
   workflow_call:
     inputs:
+      # Workflows
+      workflow:
+        required: true
+        type: boolean
+      # Applications
       dbt-hm-postgres:
         required: true
         type: boolean
 
 jobs:
-  detect-changes:
-    name: Detect Changes
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    permissions:
-      pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - uses: dorny/paths-filter@v3.0.2
-        id: filter
-        with:
-          filters: |
-            workflow:
-              - '.github/workflows/.test-data-transformation.yml'
-
   dbt-hm-postgres-test:
     name: dbt (hm-postgres) | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || inputs.dbt-hm-postgres }}
+    if: ${{ inputs.workflow || inputs.dbt-hm-postgres }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10

@@ -30,8 +30,46 @@ jobs:
             # Workflows
             workflow:
               - '.github/workflows/test.yml'
-            lint:
+            workflow-lint:
               - '.github/workflows/.lint.yml'
+            workflow-static-type-check:
+              - '.github/workflows/.static-type-check.yml'
+            workflow-test-aerospace:
+              - '.github/workflows/.test-aerospace.yml'
+            workflow-test-api:
+              - '.github/workflows/.test-api.yml'
+            workflow-test-cloud:
+              - '.github/workflows/.test-cloud.yml'
+            workflow-test-computer-vision:
+              - '.github/workflows/.test-computer-vision.yml'
+            workflow-test-computing:
+              - '.github/workflows/.test-computing.yml'
+            workflow-test-data-analytics:
+              - '.github/workflows/.test-data-analytics.yml'
+            workflow-test-data-orchestration:
+              - '.github/workflows/.test-data-orchestration.yml'
+            workflow-test-data-processing:
+              - '.github/workflows/.test-data-processing.yml'
+            workflow-test-data-storage:
+              - '.github/workflows/.test-data-storage.yml'
+            workflow-test-data-transformation:
+              - '.github/workflows/.test-data-transformation.yml'
+            workflow-test-data-visualization:
+              - '.github/workflows/.test-data-visualization.yml'
+            workflow-test-embedded-system:
+              - '.github/workflows/.test-embedded-system.yml'
+            workflow-test-hardware-in-the-loop:
+              - '.github/workflows/.test-hardware-in-the-loop.yml'
+            workflow-test-machine-learning:
+              - '.github/workflows/.test-machine-learning.yml'
+            workflow-test-mobile:
+              - '.github/workflows/.test-mobile.yml'
+            workflow-test-network-programmability:
+              - '.github/workflows/.test-network-programmability.yml'
+            workflow-test-operating-system:
+              - '.github/workflows/.test-operating-system.yml'
+            workflow-test-web:
+              - '.github/workflows/.test-web.yml'
             # Languages
             ansible:
               - 'pyproject.toml'
@@ -447,6 +485,25 @@ jobs:
     outputs:
       # Workflows
       workflow-lint: ${{ steps.filter.outputs.workflow-lint }}
+      workflow-static-type-check: ${{ steps.filter.outputs.workflow-static-type-check }}
+      workflow-test-aerospace: ${{ steps.filter.outputs.workflow-test-aerospace }}
+      workflow-test-api: ${{ steps.filter.outputs.workflow-test-api }}
+      workflow-test-cloud: ${{ steps.filter.outputs.workflow-test-cloud }}
+      workflow-test-computer-vision: ${{ steps.filter.outputs.workflow-test-computer-vision }}
+      workflow-test-computing: ${{ steps.filter.outputs.workflow-test-computing }}
+      workflow-test-data-analytics: ${{ steps.filter.outputs.workflow-test-data-analytics }}
+      workflow-test-data-orchestration: ${{ steps.filter.outputs.workflow-test-data-orchestration }}
+      workflow-test-data-processing: ${{ steps.filter.outputs.workflow-test-data-processing }}
+      workflow-test-data-storage: ${{ steps.filter.outputs.workflow-test-data-storage }}
+      workflow-test-data-transformation: ${{ steps.filter.outputs.workflow-test-data-transformation }}
+      workflow-test-data-visualization: ${{ steps.filter.outputs.workflow-test-data-visualization }}
+      workflow-test-embedded-system: ${{ steps.filter.outputs.workflow-test-embedded-system }}
+      workflow-test-hardware-in-the-loop: ${{ steps.filter.outputs.workflow-test-hardware-in-the-loop }}
+      workflow-test-machine-learning: ${{ steps.filter.outputs.workflow-test-machine-learning }}
+      workflow-test-mobile: ${{ steps.filter.outputs.workflow-test-mobile }}
+      workflow-test-network-programmability: ${{ steps.filter.outputs.workflow-test-network-programmability }}
+      workflow-test-operating-system: ${{ steps.filter.outputs.workflow-test-operating-system }}
+      workflow-test-web: ${{ steps.filter.outputs.workflow-test-web }}
       workflow: ${{ steps.filter.outputs.workflow }}
       # Languages
       ansible: ${{ steps.filter.outputs.ansible }}
@@ -659,6 +716,12 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-static-type-check == 'true' }}
+      # Languages
+      python: ${{ needs.detect-changes.outputs.python == 'true' }}
+      terraform: ${{ needs.detect-changes.outputs.terraform == 'true' }}
+      # Applications
       api-go: ${{ needs.detect-changes.outputs.api-go == 'true' }}
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
       ethereum: ${{ needs.detect-changes.outputs.ethereum == 'true' }}
@@ -674,6 +737,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-mobile == 'true' }}
+      # Applications
       mobile-android: ${{ needs.detect-changes.outputs.mobile-android == 'true' }}
       mobile-ios: ${{ needs.detect-changes.outputs.mobile-ios == 'true' }}
       mobile-react-native: ${{ needs.detect-changes.outputs.mobile-react-native == 'true' }}
@@ -684,6 +750,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-web == 'true' }}
+      # Applications
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
       web-cypress: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
       web: ${{ needs.detect-changes.outputs.web == 'true' }}
@@ -694,6 +763,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-api == 'true' }}
+      # Applications
       api-go: ${{ needs.detect-changes.outputs.api-go == 'true' }}
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
       api-python: ${{ needs.detect-changes.outputs.api-python == 'true' }}
@@ -705,6 +777,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-data-orchestration == 'true' }}
+      # Applications
       hm-airflow: ${{ needs.detect-changes.outputs.hm-airflow == 'true' }}
       hm-prefect-calculate: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
       hm-prefect-greet: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
@@ -716,6 +791,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-data-processing == 'true' }}
+      # Applications
       flink-stream-tweets: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
       hm-spark-analyze-coffee-customers: ${{ needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
       hm-spark-find-retired-people-python: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
@@ -735,6 +813,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-data-transformation == 'true' }}
+      # Applications
       dbt-hm-postgres: ${{ needs.detect-changes.outputs.dbt-hm-postgres == 'true' }}
 
   test-data-storage:
@@ -743,6 +824,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-data-storage == 'true' }}
+      # Applications
       delta-lake-read-delta-lake-by-amazon-athena: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-amazon-athena == 'true' }}
       delta-lake-read-delta-lake-by-trino: ${{ needs.detect-changes.outputs.delta-lake-read-delta-lake-by-trino == 'true' }}
       delta-lake-write-to-delta-lake: ${{ needs.detect-changes.outputs.delta-lake-write-to-delta-lake == 'true' }}
@@ -762,6 +846,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-data-analytics == 'true' }}
+      # Applications
       hm-cudf: ${{ needs.detect-changes.outputs.hm-cudf == 'true' }}
       hm-cupy: ${{ needs.detect-changes.outputs.hm-cupy == 'true' }}
       hm-geopandas: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
@@ -776,6 +863,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-data-visualization == 'true' }}
+      # Applications
       grafana-hm-dashboard: ${{ needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
       grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
       iads-iads-config-reader: ${{ needs.detect-changes.outputs.iads-iads-config-reader == 'true' }}
@@ -789,6 +879,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-computing == 'true' }}
+      # Applications
       # Scientific Computing
       hm-sunpy: ${{ needs.detect-changes.outputs.hm-sunpy == 'true' }}
       # Parallel Computing
@@ -810,6 +903,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-cloud == 'true' }}
+      # Applications
       # Cloud Platform
       amazon-sagemaker-pytorch-mnist: ${{ needs.detect-changes.outputs.amazon-sagemaker-pytorch-mnist == 'true' }}
       hm-aws-parallelcluster: ${{ needs.detect-changes.outputs.hm-aws-parallelcluster == 'true' }}
@@ -825,6 +921,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-machine-learning == 'true' }}
+      # Applications
       amazon-sagemaker-triton-resnet-50-deploy: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-deploy == 'true' }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
@@ -862,6 +961,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-computer-vision == 'true' }}
+      # Applications
       hm-imagebind: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
       hm-open3d: ${{ needs.detect-changes.outputs.hm-open3d == 'true' }}
       hm-pyvista-mount-saint-helens: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
@@ -874,6 +976,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-network-programmability == 'true' }}
+      # Applications
       udp-receiver: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
       udp-sender: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
 
@@ -883,6 +988,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-operating-system == 'true' }}
+      # Applications
       windows-calculator: ${{ needs.detect-changes.outputs.windows-calculator == 'true' }}
 
   test-embedded-system:
@@ -891,6 +999,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-embedded-system == 'true' }}
+      # Applications
       decode-can-blf-data: ${{ needs.detect-changes.outputs.decode-can-blf-data == 'true' }}
       decode-can-mf4-data: ${{ needs.detect-changes.outputs.decode-can-mf4-data == 'true' }}
       decode-can-trc-data: ${{ needs.detect-changes.outputs.decode-can-trc-data == 'true' }}
@@ -904,6 +1015,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-hardware-in-the-loop == 'true' }}
+      # Applications
       national-instruments-hm-pyvisa: ${{ needs.detect-changes.outputs.national-instruments-hm-pyvisa == 'true' }}
       national-instruments-hm-tdms: ${{ needs.detect-changes.outputs.national-instruments-hm-tdms == 'true' }}
       national-instruments-hm-veristand: ${{ needs.detect-changes.outputs.national-instruments-hm-veristand == 'true' }}
@@ -914,6 +1028,9 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-aerospace == 'true' }}
+      # Applications
       hm-aerosandbox: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
       hm-openaerostruct: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
 
