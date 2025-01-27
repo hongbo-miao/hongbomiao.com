@@ -364,32 +364,3 @@ module "tracker_kafka_snowflake_sink_connector" {
     module.hm_amazon_msk_plugin_tracker_kafka_snowflake_sink_plugin
   ]
 }
-
-# Loki data
-locals {
-  loki_chunk_data_name = "${var.environment}-hm-loki-chunk-data"
-  loki_ruler_data_name = "${var.environment}-hm-loki-ruler-data"
-  loki_admin_data_name = "${var.environment}-hm-loki-admin-data"
-}
-# Loki data - S3 bucket
-module "s3_bucket_loki_chunk_data" {
-  providers      = { aws = aws.production }
-  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
-  s3_bucket_name = "${local.loki_chunk_data_name}-bucket"
-  environment    = var.environment
-  team           = var.team
-}
-module "s3_bucket_loki_ruler_data" {
-  providers      = { aws = aws.production }
-  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
-  s3_bucket_name = "${local.loki_ruler_data_name}-bucket"
-  environment    = var.environment
-  team           = var.team
-}
-module "s3_bucket_loki_admin_data" {
-  providers      = { aws = aws.production }
-  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
-  s3_bucket_name = "${local.loki_admin_data_name}-bucket"
-  environment    = var.environment
-  team           = var.team
-}
