@@ -45,7 +45,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: hm-open-webui-secret
-                  key: openai_api_keys
+                  key: OPENAI_API_KEYS
             - name: DEFAULT_MODELS
               value: claude-3-5-sonnet
             - name: SCARF_NO_ANALYTICS
@@ -92,7 +92,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: hm-open-webui-secret
-                  key: google_client_secret
+                  key: GOOGLE_CLIENT_SECRET
           resources:
             requests:
               cpu: 2000m
