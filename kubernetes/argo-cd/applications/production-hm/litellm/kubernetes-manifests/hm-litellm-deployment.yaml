@@ -25,7 +25,7 @@ spec:
             - name: litellm
               protocol: TCP
               containerPort: 4000
-          command: ["litellm", "--port", "4000", "--config", "/app/config.yaml", "--detailed_debug"]
+          command: ["litellm", "--port", "4000", "--config", "/app/config.yaml"]
           volumeMounts:
             - name: litellm-volume
               mountPath: /app/config.yaml
