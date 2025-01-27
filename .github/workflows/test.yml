@@ -20,130 +20,6 @@ jobs:
     timeout-minutes: 10
     permissions:
       pull-requests: read
-    outputs:
-      workflow: ${{ steps.filter.outputs.workflow }}
-      amazon-sagemaker-pytorch-mnist: ${{ steps.filter.outputs.amazon-sagemaker-pytorch-mnist }}
-      amazon-sagemaker-triton-resnet-50-deploy: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-deploy }}
-      amazon-sagemaker-triton-resnet-50-infer: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-infer }}
-      api-go: ${{ steps.filter.outputs.api-go }}
-      api-node: ${{ steps.filter.outputs.api-node }}
-      api-python: ${{ steps.filter.outputs.api-python }}
-      api-rust: ${{ steps.filter.outputs.api-rust }}
-      call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
-      convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
-      data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
-      dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
-      decode-can-blf-data: ${{ steps.filter.outputs.decode-can-blf-data }}
-      decode-can-mf4-data: ${{ steps.filter.outputs.decode-can-mf4-data }}
-      decode-can-trc-data: ${{ steps.filter.outputs.decode-can-trc-data }}
-      delta-lake-read-delta-lake-by-amazon-athena: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-amazon-athena }}
-      delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
-      delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
-      development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
-      ethereum: ${{ steps.filter.outputs.ethereum }}
-      feature-store: ${{ steps.filter.outputs.feature-store }}
-      flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
-      format-can-data: ${{ steps.filter.outputs.format-can-data }}
-      grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
-      grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
-      graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
-      hm-aerosandbox: ${{ steps.filter.outputs.hm-aerosandbox }}
-      hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
-      hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
-      hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
-      hm-cudf: ${{ steps.filter.outputs.hm-cudf }}
-      hm-cuml: ${{ steps.filter.outputs.hm-cuml }}
-      hm-cupy: ${{ steps.filter.outputs.hm-cupy }}
-      hm-docling: ${{ steps.filter.outputs.hm-docling }}
-      hm-duckdb-query-duckdb: ${{ steps.filter.outputs.hm-duckdb-query-duckdb }}
-      hm-duckdb-query-lance: ${{ steps.filter.outputs.hm-duckdb-query-lance }}
-      hm-duckdb-query-parquet: ${{ steps.filter.outputs.hm-duckdb-query-parquet }}
-      hm-duckdb-query-protobuf: ${{ steps.filter.outputs.hm-duckdb-query-protobuf }}
-      hm-faster-whisper: ${{ steps.filter.outputs.hm-faster-whisper }}
-      hm-flax: ${{ steps.filter.outputs.hm-flax }}
-      hm-genesis: ${{ steps.filter.outputs.hm-genesis }}
-      hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
-      hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
-      hm-imagebind: ${{ steps.filter.outputs.hm-imagebind }}
-      hm-jax: ${{ steps.filter.outputs.hm-jax }}
-      hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
-      hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
-      hm-lancedb: ${{ steps.filter.outputs.hm-lancedb }}
-      hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
-      hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
-      hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
-      hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
-      hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
-      hm-networkx: ${{ steps.filter.outputs.hm-networkx }}
-      hm-numba: ${{ steps.filter.outputs.hm-numba }}
-      hm-nvidia-modulus: ${{ steps.filter.outputs.hm-nvidia-modulus }}
-      hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
-      hm-open3d: ${{ steps.filter.outputs.hm-open3d }}
-      hm-openaerostruct: ${{ steps.filter.outputs.hm-openaerostruct }}
-      hm-pandas: ${{ steps.filter.outputs.hm-pandas }}
-      hm-polars: ${{ steps.filter.outputs.hm-polars }}
-      hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
-      hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
-      hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
-      hm-protobuf: ${{ steps.filter.outputs.hm-protobuf }}
-      hm-prowler: ${{ steps.filter.outputs.hm-prowler }}
-      hm-pulumi: ${{ steps.filter.outputs.hm-pulumi }}
-      hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
-      hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
-      hm-ray-calculate: ${{ steps.filter.outputs.hm-ray-calculate }}
-      hm-ray-process-flight-data: ${{ steps.filter.outputs.hm-ray-process-flight-data }}
-      hm-scikit-learn: ${{ steps.filter.outputs.hm-scikit-learn }}
-      hm-serial: ${{ steps.filter.outputs.hm-serial }}
-      hm-sglang: ${{ steps.filter.outputs.hm-sglang }}
-      hm-skypilot: ${{ steps.filter.outputs.hm-skypilot }}
-      hm-spark-analyze-coffee-customers: ${{ steps.filter.outputs.hm-spark-analyze-coffee-customers }}
-      hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
-      hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
-      hm-spark-find-taxi-top-routes-sql: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes-sql }}
-      hm-spark-find-taxi-top-routes: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes }}
-      hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
-      hm-spark-recommend-movies: ${{ steps.filter.outputs.hm-spark-recommend-movies }}
-      hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
-      hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
-      hm-sunpy: ${{ steps.filter.outputs.hm-sunpy }}
-      hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
-      hm-triton: ${{ steps.filter.outputs.hm-triton }}
-      hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
-      hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
-      iads-iads-config-reader: ${{ steps.filter.outputs.iads-iads-config-reader }}
-      iads-iads-data-producer: ${{ steps.filter.outputs.iads-iads-data-producer }}
-      iads-iads-data-reader: ${{ steps.filter.outputs.iads-iads-data-reader }}
-      iads-zeromq-iads-bridge: ${{ steps.filter.outputs.iads-zeromq-iads-bridge }}
-      kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
-      kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
-      kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
-      kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
-      lance: ${{ steps.filter.outputs.lance }}
-      mineru: ${{ steps.filter.outputs.mineru }}
-      mobile-android: ${{ steps.filter.outputs.mobile-android }}
-      mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
-      mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
-      national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
-      national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
-      national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
-      national-instruments-veristand-zeromq-bridge: ${{ steps.filter.outputs.national-instruments-veristand-zeromq-bridge }}
-      neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
-      nvidia-dali: ${{ steps.filter.outputs.nvidia-dali }}
-      open-clip: ${{ steps.filter.outputs.open-clip }}
-      pack-unpack-data: ${{ steps.filter.outputs.pack-unpack-data }}
-      production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
-      prometheus: ${{ steps.filter.outputs.prometheus }}
-      quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
-      reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
-      robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
-      stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
-      taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
-      taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
-      udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
-      udp-sender: ${{ steps.filter.outputs.udp-sender }}
-      web-cypress: ${{ steps.filter.outputs.web-cypress }}
-      web: ${{ steps.filter.outputs.web }}
-      windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -151,8 +27,178 @@ jobs:
         id: filter
         with:
           filters: |
+            # Workflows
             workflow:
               - '.github/workflows/test.yml'
+            lint:
+              - '.github/workflows/.lint.yml'
+            # Languages
+            ansible:
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/playbook.yml'
+            c-cpp:
+              - '.clang-format'
+              - '**/*.c'
+              - '**/*.cpp'
+              - '**/*.cu'
+              - '**/*.cuh'
+              - '**/*.h'
+              - '**/*.hpp'
+              - '**/*.ino'
+            cmake:
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/CMakeLists.txt'
+            css:
+              - '.node-version'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '.stylelintignore'
+              - '.stylelintrc.mjs'
+              - '**/*.css'
+            dockerfile:
+              - '.hadolint.yaml'
+              - '**/Dockerfile*'
+            html:
+              - '.node-version'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '**/*.html'
+            json:
+              - '.node-version'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '**/*.json'
+            justfile:
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/justfile'
+            kubernetes:
+              - 'kubernetes/manifests/**'
+            markdown:
+              - '.node-version'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '**/*.md'
+            matlab:
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/*.m'
+            natural-language:
+              - '.node-version'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '.textlintrc.json'
+              - '.textlintignore'
+              - '**/*.c'
+              - '**/*.cjs'
+              - '**/*.cpp'
+              - '**/*.cs'
+              - '**/*.csproj'
+              - '**/*.cu'
+              - '**/*.cuh'
+              - '**/*.dbc'
+              - '**/*.go'
+              - '**/*.gradle'
+              - '**/*.h'
+              - '**/*.hpp'
+              - '**/*.ino'
+              - '**/*.ipynb'
+              - '**/*.java'
+              - '**/*.jl'
+              - '**/*.js'
+              - '**/*.json'
+              - '**/*.kt'
+              - '**/*.kts'
+              - '**/*.m'
+              - '**/*.md'
+              - '**/*.mjs'
+              - '**/*.p4'
+              - '**/*.py'
+              - '**/*.rego'
+              - '**/*.rs'
+              - '**/*.scad'
+              - '**/*.scala'
+              - '**/*.sh'
+              - '**/*.sln'
+              - '**/*.sol'
+              - '**/*.sql'
+              - '**/*.swift'
+              - '**/*.tf'
+              - '**/*.toml'
+              - '**/*.ts'
+              - '**/*.tsx'
+              - '**/*.vhd'
+              - '**/*.WizardFile'
+              - '**/*.xml'
+              - '**/*.yaml'
+              - '**/*.yml'
+            ruby:
+              - 'Gemfile'
+              - 'Gemfile.lock'
+              # https://github.com/rubocop/rubocop/blob/master/config/default.yml
+              - '**/*.gemfile'
+              - '**/Vagrantfile'
+            python:
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '.mypy.ini'
+              - '.ruff.toml'
+              - '**/*.py'
+            qml:
+              - '**/*.qml'
+            shell:
+              - '**/*.sh'
+            solidity:
+              - '.node-version'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '.solhint.json'
+              - '.solhintignore'
+              - '**/*.sol'
+            sql:
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '.sqlfluff'
+              - '.sqlfluffignore'
+              - '**/*.sql'
+            terraform:
+              - '**/*.tf'
+              - '**/*.tfvars'
+              - '**/.terraform.lock.hcl'
+              - 'cloud-infrastructure/terraform/**'
+            toml:
+              - 'taplo.toml'
+              - '**/*.toml'
+            verilog:
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/*.v'
+            vhdl:
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '**/*.vhd'
+            xml:
+              - '.node-version'
+              - '.npmrc'
+              - 'package.json'
+              - 'package-lock.json'
+              - '.prettierignore'
+              - '.prettierrc.mjs'
+              - '**/*.xml'
+            yaml:
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '.yamllint.yaml'
+              - '**/*.yaml'
+            # Application
             amazon-sagemaker-pytorch-mnist:
               - 'cloud-platform/aws/amazon-sagemaker/pytorch-mnist/**'
             amazon-sagemaker-triton-resnet-50-deploy:
@@ -398,6 +444,158 @@ jobs:
               - 'web-cypress/**'
             windows-calculator:
               - 'operating-system/windows/calculator/**'
+    outputs:
+      # Workflows
+      workflow-lint: ${{ steps.filter.outputs.workflow-lint }}
+      workflow: ${{ steps.filter.outputs.workflow }}
+      # Languages
+      ansible: ${{ steps.filter.outputs.ansible }}
+      c-cpp: ${{ steps.filter.outputs.c-cpp }}
+      cmake: ${{ steps.filter.outputs.cmake }}
+      css: ${{ steps.filter.outputs.css }}
+      dockerfile: ${{ steps.filter.outputs.dockerfile }}
+      html: ${{ steps.filter.outputs.html }}
+      json: ${{ steps.filter.outputs.json }}
+      justfile: ${{ steps.filter.outputs.justfile }}
+      kubernetes: ${{ steps.filter.outputs.kubernetes }}
+      markdown: ${{ steps.filter.outputs.markdown }}
+      matlab: ${{ steps.filter.outputs.matlab }}
+      natural-language: ${{ steps.filter.outputs.natural-language }}
+      python: ${{ steps.filter.outputs.python }}
+      qml: ${{ steps.filter.outputs.qml }}
+      ruby: ${{ steps.filter.outputs.ruby }}
+      shell: ${{ steps.filter.outputs.shell }}
+      solidity: ${{ steps.filter.outputs.solidity }}
+      sql: ${{ steps.filter.outputs.sql }}
+      terraform: ${{ steps.filter.outputs.terraform }}
+      toml: ${{ steps.filter.outputs.toml }}
+      verilog: ${{ steps.filter.outputs.verilog }}
+      vhdl: ${{ steps.filter.outputs.vhdl }}
+      xml: ${{ steps.filter.outputs.xml }}
+      yaml: ${{ steps.filter.outputs.yaml }}
+      # Applications
+      amazon-sagemaker-pytorch-mnist: ${{ steps.filter.outputs.amazon-sagemaker-pytorch-mnist }}
+      amazon-sagemaker-triton-resnet-50-deploy: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-deploy }}
+      amazon-sagemaker-triton-resnet-50-infer: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-infer }}
+      api-go: ${{ steps.filter.outputs.api-go }}
+      api-node: ${{ steps.filter.outputs.api-node }}
+      api-python: ${{ steps.filter.outputs.api-python }}
+      api-rust: ${{ steps.filter.outputs.api-rust }}
+      call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
+      convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
+      data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
+      dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
+      decode-can-blf-data: ${{ steps.filter.outputs.decode-can-blf-data }}
+      decode-can-mf4-data: ${{ steps.filter.outputs.decode-can-mf4-data }}
+      decode-can-trc-data: ${{ steps.filter.outputs.decode-can-trc-data }}
+      delta-lake-read-delta-lake-by-amazon-athena: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-amazon-athena }}
+      delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
+      delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
+      development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
+      ethereum: ${{ steps.filter.outputs.ethereum }}
+      feature-store: ${{ steps.filter.outputs.feature-store }}
+      flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
+      format-can-data: ${{ steps.filter.outputs.format-can-data }}
+      grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
+      grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
+      graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
+      hm-aerosandbox: ${{ steps.filter.outputs.hm-aerosandbox }}
+      hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
+      hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
+      hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
+      hm-cudf: ${{ steps.filter.outputs.hm-cudf }}
+      hm-cuml: ${{ steps.filter.outputs.hm-cuml }}
+      hm-cupy: ${{ steps.filter.outputs.hm-cupy }}
+      hm-docling: ${{ steps.filter.outputs.hm-docling }}
+      hm-duckdb-query-duckdb: ${{ steps.filter.outputs.hm-duckdb-query-duckdb }}
+      hm-duckdb-query-lance: ${{ steps.filter.outputs.hm-duckdb-query-lance }}
+      hm-duckdb-query-parquet: ${{ steps.filter.outputs.hm-duckdb-query-parquet }}
+      hm-duckdb-query-protobuf: ${{ steps.filter.outputs.hm-duckdb-query-protobuf }}
+      hm-faster-whisper: ${{ steps.filter.outputs.hm-faster-whisper }}
+      hm-flax: ${{ steps.filter.outputs.hm-flax }}
+      hm-genesis: ${{ steps.filter.outputs.hm-genesis }}
+      hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
+      hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
+      hm-imagebind: ${{ steps.filter.outputs.hm-imagebind }}
+      hm-jax: ${{ steps.filter.outputs.hm-jax }}
+      hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
+      hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
+      hm-lancedb: ${{ steps.filter.outputs.hm-lancedb }}
+      hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
+      hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
+      hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
+      hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
+      hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
+      hm-networkx: ${{ steps.filter.outputs.hm-networkx }}
+      hm-numba: ${{ steps.filter.outputs.hm-numba }}
+      hm-nvidia-modulus: ${{ steps.filter.outputs.hm-nvidia-modulus }}
+      hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
+      hm-open3d: ${{ steps.filter.outputs.hm-open3d }}
+      hm-openaerostruct: ${{ steps.filter.outputs.hm-openaerostruct }}
+      hm-pandas: ${{ steps.filter.outputs.hm-pandas }}
+      hm-polars: ${{ steps.filter.outputs.hm-polars }}
+      hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
+      hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
+      hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
+      hm-protobuf: ${{ steps.filter.outputs.hm-protobuf }}
+      hm-prowler: ${{ steps.filter.outputs.hm-prowler }}
+      hm-pulumi: ${{ steps.filter.outputs.hm-pulumi }}
+      hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
+      hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
+      hm-ray-calculate: ${{ steps.filter.outputs.hm-ray-calculate }}
+      hm-ray-process-flight-data: ${{ steps.filter.outputs.hm-ray-process-flight-data }}
+      hm-scikit-learn: ${{ steps.filter.outputs.hm-scikit-learn }}
+      hm-serial: ${{ steps.filter.outputs.hm-serial }}
+      hm-sglang: ${{ steps.filter.outputs.hm-sglang }}
+      hm-skypilot: ${{ steps.filter.outputs.hm-skypilot }}
+      hm-spark-analyze-coffee-customers: ${{ steps.filter.outputs.hm-spark-analyze-coffee-customers }}
+      hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
+      hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
+      hm-spark-find-taxi-top-routes-sql: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes-sql }}
+      hm-spark-find-taxi-top-routes: ${{ steps.filter.outputs.hm-spark-find-taxi-top-routes }}
+      hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
+      hm-spark-recommend-movies: ${{ steps.filter.outputs.hm-spark-recommend-movies }}
+      hm-streamlit-live-line-chart: ${{ steps.filter.outputs.hm-streamlit-live-line-chart }}
+      hm-streamlit-map: ${{ steps.filter.outputs.hm-streamlit-map }}
+      hm-sunpy: ${{ steps.filter.outputs.hm-sunpy }}
+      hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
+      hm-triton: ${{ steps.filter.outputs.hm-triton }}
+      hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
+      hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
+      iads-iads-config-reader: ${{ steps.filter.outputs.iads-iads-config-reader }}
+      iads-iads-data-producer: ${{ steps.filter.outputs.iads-iads-data-producer }}
+      iads-iads-data-reader: ${{ steps.filter.outputs.iads-iads-data-reader }}
+      iads-zeromq-iads-bridge: ${{ steps.filter.outputs.iads-zeromq-iads-bridge }}
+      kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
+      kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
+      kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
+      kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
+      lance: ${{ steps.filter.outputs.lance }}
+      mineru: ${{ steps.filter.outputs.mineru }}
+      mobile-android: ${{ steps.filter.outputs.mobile-android }}
+      mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
+      mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
+      national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
+      national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
+      national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
+      national-instruments-veristand-zeromq-bridge: ${{ steps.filter.outputs.national-instruments-veristand-zeromq-bridge }}
+      neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
+      nvidia-dali: ${{ steps.filter.outputs.nvidia-dali }}
+      open-clip: ${{ steps.filter.outputs.open-clip }}
+      pack-unpack-data: ${{ steps.filter.outputs.pack-unpack-data }}
+      production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
+      prometheus: ${{ steps.filter.outputs.prometheus }}
+      quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
+      reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
+      robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
+      stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
+      taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
+      taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
+      udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
+      udp-sender: ${{ steps.filter.outputs.udp-sender }}
+      web-cypress: ${{ steps.filter.outputs.web-cypress }}
+      web: ${{ steps.filter.outputs.web }}
+      windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
 
   lint:
     name: Lint
@@ -405,6 +603,34 @@ jobs:
     secrets: inherit
     needs: detect-changes
     with:
+      # Workflows
+      workflow: ${{ needs.detect-changes.outputs.workflow-lint == 'true' }}
+      # Languages
+      ansible: ${{ needs.detect-changes.outputs.ansible == 'true' }}
+      c-cpp: ${{ needs.detect-changes.outputs.c-cpp == 'true' }}
+      cmake: ${{ needs.detect-changes.outputs.cmake == 'true' }}
+      css: ${{ needs.detect-changes.outputs.css == 'true' }}
+      dockerfile: ${{ needs.detect-changes.outputs.dockerfile == 'true' }}
+      html: ${{ needs.detect-changes.outputs.html == 'true' }}
+      json: ${{ needs.detect-changes.outputs.json == 'true' }}
+      justfile: ${{ needs.detect-changes.outputs.justfile == 'true' }}
+      kubernetes: ${{ needs.detect-changes.outputs.kubernetes == 'true' }}
+      markdown: ${{ needs.detect-changes.outputs.markdown == 'true' }}
+      matlab: ${{ needs.detect-changes.outputs.matlab == 'true' }}
+      natural-language: ${{ needs.detect-changes.outputs.natural-language == 'true' }}
+      python: ${{ needs.detect-changes.outputs.python == 'true' }}
+      qml: ${{ needs.detect-changes.outputs.qml == 'true' }}
+      ruby: ${{ needs.detect-changes.outputs.ruby == 'true' }}
+      shell: ${{ needs.detect-changes.outputs.shell == 'true' }}
+      solidity: ${{ needs.detect-changes.outputs.solidity == 'true' }}
+      sql: ${{ needs.detect-changes.outputs.sql == 'true' }}
+      terraform: ${{ needs.detect-changes.outputs.terraform == 'true' }}
+      toml: ${{ needs.detect-changes.outputs.toml == 'true' }}
+      verilog: ${{ needs.detect-changes.outputs.verilog == 'true' }}
+      vhdl: ${{ needs.detect-changes.outputs.vhdl == 'true' }}
+      xml: ${{ needs.detect-changes.outputs.xml == 'true' }}
+      yaml: ${{ needs.detect-changes.outputs.yaml == 'true' }}
+      # Applications
       api-go: ${{ needs.detect-changes.outputs.api-go == 'true' }}
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
       api-rust: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
