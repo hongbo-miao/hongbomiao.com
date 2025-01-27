@@ -103,10 +103,7 @@ name: . Lint
       hm-spark-ingest-from-s3-to-kafka:
         required: true
         type: boolean
-      iads-iads-data-producer:
-        required: true
-        type: boolean
-      iads-zeromq-iads-bridge:
+      iads-data-producer:
         required: true
         type: boolean
       kafka-rust-proto-consumer:
@@ -143,6 +140,9 @@ name: . Lint
         required: true
         type: boolean
       windows-calculator:
+        required: true
+        type: boolean
+      zeromq-iads-bridge:
         required: true
         type: boolean
 
@@ -787,7 +787,7 @@ jobs:
 
   lint-rust-iads-data-producer:
     name: Rust (iads-data-producer)
-    if: ${{ inputs.workflow || inputs.iads-iads-data-producer }}
+    if: ${{ inputs.workflow || inputs.iads-data-producer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -811,7 +811,7 @@ jobs:
 
   lint-rust-zeromq-iads-bridge:
     name: Rust (zeromq-iads-bridge)
-    if: ${{ inputs.workflow || inputs.iads-zeromq-iads-bridge }}
+    if: ${{ inputs.workflow || inputs.zeromq-iads-bridge }}
     runs-on: windows-2025
     environment: test
     timeout-minutes: 10
