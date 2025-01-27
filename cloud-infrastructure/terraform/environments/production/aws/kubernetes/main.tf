@@ -33,7 +33,7 @@ module "amazon_ebs_csi_driver_iam_role" {
   team                                 = var.team
 }
 # Amazon S3 CSI driver mountpoint - S3 bucket
-module "amazon_s3_bucket_eks_cluster_mount" {
+module "s3_bucket_eks_cluster_mount" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.amazon_eks_cluster_name}-mount"
@@ -188,14 +188,14 @@ module "karpenter" {
 
 # Gateway API
 # Gateway API - S3 bucket
-module "amazon_s3_bucket_eks_cluster_elastic_load_balancer" {
+module "s3_bucket_eks_cluster_elastic_load_balancer" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.amazon_eks_cluster_name}-elastic-load-balancer"
   environment    = var.environment
   team           = var.team
 }
-module "amazon_s3_bucket_eks_cluster_network_load_balancer_policy" {
+module "s3_bucket_eks_cluster_network_load_balancer_policy" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/kubernetes/hm_aws_network_load_balancer_s3_bucket_policy"
   s3_bucket_name = module.amazon_s3_bucket_eks_cluster_elastic_load_balancer.name
@@ -356,7 +356,7 @@ module "kubernetes_namespace_hm_sealed_secrets" {
 
 # Airbyte
 # Airbyte - S3 bucket
-module "amazon_s3_bucket_hm_airbyte" {
+module "s3_bucket_hm_airbyte" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-airbyte"
@@ -447,7 +447,7 @@ module "kubernetes_namespace_hm_airbyte" {
 
 # MLflow
 # MLflow - S3 bucket
-module "amazon_s3_bucket_hm_mlflow" {
+module "s3_bucket_hm_mlflow" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-mlflow"
@@ -592,6 +592,71 @@ module "kubernetes_namespace_hm_prometheus" {
   ]
 }
 
+# Loki
+# Loki - S3 bucket
+locals {
+  loki_admin_data_name = "${var.environment}-hm-loki-admin-data"
+  loki_chunk_data_name = "${var.environment}-hm-loki-chunk-data"
+  loki_ruler_data_name = "${var.environment}-hm-loki-ruler-data"
+}
+module "s3_bucket_loki_admin_data" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.loki_admin_data_name}-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+module "s3_bucket_loki_chunk_data" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.loki_chunk_data_name}-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+module "s3_bucket_loki_ruler_data" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.loki_ruler_data_name}-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+module "hm_loki_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/kubernetes/hm_loki_iam_role"
+  loki_service_account_name            = "hm-loki"
+  loki_namespace                       = "${var.environment}-hm-loki"
+  loki_admin_data_s3_bucket_name       = module.s3_bucket_loki_admin_data.name
+  loki_chunk_data_s3_bucket_name       = module.s3_bucket_loki_chunk_data.name
+  loki_ruler_data_s3_bucket_name       = module.s3_bucket_loki_ruler_data.name
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  environment                          = var.environment
+  team                                 = var.team
+}
+# Loki - Kubernetes namespace
+module "kubernetes_namespace_hm_loki" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-loki"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
+# Promtail
+# Promtail - Kubernetes namespace
+module "kubernetes_namespace_hm_promtail" {
+  source               = "../../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-promtail"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
 # Grafana
 # Grafana - Kubernetes namespace
 module "kubernetes_namespace_hm_grafana" {
@@ -623,19 +688,6 @@ module "kubernetes_namespace_hm_qdrant" {
 module "kubernetes_namespace_hm_valkey" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-valkey"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Loki
-# Loki - Kubernetes namespace
-module "kubernetes_namespace_hm_loki" {
-  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-loki"
   labels = {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
