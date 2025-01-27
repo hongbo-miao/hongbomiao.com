@@ -8,6 +8,5 @@ grant all privileges on database mlflow_auth_db to mlflow_user;
 
 \connect mlflow_db
 grant all privileges on schema public to mlflow_user;
-
 \connect mlflow_auth_db
 grant all privileges on schema public to mlflow_user;

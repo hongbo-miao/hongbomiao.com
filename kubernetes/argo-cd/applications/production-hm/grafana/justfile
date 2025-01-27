@@ -1,3 +1,11 @@
+sealed-secrets-seal:
+    cat secrets/hm-grafana-secret.unsealed.yaml | \
+    kubeseal \
+        --controller-namespace=production-hm-sealed-secrets \
+        --controller-name=hm-sealed-secrets \
+        --format=yaml \
+        > kubernetes-manifests/hm-grafana-secret.yaml
+
 argo-cd-app-create:
     argocd app create production-hm-grafana --file=argo-cd-manifests/hm-grafana-application.yaml
 

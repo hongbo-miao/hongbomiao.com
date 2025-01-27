@@ -18,6 +18,20 @@ spec:
         values: |
           # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
           ---
+          replicas: 3
+          admin:
+            existingSecret: hm-grafana-secret
+            userKey: GRAFANA_ADMIN_USER_NAME
+            passwordKey: GRAFANA_ADMIN_PASSWORD
+          envValueFrom:
+            POSTGRES_USER_NAME:
+              secretKeyRef:
+                name: hm-grafana-secret
+                key: POSTGRES_USER_NAME
+            POSTGRES_PASSWORD:
+              secretKeyRef:
+                name: hm-grafana-secret
+                key: POSTGRES_PASSWORD
           grafana.ini:
             security:
               # For Ray: https://docs.ray.io/en/latest/cluster/kubernetes/k8s-ecosystem/prometheus-grafana.html
@@ -25,6 +39,16 @@ spec:
             auth.anonymous:
               enabled: true
               org_role: Viewer
+            database:
+              type: postgres
+              host: production-hm-grafana-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com:5432
+              name: grafana_db
+              user: $__env{POSTGRES_USER_NAME}
+              password: $__env{POSTGRES_PASSWORD}
+              ssl_mode: require
+          persistence:
+            enabled: false
+            type: pvc
           sidecar:
             dashboards:
               enabled: true
