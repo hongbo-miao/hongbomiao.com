@@ -416,14 +416,12 @@ jobs:
               - 'hm-xxhash/**'
             hugging-face-analyze-sentiment:
               - 'machine-learning/hugging-face/analyze-sentiment/**'
-            iads-iads-config-reader:
-              - 'data-visualization/iads/iads-iads-config-reader/**'
-            iads-iads-data-reader:
-              - 'data-visualization/iads/iads-iads-data-reader/**'
-            iads-iads-data-producer:
+            iads-config-reader:
+              - 'data-visualization/iads/iads-data-manager/iads-config-reader/**'
+            iads-data-producer:
               - 'data-visualization/iads/iads-rtstation/iads-data-producer/**'
-            iads-zeromq-iads-bridge:
-              - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
+            iads-data-reader:
+              - 'data-visualization/iads/iads-data-manager/iads-data-reader/**'
             kafka-rust-proto-consumer:
               - 'data-processing/kafka/kafka-client/kafka-rust/proto-consumer/**'
             kafka-rust-proto-producer:
@@ -482,6 +480,8 @@ jobs:
               - 'web-cypress/**'
             windows-calculator:
               - 'operating-system/windows/calculator/**'
+            zeromq-iads-bridge:
+              - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
     outputs:
       # Workflows
       workflow-lint: ${{ steps.filter.outputs.workflow-lint }}
@@ -619,10 +619,9 @@ jobs:
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
       hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
-      iads-iads-config-reader: ${{ steps.filter.outputs.iads-iads-config-reader }}
-      iads-iads-data-producer: ${{ steps.filter.outputs.iads-iads-data-producer }}
-      iads-iads-data-reader: ${{ steps.filter.outputs.iads-iads-data-reader }}
-      iads-zeromq-iads-bridge: ${{ steps.filter.outputs.iads-zeromq-iads-bridge }}
+      iads-config-reader: ${{ steps.filter.outputs.iads-config-reader }}
+      iads-data-producer: ${{ steps.filter.outputs.iads-data-producer }}
+      iads-data-reader: ${{ steps.filter.outputs.iads-data-reader }}
       kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
       kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
@@ -653,6 +652,7 @@ jobs:
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
       web: ${{ steps.filter.outputs.web }}
       windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
+      zeromq-iads-bridge: ${{ steps.filter.outputs.zeromq-iads-bridge }}
 
   lint:
     name: Lint
@@ -695,8 +695,7 @@ jobs:
       grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
       hm-spark-find-retired-people-scala: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}
       hm-spark-ingest-from-s3-to-kafka: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
-      iads-iads-data-producer: ${{ needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
-      iads-zeromq-iads-bridge: ${{ needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
+      iads-data-producer: ${{ needs.detect-changes.outputs.iads-data-producer == 'true' }}
       kafka-rust-proto-consumer: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
       kafka-rust-proto-producer: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
       kafka-rust-udp-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
@@ -709,6 +708,7 @@ jobs:
       web-cypress: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
       web: ${{ needs.detect-changes.outputs.web == 'true' }}
       windows-calculator: ${{ needs.detect-changes.outputs.windows-calculator == 'true' }}
+      zeromq-iads-bridge: ${{ needs.detect-changes.outputs.zeromq-iads-bridge == 'true' }}
 
   static-type-check:
     name: Static Type Check
@@ -868,10 +868,10 @@ jobs:
       # Applications
       grafana-hm-dashboard: ${{ needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
       grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
-      iads-iads-config-reader: ${{ needs.detect-changes.outputs.iads-iads-config-reader == 'true' }}
-      iads-iads-data-producer: ${{ needs.detect-changes.outputs.iads-iads-data-producer == 'true' }}
-      iads-iads-data-reader: ${{ needs.detect-changes.outputs.iads-iads-data-reader == 'true' }}
-      iads-zeromq-iads-bridge: ${{ needs.detect-changes.outputs.iads-zeromq-iads-bridge == 'true' }}
+      iads-config-reader: ${{ needs.detect-changes.outputs.iads-config-reader == 'true' }}
+      iads-data-producer: ${{ needs.detect-changes.outputs.iads-data-producer == 'true' }}
+      iads-data-reader: ${{ needs.detect-changes.outputs.iads-data-reader == 'true' }}
+      zeromq-iads-bridge: ${{ needs.detect-changes.outputs.zeromq-iads-bridge == 'true' }}
 
   test-computing:
     name: Test Computing
