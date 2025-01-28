@@ -24,13 +24,15 @@ spec:
           head:
             serviceAccountName: hm-ray-cluster-service-account
             containerEnv:
+              # https://docs.ray.io/en/latest/cluster/configure-manage-dashboard.html#embedding-grafana-visualizations-into-ray-dashboard
               - name: RAY_GRAFANA_IFRAME_HOST
                 value: https://grafana.internal.hongbomiao.com
               - name: RAY_GRAFANA_HOST
                 value: http://hm-grafana.production-hm-grafana.svc:80
               - name: RAY_PROMETHEUS_HOST
                 value: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus.svc:9090
-            ports: []
+              - name: RAY_PROMETHEUS_NAME
+                value: hm-prometheus
             resources:
               requests:
                 cpu: 1000m
@@ -43,11 +45,6 @@ spec:
             minReplicas: 2
             maxReplicas: 100
             serviceAccountName: hm-ray-cluster-service-account
-            containerEnv:
-              # https://github.com/ray-project/kuberay/issues/2239
-              - name: RANDOM_ENV
-                value: "1"
-            ports: []
             resources:
               requests:
                 cpu: 1000m
