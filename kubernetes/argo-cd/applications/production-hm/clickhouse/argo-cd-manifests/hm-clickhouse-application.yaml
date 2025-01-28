@@ -1,0 +1,51 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-clickhouse
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-clickhouse
+spec:
+  project: production-hm
+  sources:
+    - repoURL: registry-1.docker.io/bitnamicharts
+      # https://artifacthub.io/packages/helm/bitnami/clickhouse
+      targetRevision: 7.2.0
+      chart: clickhouse
+      helm:
+        releaseName: hm-clickhouse
+        values: |
+          # https://github.com/bitnami/charts/blob/main/bitnami/clickhouse/values.yaml
+          ---
+          auth:
+            username: admin
+            existingSecret: hm-clickhouse-secret
+            existingSecretKey: CLICKHOUSE_ADMIN_PASSWORD
+          persistence:
+            enabled: true
+            accessModes: ["ReadWriteOnce"]
+            size: 100Gi
+            storageClass: production-hm-clickhouse-storage-class
+          keeper:
+            enabled: true
+          zookeeper:
+            enabled: false
+          resources:
+            requests:
+              cpu: 200m
+              memory: 2Gi
+            limits:
+              cpu: 4000m
+              memory: 8Gi
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/clickhouse/kubernetes-manifests
+  destination:
+    namespace: production-hm-clickhouse
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
