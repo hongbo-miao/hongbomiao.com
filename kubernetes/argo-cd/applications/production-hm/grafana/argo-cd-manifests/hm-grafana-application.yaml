@@ -18,7 +18,7 @@ spec:
         values: |
           # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
           ---
-          replicas: 3
+          replicas: 10
           admin:
             existingSecret: hm-grafana-secret
             userKey: GRAFANA_ADMIN_USER_NAME
@@ -46,6 +46,8 @@ spec:
               user: $__env{POSTGRES_USER_NAME}
               password: $__env{POSTGRES_PASSWORD}
               ssl_mode: require
+          plugins:
+            - trino-datasource
           persistence:
             enabled: false
             type: pvc
@@ -64,12 +66,12 @@ spec:
             datasources.yaml:
               apiVersion: 1
               datasources:
-                - name: Prometheus
+                - name: hm-prometheus
                   type: prometheus
                   url: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus:9090
                   access: proxy
                   isDefault: true
-                - name: Loki
+                - name: hm-loki
                   type: loki
                   url: http://hm-loki-gateway.production-hm-loki:80
                   access: proxy
@@ -78,52 +80,52 @@ spec:
             dashboardproviders.yaml:
               apiVersion: 1
               providers:
-                - name: kubernetes-dashboards
+                - name: hm-kubernetes-dashboards
                   orgId: 1
                   folder: Kubernetes
                   type: file
                   disableDeletion: true
                   editable: false
                   options:
-                    path: /var/lib/grafana/dashboards/kubernetes-dashboards
-                - name: ray-dashboards
+                    path: /var/lib/grafana/dashboards/hm-kubernetes-dashboards
+                - name: hm-ray-dashboards
                   orgId: 1
                   folder: Ray
                   type: file
                   disableDeletion: true
                   editable: false
                   options:
-                    path: /var/lib/grafana/dashboards/ray-dashboards
+                    path: /var/lib/grafana/dashboards/hm-ray-dashboards
           dashboards:
-            kubernetes-dashboards:
-              kubernetes-system-api-server-dashboard:
+            hm-kubernetes-dashboards:
+              hm-kubernetes-system-api-server-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
-              kubernetes-system-coredns-dashboard:
+              hm-kubernetes-system-coredns-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
-              kubernetes-views-global-dashboard:
+              hm-kubernetes-views-global-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
-              kubernetes-views-namespaces-dashboard:
+              hm-kubernetes-views-namespaces-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
-              kubernetes-views-nodes-dashboard:
+              hm-kubernetes-views-nodes-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
-              kubernetes-views-pods-dashboard:
+              hm-kubernetes-views-pods-dashboard:
                 url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
-            ray-dashboards:
-              ray-data-grafana-dashboard:
+            hm-ray-dashboards:
+              hm-ray-data-grafana-dashboard:
                 url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/data_grafana_dashboard.json
-              ray-default-grafana-dashboard:
+              hm-ray-default-grafana-dashboard:
                 url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/default_grafana_dashboard.json
-              ray-serve-deployment-grafana-dashboard:
+              hm-ray-serve-deployment-grafana-dashboard:
                 url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/serve_deployment_grafana_dashboard.json
-              ray-serve-grafana-dashboard:
+              hm-ray-serve-grafana-dashboard:
                 url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/serve_grafana_dashboard.json
           resources:
             requests:
-              cpu: 50m
-              memory: 256Mi
+              cpu: 1000m
+              memory: 1Gi
             limits:
-              cpu: 100m
-              memory: 512Mi
+              cpu: 2000m
+              memory: 4Gi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/grafana/kubernetes-manifests
