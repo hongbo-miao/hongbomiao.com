@@ -288,6 +288,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Airbyte** - Data integration
 - **Vector** - Log collector
 - **Fluent Bit** - Log collector
+- **Alloy** - OpenTelemetry Collector
 
 ### Data Orchestration
 
