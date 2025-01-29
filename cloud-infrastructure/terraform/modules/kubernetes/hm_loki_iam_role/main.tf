@@ -52,12 +52,12 @@ resource "aws_iam_role_policy" "hm_loki_iam_role_policy" {
           "s3:PutObject"
         ]
         Resource = [
-          "arn:aws:s3:::${var.loki_admin_data_s3_bucket_name}",
-          "arn:aws:s3:::${var.loki_admin_data_s3_bucket_name}/*",
-          "arn:aws:s3:::${var.loki_chunk_data_s3_bucket_name}",
-          "arn:aws:s3:::${var.loki_chunk_data_s3_bucket_name}/*",
-          "arn:aws:s3:::${var.loki_ruler_data_s3_bucket_name}",
-          "arn:aws:s3:::${var.loki_ruler_data_s3_bucket_name}/*"
+          "arn:aws:s3:::${var.loki_admin_s3_bucket_name}",
+          "arn:aws:s3:::${var.loki_admin_s3_bucket_name}/*",
+          "arn:aws:s3:::${var.loki_chunk_s3_bucket_name}",
+          "arn:aws:s3:::${var.loki_chunk_s3_bucket_name}/*",
+          "arn:aws:s3:::${var.loki_ruler_s3_bucket_name}",
+          "arn:aws:s3:::${var.loki_ruler_s3_bucket_name}/*"
         ]
       }
     ]

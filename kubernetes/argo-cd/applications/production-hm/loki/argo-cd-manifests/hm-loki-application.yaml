@@ -39,7 +39,7 @@ spec:
             storage_config:
               aws:
                 region: us-west-2
-                bucketnames: production-hm-loki-chunk-data-bucket
+                bucketnames: production-hm-loki-chunk-bucket
                 s3forcepathstyle: false
             pattern_ingester:
               enabled: true
@@ -60,7 +60,7 @@ spec:
                 type: s3
                 s3:
                   region: us-west-2
-                  bucketnames: production-hm-loki-ruler-data-bucket
+                  bucketnames: production-hm-loki-ruler-bucket
                   s3forcepathstyle: false
                 alertmanager_url: http://hm-prometheus-kube-pr-alertmanager.production-hm-prometheus:9093
             storage:
@@ -68,9 +68,9 @@ spec:
               s3:
                 region: us-west-2
               bucketNames:
-                chunks: production-hm-loki-chunk-data-bucket
-                ruler: production-hm-loki-ruler-data-bucket
-                admin: production-hm-loki-admin-data-bucket
+                chunks: production-hm-loki-chunk-bucket
+                ruler: production-hm-loki-ruler-bucket
+                admin: production-hm-loki-admin-bucket
           sidecar:
             resources:
               requests:
