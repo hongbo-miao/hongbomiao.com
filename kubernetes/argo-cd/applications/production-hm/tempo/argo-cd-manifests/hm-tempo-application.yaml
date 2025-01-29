@@ -52,11 +52,18 @@ spec:
         metricsGenerator:
           enabled: true
           config:
+            processor:
+              # https://grafana.com/docs/tempo/latest/operations/traceql-metrics/
+              local_blocks:
+                filter_server_spans: false
             storage:
               remote_write:
                 - url: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus:9090/api/v1/write
         global_overrides:
-          metrics_generator_processors: [service-graphs, span-metrics]
+          metrics_generator_processors:
+            - local-blocks
+            - service-graphs
+            - span-metrics
   destination:
     namespace: production-hm-tempo
     server: https://kubernetes.default.svc
