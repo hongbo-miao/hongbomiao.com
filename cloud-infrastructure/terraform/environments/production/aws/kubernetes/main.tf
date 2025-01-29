@@ -648,7 +648,7 @@ module "kubernetes_namespace_hm_loki" {
 # Promtail
 # Promtail - Kubernetes namespace
 module "kubernetes_namespace_hm_promtail" {
-  source               = "../../../../../modules/kubernetes/hm_kubernetes_namespace"
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-promtail"
   labels = {
     "goldilocks.fairwinds.com/enabled" = "true"
@@ -657,6 +657,52 @@ module "kubernetes_namespace_hm_promtail" {
     module.hm_amazon_eks_cluster
   ]
 }
+
+
+# Tempo
+# Tempo - S3 bucket
+locals {
+  tempo_admin_name = "${var.environment}-hm-tempo-admin"
+  tempo_trace_name = "${var.environment}-hm-tempo-trace"
+}
+module "s3_bucket_hm_tempo_admin" {
+  providers      = { aws = aws.engineering }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.tempo_admin_name}-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+module "s3_bucket_hm_tempo_trace" {
+  providers      = { aws = aws.engineering }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.tempo_trace_name}-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+module "hm_tempo_iam_role" {
+  providers                            = { aws = aws.engineering }
+  source                               = "../../../../modules/kubernetes/hm_tempo_iam_role"
+  tempo_service_account_name           = "hm-tempo"
+  tempo_namespace                      = "${var.environment}-hm-tempo"
+  tempo_admin_s3_bucket_name           = module.s3_bucket_hm_tempo_admin.name
+  tempo_trace_s3_bucket_name           = module.s3_bucket_hm_tempo_trace.name
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  environment                          = var.environment
+  team                                 = var.team
+}
+# Tempo - Kubernetes namespace
+module "hm_kubernetes_namespace_hm_tempo" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-tempo"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
 # Grafana
 # Grafana - Kubernetes namespace
 module "kubernetes_namespace_hm_grafana" {

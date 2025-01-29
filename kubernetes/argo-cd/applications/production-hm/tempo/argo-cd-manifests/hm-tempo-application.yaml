@@ -1,0 +1,67 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-tempo
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-tempo
+spec:
+  project: production-hm
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    # https://artifacthub.io/packages/helm/grafana/tempo-distributed
+    targetRevision: 1.31.0
+    chart: tempo-distributed
+    helm:
+      releaseName: hm-tempo
+      values: |
+        # https://github.com/grafana/helm-charts/blob/main/charts/tempo-distributed/values.yaml
+        # https://grafana.com/docs/tempo/latest/setup/operator/object-storage/
+        ---
+        tempo:
+          structuredConfig:
+            # https://grafana.com/docs/tempo/latest/traceql/#stream-query-results
+            stream_over_http_enabled: true
+        gateway:
+          enabled: false
+        serviceAccount:
+          create: true
+          name: hm-tempo
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/TempoRole-hm-tempo
+        storage:
+          trace:
+            backend: s3
+            s3:
+              endpoint: s3.amazonaws.com
+              region: us-west-2
+              bucket: production-hm-tempo-trace-bucket
+          admin:
+            backend: s3
+            s3:
+              endpoint: s3.amazonaws.com
+              region: us-west-2
+              bucket: production-hm-tempo-admin-bucket
+        traces:
+          otlp:
+            http:
+              enabled: true
+            grpc:
+              enabled: true
+        metricsGenerator:
+          enabled: true
+          config:
+            storage:
+              remote_write:
+                - url: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus:9090/api/v1/write
+        global_overrides:
+          metrics_generator_processors: [service-graphs, span-metrics]
+  destination:
+    namespace: production-hm-tempo
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
