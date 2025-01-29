@@ -171,12 +171,14 @@ spec:
 
               // https://grafana.com/docs/tempo/latest/configuration/grafana-alloy/automatic-logging/
               // https://grafana.com/docs/tempo/latest/configuration/grafana-alloy/service-graphs/
+              // https://grafana.com/docs/tempo/latest/configuration/grafana-alloy/span-metrics/
               otelcol.receiver.otlp "default" {
                 grpc {}
                 http {}
                 output {
                   traces = [
                     otelcol.connector.servicegraph.default.input,
+                    otelcol.connector.spanmetrics.default.input,
                     otelcol.exporter.otlp.default.input,
                   ]
                 }
@@ -186,6 +188,27 @@ spec:
                 roots = true
                 output {
                   logs = [otelcol.exporter.otlp.default.input]
+                }
+              }
+
+              otelcol.connector.spanmetrics "default" {
+                dimension {
+                  name = "http.method"
+                  default = "GET"
+                }
+                dimension {
+                  name = "http.target"
+                }
+                aggregation_temporality = "DELTA"
+                histogram {
+                  explicit {
+                    buckets = ["50ms", "100ms", "250ms", "1s", "5s", "10s"]
+                  }
+                }
+                metrics_flush_interval = "15s"
+                namespace = "traces_spanmetrics"
+                output {
+                  metrics = [otelcol.exporter.otlp.default.input]
                 }
               }
 
