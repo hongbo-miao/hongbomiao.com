@@ -595,28 +595,28 @@ module "kubernetes_namespace_hm_prometheus" {
 # Loki
 # Loki - S3 bucket
 locals {
-  loki_admin_data_name = "${var.environment}-hm-loki-admin-data"
-  loki_chunk_data_name = "${var.environment}-hm-loki-chunk-data"
-  loki_ruler_data_name = "${var.environment}-hm-loki-ruler-data"
+  loki_admin_name = "${var.environment}-hm-loki-admin"
+  loki_chunk_name = "${var.environment}-hm-loki-chunk"
+  loki_ruler_name = "${var.environment}-hm-loki-ruler"
 }
-module "s3_bucket_loki_admin_data" {
+module "s3_bucket_hm_loki_admin" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
-  s3_bucket_name = "${local.loki_admin_data_name}-bucket"
+  s3_bucket_name = "${local.loki_admin_name}-bucket"
   environment    = var.environment
   team           = var.team
 }
-module "s3_bucket_loki_chunk_data" {
+module "s3_bucket_hm_loki_chunk" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
-  s3_bucket_name = "${local.loki_chunk_data_name}-bucket"
+  s3_bucket_name = "${local.loki_chunk_name}-bucket"
   environment    = var.environment
   team           = var.team
 }
-module "s3_bucket_loki_ruler_data" {
+module "s3_bucket_hm_loki_ruler" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
-  s3_bucket_name = "${local.loki_ruler_data_name}-bucket"
+  s3_bucket_name = "${local.loki_ruler_name}-bucket"
   environment    = var.environment
   team           = var.team
 }
@@ -625,9 +625,9 @@ module "hm_loki_iam_role" {
   source                               = "../../../../modules/kubernetes/hm_loki_iam_role"
   loki_service_account_name            = "hm-loki"
   loki_namespace                       = "${var.environment}-hm-loki"
-  loki_admin_data_s3_bucket_name       = module.s3_bucket_loki_admin_data.name
-  loki_chunk_data_s3_bucket_name       = module.s3_bucket_loki_chunk_data.name
-  loki_ruler_data_s3_bucket_name       = module.s3_bucket_loki_ruler_data.name
+  loki_admin_s3_bucket_name            = module.s3_bucket_hm_loki_admin.name
+  loki_chunk_s3_bucket_name            = module.s3_bucket_hm_loki_chunk.name
+  loki_ruler_s3_bucket_name            = module.s3_bucket_hm_loki_ruler.name
   amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
   environment                          = var.environment
