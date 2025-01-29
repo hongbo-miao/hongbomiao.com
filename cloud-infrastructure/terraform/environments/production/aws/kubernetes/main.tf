@@ -645,19 +645,6 @@ module "kubernetes_namespace_hm_loki" {
   ]
 }
 
-# Promtail
-# Promtail - Kubernetes namespace
-module "kubernetes_namespace_hm_promtail" {
-  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-promtail"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.hm_amazon_eks_cluster
-  ]
-}
-
 # Alloy
 # Alloy - Kubernetes namespace
 module "kubernetes_namespace_hm_alloy" {
