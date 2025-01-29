@@ -4,13 +4,13 @@ variable "loki_service_account_name" {
 variable "loki_namespace" {
   type = string
 }
-variable "loki_admin_data_s3_bucket_name" {
+variable "loki_admin_s3_bucket_name" {
   type = string
 }
-variable "loki_chunk_data_s3_bucket_name" {
+variable "loki_chunk_s3_bucket_name" {
   type = string
 }
-variable "loki_ruler_data_s3_bucket_name" {
+variable "loki_ruler_s3_bucket_name" {
   type = string
 }
 variable "amazon_eks_cluster_oidc_provider" {
