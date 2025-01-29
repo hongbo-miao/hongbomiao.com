@@ -215,6 +215,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Metrics Server** - Kubernetes metrics
 - **Elastic APM** - Application performance monitoring
 - **OpenTelemetry** - Observability framework
+- **Tempo** - Distributed tracing backend
 - **Jaeger** - Distributed tracing system
 - **Netdata** - Distributed monitoring platform
 - **Telegraf** - Plugin-driven server agent
