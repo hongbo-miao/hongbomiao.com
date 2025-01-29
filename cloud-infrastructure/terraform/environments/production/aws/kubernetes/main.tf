@@ -658,6 +658,18 @@ module "kubernetes_namespace_hm_promtail" {
   ]
 }
 
+# Alloy
+# Alloy - Kubernetes namespace
+module "kubernetes_namespace_hm_alloy" {
+  source               = "../../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-alloy"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
 
 # Tempo
 # Tempo - S3 bucket
@@ -692,7 +704,7 @@ module "hm_tempo_iam_role" {
   team                                 = var.team
 }
 # Tempo - Kubernetes namespace
-module "hm_kubernetes_namespace_hm_tempo" {
+module "kubernetes_namespace_hm_tempo" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-tempo"
   labels = {
