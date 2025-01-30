@@ -11,27 +11,6 @@ wheels = [
 ]
 
 [[package]]
-name = "attrs"
-version = "25.1.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/49/7c/fdf464bcc51d23881d110abd74b512a42b3d5d376a55a831b44c603ae17f/attrs-25.1.0.tar.gz", hash = "sha256:1c97078a80c814273a76b2a298a932eb681c87415c11dee0a6921de7f1b02c3e", size = 810562 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/fc/30/d4986a882011f9df997a55e6becd864812ccfcd821d64aac8570ee39f719/attrs-25.1.0-py3-none-any.whl", hash = "sha256:c75a69e28a550a7e93789579c22aa26b0f5b83b75dc4e08fe092980051e1090a", size = 63152 },
-]
-
-[[package]]
-name = "bindepend"
-version = "0.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pefile" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/4a/c3/c8dd5829125827ee181ec0f84154f6a75d8d42e024968904d8eba377f86a/bindepend-0.1.tar.gz", hash = "sha256:4a376a4a81d4812e85be9cf1b9b49c78bcf76a3278b94a9b080c22ac9c3ad1fd", size = 1953 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/bc/30/82759beab522bd15c2c90b69246b453c31bfcd82da1f12284399f348e675/bindepend-0.1-py3-none-any.whl", hash = "sha256:8c3017b8d25b18c3865f55137656338312d06999b93b798b5be1a1d0176e6493", size = 3073 },
-]
-
-[[package]]
 name = "cmake"
 version = "3.31.4"
 source = { registry = "https://pypi.org/simple" }
@@ -113,7 +92,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "cmake", specifier = "==3.31.4" },
-    { name = "delocate", specifier = "==0.12.0" },
+    { name = "delocate", specifier = "==0.13.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -125,18 +104,16 @@ dev = [
 
 [[package]]
 name = "delocate"
-version = "0.12.0"
+version = "0.13.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "bindepend", marker = "sys_platform == 'win32'" },
     { name = "macholib" },
-    { name = "machomachomangler", marker = "sys_platform == 'win32'" },
     { name = "packaging" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d3/c1/9ce172375070c59f3a40973fa4daf98d80a874cddc9ddaed494656dd9259/delocate-0.12.0.tar.gz", hash = "sha256:e051660836a87b61c99b9b180344be363c31e1f2d9fdc94caebc854b6611335c", size = 238813 }
+sdist = { url = "https://files.pythonhosted.org/packages/2d/21/f1679803b2582632e7b9fdd83e675d5fc661513433c0f661938414978bc7/delocate-0.13.0.tar.gz", hash = "sha256:a93e67a9f56ee01a3f7096a042231d4ac37fecac873cd5ea34ea2b4f43a8fa13", size = 240774 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bf/4a/aa78a0333ce108aa722a6b8f449dfae55b12ed180e98721a90e571896dbd/delocate-0.12.0-py3-none-any.whl", hash = "sha256:0da599c7561dcca2835149eaa4733e85408d71f249c6c4c43c3cb16cedb43a09", size = 236096 },
+    { url = "https://files.pythonhosted.org/packages/2b/dd/437e601fa9d2b6bf8507256daf52196a226c3b340261f4cde8fac8e853ea/delocate-0.13.0-py3-none-any.whl", hash = "sha256:11f7596f88984c33f76b27fe2eea7637d1ce369a9e0b6737bbc706b6426e862c", size = 238040 },
 ]
 
 [[package]]
@@ -161,18 +138,6 @@ wheels = [
 ]
 
 [[package]]
-name = "machomachomangler"
-version = "0.0.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "attrs" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/d0/29/d9f07b12f19d0fe64c1e88bbbebe49faf710841144c5a67dba5b98f42ab6/machomachomangler-0.0.1.tar.gz", hash = "sha256:2acbad5bd465c5f386e5ceac8a8a1939a9789f503dd84f491e046292cf6e54a6", size = 64271 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/71/df/fba669db568cc25eb44a726bbce1a0a40e3a1c5b10a1a57492877b79c00b/machomachomangler-0.0.1-py3-none-any.whl", hash = "sha256:4fa66b8b65959399874f05a4d93abe1e49db46f71bef66a68a93e060d9ba0cb3", size = 70901 },
-]
-
-[[package]]
 name = "packaging"
 version = "24.2"
 source = { registry = "https://pypi.org/simple" }
@@ -188,15 +153,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/76/f1/4594f5e0fcddb6953e5b8fe00da8c317b8b41b547e2b3ae2da7512943c62/pastel-0.2.1.tar.gz", hash = "sha256:e6581ac04e973cac858828c6202c1e1e81fee1dc7de7683f3e1ffe0bfd8a573d", size = 7555 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/aa/18/a8444036c6dd65ba3624c63b734d3ba95ba63ace513078e1580590075d21/pastel-0.2.1-py2.py3-none-any.whl", hash = "sha256:4349225fcdf6c2bb34d483e523475de5bb04a5c10ef711263452cb37d7dd4364", size = 5955 },
-]
-
-[[package]]
-name = "pefile"
-version = "2024.8.26"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/03/4f/2750f7f6f025a1507cd3b7218691671eecfd0bbebebe8b39aa0fe1d360b8/pefile-2024.8.26.tar.gz", hash = "sha256:3ff6c5d8b43e8c37bb6e6dd5085658d658a7a0bdcd20b6a07b1fcfc1c4e9d632", size = 76008 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/54/16/12b82f791c7f50ddec566873d5bdd245baa1491bac11d15ffb98aecc8f8b/pefile-2024.8.26-py3-none-any.whl", hash = "sha256:76f8b485dcd3b1bb8166f1128d395fa3d87af26360c2358fb75b80019b957c6f", size = 74766 },
 ]
 
 [[package]]
