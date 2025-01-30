@@ -31,18 +31,18 @@ spec:
           annotations:
             eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/TempoRole-hm-tempo
         storage:
-          trace:
-            backend: s3
-            s3:
-              endpoint: s3.amazonaws.com
-              region: us-west-2
-              bucket: production-hm-tempo-trace-bucket
           admin:
             backend: s3
             s3:
               endpoint: s3.amazonaws.com
               region: us-west-2
               bucket: production-hm-tempo-admin-bucket
+          trace:
+            backend: s3
+            s3:
+              endpoint: s3.amazonaws.com
+              region: us-west-2
+              bucket: production-hm-tempo-trace-bucket
         traces:
           otlp:
             http:
