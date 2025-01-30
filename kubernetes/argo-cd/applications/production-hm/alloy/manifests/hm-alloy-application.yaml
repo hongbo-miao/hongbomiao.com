@@ -19,6 +19,8 @@ spec:
         # https://github.com/grafana/alloy/blob/main/operations/helm/charts/alloy/values.yaml
         ---
         alloy:
+          # For "beyla.ebpf", see https://grafana.com/docs/grafana-cloud/send-data/alloy/reference/components/beyla/beyla.ebpf/
+          stabilityLevel: public-preview
           extraEnv:
             - name: LOKI_URL
               value: http://hm-loki-gateway.production-hm-loki:80/loki/api/v1/push
@@ -27,16 +29,10 @@ spec:
           configMap:
             content: |-
               // https://grafana.com/docs/alloy/latest/configure/kubernetes/
+              // https://grafana.com/docs/alloy/latest/collect/logs-in-kubernetes/
               logging {
                 level = "info"
                 format = "logfmt"
-              }
-
-              // https://grafana.com/docs/alloy/latest/collect/logs-in-kubernetes/
-              loki.write "default" {
-                endpoint {
-                  url = env("LOKI_URL")
-                }
               }
 
               // local.file_match discovers files on the local filesystem using glob patterns and the doublestar library. It returns an array of file paths.
@@ -169,25 +165,58 @@ spec:
                 }
               }
 
+              loki.write "default" {
+                endpoint {
+                  url = env("LOKI_URL")
+                }
+              }
+
               // https://grafana.com/docs/tempo/latest/configuration/grafana-alloy/automatic-logging/
               // https://grafana.com/docs/tempo/latest/configuration/grafana-alloy/service-graphs/
               // https://grafana.com/docs/tempo/latest/configuration/grafana-alloy/span-metrics/
+              // https://grafana.com/blog/2024/05/21/how-to-use-grafana-beyla-in-grafana-alloy-for-ebpf-based-auto-instrumentation/
+              beyla.ebpf "default" {
+                attributes {
+                  kubernetes {
+                    enable = "true"
+                  }
+                }
+                discovery {
+                  services {
+                    exe_path = "http"
+                    open_ports = "80"
+                  }
+                }
+                output {
+                  traces = [otelcol.processor.batch.default.input]
+                }
+              }
+
               otelcol.receiver.otlp "default" {
                 grpc {}
                 http {}
                 output {
+                  metrics = [otelcol.processor.batch.default.input]
+                  logs    = [otelcol.processor.batch.default.input]
                   traces = [
                     otelcol.connector.servicegraph.default.input,
+                    otelcol.connector.spanlogs.default.input,
                     otelcol.connector.spanmetrics.default.input,
-                    otelcol.exporter.otlp.default.input,
                   ]
+                }
+              }
+
+              otelcol.connector.servicegraph "default" {
+                dimensions = ["http.method", "http.target"]
+                output {
+                  metrics = [otelcol.processor.batch.default.input]
                 }
               }
 
               otelcol.connector.spanlogs "default" {
                 roots = true
                 output {
-                  logs = [otelcol.exporter.otlp.default.input]
+                  logs = [otelcol.processor.batch.default.input]
                 }
               }
 
@@ -208,20 +237,25 @@ spec:
                 metrics_flush_interval = "15s"
                 namespace = "traces_spanmetrics"
                 output {
-                  metrics = [otelcol.exporter.otlp.default.input]
+                  metrics = [otelcol.processor.batch.default.input]
                 }
               }
 
-              otelcol.exporter.otlp "default" {
+              otelcol.processor.batch "default" {
+                output {
+                  metrics = [otelcol.exporter.otlp.hm_tempo.input]
+                  logs    = [otelcol.exporter.otlp.hm_tempo.input]
+                  traces  = [otelcol.exporter.otlp.hm_tempo.input]
+                }
+              }
+
+              otelcol.exporter.otlp "hm_tempo" {
                 client {
                   endpoint = env("TEMPO_URL")
-                }
-              }
-
-              otelcol.connector.servicegraph "default" {
-                dimensions = ["http.method", "http.target"]
-                output {
-                  metrics = [otelcol.exporter.otlp.default.input]
+                  tls {
+                    insecure = true
+                    insecure_skip_verify = true
+                  }
                 }
               }
   destination:
