@@ -24,8 +24,8 @@ spec:
           extraEnv:
             - name: LOKI_URL
               value: http://hm-loki-gateway.production-hm-loki:80/loki/api/v1/push
-            - name: TEMPO_URL
-              value: http://hm-tempo-distributor.production-hm-tempo:4317
+            - name: TEMPO_ENDPOINT
+              value: hm-tempo-distributor.production-hm-tempo:4317
           configMap:
             content: |-
               // https://grafana.com/docs/alloy/latest/configure/kubernetes/
@@ -251,7 +251,7 @@ spec:
 
               otelcol.exporter.otlp "hm_tempo" {
                 client {
-                  endpoint = env("TEMPO_URL")
+                  endpoint = env("TEMPO_ENDPOINT")
                   tls {
                     insecure = true
                     insecure_skip_verify = true
