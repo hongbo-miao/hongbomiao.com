@@ -213,14 +213,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Traefik** - Web server, reverse proxy, load balancer
 - **nginx** - Web server, reverse proxy, load balancer
 - **Metrics Server** - Kubernetes metrics
-- **Elastic APM** - Application performance monitoring
-- **OpenTelemetry** - Observability framework
-- **Tempo** - Distributed tracing backend
-- **Jaeger** - Distributed tracing system
-- **Netdata** - Distributed monitoring platform
 - **Telegraf** - Plugin-driven server agent
 - **Thanos** - Highly available Prometheus setup with long-term storage capabilities
-- **Pixie** - Observability tool for Kubernetes applications
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
 - **Multipass** - VM management
@@ -230,6 +224,23 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **K3s** - Lightweight Kubernetes
 - **containerd** - Container runtime
 - **Kubernetes** - Container-orchestration system
+
+## Monitoring
+
+- **Grafana** - Data visualization
+  - **Grafana Alloy** - OpenTelemetry Collector
+  - **Grafana Beyla** - eBPF-based auto-instrumentation tool
+  - **Grafana Loki** - Log aggregation system
+  - **Grafana Tempo** - Distributed tracing backend
+- **Vector** - Log collector
+- **Fluent Bit** - Log collector
+- **Prometheus** - Time-series database
+- **OpenTelemetry** - Observability framework
+- **Jaeger** - Distributed tracing system
+- **Pixie** - Kubernetes application observability tool
+- **Netdata** - Distributed monitoring platform
+- **Elastic APM** - Application performance monitoring
+- **Kibana** - Elasticsearch visualization
 
 ## Data
 
@@ -271,7 +282,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Chroma** - Distributed vector database
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
-  - **Kibana** - Elasticsearch visualization
 - **MinIO** - Object storage
 - **Apache ZooKeeper** - Distributed coordination system
 - **Apache Hadoop** - Software utility collection
@@ -286,9 +296,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Data Ingestion
 
 - **Airbyte** - Data integration
-- **Vector** - Log collector
-- **Fluent Bit** - Log collector
-- **Alloy** - OpenTelemetry Collector
 
 ### Data Orchestration
 
@@ -843,6 +850,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **SedonaSQL**
   - **Snowflake SQL**
   - **Spark SQL**
+  - **TraceQL**
 - **Swift**
 - **Verilog**
 - **VHDL**
