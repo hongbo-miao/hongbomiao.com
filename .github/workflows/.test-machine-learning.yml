@@ -638,7 +638,8 @@ jobs:
         run: |
           uv sync --extra=build
           uv sync --extra=build --extra=compile
-          uv sync --extra=build --extra=compile --dev
+          uv sync --extra=build --extra=compile --extra=paddlepaddle-gpu
+          uv sync --extra=build --extra=compile --extra=paddlepaddle-gpu --dev
       - name: Test
         working-directory: machine-learning/mineru
         run: |
