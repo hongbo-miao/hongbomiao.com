@@ -1296,9 +1296,6 @@ wheels = [
 name = "mineru"
 version = "1.0.0"
 source = { virtual = "." }
-dependencies = [
-    { name = "paddlepaddle-gpu" },
-]
 
 [package.optional-dependencies]
 build = [
@@ -1308,6 +1305,9 @@ build = [
 compile = [
     { name = "detectron2" },
     { name = "magic-pdf", extra = ["full"] },
+]
+paddlepaddle-gpu = [
+    { name = "paddlepaddle-gpu" },
 ]
 
 [package.dev-dependencies]
@@ -1321,7 +1321,7 @@ dev = [
 requires-dist = [
     { name = "detectron2", marker = "extra == 'compile'", git = "https://github.com/facebookresearch/detectron2.git?branch=main" },
     { name = "magic-pdf", extras = ["full"], marker = "extra == 'compile'", specifier = "==1.1.0" },
-    { name = "paddlepaddle-gpu", specifier = "==3.0.0b2", index = "https://www.paddlepaddle.org.cn/packages/stable/cu118" },
+    { name = "paddlepaddle-gpu", marker = "extra == 'paddlepaddle-gpu'", specifier = "==3.0.0b2", index = "https://www.paddlepaddle.org.cn/packages/stable/cu118" },
     { name = "setuptools", marker = "extra == 'build'" },
     { name = "torch", marker = "extra == 'build'" },
 ]
