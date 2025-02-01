@@ -17,7 +17,7 @@ class Listener(dds.DynamicData.NoOpDataReaderListener):
 def subscriber_main(domain_id: int) -> None:
     participant = dds.DomainParticipant(domain_id)
 
-    hm_type = dds.QosProvider("hm_message.xml").type("HMMessage")
+    hm_type = dds.QosProvider("hm_message.xml").type("HmMessage")
     topic = dds.DynamicData.Topic(participant, "hm-topic", hm_type)
     reader = dds.DynamicData.DataReader(dds.Subscriber(participant), topic)
     listener = Listener()

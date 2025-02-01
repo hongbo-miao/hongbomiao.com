@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def publisher_main(dds_domain_id: int, total_count: int) -> None:
     participant = dds.DomainParticipant(domain_id=dds_domain_id)
-    hm_type = dds.QosProvider("hm_message.xml").type("HMMessage")
+    hm_type = dds.QosProvider("hm_message.xml").type("HmMessage")
 
     topic = dds.DynamicData.Topic(participant, "hm-topic", hm_type)
     writer = dds.DynamicData.DataWriter(dds.Publisher(participant), topic)
