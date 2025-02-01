@@ -270,8 +270,6 @@ jobs:
               - 'embedded-system/format-can-data/**'
             convolutional-neural-network:
               - 'machine-learning/convolutional-neural-network/**'
-            data-distribution-service:
-              - 'data-distribution-service/**'
             dbt-hm-postgres:
               - 'data-transformation/dbt/projects/dbt_hm_postgres/**'
             delta-lake-read-delta-lake-by-amazon-athena:
@@ -464,6 +462,8 @@ jobs:
               - 'machine-learning/reinforcement-learning/cart-pole/**'
             robot-operating-system:
               - 'robotics/robot-operating-system/**'
+            rti-connext-dds:
+              - 'data-distribution/rti-connext-dds/**'
             stable-diffusion:
               - 'machine-learning/stable-diffusion/**'
             taichi-count-primes:
@@ -540,7 +540,6 @@ jobs:
       api-rust: ${{ steps.filter.outputs.api-rust }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
-      data-distribution-service: ${{ steps.filter.outputs.data-distribution-service }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
       decode-can-blf-data: ${{ steps.filter.outputs.decode-can-blf-data }}
       decode-can-mf4-data: ${{ steps.filter.outputs.decode-can-mf4-data }}
@@ -644,6 +643,7 @@ jobs:
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
       reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
+      rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
       stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
       taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
       taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
@@ -1105,10 +1105,10 @@ jobs:
         with:
           directory: matlab/call-matlab-function-in-python
 
-  data-distribution-service-test:
+  rti-connext-dds-test:
     name: Data Distribution Service | Test
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.data-distribution-service == 'true' }}
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.rti-connext-dds == 'true' }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1120,23 +1120,23 @@ jobs:
         with:
           version: 0.5.20
           enable-cache: true
-          cache-dependency-glob: data-distribution-service/uv.lock
+          cache-dependency-glob: data-distribution/rti-connext-dds/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.4.0
         with:
-          python-version-file: data-distribution-service/pyproject.toml
+          python-version-file: data-distribution/rti-connext-dds/pyproject.toml
       - name: Install dependencies
-        working-directory: data-distribution-service
+        working-directory: data-distribution/rti-connext-dds
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-distribution-service
+        working-directory: data-distribution/rti-connext-dds
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.3.1
         with:
-          directory: data-distribution-service
+          directory: data-distribution/rti-connext-dds
 
   xxhash-test:
     name: xxHash | Test
