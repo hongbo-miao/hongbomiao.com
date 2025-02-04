@@ -244,55 +244,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Data
 
-## Data Format
-
-- **Protocol Buffers (Protobuf)** - Data serialization format
-- **Apache Arrow** - Columnar memory format for big data
-- **Apache Parquet** - Columnar file format for big data
-- **Lance** - Columnar file format for machine learning
-- **HDF5** - Hierarchical data format
-- **BLF** - Binary log format
-- **TRC** - PEAK-System trace capture
-- **MF4** - Measurement data format (MDF)
-
-### Database, Data Warehouse, Data Lakehouse
-
-- **Trino** - Distributed SQL query engine
-- **PostgreSQL** - Object-relational database
-  - **Patroni** - PostgreSQL high-availability (HA) template
-  - **Postgres Operator** - PostgreSQL cluster provisioning
-  - **pgAdmin** - PostgreSQL management tool
-- **MySQL** - Relational database
-  - **MariaDB** - Fork of MySQL
-- **Hydra** - Column-oriented SQL database
-- **ClickHouse** - Column-oriented SQL database
-- **YugabyteDB** - Distributed SQL database
-- **TimescaleDB** - Time-series SQL database
-- **Prometheus** - Time-series database
-- **InfluxDB** - Distributed time-series database
-- **Loki** - Log aggregation system
-- **DuckDB** - Embedded analytical SQL database
-- **RocksDB** - Embedded key-value store
-- **Redis** - Distributed in-memory key-value store
-  - **Valkey** - Fork of Redis
-  - **KeyDB** - Multithreaded fork of Redis
-- **Apache Cassandra** - Distributed wide-column NoSQL database
-- **LanceDB** - Embedded vector database
-- **Qdrant** - Distributed vector database
-- **Chroma** - Distributed vector database
-- **Dgraph** - Distributed graph database
-- **Elasticsearch** - Distributed document-oriented search engine
-- **MinIO** - Object storage
-- **Apache ZooKeeper** - Distributed coordination system
-- **Apache Hadoop** - Software utility collection
-  - **Apache Hadoop HDFS (Distributed File System)** - Distributed file system
-  - **Apache Hadoop YARN (Yet Another Resource Negotiator)** - Resource management and job scheduling framework
-  - **Apache Hadoop MapReduce** - Data processing framework
-- **Apache Hive** - Distributed data warehousing and SQL-like query language system built on top of Apache Hadoop
-- **Delta Lake** - Data lakehouse
-- **Snowflake** - Data warehouse
-- **golang-migrate/migrate** - Database migrations
-
 ### Data Ingestion
 
 - **Airbyte** - Data integration
@@ -345,6 +296,61 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Data Transformation
 
 - **dbt** - Data transformation
+
+### Data Format
+
+- **Protocol Buffers (Protobuf)** - Data serialization format
+- **Apache Arrow** - Columnar memory format for big data
+- **Apache Parquet** - Columnar file format for big data
+- **Lance** - Columnar file format for machine learning
+- **HDF5** - Hierarchical data format
+- **BLF** - Binary log format
+- **TRC** - PEAK-System trace capture
+- **MF4** - Measurement data format (MDF)
+
+### Database, Data Warehouse, Data Lakehouse
+
+- **Trino** - Distributed SQL query engine
+- **PostgreSQL** - Object-relational database
+  - **Patroni** - PostgreSQL high-availability (HA) template
+  - **Postgres Operator** - PostgreSQL cluster provisioning
+  - **pgAdmin** - PostgreSQL management tool
+- **MySQL** - Relational database
+  - **MariaDB** - Fork of MySQL
+- **Hydra** - Column-oriented SQL database
+- **ClickHouse** - Column-oriented SQL database
+- **YugabyteDB** - Distributed SQL database
+- **TimescaleDB** - Time-series SQL database
+- **Prometheus** - Time-series database
+- **InfluxDB** - Distributed time-series database
+- **Loki** - Log aggregation system
+- **DuckDB** - Embedded analytical SQL database
+- **RocksDB** - Embedded key-value store
+- **Redis** - Distributed in-memory key-value store
+  - **Valkey** - Fork of Redis
+  - **KeyDB** - Multithreaded fork of Redis
+- **Apache Cassandra** - Distributed wide-column NoSQL database
+- **LanceDB** - Embedded vector database
+- **Qdrant** - Distributed vector database
+- **Chroma** - Distributed vector database
+- **Dgraph** - Distributed graph database
+- **Elasticsearch** - Distributed document-oriented search engine
+- **MinIO** - Object storage
+- **Apache ZooKeeper** - Distributed coordination system
+- **Apache Hadoop** - Software utility collection
+  - **Apache Hadoop HDFS (Distributed File System)** - Distributed file system
+  - **Apache Hadoop YARN (Yet Another Resource Negotiator)** - Resource management and job scheduling framework
+  - **Apache Hadoop MapReduce** - Data processing framework
+- **Apache Hive** - Distributed data warehousing and SQL-like query language system built on top of Apache Hadoop
+- **Delta Lake** - Data lakehouse
+- **Snowflake** - Data warehouse
+- **golang-migrate/migrate** - Database migrations
+
+### Data Distribution
+
+- **Arrow Flight** - High-performance data transport framework
+- **RTI Connext** - Real-time, distributed systems framework
+- **DDS** - Data distribution service
 
 ### Data Visualization
 
@@ -637,8 +643,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
 - **ASTERIOS** - Real-time, safety-critical applications development
-- **RTI Connext** - Real-time, distributed systems framework
-  - **RTI Connext DDS** - Data distribution service (DDS)
 - **OpenSCAD** - 3D CAD Modeller
 - **Arduino Uno** - Microcontroller board
 - **BeagleBone Black** - Microcontroller board
