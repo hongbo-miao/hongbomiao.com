@@ -1,0 +1,23 @@
+[project]
+name = "arrow-flight-client"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+  "polars==1.21.0",
+  "pyarrow==19.0.0",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.32.2",
+  "pytest-cov==6.0.0",
+  "pytest==8.3.4",
+]
+
+[tool.uv]
+package = false
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
