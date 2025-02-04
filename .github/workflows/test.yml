@@ -251,6 +251,10 @@ jobs:
               - 'api-python/**'
             api-rust:
               - 'api-rust/**'
+            arrow-flight-client:
+              - 'data-distribution/arrow-flight/arrow-flight-client/**'
+            arrow-flight-server:
+              - 'data-distribution/arrow-flight/arrow-flight-server/**'
             call-matlab-function-in-python:
               - 'matlab/call-matlab-function-in-python/**'
             decode-can-blf-data:
@@ -538,6 +542,8 @@ jobs:
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
       api-rust: ${{ steps.filter.outputs.api-rust }}
+      arrow-flight-client: ${{ steps.filter.outputs.arrow-flight-client }}
+      arrow-flight-server: ${{ steps.filter.outputs.arrow-flight-server }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
@@ -1104,6 +1110,65 @@ jobs:
         uses: codecov/codecov-action@v5.3.1
         with:
           directory: matlab/call-matlab-function-in-python
+
+  arrow-flight-client-test:
+    name: Data Distribution Service | Test
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.arrow-flight-client == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.2.2
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-distribution/arrow-flight/arrow-flight-client/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version-file: data-distribution/arrow-flight/arrow-flight-client/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-distribution/arrow-flight/arrow-flight-client
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-distribution/arrow-flight/arrow-flight-client
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.3.1
+        with:
+          directory: data-distribution/arrow-flight/arrow-flight-client
+
+  arrow-flight-server-test:
+    name: UDP Sender | Test
+    if: ${{ inputs.workflow || inputs.arrow-flight-server }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      # protoc is for prost
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 28.3
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      - name: Install dependencies
+        working-directory: data-distribution/arrow-flight/arrow-flight-server
+        run: |
+          cargo build
+      - name: Test
+        working-directory: data-distribution/arrow-flight/arrow-flight-server
+        run: |
+          cargo test --all-features
 
   rti-connext-dds-test:
     name: Data Distribution Service | Test
