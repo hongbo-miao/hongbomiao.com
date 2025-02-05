@@ -592,6 +592,59 @@ module "kubernetes_namespace_hm_prometheus" {
   ]
 }
 
+# Mimir
+# Mimir - S3 bucket
+locals {
+  mimir_alertmanager_name = "${var.environment}-hm-mimir-alertmanager"
+  mimir_block_name        = "${var.environment}-hm-mimir-block"
+  mimir_ruler_name        = "${var.environment}-hm-mimir-ruler"
+}
+module "s3_bucket_hm_mimir_alertmanager" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.mimir_alertmanager_name}-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+module "s3_bucket_hm_mimir_block" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.mimir_block_name}-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+module "s3_bucket_hm_mimir_ruler" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${local.mimir_ruler_name}-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+module "hm_mimir_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/aws/hm_mimir_iam_role"
+  mimir_service_account_name           = "hm-mimir"
+  mimir_namespace                      = "${var.environment}-hm-mimir"
+  mimir_alertmanager_s3_bucket_name    = module.s3_bucket_hm_mimir_alertmanager.name
+  mimir_block_s3_bucket_name           = module.s3_bucket_hm_mimir_block.name
+  mimir_ruler_s3_bucket_name           = module.s3_bucket_hm_mimir_ruler.name
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  environment                          = var.environment
+  team                                 = var.team
+}
+# Mimir - Kubernetes namespace
+module "kubernetes_namespace_hm_mimir" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-mimir"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
 # Loki
 # Loki - S3 bucket
 locals {
@@ -648,7 +701,7 @@ module "kubernetes_namespace_hm_loki" {
 # Alloy
 # Alloy - Kubernetes namespace
 module "kubernetes_namespace_hm_alloy" {
-  source               = "../../../../../modules/kubernetes/hm_kubernetes_namespace"
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-alloy"
   labels = {
     "goldilocks.fairwinds.com/enabled" = "true"

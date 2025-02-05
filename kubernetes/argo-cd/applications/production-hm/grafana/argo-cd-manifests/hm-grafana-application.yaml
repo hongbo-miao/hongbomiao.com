@@ -69,8 +69,15 @@ spec:
                 - name: hm-prometheus
                   type: prometheus
                   isDefault: true
-                  url: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus:9090
+                  url: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus.svc:9090
                   access: proxy
+                - name: hm-mimir
+                  type: prometheus
+                  isDefault: false
+                  url: http://hm-mimir-store-gateway-headless.production-hm-mimir.svc:8080/prometheus
+                  access: proxy
+                  jsonData:
+                    prometheusType: Mimir
                 - name: hm-loki
                   type: loki
                   isDefault: false
@@ -84,35 +91,35 @@ spec:
                   # https://grafana.com/docs/grafana/next/datasources/tempo/configure-tempo-data-source/#example-file
                   jsonData:
                     tracesToLogsV2:
-                      datasourceUid: 'hm-loki'
-                      spanStartTimeShift: '-1h'
-                      spanEndTimeShift: '1h'
-                      tags: ['job', 'instance', 'pod', 'namespace']
+                      datasourceUid: hm-loki
+                      spanStartTimeShift: -1h
+                      spanEndTimeShift: 1h
+                      tags: ["job", "instance", "pod", "namespace"]
                       filterByTraceID: false
                       filterBySpanID: false
                       customQuery: true
-                      query: 'method="$${__span.tags.method}"'
+                      query: method="$${__span.tags.method}"
                     tracesToMetrics:
-                      datasourceUid: 'hm-prometheus'
-                      spanStartTimeShift: '-1h'
-                      spanEndTimeShift: '1h'
-                      tags: [{ key: 'service.name', value: 'service' }, { key: 'job' }]
+                      datasourceUid: hm-prometheus
+                      spanStartTimeShift: -1h
+                      spanEndTimeShift: 1h
+                      tags: [{ key: "service.name", value: "service" }, { key: "job" }]
                       queries:
-                        - name: 'Sample query'
-                          query: 'sum(rate(traces_spanmetrics_latency_bucket{$$__tags}[5m]))'
+                        - name: Sample query
+                          query: sum(rate(traces_spanmetrics_latency_bucket{$$__tags}[5m]))
                     serviceMap:
-                      datasourceUid: 'hm-prometheus'
+                      datasourceUid: hm-prometheus
                     nodeGraph:
                       enabled: true
                     search:
                       hide: false
                     traceQuery:
                       timeShiftEnabled: true
-                      spanStartTimeShift: '-1h'
-                      spanEndTimeShift: '1h'
+                      spanStartTimeShift: -1h
+                      spanEndTimeShift: 1h
                     spanBar:
-                      type: 'Tag'
-                      tag: 'http.path'
+                      type: Tag
+                      tag: http.path
                     streamingEnabled:
                       search: true
           dashboardProviders:
