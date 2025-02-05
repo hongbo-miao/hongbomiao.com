@@ -214,7 +214,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **nginx** - Web server, reverse proxy, load balancer
 - **Metrics Server** - Kubernetes metrics
 - **Telegraf** - Plugin-driven server agent
-- **Thanos** - Highly available Prometheus setup with long-term storage capabilities
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
 - **Multipass** - VM management
@@ -231,10 +230,13 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Grafana Alloy** - OpenTelemetry Collector
   - **Grafana Beyla** - eBPF-based auto-instrumentation tool
   - **Grafana Loki** - Log aggregation system
+  - **Grafana Mimir** - Long-term storage for Prometheus
   - **Grafana Tempo** - Distributed tracing backend
 - **Vector** - Log collector
 - **Fluent Bit** - Log collector
 - **Prometheus** - Time-series database
+  - **Thanos** - Long-term storage for Prometheus
+  - **Grafana Mimir** - Long-term storage for Prometheus
 - **OpenTelemetry** - Observability framework
 - **Jaeger** - Distributed tracing system
 - **Pixie** - Kubernetes application observability tool

@@ -1,0 +1,84 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-mimir
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-mimir
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://grafana.github.io/helm-charts
+      # https://artifacthub.io/packages/helm/grafana/mimir-distributed
+      targetRevision: 5.7.0-weekly.328
+      chart: mimir-distributed
+      helm:
+        releaseName: hm-mimir
+        values: |
+          # https://github.com/grafana/mimir/blob/main/operations/helm/charts/mimir-distributed/values.yaml
+          # https://grafana.com/docs/mimir/latest/configure/configure-object-storage-backend/
+          ---
+          mimir:
+            structuredConfig:
+              usage_stats:
+                enabled: false
+              common:
+                storage:
+                  backend: s3
+                  s3:
+                    endpoint: s3.us-west-2.amazonaws.com
+                    region: us-west-2
+              alertmanager_storage:
+                s3:
+                  bucket_name: production-hm-mimir-alertmanager-bucket
+              blocks_storage:
+                s3:
+                  bucket_name: production-hm-mimir-block-bucket
+              ruler_storage:
+                s3:
+                  bucket_name: production-hm-mimir-ruler-bucket
+          serviceAccount:
+            create: true
+            name: hm-mimir
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/MimirRole-hm-mimir
+          alertmanager:
+            enabled: true
+            persistentVolume:
+              accessModes: ["ReadWriteOnce"]
+              size: 1Gi
+              storageClass: production-hm-mimir-storage-class
+          compactor:
+            enabled: true
+            persistentVolume:
+              accessModes: ["ReadWriteOnce"]
+              size: 2Gi
+              storageClass: production-hm-mimir-storage-class
+          ingester:
+            enabled: true
+            persistentVolume:
+              accessModes: ["ReadWriteOnce"]
+              size: 2Gi
+              storageClass: production-hm-mimir-storage-class
+          store_gateway:
+            enabled: true
+            persistentVolume:
+              accessModes: ["ReadWriteOnce"]
+              size: 2Gi
+              storageClass: production-hm-mimir-storage-class
+          minio:
+            enabled: false
+          nginx:
+            enabled: false
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/mimir/kubernetes-manifests
+  destination:
+    namespace: production-hm-mimir
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
