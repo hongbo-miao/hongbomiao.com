@@ -74,10 +74,13 @@ spec:
                 - name: hm-mimir
                   type: prometheus
                   isDefault: false
-                  url: http://hm-mimir-store-gateway-headless.production-hm-mimir.svc:8080/prometheus
+                  url: http://hm-mimir-query-frontend.production-hm-mimir.svc:8080/prometheus
                   access: proxy
                   jsonData:
                     prometheusType: Mimir
+                    httpHeaderName1: X-Scope-OrgID
+                  secureJsonData:
+                    httpHeaderValue1: hm-grafana
                 - name: hm-loki
                   type: loki
                   isDefault: false
