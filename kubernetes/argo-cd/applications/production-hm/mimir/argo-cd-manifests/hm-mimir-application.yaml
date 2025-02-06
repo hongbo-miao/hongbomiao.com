@@ -21,8 +21,6 @@ spec:
           ---
           mimir:
             structuredConfig:
-              usage_stats:
-                enabled: false
               common:
                 storage:
                   backend: s3
@@ -38,6 +36,10 @@ spec:
               ruler_storage:
                 s3:
                   bucket_name: production-hm-mimir-ruler-bucket
+              limits:
+                max_global_series_per_user: 1000000
+              usage_stats:
+                enabled: false
           serviceAccount:
             create: true
             name: hm-mimir
@@ -49,24 +51,115 @@ spec:
               accessModes: ["ReadWriteOnce"]
               size: 1Gi
               storageClass: production-hm-mimir-storage-class
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
           compactor:
             enabled: true
             persistentVolume:
               accessModes: ["ReadWriteOnce"]
               size: 2Gi
               storageClass: production-hm-mimir-storage-class
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
+          distributor:
+            enabled: true
+            resources:
+              requests:
+                cpu: 200m
+                memory: 256Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
           ingester:
             enabled: true
             persistentVolume:
               accessModes: ["ReadWriteOnce"]
               size: 2Gi
               storageClass: production-hm-mimir-storage-class
+            resources:
+              requests:
+                cpu: 200m
+                memory: 2Gi
+              limits:
+                cpu: 500m
+                memory: 4Gi
+          overrides_exporter:
+            enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
+          querier:
+            enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
+          query_frontend:
+            enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
+          query_scheduler:
+            enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
+          rollout_operator:
+            enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
+          ruler:
+            enabled: true
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
           store_gateway:
             enabled: true
             persistentVolume:
               accessModes: ["ReadWriteOnce"]
               size: 2Gi
               storageClass: production-hm-mimir-storage-class
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
           minio:
             enabled: false
           nginx:
