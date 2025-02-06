@@ -8,7 +8,7 @@ terraform {
     # https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest
     snowflake = {
       source  = "Snowflake-Labs/snowflake"
-      version = "1.0.2"
+      version = "1.0.3"
     }
   }
   required_version = ">= 1.8"
