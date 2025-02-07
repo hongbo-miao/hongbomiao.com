@@ -1,4 +1,4 @@
-FROM docker.io/python:3.13.1-alpine AS base
+FROM docker.io/python:3.13.2-alpine AS base
 WORKDIR /usr/src/app
 ENV PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1 \
