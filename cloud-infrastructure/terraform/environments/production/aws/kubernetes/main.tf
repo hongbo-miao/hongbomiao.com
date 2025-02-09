@@ -58,31 +58,31 @@ module "amazon_eks_cluster" {
   source          = "terraform-aws-modules/eks/aws"
   version         = "20.33.1"
   cluster_name    = local.amazon_eks_cluster_name
-  cluster_version = "1.30"
+  cluster_version = "1.32"
   cluster_addons = {
     coredns = {
-      addon_version               = "v1.11.1-eksbuild.9"
+      addon_version               = "v1.11.4-eksbuild.2"
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
     kube-proxy = {
-      addon_version               = "v1.30.0-eksbuild.3"
+      addon_version               = "v1.31.3-eksbuild.2"
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
     vpc-cni = {
-      addon_version               = "v1.18.3-eksbuild.1"
+      addon_version               = "v1.19.2-eksbuild.1"
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
     aws-ebs-csi-driver = {
-      addon_version               = "v1.33.0-eksbuild.1"
+      addon_version               = "v1.39.0-eksbuild.1"
       service_account_role_arn    = module.amazon_ebs_csi_driver_iam_role.arn
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
     aws-mountpoint-s3-csi-driver = {
-      addon_version               = "v1.7.0-eksbuild.1"
+      addon_version               = "v1.11.0-eksbuild.1"
       service_account_role_arn    = module.amazon_s3_csi_driver_mountpoint_iam_role.arn
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
@@ -123,11 +123,18 @@ module "amazon_eks_cluster" {
     instance_types = ["m7i.large", "m7g.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
   }
   eks_managed_node_groups = {
-    hm_eks_node_group = {
+    eks_node_group_1 = {
       min_size       = 10
       max_size       = 50
       desired_size   = 10
       instance_types = ["m7a.2xlarge", "m7i.2xlarge", "m6a.2xlarge", "m6i.2xlarge", "m6in.2xlarge", "m5.2xlarge", "m5a.2xlarge", "m5n.2xlarge", "m5zn.2xlarge"]
+      capacity_type  = "SPOT"
+    }
+    eks_node_group_2 = {
+      min_size       = 5
+      max_size       = 10
+      desired_size   = 5
+      instance_types = ["m7a.8xlarge", "m7i.8xlarge", "m6a.8xlarge", "m6i.8xlarge", "m6in.8xlarge", "m5.8xlarge", "m5a.8xlarge", "m5n.8xlarge"]
       capacity_type  = "SPOT"
     }
   }
