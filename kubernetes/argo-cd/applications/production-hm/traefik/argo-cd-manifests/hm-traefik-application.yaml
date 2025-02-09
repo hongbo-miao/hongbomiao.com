@@ -11,13 +11,16 @@ spec:
   source:
     repoURL: https://traefik.github.io/charts
     # https://artifacthub.io/packages/helm/traefik/traefik
-    targetRevision: 28.3.0
+    targetRevision: 34.2.0
     chart: traefik
     helm:
       releaseName: hm-traefik
       values: |
         # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
         ---
+        image:
+          registry: public.ecr.aws
+          repository: docker/library/traefik
         providers:
           kubernetesIngress:
             publishedService:
@@ -32,8 +35,11 @@ spec:
             service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-xxxxxxxxxxxxxxxxx,subnet-xxxxxxxxxxxxxxxxx,subnet-xxxxxxxxxxxxxxxxx,subnet-xxxxxxxxxxxxxxxxx
         ports:
           web:
-            redirectTo:
-              port: websecure
+            redirections:
+              entryPoint:
+                to: websecure
+                scheme: https
+                permanent: true
         globalArguments: []
         # additionalArguments:
         #   - --log.level=DEBUG
