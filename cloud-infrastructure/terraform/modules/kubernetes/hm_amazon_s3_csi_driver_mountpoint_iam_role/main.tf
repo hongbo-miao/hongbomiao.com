@@ -37,9 +37,10 @@ resource "aws_iam_role" "s3_csi_driver_mountpoint_role" {
     ResourceName = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
   }
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy
-resource "aws_iam_policy" "hm_amazon_s3_csi_driver_mountpoint_iam_policy" {
-  name = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+resource "aws_iam_role_policy" "eks_cluster_s3_policy" {
+  name = "${local.aws_iam_role_name_prefix}EksClusterS3Policy-${var.amazon_eks_cluster_name}"
+  role = aws_iam_role.s3_csi_driver_mountpoint_role.name
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -66,15 +67,4 @@ resource "aws_iam_policy" "hm_amazon_s3_csi_driver_mountpoint_iam_policy" {
       }
     ]
   })
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
-  }
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
-resource "aws_iam_role_policy_attachment" "hm_amazon_emr_studio_iam_role_policy_attachment" {
-  role       = aws_iam_role.s3_csi_driver_mountpoint_role.name
-  policy_arn = aws_iam_policy.hm_amazon_s3_csi_driver_mountpoint_iam_policy.arn
-}
-
