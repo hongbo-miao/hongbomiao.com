@@ -10,7 +10,10 @@ variable "amazon_rds_engine_version" {
 variable "amazon_rds_instance_class" {
   type = string
 }
-variable "amazon_rds_storage_size_gb" {
+variable "storage_size_gb" {
+  type = number
+}
+variable "max_storage_size_gb" {
   type = number
 }
 variable "user_name" {

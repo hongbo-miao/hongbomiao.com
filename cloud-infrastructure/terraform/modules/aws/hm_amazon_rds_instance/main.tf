@@ -12,7 +12,8 @@ resource "aws_db_instance" "rds_instance" {
   engine                                = var.amazon_rds_engine
   engine_version                        = var.amazon_rds_engine_version
   instance_class                        = var.amazon_rds_instance_class
-  allocated_storage                     = var.amazon_rds_storage_size_gb
+  allocated_storage                     = var.storage_size_gb
+  max_allocated_storage                 = var.max_storage_size_gb
   storage_type                          = "gp3"
   username                              = var.user_name
   password                              = var.password
