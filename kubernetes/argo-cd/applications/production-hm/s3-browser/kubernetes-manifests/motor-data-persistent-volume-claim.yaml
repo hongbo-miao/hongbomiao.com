@@ -1,0 +1,17 @@
+# https://github.com/s3-browser/helm-charts/blob/main/charts/s3-browser/values.yaml
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: motor-data-persistent-volume-claim
+  namespace: production-hm-s3-browser
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PreSync
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: motor-data-persistent-volume

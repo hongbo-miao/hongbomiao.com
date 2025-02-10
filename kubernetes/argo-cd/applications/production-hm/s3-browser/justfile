@@ -1,0 +1,8 @@
+argo-cd-app-create:
+    argocd app create production-hm-s3-browser --file=manifests/hm-s3-browser-application.yaml
+
+argo-cd-app-update:
+    argocd app create production-hm-s3-browser --file=manifests/hm-s3-browser-application.yaml --upsert
+
+argo-cd-app-delete:
+    argocd app delete production-hm-s3-browser --yes
