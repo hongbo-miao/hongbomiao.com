@@ -1,0 +1,34 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-s3-browser-ingress
+  namespace: production-hm-s3-browser
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: s3-browser.hongbomiao.com
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+  labels:
+    app.kubernetes.io/name: hm-s3-browser-ingress
+    app.kubernetes.io/part-of: production-hm-s3-browser
+spec:
+  rules:
+    - host: s3-browser.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-s3-browser-service
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - s3-browser.hongbomiao.com
+      secretName: production-hm-s3-browser-certificate

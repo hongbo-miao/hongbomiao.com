@@ -50,7 +50,7 @@ resource "aws_iam_role_policy" "eks_cluster_s3_policy" {
           "s3:ListBucket"
         ]
         Resource = [
-          "arn:aws:s3:::${var.s3_bucket_name}"
+          "arn:aws:s3:::${var.eks_cluster_s3_bucket_name}"
         ]
       },
       {
@@ -62,7 +62,35 @@ resource "aws_iam_role_policy" "eks_cluster_s3_policy" {
           "s3:PutObject"
         ]
         Resource = [
-          "arn:aws:s3:::${var.s3_bucket_name}/*"
+          "arn:aws:s3:::${var.eks_cluster_s3_bucket_name}/*"
+        ]
+      }
+    ]
+  })
+}
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+resource "aws_iam_role_policy" "iot_data_s3_policy" {
+  name = "${local.aws_iam_role_name_prefix}IoTDataS3Policy-${var.amazon_eks_cluster_name}"
+  role = aws_iam_role.s3_csi_driver_mountpoint_role.name
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:ListBucket"
+        ]
+        Resource = [
+          "arn:aws:s3:::${var.iot_data_s3_bucket_name}"
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject"
+        ]
+        Resource = [
+          "arn:aws:s3:::${var.iot_data_s3_bucket_name}/*"
         ]
       }
     ]

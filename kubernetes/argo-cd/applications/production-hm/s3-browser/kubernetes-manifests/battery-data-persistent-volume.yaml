@@ -1,0 +1,25 @@
+# https://github.com/awslabs/mountpoint-s3-csi-driver/blob/main/examples/kubernetes/static_provisioning/static_provisioning.yaml
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: battery-data-persistent-volume
+  namespace: production-hm-s3-browser
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PreSync
+spec:
+  capacity:
+    storage: 1Gi # This required value can be anything and is ignored by the CSI driver
+  accessModes:
+    - ReadOnlyMany
+  mountOptions:
+    # https://github.com/awslabs/mountpoint-s3/blob/main/doc/CONFIGURATION.md
+    - region=us-west-2
+    - prefix=battery_data/
+    - metadata-ttl=300 # seconds
+  csi:
+    driver: s3.csi.aws.com
+    volumeHandle: battery-data-volume-handle
+    volumeAttributes:
+      bucketName: iot-data-bucket

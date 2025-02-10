@@ -1,0 +1,23 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: staging-hm-s3-browser-certificate
+  namespace: production-hm-s3-browser
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PreSync
+spec:
+  commonName: s3-browser.hongbomiao.com
+  secretName: staging-hm-s3-browser-certificate
+  dnsNames:
+    - s3-browser.hongbomiao.com
+  issuerRef:
+    kind: ClusterIssuer
+    name: staging-lets-encrypt-cluster-issuer
+  # https://letsencrypt.org/certificates
+  privateKey:
+    algorithm: ECDSA
+    size: 384
+    rotationPolicy: Always
