@@ -47,7 +47,8 @@ module "amazon_s3_csi_driver_mountpoint_iam_role" {
   amazon_eks_cluster_name              = module.amazon_eks_cluster.cluster_name
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  s3_bucket_name                       = module.amazon_s3_bucket_eks_cluster_mount.name
+  eks_cluster_s3_bucket_name           = module.amazon_s3_bucket_eks_cluster_mount.name
+  iot_data_s3_bucket_name              = "iot-data-bucket"
   environment                          = var.environment
   team                                 = var.team
 }

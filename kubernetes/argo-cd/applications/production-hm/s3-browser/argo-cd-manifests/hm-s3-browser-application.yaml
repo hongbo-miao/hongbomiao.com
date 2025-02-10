@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-s3-browser
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-s3-browser
+spec:
+  project: production-hm
+  source:
+    repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+    targetRevision: main
+    path: kubernetes/argo-cd/applications/production-hm/s3-browser/kubernetes-manifests
+  destination:
+    namespace: production-hm-s3-browser
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

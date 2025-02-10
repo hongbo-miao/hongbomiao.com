@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hm-s3-browser-deployment
+  namespace: production-hm-s3-browser
+  labels:
+    app.kubernetes.io/name: hm-s3-browser-deployment
+    app.kubernetes.io/part-of: production-hm-s3-browser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hm-s3-browser
+  template:
+    metadata:
+      labels:
+        app: hm-s3-browser
+    spec:
+      containers:
+        - name: s3-browser
+          image: public.ecr.aws/docker/library/caddy:2.9.1-alpine
+          ports:
+            - name: s3-browser
+              protocol: TCP
+              containerPort: 8080
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "{
+                debug
+                log {
+                  output stdout
+                  level DEBUG
+                }
+                auto_https off
+              }
+              :8080 {
+                encode zstd gzip
+                root * /srv
+                file_server browse
+              }" > /etc/caddy/Caddyfile
+              caddy run --config /etc/caddy/Caddyfile
+          volumeMounts:
+            - name: motor-data-volume
+              mountPath: /srv/motor_data
+            - name: battery-data-volume
+              mountPath: /srv/battery_data
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+      volumes:
+        - name: motor-data-volume
+          persistentVolumeClaim:
+            claimName: motor-data-persistent-volume-claim
+        - name: battery-data-volume
+          persistentVolumeClaim:
+            claimName: battery-data-persistent-volume-claim

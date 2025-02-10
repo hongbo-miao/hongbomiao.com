@@ -542,6 +542,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Amazon RDS** - Relational database service
   - **Amazon Route 53** - Domain Name System (DNS) web service
   - **Amazon S3** - Object storage
+    - **Mountpoint for Amazon S3** - High-performance file client for mounting Amazon S3 as a local file system
   - **Amazon Redshift** - Data warehouse
   - **Amazon SageMaker** - Machine learning platform
   - **Amazon SQS** - Queue
