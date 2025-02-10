@@ -1,0 +1,23 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: staging-hm-harbor-certificate
+  namespace: production-hm-harbor
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PreSync
+spec:
+  commonName: harbor.hongbomiao.com
+  secretName: staging-hm-harbor-certificate
+  dnsNames:
+    - harbor.hongbomiao.com
+  issuerRef:
+    kind: ClusterIssuer
+    name: staging-lets-encrypt-cluster-issuer
+  # https://letsencrypt.org/certificates
+  privateKey:
+    algorithm: ECDSA
+    size: 384
+    rotationPolicy: Always

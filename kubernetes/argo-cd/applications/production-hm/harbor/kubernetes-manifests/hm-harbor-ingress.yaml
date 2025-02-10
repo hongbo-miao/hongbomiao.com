@@ -1,0 +1,70 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-harbor-ingress
+  namespace: production-hm-harbor
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: harbor.hongbomiao.com
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+  labels:
+    app.kubernetes.io/name: hm-harbor-ingress
+    app.kubernetes.io/part-of: production-hm-harbor
+spec:
+  rules:
+    - host: harbor.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-harbor-portal
+                port:
+                  number: 80
+          # https://github.com/goharbor/harbor-helm/issues/565#issuecomment-1238816325
+          - path: /c/
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-harbor-core
+                port:
+                  number: 80
+          - path: /api/
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-harbor-core
+                port:
+                  number: 80
+          - path: /service/
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-harbor-core
+                port:
+                  number: 80
+          - path: /v2/
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-harbor-core
+                port:
+                  number: 80
+          - path: /chartrepo/
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-harbor-core
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - harbor.hongbomiao.com
+      secretName: production-hm-harbor-certificate

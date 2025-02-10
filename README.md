@@ -206,6 +206,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Sealed Secrets** - Kubernetes secret encrypting
 - **ExternalDNS** - Kubernetes services and Ingresses exposing
 - **cert-manager** - Kubernetes X.509 certificate management
+- **Harbor** - Registry
 - **Hasura** - GraphQL Engine
   - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
 - **Linkerd** - Service mesh
