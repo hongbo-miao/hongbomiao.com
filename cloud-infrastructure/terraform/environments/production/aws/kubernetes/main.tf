@@ -1005,3 +1005,91 @@ module "kubernetes_namespace_hm_open_webui_pipelines" {
     module.amazon_eks_cluster
   ]
 }
+
+# Harbor
+# Harbor - S3 bucket
+module "hm_amazon_s3_bucket_hm_harbor" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${var.environment}-hm-harbor-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+# Harbor - IAM role
+module "hm_harbor_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/kubernetes/hm_harbor_iam_role"
+  harbor_service_account_name          = "hm-harbor"
+  harbor_namespace                     = "${var.environment}-hm-harbor"
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  s3_bucket_name                       = module.hm_amazon_s3_bucket_hm_harbor.name
+  environment                          = var.environment
+  team                                 = var.team
+}
+# Harbor - Postgres
+locals {
+  harbor_postgres_name = "${var.environment}-hm-harbor-postgres"
+}
+data "aws_secretsmanager_secret" "hm_harbor_postgres_secret" {
+  provider = aws.production
+  name     = "${var.environment}-hm-harbor-postgres/admin"
+}
+data "aws_secretsmanager_secret_version" "hm_harbor_postgres_secret_version" {
+  provider  = aws.production
+  secret_id = data.aws_secretsmanager_secret.hm_harbor_postgres_secret.id
+}
+module "harbor_postgres_security_group" {
+  providers                      = { aws = aws.production }
+  source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
+  amazon_ec2_security_group_name = "${local.harbor_postgres_name}-security-group"
+  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
+  amazon_vpc_cidr_ipv4           = data.aws_vpc.hm_amazon_vpc.cidr_block
+  environment                    = var.environment
+  team                           = var.team
+}
+module "harbor_postgres_subnet_group" {
+  providers         = { aws = aws.production }
+  source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
+  subnet_group_name = "${local.harbor_postgres_name}-subnet-group"
+  subnet_ids        = var.amazon_vpc_private_subnet_ids
+  environment       = var.environment
+  team              = var.team
+}
+module "harbor_postgres_parameter_group" {
+  providers            = { aws = aws.production }
+  source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
+  family               = "postgres17"
+  parameter_group_name = "${local.harbor_postgres_name}-parameter-group"
+  environment          = var.environment
+  team                 = var.team
+}
+module "harbor_postgres_instance" {
+  providers                 = { aws = aws.production }
+  source                    = "../../../../modules/aws/hm_amazon_rds_instance"
+  amazon_rds_name           = local.harbor_postgres_name
+  amazon_rds_engine         = "postgres"
+  amazon_rds_engine_version = "17.2"
+  amazon_rds_instance_class = "db.m7g.large"
+  storage_size_gb           = 32
+  max_storage_size_gb       = 64
+  user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_harbor_postgres_secret_version.secret_string)["user_name"]
+  password                  = jsondecode(data.aws_secretsmanager_secret_version.hm_harbor_postgres_secret_version.secret_string)["password"]
+  parameter_group_name      = module.hm_harbor_postgres_parameter_group.name
+  subnet_group_name         = module.hm_harbor_postgres_subnet_group.name
+  vpc_security_group_ids    = [module.hm_harbor_postgres_security_group.id]
+  cloudwatch_log_types      = ["postgresql", "upgrade"]
+  environment               = var.environment
+  team                      = var.team
+}
+# Harbor - Kubernetes namespace
+module "kubernetes_namespace_hm_harbor" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-harbor"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
