@@ -51,6 +51,13 @@ aws-secrets-manager-secret-create-production-hm-grafana-postgres:
         --region=us-west-2 \
         --secret-string=file://secrets/production-hm-grafana-postgres-admin-credentials.json
 
+# Harbor - Amazon RDS
+aws-secrets-manager-secret-create-production-hm-harbor-postgres:
+    aws secretsmanager create-secret \
+        --name=production-hm-harbor-postgres/admin \
+        --region=us-west-2 \
+        --secret-string=file://secrets/production-hm-harbor-postgres-admin-credentials.json
+
 # MLflow - Amazon RDS
 aws-secrets-manager-secret-create-production-hm-mlflow-postgres:
     aws secretsmanager create-secret \
