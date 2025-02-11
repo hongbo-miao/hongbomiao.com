@@ -26,7 +26,7 @@ RUN apk add --no-cache gcc g++ make bash \
   && make install \
   && cd .. \
   && rm -r -f librdkafka-${LIBRDKAFKA_VERSION}/
-COPY --from=ghcr.io/astral-sh/uv:0.5.29-python3.13-alpine /usr/local/bin/uv /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.5.30-python3.13-alpine /usr/local/bin/uv /bin/
 COPY ["api-python/pyproject.toml", "api-python/uv.lock", "./"]
 RUN . /venv/bin/activate \
   && uv sync --frozen
