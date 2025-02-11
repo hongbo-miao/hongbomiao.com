@@ -18,6 +18,8 @@ spec:
         values: |
           # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
           ---
+          global:
+            imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
           replicas: 10
           admin:
             existingSecret: hm-grafana-secret
