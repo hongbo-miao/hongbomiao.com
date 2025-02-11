@@ -1009,24 +1009,21 @@ module "kubernetes_namespace_hm_open_webui_pipelines" {
 
 # Harbor
 # Harbor - S3 bucket
-module "hm_amazon_s3_bucket_hm_harbor" {
+module "s3_bucket_hm_harbor" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-harbor-bucket"
   environment    = var.environment
   team           = var.team
 }
-# Harbor - IAM role
-module "hm_harbor_iam_role" {
-  providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/hm_harbor_iam_role"
-  harbor_service_account_name          = "hm-harbor"
-  harbor_namespace                     = "${var.environment}-hm-harbor"
-  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
-  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
-  s3_bucket_name                       = module.hm_amazon_s3_bucket_hm_harbor.name
-  environment                          = var.environment
-  team                                 = var.team
+# Harbor - IAM user
+module "harbor_iam_user" {
+  providers         = { aws = aws.production }
+  source            = "../../../../modules/aws/hm_harbor_iam_user"
+  aws_iam_user_name = "${var.environment}-hm-harbor-user"
+  s3_bucket_name    = module.hm_amazon_s3_bucket_hm_harbor.name
+  environment       = var.environment
+  team              = var.team
 }
 # Harbor - Postgres
 locals {
