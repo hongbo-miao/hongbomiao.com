@@ -19,6 +19,9 @@ spec:
         # https://github.com/grafana/helm-charts/blob/main/charts/tempo-distributed/values.yaml
         # https://grafana.com/docs/tempo/latest/setup/operator/object-storage/
         ---
+        global:
+          image:
+            registry: harbor.hongbomiao.com/docker-hub-proxy-cache
         tempo:
           structuredConfig:
             # https://grafana.com/docs/tempo/latest/traceql/#stream-query-results
