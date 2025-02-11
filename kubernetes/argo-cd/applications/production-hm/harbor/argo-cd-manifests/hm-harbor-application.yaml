@@ -9,64 +9,58 @@ metadata:
 spec:
   project: production-hm
   sources:
-    - repoURL: registry-1.docker.io/bitnamicharts
-      # https://artifacthub.io/packages/helm/bitnami/harbor
-      targetRevision: 24.3.0
+    - repoURL: https://helm.goharbor.io
+      # https://artifacthub.io/packages/helm/harbor/harbor
+      targetRevision: 1.16.2
       chart: harbor
       helm:
         releaseName: hm-harbor
         values: |
-          # https://github.com/bitnami/charts/blob/main/bitnami/harbor/values.yaml
+          # https://github.com/goharbor/harbor-helm/blob/main/values.yaml
           ---
-          global:
-            imageRegistry: public.ecr.aws
-            security:
-              allowInsecureImages: true
+          expose:
+            type: ingress
+            ingress:
+              hosts:
+                core: harbor.hongbomiao.com
+            tls:
+              enabled: false
+          existingSecretAdminPassword: hm-harbor-secret
+          existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
           externalURL: https://harbor.hongbomiao.com
-          exposureType: ingress
-          # ingress:
-          #   core:
-          #     hostname: harbor.hongbomiao.com
-          redis:
-            enabled: true
-            master:
-              persistence:
-                enabled: true
-                accessModes: ["ReadWriteOnce"]
-                size: 10Gi
-                storageClass: production-hm-harbor-storage-class
-          postgresql:
-            enabled: false
-          externalDatabase:
-            host: production-hm-harbor-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
-            port: 5432
-            sslmode: require
-            user: harbor_user
-            coreDatabase: harbor_db
-            existingSecret: hm-harbor-secret
-            existingSecretPasswordKey: postgres_password
-          registry:
-            serviceAccount:
-              create: true
-              name: hm-harbor
-              annotations:
-                eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/HarborRole-hm-harbor
           persistence:
+            enabled: true
             resourcePolicy: keep
             persistentVolumeClaim:
               jobservice:
-                accessModes: ["ReadWriteOnce"]
-                size: 1Gi
-                storageClass: production-hm-harbor-storage-class
+                jobLog:
+                  accessMode: ReadWriteOnce
+                  size: 1Gi
+                  storageClass: production-hm-harbor-storage-class
               trivy:
-                accessModes: ["ReadWriteOnce"]
+                accessMode: ReadWriteOnce
                 size: 5Gi
+                storageClass: production-hm-harbor-storage-class
+              redis:
+                accessMode: ReadWriteOnce
+                size: 1Gi
                 storageClass: production-hm-harbor-storage-class
             imageChartStorage:
               type: s3
               s3:
                 region: us-west-2
                 bucket: production-hm-harbor-bucket
+                existingSecret: hm-harbor-secret
+            existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
+          database:
+            type: external
+            external:
+              host: production-hm-harbor-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
+              port: 5432
+              username: harbor_user
+              coreDatabase: harbor_db
+              existingSecret: hm-harbor-secret
+              sslmode: require
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/harbor/kubernetes-manifests
