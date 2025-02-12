@@ -5,6 +5,11 @@ terraform {
     key    = "production/harbor/terraform.tfstate"
   }
   required_providers {
+    # https://registry.terraform.io/providers/hashicorp/aws/latest
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.86.1"
+    }
     # https://registry.terraform.io/providers/goharbor/harbor/latest
     harbor = {
       source  = "goharbor/harbor"
