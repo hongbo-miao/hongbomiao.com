@@ -10,6 +10,7 @@ spec:
   project: production-hm
   sources:
     - repoURL: https://helm.goharbor.io
+      # https://goharbor.io/docs/1.10/install-config/harbor-ha-helm/
       # https://artifacthub.io/packages/helm/harbor/harbor
       targetRevision: 1.16.2
       chart: harbor
@@ -25,9 +26,73 @@ spec:
                 core: harbor.hongbomiao.com
             tls:
               enabled: false
+          externalURL: https://harbor.hongbomiao.com
           existingSecretAdminPassword: hm-harbor-secret
           existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
-          externalURL: https://harbor.hongbomiao.com
+          core:
+            replicas: 3
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+          jobservice:
+            replicas: 1
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+          portal:
+            replicas: 3
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+          registry:
+            replicas: 3
+            registry:
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 500m
+                  memory: 512Mi
+            controller:
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 100m
+                  memory: 256Mi
+          trivy:
+            replicas: 1
+            resources:
+              requests:
+                cpu: 200m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 1Gi
+          redis:
+            type: internal
+            internal:
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 100m
+                  memory: 256Mi
           persistence:
             enabled: true
             resourcePolicy: keep
