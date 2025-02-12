@@ -10,6 +10,11 @@ terraform {
       source  = "airbytehq/airbyte"
       version = "0.6.5"
     }
+    # https://registry.terraform.io/providers/hashicorp/aws/latest
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.86.1"
+    }
   }
   # terraform version
   required_version = ">= 1.7"
