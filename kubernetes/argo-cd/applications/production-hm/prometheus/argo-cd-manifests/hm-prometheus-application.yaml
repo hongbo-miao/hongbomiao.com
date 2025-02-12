@@ -63,13 +63,15 @@ spec:
               - url: http://hm-mimir-distributor-headless.production-hm-mimir.svc:8080/api/v1/push
                 headers:
                   X-Scope-OrgID: hm-prometheus
+            tsdb:
+              outOfOrderTimeWindow: 30m
             resources:
               requests:
-                cpu: 100m
+                cpu: 200m
                 memory: 512Mi
               limits:
-                cpu: 200m
-                memory: 1Gi
+                cpu: 500m
+                memory: 2Gi
         prometheus-node-exporter:
           resources:
             requests:
