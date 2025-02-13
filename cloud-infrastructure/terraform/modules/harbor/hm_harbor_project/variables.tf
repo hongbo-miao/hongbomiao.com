@@ -5,5 +5,6 @@ variable "public" {
   type = bool
 }
 variable "registry_id" {
-  type = string
+  type    = string
+  default = null
 }
