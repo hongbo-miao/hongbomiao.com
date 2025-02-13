@@ -1,3 +1,8 @@
+module "harbor_config_system" {
+  source                       = "../../../modules/harbor/hm_harbor_config_system"
+  project_creation_restriction = "adminonly"
+}
+
 module "harbor_registry_docker_hub" {
   source        = "../../../modules/harbor/hm_harbor_registry"
   provider_name = "docker-hub"
@@ -9,6 +14,11 @@ module "harbor_project_docker_hub_proxy_cache" {
   name        = "docker-hub-proxy-cache"
   public      = true
   registry_id = module.harbor_registry_docker_hub.id
+}
+module "harbor_project_engineering" {
+  source = "../../../modules/harbor/hm_harbor_project"
+  name   = "engineering"
+  public = false
 }
 
 data "aws_secretsmanager_secret" "hm_harbor_google_client_secret" {
