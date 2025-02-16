@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.12.0, <3.13"
 resolution-markers = [
     "sys_platform == 'darwin'",
@@ -381,13 +382,14 @@ wheels = [
 
 [[package]]
 name = "flashinfer-python"
-version = "0.2.0.post2"
+version = "0.2.1.post1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ninja" },
+    { name = "numpy" },
     { name = "torch" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c8/39/bac839234a3beaab4292e489b4d8941cc97ba4f76474aff0407d7b05a84f/flashinfer_python-0.2.0.post2.tar.gz", hash = "sha256:4e6c66ecf68aaef7ec8364444ff74e12ca43a0d1c92288723bf677864f909274", size = 1735947 }
+sdist = { url = "https://files.pythonhosted.org/packages/7f/3d/aab500609825108d3f6a4b440a7eeb6436d578d3e781e97ea015fd49a530/flashinfer_python-0.2.1.post1.tar.gz", hash = "sha256:ff45819c29f24265a140549cb5bd66e8fa7fa924df1df5bf50f2ea8a8ecbd55e", size = 1745710 }
 
 [[package]]
 name = "frozenlist"
@@ -491,7 +493,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "flashinfer", index = "https://flashinfer.ai/whl/cu124/torch2.4" },
-    { name = "sglang", extras = ["all"], specifier = "==0.4.2.post4" },
+    { name = "sglang", extras = ["all"], specifier = "==0.4.3" },
 ]
 
 [package.metadata.requires-dev]
@@ -1790,15 +1792,15 @@ wheels = [
 
 [[package]]
 name = "sgl-kernel"
-version = "0.0.3.post3"
+version = "0.0.3.post6"
 source = { registry = "https://pypi.org/simple" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/56/6d/288fc0708165b4222d0ff8cbd6dd36a5b5afc0440f4d5a97cd7a202ea582/sgl_kernel-0.0.3.post3-cp39-abi3-manylinux2014_x86_64.whl", hash = "sha256:5377d80d9748eeb00d0240fd81ecc33a3374b44984d82706543d9c2dbb97a267", size = 9315949 },
+    { url = "https://files.pythonhosted.org/packages/3e/c8/59afe4c8d74c039773331936ebe9c25f871129faf8629ac165086fb8ced9/sgl_kernel-0.0.3.post6-cp39-abi3-manylinux2014_x86_64.whl", hash = "sha256:c4373924dcee1af9dce5a1e5bb8bd3ee95879ad2819837678caebd62f8b64336", size = 9404497 },
 ]
 
 [[package]]
 name = "sglang"
-version = "0.4.2.post4"
+version = "0.4.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ipython" },
@@ -1807,9 +1809,9 @@ dependencies = [
     { name = "setproctitle" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/76/81/d19eadc79ef4e184521c652e45d1a388b28604f818f7257d6739c0ff977e/sglang-0.4.2.post4.tar.gz", hash = "sha256:d93ba43eccb91c679cd05a7b8339a88a35dafd7c736f84d52c458b6267178906", size = 555476 }
+sdist = { url = "https://files.pythonhosted.org/packages/ec/b6/316249d0da94d61e764fdd62fb207bf3e117a11b222c52f7125b87e8a7fd/sglang-0.4.3.tar.gz", hash = "sha256:cea0a78a7d7e00c50b9a5ba0591509e3a7da3f4fd1eac1852457b9271ed0f2cb", size = 561169 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/da/22/465a91a9a2b407a5a30a5de0b78117c6f55d1a39454ceffd92e5b2715b24/sglang-0.4.2.post4-py3-none-any.whl", hash = "sha256:33d6cec30ed4bd4e1a3d5b8dca4f6d932c0e607ff680eb3e3da3e14b7e861c9a", size = 803402 },
+    { url = "https://files.pythonhosted.org/packages/e5/eb/90bc68ae9f416c57e21d2fa7d04afe8b49309fc6606f94b4902dc2e5e13b/sglang-0.4.3-py3-none-any.whl", hash = "sha256:2ce4a5385a0319fe70c2087b3def17ccb174deab1be1d4448eed430b3066d60b", size = 817499 },
 ]
 
 [package.optional-dependencies]
@@ -1825,6 +1827,7 @@ all = [
     { name = "interegular" },
     { name = "litellm" },
     { name = "modelscope" },
+    { name = "ninja" },
     { name = "openai" },
     { name = "orjson" },
     { name = "outlines" },
