@@ -8,7 +8,7 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"
-      version = "5.86.1"
+      version = "5.87.0"
     }
   }
   required_version = ">= 1.8"
