@@ -18,6 +18,10 @@ spec:
         values: |
           # https://github.com/bitnami/charts/blob/main/bitnami/clickhouse/values.yaml
           ---
+          global:
+            imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+            security:
+              allowInsecureImages: true
           auth:
             username: admin
             existingSecret: hm-clickhouse-secret

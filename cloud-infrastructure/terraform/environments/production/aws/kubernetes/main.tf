@@ -121,17 +121,36 @@ module "amazon_eks_cluster" {
   subnet_ids               = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids
   control_plane_subnet_ids = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids
   eks_managed_node_group_defaults = {
-    instance_types = ["m7i.large", "m7g.large", "m6i.large", "m6in.large", "m5.large", "m5n.large", "m5zn.large"]
+    block_device_mappings = {
+      xvda = {
+        device_name = "/dev/xvda"
+        ebs = {
+          volume_size           = 100
+          volume_type           = "gp3"
+          iops                  = 3000
+          throughput            = 125
+          encrypted             = true
+          delete_on_termination = true
+        }
+      }
+    }
   }
   eks_managed_node_groups = {
     eks_node_group_1 = {
+      min_size       = 10
+      max_size       = 20
+      desired_size   = 10
+      instance_types = ["m7a.xlarge", "m7i.xlarge", "m6a.xlarge", "m6i.xlarge", "m6in.xlarge", "m5.xlarge", "m5a.xlarge", "m5n.xlarge", "m5zn.xlarge"]
+      capacity_type  = "SPOT"
+    }
+    eks_node_group_2 = {
       min_size       = 10
       max_size       = 50
       desired_size   = 10
       instance_types = ["m7a.2xlarge", "m7i.2xlarge", "m6a.2xlarge", "m6i.2xlarge", "m6in.2xlarge", "m5.2xlarge", "m5a.2xlarge", "m5n.2xlarge", "m5zn.2xlarge"]
       capacity_type  = "SPOT"
     }
-    eks_node_group_2 = {
+    eks_node_group_3 = {
       min_size       = 5
       max_size       = 10
       desired_size   = 5

@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://grafana.github.io/helm-charts
       # https://artifacthub.io/packages/helm/grafana/grafana
-      targetRevision: 8.8.5
+      targetRevision: 8.10.0
       chart: grafana
       helm:
         releaseName: hm-grafana
@@ -82,12 +82,16 @@ spec:
                     prometheusType: Mimir
                     httpHeaderName1: X-Scope-OrgID
                   secureJsonData:
-                    httpHeaderValue1: hm-grafana
+                    httpHeaderValue1: hm
                 - name: hm-loki
                   type: loki
                   isDefault: false
                   url: http://hm-loki-gateway.production-hm-loki:80
                   access: proxy
+                  jsonData:
+                    httpHeaderName1: X-Scope-OrgID
+                  secureJsonData:
+                    httpHeaderValue1: hm
                 - name: hm-tempo
                   type: tempo
                   isDefault: false
@@ -127,6 +131,9 @@ spec:
                       tag: http.path
                     streamingEnabled:
                       search: true
+                    httpHeaderName1: X-Scope-OrgID
+                  secureJsonData:
+                    httpHeaderValue1: hm
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1

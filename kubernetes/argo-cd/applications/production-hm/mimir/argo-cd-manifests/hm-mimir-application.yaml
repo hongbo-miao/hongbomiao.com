@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://grafana.github.io/helm-charts
       # https://artifacthub.io/packages/helm/grafana/mimir-distributed
-      targetRevision: 5.7.0-weekly.328
+      targetRevision: 5.7.0-weekly.329
       chart: mimir-distributed
       helm:
         releaseName: hm-mimir
@@ -42,6 +42,18 @@ spec:
                 max_global_series_per_user: 1000000
               usage_stats:
                 enabled: false
+          # https://grafana.com/docs/mimir/latest/configure/about-runtime-configuration/
+          runtimeConfig:
+            distributor_limits:
+              # 300 MiB
+              max_inflight_push_requests_bytes: 314572800
+              max_inflight_push_requests: 30000
+              max_ingestion_rate: 5000000
+            ingester_limits:
+              max_inflight_push_requests: 30000
+              max_ingestion_rate: 5000000
+              max_series: 1500000
+              max_tenants: 1000
           serviceAccount:
             create: true
             name: hm-mimir

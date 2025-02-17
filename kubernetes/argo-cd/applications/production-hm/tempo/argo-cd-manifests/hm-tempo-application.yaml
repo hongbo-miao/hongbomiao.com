@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://grafana.github.io/helm-charts
     # https://artifacthub.io/packages/helm/grafana/tempo-distributed
-    targetRevision: 1.31.0
+    targetRevision: 1.32.0
     chart: tempo-distributed
     helm:
       releaseName: hm-tempo
@@ -22,17 +22,73 @@ spec:
         global:
           image:
             registry: harbor.hongbomiao.com/docker-hub-proxy-cache
-        tempo:
-          structuredConfig:
-            # https://grafana.com/docs/tempo/latest/traceql/#stream-query-results
-            stream_over_http_enabled: true
-        gateway:
-          enabled: false
         serviceAccount:
           create: true
           name: hm-tempo
           annotations:
             eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/TempoRole-hm-tempo
+        multitenancyEnabled: true
+        tempo:
+          structuredConfig:
+            # https://grafana.com/docs/tempo/latest/traceql/#stream-query-results
+            stream_over_http_enabled: true
+        gateway:
+        server:
+          logLevel: info
+        gateway:
+          enabled: false
+        distributor:
+          replicas: 3
+          receivers:
+            otlp:
+              protocols:
+                grpc:
+                  endpoint: 0.0.0.0:4317
+                http:
+                  endpoint: 0.0.0.0:4318
+        ingester:
+          replicas: 5
+        compactor:
+          replicas: 3
+          config:
+            compaction:
+              # 31 days
+              block_retention: 744h
+        querier:
+          replicas: 3
+        queryFrontend:
+          replicas: 3
+        memcached:
+          replicas: 3
+        traces:
+          otlp:
+            http:
+              enabled: true
+            grpc:
+              enabled: true
+        # https://grafana.com/docs/tempo/latest/configuration/#metrics-generator
+        # https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed#activate-metrics-generator
+        metricsGenerator:
+          enabled: true
+          config:
+            processor:
+              # https://grafana.com/docs/tempo/latest/operations/traceql-metrics/
+              local_blocks:
+                filter_server_spans: false
+            storage:
+              remote_write_add_org_id_header: true
+              remote_write:
+                - url: http://hm-mimir-distributor-headless.production-hm-mimir.svc:8080/api/v1/push
+                  headers:
+                    X-Scope-OrgID: hm
+        global_overrides:
+          defaults:
+            metrics_generator:
+              processors:
+                - local-blocks
+                - service-graphs
+                - span-metrics
+        # https://grafana.com/docs/tempo/latest/setup/operator/object-storage/
         storage:
           admin:
             backend: s3
@@ -46,27 +102,12 @@ spec:
               endpoint: s3.amazonaws.com
               region: us-west-2
               bucket: production-hm-tempo-trace-bucket
-        traces:
-          otlp:
-            http:
-              enabled: true
-            grpc:
-              enabled: true
-        metricsGenerator:
-          enabled: true
-          config:
-            processor:
-              # https://grafana.com/docs/tempo/latest/operations/traceql-metrics/
-              local_blocks:
-                filter_server_spans: false
-            storage:
-              remote_write:
-                - url: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus.svc:9090/api/v1/write
-        global_overrides:
-          metrics_generator_processors:
-            - local-blocks
-            - service-graphs
-            - span-metrics
+            # https://grafana.com/docs/tempo/latest/configuration/compression/
+            block:
+              v2_encoding: zstd
+            wal:
+              v2_encoding: zstd
+        reportingEnabled: false
   destination:
     namespace: production-hm-tempo
     server: https://kubernetes.default.svc
