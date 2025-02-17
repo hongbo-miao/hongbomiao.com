@@ -19,6 +19,9 @@ spec:
           # https://github.com/grafana/loki/blob/main/production/helm/loki/values.yaml
           # https://grafana.com/docs/loki/latest/setup/install/helm/install-scalable/
           ---
+          global:
+            image:
+              registry: harbor.hongbomaio.com/docker-hub-proxy-cache
           deploymentMode: SimpleScalable
           serviceAccount:
             create: true
@@ -26,7 +29,7 @@ spec:
             annotations:
               eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/LokiRole-hm-loki
           loki:
-            auth_enabled: false
+            auth_enabled: true
             schemaConfig:
               configs:
                 - from: 2025-01-01
@@ -45,12 +48,30 @@ spec:
               enabled: true
             ingester:
               chunk_encoding: zstd
+              max_chunk_age: 24h
+              # https://github.com/grafana/loki/issues/8615#issuecomment-1741827915
+              autoforget_unhealthy: true
             limits_config:
+              # https://grafana.com/docs/loki/latest/operations/automatic-stream-sharding/
+              shard_streams:
+                enabled: true
+              # https://grafana.com/docs/grafana/latest/explore/simplified-exploration/logs/access/
               allow_structured_metadata: true
               volume_enabled: true
-              retention_period: 2160h
+              # https://grafana.com/docs/loki/latest/operations/storage/retention/
+              retention_period: 744h
+              # https://grafana.com/docs/loki/latest/operations/request-validation-rate-limits/
+              ingestion_rate_mb: 50
+              ingestion_burst_size_mb: 100
+              per_stream_rate_limit: 50MB
+              per_stream_rate_limit_burst: 100MB
             querier:
               max_concurrent: 4
+            server:
+              # 128 MiB
+              grpc_server_max_recv_msg_size: 134217728
+              # 128 MiB
+              grpc_server_max_send_msg_size: 134217728
             compactor:
               retention_enabled: true
               delete_request_store: s3
@@ -93,7 +114,7 @@ spec:
                 cpu: 500m
                 memory: 1Gi
           read:
-            replicas: 3
+            replicas: 5
             persistence:
               size: 10Gi
               storageClass: production-hm-loki-storage-class
@@ -101,23 +122,23 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 256Mi
+                memory: 512Mi
               limits:
                 cpu: 200m
                 memory: 1Gi
           write:
-            replicas: 3
+            replicas: 5
             persistence:
               size: 10Gi
               storageClass: production-hm-loki-storage-class
               enableStatefulSetAutoDeletePVC: false
             resources:
               requests:
-                cpu: 100m
-                memory: 1Gi
-              limits:
-                cpu: 200m
+                cpu: 1000m
                 memory: 2Gi
+              limits:
+                cpu: 2000m
+                memory: 3Gi
           gateway:
             resources:
               requests:
@@ -130,10 +151,10 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 128Mi
+                memory: 1Gi
               limits:
                 cpu: 200m
-                memory: 1Gi
+                memory: 4Gi
           resultsCache:
             resources:
               requests:
@@ -149,7 +170,7 @@ spec:
                 memory: 128Mi
               limits:
                 cpu: 200m
-                memory: 256Mi
+                memory: 1Gi
           lokiCanary:
             resources:
               requests:
