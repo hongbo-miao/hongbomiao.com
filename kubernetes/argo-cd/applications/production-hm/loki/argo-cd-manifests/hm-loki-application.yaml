@@ -11,18 +11,19 @@ spec:
   sources:
     - repoURL: https://grafana.github.io/helm-charts
       # https://artifacthub.io/packages/helm/grafana/loki
-      targetRevision: 6.25.0
+      targetRevision: 6.27.0
       chart: loki
       helm:
         releaseName: hm-loki
         values: |
           # https://github.com/grafana/loki/blob/main/production/helm/loki/values.yaml
-          # https://grafana.com/docs/loki/latest/setup/install/helm/install-scalable/
+          # https://github.com/grafana/loki/blob/main/production/helm/loki/distributed-values.yaml
+          # https://grafana.com/docs/loki/latest/setup/install/helm/install-microservices/
           ---
           global:
             image:
               registry: harbor.hongbomaio.com/docker-hub-proxy-cache
-          deploymentMode: SimpleScalable
+          deploymentMode: Distributed
           serviceAccount:
             create: true
             name: hm-loki
@@ -65,8 +66,10 @@ spec:
               ingestion_burst_size_mb: 100
               per_stream_rate_limit: 50MB
               per_stream_rate_limit_burst: 100MB
+            query_scheduler:
+              max_outstanding_requests_per_tenant: 32768
             querier:
-              max_concurrent: 4
+              max_concurrent: 16
             server:
               # 128 MiB
               grpc_server_max_recv_msg_size: 134217728
@@ -92,7 +95,9 @@ spec:
                 chunks: production-hm-loki-chunk-bucket
                 ruler: production-hm-loki-ruler-bucket
                 admin: production-hm-loki-admin-bucket
-          sidecar:
+          gateway:
+            enabled: true
+            replicas: 3
             resources:
               requests:
                 cpu: 100m
@@ -100,69 +105,101 @@ spec:
               limits:
                 cpu: 200m
                 memory: 256Mi
-          backend:
+          indexGateway:
             replicas: 3
-            persistence:
-              size: 10Gi
-              storageClass: production-hm-loki-storage-class
-              enableStatefulSetAutoDeletePVC: true
+            maxUnavailable: 1
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 200m
+                memory: 2Gi
+          distributor:
+            autoscaling:
+              enabled: true
+              minReplicas: 6
+              maxReplicas: 15
+              targetCPUUtilizationPercentage: 80
+              targetMemoryUtilizationPercentage: 80
+            resources:
+              requests:
+                cpu: 1000m
+                memory: 256Mi
+              limits:
+                cpu: 8000m
+                memory: 8Gi
+          ingester:
+            zoneAwareReplication:
+              enabled: true
+            autoscaling:
+              enabled: true
+              minReplicas: 3
+              maxReplicas: 15
+              targetCPUUtilizationPercentage: 80
+              targetMemoryUtilizationPercentage: 80
+            resources:
+              requests:
+                cpu: 2000m
+                memory: 2Gi
+              limits:
+                cpu: 8000m
+                memory: 8Gi
+          queryFrontend:
+            autoscaling:
+              enabled: true
+              minReplicas: 3
+              maxReplicas: 6
+              targetCPUUtilizationPercentage: 80
+              targetMemoryUtilizationPercentage: 80
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 1Gi
+          queryScheduler:
+            replicas: 3
             resources:
               requests:
                 cpu: 100m
                 memory: 256Mi
               limits:
                 cpu: 500m
-                memory: 1Gi
-          read:
-            replicas: 5
-            persistence:
-              size: 10Gi
-              storageClass: production-hm-loki-storage-class
-              enableStatefulSetAutoDeletePVC: true
-            resources:
-              requests:
-                cpu: 100m
-                memory: 512Mi
-              limits:
-                cpu: 200m
-                memory: 1Gi
-          write:
-            replicas: 5
-            persistence:
-              size: 10Gi
-              storageClass: production-hm-loki-storage-class
-              enableStatefulSetAutoDeletePVC: false
-            resources:
-              requests:
-                cpu: 1000m
                 memory: 2Gi
-              limits:
+          querier:
+            autoscaling:
+              enabled: true
+              minReplicas: 6
+              maxReplicas: 15
+              targetCPUUtilizationPercentage: 80
+              targetMemoryUtilizationPercentage: 80
+            resources:
+              requests:
                 cpu: 2000m
-                memory: 3Gi
-          gateway:
+                memory: 1Gi
+              limits:
+                cpu: 4000m
+                memory: 2Gi
+          compactor:
+            replicas: 3
             resources:
               requests:
                 cpu: 100m
-                memory: 128Mi
-              limits:
-                cpu: 200m
                 memory: 256Mi
+              limits:
+                cpu: 500m
+                memory: 2Gi
           chunksCache:
+            replicas: 3
             resources:
               requests:
                 cpu: 100m
                 memory: 1Gi
               limits:
                 cpu: 200m
-                memory: 4Gi
-          resultsCache:
-            resources:
-              requests:
-                cpu: 100m
-                memory: 128Mi
-              limits:
-                cpu: 200m
-                memory: 256Mi
+                memory: 8Gi
           memcachedExporter:
             resources:
               requests:
@@ -170,8 +207,9 @@ spec:
                 memory: 128Mi
               limits:
                 cpu: 200m
-                memory: 1Gi
+                memory: 256Mi
           lokiCanary:
+            enabled: true
             resources:
               requests:
                 cpu: 100m
@@ -179,6 +217,24 @@ spec:
               limits:
                 cpu: 200m
                 memory: 256Mi
+          bloomPlanner:
+            replicas: 0
+          bloomBuilder:
+            replicas: 0
+          bloomGateway:
+            replicas: 0
+          minio:
+            enabled: false
+          # Zero out replica counts of monolithic deployment mode
+          singleBinary:
+            replicas: 0
+          # Zero out replica counts of simple scalable deployment mode
+          backend:
+            replicas: 0
+          read:
+            replicas: 0
+          write:
+            replicas: 0
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/loki/kubernetes-manifests
