@@ -49,6 +49,36 @@ spec:
               limits:
                 cpu: 4000m
                 memory: 128Gi
+            volumes:
+              - name: ray-logs
+                emptyDir: {}
+              - name: alloy-config
+                configMap:
+                  name: hm-ray-cluster-config-map
+            volumeMounts:
+              - mountPath: /tmp/ray
+                name: ray-logs
+            sidecarContainers:
+              - name: alloy
+                image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
+                env:
+                  - name: NODE_TYPE
+                    value: head
+                  - name: LOKI_URL
+                    value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
+                resources:
+                  requests:
+                    cpu: 100m
+                    memory: 128Mi
+                  limits:
+                    cpu: 200m
+                    memory: 256Mi
+                volumeMounts:
+                  - mountPath: /tmp/ray
+                    name: ray-logs
+                  - mountPath: /etc/alloy/config.alloy
+                    subPath: config.alloy
+                    name: alloy-config
           worker:
             replicas: 10
             minReplicas: 10
@@ -66,6 +96,36 @@ spec:
               limits:
                 cpu: 4000m
                 memory: 128Gi
+            volumes:
+              - name: ray-logs
+                emptyDir: {}
+              - name: alloy-config
+                configMap:
+                  name: hm-ray-cluster-config-map
+            volumeMounts:
+              - mountPath: /tmp/ray
+                name: ray-logs
+            sidecarContainers:
+              - name: alloy
+                image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
+                env:
+                  - name: NODE_TYPE
+                    value: worker
+                  - name: LOKI_URL
+                    value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
+                resources:
+                  requests:
+                    cpu: 100m
+                    memory: 128Mi
+                  limits:
+                    cpu: 200m
+                    memory: 256Mi
+                volumeMounts:
+                  - mountPath: /tmp/ray
+                    name: ray-logs
+                  - mountPath: /etc/alloy/config.alloy
+                    subPath: config.alloy
+                    name: alloy-config
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/ray-cluster/kubernetes-manifests
