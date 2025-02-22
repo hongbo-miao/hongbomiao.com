@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hm-ray-cluster-config-map
+  namespace: production-hm-ray-cluster
+  labels:
+    app.kubernetes.io/name: hm-ray-cluster-config-map
+    app.kubernetes.io/part-of: production-hm-ray-cluster
+data:
+  config.alloy: |
+    logging {
+      level = "info"
+      format = "logfmt"
+    }
+
+    local.file_match "ray_cluster_logs" {
+      path_targets = [{
+        __path__  = "/tmp/ray/session_latest/logs/*",
+        job       = "ray/logs",
+        component = "ray-cluster",
+        cluster   = "hm-eks-cluster",
+        node_type = env("NODE_TYPE"),
+      }]
+    }
+
+    loki.source.file "ray_cluster_logs" {
+      targets    = local.file_match.ray_cluster_logs.targets
+      forward_to = [loki.write.hm_loki.receiver]
+    }
+
+    loki.write "hm_loki" {
+      endpoint {
+        url = env("LOKI_URL")
+        headers = {
+          "X-Scope-OrgID" = "hm",
+        }
+      }
+    }
