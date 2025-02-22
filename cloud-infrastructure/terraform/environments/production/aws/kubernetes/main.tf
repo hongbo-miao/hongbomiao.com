@@ -128,7 +128,7 @@ module "amazon_eks_cluster" {
           volume_size           = 100
           volume_type           = "gp3"
           iops                  = 3000
-          throughput            = 125
+          throughput            = 250
           encrypted             = true
           delete_on_termination = true
         }

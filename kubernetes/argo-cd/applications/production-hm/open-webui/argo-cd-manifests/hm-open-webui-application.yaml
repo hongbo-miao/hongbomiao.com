@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://helm.openwebui.com
       # https://artifacthub.io/packages/helm/open-webui/open-webui
-      targetRevision: 4.0.4
+      targetRevision: 5.16.1
       chart: open-webui
       helm:
         releaseName: hm-open-webui
@@ -21,7 +21,7 @@ spec:
           image:
             repository: ghcr.io/open-webui/open-webui
             # https://github.com/open-webui/open-webui/releases
-            tag: v0.4.5
+            tag: v0.5.14
           ollama:
             enabled: false
           pipelines:
@@ -74,6 +74,10 @@ spec:
               value: "false"
             - name: PDF_EXTRACT_IMAGES
               value: "true"
+            - name: RAG_FULL_CONTEXT
+              value: "true"
+            - name: RAG_WEB_SEARCH_FULL_CONTEXT
+              value: "true"
             - name: DEFAULT_USER_ROLE
               value: user
             - name: ENABLE_LOGIN_FORM
@@ -99,7 +103,7 @@ spec:
               memory: 4Gi
             limits:
               cpu: 4000m
-              memory: 8Gi
+              memory: 16Gi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/open-webui/kubernetes-manifests
