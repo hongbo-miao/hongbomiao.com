@@ -1,4 +1,4 @@
-FROM docker.io/rust:1.84.1-alpine AS base
+FROM docker.io/rust:1.85.0-alpine AS base
 WORKDIR /usr/src/app
 
 FROM base AS builder
