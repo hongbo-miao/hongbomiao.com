@@ -39,7 +39,9 @@ spec:
                 s3:
                   bucket_name: production-hm-mimir-ruler-bucket
               limits:
-                max_global_series_per_user: 1000000
+                max_global_series_per_user: 10000000000
+                ingestion_burst_size: 2000000
+                ingestion_rate: 100000
               usage_stats:
                 enabled: false
           # https://grafana.com/docs/mimir/latest/configure/about-runtime-configuration/
