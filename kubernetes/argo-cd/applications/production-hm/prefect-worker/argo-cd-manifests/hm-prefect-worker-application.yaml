@@ -1,0 +1,55 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-prefect-worker
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-prefect-worker
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://prefecthq.github.io/prefect-helm
+      # https://artifacthub.io/packages/helm/prefect/prefect-worker
+      targetRevision: 2025.2.21193831
+      chart: prefect-worker
+      helm:
+        releaseName: hm-prefect-worker
+        values: |
+          # https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-worker
+          # https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-worker/values.yaml
+          ---
+          global:
+            prefect:
+              image:
+                repository: harbor.hongbomiao.com/docker-hub-proxy-cache/prefecthq/prefect
+              prefectApiUrl: https://prefect.hongbomiao.com/api
+          worker:
+            basicAuth:
+              enabled: true
+              existingSecret: hm-prefect-worker-secret
+            replicaCount: 1
+            apiConfig: server
+            config:
+              workPool: hm-work-pool
+            serverApiConfig:
+              apiUrl: http://prefect-server.production-hm-prefect-server.svc:4200/api
+              uiUrl: http://prefect-server.production-hm-prefect-server.svc:4200
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/prefect-worker/kubernetes-manifests
+  destination:
+    namespace: production-hm-prefect-worker
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
