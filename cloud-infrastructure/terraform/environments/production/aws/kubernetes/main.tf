@@ -448,7 +448,7 @@ module "airbyte_postgres_instance" {
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.airbyte_postgres_name
   amazon_rds_engine         = "postgres"
-  amazon_rds_engine_version = "17.2"
+  amazon_rds_engine_version = "17.4"
   amazon_rds_instance_class = "db.m7g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
@@ -547,7 +547,7 @@ module "mlflow_postgres_instance" {
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.mlflow_postgres_name
   amazon_rds_engine         = "postgres"
-  amazon_rds_engine_version = "17.2"
+  amazon_rds_engine_version = "17.4"
   amazon_rds_instance_class = "db.m7g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
@@ -827,7 +827,7 @@ module "grafana_postgres_instance" {
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.grafana_postgres_name
   amazon_rds_engine         = "postgres"
-  amazon_rds_engine_version = "17.2"
+  amazon_rds_engine_version = "17.4"
   amazon_rds_instance_class = "db.m7g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
@@ -1117,7 +1117,7 @@ module "s3_bucket_hm_harbor" {
 # Harbor - IAM user
 module "harbor_iam_user" {
   providers         = { aws = aws.production }
-  source            = "../../../../modules/aws/hm_harbor_iam_user"
+  source            = "../../../../modules/kubernetes/hm_harbor_iam_user"
   aws_iam_user_name = "${var.environment}-hm-harbor-user"
   s3_bucket_name    = module.hm_amazon_s3_bucket_hm_harbor.name
   environment       = var.environment
@@ -1165,7 +1165,7 @@ module "harbor_postgres_instance" {
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.harbor_postgres_name
   amazon_rds_engine         = "postgres"
-  amazon_rds_engine_version = "17.2"
+  amazon_rds_engine_version = "17.4"
   amazon_rds_instance_class = "db.m7g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
