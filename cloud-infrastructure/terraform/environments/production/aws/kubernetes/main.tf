@@ -852,6 +852,85 @@ module "kubernetes_namespace_hm_grafana" {
   ]
 }
 
+# Prefect
+# Prefect - Postgres
+locals {
+  prefect_postgres_name = "${var.environment}-hm-prefect-postgres"
+}
+data "aws_secretsmanager_secret" "hm_prefect_postgres_secret" {
+  provider = aws.production
+  name     = "${var.environment}-hm-prefect-postgres/admin"
+}
+data "aws_secretsmanager_secret_version" "hm_prefect_postgres_secret_version" {
+  provider  = aws.production
+  secret_id = data.aws_secretsmanager_secret.hm_prefect_postgres_secret.id
+}
+module "hm_prefect_postgres_security_group" {
+  providers                      = { aws = aws.production }
+  source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
+  amazon_ec2_security_group_name = "${local.prefect_postgres_name}-security-group"
+  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
+  amazon_vpc_cidr_ipv4           = data.aws_vpc.hm_amazon_vpc.cidr_block
+  environment                    = var.environment
+  team                           = var.team
+}
+module "hm_prefect_postgres_subnet_group" {
+  providers         = { aws = aws.production }
+  source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
+  subnet_group_name = "${local.prefect_postgres_name}-subnet-group"
+  subnet_ids        = var.amazon_vpc_private_subnet_ids
+  environment       = var.environment
+  team              = var.team
+}
+module "hm_prefect_postgres_parameter_group" {
+  providers            = { aws = aws.production }
+  source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
+  family               = "postgres17"
+  parameter_group_name = "${local.prefect_postgres_name}-parameter-group"
+  environment          = var.environment
+  team                 = var.team
+}
+module "hm_prefect_postgres_instance" {
+  providers                 = { aws = aws.production }
+  source                    = "../../../../modules/aws/hm_amazon_rds_instance"
+  amazon_rds_name           = local.prefect_postgres_name
+  amazon_rds_engine         = "postgres"
+  amazon_rds_engine_version = "17.4"
+  amazon_rds_instance_class = "db.m7g.large"
+  storage_size_gb           = 32
+  max_storage_size_gb       = 64
+  user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_prefect_postgres_secret_version.secret_string)["user_name"]
+  password                  = jsondecode(data.aws_secretsmanager_secret_version.hm_prefect_postgres_secret_version.secret_string)["password"]
+  parameter_group_name      = module.hm_prefect_postgres_parameter_group.name
+  subnet_group_name         = module.hm_prefect_postgres_subnet_group.name
+  vpc_security_group_ids    = [module.hm_prefect_postgres_security_group.id]
+  cloudwatch_log_types      = ["postgresql", "upgrade"]
+  environment               = var.environment
+  team                      = var.team
+}
+# Prefect Server - Kubernetes namespace
+module "hm_kubernetes_namespace_hm_prefect_server" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-prefect-server"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+# Prefect Worker - Kubernetes namespace
+module "hm_kubernetes_namespace_hm_prefect_worker" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-prefect-worker"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
 # Qdrant
 # Qdrant - Kubernetes namespace
 module "kubernetes_namespace_hm_qdrant" {
