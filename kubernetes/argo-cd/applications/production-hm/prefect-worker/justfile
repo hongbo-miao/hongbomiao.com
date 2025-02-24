@@ -1,0 +1,16 @@
+sealed-secrets-seal:
+    cat secrets/hm-prefect-worker-secret.unsealed.yaml | \
+    kubeseal \
+        --controller-namespace=production-hm-sealed-secrets \
+        --controller-name=hm-sealed-secrets \
+        --format=yaml \
+        > kubernetes-manifests/hm-prefect-worker-secret.yaml
+
+argo-cd-app-create:
+    argocd app create production-hm-prefect-worker --file=argo-cd-manifests/hm-prefect-worker-application.yaml
+
+argo-cd-app-update:
+    argocd app create production-hm-prefect-worker --file=argo-cd-manifests/hm-prefect-worker-application.yaml --upsert
+
+argo-cd-app-delete:
+    argocd app delete production-hm-prefect-worker --yes
