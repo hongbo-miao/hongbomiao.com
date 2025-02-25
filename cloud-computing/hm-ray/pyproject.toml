@@ -1,5 +1,5 @@
 [project]
-name = "calculate"
+name = "hm-ray"
 version = "1.0.0"
 requires-python = "~=3.12.0"
 dependencies = [
@@ -9,14 +9,10 @@ dependencies = [
 [dependency-groups]
 dev = [
   "poethepoet==0.32.2",
-  "pytest-cov==6.0.0",
-  "pytest==8.3.4",
 ]
 
 [tool.uv]
 package = false
 
 [tool.poe.tasks]
-submit = "python src/submit.py"
-test = "pytest --verbose --verbose"
-test-coverage = "pytest --cov=. --cov-report=xml"
+stop-job = "ray job stop --address=https://ray.example.com"
