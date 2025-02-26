@@ -17,9 +17,8 @@ use tokio::net::TcpStream;
 use tokio::process::Command;
 use tokio::sync::RwLock;
 use windows::core::{HSTRING, PCWSTR};
-use windows::Win32::System::Com::IDispatch;
-use windows::Win32::System::Com::{CLSIDFromProgID, CoCreateInstance, CLSCTX_ALL};
-use windows::Win32::System::Com::{CoInitializeEx, COINIT_MULTITHREADED};
+use windows::Win32::System::Com::{CLSIDFromProgID, CoCreateInstance, CoInitializeEx, CLSCTX_ALL, COINIT_MULTITHREADED, IDispatch, DISPPARAMS, DISPATCH_METHOD};
+use windows::Win32::System::Variant::VARIANT;
 use zeromq::{Socket, SocketRecv, SubSocket};
 
 pub mod production {
@@ -130,13 +129,13 @@ async fn stop_iads() -> Result<(), Box<dyn Error>> {
         );
 
         if result.is_ok() {
-            let params = windows::Win32::System::Com::DISPPARAMS::default();
-            let mut result = std::mem::zeroed();
+            let params = DISPPARAMS::default();
+            let mut result: VARIANT = std::mem::zeroed();
             let _ = iads.Invoke(
                 disp_id,
                 &windows::core::GUID::zeroed(),
                 0,
-                windows::Win32::System::Com::DISPATCH_METHOD,
+                DISPATCH_METHOD,
                 &params,
                 Some(&mut result),
                 None,
