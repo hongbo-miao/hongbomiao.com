@@ -1,43 +1,14 @@
-prefect-server-start:
-    prefect server start
-
-prefect-agent-start:
-    prefect agent start --work-queue=hm-local-queue
-
-prefect-profile-ls:
-    prefect profile ls
-
-prefect-profile-use:
-    prefect profile use default
-    prefect profile use xxx
+prefect-profile-view:
+    cat ~/.prefect/profiles.toml
 
 prefect-profile-create:
-    prefect profile create xxx
+    uv run poe profile-create -- hm
 
-prefect-profile-delete:
-    prefect profile delete xxx
-
-prefect-profile-inspect:
-    prefect profile inspect xxx
-
-prefect-queue-ls:
-    prefect work-queue ls
-
-prefect-queue-create:
-    prefect work-queue create hm-local-queue
-
-prefect-config-view:
-    prefect config view
-
-prefect-config-view-show-defaults:
-    prefect config view --show-defaults
+prefect-profile-use:
+    uv run poe profile-use -- hm
 
 prefect-config-set:
-    prefect config set PREFECT_API_URL=http://localhost:4200/api
+    uv run poe config-set -- PREFECT_API_URL=https://prefect.hongbomiao.com/api
 
-# Prefect Cloud
-prefect-cloud-login:
-    prefect cloud login
-
-prefect-cloud-workspace-set:
-    prefect cloud workspace set --workspace=hongbo-miao/hongbomiao
+prefect-generate-kubernetes-base-job-template:
+    uv run poe get-kubernetes-base-job-template > base-job-template.json

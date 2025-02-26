@@ -30,8 +30,233 @@ spec:
               existingSecret: hm-prefect-worker-secret
             replicaCount: 1
             apiConfig: server
+            # https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-worker#setting-workerclusteruid
+            clusterUid: hm-eks-cluster
+            # https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-worker#configuring-a-base-job-template-on-the-worker
             config:
               workPool: hm-work-pool
+              baseJobTemplate:
+                configuration: |
+                  {
+                    "job_configuration": {
+                      "command": "{{ command }}",
+                      "env": "{{ env }}",
+                      "labels": "{{ labels }}",
+                      "name": "{{ name }}",
+                      "namespace": "production-hm-prefect-worker",
+                      "job_manifest": {
+                        "apiVersion": "batch/v1",
+                        "kind": "Job",
+                        "metadata": {
+                          "generateName": "{{ name }}-",
+                          "labels": "{{ labels }}",
+                          "namespace": "production-hm-prefect-worker"
+                        },
+                        "spec": {
+                          "backoffLimit": 0,
+                          "template": {
+                            "spec": {
+                              "completions": 1,
+                              "containers": [
+                                {
+                                  "args": "{{ command }}",
+                                  "env": "{{ env }}",
+                                  "image": "{{ image }}",
+                                  "imagePullPolicy": "{{ image_pull_policy }}",
+                                  "name": "prefect-job"
+                                }
+                              ],
+                              "parallelism": 1,
+                              "restartPolicy": "Never",
+                              "serviceAccountName": "{{ service_account_name }}"
+                            }
+                          },
+                          "ttlSecondsAfterFinished": "{{ finished_job_ttl }}"
+                        }
+                      },
+                      "cluster_config": "{{ cluster_config }}",
+                      "job_watch_timeout_seconds": "{{ job_watch_timeout_seconds }}",
+                      "pod_watch_timeout_seconds": "{{ pod_watch_timeout_seconds }}",
+                      "stream_output": "{{ stream_output }}"
+                    },
+                    "variables": {
+                      "description": "Default variables for the Kubernetes worker.\n\nThe schema for this class is used to populate the `variables` section of the default\nbase job template.",
+                      "properties": {
+                        "name": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "description": "Name given to infrastructure created by a worker.",
+                          "title": "Name"
+                        },
+                        "env": {
+                          "additionalProperties": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "description": "Environment variables to set when starting a flow run.",
+                          "title": "Environment Variables",
+                          "type": "object"
+                        },
+                        "labels": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Labels applied to infrastructure created by a worker.",
+                          "title": "Labels",
+                          "type": "object"
+                        },
+                        "command": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "description": "The command to use when starting a flow run. In most cases, this should be left blank and the command will be automatically generated by the worker.",
+                          "title": "Command"
+                        },
+                        "namespace": {
+                          "default": "default",
+                          "description": "The Kubernetes namespace to create jobs within.",
+                          "title": "Namespace",
+                          "type": "string"
+                        },
+                        "image": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "description": "The image reference of a container image to use for created jobs. If not set, the latest Prefect image will be used.",
+                          "examples": [
+                            "docker.io/prefecthq/prefect:3-latest"
+                          ],
+                          "title": "Image"
+                        },
+                        "service_account_name": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "description": "The Kubernetes service account to use for job creation.",
+                          "title": "Service Account Name"
+                        },
+                        "image_pull_policy": {
+                          "default": "IfNotPresent",
+                          "description": "The Kubernetes image pull policy to use for job containers.",
+                          "enum": [
+                            "IfNotPresent",
+                            "Always",
+                            "Never"
+                          ],
+                          "title": "Image Pull Policy",
+                          "type": "string"
+                        },
+                        "finished_job_ttl": {
+                          "anyOf": [
+                            {
+                              "type": "integer"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "description": "The number of seconds to retain jobs after completion. If set, finished jobs will be cleaned up by Kubernetes after the given delay. If not set, jobs will be retained indefinitely.",
+                          "title": "Finished Job TTL"
+                        },
+                        "job_watch_timeout_seconds": {
+                          "anyOf": [
+                            {
+                              "type": "integer"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "description": "Number of seconds to wait for each event emitted by a job before timing out. If not set, the worker will wait for each event indefinitely.",
+                          "title": "Job Watch Timeout Seconds"
+                        },
+                        "pod_watch_timeout_seconds": {
+                          "default": 60,
+                          "description": "Number of seconds to watch for pod creation before timing out.",
+                          "title": "Pod Watch Timeout Seconds",
+                          "type": "integer"
+                        },
+                        "stream_output": {
+                          "default": true,
+                          "description": "If set, output will be streamed from the job to local standard output.",
+                          "title": "Stream Output",
+                          "type": "boolean"
+                        },
+                        "cluster_config": {
+                          "anyOf": [
+                            {
+                              "$ref": "#/definitions/KubernetesClusterConfig"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "description": "The Kubernetes cluster config to use for job creation."
+                        }
+                      },
+                      "type": "object",
+                      "definitions": {
+                        "KubernetesClusterConfig": {
+                          "block_schema_references": {},
+                          "block_type_slug": "kubernetes-cluster-config",
+                          "description": "Stores configuration for interaction with Kubernetes clusters.\n\nSee `from_file` for creation.",
+                          "properties": {
+                            "config": {
+                              "description": "The entire contents of a kubectl config file.",
+                              "title": "Config",
+                              "type": "object"
+                            },
+                            "context_name": {
+                              "description": "The name of the kubectl context to use.",
+                              "title": "Context Name",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "config",
+                            "context_name"
+                          ],
+                          "secret_fields": [],
+                          "title": "KubernetesClusterConfig",
+                          "type": "object"
+                        }
+                      }
+                    }
+                  }
             serverApiConfig:
               apiUrl: http://prefect-server.production-hm-prefect-server.svc:4200/api
               uiUrl: http://prefect-server.production-hm-prefect-server.svc:4200
