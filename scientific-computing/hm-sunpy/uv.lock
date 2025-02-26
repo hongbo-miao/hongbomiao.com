@@ -556,7 +556,7 @@ dev = [
 requires-dist = [
     { name = "matplotlib", specifier = "==3.10.0" },
     { name = "scipy", specifier = "==1.15.2" },
-    { name = "sunpy", extras = ["all"], specifier = "==6.0.4" },
+    { name = "sunpy", extras = ["all"], specifier = "==6.1.1" },
 ]
 
 [package.metadata.requires-dev]
@@ -1252,23 +1252,24 @@ wheels = [
 
 [[package]]
 name = "sunpy"
-version = "6.0.4"
+version = "6.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "astropy" },
+    { name = "fsspec" },
     { name = "numpy" },
     { name = "packaging" },
     { name = "parfive", extra = ["ftp"] },
     { name = "pyerfa" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b3/0a/316db001b2cb943455a30b857d222446b3769906cd86ed1ccf211619cda8/sunpy-6.0.4.tar.gz", hash = "sha256:aaae63e394b7fe13101e359c3a482becedd8b99a7b4a393f03a01244154fc5f4", size = 3750259 }
+sdist = { url = "https://files.pythonhosted.org/packages/af/d7/df90ee7671c084798240b82814854d612108af0018f48d710d0328e80445/sunpy-6.1.1.tar.gz", hash = "sha256:c609a6b1b0bb286bd42789940f54fcb7d6900dfcfe217df54f859ff6082e13db", size = 3788826 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/61/0d/950500b37298cb701a040b4f0561025cedd068f284a38671f9982dcc3a52/sunpy-6.0.4-cp310-abi3-macosx_10_9_x86_64.whl", hash = "sha256:d4bf8edfcbf45541a9a6c6227814ff33e8bfd565f111d18b15f25d6984a0f679", size = 3349298 },
-    { url = "https://files.pythonhosted.org/packages/05/ef/b75e9f7d42af738990aa317bc48d66a175f67f8a526b90d95b93de4f4aa1/sunpy-6.0.4-cp310-abi3-macosx_11_0_arm64.whl", hash = "sha256:9730b86923d3f33e994d75730557648336078ae8ed684e8ff4989fae7f6b9a36", size = 3349177 },
-    { url = "https://files.pythonhosted.org/packages/73/dd/98a3751545c87266e3704ac5ed6b5032cb6674d0a515ea268b5b2487f602/sunpy-6.0.4-cp310-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d948e710e9c9fcacec95b93d11c53b8bb054116814b29db864e4b5eaacc7126a", size = 3399431 },
-    { url = "https://files.pythonhosted.org/packages/09/0b/4d49df396593bb183b469665afd758b87771068b24f92cbc4fb246860158/sunpy-6.0.4-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:706b863b3033170ea85ff5e18fefb521b0d977a4218a9fcc6313d20f56a23f9a", size = 3403829 },
-    { url = "https://files.pythonhosted.org/packages/7e/f3/0093712cc8d57e01a246b3bb697119534047440c290119302dc104b0991b/sunpy-6.0.4-py3-none-any.whl", hash = "sha256:b027fd277118bb44943b0e2d750c7951b171a51f1632f56ca7530707d44658dc", size = 3320085 },
+    { url = "https://files.pythonhosted.org/packages/2c/3c/7b9abf128ac4e761b39c943f3ed04d68c89b4360466f9592badb86d936aa/sunpy-6.1.1-cp311-abi3-macosx_10_9_x86_64.whl", hash = "sha256:41eb4ad6da7aecba629b3c5bf1b160f065fb6b324b58386d188211450c013915", size = 3385882 },
+    { url = "https://files.pythonhosted.org/packages/07/9f/ed01c8426ba46fe6e966ee5a4fb1bddc9d0d761728b909e4a49688d1677f/sunpy-6.1.1-cp311-abi3-macosx_11_0_arm64.whl", hash = "sha256:0deb7d3bba55effcc869fd831fc7d4f58283b4910e4704cdbcffaba059d39dc2", size = 3385756 },
+    { url = "https://files.pythonhosted.org/packages/6a/0f/ea37d3618915fc09b3d0782d293d3f3ca04339e6cedcf01eeeb2133df91a/sunpy-6.1.1-cp311-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a31b43747049940048ba5912be1dead02440c00364ff3637f725b8ee9a4833e2", size = 3436079 },
+    { url = "https://files.pythonhosted.org/packages/36/72/d39c379d571dad117c3398aded7ab747d057332d172cc89b74e5748c9ad7/sunpy-6.1.1-cp311-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:71f61a7f3a5fee7eb7a0fc85e2ac1aab6bcc7b97d4be3cbe41f1f5719543b037", size = 3440599 },
+    { url = "https://files.pythonhosted.org/packages/f7/84/4e7b3130699306516fbf5f2be8450ff3a7f56d4343dbdfd0fb506bc22338/sunpy-6.1.1-py3-none-any.whl", hash = "sha256:27302170af939f881cee882fb961492becd86c35afb8878827080549b655c72b", size = 3356656 },
 ]
 
 [package.optional-dependencies]
@@ -1277,6 +1278,7 @@ all = [
     { name = "asdf-astropy" },
     { name = "beautifulsoup4" },
     { name = "cdflib" },
+    { name = "contourpy" },
     { name = "drms" },
     { name = "glymur" },
     { name = "h5netcdf" },
