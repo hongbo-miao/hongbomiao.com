@@ -522,8 +522,8 @@ jobs:
         with:
           action: docker/build-push-action@v5.1.0
           with: |
-            context: .
-            file: ./data-orchestration/hm-prefect/workflows/print-platform/Dockerfile
+            context: ./data-orchestration/hm-prefect/workflows/print-platform
+            file: Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
             cache-from: type=gha
