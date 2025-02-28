@@ -1,11 +1,11 @@
 // https://eslint.org/docs/latest/use/configure/configuration-files
 
-const grafanaConfig = require("@grafana/eslint-config/flat");
+import grafanaConfig from '@grafana/eslint-config/flat.js';
 
 /**
  * @type {Array<import('eslint').Linter.Config>}
  */
-module.exports = [
+export default [
   {
     // https://eslint.org/docs/latest/use/configure/ignore#the-eslintignore-file
     ignores: [
