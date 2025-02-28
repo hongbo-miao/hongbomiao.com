@@ -13,7 +13,7 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"
-      version = "5.88.0"
+      version = "5.89.0"
     }
   }
   # terraform version
