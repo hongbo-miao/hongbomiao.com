@@ -9,7 +9,7 @@ name: . Test Data Analytics
         required: true
         type: boolean
       # Applications
-      hm-cudf:
+      hm-cudf-analyze-transactions:
         required: true
         type: boolean
       hm-cupy:
@@ -24,10 +24,13 @@ name: . Test Data Analytics
       hm-numba:
         required: true
         type: boolean
-      hm-pandas:
+      hm-pandas-analyze-transactions:
         required: true
         type: boolean
-      hm-polars:
+      hm-polars-analyze-transactions-cpu:
+        required: true
+        type: boolean
+      hm-polars-analyze-transactions-gpu:
         required: true
         type: boolean
 
@@ -96,9 +99,9 @@ jobs:
         with:
           directory: data-analytics/hm-numba
 
-  pandas-test:
-    name: pandas | Test
-    if: ${{ inputs.workflow || inputs.hm-pandas }}
+  pandas-analyze-transactions-test:
+    name: pandas (analyze-transactions) | Test
+    if: ${{ inputs.workflow || inputs.hm-pandas-analyze-transactions }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -110,27 +113,27 @@ jobs:
         with:
           version: 0.5.20
           enable-cache: true
-          cache-dependency-glob: data-analytics/hm-pandas/uv.lock
+          cache-dependency-glob: data-analytics/hm-pandas/analyze-transactions/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.4.0
         with:
-          python-version-file: data-analytics/hm-pandas/pyproject.toml
+          python-version-file: data-analytics/hm-pandas/analyze-transactions/pyproject.toml
       - name: Install dependencies
-        working-directory: data-analytics/hm-pandas
+        working-directory: data-analytics/hm-pandas/analyze-transactions
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-analytics/hm-pandas
+        working-directory: data-analytics/hm-pandas/analyze-transactions
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.0
         with:
-          directory: data-analytics/hm-pandas
+          directory: data-analytics/hm-pandas/analyze-transactions
 
-  cudf-test:
-    name: cuDF | Test
-    if: ${{ inputs.workflow || inputs.hm-cudf }}
+  cudf-analyze-transactions-test:
+    name: cuDF (analyze-transactions) | Test
+    if: ${{ inputs.workflow || inputs.hm-cudf-analyze-transactions }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -142,27 +145,27 @@ jobs:
         with:
           version: 0.5.20
           enable-cache: true
-          cache-dependency-glob: data-analytics/hm-cudf/uv.lock
+          cache-dependency-glob: data-analytics/hm-cudf/analyze-transactions/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.4.0
         with:
-          python-version-file: data-analytics/hm-cudf/pyproject.toml
+          python-version-file: data-analytics/hm-cudf/analyze-transactions/pyproject.toml
       - name: Install dependencies
-        working-directory: data-analytics/hm-cudf
+        working-directory: data-analytics/hm-cudf/analyze-transactions
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-analytics/hm-cudf
+        working-directory: data-analytics/hm-cudf/analyze-transactions
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.0
         with:
-          directory: data-analytics/hm-cudf
+          directory: data-analytics/hm-cudf/analyze-transactions
 
-  polars-test:
-    name: Polars | Test
-    if: ${{ inputs.workflow || inputs.hm-polars }}
+  polars-analyze-transactions-cpu-test:
+    name: Polars (analyze-transactions-cpu) | Test
+    if: ${{ inputs.workflow || inputs.hm-polars-analyze-transactions-cpu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -174,23 +177,55 @@ jobs:
         with:
           version: 0.5.20
           enable-cache: true
-          cache-dependency-glob: data-analytics/hm-polars/uv.lock
+          cache-dependency-glob: data-analytics/hm-polars/analyze-transactions-cpu/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.4.0
         with:
-          python-version-file: data-analytics/hm-polars/pyproject.toml
+          python-version-file: data-analytics/hm-polars/analyze-transactions-cpu/pyproject.toml
       - name: Install dependencies
-        working-directory: data-analytics/hm-polars
+        working-directory: data-analytics/hm-polars/analyze-transactions-cpu
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-analytics/hm-polars
+        working-directory: data-analytics/hm-polars/analyze-transactions-cpu
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.0
         with:
-          directory: data-analytics/hm-polars
+          directory: data-analytics/hm-polars/analyze-transactions-cpu
+
+  polars-analyze-transactions-gpu-test:
+    name: Polars (analyze-transactions-gpu) | Test
+    if: ${{ inputs.workflow || inputs.hm-polars-analyze-transactions-gpu }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.3.0
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-polars/analyze-transactions-gpu/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version-file: data-analytics/hm-polars/analyze-transactions-gpu/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-polars/analyze-transactions-gpu
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-polars/analyze-transactions-gpu
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.0
+        with:
+          directory: data-analytics/hm-polars/analyze-transactions-gpu
 
   geopandas-test:
     name: GeoPandas | Test
