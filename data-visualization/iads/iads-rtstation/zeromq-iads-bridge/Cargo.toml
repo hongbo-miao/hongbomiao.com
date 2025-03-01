@@ -12,7 +12,11 @@ prost = "=0.13.5"
 serde = { version = "=1.0.218", features = ["derive"] }
 tempfile = "=3.17.1"
 tokio = { version = "=1.43.0", features = ["full"] }
-windows = { version = "=0.58.0", features = ["Win32_System_Com"] }
+windows = { version = "=0.60.0", features = [
+  "Win32_System_Com",
+  "Win32_System_Ole",
+  "Win32_System_Variant",
+] }
 zeromq = "=0.4.1"
 
 [dev-dependencies]
