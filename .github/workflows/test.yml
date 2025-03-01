@@ -306,6 +306,8 @@ jobs:
               - 'machine-learning/hm-cuml/**'
             hm-cupy:
               - 'data-analytics/hm-cupy/**'
+            hm-daft-analyze-transactions:
+              - 'data-analytics/hm-daft/analyze-transactions/**'
             hm-docling:
               - 'machine-learning/hm-docling/**'
             hm-duckdb-query-duckdb:
@@ -568,6 +570,7 @@ jobs:
       hm-cudf-analyze-transactions: ${{ steps.filter.outputs.hm-cudf-analyze-transactions }}
       hm-cuml: ${{ steps.filter.outputs.hm-cuml }}
       hm-cupy: ${{ steps.filter.outputs.hm-cupy }}
+      hm-daft-analyze-transactions: ${{ steps.filter.outputs.hm-daft-analyze-transactions }}
       hm-docling: ${{ steps.filter.outputs.hm-docling }}
       hm-duckdb-query-duckdb: ${{ steps.filter.outputs.hm-duckdb-query-duckdb }}
       hm-duckdb-query-lance: ${{ steps.filter.outputs.hm-duckdb-query-lance }}
@@ -858,6 +861,7 @@ jobs:
       # Applications
       hm-cudf-analyze-transactions: ${{ needs.detect-changes.outputs.hm-cudf-analyze-transactions == 'true' }}
       hm-cupy: ${{ needs.detect-changes.outputs.hm-cupy == 'true' }}
+      hm-daft-analyze-transactions: ${{ needs.detect-changes.outputs.hm-daft-analyze-transactions == 'true' }}
       hm-geopandas: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
       hm-networkx: ${{ needs.detect-changes.outputs.hm-networkx == 'true' }}
       hm-numba: ${{ needs.detect-changes.outputs.hm-numba == 'true' }}

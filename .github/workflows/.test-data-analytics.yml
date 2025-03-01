@@ -15,6 +15,9 @@ name: . Test Data Analytics
       hm-cupy:
         required: true
         type: boolean
+      hm-daft-analyze-transactions:
+        required: true
+        type: boolean
       hm-geopandas:
         required: true
         type: boolean
@@ -162,6 +165,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.0
         with:
           directory: data-analytics/hm-cudf/analyze-transactions
+
+  daft-analyze-transactions-test:
+    name: Daft (analyze-transactions) | Test
+    if: ${{ inputs.workflow || inputs.hm-daft-analyze-transactions }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.3.0
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-analytics/hm-daft/analyze-transactions/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version-file: data-analytics/hm-daft/analyze-transactions/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-analytics/hm-daft/analyze-transactions
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-analytics/hm-daft/analyze-transactions
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.0
+        with:
+          directory: data-analytics/hm-daft/analyze-transactions
 
   polars-analyze-transactions-cpu-test:
     name: Polars (analyze-transactions-cpu) | Test
