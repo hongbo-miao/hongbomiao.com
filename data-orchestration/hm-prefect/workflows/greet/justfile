@@ -7,36 +7,31 @@ uv-update-lock-file:
 uv-install-dependencies:
     uv sync --dev
 
-uv-run-prefect-server-start:
-    uv run poe prefect-server-start
-
-uv-run-prefect-agent-start:
-    uv run poe prefect-agent-start
-
-prefect-profile-use:
-    uv run poe prefect-profile-use -- hm-prefect
-
-uv-run-set-up:
-    uv run poe set-up
-
-uv-run-dev:
+dev:
     uv run poe dev
 
-uv-run-test:
+test:
     uv run poe test
 
-uv-run-test-coverage:
+test-coverage:
     uv run poe test-coverage
 
-uv-run-build:
-    uv run poe build --params='{"user":{"first_name":"Hongbo","last_name":"Miao"}}' --work-queue=hm-kubernetes-queue
+publish-development-docker-image:
+    docker build --platform=linux/amd64 --file=Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-greet:development . && \
+    docker push ghcr.io/hongbo-miao/hm-prefect-greet:development
 
-uv-run-run:
-    uv run poe run
-
-docker-build:
-    cd ../../../.. && \
-    docker build --file=data-orchestration/hm-prefect/workflows/greet/Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-greet:latest .
-
-docker-push:
+publish-production-docker-image:
+    docker build --platform=linux/amd64 --file=Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-greet:latest . && \
     docker push ghcr.io/hongbo-miao/hm-prefect-greet:latest
+
+deploy-development:
+    uv run poe deploy --environment=development
+
+deploy-production:
+    uv run poe deploy --environment=production
+
+run-development:
+    uv run poe run -- greet/hm-development-greet
+
+run-production:
+    uv run poe run -- greet/hm-production-greet
