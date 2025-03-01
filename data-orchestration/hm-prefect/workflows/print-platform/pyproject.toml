@@ -9,6 +9,7 @@ dependencies = [
 [dependency-groups]
 dev = [
   "poethepoet==0.32.2",
+  "prefect==3.2.7",
   "pytest-cov==6.0.0",
   "pytest==8.3.4",
 ]
@@ -17,8 +18,6 @@ dev = [
 package = false
 
 [tool.poe.tasks]
-prefect-profile-use = "prefect profile use"
-
 dev = "python src/main.py"
 test = "pytest --verbose --verbose"
 test-coverage = "pytest --cov=. --cov-report=xml"

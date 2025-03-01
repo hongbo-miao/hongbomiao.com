@@ -1,2 +1,4 @@
 FROM docker.io/prefecthq/prefect:3.2.9-python3.11-kubernetes
-COPY ["data-orchestration/hm-prefect/workflows/calculate/src/", "/opt/prefect/flows/src/"]
+WORKDIR /opt/prefect/workflow
+
+COPY ["src/", "/opt/prefect/workflow/src/"]
