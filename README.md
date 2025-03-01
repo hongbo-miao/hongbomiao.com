@@ -58,7 +58,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/user-attachments/assets/80c35cbd-e572-4efd-a748-d6d464ec5fdd)
+![Architecture](https://github.com/user-attachments/assets/60a0b0ca-d6c0-44e4-b475-d9809e735e1e)
 
 # 🧱 Tech Stack
 
