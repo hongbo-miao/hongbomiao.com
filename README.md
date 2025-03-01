@@ -371,9 +371,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **pandas** - Data analysis library
   - **GeoPandas** - Spatial data library
   - **AWS SDK for pandas** - pandas integration with AWS services
-  - **Modin** - pandas workflows scaling
   - **cuDF** - GPU-powered DataFrame library
-  - **Polars** - Multithreaded, vectorized, query-engine-powered DataFrame library
+  - **Polars** - High-performance DataFrame library
+  - **Modin** - Distributed DataFrame library
+  - **Daft** - Distributed DataFrame library
 - **NetworkX** - Network analysis library
 - **JupyterLab** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning

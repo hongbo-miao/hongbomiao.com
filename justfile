@@ -441,12 +441,14 @@ static-type-check-python:
     uv run poe static-type-check-python --package=computer-vision.hm-pyvista.mount-saint-helens
     uv run poe static-type-check-python --package=computer-vision.hm-supervision.detect-objects
     uv run poe static-type-check-python --package=computer-vision.open-clip
-    uv run poe static-type-check-python --package=data-analytics.hm-cudf
+    uv run poe static-type-check-python --package=data-analytics.hm-cudf.analyze-transactions
     uv run poe static-type-check-python --package=data-analytics.hm-cupy
+    uv run poe static-type-check-python --package=data-analytics.hm-daft.analyze-transactions
     uv run poe static-type-check-python --package=data-analytics.hm-geopandas
     uv run poe static-type-check-python --package=data-analytics.hm-numba
-    uv run poe static-type-check-python --package=data-analytics.hm-pandas
-    uv run poe static-type-check-python --package=data-analytics.hm-polars
+    uv run poe static-type-check-python --package=data-analytics.hm-pandas.analyze-transactions
+    uv run poe static-type-check-python --package=data-analytics.hm-polars.analyze-transactions-cpu
+    uv run poe static-type-check-python --package=data-analytics.hm-polars.analyze-transactions-gpu
     uv run poe static-type-check-python --package=data-distribution.arrow-flight.arrow-flight-client
     uv run poe static-type-check-python --package=data-distribution.rti-connext-dds
     uv run poe static-type-check-python --package=data-orchestration.hm-airflow
