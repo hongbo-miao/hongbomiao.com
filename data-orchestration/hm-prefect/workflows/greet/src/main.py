@@ -1,33 +1,36 @@
-from prefect import flow, get_run_logger, task
+from prefect import flow, get_run_logger
 from pydantic import BaseModel
 
 
 class User(BaseModel):
-    first_name: str
-    last_name: str
-
-
-@task
-def get_hello(name: str) -> str:
-    return f"Hello {name}!"
+    name: str
+    age: int
 
 
 @flow
-def greet_subflow(msg: str) -> str:
+def create_greeting_subflow(name: str) -> str:
     logger = get_run_logger()
-    logger.info(f"Subflow says: {msg}")
-    return "Bye"
+    greeting = f"Hello {name}!"
+    logger.info(greeting)
+    return greeting
+
+
+@flow
+def create_farewell_subflow(age: int) -> str:
+    logger = get_run_logger()
+    message = "Good night!" if age > 50 else "Goodbye!"
+    logger.info(message)
+    return message
 
 
 @flow
 def greet(user: User) -> None:
+    greeting = create_greeting_subflow(user.name)
+    farewell = create_farewell_subflow(user.age)
     logger = get_run_logger()
-    message = get_hello(f"{user.first_name} {user.last_name}")
-    logger.info(message)
-    bye_message = greet_subflow(message)
-    logger.info(bye_message)
+    logger.info(f"Final messages: {greeting} {farewell}")
 
 
 if __name__ == "__main__":
-    external_user = User(first_name="Hongbo", last_name="Miao")
+    external_user = User(name="Rose", age=20)
     greet(external_user)

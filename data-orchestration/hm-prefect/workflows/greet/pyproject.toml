@@ -1,15 +1,16 @@
 [project]
-name = "greet"
+name = "prefect-greet"
 version = "1.0.0"
-requires-python = "~=3.13.0"
+requires-python = "~=3.11.0"
 dependencies = [
-  "prefect==3.2.9",
+  "prefect-client==3.2.9",
   "pydantic==2.10.6",
 ]
 
 [dependency-groups]
 dev = [
   "poethepoet==0.32.2",
+  "prefect==3.2.9",
   "pytest-cov==6.0.0",
   "pytest==8.3.4",
 ]
@@ -18,13 +19,8 @@ dev = [
 package = false
 
 [tool.poe.tasks]
-prefect-server-start = "prefect server start"
-prefect-agent-start = "prefect agent start"
-prefect-profile-use = "prefect profile use"
-
-set-up = "python tools/set_up/main.py"
 dev = "python src/main.py"
 test = "pytest --verbose --verbose"
 test-coverage = "pytest --cov=. --cov-report=xml"
-build = "prefect deployment build src/main.py:greet --name=greet --infra-block=kubernetes-job/greet-kubernetes-job-block --apply"
-run = "prefect deployment run greet/greet"
+deploy = "python src/deploy.py"
+run = "prefect deployment run"
