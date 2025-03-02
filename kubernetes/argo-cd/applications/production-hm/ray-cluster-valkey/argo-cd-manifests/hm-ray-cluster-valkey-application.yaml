@@ -1,0 +1,67 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-ray-cluster-valkey
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-ray-cluster-valkey
+spec:
+  project: production-hm
+  sources:
+    - repoURL: registry-1.docker.io/bitnamicharts
+      # https://artifacthub.io/packages/helm/bitnami/valkey
+      targetRevision: 2.4.1
+      chart: valkey
+      helm:
+        releaseName: hm-ray-cluster-valkey
+        values: |
+          # https://github.com/bitnami/charts/blob/main/bitnami/valkey/values.yaml
+          ---
+          global:
+            imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+            security:
+              allowInsecureImages: true
+          auth:
+            enabled: true
+            sentinel: false
+            existingSecret: hm-ray-cluster-valkey-secret
+          primary:
+            replicaCount: 1
+            persistence:
+              accessModes: ["ReadWriteOnce"]
+              size: 1Gi
+              storageClass: production-hm-ray-cluster-valkey-storage-class
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 1500m
+                memory: 1Gi
+          replica:
+            replicaCount: 3
+            persistence:
+              accessModes: ["ReadWriteOnce"]
+              size: 1Gi
+              storageClass: production-hm-ray-cluster-valkey-storage-class
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 1500m
+                memory: 1Gi
+          sentinel:
+            enabled: false
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/ray-cluster-valkey/kubernetes-manifests
+  destination:
+    namespace: production-hm-ray-cluster-valkey
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
