@@ -66,12 +66,6 @@ spec:
                 value: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus.svc:9090
               - name: RAY_PROMETHEUS_NAME
                 value: hm-prometheus
-            volumeMounts:
-              - mountPath: /tmp/ray
-                name: ray-logs
-              - mountPath: /etc/alloy/config.alloy
-                subPath: config.alloy
-                name: alloy-config
             resources:
               requests:
                 cpu: 1000m
@@ -79,6 +73,12 @@ spec:
               limits:
                 cpu: 2000m
                 memory: 4Gi
+            volumeMounts:
+              - mountPath: /tmp/ray
+                name: ray-logs
+              - mountPath: /etc/alloy/config.alloy
+                subPath: config.alloy
+                name: alloy-config
           - name: alloy
             image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
             env:
@@ -86,12 +86,6 @@ spec:
                 value: worker
               - name: LOKI_URL
                 value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
-            volumeMounts:
-              - mountPath: /tmp/ray
-                name: ray-logs
-              - mountPath: /etc/alloy/config.alloy
-                subPath: config.alloy
-                name: alloy-config
             resources:
               requests:
                 cpu: 100m
@@ -99,6 +93,12 @@ spec:
               limits:
                 cpu: 200m
                 memory: 256Mi
+            volumeMounts:
+              - mountPath: /tmp/ray
+                name: ray-logs
+              - mountPath: /etc/alloy/config.alloy
+                subPath: config.alloy
+                name: alloy-config
         volumes:
           - name: ray-logs
             emptyDir: {}
@@ -106,15 +106,14 @@ spec:
             configMap:
               name: hm-ray-cluster-config-map
   workerGroupSpecs:
-    - groupName: group-1
+    - groupName: 1g
       replicas: 1
       minReplicas: 1
-      maxReplicas: 100
+      maxReplicas: 20
       rayStartParams: {}
       template:
         spec:
           serviceAccountName: hm-ray-cluster-service-account
-          # https://github.com/ray-project/kuberay/blob/master/ray-operator/config/samples/ray-cluster.autoscaler-v2.yaml
           restartPolicy: Never
           containers:
             - name: ray-worker
@@ -123,9 +122,6 @@ spec:
                 capabilities:
                   add:
                     - SYS_PTRACE
-              volumeMounts:
-                - mountPath: /tmp/ray
-                  name: ray-logs
               resources:
                 requests:
                   cpu: 1000m
@@ -133,6 +129,9 @@ spec:
                 limits:
                   cpu: 1000m
                   memory: 1Gi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
             - name: alloy
               image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
               env:
@@ -140,12 +139,6 @@ spec:
                   value: worker
                 - name: LOKI_URL
                   value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
-              volumeMounts:
-                - mountPath: /tmp/ray
-                  name: ray-logs
-                - mountPath: /etc/alloy/config.alloy
-                  subPath: config.alloy
-                  name: alloy-config
               resources:
                 requests:
                   cpu: 100m
@@ -153,21 +146,26 @@ spec:
                 limits:
                   cpu: 200m
                   memory: 256Mi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+                - mountPath: /etc/alloy/config.alloy
+                  subPath: config.alloy
+                  name: alloy-config
           volumes:
             - name: ray-logs
               emptyDir: {}
             - name: alloy-config
               configMap:
                 name: hm-ray-cluster-config-map
-    - groupName: group-2
+    - groupName: 2g
       replicas: 1
       minReplicas: 1
-      maxReplicas: 100
+      maxReplicas: 20
       rayStartParams: {}
       template:
         spec:
           serviceAccountName: hm-ray-cluster-service-account
-          # https://github.com/ray-project/kuberay/blob/master/ray-operator/config/samples/ray-cluster.autoscaler-v2.yaml
           restartPolicy: Never
           containers:
             - name: ray-worker
@@ -176,16 +174,16 @@ spec:
                 capabilities:
                   add:
                     - SYS_PTRACE
+              resources:
+                requests:
+                  cpu: 2000m
+                  memory: 2Gi
+                limits:
+                  cpu: 2000m
+                  memory: 2Gi
               volumeMounts:
                 - mountPath: /tmp/ray
                   name: ray-logs
-              resources:
-                requests:
-                  cpu: 1000m
-                  memory: 32Gi
-                limits:
-                  cpu: 1000m
-                  memory: 32Gi
             - name: alloy
               image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
               env:
@@ -193,12 +191,6 @@ spec:
                   value: worker
                 - name: LOKI_URL
                   value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
-              volumeMounts:
-                - mountPath: /tmp/ray
-                  name: ray-logs
-                - mountPath: /etc/alloy/config.alloy
-                  subPath: config.alloy
-                  name: alloy-config
               resources:
                 requests:
                   cpu: 100m
@@ -206,21 +198,26 @@ spec:
                 limits:
                   cpu: 200m
                   memory: 256Mi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+                - mountPath: /etc/alloy/config.alloy
+                  subPath: config.alloy
+                  name: alloy-config
           volumes:
             - name: ray-logs
               emptyDir: {}
             - name: alloy-config
               configMap:
                 name: hm-ray-cluster-config-map
-    - groupName: group-3
+    - groupName: 4g
       replicas: 1
       minReplicas: 1
-      maxReplicas: 100
+      maxReplicas: 15
       rayStartParams: {}
       template:
         spec:
           serviceAccountName: hm-ray-cluster-service-account
-          # https://github.com/ray-project/kuberay/blob/master/ray-operator/config/samples/ray-cluster.autoscaler-v2.yaml
           restartPolicy: Never
           containers:
             - name: ray-worker
@@ -229,16 +226,16 @@ spec:
                 capabilities:
                   add:
                     - SYS_PTRACE
+              resources:
+                requests:
+                  cpu: 4000m
+                  memory: 4Gi
+                limits:
+                  cpu: 4000m
+                  memory: 4Gi
               volumeMounts:
                 - mountPath: /tmp/ray
                   name: ray-logs
-              resources:
-                requests:
-                  cpu: 1000m
-                  memory: 128Gi
-                limits:
-                  cpu: 1000m
-                  memory: 128Gi
             - name: alloy
               image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
               env:
@@ -246,12 +243,6 @@ spec:
                   value: worker
                 - name: LOKI_URL
                   value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
-              volumeMounts:
-                - mountPath: /tmp/ray
-                  name: ray-logs
-                - mountPath: /etc/alloy/config.alloy
-                  subPath: config.alloy
-                  name: alloy-config
               resources:
                 requests:
                   cpu: 100m
@@ -259,6 +250,272 @@ spec:
                 limits:
                   cpu: 200m
                   memory: 256Mi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+                - mountPath: /etc/alloy/config.alloy
+                  subPath: config.alloy
+                  name: alloy-config
+          volumes:
+            - name: ray-logs
+              emptyDir: {}
+            - name: alloy-config
+              configMap:
+                name: hm-ray-cluster-config-map
+    - groupName: 8g
+      replicas: 1
+      minReplicas: 1
+      maxReplicas: 10
+      rayStartParams: {}
+      template:
+        spec:
+          serviceAccountName: hm-ray-cluster-service-account
+          restartPolicy: Never
+          containers:
+            - name: ray-worker
+              image: harbor.hongbomiao.com/docker-hub-proxy-cache/rayproject/ray:2.43.0-py312-cpu
+              securityContext:
+                capabilities:
+                  add:
+                    - SYS_PTRACE
+              resources:
+                requests:
+                  cpu: 6000m
+                  memory: 8Gi
+                limits:
+                  cpu: 6000m
+                  memory: 8Gi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+            - name: alloy
+              image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
+              env:
+                - name: NODE_TYPE
+                  value: worker
+                - name: LOKI_URL
+                  value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+                - mountPath: /etc/alloy/config.alloy
+                  subPath: config.alloy
+                  name: alloy-config
+          volumes:
+            - name: ray-logs
+              emptyDir: {}
+            - name: alloy-config
+              configMap:
+                name: hm-ray-cluster-config-map
+    - groupName: 16g
+      replicas: 0
+      minReplicas: 0
+      maxReplicas: 8
+      rayStartParams: {}
+      template:
+        spec:
+          serviceAccountName: hm-ray-cluster-service-account
+          restartPolicy: Never
+          containers:
+            - name: ray-worker
+              image: harbor.hongbomiao.com/docker-hub-proxy-cache/rayproject/ray:2.43.0-py312-cpu
+              securityContext:
+                capabilities:
+                  add:
+                    - SYS_PTRACE
+              resources:
+                requests:
+                  cpu: 8000m
+                  memory: 16Gi
+                limits:
+                  cpu: 8000m
+                  memory: 16Gi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+            - name: alloy
+              image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
+              env:
+                - name: NODE_TYPE
+                  value: worker
+                - name: LOKI_URL
+                  value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+                - mountPath: /etc/alloy/config.alloy
+                  subPath: config.alloy
+                  name: alloy-config
+          volumes:
+            - name: ray-logs
+              emptyDir: {}
+            - name: alloy-config
+              configMap:
+                name: hm-ray-cluster-config-map
+    - groupName: 30g
+      replicas: 0
+      minReplicas: 0
+      maxReplicas: 5
+      rayStartParams: {}
+      template:
+        spec:
+          serviceAccountName: hm-ray-cluster-service-account
+          restartPolicy: Never
+          containers:
+            - name: ray-worker
+              image: harbor.hongbomiao.com/docker-hub-proxy-cache/rayproject/ray:2.43.0-py312-cpu
+              securityContext:
+                capabilities:
+                  add:
+                    - SYS_PTRACE
+              resources:
+                requests:
+                  cpu: 12000m
+                  memory: 30Gi
+                limits:
+                  cpu: 12000m
+                  memory: 30Gi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+            - name: alloy
+              image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
+              env:
+                - name: NODE_TYPE
+                  value: worker
+                - name: LOKI_URL
+                  value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+                - mountPath: /etc/alloy/config.alloy
+                  subPath: config.alloy
+                  name: alloy-config
+          volumes:
+            - name: ray-logs
+              emptyDir: {}
+            - name: alloy-config
+              configMap:
+                name: hm-ray-cluster-config-map
+    - groupName: 60g
+      replicas: 0
+      minReplicas: 0
+      maxReplicas: 5
+      rayStartParams: {}
+      template:
+        spec:
+          serviceAccountName: hm-ray-cluster-service-account
+          restartPolicy: Never
+          containers:
+            - name: ray-worker
+              image: harbor.hongbomiao.com/docker-hub-proxy-cache/rayproject/ray:2.43.0-py312-cpu
+              securityContext:
+                capabilities:
+                  add:
+                    - SYS_PTRACE
+              resources:
+                requests:
+                  cpu: 15000m
+                  memory: 60Gi
+                limits:
+                  cpu: 15000m
+                  memory: 60Gi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+            - name: alloy
+              image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
+              env:
+                - name: NODE_TYPE
+                  value: worker
+                - name: LOKI_URL
+                  value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+                - mountPath: /etc/alloy/config.alloy
+                  subPath: config.alloy
+                  name: alloy-config
+          volumes:
+            - name: ray-logs
+              emptyDir: {}
+            - name: alloy-config
+              configMap:
+                name: hm-ray-cluster-config-map
+    - groupName: 120g
+      replicas: 0
+      minReplicas: 0
+      maxReplicas: 5
+      rayStartParams: {}
+      template:
+        spec:
+          serviceAccountName: hm-ray-cluster-service-account
+          restartPolicy: Never
+          containers:
+            - name: ray-worker
+              image: harbor.hongbomiao.com/docker-hub-proxy-cache/rayproject/ray:2.43.0-py312-cpu
+              securityContext:
+                capabilities:
+                  add:
+                    - SYS_PTRACE
+              resources:
+                requests:
+                  cpu: 30000m
+                  memory: 120Gi
+                limits:
+                  cpu: 30000m
+                  memory: 120Gi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+            - name: alloy
+              image: harbor.hongbomiao.com/docker-hub-proxy-cache/grafana/alloy:v1.6.1
+              env:
+                - name: NODE_TYPE
+                  value: worker
+                - name: LOKI_URL
+                  value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+              volumeMounts:
+                - mountPath: /tmp/ray
+                  name: ray-logs
+                - mountPath: /etc/alloy/config.alloy
+                  subPath: config.alloy
+                  name: alloy-config
           volumes:
             - name: ray-logs
               emptyDir: {}
