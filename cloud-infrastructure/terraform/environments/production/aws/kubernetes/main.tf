@@ -607,6 +607,17 @@ module "kubernetes_namespace_hm_ray_cluster" {
     module.amazon_eks_cluster
   ]
 }
+# Ray Cluster Valkey - Kubernetes namespace
+module "hm_kubernetes_namespace_hm_ray_cluster_valkey" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-ray-cluster-valkey"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
 
 # Prometheus
 # Prometheus - Kubernetes namespace
