@@ -6,6 +6,9 @@ terraform {
   }
 }
 
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 locals {
   aws_iam_role_name_prefix = "LiteLLMRole"
 }
@@ -52,11 +55,15 @@ resource "aws_iam_role_policy" "hm_litellm_iam_role_policy" {
           "bedrock:InvokeModel",
           "bedrock:InvokeModelWithResponseStream"
         ]
+        # https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html
+        # https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html
         Resource = [
           # Claude Haiku
+          "arn:aws:bedrock:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:inference-profile/us.anthropic.claude-3-5-haiku-20241022-v1:0",
           "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-haiku-20241022-v1:0",
           # Claude Sonnet
-          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0"
+          "arn:aws:bedrock:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:inference-profile/us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-7-sonnet-20250219-v1:0"
         ]
       }
     ]
