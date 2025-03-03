@@ -9,10 +9,10 @@ metadata:
     # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
     argocd.argoproj.io/hook: PreSync
 spec:
-  commonName: confluent-schema-registry.internal.hongbomiao.com
+  commonName: confluent-schema-registry.hongbomiao.com
   secretName: production-hm-confluent-schema-registry-certificate
   dnsNames:
-    - confluent-schema-registry.internal.hongbomiao.com
+    - confluent-schema-registry.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

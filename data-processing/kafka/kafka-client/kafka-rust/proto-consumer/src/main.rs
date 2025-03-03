@@ -32,7 +32,7 @@ async fn main() {
         .unwrap_or_else(|| "localhost:9092".to_string());
 
     let consumer = create_consumer(&bootstrap_server, "proto-consumer-consumer-group");
-    let schema_registry_url = "https://confluent-schema-registry.internal.hongbomiao.com";
+    let schema_registry_url = "https://confluent-schema-registry.hongbomiao.com";
     let sr_settings = SrSettings::new(schema_registry_url.to_string());
     let decoder = EasyProtoRawDecoder::new(sr_settings);
     let topic = "production.iot.motor.proto";

@@ -10,13 +10,13 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
     # https://kubernetes-sigs.github.io/external-dns/latest/annotations/annotations
-    external-dns.alpha.kubernetes.io/hostname: argo-cd.internal.hongbomiao.com
+    external-dns.alpha.kubernetes.io/hostname: argo-cd.hongbomiao.com
   labels:
     app.kubernetes.io/name: hm-argo-cd-ingress
     app.kubernetes.io/part-of: production-hm-argo-cd
 spec:
   rules:
-    - host: argo-cd.internal.hongbomiao.com
+    - host: argo-cd.hongbomiao.com
       http:
         paths:
           - path: /
@@ -28,5 +28,5 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - argo-cd.internal.hongbomiao.com
+        - argo-cd.hongbomiao.com
       secretName: production-hm-argo-cd-certificate

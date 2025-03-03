@@ -16,7 +16,7 @@ metadata:
     app.kubernetes.io/part-of: production-hm-opencost
 spec:
   rules:
-    - host: opencost.internal.hongbomiao.com
+    - host: opencost.hongbomiao.com
       http:
         paths:
           - path: /
@@ -28,5 +28,5 @@ spec:
                   number: 9090
   tls:
     - hosts:
-        - opencost.internal.hongbomiao.com
+        - opencost.hongbomiao.com
       secretName: production-hm-opencost-certificate

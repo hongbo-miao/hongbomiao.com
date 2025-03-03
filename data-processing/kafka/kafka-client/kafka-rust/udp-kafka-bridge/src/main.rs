@@ -106,7 +106,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Set up Kafka producer and Schema Registry encoder
     let bootstrap_server = "localhost:9092";
     let producer = create_producer(bootstrap_server);
-    let schema_registry_url = "https://confluent-schema-registry.internal.hongbomiao.com";
+    let schema_registry_url = "https://confluent-schema-registry.hongbomiao.com";
     let sr_settings = SrSettings::new(schema_registry_url.to_string());
     let encoder = EasyProtoRawEncoder::new(sr_settings);
     let topic = "production.iot.motor.proto".to_string();
