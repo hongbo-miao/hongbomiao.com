@@ -16,7 +16,7 @@ metadata:
     app.kubernetes.io/part-of: production-hm-airbyte
 spec:
   rules:
-    - host: airbyte.internal.hongbomiao.com
+    - host: airbyte.hongbomiao.com
       http:
         paths:
           - path: /
@@ -28,5 +28,5 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - airbyte.internal.hongbomiao.com
+        - airbyte.hongbomiao.com
       secretName: production-hm-airbyte-certificate

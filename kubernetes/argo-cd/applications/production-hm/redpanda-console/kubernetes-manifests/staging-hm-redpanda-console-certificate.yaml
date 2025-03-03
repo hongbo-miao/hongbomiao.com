@@ -9,10 +9,10 @@ metadata:
     # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
     argocd.argoproj.io/hook: PreSync
 spec:
-  commonName: redpanda-console.internal.hongbomiao.com
+  commonName: redpanda-console.hongbomiao.com
   secretName: staging-hm-redpanda-console-certificate
   dnsNames:
-    - redpanda-console.internal.hongbomiao.com
+    - redpanda-console.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: staging-lets-encrypt-cluster-issuer

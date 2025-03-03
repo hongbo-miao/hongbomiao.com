@@ -9,10 +9,10 @@ metadata:
     # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
     argocd.argoproj.io/hook: PreSync
 spec:
-  commonName: clickhouse.internal.hongbomiao.com
+  commonName: clickhouse.hongbomiao.com
   secretName: production-hm-clickhouse-certificate
   dnsNames:
-    - clickhouse.internal.hongbomiao.com
+    - clickhouse.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

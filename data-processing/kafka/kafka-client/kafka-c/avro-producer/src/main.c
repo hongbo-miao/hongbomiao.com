@@ -18,8 +18,7 @@
 #include "../include/schema.h"
 
 int main(int argc, char **argv) {
-  const char *confluent_schema_registry_url =
-    "https://confluent-schema-registry.internal.hongbomiao.com";
+  const char *confluent_schema_registry_url = "https://confluent-schema-registry.hongbomiao.com";
   const char *topic = "production.iot.device.avro";
   const char *schema_name = "production.iot.device.avro-value";
 

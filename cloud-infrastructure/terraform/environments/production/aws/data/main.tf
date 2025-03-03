@@ -214,7 +214,7 @@ module "iot_kafka_s3_parquet_sink_connector" {
   source                               = "../../../../modules/aws/hm_amazon_msk_s3_parquet_sink_connector"
   amazon_msk_connector_name            = local.iot_kafka_s3_parquet_sink_connector_name
   kafka_topics                         = ["production.iot.device.avro"]
-  confluent_schema_registry_url        = "https://confluent-schema-registry.internal.hongbomiao.com"
+  confluent_schema_registry_url        = "https://confluent-schema-registry.hongbomiao.com"
   aws_region                           = data.aws_region.current.name
   s3_bucket_name                       = module.s3_bucket_iot_data.name
   max_task_number                      = 3
@@ -348,7 +348,7 @@ module "tracker_kafka_snowflake_sink_connector" {
   snowflake_role_name                  = "HM_KAFKA_DB_PRODUCT_READ_WRITE_ROLE"
   snowflake_database_name              = "HM_KAFKA_DB"
   snowflake_schema_name                = "ENGINEERING"
-  confluent_schema_registry_url        = "https://confluent-schema-registry.internal.hongbomiao.com"
+  confluent_schema_registry_url        = "https://confluent-schema-registry.hongbomiao.com"
   kafka_connect_version                = "2.7.1"
   amazon_msk_plugin_arn                = module.hm_amazon_msk_plugin_tracker_kafka_snowflake_sink_plugin.arn
   amazon_msk_plugin_revision           = module.hm_amazon_msk_plugin_tracker_kafka_snowflake_sink_plugin.latest_revision

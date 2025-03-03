@@ -9,10 +9,10 @@ metadata:
     # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
     argocd.argoproj.io/hook: PreSync
 spec:
-  commonName: grafana.internal.hongbomiao.com
+  commonName: grafana.hongbomiao.com
   secretName: staging-hm-grafana-certificate
   dnsNames:
-    - grafana.internal.hongbomiao.com
+    - grafana.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: staging-lets-encrypt-cluster-issuer
