@@ -32,6 +32,7 @@ spec:
           serviceAccount:
             enable: false
           # https://docs.openwebui.com/getting-started/env-configuration/
+          # https://github.com/open-webui/open-webui/blob/main/backend/open_webui/config.py
           extraEnvVars:
             - name: ENV
               value: prod
@@ -76,7 +77,9 @@ spec:
               value: "true"
             - name: RAG_FULL_CONTEXT
               value: "true"
-            - name: RAG_WEB_SEARCH_FULL_CONTEXT
+            - name: BYPASS_EMBEDDING_AND_RETRIEVAL
+              value: "true"
+            - name: BYPASS_WEB_SEARCH_EMBEDDING_AND_RETRIEVAL
               value: "true"
             - name: DEFAULT_USER_ROLE
               value: user
