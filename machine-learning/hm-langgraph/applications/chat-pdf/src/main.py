@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 def create_openai_client() -> OpenAI:
     config = Config()
     return OpenAI(
-        base_url="https://litellm.internal.hongbomiao.com/v1",
+        base_url="https://litellm.hongbomiao.com/v1",
         api_key=config.OPENAI_API_KEY,
     )
 

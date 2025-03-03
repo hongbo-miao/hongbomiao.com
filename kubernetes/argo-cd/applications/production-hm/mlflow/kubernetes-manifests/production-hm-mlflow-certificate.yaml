@@ -9,10 +9,10 @@ metadata:
     # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
     argocd.argoproj.io/hook: PreSync
 spec:
-  commonName: mlflow.internal.hongbomiao.com
+  commonName: mlflow.hongbomiao.com
   secretName: production-hm-mlflow-certificate
   dnsNames:
-    - mlflow.internal.hongbomiao.com
+    - mlflow.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

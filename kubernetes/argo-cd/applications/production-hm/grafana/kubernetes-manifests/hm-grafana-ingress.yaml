@@ -16,7 +16,7 @@ metadata:
     app.kubernetes.io/part-of: production-hm-grafana
 spec:
   rules:
-    - host: grafana.internal.hongbomiao.com
+    - host: grafana.hongbomiao.com
       http:
         paths:
           - path: /
@@ -28,5 +28,5 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - grafana.internal.hongbomiao.com
+        - grafana.hongbomiao.com
       secretName: production-hm-grafana-certificate

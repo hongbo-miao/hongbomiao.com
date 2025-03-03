@@ -49,7 +49,7 @@ async fn main() -> Result<()> {
         .unwrap_or_else(|| "localhost:9092".to_string());
     let producer = create_producer(&bootstrap_server);
 
-    let schema_registry_url = "https://confluent-schema-registry.internal.hongbomiao.com";
+    let schema_registry_url = "https://confluent-schema-registry.hongbomiao.com";
     let sr_settings = SrSettings::new(schema_registry_url.to_string());
     let encoder = EasyProtoRawEncoder::new(sr_settings);
     let mut interval = time::interval(Duration::from_nanos(100));

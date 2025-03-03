@@ -24,7 +24,7 @@ def main() -> None:
         model_name="sentence-transformers/all-MiniLM-L6-v2",
     )
     Settings.llm = LiteLLM(
-        api_base="https://litellm.internal.hongbomiao.com",
+        api_base="https://litellm.hongbomiao.com",
         api_key=config.OPENAI_API_KEY,
         model="openai/claude-3-5-sonnet",
         temperature=0.7,

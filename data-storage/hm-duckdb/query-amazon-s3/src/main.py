@@ -60,6 +60,6 @@ if __name__ == "__main__":
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
     parquet_url = (
-        "https://data-browser.internal.hongbomiao.com/experiments/experiment1.parquet"
+        "https://s3-data-browser.hongbomiao.com/experiments/experiment1.parquet"
     )
     main(parquet_url)

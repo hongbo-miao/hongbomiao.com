@@ -7,7 +7,7 @@ argo-cd-password-reset:
         --patch='{"stringData": {"admin.password": "$2a$10$xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "admin.passwordMtime": "'$(date +%FT%T%Z)'"}}'
 
 argo-cd-sign-in:
-    argocd login argo-cd.internal.hongbomiao.com --username=admin
+    argocd login argo-cd.hongbomiao.com --username=admin
 
 argo-cd-project-create:
     argocd proj create production-hm --file
