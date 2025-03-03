@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://helm.openwebui.com
       # https://artifacthub.io/packages/helm/open-webui/open-webui
-      targetRevision: 5.16.1
+      targetRevision: 5.20.0
       chart: open-webui
       helm:
         releaseName: hm-open-webui
@@ -21,7 +21,7 @@ spec:
           image:
             repository: ghcr.io/open-webui/open-webui
             # https://github.com/open-webui/open-webui/releases
-            tag: v0.5.14
+            tag: v0.5.18
           ollama:
             enabled: false
           pipelines:
@@ -47,7 +47,7 @@ spec:
                   name: hm-open-webui-secret
                   key: OPENAI_API_KEYS
             - name: DEFAULT_MODELS
-              value: claude-3-5-sonnet
+              value: claude-3-7-sonnet
             - name: SCARF_NO_ANALYTICS
               value: "true"
             - name: DO_NOT_TRACK

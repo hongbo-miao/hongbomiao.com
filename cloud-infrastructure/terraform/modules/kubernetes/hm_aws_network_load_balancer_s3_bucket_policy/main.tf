@@ -6,7 +6,8 @@ terraform {
   }
 }
 
-data "aws_caller_identity" "main" {}
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
 
 # https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-access-logs.html
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy
@@ -26,10 +27,10 @@ resource "aws_s3_bucket_policy" "network_load_balancer_s3_bucket_policy" {
         Resource = "arn:aws:s3:::${var.s3_bucket_name}",
         Condition = {
           StringEquals = {
-            "aws:SourceAccount" = [data.aws_caller_identity.main.account_id]
+            "aws:SourceAccount" = [data.aws_caller_identity.current.account_id]
           },
           ArnLike = {
-            "aws:SourceArn" = ["arn:aws:logs:us-west-2:${data.aws_caller_identity.main.account_id}:*"]
+            "aws:SourceArn" = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
           }
         }
       },
@@ -44,10 +45,10 @@ resource "aws_s3_bucket_policy" "network_load_balancer_s3_bucket_policy" {
         Condition = {
           StringEquals = {
             "s3:x-amz-acl"      = "bucket-owner-full-control",
-            "aws:SourceAccount" = [data.aws_caller_identity.main.account_id]
+            "aws:SourceAccount" = [data.aws_caller_identity.current.account_id]
           },
           ArnLike = {
-            "aws:SourceArn" = ["arn:aws:logs:us-west-2:${data.aws_caller_identity.main.account_id}:*"]
+            "aws:SourceArn" = ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
           }
         }
       }
