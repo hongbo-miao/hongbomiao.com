@@ -453,8 +453,8 @@ module "airbyte_postgres_parameter_group" {
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres17"
   parameter_group_name = "${local.airbyte_postgres_name}-parameter-group"
-  # https://github.com/airbytehq/airbyte/issues/39636
   parameters = [
+    # https://github.com/airbytehq/airbyte/issues/39636
     {
       name  = "rds.force_ssl"
       value = "0"
@@ -1256,8 +1256,15 @@ module "odoo_postgres_parameter_group" {
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres17"
   parameter_group_name = "${local.odoo_postgres_name}-parameter-group"
-  environment          = var.environment
-  team                 = var.team
+  parameters = [
+    # https://github.com/bitnami/charts/issues/32256
+    {
+      name  = "rds.force_ssl"
+      value = "0"
+    }
+  ]
+  environment = var.environment
+  team        = var.team
 }
 module "odoo_postgres_instance" {
   providers                 = { aws = aws.production }
@@ -1281,6 +1288,19 @@ module "odoo_postgres_instance" {
 module "kubernetes_namespace_hm_odoo" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-odoo"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
+  ]
+}
+
+# S3 Browser
+# S3 Browser - Kubernetes namespace
+module "kubernetes_namespace_hm_s3_browser" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-s3-browser"
   labels = {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
