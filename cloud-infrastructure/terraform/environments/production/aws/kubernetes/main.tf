@@ -67,23 +67,23 @@ module "amazon_eks_cluster" {
       resolve_conflicts_on_update = "OVERWRITE"
     }
     kube-proxy = {
-      addon_version               = "v1.31.3-eksbuild.2"
+      addon_version               = "v1.32.0-eksbuild.2"
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
     vpc-cni = {
-      addon_version               = "v1.19.2-eksbuild.1"
+      addon_version               = "v1.19.3-eksbuild.1"
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
     aws-ebs-csi-driver = {
-      addon_version               = "v1.39.0-eksbuild.1"
+      addon_version               = "v1.40.0-eksbuild.1"
       service_account_role_arn    = module.amazon_ebs_csi_driver_iam_role.arn
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
     aws-mountpoint-s3-csi-driver = {
-      addon_version               = "v1.11.0-eksbuild.1"
+      addon_version               = "v1.12.0-eksbuild.1"
       service_account_role_arn    = module.amazon_s3_csi_driver_mountpoint_iam_role.arn
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
@@ -155,6 +155,13 @@ module "amazon_eks_cluster" {
       max_size       = 10
       desired_size   = 5
       instance_types = ["m7a.8xlarge", "m7i.8xlarge", "m6a.8xlarge", "m6i.8xlarge", "m6in.8xlarge", "m5.8xlarge", "m5a.8xlarge", "m5n.8xlarge"]
+      capacity_type  = "SPOT"
+    }
+    eks_node_group_4 = {
+      min_size       = 3
+      max_size       = 5
+      desired_size   = 3
+      instance_types = ["r7a.16xlarge", "r7i.16xlarge", "r6a.16xlarge", "r6i.16xlarge", "r6in.16xlarge"]
       capacity_type  = "SPOT"
     }
   }
@@ -313,6 +320,19 @@ module "kubernetes_namespace_hm_cert_manager" {
   }
   depends_on = [
     module.amazon_eks_cluster
+  ]
+}
+
+# priority-class
+# priority-class - Kubernetes namespace
+module "kubernetes_namespace_hm_priority_class" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-priority-class"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.hm_amazon_eks_cluster
   ]
 }
 

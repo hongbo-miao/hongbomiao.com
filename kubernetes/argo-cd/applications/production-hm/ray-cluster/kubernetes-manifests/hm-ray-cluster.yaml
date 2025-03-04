@@ -33,6 +33,7 @@ spec:
       num-cpus: "0"
     template:
       spec:
+        priorityClassName: high
         serviceAccountName: hm-ray-cluster-service-account
         # https://github.com/ray-project/kuberay/blob/master/ray-operator/config/samples/ray-cluster.autoscaler-v2.yaml
         restartPolicy: Never
@@ -366,13 +367,14 @@ spec:
             - name: alloy-config
               configMap:
                 name: hm-ray-cluster-config-map
-    - groupName: 30g
+    - groupName: 28g
       replicas: 0
       minReplicas: 0
       maxReplicas: 5
       rayStartParams: {}
       template:
         spec:
+          priorityClassName: high
           serviceAccountName: hm-ray-cluster-service-account
           restartPolicy: Never
           containers:
@@ -385,10 +387,10 @@ spec:
               resources:
                 requests:
                   cpu: 12000m
-                  memory: 30Gi
+                  memory: 28Gi
                 limits:
                   cpu: 12000m
-                  memory: 30Gi
+                  memory: 28Gi
               volumeMounts:
                 - mountPath: /tmp/ray
                   name: ray-logs
@@ -418,13 +420,14 @@ spec:
             - name: alloy-config
               configMap:
                 name: hm-ray-cluster-config-map
-    - groupName: 60g
+    - groupName: 58g
       replicas: 0
       minReplicas: 0
       maxReplicas: 5
       rayStartParams: {}
       template:
         spec:
+          priorityClassName: high
           serviceAccountName: hm-ray-cluster-service-account
           restartPolicy: Never
           containers:
@@ -437,10 +440,10 @@ spec:
               resources:
                 requests:
                   cpu: 15000m
-                  memory: 60Gi
+                  memory: 58Gi
                 limits:
                   cpu: 15000m
-                  memory: 60Gi
+                  memory: 58Gi
               volumeMounts:
                 - mountPath: /tmp/ray
                   name: ray-logs
@@ -470,13 +473,14 @@ spec:
             - name: alloy-config
               configMap:
                 name: hm-ray-cluster-config-map
-    - groupName: 120g
+    - groupName: 460g
       replicas: 0
       minReplicas: 0
-      maxReplicas: 5
+      maxReplicas: 3
       rayStartParams: {}
       template:
         spec:
+          priorityClassName: high
           serviceAccountName: hm-ray-cluster-service-account
           restartPolicy: Never
           containers:
@@ -488,11 +492,11 @@ spec:
                     - SYS_PTRACE
               resources:
                 requests:
-                  cpu: 30000m
-                  memory: 120Gi
+                  cpu: 57000m
+                  memory: 460Gi
                 limits:
-                  cpu: 30000m
-                  memory: 120Gi
+                  cpu: 57000m
+                  memory: 460Gi
               volumeMounts:
                 - mountPath: /tmp/ray
                   name: ray-logs

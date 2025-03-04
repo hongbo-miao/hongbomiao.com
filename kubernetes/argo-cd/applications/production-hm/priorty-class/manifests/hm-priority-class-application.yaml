@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-priority-class
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-priority-class
+spec:
+  project: production-hm
+  source:
+    repoURL: ghcr.io/deliveryhero/helm-charts
+    # https://artifacthub.io/packages/helm/deliveryhero/priority-class
+    targetRevision: 0.1.2
+    chart: priority-class
+    helm:
+      releaseName: hm-priority-class
+  destination:
+    namespace: production-hm-priority-class
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
