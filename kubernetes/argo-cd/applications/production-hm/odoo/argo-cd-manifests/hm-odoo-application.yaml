@@ -1,0 +1,57 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-odoo
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-odoo
+spec:
+  project: production-hm
+  sources:
+    - repoURL: registry-1.docker.io/bitnamicharts
+      # https://artifacthub.io/packages/helm/bitnami/odoo
+      targetRevision: 28.1.3
+      chart: odoo
+      helm:
+        releaseName: hm-odoo
+        values: |
+          # https://github.com/bitnami/charts/blob/main/bitnami/odoo/values.yaml
+          ---
+          global:
+            imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+            security:
+              allowInsecureImages: true
+          odooEmail: me@hongbomiao.com
+          existingSecret: hm-odoo-secret
+          service:
+            type: ClusterIP
+          postgresql:
+            enabled: false
+          externalDatabase:
+            create: true
+            host: production-hm-odoo-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
+            port: 5432
+            database: odoo_db
+            user: odoo_user
+            postgresqlPostgresUser: postgres
+            existingSecret: hm-odoo-secret
+            existingSecretPasswordKey: POSTGRES_USER_PASSWORD
+            existingSecretPostgresPasswordKey: POSTGRES_ADMIN_PASSWORD
+          persistence:
+            enabled: true
+            resourcePolicy: keep
+            storageClass: production-hm-odoo-storage-class
+            accessModes: ["ReadWriteOnce"]
+            size: 100Gi
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/odoo/kubernetes-manifests
+  destination:
+    namespace: production-hm-odoo
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
