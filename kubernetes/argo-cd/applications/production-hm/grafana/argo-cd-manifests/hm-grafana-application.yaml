@@ -34,10 +34,31 @@ spec:
               secretKeyRef:
                 name: hm-grafana-secret
                 key: POSTGRES_PASSWORD
+          # https://github.com/grafana/grafana/blob/main/conf/defaults.ini
           grafana.ini:
             security:
               # For Ray: https://docs.ray.io/en/latest/cluster/kubernetes/k8s-ecosystem/prometheus-grafana.html
               allow_embedding: true
+            server:
+              root_url: https://grafana.hongbomiao.com
+            auth:
+              disable_login_form: true
+            auth.basic:
+              enabled: false
+            auth.google:
+              enabled: true
+              allow_sign_up: true
+              auto_login: false
+              client_id: xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com
+              client_secret: $__env{GOOGLE_CLIENT_SECRET}
+              scopes: openid email profile
+              auth_url: https://accounts.google.com/o/oauth2/v2/auth
+              token_url: https://oauth2.googleapis.com/token
+              api_url: https://openidconnect.googleapis.com/v1/userinfo
+              allowed_domains: hongbomiao.com
+              hosted_domain: hongbomiao.com
+              use_pkce: true
+              use_refresh_token: true
             database:
               type: postgres
               host: production-hm-grafana-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com:5432
