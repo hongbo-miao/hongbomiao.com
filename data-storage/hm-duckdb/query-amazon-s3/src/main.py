@@ -59,7 +59,5 @@ if __name__ == "__main__":
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
-    parquet_url = (
-        "https://s3-data-browser.hongbomiao.com/experiments/experiment1.parquet"
-    )
+    parquet_url = "https://s3-browser.hongbomiao.com/experiments/experiment1.parquet"
     main(parquet_url)
