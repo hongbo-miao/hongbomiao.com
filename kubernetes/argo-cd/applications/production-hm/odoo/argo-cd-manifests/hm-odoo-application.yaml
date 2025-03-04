@@ -29,21 +29,27 @@ spec:
           postgresql:
             enabled: false
           externalDatabase:
-            create: true
+            create: false
             host: production-hm-odoo-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
             port: 5432
             database: odoo_db
             user: odoo_user
             postgresqlPostgresUser: postgres
             existingSecret: hm-odoo-secret
-            existingSecretPasswordKey: POSTGRES_USER_PASSWORD
-            existingSecretPostgresPasswordKey: POSTGRES_ADMIN_PASSWORD
+            existingSecretPasswordKey: POSTGRES_PASSWORD
           persistence:
             enabled: true
             resourcePolicy: keep
             storageClass: production-hm-odoo-storage-class
             accessModes: ["ReadWriteOnce"]
             size: 100Gi
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 2Gi
+            limits:
+              cpu: 4000m
+              memory: 16Gi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/odoo/kubernetes-manifests
