@@ -1,8 +1,9 @@
 [project]
-name = "prefect-print-platform"
+name = "prefect-daft-analysis"
 version = "1.0.0"
 requires-python = "~=3.12.0"
 dependencies = [
+  "getdaft==0.4.6",
   "prefect-client==3.2.11",
 ]
 
@@ -13,9 +14,6 @@ dev = [
   "pytest-cov==6.0.0",
   "pytest==8.3.5",
 ]
-
-[tool.uv]
-package = false
 
 [tool.poe.tasks]
 dev = "python src/main.py"
