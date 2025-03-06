@@ -453,6 +453,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-distribution.rti-connext-dds
     uv run poe static-type-check-python --package=data-orchestration.hm-airflow
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.calculate
+    uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.daft-analysis
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.greet
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.print-platform
     uv run poe static-type-check-python --package=data-processing.hm-spark.applications.analyze-coffee-customers

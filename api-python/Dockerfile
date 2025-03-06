@@ -30,7 +30,7 @@ COPY --from=ghcr.io/astral-sh/uv:0.6.4-python3.13-alpine /usr/local/bin/uv /bin/
 COPY ["api-python/pyproject.toml", "api-python/uv.lock", "./"]
 RUN . /venv/bin/activate \
   && uv sync --frozen
-COPY api-python ./
+COPY ["api-python/", "./"]
 RUN . /venv/bin/activate \
   && uv build \
   && pip install --no-cache-dir dist/*.whl \
