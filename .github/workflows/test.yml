@@ -366,6 +366,8 @@ jobs:
               - 'data-analytics/hm-polars/**'
             hm-prefect-calculate:
               - 'data-orchestration/hm-prefect/workflows/calculate/**'
+            hm-prefect-daft-analysis:
+              - 'data-orchestration/hm-prefect/workflows/daft-analysis/**'
             hm-prefect-greet:
               - 'data-orchestration/hm-prefect/workflows/greet/**'
             hm-prefect-print-platform:
@@ -601,6 +603,7 @@ jobs:
       hm-polars-analyze-transactions-cpu: ${{ steps.filter.outputs.hm-polars-analyze-transactions-cpu }}
       hm-polars-analyze-transactions-gpu: ${{ steps.filter.outputs.hm-polars-analyze-transactions-gpu }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
+      hm-prefect-daft-analysis: ${{ steps.filter.outputs.hm-prefect-daft-analysis }}
       hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
       hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
       hm-protobuf: ${{ steps.filter.outputs.hm-protobuf }}
@@ -792,6 +795,7 @@ jobs:
       # Applications
       hm-airflow: ${{ needs.detect-changes.outputs.hm-airflow == 'true' }}
       hm-prefect-calculate: ${{ needs.detect-changes.outputs.hm-prefect-calculate == 'true' }}
+      hm-prefect-daft-analysis: ${{ needs.detect-changes.outputs.hm-prefect-daft-analysis == 'true' }}
       hm-prefect-greet: ${{ needs.detect-changes.outputs.hm-prefect-greet == 'true' }}
       hm-prefect-print-platform: ${{ needs.detect-changes.outputs.hm-prefect-print-platform == 'true' }}
 
