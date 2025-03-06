@@ -456,7 +456,7 @@ jobs:
           action: docker/build-push-action@v5.1.0
           with: |
             context: ./data-orchestration/hm-prefect/workflows/calculate
-            file: Dockerfile
+            file: ./data-orchestration/hm-prefect/workflows/calculate/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-calculate:latest
             cache-from: type=gha
@@ -492,7 +492,7 @@ jobs:
           action: docker/build-push-action@v5.1.0
           with: |
             context: ./data-orchestration/hm-prefect/workflows/daft-analysis
-            file: Dockerfile
+            file: ./data-orchestration/hm-prefect/workflows/daft-analysis/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-daft-analysis:latest
             cache-from: type=gha
@@ -528,7 +528,7 @@ jobs:
           action: docker/build-push-action@v5.1.0
           with: |
             context: ./data-orchestration/hm-prefect/workflows/greet
-            file: Dockerfile
+            file: ./data-orchestration/hm-prefect/workflows/greet/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-greet:latest
             cache-from: type=gha
@@ -564,7 +564,7 @@ jobs:
           action: docker/build-push-action@v5.1.0
           with: |
             context: ./data-orchestration/hm-prefect/workflows/print-platform
-            file: Dockerfile
+            file: ./data-orchestration/hm-prefect/workflows/print-platform/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-prefect-print-platform:latest
             cache-from: type=gha
