@@ -67,6 +67,11 @@ spec:
                                   "name": "prefect-job"
                                 }
                               ],
+                              "imagePullSecrets": [
+                                {
+                                  "name": "hm-harbor-secret"
+                                }
+                              ],
                               "parallelism": 1,
                               "restartPolicy": "Never",
                               "serviceAccountName": "{{ service_account_name }}"

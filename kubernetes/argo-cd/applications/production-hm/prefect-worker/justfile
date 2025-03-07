@@ -1,10 +1,18 @@
-sealed-secrets-seal:
+sealed-secrets-seal-hm-prefect-worker-secret:
     cat secrets/hm-prefect-worker-secret.unsealed.yaml | \
     kubeseal \
-        --controller-namespace=production-hm-sealed-secrets \
-        --controller-name=hm-sealed-secrets \
-        --format=yaml \
-        > kubernetes-manifests/hm-prefect-worker-secret.yaml
+    	--controller-namespace=production-hm-sealed-secrets \
+    	--controller-name=hm-sealed-secrets \
+    	--format=yaml \
+    	> kubernetes-manifests/hm-prefect-worker-secret.yaml
+
+sealed-secrets-seal-hm-harbor-secret:
+    cat secrets/hm-harbor-secret.unsealed.yaml | \
+    kubeseal \
+    	--controller-namespace=production-hm-sealed-secrets \
+    	--controller-name=hm-sealed-secrets \
+    	--format=yaml \
+    	> kubernetes-manifests/hm-harbor-secret.yaml
 
 argo-cd-app-create:
     argocd app create production-hm-prefect-worker --file=argo-cd-manifests/hm-prefect-worker-application.yaml
