@@ -17,12 +17,12 @@ test-coverage:
     uv run poe test-coverage
 
 publish-development-docker-image:
-    docker build --platform=linux/amd64 --file=Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-greet:development . && \
-    docker push ghcr.io/hongbo-miao/hm-prefect-greet:development
+    docker build --platform=linux/amd64 --file=Dockerfile --tag=harbor.hongbomiao.com/hm/prefect-greet:development . && \
+    docker push harbor.hongbomiao.com/hm/prefect-greet:development
 
 publish-production-docker-image:
-    docker build --platform=linux/amd64 --file=Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-greet:latest . && \
-    docker push ghcr.io/hongbo-miao/hm-prefect-greet:latest
+    docker build --platform=linux/amd64 --file=Dockerfile --tag=harbor.hongbomiao.com/hm/prefect-greet:latest . && \
+    docker push harbor.hongbomiao.com/hm/prefect-greet:latest
 
 deploy-development:
     uv run poe deploy --environment=development
@@ -31,7 +31,7 @@ deploy-production:
     uv run poe deploy --environment=production
 
 run-development:
-    uv run poe run -- greet/hm-development-greet
+    uv run poe run -- hm-greet/development-hm-greet
 
 run-production:
-    uv run poe run -- greet/hm-production-greet
+    uv run poe run -- hm-greet/production-hm-greet
