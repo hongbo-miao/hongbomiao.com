@@ -1,10 +1,10 @@
 sealed-secrets-seal:
     cat secrets/hm-prefect-server-secret.unsealed.yaml | \
     kubeseal \
-        --controller-namespace=production-hm-sealed-secrets \
-        --controller-name=hm-sealed-secrets \
-        --format=yaml \
-        > kubernetes-manifests/hm-prefect-server-secret.yaml
+    	--controller-namespace=production-hm-sealed-secrets \
+    	--controller-name=hm-sealed-secrets \
+    	--format=yaml \
+    	> kubernetes-manifests/hm-prefect-server-secret.yaml
 
 argo-cd-app-create:
     argocd app create production-hm-prefect-server --file=argo-cd-manifests/hm-prefect-server-application.yaml

@@ -17,12 +17,12 @@ test-coverage:
     uv run poe test-coverage
 
 publish-development-docker-image:
-    docker build --platform=linux/amd64 --file=Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-daft-analysis:development . && \
-    docker push ghcr.io/hongbo-miao/hm-prefect-daft-analysis:development
+    docker build --platform=linux/amd64 --file=Dockerfile --tag=harbor.hongbomiao.com/hm/prefect-daft-analysis:development . && \
+    docker push harbor.hongbomiao.com/hm/prefect-daft-analysis:development
 
 publish-production-docker-image:
-    docker build --platform=linux/amd64 --file=Dockerfile --tag=ghcr.io/hongbo-miao/hm-prefect-daft-analysis:latest . && \
-    docker push ghcr.io/hongbo-miao/hm-prefect-daft-analysis:latest
+    docker build --platform=linux/amd64 --file=Dockerfile --tag=harbor.hongbomiao.com/hm/prefect-daft-analysis:latest . && \
+    docker push harbor.hongbomiao.com/hm/prefect-daft-analysis:latest
 
 deploy-development:
     uv run poe deploy --environment=development
@@ -31,7 +31,7 @@ deploy-production:
     uv run poe deploy --environment=production
 
 run-development:
-    uv run poe run -- daft-analysis/hm-development-daft-analysis
+    uv run poe run -- hm-daft-analysis/development-hm-daft-analysis
 
 run-production:
-    uv run poe run -- daft-analysis/hm-production-daft-analysis
+    uv run poe run -- hm-daft-analysis/production-hm-daft-analysis
