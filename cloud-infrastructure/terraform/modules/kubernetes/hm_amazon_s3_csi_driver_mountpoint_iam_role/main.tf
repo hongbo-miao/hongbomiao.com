@@ -70,7 +70,7 @@ resource "aws_iam_role_policy" "eks_cluster_s3_policy" {
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "iot_data_s3_policy" {
-  name = "${local.aws_iam_role_name_prefix}IoTDataS3Policy-${var.amazon_eks_cluster_name}"
+  name = "${local.aws_iam_role_name_prefix}IotDataS3Policy-${var.amazon_eks_cluster_name}"
   role = aws_iam_role.s3_csi_driver_mountpoint_role.name
   policy = jsonencode({
     Version = "2012-10-17"

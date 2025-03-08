@@ -40,7 +40,7 @@ def sum_up(nums: list[int]) -> int:
 
 
 @flow
-def calculate(model: Model) -> None:
+def hm_calculate(model: Model) -> None:
     logger = get_run_logger()
     nums = expand(model.n)
     nums = power.map(nums, 2)
@@ -56,4 +56,4 @@ def calculate(model: Model) -> None:
 
 if __name__ == "__main__":
     external_model = Model(n=4)
-    calculate(external_model)
+    hm_calculate(external_model)
