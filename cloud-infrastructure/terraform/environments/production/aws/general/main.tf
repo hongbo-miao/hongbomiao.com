@@ -455,7 +455,7 @@ module "hm_glue_crawler_motor_data" {
   source                        = "../../../../modules/aws/hm_aws_glue_crawler"
   aws_glue_crawler_name         = "hm-delta-lake-crawler-iot"
   aws_glue_crawler_delta_tables = ["s3://hm-production-bucket/delta-tables/motor_data/"]
-  aws_glue_database             = "production_hm_delta_db"
+  aws_glue_database             = "production_motor_db"
   schedule                      = "cron(40 9 * * ? *)" # Every day at 9:40 UTC https://crontab.cronhub.io/
   iam_role_arn                  = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
   environment                   = var.environment

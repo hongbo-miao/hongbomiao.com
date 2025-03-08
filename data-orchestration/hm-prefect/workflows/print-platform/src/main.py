@@ -4,7 +4,7 @@ from prefect import flow, get_run_logger
 
 
 @flow
-def print_platform() -> None:
+def hm_print_platform() -> None:
     logger = get_run_logger()
     logger.info(f"Node: {platform.node()}")
     logger.info(f"Platform: {platform.platform()}")
@@ -12,4 +12,4 @@ def print_platform() -> None:
 
 
 if __name__ == "__main__":
-    print_platform()
+    hm_print_platform()

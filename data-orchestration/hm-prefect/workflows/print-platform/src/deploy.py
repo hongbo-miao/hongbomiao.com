@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from main import print_platform
+from main import hm_print_platform
 from workflow_deploy import config
 from workflow_deploy.args import get_args
 from workflow_deploy.environments import Environments
@@ -20,10 +20,10 @@ async def deploy() -> None:
             logging.error("Not supported environment.")
             return
 
-    docker_image_name = f"ghcr.io/hongbo-miao/hm-prefect-{config.BASE_WORKFLOW_NAME}"
+    docker_image_name = f"harbor.hongbomiao.com/hm/prefect-{config.BASE_WORKFLOW_NAME}"
     await create_deployment(
         args.environment,
-        print_platform,
+        hm_print_platform,
         docker_image_name,
         deployment,
     )
