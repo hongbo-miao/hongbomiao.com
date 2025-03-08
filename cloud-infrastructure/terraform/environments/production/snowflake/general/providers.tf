@@ -1,4 +1,4 @@
 provider "snowflake" {
-  alias = "production_terraform_role"
+  alias = "terraform_role"
   role  = "PRODUCTION_TERRAFORM_ROLE"
 }
