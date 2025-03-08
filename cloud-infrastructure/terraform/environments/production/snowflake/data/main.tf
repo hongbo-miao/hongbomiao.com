@@ -47,7 +47,7 @@ module "hm_streamlit_db_department_schema" {
   for_each                = local.hm_streamlit_db_department_names
   snowflake_database_name = module.hm_streamlit_db_database.name
   snowflake_schema_name   = each.value
-  is_managed              = false
+  with_managed_access     = false
   data_retention_days     = var.database_data_retention_days
   depends_on = [
     module.hm_streamlit_db_database

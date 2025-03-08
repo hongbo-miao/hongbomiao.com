@@ -1,6 +1,15 @@
 terraform-init:
     terraform init -backend=false
 
+terraform-validate:
+    terraform validate
+
+terraform-plan:
+    terraform plan
+
+terraform-apply:
+    terraform apply
+
 download-gateway-api-custom-resource-definition:
     curl --silent --fail --show-error --location https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/experimental-install.yaml > files/gateway-api/manifests/experimental-install.yaml
 
