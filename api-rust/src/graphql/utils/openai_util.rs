@@ -18,7 +18,7 @@ pub async fn chat(message: String) -> Result<ChatResponse, String> {
     let model =
         env::var("OPENAI_MODEL").map_err(|_| "OPENAI_MODEL not set in environment".to_string())?;
 
-    let client = OpenAIClient::builder()
+    let mut client = OpenAIClient::builder()
         .with_api_key(api_key)
         .with_endpoint(&base_url)
         .build()
