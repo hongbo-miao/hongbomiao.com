@@ -612,7 +612,8 @@ module "ray_cluster_iam_role" {
   ray_cluster_namespace                = "${var.environment}-hm-ray-cluster"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  s3_bucket_name                       = module.amazon_s3_bucket_hm_mlflow.name
+  mlflow_s3_bucket_name                = module.amazon_s3_bucket_hm_mlflow.name
+  iot_data_s3_bucket_name              = "iot-data-bucket"
   environment                          = var.environment
   team                                 = var.team
 }
@@ -628,7 +629,7 @@ module "kubernetes_namespace_hm_ray_cluster" {
   ]
 }
 # Ray Cluster Valkey - Kubernetes namespace
-module "hm_kubernetes_namespace_hm_ray_cluster_valkey" {
+module "kubernetes_namespace_hm_ray_cluster_valkey" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-ray-cluster-valkey"
   labels = {
@@ -680,7 +681,7 @@ module "s3_bucket_hm_mimir_ruler" {
   environment    = var.environment
   team           = var.team
 }
-module "hm_mimir_iam_role" {
+module "mimir_iam_role" {
   providers                            = { aws = aws.production }
   source                               = "../../../../modules/kubernetes/hm_mimir_iam_role"
   mimir_service_account_name           = "hm-mimir"
@@ -733,7 +734,7 @@ module "s3_bucket_hm_loki_ruler" {
   environment    = var.environment
   team           = var.team
 }
-module "hm_loki_iam_role" {
+module "loki_iam_role" {
   providers                            = { aws = aws.production }
   source                               = "../../../../modules/kubernetes/hm_loki_iam_role"
   loki_service_account_name            = "hm-loki"
@@ -791,7 +792,7 @@ module "s3_bucket_hm_tempo_trace" {
   environment    = var.environment
   team           = var.team
 }
-module "hm_tempo_iam_role" {
+module "tempo_iam_role" {
   providers                            = { aws = aws.production }
   source                               = "../../../../modules/kubernetes/hm_tempo_iam_role"
   tempo_service_account_name           = "hm-tempo"
@@ -896,7 +897,7 @@ data "aws_secretsmanager_secret_version" "hm_prefect_postgres_secret_version" {
   provider  = aws.production
   secret_id = data.aws_secretsmanager_secret.hm_prefect_postgres_secret.id
 }
-module "hm_prefect_postgres_security_group" {
+module "prefect_postgres_security_group" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.prefect_postgres_name}-security-group"
@@ -905,7 +906,7 @@ module "hm_prefect_postgres_security_group" {
   environment                    = var.environment
   team                           = var.team
 }
-module "hm_prefect_postgres_subnet_group" {
+module "prefect_postgres_subnet_group" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.prefect_postgres_name}-subnet-group"
@@ -913,7 +914,7 @@ module "hm_prefect_postgres_subnet_group" {
   environment       = var.environment
   team              = var.team
 }
-module "hm_prefect_postgres_parameter_group" {
+module "prefect_postgres_parameter_group" {
   providers            = { aws = aws.production }
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres17"
@@ -921,7 +922,7 @@ module "hm_prefect_postgres_parameter_group" {
   environment          = var.environment
   team                 = var.team
 }
-module "hm_prefect_postgres_instance" {
+module "prefect_postgres_instance" {
   providers                 = { aws = aws.production }
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.prefect_postgres_name
@@ -940,7 +941,7 @@ module "hm_prefect_postgres_instance" {
   team                      = var.team
 }
 # Prefect Server - Kubernetes namespace
-module "hm_kubernetes_namespace_hm_prefect_server" {
+module "kubernetes_namespace_hm_prefect_server" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-prefect-server"
   labels = {
@@ -950,8 +951,24 @@ module "hm_kubernetes_namespace_hm_prefect_server" {
     module.hm_amazon_eks_cluster
   ]
 }
+# Prefect Worker - IAM role
+module "prefect_worker_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/kubernetes/hm_prefect_worker_iam_role"
+  prefect_worker_service_account_name  = "hm-prefect-worker"
+  prefect_worker_namespace             = "${var.environment}-hm-prefect-worker"
+  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  iot_data_s3_bucket_name              = "iot-data-bucket"
+  aws_glue_database_names = [
+    "${var.environment}_battery_db",
+    "${var.environment}_motor_db"
+  ]
+  environment = var.environment
+  team        = var.team
+}
 # Prefect Worker - Kubernetes namespace
-module "hm_kubernetes_namespace_hm_prefect_worker" {
+module "kubernetes_namespace_hm_prefect_worker" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-prefect-worker"
   labels = {
@@ -1090,7 +1107,7 @@ module "kubernetes_namespace_hm_kafbat_ui" {
 
 # LiteLLM
 # LiteLLM - IAM role
-module "hm_litellm_iam_role" {
+module "litellm_iam_role" {
   providers                            = { aws = aws.production }
   source                               = "../../../../modules/kubernetes/hm_litellm_iam_role"
   litellm_service_account_name         = "hm-litellm-service-account"

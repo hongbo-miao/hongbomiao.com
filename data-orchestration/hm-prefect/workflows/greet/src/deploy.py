@@ -8,7 +8,7 @@ from workflow_deploy.environments import Environments
 from workflow_deploy.utils.create_deployment import create_deployment
 
 
-async def deploy() -> None:
+async def hm_greet() -> None:
     args = get_args()
 
     match args.environment:
@@ -20,7 +20,7 @@ async def deploy() -> None:
             logging.error("Not supported environment.")
             return
 
-    docker_image_name = f"ghcr.io/hongbo-miao/hm-prefect-{config.BASE_WORKFLOW_NAME}"
+    docker_image_name = f"harbor.hongbomiao.com/hm/prefect-{config.BASE_WORKFLOW_NAME}"
     await create_deployment(
         args.environment,
         greet,
@@ -31,4 +31,4 @@ async def deploy() -> None:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    asyncio.run(deploy())
+    asyncio.run(hm_greet())

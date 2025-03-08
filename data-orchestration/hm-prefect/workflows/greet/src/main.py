@@ -24,7 +24,7 @@ def create_farewell_subflow(age: int) -> str:
 
 
 @flow
-def greet(user: User) -> None:
+def hm_greet(user: User) -> None:
     greeting = create_greeting_subflow(user.name)
     farewell = create_farewell_subflow(user.age)
     logger = get_run_logger()
@@ -33,4 +33,4 @@ def greet(user: User) -> None:
 
 if __name__ == "__main__":
     external_user = User(name="Rose", age=20)
-    greet(external_user)
+    hm_greet(external_user)
