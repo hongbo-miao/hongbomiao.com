@@ -282,8 +282,7 @@ locals {
   tracker_kafka_snowflake_sink_plugin_dir_path  = "files/amazon-msk/${local.tracker_kafka_name}/plugins/${local.tracker_kafka_snowflake_sink_plugin_name}"
 }
 data "external" "local_tracker_kafka_snowflake_sink_plugin" {
-  provider = aws.production
-  program  = ["bash", "${local.tracker_kafka_snowflake_sink_plugin_dir_path}/build.sh"]
+  program = ["bash", "${local.tracker_kafka_snowflake_sink_plugin_dir_path}/build.sh"]
   query = {
     kafka_plugin_name = local.tracker_kafka_snowflake_sink_plugin_name
     # snowflake-kafka-connector requires bc-fips and bcpkix-fips

@@ -15,16 +15,6 @@ terraform {
       source  = "hashicorp/external"
       version = "2.3.4"
     }
-    # https://registry.terraform.io/providers/hashicorp/helm/latest
-    helm = {
-      source  = "hashicorp/helm"
-      version = "2.17.0"
-    }
-    # https://registry.terraform.io/providers/hashicorp/kubernetes/latest
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "2.36.0"
-    }
   }
   required_version = ">= 1.8"
 }

@@ -1,3 +1,3 @@
 output "id" {
-  value = harbor_registry.hm_harbor_registry.registry_id
+  value = harbor_registry.main.registry_id
 }

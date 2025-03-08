@@ -7,6 +7,11 @@ data "terraform_remote_state" "production_aws_network_terraform_remote_state" {
   }
 }
 
+data "aws_vpc" "current" {
+  provider = aws.production
+  default  = true
+}
+
 # Amazon EKS
 locals {
   amazon_eks_cluster_name      = "hm-kubernetes"
@@ -47,7 +52,7 @@ module "amazon_s3_csi_driver_mountpoint_iam_role" {
   amazon_eks_cluster_name              = module.amazon_eks_cluster.cluster_name
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  eks_cluster_s3_bucket_name           = module.amazon_s3_bucket_eks_cluster_mount.name
+  eks_cluster_s3_bucket_name           = module.s3_bucket_eks_cluster_mount.name
   iot_data_s3_bucket_name              = "iot-data-bucket"
   environment                          = var.environment
   team                                 = var.team
@@ -232,7 +237,7 @@ module "s3_bucket_eks_cluster_elastic_load_balancer" {
 module "s3_bucket_eks_cluster_network_load_balancer_policy" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/kubernetes/hm_aws_network_load_balancer_s3_bucket_policy"
-  s3_bucket_name = module.amazon_s3_bucket_eks_cluster_elastic_load_balancer.name
+  s3_bucket_name = module.s3_bucket_eks_cluster_elastic_load_balancer.name
 }
 # Gateway API - CRDs
 module "kubernetes_manifest_gateway_api" {
@@ -332,7 +337,7 @@ module "kubernetes_namespace_hm_priority_class" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
 
@@ -415,7 +420,7 @@ module "airbyte_iam_user" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/kubernetes/hm_airbyte_iam_user"
   aws_iam_user_name = "${var.environment}_hm_airbyte_user"
-  s3_bucket_name    = module.amazon_s3_bucket_hm_airbyte.name
+  s3_bucket_name    = module.s3_bucket_hm_airbyte.name
   environment       = var.environment
   team              = var.team
 }
@@ -510,7 +515,7 @@ module "mlflow_tracking_server_iam_role" {
   mlflow_namespace                     = "${var.environment}-hm-mlflow"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  s3_bucket_name                       = module.amazon_s3_bucket_hm_mlflow.name
+  s3_bucket_name                       = module.s3_bucket_hm_mlflow.name
   environment                          = var.environment
   team                                 = var.team
 }
@@ -521,7 +526,7 @@ module "mlflow_run_iam_role" {
   mlflow_namespace                     = "${var.environment}-hm-mlflow"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  s3_bucket_name                       = module.amazon_s3_bucket_hm_mlflow.name
+  s3_bucket_name                       = module.s3_bucket_hm_mlflow.name
   environment                          = var.environment
   team                                 = var.team
 }
@@ -612,7 +617,7 @@ module "ray_cluster_iam_role" {
   ray_cluster_namespace                = "${var.environment}-hm-ray-cluster"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  mlflow_s3_bucket_name                = module.amazon_s3_bucket_hm_mlflow.name
+  mlflow_s3_bucket_name                = module.s3_bucket_hm_mlflow.name
   iot_data_s3_bucket_name              = "iot-data-bucket"
   environment                          = var.environment
   team                                 = var.team
@@ -636,7 +641,7 @@ module "kubernetes_namespace_hm_ray_cluster_valkey" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
 
@@ -689,8 +694,8 @@ module "mimir_iam_role" {
   mimir_alertmanager_s3_bucket_name    = module.s3_bucket_hm_mimir_alertmanager.name
   mimir_block_s3_bucket_name           = module.s3_bucket_hm_mimir_block.name
   mimir_ruler_s3_bucket_name           = module.s3_bucket_hm_mimir_ruler.name
-  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
-  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   environment                          = var.environment
   team                                 = var.team
 }
@@ -702,7 +707,7 @@ module "kubernetes_namespace_hm_mimir" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
 
@@ -742,8 +747,8 @@ module "loki_iam_role" {
   loki_admin_s3_bucket_name            = module.s3_bucket_hm_loki_admin.name
   loki_chunk_s3_bucket_name            = module.s3_bucket_hm_loki_chunk.name
   loki_ruler_s3_bucket_name            = module.s3_bucket_hm_loki_ruler.name
-  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
-  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   environment                          = var.environment
   team                                 = var.team
 }
@@ -755,7 +760,7 @@ module "kubernetes_namespace_hm_loki" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
 
@@ -768,7 +773,7 @@ module "kubernetes_namespace_hm_alloy" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
 
@@ -799,8 +804,8 @@ module "tempo_iam_role" {
   tempo_namespace                      = "${var.environment}-hm-tempo"
   tempo_admin_s3_bucket_name           = module.s3_bucket_hm_tempo_admin.name
   tempo_trace_s3_bucket_name           = module.s3_bucket_hm_tempo_trace.name
-  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
-  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   environment                          = var.environment
   team                                 = var.team
 }
@@ -812,7 +817,7 @@ module "kubernetes_namespace_hm_tempo" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
 
@@ -833,8 +838,8 @@ module "grafana_postgres_security_group" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.grafana_postgres_name}-security-group"
-  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
-  amazon_vpc_cidr_ipv4           = data.aws_vpc.hm_amazon_vpc.cidr_block
+  amazon_vpc_id                  = data.aws_vpc.current.id
+  amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
   environment                    = var.environment
   team                           = var.team
 }
@@ -865,9 +870,9 @@ module "grafana_postgres_instance" {
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_grafana_postgres_secret_version.secret_string)["user_name"]
   password                  = jsondecode(data.aws_secretsmanager_secret_version.hm_grafana_postgres_secret_version.secret_string)["password"]
-  parameter_group_name      = module.hm_grafana_postgres_parameter_group.name
-  subnet_group_name         = module.hm_grafana_postgres_subnet_group.name
-  vpc_security_group_ids    = [module.hm_grafana_postgres_security_group.id]
+  parameter_group_name      = module.grafana_postgres_parameter_group.name
+  subnet_group_name         = module.grafana_postgres_subnet_group.name
+  vpc_security_group_ids    = [module.grafana_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   environment               = var.environment
   team                      = var.team
@@ -901,8 +906,8 @@ module "prefect_postgres_security_group" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.prefect_postgres_name}-security-group"
-  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
-  amazon_vpc_cidr_ipv4           = data.aws_vpc.hm_amazon_vpc.cidr_block
+  amazon_vpc_id                  = data.aws_vpc.current.id
+  amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
   environment                    = var.environment
   team                           = var.team
 }
@@ -933,9 +938,9 @@ module "prefect_postgres_instance" {
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_prefect_postgres_secret_version.secret_string)["user_name"]
   password                  = jsondecode(data.aws_secretsmanager_secret_version.hm_prefect_postgres_secret_version.secret_string)["password"]
-  parameter_group_name      = module.hm_prefect_postgres_parameter_group.name
-  subnet_group_name         = module.hm_prefect_postgres_subnet_group.name
-  vpc_security_group_ids    = [module.hm_prefect_postgres_security_group.id]
+  parameter_group_name      = module.prefect_postgres_parameter_group.name
+  subnet_group_name         = module.prefect_postgres_subnet_group.name
+  vpc_security_group_ids    = [module.prefect_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   environment               = var.environment
   team                      = var.team
@@ -948,7 +953,7 @@ module "kubernetes_namespace_hm_prefect_server" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
 # Prefect Worker - IAM role
@@ -957,8 +962,8 @@ module "prefect_worker_iam_role" {
   source                               = "../../../../modules/kubernetes/hm_prefect_worker_iam_role"
   prefect_worker_service_account_name  = "hm-prefect-worker"
   prefect_worker_namespace             = "${var.environment}-hm-prefect-worker"
-  amazon_eks_cluster_oidc_provider     = module.hm_amazon_eks_cluster.oidc_provider
-  amazon_eks_cluster_oidc_provider_arn = module.hm_amazon_eks_cluster.oidc_provider_arn
+  amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   iot_data_s3_bucket_name              = "iot-data-bucket"
   aws_glue_database_names = [
     "${var.environment}_battery_db",
@@ -975,7 +980,7 @@ module "kubernetes_namespace_hm_prefect_worker" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
 
@@ -1167,7 +1172,7 @@ module "harbor_iam_user" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/kubernetes/hm_harbor_iam_user"
   aws_iam_user_name = "${var.environment}-hm-harbor-user"
-  s3_bucket_name    = module.hm_amazon_s3_bucket_hm_harbor.name
+  s3_bucket_name    = module.s3_bucket_hm_harbor.name
   environment       = var.environment
   team              = var.team
 }
@@ -1187,8 +1192,8 @@ module "harbor_postgres_security_group" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.harbor_postgres_name}-security-group"
-  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
-  amazon_vpc_cidr_ipv4           = data.aws_vpc.hm_amazon_vpc.cidr_block
+  amazon_vpc_id                  = data.aws_vpc.current.id
+  amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
   environment                    = var.environment
   team                           = var.team
 }
@@ -1219,9 +1224,9 @@ module "harbor_postgres_instance" {
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_harbor_postgres_secret_version.secret_string)["user_name"]
   password                  = jsondecode(data.aws_secretsmanager_secret_version.hm_harbor_postgres_secret_version.secret_string)["password"]
-  parameter_group_name      = module.hm_harbor_postgres_parameter_group.name
-  subnet_group_name         = module.hm_harbor_postgres_subnet_group.name
-  vpc_security_group_ids    = [module.hm_harbor_postgres_security_group.id]
+  parameter_group_name      = module.harbor_postgres_parameter_group.name
+  subnet_group_name         = module.harbor_postgres_subnet_group.name
+  vpc_security_group_ids    = [module.harbor_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   environment               = var.environment
   team                      = var.team
@@ -1234,7 +1239,7 @@ module "kubernetes_namespace_hm_harbor" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
 
@@ -1255,8 +1260,8 @@ module "odoo_postgres_security_group" {
   providers                      = { aws = aws.production }
   source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
   amazon_ec2_security_group_name = "${local.odoo_postgres_name}-security-group"
-  amazon_vpc_id                  = data.aws_vpc.hm_amazon_vpc.id
-  amazon_vpc_cidr_ipv4           = data.aws_vpc.hm_amazon_vpc.cidr_block
+  amazon_vpc_id                  = data.aws_vpc.current.id
+  amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
   environment                    = var.environment
   team                           = var.team
 }
@@ -1294,9 +1299,9 @@ module "odoo_postgres_instance" {
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_odoo_postgres_secret_version.secret_string)["user_name"]
   password                  = jsondecode(data.aws_secretsmanager_secret_version.hm_odoo_postgres_secret_version.secret_string)["password"]
-  parameter_group_name      = module.hm_odoo_postgres_parameter_group.name
-  subnet_group_name         = module.hm_odoo_postgres_subnet_group.name
-  vpc_security_group_ids    = [module.hm_odoo_postgres_security_group.id]
+  parameter_group_name      = module.odoo_postgres_parameter_group.name
+  subnet_group_name         = module.odoo_postgres_subnet_group.name
+  vpc_security_group_ids    = [module.odoo_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   environment               = var.environment
   team                      = var.team
@@ -1309,7 +1314,7 @@ module "kubernetes_namespace_hm_odoo" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
 
@@ -1322,6 +1327,6 @@ module "kubernetes_namespace_hm_s3_browser" {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
   depends_on = [
-    module.hm_amazon_eks_cluster
+    module.amazon_eks_cluster
   ]
 }
