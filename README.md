@@ -358,11 +358,12 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Data Visualization
 
-- **Grafana** - Data visualization
-- **Metabase** - Data visualization
-- **Apache Superset** - Data visualization
-- **Tableau** - Data visualization
-- **IADS** - Data visualization
+- **Plotly** - Interactive scientific, engineering, and business data visualization
+- **Grafana** - Monitoring, observability, and real-time data visualization
+- **Metabase** - Business intelligence (BI) data visualization
+- **Apache Superset** - Business intelligence (BI) data visualization
+- **Tableau** - Business intelligence (BI) data visualization
+- **IADS** - Flight test data visualization
 
 ### Data Analytics
 
