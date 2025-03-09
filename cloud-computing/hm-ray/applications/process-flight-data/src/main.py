@@ -10,7 +10,7 @@ import ray
 logger = logging.getLogger(__name__)
 
 
-@ray.remote
+@ray.remote(num_cpus=1, memory=1**9)  # memory: 1 GB
 def process_flight_data(
     mlflow_tracking_server_host: str,
     mlflow_tracking_server_user_name: str,
