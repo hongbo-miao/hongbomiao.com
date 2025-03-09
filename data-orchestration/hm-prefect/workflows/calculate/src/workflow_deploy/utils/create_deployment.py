@@ -22,5 +22,6 @@ async def create_deployment(
             tag=deployment["docker_image_tag"],
             dockerfile="Dockerfile",
         ),
+        build=False,
         push=False,
     )
