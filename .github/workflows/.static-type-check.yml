@@ -297,6 +297,66 @@ jobs:
         run: |
           terraform validate
 
+  static-type-check-terraform-production-snowflake-account:
+    name: Terraform (production/snowflake/account)
+    if: ${{ inputs.workflow || inputs.terraform }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Initialize Terraform
+        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/account
+        run: |
+          terraform init -backend=false
+      - name: Static type check Terraform
+        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/account
+        run: |
+          terraform validate
+
+  static-type-check-terraform-production-snowflake-data:
+    name: Terraform (production/snowflake/data)
+    if: ${{ inputs.workflow || inputs.terraform }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Initialize Terraform
+        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/data
+        run: |
+          terraform init -backend=false
+      - name: Static type check Terraform
+        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/data
+        run: |
+          terraform validate
+h
+  static-type-check-terraform-production-snowflake-general:
+    name: Terraform (production/snowflake/general)
+    if: ${{ inputs.workflow || inputs.terraform }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Initialize Terraform
+        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/general
+        run: |
+          terraform init -backend=false
+      - name: Static type check Terraform
+        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/general
+        run: |
+          terraform validate
+
   static-type-check-typescript-api-node:
     name: TypeScript (api-node)
     if: ${{ inputs.workflow || inputs.api-node }}
