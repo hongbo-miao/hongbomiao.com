@@ -6,13 +6,13 @@ import ray
 logger = logging.getLogger(__name__)
 
 
-@ray.remote
+@ray.remote(num_cpus=0.1, memory=1**6)  # memory: 1 MB
 def square(n: int) -> int:
     time.sleep(5)
     return n * n
 
 
-@ray.remote
+@ray.remote(num_cpus=0.1, memory=1**6)  # memory: 1 MB
 def sum_list(numbers: list[int]) -> int:
     return sum(numbers)
 
