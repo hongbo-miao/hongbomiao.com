@@ -3,9 +3,13 @@ import logging
 
 import torch
 from ogb.graphproppred import PygGraphPropPredDataset
+from torch_geometric.data.data import DataEdgeAttr, DataTensorAttr
+from torch_geometric.data.storage import GlobalStorage
 from torch_geometric.loader import DataLoader
 
 logger = logging.getLogger(__name__)
+
+torch.serialization.add_safe_globals([DataEdgeAttr, DataTensorAttr, GlobalStorage])
 
 
 def fetch_dataset(config: argparse.Namespace) -> PygGraphPropPredDataset:
