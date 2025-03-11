@@ -17,7 +17,7 @@ async def hm_calculate() -> None:
         case Environments.production.value:
             deployment = config.PRODUCTION_DEPLOYMENT
         case _:
-            logging.error("Not supported environment.")
+            logging.error(f"Not supported environment: {args.environment}")
             return
 
     docker_image_name = f"harbor.hongbomiao.com/hm/prefect-{config.BASE_WORKFLOW_NAME}"
