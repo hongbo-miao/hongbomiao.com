@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-keda
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-keda
+spec:
+  project: production-hm
+  source:
+    repoURL: https://kedacore.github.io/charts
+    # https://artifacthub.io/packages/helm/kedacore/keda
+    targetRevision: 2.16.1
+    chart: keda
+    helm:
+      releaseName: hm-keda
+  destination:
+    namespace: production-hm-keda
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
