@@ -341,6 +341,18 @@ module "kubernetes_namespace_hm_priority_class" {
   ]
 }
 
+# Keda - Kubernetes namespace
+module "kubernetes_namespace_hm_keda" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-keda"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # Metrics Server
 # Metrics Server - Kubernetes namespace
 module "kubernetes_namespace_hm_metrics_server" {
