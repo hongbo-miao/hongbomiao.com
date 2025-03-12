@@ -221,6 +221,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Locust** - Load testing
 - **Cloudflare Tunnel** - Tunneling
 - **Vertical Pod Autoscaler** - Kubernetes vertical pod autoscaler
+- **KEDA** - Kubernetes event-driven autoscaler
 - **K3s** - Lightweight Kubernetes
 - **containerd** - Container runtime
 - **Kubernetes** - Container-orchestration system
