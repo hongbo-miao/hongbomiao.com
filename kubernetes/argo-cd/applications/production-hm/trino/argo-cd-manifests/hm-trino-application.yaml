@@ -1,0 +1,75 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-trino
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-trino
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://trinodb.github.io/charts
+      # https://artifacthub.io/packages/helm/trino/trino
+      targetRevision: 1.37.0
+      chart: trino
+      helm:
+        releaseName: hm-trino
+        values: |
+          # https://github.com/trinodb/charts/blob/main/charts/trino/values.yaml
+          ---
+          image:
+            registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+          coordinator:
+            jvm:
+              maxHeapSize: 48G
+            resources:
+              requests:
+                cpu: 15000m
+                memory: 63Gi
+              limits:
+                cpu: 15000m
+                memory: 63Gi
+          worker:
+            jvm:
+              maxHeapSize: 48G
+            resources:
+              requests:
+                cpu: 15000m
+                memory: 63Gi
+              limits:
+                cpu: 15000m
+                memory: 63Gi
+          server:
+            workers: 10
+          additionalConfigProperties:
+            - http-server.process-forwarded=true
+          serviceAccount:
+            create: true
+            name: hm-trino
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/TrinoRole-hm-trino
+          envFrom:
+            - secretRef:
+                name: hm-trino-secret
+          catalogs:
+            postgresql: |
+              connector.name=postgresql
+              connection-url=jdbc:postgresql://production-hm-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com:5432/iot_db
+              connection-user=${ENV:HM_POSTGRES_USER}
+              connection-password=${ENV:HM_POSTGRES_PASSWORD}
+            delta: |
+              connector.name=delta_lake
+              hive.metastore=glue
+              fs.native-s3.enabled=true
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/trino/kubernetes-manifests
+  destination:
+    namespace: production-hm-trino
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
