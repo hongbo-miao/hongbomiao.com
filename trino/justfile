@@ -1,7 +1,11 @@
+trino-catalog-check:
+    cat /etc/trino/catalog/delta.properties
+    cat /etc/trino/catalog/postgresql.properties
+
 trino-docker-run:
     docker run --publish=44116:8080 --name=hm-trino trinodb/trino
 
-trino-docker-rm:
+trino-docker-remove:
     docker rm hm-trino
 
 trino-docker-exec-trino:
