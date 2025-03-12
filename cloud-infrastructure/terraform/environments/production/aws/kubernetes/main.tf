@@ -1330,3 +1330,31 @@ module "kubernetes_namespace_hm_s3_browser" {
     module.amazon_eks_cluster
   ]
 }
+
+# Trino - IAM role
+module "hm_trino_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/kubernetes/hm_trino_iam_role"
+  trino_service_account_name           = "hm-trino"
+  trino_namespace                      = "${var.environment}-hm-trino"
+  amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
+  iot_data_s3_bucket_name              = "iot-data-bucket"
+  aws_glue_database_names = [
+    "${var.environment}_battery_db",
+    "${var.environment}_motor_db"
+  ]
+  environment = var.environment
+  team        = var.team
+}
+# Trino - Kubernetes namespace
+module "hm_kubernetes_namespace_hm_trino" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-trino"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
