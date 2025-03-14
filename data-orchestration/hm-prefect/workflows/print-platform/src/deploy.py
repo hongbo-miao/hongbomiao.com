@@ -7,6 +7,8 @@ from workflow_deploy.args import get_args
 from workflow_deploy.environments import Environments
 from workflow_deploy.utils.create_deployment import create_deployment
 
+logger = logging.getLogger(__name__)
+
 
 async def deploy() -> None:
     args = get_args()
@@ -17,7 +19,7 @@ async def deploy() -> None:
         case Environments.production.value:
             deployment = config.PRODUCTION_DEPLOYMENT
         case _:
-            logging.error(f"Not supported environment: {args.environment}")
+            logger.error(f"Not supported environment: {args.environment}")
             return
 
     docker_image_name = f"harbor.hongbomiao.com/hm/prefect-{config.BASE_WORKFLOW_NAME}"
@@ -30,5 +32,8 @@ async def deploy() -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
     asyncio.run(deploy())
