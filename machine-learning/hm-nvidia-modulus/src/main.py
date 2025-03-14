@@ -90,7 +90,7 @@ def ldc_trainer(cfg: DictConfig) -> None:
     )
 
     for i in range(10000):
-        for bc_data, int_data in zip(bc_dataloader, interior_dataloader):
+        for bc_data, int_data in zip(bc_dataloader, interior_dataloader, strict=True):
             optimizer.zero_grad()
 
             # subsample points:

@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
@@ -38,7 +38,7 @@ class IadsUtil:
         day, hour, minute, second = irig_time.split(":")
         second, millisecond = second.split(".")
 
-        dt = datetime(year, 1, 1, tzinfo=timezone.utc) + timedelta(
+        dt = datetime(year, 1, 1, tzinfo=UTC) + timedelta(
             days=int(day),
             hours=int(hour),
             minutes=int(minute),
