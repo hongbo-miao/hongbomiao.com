@@ -10,14 +10,16 @@ metadata:
     argocd.argoproj.io/hook: PreSync
 spec:
   capacity:
-    storage: 1Gi # This required value can be anything and is ignored by the CSI driver
+    # This required value can be anything and is ignored by the CSI driver
+    storage: 1Gi
   accessModes:
     - ReadOnlyMany
   mountOptions:
     # https://github.com/awslabs/mountpoint-s3/blob/main/doc/CONFIGURATION.md
     - region=us-west-2
     - prefix=dmotor_data/
-    - metadata-ttl=300 # seconds
+    # seconds
+    - metadata-ttl=300
   csi:
     driver: s3.csi.aws.com
     volumeHandle: motor-data-volume-handle
