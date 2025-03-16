@@ -308,6 +308,8 @@ jobs:
               - 'data-analytics/hm-cupy/**'
             hm-daft-analyze-transactions:
               - 'data-analytics/hm-daft/analyze-transactions/**'
+            hm-dash:
+              - 'data-visualization/hm-dash/heatmap/**'
             hm-docling:
               - 'machine-learning/hm-docling/**'
             hm-duckdb-query-duckdb:
@@ -575,6 +577,7 @@ jobs:
       hm-cuml: ${{ steps.filter.outputs.hm-cuml }}
       hm-cupy: ${{ steps.filter.outputs.hm-cupy }}
       hm-daft-analyze-transactions: ${{ steps.filter.outputs.hm-daft-analyze-transactions }}
+      hm-dash: ${{ steps.filter.outputs.hm-dash }}
       hm-docling: ${{ steps.filter.outputs.hm-docling }}
       hm-duckdb-query-duckdb: ${{ steps.filter.outputs.hm-duckdb-query-duckdb }}
       hm-duckdb-query-lance: ${{ steps.filter.outputs.hm-duckdb-query-lance }}
@@ -887,6 +890,7 @@ jobs:
       # Applications
       grafana-hm-dashboard: ${{ needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
       grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
+      hm-dash: ${{ needs.detect-changes.outputs.hm-dash == 'true' }}
       iads-config-reader: ${{ needs.detect-changes.outputs.iads-config-reader == 'true' }}
       iads-data-producer: ${{ needs.detect-changes.outputs.iads-data-producer == 'true' }}
       iads-data-reader: ${{ needs.detect-changes.outputs.iads-data-reader == 'true' }}

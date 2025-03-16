@@ -473,9 +473,10 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-storage.hm-protobuf
     uv run poe static-type-check-python --package=data-storage.lance
     uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
+    uv run poe static-type-check-python --package=data-visualization.hm-dash
+    uv run poe static-type-check-python --package=data-visualization.hm-plotly.heatmap
     uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-config-reader
     uv run poe static-type-check-python --package=data-visualization.iads.iads-data-manager.iads-data-reader
-    uv run poe static-type-check-python --package=data-visualization.hm-plotly.heatmap
     uv run poe static-type-check-python --package=embedded-system.decode-can-blf-data
     uv run poe static-type-check-python --package=embedded-system.decode-can-mf4-data
     uv run poe static-type-check-python --package=embedded-system.decode-can-trc-data
