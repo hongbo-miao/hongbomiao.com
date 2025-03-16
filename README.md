@@ -450,6 +450,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Faiss** - Vector search and similarity library
 - **Gradio** - Machine learning web application building
 - **Streamlit** - Data web application building
+- **Dash** - Data web application and dashboard building
 - **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
 - **Rasa** - Machine learning framework for automated text and voice-based conversations

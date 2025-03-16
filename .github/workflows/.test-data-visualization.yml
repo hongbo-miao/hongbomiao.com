@@ -15,6 +15,9 @@ name: . Test Data Visualization
       grafana-hm-panel-plugin:
         required: true
         type: boolean
+      hm-dash:
+        required: true
+        type: boolean
       iads-config-reader:
         required: true
         type: boolean
@@ -123,6 +126,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.0
         with:
           directory: data-visualization/hm-plotly/heatmap
+
+  dash-test:
+    name: Dash | Test
+    if: ${{ inputs.workflow || inputs.hm-dash }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.3.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: data-visualization/hm-dash/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version-file: data-visualization/hm-dash/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-visualization/hm-dash
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-visualization/hm-dash
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.0
+        with:
+          directory: data-visualization/hm-dash
 
   iads-config-reader-test:
     name: IADS (iads-config-reader) | Test
