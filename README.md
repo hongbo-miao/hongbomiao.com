@@ -434,6 +434,13 @@ The diagram illustrates the repository's architecture, which is considered overl
       - XGBoost
   - Stacking
 
+### Data Application
+
+- **PyGWalker** - Data exploration
+- **Gradio** - Machine learning application building
+- **Streamlit** - Data application building
+- **Dash** - Data application and dashboard building
+
 ### Machine Learning (ML)
 
 - **scikit-learn** - Machine learning library
@@ -448,9 +455,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Faster Whisper** - Speech recognition model
 - **Transformers** - Machine learning models
 - **Faiss** - Vector search and similarity library
-- **Gradio** - Machine learning web application building
-- **Streamlit** - Data web application building
-- **Dash** - Data web application and dashboard building
 - **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
