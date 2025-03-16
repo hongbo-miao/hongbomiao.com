@@ -309,7 +309,7 @@ jobs:
             hm-daft-analyze-transactions:
               - 'data-analytics/hm-daft/analyze-transactions/**'
             hm-dash:
-              - 'data-visualization/hm-dash/heatmap/**'
+              - 'data-visualization/hm-dash/**'
             hm-docling:
               - 'machine-learning/hm-docling/**'
             hm-duckdb-query-duckdb:
@@ -380,6 +380,8 @@ jobs:
               - 'cloud-security/hm-prowler/**'
             hm-pulumi:
               - 'cloud-infrastructure/hm-pulumi/**'
+            hm-pygwalker:
+              - 'data-visualization/hm-pygwalker/**'
             hm-pyvista-mount-saint-helens:
               - 'computer-vision/hm-pyvista/mount-saint-helens/**'
             hm-rasa:
@@ -614,6 +616,7 @@ jobs:
       hm-protobuf: ${{ steps.filter.outputs.hm-protobuf }}
       hm-prowler: ${{ steps.filter.outputs.hm-prowler }}
       hm-pulumi: ${{ steps.filter.outputs.hm-pulumi }}
+      hm-pygwalker: ${{ steps.filter.outputs.hm-pygwalker }}
       hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
       hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
       hm-ray-calculate: ${{ steps.filter.outputs.hm-ray-calculate }}
@@ -891,6 +894,7 @@ jobs:
       grafana-hm-dashboard: ${{ needs.detect-changes.outputs.grafana-hm-dashboard == 'true' }}
       grafana-hm-panel-plugin: ${{ needs.detect-changes.outputs.grafana-hm-panel-plugin == 'true' }}
       hm-dash: ${{ needs.detect-changes.outputs.hm-dash == 'true' }}
+      hm-pygwalker: ${{ needs.detect-changes.outputs.hm-pygwalker == 'true' }}
       iads-config-reader: ${{ needs.detect-changes.outputs.iads-config-reader == 'true' }}
       iads-data-producer: ${{ needs.detect-changes.outputs.iads-data-producer == 'true' }}
       iads-data-reader: ${{ needs.detect-changes.outputs.iads-data-reader == 'true' }}
