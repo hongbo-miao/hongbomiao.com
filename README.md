@@ -378,11 +378,12 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Polars** - High-performance DataFrame library
   - **Modin** - Distributed DataFrame library
   - **Daft** - Distributed DataFrame library
+- **Narwhals** - Compatibility layer between DataFrame libraries
 - **NetworkX** - Network analysis library
 - **JupyterLab** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
-- **Databricks** - Unified data analytics platform
-- **Palantir** - Data integration and analysis platform
+- **Databricks** - Data analytics platform
+- **Palantir** - Data analytics platform
 
 ### Data Quality
 
