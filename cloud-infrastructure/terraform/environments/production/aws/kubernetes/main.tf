@@ -418,6 +418,39 @@ module "kubernetes_namespace_hm_sealed_secrets" {
   ]
 }
 
+# Velero
+# Velero - S3 bucket
+module "s3_bucket_hm_velero" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${var.environment}-hm-velero-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+# Velero - IAM role
+module "velero_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/kubernetes/hm_velero_iam_role"
+  velero_service_account_name          = "hm-velero"
+  velero_namespace                     = "${var.environment}-hm-velero"
+  amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
+  s3_bucket_name                       = module.s3_bucket_hm_velero.name
+  environment                          = var.environment
+  team                                 = var.team
+}
+# Velero - Kubernetes namespace
+module "kubernetes_namespace_hm_velero" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-velero"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # Airbyte
 # Airbyte - S3 bucket
 module "s3_bucket_hm_airbyte" {
