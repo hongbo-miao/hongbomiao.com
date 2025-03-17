@@ -6,6 +6,9 @@ terraform {
   }
 }
 
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
 locals {
   aws_iam_role_name_prefix = "RayClusterRole"
 }
@@ -74,12 +77,41 @@ resource "aws_iam_role_policy" "iot_data_s3_policy" {
       {
         Effect = "Allow"
         Action = [
+          "s3:GetBucketLocation",
           "s3:GetObject",
           "s3:PutObject"
         ]
         Resource = [
           "arn:aws:s3:::${var.iot_data_s3_bucket_name}/*"
         ]
+      }
+    ]
+  })
+}
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+resource "aws_iam_role_policy" "aws_glue_policy" {
+  name = "${local.aws_iam_role_name_prefix}AwsGluePolicy-${var.ray_cluster_service_account_name}"
+  role = aws_iam_role.ray_cluster_iam_role.name
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "glue:GetDatabase",
+          "glue:GetDatabases",
+          "glue:GetTable",
+          "glue:GetTables"
+        ]
+        Resource = flatten([
+          "arn:aws:glue:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:catalog",
+          [for database in var.aws_glue_database_names :
+            "arn:aws:glue:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:database/${database}"
+          ],
+          [for database in var.aws_glue_database_names :
+            "arn:aws:glue:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${database}/*"
+          ]
+        ])
       }
     ]
   })
