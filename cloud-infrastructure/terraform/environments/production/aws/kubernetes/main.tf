@@ -631,8 +631,12 @@ module "ray_cluster_iam_role" {
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   mlflow_s3_bucket_name                = module.s3_bucket_hm_mlflow.name
   iot_data_s3_bucket_name              = "iot-data-bucket"
-  environment                          = var.environment
-  team                                 = var.team
+  aws_glue_database_names = [
+    "${var.environment}_battery_db",
+    "${var.environment}_motor_db"
+  ]
+  environment = var.environment
+  team        = var.team
 }
 # Ray Cluster - Kubernetes namespace
 module "kubernetes_namespace_hm_ray_cluster" {

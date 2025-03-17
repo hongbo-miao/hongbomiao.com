@@ -16,6 +16,9 @@ variable "mlflow_s3_bucket_name" {
 variable "iot_data_s3_bucket_name" {
   type = string
 }
+variable "aws_glue_database_names" {
+  type = list(string)
+}
 variable "environment" {
   type = string
 }
