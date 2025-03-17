@@ -350,6 +350,8 @@ jobs:
               - 'machine-learning/hm-mlflow/experiments/classify-mnist/**'
             hm-mlflow-predict-diabetes:
               - 'machine-learning/hm-mlflow/experiments/predict-diabetes/**'
+            hm-narwhals:
+              - 'data-analytics/hm-narwhals/**'
             hm-networkx:
               - 'data-analytics/hm-networkx/**'
             hm-numba:
@@ -600,6 +602,7 @@ jobs:
       hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
       hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
+      hm-narwhals: ${{ steps.filter.outputs.hm-narwhals }}
       hm-networkx: ${{ steps.filter.outputs.hm-networkx }}
       hm-numba: ${{ steps.filter.outputs.hm-numba }}
       hm-nvidia-modulus: ${{ steps.filter.outputs.hm-nvidia-modulus }}
@@ -876,6 +879,7 @@ jobs:
       hm-cupy: ${{ needs.detect-changes.outputs.hm-cupy == 'true' }}
       hm-daft-analyze-transactions: ${{ needs.detect-changes.outputs.hm-daft-analyze-transactions == 'true' }}
       hm-geopandas: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
+      hm-narwhals: ${{ needs.detect-changes.outputs.hm-narwhals == 'true' }}
       hm-networkx: ${{ needs.detect-changes.outputs.hm-networkx == 'true' }}
       hm-numba: ${{ needs.detect-changes.outputs.hm-numba == 'true' }}
       hm-pandas-analyze-transactions: ${{ needs.detect-changes.outputs.hm-pandas-analyze-transactions == 'true' }}
