@@ -26,6 +26,8 @@ spec:
             name: hm-velero
             annotations:
               eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/VeleroRole-hm-velero
+        credentials:
+          useSecret: false
         initContainers:
           - name: aws-plugin
             image: harbor.hongbomiao.com/docker-hub-proxy-cache/velero/velero-plugin-for-aws:v1.11.1
@@ -34,9 +36,11 @@ spec:
                 name: plugins
         configuration:
           backupStorageLocation:
-            - name: aws-backup
+            - name: aws-backup-storage
+              default: true
               provider: aws
               bucket: production-hm-velero-bucket
+              prefix: backup
               accessMode: ReadWrite
               config:
                 region: us-west-2
@@ -45,6 +49,18 @@ spec:
               provider: aws
               config:
                 region: us-west-2
+        schedules:
+          cluster-backup:
+            schedule: 21 0 * * *
+            disabled: false
+            paused: false
+            skipImmediately: false
+            useOwnerReferencesInBackup: false
+            template:
+              ttl: 336h
+              storageLocation: aws-backup-storage
+              includedNamespaces:
+                - "*"
         upgradeJobResources:
           requests:
             cpu: 50m
