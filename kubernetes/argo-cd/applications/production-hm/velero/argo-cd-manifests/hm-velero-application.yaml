@@ -40,7 +40,7 @@ spec:
               default: true
               provider: aws
               bucket: production-hm-velero-bucket
-              prefix: backup
+              prefix: hm-kubernetes-backups
               accessMode: ReadWrite
               config:
                 region: us-west-2
@@ -50,14 +50,42 @@ spec:
               config:
                 region: us-west-2
         schedules:
-          cluster-backup:
-            schedule: 21 0 * * *
+          daily-kubernetes-cluster-backup:
+            # Every day at 10:11 UTC
+            schedule: 11 10 * * *
             disabled: false
             paused: false
             skipImmediately: false
             useOwnerReferencesInBackup: false
             template:
+              # 14 days retention
               ttl: 336h
+              storageLocation: aws-backup-storage
+              includedNamespaces:
+                - "*"
+          weekly-kubernetes-cluster-backup:
+            # Every Sunday at 10:21 UTC
+            schedule: 21 10 * * 0
+            disabled: false
+            paused: false
+            skipImmediately: false
+            useOwnerReferencesInBackup: false
+            template:
+              # 60 days retention
+              ttl: 1440h
+              storageLocation: aws-backup-storage
+              includedNamespaces:
+                - "*"
+          monthly-kubernetes-cluster-backup:
+            # First day of each month at 10:45 UTC
+            schedule: 45 10 1 * *
+            disabled: false
+            paused: false
+            skipImmediately: false
+            useOwnerReferencesInBackup: false
+            template:
+              # 366 days retention
+              ttl: 8784h
               storageLocation: aws-backup-storage
               includedNamespaces:
                 - "*"
