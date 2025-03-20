@@ -1,6 +1,3 @@
-uv-install-python:
-    uv python install
-
 uv-update-lock-file:
     uv lock
 
@@ -13,38 +10,38 @@ feast-init:
 download-driver-stats:
     curl --silent --fail --show-error --location https://raw.githubusercontent.com/hongbo-miao/hm-driver-stats/main/driver_stats.parquet > features/data/driver_stats.parquet
 
-uv-run-test:
+test:
     uv run poe test
 
-uv-run-test-coverage:
+test-coverage:
     uv run poe test-coverage
 
-uv-run-inspect-raw-data:
+inspect-raw-data:
     uv run poe inspect-raw-data
 
 # Scan python files in the current directory for feature view/entity definitions, registers the objects, and deploys infrastructure.
-uv-run-feast-apply:
+feast-apply:
     uv run poe feast-apply
 
 # Generate training data
-uv-run-generate-training-data:
+generate-training-data:
     uv run poe generate-training-data
 
 # Load features into your online store
-uv-run-materialize-features:
+materialize-features:
     uv run poe materialize-features
 
 # Inspect materialized features
-uv-run-inspect-features:
+inspect-features:
     uv run poe inspect-features
 
 # Fetch feature vectors for inference
-uv-run-fetch-features:
+fetch-features:
     uv run poe fetch-features
 
 # Fetch feature vectors for inference by feature service
-uv-run-fetch-features-by-service:
+fetch-features-by-service:
     uv run poe fetch-features-by-service
 
-uv-run-feast-ui:
+feast-ui:
     uv run poe feast-ui
