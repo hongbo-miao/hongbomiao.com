@@ -6,8 +6,8 @@ client.submit_job(
     runtime_env={
         "working_dir": "./",
         "pip": [
-            "mlflow==2.14.1",
-            "polars==1.25.2",
+            "daft[aws,deltalake,sql]==0.4.7",
+            "trino[sqlalchemy]==0.333.0",
         ],
     },
 )

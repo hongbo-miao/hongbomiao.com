@@ -35,6 +35,9 @@ name: . Test Computing
       hm-ray-calculate:
         required: true
         type: boolean
+      hm-ray-daft-analysis:
+        required: true
+        type: boolean
       hm-ray-process-flight-data:
         required: true
         type: boolean
@@ -271,6 +274,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.0
         with:
           directory: cloud-computing/hm-ray/applications/calculate
+
+  ray-daft-analysis-test:
+    name: Ray (daft-analysis) | Test
+    if: ${{ inputs.workflow || inputs.hm-ray-daft-analysis }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.3.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: cloud-computing/hm-ray/applications/daft-analysis/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version-file: cloud-computing/hm-ray/applications/daft-analysis/pyproject.toml
+      - name: Install dependencies
+        working-directory: cloud-computing/hm-ray/applications/daft-analysis
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: cloud-computing/hm-ray/applications/daft-analysis
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.0
+        with:
+          directory: cloud-computing/hm-ray/applications/daft-analysis
 
   ray-process-flight-data-test:
     name: Ray (process-flight-data) | Test

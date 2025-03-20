@@ -4,7 +4,7 @@ from pathlib import Path
 
 import config
 import mlflow
-import pandas as pd
+import polars as pl
 import ray
 
 logger = logging.getLogger(__name__)
@@ -18,13 +18,13 @@ def process_flight_data(
     mlflow_experiment_name: str,
     flight_data: dict,
     experiment_number: int,
-) -> pd.DataFrame:
+) -> pl.DataFrame:
     mlflow.set_tracking_uri(
         f"https://{mlflow_tracking_server_user_name}:{mlflow_tracking_server_password}@{mlflow_tracking_server_host}",
     )
     mlflow.set_experiment(mlflow_experiment_name)
 
-    df = pd.DataFrame(flight_data)
+    df = pl.DataFrame(flight_data)
 
     df["total_flight_hours"] = df["flight_duration_hours"] * df["number_of_flights"]
     df = df[df["total_flight_hours"] > 500]
