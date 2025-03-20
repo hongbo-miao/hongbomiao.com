@@ -68,6 +68,9 @@ spec:
                 value: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus.svc:9090
               - name: RAY_PROMETHEUS_NAME
                 value: hm-prometheus
+              # https://docs.ray.io/en/latest/ray-observability/user-guides/configure-logging.html#log-deduplication
+              - name: RAY_DEDUP_LOGS
+                value: "0"
             resources:
               requests:
                 cpu: 1000m
