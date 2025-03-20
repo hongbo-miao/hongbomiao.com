@@ -14,7 +14,7 @@ def hm_daft_analysis() -> None:
         ray_address,
         runtime_env={
             "pip": [
-                "getdaft[aws,deltalake,ray]==0.4.6",
+                "daft[aws,deltalake,ray]==0.4.7",
             ],
         },
     )
