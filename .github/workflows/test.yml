@@ -390,6 +390,8 @@ jobs:
               - 'machine-learning/hm-rasa/**'
             hm-ray-calculate:
               - 'cloud-computing/hm-ray/applications/calculate/**'
+            hm-ray-daft-analysis:
+              - 'cloud-computing/hm-ray/applications/daft-analysis/**'
             hm-ray-process-flight-data:
               - 'cloud-computing/hm-ray/applications/process-flight-data/**'
             hm-scikit-learn:
@@ -623,6 +625,7 @@ jobs:
       hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
       hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
       hm-ray-calculate: ${{ steps.filter.outputs.hm-ray-calculate }}
+      hm-ray-daft-analysis: ${{ steps.filter.outputs.hm-ray-daft-analysis }}
       hm-ray-process-flight-data: ${{ steps.filter.outputs.hm-ray-process-flight-data }}
       hm-scikit-learn: ${{ steps.filter.outputs.hm-scikit-learn }}
       hm-serial: ${{ steps.filter.outputs.hm-serial }}
@@ -926,6 +929,7 @@ jobs:
       quantum-computing: ${{ needs.detect-changes.outputs.quantum-computing == 'true' }}
       # Cloud Computing
       hm-ray-calculate: ${{ needs.detect-changes.outputs.hm-ray-calculate == 'true' }}
+      hm-ray-daft-analysis: ${{ needs.detect-changes.outputs.hm-ray-daft-analysis == 'true' }}
       hm-ray-process-flight-data: ${{ needs.detect-changes.outputs.hm-ray-process-flight-data == 'true' }}
       hm-skypilot: ${{ needs.detect-changes.outputs.hm-skypilot == 'true' }}
 

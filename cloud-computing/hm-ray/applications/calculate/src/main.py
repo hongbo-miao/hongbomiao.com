@@ -33,5 +33,3 @@ if __name__ == "__main__":
     sum_task = sum_list.remote(squared_results)
     total_sum = ray.get(sum_task)
     logger.info(f"{total_sum = }")
-
-    ray.shutdown()
