@@ -39,7 +39,9 @@ spec:
                 cpu: 100m
                 memory: 256Mi
           jobservice:
-            replicas: 1
+            replicas: 3
+            jobLoggers:
+              - stdout
             resources:
               requests:
                 cpu: 50m
@@ -97,11 +99,6 @@ spec:
             enabled: true
             resourcePolicy: keep
             persistentVolumeClaim:
-              jobservice:
-                jobLog:
-                  accessMode: ReadWriteOnce
-                  size: 1Gi
-                  storageClass: production-hm-harbor-storage-class
               trivy:
                 accessMode: ReadWriteOnce
                 size: 5Gi
