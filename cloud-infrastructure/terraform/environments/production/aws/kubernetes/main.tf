@@ -60,14 +60,32 @@ module "amazon_s3_csi_driver_mountpoint_iam_role" {
 # Amazon EKS cluster
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
 module "amazon_eks_cluster" {
-  providers       = { aws = aws.production }
-  source          = "terraform-aws-modules/eks/aws"
+  providers = { aws = aws.production }
+  source    = "terraform-aws-modules/eks/aws"
+  # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
   version         = "20.34.0"
   cluster_name    = local.amazon_eks_cluster_name
   cluster_version = "1.32"
   cluster_addons = {
+    aws-ebs-csi-driver = {
+      addon_version               = "v1.40.0-eksbuild.1"
+      service_account_role_arn    = module.amazon_ebs_csi_driver_iam_role.arn
+      resolve_conflicts_on_create = "OVERWRITE"
+      resolve_conflicts_on_update = "OVERWRITE"
+    }
+    aws-mountpoint-s3-csi-driver = {
+      addon_version               = "v1.12.0-eksbuild.1"
+      service_account_role_arn    = module.amazon_s3_csi_driver_mountpoint_iam_role.arn
+      resolve_conflicts_on_create = "OVERWRITE"
+      resolve_conflicts_on_update = "OVERWRITE"
+    }
     coredns = {
       addon_version               = "v1.11.4-eksbuild.2"
+      resolve_conflicts_on_create = "OVERWRITE"
+      resolve_conflicts_on_update = "OVERWRITE"
+    }
+    eks-pod-identity-agent = {
+      addon_version               = "v1.3.5-eksbuild.2"
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
@@ -78,18 +96,6 @@ module "amazon_eks_cluster" {
     }
     vpc-cni = {
       addon_version               = "v1.19.3-eksbuild.1"
-      resolve_conflicts_on_create = "OVERWRITE"
-      resolve_conflicts_on_update = "OVERWRITE"
-    }
-    aws-ebs-csi-driver = {
-      addon_version               = "v1.40.0-eksbuild.1"
-      service_account_role_arn    = module.amazon_ebs_csi_driver_iam_role.arn
-      resolve_conflicts_on_create = "OVERWRITE"
-      resolve_conflicts_on_update = "OVERWRITE"
-    }
-    aws-mountpoint-s3-csi-driver = {
-      addon_version               = "v1.12.0-eksbuild.1"
-      service_account_role_arn    = module.amazon_s3_csi_driver_mountpoint_iam_role.arn
       resolve_conflicts_on_create = "OVERWRITE"
       resolve_conflicts_on_update = "OVERWRITE"
     }
@@ -208,10 +214,14 @@ module "amazon_eks_cluster" {
 
 # Karpenter
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
-module "karpenter" {
-  source       = "terraform-aws-modules/eks/aws//modules/karpenter"
-  cluster_name = module.amazon_eks_cluster.cluster_name
-  # Attach additional IAM policies to the Karpenter node IAM role
+module "hm_karpenter" {
+  source = "terraform-aws-modules/eks/aws//modules/karpenter"
+  # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
+  version                         = "20.34.0"
+  cluster_name                    = module.amazon_eks_cluster.cluster_name
+  enable_v1_permissions           = true
+  enable_pod_identity             = true
+  create_pod_identity_association = true
   node_iam_role_additional_policies = {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
@@ -220,8 +230,42 @@ module "karpenter" {
     Team         = var.team
     ResourceName = "${local.amazon_eks_cluster_name}-karpenter"
   }
+}
+# Karpenter - Kubernetes namespace
+module "kubernetes_namespace_hm_karpenter" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-karpenter"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
   depends_on = [
     module.amazon_eks_cluster
+  ]
+}
+# Karpenter - Helm chart
+module "karpenter_helm_chart" {
+  source        = "../../../../modules/kubernetes/hm_helm_chart"
+  repository    = "oci://public.ecr.aws/karpenter"
+  chart_name    = "karpenter"
+  chart_version = "1.3.3" # https://gallery.ecr.aws/karpenter/karpenter
+  release_name  = "hm-karpenter"
+  namespace     = module.kubernetes_namespace_hm_karpenter.namespace
+  my_values = [
+    <<-EOT
+      serviceAccount:
+        create: true
+        name: ${module.hm_karpenter.service_account}
+      settings:
+        clusterName: ${module.amazon_eks_cluster.cluster_name}
+        clusterEndpoint: ${module.amazon_eks_cluster.cluster_endpoint}
+        interruptionQueue: ${module.hm_karpenter.queue_name}
+    EOT
+  ]
+  environment = var.environment
+  team        = var.team
+  depends_on = [
+    module.kubernetes_namespace_hm_karpenter,
+    module.hm_karpenter
   ]
 }
 
