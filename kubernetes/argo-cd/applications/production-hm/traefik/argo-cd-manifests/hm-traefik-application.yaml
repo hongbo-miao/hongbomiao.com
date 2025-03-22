@@ -40,6 +40,20 @@ spec:
                 to: websecure
                 scheme: https
                 permanent: true
+            transport:
+              respondingTimeouts:
+                readTimeout: 30m
+          websecure:
+            transport:
+              respondingTimeouts:
+                readTimeout: 30m
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
         globalArguments: []
         # additionalArguments:
         #   - --log.level=DEBUG

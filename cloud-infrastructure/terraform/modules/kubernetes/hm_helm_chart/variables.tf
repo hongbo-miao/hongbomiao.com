@@ -10,6 +10,10 @@ variable "chart_version" {
 variable "release_name" {
   type = string
 }
+variable "my_values" {
+  type    = list(string)
+  default = []
+}
 variable "my_values_yaml_path" {
   type    = string
   default = ""
