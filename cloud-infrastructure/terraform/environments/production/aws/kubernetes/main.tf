@@ -213,24 +213,6 @@ module "amazon_eks_cluster" {
 }
 
 # Karpenter
-# https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
-module "hm_karpenter" {
-  source = "terraform-aws-modules/eks/aws//modules/karpenter"
-  # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
-  version                         = "20.34.0"
-  cluster_name                    = module.amazon_eks_cluster.cluster_name
-  enable_v1_permissions           = true
-  enable_pod_identity             = true
-  create_pod_identity_association = true
-  node_iam_role_additional_policies = {
-    AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  }
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = "${local.amazon_eks_cluster_name}-karpenter"
-  }
-}
 # Karpenter - Kubernetes namespace
 module "kubernetes_namespace_hm_karpenter" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
@@ -240,6 +222,31 @@ module "kubernetes_namespace_hm_karpenter" {
   }
   depends_on = [
     module.amazon_eks_cluster
+  ]
+}
+# Karpenter - Karpenter
+# https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
+module "hm_karpenter" {
+  source = "terraform-aws-modules/eks/aws//modules/karpenter"
+  # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
+  version                         = "20.34.0"
+  cluster_name                    = module.amazon_eks_cluster.cluster_name
+  enable_v1_permissions           = true
+  enable_pod_identity             = true
+  create_pod_identity_association = true
+  enable_irsa                     = true
+  irsa_oidc_provider_arn          = module.amazon_eks_cluster.oidc_provider_arn
+  irsa_namespace_service_accounts = ["${module.kubernetes_namespace_hm_karpenter.namespace}:karpenter"]
+  node_iam_role_additional_policies = {
+    AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  }
+  tags = {
+    Environment  = var.environment
+    Team         = var.team
+    ResourceName = "${local.amazon_eks_cluster_name}-karpenter"
+  }
+  depends_on = [
+    module.kubernetes_namespace_hm_karpenter
   ]
 }
 # Karpenter - Helm chart
@@ -255,6 +262,8 @@ module "karpenter_helm_chart" {
       serviceAccount:
         create: true
         name: ${module.hm_karpenter.service_account}
+        annotations:
+          eks.amazonaws.com/role-arn: ${module.hm_karpenter.iam_role_arn}
       settings:
         clusterName: ${module.amazon_eks_cluster.cluster_name}
         clusterEndpoint: ${module.amazon_eks_cluster.cluster_endpoint}
