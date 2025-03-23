@@ -15,5 +15,5 @@ resource "helm_release" "main" {
   namespace    = var.namespace
   values       = var.my_values_yaml_path != "" ? [file(var.my_values_yaml_path)] : var.my_values
   reset_values = true
-  wait         = true
+  wait         = false
 }
