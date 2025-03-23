@@ -14,7 +14,7 @@ data "aws_vpc" "current" {
 
 # Amazon EKS
 locals {
-  amazon_eks_cluster_name      = "hm-kubernetes"
+  amazon_eks_cluster_name      = "hm-eks-cluster"
   amazon_eks_cluster_name_hash = substr(md5(local.amazon_eks_cluster_name), 0, 3)
 }
 # Amazon EKS Access Entry - IAM role
@@ -147,32 +147,12 @@ module "amazon_eks_cluster" {
     }
   }
   eks_managed_node_groups = {
-    eks_node_group_1 = {
-      min_size       = 10
-      max_size       = 20
-      desired_size   = 10
-      instance_types = ["m7a.xlarge", "m7i.xlarge", "m6a.xlarge", "m6i.xlarge", "m6in.xlarge", "m5.xlarge", "m5a.xlarge", "m5n.xlarge", "m5zn.xlarge"]
-      capacity_type  = "SPOT"
-    }
-    eks_node_group_2 = {
-      min_size       = 10
-      max_size       = 50
-      desired_size   = 10
-      instance_types = ["m7a.2xlarge", "m7i.2xlarge", "m6a.2xlarge", "m6i.2xlarge", "m6in.2xlarge", "m5.2xlarge", "m5a.2xlarge", "m5n.2xlarge", "m5zn.2xlarge"]
-      capacity_type  = "SPOT"
-    }
-    eks_node_group_3 = {
-      min_size       = 5
-      max_size       = 10
-      desired_size   = 5
-      instance_types = ["m7a.8xlarge", "m7i.8xlarge", "m6a.8xlarge", "m6i.8xlarge", "m6in.8xlarge", "m5.8xlarge", "m5a.8xlarge", "m5n.8xlarge"]
-      capacity_type  = "SPOT"
-    }
-    eks_node_group_4 = {
+    hm_eks_node_group = {
       min_size       = 3
-      max_size       = 5
+      max_size       = 10
       desired_size   = 3
-      instance_types = ["r7a.16xlarge", "r7i.16xlarge", "r6a.16xlarge", "r6i.16xlarge", "r6in.16xlarge"]
+      ami_type       = "AL2023_x86_64_STANDARD"
+      instance_types = ["m7a.xlarge", "m7i.xlarge", "m6a.xlarge", "m6i.xlarge", "m6in.xlarge", "m5.xlarge", "m5a.xlarge", "m5n.xlarge", "m5zn.xlarge"]
       capacity_type  = "SPOT"
     }
   }
@@ -185,6 +165,9 @@ module "amazon_eks_cluster" {
       to_port                       = 8080
       source_cluster_security_group = true
     }
+  }
+  node_security_group_tags = {
+    "karpenter.sh/discovery" = local.amazon_eks_cluster_name
   }
   enable_cluster_creator_admin_permissions = true
   access_entries = {
@@ -247,34 +230,6 @@ module "hm_karpenter" {
   }
   depends_on = [
     module.kubernetes_namespace_hm_karpenter
-  ]
-}
-# Karpenter - Helm chart
-module "karpenter_helm_chart" {
-  source        = "../../../../modules/kubernetes/hm_helm_chart"
-  repository    = "oci://public.ecr.aws/karpenter"
-  chart_name    = "karpenter"
-  chart_version = "1.3.3" # https://gallery.ecr.aws/karpenter/karpenter
-  release_name  = "hm-karpenter"
-  namespace     = module.kubernetes_namespace_hm_karpenter.namespace
-  my_values = [
-    <<-EOT
-      serviceAccount:
-        create: true
-        name: ${module.hm_karpenter.service_account}
-        annotations:
-          eks.amazonaws.com/role-arn: ${module.hm_karpenter.iam_role_arn}
-      settings:
-        clusterName: ${module.amazon_eks_cluster.cluster_name}
-        clusterEndpoint: ${module.amazon_eks_cluster.cluster_endpoint}
-        interruptionQueue: ${module.hm_karpenter.queue_name}
-    EOT
-  ]
-  environment = var.environment
-  team        = var.team
-  depends_on = [
-    module.kubernetes_namespace_hm_karpenter,
-    module.hm_karpenter
   ]
 }
 

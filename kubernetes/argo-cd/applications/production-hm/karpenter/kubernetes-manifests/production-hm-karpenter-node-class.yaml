@@ -1,0 +1,31 @@
+---
+apiVersion: karpenter.k8s.aws/v1
+kind: EC2NodeClass
+metadata:
+  name: production-hm-karpenter-node-class
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+# https://karpenter.sh/v1.3/concepts/nodeclasses/
+spec:
+  amiFamily: AL2023
+  amiSelectorTerms:
+    - alias: al2023@latest
+  role: Karpenter-hm-eks-cluster-xxxxxxxxxxxxxxxxxxxxxxxxxx
+  blockDeviceMappings:
+    - deviceName: /dev/xvda
+      ebs:
+        volumeSize: 100Gi
+        volumeType: gp3
+        iops: 3000
+        throughput: 250
+        encrypted: true
+        deleteOnTermination: true
+  subnetSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: hm-eks-cluster
+  securityGroupSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: hm-eks-cluster
+  tags:
+    karpenter.sh/discovery: hm-eks-cluster
