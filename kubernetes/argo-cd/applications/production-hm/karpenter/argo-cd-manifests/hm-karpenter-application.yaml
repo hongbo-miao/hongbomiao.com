@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-karpenter
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-karpenter
+spec:
+  project: production-hm
+  sources:
+    - repoURL: public.ecr.aws/karpenter
+      # https://gallery.ecr.aws/karpenter/karpenter
+      targetRevision: 1.3.3
+      chart: karpenter
+      helm:
+        releaseName: hm-karpenter
+        values: |
+          # https://github.com/aws/karpenter-provider-aws/blob/main/charts/karpenter/values.yaml
+          ---
+          serviceAccount:
+            create: true
+            name: karpenter
+            annotations:
+              eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/KarpenterController-xxxxxxxxxxxxxxxxxxxxxxxxxx
+          settings:
+            clusterName: hm-eks-cluster
+            interruptionQueue: Karpenter-hm-eks-cluster
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/karpenter/kubernetes-manifests
+  destination:
+    namespace: production-hm-karpenter
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
