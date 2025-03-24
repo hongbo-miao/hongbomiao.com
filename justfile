@@ -518,13 +518,20 @@ static-type-check-python:
     uv run poe static-type-check-python --package=scientific-computing.hm-sunpy
 
 static-type-check-terraform:
-    cd cloud-infrastructure/terraform/environments/development/aws && terraform validate
-    cd cloud-infrastructure/terraform/environments/production/aws && terraform validate
-    cd cloud-infrastructure/terraform/environments/development/snowflake && terraform validate
-    cd cloud-infrastructure/terraform/environments/production/snowflake && terraform validate
+    cd cloud-infrastructure/terraform/environments/production/airbyte && terraform validate
+    cd cloud-infrastructure/terraform/environments/production/aws/data && terraform validate
+    cd cloud-infrastructure/terraform/environments/production/aws/general && terraform validate
+    cd cloud-infrastructure/terraform/environments/production/aws/kubernetes && terraform validate
+    cd cloud-infrastructure/terraform/environments/production/aws/network && terraform validate
+    cd cloud-infrastructure/terraform/environments/production/harbor && terraform validate
+    cd cloud-infrastructure/terraform/environments/production/snowflake/account && terraform validate
+    cd cloud-infrastructure/terraform/environments/production/snowflake/data && terraform validate
+    cd cloud-infrastructure/terraform/environments/production/snowflake/general && terraform validate
 
 static-type-check-typescript:
     cd api-node && npm run tsc
     cd ethereum && npm run tsc
-    cd mobile-react-native && npm run tsc
+    cd data-visualization/grafana/hm-panel-plugin && npm run tsc
+    cd mobile/mobile-react-native && npm run tsc
+    cd web && npm run tsc
     cd web-cypress && npm run tsc
