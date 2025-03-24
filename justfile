@@ -199,23 +199,17 @@ sqlfluff-dialect-list:
     uv run poe sqlfluff-list-dialects
 
 # Rust
+rust-install-toolchain:
+    rustup install
+
 rust-update:
     rustup update
 
-rust-version:
-    rustc --version
-
-rustup-set-default-rust-version:
-    rustup default 1.82.0
+rust-show-toolchains:
+    rustup show
 
 rustup-update:
     rustup self update
-
-rustup-add:
-    rustup component add xxx
-
-rustup-remove:
-    rustup component remove xxx
 
 cargo-new:
     cargo new xxx
