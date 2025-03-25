@@ -178,7 +178,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "lightning", specifier = "==2.5.1" },
-    { name = "mlflow", specifier = "==2.21.0" },
+    { name = "mlflow", specifier = "==2.21.1" },
     { name = "torch", specifier = "==2.6.0" },
     { name = "torchvision", specifier = "==0.21.0" },
     { name = "wandb", specifier = "==0.19.8" },
@@ -716,7 +716,7 @@ wheels = [
 
 [[package]]
 name = "mlflow"
-version = "2.21.0"
+version = "2.21.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "alembic" },
@@ -736,14 +736,14 @@ dependencies = [
     { name = "sqlalchemy" },
     { name = "waitress", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ab/b8/2598a48556ac14dfec536942d901031e658ef6e5a931559bf7b824d4299e/mlflow-2.21.0.tar.gz", hash = "sha256:015f2527367986322ef9fac1a329f6a9040c281077b284badb66261d4adf99d1", size = 27546156 }
+sdist = { url = "https://files.pythonhosted.org/packages/87/cc/2c3ad433ef3bacea946ea6a73e5d55e33768bc29c1a19e517d5aa3f404a4/mlflow-2.21.1.tar.gz", hash = "sha256:ca023226df67c9ead60778c10ed67c207b9f9b581aa1c826a81d4ed3f61f5b41", size = 27619701 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e4/b2/f7ea0714d3ffaaa4f997111ad9638f6719b1c3d6168b9f936290e4de3118/mlflow-2.21.0-py3-none-any.whl", hash = "sha256:92b6335420256d10ad0c3d60a7bc5a3c8ba80e56d78759229c53c2252ed61a14", size = 28160119 },
+    { url = "https://files.pythonhosted.org/packages/79/14/a7e3f043ee54d14826d2b551fff4ee5b5cf91d04904604bc478913e63e50/mlflow-2.21.1-py3-none-any.whl", hash = "sha256:bdb825501fd8c8bab49cacb7ab6ca2bfebce678f57701924c345606c4f9e0d92", size = 28234573 },
 ]
 
 [[package]]
 name = "mlflow-skinny"
-version = "2.21.0"
+version = "2.21.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cachetools" },
@@ -764,9 +764,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "uvicorn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/64/26/b44398ab5bc013f8d4d834c79202755408df040426b83780640565a9bfaf/mlflow_skinny-2.21.0.tar.gz", hash = "sha256:9369bebba734570e7376787bcc08aece5ae4b7ccd03d5333e34417f5029477ac", size = 5768307 }
+sdist = { url = "https://files.pythonhosted.org/packages/c9/c4/c5bac99a324a5901e1bb0af8f27a860dd6a940dfd8bdef7cc174f1fc4269/mlflow_skinny-2.21.1.tar.gz", hash = "sha256:e0f88aed198d1d8c5a3e40dc8d3c6b59162e547576371f25b4381f827a9d22fd", size = 5771544 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a3/a9/4295421f222308da8b78c749756a835e292dcda94a01f4710c7ca457adf2/mlflow_skinny-2.21.0-py3-none-any.whl", hash = "sha256:af238c6e3fd7ffa98753c7d4920cf19bca76175c31e614a7b3235d876ab4eafe", size = 6139458 },
+    { url = "https://files.pythonhosted.org/packages/f4/5b/866da8a061105a382eafef79da6926314b3e324b9f6a6db244a1c0376253/mlflow_skinny-2.21.1-py3-none-any.whl", hash = "sha256:d3523b180f0af639b7e5346a9a9cbae55b75da595786456a767cf65907bdf08d", size = 6143385 },
 ]
 
 [[package]]
@@ -866,7 +866,7 @@ name = "nvidia-cudnn-cu12"
 version = "9.1.0.70"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas-cu12", marker = "sys_platform != 'win32'" },
+    { name = "nvidia-cublas-cu12", marker = "sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9f/fd/713452cd72343f682b1c7b9321e23829f00b842ceaedcda96e742ea0b0b3/nvidia_cudnn_cu12-9.1.0.70-py3-none-manylinux2014_x86_64.whl", hash = "sha256:165764f44ef8c61fcdfdfdbe769d687e06374059fbb388b6c89ecb0e28793a6f", size = 664752741 },
@@ -877,7 +877,7 @@ name = "nvidia-cufft-cu12"
 version = "11.2.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform != 'win32'" },
+    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/27/94/3266821f65b92b3138631e9c8e7fe1fb513804ac934485a8d05776e1dd43/nvidia_cufft_cu12-11.2.1.3-py3-none-manylinux2014_x86_64.whl", hash = "sha256:f083fc24912aa410be21fa16d157fed2055dab1cc4b6934a0e03cba69eb242b9", size = 211459117 },
@@ -896,9 +896,9 @@ name = "nvidia-cusolver-cu12"
 version = "11.6.1.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas-cu12", marker = "sys_platform != 'win32'" },
-    { name = "nvidia-cusparse-cu12", marker = "sys_platform != 'win32'" },
-    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform != 'win32'" },
+    { name = "nvidia-cublas-cu12", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-cusparse-cu12", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/3a/e1/5b9089a4b2a4790dfdea8b3a006052cfecff58139d5a4e34cb1a51df8d6f/nvidia_cusolver_cu12-11.6.1.9-py3-none-manylinux2014_x86_64.whl", hash = "sha256:19e33fa442bcfd085b3086c4ebf7e8debc07cfe01e11513cc6d332fd918ac260", size = 127936057 },
@@ -909,7 +909,7 @@ name = "nvidia-cusparse-cu12"
 version = "12.3.1.170"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform != 'win32'" },
+    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/db/f7/97a9ea26ed4bbbfc2d470994b8b4f338ef663be97b8f677519ac195e113d/nvidia_cusparse_cu12-12.3.1.170-py3-none-manylinux2014_x86_64.whl", hash = "sha256:ea4f11a2904e2a8dc4b1833cc1b5181cde564edd0d5cd33e3c168eff2d1863f1", size = 207454763 },
