@@ -1,0 +1,23 @@
+[project]
+name = "hm-marimo"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+  "marimo==0.11.31",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.33.1",
+  "pytest-cov==6.0.0",
+  "pytest==8.3.5",
+]
+
+[tool.uv]
+package = false
+
+[tool.poe.tasks]
+edit = " marimo edit src/main.py"
+run = " marimo run src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
