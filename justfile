@@ -439,6 +439,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-analytics.hm-cupy
     uv run poe static-type-check-python --package=data-analytics.hm-daft.analyze-transactions
     uv run poe static-type-check-python --package=data-analytics.hm-geopandas
+    uv run poe static-type-check-python --package=data-analytics.hm-marimo
     uv run poe static-type-check-python --package=data-analytics.hm-narwhals
     uv run poe static-type-check-python --package=data-analytics.hm-numba
     uv run poe static-type-check-python --package=data-analytics.hm-pandas.analyze-transactions

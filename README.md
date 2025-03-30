@@ -381,6 +381,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Daft** - Distributed DataFrame library
 - **Narwhals** - Compatibility layer between DataFrame libraries
 - **NetworkX** - Network analysis library
+- **marimo** - Reactive Python notebook
 - **JupyterLab** - Web-based interactive computing platform
   - **nb-clean** - Jupyter notebook cleaning
 - **Databricks** - Data analytics platform
