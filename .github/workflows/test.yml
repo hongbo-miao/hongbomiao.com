@@ -346,6 +346,8 @@ jobs:
               - 'machine-learning/hm-langgraph/applications/chat-pdf/**'
             hm-llama-index-chat-pdf:
               - 'machine-learning/hm-llama-index/applications/chat-pdf/**'
+            hm-marimo:
+              - 'data-analytics/hm-marimo/**'
             hm-mlflow-classify-mnist:
               - 'machine-learning/hm-mlflow/experiments/classify-mnist/**'
             hm-mlflow-predict-diabetes:
@@ -602,6 +604,7 @@ jobs:
       hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
       hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
       hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
+      hm-marimo: ${{ steps.filter.outputs.hm-marimo }}
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
       hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
       hm-narwhals: ${{ steps.filter.outputs.hm-narwhals }}
@@ -882,6 +885,7 @@ jobs:
       hm-cupy: ${{ needs.detect-changes.outputs.hm-cupy == 'true' }}
       hm-daft-analyze-transactions: ${{ needs.detect-changes.outputs.hm-daft-analyze-transactions == 'true' }}
       hm-geopandas: ${{ needs.detect-changes.outputs.hm-geopandas == 'true' }}
+      hm-marimo: ${{ needs.detect-changes.outputs.hm-marimo == 'true' }}
       hm-narwhals: ${{ needs.detect-changes.outputs.hm-narwhals == 'true' }}
       hm-networkx: ${{ needs.detect-changes.outputs.hm-networkx == 'true' }}
       hm-numba: ${{ needs.detect-changes.outputs.hm-numba == 'true' }}
