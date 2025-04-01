@@ -505,6 +505,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.map
     uv run poe static-type-check-python --package=machine-learning.hugging-face
     uv run poe static-type-check-python --package=machine-learning.mineru
+    uv run poe static-type-check-python --package=machine-learning.model-context-protocol
     uv run poe static-type-check-python --package=machine-learning.neural-forecasting.forecast-air-passenger-number
     uv run poe static-type-check-python --package=machine-learning.nvidia-dali
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.deploy
