@@ -87,6 +87,9 @@ name: . Test Machine Learning
       mineru:
         required: true
         type: boolean
+      model-context-protocol:
+        required: true
+        type: boolean
       neural-forecasting-forecast-air-passenger-number:
         required: true
         type: boolean
@@ -776,6 +779,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.0
         with:
           directory: machine-learning/hm-llama-index/applications/chat-pdf
+
+  model-context-protocol-test:
+    name: Model Context Protocol | Test
+    if: ${{ inputs.workflow || inputs.model-context-protocol }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.4.1
+        with:
+          version: 0.5.20
+          enable-cache: true
+          cache-dependency-glob: machine-learning/model-context-protocol/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.5.0
+        with:
+          python-version-file: machine-learning/model-context-protocol/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/model-context-protocol
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/model-context-protocol
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.0
+        with:
+          directory: machine-learning/model-context-protocol
 
   mlflow-classify-mnist-test:
     name: MLflow (classify-mnist) | Test
