@@ -456,6 +456,8 @@ jobs:
               - 'mobile/mobile-ios/**'
             mobile-react-native:
               - 'mobile/mobile-react-native/**'
+            model-context-protocol:
+              - 'machine-learning/model-context-protocol/**'
             national-instruments-hm-pyvisa:
               - 'hardware-in-the-loop/national-instruments/hm-pyvisa/**'
             national-instruments-hm-tdms:
@@ -657,6 +659,7 @@ jobs:
       kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
       lance: ${{ steps.filter.outputs.lance }}
       mineru: ${{ steps.filter.outputs.mineru }}
+      model-context-protocol: ${{ steps.filter.outputs.model-context-protocol }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
@@ -990,6 +993,7 @@ jobs:
       hm-streamlit-map: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
       hugging-face-analyze-sentiment: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
       mineru: ${{ needs.detect-changes.outputs.mineru == 'true' }}
+      model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
       neural-forecasting-forecast-air-passenger-number: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
       reinforcement-learning-cart-pole: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}

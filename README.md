@@ -473,9 +473,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 #### Generative AI (GenAI)
 
-- **LlamaIndex** - Large language model (LLM) data framework
+- **MCP** - Model Context Protocol
 - **LangGraph** - Large language model (LLM) workflows library
 - **LangChain** - Large language model (LLM) application framework
+- **LlamaIndex** - Large language model (LLM) data framework
 - **MinerU** - Document data extraction
 - **Docling** - Document data extraction
 - **pypdf** - PDF manipulation
