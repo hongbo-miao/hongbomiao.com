@@ -32,10 +32,23 @@ module "harbor_project_docker_hub_proxy_cache" {
   public      = true
   registry_id = module.harbor_registry_docker_hub.id
 }
+module "harbor_project_docker_hub_proxy_cache_clean_untagged_artifacts" {
+  source               = "../../../modules/harbor/hm_harbor_clean_untagged_artifacts"
+  project_id           = module.harbor_project_docker_hub_proxy_cache.id
+  schedule             = "Daily"
+  days_since_last_pull = 7
+}
+
 module "harbor_project_hm" {
   source = "../../../modules/harbor/hm_harbor_project"
   name   = "hm"
   public = false
+}
+module "harbor_project_hm_clean_untagged_artifacts" {
+  source               = "../../../modules/harbor/hm_harbor_clean_untagged_artifacts"
+  project_id           = module.harbor_project_hm.id
+  schedule             = "Daily"
+  days_since_last_pull = 7
 }
 
 # Robots
@@ -48,7 +61,8 @@ data "aws_secretsmanager_secret_version" "hm_harbor_hm_kubernetes_robot_secret_v
   secret_id = data.aws_secretsmanager_secret.hm_harbor_hm_kubernetes_robot_secret.id
 }
 module "harbor_robot_account_hm_kubernetes_robot" {
-  source = "../../../modules/harbor/hm_harbor_robot_account"
-  name   = "hm-kubernetes-robot"
-  secret = jsondecode(data.aws_secretsmanager_secret_version.hm_harbor_hm_kubernetes_robot_secret_version.secret_string)["secret"]
+  source        = "../../../modules/harbor/hm_harbor_robot_account"
+  name          = "hm-kubernetes-robot"
+  project_names = [module.harbor_project_hm.name]
+  secret        = jsondecode(data.aws_secretsmanager_secret_version.hm_harbor_hm_kubernetes_robot_secret_version.secret_string)["secret"]
 }
