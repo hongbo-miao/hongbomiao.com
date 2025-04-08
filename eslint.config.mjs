@@ -1,8 +1,8 @@
 // https://eslint.org/docs/latest/use/configure/configuration-files
 
+import jsonPlugin from '@eslint/json';
 import htmlPlugin from '@html-eslint/eslint-plugin';
-import htmlParser from "@html-eslint/parser";
-import jsonPlugin from "@eslint/json";
+import htmlParser from '@html-eslint/parser';
 
 /**
  * @type {Array<import('eslint').Linter.Config>}
@@ -190,7 +190,7 @@ export default [
     ],
   },
   {
-    files: ["**/*.html"],
+    files: ['**/*.html'],
     languageOptions: {
       parser: htmlParser,
     },
@@ -198,13 +198,14 @@ export default [
       '@html-eslint': htmlPlugin,
     },
     rules: {
-      ...htmlPlugin.configs["flat/recommended"].rules,
-      "@html-eslint/indent": ["error", 2],
+      ...htmlPlugin.configs['flat/recommended'].rules,
+      '@html-eslint/indent': ['error', 2],
+      '@html-eslint/use-baseline': ['error', { available: 'newly' }],
     },
   },
   {
-    files: ["**/*.json"],
-    language: "json/json",
+    files: ['**/*.json'],
+    language: 'json/json',
     plugins: {
       json: jsonPlugin,
     },
@@ -213,8 +214,8 @@ export default [
     },
   },
   {
-    files: ["**/*.jsonc"],
-    language: "json/jsonc",
+    files: ['**/*.jsonc'],
+    language: 'json/jsonc',
     plugins: {
       json: jsonPlugin,
     },
@@ -223,8 +224,8 @@ export default [
     },
   },
   {
-    files: ["**/*.json5"],
-    language: "json/json5",
+    files: ['**/*.json5'],
+    language: 'json/json5',
     plugins: {
       json: jsonPlugin,
     },
