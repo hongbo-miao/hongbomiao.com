@@ -11,12 +11,15 @@ resource "harbor_robot_account" "main" {
   name   = var.name
   secret = var.secret
   level  = "system"
-  permissions {
-    access {
-      action   = "pull"
-      resource = "repository"
+  dynamic "permissions" {
+    for_each = var.project_names
+    content {
+      access {
+        action   = "pull"
+        resource = "repository"
+      }
+      kind      = "project"
+      namespace = permissions.value
     }
-    kind      = "project"
-    namespace = "*"
   }
 }
