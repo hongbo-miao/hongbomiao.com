@@ -479,7 +479,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "flashinfer", index = "https://flashinfer.ai/whl/cu124/torch2.4" },
-    { name = "sglang", extras = ["all"], specifier = "==0.4.5" },
+    { name = "sglang", extras = ["all"], specifier = "==0.4.5.post1" },
 ]
 
 [package.metadata.requires-dev]
@@ -1640,15 +1640,15 @@ wheels = [
 
 [[package]]
 name = "sgl-kernel"
-version = "0.0.8"
+version = "0.0.9.post1"
 source = { registry = "https://pypi.org/simple" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ee/a7/46dd675bcf4d90651855d2cdb165c30127fb40aaca35d8808d0da621fdd7/sgl_kernel-0.0.8-cp39-abi3-manylinux2014_x86_64.whl", hash = "sha256:9c185f77579a4626f38e03bfeb1cd02cfcca1b4f621168da0ce1bd8f7b5b8e9d", size = 96129841 },
+    { url = "https://files.pythonhosted.org/packages/13/2e/4538295eb48332c62df0fbf544a30396b8cb7ed1e20bbd1760b43d724e7a/sgl_kernel-0.0.9.post1-cp39-abi3-manylinux2014_x86_64.whl", hash = "sha256:6f053a2c89143a1d2feb77ab5d74ee40f5ee9747458ee5f0fcb76dbf18935588", size = 97965704 },
 ]
 
 [[package]]
 name = "sglang"
-version = "0.4.5"
+version = "0.4.5.post1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -1658,9 +1658,9 @@ dependencies = [
     { name = "setproctitle" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ab/32/0e77e0af5e4d16d9725164e9369cf35b7e3d16896ced5b63c1f1f2b784d6/sglang-0.4.5.tar.gz", hash = "sha256:8a1c2b45ee30db266d3b1039eaefe225fbdb45573a53e6464804f5ee9bee9d49", size = 807520 }
+sdist = { url = "https://files.pythonhosted.org/packages/69/40/ffba460e98fdc10b0854b3dc5050c4498858643610ed9703cb1862cda9b7/sglang-0.4.5.post1.tar.gz", hash = "sha256:3376bbe986d810f4a4681cca0633d1af43bc5e8cfed5cc0fe193944c955e723b", size = 836610 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/79/ca/a6770abaf453cecfa1b3ddd786d4d31ca078e916855ad640324d5dded4fd/sglang-0.4.5-py3-none-any.whl", hash = "sha256:126391f156ea4df0a0b6158c52af134e853a968be7f537b2186a7a4caf93efd8", size = 1152817 },
+    { url = "https://files.pythonhosted.org/packages/12/a6/d63fe9ece5c2877f4e38e689ec66a158cf0395d2ab2b4b2b378e20916510/sglang-0.4.5.post1-py3-none-any.whl", hash = "sha256:c9eca036f0e0988b37ac115907d11ff85debc1eb822b6429fb14bc9f49b440ce", size = 1189304 },
 ]
 
 [package.optional-dependencies]
@@ -1697,6 +1697,7 @@ all = [
     { name = "tiktoken" },
     { name = "torch" },
     { name = "torchao" },
+    { name = "torchvision" },
     { name = "transformers" },
     { name = "uvicorn" },
     { name = "uvloop" },
@@ -1865,6 +1866,22 @@ wheels = [
 ]
 
 [[package]]
+name = "torchvision"
+version = "0.20.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "pillow" },
+    { name = "torch" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c5/eb/4ba19616378f2bc085999432fded2b7dfdbdccc6dd0fc293203452508100/torchvision-0.20.1-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:1a31256ff945d64f006bb306813a7c95a531fe16bfb2535c837dd4c104533d7a", size = 1787553 },
+    { url = "https://files.pythonhosted.org/packages/d4/75/00a852275ade58d3dc474530f7a7b6bc999a817148f0eb59d4fde12eb955/torchvision-0.20.1-cp312-cp312-manylinux1_x86_64.whl", hash = "sha256:17cd78adddf81dac57d7dccc9277a4d686425b1c55715f308769770cb26cad5c", size = 7240323 },
+    { url = "https://files.pythonhosted.org/packages/af/f0/ca1445406eb12cbeb7a41fc833a1941ede78e7c55621198b83ecd7bcfd0f/torchvision-0.20.1-cp312-cp312-manylinux2014_aarch64.whl", hash = "sha256:9f853ba4497ac4691815ad41b523ee23cf5ba4f87b1ce869d704052e233ca8b7", size = 14266936 },
+    { url = "https://files.pythonhosted.org/packages/c3/18/00993d420b1d6e88582e51d4bc82c824c99a2e9c045d50eaf9b34fff729a/torchvision-0.20.1-cp312-cp312-win_amd64.whl", hash = "sha256:4a330422c36dbfc946d3a6c1caec3489db07ecdf3675d83369adb2e5a0ca17c4", size = 1562392 },
+]
+
+[[package]]
 name = "tqdm"
 version = "4.67.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1887,7 +1904,7 @@ wheels = [
 
 [[package]]
 name = "transformers"
-version = "4.51.0"
+version = "4.51.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "filelock" },
@@ -1901,9 +1918,9 @@ dependencies = [
     { name = "tokenizers" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/38/75/6ebdae4d6f4574f47139a070445245537e43482d006f615af8e23d5bf05e/transformers-4.51.0.tar.gz", hash = "sha256:2d302563ff6c2cc2d0e88ef352cf059f9a21ce18102fd43662bb1246f70b8a84", size = 8925571 }
+sdist = { url = "https://files.pythonhosted.org/packages/c4/85/9182a14e0cceb6ababd37c9832d99f1c939e89854c80fa676ee0dbb8615b/transformers-4.51.1.tar.gz", hash = "sha256:206ea0b75dfde142ed7495b911da76579dce6ea249cc3695fdd29a544a9e007b", size = 8935230 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6f/db/7ee15028d5130929aa0b1b85bab6d8bafe806254d3b5c56c42a0066cceb8/transformers-4.51.0-py3-none-any.whl", hash = "sha256:2e6baa476735ab8adccbaee6961525a0d1ce8c21d49293af30ef5ee4b082f64d", size = 10362017 },
+    { url = "https://files.pythonhosted.org/packages/73/e0/f1fce1b2f31da4acfb858732d909209fdb10f65adda1e7af0c7ac74927a5/transformers-4.51.1-py3-none-any.whl", hash = "sha256:c7038e216afb2a3e9b00dd12d87ad5e3af4c30895f70b28e92f65459eded0161", size = 10365727 },
 ]
 
 [[package]]
