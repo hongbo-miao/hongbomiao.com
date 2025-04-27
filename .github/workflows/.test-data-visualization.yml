@@ -15,7 +15,10 @@ name: . Test Data Visualization
       grafana-hm-panel-plugin:
         required: true
         type: boolean
-      hm-dash:
+      hm-dash-csv-visualizer:
+        required: true
+        type: boolean
+      hm-dash-parquet-visualizer:
         required: true
         type: boolean
       hm-pygwalker:
@@ -162,9 +165,9 @@ jobs:
         with:
           directory: data-visualization/hm-plotly/heatmap
 
-  dash-test:
-    name: Dash | Test
-    if: ${{ inputs.workflow || inputs.hm-dash }}
+  dash-csv-visualizer-test:
+    name: Dash (csv-visualizer) | Test
+    if: ${{ inputs.workflow || inputs.hm-dash-csv-visualizer }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -176,23 +179,55 @@ jobs:
         with:
           version: 0.6.14
           enable-cache: true
-          cache-dependency-glob: data-visualization/hm-dash/uv.lock
+          cache-dependency-glob: data-visualization/hm-dash/csv-visualizer/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.5.0
         with:
-          python-version-file: data-visualization/hm-dash/pyproject.toml
+          python-version-file: data-visualization/hm-dash/csv-visualizer/pyproject.toml
       - name: Install dependencies
-        working-directory: data-visualization/hm-dash
+        working-directory: data-visualization/hm-dash/csv-visualizer
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-visualization/hm-dash
+        working-directory: data-visualization/hm-dash/csv-visualizer
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.2
         with:
-          directory: data-visualization/hm-dash
+          directory: data-visualization/hm-dash/csv-visualizer
+
+  dash-parquet-visualizer-test:
+    name: Dash (parquet-visualizer) | Test
+    if: ${{ inputs.workflow || inputs.hm-dash-parquet-visualizer }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5.4.2
+        with:
+          version: 0.6.14
+          enable-cache: true
+          cache-dependency-glob: data-visualization/hm-dash/parquet-visualizer/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.5.0
+        with:
+          python-version-file: data-visualization/hm-dash/parquet-visualizer/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-visualization/hm-dash/parquet-visualizer
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-visualization/hm-dash/parquet-visualizer
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.2
+        with:
+          directory: data-visualization/hm-dash/parquet-visualizer
 
   iads-config-reader-test:
     name: IADS (iads-config-reader) | Test

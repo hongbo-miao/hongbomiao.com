@@ -1,0 +1,18 @@
+uv-update-lock-file:
+    uv lock
+
+uv-install-dependencies:
+    uv sync --dev
+
+dev:
+    uv run poe dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
+
+publish-docker-image:
+    docker build --platform=linux/amd64 --tag=harbor.hongbomiao.com/hm/parquet-visualizer:latest .
+    docker push harbor.hongbomiao.com/hm/parquet-visualizer:latest
