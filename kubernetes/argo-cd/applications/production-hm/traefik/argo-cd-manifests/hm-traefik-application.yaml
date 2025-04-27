@@ -21,6 +21,8 @@ spec:
         image:
           registry: public.ecr.aws
           repository: docker/library/traefik
+        deployment:
+          replicas: 3
         providers:
           kubernetesIngress:
             publishedService:

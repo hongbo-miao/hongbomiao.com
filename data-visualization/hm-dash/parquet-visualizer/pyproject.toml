@@ -1,17 +1,21 @@
 [project]
-name = "hm-dash"
+name = "parquet-visualizer"
 version = "1.0.0"
 requires-python = "~=3.13.0"
 dependencies = [
-  "dash==3.0.4",
-  "polars[pyarrow]==1.27.1",
-  "plotly[express]==6.0.1",
+  "daft[sql]==0.4.7",
+  "dash==3.0.2",
+  "gunicorn==23.0.0",
+  "numpy==2.2.4",
+  "pandas==2.2.3",
+  "plotly==6.0.1",
+  "trino[sqlalchemy]==0.333.0",
 ]
 
 [dependency-groups]
 dev = [
   "poethepoet==0.33.1",
-  "pytest-cov==6.1.1",
+  "pytest-cov==6.1.0",
   "pytest==8.3.5",
 ]
 
