@@ -1,0 +1,25 @@
+[project]
+name = "csv-visualizer"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+  "dash==3.0.4",
+  "polars[pyarrow]==1.27.1",
+  "plotly[express]==6.0.1",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.33.1",
+  "pytest-cov==6.1.1",
+  "pytest==8.3.5",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.6.0"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

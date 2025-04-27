@@ -180,7 +180,7 @@ class IadsUtil:
                 # Create signal group
                 group_name = "AllSignals"
                 logger.info(
-                    f"Creating signal group with query. group_name = '{group_name}'",
+                    f"Creating signal group {group_name = }",
                 )
                 IadsUtil.create_iads_signal_group(iads_config, signal_set, group_name)
                 logger.info(f"Signal group '{group_name}' created successfully")
