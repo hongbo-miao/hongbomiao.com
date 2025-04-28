@@ -352,6 +352,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Odoo** - Enterprise resource planning (ERP) and customer relationship management (CRM)
 - **golang-migrate/migrate** - Database migrations
 
+### Data Catalog
+
+- **Nessie** - Transactional data catalog
+- **AWS Glue Data Catalog** - Central metadata repository
+
 ### Data Distribution
 
 - **Arrow Flight** - High-performance data transport framework
@@ -566,7 +571,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **AWS CodeCommit** - Version control
   - **AWS Glue** - Serverless data integration
     - **AWS Glue Crawler** - Data source discovery
-    - **AWS Glue Data Catalog** - Data catalog
+    - **AWS Glue Data Catalog** - Central metadata repository
     - **AWS Glue DataBrew** - Data cleaning
   - **AWS IAM** - Identity and access management
   - **AWS IoT Core** - Internet of Things (IoT)

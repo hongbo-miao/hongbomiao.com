@@ -1,0 +1,38 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-nessie
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-nessie
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://charts.projectnessie.org
+      # https://artifacthub.io/packages/helm/bitnami/nessie
+      targetRevision: 0.103.3
+      chart: nessie
+      helm:
+        releaseName: hm-nessie
+        values: |
+          # https://github.com/projectnessie/nessie/blob/main/helm/nessie/values.yaml
+          ---
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+            limits:
+              cpu: 4000m
+              memory: 16Gi
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/nessie/kubernetes-manifests
+  destination:
+    namespace: production-hm-nessie
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
