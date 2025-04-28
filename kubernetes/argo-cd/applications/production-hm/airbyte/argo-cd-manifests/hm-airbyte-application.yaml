@@ -12,7 +12,7 @@ spec:
   sources:
     - repoURL: https://airbytehq.github.io/helm-charts
       # https://artifacthub.io/packages/helm/airbyte/airbyte
-      targetRevision: 0.350.0
+      targetRevision: 1.5.1
       chart: airbyte
       helm:
         releaseName: hm-airbyte
@@ -32,11 +32,25 @@ spec:
                 secretName: hm-airbyte-secret
                 emailSecretKey: AIRBYTE_ADMIN_EMAIL
                 passwordSecretKey: AIRBYTE_ADMIN_PASSWORD
-            state:
-              storage:
-                type: S3
+            storage:
+              type: S3
+              s3:
+                authenticationType: credentials
+                region: us-west-2
+                accessKey:
+                  existingSecret: hm-airbyte-secret
+                  existingSecretKey: AWS_ACCESS_KEY_ID
+                secretKey:
+                  existingSecret: hm-airbyte-secret
+                  existingSecretKey: AWS_SECRET_ACCESS_KEY
+              storageSecretName: hm-airbyte-secret
+              bucket:
+                log: production-hm-airbyte
+                state: production-hm-airbyte
+                workloadOutput: production-hm-airbyte
             database:
-              type: external
+              # https://github.com/airbytehq/airbyte/issues/43328#issuecomment-2474748419
+              type: internal
               host: production-hm-airbyte-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
               port: 5432
               database: airbyte_db
@@ -50,13 +64,6 @@ spec:
               secretKey:
                 existingSecret: hm-airbyte-secret
                 existingSecretKey: AWS_SECRET_ACCESS_KEY
-            storage:
-              type: S3
-              bucket:
-                activityPayload: production-hm-airbyte
-                log: production-hm-airbyte
-                state: production-hm-airbyte
-                workloadOutput: production-hm-airbyte
             minio:
               enabled: false
             jobs:
@@ -68,6 +75,8 @@ spec:
                   curl: harbor.hongbomiao.com/docker-hub-proxy-cache/alpine/curl:8.12.0
                   # https://hub.docker.com/r/alpine/socat/tags
                   socat: harbor.hongbomiao.com/docker-hub-proxy-cache/alpine/socat:1.8.0.1
+                # https://github.com/airbytehq/airbyte/issues/49938#issuecomment-2656958051
+                serviceAccountName: airbyte-admin
               resources:
                 requests:
                   cpu: 3000m
@@ -90,21 +99,6 @@ spec:
           server:
             enabled: true
             extraEnv:
-              - name: AWS_DEFAULT_REGION
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AIRBYTE_LOG_S3_BUCKET_REGION
-              - name: AWS_ACCESS_KEY_ID
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AWS_ACCESS_KEY_ID
-              - name: AWS_SECRET_ACCESS_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AWS_SECRET_ACCESS_KEY
               - name: STATE_STORAGE_S3_ACCESS_KEY
                 valueFrom:
                   secretKeyRef:
@@ -135,21 +129,6 @@ spec:
           worker:
             enabled: true
             extraEnv:
-              - name: AWS_DEFAULT_REGION
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AIRBYTE_LOG_S3_BUCKET_REGION
-              - name: AWS_ACCESS_KEY_ID
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AWS_ACCESS_KEY_ID
-              - name: AWS_SECRET_ACCESS_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: hm-airbyte-secret
-                    key: AWS_SECRET_ACCESS_KEY
               - name: STATE_STORAGE_S3_ACCESS_KEY
                 valueFrom:
                   secretKeyRef:
@@ -217,8 +196,6 @@ spec:
                 memory: 1Gi
           temporal:
             enabled: true
-            image:
-              repository: harbor.hongbomiao.com/docker-hub-proxy-cache/temporalio/auto-setup
             extraVolumes:
               - name: airbyte-config-map-volume
                 configMap:
