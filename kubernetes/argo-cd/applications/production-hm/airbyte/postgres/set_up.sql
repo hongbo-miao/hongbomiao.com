@@ -12,5 +12,6 @@ grant all privileges on database temporal_visibility_db to airbyte_user;
 grant all privileges on schema public to airbyte_user;
 \connect temporal_db
 grant all privileges on schema public to airbyte_user;
+create extension if not exists btree_gin;
 \connect temporal_visibility_db
 grant all privileges on schema public to airbyte_user;
