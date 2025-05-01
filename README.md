@@ -348,6 +348,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Apache Hadoop MapReduce** - Data processing framework
 - **Apache Hive** - Distributed data warehousing and SQL-like query language system built on top of Apache Hadoop
 - **Delta Lake** - Data lakehouse
+- **Apache Doris** - Real-Time data warehouse
 - **Snowflake** - Data warehouse
 - **Odoo** - Enterprise resource planning (ERP) and customer relationship management (CRM)
 - **golang-migrate/migrate** - Database migrations

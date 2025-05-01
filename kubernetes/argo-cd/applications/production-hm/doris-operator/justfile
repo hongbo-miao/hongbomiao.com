@@ -1,0 +1,8 @@
+argo-cd-app-create:
+    argocd app create production-horizon-doris-operator --file=manifests/horizon-doris-operator-application.yaml
+
+argo-cd-app-update:
+    argocd app create production-horizon-doris-operator --file=manifests/horizon-doris-operator-application.yaml --upsert
+
+argo-cd-app-delete:
+    argocd app delete production-hm-doris-operator --yes
