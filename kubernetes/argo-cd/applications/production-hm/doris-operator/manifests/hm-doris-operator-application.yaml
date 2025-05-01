@@ -1,0 +1,31 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-doris-operator
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-doris-operator
+spec:
+  project: production-hm
+  source:
+    repoURL: https://charts.selectdb.com
+    # https://artifacthub.io/packages/helm/doris/doris-operator
+    targetRevision: 25.4.0
+    chart: doris-operator
+    helm:
+      releaseName: hm-doris-operator
+      values: |
+        # https://github.com/apache/doris-operator/blob/master/helm-charts/doris-operator/values.yaml
+        ---
+        dorisOperator:
+          image:
+            repository: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/doris
+  destination:
+    namespace: production-hm-doris-operator
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

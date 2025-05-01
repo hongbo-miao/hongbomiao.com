@@ -1054,6 +1054,30 @@ module "kubernetes_namespace_hm_qdrant" {
   ]
 }
 
+# Doris
+# Doris Operator - Kubernetes namespace
+module "kubernetes_namespace_hm_doris_operator" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-doris-operator"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+# Doris - Kubernetes namespace
+module "kubernetes_namespace_hm_doris" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-doris"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # Valkey
 # Valkey - Kubernetes namespace
 module "kubernetes_namespace_hm_valkey" {
