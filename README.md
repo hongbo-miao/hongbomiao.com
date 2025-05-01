@@ -315,7 +315,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Database, Data Warehouse, Data Lakehouse
 
-- **Trino** - Distributed SQL query engine
 - **PostgreSQL** - Object-relational database
   - **Patroni** - PostgreSQL high-availability (HA) template
   - **Postgres Operator** - PostgreSQL cluster provisioning
@@ -347,6 +346,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Apache Hadoop YARN (Yet Another Resource Negotiator)** - Resource management and job scheduling framework
   - **Apache Hadoop MapReduce** - Data processing framework
 - **Apache Hive** - Distributed data warehousing and SQL-like query language system built on top of Apache Hadoop
+- **Trino** - Distributed SQL query engine
 - **Delta Lake** - Data lakehouse
 - **Apache Doris** - Real-Time data warehouse
 - **Snowflake** - Data warehouse

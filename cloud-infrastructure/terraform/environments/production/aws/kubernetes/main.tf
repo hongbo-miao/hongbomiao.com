@@ -1041,11 +1041,11 @@ module "kubernetes_namespace_hm_prefect_worker" {
   ]
 }
 
-# Qdrant
-# Qdrant - Kubernetes namespace
-module "kubernetes_namespace_hm_qdrant" {
+# Clickhouse
+# Clickhouse - Kubernetes namespace
+module "kubernetes_namespace_hm_clickhouse" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-qdrant"
+  kubernetes_namespace = "${var.environment}-hm-clickhouse"
   labels = {
     "goldilocks.fairwinds.com/enabled" = "true"
   }
@@ -1077,6 +1077,20 @@ module "kubernetes_namespace_hm_doris" {
     module.amazon_eks_cluster
   ]
 }
+
+# Qdrant
+# Qdrant - Kubernetes namespace
+module "kubernetes_namespace_hm_qdrant" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-qdrant"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 
 # Valkey
 # Valkey - Kubernetes namespace
