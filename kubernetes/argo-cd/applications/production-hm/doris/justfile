@@ -1,0 +1,8 @@
+argo-cd-app-create:
+    argocd app create production-hm-doris --file=manifests/hm-doris-application.yaml
+
+argo-cd-app-update:
+    argocd app create production-hm-doris --file=manifests/hm-doris-application.yaml --upsert
+
+argo-cd-app-delete:
+    argocd app delete production-hm-doris --yes
