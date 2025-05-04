@@ -23,7 +23,7 @@ require (
 	github.com/jackc/pgx/v5 v5.7.4
 	github.com/joho/godotenv v1.5.1
 	github.com/minio/minio-go/v7 v7.0.91
-	github.com/open-policy-agent/opa v1.4.0
+	github.com/open-policy-agent/opa v1.4.2
 	github.com/prometheus/client_golang v1.22.0
 	github.com/redis/go-redis/v9 v9.8.0
 	github.com/rs/zerolog v1.34.0
