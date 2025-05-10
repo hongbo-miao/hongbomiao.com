@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: registry-1.docker.io/bitnamicharts
       # https://artifacthub.io/packages/helm/bitnami/valkey
-      targetRevision: 2.4.1
+      targetRevision: 3.0.4
       chart: valkey
       helm:
         releaseName: hm-ray-cluster-valkey
@@ -30,7 +30,7 @@ spec:
             replicaCount: 1
             persistence:
               accessModes: ["ReadWriteOnce"]
-              size: 1Gi
+              size: 5Gi
               storageClass: production-hm-ray-cluster-valkey-storage-class
             resources:
               requests:
@@ -43,7 +43,7 @@ spec:
             replicaCount: 3
             persistence:
               accessModes: ["ReadWriteOnce"]
-              size: 1Gi
+              size: 5Gi
               storageClass: production-hm-ray-cluster-valkey-storage-class
             resources:
               requests:

@@ -1,0 +1,34 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-doris-ingress
+  namespace: production-hm-doris
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: doris.hongbomiao.com
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+  labels:
+    app.kubernetes.io/name: hm-doris-ingress
+    app.kubernetes.io/part-of: production-hm-doris
+spec:
+  rules:
+    - host: doris.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: doriscluster-helm-fe-service
+                port:
+                  number: 8030
+  tls:
+    - hosts:
+        - doris.hongbomiao.com
+      secretName: production-hm-doris-certificate
