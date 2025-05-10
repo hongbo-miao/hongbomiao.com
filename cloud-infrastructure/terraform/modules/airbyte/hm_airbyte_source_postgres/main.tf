@@ -26,7 +26,7 @@ resource "airbyte_source_postgres" "main" {
         queue_size                           = 10000
         heartbeat_action_query               = "insert into ${var.postgres_schema}._airbyte_heartbeat (id, timestamp) values (1, now()) on conflict (id) do update set timestamp = excluded.timestamp;"
         lsn_commit_behaviour                 = "After loading Data in the destination"
-        invalid_cdc_cursor_position_behavior = "Fail sync"
+        invalid_cdc_cursor_position_behavior = "Re-sync data"
       }
     }
     ssl_mode = {
