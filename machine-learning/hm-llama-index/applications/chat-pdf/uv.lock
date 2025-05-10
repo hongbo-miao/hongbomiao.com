@@ -57,6 +57,18 @@ wheels = [
 ]
 
 [[package]]
+name = "aiosqlite"
+version = "0.21.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/13/7d/8bca2bf9a247c2c5dfeec1d7a5f40db6518f88d314b8bca9da29670d2671/aiosqlite-0.21.0.tar.gz", hash = "sha256:131bb8056daa3bc875608c631c678cda73922a2d4ba8aec373b19f18c17e7aa3", size = 13454, upload-time = "2025-02-03T07:30:16.235Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f5/10/6c25ed6de94c49f88a91fa5018cb4c0f3625f31d5be9f771ebe5cc7cd506/aiosqlite-0.21.0-py3-none-any.whl", hash = "sha256:2549cf4057f95f53dcba16f2b64e8e2791d7e1adedb13197dd8ed77bb226d7d0", size = 15792, upload-time = "2025-02-03T07:30:13.6Z" },
+]
+
+[[package]]
 name = "annotated-types"
 version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -344,7 +356,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "llama-index", specifier = "==0.12.34" },
+    { name = "llama-index", specifier = "==0.12.35" },
     { name = "llama-index-embeddings-huggingface", specifier = "==0.5.3" },
     { name = "llama-index-llms-litellm", specifier = "==0.4.1" },
     { name = "pydantic-settings", specifier = "==2.9.1" },
@@ -563,7 +575,7 @@ wheels = [
 
 [[package]]
 name = "llama-index"
-version = "0.12.34"
+version = "0.12.35"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "llama-index-agent-openai" },
@@ -579,9 +591,9 @@ dependencies = [
     { name = "llama-index-readers-llama-parse" },
     { name = "nltk" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e2/b4/8fe91282df65d4edd559dd4fdcd0b5475e1daad6e114cc21f0acf0147da4/llama_index-0.12.34.tar.gz", hash = "sha256:6a94ca245606c9a8f98e7c36bd3269176bf3e3430066876e7739a8cdd3df1ffe", size = 7927, upload-time = "2025-05-01T03:57:01.539Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/38/30/3a584acdac0db3202580eaf6089a68a8d59ad16beca5e87800d3878540ad/llama_index-0.12.35.tar.gz", hash = "sha256:6a64748d92edd0e4474e72c69f967d1105c25a2513c8c2f06560481814b0f27e", size = 8001, upload-time = "2025-05-08T22:22:13.639Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/17/3c/6ac00c9fb5d9811499badc524cc27c0a199cfe675fa67bdbe63c115bac7a/llama_index-0.12.34-py3-none-any.whl", hash = "sha256:da76964c15e283e91b10e0dfa8121a4d133bbe9a63cc84641628a332df346e66", size = 7025, upload-time = "2025-05-01T03:56:59.839Z" },
+    { url = "https://files.pythonhosted.org/packages/78/e5/6bf44746ac57fce8a4731d723082db66a07ec0bab6e0ab01120c2b5bddde/llama_index-0.12.35-py3-none-any.whl", hash = "sha256:86c6e070705febec56f4fd96d30467bce134f7af0f1ba38287e7e30f2b7a239d", size = 7028, upload-time = "2025-05-08T22:22:11.722Z" },
 ]
 
 [[package]]
@@ -614,10 +626,11 @@ wheels = [
 
 [[package]]
 name = "llama-index-core"
-version = "0.12.34.post1"
+version = "0.12.35"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
+    { name = "aiosqlite" },
     { name = "banks" },
     { name = "dataclasses-json" },
     { name = "deprecated" },
@@ -641,9 +654,9 @@ dependencies = [
     { name = "typing-inspect" },
     { name = "wrapt" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a8/32/72599bda6d3d2ac932b12589976d8e5b3f1e1fb971d6f8107cc2e5eb0450/llama_index_core-0.12.34.post1.tar.gz", hash = "sha256:1673566b134c75e99f5f64e9ec8ca979078bee2e70efa40fd009562b68c18307", size = 7283645, upload-time = "2025-05-01T02:55:41.187Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f9/b1/d8125319df640211f858e64230018bfe80e81e62265390ceeb87d4158285/llama_index_core-0.12.35.tar.gz", hash = "sha256:6b03747aafb01582c286f2cd76385c82350245b21037a3984241a6c2fb884525", size = 7287848, upload-time = "2025-05-08T19:49:31.763Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4f/c0/876dad0daa4493bb30d823933a0b916e3c294a46b9f15eaa40264b559ff9/llama_index_core-0.12.34.post1-py3-none-any.whl", hash = "sha256:2b8262b5ec6537d979e7fb1b3c0e56747055ae7321b8dcb184ef43eee1df6396", size = 7652819, upload-time = "2025-05-01T02:55:34.359Z" },
+    { url = "https://files.pythonhosted.org/packages/ce/3e/029e3533ea673be65a1c0eb92a6ea349693c44ca1a436d52096c031e09f8/llama_index_core-0.12.35-py3-none-any.whl", hash = "sha256:19db7b5ac22012d8c240efe9b3b8b59cbab4002adbe70d915840781f30453f3d", size = 7660425, upload-time = "2025-05-08T19:49:23.566Z" },
 ]
 
 [[package]]
