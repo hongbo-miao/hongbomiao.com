@@ -22,7 +22,7 @@ resource "airbyte_source_mssql" "main" {
         initial_load_timeout_hours           = 8
         initial_waiting_seconds              = var.initial_waiting_time_s
         queue_size                           = 10000
-        invalid_cdc_cursor_position_behavior = "Fail sync"
+        invalid_cdc_cursor_position_behavior = "Re-sync data"
       }
     }
     ssl_method = {

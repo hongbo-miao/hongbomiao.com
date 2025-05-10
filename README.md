@@ -348,7 +348,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Apache Hive** - Distributed data warehousing and SQL-like query language system built on top of Apache Hadoop
 - **Trino** - Distributed SQL query engine
 - **Delta Lake** - Data lakehouse
-- **Apache Doris** - Real-Time data warehouse
+- **Apache Doris** - Real-time data warehouse
 - **Snowflake** - Data warehouse
 - **Odoo** - Enterprise resource planning (ERP) and customer relationship management (CRM)
 - **golang-migrate/migrate** - Database migrations
