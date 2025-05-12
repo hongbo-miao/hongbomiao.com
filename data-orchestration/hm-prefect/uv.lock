@@ -476,7 +476,7 @@ dev = [
 dev = [
     { name = "poethepoet", specifier = "==0.34.0" },
     { name = "prefect", specifier = "==3.4.1" },
-    { name = "prefect-kubernetes", specifier = "==0.5.10" },
+    { name = "prefect-kubernetes", specifier = "==0.6.0" },
 ]
 
 [[package]]
@@ -561,6 +561,15 @@ wheels = [
 ]
 
 [[package]]
+name = "iso8601"
+version = "2.1.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b9/f3/ef59cee614d5e0accf6fd0cbba025b93b272e626ca89fb70a3e9187c5d15/iso8601-2.1.0.tar.gz", hash = "sha256:6b1d3829ee8921c4301998c909f7829fa9ed3cbdac0d3b16af2d743aed1ba8df", size = 6522, upload-time = "2023-10-03T00:25:39.317Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6c/0c/f37b6a241f0759b7653ffa7213889d89ad49a2b76eb2ddf3b57b2738c347/iso8601-2.1.0-py3-none-any.whl", hash = "sha256:aac4145c4dcb66ad8b648a02830f5e2ff6c24af20f4f482689be402db2429242", size = 7545, upload-time = "2023-10-03T00:25:32.304Z" },
+]
+
+[[package]]
 name = "jinja2"
 version = "3.1.6"
 source = { registry = "https://pypi.org/simple" }
@@ -631,6 +640,23 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/10/db/58f950c996c793472e336ff3655b13fbcf1e3b359dcf52dcf3ed3b52c352/jsonschema_specifications-2024.10.1.tar.gz", hash = "sha256:0f38b83639958ce1152d02a7f062902c41c8fd20d558b0c34344292d417ae272", size = 15561, upload-time = "2024-10-08T12:29:32.068Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d1/0f/8910b19ac0670a0f80ce1008e5e751c4a57e14d2c4c13a482aa6079fa9d6/jsonschema_specifications-2024.10.1-py3-none-any.whl", hash = "sha256:a09a0680616357d9a0ecf05c12ad234479f549239d0f5b55f3deea67475da9bf", size = 18459, upload-time = "2024-10-08T12:29:30.439Z" },
+]
+
+[[package]]
+name = "kopf"
+version = "1.37.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aiohttp" },
+    { name = "click" },
+    { name = "iso8601" },
+    { name = "python-json-logger" },
+    { name = "pyyaml" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5c/c3/271b59874f3ae7ef6aa3c2e6f994f95b257e2b7e19057e7e6ab8f32612a0/kopf-1.37.5.tar.gz", hash = "sha256:c468b4adc1c9ec7dde5bb852ab9b0d4e51e07b98c22538bc5dc5876422ba767c", size = 1192425, upload-time = "2025-03-22T16:32:22.096Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c4/49/84f4994b242d1436bbcd9cc0154cbc9459420e7c9dbe9e15bb2b53a726ed/kopf-1.37.5-py3-none-any.whl", hash = "sha256:ca6999350052c2f179200bead2386cc35f5bed873f60af3cb8f8a736994e0d68", size = 208459, upload-time = "2025-03-22T16:32:20.044Z" },
 ]
 
 [[package]]
@@ -894,18 +920,19 @@ wheels = [
 
 [[package]]
 name = "prefect-kubernetes"
-version = "0.5.10"
+version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "exceptiongroup" },
+    { name = "kopf" },
     { name = "kubernetes-asyncio" },
     { name = "prefect" },
     { name = "pyopenssl" },
     { name = "tenacity" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6b/6f/495ef45ca1b746940d0810a1781f261bb09c4049eab3812a9be9d68c6b26/prefect_kubernetes-0.5.10.tar.gz", hash = "sha256:82098ba8e5380fa72778d9638c814559d0dcd36f688b8858d0b44686a8a5404f", size = 64299, upload-time = "2025-04-23T16:23:54Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c0/a9/5f0101fffcd806d7d5a6e066b8b377c7b888d88540a454a77e3ca877e8b3/prefect_kubernetes-0.6.0.tar.gz", hash = "sha256:b434b0d0f8110bfafc499a0ef7675759d12ad5d08dca320c092a5383eb1817bd", size = 65650, upload-time = "2025-05-08T17:55:44.716Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/c8/66863637706bb269db20fd1aeddbc259ed0857ed4b0eccf6f5a851426ee1/prefect_kubernetes-0.5.10-py3-none-any.whl", hash = "sha256:bc1d9c48fe6670b7030ff15020f77f224d9f52664d38ab05a1fc83189986892e", size = 38109, upload-time = "2025-04-23T16:23:52.674Z" },
+    { url = "https://files.pythonhosted.org/packages/0f/af/69799ecfa336fcb0aed4989d5da59b458f69de3fa784237a12dfd30f58d6/prefect_kubernetes-0.6.0-py3-none-any.whl", hash = "sha256:45e9a1050dc51823b9e2f3ba4bb0ea3f093deb4b9ad47b08134923104fec92bc", size = 38120, upload-time = "2025-05-08T17:55:43.351Z" },
 ]
 
 [[package]]
@@ -1072,6 +1099,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/bc/57/e84d88dfe0aec03b7a2d4327012c1627ab5f03652216c63d49846d7a6c58/python-dotenv-1.0.1.tar.gz", hash = "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca", size = 39115, upload-time = "2024-01-23T06:33:00.505Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl", hash = "sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a", size = 19863, upload-time = "2024-01-23T06:32:58.246Z" },
+]
+
+[[package]]
+name = "python-json-logger"
+version = "3.3.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/9e/de/d3144a0bceede957f961e975f3752760fbe390d57fbe194baf709d8f1f7b/python_json_logger-3.3.0.tar.gz", hash = "sha256:12b7e74b17775e7d565129296105bbe3910842d9d0eb083fc83a6a617aa8df84", size = 16642, upload-time = "2025-03-07T07:08:27.301Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/08/20/0f2523b9e50a8052bc6a8b732dfc8568abbdc42010aef03a2d750bdab3b2/python_json_logger-3.3.0-py3-none-any.whl", hash = "sha256:dd980fae8cffb24c13caf6e158d3d61c0d6d22342f932cb6e9deedab3d35eec7", size = 15163, upload-time = "2025-03-07T07:08:25.627Z" },
 ]
 
 [[package]]
