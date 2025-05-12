@@ -86,15 +86,15 @@ wheels = [
 
 [[package]]
 name = "apache-airflow"
-version = "3.0.0"
+version = "3.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "apache-airflow-core" },
     { name = "apache-airflow-task-sdk" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/7f/b5/38acd006c3848ffbbe97a230e4cc2e7665fb78e2f1b427392276564d0936/apache_airflow-3.0.0.tar.gz", hash = "sha256:07837e082968c0db24ec8f168850a5def368b3b318cd7ca2ed8de01e9f0c635f", size = 22904, upload-time = "2025-04-22T14:14:18.017Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2d/a7/9fce8fadb2b4f8a19a24778c0879090fc3b6ce138c7637e0a3d5cb5d5e15/apache_airflow-3.0.1.tar.gz", hash = "sha256:cd1ea4a780424e3a2c8d601d1372227cfeddf93b6edcb4d43a6f3f290aca8015", size = 27204, upload-time = "2025-05-12T11:04:55.129Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/46/e8/2750757fa7187e33bc87937f30c5d334247e655fdd21eb45811db6b1a547/apache_airflow-3.0.0-py3-none-any.whl", hash = "sha256:9f9f5623d771b8950df2ee663863d7a4c0ebf6f6acc902402d12ee8efb17f5f7", size = 11979, upload-time = "2025-04-22T14:14:10.874Z" },
+    { url = "https://files.pythonhosted.org/packages/68/46/59af3aa40b2f26e55ee2208c9c7076c406aadc0d6cbb11c220659987d0e8/apache_airflow-3.0.1-py3-none-any.whl", hash = "sha256:0833560d2990a477d91aed0a922cffcf306144babd94212f68a050a9cc0e3a35", size = 12115, upload-time = "2025-05-12T11:04:49.187Z" },
 ]
 
 [package.optional-dependencies]
@@ -104,7 +104,7 @@ celery = [
 
 [[package]]
 name = "apache-airflow-core"
-version = "3.0.0"
+version = "3.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "a2wsgi" },
@@ -128,9 +128,9 @@ dependencies = [
     { name = "dill" },
     { name = "fastapi", extra = ["standard"] },
     { name = "flask" },
-    { name = "gitpython" },
     { name = "gunicorn" },
     { name = "httpx" },
+    { name = "importlib-metadata" },
     { name = "itsdangerous" },
     { name = "jinja2" },
     { name = "jsonschema" },
@@ -156,7 +156,7 @@ dependencies = [
     { name = "rich" },
     { name = "rich-argparse" },
     { name = "setproctitle" },
-    { name = "sqlalchemy" },
+    { name = "sqlalchemy", extra = ["asyncio"] },
     { name = "sqlalchemy-jsonfield" },
     { name = "sqlalchemy-utils" },
     { name = "svcs" },
@@ -166,9 +166,9 @@ dependencies = [
     { name = "universal-pathlib" },
     { name = "uuid6" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/7b/4b/48b274a1517428d7dab1ba23cb485847289f645e56e26de00f1ae912ddb5/apache_airflow_core-3.0.0.tar.gz", hash = "sha256:e1e4204fdba3d13810784b70d907e18d9ed875f52bfebd7fe2653625e0fb0e85", size = 2838927, upload-time = "2025-04-22T14:14:19.587Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/87/1f/a201c91dfdfb0e86bb302c74f9f32ed83e99f095fe44c1ad21014c26231a/apache_airflow_core-3.0.1.tar.gz", hash = "sha256:309675bf1b792fbe7ae9653efd257dd50a7cf137089153cdc9362cf72aea0679", size = 2842783, upload-time = "2025-05-12T11:04:51.944Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e5/ca/17b42a005bc6d45adae968b419a3ff7da2634817c357a3787a356a8ec6a5/apache_airflow_core-3.0.0-py3-none-any.whl", hash = "sha256:a849aa5e2783c17e910d8999b75670fe4eeff66c5ee03f9f0ee5ab55bae16be1", size = 3747485, upload-time = "2025-04-22T14:14:14.253Z" },
+    { url = "https://files.pythonhosted.org/packages/7a/65/7a17ae37e0e5d3fd0edc5aa2578ef3fad5138cfa166f9a56bb9a4f113bae/apache_airflow_core-3.0.1-py3-none-any.whl", hash = "sha256:711ebdb4ebba9cdc69b87326d0007e1dbc68eec71b49541261326f36eebb9c24", size = 3740503, upload-time = "2025-05-12T11:04:45.318Z" },
 ]
 
 [[package]]
@@ -252,7 +252,7 @@ wheels = [
 
 [[package]]
 name = "apache-airflow-task-sdk"
-version = "1.0.0"
+version = "1.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiologic" },
@@ -269,9 +269,9 @@ dependencies = [
     { name = "retryhttp" },
     { name = "structlog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9e/5d/ffcb0ab3beef1ddc0d87fed1f123f81edefb8a030f917f235a47d8b49630/apache_airflow_task_sdk-1.0.0.tar.gz", hash = "sha256:44b4d8222397e0835dc0b88e833eed54b5cb2ac90f13d3d46355a03fb2fb06f5", size = 276585, upload-time = "2025-04-22T14:14:21.117Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/dc/bc/d543c0630b0cdd7ce17b8d988679b5db750c08afd3d0802178bc8bedd1f8/apache_airflow_task_sdk-1.0.1.tar.gz", hash = "sha256:9869912e23eadf601f8f561316e3b532e487181dc9a20c03abe44ae166688164", size = 279025, upload-time = "2025-05-12T11:04:53.651Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8a/b8/23f42db41047e6b3db1d7f7f55472b608e167c73d0cd391d5a67023497c9/apache_airflow_task_sdk-1.0.0-py3-none-any.whl", hash = "sha256:d1c44a79a30247d2d0396813603d8def26137fa3383f049d832f17425872bb2b", size = 233225, upload-time = "2025-04-22T14:14:16.423Z" },
+    { url = "https://files.pythonhosted.org/packages/1b/70/342a02d8c3a2207bebd058636063e78d0d3c17f26216421e98a27743ee30/apache_airflow_task_sdk-1.0.1-py3-none-any.whl", hash = "sha256:a793f9881e2b722f1f3bd13a99b4635d28cae27c18b0c753706e3f71ed1d2af9", size = 234252, upload-time = "2025-05-12T11:04:47.462Z" },
 ]
 
 [[package]]
@@ -677,30 +677,6 @@ wheels = [
 ]
 
 [[package]]
-name = "gitdb"
-version = "4.0.12"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "smmap" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/72/94/63b0fc47eb32792c7ba1fe1b694daec9a63620db1e313033d18140c2320a/gitdb-4.0.12.tar.gz", hash = "sha256:5ef71f855d191a3326fcfbc0d5da835f26b13fbcba60c32c21091c349ffdb571", size = 394684, upload-time = "2025-01-02T07:20:46.413Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a0/61/5c78b91c3143ed5c14207f463aecfc8f9dbb5092fb2869baf37c273b2705/gitdb-4.0.12-py3-none-any.whl", hash = "sha256:67073e15955400952c6565cc3e707c554a4eea2e428946f7a4c162fab9bd9bcf", size = 62794, upload-time = "2025-01-02T07:20:43.624Z" },
-]
-
-[[package]]
-name = "gitpython"
-version = "3.1.44"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "gitdb" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c0/89/37df0b71473153574a5cdef8f242de422a0f5d26d7a9e231e6f169b4ad14/gitpython-3.1.44.tar.gz", hash = "sha256:c87e30b26253bf5418b01b0660f818967f3c503193838337fe5e573331249269", size = 214196, upload-time = "2025-01-02T07:32:43.59Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1d/9a/4114a9057db2f1462d5c8f8390ab7383925fe1ac012eaa42402ad65c2963/GitPython-3.1.44-py3-none-any.whl", hash = "sha256:9e0e10cda9bed1ee64bc9a6de50e7e38a9c9943241cd7f585f6df3ed28011110", size = 207599, upload-time = "2025-01-02T07:32:40.731Z" },
-]
-
-[[package]]
 name = "google-re2"
 version = "1.1.20240702"
 source = { registry = "https://pypi.org/simple" }
@@ -801,7 +777,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "apache-airflow", extras = ["celery", "s3"], specifier = "==3.0.0" }]
+requires-dist = [{ name = "apache-airflow", extras = ["celery", "s3"], specifier = "==3.0.1" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -1659,15 +1635,6 @@ wheels = [
 ]
 
 [[package]]
-name = "smmap"
-version = "5.0.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/44/cd/a040c4b3119bbe532e5b0732286f805445375489fceaec1f48306068ee3b/smmap-5.0.2.tar.gz", hash = "sha256:26ea65a03958fa0c8a1c7e8c7a58fdc77221b8910f6be2131affade476898ad5", size = 22329, upload-time = "2025-01-02T07:14:40.909Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/04/be/d09147ad1ec7934636ad912901c5fd7667e1c858e19d355237db0d0cd5e4/smmap-5.0.2-py3-none-any.whl", hash = "sha256:b30115f0def7d7531d22a0fb6502488d879e75b260a9db4d0819cfb25403af5e", size = 24303, upload-time = "2025-01-02T07:14:38.724Z" },
-]
-
-[[package]]
 name = "sniffio"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1690,6 +1657,11 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/c0/8b/f45dd378f6c97e8ff9332ff3d03ecb0b8c491be5bb7a698783b5a2f358ec/SQLAlchemy-1.4.54-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b5e0d47d619c739bdc636bbe007da4519fc953393304a5943e0b5aec96c9877c", size = 1629232, upload-time = "2024-09-05T17:48:15.514Z" },
     { url = "https://files.pythonhosted.org/packages/0d/3c/884fe389f5bec86a310b81e79abaa1e26e5d78dc10a84d544a6822833e47/SQLAlchemy-1.4.54-cp312-cp312-win32.whl", hash = "sha256:12bc0141b245918b80d9d17eca94663dbd3f5266ac77a0be60750f36102bbb0f", size = 1592027, upload-time = "2024-09-05T17:54:02.253Z" },
     { url = "https://files.pythonhosted.org/packages/01/c3/c690d037be57efd3a69cde16a2ef1bd2a905dafe869434d33836de0983d0/SQLAlchemy-1.4.54-cp312-cp312-win_amd64.whl", hash = "sha256:f941aaf15f47f316123e1933f9ea91a6efda73a161a6ab6046d1cde37be62c88", size = 1593827, upload-time = "2024-09-05T17:52:07.454Z" },
+]
+
+[package.optional-dependencies]
+asyncio = [
+    { name = "greenlet" },
 ]
 
 [[package]]
