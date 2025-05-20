@@ -1,0 +1,32 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-starrocks-operator
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-starrocks-operator
+spec:
+  project: production-hm
+  source:
+    repoURL: https://starrocks.github.io/starrocks-kubernetes-operator
+    # https://artifacthub.io/packages/helm/kube-starrocks/operator
+    targetRevision: 1.10.2
+    chart: operator
+    helm:
+      releaseName: hm-starrocks-operator
+      values: |
+        # https://github.com/StarRocks/starrocks-kubernetes-operator/blob/main/helm-charts/charts/kube-starrocks/charts/operator/values.yaml
+        ---
+        timeZone: America/Los_Angeles
+        starrocksOperator:
+          image:
+            repository: harbor.hongbomiao.com/docker-hub-proxy-cache/starrocks/operator
+  destination:
+    namespace: production-hm-starrocks-operator
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
