@@ -176,7 +176,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "boto3", specifier = "==1.38.19" },
-    { name = "sagemaker", specifier = "==2.244.1" },
+    { name = "sagemaker", specifier = "==2.244.2" },
 ]
 
 [package.metadata.requires-dev]
@@ -233,6 +233,42 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/35/4a/0bd53b36ff0323d10d5f24ebd67af2de10a1117f5cf4d7add90df92756f1/google-pasta-0.2.0.tar.gz", hash = "sha256:c9f2c8dfc8f96d0d5808299920721be30c9eec37f2389f28904f454565c8a16e", size = 40430, upload-time = "2020-03-13T18:57:50.34Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a3/de/c648ef6835192e6e2cc03f40b19eeda4382c49b5bafb43d88b931c4c74ac/google_pasta-0.2.0-py3-none-any.whl", hash = "sha256:b32482794a366b5366a32c92a9a9201b107821889935a02b3e51f6b432ea84ed", size = 57471, upload-time = "2020-03-13T18:57:48.872Z" },
+]
+
+[[package]]
+name = "graphene"
+version = "3.4.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "graphql-core" },
+    { name = "graphql-relay" },
+    { name = "python-dateutil" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/cc/f6/bf62ff950c317ed03e77f3f6ddd7e34aaa98fe89d79ebd660c55343d8054/graphene-3.4.3.tar.gz", hash = "sha256:2a3786948ce75fe7e078443d37f609cbe5bb36ad8d6b828740ad3b95ed1a0aaa", size = 44739, upload-time = "2024-11-09T20:44:25.757Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/66/e0/61d8e98007182e6b2aca7cf65904721fb2e4bce0192272ab9cb6f69d8812/graphene-3.4.3-py2.py3-none-any.whl", hash = "sha256:820db6289754c181007a150db1f7fff544b94142b556d12e3ebc777a7bf36c71", size = 114894, upload-time = "2024-11-09T20:44:23.851Z" },
+]
+
+[[package]]
+name = "graphql-core"
+version = "3.2.6"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/c4/16/7574029da84834349b60ed71614d66ca3afe46e9bf9c7b9562102acb7d4f/graphql_core-3.2.6.tar.gz", hash = "sha256:c08eec22f9e40f0bd61d805907e3b3b1b9a320bc606e23dc145eebca07c8fbab", size = 505353, upload-time = "2025-01-26T16:36:27.374Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ae/4f/7297663840621022bc73c22d7d9d80dbc78b4db6297f764b545cd5dd462d/graphql_core-3.2.6-py3-none-any.whl", hash = "sha256:78b016718c161a6fb20a7d97bbf107f331cd1afe53e45566c59f776ed7f0b45f", size = 203416, upload-time = "2025-01-26T16:36:24.868Z" },
+]
+
+[[package]]
+name = "graphql-relay"
+version = "3.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "graphql-core" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d1/13/98fbf8d67552f102488ffc16c6f559ce71ea15f6294728d33928ab5ff14d/graphql-relay-3.2.0.tar.gz", hash = "sha256:1ff1c51298356e481a0be009ccdff249832ce53f30559c1338f22a0e0d17250c", size = 50027, upload-time = "2022-04-16T11:03:45.447Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/74/16/a4cf06adbc711bd364a73ce043b0b08d8fa5aae3df11b6ee4248bcdad2e0/graphql_relay-3.2.0-py3-none-any.whl", hash = "sha256:c9b22bd28b170ba1fe674c74384a8ff30a76c8e26f88ac3aa1584dd3179953e5", size = 16940, upload-time = "2022-04-16T11:03:43.895Z" },
 ]
 
 [[package]]
@@ -731,7 +767,7 @@ wheels = [
 
 [[package]]
 name = "sagemaker"
-version = "2.244.1"
+version = "2.244.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
@@ -740,6 +776,7 @@ dependencies = [
     { name = "docker" },
     { name = "fastapi" },
     { name = "google-pasta" },
+    { name = "graphene" },
     { name = "importlib-metadata" },
     { name = "jsonschema" },
     { name = "numpy" },
@@ -760,9 +797,9 @@ dependencies = [
     { name = "urllib3" },
     { name = "uvicorn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/50/4e/c7db3facd3973af4550ebe7c97686d1ad6fb4fb49f45f96fd53ab5392e32/sagemaker-2.244.1.tar.gz", hash = "sha256:1da5b12f9d47dbcf8b91f944dce57beca80eb63d87f6eedb56072f511eb02f8c", size = 1202019, upload-time = "2025-05-15T00:46:49.268Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0d/64/5bf09f7366674e4d3db3981f2c0b27199215452d1800e8f8cf9ae6cc9ff2/sagemaker-2.244.2.tar.gz", hash = "sha256:cc5e6ca6c1eb08938cb8276d03857cd2d8e32bedad8e38ad45059f0af5808845", size = 1203691, upload-time = "2025-05-19T20:52:09.665Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/27/9f/711403cbecfdb4dd1c97834f03292ab5217570af0318f20880c86abc626a/sagemaker-2.244.1-py3-none-any.whl", hash = "sha256:4ec205349d3319890d640a73ca148e7f3d869089034d63794922de0e80a1501e", size = 1655997, upload-time = "2025-05-15T00:46:46.879Z" },
+    { url = "https://files.pythonhosted.org/packages/df/5e/4a152aa1d002c0ecf5258b81d9bdc9a87db98e7e119ae402b66246976301/sagemaker-2.244.2-py3-none-any.whl", hash = "sha256:78a90a5eb0289c1f211763bba1ffcb42a66070761e7c486054f46019fdc54ca2", size = 1657575, upload-time = "2025-05-19T20:52:06.97Z" },
 ]
 
 [[package]]
