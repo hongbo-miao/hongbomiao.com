@@ -1,0 +1,34 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-starrocks-ingress
+  namespace: production-hm-starrocks
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: starrocks.hongbomiao.com
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+  labels:
+    app.kubernetes.io/name: hm-starrocks-ingress
+    app.kubernetes.io/part-of: production-hm-starrocks
+spec:
+  rules:
+    - host: starrocks.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kube-starrocks-fe-service
+                port:
+                  number: 8030
+  tls:
+    - hosts:
+        - starrocks.hongbomiao.com
+      secretName: production-hm-starrocks-certificate

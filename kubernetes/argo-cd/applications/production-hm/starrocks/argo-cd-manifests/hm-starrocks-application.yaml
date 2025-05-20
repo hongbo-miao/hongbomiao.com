@@ -1,0 +1,53 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-starrocks
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-starrocks
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://starrocks.github.io/starrocks-kubernetes-operator
+      # https://artifacthub.io/packages/helm/kube-starrocks/starrocks
+      targetRevision: 1.10.2
+      chart: starrocks
+      helm:
+        releaseName: hm-starrocks
+        values: |
+          # https://github.com/StarRocks/starrocks-kubernetes-operator/blob/main/helm-charts/charts/kube-starrocks/charts/starrocks/values.yaml
+          ---
+          timeZone: America/Los_Angeles
+          starrocksFESpec:
+            replicas: 3
+            runAsNonRoot: true
+            serviceAccount: hm-starrocks-service-account
+            image:
+              repository: harbor.hongbomiao.com/docker-hub-proxy-cache/starrocks/fe-ubuntu
+          starrocksBeSpec:
+            replicas: 3
+            runAsNonRoot: true
+            serviceAccount: hm-starrocks-service-account
+            image:
+              repository: harbor.hongbomiao.com/docker-hub-proxy-cache/starrocks/be-ubuntu
+          starrocksCnSpec:
+            runAsNonRoot: true
+            serviceAccount: hm-starrocks-service-account
+            image:
+              repository: harbor.hongbomiao.com/docker-hub-proxy-cache/starrocks/cn-ubuntu
+          starrocksCluster:
+            componentValues:
+              runAsNonRoot: true
+              serviceAccount: hm-starrocks-service-account
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/starrocks/kubernetes-manifests
+  destination:
+    namespace: production-hm-starrocks
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true
