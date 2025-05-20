@@ -22,24 +22,28 @@ spec:
             replicas: 3
             image:
               repository: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/doris
+              tag: fe-3.0.5
             systemInitialization:
               initImage: harbor.hongbomiao.com/docker-hub-proxy-cache/selectdb/alpine:latest
           beSpec:
             replicas: 3
             image:
               repository: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/doris
+              tag: be-3.0.5
             systemInitialization:
               initImage: harbor.hongbomiao.com/docker-hub-proxy-cache/selectdb/alpine:latest
           cnSpec:
             replicas: 3
             image:
               repository: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/doris
+              tag: be-3.0.5
             systemInitialization:
               initImage: harbor.hongbomiao.com/docker-hub-proxy-cache/selectdb/alpine:latest
           brokerSpec:
             replicas: 3
             image:
               repository: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/doris
+              tag: broker-3.0.5
             systemInitialization:
               initImage: harbor.hongbomiao.com/docker-hub-proxy-cache/selectdb/alpine:latest
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
