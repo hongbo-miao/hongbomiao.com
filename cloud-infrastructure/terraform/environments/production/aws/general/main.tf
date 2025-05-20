@@ -421,9 +421,11 @@ module "hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data" {
   providers               = { aws = aws.production }
   source                  = "../../../../modules/aws/hm_aws_glue_job"
   aws_glue_job_name       = "hm_write_parquet_to_delta_table_adsb_2x_flight_trace_data"
+  aws_glue_version        = "5.0"
   spark_script_s3_uri     = module.hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script.uri
   spark_worker_type       = "G.1X"
   spark_worker_max_number = 900
+  spark_conf              = "--conf spark.sql.sources.partitionOverwriteMode=dynamic --conf spark.sql.parquet.compression.codec=zstd --conf spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension --conf spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog --conf spark.delta.logStore.class=org.apache.spark.sql.delta.storage.S3SingleDriverLogStore"
   timeout_min             = 360
   iam_role_arn            = module.hm_glue_job_write_parquet_to_delta_table_adsb_2x_flight_trace_data_script_iam.arn
   environment             = var.environment
@@ -442,9 +444,11 @@ module "hm_glue_job_write_parquet_to_delta_table_motor_data" {
   providers               = { aws = aws.production }
   source                  = "../../../../modules/aws/hm_aws_glue_job"
   aws_glue_job_name       = "hm_write_parquet_to_delta_lake_motor_data"
+  aws_glue_version        = "5.0"
   spark_script_s3_uri     = "s3://hm-production-bucket/aws-glue/spark-scripts/hm_write_parquet_to_delta_lake_motor_data.py"
   spark_worker_type       = "G.1X"
   spark_worker_max_number = 20
+  spark_conf              = "--conf spark.sql.sources.partitionOverwriteMode=dynamic --conf spark.sql.parquet.compression.codec=zstd --conf spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension --conf spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog --conf spark.delta.logStore.class=org.apache.spark.sql.delta.storage.S3SingleDriverLogStore"
   timeout_min             = 360
   iam_role_arn            = "arn:aws:iam::272394222652:role/service-role/AWSGlueServiceRole-hm"
   environment             = var.environment
