@@ -1078,6 +1078,42 @@ module "kubernetes_namespace_hm_doris" {
   ]
 }
 
+# StarRocks
+# StarRocks - IAM role
+module "starrocks_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/kubernetes/hm_starrocks_iam_role"
+  starrocks_service_account_name       = "hm-starrocks-service-account"
+  starrocks_namespace                  = "${var.environment}-hm-starrocks"
+  amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
+  iot_data_s3_bucket_name              = "iot-data-bucket"
+  environment                          = var.environment
+  team                                 = var.team
+}
+# StarRocks Operator - Kubernetes namespace
+module "kubernetes_namespace_hm_starrocks_operator" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-starrocks-operator"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+# StarRocks - Kubernetes namespace
+module "kubernetes_namespace_hm_starrocks" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-starrocks"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # Qdrant
 # Qdrant - Kubernetes namespace
 module "kubernetes_namespace_hm_qdrant" {
