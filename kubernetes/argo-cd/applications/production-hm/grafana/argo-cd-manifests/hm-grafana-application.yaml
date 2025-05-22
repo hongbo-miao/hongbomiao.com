@@ -87,6 +87,8 @@ spec:
           datasources:
             datasources.yaml:
               apiVersion: 1
+              # deleteDatasources:
+              #   - name: xxx
               datasources:
                 - name: hm-prometheus
                   type: prometheus
@@ -154,6 +156,19 @@ spec:
                     httpHeaderName1: X-Scope-OrgID
                   secureJsonData:
                     httpHeaderValue1: hm
+                - name: hm-starrocks
+                  type: mysql
+                  url: kube-starrocks-fe-service.production-hm-starrocks.svc:9030
+                  user: grafana_user
+                  jsonData:
+                    maxOpenConns: 100
+                    maxIdleConns: 100
+                    maxIdleConnsAuto: true
+                    connMaxLifetime: 14400
+                    timezone: UTC
+                    timeInterval: 1ms
+                  secureJsonData:
+                    password: $__env{HM_STARROCKS_PASSWORD}
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1
