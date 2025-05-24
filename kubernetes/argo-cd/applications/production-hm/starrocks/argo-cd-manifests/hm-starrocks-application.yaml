@@ -21,7 +21,16 @@ spec:
           timeZone: UTC
           initPassword:
             enabled: true
+            # Make sure to set isInstall to false after the initial installation.
+            isInstall: false
             passwordSecret: hm-starrocks-secret
+            resources:
+              requests:
+                cpu: 500m
+                memory: 500Mi
+              limits:
+                cpu: 500m
+                memory: 500Mi
           starrocksCluster:
             enabledBe: true
             enabledCn: true
@@ -37,6 +46,13 @@ spec:
               storageClassName: production-hm-starrocks-storage-class
               storageSize: 10Gi
               logStorageSize: 0Gi
+            resources:
+              requests:
+                cpu: 4
+                memory: 4Gi
+              limits:
+                cpu: 8
+                memory: 8Gi
           starrocksBeSpec:
             replicas: 3
             runAsNonRoot: true
@@ -49,6 +65,13 @@ spec:
               storageClassName: production-hm-starrocks-storage-class
               storageSize: 1Ti
               logStorageSize: 0Gi
+            resources:
+              requests:
+                cpu: 4
+                memory: 4Gi
+              limits:
+                cpu: 8
+                memory: 60Gi
           starrocksCnSpec:
             replicas: 5
             runAsNonRoot: true
@@ -61,6 +84,13 @@ spec:
               storageClassName: production-hm-starrocks-storage-class
               storageSize: 1Ti
               logStorageSize: 0Gi
+            resources:
+              requests:
+                cpu: 4
+                memory: 8Gi
+              limits:
+                cpu: 8
+                memory: 8Gi
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/starrocks/kubernetes-manifests
