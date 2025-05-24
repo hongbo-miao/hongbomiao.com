@@ -79,10 +79,10 @@ spec:
                 serviceAccountName: airbyte-admin
               resources:
                 requests:
-                  cpu: 3000m
+                  cpu: 3
                   memory: 4Gi
                 limits:
-                  cpu: 4000m
+                  cpu: 4
                   memory: 8Gi
           serviceAccount:
             create: true
@@ -124,7 +124,7 @@ spec:
                 cpu: 500m
                 memory: 2Gi
               limits:
-                cpu: 1000m
+                cpu: 1
                 memory: 4Gi
           worker:
             enabled: true
@@ -151,19 +151,19 @@ spec:
                     key: AIRBYTE_LOG_S3_BUCKET_REGION
             resources:
               requests:
-                cpu: 1000m
+                cpu: 1
                 memory: 1Gi
               limits:
-                cpu: 2000m
+                cpu: 2
                 memory: 2Gi
           airbyte-bootloader:
             enabled: true
             resources:
               requests:
-                cpu: 1000m
+                cpu: 1
                 memory: 512Mi
               limits:
-                cpu: 2000m
+                cpu: 2
                 memory: 1Gi
           airbyte-api-server:
             enabled: false
