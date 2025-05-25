@@ -4,5 +4,10 @@ select @@version_comment;
 -- Check variables
 show variables;
 
--- Check backends
+-- Check nodes
+show frontends;
 show backends;
+show compute nodes;
+
+-- Check queries
+show running queries;
