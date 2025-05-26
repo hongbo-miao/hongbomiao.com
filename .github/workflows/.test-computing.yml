@@ -13,6 +13,10 @@ name: . Test Computing
       hm-sunpy:
         required: true
         type: boolean
+      # Scientific Computing
+      surrogate-model:
+        required: true
+        type: boolean
       # Parallel Computing
       hm-triton:
         required: true
@@ -78,6 +82,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: scientific-computing/hm-sunpy
+
+  surrogate-model-test:
+    name: surrogate-model | Test
+    if: ${{ inputs.workflow || inputs.surrogate-model }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.1.0
+        with:
+          version: 0.6.14
+          enable-cache: true
+          cache-dependency-glob: scientific-computing/surrogate-model/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: scientific-computing/surrogate-model/pyproject.toml
+      - name: Install dependencies
+        working-directory: scientific-computing/surrogate-model
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: scientific-computing/surrogate-model
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: scientific-computing/surrogate-model
 
   # Parallel Computing
   taichi-count-primes-test:

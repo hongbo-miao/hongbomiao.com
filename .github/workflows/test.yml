@@ -488,6 +488,8 @@ jobs:
               - 'robotics/robot-operating-system/**'
             rti-connext-dds:
               - 'data-distribution/rti-connext-dds/**'
+            surrogate-model:
+              - 'scientific-computing/surrogate-model/**'
             stable-diffusion:
               - 'machine-learning/stable-diffusion/**'
             taichi-count-primes:
@@ -662,10 +664,10 @@ jobs:
       kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
       lance: ${{ steps.filter.outputs.lance }}
       mineru: ${{ steps.filter.outputs.mineru }}
-      model-context-protocol: ${{ steps.filter.outputs.model-context-protocol }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
+      model-context-protocol: ${{ steps.filter.outputs.model-context-protocol }}
       national-instruments-hm-pyvisa: ${{ steps.filter.outputs.national-instruments-hm-pyvisa }}
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
@@ -682,6 +684,7 @@ jobs:
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
       stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
+      surrogate-model: ${{ steps.filter.outputs.surrogate-model }}
       taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
       taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
       udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
@@ -930,6 +933,7 @@ jobs:
       # Applications
       # Scientific Computing
       hm-sunpy: ${{ needs.detect-changes.outputs.hm-sunpy == 'true' }}
+      surrogate-model: ${{ needs.detect-changes.outputs.surrogate-model == 'true' }}
       # Parallel Computing
       hm-triton: ${{ needs.detect-changes.outputs.hm-triton == 'true' }}
       taichi-count-primes: ${{ needs.detect-changes.outputs.taichi-count-primes == 'true' }}
