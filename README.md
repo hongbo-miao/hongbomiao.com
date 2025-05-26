@@ -681,6 +681,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Simulation
 
+- **Surrogate Modeling Toolbox (SMT)** - Surrogate modeling
 - **AnyLogic** - Simulation modeling tool
 - **LabVIEW** - Graphical programming environment
 - **VeriStand** - Real-time testing and simulation
