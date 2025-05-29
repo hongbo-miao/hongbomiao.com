@@ -10,6 +10,13 @@
           - htop
           - vnstat
         state: present
+    - name: Install common packages from Snap (classic confinement)
+      become: true
+      community.general.snap:
+        name:
+          - kubectl
+        classic: true
+        state: present
 - name: Deploy RKE2
   hosts: all
   become: true
