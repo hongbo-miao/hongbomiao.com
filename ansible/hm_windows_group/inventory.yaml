@@ -1,0 +1,13 @@
+# https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html
+
+---
+all:
+  children:
+    hm_windows_group:
+      hosts:
+        hm-windows:
+          ansible_host: 10.211.55.39
+          ansible_user: hongbo-miao
+          ansible_shell_type: powershell
+          ansible_become_method: runas
+          ansible_become_user: hongbo-miao

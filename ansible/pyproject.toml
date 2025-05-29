@@ -1,0 +1,22 @@
+[project]
+name = "hm-ansible"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+  "ansible[windows]==11.6.0",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.34.0",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.6.0"
+
+[tool.poe.tasks]
+install = "ansible-galaxy install --role-file=requirements.yml"
+deploy-hm-macos-group = "ansible-playbook --inventory=hm_macos_group/inventory.yaml hm_macos_group/playbook.yml"
+deploy-hm-ubuntu-group = "ansible-playbook --inventory=hm_ubuntu_group/inventory.yaml hm_ubuntu_group/playbook.yml"
+deploy-hm-windows-group = "ansible-playbook --inventory=hm_windows_group/inventory.yaml hm_windows_group/playbook.yml"

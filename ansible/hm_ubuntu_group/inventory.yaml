@@ -3,10 +3,6 @@
 ---
 all:
   children:
-    hm_macos_group:
-      hosts:
-        hm-macos:
-          ansible_connection: local
     hm_ubuntu_group:
       hosts:
         hm-ubuntu:
@@ -20,11 +16,3 @@ all:
             3161356638316637320a393831333233313539663531616465636563663933373963343062346137
             6463
           kafka_node_id: 0
-    hm_windows_group:
-      hosts:
-        hm-windows:
-          ansible_host: 10.211.55.39
-          ansible_user: hongbo-miao
-          ansible_shell_type: powershell
-          ansible_become_method: runas
-          ansible_become_user: hongbo-miao
