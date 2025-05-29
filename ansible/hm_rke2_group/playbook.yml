@@ -1,0 +1,17 @@
+---
+- name: Install common packages
+  hosts: all
+  tasks:
+    - name: Install common packages from Snap
+      become: true
+      community.general.snap:
+        name:
+          - btop
+          - htop
+          - vnstat
+        state: present
+- name: Deploy RKE2
+  hosts: all
+  become: true
+  roles:
+    - role: lablabs.rke2
