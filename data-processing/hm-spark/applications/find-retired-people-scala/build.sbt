@@ -2,7 +2,7 @@ name := "FindRetiredPeople"
 version := "1.0"
 scalaVersion := "2.12.20"
 
-val sparkVersion = "3.5.5"
+val sparkVersion = "3.5.6"
 
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % sparkVersion % "provided",
