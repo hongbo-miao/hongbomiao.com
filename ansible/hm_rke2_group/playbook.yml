@@ -20,30 +20,42 @@
 - name: Deploy RKE2
   hosts: all
   become: true
+  vars:
+    # https://github.com/rancher/rke2/releases
+    rke2_version: v1.33.1+rke2r1
+    rke2_download_kubeconf: true
+    rke2_download_kubeconf_path: ~/.kube
+    rke2_download_kubeconf_file_name: config
+    disable_kube_proxy: true
+    rke2_disable:
+      - rke2-canal
+      - rke2-ingress-nginx
+    rke2_cni:
+      - cilium
+    rke2_custom_manifests:
+      - rke2-cilium-values.yaml
+  # https://github.com/lablabs/ansible-role-rke2/issues/157#issuecomment-2817301798
+  pre_tasks:
+    - name: Do not manage foreign routes
+      ansible.builtin.blockinfile:
+        path: /etc/systemd/networkd.conf
+        insertafter: "^\\[Network\\]"
+        block: |
+          ManageForeignRoutes=no
+          ManageForeignRoutingPolicyRules=no
+      register: networkd_patch
+    - name: Force systemd to reread configs
+      ansible.builtin.systemd:
+        daemon_reload: true
+      when: networkd_patch.changed
+    - name: Check if {{ rke2_api_ip }} is pingable
+      ansible.builtin.shell: "ping -c 1 {{ rke2_api_ip }}"
+      register: ping_result
+      ignore_errors: true
+    - name: Add the {{ rke2_api_ip }} address to the first node if no ICMP reply
+      ansible.builtin.shell: "ip addr add {{ rke2_api_ip }}/32 dev {{ rke2_interface }}"
+      when:
+        - ping_result.failed
+        - inventory_hostname == groups[rke2_servers_group_name].0
   roles:
     - role: lablabs.rke2
-- name: Configure kubectl
-  hosts: masters
-  tasks:
-    - name: Create .kube directory
-      file:
-        path: "{{ ansible_env.HOME }}/.kube"
-        state: directory
-        mode: '0755'
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
-    - name: Copy RKE2 kubeconfig to user's home
-      become: true
-      copy:
-        src: /etc/rancher/rke2/rke2.yaml
-        dest: "{{ ansible_env.HOME }}/.kube/config"
-        remote_src: true
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
-        mode: '0600'
-    - name: Add KUBECONFIG to shell profile
-      lineinfile:
-        path: "{{ ansible_env.HOME }}/.bashrc"
-        line: 'export KUBECONFIG=$HOME/.kube/config'
-        state: present
-        create: yes
