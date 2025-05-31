@@ -34,6 +34,12 @@
       - cilium
     rke2_custom_manifests:
       - templates/rke2-cilium-values.yaml
+    rke2_custom_registry_mirrors:
+      - name: docker.io
+        endpoint:
+          - https://harbor.hongbomiao.com
+        rewrite:
+          '"^(.*)$": "docker-hub-proxy-cache/$1"'
   # https://github.com/lablabs/ansible-role-rke2/issues/157#issuecomment-2817301798
   pre_tasks:
     - name: Do not manage foreign routes
