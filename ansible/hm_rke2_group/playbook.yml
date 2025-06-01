@@ -24,8 +24,8 @@
     # https://github.com/rancher/rke2/releases
     rke2_version: v1.33.1+rke2r1
     rke2_download_kubeconf: true
-    rke2_download_kubeconf_path: ~/.kube
-    rke2_download_kubeconf_file_name: config
+    rke2_download_kubeconf_path: /tmp
+    rke2_download_kubeconf_file_name: rke2.yaml
     disable_kube_proxy: true
     rke2_disable:
       - rke2-canal
@@ -38,8 +38,7 @@
       - name: docker.io
         endpoint:
           - https://harbor.hongbomiao.com
-        rewrite:
-          '"^(.*)$": "docker-hub-proxy-cache/$1"'
+        rewrite: '"^(.*)$": "docker-hub-proxy-cache/$1"'
   # https://github.com/lablabs/ansible-role-rke2/issues/157#issuecomment-2817301798
   pre_tasks:
     - name: Do not manage foreign routes
