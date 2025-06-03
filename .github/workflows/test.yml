@@ -64,8 +64,8 @@ jobs:
               - '.github/workflows/.test-machine-learning.yml'
             workflow-test-mobile:
               - '.github/workflows/.test-mobile.yml'
-            workflow-test-network-programmability:
-              - '.github/workflows/.test-network-programmability.yml'
+            workflow-test-network:
+              - '.github/workflows/.test-network.yml'
             workflow-test-operating-system:
               - '.github/workflows/.test-operating-system.yml'
             workflow-test-web:
@@ -497,9 +497,9 @@ jobs:
             taichi-fluid-solver:
               - 'parallel-computing/hm-taichi/fluid-solver/**'
             udp-receiver:
-              - 'network-programmability/udp/udp-receiver/**'
+              - 'network/udp/udp-receiver/**'
             udp-sender:
-              - 'network-programmability/udp/udp-sender/**'
+              - 'network/udp/udp-sender/**'
             web:
               - 'web/**'
             web-cypress:
@@ -527,7 +527,7 @@ jobs:
       workflow-test-hardware-in-the-loop: ${{ steps.filter.outputs.workflow-test-hardware-in-the-loop }}
       workflow-test-machine-learning: ${{ steps.filter.outputs.workflow-test-machine-learning }}
       workflow-test-mobile: ${{ steps.filter.outputs.workflow-test-mobile }}
-      workflow-test-network-programmability: ${{ steps.filter.outputs.workflow-test-network-programmability }}
+      workflow-test-network: ${{ steps.filter.outputs.workflow-test-network }}
       workflow-test-operating-system: ${{ steps.filter.outputs.workflow-test-operating-system }}
       workflow-test-web: ${{ steps.filter.outputs.workflow-test-web }}
       workflow: ${{ steps.filter.outputs.workflow }}
@@ -1022,14 +1022,14 @@ jobs:
       hm-supervision-detect-objects: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
       open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
 
-  test-network-programmability:
-    name: Test Network Programmability
-    uses: ./.github/workflows/.test-network-programmability.yml
+  test-network:
+    name: Test Network
+    uses: ./.github/workflows/.test-network.yml
     secrets: inherit
     needs: detect-changes
     with:
       # Workflows
-      workflow: ${{ needs.detect-changes.outputs.workflow-test-network-programmability == 'true' }}
+      workflow: ${{ needs.detect-changes.outputs.workflow-test-network == 'true' }}
       # Applications
       udp-receiver: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
       udp-sender: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
