@@ -1,5 +1,5 @@
 ---
-name: . Test Network Programmability
+name: . Test Network
 
 'on':
   workflow_call:
@@ -35,11 +35,11 @@ jobs:
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.12.0
       - name: Install dependencies
-        working-directory: network-programmability/udp/udp-receiver
+        working-directory: network/udp/udp-receiver
         run: |
           cargo build
       - name: Test
-        working-directory: network-programmability/udp/udp-receiver
+        working-directory: network/udp/udp-receiver
         run: |
           cargo test --all-features
 
@@ -61,10 +61,10 @@ jobs:
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.12.0
       - name: Install dependencies
-        working-directory: network-programmability/udp/udp-sender
+        working-directory: network/udp/udp-sender
         run: |
           cargo build
       - name: Test
-        working-directory: network-programmability/udp/udp-sender
+        working-directory: network/udp/udp-sender
         run: |
           cargo test --all-features
