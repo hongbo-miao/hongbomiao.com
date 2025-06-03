@@ -1,0 +1,20 @@
+tshark-help:
+    tshark --help
+
+tshark-interface-list:
+    tshark --list-interfaces
+
+tshark-capture:
+    tshark --interface=en0
+
+tshark-capture-with-filter:
+    tshark --interface=en0 -X lua_script:dissectors/packet_peek.lua
+
+tshark-capture-to-file:
+    tshark --interface=en0 -w capture.pcap
+
+tshark-read-file:
+    tshark --interface=en0 --read-file=capture.pcap
+
+tshark-read-file-with-filter:
+    tshark --interface=en0 --read-file=capture.pcap -X lua_script:dissectors/packet_peek.lua
