@@ -24,8 +24,23 @@ show-command-location:
 show-powershell-version:
     $PSVersionTable.PSVersion
 
+# Execution policy
 execution-policy-get:
     Get-ExecutionPolicy
 
 execution-policy-set:
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+
+# Trace
+trace:
+    # 1. Enable the trace
+    sxstrace trace -logfile:sxstrace.etl
+    # 2. Parse the trace
+    sxstrace parse -logfile:sxstrace.etl -outfile:sxstrace.txt
+
+# Event
+show-event:
+    Get-EventLog -LogName Application -Newest 10
+
+open-event-viewer:
+    Start-Process -FilePath "eventvwr.msc"
