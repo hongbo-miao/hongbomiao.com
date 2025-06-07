@@ -2,7 +2,7 @@ module github.com/hongbo-miao/hongbomiao.com/api-go
 
 go 1.23.8
 
-toolchain go1.24.3
+toolchain go1.24.4
 
 require (
 	contrib.go.opencensus.io/exporter/ocagent v0.7.0
