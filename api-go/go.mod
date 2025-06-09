@@ -25,7 +25,7 @@ require (
 	github.com/minio/minio-go/v7 v7.0.92
 	github.com/open-policy-agent/opa v1.5.1
 	github.com/prometheus/client_golang v1.22.0
-	github.com/redis/go-redis/v9 v9.9.0
+	github.com/redis/go-redis/v9 v9.10.0
 	github.com/rs/zerolog v1.34.0
 	github.com/stretchr/testify v1.10.0
 	go.elastic.co/apm/module/apmgin/v2 v2.7.1
