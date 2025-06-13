@@ -496,6 +496,8 @@ jobs:
               - 'parallel-computing/hm-taichi/count-primes/**'
             taichi-fluid-solver:
               - 'parallel-computing/hm-taichi/fluid-solver/**'
+            transformer:
+              - 'machine-learning/transformer/**'
             udp-receiver:
               - 'network/udp/udp-receiver/**'
             udp-sender:
@@ -1006,6 +1008,7 @@ jobs:
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
       reinforcement-learning-cart-pole: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
+      transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
 
   test-computer-vision:
     name: Test Computer Vision
