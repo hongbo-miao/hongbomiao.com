@@ -526,7 +526,7 @@ module "airbyte_postgres_instance" {
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.airbyte_postgres_name
   amazon_rds_engine         = "postgres"
-  amazon_rds_engine_version = "17.4"
+  amazon_rds_engine_version = "17"
   amazon_rds_instance_class = "db.m7g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
@@ -625,7 +625,7 @@ module "mlflow_postgres_instance" {
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.mlflow_postgres_name
   amazon_rds_engine         = "postgres"
-  amazon_rds_engine_version = "17.4"
+  amazon_rds_engine_version = "17"
   amazon_rds_instance_class = "db.m7g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
@@ -921,7 +921,7 @@ module "grafana_postgres_instance" {
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.grafana_postgres_name
   amazon_rds_engine         = "postgres"
-  amazon_rds_engine_version = "17.4"
+  amazon_rds_engine_version = "17"
   amazon_rds_instance_class = "db.m7g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
@@ -989,7 +989,7 @@ module "prefect_postgres_instance" {
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.prefect_postgres_name
   amazon_rds_engine         = "postgres"
-  amazon_rds_engine_version = "17.4"
+  amazon_rds_engine_version = "17"
   amazon_rds_instance_class = "db.m7g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
@@ -1349,7 +1349,7 @@ module "harbor_postgres_instance" {
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.harbor_postgres_name
   amazon_rds_engine         = "postgres"
-  amazon_rds_engine_version = "17.4"
+  amazon_rds_engine_version = "17"
   amazon_rds_instance_class = "db.m7g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
@@ -1424,7 +1424,7 @@ module "odoo_postgres_instance" {
   source                    = "../../../../modules/aws/hm_amazon_rds_instance"
   amazon_rds_name           = local.odoo_postgres_name
   amazon_rds_engine         = "postgres"
-  amazon_rds_engine_version = "17.4"
+  amazon_rds_engine_version = "17"
   amazon_rds_instance_class = "db.m7g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
