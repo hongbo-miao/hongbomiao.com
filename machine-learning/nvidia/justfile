@@ -14,5 +14,17 @@ cuda-toolkit-install-wsl-2:
     sudo apt-get update
     sudo apt-get --yes install cuda-toolkit-12-8
 
+cuda-toolkit-install-ubuntu-24:
+    # https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=24.04&target_type=deb_local
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-ubuntu2404.pin
+    sudo mv cuda-ubuntu2404.pin /etc/apt/preferences.d/cuda-repository-pin-600
+    wget https://developer.download.nvidia.com/compute/cuda/12.9.1/local_installers/cuda-repo-ubuntu2404-12-9-local_12.9.1-575.57.08-1_amd64.deb
+    sudo dpkg --install cuda-repo-ubuntu2404-12-9-local_12.9.1-575.57.08-1_amd64.deb
+    sudo cp /var/cuda-repo-ubuntu2404-12-9-local/cuda-*-keyring.gpg /usr/share/keyrings/
+    sudo apt-get update
+    sudo apt-get --yes install cuda-toolkit-12-9
+    # Driver
+    sudo apt-get --yes install nvidia-open
+
 cuda-toolkit-version:
     nvcc --version
