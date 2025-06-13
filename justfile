@@ -513,6 +513,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
     uv run poe static-type-check-python --package=machine-learning.reinforcement-learning.cart-pole
     uv run poe static-type-check-python --package=machine-learning.stable-diffusion
+    uv run poe static-type-check-python --package=machine-learning.transformer
     uv run poe static-type-check-python --package=parallel-computing.hm-taichi.count-primes
     uv run poe static-type-check-python --package=parallel-computing.hm-taichi.fluid-solver
     uv run poe static-type-check-python --package=parallel-computing.hm-triton

@@ -1,0 +1,23 @@
+[project]
+name = "transformer"
+version = "1.0.0"
+requires-python = "~=3.13.3"
+dependencies = [
+  "torch==2.7.1",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.34.0",
+  "pytest-cov==6.1.1",
+  "pytest==8.3.5",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.6.0"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
