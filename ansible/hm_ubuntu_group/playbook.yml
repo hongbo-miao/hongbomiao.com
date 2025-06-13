@@ -10,6 +10,12 @@
           - htop
           - vnstat
         state: present
+    - name: Install common packages from apt
+      become: true
+      ansible.builtin.apt:
+        name:
+          - tshark
+        state: present
 
 - name: Install pyenv
   hosts: hm-ubuntu
