@@ -1,0 +1,24 @@
+run:
+    docker run --gpus=all \
+        --volume="$HOME/.cache/huggingface:/root/.cache/huggingface" \
+        --publish=44194:8000 \
+        nvcr.io/nvidia/tritonserver:25.05-vllm-python-py3 \
+            python3 -m vllm.entrypoints.openai.api_server \
+                --model=Qwen/Qwen2.5-0.5B-Instruct \
+                --port=8000 \
+                --gpu-memory-utilization=0.75 \
+                --max_model_len=8192 \
+                --tensor-parallel-size=1 \
+                --max_num_seqs=128 \
+                --enforce-eager
+
+ask:
+    curl http://localhost:44194/v1/chat/completions \
+        --header "Content-Type: application/json" \
+        --data '{ \
+            "model": "Qwen/Qwen2.5-0.5B-Instruct", \
+            "messages": [ \
+                {"role": "system", "content": "You are a helpful assistant."}, \
+                {"role": "user", "content": "Tell me a joke."} \
+            ] \
+        }'
