@@ -489,6 +489,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Docling** - Document data extraction
 - **pypdf** - PDF manipulation
 - **SGLang** - Large language model (LLM) and visual language model (VLM) serving framework
+- **vLLM** - Large language model (LLM) serving framework
 - **LiteLLM** - Large language model (LLM) gateway
 - **Open WebUI** - AI chat interface
   - **Open WebUI Pipelines** - OpenAI API plugin framework
