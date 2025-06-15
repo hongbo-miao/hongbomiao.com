@@ -480,6 +480,8 @@ jobs:
               - 'data-visualization/hm-plotly/heatmap/**'
             prometheus:
               - 'data-storage/prometheus/**'
+            quantization:
+              - 'machine-learning/quantization/**'
             quantum-computing:
               - 'quantum-computing/**'
             reinforcement-learning-cart-pole:
@@ -1006,6 +1008,7 @@ jobs:
       model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
       neural-forecasting-forecast-air-passenger-number: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
+      quantization: ${{ needs.detect-changes.outputs.quantization == 'true' }}
       reinforcement-learning-cart-pole: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
