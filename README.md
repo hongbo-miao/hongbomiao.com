@@ -457,6 +457,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **scikit-learn** - Machine learning library
   - **cuML** - GPU-accelerated machine learning library
 - **PyTorch** - Machine learning
+  - **torchao** - Quantization and sparsification
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
 - **Flax** - Neural network for JAX
