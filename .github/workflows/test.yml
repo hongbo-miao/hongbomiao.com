@@ -434,6 +434,8 @@ jobs:
               - 'hm-xxhash/**'
             hugging-face-analyze-sentiment:
               - 'machine-learning/hugging-face/analyze-sentiment/**'
+            hyperparameter-optimization:
+              - 'machine-learning/hyperparameter-optimization/**'
             iads-config-reader:
               - 'data-visualization/iads/iads-data-manager/iads-config-reader/**'
             iads-data-producer:
@@ -1004,6 +1006,7 @@ jobs:
       hm-streamlit-live-line-chart: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
       hm-streamlit-map: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
       hugging-face-analyze-sentiment: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
+      hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
       mineru: ${{ needs.detect-changes.outputs.mineru == 'true' }}
       model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
       neural-forecasting-forecast-air-passenger-number: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
