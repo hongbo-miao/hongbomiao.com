@@ -1,0 +1,25 @@
+[project]
+name = "hm-optuna"
+version = "1.0.0"
+requires-python = "~=3.13.3"
+dependencies = [
+  "optuna==4.4.0",
+]
+
+[dependency-groups]
+dev = [
+  "optuna-dashboard==0.18.0",
+  "poethepoet==0.34.0",
+  "pytest-cov==6.1.1",
+  "pytest==8.3.5",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.6.0"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+dashboard = "optuna-dashboard sqlite:///db.sqlite3"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
