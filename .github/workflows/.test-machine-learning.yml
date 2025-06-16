@@ -84,6 +84,9 @@ name: . Test Machine Learning
       hugging-face-analyze-sentiment:
         required: true
         type: boolean
+      hyperparameter-optimization:
+        required: true
+        type: boolean
       mineru:
         required: true
         type: boolean
@@ -1041,6 +1044,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: machine-learning/transformer
+
+  hyperparameter-optimization-test:
+    name: Hyperparameter Optimization | Test
+    if: ${{ inputs.workflow || inputs.hyperparameter-optimization }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.1.0
+        with:
+          version: 0.6.14
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hyperparameter-optimization/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: machine-learning/hyperparameter-optimization/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/hyperparameter-optimization
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hyperparameter-optimization
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: machine-learning/hyperparameter-optimization
 
   quantization-test:
     name: Quantization | Test
