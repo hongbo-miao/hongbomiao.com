@@ -1,4 +1,4 @@
-FROM docker.io/confluentinc/cp-schema-registry:7.9.2
+FROM docker.io/confluentinc/cp-schema-registry:8.0.0
 
 USER root
 
