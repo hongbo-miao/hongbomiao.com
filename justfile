@@ -316,6 +316,12 @@ lint-matlab:
 lint-matlab-fix:
     uv run poe lint-matlab-fix
 
+lint-natural-language:
+    npm run lint:natural-language
+
+lint-natural-language-fix:
+    npm run lint:natural-language:fix
+
 lint-protocol-buffers:
     buf lint
 
