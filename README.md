@@ -470,6 +470,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
+- **torchtune** - Fine-tuning
 - **Optuna** - Hyperparameter optimization framework
 - **CML** - Continuous machine learning
 - **DVC** - Data version control
