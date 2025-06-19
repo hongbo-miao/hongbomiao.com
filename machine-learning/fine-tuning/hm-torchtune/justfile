@@ -1,0 +1,25 @@
+uv-update-lock-file:
+    uv lock
+
+uv-install-dependencies:
+    uv sync --dev
+
+list-fine-tuning-configs:
+    uv run tune ls
+
+download-model:
+    uv run tune download Qwen/Qwen2.5-1.5B-Instruct \
+        --output-dir=/tmp/Qwen2.5-1.5B-Instruct \
+        --ignore-patterns=None
+
+initialize-config:
+    uv run tune cp \
+        qwen2_5/1.5B_lora_single_device ./config/qwen2_5/1.5B_lora_single_device.yaml \
+        --make-parents
+
+validate-config:
+    uv run tune validate ./config/qwen2_5/1.5B_lora_single_device.yaml
+
+fine-tune:
+    uv run tune run lora_finetune_single_device \
+        --config ./config/qwen2_5/1.5B_lora_single_device.yaml
