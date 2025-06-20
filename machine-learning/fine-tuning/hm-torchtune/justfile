@@ -8,18 +8,21 @@ list-fine-tuning-configs:
     uv run tune ls
 
 download-model:
-    uv run tune download Qwen/Qwen2.5-1.5B-Instruct \
-        --output-dir=/tmp/Qwen2.5-1.5B-Instruct \
+    uv run tune download Qwen/Qwen2.5-0.5B-Instruct \
+        --output-dir=/tmp/Qwen2.5-0.5B-Instruct \
         --ignore-patterns=None
 
 initialize-config:
     uv run tune cp \
-        qwen2_5/1.5B_lora_single_device ./config/qwen2_5/1.5B_lora_single_device.yaml \
+        qwen2_5/0.5B_lora_single_device ./config/qwen2_5/0.5B_lora_single_device.yaml \
         --make-parents
 
 validate-config:
-    uv run tune validate ./config/qwen2_5/1.5B_lora_single_device.yaml
+    uv run tune validate ./config/qwen2_5/0.5B_lora_single_device.yaml
 
 fine-tune:
     uv run tune run lora_finetune_single_device \
-        --config ./config/qwen2_5/1.5B_lora_single_device.yaml
+        --config ./config/qwen2_5/0.5B_lora_single_device.yaml
+
+dashboard:
+    uv run tensorboard --logdir=/tmp/torchtune/qwen2_5_0_5B/lora_single_device/logs/
