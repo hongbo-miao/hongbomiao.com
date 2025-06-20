@@ -452,7 +452,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Streamlit** - Data application building
 - **Dash** - Data application and dashboard building
 
-### Machine Learning (ML)
+## Machine Learning (ML)
 
 - **scikit-learn** - Machine learning library
   - **cuML** - GPU-accelerated machine learning library
@@ -476,13 +476,14 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **DVC** - Data version control
 - **Feast** - Feature store
 - **Kubeflow** - Machine learning platform
+- **TensorBoard** - Machine learning experiment tracking
 - **MLflow** - Machine learning experiment tracking
 - **Weights & Biases** - Machine learning experiment tracking
 - **NVIDIA Data Loading Library (DALI)** - GPU-accelerated data loading and preprocessing pipeline
 - **NVIDIA Triton Inference Server** - Inference server
 - **NVIDIA Modulus** - Physics-informed machine learning framework
 
-#### Generative AI (GenAI)
+### Generative AI (GenAI)
 
 - **MCP** - Model Context Protocol
 - **LangGraph** - Large language model (LLM) workflows library
