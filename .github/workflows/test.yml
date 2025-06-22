@@ -364,6 +364,8 @@ jobs:
               - 'data-analytics/hm-numba/**'
             hm-nvidia-modulus:
               - 'machine-learning/hm-nvidia-modulus/**'
+            hm-olmocr:
+              - 'machine-learning/data-extraction/hm-olmocr/**'
             hm-opal-client:
               - 'authorization/hm-opal-client/**'
             hm-open3d:
@@ -629,6 +631,7 @@ jobs:
       hm-networkx: ${{ steps.filter.outputs.hm-networkx }}
       hm-numba: ${{ steps.filter.outputs.hm-numba }}
       hm-nvidia-modulus: ${{ steps.filter.outputs.hm-nvidia-modulus }}
+      hm-olmocr: ${{ steps.filter.outputs.hm-olmocr }}
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-open3d: ${{ steps.filter.outputs.hm-open3d }}
       hm-openaerostruct: ${{ steps.filter.outputs.hm-openaerostruct }}
@@ -1007,6 +1010,7 @@ jobs:
       hm-mlflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
       hm-mlflow-predict-diabetes: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
       hm-nvidia-modulus: ${{ needs.detect-changes.outputs.hm-nvidia-modulus == 'true' }}
+      hm-olmocr: ${{ needs.detect-changes.outputs.hm-olmocr == 'true' }}
       hm-rasa: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
       hm-scikit-learn: ${{ needs.detect-changes.outputs.hm-scikit-learn == 'true' }}
       hm-sglang: ${{ needs.detect-changes.outputs.hm-sglang == 'true' }}
