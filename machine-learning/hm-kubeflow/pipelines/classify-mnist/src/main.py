@@ -6,12 +6,12 @@ from kfp import client, dsl
     packages_to_install=["torch==2.0.0", "torchvision==0.15.1", "lightning==2.0.5"],
 )
 def train() -> None:
-    import lightning as L  # noqa: N812
-    import torch
-    import torch.nn.functional as F  # noqa: N812
-    import torchvision
-    from torch import nn
-    from torch.utils import data
+    import lightning as L  # noqa: N812, PLC0415
+    import torch  # noqa: PLC0415
+    import torch.nn.functional as F  # noqa: N812, PLC0415
+    import torchvision  # noqa: PLC0415
+    from torch import nn  # noqa: PLC0415
+    from torch.utils import data  # noqa: PLC0415
 
     class LitAutoEncoder(L.LightningModule):
         def __init__(self) -> None:
