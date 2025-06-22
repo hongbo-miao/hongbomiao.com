@@ -352,6 +352,8 @@ jobs:
               - 'machine-learning/hm-llama-index/applications/chat-pdf/**'
             hm-marimo:
               - 'data-analytics/hm-marimo/**'
+            hm-mineru:
+              - 'machine-learning/data-extraction/hm-mineru/**'
             hm-mlflow-classify-mnist:
               - 'machine-learning/hm-mlflow/experiments/classify-mnist/**'
             hm-mlflow-predict-diabetes:
@@ -460,8 +462,6 @@ jobs:
               - 'data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge/**'
             lance:
               - 'data-storage/lance/**'
-            mineru:
-              - 'machine-learning/data-extraction/mineru/**'
             mobile-android:
               - 'mobile/mobile-android/**'
             mobile-ios:
@@ -627,6 +627,7 @@ jobs:
       hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
       hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
       hm-marimo: ${{ steps.filter.outputs.hm-marimo }}
+      hm-mineru: ${{ steps.filter.outputs.hm-mineru }}
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
       hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
       hm-narwhals: ${{ steps.filter.outputs.hm-narwhals }}
@@ -681,7 +682,6 @@ jobs:
       kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
       kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
       lance: ${{ steps.filter.outputs.lance }}
-      mineru: ${{ steps.filter.outputs.mineru }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
@@ -1010,6 +1010,7 @@ jobs:
       hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
       hm-langgraph-chat-pdf: ${{ needs.detect-changes.outputs.hm-langgraph-chat-pdf == 'true' }}
       hm-llama-index-chat-pdf: ${{ needs.detect-changes.outputs.hm-llama-index-chat-pdf == 'true' }}
+      hm-mineru: ${{ needs.detect-changes.outputs.hm-mineru == 'true' }}
       hm-mlflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
       hm-mlflow-predict-diabetes: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
       hm-nvidia-modulus: ${{ needs.detect-changes.outputs.hm-nvidia-modulus == 'true' }}
@@ -1023,7 +1024,6 @@ jobs:
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
       hugging-face-analyze-sentiment: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
       hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
-      mineru: ${{ needs.detect-changes.outputs.mineru == 'true' }}
       model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
       neural-forecasting-forecast-air-passenger-number: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
@@ -1124,7 +1124,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6.3.0
         with:
-          version: 0.6.14
+          version: 0.7.13
           enable-cache: true
           cache-dependency-glob: physics/hm-genesis/uv.lock
       - name: Set up Python
@@ -1162,7 +1162,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6.3.0
         with:
-          version: 0.6.14
+          version: 0.7.13
           enable-cache: true
           cache-dependency-glob: matlab/call-matlab-function-in-python/uv.lock
       - name: Set up Python
@@ -1195,7 +1195,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6.3.0
         with:
-          version: 0.6.14
+          version: 0.7.13
           enable-cache: true
           cache-dependency-glob: data-distribution/arrow-flight/arrow-flight-client/uv.lock
       - name: Set up Python
@@ -1254,7 +1254,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6.3.0
         with:
-          version: 0.6.14
+          version: 0.7.13
           enable-cache: true
           cache-dependency-glob: data-distribution/rti-connext-dds/uv.lock
       - name: Set up Python
@@ -1287,7 +1287,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6.3.0
         with:
-          version: 0.6.14
+          version: 0.7.13
           enable-cache: true
           cache-dependency-glob: hm-xxhash/uv.lock
       - name: Set up Python
