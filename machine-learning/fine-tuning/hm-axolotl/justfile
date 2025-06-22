@@ -2,7 +2,9 @@ uv-update-lock-file:
     uv lock
 
 uv-install-dependencies:
-    uv sync --dev
+    uv sync --extra=build
+    uv sync --extra=build --extra=compile
+    uv sync --extra=build --extra=compile --dev
 
 dev:
     uv run poe dev
