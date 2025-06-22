@@ -1,10 +1,9 @@
 [project]
 name = "hm-axolotl"
 version = "1.0.0"
-requires-python = "~=3.11.0"
+requires-python = "~=3.12.0"
 dependencies = [
   "axolotl[deepspeed]==0.10.0",
-  "flash-attn==2.8.0.post2",
 ]
 
 [dependency-groups]
@@ -12,6 +11,15 @@ dev = [
   "poethepoet==0.34.0",
   "pytest-cov==6.1.1",
   "pytest==8.3.5",
+]
+
+[project.optional-dependencies]
+build = [
+  "setuptools",
+  "torch",
+]
+compile = [
+  "flash-attn==2.8.0.post2",
 ]
 
 [tool.uv]
