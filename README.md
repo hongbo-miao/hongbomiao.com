@@ -470,7 +470,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
-- **torchtune** - Fine-tuning
 - **Optuna** - Hyperparameter optimization framework
 - **CML** - Continuous machine learning
 - **DVC** - Data version control
@@ -495,6 +494,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **SGLang** - Large language model (LLM) and visual language model (VLM) serving framework
 - **vLLM** - Large language model (LLM) serving framework
 - **Ollama** - Large language model (LLM) serving framework
+- **torchtune** - Large language model (LLM) fine-tuning
+- **Axolotl** - Large language model (LLM) fine-tuning
 - **LiteLLM** - Large language model (LLM) gateway
 - **Open WebUI** - AI chat interface
   - **Open WebUI Pipelines** - OpenAI API plugin framework
