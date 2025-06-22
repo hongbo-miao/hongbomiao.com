@@ -493,8 +493,8 @@ static-type-check-python:
     uv run poe static-type-check-python --package=hm-xxhash
     uv run poe static-type-check-python --package=machine-learning.convolutional-neural-network
     uv run poe static-type-check-python --package=machine-learning.data-extraction.hm-docling
+    uv run poe static-type-check-python --package=machine-learning.data-extraction.hm-mineru
     uv run poe static-type-check-python --package=machine-learning.data-extraction.hm-olmocr
-    uv run poe static-type-check-python --package=machine-learning.data-extraction.mineru
     uv run poe static-type-check-python --package=machine-learning.feature-store
     uv run poe static-type-check-python --package=machine-learning.fine-tuning.hm-axolotl
     uv run poe static-type-check-python --package=machine-learning.fine-tuning.hm-torchtune
