@@ -15,8 +15,6 @@ test-coverage:
 download-examples:
     uv run axolotl fetch examples
 
-preprocess:
-    uv run axolotl preprocess config/qwen3/qlora-fsdp.yaml
-
 train:
-    uv run axolotl train config/qwen3/qlora-fsdp.yaml
+    uv run axolotl train config/llama-3/lora-1b.yml
+    uv run axolotl train config/llama-3/qlora-1b.yml
