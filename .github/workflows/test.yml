@@ -436,6 +436,8 @@ jobs:
               - 'machine-learning/fine-tuning/hm-torchtune/**'
             hm-triton:
               - 'parallel-computing/hm-triton/**'
+            hm-unsloth:
+              - 'machine-learning/fine-tuning/hm-unsloth/**'
             hm-xxhash:
               - 'hm-xxhash/**'
             hugging-face-analyze-sentiment:
@@ -668,6 +670,7 @@ jobs:
       hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
       hm-torchtune: ${{ steps.filter.outputs.hm-torchtune }}
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
+      hm-unsloth: ${{ steps.filter.outputs.hm-unsloth }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
       hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
       iads-config-reader: ${{ steps.filter.outputs.iads-config-reader }}
@@ -1017,6 +1020,7 @@ jobs:
       hm-streamlit-live-line-chart: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
       hm-streamlit-map: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
       hm-torchtune: ${{ needs.detect-changes.outputs.hm-torchtune == 'true' }}
+      hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
       hugging-face-analyze-sentiment: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
       hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
       mineru: ${{ needs.detect-changes.outputs.mineru == 'true' }}
