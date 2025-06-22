@@ -1,12 +1,10 @@
 [project]
-name = "hm-torchtune"
+name = "hm-axolotl"
 version = "1.0.0"
-requires-python = "~=3.12.0"
+requires-python = "~=3.11.0"
 dependencies = [
-  "tensorboard==2.19.0",
-  "torch==2.7.1",
-  "torchao==0.11.0",
-  "torchtune==0.6.1",
+  "axolotl[deepspeed]==0.10.0",
+  "flash-attn==2.8.0.post2",
 ]
 
 [dependency-groups]
@@ -19,6 +17,8 @@ dev = [
 [tool.uv]
 package = false
 required-version = ">=0.6.0"
+no-build-isolation-package = ["flash-attn"]
+override-dependencies = ["torch==2.7.1"]
 
 [tool.uv.sources]
 torch = [{ index = "pytorch-cu128" }]

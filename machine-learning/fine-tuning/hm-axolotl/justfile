@@ -1,0 +1,23 @@
+uv-update-lock-file:
+    uv lock
+
+uv-install-dependencies:
+    uv sync --dev
+
+dev:
+    uv run poe dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
+
+download-examples:
+    uv run axolotl fetch examples
+
+preprocess:
+    uv run axolotl preprocess config/qwen3/qlora-fsdp.yaml
+
+train:
+    uv run axolotl train config/qwen3/qlora-fsdp.yaml
