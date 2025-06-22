@@ -494,6 +494,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **LangChain** - LLM application framework
   - **LlamaIndex** - LLM data framework
 - **LLM Fine-Tuning**
+  - **Unsloth** - LLM fine-tuning
   - **torchtune** - LLM fine-tuning
   - **Axolotl** - LLM fine-tuning
 - **LLM Serving**
