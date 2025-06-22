@@ -649,26 +649,26 @@ jobs:
         with:
           version: 0.6.14
           enable-cache: true
-          cache-dependency-glob: machine-learning/mineru/uv.lock
+          cache-dependency-glob: machine-learning/data-extraction/mineru/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/mineru/pyproject.toml
+          python-version-file: machine-learning/data-extraction/mineru/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/mineru
+        working-directory: machine-learning/data-extraction/mineru
         run: |
           uv sync --extra=build
           uv sync --extra=build --extra=compile
           uv sync --extra=build --extra=compile --extra=paddlepaddle-gpu
           uv sync --extra=build --extra=compile --extra=paddlepaddle-gpu --dev
       - name: Test
-        working-directory: machine-learning/mineru
+        working-directory: machine-learning/data-extraction/mineru
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/mineru
+          directory: machine-learning/data-extraction/mineru
 
   olmocr-test:
     name: olmOCR | Test
@@ -716,23 +716,23 @@ jobs:
         with:
           version: 0.6.14
           enable-cache: true
-          cache-dependency-glob: machine-learning/hm-docling/uv.lock
+          cache-dependency-glob: machine-learning/data-extraction/hm-docling/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/hm-docling/pyproject.toml
+          python-version-file: machine-learning/data-extraction/hm-docling/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/hm-docling
+        working-directory: machine-learning/data-extraction/hm-docling
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/hm-docling
+        working-directory: machine-learning/data-extraction/hm-docling
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/hm-docling
+          directory: machine-learning/data-extraction/hm-docling
 
   langchain-chat-pdf-test:
     name: LangChain (chat-pdf) | Test
