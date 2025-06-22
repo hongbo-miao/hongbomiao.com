@@ -139,7 +139,7 @@ class IadsUtil:
         # Get Unix timestamp for Jan 1 of the specified year in the given timezone
         local_time = datetime(year, 1, 1, 0, 0, 0, tzinfo=ZoneInfo(timezone))
         year_start_ns = int(
-            Decimal(str(local_time.timestamp())) * Decimal("1000000000"),
+            Decimal(str(local_time.timestamp())) * Decimal(1000000000),
         )
         return year_start_ns + irig_time_ns
 
@@ -149,8 +149,8 @@ class IadsUtil:
         iads_data_path: Path,
         timezone: str,
     ) -> pd.DataFrame:
-        import pythoncom
-        import win32com.client
+        import pythoncom  # noqa: PLC0415
+        import win32com.client  # noqa: PLC0415
 
         iads_config_path = iads_data_path / Path(IadsUtil.IADS_CONFIG_FILE_NAME)
         iads_metadata_path = iads_data_path / Path(IadsUtil.IADS_METADATA_FILE_NAME)
