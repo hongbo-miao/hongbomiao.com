@@ -10,8 +10,8 @@ mkdir -p "/tmp/$KAFKA_PLUGIN_NAME/temp/"
 mkdir -p "/tmp/$KAFKA_PLUGIN_NAME/output/"
 
 # Download
-curl --silent --fail --show-error --location --output "/tmp/$KAFKA_PLUGIN_NAME/raw/confluentinc-kafka-connect-s3-$CONFLUENT_KAFKA_CONNECT_S3_CONVERTER_VERSION.zip" "https://d2p6pa21dvn84.cloudfront.net/api/plugins/confluentinc/kafka-connect-s3/versions/$CONFLUENT_KAFKA_CONNECT_S3_CONVERTER_VERSION/confluentinc-kafka-connect-s3-$CONFLUENT_KAFKA_CONNECT_S3_CONVERTER_VERSION.zip"
-curl --silent --fail --show-error --location --output "/tmp/$KAFKA_PLUGIN_NAME/raw/confluentinc-kafka-connect-avro-converter-$CONFLUENT_KAFKA_CONNECT_AVRO_CONVERTER_VERSION.zip" "https://d2p6pa21dvn84.cloudfront.net/api/plugins/confluentinc/kafka-connect-avro-converter/versions/$CONFLUENT_KAFKA_CONNECT_AVRO_CONVERTER_VERSION/confluentinc-kafka-connect-avro-converter-$CONFLUENT_KAFKA_CONNECT_AVRO_CONVERTER_VERSION.zip"
+curl --silent --fail --show-error --location --output="/tmp/$KAFKA_PLUGIN_NAME/raw/confluentinc-kafka-connect-s3-$CONFLUENT_KAFKA_CONNECT_S3_CONVERTER_VERSION.zip" "https://d2p6pa21dvn84.cloudfront.net/api/plugins/confluentinc/kafka-connect-s3/versions/$CONFLUENT_KAFKA_CONNECT_S3_CONVERTER_VERSION/confluentinc-kafka-connect-s3-$CONFLUENT_KAFKA_CONNECT_S3_CONVERTER_VERSION.zip"
+curl --silent --fail --show-error --location --output="/tmp/$KAFKA_PLUGIN_NAME/raw/confluentinc-kafka-connect-avro-converter-$CONFLUENT_KAFKA_CONNECT_AVRO_CONVERTER_VERSION.zip" "https://d2p6pa21dvn84.cloudfront.net/api/plugins/confluentinc/kafka-connect-avro-converter/versions/$CONFLUENT_KAFKA_CONNECT_AVRO_CONVERTER_VERSION/confluentinc-kafka-connect-avro-converter-$CONFLUENT_KAFKA_CONNECT_AVRO_CONVERTER_VERSION.zip"
 
 # Build
 unzip -q "/tmp/$KAFKA_PLUGIN_NAME/raw/confluentinc-kafka-connect-s3-$CONFLUENT_KAFKA_CONNECT_S3_CONVERTER_VERSION.zip" -d "/tmp/$KAFKA_PLUGIN_NAME/temp/"

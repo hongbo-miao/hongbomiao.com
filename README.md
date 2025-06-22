@@ -484,23 +484,27 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Generative AI (GenAI)
 
+- **Data Extraction**
+  - **MinerU** - Document data extraction
+  - **olmOCR** - Document data extraction
+  - **Docling** - Document data extraction
+  - **pypdf** - PDF manipulation
+- **LLM Application**
+  - **LangGraph** - LLM workflows library
+  - **LangChain** - LLM application framework
+  - **LlamaIndex** - LLM data framework
+- **LLM Fine-Tuning**
+  - **torchtune** - LLM fine-tuning
+  - **Axolotl** - LLM fine-tuning
+- **LLM Serving**
+  - **vLLM** - LLM serving framework
+  - **SGLang** - LLM and visual language model (VLM) serving framework
+  - **Ollama** - LLM serving framework
 - **MCP** - Model Context Protocol
-- **LangGraph** - Large language model (LLM) workflows library
-- **LangChain** - Large language model (LLM) application framework
-- **LlamaIndex** - Large language model (LLM) data framework
-- **MinerU** - Document data extraction
-- **olmOCR** - Document data extraction
-- **Docling** - Document data extraction
-- **pypdf** - PDF manipulation
-- **SGLang** - Large language model (LLM) and visual language model (VLM) serving framework
-- **vLLM** - Large language model (LLM) serving framework
-- **Ollama** - Large language model (LLM) serving framework
-- **torchtune** - Large language model (LLM) fine-tuning
-- **Axolotl** - Large language model (LLM) fine-tuning
-- **LiteLLM** - Large language model (LLM) gateway
+- **LiteLLM** - LLM gateway
 - **Open WebUI** - AI chat interface
   - **Open WebUI Pipelines** - OpenAI API plugin framework
-- **GPT4All** - Local large language model (LLM) models
+- **GPT4All** - Local LLM models
 - **Diffusers** - Diffusion models
   - **Stable Diffusion** - Text-to-image generation model
 - **ComfyUI** - Node-based interface for diffusion model workflows
