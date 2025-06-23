@@ -1,0 +1,17 @@
+uv-update-lock-file:
+    uv lock
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
+
+download-data:
+    mkdir -p data && curl --silent --fail --show-error --location https://github.com/hiyouga/LLaMA-Factory/archive/refs/heads/main.tar.gz | tar -x --strip-components=2 --directory=data LLaMA-Factory-main/data
+
+train:
+    uv run llamafactory-cli train config/train_lora/qwen2_5vl_lora_sft.yaml
+
+help:
+    uv run llamafactory-cli help
