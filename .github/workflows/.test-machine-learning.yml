@@ -57,6 +57,9 @@ name: . Test Machine Learning
       hm-langgraph-chat-pdf:
         required: true
         type: boolean
+      hm-llama-factory:
+        required: true
+        type: boolean
       hm-llama-index-chat-pdf:
         required: true
         type: boolean
@@ -1150,70 +1153,6 @@ jobs:
         with:
           directory: machine-learning/quantization
 
-  unsloth-test:
-    name: Unsloth | Test
-    if: ${{ inputs.workflow || inputs.hm-unsloth }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.3.0
-        with:
-          version: 0.7.13
-          enable-cache: true
-          cache-dependency-glob: machine-learning/fine-tuning/hm-unsloth/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.6.0
-        with:
-          python-version-file: machine-learning/fine-tuning/hm-unsloth/pyproject.toml
-      - name: Install dependencies
-        working-directory: machine-learning/fine-tuning/hm-unsloth
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/fine-tuning/hm-unsloth
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.4.3
-        with:
-          directory: machine-learning/fine-tuning/hm-unsloth
-
-  torchtune-test:
-    name: torchtune | Test
-    if: ${{ inputs.workflow || inputs.hm-torchtune }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.3.0
-        with:
-          version: 0.7.13
-          enable-cache: true
-          cache-dependency-glob: machine-learning/fine-tuning/hm-torchtune/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.6.0
-        with:
-          python-version-file: machine-learning/fine-tuning/hm-torchtune/pyproject.toml
-      - name: Install dependencies
-        working-directory: machine-learning/fine-tuning/hm-torchtune
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/fine-tuning/hm-torchtune
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.4.3
-        with:
-          directory: machine-learning/fine-tuning/hm-torchtune
-
   axolotl-test:
     name: Axolotl | Test
     # if: ${{ inputs.workflow || inputs.hm-axolotl }}
@@ -1248,6 +1187,102 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: machine-learning/fine-tuning/hm-axolotl
+
+  llama-factory-test:
+    name: LLaMA-Factory | Test
+    if: ${{ inputs.workflow || inputs.hm-llama-factory }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.3.0
+        with:
+          version: 0.7.13
+          enable-cache: true
+          cache-dependency-glob: machine-learning/fine-tuning/hm-llama-factory/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: machine-learning/fine-tuning/hm-llama-factory/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/fine-tuning/hm-llama-factory
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/fine-tuning/hm-llama-factory
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: machine-learning/fine-tuning/hm-llama-factory
+
+  torchtune-test:
+    name: torchtune | Test
+    if: ${{ inputs.workflow || inputs.hm-torchtune }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.3.0
+        with:
+          version: 0.7.13
+          enable-cache: true
+          cache-dependency-glob: machine-learning/fine-tuning/hm-torchtune/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: machine-learning/fine-tuning/hm-torchtune/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/fine-tuning/hm-torchtune
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/fine-tuning/hm-torchtune
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: machine-learning/fine-tuning/hm-torchtune
+
+  unsloth-test:
+    name: Unsloth | Test
+    if: ${{ inputs.workflow || inputs.hm-unsloth }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.3.0
+        with:
+          version: 0.7.13
+          enable-cache: true
+          cache-dependency-glob: machine-learning/fine-tuning/hm-unsloth/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: machine-learning/fine-tuning/hm-unsloth/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/fine-tuning/hm-unsloth
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/fine-tuning/hm-unsloth
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: machine-learning/fine-tuning/hm-unsloth
 
   rasa-test:
     name: Rasa | Test
