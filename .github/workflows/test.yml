@@ -345,13 +345,13 @@ jobs:
             hm-lancedb:
               - 'data-storage/hm-lancedb/**'
             hm-langchain-chat-pdf:
-              - 'machine-learning/hm-langchain/applications/chat-pdf/**'
+              - 'machine-learning/llm-application/hm-langchain/applications/chat-pdf/**'
             hm-langgraph-chat-pdf:
-              - 'machine-learning/hm-langgraph/applications/chat-pdf/**'
+              - 'machine-learning/llm-application/hm-langgraph/applications/chat-pdf/**'
             hm-llama-factory:
               - 'machine-learning/fine-tuning/hm-llama-factory/**'
             hm-llama-index-chat-pdf:
-              - 'machine-learning/hm-llama-index/applications/chat-pdf/**'
+              - 'machine-learning/llm-application/hm-llama-index/applications/chat-pdf/**'
             hm-marimo:
               - 'data-analytics/hm-marimo/**'
             hm-mineru:
@@ -625,10 +625,10 @@ jobs:
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
       hm-lancedb: ${{ steps.filter.outputs.hm-lancedb }}
-      hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
-      hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
+      hm-langchain-chat-pdf: ${{ steps.filter.outputs.llm-application.hm-langchain-chat-pdf }}
+      hm-langgraph-chat-pdf: ${{ steps.filter.outputs.llm-application.hm-langgraph-chat-pdf }}
       hm-llama-factory: ${{ steps.filter.outputs.hm-llama-factory }}
-      hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
+      hm-llama-index-chat-pdf: ${{ steps.filter.outputs.llm-application.hm-llama-index-chat-pdf }}
       hm-marimo: ${{ steps.filter.outputs.hm-marimo }}
       hm-mineru: ${{ steps.filter.outputs.hm-mineru }}
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
@@ -1010,10 +1010,10 @@ jobs:
       hm-gradio-classify-image: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
       hm-kubeflow-calculate: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
       hm-kubeflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
-      hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
-      hm-langgraph-chat-pdf: ${{ needs.detect-changes.outputs.hm-langgraph-chat-pdf == 'true' }}
+      hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.llm-application.hm-langchain-chat-pdf == 'true' }}
+      hm-langgraph-chat-pdf: ${{ needs.detect-changes.outputs.llm-application.hm-langgraph-chat-pdf == 'true' }}
       hm-llama-factory: ${{ needs.detect-changes.outputs.hm-llama-factory == 'true' }}
-      hm-llama-index-chat-pdf: ${{ needs.detect-changes.outputs.hm-llama-index-chat-pdf == 'true' }}
+      hm-llama-index-chat-pdf: ${{ needs.detect-changes.outputs.llm-application.hm-llama-index-chat-pdf == 'true' }}
       hm-mineru: ${{ needs.detect-changes.outputs.hm-mineru == 'true' }}
       hm-mlflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
       hm-mlflow-predict-diabetes: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
