@@ -348,6 +348,8 @@ jobs:
               - 'machine-learning/hm-langchain/applications/chat-pdf/**'
             hm-langgraph-chat-pdf:
               - 'machine-learning/hm-langgraph/applications/chat-pdf/**'
+            hm-llama-factory:
+              - 'machine-learning/fine-tuning/hm-llama-factory/**'
             hm-llama-index-chat-pdf:
               - 'machine-learning/hm-llama-index/applications/chat-pdf/**'
             hm-marimo:
@@ -625,6 +627,7 @@ jobs:
       hm-lancedb: ${{ steps.filter.outputs.hm-lancedb }}
       hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
       hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
+      hm-llama-factory: ${{ steps.filter.outputs.hm-llama-factory }}
       hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
       hm-marimo: ${{ steps.filter.outputs.hm-marimo }}
       hm-mineru: ${{ steps.filter.outputs.hm-mineru }}
@@ -1009,6 +1012,7 @@ jobs:
       hm-kubeflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
       hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
       hm-langgraph-chat-pdf: ${{ needs.detect-changes.outputs.hm-langgraph-chat-pdf == 'true' }}
+      hm-llama-factory: ${{ needs.detect-changes.outputs.hm-llama-factory == 'true' }}
       hm-llama-index-chat-pdf: ${{ needs.detect-changes.outputs.hm-llama-index-chat-pdf == 'true' }}
       hm-mineru: ${{ needs.detect-changes.outputs.hm-mineru == 'true' }}
       hm-mlflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
