@@ -4,6 +4,7 @@ from unsloth import FastLanguageModel  # isort: skip
 from unsloth.chat_templates import standardize_sharegpt  # isort: skip
 
 import logging
+from pathlib import Path
 
 import pandas as pd
 import torch
@@ -226,12 +227,12 @@ def test_inference(model: PreTrainedModel, tokenizer: PreTrainedTokenizer) -> No
 def save_model(
     model: PreTrainedModel,
     tokenizer: PreTrainedTokenizer,
-    save_path: str = "lora_model",
+    output_path: Path,
 ) -> None:
     """Save the trained model."""
-    logger.info(f"Saving model to {save_path}...")
-    model.save_pretrained(save_path)
-    tokenizer.save_pretrained(save_path)
+    logger.info(f"Saving model to {output_path}...")
+    model.save_pretrained(output_path)
+    tokenizer.save_pretrained(output_path)
     logger.info("Model saved successfully!")
 
 
@@ -254,7 +255,8 @@ def main() -> None:
         test_inference(model, tokenizer)
 
         # Save the model
-        save_model(model, tokenizer)
+        output_dir = Path("output")
+        save_model(model, tokenizer, output_dir)
 
         logger.info("=" * 50)
         logger.info("Training completed successfully!")
