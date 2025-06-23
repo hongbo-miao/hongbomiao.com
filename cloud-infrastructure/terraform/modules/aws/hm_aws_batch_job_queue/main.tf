@@ -11,7 +11,13 @@ resource "aws_batch_job_queue" "main" {
   name                 = var.aws_batch_job_queue_name
   state                = "ENABLED"
   priority             = "0"
-  compute_environments = var.aws_batch_compute_environment_arns
+  dynamic "compute_environment_order" {
+    for_each = var.aws_batch_compute_environment_arns
+    content {
+      order               = compute_environment_order.key + 1
+      compute_environment = compute_environment_order.value
+    }
+  }
   tags = {
     Environment  = var.environment
     Team         = var.team
