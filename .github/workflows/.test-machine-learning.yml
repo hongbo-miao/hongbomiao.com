@@ -751,23 +751,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/hm-langchain/applications/chat-pdf/uv.lock
+          cache-dependency-glob: machine-learning/llm-application/hm-langchain/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/hm-langchain/applications/chat-pdf/pyproject.toml
+          python-version-file: machine-learning/llm-application/hm-langchain/applications/chat-pdf/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/hm-langchain/applications/chat-pdf
+        working-directory: machine-learning/llm-application/hm-langchain/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/hm-langchain/applications/chat-pdf
+        working-directory: machine-learning/llm-application/hm-langchain/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/hm-langchain/applications/chat-pdf
+          directory: machine-learning/llm-application/hm-langchain/applications/chat-pdf
 
   langgraph-chat-pdf-test:
     name: LangGraph (chat-pdf) | Test
@@ -783,23 +783,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/hm-langgraph/applications/chat-pdf/uv.lock
+          cache-dependency-glob: machine-learning/llm-application/hm-langgraph/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/hm-langgraph/applications/chat-pdf/pyproject.toml
+          python-version-file: machine-learning/llm-application/hm-langgraph/applications/chat-pdf/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/hm-langgraph/applications/chat-pdf
+        working-directory: machine-learning/llm-application/hm-langgraph/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/hm-langgraph/applications/chat-pdf
+        working-directory: machine-learning/llm-application/hm-langgraph/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/hm-langgraph/applications/chat-pdf
+          directory: machine-learning/llm-application/hm-langgraph/applications/chat-pdf
 
   llama-index-chat-pdf-test:
     name: LlamaIndex (chat-pdf) | Test
@@ -815,23 +815,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/hm-llama-index/applications/chat-pdf/uv.lock
+          cache-dependency-glob: machine-learning/llm-application/hm-llama-index/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/hm-llama-index/applications/chat-pdf/pyproject.toml
+          python-version-file: machine-learning/llm-application/hm-llama-index/applications/chat-pdf/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/hm-llama-index/applications/chat-pdf
+        working-directory: machine-learning/llm-application/hm-llama-index/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/hm-llama-index/applications/chat-pdf
+        working-directory: machine-learning/llm-application/hm-llama-index/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/hm-llama-index/applications/chat-pdf
+          directory: machine-learning/llm-application/hm-llama-index/applications/chat-pdf
 
   model-context-protocol-test:
     name: Model Context Protocol | Test
