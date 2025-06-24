@@ -519,6 +519,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.llm-application.hm-langchain.applications.chat-pdf
     uv run poe static-type-check-python --package=machine-learning.llm-application.hm-langgraph.applications.chat-pdf
     uv run poe static-type-check-python --package=machine-learning.llm-application.hm-llama-index.applications.chat-pdf
+    uv run poe static-type-check-python --package=machine-learning.llm-application.hm-pydantic-ai.applications.chat-pdf
     uv run poe static-type-check-python --package=machine-learning.model-context-protocol
     uv run poe static-type-check-python --package=machine-learning.neural-forecasting.forecast-air-passenger-number
     uv run poe static-type-check-python --package=machine-learning.nvidia-dali
