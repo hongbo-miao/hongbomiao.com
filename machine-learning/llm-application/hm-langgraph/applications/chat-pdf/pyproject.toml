@@ -1,7 +1,7 @@
 [project]
 name = "hm-langgraph-chat-pdf"
 version = "1.0.0"
-requires-python = "~=3.13.4"
+requires-python = "~=3.12.0"
 dependencies = [
   "docling==2.37.0",
   "faiss-cpu==1.11.0",
@@ -10,6 +10,7 @@ dependencies = [
   "pydantic-settings==2.10.0",
   "python-dotenv==1.1.0",
   "sentence-transformers==4.1.0",
+  "torch",
 ]
 
 [dependency-groups]
@@ -22,6 +23,14 @@ dev = [
 [tool.uv]
 package = false
 required-version = ">=0.6.0"
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu128" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
 
 [tool.poe.tasks]
 dev = "python src/main.py"
