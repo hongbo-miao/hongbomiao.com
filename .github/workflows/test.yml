@@ -394,6 +394,8 @@ jobs:
               - 'cloud-security/hm-prowler/**'
             hm-pulumi:
               - 'cloud-infrastructure/hm-pulumi/**'
+            hm-pydantic-ai-chat-pdf:
+              - 'machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf/**'
             hm-pygwalker:
               - 'data-visualization/hm-pygwalker/**'
             hm-pyvista-mount-saint-helens:
@@ -625,10 +627,10 @@ jobs:
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
       hm-lancedb: ${{ steps.filter.outputs.hm-lancedb }}
-      hm-langchain-chat-pdf: ${{ steps.filter.outputs.llm-application.hm-langchain-chat-pdf }}
-      hm-langgraph-chat-pdf: ${{ steps.filter.outputs.llm-application.hm-langgraph-chat-pdf }}
+      hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
+      hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
       hm-llama-factory: ${{ steps.filter.outputs.hm-llama-factory }}
-      hm-llama-index-chat-pdf: ${{ steps.filter.outputs.llm-application.hm-llama-index-chat-pdf }}
+      hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
       hm-marimo: ${{ steps.filter.outputs.hm-marimo }}
       hm-mineru: ${{ steps.filter.outputs.hm-mineru }}
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
@@ -651,6 +653,7 @@ jobs:
       hm-protobuf: ${{ steps.filter.outputs.hm-protobuf }}
       hm-prowler: ${{ steps.filter.outputs.hm-prowler }}
       hm-pulumi: ${{ steps.filter.outputs.hm-pulumi }}
+      hm-pydantic-ai-chat-pdf: ${{ steps.filter.outputs.hm-pydantic-ai-chat-pdf }}
       hm-pygwalker: ${{ steps.filter.outputs.hm-pygwalker }}
       hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
       hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
@@ -1010,15 +1013,16 @@ jobs:
       hm-gradio-classify-image: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
       hm-kubeflow-calculate: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
       hm-kubeflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
-      hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.llm-application.hm-langchain-chat-pdf == 'true' }}
-      hm-langgraph-chat-pdf: ${{ needs.detect-changes.outputs.llm-application.hm-langgraph-chat-pdf == 'true' }}
+      hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
+      hm-langgraph-chat-pdf: ${{ needs.detect-changes.outputs.hm-langgraph-chat-pdf == 'true' }}
       hm-llama-factory: ${{ needs.detect-changes.outputs.hm-llama-factory == 'true' }}
-      hm-llama-index-chat-pdf: ${{ needs.detect-changes.outputs.llm-application.hm-llama-index-chat-pdf == 'true' }}
+      hm-llama-index-chat-pdf: ${{ needs.detect-changes.outputs.hm-llama-index-chat-pdf == 'true' }}
       hm-mineru: ${{ needs.detect-changes.outputs.hm-mineru == 'true' }}
       hm-mlflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
       hm-mlflow-predict-diabetes: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
       hm-nvidia-modulus: ${{ needs.detect-changes.outputs.hm-nvidia-modulus == 'true' }}
       hm-olmocr: ${{ needs.detect-changes.outputs.hm-olmocr == 'true' }}
+      hm-pydantic-ai-chat-pdf: ${{ needs.detect-changes.outputs.hm-pydantic-ai-chat-pdf == 'true' }}
       hm-rasa: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
       hm-scikit-learn: ${{ needs.detect-changes.outputs.hm-scikit-learn == 'true' }}
       hm-sglang: ${{ needs.detect-changes.outputs.hm-sglang == 'true' }}

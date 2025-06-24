@@ -78,6 +78,9 @@ name: . Test Machine Learning
       hm-olmocr:
         required: true
         type: boolean
+      hm-pydantic-ai-chat-pdf:
+        required: true
+        type: boolean
       hm-rasa:
         required: true
         type: boolean
@@ -768,6 +771,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: machine-learning/llm-application/hm-langchain/applications/chat-pdf
+
+  pydantic-ai-chat-pdf-test:
+    name: PydanticAI (chat-pdf) | Test
+    if: ${{ inputs.workflow || inputs.hm-pydantic-ai-chat-pdf }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.3.0
+        with:
+          version: 0.7.13
+          enable-cache: true
+          cache-dependency-glob: machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf
 
   langgraph-chat-pdf-test:
     name: LangGraph (chat-pdf) | Test
