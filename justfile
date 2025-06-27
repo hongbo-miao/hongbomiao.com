@@ -17,8 +17,14 @@ docker-stop:
 docker-rmi:
     docker rmi --force IMAGE_ID
 
+docker-show-disk-usage:
+    docker system df
+
 docker-prune:
     docker system prune
+
+docker-prune-build-cache:
+    docker builder prune --all
 
 # Node.js
 nvm-install:
