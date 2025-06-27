@@ -524,6 +524,8 @@ jobs:
               - 'web-cypress/**'
             windows-calculator:
               - 'operating-system/windows/calculator/**'
+            x-plane:
+              - 'aerospace/x-plane/**'
             zeromq-iads-bridge:
               - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
     outputs:
@@ -716,6 +718,7 @@ jobs:
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
       web: ${{ steps.filter.outputs.web }}
       windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
+      x-plane: ${{ steps.filter.outputs.x-plane }}
       zeromq-iads-bridge: ${{ steps.filter.outputs.zeromq-iads-bridge }}
 
   lint:
@@ -1118,6 +1121,7 @@ jobs:
       # Applications
       hm-aerosandbox: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
       hm-openaerostruct: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
+      x-plane: ${{ needs.detect-changes.outputs.x-plane == 'true' }}
 
   genesis-test:
     name: Genesis | Test
