@@ -731,6 +731,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **PX4** - Flight control software
 - **CubeSat** - Miniaturized satellite
 - **QGroundControl** - Ground control station (GCS) for unmanned aerial vehicles (UAVs)
+- **X-Plane** - Flight simulator
 
 ## Code
 
@@ -1081,6 +1082,10 @@ OpenFOAM simulation results viewed by ParaView.
 ![ROS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/4e4ab425-53a1-428d-abb9-408eb48553da)
 
 ![ROS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/6728d19c-9f04-4ec9-a603-46fd8ee0e2b0)
+
+### X-Plane - Flight Simulator
+
+![X-Plane screenshot](https://github.com/user-attachments/assets/eeba5334-a7bc-4c63-b9b1-17979edbdba1)
 
 ### PX4 - Flight Control Software
 
