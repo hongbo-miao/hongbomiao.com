@@ -86,7 +86,7 @@ jobs:
 
   x-plane-test:
     name: X-Plane | Test
-    if: ${{ inputs.workflow || inputs.hm-x-plane }}
+    if: ${{ inputs.workflow || inputs.x-plane }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -98,20 +98,20 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: aerospace/hm-x-plane/uv.lock
+          cache-dependency-glob: aerospace/x-plane/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: aerospace/hm-x-plane/pyproject.toml
+          python-version-file: aerospace/x-plane/pyproject.toml
       - name: Install dependencies
-        working-directory: aerospace/hm-x-plane
+        working-directory: aerospace/x-plane
         run: |
           uv sync --dev
       - name: Test
-        working-directory: aerospace/hm-x-plane
+        working-directory: aerospace/x-plane
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: aerospace/hm-x-plane
+          directory: aerospace/x-plane
