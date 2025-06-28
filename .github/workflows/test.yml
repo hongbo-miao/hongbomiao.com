@@ -284,6 +284,8 @@ jobs:
               - 'data-storage/delta-lake/write-to-delta-lake/**'
             feature-store:
               - 'machine-learning/feature-store/**'
+            fine-tune-whisper:
+              - 'machine-learning/fine-tuning/fine-tune-whisper/**'
             flink-stream-tweets:
               - 'data-processing/flink/applications/stream-tweets/**'
             grafana-hm-dashboard:
@@ -598,6 +600,7 @@ jobs:
       development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
       ethereum: ${{ steps.filter.outputs.ethereum }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
+      fine-tune-whisper: ${{ steps.filter.outputs.fine-tune-whisper }}
       flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
       format-can-data: ${{ steps.filter.outputs.format-can-data }}
       grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
@@ -1006,6 +1009,7 @@ jobs:
       amazon-sagemaker-triton-resnet-50-infer: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
       feature-store: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
+      fine-tune-whisper: ${{ needs.detect-changes.outputs.fine-tune-whisper == 'true' }}
       graph-neural-network: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
       hm-autogluon: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
       hm-axolotl: ${{ needs.detect-changes.outputs.hm-axolotl == 'true' }}

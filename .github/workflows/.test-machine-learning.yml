@@ -21,6 +21,9 @@ name: . Test Machine Learning
       feature-store:
         required: true
         type: boolean
+      fine-tune-whisper:
+        required: true
+        type: boolean
       graph-neural-network:
         required: true
         type: boolean
@@ -1318,6 +1321,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: machine-learning/fine-tuning/hm-unsloth
+
+  fine-tune-whisper-test:
+    name: Fine Tune Whisper | Test
+    if: ${{ inputs.workflow || inputs.fine-tune-whisper }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.3.0
+        with:
+          version: 0.7.13
+          enable-cache: true
+          cache-dependency-glob: machine-learning/fine-tuning/fine-tune-whisper/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: machine-learning/fine-tuning/fine-tune-whisper/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/fine-tuning/fine-tune-whisper
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/fine-tuning/fine-tune-whisper
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: machine-learning/fine-tuning/fine-tune-whisper
 
   rasa-test:
     name: Rasa | Test
