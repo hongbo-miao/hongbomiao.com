@@ -24,6 +24,10 @@ LANGUAGE_CODE: str = "fr"
 DATASET_NAME: str = "mozilla-foundation/common_voice_17_0"
 OUTPUT_DIR: str = "./output/whisper-tiny-fr"
 
+# Dataset size parameters - None means use full dataset
+TRAIN_SUBSET_SIZE: int | None = 10000  # Set to None for full dataset
+TEST_SUBSET_SIZE: int | None = 2000  # Set to None for full dataset
+
 
 @dataclass
 class DataCollator:
@@ -45,7 +49,12 @@ class DataCollator:
 
         # Pad labels
         label_features = [{"input_ids": feature["labels"]} for feature in features]
-        labels_batch = self.processor.tokenizer.pad(label_features, return_tensors="pt")
+        labels_batch = self.processor.tokenizer.pad(
+            label_features,
+            return_tensors="pt",
+            padding=True,
+            return_attention_mask=True,
+        )
 
         # Mask padding tokens in labels
         labels = labels_batch["input_ids"].masked_fill(
@@ -60,8 +69,11 @@ class DataCollator:
         return batch
 
 
-def load_and_prepare_dataset() -> tuple[Dataset, Dataset]:
-    """Load Common Voice dataset."""
+def load_and_prepare_dataset(
+    train_subset_size: int | None = None,
+    test_subset_size: int | None = None,
+) -> tuple[Dataset, Dataset]:
+    """Load Common Voice dataset with optional subset size."""
     logger.info(f"Loading dataset: {DATASET_NAME}")
     train_dataset = load_dataset(
         DATASET_NAME,
@@ -76,10 +88,22 @@ def load_and_prepare_dataset() -> tuple[Dataset, Dataset]:
         trust_remote_code=True,
     )
 
-    # Select subset of 1000 samples
-    train_dataset = train_dataset.select(range(1000))
-    # 200 for test
-    test_dataset = test_dataset.select(range(min(200, len(test_dataset))))
+    # Apply subset selection if specified
+    if train_subset_size is not None:
+        original_train_size = len(train_dataset)
+        subset_size = min(train_subset_size, original_train_size)
+        train_dataset = train_dataset.select(range(subset_size))
+        logger.info(f"Using train subset: {subset_size}/{original_train_size} samples")
+    else:
+        logger.info(f"Using full train dataset: {len(train_dataset)} samples")
+
+    if test_subset_size is not None:
+        original_test_size = len(test_dataset)
+        subset_size = min(test_subset_size, original_test_size)
+        test_dataset = test_dataset.select(range(subset_size))
+        logger.info(f"Using test subset: {subset_size}/{original_test_size} samples")
+    else:
+        logger.info(f"Using full test dataset: {len(test_dataset)} samples")
 
     # Remove unnecessary columns
     cols_to_remove: list[str] = [
@@ -150,8 +174,11 @@ def main() -> None:
     else:
         logger.info("Using CPU - training will be slow!")
 
-    # Load dataset
-    train_dataset, test_dataset = load_and_prepare_dataset()
+    # Load dataset with subset parameters
+    train_dataset, test_dataset = load_and_prepare_dataset(
+        train_subset_size=TRAIN_SUBSET_SIZE,
+        test_subset_size=TEST_SUBSET_SIZE,
+    )
 
     # Setup processor and model
     processor = WhisperProcessor.from_pretrained(
@@ -188,13 +215,14 @@ def main() -> None:
     # Training arguments
     training_args = Seq2SeqTrainingArguments(
         output_dir=OUTPUT_DIR,
-        per_device_train_batch_size=64,
-        per_device_eval_batch_size=32,
-        learning_rate=1e-5,
-        warmup_steps=500,
-        max_steps=4000,
+        per_device_train_batch_size=64,  # Much larger batches
+        per_device_eval_batch_size=32,  # Increased eval batch
+        gradient_accumulation_steps=1,  # No need with large batches
+        learning_rate=2e-5,  # Slightly higher LR for larger batches
+        warmup_steps=200,  # Reduced warmup for faster training
+        max_steps=2000,  # Fewer steps needed with larger batches
         fp16=False,
-        bf16=True,
+        bf16=True,  # Use bfloat16 for better precision
         eval_strategy="steps",
         eval_steps=1000,
         save_steps=1000,
@@ -205,6 +233,18 @@ def main() -> None:
         metric_for_best_model="wer",
         greater_is_better=False,
         ddp_find_unused_parameters=False,
+        # Maximize CPU/GPU utilization
+        dataloader_num_workers=16,  # Use more CPU cores
+        dataloader_pin_memory=True,
+        dataloader_prefetch_factor=4,  # Prefetch more batches
+        remove_unused_columns=False,
+        report_to=None,
+        # Memory optimizations for large GPU
+        max_grad_norm=1.0,
+        weight_decay=0.01,
+        adam_beta1=0.9,
+        adam_beta2=0.999,
+        adam_epsilon=1e-8,
     )
 
     # Setup trainer
