@@ -503,6 +503,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.data-extraction.hm-mineru
     uv run poe static-type-check-python --package=machine-learning.data-extraction.hm-olmocr
     uv run poe static-type-check-python --package=machine-learning.feature-store
+    uv run poe static-type-check-python --package=machine-learning.fine-tuning.fine-tune-whisper
     uv run poe static-type-check-python --package=machine-learning.fine-tuning.hm-axolotl
     uv run poe static-type-check-python --package=machine-learning.fine-tuning.hm-llama-factory
     uv run poe static-type-check-python --package=machine-learning.fine-tuning.hm-torchtune
