@@ -17,6 +17,12 @@
           - kubectl
         classic: true
         state: present
+    - name: Install common packages from apt
+      become: true
+      ansible.builtin.apt:
+        name:
+          - ncdu
+        state: present
 - name: Deploy RKE2
   hosts: all
   become: true

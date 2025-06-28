@@ -72,7 +72,7 @@ def main() -> None:
 
         logger.info("  -> Flaps UP")
         # Flaps up
-        send_dref(sock, "sim/cockpit2/controls/flap_ratio", 0.0)
+        send_dref(sock, "sim/cockpit2/controls/flap_handle_request_ratio", 0.0)
 
         # Step 5: Neutralize controls
         logger.info("\n[Phase 5] Stabilizing climb. You have control.")
