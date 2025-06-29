@@ -503,6 +503,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **vLLM** - LLM serving framework
   - **SGLang** - LLM and visual language model (VLM) serving framework
   - **Ollama** - LLM serving framework
+- **LLM Evaluation**
+  - **DeepEval** - LLM evaluation framework
 - **MCP** - Model Context Protocol
 - **LiteLLM** - LLM gateway
 - **Open WebUI** - AI chat interface
