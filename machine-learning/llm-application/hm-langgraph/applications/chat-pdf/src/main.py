@@ -108,7 +108,7 @@ def generate_answer(state: MessagesState) -> MessagesState:
     try:
         client = create_openai_client()
         response = client.chat.completions.create(
-            model="claude-3-5-sonnet",
+            model="claude-sonnet-4",
             messages=[
                 {
                     "role": "system",

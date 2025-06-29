@@ -490,7 +490,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Docling** - Document data extraction
   - **pypdf** - PDF manipulation
 - **LLM Application**
-  - **LangGraph** - LLM workflows library
+  - **PydanticAI** - LLM agent framework
+  - **LangGraph** - LLM workflow library
   - **LangChain** - LLM application framework
   - **LlamaIndex** - LLM data framework
 - **LLM Fine-Tuning**
