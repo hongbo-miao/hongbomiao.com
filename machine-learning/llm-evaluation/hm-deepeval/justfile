@@ -1,0 +1,23 @@
+uv-update-lock-file:
+    uv lock
+
+uv-install-dependencies:
+    uv sync --dev
+
+dev:
+    uv run poe dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
+
+deepeval-set-model:
+    uv run deepeval set-litellm anthropic/claude-sonnet-4 --api-base=https://litellm.hongbomiao.com --api-key=xxx
+
+deepeval-test:
+    uv run deepeval test run src
+
+deepeval-view:
+    uv run deepeval view

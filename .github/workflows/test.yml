@@ -326,6 +326,8 @@ jobs:
               - 'data-storage/hm-duckdb/query-parquet/**'
             hm-duckdb-query-protobuf:
               - 'data-storage/hm-duckdb/query-protobuf/**'
+            hm-deepeval:
+              - 'machine-learning/llm-evaluation/hm-deepeval/**'
             hm-faster-whisper:
               - 'machine-learning/hm-faster-whisper/**'
             hm-flax:
@@ -617,6 +619,7 @@ jobs:
       hm-daft-analyze-transactions: ${{ steps.filter.outputs.hm-daft-analyze-transactions }}
       hm-dash-csv-visualizer: ${{ steps.filter.outputs.hm-dash-csv-visualizer }}
       hm-dash-parquet-visualizer: ${{ steps.filter.outputs.hm-dash-parquet-visualizer }}
+      hm-deepeval: ${{ steps.filter.outputs.hm-deepeval }}
       hm-docling: ${{ steps.filter.outputs.hm-docling }}
       hm-duckdb-query-duckdb: ${{ steps.filter.outputs.hm-duckdb-query-duckdb }}
       hm-duckdb-query-lance: ${{ steps.filter.outputs.hm-duckdb-query-lance }}
@@ -1014,6 +1017,7 @@ jobs:
       hm-autogluon: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
       hm-axolotl: ${{ needs.detect-changes.outputs.hm-axolotl == 'true' }}
       hm-cuml: ${{ needs.detect-changes.outputs.hm-cuml == 'true' }}
+      hm-deepeval: ${{ needs.detect-changes.outputs.hm-deepeval == 'true' }}
       hm-docling: ${{ needs.detect-changes.outputs.hm-docling == 'true' }}
       hm-faster-whisper: ${{ needs.detect-changes.outputs.hm-faster-whisper == 'true' }}
       hm-flax: ${{ needs.detect-changes.outputs.hm-flax == 'true' }}
