@@ -13,6 +13,7 @@ export default [
     ignores: [
       // Anywhere
       '**/__pycache__',
+      '**/.deepeval',
       '**/.DS_Store',
       '**/.env.development.local',
       '**/.env.production.local',
