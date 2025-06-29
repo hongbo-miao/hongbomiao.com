@@ -1147,6 +1147,10 @@ The VHDL waveforms are displayed in GTKWave.
 
 ![ComfyUI screenshot](https://github.com/user-attachments/assets/1c3e5b19-e261-48c9-94bf-6e8daedfece4)
 
+### DeepEval - LLM Evaluation Framework
+
+![DeepEval screenshot](https://github.com/user-attachments/assets/308dfd7b-4d0a-4228-ad9f-596cb4089911)
+
 ### Qdrant - Distributed Vector Database
 
 ![Qdrant screenshot](https://github.com/user-attachments/assets/9cf6fda0-65e3-45fe-90ac-6937a06bfabe)
@@ -1194,12 +1198,6 @@ Chatbot on Telegram powered by Rasa.
 ### Pixie - Kubernetes Application Observing
 
 ![Pixie screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/d3ea9059-45f3-4ee3-8664-bcf167e9eea6)
-
-![Pixie screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/e0622e37-bb50-46d9-a572-8f76e717247c)
-
-![Pixie screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/05ab9c40-cb6e-4872-938b-b6e03745b1f5)
-
-![Pixie screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/fb2b47c0-a6de-4957-af7f-0fd90d09c7a2)
 
 ### Linkerd - Service Mesh
 
