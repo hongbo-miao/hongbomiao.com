@@ -509,14 +509,14 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **DeepEval** - LLM evaluation framework
 - LLM Gateway
   - **LiteLLM** - LLM gateway
-- Agent Communication Protocol (ACP)
+- Agent Communication Protocol
   - **Model Context Protocol (MCP)**
   - **Agent Communication Protocol (ACP)**
   - **Agent2Agent Protocol (A2A)**
 - AI Chat Interface
   - **Open WebUI** - AI chat interface
     - **Open WebUI Pipelines** - OpenAI API plugin framework
-- Diffusion Models:
+- Diffusion Model:
   - **Diffusers** - Diffusion models
     - **Stable Diffusion** - Text-to-image generation model
   - **ComfyUI** - Node-based interface for diffusion model workflows
@@ -925,7 +925,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **TShark** – Network protocol analyzer
 
-### Communication Standards
+### Communication Standard
 
 - **Open Systems Interconnection (OSI) model**
   - Layer 1: Physical layer
@@ -980,7 +980,7 @@ The diagram illustrates the repository's architecture, which is considered overl
       - **Internet Message Access Protocol (IMAP)**
     - **MQTT**
 
-### Wireless Network Standards
+### Wireless Network Standard
 
 - **1G**
 - **2G**
@@ -992,7 +992,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **5.5G** - 5G Advanced
 - **6G**
 
-## Guidelines
+## Guideline
 
 - **Avionics Systems**
   - **DO-178C** - Software considerations in airborne systems and equipment certification
@@ -1010,7 +1010,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **ISO 10218** - Robots and robotic devices — safety requirements for industrial robots
   - **ANSI/RIA R15.06-2012** - Industrial robots and robot systems — safety requirements
 
-# 🏞 Highlights
+# 🏞 Highlight
 
 ## Simulation
 
