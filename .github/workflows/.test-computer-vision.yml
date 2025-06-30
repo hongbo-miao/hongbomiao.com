@@ -9,9 +9,6 @@ name: . Test Computer Vision
         required: true
         type: boolean
       # Applications
-      hm-imagebind:
-        required: true
-        type: boolean
       hm-open3d:
         required: true
         type: boolean
@@ -19,9 +16,6 @@ name: . Test Computer Vision
         required: true
         type: boolean
       hm-supervision-detect-objects:
-        required: true
-        type: boolean
-      open-clip:
         required: true
         type: boolean
 
@@ -57,70 +51,6 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: computer-vision/hm-supervision/detect-objects
-
-  imagebind-test:
-    name: ImageBind | Test
-    if: ${{ inputs.workflow || inputs.hm-imagebind }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.3.0
-        with:
-          version: 0.7.13
-          enable-cache: true
-          cache-dependency-glob: computer-vision/hm-imagebind/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.6.0
-        with:
-          python-version-file: computer-vision/hm-imagebind/pyproject.toml
-      - name: Install dependencies
-        working-directory: computer-vision/hm-imagebind
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: computer-vision/hm-imagebind
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.4.3
-        with:
-          directory: computer-vision/hm-imagebind
-
-  open-clip-test:
-    name: OpenCLIP | Test
-    if: ${{ inputs.workflow || inputs.open-clip }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.3.0
-        with:
-          version: 0.7.13
-          enable-cache: true
-          cache-dependency-glob: computer-vision/open-clip/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.6.0
-        with:
-          python-version-file: computer-vision/open-clip/pyproject.toml
-      - name: Install dependencies
-        working-directory: computer-vision/open-clip
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: computer-vision/open-clip
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.4.3
-        with:
-          directory: computer-vision/open-clip
 
   open3d-test:
     name: Open3D | Test
