@@ -339,7 +339,7 @@ jobs:
             hm-gradio-classify-image:
               - 'machine-learning/hm-gradio/applications/classify-image/**'
             hm-imagebind:
-              - 'computer-vision/hm-imagebind/**'
+              - 'embedding/hm-imagebind/**'
             hm-jax:
               - 'high-performance-computing/hm-jax/**'
             hm-kubeflow-calculate:
@@ -493,7 +493,7 @@ jobs:
             nvidia-dali:
               - 'machine-learning/nvidia-dali/**'
             open-clip:
-              - 'computer-vision/open-clip/**'
+              - 'embedding/open-clip/**'
             pack-unpack-data:
               - 'embedded-system/pack-unpack-data/**'
             plotly-heatmap:
@@ -1025,6 +1025,7 @@ jobs:
       hm-faster-whisper: ${{ needs.detect-changes.outputs.hm-faster-whisper == 'true' }}
       hm-flax: ${{ needs.detect-changes.outputs.hm-flax == 'true' }}
       hm-gradio-classify-image: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
+      hm-imagebind: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
       hm-kubeflow-calculate: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
       hm-kubeflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
       hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
@@ -1050,6 +1051,7 @@ jobs:
       model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
       neural-forecasting-forecast-air-passenger-number: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
+      open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
       quantization: ${{ needs.detect-changes.outputs.quantization == 'true' }}
       reinforcement-learning-cart-pole: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
@@ -1064,11 +1066,9 @@ jobs:
       # Workflows
       workflow: ${{ needs.detect-changes.outputs.workflow-test-computer-vision == 'true' }}
       # Applications
-      hm-imagebind: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
       hm-open3d: ${{ needs.detect-changes.outputs.hm-open3d == 'true' }}
       hm-pyvista-mount-saint-helens: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
       hm-supervision-detect-objects: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
-      open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
 
   test-network:
     name: Test Network
