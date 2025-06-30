@@ -78,6 +78,9 @@ name: . Test Machine Learning
       hm-mlflow-predict-diabetes:
         required: true
         type: boolean
+      hm-mlx-lm:
+        required: true
+        type: boolean
       hm-nvidia-modulus:
         required: true
         type: boolean
@@ -568,23 +571,55 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/hm-sglang/uv.lock
+          cache-dependency-glob: machine-learning/llm-inference/hm-sglang/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/hm-sglang/pyproject.toml
+          python-version-file: machine-learning/llm-inference/hm-sglang/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/hm-sglang
+        working-directory: machine-learning/llm-inference/hm-sglang
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/hm-sglang
+        working-directory: machine-learning/llm-inference/hm-sglang
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/hm-sglang
+          directory: machine-learning/llm-inference/hm-sglang
+
+  mlx-lm-test:
+    name: MLX LM | Test
+    if: ${{ inputs.workflow || inputs.hm-mlx-lm }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.3.0
+        with:
+          version: 0.7.13
+          enable-cache: true
+          cache-dependency-glob: machine-learning/llm-inference/hm-mlx-lm/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: machine-learning/llm-inference/hm-mlx-lm/pyproject.toml
+      - name: Install dependencies
+        working-directory: machine-learning/llm-inference/hm-mlx-lm
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/llm-inference/hm-mlx-lm
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: machine-learning/llm-inference/hm-mlx-lm
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
