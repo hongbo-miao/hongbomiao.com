@@ -252,10 +252,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Data Extraction
 
-  - **MinerU** - Document data extraction
-  - **olmOCR** - Document data extraction
-  - **Docling** - Document data extraction
-  - **pypdf** - PDF manipulation
+- **MinerU** - Document data extraction
+- **olmOCR** - Document data extraction
+- **Docling** - Document data extraction
+- **pypdf** - PDF manipulation
 
 ### Data Ingestion
 
@@ -496,6 +496,9 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **olmOCR** - Document data extraction
   - **Docling** - Document data extraction
   - **pypdf** - PDF manipulation
+- Embedding
+  - **ImageBind** - Multimodal embedding model for images, text, audio, video, depth, thermal, and inertial measurement units (IMUs)
+  - **OpenCLIP** - Multimodal embedding model for images and text
 - Vector Database
   - **LanceDB** - Embedded vector database
   - **Qdrant** - Distributed vector database
@@ -534,8 +537,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Computer Vision
 
-- **ImageBind** - Multimodal embedding model for images, text, audio, video, depth, thermal, and inertial measurement units (IMUs)
-- **OpenCLIP** - Multimodal embedding model for images and text
 - **OpenCV** - Computer vision library
 - **supervision** - Computer vision library
 - **Ultralytics YOLOv8** - Object detection model
