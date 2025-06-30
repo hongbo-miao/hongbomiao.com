@@ -484,36 +484,42 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Generative AI (GenAI)
 
-- **Data Extraction**
+- Data Extraction
   - **MinerU** - Document data extraction
   - **olmOCR** - Document data extraction
   - **Docling** - Document data extraction
   - **pypdf** - PDF manipulation
-- **LLM Application**
+- *LLM Application
   - **PydanticAI** - LLM agent framework
   - **LangGraph** - LLM workflow library
   - **LangChain** - LLM application framework
   - **LlamaIndex** - LLM data framework
-- **LLM Fine-Tuning**
+- LLM Fine-Tuning
   - **LLaMA-Factory** - LLM fine-tuning
   - **Unsloth** - LLM fine-tuning
   - **torchtune** - LLM fine-tuning
   - **Axolotl** - LLM fine-tuning
-- **LLM Inference**
+- LLM Inference
   - **vLLM** – High-throughput LLM serving
   - **SGLang** – LLM/VLM serving
-  - **Ollama** – Lightweight LLM serving
+  - **Ollama** – Local LLM serving
+  - **GPT4All** - Local LLM serving
   - **MLX LM** – LLM serving for Apple silicon
-- **LLM Evaluation**
+- LLM Evaluation
   - **DeepEval** - LLM evaluation framework
-- **MCP** - Model Context Protocol
-- **LiteLLM** - LLM gateway
-- **Open WebUI** - AI chat interface
-  - **Open WebUI Pipelines** - OpenAI API plugin framework
-- **GPT4All** - Local LLM models
-- **Diffusers** - Diffusion models
-  - **Stable Diffusion** - Text-to-image generation model
-- **ComfyUI** - Node-based interface for diffusion model workflows
+- LLM Gateway
+  - **LiteLLM** - LLM gateway
+- Agent Communication Protocol
+  - **Model Context Protocol (MCP)**
+  - **Agent Communication Protocol (ACP)**
+  - **Agent2Agent Protocol (A2A)**
+- AI Chat Interface
+  - **Open WebUI** - AI chat interface
+    - **Open WebUI Pipelines** - OpenAI API plugin framework
+- Diffusion Model
+  - **Diffusers** - Diffusion models
+    - **Stable Diffusion** - Text-to-image generation model
+  - **ComfyUI** - Node-based interface for diffusion model workflows
 
 ## Computer Vision
 
@@ -919,7 +925,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **TShark** – Network protocol analyzer
 
-### Communication Standards
+### Communication Standard
 
 - **Open Systems Interconnection (OSI) model**
   - Layer 1: Physical layer
@@ -974,7 +980,7 @@ The diagram illustrates the repository's architecture, which is considered overl
       - **Internet Message Access Protocol (IMAP)**
     - **MQTT**
 
-### Wireless Network Standards
+### Wireless Network Standard
 
 - **1G**
 - **2G**
@@ -986,7 +992,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **5.5G** - 5G Advanced
 - **6G**
 
-## Guidelines
+## Guideline
 
 - **Avionics Systems**
   - **DO-178C** - Software considerations in airborne systems and equipment certification
@@ -1004,7 +1010,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **ISO 10218** - Robots and robotic devices — safety requirements for industrial robots
   - **ANSI/RIA R15.06-2012** - Industrial robots and robot systems — safety requirements
 
-# 🏞 Highlights
+# 🏞 Highlight
 
 ## Simulation
 
