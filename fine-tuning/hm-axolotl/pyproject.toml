@@ -1,7 +1,7 @@
 [project]
 name = "hm-axolotl"
 version = "1.0.0"
-requires-python = "~=3.13.5"
+requires-python = "~=3.12.0"
 dependencies = [
   "axolotl[deepspeed]==0.10.0",
 ]
@@ -13,28 +13,9 @@ dev = [
   "pytest==8.4.1",
 ]
 
-[project.optional-dependencies]
-build = [
-  "setuptools",
-  "torch",
-]
-compile = [
-  "flash-attn==2.8.0.post2",
-]
-
 [tool.uv]
 package = false
 required-version = ">=0.6.0"
-no-build-isolation-package = ["flash-attn"]
-override-dependencies = ["torch==2.7.1"]
-
-[tool.uv.sources]
-torch = [{ index = "pytorch-cu128" }]
-
-[[tool.uv.index]]
-name = "pytorch-cu128"
-url = "https://download.pytorch.org/whl/cu128"
-explicit = true
 
 [tool.poe.tasks]
 test = "pytest --verbose --verbose"
