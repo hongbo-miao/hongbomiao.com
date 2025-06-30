@@ -484,36 +484,42 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Generative AI (GenAI)
 
-- **Data Extraction**
+- Data Extraction
   - **MinerU** - Document data extraction
   - **olmOCR** - Document data extraction
   - **Docling** - Document data extraction
   - **pypdf** - PDF manipulation
-- **LLM Application**
+- *LLM Application
   - **PydanticAI** - LLM agent framework
   - **LangGraph** - LLM workflow library
   - **LangChain** - LLM application framework
   - **LlamaIndex** - LLM data framework
-- **LLM Fine-Tuning**
+- LLM Fine-Tuning
   - **LLaMA-Factory** - LLM fine-tuning
   - **Unsloth** - LLM fine-tuning
   - **torchtune** - LLM fine-tuning
   - **Axolotl** - LLM fine-tuning
-- **LLM Inference**
+- LLM Inference
   - **vLLM** – High-throughput LLM serving
   - **SGLang** – LLM/VLM serving
-  - **Ollama** – Lightweight LLM serving
+  - **Ollama** – Local LLM serving
+  - **GPT4All** - Local LLM serving
   - **MLX LM** – LLM serving for Apple silicon
-- **LLM Evaluation**
+- LLM Evaluation
   - **DeepEval** - LLM evaluation framework
-- **MCP** - Model Context Protocol
-- **LiteLLM** - LLM gateway
-- **Open WebUI** - AI chat interface
-  - **Open WebUI Pipelines** - OpenAI API plugin framework
-- **GPT4All** - Local LLM models
-- **Diffusers** - Diffusion models
-  - **Stable Diffusion** - Text-to-image generation model
-- **ComfyUI** - Node-based interface for diffusion model workflows
+- LLM Gateway
+  - **LiteLLM** - LLM gateway
+- Agent Communication Protocol (ACP)
+  - **Model Context Protocol (MCP)**
+  - **Agent Communication Protocol (ACP)**
+  - **Agent2Agent Protocol (A2A)**
+- AI Chat Interface
+  - **Open WebUI** - AI chat interface
+    - **Open WebUI Pipelines** - OpenAI API plugin framework
+- Diffusion Models:
+  - **Diffusers** - Diffusion models
+    - **Stable Diffusion** - Text-to-image generation model
+  - **ComfyUI** - Node-based interface for diffusion model workflows
 
 ## Computer Vision
 
