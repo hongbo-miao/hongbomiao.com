@@ -571,23 +571,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/llm-inference/hm-sglang/uv.lock
+          cache-dependency-glob: llm-inference/hm-sglang/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/llm-inference/hm-sglang/pyproject.toml
+          python-version-file: llm-inference/hm-sglang/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/llm-inference/hm-sglang
+        working-directory: llm-inference/hm-sglang
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/llm-inference/hm-sglang
+        working-directory: llm-inference/hm-sglang
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/llm-inference/hm-sglang
+          directory: llm-inference/hm-sglang
 
   mlx-lm-test:
     name: MLX LM | Test
@@ -603,23 +603,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/llm-inference/hm-mlx-lm/uv.lock
+          cache-dependency-glob: llm-inference/hm-mlx-lm/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/llm-inference/hm-mlx-lm/pyproject.toml
+          python-version-file: llm-inference/hm-mlx-lm/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/llm-inference/hm-mlx-lm
+        working-directory: llm-inference/hm-mlx-lm
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/llm-inference/hm-mlx-lm
+        working-directory: llm-inference/hm-mlx-lm
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/llm-inference/hm-mlx-lm
+          directory: llm-inference/hm-mlx-lm
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
@@ -699,23 +699,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/data-extraction/hm-mineru/uv.lock
+          cache-dependency-glob: data-extraction/hm-mineru/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/data-extraction/hm-mineru/pyproject.toml
+          python-version-file: data-extraction/hm-mineru/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/data-extraction/hm-mineru
+        working-directory: data-extraction/hm-mineru
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/data-extraction/hm-mineru
+        working-directory: data-extraction/hm-mineru
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/data-extraction/hm-mineru
+          directory: data-extraction/hm-mineru
 
   olmocr-test:
     name: olmOCR | Test
@@ -731,23 +731,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/data-extraction/hm-olmocr/uv.lock
+          cache-dependency-glob: data-extraction/hm-olmocr/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/data-extraction/hm-olmocr/pyproject.toml
+          python-version-file: data-extraction/hm-olmocr/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/data-extraction/hm-olmocr
+        working-directory: data-extraction/hm-olmocr
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/data-extraction/hm-olmocr
+        working-directory: data-extraction/hm-olmocr
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/data-extraction/hm-olmocr
+          directory: data-extraction/hm-olmocr
 
   docling-test:
     name: Docling | Test
@@ -763,23 +763,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/data-extraction/hm-docling/uv.lock
+          cache-dependency-glob: data-extraction/hm-docling/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/data-extraction/hm-docling/pyproject.toml
+          python-version-file: data-extraction/hm-docling/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/data-extraction/hm-docling
+        working-directory: data-extraction/hm-docling
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/data-extraction/hm-docling
+        working-directory: data-extraction/hm-docling
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/data-extraction/hm-docling
+          directory: data-extraction/hm-docling
 
   langchain-chat-pdf-test:
     name: LangChain (chat-pdf) | Test
@@ -795,23 +795,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/llm-application/hm-langchain/applications/chat-pdf/uv.lock
+          cache-dependency-glob: llm-application/hm-langchain/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/llm-application/hm-langchain/applications/chat-pdf/pyproject.toml
+          python-version-file: llm-application/hm-langchain/applications/chat-pdf/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/llm-application/hm-langchain/applications/chat-pdf
+        working-directory: llm-application/hm-langchain/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/llm-application/hm-langchain/applications/chat-pdf
+        working-directory: llm-application/hm-langchain/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/llm-application/hm-langchain/applications/chat-pdf
+          directory: llm-application/hm-langchain/applications/chat-pdf
 
   pydantic-ai-chat-pdf-test:
     name: PydanticAI (chat-pdf) | Test
@@ -827,23 +827,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf/uv.lock
+          cache-dependency-glob: llm-application/hm-pydantic-ai/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf/pyproject.toml
+          python-version-file: llm-application/hm-pydantic-ai/applications/chat-pdf/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf
+        working-directory: llm-application/hm-pydantic-ai/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf
+        working-directory: llm-application/hm-pydantic-ai/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/llm-application/hm-pydantic-ai/applications/chat-pdf
+          directory: llm-application/hm-pydantic-ai/applications/chat-pdf
 
   langgraph-chat-pdf-test:
     name: LangGraph (chat-pdf) | Test
@@ -859,23 +859,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/llm-application/hm-langgraph/applications/chat-pdf/uv.lock
+          cache-dependency-glob: llm-application/hm-langgraph/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/llm-application/hm-langgraph/applications/chat-pdf/pyproject.toml
+          python-version-file: llm-application/hm-langgraph/applications/chat-pdf/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/llm-application/hm-langgraph/applications/chat-pdf
+        working-directory: llm-application/hm-langgraph/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/llm-application/hm-langgraph/applications/chat-pdf
+        working-directory: llm-application/hm-langgraph/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/llm-application/hm-langgraph/applications/chat-pdf
+          directory: llm-application/hm-langgraph/applications/chat-pdf
 
   llama-index-chat-pdf-test:
     name: LlamaIndex (chat-pdf) | Test
@@ -891,23 +891,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/llm-application/hm-llama-index/applications/chat-pdf/uv.lock
+          cache-dependency-glob: llm-application/hm-llama-index/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/llm-application/hm-llama-index/applications/chat-pdf/pyproject.toml
+          python-version-file: llm-application/hm-llama-index/applications/chat-pdf/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/llm-application/hm-llama-index/applications/chat-pdf
+        working-directory: llm-application/hm-llama-index/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/llm-application/hm-llama-index/applications/chat-pdf
+        working-directory: llm-application/hm-llama-index/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/llm-application/hm-llama-index/applications/chat-pdf
+          directory: llm-application/hm-llama-index/applications/chat-pdf
 
   model-context-protocol-test:
     name: Model Context Protocol | Test
@@ -1244,25 +1244,25 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/fine-tuning/hm-axolotl/uv.lock
+          cache-dependency-glob: fine-tuning/hm-axolotl/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/fine-tuning/hm-axolotl/pyproject.toml
+          python-version-file: fine-tuning/hm-axolotl/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/fine-tuning/hm-axolotl
+        working-directory: fine-tuning/hm-axolotl
         run: |
           uv sync --extra=build
           uv sync --extra=build --extra=compile
           uv sync --extra=build --extra=compile --dev
       - name: Test
-        working-directory: machine-learning/fine-tuning/hm-axolotl
+        working-directory: fine-tuning/hm-axolotl
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/fine-tuning/hm-axolotl
+          directory: fine-tuning/hm-axolotl
 
   llama-factory-test:
     name: LLaMA-Factory | Test
@@ -1278,23 +1278,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/fine-tuning/hm-llama-factory/uv.lock
+          cache-dependency-glob: fine-tuning/hm-llama-factory/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/fine-tuning/hm-llama-factory/pyproject.toml
+          python-version-file: fine-tuning/hm-llama-factory/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/fine-tuning/hm-llama-factory
+        working-directory: fine-tuning/hm-llama-factory
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/fine-tuning/hm-llama-factory
+        working-directory: fine-tuning/hm-llama-factory
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/fine-tuning/hm-llama-factory
+          directory: fine-tuning/hm-llama-factory
 
   torchtune-test:
     name: torchtune | Test
@@ -1310,23 +1310,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/fine-tuning/hm-torchtune/uv.lock
+          cache-dependency-glob: fine-tuning/hm-torchtune/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/fine-tuning/hm-torchtune/pyproject.toml
+          python-version-file: fine-tuning/hm-torchtune/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/fine-tuning/hm-torchtune
+        working-directory: fine-tuning/hm-torchtune
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/fine-tuning/hm-torchtune
+        working-directory: fine-tuning/hm-torchtune
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/fine-tuning/hm-torchtune
+          directory: fine-tuning/hm-torchtune
 
   unsloth-test:
     name: Unsloth | Test
@@ -1342,23 +1342,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/fine-tuning/hm-unsloth/uv.lock
+          cache-dependency-glob: fine-tuning/hm-unsloth/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/fine-tuning/hm-unsloth/pyproject.toml
+          python-version-file: fine-tuning/hm-unsloth/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/fine-tuning/hm-unsloth
+        working-directory: fine-tuning/hm-unsloth
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/fine-tuning/hm-unsloth
+        working-directory: fine-tuning/hm-unsloth
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/fine-tuning/hm-unsloth
+          directory: fine-tuning/hm-unsloth
 
   fine-tune-whisper-test:
     name: Fine Tune Whisper | Test
@@ -1374,23 +1374,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/fine-tuning/fine-tune-whisper/uv.lock
+          cache-dependency-glob: fine-tuning/fine-tune-whisper/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/fine-tuning/fine-tune-whisper/pyproject.toml
+          python-version-file: fine-tuning/fine-tune-whisper/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/fine-tuning/fine-tune-whisper
+        working-directory: fine-tuning/fine-tune-whisper
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/fine-tuning/fine-tune-whisper
+        working-directory: fine-tuning/fine-tune-whisper
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/fine-tuning/fine-tune-whisper
+          directory: fine-tuning/fine-tune-whisper
 
   deepeval-test:
     name: DeepEval | Test
@@ -1407,23 +1407,23 @@ jobs:
         with:
           version: 0.7.13
           enable-cache: true
-          cache-dependency-glob: machine-learning/llm-evaluation/hm-deepeval/uv.lock
+          cache-dependency-glob: llm-evaluation/hm-deepeval/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/llm-evaluation/hm-deepeval/pyproject.toml
+          python-version-file: llm-evaluation/hm-deepeval/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/llm-evaluation/hm-deepeval
+        working-directory: llm-evaluation/hm-deepeval
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/llm-evaluation/hm-deepeval
+        working-directory: llm-evaluation/hm-deepeval
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/llm-evaluation/hm-deepeval
+          directory: llm-evaluation/hm-deepeval
 
   rasa-test:
     name: Rasa | Test
