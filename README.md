@@ -250,6 +250,13 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Data
 
+### Data Extraction
+
+  - **MinerU** - Document data extraction
+  - **olmOCR** - Document data extraction
+  - **Docling** - Document data extraction
+  - **pypdf** - PDF manipulation
+
 ### Data Ingestion
 
 - **Airbyte** - Data integration
@@ -489,7 +496,11 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **olmOCR** - Document data extraction
   - **Docling** - Document data extraction
   - **pypdf** - PDF manipulation
-- *LLM Application
+- Vector Database
+  - **LanceDB** - Embedded vector database
+  - **Qdrant** - Distributed vector database
+  - **Chroma** - Distributed vector database
+- LLM Application
   - **PydanticAI** - LLM agent framework
   - **LangGraph** - LLM workflow library
   - **LangChain** - LLM application framework
