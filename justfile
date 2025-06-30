@@ -519,7 +519,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.hm-nvidia-modulus
     uv run poe static-type-check-python --package=machine-learning.hm-rasa
     uv run poe static-type-check-python --package=machine-learning.hm-scikit-learn
-    uv run poe static-type-check-python --package=machine-learning.hm-sglang
     uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.live-line-chart
     uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.map
     uv run poe static-type-check-python --package=machine-learning.hugging-face
@@ -529,6 +528,8 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.llm-application.hm-llama-index.applications.chat-pdf
     uv run poe static-type-check-python --package=machine-learning.llm-application.hm-pydantic-ai.applications.chat-pdf
     uv run poe static-type-check-python --package=machine-learning.llm-evaluation.hm-deepeval
+    uv run poe static-type-check-python --package=machine-learning.llm-inference.hm-mlx-lm
+    uv run poe static-type-check-python --package=machine-learning.llm-inference.hm-sglang
     uv run poe static-type-check-python --package=machine-learning.model-context-protocol
     uv run poe static-type-check-python --package=machine-learning.neural-forecasting.forecast-air-passenger-number
     uv run poe static-type-check-python --package=machine-learning.nvidia-dali

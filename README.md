@@ -499,10 +499,11 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Unsloth** - LLM fine-tuning
   - **torchtune** - LLM fine-tuning
   - **Axolotl** - LLM fine-tuning
-- **LLM Serving**
-  - **vLLM** - LLM serving framework
-  - **SGLang** - LLM and visual language model (VLM) serving framework
-  - **Ollama** - LLM serving framework
+- **LLM Inference**
+  - **vLLM** – High-throughput LLM serving
+  - **SGLang** – LLM/VLM serving
+  - **Ollama** – Lightweight LLM serving
+  - **MLX LM** – LLM serving for Apple silicon
 - **LLM Evaluation**
   - **DeepEval** - LLM evaluation framework
 - **MCP** - Model Context Protocol

@@ -364,6 +364,8 @@ jobs:
               - 'machine-learning/hm-mlflow/experiments/classify-mnist/**'
             hm-mlflow-predict-diabetes:
               - 'machine-learning/hm-mlflow/experiments/predict-diabetes/**'
+            hm-mlx-lm:
+              - 'machine-learning/llm-inference/hm-mlx-lm/**'
             hm-narwhals:
               - 'data-analytics/hm-narwhals/**'
             hm-networkx:
@@ -417,7 +419,7 @@ jobs:
             hm-serial:
               - 'embedded-system/hm-serial/**'
             hm-sglang:
-              - 'machine-learning/hm-sglang/**'
+              - 'machine-learning/llm-inference/hm-sglang/**'
             hm-skypilot:
               - 'cloud-computing/hm-skypilot/**'
             hm-spark-analyze-coffee-customers:
@@ -643,6 +645,7 @@ jobs:
       hm-mineru: ${{ steps.filter.outputs.hm-mineru }}
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
       hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
+      hm-mlx-lm: ${{ steps.filter.outputs.hm-mlx-lm }}
       hm-narwhals: ${{ steps.filter.outputs.hm-narwhals }}
       hm-networkx: ${{ steps.filter.outputs.hm-networkx }}
       hm-numba: ${{ steps.filter.outputs.hm-numba }}
@@ -1031,6 +1034,7 @@ jobs:
       hm-mineru: ${{ needs.detect-changes.outputs.hm-mineru == 'true' }}
       hm-mlflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
       hm-mlflow-predict-diabetes: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
+      hm-mlx-lm: ${{ needs.detect-changes.outputs.hm-mlx-lm == 'true' }}
       hm-nvidia-modulus: ${{ needs.detect-changes.outputs.hm-nvidia-modulus == 'true' }}
       hm-olmocr: ${{ needs.detect-changes.outputs.hm-olmocr == 'true' }}
       hm-pydantic-ai-chat-pdf: ${{ needs.detect-changes.outputs.hm-pydantic-ai-chat-pdf == 'true' }}
