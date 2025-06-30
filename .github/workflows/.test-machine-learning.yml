@@ -1470,14 +1470,19 @@ jobs:
 
   deepeval-test:
     name: DeepEval | Test
-    # if: ${{ inputs.workflow || inputs.hm-deepeval }}
-    if: ${{ false }}
+    if: ${{ inputs.workflow || inputs.hm-deepeval }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
+      - name: Install NVIDIA CUDA Toolkit
+        uses: Jimver/cuda-toolkit@v0.2.24
+        id: cuda-toolkit
+        with:
+          cuda: 12.9.0
+          method: network
       - name: Install uv
         uses: astral-sh/setup-uv@v6.3.1
         with:
