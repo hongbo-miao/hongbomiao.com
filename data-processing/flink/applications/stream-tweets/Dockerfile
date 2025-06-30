@@ -1,4 +1,4 @@
-FROM docker.io/maven:3.9.9-amazoncorretto-11 AS builder
+FROM docker.io/maven:3.9.10-amazoncorretto-11 AS builder
 WORKDIR /usr/src/app
 COPY ["data-processing/flink/applications/stream-tweets/src/",  "./src/"]
 COPY ["data-processing/flink/applications/stream-tweets/pom.xml", "./"]
