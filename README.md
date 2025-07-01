@@ -58,7 +58,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/user-attachments/assets/cdeeff60-d935-4d6d-9a1e-d357bbffba58)
+![Architecture](https://github.com/user-attachments/assets/73a0340b-8e0f-4d7f-9172-9533d6a1fee8)
 
 # 🧱 Tech Stack
 
@@ -335,6 +335,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **TimescaleDB** - Time-series SQL database
 - **Prometheus** - Time-series database
 - **InfluxDB** - Distributed time-series database
+- **VictoriaMetrics** - Distributed time-series database
 - **Loki** - Log aggregation system
 - **DuckDB** - Embedded analytical SQL database
 - **RocksDB** - Embedded key-value store
@@ -344,7 +345,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Apache Cassandra** - Distributed wide-column NoSQL database
 - **LanceDB** - Embedded vector database
 - **Qdrant** - Distributed vector database
-- **Chroma** - Distributed vector database
+- **Chroma** - Embedded and distributed vector database
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
 - **MinIO** - Object storage

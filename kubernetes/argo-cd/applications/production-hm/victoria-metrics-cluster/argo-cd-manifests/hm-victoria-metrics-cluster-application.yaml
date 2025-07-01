@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-victoria-metrics-cluster
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-victoria-metrics-cluster
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://victoriametrics.github.io/helm-charts
+      # https://artifacthub.io/packages/helm/victoriametrics/victoria-metrics-cluster
+      targetRevision: 0.25.0
+      chart: victoria-metrics-cluster
+      helm:
+        releaseName: hm-victoria-metrics-cluster
+        values: |
+          # https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-cluster/values.yaml
+          ---
+          global:
+            image:
+              registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+          vmstorage:
+            retentionPeriod: 31d
+            persistentVolume:
+              storageClassName: production-hm-victoria-metrics-cluster-storage-class
+              size: 10Ti
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/victoria-metrics-cluster/kubernetes-manifests
+  destination:
+    namespace: production-hm-victoria-metrics-cluster
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

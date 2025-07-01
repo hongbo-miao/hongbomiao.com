@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: https://grafana.github.io/helm-charts
       # https://artifacthub.io/packages/helm/grafana/grafana
-      targetRevision: 8.10.1
+      targetRevision: 9.2.9
       chart: grafana
       helm:
         releaseName: hm-grafana
@@ -70,6 +70,7 @@ spec:
             - nline-plotlyjs-panel
             - redis-datasource
             - trino-datasource
+            - victoriametrics-metrics-datasource
           persistence:
             enabled: false
             type: pvc
@@ -158,6 +159,7 @@ spec:
                     httpHeaderValue1: hm
                 - name: hm-starrocks
                   type: mysql
+                  isDefault: false
                   url: kube-starrocks-fe-service.production-hm-starrocks.svc:9030
                   user: grafana_user
                   jsonData:
@@ -169,6 +171,11 @@ spec:
                     timeInterval: 1ms
                   secureJsonData:
                     password: $__env{HM_STARROCKS_PASSWORD}
+                - name: hm-victoria-metrics-cluster
+                  type: victoriametrics-metrics-datasource
+                  isDefault: false
+                  access: proxy
+                  url: http://hm-victoria-metrics-cluster-vmselect.production-hm-victoria-metrics-cluster.svc:8481/select/0/prometheus
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1
