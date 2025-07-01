@@ -9,7 +9,7 @@ X_PLANE_IP: str = "127.0.0.1"
 X_PLANE_PORT: int = 49000
 
 
-def send_dref(sock: socket.socket, dataref_str: str, value: float) -> None:
+def send_command(sock: socket.socket, dataref_str: str, value: float) -> None:
     """Construct and send a DREF command to X-Plane."""
     dataref: bytes = dataref_str.encode("utf-8")
     header: bytes = b"DREF\0"
@@ -35,11 +35,12 @@ def main() -> None:
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
         # Step 1: Pre-takeoff configuration
         logger.info("\n[Phase 1] Configuring for takeoff...")
-        send_dref(sock, "sim/cockpit2/controls/parking_brake_ratio", 0.0)  # Brakes OFF
-        send_dref(sock, "sim/cockpit2/controls/flap_ratio", 0.25)  # Flaps to 25%
-
+        # Brakes OFF
+        send_command(sock, "sim/cockpit2/controls/parking_brake_ratio", 0.0)
+        # Flaps to 25%
+        send_command(sock, "sim/cockpit2/controls/flap_ratio", 0.25)
         # Full throttle
-        send_dref(
+        send_command(
             sock,
             "sim/cockpit2/engine/actuators/throttle_ratio_all",
             1.0,
@@ -52,32 +53,30 @@ def main() -> None:
         # Step 3: Rotation (pull back on the yoke)
         logger.info("\n[Phase 3] Rotating for liftoff...")
         # Pull back gently
-        send_dref(sock, "sim/joystick/yoke_pitch_ratio", -0.5)
+        send_command(sock, "sim/joystick/yoke_pitch_ratio", -0.5)
 
         # Step 4: Initial climb and cleanup
         logger.info("\n[Phase 4] Positive rate of climb, cleaning up...")
-        time.sleep(4)  # Wait a few seconds after liftoff
-
-        logger.info("  -> Gear UP")
+        # Wait a few seconds after liftoff
+        time.sleep(4)
         # Gear up
-        send_dref(sock, "sim/cockpit2/controls/gear_handle_down", 0.0)
-
-        time.sleep(6)  # Continue climbing
-
-        logger.info("  -> Easing yoke pressure")
+        logger.info("  -> Gear UP")
+        send_command(sock, "sim/cockpit2/controls/gear_handle_down", 0.0)
+        # Continue climbing
+        time.sleep(6)
         # Reduce back pressure
-        send_dref(sock, "sim/joystick/yoke_pitch_ratio", -0.15)
-
-        time.sleep(15)  # Climb further
-
-        logger.info("  -> Flaps UP")
+        logger.info("  -> Easing yoke pressure")
+        send_command(sock, "sim/joystick/yoke_pitch_ratio", -0.15)
+        # Climb further
+        time.sleep(15)
         # Flaps up
-        send_dref(sock, "sim/cockpit2/controls/flap_handle_request_ratio", 0.0)
+        logger.info("  -> Flaps UP")
+        send_command(sock, "sim/cockpit2/controls/flap_handle_request_ratio", 0.0)
 
         # Step 5: Neutralize controls
         logger.info("\n[Phase 5] Stabilizing climb. You have control.")
         # Neutralize yoke
-        send_dref(sock, "sim/joystick/yoke_pitch_ratio", 0.0)
+        send_command(sock, "sim/joystick/yoke_pitch_ratio", 0.0)
 
         logger.info("\n--- Auto-Takeoff Sequence Finished ---")
 
