@@ -530,8 +530,10 @@ jobs:
               - 'web-cypress/**'
             windows-calculator:
               - 'operating-system/windows/calculator/**'
-            x-plane:
-              - 'aerospace/x-plane/**'
+            x-plane-rest-api:
+              - 'aerospace/x-plane/rest-api/**'
+            x-plane-udp:
+              - 'aerospace/x-plane/udp/**'
             zeromq-iads-bridge:
               - 'data-visualization/iads/iads-rtstation/zeromq-iads-bridge/**'
     outputs:
@@ -727,7 +729,8 @@ jobs:
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
       web: ${{ steps.filter.outputs.web }}
       windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
-      x-plane: ${{ steps.filter.outputs.x-plane }}
+      x-plane-rest-api: ${{ steps.filter.outputs.x-plane-rest-api }}
+      x-plane-udp: ${{ steps.filter.outputs.x-plane-udp }}
       zeromq-iads-bridge: ${{ steps.filter.outputs.zeromq-iads-bridge }}
 
   lint:
@@ -1133,7 +1136,8 @@ jobs:
       # Applications
       hm-aerosandbox: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
       hm-openaerostruct: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
-      x-plane: ${{ needs.detect-changes.outputs.x-plane == 'true' }}
+      x-plane-rest-api: ${{ needs.detect-changes.outputs.x-plane-rest-api == 'true' }}
+      x-plane-udp: ${{ needs.detect-changes.outputs.x-plane-udp == 'true' }}
 
   genesis-test:
     name: Genesis | Test
