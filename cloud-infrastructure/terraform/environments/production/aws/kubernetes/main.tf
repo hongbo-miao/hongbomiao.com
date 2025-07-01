@@ -1114,6 +1114,18 @@ module "kubernetes_namespace_hm_starrocks" {
   ]
 }
 
+# VictoriaMetrics Cluster - Kubernetes namespace
+module "kubernetes_namespace_hm_victoria_metrics_cluster" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-victoria-metrics-cluster"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # Qdrant
 # Qdrant - Kubernetes namespace
 module "kubernetes_namespace_hm_qdrant" {
