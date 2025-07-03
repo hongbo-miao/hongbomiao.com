@@ -514,6 +514,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=llm-evaluation.hm-deepeval
     uv run poe static-type-check-python --package=llm-inference.hm-mlx-lm
     uv run poe static-type-check-python --package=llm-inference.hm-sglang
+    uv run poe static-type-check-python --package=llm-inference.speculative-decoding
     uv run poe static-type-check-python --package=machine-learning.convolutional-neural-network
     uv run poe static-type-check-python --package=machine-learning.feature-store
     uv run poe static-type-check-python --package=machine-learning.graph-neural-network
