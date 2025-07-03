@@ -520,6 +520,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Ollama** – Local LLM serving
   - **GPT4All** - Local LLM serving
   - **MLX LM** – LLM serving for Apple silicon
+  - **Peculative Decoding** – Acceleration technique using draft models
 - LLM Evaluation
   - **DeepEval** - LLM evaluation framework
 - LLM Gateway
