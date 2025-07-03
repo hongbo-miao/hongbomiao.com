@@ -510,10 +510,12 @@ jobs:
               - 'robotics/robot-operating-system/**'
             rti-connext-dds:
               - 'data-distribution/rti-connext-dds/**'
-            surrogate-model:
-              - 'scientific-computing/surrogate-model/**'
+            speculative-decoding:
+              - 'llm-inference/speculative-decoding/**'
             stable-diffusion:
               - 'machine-learning/stable-diffusion/**'
+            surrogate-model:
+              - 'scientific-computing/surrogate-model/**'
             taichi-count-primes:
               - 'parallel-computing/hm-taichi/count-primes/**'
             taichi-fluid-solver:
@@ -720,6 +722,7 @@ jobs:
       reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
+      speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
       stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
       surrogate-model: ${{ steps.filter.outputs.surrogate-model }}
       taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
@@ -1057,6 +1060,7 @@ jobs:
       open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
       quantization: ${{ needs.detect-changes.outputs.quantization == 'true' }}
       reinforcement-learning-cart-pole: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
+      speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
 
