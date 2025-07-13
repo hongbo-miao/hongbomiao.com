@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import React from 'react';
 import { useAudio } from 'react-use';
 import flashingMusicalNoteGIF from '../images/musical-note-flashing.gif';
