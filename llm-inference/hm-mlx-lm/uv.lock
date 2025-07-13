@@ -1,6 +1,6 @@
 version = 1
 revision = 2
-requires-python = ">=3.13.0, <3.14"
+requires-python = "==3.13.*"
 resolution-markers = [
     "sys_platform == 'darwin'",
     "platform_machine == 'aarch64' and sys_platform == 'linux'",
@@ -127,7 +127,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "mlx-lm", specifier = "==0.25.3" }]
+requires-dist = [{ name = "mlx-lm", specifier = "==0.26.0" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -226,7 +226,7 @@ wheels = [
 
 [[package]]
 name = "mlx-lm"
-version = "0.25.3"
+version = "0.26.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
@@ -234,11 +234,11 @@ dependencies = [
     { name = "numpy" },
     { name = "protobuf" },
     { name = "pyyaml" },
-    { name = "transformers", extra = ["sentencepiece"] },
+    { name = "transformers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ec/bc/0c3f69a8ff78fc8152985be99b2f83dc7e902b9b96ff5260c6a4958c10f1/mlx_lm-0.25.3.tar.gz", hash = "sha256:40ea0a2849abd804a40a3e388627ae5327918a8656287022610150fd453a2242", size = 154221, upload-time = "2025-07-01T03:04:07.056Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8d/aa/a2f02e67736a2bf57acefb3a1a342005586f1be8d7b2fb37ca5f3d4f3049/mlx_lm-0.26.0.tar.gz", hash = "sha256:78980ad994baf976779cc1c34c0d55c1c6b63dffef4899d67fec240d0c443b52", size = 159064, upload-time = "2025-07-08T20:21:31.393Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/58/ce/3484a973943572461765977231e3b9b68876a8d7e16c3e6110b81c180a89/mlx_lm-0.25.3-py3-none-any.whl", hash = "sha256:56a84f1ae4a3581b13c84c4d8edaa6704b971b40090b725dfc3b719b522ccc2b", size = 203913, upload-time = "2025-07-01T03:04:05.928Z" },
+    { url = "https://files.pythonhosted.org/packages/08/e7/d0e576397b61bf90a0bb27819443f723258acd8dd1207684fdef29243ce4/mlx_lm-0.26.0-py3-none-any.whl", hash = "sha256:b00294c26242cd50db4b6e3ec3a2baf1cfdf8ca49a5e6057dce14642fabe0d21", size = 217671, upload-time = "2025-07-08T20:21:29.448Z" },
 ]
 
 [[package]]
@@ -442,12 +442,6 @@ wheels = [
 ]
 
 [[package]]
-name = "sentencepiece"
-version = "0.2.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c9/d2/b9c7ca067c26d8ff085d252c89b5f69609ca93fb85a00ede95f4857865d4/sentencepiece-0.2.0.tar.gz", hash = "sha256:a52c19171daaf2e697dc6cbe67684e0fa341b1248966f6aebb541de654d15843", size = 2632106, upload-time = "2024-02-19T17:06:47.428Z" }
-
-[[package]]
 name = "tokenizers"
 version = "0.21.2"
 source = { registry = "https://pypi.org/simple" }
@@ -503,12 +497,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/e8/40/f2d2c3bcf5c6135027cab0fd7db52f6149a1c23acc4e45f914c43d362386/transformers-4.53.0.tar.gz", hash = "sha256:f89520011b4a73066fdc7aabfa158317c3934a22e3cd652d7ffbc512c4063841", size = 9177265, upload-time = "2025-06-26T16:10:54.729Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5e/0c/68d03a38f6ab2ba2b2829eb11b334610dd236e7926787f7656001b68e1f2/transformers-4.53.0-py3-none-any.whl", hash = "sha256:7d8039ff032c01a2d7f8a8fe0066620367003275f023815a966e62203f9f5dd7", size = 10821970, upload-time = "2025-06-26T16:10:51.505Z" },
-]
-
-[package.optional-dependencies]
-sentencepiece = [
-    { name = "protobuf" },
-    { name = "sentencepiece" },
 ]
 
 [[package]]
