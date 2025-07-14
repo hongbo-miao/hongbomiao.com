@@ -54,7 +54,9 @@ class SimpleSelfAttention(nn.Module):
         # `.view(B, T, self.num_heads, self.head_dim)`
         # (B, T_q=1, C) -> (B, T_q=1, num_heads, head_dim)
         # It takes the last dimension (C = 64) and splits it into two new dimensions: num_heads (4) and head_dim (16).
-        # This is the "Multi-Head" part of multi-head attention. Instead of having one attention mechanism look at the full 64-dimension embedding, we create 4 parallel "heads" that each look at a smaller 16-dimension slice. This allows the model to focus on different kinds of relationships simultaneously.
+        # This is the "Multi-Head" part of multi-head attention.
+        # Instead of having one attention mechanism look at the full 64-dimension embedding, we create 4 parallel "heads" that each look at a smaller 16-dimension slice.
+        # This allows the model to focus on different kinds of relationships simultaneously.
 
         # `.transpose(1, 2)`
         # (B, T_q=1, num_heads, head_dim) -> (B, num_heads, T_q=1, head_dim)
