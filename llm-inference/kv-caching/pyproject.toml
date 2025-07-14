@@ -1,0 +1,23 @@
+[project]
+name = "kv-caching"
+version = "1.0.0"
+requires-python = "~=3.13.3"
+dependencies = [
+  "torch==2.7.1",
+  "sentence-transformers==5.0.0",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.36.0",
+  "pytest-cov==6.2.1",
+  "pytest==8.4.1",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.6.0"
+
+[tool.poe.tasks]
+test = "pytest --verbose --verbose --log-cli-level=DEBUG"
+test-coverage = "pytest --cov=. --cov-report=xml"

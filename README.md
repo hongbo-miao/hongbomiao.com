@@ -520,6 +520,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Ollama** – Local LLM serving
   - **GPT4All** - Local LLM serving
   - **MLX LM** – LLM serving for Apple silicon
+  - **KV Caching** - Memory optimization technique caching key/value pairs from self-attention to accelerate auto-regressive decoding
   - **Peculative Decoding** – Acceleration technique using draft models
 - LLM Evaluation
   - **DeepEval** - LLM evaluation framework
