@@ -470,6 +470,8 @@ jobs:
               - 'data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge/**'
             kafka-rust-zeromq-kafka-bridge:
               - 'data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge/**'
+            kv-caching:
+              - 'llm-inference/kv-caching/**'
             lance:
               - 'data-storage/lance/**'
             mobile-android:
@@ -702,6 +704,7 @@ jobs:
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
       kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
       kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
+      kv-caching: ${{ steps.filter.outputs.kv-caching }}
       lance: ${{ steps.filter.outputs.lance }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
@@ -1054,6 +1057,7 @@ jobs:
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
       hugging-face-analyze-sentiment: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
       hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
+      kv-caching: ${{ needs.detect-changes.outputs.kv-caching == 'true' }}
       model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
       neural-forecasting-forecast-air-passenger-number: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
