@@ -135,7 +135,7 @@ name: . Test Machine Learning
       open-clip:
         required: true
         type: boolean
-      quantization:
+      post-training-quantization:
         required: true
         type: boolean
       reinforcement-learning-cart-pole:
@@ -1343,9 +1343,9 @@ jobs:
         with:
           directory: machine-learning/hyperparameter-optimization
 
-  quantization-test:
-    name: Quantization | Test
-    if: ${{ inputs.workflow || inputs.quantization }}
+  post-training-quantization-test:
+    name: Post-Training Quantization | Test
+    if: ${{ inputs.workflow || inputs.post-training-quantization }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
@@ -1357,23 +1357,23 @@ jobs:
         with:
           version: 0.7.20
           enable-cache: true
-          cache-dependency-glob: machine-learning/quantization/uv.lock
+          cache-dependency-glob: llm-inference/post-training-quantization/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/quantization/pyproject.toml
+          python-version-file: llm-inference/post-training-quantization/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/quantization
+        working-directory: llm-inference/post-training-quantization
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/quantization
+        working-directory: llm-inference/post-training-quantization
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/quantization
+          directory: llm-inference/post-training-quantization
 
   axolotl-test:
     name: Axolotl | Test
