@@ -9,7 +9,7 @@ from segment_anything import sam_model_registry
 from torch import nn
 from torch.utils.benchmark import Timer
 from torchao.quantization.quant_api import (
-    int8_dynamic_activation_int8_weight,
+    Int8DynamicActivationInt8WeightConfig,
     quantize_,
 )
 
@@ -42,7 +42,7 @@ def get_sam_model(
     sam_checkpoint_base_path: str,
     model_type: str,
     model_name: str,
-    batchsize: int,
+    batch_size: int,
     only_one_block: bool,
 ) -> tuple[nn.Module, torch.Tensor]:
     """Load SAM model and create appropriate input tensor."""
@@ -50,12 +50,12 @@ def get_sam_model(
     sam = sam_model_registry[model_type](checkpoint=checkpoint_path).cuda()
     # Focus on image encoder (statically sized inputs)
     model: nn.Module = sam.image_encoder.eval()
-    image: torch.Tensor = torch.randn(batchsize, 3, 1024, 1024, device="cuda")
+    image: torch.Tensor = torch.randn(batch_size, 3, 1024, 1024, device="cuda")
     # Option to test single transformer block for detailed analysis
     if only_one_block:
         model = model.blocks[0]
         # Adjust input dimensions for single block (after patch embedding)
-        image = torch.randn(batchsize, 64, 64, 1280, device="cuda")
+        image = torch.randn(batch_size, 64, 64, 1280, device="cuda")
     return model, image
 
 
@@ -63,7 +63,7 @@ def run_fp32_baseline(
     sam_checkpoint_base_path: str,
     model_type: str,
     model_name: str,
-    batchsize: int,
+    batch_size: int,
     only_one_block: bool,
 ) -> None:
     """Run baseline FP32 performance test."""
@@ -73,7 +73,7 @@ def run_fp32_baseline(
             sam_checkpoint_base_path,
             model_type,
             model_name,
-            batchsize,
+            batch_size,
             only_one_block,
         )
         fp32_res: dict[str, float] = benchmark(model, image)
@@ -89,7 +89,7 @@ def run_bfloat16_optimization(
     sam_checkpoint_base_path: str,
     model_type: str,
     model_name: str,
-    batchsize: int,
+    batch_size: int,
     only_one_block: bool,
 ) -> dict[str, float]:
     """Run BFloat16 conversion optimization."""
@@ -100,7 +100,7 @@ def run_bfloat16_optimization(
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
     model = model.to(torch.bfloat16)  # Convert model weights to bfloat16
@@ -117,7 +117,7 @@ def run_torch_compile_optimization(
     sam_checkpoint_base_path: str,
     model_type: str,
     model_name: str,
-    batchsize: int,
+    batch_size: int,
     only_one_block: bool,
 ) -> dict[str, float]:
     """Run torch.compile optimization."""
@@ -130,7 +130,7 @@ def run_torch_compile_optimization(
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
     model = model.to(torch.bfloat16)
@@ -148,7 +148,7 @@ def run_int8_quantization(
     sam_checkpoint_base_path: str,
     model_type: str,
     model_name: str,
-    batchsize: int,
+    batch_size: int,
     only_one_block: bool,
 ) -> dict[str, float]:
     """Run INT8 dynamic quantization."""
@@ -159,13 +159,21 @@ def run_int8_quantization(
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
     model = model.to(torch.bfloat16)
     image = image.to(torch.bfloat16)
+    # Quantization for GPUs comes in three main forms in torchao which is just native pytorch+python code. This includes:
+    # - int8 dynamic quantization: Int8DynamicActivationInt8WeightConfig()
+    # - int8 weight-only quantization: Int8WeightOnlyConfig()
+    # - int4 weight-only quantization: Int4WeightOnlyConfig()
+    # Different models, or sometimes different layers in a model can require different techniques.
+    # For models which are heavily compute bound, dynamic quantization tends to work the best since it swaps the normal expensive floating point matmul ops with integer versions.
+    # Weight-only quantization works better in memory bound situations where the benefit comes from loading less weight data, rather than doing less computation.
+    #
     # Apply INT8 dynamic quantization to linear layers
-    quantize_(model, int8_dynamic_activation_int8_weight())
+    quantize_(model, Int8DynamicActivationInt8WeightConfig())
     model_c = torch.compile(model, mode="max-autotune")
     quant_res: dict[str, float] = benchmark(model_c, image)
     logger.info(
@@ -179,7 +187,7 @@ def run_fused_int8_matmul(
     sam_checkpoint_base_path: str,
     model_type: str,
     model_name: str,
-    batchsize: int,
+    batch_size: int,
     only_one_block: bool,
 ) -> dict[str, float]:
     """Run INT8 MatMul fusion optimization."""
@@ -190,14 +198,21 @@ def run_fused_int8_matmul(
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
     model = model.to(torch.bfloat16)
     image = image.to(torch.bfloat16)
+    # With quantization, we have improved performance a bit more but memory usage increased significantly.
+    # This is for two reasons:
+    # 1) Quantization adds overhead to the model since we need to quantize and dequantize the input and output.
+    #    For small batch sizes this overhead can actually make the model go slower.
+    # 2) Even though we are doing a quantized matmul, such as int8 x int8, the result of the multiplication gets stored in an int32 tensor which is twice the size of the result from the non-quantized model.
+    #    If we can avoid creating this int32 tensor, our memory usage will improve a lot.
+    # We can fix #2 by fusing the integer matmul with the subsequent rescale operation since the final output will be bf16, if we immediately convert the int32 tensor to bf16 and instead store that we'll get better performance in terms of both runtime and memory.
     # Enable fusion of int8 matrix multiplication with rescaling operation
     torch._inductor.config.force_fuse_int_mm_with_mul = True  # noqa: SLF001
-    quantize_(model, int8_dynamic_activation_int8_weight())
+    quantize_(model, Int8DynamicActivationInt8WeightConfig())
     model_c = torch.compile(model, mode="max-autotune")
     quant_res = benchmark(model_c, image)
     logger.info(
@@ -211,7 +226,7 @@ def run_advanced_compiler_tuning(
     sam_checkpoint_base_path: str,
     model_type: str,
     model_name: str,
-    batchsize: int,
+    batch_size: int,
     only_one_block: bool,
 ) -> dict[str, float]:
     """Run advanced compiler optimizations."""
@@ -221,21 +236,18 @@ def run_advanced_compiler_tuning(
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
     model = model.to(torch.bfloat16)
     image = image.to(torch.bfloat16)
-    # Advanced inductor configuration for optimal performance
-    # Disable epilogue fusion (can confuse autotuner)
-    torch._inductor.config.epilogue_fusion = False  # noqa: SLF001
-    # Enable coordinate descent tuning
-    torch._inductor.config.coordinate_descent_tuning = True  # noqa: SLF001
-    # Expand search space
-    torch._inductor.config.coordinate_descent_check_all_directions = True  # noqa: SLF001
-    # Keep int8 fusion
     torch._inductor.config.force_fuse_int_mm_with_mul = True  # noqa: SLF001
-    quantize_(model, int8_dynamic_activation_int8_weight())
+    # Disabling epilogue fusion can sometimes improve performance since the autotuning process can be confused by fusions and choose bad kernel parameters.
+    torch._inductor.config.epilogue_fusion = False  # noqa: SLF001
+    # Apply coordinate descent tuning in all directions to enlarge the search area for kernel parameters.
+    torch._inductor.config.coordinate_descent_tuning = True  # noqa: SLF001
+    torch._inductor.config.coordinate_descent_check_all_directions = True  # noqa: SLF001
+    quantize_(model, Int8DynamicActivationInt8WeightConfig())
     model_c = torch.compile(model, mode="max-autotune")
     quant_res = benchmark(model_c, image)
     logger.info(
@@ -250,7 +262,7 @@ def main() -> None:
     sam_checkpoint_base_path = "data"
     model_type = "vit_h"  # Vision Transformer Huge variant
     model_name = "sam_vit_h_4b8939.pth"
-    batchsize = 16
+    batch_size = 16
     only_one_block = True  # Focus on single transformer block for easier analysis
 
     # ==================== BASELINE: FP32 PERFORMANCE ====================
@@ -258,7 +270,7 @@ def main() -> None:
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
 
@@ -267,7 +279,7 @@ def main() -> None:
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
 
@@ -276,7 +288,7 @@ def main() -> None:
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
 
@@ -285,7 +297,7 @@ def main() -> None:
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
 
@@ -294,7 +306,7 @@ def main() -> None:
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
 
@@ -303,7 +315,7 @@ def main() -> None:
         sam_checkpoint_base_path,
         model_type,
         model_name,
-        batchsize,
+        batch_size,
         only_one_block,
     )
 
