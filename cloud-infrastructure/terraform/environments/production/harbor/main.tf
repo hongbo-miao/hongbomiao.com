@@ -24,31 +24,40 @@ module "harbor_registry_docker_hub" {
   name          = "docker-hub"
   endpoint_url  = "https://hub.docker.com"
 }
+module "harbor_registry_microsoft_artifact_registry" {
+  source        = "../../../modules/harbor/hm_harbor_registry"
+  provider_name = "docker-registry"
+  name          = "microsoft-artifact-registry"
+  endpoint_url  = "https://mcr.microsoft.com"
+}
+
+# Garbage Collection
+module "harbor_garbage_collection" {
+  source        = "../../../modules/harbor/hm_harbor_garbage_collection"
+  schedule      = "0 7 9 1 * *" # 9:07 AM on the 1st day of every month (UTC)
+  worker_number = 2
+}
 
 # Projects
+# Projects - docker-hub-proxy-cache
 module "harbor_project_docker_hub_proxy_cache" {
   source      = "../../../modules/harbor/hm_harbor_project"
   name        = "docker-hub-proxy-cache"
   public      = true
   registry_id = module.harbor_registry_docker_hub.id
 }
-module "harbor_project_docker_hub_proxy_cache_clean_untagged_artifacts" {
-  source               = "../../../modules/harbor/hm_harbor_clean_untagged_artifacts"
-  project_id           = module.harbor_project_docker_hub_proxy_cache.id
-  schedule             = "Daily"
-  days_since_last_pull = 7
+# Projects - microsoft-artifact-registry-proxy-cache
+module "harbor_project_microsoft_artifact_registry_proxy_cache" {
+  source      = "../../../modules/harbor/hm_harbor_project"
+  name        = "microsoft-artifact-registry-proxy-cache"
+  public      = true
+  registry_id = module.harbor_registry_microsoft_artifact_registry.id
 }
-
+# Projects - hongbomiao
 module "harbor_project_hm" {
   source = "../../../modules/harbor/hm_harbor_project"
-  name   = "hm"
+  name   = "hongbomiao"
   public = false
-}
-module "harbor_project_hm_clean_untagged_artifacts" {
-  source               = "../../../modules/harbor/hm_harbor_clean_untagged_artifacts"
-  project_id           = module.harbor_project_hm.id
-  schedule             = "Daily"
-  days_since_last_pull = 7
 }
 
 # Robots
