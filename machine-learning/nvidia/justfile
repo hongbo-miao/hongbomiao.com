@@ -31,3 +31,14 @@ cuda-toolkit-install-ubuntu-24:
 
 cuda-toolkit-version:
     nvcc --version
+
+nccl-install-ubuntu-24:
+    # https://developer.nvidia.com/nccl/nccl-download
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
+    sudo dpkg --install cuda-keyring_1.1-1_all.deb
+    sudo apt-get update
+    sudo apt install libnccl2=2.27.6-1+cuda12.9 libnccl-dev=2.27.6-1+cuda12.9
+
+nccl-version:
+    ldconfig -p | grep nccl
+    ls -l /lib/x86_64-linux-gnu/libnccl.so.2
