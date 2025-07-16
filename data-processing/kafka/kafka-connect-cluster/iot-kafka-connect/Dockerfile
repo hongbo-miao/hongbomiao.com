@@ -1,4 +1,4 @@
-FROM docker.io/alpine:3.22.0 AS builder
+FROM docker.io/alpine:3.22.1 AS builder
 USER root:root
 RUN mkdir -p /opt/kafka/plugins/ \
   # apicurio-registry-distro-connect-converter
