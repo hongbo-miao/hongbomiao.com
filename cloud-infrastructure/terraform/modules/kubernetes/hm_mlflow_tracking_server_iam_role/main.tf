@@ -46,9 +46,17 @@ resource "aws_iam_role_policy" "hm_mlflow_iam_role_policy" {
       {
         Effect = "Allow"
         Action = [
+          "s3:ListBucket"
+        ]
+        Resource = [
+          "arn:aws:s3:::${var.s3_bucket_name}"
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
           "s3:DeleteObject",
           "s3:GetObject",
-          "s3:ListBucket",
           "s3:PutObject"
         ]
         Resource = [

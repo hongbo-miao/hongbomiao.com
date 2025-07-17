@@ -1563,7 +1563,7 @@ module "kubernetes_namespace_hm_s3_browser" {
 }
 
 # Trino - IAM role
-module "hm_trino_iam_role" {
+module "trino_iam_role" {
   providers                            = { aws = aws.production }
   source                               = "../../../../modules/kubernetes/hm_trino_iam_role"
   trino_service_account_name           = "hm-trino"
@@ -1579,7 +1579,7 @@ module "hm_trino_iam_role" {
   team        = var.team
 }
 # Trino - Kubernetes namespace
-module "hm_kubernetes_namespace_hm_trino" {
+module "kubernetes_namespace_hm_trino" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
   kubernetes_namespace = "${var.environment}-hm-trino"
   labels = {

@@ -37,9 +37,17 @@ resource "aws_iam_role_policy" "sagemaker_notebook_instance_role_s3_policy" {
       {
         Effect = "Allow"
         Action = [
+          "s3:ListBucket"
+        ]
+        Resource = [
+          "arn:aws:s3:::*"
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
           "s3:DeleteObject",
           "s3:GetObject",
-          "s3:ListBucket",
           "s3:PutObject"
         ]
         Resource = [
