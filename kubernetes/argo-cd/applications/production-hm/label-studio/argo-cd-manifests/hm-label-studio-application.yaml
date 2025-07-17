@@ -1,0 +1,56 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-label-studio
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-label-studio
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://charts.heartex.com
+      # https://artifacthub.io/packages/helm/community-charts/label-studio
+      targetRevision: 1.10.0
+      chart: label-studio
+      helm:
+        releaseName: hm-label-studio
+        values: |
+          # https://github.com/HumanSignal/charts/blob/master/heartex/label-studio/values.yaml
+          ---
+          global:
+            image:
+              registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+            pgConfig:
+              host: production-hm-label-studio-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
+              dbName: label_studio_db
+              userName: label_studio_user
+              password:
+                secretName: hm-label-studio-secret
+                secretKey: POSTGRES_PASSWORD
+            persistence:
+              enabled: true
+              type: s3
+              config:
+                s3:
+                  region: us-west-2
+                  bucket: production-hm-label-studio-bucket
+          postgresql:
+            enabled: false
+          app:
+            serviceAccount:
+              create: true
+              name: hm-label-studio
+              annotations:
+                eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/LabelStudioRole-hm-label-studio
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/label-studio/kubernetes-manifests
+  destination:
+    namespace: production-hm-label-studio
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    automated:
+      prune: true

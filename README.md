@@ -491,6 +491,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Generative AI (GenAI)
 
+- Data Annotation
+  - **Label Studio** - Data annotation
 - Data Extraction
   - **MinerU** - Document data extraction
   - **olmOCR** - Document data extraction
