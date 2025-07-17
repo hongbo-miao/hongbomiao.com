@@ -46,17 +46,24 @@ resource "aws_iam_role_policy" "hm_loki_iam_role_policy" {
       {
         Effect = "Allow"
         Action = [
-          "s3:DeleteObject",
-          "s3:GetObject",
-          "s3:ListBucket",
-          "s3:PutObject"
+          "s3:ListBucket"
         ]
         Resource = [
           "arn:aws:s3:::${var.loki_admin_s3_bucket_name}",
-          "arn:aws:s3:::${var.loki_admin_s3_bucket_name}/*",
           "arn:aws:s3:::${var.loki_chunk_s3_bucket_name}",
+          "arn:aws:s3:::${var.loki_ruler_s3_bucket_name}"
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:DeleteObject",
+          "s3:GetObject",
+          "s3:PutObject"
+        ]
+        Resource = [
+          "arn:aws:s3:::${var.loki_admin_s3_bucket_name}/*",
           "arn:aws:s3:::${var.loki_chunk_s3_bucket_name}/*",
-          "arn:aws:s3:::${var.loki_ruler_s3_bucket_name}",
           "arn:aws:s3:::${var.loki_ruler_s3_bucket_name}/*"
         ]
       }

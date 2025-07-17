@@ -55,11 +55,11 @@ resource "aws_iam_role_policy" "hm_label_studio_iam_role_s3_policy" {
       {
         Effect = "Allow"
         Action = [
-          "s3:GetObject",
-          "s3:DeleteObject",
-          "s3:PutObject",
           "s3:AbortMultipartUpload",
-          "s3:ListMultipartUploadParts"
+          "s3:DeleteObject",
+          "s3:GetObject",
+          "s3:ListMultipartUploadParts",
+          "s3:PutObject"
         ]
         Resource = [
           "arn:aws:s3:::${var.s3_bucket_name}/*"
