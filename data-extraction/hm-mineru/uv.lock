@@ -1,6 +1,6 @@
 version = 1
 revision = 2
-requires-python = ">=3.13.0, <3.14"
+requires-python = "==3.13.*"
 resolution-markers = [
     "sys_platform == 'win32'",
     "sys_platform == 'darwin'",
@@ -655,7 +655,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "mineru", extras = ["core"], specifier = "==2.1.0" },
+    { name = "mineru", extras = ["core"], specifier = "==2.1.1" },
     { name = "torch", index = "https://download.pytorch.org/whl/cu128" },
 ]
 
@@ -927,17 +927,19 @@ wheels = [
 
 [[package]]
 name = "mineru"
-version = "2.1.0"
+version = "2.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
     { name = "click" },
+    { name = "fast-langdetect" },
     { name = "httpx" },
     { name = "huggingface-hub" },
     { name = "json-repair" },
     { name = "loguru" },
     { name = "modelscope" },
     { name = "numpy" },
+    { name = "opencv-python" },
     { name = "pdfminer-six" },
     { name = "pdftext" },
     { name = "pillow" },
@@ -948,7 +950,7 @@ dependencies = [
     { name = "tqdm" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fb/32/12ebe9e840237930dea4bcba8d4833172e087b76ed6666fc7f9dec004208/mineru-2.1.0-py3-none-any.whl", hash = "sha256:31cfd4500869b129785d362ca46d8b281b7533f05ca64a93d772a8a314b15982", size = 1260139, upload-time = "2025-07-04T21:27:26.404Z" },
+    { url = "https://files.pythonhosted.org/packages/0d/95/34a11a5d373b8c667e3497b5d44176ff3fe4528a139202db246249a97c2a/mineru-2.1.1-py3-none-any.whl", hash = "sha256:73f19f64676ac190b93fb132046b931064581f081fa78b81ab74e049605367c7", size = 1257509, upload-time = "2025-07-16T10:20:23.61Z" },
 ]
 
 [package.optional-dependencies]
@@ -956,7 +958,6 @@ core = [
     { name = "accelerate" },
     { name = "dill" },
     { name = "doclayout-yolo" },
-    { name = "fast-langdetect" },
     { name = "fastapi" },
     { name = "ftfy" },
     { name = "gradio" },
