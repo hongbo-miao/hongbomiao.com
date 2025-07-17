@@ -1,0 +1,34 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-label-studio-ingress
+  namespace: production-hm-label-studio
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: label-studio.hongbomiao.com
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+  labels:
+    app.kubernetes.io/name: hm-label-studio-ingress
+    app.kubernetes.io/part-of: production-hm-label-studio
+spec:
+  rules:
+    - host: label-studio.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-label-studio-ls-app
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - label-studio.hongbomiao.com
+      secretName: production-hm-label-studio-certificate

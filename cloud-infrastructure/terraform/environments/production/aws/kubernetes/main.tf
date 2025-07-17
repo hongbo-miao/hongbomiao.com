@@ -551,6 +551,94 @@ module "kubernetes_namespace_hm_airbyte" {
   ]
 }
 
+# Label Studio
+# Label Studio - S3 bucket
+module "amazon_s3_bucket_hm_label_studio" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/hm_amazon_s3_bucket"
+  s3_bucket_name = "${var.environment}-hm-label-studio-bucket"
+  environment    = var.environment
+  team           = var.team
+}
+# Label Studio - IAM role
+module "label_studio_iam_role" {
+  providers                            = { aws = aws.production }
+  source                               = "../../../../modules/kubernetes/hm_label_studio_iam_role"
+  label_studio_service_account_name    = "hm-label-studio"
+  label_studio_namespace               = "${var.environment}-hm-label-studio"
+  amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
+  amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
+  s3_bucket_name                       = module.amazon_s3_bucket_hm_label_studio.name
+  environment                          = var.environment
+  team                                 = var.team
+}
+# Label Studio - Postgres
+locals {
+  label_studio_postgres_name = "${var.environment}-hm-label-studio-postgres"
+}
+data "aws_secretsmanager_secret" "hm_label_studio_postgres_secret" {
+  provider = aws.production
+  name     = "${var.environment}-hm-label-studio-postgres/admin"
+}
+data "aws_secretsmanager_secret_version" "hm_label_studio_postgres_secret_version" {
+  provider  = aws.production
+  secret_id = data.aws_secretsmanager_secret.hm_label_studio_postgres_secret.id
+}
+module "label_studio_postgres_security_group" {
+  providers                      = { aws = aws.production }
+  source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
+  amazon_ec2_security_group_name = "${local.label_studio_postgres_name}-security-group"
+  amazon_vpc_id                  = data.aws_vpc.current.id
+  amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
+  environment                    = var.environment
+  team                           = var.team
+}
+module "label_studio_postgres_subnet_group" {
+  providers         = { aws = aws.production }
+  source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
+  subnet_group_name = "${local.label_studio_postgres_name}-subnet-group"
+  subnet_ids        = var.amazon_vpc_private_subnet_ids
+  environment       = var.environment
+  team              = var.team
+}
+module "label_studio_postgres_parameter_group" {
+  providers            = { aws = aws.production }
+  source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
+  family               = "postgres17"
+  parameter_group_name = "${local.label_studio_postgres_name}-parameter-group"
+  environment          = var.environment
+  team                 = var.team
+}
+module "label_studio_postgres_instance" {
+  providers                 = { aws = aws.production }
+  source                    = "../../../../modules/aws/hm_amazon_rds_instance"
+  amazon_rds_name           = local.label_studio_postgres_name
+  amazon_rds_engine         = "postgres"
+  amazon_rds_engine_version = "17"
+  amazon_rds_instance_class = "db.m7g.large"
+  storage_size_gb           = 32
+  max_storage_size_gb       = 64
+  user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_label_studio_postgres_secret_version.secret_string)["user_name"]
+  password                  = jsondecode(data.aws_secretsmanager_secret_version.hm_label_studio_postgres_secret_version.secret_string)["password"]
+  parameter_group_name      = module.label_studio_postgres_parameter_group.name
+  subnet_group_name         = module.label_studio_postgres_subnet_group.name
+  vpc_security_group_ids    = [module.label_studio_postgres_security_group.id]
+  cloudwatch_log_types      = ["postgresql", "upgrade"]
+  environment               = var.environment
+  team                      = var.team
+}
+# Label Studio - Kubernetes namespace
+module "kubernetes_namespace_hm_label_studio" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-label-studio"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # MLflow
 # MLflow - S3 bucket
 module "s3_bucket_hm_mlflow" {
