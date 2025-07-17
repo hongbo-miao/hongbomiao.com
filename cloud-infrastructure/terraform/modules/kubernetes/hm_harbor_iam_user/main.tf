@@ -26,14 +26,21 @@ resource "aws_iam_user_policy" "hm_aws_iam_user_policy" {
       {
         Effect = "Allow"
         Action = [
+          "s3:ListBucket",
+          "s3:ListBucketMultipartUploads"
+        ]
+        Resource = [
+          "arn:aws:s3:::${var.s3_bucket_name}"
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
           "s3:DeleteObject",
           "s3:GetObject",
-          "s3:ListBucket",
-          "s3:ListBucketMultipartUploads",
           "s3:PutObject"
         ]
         Resource = [
-          "arn:aws:s3:::${var.s3_bucket_name}",
           "arn:aws:s3:::${var.s3_bucket_name}/*"
         ]
       }
