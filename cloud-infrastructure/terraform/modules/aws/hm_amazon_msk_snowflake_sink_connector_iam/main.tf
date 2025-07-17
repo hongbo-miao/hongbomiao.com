@@ -94,11 +94,18 @@ resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_plugin_s3_polic
       {
         Effect = "Allow"
         Action = [
-          "s3:GetObject",
           "s3:ListBucket"
         ]
         Resource = [
-          "arn:aws:s3:::${var.msk_plugin_s3_bucket_name}",
+          "arn:aws:s3:::${var.msk_plugin_s3_bucket_name}"
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject"
+        ]
+        Resource = [
           "arn:aws:s3:::${var.msk_plugin_s3_bucket_name}/*"
         ]
       }

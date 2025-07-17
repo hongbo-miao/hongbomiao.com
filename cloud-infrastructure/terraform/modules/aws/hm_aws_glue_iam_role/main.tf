@@ -38,11 +38,18 @@ resource "aws_iam_role_policy" "glue_role_input_policy" {
       {
         Effect = "Allow"
         Action = [
-          "s3:GetObject",
           "s3:ListBucket"
         ]
         Resource = [
-          "arn:aws:s3:::${var.input_s3_bucket_name}",
+          "arn:aws:s3:::${var.input_s3_bucket_name}"
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject"
+        ]
+        Resource = [
           "arn:aws:s3:::${var.input_s3_bucket_name}/*"
         ]
       }
@@ -60,13 +67,20 @@ resource "aws_iam_role_policy" "glue_role_output_policy" {
       {
         Effect = "Allow"
         Action = [
+          "s3:ListBucket"
+        ]
+        Resource = [
+          "arn:aws:s3:::${var.output_s3_bucket_name}"
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
           "s3:DeleteObject",
           "s3:GetObject",
-          "s3:ListBucket",
           "s3:PutObject"
         ]
         Resource = [
-          "arn:aws:s3:::${var.output_s3_bucket_name}",
           "arn:aws:s3:::${var.output_s3_bucket_name}/*"
         ]
       },
