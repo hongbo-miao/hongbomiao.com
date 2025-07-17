@@ -63,7 +63,7 @@ module "amazon_eks_cluster" {
   providers = { aws = aws.production }
   source    = "terraform-aws-modules/eks/aws"
   # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
-  version         = "20.37.1"
+  version         = "20.37.2"
   cluster_name    = local.amazon_eks_cluster_name
   cluster_version = "1.32"
   cluster_addons = {
@@ -212,7 +212,7 @@ module "kubernetes_namespace_hm_karpenter" {
 module "hm_karpenter" {
   source = "terraform-aws-modules/eks/aws//modules/karpenter"
   # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
-  version                         = "20.37.1"
+  version                         = "20.37.2"
   cluster_name                    = module.amazon_eks_cluster.cluster_name
   enable_v1_permissions           = true
   enable_pod_identity             = true
