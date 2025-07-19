@@ -250,6 +250,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Data
 
+### Data Annotation
+
+- **Label Studio** - Data annotation
+
 ### Data Extraction
 
 - **MinerU** - Document data extraction
