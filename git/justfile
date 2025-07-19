@@ -4,6 +4,7 @@ git-add:
 git-commit:
     git commit --message="xxx"
 
+# Branch
 git-branch-show-head:
     cat .git/HEAD
 
@@ -11,7 +12,7 @@ git-branch-switch:
     git switch branch-name
 
 git-branch-create-and-switch:
-    git switch -c branch-name
+    git switch --create=branch-name
 
 git-branch-create-by-commit-hash:
     git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -20,7 +21,18 @@ git-branch-list-local:
     git branch
 
 git-branch-list-remote:
-    git branch -r
+    git branch --remotes
+
+# Reset and switch
+git-reset-and-switch-to-main:
+    git reset --hard
+    git switch main
+
+# Stash and switch
+git-stash-and-to-main:
+    git stash
+    git switch main
+    git stash pop
 
 git-fetch-branches:
     git fetch --all
@@ -34,10 +46,12 @@ git-log:
 git-status:
     git status
 
+# Recover
 git-recover:
     git reflog --no-abbrev
     git branch branch-name xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+# Remove secret
 git-remove-secret:
     git log -S xxx
     git log -p -S xxx > git_log.txt
