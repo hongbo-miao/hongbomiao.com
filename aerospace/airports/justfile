@@ -1,0 +1,2 @@
+create-duckdb:
+    duckdb airports.duckdb "create table airports as select country_code, region_name, iata, icao, airport, cast(latitude as double) as latitude, cast(longitude as double) as longitude from 'https://raw.githubusercontent.com/ip2location/ip2location-iata-icao/refs/heads/master/iata-icao.csv'"
