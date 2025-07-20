@@ -9,7 +9,7 @@ workdir: .
 envs:
   WANDB_API_KEY: xxx
 setup: |
-  curl --silent --fail --show-error --location https://install.python-poetry.org | python3 -
+  curl --silent --fail --show-error --location https://astral.sh/uv/install.sh | sh
   uv sync --dev
 run: |
   uv run poe dev
