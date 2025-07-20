@@ -93,9 +93,6 @@ name: . Test Machine Learning
       hm-pydantic-ai-chat-pdf:
         required: true
         type: boolean
-      hm-rasa:
-        required: true
-        type: boolean
       hm-scikit-learn:
         required: true
         type: boolean
@@ -1570,21 +1567,6 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: llm-evaluation/hm-deepeval
-
-  rasa-test:
-    name: Rasa | Test
-    if: ${{ inputs.workflow || inputs.hm-rasa }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Train and test
-        uses: RasaHQ/rasa-train-test-gha@v2.3.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          workspace: ${{ github.workspace }}/machine-learning/hm-rasa
 
   graph-neural-network-test:
     name: GNN | Test
