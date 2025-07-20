@@ -528,7 +528,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.classify-mnist
     uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.predict-diabetes
     uv run poe static-type-check-python --package=machine-learning.hm-nvidia-modulus
-    uv run poe static-type-check-python --package=machine-learning.hm-rasa
     uv run poe static-type-check-python --package=machine-learning.hm-scikit-learn
     uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.live-line-chart
     uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.map
