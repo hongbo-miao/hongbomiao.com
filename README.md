@@ -58,7 +58,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 (The diagram here may take a moment to load. Please wait patiently.)
 
-![Architecture](https://github.com/user-attachments/assets/73a0340b-8e0f-4d7f-9172-9533d6a1fee8)
+![Architecture](https://github.com/user-attachments/assets/80a8865b-d3e9-43e4-abc2-fe29a619ce6b)
 
 # 🧱 Tech Stack
 
@@ -480,7 +480,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Faiss** - Vector search and similarity library
 - **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
-- **Rasa** - Machine learning framework for automated text and voice-based conversations
 - **Optuna** - Hyperparameter optimization framework
 - **DVC** - Data version control
 - **Feast** - Feature store
@@ -1191,12 +1190,6 @@ The VHDL waveforms are displayed in GTKWave.
 ### Kubeflow - Machine Learning Platform
 
 ![Kubeflow screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/0de50151-9d5d-4239-82de-93bf2eed1169)
-
-### Contextual AI assistant
-
-Chatbot on Telegram powered by Rasa.
-
-![Telegram screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/14374215-ec31-43d0-be25-dc59b0c9c70e)
 
 ### Weights & Biases - Machine Learning Experiment Tracking
 

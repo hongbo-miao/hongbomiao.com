@@ -93,10 +93,6 @@ jobs:
               - '.dockerignore'
               - '.github/workflows/build.yml'
               - 'data-orchestration/hm-prefect/workflows/print-platform/**'
-            hm-rasa:
-              - '.dockerignore'
-              - '.github/workflows/build.yml'
-              - 'machine-learning/hm-rasa/**'
             hm-spark-find-retired-people-python:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -136,7 +132,6 @@ jobs:
       hm-prefect-daft-analysis: ${{ steps.filter.outputs.hm-prefect-daft-analysis }}
       hm-prefect-greet: ${{ steps.filter.outputs.hm-prefect-greet }}
       hm-prefect-print-platform: ${{ steps.filter.outputs.hm-prefect-print-platform }}
-      hm-rasa: ${{ steps.filter.outputs.hm-rasa }}
       hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
       hm-spark-find-retired-people-scala: ${{ steps.filter.outputs.hm-spark-find-retired-people-scala }}
       hm-spark-ingest-from-s3-to-kafka: ${{ steps.filter.outputs.hm-spark-ingest-from-s3-to-kafka }}
@@ -894,42 +889,6 @@ jobs:
             file: ./authorization/hm-opal-client/Dockerfile
             push: true
             tags: ghcr.io/hongbo-miao/hm-opal-client:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
-
-  build-hm-rasa-action-server:
-    name: Build hm-rasa-action-server
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.hm-rasa == 'true' }}
-    runs-on: ubuntu-24.04
-    environment: production
-    timeout-minutes: 60
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3.6.0
-        with:
-          platforms: amd64,arm64
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.11.1
-      - name: Log in GitHub Container Registry
-        uses: docker/login-action@v3.4.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
-        with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./machine-learning/hm-rasa/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-rasa-action-server:latest
             cache-from: type=gha
             cache-to: type=gha,mode=max
           attempt_limit: 3
