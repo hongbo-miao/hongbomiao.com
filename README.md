@@ -482,7 +482,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **OGB** - Open graph benchmark
 - **Rasa** - Machine learning framework for automated text and voice-based conversations
 - **Optuna** - Hyperparameter optimization framework
-- **CML** - Continuous machine learning
 - **DVC** - Data version control
 - **Feast** - Feature store
 - **Kubeflow** - Machine learning platform
