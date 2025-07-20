@@ -22,9 +22,6 @@ focus-opa-debug:
 focus-pixie-debug:
     sh bin/utils/focus_pixie_debug.sh
 
-focus-rasa-debug:
-    sh bin/utils/focus_rasa_debug.sh
-
 install-alpine:
     sh bin/utils/install_hm_alpine.sh
 
@@ -360,12 +357,6 @@ kubectl-port-forward-kubeflow:
 
 kubectl-port-forward-mlflow:
     kubectl port-forward service/mlflow --namespace=hm-mlflow 29858:5000
-
-kubectl-port-forward-rasa:
-    kubectl port-forward service/hm-release-rasa --namespace=hm-rasa 39143:5005
-    kubectl port-forward service/hm-release-postgresql-headless --namespace=hm-rasa 35785:5432
-    kubectl port-forward service/hm-release-redis-master --namespace=hm-rasa 6379:6379
-    kubectl port-forward service/hm-release-rasa-action-server --namespace=hm-rasa-action-server 5055:5055
 
 kubectl-port-forward-kubecost:
     kubectl port-forward service/kubecost-cost-analyzer --namespace=hm-kubecost 9090:9090
