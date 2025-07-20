@@ -16,7 +16,7 @@ dev = [
 
 [tool.uv]
 package = false
-required-version = ">=0.7.0"
+required-version = ">=0.8.0"
 
 [tool.poe.tasks]
 build = { shell = "cd ../submodules/connextdds-py && git checkout tags/v0.1.5 && python configure.py --nddshome=/Applications/rti_connext_dds-6.1.1 --jobs=8 arm64Darwin20clang12.0 && pip install . && rm -f rti-0.1.5-cp310-cp310-macosx_12_0_arm64.whl && git checkout master" }
