@@ -1,6 +1,23 @@
-# https://skypilot.readthedocs.io/en/latest/reference/yaml-spec.html
+# https://docs.skypilot.co/en/latest/reference/yaml-spec.html
 
 ---
 name: hm-skypilot
 resources:
-  accelerators: A100-80GB:8
+  infra: aws
+  accelerators: L4:1
+  image_id:
+    # Deep Learning Base OSS Nvidia Driver GPU AMI (Ubuntu 24.04)
+    us-west-2: ami-07886a480c06fb92a
+  use_spot: false
+  disk_size: 256
+  cpus: 4+
+  memory: 32+
+  disk_tier: medium
+setup: |
+  # Add SSH key
+  echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWhR5NV13iw0X8lKqsrSRqbcIJcA5AVMjyfJjOrplwH hongbo-miao" >> ~/.ssh/authorized_keys
+
+  # Install dependencies
+  sudo snap install btop
+  sudo snap install nvtop
+  sudo snap install uv
