@@ -345,7 +345,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **RocksDB** - Embedded key-value store
 - **Redis** - Distributed in-memory key-value store
   - **Valkey** - Fork of Redis
-  - **KeyDB** - Multithreaded fork of Redis
 - **Apache Cassandra** - Distributed wide-column NoSQL database
 - **LanceDB** - Embedded vector database
 - **Qdrant** - Distributed vector database
