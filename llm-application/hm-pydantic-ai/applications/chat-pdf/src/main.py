@@ -13,7 +13,7 @@ from docling.datamodel.pipeline_options import (
     TableStructureOptions,
 )
 from docling.document_converter import DocumentConverter, PdfFormatOption
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from pydantic_ai import Agent, RunContext
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
@@ -27,11 +27,7 @@ class PDFContext(BaseModel):
     faiss_index: Any = None  # FAISS index can't be serialized
     embeddings: Any = None  # NumPy arrays
     model: Any = None  # SentenceTransformer model
-
-    class Config:
-        """Pydantic configuration to allow arbitrary types."""
-
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
 
 class ChatResponse(BaseModel):
