@@ -731,6 +731,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **CoppeliaSim** - Robot simulation
 - **OpenFOAM** - Computational fluid dynamics (CFD)
 - **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
+- **BlueSky** - Air traffic simulator
 - **AeroSandbox** - Aircraft design and optimization
 - **MATLAB** - Programming and numeric computing platform
   - **5G Toolbox** - 5G communications systems simulation, analysis, and testing
