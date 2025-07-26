@@ -5,18 +5,23 @@ aws-install:
     sudo installer -pkg AWSCLIV2.pkg -target /
 
 aws-profile-create:
-    # https://us-east-1.console.aws.amazon.com/iamv2/home#/security_credentials?section=codecommit_credentials
-    aws configure --profile=default
+    aws configure --profile=hm
     # AWS Access Key ID: xxx
     # AWS Secret Access Key: xxx
     # Default region name: us-west-2
     # Default output format:
 
+aws-sso-configure:
+    aws configure sso
+
+aws-sso-login:
+    aws sso login --profile=hm
+
 aws-profile-list:
     aws configure list-profiles
 
 aws-profile-show:
-    aws configure list --profile=default
+    aws configure list --profile=hm
 
 aws-credentials-show:
     cat ~/.aws/credentials
