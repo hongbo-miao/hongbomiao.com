@@ -255,6 +255,8 @@ jobs:
               - 'data-distribution/arrow-flight/arrow-flight-client/**'
             arrow-flight-server:
               - 'data-distribution/arrow-flight/arrow-flight-server/**'
+            bluesky:
+              - 'aerospace/bluesky/**'
             call-matlab-function-in-python:
               - 'matlab/call-matlab-function-in-python/**'
             decode-can-blf-data:
@@ -596,6 +598,7 @@ jobs:
       api-rust: ${{ steps.filter.outputs.api-rust }}
       arrow-flight-client: ${{ steps.filter.outputs.arrow-flight-client }}
       arrow-flight-server: ${{ steps.filter.outputs.arrow-flight-server }}
+      bluesky: ${{ steps.filter.outputs.bluesky }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
@@ -1138,6 +1141,7 @@ jobs:
       # Workflows
       workflow: ${{ needs.detect-changes.outputs.workflow-test-aerospace == 'true' }}
       # Applications
+      bluesky: ${{ needs.detect-changes.outputs.bluesky == 'true' }}
       hm-aerosandbox: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
       hm-openaerostruct: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
       x-plane-rest-api: ${{ needs.detect-changes.outputs.x-plane-rest-api == 'true' }}
