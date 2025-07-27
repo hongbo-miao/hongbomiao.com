@@ -1389,23 +1389,23 @@ jobs:
         with:
           version: 0.8.0
           enable-cache: true
-          cache-dependency-glob: llm-inference/post-training-quantization/uv.lock
+          cache-dependency-glob: llm-post-training/post-training-quantization/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: llm-inference/post-training-quantization/pyproject.toml
+          python-version-file: llm-post-training/post-training-quantization/pyproject.toml
       - name: Install dependencies
-        working-directory: llm-inference/post-training-quantization
+        working-directory: llm-post-training/post-training-quantization
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-inference/post-training-quantization
+        working-directory: llm-post-training/post-training-quantization
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: llm-inference/post-training-quantization
+          directory: llm-post-training/post-training-quantization
 
   axolotl-test:
     name: Axolotl | Test
@@ -1422,25 +1422,25 @@ jobs:
         with:
           version: 0.8.0
           enable-cache: true
-          cache-dependency-glob: fine-tuning/hm-axolotl/uv.lock
+          cache-dependency-glob: llm-post-training/fine-tuning/hm-axolotl/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: fine-tuning/hm-axolotl/pyproject.toml
+          python-version-file: llm-post-training/fine-tuning/hm-axolotl/pyproject.toml
       - name: Install dependencies
-        working-directory: fine-tuning/hm-axolotl
+        working-directory: llm-post-training/fine-tuning/hm-axolotl
         run: |
           uv sync --extra=build
           uv sync --extra=build --extra=compile
           uv sync --extra=build --extra=compile --dev
       - name: Test
-        working-directory: fine-tuning/hm-axolotl
+        working-directory: llm-post-training/fine-tuning/hm-axolotl
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: fine-tuning/hm-axolotl
+          directory: llm-post-training/fine-tuning/hm-axolotl
 
   llama-factory-test:
     name: LLaMA-Factory | Test
@@ -1456,23 +1456,23 @@ jobs:
         with:
           version: 0.8.0
           enable-cache: true
-          cache-dependency-glob: fine-tuning/hm-llama-factory/uv.lock
+          cache-dependency-glob: llm-post-training/fine-tuning/hm-llama-factory/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: fine-tuning/hm-llama-factory/pyproject.toml
+          python-version-file: llm-post-training/fine-tuning/hm-llama-factory/pyproject.toml
       - name: Install dependencies
-        working-directory: fine-tuning/hm-llama-factory
+        working-directory: llm-post-training/fine-tuning/hm-llama-factory
         run: |
           uv sync --dev
       - name: Test
-        working-directory: fine-tuning/hm-llama-factory
+        working-directory: llm-post-training/fine-tuning/hm-llama-factory
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: fine-tuning/hm-llama-factory
+          directory: llm-post-training/fine-tuning/hm-llama-factory
 
   torchtune-test:
     name: torchtune | Test
@@ -1488,23 +1488,23 @@ jobs:
         with:
           version: 0.8.0
           enable-cache: true
-          cache-dependency-glob: fine-tuning/hm-torchtune/uv.lock
+          cache-dependency-glob: llm-post-training/fine-tuning/hm-torchtune/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: fine-tuning/hm-torchtune/pyproject.toml
+          python-version-file: llm-post-training/fine-tuning/hm-torchtune/pyproject.toml
       - name: Install dependencies
-        working-directory: fine-tuning/hm-torchtune
+        working-directory: llm-post-training/fine-tuning/hm-torchtune
         run: |
           uv sync --dev
       - name: Test
-        working-directory: fine-tuning/hm-torchtune
+        working-directory: llm-post-training/fine-tuning/hm-torchtune
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: fine-tuning/hm-torchtune
+          directory: llm-post-training/fine-tuning/hm-torchtune
 
   unsloth-test:
     name: Unsloth | Test
@@ -1520,23 +1520,23 @@ jobs:
         with:
           version: 0.8.0
           enable-cache: true
-          cache-dependency-glob: fine-tuning/hm-unsloth/uv.lock
+          cache-dependency-glob: llm-post-training/fine-tuning/hm-unsloth/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: fine-tuning/hm-unsloth/pyproject.toml
+          python-version-file: llm-post-training/fine-tuning/hm-unsloth/pyproject.toml
       - name: Install dependencies
-        working-directory: fine-tuning/hm-unsloth
+        working-directory: llm-post-training/fine-tuning/hm-unsloth
         run: |
           uv sync --dev
       - name: Test
-        working-directory: fine-tuning/hm-unsloth
+        working-directory: llm-post-training/fine-tuning/hm-unsloth
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: fine-tuning/hm-unsloth
+          directory: llm-post-training/fine-tuning/hm-unsloth
 
   fine-tune-whisper-test:
     name: Fine Tune Whisper | Test
@@ -1552,23 +1552,23 @@ jobs:
         with:
           version: 0.8.0
           enable-cache: true
-          cache-dependency-glob: fine-tuning/fine-tune-whisper/uv.lock
+          cache-dependency-glob: llm-post-training/fine-tuning/fine-tune-whisper/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: fine-tuning/fine-tune-whisper/pyproject.toml
+          python-version-file: llm-post-training/fine-tuning/fine-tune-whisper/pyproject.toml
       - name: Install dependencies
-        working-directory: fine-tuning/fine-tune-whisper
+        working-directory: llm-post-training/fine-tuning/fine-tune-whisper
         run: |
           uv sync --dev
       - name: Test
-        working-directory: fine-tuning/fine-tune-whisper
+        working-directory: llm-post-training/fine-tuning/fine-tune-whisper
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: fine-tuning/fine-tune-whisper
+          directory: llm-post-training/fine-tuning/fine-tune-whisper
 
   deepeval-test:
     name: DeepEval | Test

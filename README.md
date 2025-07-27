@@ -513,18 +513,20 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **LangGraph** - LLM workflow library
   - **LangChain** - LLM application framework
   - **LlamaIndex** - LLM data framework
-- LLM Fine-Tuning
-  - **LLaMA-Factory** - LLM fine-tuning
-  - **Unsloth** - LLM fine-tuning
-  - **torchtune** - LLM fine-tuning
-  - **Axolotl** - LLM fine-tuning
+- LLM Post-Training
+  - Fine-Tuning
+    - **LLaMA-Factory** - LLM fine-tuning
+    - **Unsloth** - LLM fine-tuning
+    - **torchtune** - LLM fine-tuning
+    - **Axolotl** - LLM fine-tuning
+  - Quantization
+    - **torchao** - Quantization and sparsification
 - LLM Inference
   - **vLLM** – High-throughput LLM serving
   - **SGLang** – LLM/VLM serving
   - **Ollama** – Local LLM serving
   - **GPT4All** - Local LLM serving
   - **MLX LM** – LLM serving for Apple silicon
-  - **torchao** - Quantization and sparsification
   - **KV Caching** - Memory optimization technique caching key/value pairs from self-attention to accelerate auto-regressive decoding
   - **Peculative Decoding** – Acceleration technique using draft models
 - LLM Evaluation
