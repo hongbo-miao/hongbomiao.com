@@ -1,4 +1,5 @@
 # https://huggingface.co/learn/llm-course/chapter6/5
+# https://www.youtube.com/watch?v=HEikzVL-lZU
 
 import logging
 from collections import defaultdict
@@ -115,38 +116,26 @@ def train_bpe_tokenizer(
     vocab: list[str] = ["<|endoftext|>", *alphabet.copy()]
     splits: dict[str, list[str]] = {word: list(word) for word in word_freqs}
 
-    logger.info("Computing initial pair frequencies...")
-    pair_freqs = compute_pair_freqs(splits, word_freqs)
-
-    # Show first few pairs
-    logger.info("Top pairs:")
-    for i, (key, freq) in enumerate(pair_freqs.items()):
-        if i >= 5:
-            break
-        logger.info(f"{key}: {freq}")
-
-    # Find best pair
-    best_pair, max_freq = find_best_pair(pair_freqs)
-    logger.info(f"Best initial pair: {best_pair} with frequency {max_freq}")
-
-    # Initialize merges dictionary
-    merges: dict[tuple[str, str], str] = {("Ġ", "t"): "Ġt"}
-    vocab.append("Ġt")
-
-    # Perform initial merge
-    splits = merge_pair("Ġ", "t", splits, word_freqs)
-    logger.info(
-        f"After initial merge - 'Ġtrained': {splits.get('Ġtrained', 'Not found')}",
-    )
+    # Initialize empty merges dictionary
+    merges: dict[tuple[str, str], str] = {}
 
     logger.info(f"Training BPE to vocabulary size {vocab_size}...")
+    logger.info(f"Starting vocabulary size: {len(vocab)}")
+
     # Main BPE training loop
     while len(vocab) < vocab_size:
         pair_freqs = compute_pair_freqs(splits, word_freqs)
+
+        # No more pairs to compute
+        if not pair_freqs:
+            logger.warning("No more pairs to merge")
+            break
+
         best_pair, max_freq = find_best_pair(pair_freqs)
 
-        if not best_pair[0]:  # Check if best_pair is empty
-            logger.warning("No more pairs to merge")
+        # Check if best_pair is empty
+        if not best_pair[0] or max_freq is None:
+            logger.warning("No valid pairs found")
             break
 
         splits = merge_pair(*best_pair, splits, word_freqs)
@@ -193,8 +182,6 @@ def tokenize_text(
 
 
 def main() -> None:
-    logger.info("Starting BPE tokenization demonstration")
-
     # Create corpus
     corpus: list[str] = create_corpus()
     logger.info(f"Created corpus with {len(corpus)} sentences")
