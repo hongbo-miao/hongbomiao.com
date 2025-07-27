@@ -15,6 +15,9 @@ name: . Test Machine Learning
       amazon-sagemaker-triton-resnet-50-infer:
         required: true
         type: boolean
+      byte-pair-encoding:
+        required: true
+        type: boolean
       convolutional-neural-network:
         required: true
         type: boolean
@@ -565,6 +568,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: machine-learning/feature-store
+
+  byte-pair-encoding-test:
+    name: Byte-Pair Encoding | Test
+    if: ${{ inputs.workflow || inputs.byte-pair-encoding }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.4.2
+        with:
+          version: 0.8.0
+          enable-cache: true
+          cache-dependency-glob: tokenization/byte-pair-encoding/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: tokenization/byte-pair-encoding/pyproject.toml
+      - name: Install dependencies
+        working-directory: tokenization/byte-pair-encoding
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: tokenization/byte-pair-encoding
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: tokenization/byte-pair-encoding
 
   imagebind-test:
     name: ImageBind | Test
