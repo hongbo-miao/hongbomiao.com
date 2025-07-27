@@ -257,6 +257,8 @@ jobs:
               - 'data-distribution/arrow-flight/arrow-flight-server/**'
             bluesky:
               - 'aerospace/bluesky/**'
+            byte-pair-encoding:
+              - 'tokenization/byte-pair-encoding/**'
             call-matlab-function-in-python:
               - 'matlab/call-matlab-function-in-python/**'
             decode-can-blf-data:
@@ -599,6 +601,7 @@ jobs:
       arrow-flight-client: ${{ steps.filter.outputs.arrow-flight-client }}
       arrow-flight-server: ${{ steps.filter.outputs.arrow-flight-server }}
       bluesky: ${{ steps.filter.outputs.bluesky }}
+      byte-pair-encoding: ${{ steps.filter.outputs.byte-pair-encoding }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
@@ -1022,6 +1025,7 @@ jobs:
       # Applications
       amazon-sagemaker-triton-resnet-50-deploy: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-deploy == 'true' }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
+      byte-pair-encoding: ${{ needs.detect-changes.outputs.byte-pair-encoding == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
       feature-store: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
       fine-tune-whisper: ${{ needs.detect-changes.outputs.fine-tune-whisper == 'true' }}

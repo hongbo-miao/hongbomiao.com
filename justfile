@@ -548,6 +548,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=quantum-computing
     uv run poe static-type-check-python --package=scientific-computing.hm-sunpy
     uv run poe static-type-check-python --package=scientific-computing.surrogate-model
+    uv run poe static-type-check-python --package=tokenization.byte-pair-encoding
 
 static-type-check-terraform:
     cd cloud-infrastructure/terraform/environments/production/airbyte && terraform validate

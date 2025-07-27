@@ -499,6 +499,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **olmOCR** - Document data extraction
   - **Docling** - Document data extraction
   - **pypdf** - PDF manipulation
+- Tokenization
+  - **Byte-Pair Encoding (BPE)** - Subword tokenization
 - Embedding
   - **ImageBind** - Multimodal embedding model for images, text, audio, video, depth, thermal, and inertial measurement units (IMUs)
   - **OpenCLIP** - Multimodal embedding model for images and text
