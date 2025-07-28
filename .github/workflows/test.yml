@@ -255,6 +255,8 @@ jobs:
               - 'data-distribution/arrow-flight/arrow-flight-client/**'
             arrow-flight-server:
               - 'data-distribution/arrow-flight/arrow-flight-server/**'
+            automatic-mixed-precision:
+              - 'llm-training/automatic-mixed-precision/**'
             bluesky:
               - 'aerospace/bluesky/**'
             byte-pair-encoding:
@@ -600,6 +602,7 @@ jobs:
       api-rust: ${{ steps.filter.outputs.api-rust }}
       arrow-flight-client: ${{ steps.filter.outputs.arrow-flight-client }}
       arrow-flight-server: ${{ steps.filter.outputs.arrow-flight-server }}
+      automatic-mixed-precision: ${{ steps.filter.outputs.automatic-mixed-precision }}
       bluesky: ${{ steps.filter.outputs.bluesky }}
       byte-pair-encoding: ${{ steps.filter.outputs.byte-pair-encoding }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
@@ -1025,6 +1028,7 @@ jobs:
       # Applications
       amazon-sagemaker-triton-resnet-50-deploy: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-deploy == 'true' }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
+      automatic-mixed-precision: ${{ needs.detect-changes.outputs.automatic-mixed-precision == 'true' }}
       byte-pair-encoding: ${{ needs.detect-changes.outputs.byte-pair-encoding == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
       feature-store: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
