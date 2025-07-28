@@ -63,10 +63,10 @@ module "amazon_eks_cluster" {
   providers = { aws = aws.production }
   source    = "terraform-aws-modules/eks/aws"
   # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
-  version         = "20.37.2"
-  cluster_name    = local.amazon_eks_cluster_name
-  cluster_version = "1.32"
-  cluster_addons = {
+  version            = "21.0.4"
+  name               = local.amazon_eks_cluster_name
+  kubernetes_version = "1.32"
+  addons = {
     aws-ebs-csi-driver = {
       addon_version               = "v1.40.0-eksbuild.1"
       service_account_role_arn    = module.amazon_ebs_csi_driver_iam_role.arn
@@ -100,9 +100,9 @@ module "amazon_eks_cluster" {
       resolve_conflicts_on_update = "OVERWRITE"
     }
   }
-  cluster_endpoint_public_access = false
-  cluster_service_ipv4_cidr      = "10.215.0.0/16"
-  cluster_security_group_additional_rules = {
+  endpoint_public_access = false
+  service_ipv4_cidr      = "10.215.0.0/16"
+  security_group_additional_rules = {
     ingress_rule_on_site = {
       description = "On-Site"
       type        = "ingress"
@@ -131,21 +131,6 @@ module "amazon_eks_cluster" {
   vpc_id                   = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id
   subnet_ids               = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids
   control_plane_subnet_ids = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_private_subnets_ids
-  eks_managed_node_group_defaults = {
-    block_device_mappings = {
-      xvda = {
-        device_name = "/dev/xvda"
-        ebs = {
-          volume_size           = 100
-          volume_type           = "gp3"
-          iops                  = 3000
-          throughput            = 250
-          encrypted             = true
-          delete_on_termination = true
-        }
-      }
-    }
-  }
   eks_managed_node_groups = {
     hm_eks_node_group = {
       min_size       = 3
@@ -154,6 +139,19 @@ module "amazon_eks_cluster" {
       ami_type       = "AL2023_x86_64_STANDARD"
       instance_types = ["m7a.xlarge", "m7i.xlarge", "m6a.xlarge", "m6i.xlarge", "m6in.xlarge", "m5.xlarge", "m5a.xlarge", "m5n.xlarge", "m5zn.xlarge"]
       capacity_type  = "SPOT"
+      block_device_mappings = {
+        xvda = {
+          device_name = "/dev/xvda"
+          ebs = {
+            volume_size           = 100
+            volume_type           = "gp3"
+            iops                  = 3000
+            throughput            = 250
+            encrypted             = true
+            delete_on_termination = true
+          }
+        }
+      }
     }
   }
   node_security_group_additional_rules = {
@@ -212,14 +210,9 @@ module "kubernetes_namespace_hm_karpenter" {
 module "hm_karpenter" {
   source = "terraform-aws-modules/eks/aws//modules/karpenter"
   # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
-  version                         = "20.37.2"
+  version                         = "21.0.4"
   cluster_name                    = module.amazon_eks_cluster.cluster_name
-  enable_v1_permissions           = true
-  enable_pod_identity             = true
   create_pod_identity_association = true
-  enable_irsa                     = true
-  irsa_oidc_provider_arn          = module.amazon_eks_cluster.oidc_provider_arn
-  irsa_namespace_service_accounts = ["${module.kubernetes_namespace_hm_karpenter.namespace}:karpenter"]
   node_iam_role_additional_policies = {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
