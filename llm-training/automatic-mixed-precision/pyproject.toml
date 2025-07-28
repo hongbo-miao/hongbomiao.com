@@ -1,0 +1,34 @@
+[project]
+name = "automatic-mixed-precision"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+  "deepspeed==0.17.2",
+  "torch==2.7.1",
+  "torchvision==0.22.1",
+  "mpi4py==4.1.0",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.36.0",
+  "pytest-cov==6.2.1",
+  "pytest==8.4.1",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.8.0"
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu128" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

@@ -15,6 +15,9 @@ name: . Test Machine Learning
       amazon-sagemaker-triton-resnet-50-infer:
         required: true
         type: boolean
+      automatic-mixed-precision:
+        required: true
+        type: boolean
       byte-pair-encoding:
         required: true
         type: boolean
@@ -569,6 +572,102 @@ jobs:
         with:
           directory: machine-learning/feature-store
 
+  mineru-test:
+    name: MinerU | Test
+    if: ${{ inputs.workflow || inputs.hm-mineru }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.4.3
+        with:
+          version: 0.8.0
+          enable-cache: true
+          cache-dependency-glob: data-extraction/hm-mineru/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: data-extraction/hm-mineru/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-extraction/hm-mineru
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-extraction/hm-mineru
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: data-extraction/hm-mineru
+
+  olmocr-test:
+    name: olmOCR | Test
+    if: ${{ inputs.workflow || inputs.hm-olmocr }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.4.3
+        with:
+          version: 0.8.0
+          enable-cache: true
+          cache-dependency-glob: data-extraction/hm-olmocr/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: data-extraction/hm-olmocr/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-extraction/hm-olmocr
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-extraction/hm-olmocr
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: data-extraction/hm-olmocr
+
+  docling-test:
+    name: Docling | Test
+    if: ${{ inputs.workflow || inputs.hm-docling }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.4.3
+        with:
+          version: 0.8.0
+          enable-cache: true
+          cache-dependency-glob: data-extraction/hm-docling/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: data-extraction/hm-docling/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-extraction/hm-docling
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-extraction/hm-docling
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: data-extraction/hm-docling
+
   byte-pair-encoding-test:
     name: Byte-Pair Encoding | Test
     if: ${{ inputs.workflow || inputs.byte-pair-encoding }}
@@ -664,6 +763,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: embedding/open-clip
+
+  automatic-mixed-precision-test:
+    name: Automatic Mixed Precision | Test
+    if: ${{ inputs.workflow || inputs.automatic-mixed-precision }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.4.3
+        with:
+          version: 0.8.0
+          enable-cache: true
+          cache-dependency-glob: llm-training/automatic-mixed-precision/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: llm-training/automatic-mixed-precision/pyproject.toml
+      - name: Install dependencies
+        working-directory: llm-training/automatic-mixed-precision
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: llm-training/automatic-mixed-precision
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: llm-training/automatic-mixed-precision
 
   sglang-test:
     name: SGLang | Test
@@ -862,102 +993,6 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: machine-learning/hm-kubeflow/pipelines/classify-mnist
-
-  mineru-test:
-    name: MinerU | Test
-    if: ${{ inputs.workflow || inputs.hm-mineru }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.4.3
-        with:
-          version: 0.8.0
-          enable-cache: true
-          cache-dependency-glob: data-extraction/hm-mineru/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.6.0
-        with:
-          python-version-file: data-extraction/hm-mineru/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-extraction/hm-mineru
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-extraction/hm-mineru
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.4.3
-        with:
-          directory: data-extraction/hm-mineru
-
-  olmocr-test:
-    name: olmOCR | Test
-    if: ${{ inputs.workflow || inputs.hm-olmocr }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.4.3
-        with:
-          version: 0.8.0
-          enable-cache: true
-          cache-dependency-glob: data-extraction/hm-olmocr/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.6.0
-        with:
-          python-version-file: data-extraction/hm-olmocr/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-extraction/hm-olmocr
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-extraction/hm-olmocr
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.4.3
-        with:
-          directory: data-extraction/hm-olmocr
-
-  docling-test:
-    name: Docling | Test
-    if: ${{ inputs.workflow || inputs.hm-docling }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.4.3
-        with:
-          version: 0.8.0
-          enable-cache: true
-          cache-dependency-glob: data-extraction/hm-docling/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.6.0
-        with:
-          python-version-file: data-extraction/hm-docling/pyproject.toml
-      - name: Install dependencies
-        working-directory: data-extraction/hm-docling
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-extraction/hm-docling
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.4.3
-        with:
-          directory: data-extraction/hm-docling
 
   langchain-chat-pdf-test:
     name: LangChain (chat-pdf) | Test
