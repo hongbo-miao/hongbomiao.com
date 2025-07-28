@@ -5,6 +5,7 @@ import logging
 import time
 from collections.abc import Generator
 from contextlib import contextmanager
+from pathlib import Path
 from typing import Any
 
 import torch
@@ -32,24 +33,16 @@ def timer_context(message: str) -> Generator[None]:
         )
 
 
-def create_model(in_size: int, out_size: int, num_layers: int) -> torch.nn.Sequential:
-    """
-    Create a simple neural network with linear layers and ReLU activations.
-
-    Args:
-        in_size: Input dimension size
-        out_size: Output dimension size
-        num_layers: Number of linear layers in the network
-
-    Returns:
-        Sequential model moved to CUDA device
-
-    """
+def create_model(
+    input_size: int,
+    output_size: int,
+    num_layers: int,
+) -> torch.nn.Sequential:
     layers: list[torch.nn.Module] = []
     for _ in range(num_layers - 1):
-        layers.append(torch.nn.Linear(in_size, in_size))
+        layers.append(torch.nn.Linear(input_size, input_size))
         layers.append(torch.nn.ReLU())
-    layers.append(torch.nn.Linear(in_size, out_size))
+    layers.append(torch.nn.Linear(input_size, output_size))
     return torch.nn.Sequential(*tuple(layers)).cuda()
 
 
@@ -61,20 +54,7 @@ def train_default_precision(
     targets: list[torch.Tensor],
     epochs: int,
 ) -> None:
-    """
-    Train the network using default precision (float32).
-
-    Args:
-        model: Neural network model
-        optimizer: Optimizer instance
-        loss_fn: Loss function
-        data: List of input tensors
-        targets: List of target tensors
-        epochs: Number of training epochs
-
-    """
-    logger.info("Starting default precision training...")
-
+    logger.info("Starting default precision (float32) training...")
     with timer_context("Default precision:"):
         for _epoch in range(epochs):
             for input_tensor, target in zip(data, targets, strict=True):
@@ -95,23 +75,6 @@ def train_mixed_precision(
     device: str,
     use_amp: bool = True,
 ) -> torch.amp.GradScaler:
-    """
-    Train the network using mixed precision with autocast and GradScaler.
-
-    Args:
-        model: Neural network model
-        optimizer: Optimizer instance
-        loss_fn: Loss function
-        data: List of input tensors
-        targets: List of target tensors
-        epochs: Number of training epochs
-        device: Device type (e.g., 'cuda')
-        use_amp: Whether to enable automatic mixed precision
-
-    Returns:
-        GradScaler instance used for training
-
-    """
     logger.info("Starting mixed precision training...")
     scaler: torch.amp.GradScaler = torch.amp.GradScaler("cuda", enabled=use_amp)
 
@@ -141,17 +104,6 @@ def demonstrate_autocast_behavior(
     targets: list[torch.Tensor],
     device: str,
 ) -> None:
-    """
-    Demonstrate autocast behavior with dtype assertions.
-
-    Args:
-        model: Neural network model
-        loss_fn: Loss function
-        data: List of input tensors
-        targets: List of target tensors
-        device: Device type (e.g., 'cuda')
-
-    """
     logger.info("Demonstrating autocast behavior...")
 
     input_tensor: torch.Tensor = data[0]
@@ -205,21 +157,8 @@ def save_checkpoint(
     model: torch.nn.Module,
     optimizer: torch.optim.Optimizer,
     scaler: torch.amp.GradScaler,
-    filename: str = "amp_checkpoint.pt",
+    filename: Path,
 ) -> dict[str, Any]:
-    """
-    Save model, optimizer, and scaler state.
-
-    Args:
-        model: Neural network model
-        optimizer: Optimizer instance
-        scaler: GradScaler instance
-        filename: Path to save checkpoint
-
-    Returns:
-        Dictionary containing saved states
-
-    """
     checkpoint: dict[str, Any] = {
         "model": model.state_dict(),
         "optimizer": optimizer.state_dict(),
@@ -236,16 +175,6 @@ def load_checkpoint(
     scaler: torch.amp.GradScaler,
     checkpoint: dict[str, Any],
 ) -> None:
-    """
-    Load model, optimizer, and scaler state.
-
-    Args:
-        model: Neural network model
-        optimizer: Optimizer instance
-        scaler: GradScaler instance
-        checkpoint: Dictionary containing saved states
-
-    """
     model.load_state_dict(checkpoint["model"])
     optimizer.load_state_dict(checkpoint["optimizer"])
     scaler.load_state_dict(checkpoint["scaler"])
@@ -257,15 +186,6 @@ def demonstrate_inference_with_autocast(
     data: list[torch.Tensor],
     device: str,
 ) -> None:
-    """
-    Demonstrate using autocast for inference/evaluation.
-
-    Args:
-        model: Neural network model
-        data: List of input tensors
-        device: Device type (e.g., 'cuda')
-
-    """
     logger.info("Demonstrating inference with autocast...")
 
     model.eval()
@@ -280,8 +200,8 @@ def demonstrate_inference_with_autocast(
 
 def run_performance_comparison(
     batch_size: int,
-    in_size: int,
-    out_size: int,
+    input_size: int,
+    output_size: int,
     num_layers: int,
     num_batches: int,
     epochs: int,
@@ -294,32 +214,16 @@ def run_performance_comparison(
     list[torch.Tensor],
     list[torch.Tensor],
 ]:
-    """
-    Run performance comparison between default and mixed precision.
-
-    Args:
-        batch_size: Size of each training batch
-        in_size: Input dimension size
-        out_size: Output dimension size
-        num_layers: Number of layers in the network
-        num_batches: Number of batches per epoch
-        epochs: Number of training epochs
-        device: Device type (e.g., 'cuda')
-
-    Returns:
-        Tuple containing (network, optimizer, scaler, loss_function, data, targets)
-
-    """
     logger.info("=" * 50)
     logger.info("PERFORMANCE COMPARISON")
 
     # Create synthetic data
     logger.info("Creating synthetic data...")
     data: list[torch.Tensor] = [
-        torch.randn(batch_size, in_size) for _ in range(num_batches)
+        torch.randn(batch_size, input_size) for _ in range(num_batches)
     ]
     targets: list[torch.Tensor] = [
-        torch.randn(batch_size, out_size) for _ in range(num_batches)
+        torch.randn(batch_size, output_size) for _ in range(num_batches)
     ]
     loss_fn: torch.nn.MSELoss = torch.nn.MSELoss().cuda()
 
@@ -327,7 +231,7 @@ def run_performance_comparison(
     logger.info("=" * 50)
     logger.info("TRAINING WITH DEFAULT PRECISION")
 
-    model: torch.nn.Module = create_model(in_size, out_size, num_layers)
+    model: torch.nn.Module = create_model(input_size, output_size, num_layers)
     optimizer: torch.optim.SGD = torch.optim.SGD(model.parameters(), lr=0.001)
     train_default_precision(model, optimizer, loss_fn, data, targets, epochs)
 
@@ -335,7 +239,7 @@ def run_performance_comparison(
     logger.info("=" * 50)
     logger.info("TRAINING WITH MIXED PRECISION")
 
-    model = create_model(in_size, out_size, num_layers)
+    model = create_model(input_size, output_size, num_layers)
     optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
     scaler: torch.amp.GradScaler = train_mixed_precision(
         model,
@@ -345,6 +249,7 @@ def run_performance_comparison(
         targets,
         epochs,
         device,
+        use_amp=True,
     )
 
     return model, optimizer, scaler, loss_fn, data, targets
@@ -359,19 +264,6 @@ def demonstrate_advanced_features(
     targets: list[torch.Tensor],
     device: str,
 ) -> None:
-    """
-    Demonstrate advanced AMP features.
-
-    Args:
-        model: Neural network model
-        optimizer: Optimizer instance
-        scaler: GradScaler instance
-        loss_fn: Loss function
-        data: List of input tensors
-        targets: List of target tensors
-        device: Device type (e.g., 'cuda')
-
-    """
     logger.info("=" * 50)
     logger.info("ADVANCED FEATURES DEMONSTRATION")
 
@@ -385,7 +277,12 @@ def demonstrate_advanced_features(
     demonstrate_inference_with_autocast(model, data, device)
 
     # Checkpoint saving/loading demonstration
-    checkpoint: dict[str, Any] = save_checkpoint(model, optimizer, scaler)
+    checkpoint: dict[str, Any] = save_checkpoint(
+        model,
+        optimizer,
+        scaler,
+        Path("checkpoint.pt"),
+    )
 
     # Create new instances and load checkpoint
     new_net: torch.nn.Module = create_model(data[0].shape[1], targets[0].shape[1], 3)
@@ -401,8 +298,8 @@ def main() -> None:
         return
 
     batch_size: int = 512
-    in_size: int = 4096
-    out_size: int = 4096
+    input_size: int = 4096
+    output_size: int = 4096
     num_layers: int = 3
     num_batches: int = 50
     epochs: int = 10
@@ -410,8 +307,8 @@ def main() -> None:
 
     logger.info("Configuration:")
     logger.info(f"  Batch size: {batch_size}")
-    logger.info(f"  Input size: {in_size}")
-    logger.info(f"  Output size: {out_size}")
+    logger.info(f"  Input size: {input_size}")
+    logger.info(f"  Output size: {output_size}")
     logger.info(f"  Number of layers: {num_layers}")
     logger.info(f"  Number of batches: {num_batches}")
     logger.info(f"  Epochs: {epochs}")
@@ -421,8 +318,8 @@ def main() -> None:
 
     model, optimizer, scaler, loss_fn, data, targets = run_performance_comparison(
         batch_size,
-        in_size,
-        out_size,
+        input_size,
+        output_size,
         num_layers,
         num_batches,
         epochs,
