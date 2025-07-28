@@ -141,7 +141,7 @@ module "iot_kafka_s3_json_sink_connector" {
   source                               = "../../../../modules/aws/hm_amazon_msk_s3_json_sink_connector"
   amazon_msk_connector_name            = local.iot_kafka_s3_json_sink_connector_name
   kafka_topics                         = ["production.iot.device.json"]
-  aws_region                           = data.aws_region.current.name
+  aws_region                           = data.aws_region.current.region
   s3_bucket_name                       = module.s3_bucket_iot_data.name
   max_task_number                      = 3
   max_worker_number                    = 10
@@ -215,7 +215,7 @@ module "iot_kafka_s3_parquet_sink_connector" {
   amazon_msk_connector_name            = local.iot_kafka_s3_parquet_sink_connector_name
   kafka_topics                         = ["production.iot.device.avro"]
   confluent_schema_registry_url        = "https://confluent-schema-registry.hongbomiao.com"
-  aws_region                           = data.aws_region.current.name
+  aws_region                           = data.aws_region.current.region
   s3_bucket_name                       = module.s3_bucket_iot_data.name
   max_task_number                      = 3
   max_worker_number                    = 10
