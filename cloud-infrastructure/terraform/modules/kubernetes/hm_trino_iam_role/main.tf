@@ -77,12 +77,12 @@ resource "aws_iam_role_policy" "aws_glue_policy" {
           "glue:GetTables"
         ]
         Resource = flatten([
-          "arn:aws:glue:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:catalog",
+          "arn:aws:glue:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:catalog",
           [for database in var.aws_glue_database_names :
-            "arn:aws:glue:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:database/${database}"
+            "arn:aws:glue:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:database/${database}"
           ],
           [for database in var.aws_glue_database_names :
-            "arn:aws:glue:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${database}/*"
+            "arn:aws:glue:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:table/${database}/*"
           ]
         ])
       }
