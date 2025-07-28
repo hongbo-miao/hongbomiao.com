@@ -346,6 +346,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Redis** - Distributed in-memory key-value store
   - **Valkey** - Fork of Redis
 - **Apache Cassandra** - Distributed wide-column NoSQL database
+- **Faiss** - Vector search and similarity library
 - **LanceDB** - Embedded vector database
 - **Qdrant** - Distributed vector database
 - **Chroma** - Embedded and distributed vector database
@@ -476,7 +477,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **NeuralForecast** - Neural forecasting
 - **Faster Whisper** - Speech recognition model
 - **Transformers** - Machine learning models
-- **Faiss** - Vector search and similarity library
 - **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
 - **Optuna** - Hyperparameter optimization framework
@@ -504,15 +504,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Embedding
   - **ImageBind** - Multimodal embedding model for images, text, audio, video, depth, thermal, and inertial measurement units (IMUs)
   - **OpenCLIP** - Multimodal embedding model for images and text
-- Vector Database
-  - **LanceDB** - Embedded vector database
-  - **Qdrant** - Distributed vector database
-  - **Chroma** - Distributed vector database
-- LLM Application
-  - **PydanticAI** - LLM agent framework
-  - **LangGraph** - LLM workflow library
-  - **LangChain** - LLM application framework
-  - **LlamaIndex** - LLM data framework
+- LLM Training
+  - **Automatic Mixed Precision** - Mixed precision FP16/FP32 training
 - LLM Post-Training
   - Fine-Tuning
     - **LLaMA-Factory** - LLM fine-tuning
@@ -533,13 +526,23 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **DeepEval** - LLM evaluation framework
 - LLM Gateway
   - **LiteLLM** - LLM gateway
+- Vector Database
+  - **Faiss** - Vector search and similarity library
+  - **LanceDB** - Embedded vector database
+  - **Qdrant** - Distributed vector database
+  - **Chroma** - Distributed vector database
+- LLM Application
+  - **PydanticAI** - LLM agent framework
+  - **LangGraph** - LLM workflow library
+  - **LangChain** - LLM application framework
+  - **LlamaIndex** - LLM data framework
+- AI Chat Interface
+  - **Open WebUI** - AI chat interface
+    - **Open WebUI Pipelines** - OpenAI API plugin framework
 - Agent Communication Protocol
   - **Model Context Protocol (MCP)**
   - **Agent Communication Protocol (ACP)**
   - **Agent2Agent Protocol (A2A)**
-- AI Chat Interface
-  - **Open WebUI** - AI chat interface
-    - **Open WebUI Pipelines** - OpenAI API plugin framework
 - Diffusion Model
   - **Diffusers** - Diffusion models
     - **Stable Diffusion** - Text-to-image generation model
