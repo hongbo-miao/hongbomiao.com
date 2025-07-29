@@ -40,11 +40,11 @@ spec:
                   enabled: true
                   urls:
                     - http://hm-confluent-schema-registry-service.production-hm-confluent-schema-registry.svc:8081
-                 protobuf:
+                protobuf:
+                  enabled: true
+                  schemaRegistry:
                     enabled: true
-                    schemaRegistry:
-                      enabled: true
-                      refreshInterval: 1m
+                    refreshInterval: 1m
           serviceAccount:
             create: true
             annotations:
