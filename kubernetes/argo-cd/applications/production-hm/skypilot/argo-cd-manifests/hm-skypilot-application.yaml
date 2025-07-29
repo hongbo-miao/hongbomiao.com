@@ -1,0 +1,41 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: production-hm-skypilot
+  namespace: production-hm-argo-cd
+  labels:
+    app.kubernetes.io/name: hm-skypilot
+spec:
+  project: production-hm
+  sources:
+    - repoURL: https://helm.skypilot.co
+      # https://artifacthub.io/packages/helm/skypilot/skypilot
+      targetRevision: 0.10.0
+      chart: skypilot
+      helm:
+        releaseName: hm-skypilot
+        values: |
+          apiService:
+            image: harbor.hongbomiao.com/docker-hub-proxy-cache/berkeleyskypilot/skypilot:0.10.0
+          ingress:
+            enabled: false
+          ingress-nginx:
+            enabled: false
+          storage:
+            enabled: true
+            storageClassName: production-hm-skypilot-storage-class
+            accessMode: ReadWriteOnce
+            size: 10Gi
+    - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+      targetRevision: main
+      path: kubernetes/argo-cd/applications/production-hm/skypilot/kubernetes-manifests
+  destination:
+    namespace: production-hm-skypilot
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true  # This replaces the --create-namespace flag
+    automated:
+      prune: true
