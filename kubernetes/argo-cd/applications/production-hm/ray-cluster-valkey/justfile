@@ -7,10 +7,10 @@ sealed-secrets-seal:
     	> kubernetes-manifests/hm-ray-cluster-valkey-secret.yaml
 
 argo-cd-app-create:
-    argocd app create production-hm-ray-cluster-valkey --file=manifests/hm-ray-cluster-valkey-application.yaml
+    argocd app create production-hm-ray-cluster-valkey --file=argo-cd-manifests/hm-ray-cluster-valkey-application.yaml
 
 argo-cd-app-update:
-    argocd app create production-hm-ray-cluster-valkey --file=manifests/hm-ray-cluster-valkey-application.yaml --upsert
+    argocd app create production-hm-ray-cluster-valkey --file=argo-cd-manifests/hm-ray-cluster-valkey-application.yaml --upsert
 
 argo-cd-app-delete:
     argocd app delete production-hm-ray-cluster-valkey --yes

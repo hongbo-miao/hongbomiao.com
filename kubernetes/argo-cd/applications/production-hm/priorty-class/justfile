@@ -1,8 +1,8 @@
 argo-cd-app-create:
-    argocd app create production-hm-priority-class --file=manifests/hm-priority-class-application.yaml
+    argocd app create production-hm-priority-class --file=argo-cd-manifests/hm-priority-class-application.yaml
 
 argo-cd-app-update:
-    argocd app create production-hm-priority-class --file=manifests/hm-priority-class-application.yaml --upsert
+    argocd app create production-hm-priority-class --file=argo-cd-manifests/hm-priority-class-application.yaml --upsert
 
 argo-cd-app-delete:
     argocd app delete production-hm-priority-class --yes
