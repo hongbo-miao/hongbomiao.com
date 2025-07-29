@@ -783,6 +783,18 @@ module "kubernetes_namespace_hm_ray_cluster_valkey" {
   ]
 }
 
+# SkyPilot - Kubernetes namespace
+module "kubernetes_namespace_hm_skypilot" {
+  source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
+  kubernetes_namespace = "${var.environment}-hm-skypilot"
+  labels = {
+    "goldilocks.fairwinds.com/enabled" = "true"
+  }
+  depends_on = [
+    module.amazon_eks_cluster
+  ]
+}
+
 # Prometheus
 # Prometheus - Kubernetes namespace
 module "kubernetes_namespace_hm_prometheus" {
