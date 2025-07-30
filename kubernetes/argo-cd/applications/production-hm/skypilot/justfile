@@ -6,3 +6,19 @@ argo-cd-app-update:
 
 argo-cd-app-delete:
     argocd app delete production-hm-skypilot --yes
+
+sealed-secrets-seal-hm-skypilot-secret:
+    cat secrets/hm-skypilot-secret.unsealed.yaml | \
+    kubeseal \
+    	--controller-namespace=production-hm-sealed-secrets \
+    	--controller-name=hm-sealed-secrets \
+    	--format=yaml \
+    	> manifests/hm-skypilot-secret.yaml
+
+sealed-secrets-seal-runpod-secret:
+    cat secrets/runpod-secret.unsealed.yaml | \
+    kubeseal \
+    	--controller-namespace=production-hm-sealed-secrets \
+    	--controller-name=hm-sealed-secrets \
+    	--format=yaml \
+    	> manifests/runpod-secret.yaml

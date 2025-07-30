@@ -65,6 +65,13 @@ aws-secrets-manager-secret-create-production-hm-mlflow-postgres:
         --region=us-west-2 \
         --secret-string=file://secrets/production-hm-mlflow-postgres-admin-credentials.json
 
+# SkyPilot - Amazon RDS
+aws-secrets-manager-secret-create-production-hm-skypilot-postgres:
+    aws secretsmanager create-secret \
+        --name=production-hm-skypilot-postgres/admin \
+        --region=us-west-2 \
+        --secret-string=file://secrets/production-hm-skypilot-postgres-admin-credentials.json
+
 # Production IoT Kafka
 # https://docs.aws.amazon.com/msk/latest/developerguide/msk-password.html
 

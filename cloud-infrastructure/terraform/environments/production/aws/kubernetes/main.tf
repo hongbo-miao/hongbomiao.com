@@ -520,7 +520,7 @@ module "airbyte_postgres_instance" {
   amazon_rds_name           = local.airbyte_postgres_name
   amazon_rds_engine         = "postgres"
   amazon_rds_engine_version = "17"
-  amazon_rds_instance_class = "db.m7g.large"
+  amazon_rds_instance_class = "db.m8g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_airbyte_postgres_secret_version.secret_string)["user_name"]
@@ -608,7 +608,7 @@ module "label_studio_postgres_instance" {
   amazon_rds_name           = local.label_studio_postgres_name
   amazon_rds_engine         = "postgres"
   amazon_rds_engine_version = "17"
-  amazon_rds_instance_class = "db.m7g.large"
+  amazon_rds_instance_class = "db.m8g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_label_studio_postgres_secret_version.secret_string)["user_name"]
@@ -707,7 +707,7 @@ module "mlflow_postgres_instance" {
   amazon_rds_name           = local.mlflow_postgres_name
   amazon_rds_engine         = "postgres"
   amazon_rds_engine_version = "17"
-  amazon_rds_instance_class = "db.m7g.large"
+  amazon_rds_instance_class = "db.m8g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_mlflow_postgres_secret_version.secret_string)["user_name"]
@@ -783,6 +783,62 @@ module "kubernetes_namespace_hm_ray_cluster_valkey" {
   ]
 }
 
+# SkyPilot
+# SkyPilot - Postgres
+locals {
+  skypilot_postgres_name = "${var.environment}-hm-skypilot-postgres"
+}
+data "aws_secretsmanager_secret" "hm_skypilot_postgres_secret" {
+  provider = aws.production
+  name     = "${var.environment}-hm-skypilot-postgres/admin"
+}
+data "aws_secretsmanager_secret_version" "hm_skypilot_postgres_secret_version" {
+  provider  = aws.production
+  secret_id = data.aws_secretsmanager_secret.hm_skypilot_postgres_secret.id
+}
+module "skypilot_postgres_security_group" {
+  providers                      = { aws = aws.production }
+  source                         = "../../../../modules/aws/hm_amazon_rds_security_group"
+  amazon_ec2_security_group_name = "${local.skypilot_postgres_name}-security-group"
+  amazon_vpc_id                  = data.aws_vpc.current.id
+  amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
+  environment                    = var.environment
+  team                           = var.team
+}
+module "skypilot_postgres_subnet_group" {
+  providers         = { aws = aws.production }
+  source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
+  subnet_group_name = "${local.skypilot_postgres_name}-subnet-group"
+  subnet_ids        = var.amazon_vpc_private_subnet_ids
+  environment       = var.environment
+  team              = var.team
+}
+module "skypilot_postgres_parameter_group" {
+  providers            = { aws = aws.production }
+  source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
+  family               = "postgres17"
+  parameter_group_name = "${local.skypilot_postgres_name}-parameter-group"
+  environment          = var.environment
+  team                 = var.team
+}
+module "skypilot_postgres_instance" {
+  providers                 = { aws = aws.production }
+  source                    = "../../../../modules/aws/hm_amazon_rds_instance"
+  amazon_rds_name           = local.skypilot_postgres_name
+  amazon_rds_engine         = "postgres"
+  amazon_rds_engine_version = "17"
+  amazon_rds_instance_class = "db.m8g.large"
+  storage_size_gb           = 32
+  max_storage_size_gb       = 64
+  user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_skypilot_postgres_secret_version.secret_string)["user_name"]
+  password                  = jsondecode(data.aws_secretsmanager_secret_version.hm_skypilot_postgres_secret_version.secret_string)["password"]
+  parameter_group_name      = module.skypilot_postgres_parameter_group.name
+  subnet_group_name         = module.skypilot_postgres_subnet_group.name
+  vpc_security_group_ids    = [module.skypilot_postgres_security_group.id]
+  cloudwatch_log_types      = ["postgresql", "upgrade"]
+  environment               = var.environment
+  team                      = var.team
+}
 # SkyPilot - Kubernetes namespace
 module "kubernetes_namespace_hm_skypilot" {
   source               = "../../../../modules/kubernetes/hm_kubernetes_namespace"
@@ -1015,7 +1071,7 @@ module "grafana_postgres_instance" {
   amazon_rds_name           = local.grafana_postgres_name
   amazon_rds_engine         = "postgres"
   amazon_rds_engine_version = "17"
-  amazon_rds_instance_class = "db.m7g.large"
+  amazon_rds_instance_class = "db.m8g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_grafana_postgres_secret_version.secret_string)["user_name"]
@@ -1083,7 +1139,7 @@ module "prefect_postgres_instance" {
   amazon_rds_name           = local.prefect_postgres_name
   amazon_rds_engine         = "postgres"
   amazon_rds_engine_version = "17"
-  amazon_rds_instance_class = "db.m7g.large"
+  amazon_rds_instance_class = "db.m8g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_prefect_postgres_secret_version.secret_string)["user_name"]
@@ -1455,7 +1511,7 @@ module "harbor_postgres_instance" {
   amazon_rds_name           = local.harbor_postgres_name
   amazon_rds_engine         = "postgres"
   amazon_rds_engine_version = "17"
-  amazon_rds_instance_class = "db.m7g.large"
+  amazon_rds_instance_class = "db.m8g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_harbor_postgres_secret_version.secret_string)["user_name"]
@@ -1530,7 +1586,7 @@ module "odoo_postgres_instance" {
   amazon_rds_name           = local.odoo_postgres_name
   amazon_rds_engine         = "postgres"
   amazon_rds_engine_version = "17"
-  amazon_rds_instance_class = "db.m7g.large"
+  amazon_rds_instance_class = "db.m8g.large"
   storage_size_gb           = 32
   max_storage_size_gb       = 64
   user_name                 = jsondecode(data.aws_secretsmanager_secret_version.hm_odoo_postgres_secret_version.secret_string)["user_name"]
