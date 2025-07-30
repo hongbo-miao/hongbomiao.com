@@ -18,6 +18,9 @@ spec:
         values: |
           apiService:
             image: harbor.hongbomiao.com/docker-hub-proxy-cache/berkeleyskypilot/skypilot:0.10.0
+            dbConnectionSecretName: hm-skypilot-secret
+            enableUserManagement: true
+            initialBasicAuthSecret: hm-skypilot-secret
           ingress:
             enabled: false
           ingress-nginx:
@@ -27,6 +30,9 @@ spec:
             storageClassName: production-hm-skypilot-storage-class
             accessMode: ReadWriteOnce
             size: 10Gi
+          runpodCredentials:
+            enabled: true
+            runpodSecretName: runpod-secret
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/skypilot/kubernetes-manifests
@@ -36,6 +42,5 @@ spec:
   syncPolicy:
     syncOptions:
       - ServerSideApply=true
-      - CreateNamespace=true  # This replaces the --create-namespace flag
     automated:
       prune: true

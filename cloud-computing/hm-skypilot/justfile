@@ -10,6 +10,18 @@ test:
 test-coverage:
     uv run poe test-coverage
 
+sky-api-sign-in:
+    uv run sky api login --endpoint=https://skypilot:xxx@skypilot.hongbomiao.com
+
+sky-check:
+    uv run sky check
+
+sky-check-runpod:
+    uv run sky check runpod --verbose
+
+sky-status:
+    uv run sky status
+
 sky-launch:
     uv run sky launch skypilot.yaml \
         --cluster=hm-skypilot-cluster \
@@ -20,12 +32,6 @@ sky-stop:
 
 sky-terminate:
     uv run sky down hm-skypilot-cluster --yes
-
-sky-check:
-    uv run sky check
-
-sky-status:
-    uv run sky status
 
 sky-ssh:
     uv run ssh hm-skypilot-cluster
