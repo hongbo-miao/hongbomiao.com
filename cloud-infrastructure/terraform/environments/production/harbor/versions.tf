@@ -13,7 +13,7 @@ terraform {
     # https://registry.terraform.io/providers/goharbor/harbor/latest
     harbor = {
       source  = "goharbor/harbor"
-      version = "3.10.22"
+      version = "3.10.23"
     }
   }
   # terraform version
