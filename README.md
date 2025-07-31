@@ -254,6 +254,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **Label Studio** - Data annotation
 
+### Data Crawling
+
+- **Crawl4AI** - Web crawling
+
 ### Data Extraction
 
 - **MinerU** - Document data extraction
@@ -494,6 +498,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - Data Annotation
   - **Label Studio** - Data annotation
+- Data Crawling
+  - **Crawl4AI** - Web crawling
 - Data Extraction
   - **MinerU** - Document data extraction
   - **olmOCR** - Document data extraction
