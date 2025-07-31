@@ -338,6 +338,8 @@ jobs:
               - 'llm-evaluation/hm-deepeval/**'
             hm-faster-whisper:
               - 'machine-learning/hm-faster-whisper/**'
+            hm-firecrawl:
+              - 'data-crawling/hm-firecrawl/**'
             hm-flax:
               - 'machine-learning/hm-flax/**'
             hm-genesis:
@@ -644,6 +646,7 @@ jobs:
       hm-duckdb-query-parquet: ${{ steps.filter.outputs.hm-duckdb-query-parquet }}
       hm-duckdb-query-protobuf: ${{ steps.filter.outputs.hm-duckdb-query-protobuf }}
       hm-faster-whisper: ${{ steps.filter.outputs.hm-faster-whisper }}
+      hm-firecrawl: ${{ steps.filter.outputs.hm-firecrawl }}
       hm-flax: ${{ steps.filter.outputs.hm-flax }}
       hm-genesis: ${{ steps.filter.outputs.hm-genesis }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
@@ -1044,6 +1047,7 @@ jobs:
       hm-deepeval: ${{ needs.detect-changes.outputs.hm-deepeval == 'true' }}
       hm-docling: ${{ needs.detect-changes.outputs.hm-docling == 'true' }}
       hm-faster-whisper: ${{ needs.detect-changes.outputs.hm-faster-whisper == 'true' }}
+      hm-firecrawl: ${{ needs.detect-changes.outputs.hm-firecrawl == 'true' }}
       hm-flax: ${{ needs.detect-changes.outputs.hm-flax == 'true' }}
       hm-gradio-classify-image: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
       hm-imagebind: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
