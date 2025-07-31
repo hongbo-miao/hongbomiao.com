@@ -1,14 +1,12 @@
 import logging
 
 import sentry_sdk
-from config import Config
+from config import config
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import health, motor
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 from utils.logger import logger
-
-config = Config()
 
 logger.setLevel(logging.INFO)
 logger.info(f"{config = }")
