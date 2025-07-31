@@ -15,6 +15,14 @@ sealed-secrets-seal-hm-skypilot-secret:
     	--format=yaml \
     	> manifests/hm-skypilot-secret.yaml
 
+sealed-secrets-seal-lambda-secret:
+    cat secrets/lambda-secret.unsealed.yaml | \
+    kubeseal \
+    	--controller-namespace=production-hm-sealed-secrets \
+    	--controller-name=hm-sealed-secrets \
+    	--format=yaml \
+    	> manifests/lambda-secret.yaml
+
 sealed-secrets-seal-runpod-secret:
     cat secrets/runpod-secret.unsealed.yaml | \
     kubeseal \
@@ -22,3 +30,11 @@ sealed-secrets-seal-runpod-secret:
     	--controller-name=hm-sealed-secrets \
     	--format=yaml \
     	> manifests/runpod-secret.yaml
+
+sealed-secrets-seal-vast-secret:
+    cat secrets/vast-secret.unsealed.yaml | \
+    kubeseal \
+    	--controller-namespace=production-hm-sealed-secrets \
+    	--controller-name=hm-sealed-secrets \
+    	--format=yaml \
+    	> manifests/vast-secret.yaml

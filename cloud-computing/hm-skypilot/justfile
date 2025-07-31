@@ -24,7 +24,9 @@ sky-show-gpus-price:
     uv run sky show-gpus --all
     uv run sky show-gpus A100-80GB:8
     # AWS
-    uv run sky show-gpus --cloud=aws --region=us-west-2 --all
+    uv run sky show-gpus --infra=aws/us-west-2 --all
     # Runpod
-    uv run sky show-gpus --cloud=runpod --all
-    uv run sky show-gpus --cloud=runpod L4:2
+    uv run sky show-gpus --infra=runpod --all
+    uv run sky show-gpus --infra=runpod L4:2
+    # Vast
+    uv run sky show-gpus --infra=vast --all
