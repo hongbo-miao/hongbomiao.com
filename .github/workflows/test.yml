@@ -310,6 +310,8 @@ jobs:
               - 'llm-post-training/fine-tuning/hm-axolotl/**'
             hm-aws-parallelcluster:
               - 'cloud-platform/aws/aws-parallelcluster/pcluster/**'
+            hm-crawl4ai:
+              - 'data-crawling/hm-crawl4ai/**'
             hm-cudf-analyze-transactions:
               - 'data-analytics/hm-cudf/analyze-transactions/**'
             hm-cuml:
@@ -628,6 +630,7 @@ jobs:
       hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
       hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
       hm-axolotl: ${{ steps.filter.outputs.hm-axolotl }}
+      hm-crawl4ai: ${{ steps.filter.outputs.hm-crawl4ai }}
       hm-cudf-analyze-transactions: ${{ steps.filter.outputs.hm-cudf-analyze-transactions }}
       hm-cuml: ${{ steps.filter.outputs.hm-cuml }}
       hm-cupy: ${{ steps.filter.outputs.hm-cupy }}
@@ -1036,6 +1039,7 @@ jobs:
       graph-neural-network: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
       hm-autogluon: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
       hm-axolotl: ${{ needs.detect-changes.outputs.hm-axolotl == 'true' }}
+      hm-crawl4ai: ${{ needs.detect-changes.outputs.hm-crawl4ai == 'true' }}
       hm-cuml: ${{ needs.detect-changes.outputs.hm-cuml == 'true' }}
       hm-deepeval: ${{ needs.detect-changes.outputs.hm-deepeval == 'true' }}
       hm-docling: ${{ needs.detect-changes.outputs.hm-docling == 'true' }}

@@ -39,6 +39,9 @@ name: . Test Machine Learning
       hm-axolotl:
         required: true
         type: boolean
+      hm-crawl4ai:
+        required: true
+        type: boolean
       hm-cuml:
         required: true
         type: boolean
@@ -571,6 +574,38 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: machine-learning/feature-store
+
+  crawl4ai-test:
+    name: Crawl4AI | Test
+    if: ${{ inputs.workflow || inputs.hm-crawl4ai }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.4.3
+        with:
+          version: 0.8.3
+          enable-cache: true
+          cache-dependency-glob: data-crawling/hm-crawl4ai/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: data-crawling/hm-crawl4ai/pyproject.toml
+      - name: Install dependencies
+        working-directory: data-crawling/hm-crawl4ai
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-crawling/hm-crawl4ai
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: data-crawling/hm-crawl4ai
 
   mineru-test:
     name: MinerU | Test
