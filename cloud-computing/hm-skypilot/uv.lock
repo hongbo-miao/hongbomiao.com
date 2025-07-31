@@ -737,23 +737,25 @@ wheels = [
 name = "hm-skypilot"
 version = "1.0.0"
 source = { virtual = "." }
+dependencies = [
+    { name = "skypilot", extra = ["aws", "gcp", "runpod", "vast"] },
+]
 
 [package.dev-dependencies]
 dev = [
     { name = "poethepoet" },
     { name = "pytest" },
     { name = "pytest-cov" },
-    { name = "skypilot", extra = ["aws", "gcp", "runpod", "vast"] },
 ]
 
 [package.metadata]
+requires-dist = [{ name = "skypilot", extras = ["aws", "gcp", "lambda", "runpod", "vast"], specifier = "==0.10.0" }]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "poethepoet", specifier = "==0.36.0" },
     { name = "pytest", specifier = "==8.4.1" },
     { name = "pytest-cov", specifier = "==6.2.1" },
-    { name = "skypilot", extras = ["aws", "gcp", "runpod", "vast"], specifier = "==0.10.0" },
 ]
 
 [[package]]
