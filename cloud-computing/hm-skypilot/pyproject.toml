@@ -2,13 +2,15 @@
 name = "hm-skypilot"
 version = "1.0.0"
 requires-python = "~=3.11.0"
+dependencies = [
+  "skypilot[aws,gcp,lambda,runpod,vast]==0.10.0",
+]
 
 [dependency-groups]
 dev = [
   "poethepoet==0.36.0",
   "pytest-cov==6.2.1",
   "pytest==8.4.1",
-  "skypilot[aws,gcp,runpod,vast]==0.10.0",
 ]
 
 [tool.uv]
