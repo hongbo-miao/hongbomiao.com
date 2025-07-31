@@ -4,13 +4,12 @@ import secrets
 import time
 from typing import Annotated
 
-from config import Config
+from config import config
 from confluent_kafka import Producer
 from fastapi import APIRouter, Depends
 from utils.kafka_util import delivery_report
 
 router = APIRouter()
-config = Config()
 
 
 def get_producer() -> Producer:
