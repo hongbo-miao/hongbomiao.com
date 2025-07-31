@@ -1,0 +1,23 @@
+# https://docs.skypilot.co/en/latest/reference/yaml-spec.html
+
+---
+name: experiment-task
+resources:
+  infra: lambda
+  any_of:
+    - infra: lambda/us-west-1
+    - infra: lambda/us-west-2
+    - infra: lambda/us-west-3
+    - infra: lambda/us-east-1
+    - infra: lambda/us-east-2
+    - infra: lambda/us-east-3
+  accelerators: A10:1
+setup: |
+  # Install Guest Agent
+  # https://docs.lambda.ai/public-cloud/guest-agent
+  curl --silent --fail --show-error --location https://lambdalabs-guest-agent.s3.us-west-2.amazonlambda.com/scripts/install.sh | sudo bash
+
+  # Install dependencies
+  sudo snap install btop
+  sudo snap install nvtop
+  sudo snap install astral-uv --classic

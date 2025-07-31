@@ -1,0 +1,19 @@
+# https://docs.skypilot.co/en/latest/reference/yaml-spec.html
+
+---
+name: experiment-task
+resources:
+  infra: vast
+  any_of:
+    - infra: vast/California, US, NA
+    - infra: vast/Delaware, US, NA
+    - infra: vast/Florida, US, NA
+    - infra: vast/Florida, US, NA
+    - infra: vast/Michigan, US, NA
+    - infra: vast/North Carolina, US, NA
+    - infra: vast/Oregon, US, NA
+    - infra: vast/Texas, US, NA
+    - infra: vast/Utah, US, NA
+    - infra: vast/Washington, US, NA
+  accelerators: H100:1
+  image_id: vastai/pytorch:2.7.1-cuda-12.8.1-py312-24.04
