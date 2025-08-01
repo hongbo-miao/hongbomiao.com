@@ -23,8 +23,7 @@ module "amazon_eks_access_entry_iam" {
   source                       = "../../../../modules/kubernetes/hm_amazon_eks_access_entry_iam_role"
   amazon_eks_access_entry_name = local.amazon_eks_cluster_name
   amazon_eks_cluster_name_hash = local.amazon_eks_cluster_name_hash
-  environment                  = var.environment
-  team                         = var.team
+  common_tags                  = var.common_tags
 }
 # Amazon EBS CSI Driver - IAM role
 module "amazon_ebs_csi_driver_iam_role" {
@@ -34,16 +33,14 @@ module "amazon_ebs_csi_driver_iam_role" {
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   amazon_eks_cluster_name_hash         = local.amazon_eks_cluster_name_hash
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # Amazon S3 CSI driver mountpoint - S3 bucket
 module "s3_bucket_eks_cluster_mount" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.amazon_eks_cluster_name}-mount"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 # Amazon S3 CSI driver mountpoint - IAM role
 module "amazon_s3_csi_driver_mountpoint_iam_role" {
@@ -54,8 +51,7 @@ module "amazon_s3_csi_driver_mountpoint_iam_role" {
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   eks_cluster_s3_bucket_name           = module.s3_bucket_eks_cluster_mount.name
   iot_data_s3_bucket_name              = "iot-data-bucket"
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # Amazon EKS cluster
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
@@ -183,11 +179,9 @@ module "amazon_eks_cluster" {
       }
     }
   }
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.amazon_eks_cluster_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.amazon_eks_cluster_name
+  })
   depends_on = [
     module.amazon_eks_access_entry_iam
   ]
@@ -216,11 +210,9 @@ module "hm_karpenter" {
   node_iam_role_additional_policies = {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = "${local.amazon_eks_cluster_name}-karpenter"
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = "${local.amazon_eks_cluster_name}-karpenter"
+  })
   depends_on = [
     module.kubernetes_namespace_hm_karpenter
   ]
@@ -232,8 +224,7 @@ module "s3_bucket_eks_cluster_elastic_load_balancer" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.amazon_eks_cluster_name}-elastic-load-balancer"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 module "s3_bucket_eks_cluster_network_load_balancer_policy" {
   providers      = { aws = aws.production }
@@ -270,8 +261,6 @@ module "argo_cd_helm_chart" {
   release_name        = "hm-argo-cd"
   namespace           = module.kubernetes_namespace_hm_argo_cd.namespace
   my_values_yaml_path = "files/argo-cd/helm/my-values.yaml"
-  environment         = var.environment
-  team                = var.team
   depends_on = [
     module.kubernetes_namespace_hm_argo_cd
   ]
@@ -288,8 +277,7 @@ module "external_dns_iam_role" {
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   amazon_route53_hosted_zone_id        = var.amazon_route53_hosted_zone_id
   amazon_eks_cluster_name_hash         = local.amazon_eks_cluster_name_hash
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # ExternalDNS - Kubernetes namespace
 module "kubernetes_namespace_hm_external_dns" {
@@ -314,8 +302,7 @@ module "cert_manager_iam_role" {
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   amazon_route53_hosted_zone_id        = var.amazon_route53_hosted_zone_id
   amazon_eks_cluster_name_hash         = local.amazon_eks_cluster_name_hash
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # cert-manager - Kubernetes namespace
 module "kubernetes_namespace_hm_cert_manager" {
@@ -425,8 +412,7 @@ module "s3_bucket_hm_velero" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-velero-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 # Velero - IAM role
 module "velero_iam_role" {
@@ -437,8 +423,7 @@ module "velero_iam_role" {
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   s3_bucket_name                       = module.s3_bucket_hm_velero.name
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # Velero - Kubernetes namespace
 module "kubernetes_namespace_hm_velero" {
@@ -458,8 +443,7 @@ module "s3_bucket_hm_airbyte" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-airbyte"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 # Airbyte - IAM user
 module "airbyte_iam_user" {
@@ -467,8 +451,7 @@ module "airbyte_iam_user" {
   source            = "../../../../modules/kubernetes/hm_airbyte_iam_user"
   aws_iam_user_name = "${var.environment}_hm_airbyte_user"
   s3_bucket_name    = module.s3_bucket_hm_airbyte.name
-  environment       = var.environment
-  team              = var.team
+  common_tags       = var.common_tags
 }
 # Airbyte - Postgres
 locals {
@@ -488,16 +471,14 @@ module "airbyte_postgres_security_group" {
   amazon_ec2_security_group_name = "${local.airbyte_postgres_name}-security-group"
   amazon_vpc_id                  = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id
   amazon_vpc_cidr_ipv4           = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_ipv4_cidr_block
-  environment                    = var.environment
-  team                           = var.team
+  common_tags                    = var.common_tags
 }
 module "airbyte_postgres_subnet_group" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.airbyte_postgres_name}-subnet-group"
   subnet_ids        = var.amazon_vpc_private_subnet_ids
-  environment       = var.environment
-  team              = var.team
+  common_tags       = var.common_tags
 }
 module "airbyte_postgres_parameter_group" {
   providers            = { aws = aws.production }
@@ -511,8 +492,7 @@ module "airbyte_postgres_parameter_group" {
       value = "0"
     }
   ]
-  environment = var.environment
-  team        = var.team
+  common_tags = var.common_tags
 }
 module "airbyte_postgres_instance" {
   providers                 = { aws = aws.production }
@@ -529,8 +509,7 @@ module "airbyte_postgres_instance" {
   subnet_group_name         = module.airbyte_postgres_subnet_group.name
   vpc_security_group_ids    = [module.airbyte_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
-  environment               = var.environment
-  team                      = var.team
+  common_tags               = var.common_tags
 }
 # Airbyte - Kubernetes namespace
 module "kubernetes_namespace_hm_airbyte" {
@@ -550,8 +529,7 @@ module "amazon_s3_bucket_hm_label_studio" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-label-studio-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 # Label Studio - IAM role
 module "label_studio_iam_role" {
@@ -562,8 +540,7 @@ module "label_studio_iam_role" {
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   s3_bucket_name                       = module.amazon_s3_bucket_hm_label_studio.name
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # Label Studio - Postgres
 locals {
@@ -583,24 +560,21 @@ module "label_studio_postgres_security_group" {
   amazon_ec2_security_group_name = "${local.label_studio_postgres_name}-security-group"
   amazon_vpc_id                  = data.aws_vpc.current.id
   amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
-  environment                    = var.environment
-  team                           = var.team
+  common_tags                    = var.common_tags
 }
 module "label_studio_postgres_subnet_group" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.label_studio_postgres_name}-subnet-group"
   subnet_ids        = var.amazon_vpc_private_subnet_ids
-  environment       = var.environment
-  team              = var.team
+  common_tags       = var.common_tags
 }
 module "label_studio_postgres_parameter_group" {
   providers            = { aws = aws.production }
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres17"
   parameter_group_name = "${local.label_studio_postgres_name}-parameter-group"
-  environment          = var.environment
-  team                 = var.team
+  common_tags          = var.common_tags
 }
 module "label_studio_postgres_instance" {
   providers                 = { aws = aws.production }
@@ -617,8 +591,7 @@ module "label_studio_postgres_instance" {
   subnet_group_name         = module.label_studio_postgres_subnet_group.name
   vpc_security_group_ids    = [module.label_studio_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
-  environment               = var.environment
-  team                      = var.team
+  common_tags               = var.common_tags
 }
 # Label Studio - Kubernetes namespace
 module "kubernetes_namespace_hm_label_studio" {
@@ -638,8 +611,7 @@ module "s3_bucket_hm_mlflow" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-mlflow"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 # MLflow - IAM role
 module "mlflow_tracking_server_iam_role" {
@@ -650,8 +622,7 @@ module "mlflow_tracking_server_iam_role" {
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   s3_bucket_name                       = module.s3_bucket_hm_mlflow.name
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 module "mlflow_run_iam_role" {
   providers                            = { aws = aws.production }
@@ -661,8 +632,7 @@ module "mlflow_run_iam_role" {
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   s3_bucket_name                       = module.s3_bucket_hm_mlflow.name
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # MLflow - Postgres
 locals {
@@ -682,24 +652,21 @@ module "mlflow_postgres_security_group" {
   amazon_ec2_security_group_name = "${local.mlflow_postgres_name}-security-group"
   amazon_vpc_id                  = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_id
   amazon_vpc_cidr_ipv4           = data.terraform_remote_state.production_aws_network_terraform_remote_state.outputs.hm_amazon_vpc_ipv4_cidr_block
-  environment                    = var.environment
-  team                           = var.team
+  common_tags                    = var.common_tags
 }
 module "mlflow_postgres_subnet_group" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.mlflow_postgres_name}-subnet-group"
   subnet_ids        = var.amazon_vpc_private_subnet_ids
-  environment       = var.environment
-  team              = var.team
+  common_tags       = var.common_tags
 }
 module "mlflow_postgres_parameter_group" {
   providers            = { aws = aws.production }
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres17"
   parameter_group_name = "${local.mlflow_postgres_name}-parameter-group"
-  environment          = var.environment
-  team                 = var.team
+  common_tags          = var.common_tags
 }
 module "mlflow_postgres_instance" {
   providers                 = { aws = aws.production }
@@ -716,8 +683,7 @@ module "mlflow_postgres_instance" {
   subnet_group_name         = module.mlflow_postgres_subnet_group.name
   vpc_security_group_ids    = [module.mlflow_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
-  environment               = var.environment
-  team                      = var.team
+  common_tags               = var.common_tags
 }
 # MLflow - Kubernetes namespace
 module "kubernetes_namespace_hm_mlflow" {
@@ -757,8 +723,7 @@ module "ray_cluster_iam_role" {
     "${var.environment}_battery_db",
     "${var.environment}_motor_db"
   ]
-  environment = var.environment
-  team        = var.team
+  common_tags = var.common_tags
 }
 # Ray Cluster - Kubernetes namespace
 module "kubernetes_namespace_hm_ray_cluster" {
@@ -802,24 +767,21 @@ module "skypilot_postgres_security_group" {
   amazon_ec2_security_group_name = "${local.skypilot_postgres_name}-security-group"
   amazon_vpc_id                  = data.aws_vpc.current.id
   amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
-  environment                    = var.environment
-  team                           = var.team
+  common_tags                    = var.common_tags
 }
 module "skypilot_postgres_subnet_group" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.skypilot_postgres_name}-subnet-group"
   subnet_ids        = var.amazon_vpc_private_subnet_ids
-  environment       = var.environment
-  team              = var.team
+  common_tags       = var.common_tags
 }
 module "skypilot_postgres_parameter_group" {
   providers            = { aws = aws.production }
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres17"
   parameter_group_name = "${local.skypilot_postgres_name}-parameter-group"
-  environment          = var.environment
-  team                 = var.team
+  common_tags          = var.common_tags
 }
 module "skypilot_postgres_instance" {
   providers                 = { aws = aws.production }
@@ -836,8 +798,7 @@ module "skypilot_postgres_instance" {
   subnet_group_name         = module.skypilot_postgres_subnet_group.name
   vpc_security_group_ids    = [module.skypilot_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
-  environment               = var.environment
-  team                      = var.team
+  common_tags               = var.common_tags
 }
 # SkyPilot - Kubernetes namespace
 module "kubernetes_namespace_hm_skypilot" {
@@ -875,22 +836,19 @@ module "s3_bucket_hm_mimir_alertmanager" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.mimir_alertmanager_name}-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 module "s3_bucket_hm_mimir_block" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.mimir_block_name}-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 module "s3_bucket_hm_mimir_ruler" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.mimir_ruler_name}-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 module "mimir_iam_role" {
   providers                            = { aws = aws.production }
@@ -902,8 +860,7 @@ module "mimir_iam_role" {
   mimir_ruler_s3_bucket_name           = module.s3_bucket_hm_mimir_ruler.name
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # Mimir - Kubernetes namespace
 module "kubernetes_namespace_hm_mimir" {
@@ -928,22 +885,19 @@ module "s3_bucket_hm_loki_admin" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.loki_admin_name}-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 module "s3_bucket_hm_loki_chunk" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.loki_chunk_name}-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 module "s3_bucket_hm_loki_ruler" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.loki_ruler_name}-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 module "loki_iam_role" {
   providers                            = { aws = aws.production }
@@ -955,8 +909,7 @@ module "loki_iam_role" {
   loki_ruler_s3_bucket_name            = module.s3_bucket_hm_loki_ruler.name
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # Loki - Kubernetes namespace
 module "kubernetes_namespace_hm_loki" {
@@ -993,15 +946,13 @@ module "s3_bucket_hm_tempo_admin" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.tempo_admin_name}-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 module "s3_bucket_hm_tempo_trace" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${local.tempo_trace_name}-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 module "tempo_iam_role" {
   providers                            = { aws = aws.production }
@@ -1012,8 +963,7 @@ module "tempo_iam_role" {
   tempo_trace_s3_bucket_name           = module.s3_bucket_hm_tempo_trace.name
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # Tempo - Kubernetes namespace
 module "kubernetes_namespace_hm_tempo" {
@@ -1046,24 +996,21 @@ module "grafana_postgres_security_group" {
   amazon_ec2_security_group_name = "${local.grafana_postgres_name}-security-group"
   amazon_vpc_id                  = data.aws_vpc.current.id
   amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
-  environment                    = var.environment
-  team                           = var.team
+  common_tags                    = var.common_tags
 }
 module "grafana_postgres_subnet_group" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.grafana_postgres_name}-subnet-group"
   subnet_ids        = var.amazon_vpc_private_subnet_ids
-  environment       = var.environment
-  team              = var.team
+  common_tags       = var.common_tags
 }
 module "grafana_postgres_parameter_group" {
   providers            = { aws = aws.production }
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres17"
   parameter_group_name = "${local.grafana_postgres_name}-parameter-group"
-  environment          = var.environment
-  team                 = var.team
+  common_tags          = var.common_tags
 }
 module "grafana_postgres_instance" {
   providers                 = { aws = aws.production }
@@ -1080,8 +1027,7 @@ module "grafana_postgres_instance" {
   subnet_group_name         = module.grafana_postgres_subnet_group.name
   vpc_security_group_ids    = [module.grafana_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
-  environment               = var.environment
-  team                      = var.team
+  common_tags               = var.common_tags
 }
 # Grafana - Kubernetes namespace
 module "kubernetes_namespace_hm_grafana" {
@@ -1114,24 +1060,21 @@ module "prefect_postgres_security_group" {
   amazon_ec2_security_group_name = "${local.prefect_postgres_name}-security-group"
   amazon_vpc_id                  = data.aws_vpc.current.id
   amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
-  environment                    = var.environment
-  team                           = var.team
+  common_tags                    = var.common_tags
 }
 module "prefect_postgres_subnet_group" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.prefect_postgres_name}-subnet-group"
   subnet_ids        = var.amazon_vpc_private_subnet_ids
-  environment       = var.environment
-  team              = var.team
+  common_tags       = var.common_tags
 }
 module "prefect_postgres_parameter_group" {
   providers            = { aws = aws.production }
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres17"
   parameter_group_name = "${local.prefect_postgres_name}-parameter-group"
-  environment          = var.environment
-  team                 = var.team
+  common_tags          = var.common_tags
 }
 module "prefect_postgres_instance" {
   providers                 = { aws = aws.production }
@@ -1148,8 +1091,7 @@ module "prefect_postgres_instance" {
   subnet_group_name         = module.prefect_postgres_subnet_group.name
   vpc_security_group_ids    = [module.prefect_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
-  environment               = var.environment
-  team                      = var.team
+  common_tags               = var.common_tags
 }
 # Prefect Server - Kubernetes namespace
 module "kubernetes_namespace_hm_prefect_server" {
@@ -1175,8 +1117,7 @@ module "prefect_worker_iam_role" {
     "${var.environment}_battery_db",
     "${var.environment}_motor_db"
   ]
-  environment = var.environment
-  team        = var.team
+  common_tags = var.common_tags
 }
 # Prefect Worker - Kubernetes namespace
 module "kubernetes_namespace_hm_prefect_worker" {
@@ -1237,8 +1178,7 @@ module "starrocks_iam_role" {
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   iot_data_s3_bucket_name              = "iot-data-bucket"
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # StarRocks Operator - Kubernetes namespace
 module "kubernetes_namespace_hm_starrocks_operator" {
@@ -1339,8 +1279,7 @@ module "confluent_schema_registry_iam_role" {
   amazon_eks_cluster_oidc_provider                   = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn               = module.amazon_eks_cluster.oidc_provider_arn
   amazon_msk_arn                                     = "arn:aws:kafka:us-west-2:272394222652:cluster/production-iot-kafka/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-xx"
-  environment                                        = var.environment
-  team                                               = var.team
+  common_tags                                        = var.common_tags
 }
 # Confluent Schema Registry - Kubernetes namespace
 module "kubernetes_namespace_hm_confluent_schema_registry" {
@@ -1363,8 +1302,7 @@ module "redpanda_console_iam_role" {
   redpanda_console_namespace            = "${var.environment}-hm-redpanda-console"
   amazon_eks_cluster_oidc_provider      = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn  = module.amazon_eks_cluster.oidc_provider_arn
-  environment                           = var.environment
-  team                                  = var.team
+  common_tags                           = var.common_tags
 }
 # Redpanda Console - Kubernetes namespace
 module "kubernetes_namespace_hm_redpanda_console" {
@@ -1387,8 +1325,7 @@ module "kafbat_ui_iam_role" {
   kafbat_ui_namespace                  = "${var.environment}-hm-kafbat-ui"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # Kafbat UI - Kubernetes namespace
 module "kubernetes_namespace_hm_kafbat_ui" {
@@ -1411,8 +1348,7 @@ module "litellm_iam_role" {
   litellm_namespace                    = "${var.environment}-hm-litellm"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
-  environment                          = var.environment
-  team                                 = var.team
+  common_tags                          = var.common_tags
 }
 # LiteLLM - Kubernetes namespace
 module "kubernetes_namespace_hm_litellm" {
@@ -1456,8 +1392,7 @@ module "s3_bucket_hm_harbor" {
   providers      = { aws = aws.production }
   source         = "../../../../modules/aws/hm_amazon_s3_bucket"
   s3_bucket_name = "${var.environment}-hm-harbor-bucket"
-  environment    = var.environment
-  team           = var.team
+  common_tags    = var.common_tags
 }
 # Harbor - IAM user
 module "harbor_iam_user" {
@@ -1465,8 +1400,7 @@ module "harbor_iam_user" {
   source            = "../../../../modules/kubernetes/hm_harbor_iam_user"
   aws_iam_user_name = "${var.environment}-hm-harbor-user"
   s3_bucket_name    = module.s3_bucket_hm_harbor.name
-  environment       = var.environment
-  team              = var.team
+  common_tags       = var.common_tags
 }
 # Harbor - Postgres
 locals {
@@ -1486,24 +1420,21 @@ module "harbor_postgres_security_group" {
   amazon_ec2_security_group_name = "${local.harbor_postgres_name}-security-group"
   amazon_vpc_id                  = data.aws_vpc.current.id
   amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
-  environment                    = var.environment
-  team                           = var.team
+  common_tags                    = var.common_tags
 }
 module "harbor_postgres_subnet_group" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.harbor_postgres_name}-subnet-group"
   subnet_ids        = var.amazon_vpc_private_subnet_ids
-  environment       = var.environment
-  team              = var.team
+  common_tags       = var.common_tags
 }
 module "harbor_postgres_parameter_group" {
   providers            = { aws = aws.production }
   source               = "../../../../modules/aws/hm_amazon_rds_parameter_group"
   family               = "postgres17"
   parameter_group_name = "${local.harbor_postgres_name}-parameter-group"
-  environment          = var.environment
-  team                 = var.team
+  common_tags          = var.common_tags
 }
 module "harbor_postgres_instance" {
   providers                 = { aws = aws.production }
@@ -1520,8 +1451,7 @@ module "harbor_postgres_instance" {
   subnet_group_name         = module.harbor_postgres_subnet_group.name
   vpc_security_group_ids    = [module.harbor_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
-  environment               = var.environment
-  team                      = var.team
+  common_tags               = var.common_tags
 }
 # Harbor - Kubernetes namespace
 module "kubernetes_namespace_hm_harbor" {
@@ -1554,16 +1484,14 @@ module "odoo_postgres_security_group" {
   amazon_ec2_security_group_name = "${local.odoo_postgres_name}-security-group"
   amazon_vpc_id                  = data.aws_vpc.current.id
   amazon_vpc_cidr_ipv4           = data.aws_vpc.current.cidr_block
-  environment                    = var.environment
-  team                           = var.team
+  common_tags                    = var.common_tags
 }
 module "odoo_postgres_subnet_group" {
   providers         = { aws = aws.production }
   source            = "../../../../modules/aws/hm_amazon_rds_subnet_group"
   subnet_group_name = "${local.odoo_postgres_name}-subnet-group"
   subnet_ids        = var.amazon_vpc_private_subnet_ids
-  environment       = var.environment
-  team              = var.team
+  common_tags       = var.common_tags
 }
 module "odoo_postgres_parameter_group" {
   providers            = { aws = aws.production }
@@ -1577,8 +1505,7 @@ module "odoo_postgres_parameter_group" {
       value = "0"
     }
   ]
-  environment = var.environment
-  team        = var.team
+  common_tags = var.common_tags
 }
 module "odoo_postgres_instance" {
   providers                 = { aws = aws.production }
@@ -1595,8 +1522,7 @@ module "odoo_postgres_instance" {
   subnet_group_name         = module.odoo_postgres_subnet_group.name
   vpc_security_group_ids    = [module.odoo_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
-  environment               = var.environment
-  team                      = var.team
+  common_tags               = var.common_tags
 }
 # Odoo - Kubernetes namespace
 module "kubernetes_namespace_hm_odoo" {
@@ -1636,8 +1562,7 @@ module "trino_iam_role" {
     "${var.environment}_battery_db",
     "${var.environment}_motor_db"
   ]
-  environment = var.environment
-  team        = var.team
+  common_tags = var.common_tags
 }
 # Trino - Kubernetes namespace
 module "kubernetes_namespace_hm_trino" {

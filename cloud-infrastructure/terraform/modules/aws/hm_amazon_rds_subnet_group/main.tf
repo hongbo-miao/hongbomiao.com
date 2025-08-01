@@ -10,9 +10,7 @@ terraform {
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = var.subnet_group_name
   subnet_ids = var.subnet_ids
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.subnet_group_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.subnet_group_name
+  })
 }

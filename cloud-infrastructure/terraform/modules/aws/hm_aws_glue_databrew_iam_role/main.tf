@@ -21,11 +21,9 @@ resource "aws_iam_role" "glue_databrew_role" {
       }
     ]
   })
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = "AWSGlueDataBrewServiceRole-${var.aws_glue_databrew_job_nickname}"
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = "AWSGlueDataBrewServiceRole-${var.aws_glue_databrew_job_nickname}"
+  })
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy

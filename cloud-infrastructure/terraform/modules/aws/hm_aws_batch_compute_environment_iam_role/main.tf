@@ -21,11 +21,9 @@ resource "aws_iam_role" "batch_compute_environment_role" {
       }
     ]
   })
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = "AWSBatchComputeEnvironmentServiceRole-${var.aws_batch_compute_environment_nickname}"
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = "AWSBatchComputeEnvironmentServiceRole-${var.aws_batch_compute_environment_nickname}"
+  })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role_policy_attachment" "batch_compute_environment_role_policy_attachment" {

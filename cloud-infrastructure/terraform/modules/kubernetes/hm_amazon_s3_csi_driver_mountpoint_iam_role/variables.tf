@@ -1,3 +1,6 @@
+variable "common_tags" {
+  type = map(string)
+}
 variable "amazon_eks_cluster_name" {
   type = string
 }
@@ -11,11 +14,5 @@ variable "eks_cluster_s3_bucket_name" {
   type = string
 }
 variable "iot_data_s3_bucket_name" {
-  type = string
-}
-variable "environment" {
-  type = string
-}
-variable "team" {
   type = string
 }

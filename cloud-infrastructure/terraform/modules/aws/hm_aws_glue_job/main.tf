@@ -35,9 +35,8 @@ resource "aws_glue_job" "main" {
     "--datalake-formats"                 = "delta"
     "--conf"                             = trimprefix(var.spark_conf, "--conf ")
   }
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.aws_glue_job_name
-  }
+
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.aws_glue_job_name
+  })
 }

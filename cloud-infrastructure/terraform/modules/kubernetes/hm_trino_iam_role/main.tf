@@ -33,11 +33,9 @@ resource "aws_iam_role" "trino_iam_role" {
       }
     ]
   })
-  tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "${local.aws_iam_role_name_prefix}-${var.trino_service_account_name}"
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = "${local.aws_iam_role_name_prefix}-${var.trino_service_account_name}"
+  })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "iot_data_s3_policy" {

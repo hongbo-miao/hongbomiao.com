@@ -21,11 +21,9 @@ resource "aws_iam_role" "emr_studio_role" {
       }
     ]
   })
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = "AmazonEMRStudioServiceRole-${var.amazon_emr_studio_name}"
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = "AmazonEMRStudioServiceRole-${var.amazon_emr_studio_name}"
+  })
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy

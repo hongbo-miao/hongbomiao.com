@@ -16,18 +16,16 @@ resource "awscc_databrew_dataset" "glue_databrew_dataset_adsb_raw_parquet" {
     }
   }
   format = "PARQUET"
-  tags = [
-    {
-      key   = "Environment"
-      value = var.environment
-    },
-    {
-      key   = "Team"
-      value = var.team
-    },
-    {
-      key   = "Name"
-      value = var.aws_glue_databrew_dataset_name
-    }
-  ]
+  tags = concat(
+    [for key, value in var.common_tags : {
+      key   = key
+      value = value
+    }],
+    [
+      {
+        key   = "hm:resource_name"
+        value = var.aws_glue_databrew_dataset_name
+      }
+    ]
+  )
 }

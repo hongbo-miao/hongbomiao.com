@@ -33,11 +33,9 @@ resource "aws_iam_role" "external_dns_role" {
       }
     ]
   })
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.aws_iam_role_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.aws_iam_role_name
+  })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 # https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md

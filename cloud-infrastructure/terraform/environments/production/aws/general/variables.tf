@@ -1,3 +1,9 @@
+variable "common_tags" {
+  type = map(string)
+}
+variable "environment" {
+  type = string
+}
 variable "tracker_kafka_manager_public_key" {
   type = string
 }
@@ -70,10 +76,4 @@ variable "adsb_2x_flight_trace_raw_parquet_dates" {
     "2023/09/29",
     "2023/09/30"
   ]
-}
-variable "environment" {
-  type = string
-}
-variable "team" {
-  type = string
 }

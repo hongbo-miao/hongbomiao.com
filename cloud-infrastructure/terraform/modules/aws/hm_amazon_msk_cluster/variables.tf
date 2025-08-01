@@ -1,3 +1,6 @@
+variable "common_tags" {
+  type = map(string)
+}
 variable "amazon_msk_cluster_name" {
   type = string
 }
@@ -29,10 +32,4 @@ variable "aws_kms_key_arn" {
 variable "is_scram_enabled" {
   type    = bool
   default = false
-}
-variable "environment" {
-  type = string
-}
-variable "team" {
-  type = string
 }

@@ -1,3 +1,6 @@
+variable "common_tags" {
+  type = map(string)
+}
 variable "instance_name" {
   type = string
 }
@@ -17,11 +20,5 @@ variable "amazon_vpc_subnet_id" {
   type = string
 }
 variable "amazon_ec2_security_group_id" {
-  type = string
-}
-variable "environment" {
-  type = string
-}
-variable "team" {
   type = string
 }
