@@ -21,9 +21,3 @@ variable "my_values_yaml_path" {
 variable "namespace" {
   type = string
 }
-variable "environment" {
-  type = string
-}
-variable "team" {
-  type = string
-}

@@ -18,9 +18,7 @@ resource "aws_batch_job_queue" "main" {
       compute_environment = compute_environment_order.value
     }
   }
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.aws_batch_job_queue_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.aws_batch_job_queue_name
+  })
 }

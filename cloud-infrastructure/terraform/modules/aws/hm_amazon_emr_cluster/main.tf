@@ -67,12 +67,10 @@ resource "aws_emr_cluster" "main" {
   placement_group_config = var.placement_group_config
   step                   = var.steps
   service_role           = var.iam_role_arn
-  tags = {
-    for-use-with-amazon-emr-managed-policies = true
-    Environment                              = var.environment
-    Team                                     = var.team
-    ResourceName                             = var.amazon_emr_cluster_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name"                         = var.amazon_emr_cluster_name,
+    "for-use-with-amazon-emr-managed-policies" = true
+  })
   lifecycle {
     create_before_destroy = true
     ignore_changes = [

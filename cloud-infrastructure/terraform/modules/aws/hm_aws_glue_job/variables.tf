@@ -1,3 +1,6 @@
+variable "common_tags" {
+  type = map(string)
+}
 variable "aws_glue_job_name" {
   type = string
 }
@@ -20,11 +23,5 @@ variable "timeout_min" {
   type = number
 }
 variable "iam_role_arn" {
-  type = string
-}
-variable "environment" {
-  type = string
-}
-variable "team" {
   type = string
 }

@@ -10,11 +10,9 @@ terraform {
 resource "aws_security_group" "rds_security_group" {
   name   = var.amazon_ec2_security_group_name
   vpc_id = var.amazon_vpc_id
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.amazon_ec2_security_group_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.amazon_ec2_security_group_name
+  })
 }
 # Ingress - On-Site
 locals {
@@ -28,11 +26,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site" {
   ip_protocol       = "tcp"
   from_port         = 5432
   to_port           = 5432
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_on_site
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_on_site
+  })
 }
 locals {
   ingress_rule_vpn = "vpn"
@@ -44,11 +40,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn" {
   ip_protocol       = "tcp"
   from_port         = 5432
   to_port           = 5432
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_vpn
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_vpn
+  })
 }
 locals {
   ingress_rule_vpc = "vpc"
@@ -60,20 +54,16 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc" {
   ip_protocol       = "tcp"
   from_port         = 5432
   to_port           = 5432
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_vpc
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_vpc
+  })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
 resource "aws_vpc_security_group_egress_rule" "egress_allow" {
   security_group_id = aws_security_group.rds_security_group.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.amazon_ec2_security_group_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.amazon_ec2_security_group_name
+  })
 }
