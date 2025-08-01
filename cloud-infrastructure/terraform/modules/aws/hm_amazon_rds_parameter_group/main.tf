@@ -21,11 +21,9 @@ resource "aws_db_parameter_group" "rds_parameter_group" {
       value = parameter.value.value
     }
   }
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.parameter_group_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.parameter_group_name
+  })
   lifecycle {
     create_before_destroy = true
   }

@@ -25,11 +25,9 @@ resource "aws_iam_role" "msk_s3_sink_connector_role" {
       }
     ]
   })
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = "${local.aws_iam_role_name_prefix}-${var.amazon_msk_connector_name}"
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = "${local.aws_iam_role_name_prefix}-${var.amazon_msk_connector_name}"
+  })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_msk_policy" {

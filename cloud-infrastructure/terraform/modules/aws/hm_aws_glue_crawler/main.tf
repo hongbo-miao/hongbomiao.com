@@ -38,9 +38,7 @@ resource "aws_glue_crawler" "main" {
       CreatePartitionIndex = true
     }
   )
-  tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = var.aws_glue_crawler_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.aws_glue_crawler_name
+  })
 }

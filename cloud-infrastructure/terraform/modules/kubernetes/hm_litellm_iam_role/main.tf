@@ -33,11 +33,9 @@ resource "aws_iam_role" "hm_litellm_iam_role" {
       }
     ]
   })
-  tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "${local.aws_iam_role_name_prefix}-${var.litellm_service_account_name}"
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = "${local.aws_iam_role_name_prefix}-${var.litellm_service_account_name}"
+  })
 }
 # https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-perform-actions-pt
 # https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html

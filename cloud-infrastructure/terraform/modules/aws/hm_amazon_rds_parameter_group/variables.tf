@@ -1,3 +1,6 @@
+variable "common_tags" {
+  type = map(string)
+}
 variable "parameter_group_name" {
   type = string
 }
@@ -11,9 +14,4 @@ variable "parameters" {
   }))
   default = []
 }
-variable "environment" {
-  type = string
-}
-variable "team" {
-  type = string
-}
+

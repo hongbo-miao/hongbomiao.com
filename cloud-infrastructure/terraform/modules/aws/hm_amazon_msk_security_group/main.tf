@@ -10,11 +10,9 @@ terraform {
 resource "aws_security_group" "msk_security_group" {
   name   = var.amazon_ec2_security_group_name
   vpc_id = var.amazon_vpc_id
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.amazon_ec2_security_group_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.amazon_ec2_security_group_name
+  })
 }
 # Ingress - On-Site
 locals {
@@ -30,11 +28,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broke
   ip_protocol       = "tcp"
   from_port         = 9094
   to_port           = 9094
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_on_site_kafka_broker_tls
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_on_site_kafka_broker_tls
+  })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broker_sasl_scram" {
   security_group_id = aws_security_group.msk_security_group.id
@@ -43,11 +39,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broke
   ip_protocol       = "tcp"
   from_port         = 9096
   to_port           = 9096
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_on_site_kafka_broker_sasl_scram
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_on_site_kafka_broker_sasl_scram
+  })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broker_iam" {
   security_group_id = aws_security_group.msk_security_group.id
@@ -56,11 +50,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broke
   ip_protocol       = "tcp"
   from_port         = 9098
   to_port           = 9098
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_on_site_kafka_broker_iam
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_on_site_kafka_broker_iam
+  })
 }
 # Ingress - VPN
 locals {
@@ -75,11 +67,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn_kafka_broker_tl
   ip_protocol       = "tcp"
   from_port         = 9094
   to_port           = 9094
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_vpn_kafka_broker_tls
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_vpn_kafka_broker_tls
+  })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn_kafka_broker_sasl_scram" {
   security_group_id = aws_security_group.msk_security_group.id
@@ -88,11 +78,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn_kafka_broker_sa
   ip_protocol       = "tcp"
   from_port         = 9096
   to_port           = 9096
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_vpn_kafka_broker_sasl_scram
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_vpn_kafka_broker_sasl_scram
+  })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn_kafka_broker_iam" {
   security_group_id = aws_security_group.msk_security_group.id
@@ -101,11 +89,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn_kafka_broker_ia
   ip_protocol       = "tcp"
   from_port         = 9098
   to_port           = 9098
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_vpn_kafka_broker_iam
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_vpn_kafka_broker_iam
+  })
 }
 # Ingress - VPC
 locals {
@@ -120,11 +106,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_tl
   ip_protocol       = "tcp"
   from_port         = 9094
   to_port           = 9094
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_vpc_kafka_broker_tls
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_vpc_kafka_broker_tls
+  })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_sasl_scram" {
   security_group_id = aws_security_group.msk_security_group.id
@@ -133,11 +117,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_sa
   ip_protocol       = "tcp"
   from_port         = 9096
   to_port           = 9096
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_vpc_kafka_broker_sasl_scram
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_vpc_kafka_broker_sasl_scram
+  })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_iam" {
   security_group_id = aws_security_group.msk_security_group.id
@@ -146,11 +128,9 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_ia
   ip_protocol       = "tcp"
   from_port         = 9098
   to_port           = 9098
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.ingress_rule_vpc_kafka_broker_iam
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.ingress_rule_vpc_kafka_broker_iam
+  })
 }
 # Egress
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
@@ -158,9 +138,7 @@ resource "aws_vpc_security_group_egress_rule" "egress_allow" {
   security_group_id = aws_security_group.msk_security_group.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.amazon_ec2_security_group_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.amazon_ec2_security_group_name
+  })
 }

@@ -29,18 +29,16 @@ resource "awscc_databrew_job" "glue_databrew_recipe_job" {
       overwrite        = true
     }
   ]
-  tags = [
-    {
-      key   = "Environment"
-      value = var.environment
-    },
-    {
-      key   = "Team"
-      value = var.team
-    },
-    {
-      key   = "Name"
-      value = var.aws_glue_databrew_recipe_job_name
-    }
-  ]
+  tags = concat(
+    [for key, value in var.common_tags : {
+      key   = key
+      value = value
+    }],
+    [
+      {
+        key   = "hm:resource_name"
+        value = var.aws_glue_databrew_recipe_job_name
+      }
+    ]
+  )
 }

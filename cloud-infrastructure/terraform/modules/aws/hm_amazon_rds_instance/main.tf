@@ -31,11 +31,9 @@ resource "aws_db_instance" "rds_instance" {
   backup_retention_period               = 7
   deletion_protection                   = true
   apply_immediately                     = true
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.amazon_rds_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.amazon_rds_name
+  })
   lifecycle {
     prevent_destroy = true
   }

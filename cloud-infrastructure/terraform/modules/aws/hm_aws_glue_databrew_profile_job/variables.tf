@@ -1,3 +1,6 @@
+variable "common_tags" {
+  type = map(string)
+}
 variable "aws_glue_databrew_profile_job_name" {
   type = string
 }
@@ -17,11 +20,5 @@ variable "output_s3_bucket_name" {
   type = string
 }
 variable "output_s3_key" {
-  type = string
-}
-variable "environment" {
-  type = string
-}
-variable "team" {
   type = string
 }

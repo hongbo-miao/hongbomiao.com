@@ -44,9 +44,7 @@ resource "aws_msk_cluster" "main" {
       scram = var.is_scram_enabled
     }
   }
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.amazon_msk_cluster_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.amazon_msk_cluster_name
+  })
 }

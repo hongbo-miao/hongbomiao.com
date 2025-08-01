@@ -1,3 +1,6 @@
+variable "common_tags" {
+  type = map(string)
+}
 variable "amazon_emr_cluster_name" {
   type = string
 }
@@ -46,11 +49,5 @@ variable "steps" {
   default = []
 }
 variable "iam_role_arn" {
-  type = string
-}
-variable "environment" {
-  type = string
-}
-variable "team" {
   type = string
 }

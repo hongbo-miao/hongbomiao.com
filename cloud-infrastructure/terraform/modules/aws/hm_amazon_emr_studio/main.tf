@@ -16,9 +16,7 @@ resource "aws_emr_studio" "main" {
   workspace_security_group_id = "sg-xxxxxxxxxxxxxxxxx"
   vpc_id                      = "vpc-xxxxxxxxxxxxxxxxx"
   subnet_ids                  = ["subnet-xxxxxxxxxxxxxxxxx"]
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.amazon_emr_studio_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.amazon_emr_studio_name
+  })
 }

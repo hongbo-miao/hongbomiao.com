@@ -91,4 +91,7 @@ resource "aws_mskconnect_connector" "msk_s3_json_sink_connector" {
     }
   }
   service_execution_role_arn = var.amazon_msk_connector_iam_role_arn
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.amazon_msk_connector_name
+  })
 }
