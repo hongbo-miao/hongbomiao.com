@@ -1,3 +1,6 @@
+variable "common_tags" {
+  type = map(string)
+}
 variable "amazon_rds_name" {
   type = string
 }
@@ -33,10 +36,4 @@ variable "parameter_group_name" {
 }
 variable "cloudwatch_log_types" {
   type = list(string)
-}
-variable "environment" {
-  type = string
-}
-variable "team" {
-  type = string
 }

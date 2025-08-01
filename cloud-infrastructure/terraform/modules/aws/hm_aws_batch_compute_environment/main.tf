@@ -17,9 +17,7 @@ resource "aws_batch_compute_environment" "main" {
   }
   service_role = var.iam_role_arn
   type         = "MANAGED"
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.aws_batch_compute_environment_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.aws_batch_compute_environment_name
+  })
 }

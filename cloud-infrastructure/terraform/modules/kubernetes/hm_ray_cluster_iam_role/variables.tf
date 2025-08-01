@@ -1,3 +1,6 @@
+variable "common_tags" {
+  type = map(string)
+}
 variable "ray_cluster_service_account_name" {
   type = string
 }
@@ -18,10 +21,4 @@ variable "iot_data_s3_bucket_name" {
 }
 variable "aws_glue_database_names" {
   type = list(string)
-}
-variable "environment" {
-  type = string
-}
-variable "team" {
-  type = string
 }

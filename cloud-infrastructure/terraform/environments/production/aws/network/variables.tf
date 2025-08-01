@@ -1,6 +1,3 @@
-variable "environment" {
-  type = string
-}
-variable "team" {
-  type = string
+variable "common_tags" {
+  type = map(string)
 }

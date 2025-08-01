@@ -14,10 +14,8 @@ resource "aws_instance" "main" {
   key_name               = var.key_name
   subnet_id              = var.amazon_vpc_subnet_id
   vpc_security_group_ids = [var.amazon_ec2_security_group_id]
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.instance_name
-    Name         = var.instance_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.instance_name,
+    Name               = var.instance_name
+  })
 }

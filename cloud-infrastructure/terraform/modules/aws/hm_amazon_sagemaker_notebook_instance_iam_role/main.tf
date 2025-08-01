@@ -21,11 +21,9 @@ resource "aws_iam_role" "sagemaker_notebook_instance_role" {
       }
     ]
   })
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = "AmazonSageMakerExecutionRole-${var.amazon_sagemaker_notebook_instance_name}"
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = "AmazonSageMakerExecutionRole-${var.amazon_sagemaker_notebook_instance_name}"
+  })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "sagemaker_notebook_instance_role_s3_policy" {

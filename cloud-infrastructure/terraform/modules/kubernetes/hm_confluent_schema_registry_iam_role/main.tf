@@ -30,11 +30,9 @@ resource "aws_iam_role" "confluent_schema_registry_role" {
       }
     ]
   })
-  tags = {
-    Environment = var.environment
-    Team        = var.team
-    Name        = "${local.aws_iam_role_name_prefix}-${var.confluent_schema_registry_service_account_name}"
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = "${local.aws_iam_role_name_prefix}-${var.confluent_schema_registry_service_account_name}"
+  })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "confluent_schema_registry_role_policy" {

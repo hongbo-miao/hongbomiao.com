@@ -32,11 +32,9 @@ resource "aws_iam_role" "cert_manager_role" {
       }
     ]
   })
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = local.aws_iam_role_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = local.aws_iam_role_name
+  })
 }
 # https://cert-manager.io/docs/configuration/acme/dns01/route53
 # https://registry.terraform.io/providers/vancluever/acme/latest/docs/guides/dns-providers-route53#least-privilege-policy-for-production-purposes

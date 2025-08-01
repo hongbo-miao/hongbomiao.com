@@ -10,9 +10,7 @@ terraform {
 resource "aws_key_pair" "main" {
   key_name   = var.key_name
   public_key = var.public_key
-  tags = {
-    Environment  = var.environment
-    Team         = var.team
-    ResourceName = var.key_name
-  }
+  tags = merge(var.common_tags, {
+    "hm:resource_name" = var.key_name
+  })
 }
