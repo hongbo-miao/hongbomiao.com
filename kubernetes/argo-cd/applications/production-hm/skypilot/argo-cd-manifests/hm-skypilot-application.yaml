@@ -30,9 +30,19 @@ spec:
             storageClassName: production-hm-skypilot-storage-class
             accessMode: ReadWriteOnce
             size: 10Gi
+          lambdaCredentials:
+            enabled: true
+            lambdaSecretName: lambda-secret
           runpodCredentials:
             enabled: true
             runpodSecretName: runpod-secret
+          nebiusCredentials:
+            enabled: true
+            tenantId: tenant-xxxxxxxxxxxxxxxxxx
+            nebiusSecretName: nebius-secret
+          vastCredentials:
+            enabled: true
+            vastSecretName: vast-secret
     - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
       targetRevision: main
       path: kubernetes/argo-cd/applications/production-hm/skypilot/kubernetes-manifests
