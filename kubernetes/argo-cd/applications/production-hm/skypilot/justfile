@@ -23,6 +23,14 @@ sealed-secrets-seal-lambda-secret:
     	--format=yaml \
     	> manifests/lambda-secret.yaml
 
+sealed-secrets-seal-nebius-secret:
+    cat secrets/nebius-secret.unsealed.yaml | \
+    kubeseal \
+    	--controller-namespace=production-hm-sealed-secrets \
+    	--controller-name=hm-sealed-secrets \
+    	--format=yaml \
+    	> manifests/nebius-secret.yaml
+
 sealed-secrets-seal-runpod-secret:
     cat secrets/runpod-secret.unsealed.yaml | \
     kubeseal \
