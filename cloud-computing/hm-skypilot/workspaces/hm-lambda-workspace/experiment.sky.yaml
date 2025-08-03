@@ -5,12 +5,19 @@ name: experiment-task
 resources:
   infra: lambda
   any_of:
-    - infra: lambda/us-west-1
-    - infra: lambda/us-west-2
-    - infra: lambda/us-west-3
+    # U.S.
     - infra: lambda/us-east-1
     - infra: lambda/us-east-2
     - infra: lambda/us-east-3
+    - infra: lambda/us-midwest-1
+    - infra: lambda/us-south-1
+    - infra: lambda/us-south-2
+    - infra: lambda/us-south-3
+    - infra: lambda/us-west-1
+    - infra: lambda/us-west-2
+    - infra: lambda/us-west-3
+    # Europe
+    - infra: lambda/europe-central-1
   accelerators: A10:1
 setup: |
   # Install Guest Agent

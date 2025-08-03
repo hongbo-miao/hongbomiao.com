@@ -5,6 +5,7 @@ name: experiment-task
 resources:
   infra: vast
   any_of:
+    # U.S.
     - infra: vast/California, US, NA
     - infra: vast/Delaware, US, NA
     - infra: vast/Florida, US, NA
@@ -14,5 +15,24 @@ resources:
     - infra: vast/Texas, US, NA
     - infra: vast/Utah, US, NA
     - infra: vast/Washington, US, NA
+    # Canada
+    - infra: vast/British Columbia, CA, NA
+    - infra: vast/Quebec, CA, NA
+    # Europe
+    - infra: vast/Bavaria, DE, EU
+    - infra: vast/Belgium, BE, EU
+    - infra: vast/Bulgaria, BG, EU
+    - infra: vast/France, FR, EU
+    - infra: vast/Germany, DE, EU
+    - infra: vast/Hungary, HU, EU
+    - infra: vast/Iceland, IS, EU
+    - infra: vast/Romania, RO, EU
+    - infra: vast/Russia, RU, EU
+    - infra: vast/Slovenia, SI, EU
+    - infra: vast/The Netherlands, NL, EU
+    - infra: vast/United Kingdom, GB, EU
+    - infra: vast/Zeeland, NL, EU
+    # Australia
+    - infra: vast/Australia, AU, OC
   accelerators: H100:1
   image_id: vastai/pytorch:2.7.1-cuda-12.8.1-py312-24.04

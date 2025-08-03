@@ -1,0 +1,18 @@
+# https://docs.skypilot.co/en/latest/reference/yaml-spec.html
+
+---
+name: experiment-task
+resources:
+  infra: nebius
+  accelerators: L40S:1
+  any_of:
+    # U.S.
+    - infra: nebius/us-central1
+    # Europe
+    - infra: nebius/eu-north1
+    - infra: nebius/eu-west1
+setup: |
+  # Install dependencies
+  sudo snap install btop
+  sudo snap install nvtop
+  sudo snap install astral-uv --classic
