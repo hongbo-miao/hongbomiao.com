@@ -480,7 +480,6 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Optax** - Gradient processing and optimization for JAX
 - **Lightning** - Deep Learning framework
 - **NeuralForecast** - Neural forecasting
-- **Faster Whisper** - Speech recognition model
 - **Transformers** - Machine learning models
 - **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
@@ -530,6 +529,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **MLX LM** – LLM serving for Apple silicon
   - **KV Caching** - Memory optimization technique caching key/value pairs from self-attention to accelerate auto-regressive decoding
   - **Peculative Decoding** – Acceleration technique using draft models
+  - **Faster Whisper** - Fast Whisper inference using CTranslate2
+  - **Speaches** - OpenAI-compatible server for streaming transcription, translation, and speech generation
 - LLM Evaluation
   - **DeepEval** - LLM evaluation framework
 - LLM Gateway
