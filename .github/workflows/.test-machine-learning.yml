@@ -111,6 +111,9 @@ name: . Test Machine Learning
       hm-sglang:
         required: true
         type: boolean
+      hm-speaches:
+        required: true
+        type: boolean
       hm-streamlit-live-line-chart:
         required: true
         type: boolean
@@ -903,6 +906,44 @@ jobs:
         uses: codecov/codecov-action@v5.4.3
         with:
           directory: llm-inference/hm-sglang
+
+  speaches-test:
+    name: Speaches | Test
+    if: ${{ inputs.workflow || inputs.hm-speaches }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install NVIDIA CUDA Toolkit
+        uses: Jimver/cuda-toolkit@v0.2.26
+        id: cuda-toolkit
+        with:
+          cuda: 12.9.0
+          method: network
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.4.3
+        with:
+          version: 0.8.4
+          enable-cache: true
+          cache-dependency-glob: llm-inference/hm-speaches/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: llm-inference/hm-speaches/pyproject.toml
+      - name: Install dependencies
+        working-directory: llm-inference/hm-speaches
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: llm-inference/hm-speaches
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: llm-inference/hm-speaches
 
   mlx-lm-test:
     name: MLX LM | Test
