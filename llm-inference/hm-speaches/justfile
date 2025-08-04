@@ -1,0 +1,34 @@
+uv-update-lock-file:
+    uv lock
+
+uv-install-dependencies:
+    uv sync --dev
+
+host:
+    docker run \
+    --publish=34796:8000 \
+    --name=speaches \
+    --volume=hf-hub-cache:/home/ubuntu/.cache/huggingface/hub \
+    --gpus=all \
+    --detach \
+    --rm \
+    ghcr.io/speaches-ai/speaches:0.8.2-cuda
+
+list:
+    export SPEACHES_BASE_URL=http://localhost:34796 && \
+    uv run speaches-cli registry ls --task automatic-speech-recognition | jq '.data[] | .id'
+
+download:
+    export SPEACHES_BASE_URL=http://localhost:34796 && \
+    uv run speaches-cli model download Systran/faster-distil-whisper-medium.en
+
+transcribe:
+    export SPEACHES_BASE_URL=http://localhost:34796 && \
+    export TRANSCRIPTION_MODEL_ID=Systran/faster-distil-whisper-medium.en && \
+    curl --silent "$SPEACHES_BASE_URL/v1/audio/transcriptions" --form "file=@data/audio.wav" --form "model=$TRANSCRIPTION_MODEL_ID"
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
