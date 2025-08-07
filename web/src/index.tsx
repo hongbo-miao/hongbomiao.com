@@ -6,9 +6,10 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import HmApp from './App/components/App';
+import { RouterProvider } from '@tanstack/react-router';
 import initSentry from './shared/utils/initSentry';
 import queryClient from './shared/utils/queryClient';
+import { router } from './router';
 
 initSentry();
 
@@ -19,7 +20,7 @@ const root = createRoot(container!);
 root.render(
   <Sentry.ErrorBoundary fallback={<p>An error has occurred</p>}>
     <QueryClientProvider client={queryClient}>
-      <HmApp />
+      <RouterProvider router={router} />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </Sentry.ErrorBoundary>,
