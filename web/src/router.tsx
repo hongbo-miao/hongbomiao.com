@@ -27,23 +27,23 @@ const signInRoute = createRoute({
   component: HmSignIn,
 });
 
-const labRoute = createRoute({
-  getParentRoute: () => rootRoute,
+const labRoute: any = createRoute({
+  getParentRoute: (): any => rootRoute,
   path: '/lab',
   component: HmLab,
 }).addChildren([
   createRoute({
-    getParentRoute: () => labRoute,
+    getParentRoute: (): any => labRoute,
     path: '/',
     component: () => <HmLazyComponent><HmWelcome /></HmLazyComponent>,
   }),
   createRoute({
-    getParentRoute: () => labRoute,
+    getParentRoute: (): any => labRoute,
     path: '/opa',
     component: () => <HmLazyComponent><HmOPAExperiment /></HmLazyComponent>,
   }),
   createRoute({
-    getParentRoute: () => labRoute,
+    getParentRoute: (): any => labRoute,
     path: '/opal',
     component: () => <HmLazyComponent><HmOPALExperiment /></HmLazyComponent>,
   }),

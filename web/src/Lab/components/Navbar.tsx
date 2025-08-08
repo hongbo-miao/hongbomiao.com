@@ -1,5 +1,5 @@
+import { Link } from '@tanstack/react-router';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import useAuth from '../../auth/hooks/useAuth';
 import useMe from '../../auth/hooks/useMe';
 import Paths from '../../shared/utils/paths';
