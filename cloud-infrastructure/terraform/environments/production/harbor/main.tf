@@ -72,6 +72,7 @@ data "aws_secretsmanager_secret_version" "hm_harbor_hm_kubernetes_robot_secret_v
 module "harbor_robot_account_hm_kubernetes_robot" {
   source        = "../../../modules/harbor/hm_harbor_robot_account"
   name          = "hm-kubernetes-robot"
+  actions       = ["pull"]
   project_names = [module.harbor_project_hm.name]
   secret        = jsondecode(data.aws_secretsmanager_secret_version.hm_harbor_hm_kubernetes_robot_secret_version.secret_string)["secret"]
 }
