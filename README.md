@@ -529,8 +529,6 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **MLX LM** – LLM serving for Apple silicon
   - **KV Caching** - Memory optimization technique caching key/value pairs from self-attention to accelerate auto-regressive decoding
   - **Peculative Decoding** – Acceleration technique using draft models
-  - **Faster Whisper** - Fast Whisper inference using CTranslate2
-  - **Speaches** - OpenAI-compatible server for streaming transcription, translation, and speech generation
 - LLM Evaluation
   - **DeepEval** - LLM evaluation framework
 - LLM Gateway
@@ -557,10 +555,14 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **Stable Diffusion** - Text-to-image generation model
   - **ComfyUI** - Node-based interface for diffusion model workflows
 
-## Automatic Speech Recognition
+## Audio
 
-- **Silero VAD** - Voice activity detector (VAD)
-- **py-webrtcvad-wheels** - Voice activity detector (VAD)
+- Voice Activity Detector (VAD)
+  - **Silero VAD** - Voice activity detector
+  - **py-webrtcvad-wheels** - Voice activity detector
+- Automatic Speech Recognition (ASR)
+  - **Faster Whisper** - Fast Whisper inference using CTranslate2
+  - **Speaches** - OpenAI-compatible inference server for streaming transcription, translation, and speech generation
 
 ## Computer Vision
 
