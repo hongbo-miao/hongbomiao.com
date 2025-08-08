@@ -559,7 +559,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Automatic Speech Recognition
 
-- **py-webrtcvad-wheels** - WebRTC voice activity detector (VAD)
+- **Silero VAD** - Voice activity detector (VAD)
+- **py-webrtcvad-wheels** - Voice activity detector (VAD)
 
 ## Computer Vision
 

@@ -428,6 +428,8 @@ jobs:
               - 'embedded-system/hm-serial/**'
             hm-sglang:
               - 'llm-inference/hm-sglang/**'
+            hm-silero-vad:
+              - 'automatic-speech-recognition/hm-silero-vad/**'
             hm-skypilot:
               - 'cloud-computing/hm-skypilot/**'
             hm-spark-analyze-coffee-customers:
@@ -696,6 +698,7 @@ jobs:
       hm-scikit-learn: ${{ steps.filter.outputs.hm-scikit-learn }}
       hm-serial: ${{ steps.filter.outputs.hm-serial }}
       hm-sglang: ${{ steps.filter.outputs.hm-sglang }}
+      hm-silero-vad: ${{ steps.filter.outputs.hm-silero-vad }}
       hm-skypilot: ${{ steps.filter.outputs.hm-skypilot }}
       hm-spark-analyze-coffee-customers: ${{ steps.filter.outputs.hm-spark-analyze-coffee-customers }}
       hm-spark-find-retired-people-python: ${{ steps.filter.outputs.hm-spark-find-retired-people-python }}
@@ -1072,6 +1075,7 @@ jobs:
       hm-pydantic-ai-chat-pdf: ${{ needs.detect-changes.outputs.hm-pydantic-ai-chat-pdf == 'true' }}
       hm-scikit-learn: ${{ needs.detect-changes.outputs.hm-scikit-learn == 'true' }}
       hm-sglang: ${{ needs.detect-changes.outputs.hm-sglang == 'true' }}
+      hm-silero-vad: ${{ needs.detect-changes.outputs.hm-silero-vad == 'true' }}
       hm-speaches: ${{ needs.detect-changes.outputs.hm-speaches == 'true' }}
       hm-streamlit-live-line-chart: ${{ needs.detect-changes.outputs.hm-streamlit-live-line-chart == 'true' }}
       hm-streamlit-map: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
