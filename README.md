@@ -557,6 +557,10 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **Stable Diffusion** - Text-to-image generation model
   - **ComfyUI** - Node-based interface for diffusion model workflows
 
+## Automatic Speech Recognition
+
+- **py-webrtcvad-wheels** - WebRTC voice activity detector (VAD)
+
 ## Computer Vision
 
 - **OpenCV** - Computer vision library

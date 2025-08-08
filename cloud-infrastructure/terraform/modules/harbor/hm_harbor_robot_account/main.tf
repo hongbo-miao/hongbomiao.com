@@ -14,9 +14,12 @@ resource "harbor_robot_account" "main" {
   dynamic "permissions" {
     for_each = var.project_names
     content {
-      access {
-        action   = "pull"
-        resource = "repository"
+      dynamic "access" {
+        for_each = var.actions
+        content {
+          action   = access.value
+          resource = "repository"
+        }
       }
       kind      = "project"
       namespace = permissions.value
