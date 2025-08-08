@@ -1413,23 +1413,23 @@ jobs:
         with:
           version: 0.8.4
           enable-cache: true
-          cache-dependency-glob: automatic-speech-recognition/hm-silero-vad/uv.lock
+          cache-dependency-glob: audio/voice-activity-detector/hm-silero-vad/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: automatic-speech-recognition/hm-silero-vad/pyproject.toml
+          python-version-file: audio/voice-activity-detector/hm-silero-vad/pyproject.toml
       - name: Install dependencies
-        working-directory: automatic-speech-recognition/hm-silero-vad
+        working-directory: audio/voice-activity-detector/hm-silero-vad
         run: |
           uv sync --dev
       - name: Test
-        working-directory: automatic-speech-recognition/hm-silero-vad
+        working-directory: audio/voice-activity-detector/hm-silero-vad
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: automatic-speech-recognition/hm-silero-vad
+          directory: audio/voice-activity-detector/hm-silero-vad
 
   webrtcvad-test:
     name: webrtcvad | Test
@@ -1445,23 +1445,23 @@ jobs:
         with:
           version: 0.8.4
           enable-cache: true
-          cache-dependency-glob: automatic-speech-recognition/hm-webrtcvad/uv.lock
+          cache-dependency-glob: audio/voice-activity-detector/hm-webrtcvad/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: automatic-speech-recognition/hm-webrtcvad/pyproject.toml
+          python-version-file: audio/voice-activity-detector/hm-webrtcvad/pyproject.toml
       - name: Install dependencies
-        working-directory: automatic-speech-recognition/hm-webrtcvad
+        working-directory: audio/voice-activity-detector/hm-webrtcvad
         run: |
           uv sync --dev
       - name: Test
-        working-directory: automatic-speech-recognition/hm-webrtcvad
+        working-directory: audio/voice-activity-detector/hm-webrtcvad
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: automatic-speech-recognition/hm-webrtcvad
+          directory: audio/voice-activity-detector/hm-webrtcvad
 
   faster-whisper-test:
     name: Faster Whisper | Test
