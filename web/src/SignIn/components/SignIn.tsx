@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
+import { useRouter } from '@tanstack/react-router';
 import useAuth from '../../auth/hooks/useAuth';
 import useMe from '../../auth/hooks/useMe';
 import styles from './SignIn.module.css';
@@ -15,6 +15,7 @@ type FormValues = {
 function SignIn() {
   const { signIn } = useAuth();
   const { me } = useMe();
+  const router = useRouter();
 
   const mutation = useMutation({
     mutationFn: (data: FormValues) => {
@@ -34,7 +35,8 @@ function SignIn() {
   };
 
   if (me != null) {
-    return <Navigate to="/lab" replace />;
+    router.history.push('/lab');
+    return null;
   }
 
   return (

@@ -1,5 +1,5 @@
+import { Link } from '@tanstack/react-router';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import Paths from '../../shared/utils/paths';
 
 function Menu() {
@@ -8,22 +8,22 @@ function Menu() {
       <p className="menu-label">GENERAL</p>
       <ul className="menu-list">
         <li>
-          <NavLink end className={({ isActive }) => (isActive ? ' is-active' : '')} to={Paths.Lab.welcomePath}>
+          <Link to={Paths.Lab.welcomePath} activeProps={{ className: 'is-active' }}>
             Welcome
-          </NavLink>
+          </Link>
         </li>
       </ul>
       <p className="menu-label">EXPERIMENTS</p>
       <ul className="menu-list">
         <li>
-          <NavLink className={({ isActive }) => (isActive ? ' is-active' : '')} to={Paths.Lab.opaPath}>
+          <Link to={Paths.Lab.opaPath} activeProps={{ className: 'is-active' }}>
             OPA
-          </NavLink>
+          </Link>
         </li>
         <li>
-          <NavLink className={({ isActive }) => (isActive ? ' is-active' : '')} to={Paths.Lab.opalPath}>
+          <Link to={Paths.Lab.opalPath} activeProps={{ className: 'is-active' }}>
             OPAL
-          </NavLink>
+          </Link>
         </li>
       </ul>
     </aside>
