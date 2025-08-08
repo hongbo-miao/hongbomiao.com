@@ -8,7 +8,7 @@ host:
     docker run \
     --publish=34796:8000 \
     --name=speaches \
-    --volume=hf-hub-cache:/home/ubuntu/.cache/huggingface/hub \
+    --volume="hf-hub-cache:$HOME/.cache/huggingface/hub" \
     --gpus=all \
     --detach \
     --rm \
