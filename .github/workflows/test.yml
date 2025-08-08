@@ -484,6 +484,8 @@ jobs:
               - 'llm-inference/kv-caching/**'
             lance:
               - 'data-storage/lance/**'
+            microphone:
+              - 'automatic-speech-recognition/microphone/**'
             mobile-android:
               - 'mobile/mobile-android/**'
             mobile-ios:
@@ -721,6 +723,7 @@ jobs:
       kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
       kv-caching: ${{ steps.filter.outputs.kv-caching }}
       lance: ${{ steps.filter.outputs.lance }}
+      microphone: ${{ steps.filter.outputs.microphone }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
@@ -1077,6 +1080,7 @@ jobs:
       hugging-face-analyze-sentiment: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
       hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
       kv-caching: ${{ needs.detect-changes.outputs.kv-caching == 'true' }}
+      microphone: ${{ needs.detect-changes.outputs.microphone == 'true' }}
       model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
       neural-forecasting-forecast-air-passenger-number: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
