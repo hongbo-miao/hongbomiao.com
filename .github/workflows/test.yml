@@ -463,7 +463,9 @@ jobs:
             hm-unsloth:
               - 'llm-post-training/fine-tuning/hm-unsloth/**'
             hm-webrtcvad:
-              - 'automatic-speech-recognition/hm-webrtcvad/**'
+              - 'audio/voice-activity-detector/hm-webrtcvad/**'
+            hm-whisperx:
+              - 'audio/voice-activity-detector/hm-whisperx/**'
             hm-xxhash:
               - 'hm-xxhash/**'
             hugging-face-analyze-sentiment:
@@ -716,6 +718,7 @@ jobs:
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
       hm-unsloth: ${{ steps.filter.outputs.hm-unsloth }}
       hm-webrtcvad: ${{ steps.filter.outputs.hm-webrtcvad }}
+      hm-whisperx: ${{ steps.filter.outputs.hm-whisperx }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
       hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
       iads-config-reader: ${{ steps.filter.outputs.iads-config-reader }}
@@ -1082,6 +1085,7 @@ jobs:
       hm-torchtune: ${{ needs.detect-changes.outputs.hm-torchtune == 'true' }}
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
       hm-webrtcvad: ${{ needs.detect-changes.outputs.hm-webrtcvad == 'true' }}
+      hm-whisperx: ${{ needs.detect-changes.outputs.hm-whisperx == 'true' }}
       hugging-face-analyze-sentiment: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
       hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
       kv-caching: ${{ needs.detect-changes.outputs.kv-caching == 'true' }}

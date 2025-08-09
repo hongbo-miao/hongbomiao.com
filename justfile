@@ -441,6 +441,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=api-python
     uv run poe static-type-check-python --package=audio.voice-activity-detector.hm-silero-vad
     uv run poe static-type-check-python --package=audio.voice-activity-detector.hm-webrtcvad
+    uv run poe static-type-check-python --package=audio.voice-activity-detector.hm-whisperx
     uv run poe static-type-check-python --package=authorization.hm-opal-client
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.calculate
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.process-flight-data
