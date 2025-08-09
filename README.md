@@ -562,6 +562,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **py-webrtcvad-wheels** - Voice activity detector
 - Automatic Speech Recognition (ASR)
   - **Faster Whisper** - Fast Whisper inference using CTranslate2
+  - **WhisperX** – Whisper-based transcription with word-level timestamps and speaker diarization
   - **Speaches** - OpenAI-compatible inference server for streaming transcription, translation, and speech generation
 
 ## Computer Vision

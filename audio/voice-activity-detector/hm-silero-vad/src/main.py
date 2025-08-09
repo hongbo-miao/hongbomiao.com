@@ -94,7 +94,6 @@ class VadProcessor:
                 logger.exception("VAD error.")
 
     def _check_speech(self, audio_window: np.ndarray) -> bool:
-        """Check if audio window contains speech using Silero VAD."""
         try:
             # Ensure exact window size
             if len(audio_window) != self.vad_window_size:
