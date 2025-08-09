@@ -916,44 +916,6 @@ jobs:
         with:
           directory: llm-inference/hm-sglang
 
-  speaches-test:
-    name: Speaches | Test
-    if: ${{ inputs.workflow || inputs.hm-speaches }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install NVIDIA CUDA Toolkit
-        uses: Jimver/cuda-toolkit@v0.2.26
-        id: cuda-toolkit
-        with:
-          cuda: 12.9.0
-          method: network
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.4.3
-        with:
-          version: 0.8.4
-          enable-cache: true
-          cache-dependency-glob: llm-inference/hm-speaches/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.6.0
-        with:
-          python-version-file: llm-inference/hm-speaches/pyproject.toml
-      - name: Install dependencies
-        working-directory: llm-inference/hm-speaches
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: llm-inference/hm-speaches
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.4.3
-        with:
-          directory: llm-inference/hm-speaches
-
   mlx-lm-test:
     name: MLX LM | Test
     if: ${{ inputs.workflow || inputs.hm-mlx-lm }}
@@ -1466,38 +1428,6 @@ jobs:
         with:
           directory: audio/voice-activity-detector/hm-webrtcvad
 
-  whisperx-test:
-    name: WhisperX | Test
-    if: ${{ inputs.workflow || inputs.hm-whisperx }}
-    runs-on: ubuntu-24.04
-    environment: test
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.4.3
-        with:
-          version: 0.8.4
-          enable-cache: true
-          cache-dependency-glob: audio/voice-activity-detector/hm-whisperx/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v5.6.0
-        with:
-          python-version-file: audio/voice-activity-detector/hm-whisperx/pyproject.toml
-      - name: Install dependencies
-        working-directory: audio/voice-activity-detector/hm-whisperx
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: audio/voice-activity-detector/hm-whisperx
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.4.3
-        with:
-          directory: audio/voice-activity-detector/hm-whisperx
-
   faster-whisper-test:
     name: Faster Whisper | Test
     if: ${{ inputs.workflow || inputs.hm-faster-whisper }}
@@ -1512,23 +1442,93 @@ jobs:
         with:
           version: 0.8.4
           enable-cache: true
-          cache-dependency-glob: machine-learning/hm-faster-whisper/uv.lock
+          cache-dependency-glob: audio/automatic-speech-recognition/hm-faster-whisper/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: machine-learning/hm-faster-whisper/pyproject.toml
+          python-version-file: audio/automatic-speech-recognition/hm-faster-whisper/pyproject.toml
       - name: Install dependencies
-        working-directory: machine-learning/hm-faster-whisper
+        working-directory: audio/automatic-speech-recognition/hm-faster-whisper
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/hm-faster-whisper
+        working-directory: audio/automatic-speech-recognition/hm-faster-whisper
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
-          directory: machine-learning/hm-faster-whisper
+          directory: audio/automatic-speech-recognition/hm-faster-whisper
+
+  whisperx-test:
+    name: WhisperX | Test
+    if: ${{ inputs.workflow || inputs.hm-whisperx }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.4.3
+        with:
+          version: 0.8.4
+          enable-cache: true
+          cache-dependency-glob: audio/automatic-speech-recognition/hm-whisperx/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: audio/automatic-speech-recognition/hm-whisperx/pyproject.toml
+      - name: Install dependencies
+        working-directory: audio/automatic-speech-recognition/hm-whisperx
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: audio/automatic-speech-recognition/hm-whisperx
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: audio/automatic-speech-recognition/hm-whisperx
+
+  speaches-test:
+    name: Speaches | Test
+    if: ${{ inputs.workflow || inputs.hm-speaches }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Install NVIDIA CUDA Toolkit
+        uses: Jimver/cuda-toolkit@v0.2.26
+        id: cuda-toolkit
+        with:
+          cuda: 12.9.0
+          method: network
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.4.3
+        with:
+          version: 0.8.4
+          enable-cache: true
+          cache-dependency-glob: audio/automatic-speech-recognition/hm-speaches/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version-file: audio/automatic-speech-recognition/hm-speaches/pyproject.toml
+      - name: Install dependencies
+        working-directory: audio/automatic-speech-recognition/hm-speaches
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: audio/automatic-speech-recognition/hm-speaches
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.4.3
+        with:
+          directory: audio/automatic-speech-recognition/hm-speaches
 
   stable-diffusion-test:
     name: Stable Diffusion | Test
