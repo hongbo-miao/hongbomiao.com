@@ -766,7 +766,7 @@ wheels = [
 
 [[package]]
 name = "mlflow"
-version = "3.1.4"
+version = "3.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "alembic" },
@@ -776,6 +776,7 @@ dependencies = [
     { name = "gunicorn", marker = "sys_platform != 'win32'" },
     { name = "matplotlib" },
     { name = "mlflow-skinny" },
+    { name = "mlflow-tracing" },
     { name = "numpy" },
     { name = "pandas" },
     { name = "pyarrow" },
@@ -784,14 +785,14 @@ dependencies = [
     { name = "sqlalchemy" },
     { name = "waitress", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/46/2e/acafb34dec24bc6d592aa68105511685861b24819350469f2f580e677334/mlflow-3.1.4.tar.gz", hash = "sha256:6f56c52905a9b71eca2083fcde7eed935614705d33a34b95e139b0b84a8d7842", size = 24104603, upload-time = "2025-07-23T05:33:27.539Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ae/84/c79bca3c13e6bc5a551411c8c253c43194fd109c2688194ffaf7771b0bed/mlflow-3.2.0.tar.gz", hash = "sha256:e96bd42238ea8b477691c8a8f6e8bdbf9247415ad7892e6e885994c6940bcf74", size = 25197246, upload-time = "2025-08-05T13:30:29.747Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/df/4e/f558c87edb2f31d3c6d31dcab57eb50fbf842f21a1520826a20e5b67ed26/mlflow-3.1.4-py3-none-any.whl", hash = "sha256:77edeac35d470aacd12745362f14e7ceefb2cde686667c7956d648fa72996bde", size = 24679835, upload-time = "2025-07-23T05:33:24.181Z" },
+    { url = "https://files.pythonhosted.org/packages/0a/24/f488e66c6f667c7468f439d48446b30adafdb81abfcc01262cf3a50267f5/mlflow-3.2.0-py3-none-any.whl", hash = "sha256:db97b925cc8afba15caf3749dcb4a95be83f9608e974f23253fbbc1d675247ea", size = 25803221, upload-time = "2025-08-05T13:30:26.089Z" },
 ]
 
 [[package]]
 name = "mlflow-skinny"
-version = "3.1.4"
+version = "3.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cachetools" },
@@ -812,9 +813,27 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "uvicorn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/72/15/426a94b130062f9899482e197e7d1e73089fe9283f646c6823137f7c1ecd/mlflow_skinny-3.1.4.tar.gz", hash = "sha256:7e05139512c3baf06fb9fcd339e028d9f725d424ce7014d9b0957f8d532ba240", size = 1608162, upload-time = "2025-07-23T05:23:24.386Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/75/0f/09f8a3eddf2585a3f21a18c4fc23fdc69fb6a1837e5d98a21841b861c51c/mlflow_skinny-3.2.0.tar.gz", hash = "sha256:b359ec082a0a966e4e8e80f03d850da7fa677ebe57e67b1c0877029e5eeee443", size = 1635555, upload-time = "2025-08-05T13:18:18.638Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/98/d8/2731884d38948379f03f35acb816997fa6a2cc8bcacc94736bddaf1b381a/mlflow_skinny-3.1.4-py3-none-any.whl", hash = "sha256:7d53259365d09404fc2b2e99a2701cbb1f3bfe44f127ff8c7a7b27e3720aba23", size = 1932209, upload-time = "2025-07-23T05:23:22.347Z" },
+    { url = "https://files.pythonhosted.org/packages/8e/27/d643aff3652b665e2131b982752cd094b9efbd066a412f30d3e3af2e43a4/mlflow_skinny-3.2.0-py3-none-any.whl", hash = "sha256:ec33a6fc164973e3b4d208e4ab8bec118ea93ff890ffbd08817b66468235ed71", size = 1964743, upload-time = "2025-08-05T13:18:16.615Z" },
+]
+
+[[package]]
+name = "mlflow-tracing"
+version = "3.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cachetools" },
+    { name = "databricks-sdk" },
+    { name = "opentelemetry-api" },
+    { name = "opentelemetry-sdk" },
+    { name = "packaging" },
+    { name = "protobuf" },
+    { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/47/88/a4eac838bf4957994d636dd07cd114287b59c61369017af2d1bf8a5a948a/mlflow_tracing-3.2.0.tar.gz", hash = "sha256:6f3dd940752ca28871b09880e9426d1293460822faa8706b33af1d50c29a0355", size = 903660, upload-time = "2025-08-05T13:14:46.669Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a3/c9/748c70024375001b8840d00eb64c102d22fd3e808c2b4c2f7772dbf452f1/mlflow_tracing-3.2.0-py3-none-any.whl", hash = "sha256:4180d48b6b68a70b3e37987def3b0689d3f4ba722f5d2b98344c3717d2289b99", size = 1094770, upload-time = "2025-08-05T13:14:44.825Z" },
 ]
 
 [[package]]
@@ -1139,7 +1158,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "mlflow", specifier = "==3.1.4" },
+    { name = "mlflow", specifier = "==3.2.0" },
     { name = "polars", specifier = "==1.32.2" },
     { name = "python-dotenv", specifier = "==1.1.1" },
     { name = "ray", extras = ["default"], specifier = "==2.48.0" },
