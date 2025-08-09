@@ -8,7 +8,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   UV_LINK_MODE=copy \
   # Target the system Python environment
   UV_PROJECT_ENVIRONMENT=/usr/local
-COPY --from=ghcr.io/astral-sh/uv:0.8.6-python3.12-alpine /usr/local/bin/uv /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.8.8-python3.12-alpine /usr/local/bin/uv /bin/
 COPY ["pyproject.toml", "uv.lock", "./"]
 RUN uv sync --frozen
 
