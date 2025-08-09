@@ -98,6 +98,20 @@ wheels = [
 ]
 
 [[package]]
+name = "alembic"
+version = "1.16.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "mako" },
+    { name = "sqlalchemy" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/83/52/72e791b75c6b1efa803e491f7cbab78e963695e76d4ada05385252927e76/alembic-1.16.4.tar.gz", hash = "sha256:efab6ada0dd0fae2c92060800e0bf5c1dc26af15a10e02fb4babff164b4725e2", size = 1968161, upload-time = "2025-07-10T16:17:20.192Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c2/62/96b5217b742805236614f05904541000f55422a6060a90d7fd4ce26c172d/alembic-1.16.4-py3-none-any.whl", hash = "sha256:b05e51e8e82efc1abd14ba2af6392897e145930c3e0a2faf2b0da2f7f7fd660d", size = 247026, upload-time = "2025-07-10T16:17:21.845Z" },
+]
+
+[[package]]
 name = "annotated-types"
 version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -607,6 +621,30 @@ wheels = [
 ]
 
 [[package]]
+name = "gitdb"
+version = "4.0.12"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "smmap" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/72/94/63b0fc47eb32792c7ba1fe1b694daec9a63620db1e313033d18140c2320a/gitdb-4.0.12.tar.gz", hash = "sha256:5ef71f855d191a3326fcfbc0d5da835f26b13fbcba60c32c21091c349ffdb571", size = 394684, upload-time = "2025-01-02T07:20:46.413Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a0/61/5c78b91c3143ed5c14207f463aecfc8f9dbb5092fb2869baf37c273b2705/gitdb-4.0.12-py3-none-any.whl", hash = "sha256:67073e15955400952c6565cc3e707c554a4eea2e428946f7a4c162fab9bd9bcf", size = 62794, upload-time = "2025-01-02T07:20:43.624Z" },
+]
+
+[[package]]
+name = "gitpython"
+version = "3.1.45"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "gitdb" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9a/c8/dd58967d119baab745caec2f9d853297cec1989ec1d63f677d3880632b88/gitpython-3.1.45.tar.gz", hash = "sha256:85b0ee964ceddf211c41b9f27a49086010a190fd8132a24e21f362a4b36a791c", size = 215076, upload-time = "2025-07-24T03:45:54.871Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/01/61/d4b89fec821f72385526e1b9d9a3a0385dda4a72b206d28049e2c7cd39b8/gitpython-3.1.45-py3-none-any.whl", hash = "sha256:8908cb2e02fb3b93b7eb0f2827125cb699869470432cc885f019b8fd0fccff77", size = 208168, upload-time = "2025-07-24T03:45:52.517Z" },
+]
+
+[[package]]
 name = "google-api-core"
 version = "2.24.0"
 source = { registry = "https://pypi.org/simple" }
@@ -799,7 +837,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "skypilot", extras = ["aws", "gcp", "lambda", "nebius", "runpod", "vast"], specifier = "==0.10.0" }]
+requires-dist = [{ name = "skypilot", extras = ["aws", "gcp", "lambda", "nebius", "runpod", "vast"], specifier = "==0.10.1" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -949,6 +987,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/10/db/58f950c996c793472e336ff3655b13fbcf1e3b359dcf52dcf3ed3b52c352/jsonschema_specifications-2024.10.1.tar.gz", hash = "sha256:0f38b83639958ce1152d02a7f062902c41c8fd20d558b0c34344292d417ae272", size = 15561, upload-time = "2024-10-08T12:29:32.068Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d1/0f/8910b19ac0670a0f80ce1008e5e751c4a57e14d2c4c13a482aa6079fa9d6/jsonschema_specifications-2024.10.1-py3-none-any.whl", hash = "sha256:a09a0680616357d9a0ecf05c12ad234479f549239d0f5b55f3deea67475da9bf", size = 18459, upload-time = "2024-10-08T12:29:30.439Z" },
+]
+
+[[package]]
+name = "mako"
+version = "1.3.10"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "markupsafe" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9e/38/bd5b78a920a64d708fe6bc8e0a2c075e1389d53bef8413725c63ba041535/mako-1.3.10.tar.gz", hash = "sha256:99579a6f39583fa7e5630a28c3c1f440e4e97a414b80372649c0ce338da2ea28", size = 392474, upload-time = "2025-04-10T12:44:31.16Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/87/fb/99f81ac72ae23375f22b7afdb7642aba97c00a713c217124420147681a2f/mako-1.3.10-py3-none-any.whl", hash = "sha256:baef24a52fc4fc514a0887ac600f9f1cff3d82c61d4d700a1fa84d597b88db59", size = 78509, upload-time = "2025-04-10T12:50:53.297Z" },
 ]
 
 [[package]]
@@ -2000,10 +2050,12 @@ wheels = [
 
 [[package]]
 name = "skypilot"
-version = "0.10.0"
+version = "0.10.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiofiles" },
+    { name = "aiohttp" },
+    { name = "alembic" },
     { name = "cachetools" },
     { name = "casbin" },
     { name = "click" },
@@ -2011,6 +2063,7 @@ dependencies = [
     { name = "cryptography" },
     { name = "fastapi" },
     { name = "filelock" },
+    { name = "gitpython" },
     { name = "httpx" },
     { name = "jinja2" },
     { name = "jsonschema" },
@@ -2035,13 +2088,14 @@ dependencies = [
     { name = "sqlalchemy" },
     { name = "sqlalchemy-adapter" },
     { name = "tabulate" },
+    { name = "types-paramiko" },
     { name = "typing-extensions" },
     { name = "uvicorn", extra = ["standard"] },
     { name = "wheel" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/43/eb/86d0e00bafb5337717e4117375cbe1a07c1d1f5a2a8c57221f9323133ded/skypilot-0.10.0.tar.gz", hash = "sha256:1ce82e4827bd61b980aaf6428941ce78d2161f80e87e6af15a85bcc834826a1f", size = 2053994, upload-time = "2025-07-12T15:59:17.61Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/47/de/3d2913dbe2784047e3fd5d586f0f2f164bef0abd75b395c8dc3d36000511/skypilot-0.10.1.tar.gz", hash = "sha256:031cc605f16d8635dc5e61841ea05e9aa38914311ef4122aca1e600e7519a2f7", size = 2414905, upload-time = "2025-08-09T06:04:39.026Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ba/9b/a07d9264634c9e0b62b0a7f0e82e02c19ed0155597a41580f46876f7bf29/skypilot-0.10.0-py3-none-any.whl", hash = "sha256:7bec9008f2c8d712d4c0784d58a7b3ec8131bd03c86337345ddfc1667248c8cc", size = 2272022, upload-time = "2025-07-12T15:59:15.565Z" },
+    { url = "https://files.pythonhosted.org/packages/a6/0c/428e493dce9db08be362168d5e62d446d2f3dd7b7b8a37e6eab90767c40f/skypilot-0.10.1-py3-none-any.whl", hash = "sha256:cd7cecf15ac357115bb7a1ba246cd6b0bd5137c46d3997ab514ff3f92517932d", size = 2644931, upload-time = "2025-08-09T06:04:37.405Z" },
 ]
 
 [package.optional-dependencies]
@@ -2068,6 +2122,15 @@ runpod = [
 ]
 vast = [
     { name = "vastai-sdk" },
+]
+
+[[package]]
+name = "smmap"
+version = "5.0.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/44/cd/a040c4b3119bbe532e5b0732286f805445375489fceaec1f48306068ee3b/smmap-5.0.2.tar.gz", hash = "sha256:26ea65a03958fa0c8a1c7e8c7a58fdc77221b8910f6be2131affade476898ad5", size = 22329, upload-time = "2025-01-02T07:14:40.909Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/04/be/d09147ad1ec7934636ad912901c5fd7667e1c858e19d355237db0d0cd5e4/smmap-5.0.2-py3-none-any.whl", hash = "sha256:b30115f0def7d7531d22a0fb6502488d879e75b260a9db4d0819cfb25403af5e", size = 24303, upload-time = "2025-01-02T07:14:38.724Z" },
 ]
 
 [[package]]
@@ -2221,6 +2284,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/c5/8c/7d682431efca5fd290017663ea4588bf6f2c6aad085c7f108c5dbc316e70/typer-0.16.0.tar.gz", hash = "sha256:af377ffaee1dbe37ae9440cb4e8f11686ea5ce4e9bae01b84ae7c63b87f1dd3b", size = 102625, upload-time = "2025-05-26T14:30:31.824Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/76/42/3efaf858001d2c2913de7f354563e3a3a2f0decae3efe98427125a8f441e/typer-0.16.0-py3-none-any.whl", hash = "sha256:1f79bed11d4d02d4310e3c1b7ba594183bcedb0ac73b27a9e5f28f6fb5b98855", size = 46317, upload-time = "2025-05-26T14:30:30.523Z" },
+]
+
+[[package]]
+name = "types-paramiko"
+version = "4.0.0.20250809"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cryptography" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b7/1f/fff9b859cc3bf7bf36c27a223b2e1a57f420e5ed5da7c512ecab724d2725/types_paramiko-4.0.0.20250809.tar.gz", hash = "sha256:e1fbe847fd2106984fe7aac0c6c15caa93a91b6d4c5e56486f9b84bfb9203f9f", size = 28640, upload-time = "2025-08-09T03:16:22.424Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/16/ec/c1475ca868e044534e5ec7f6a7dbbfbc1cfde7a6db7d72e7d61c22ee08a7/types_paramiko-4.0.0.20250809-py3-none-any.whl", hash = "sha256:9777f62f209ced1daa8292f664e6a2975c84961e8ad56f9d4e677047dab0d9d5", size = 38796, upload-time = "2025-08-09T03:16:21.578Z" },
 ]
 
 [[package]]
