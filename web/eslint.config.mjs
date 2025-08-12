@@ -61,7 +61,8 @@ export default [
       '**/storybook-static',
       '**/target',
 
-      // Directories
+      // eslint.config.mjs specific
+      'src/components/ui',
       'tmp',
     ],
   },

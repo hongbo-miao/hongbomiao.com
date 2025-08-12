@@ -3,7 +3,7 @@ import React from 'react';
 import { useAudio } from 'react-use';
 import flashingMusicalNoteGIF from '../images/musical-note-flashing.gif';
 import playingMusicalNoteGIF from '../images/musical-note-playing.gif';
-import styles from './AudioPlayer.module.css';
+import './AudioPlayer.css';
 
 interface Props {
   audioSrc: string;
@@ -24,13 +24,13 @@ function AudioPlayer(props: Props) {
   };
 
   const musicalNoteGIF = audioState.paused ? flashingMusicalNoteGIF : playingMusicalNoteGIF;
-  const playButtonClassName = clsx('button', styles.hmPlayButton);
+  const playButtonClassName = clsx('button', 'hm-play-button');
 
   return (
     <>
       {audioElement}
       <button className={playButtonClassName} type="button" onClick={onTogglePlay}>
-        <img className={styles.hmMusicalNote} width="20" height="20" src={musicalNoteGIF} alt="Music" />
+        <img className="hm-musical-note" width="20" height="20" src={musicalNoteGIF} alt="Music" />
       </button>
     </>
   );

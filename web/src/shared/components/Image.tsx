@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Image.module.css';
+import './Image.css';
 
 type Props = {
   avifSrc: string;
@@ -14,7 +14,7 @@ type Props = {
 function Image(props: Props) {
   const { avifSrc, fallbackSrc, style, alt } = props;
   return (
-    <picture className={styles.hmPicture}>
+    <picture className="hm-picture">
       <source type="image/avif" srcSet={avifSrc} />
       <img src={fallbackSrc} style={style} alt={alt} />
     </picture>

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Copyright.module.css';
+import './Copyright.css';
 
 type Props = {
   year: number;
@@ -8,7 +8,7 @@ type Props = {
 function Copyright(props: Props) {
   const { year } = props;
   const copyright = `© ${year} H.M.`;
-  return <div className={styles.hmCopyright}>{copyright}</div>;
+  return <div className="hm-copyright">{copyright}</div>;
 }
 
 export default Copyright;
