@@ -1,4 +1,3 @@
-import React from 'react';
 import HmCopyright from '../../App/components/Copyright';
 import HmSocialList from '../../App/components/SocialList';
 import WEBSITES from '../fixtures/WEBSITES';
