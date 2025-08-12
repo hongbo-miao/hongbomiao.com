@@ -11,7 +11,7 @@ import hatPNG from '../images/hat.png';
 import magicAVIF from '../images/magic.avif';
 import magicPNG from '../images/magic.png';
 import HmFooter from './Footer';
-import styles from './Home.module.css';
+import './Home.css';
 
 function Home() {
   useHealthSubscription();
@@ -25,28 +25,28 @@ function Home() {
   const bio = 'Making magic happen';
 
   return (
-    <div className={styles.hmHome}>
-      <div className={styles.hmBody}>
-        <div className={`container is-max-desktop ${styles.hmContainer}`}>
-          <div className={styles.hmNameContainer}>
-            <h1 className={styles.hmName}>{name}</h1>
-            <div className={styles.hmAudioPlayerWrapper}>
+    <div className="hm-home">
+      <div className="hm-body">
+        <div className="mx-auto hm-home-container">
+          <div className="hm-name-container">
+            <h1 className="hm-name">{name}</h1>
+            <div className="hm-audio-player-wrapper">
               <HmAudioPlayer audioSrc={springWaltzMP3} />
             </div>
           </div>
           <HmSparkles>
-            <a className={styles.hmBioContainer} href={config.githubURL} target="_blank" rel="noopener noreferrer">
+            <a className="hm-bio-container" href={config.githubURL} target="_blank" rel="noopener noreferrer">
               <HmImage
                 avifSrc={hatAVIF}
                 fallbackSrc={hatPNG}
-                style={{ height: '22px', width: '22px' }}
+                style={{ height: '26px', width: '26px' }}
                 alt="Magical Hat"
               />
-              <div className={styles.hmBio}>{bio}</div>
+              <div className="hm-bio">{bio}</div>
               <HmImage
                 avifSrc={magicAVIF}
                 fallbackSrc={magicPNG}
-                style={{ height: '22px', width: '22px' }}
+                style={{ height: '26px', width: '26px' }}
                 alt="Magic"
               />
             </a>
