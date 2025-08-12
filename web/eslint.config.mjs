@@ -156,6 +156,7 @@ export default [
         },
       ],
       'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
       'react-refresh/only-export-components': 'error',
       'security/detect-non-literal-fs-filename': 'off',
       'spaced-comment': [
