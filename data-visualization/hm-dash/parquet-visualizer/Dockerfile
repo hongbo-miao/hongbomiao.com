@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:0.8.8-python3.12-bookworm-slim
+FROM ghcr.io/astral-sh/uv:0.8.9-python3.12-bookworm-slim
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   PIP_NO_CACHE_DIR=1 \
