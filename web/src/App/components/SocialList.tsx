@@ -1,4 +1,3 @@
-import React from 'react';
 import Website from '../types/Website';
 import './SocialList.css';
 
