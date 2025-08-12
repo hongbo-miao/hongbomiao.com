@@ -69,9 +69,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **TanStack Query** - Hooks for fetching, caching and updating asynchronous data
 - **TanStack Router** - Router
 - **RxJS** - Asynchronous programming with observable streams
-- **Tailwind CSS** - CSS framework
-- **shadcn/ui** - Component library
-- **Radix UI** - Component library
+- **shadcn/ui** - UI component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix Primitives** - Low-level, unstyled, accessible UI primitives
 - **PurgeCSS** - Unused CSS removing
 - **Jest** - Unit testing, snapshot testing
 - **React Testing Library** - React component testing
