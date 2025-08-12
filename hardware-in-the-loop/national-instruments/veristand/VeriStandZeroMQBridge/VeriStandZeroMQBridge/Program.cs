@@ -95,6 +95,7 @@ public static class StringSanitizer
             .Replace("℃", "degc")
             .Replace("%", "pct")
             .Replace("Ω", "ohm")
+            .Replace("µ", "u")
             .Replace("/", "."); // Convert forward slashes to dots
 
         // Replace special characters with underscore, except for dots
