@@ -1,5 +1,4 @@
 import React from 'react';
-import useMe from '../../auth/hooks/useMe';
 import config from '../../config';
 import useHealthSubscription from '../../health/hooks/useHealthSubscription';
 import HmAudioPlayer from '../../shared/components/AudioPlayer';
@@ -15,14 +14,15 @@ import HmFooter from './Footer';
 import styles from './Home.module.css';
 
 function Home() {
-  const { me } = useMe();
   useHealthSubscription();
 
   React.useEffect(() => {
     analytics.page();
   }, []);
 
-  const { bio, name } = me;
+  // Static content instead of auth-based data
+  const name = 'Hongbo Miao';
+  const bio = 'Making magic happen';
 
   return (
     <div className={styles.hmHome}>

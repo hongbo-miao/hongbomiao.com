@@ -68,7 +68,7 @@ jobs:
       - name: Test
         working-directory: api-node
         run: |
-          npm run test:coverage
+          npm run test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
@@ -98,7 +98,7 @@ jobs:
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: |
-          npm run test:stryker
+          npm run test-stryker
 
   api-python-test:
     name: API - Python | Test

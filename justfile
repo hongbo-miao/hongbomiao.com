@@ -569,9 +569,9 @@ static-type-check-terraform:
     cd cloud-infrastructure/terraform/environments/production/snowflake/general && terraform validate
 
 static-type-check-typescript:
-    cd api-node && npm run tsc
-    cd ethereum && npm run tsc
-    cd data-visualization/grafana/hm-panel-plugin && npm run tsc
-    cd mobile/mobile-react-native && npm run tsc
-    cd web && npm run tsc
-    cd web-cypress && npm run tsc
+    cd api-node && npm run static-type-check-typescript
+    cd ethereum && npm run static-type-check-typescript
+    cd data-visualization/grafana/hm-panel-plugin && npm run static-type-check-typescript
+    cd mobile/mobile-react-native && npm run static-type-check-typescript
+    cd web && npm run static-type-check-typescript
+    cd web-cypress && npm run static-type-check-typescript

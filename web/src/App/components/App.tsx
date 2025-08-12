@@ -1,21 +1,19 @@
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import React from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import HmHome from '../../Home/components/Home';
-import HmLab from '../../Lab/components/Lab';
-import HmSignIn from '../../SignIn/components/SignIn';
-import Paths from '../../shared/utils/paths';
+import { routeTree } from '../../routeTree.gen';
+
+// Create a new router instance
+const router = createRouter({ routeTree });
+
+// Register the router instance for type safety
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={Paths.appRootPath} element={<HmHome />} />
-        <Route path={Paths.signInPath} element={<HmSignIn />} />
-        <Route path={Paths.labPath} element={<HmLab />} />
-        <Route path="*" element={<Navigate to={Paths.appRootPath} replace />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -67,6 +67,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **React** - Web framework
 - **Vite** - JavaScript build tool and development server
 - **TanStack Query** - Hooks for fetching, caching and updating asynchronous data
+- **TanStack Router** - Router
 - **RxJS** - Asynchronous programming with observable streams
 - **Bulma** - CSS framework
 - **PurgeCSS** - Unused CSS removing

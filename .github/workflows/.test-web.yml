@@ -42,7 +42,7 @@ jobs:
       - name: Test
         working-directory: web
         run: |
-          npm run test:coverage
+          npm run test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.4.3
         with:
@@ -81,7 +81,7 @@ jobs:
       - name: Cypress
         working-directory: web-cypress
         run: |
-          npm run test:cypress:headless:58136
+          npm run test-cypress-headless-58136
       - name: Stop Docker
         working-directory: api-node
         run: |
@@ -144,8 +144,8 @@ jobs:
         working-directory: web
         run: |
           npm run build
-          npm run storybook:build
+          npm run storybook-build
       - name: Publish storybook to Chromatic
         working-directory: web
         run: |
-          npm run storybook:publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
+          npm run storybook-publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
