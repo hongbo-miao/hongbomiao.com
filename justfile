@@ -264,25 +264,25 @@ lint-cmake:
     uv run poe lint-cmake
 
 lint-css:
-    npm run lint:css
+    npm run lint-css
 
 lint-css-fix:
-    npm run lint:css:fix
+    npm run lint-css-fix
 
 lint-dockerfile:
     hadolint $(git ls-files "**/Dockerfile*")
 
 lint-html:
-    npm run lint:html
+    npm run lint-html
 
 lint-html-fix:
-    npm run lint:html:fix
+    npm run lint-html-fix
 
 lint-json:
-    npm run lint:json
+    npm run lint-json
 
 lint-json-fix:
-    npm run lint:json:fix
+    npm run lint-json-fix
 
 lint-justfile:
     uv run poe lint-justfile
@@ -311,10 +311,10 @@ lint-kubernetes-manifest:
         kubernetes/manifests/
 
 lint-markdown:
-    npm run lint:markdown
+    npm run lint-markdown
 
 lint-markdown-fix:
-    npm run lint:markdown:fix
+    npm run lint-markdown-fix
 
 lint-matlab:
     uv run poe lint-matlab
@@ -323,10 +323,10 @@ lint-matlab-fix:
     uv run poe lint-matlab-fix
 
 lint-natural-language:
-    npm run lint:natural-language
+    npm run lint-natural-language
 
 lint-natural-language-fix:
-    npm run lint:natural-language:fix
+    npm run lint-natural-language-fix
 
 lint-protocol-buffers:
     buf lint
@@ -358,10 +358,10 @@ lint-shell:
     shellcheck $(git ls-files "**/*.sh")
 
 lint-solidity:
-    npm run lint:solidity
+    npm run lint-solidity
 
 lint-solidity-fix:
-    npm run lint:solidity:fix
+    npm run lint-solidity-fix
 
 lint-sql:
     uv run poe lint-sql --dialect=athena cloud-platform/aws/amazon-athena/queries
@@ -424,10 +424,10 @@ lint-vhdl-fix:
     uv run poe lint-vhdl-fix
 
 lint-xml:
-    npm run lint:xml
+    npm run lint-xml
 
 lint-xml-fix:
-    npm run lint:xml:fix
+    npm run lint-xml-fix
 
 lint-yaml:
     uv run poe lint-yaml

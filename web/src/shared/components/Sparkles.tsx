@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import useRandomInterval from '../hooks/useRandomInterval.hook';
 import generateSparkle from '../utils/generateSparkle';
 import HmSparkle from './Sparkle';
-import styles from './Sparkles.module.css';
+import './Sparkles.css';
 
 type Props = {
   children: ReactNode;
@@ -30,9 +30,9 @@ function Sparkles(props: Props) {
   ));
 
   return (
-    <span className={styles.hmWrapper}>
+    <span className="hm-sparkles-wrapper">
       {sparkleItems}
-      <div className={styles.hmChildrenWrapper}>{children}</div>
+      <div className="hm-sparkles-children-wrapper">{children}</div>
     </span>
   );
 }
