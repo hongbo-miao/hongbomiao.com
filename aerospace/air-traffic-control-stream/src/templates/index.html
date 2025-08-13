@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Air Traffic Control Stream</title>
+  </head>
+  <body>
+    <p>
+      <select id="streamSelect">
+        <option value="">Select a stream...</option>
+      </select>
+      <button id="playBtn" disabled>Play</button>
+    </p>
+    <p id="status">Select a stream to begin listening</p>
+    <script>
+      let ws = null;
+      let audioContext = null;
+      let gainNode = null;
+      let isPlaying = false;
+
+      // Initialize audio context
+      async function initAudio() {
+        if (!audioContext) {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          gainNode = audioContext.createGain();
+          gainNode.connect(audioContext.destination);
+          gainNode.gain.value = 0.5; // 50% volume
+        }
+      }
+
+      // Load available streams
+      async function loadStreams() {
+        try {
+          const response = await fetch('/api/air-traffic-control-streams');
+          const data = await response.json();
+          const streamSelect = document.getElementById('streamSelect');
+
+          Object.entries(data.streams).forEach(([feedId, stream]) => {
+            const option = document.createElement('option');
+            option.value = feedId;
+            option.textContent = `${stream.name} (${stream.location})`;
+            streamSelect.appendChild(option);
+          });
+        } catch (error) {
+          updateStatus('Error loading streams: ' + error.message);
+        }
+      }
+
+      // Handle stream selection
+      document.getElementById('streamSelect').addEventListener('change', (e) => {
+        const playBtn = document.getElementById('playBtn');
+        if (e.target.value) {
+          // If a stream is currently playing or connecting, stop it when switching
+          if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) {
+            ws.close();
+          }
+          isPlaying = false;
+          playBtn.disabled = false;
+          updateStatus('Ready to play');
+        } else {
+          playBtn.disabled = true;
+          updateStatus('Select a stream to begin listening');
+        }
+      });
+
+      async function startStream() {
+        const selectedFeedId = document.getElementById('streamSelect').value;
+        if (!selectedFeedId) return;
+
+        const playBtn = document.getElementById('playBtn');
+        // Prevent double-start
+        if (isPlaying) return;
+        // Disable the Play button during playback
+        playBtn.disabled = true;
+
+        await initAudio();
+
+        try {
+          const wsUrl = `ws://localhost:39183/ws/air-traffic-control-stream?stream_id=${selectedFeedId}`;
+          ws = new WebSocket(wsUrl);
+          ws.binaryType = 'arraybuffer';
+
+          // Audio streaming variables
+          let nextStartTime = 0;
+          const sampleRate = 16000;
+
+          ws.onopen = () => {
+            isPlaying = true;
+            updateStatus('Streaming audio...');
+            nextStartTime = audioContext.currentTime;
+          };
+
+          ws.onmessage = async (event) => {
+            if (audioContext && event.data instanceof ArrayBuffer) {
+              try {
+                // Convert PCM data to audio buffer
+                const audioBuffer = audioContext.createBuffer(1, event.data.byteLength / 2, sampleRate);
+                const channelData = audioBuffer.getChannelData(0);
+                const view = new Int16Array(event.data);
+
+                for (let i = 0; i < view.length; i++) {
+                  // Convert 16-bit signed PCM to float: 32768.0 = 2^15 (max positive value for 16-bit signed int)
+                  // This normalizes the range from [-32768, 32767] to [-1.0, 1.0] for Web Audio API
+                  channelData[i] = view[i] / 32768.0;
+                }
+
+                // Schedule audio buffer for seamless playback
+                const source = audioContext.createBufferSource();
+                source.buffer = audioBuffer;
+                source.connect(gainNode);
+
+                // Schedule the audio to start at the right time for continuous playback
+                const startTime = Math.max(audioContext.currentTime, nextStartTime);
+                source.start(startTime);
+
+                // Update next start time for seamless continuation
+                nextStartTime = startTime + audioBuffer.duration;
+              } catch (error) {
+                console.error('Audio playback error:', error);
+              }
+            }
+          };
+
+          ws.onerror = (error) => {
+            updateStatus('Connection error: ' + error.message);
+            isPlaying = false;
+            const playBtn = document.getElementById('playBtn');
+            // Re-enable Play if a stream is selected
+            playBtn.disabled = !document.getElementById('streamSelect').value;
+          };
+
+          ws.onclose = () => {
+            updateStatus('Connection closed');
+            isPlaying = false;
+            ws = null;
+            const playBtn = document.getElementById('playBtn');
+            // Re-enable Play if a stream is selected
+            playBtn.disabled = !document.getElementById('streamSelect').value;
+          };
+        } catch (error) {
+          updateStatus('Error starting stream: ' + error.message);
+        }
+      }
+
+      function updateStatus(message) {
+        document.getElementById('status').textContent = message;
+      }
+
+      // Event listeners
+      document.getElementById('playBtn').addEventListener('click', startStream);
+
+      // Load streams on page load
+      loadStreams();
+    </script>
+  </body>
+</html>

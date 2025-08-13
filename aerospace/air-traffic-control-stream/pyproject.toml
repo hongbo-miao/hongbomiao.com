@@ -1,0 +1,25 @@
+[project]
+name = "air-traffic-control-stream"
+version = "1.0.0"
+requires-python = "~=3.13.0"
+dependencies = [
+  "fastapi==0.116.1",
+  "uvicorn[standard]==0.35.0",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.37.0",
+  "pytest-cov==6.2.1",
+  "pytest==8.4.1",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.8.0"
+
+[tool.poe.tasks]
+dev = { cmd = "uvicorn src.main:app --port=39183 --reload", env = { ENV = "development" } }
+serve = { cmd = "uvicorn src.main:app --port=39183", env = { ENV = "production" } }
+test = { cmd = "pytest --verbose --verbose", env = { ENV = "test" } }
+test-coverage = "pytest --cov=. --cov-report=xml"

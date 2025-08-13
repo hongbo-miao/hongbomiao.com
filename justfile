@@ -434,6 +434,7 @@ lint-yaml:
 
 # Static type check
 static-type-check-python:
+    uv run poe static-type-check-python --package=aerospace.air-traffic-control-stream
     uv run poe static-type-check-python --package=aerospace.hm-aerosandbox
     uv run poe static-type-check-python --package=aerospace.hm-openaerostruct
     uv run poe static-type-check-python --package=aerospace.x-plane.rest-api
