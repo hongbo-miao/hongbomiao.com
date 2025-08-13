@@ -12,7 +12,7 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
-LIVEATC_BASE_URL = "http://d.liveatc.net"
+LIVE_ATC_BASE_URL = "http://d.liveatc.net"
 STREAMS: dict[str, dict[str, str]] = {
     "kjfk_twr": {
         "name": "JFK Airport - Tower",
@@ -85,7 +85,7 @@ class StreamManager:
                 )
 
     async def _decode_stream(self, stream_id: str) -> None:
-        url = f"{LIVEATC_BASE_URL}/{STREAMS[stream_id]['stream_path']}"
+        url = f"{LIVE_ATC_BASE_URL}/{STREAMS[stream_id]['stream_path']}"
 
         try:
             async for chunk in self._ffmpeg_pcm_stream(url):
