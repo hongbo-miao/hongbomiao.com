@@ -237,6 +237,8 @@ jobs:
               - '.yamllint.yaml'
               - '**/*.yaml'
             # Applications
+            air-traffic-control-stream:
+              - 'aerospace/air-traffic-control-stream/**'
             amazon-sagemaker-pytorch-mnist:
               - 'cloud-platform/aws/amazon-sagemaker/pytorch-mnist/**'
             amazon-sagemaker-triton-resnet-50-deploy:
@@ -605,6 +607,7 @@ jobs:
       xml: ${{ steps.filter.outputs.xml }}
       yaml: ${{ steps.filter.outputs.yaml }}
       # Applications
+      air-traffic-control-stream: ${{ steps.filter.outputs.air-traffic-control-stream }}
       amazon-sagemaker-pytorch-mnist: ${{ steps.filter.outputs.amazon-sagemaker-pytorch-mnist }}
       amazon-sagemaker-triton-resnet-50-deploy: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-deploy }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-infer }}
@@ -1173,6 +1176,7 @@ jobs:
       # Workflows
       workflow: ${{ needs.detect-changes.outputs.workflow-test-aerospace == 'true' }}
       # Applications
+      air-traffic-control-stream: ${{ needs.detect-changes.outputs.air-traffic-control-stream == 'true' }}
       bluesky: ${{ needs.detect-changes.outputs.bluesky == 'true' }}
       hm-aerosandbox: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
       hm-openaerostruct: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
