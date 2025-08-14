@@ -8,7 +8,7 @@ COPY web ./
 RUN npm run build \
   && npm prune --production
 
-FROM docker.io/nginx:1.29.0-alpine AS release
+FROM docker.io/nginx:1.29.1-alpine AS release
 COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
 COPY web/conf/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
