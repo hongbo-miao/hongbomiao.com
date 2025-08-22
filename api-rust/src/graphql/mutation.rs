@@ -2,7 +2,9 @@ use async_graphql::{Context, Object, SimpleObject, Upload};
 use serde::Serialize;
 use std::io::Read;
 
-use crate::graphql::utils::resnet_18_util;
+use crate::shared::image::utils::load_labels::load_labels;
+use crate::shared::image::utils::load_model::load_model;
+use crate::shared::image::utils::process_image::process_image;
 
 #[derive(SimpleObject)]
 pub struct UpdateResponse {
@@ -31,34 +33,60 @@ impl Mutation {
         image: Upload,
     ) -> Result<ClassificationResponse, String> {
         // Get image data from upload
-        let upload_value = image.value(ctx).map_err(|e| e.to_string())?;
+        let upload_value = image.value(ctx).map_err(|error| error.to_string())?;
         let mut image_data = Vec::new();
         upload_value
             .into_read()
             .read_to_end(&mut image_data)
-            .map_err(|e| e.to_string())?;
+            .map_err(|error| error.to_string())?;
 
         // Process image
-        let image_tensor = resnet_18_util::process_image(&image_data)?;
+        let image_data_processed = process_image(&image_data)?;
 
         // Run inference
-        let model = resnet_18_util::load_model()?;
-        let output = model
-            .forward_ts(&[image_tensor])
-            .map_err(|e| format!("Failed to run inference: {}", e))?;
+        let session = load_model()?;
 
-        let output = output
-            .to_kind(tch::Kind::Float)
-            .softmax(-1, tch::Kind::Float);
+        // Create input tensor for ONNX Runtime
+        let input_array = ndarray::CowArray::from(
+            ndarray::Array4::from_shape_vec((1, 3, 224, 224), image_data_processed)
+                .map_err(|error| format!("Failed to create input array: {}", error))?,
+        )
+        .into_dyn();
 
-        // Get the top prediction
-        let (confidence, class_index) = output.max_dim(1, true);
+        let input_tensor = ort::Value::from_array(session.allocator(), &input_array)
+            .map_err(|error| format!("Failed to create ONNX tensor: {}", error))?;
 
-        // Convert tensors to scalar values
-        let class_idx = class_index.int64_value(&[]) as usize;
-        let confidence_val = confidence.double_value(&[]);
+        let outputs = session
+            .run(vec![input_tensor])
+            .map_err(|error| format!("Failed to run inference: {}", error))?;
 
-        let labels = resnet_18_util::load_labels()?;
+        // Get output tensor
+        let output_tensor = outputs[0]
+            .try_extract::<f32>()
+            .map_err(|error| format!("Failed to extract output: {}", error))?;
+        let output = output_tensor.view();
+
+        // Apply softmax and find max
+        let output_slice = output.as_slice().unwrap();
+        let mut softmax_output = vec![0.0f32; output_slice.len()];
+
+        // Compute softmax
+        let max_val = output_slice
+            .iter()
+            .fold(f32::NEG_INFINITY, |a, &b| a.max(b));
+        let sum: f32 = output_slice.iter().map(|&x| (x - max_val).exp()).sum();
+        for (i, &val) in output_slice.iter().enumerate() {
+            softmax_output[i] = (val - max_val).exp() / sum;
+        }
+
+        // Find the class with highest probability
+        let (class_idx, &confidence_val) = softmax_output
+            .iter()
+            .enumerate()
+            .max_by(|(_, a), (_, b)| a.partial_cmp(b).unwrap())
+            .unwrap();
+
+        let labels = load_labels()?;
         let class_name = labels
             .get(class_idx)
             .map(String::from)
@@ -66,7 +94,7 @@ impl Mutation {
 
         Ok(ClassificationResponse {
             class_name,
-            confidence: confidence_val,
+            confidence: confidence_val as f64,
         })
     }
 }
