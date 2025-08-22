@@ -1,48 +1,53 @@
 #![forbid(unsafe_code)]
 
+mod config;
 mod graphql;
 mod handlers;
 mod shared;
 
-use axum::http::Method;
-use axum::routing::{get, post};
 use axum::Router;
-use std::env;
+use axum::http::{HeaderValue, Method};
+use axum::routing::{get, post};
 use std::net::SocketAddr;
 use std::sync::Arc;
 use std::time::Duration;
+use tower_governor::GovernorLayer;
 use tower_governor::governor::GovernorConfigBuilder;
 use tower_governor::key_extractor::SmartIpKeyExtractor;
-use tower_governor::GovernorLayer;
 use tower_http::compression::CompressionLayer;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::timeout::TimeoutLayer;
 use tower_http::trace::TraceLayer;
 use tracing::info;
 
+use crate::config::AppConfig;
 use crate::graphql::schema;
 
 #[tokio::main]
 async fn main() {
+    let config = AppConfig::get();
+
     tracing_subscriber::fmt()
-        .with_max_level(tracing::Level::TRACE)
+        .with_max_level(config.log_level)
         .init();
-
-    #[cfg(debug_assertions)]
-    dotenvy::from_filename(".env.development").ok();
-    #[cfg(not(debug_assertions))]
-    dotenvy::from_filename(".env.production").ok();
-
-    let port = env::var("PORT")
-        .expect("PORT must be set in environment")
-        .parse::<u16>()
-        .expect("PORT must be a valid number");
     let schema = schema::create_schema();
     let compression = CompressionLayer::new();
+    let allowed_origins: Vec<HeaderValue> = config
+        .cors_allowed_origins
+        .iter()
+        .filter_map(|origin| HeaderValue::from_str(origin).ok())
+        .collect();
     let timeout = TimeoutLayer::new(Duration::from_secs(10));
     let cors = CorsLayer::new()
-        .allow_methods([Method::GET, Method::POST])
-        .allow_origin(Any)
+        .allow_methods([
+            Method::GET,
+            Method::HEAD,
+            Method::OPTIONS,
+            Method::PATCH,
+            Method::POST,
+            Method::PUT,
+        ])
+        .allow_origin(allowed_origins)
         .allow_headers(Any);
     let trace = TraceLayer::new_for_http();
     let governor = GovernorLayer {
@@ -71,7 +76,7 @@ async fn main() {
         .layer(trace)
         .layer(governor);
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], port));
+    let addr = SocketAddr::from(([0, 0, 0, 0], config.port));
     info!("Listening on {}", addr);
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(

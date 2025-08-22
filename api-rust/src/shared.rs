@@ -5,3 +5,11 @@ pub mod image {
         pub mod process_image;
     }
 }
+pub mod openai {
+    pub mod types {
+        pub mod chat_response;
+    }
+    pub mod utils {
+        pub mod chat;
+    }
+}
