@@ -1,0 +1,59 @@
+use std::sync::OnceLock;
+
+#[derive(Debug, Clone)]
+pub struct AppConfig {
+    pub port: u16,
+    pub log_level: tracing::Level,
+    pub openai_api_base_url: String,
+    pub openai_api_key: String,
+    pub openai_model: String,
+    pub cors_allowed_origins: Vec<String>,
+}
+
+impl AppConfig {
+    pub fn load() -> Result<Self, Box<dyn std::error::Error>> {
+        if cfg!(test) {
+            let _ = dotenvy::from_filename(".env.development");
+        } else {
+            match std::env::var("RUST_ENV")
+                .unwrap_or_else(|_| "development".to_string())
+                .as_str()
+            {
+                "development" => {
+                    let _ = dotenvy::from_filename(".env.development");
+                }
+                "production" => {
+                    let _ = dotenvy::from_filename(".env.production");
+                }
+                env => {
+                    eprintln!("Warning: Unknown RUST_ENV value '{env}', defaulting to no env file");
+                }
+            }
+        }
+
+        let app_config = AppConfig {
+            port: std::env::var("PORT")?.parse()?,
+            log_level: std::env::var("LOG_LEVEL")
+                .unwrap_or_else(|_| "INFO".to_string())
+                .parse::<tracing::Level>()
+                .expect(
+                    "LOG_LEVEL must be a valid tracing level (TRACE, DEBUG, INFO, WARN, ERROR)",
+                ),
+            openai_api_base_url: std::env::var("OPENAI_API_BASE_URL")?,
+            openai_api_key: std::env::var("OPENAI_API_KEY")?,
+            openai_model: std::env::var("OPENAI_MODEL")?,
+            cors_allowed_origins: std::env::var("CORS_ALLOWED_ORIGINS")
+                .unwrap_or_else(|_| "*".to_string())
+                .split(',')
+                .map(|s| s.trim().to_string())
+                .filter(|s| !s.is_empty())
+                .collect(),
+        };
+        Ok(app_config)
+    }
+
+    pub fn get() -> &'static AppConfig {
+        static CONFIG: OnceLock<AppConfig> = OnceLock::new();
+        CONFIG.get_or_init(|| AppConfig::load().expect("Failed to load application configuration"))
+    }
+}

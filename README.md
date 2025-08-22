@@ -124,13 +124,18 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **axum** - Web framework
 - **Tokio** - Asynchronous runtime
-- **tower-http** - HTTP middleware and utilities (compression, CORS, timeout, trace)
-- **tower-governor** - Rate limiting
+  - **tokio-stream** - Stream utilities and adapters
+- **tower** - Service trait and middleware library
+  - **tower-http** - HTTP middleware and utilities (compression, CORS, timeout, trace)
+  - **tower-governor** - Rate limiting
+- **Serde** - Serialization and deserialization framework
+- **futures-rs** - Foundational traits and utilities for async programming (Future, Stream, Sink)
 - **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
 - **ort** - ONNX Runtime
 - **opencv-rust** - OpenCV bindings
-- **openai-api-rs** - OpenAI API library
+- **async-openai** - OpenAI API library
 - **Tracing** - Tracing
+  - **tracing-subscriber** - Utilities for implementing and composing tracing subscribers
 - **dotenvy** - Environment variables loading
 
 ### API Server - Go
