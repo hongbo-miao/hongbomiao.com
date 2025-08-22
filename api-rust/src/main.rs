@@ -2,6 +2,7 @@
 
 mod graphql;
 mod handlers;
+mod shared;
 
 use axum::http::Method;
 use axum::routing::{get, post};
