@@ -32,12 +32,12 @@ async fn main() {
         .init();
     let schema = schema::create_schema();
     let compression = CompressionLayer::new();
+    let timeout = TimeoutLayer::new(Duration::from_secs(10));
     let allowed_origins: Vec<HeaderValue> = config
         .cors_allowed_origins
         .iter()
         .filter_map(|origin| HeaderValue::from_str(origin).ok())
         .collect();
-    let timeout = TimeoutLayer::new(Duration::from_secs(10));
     let cors = CorsLayer::new()
         .allow_methods([
             Method::GET,
@@ -50,16 +50,14 @@ async fn main() {
         .allow_origin(allowed_origins)
         .allow_headers(Any);
     let trace = TraceLayer::new_for_http();
-    let governor = GovernorLayer {
-        config: Arc::new(
-            GovernorConfigBuilder::default()
-                .per_second(20)
-                .burst_size(50)
-                .key_extractor(SmartIpKeyExtractor)
-                .finish()
-                .unwrap(),
-        ),
-    };
+    let governor = GovernorLayer::new(Arc::new(
+        GovernorConfigBuilder::default()
+            .per_second(20)
+            .burst_size(50)
+            .key_extractor(SmartIpKeyExtractor)
+            .finish()
+            .unwrap(),
+    ));
 
     let app = Router::new()
         .route("/", get(handlers::root::root))
