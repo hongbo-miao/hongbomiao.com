@@ -1,4 +1,5 @@
-use crate::graphql::utils::openai_util::{chat, ChatResponse};
+use crate::shared::openai::types::chat_response::ChatResponse;
+use crate::shared::openai::utils::chat::chat;
 use async_graphql::{Object, SimpleObject};
 
 #[derive(SimpleObject)]

@@ -1,9 +1,9 @@
 use crate::handlers::root::root;
 use axum::body::to_bytes;
 use axum::{
+    Router,
     body::Body,
     http::{Request, StatusCode},
-    Router,
 };
 use tower::ServiceExt;
 

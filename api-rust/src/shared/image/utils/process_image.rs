@@ -1,6 +1,6 @@
-use opencv::core::{Mat, MatTraitConst, Size, CV_32F};
+use opencv::core::{CV_32F, Mat, MatTraitConst, Size};
 use opencv::imgcodecs::IMREAD_COLOR;
-use opencv::imgproc::{resize, INTER_LINEAR};
+use opencv::imgproc::{INTER_LINEAR, resize};
 use opencv::prelude::MatTraitConstManual;
 
 const IMAGE_SIZE: u32 = 224;
