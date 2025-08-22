@@ -766,12 +766,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Install OpenCV
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes libopencv-dev
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1.13.0
+      - name: Set up
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes clang libclang-dev libopencv-dev
       - name: Install dependencies
         working-directory: api-rust
         run: |
