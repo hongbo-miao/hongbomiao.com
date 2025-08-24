@@ -33,7 +33,7 @@ require (
 	go.opencensus.io v0.24.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.62.0
 	go.uber.org/atomic v1.11.0
-	google.golang.org/grpc v1.74.2
+	google.golang.org/grpc v1.75.0
 	google.golang.org/protobuf v1.36.8
 )
 
@@ -121,8 +121,8 @@ require (
 	golang.org/x/sys v0.34.0 // indirect
 	golang.org/x/text v0.27.0 // indirect
 	google.golang.org/api v0.103.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250603155806-513f23925822 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250603155806-513f23925822 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	howett.net/plist v1.0.0 // indirect
 	sigs.k8s.io/yaml v1.6.0 // indirect
