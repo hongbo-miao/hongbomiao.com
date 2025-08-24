@@ -14,6 +14,7 @@ impl AppConfig {
     pub fn load() -> Result<Self, Box<dyn std::error::Error>> {
         if cfg!(test) {
             let _ = dotenvy::from_filename(".env.development");
+            let _ = dotenvy::from_filename_override(".env.development.local");
         } else {
             match std::env::var("RUST_ENV")
                 .unwrap_or_else(|_| "development".to_string())
@@ -21,9 +22,11 @@ impl AppConfig {
             {
                 "development" => {
                     let _ = dotenvy::from_filename(".env.development");
+                    let _ = dotenvy::from_filename_override(".env.development.local");
                 }
                 "production" => {
                     let _ = dotenvy::from_filename(".env.production");
+                    let _ = dotenvy::from_filename_override(".env.production.local");
                 }
                 env => {
                     eprintln!("Warning: Unknown RUST_ENV value '{env}', defaulting to no env file");
