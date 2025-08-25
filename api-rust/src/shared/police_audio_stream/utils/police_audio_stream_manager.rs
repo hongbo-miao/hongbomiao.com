@@ -17,6 +17,8 @@ pub struct PoliceAudioStreamState {
     pub active_clients: Arc<RwLock<HashMap<String, HashSet<u64>>>>,
     // audio broadcaster per stream (binary PCM chunks)
     pub audio_senders: Arc<RwLock<HashMap<String, broadcast::Sender<Vec<u8>>>>>,
+    // server-sent event broadcaster per stream (transcription events)
+    pub server_sent_event_senders: Arc<RwLock<HashMap<String, broadcast::Sender<String>>>>,
     // decoder task handles per stream
     pub tasks: Arc<RwLock<HashMap<String, JoinHandle<()>>>>,
     // id counter for WebSocket connection bookkeeping
@@ -28,6 +30,7 @@ impl PoliceAudioStreamState {
         Self {
             active_clients: Arc::new(RwLock::new(HashMap::new())),
             audio_senders: Arc::new(RwLock::new(HashMap::new())),
+            server_sent_event_senders: Arc::new(RwLock::new(HashMap::new())),
             tasks: Arc::new(RwLock::new(HashMap::new())),
             next_client_id: Arc::new(RwLock::new(1)),
         }
@@ -46,11 +49,19 @@ impl PoliceAudioStreamManager {
 
         let police_stream_id_str = police_stream_id.to_string();
         let (audio_sender, _audio_receiver) = broadcast::channel::<Vec<u8>>(64);
+        let (server_sent_event_sender, _server_sent_event_receiver) =
+            broadcast::channel::<String>(64);
+
         state
             .audio_senders
             .write()
             .await
             .insert(police_stream_id_str.clone(), audio_sender.clone());
+
+        state.server_sent_event_senders.write().await.insert(
+            police_stream_id_str.clone(),
+            server_sent_event_sender.clone(),
+        );
 
         let stream_url = POLICE_STREAMS
             .get(police_stream_id)
@@ -61,6 +72,7 @@ impl PoliceAudioStreamManager {
             police_stream_id_str.clone(),
             stream_url.clone(),
             audio_sender.clone(),
+            server_sent_event_sender.clone(),
         ));
         tasks.insert(police_stream_id_str, handle);
     }
@@ -103,6 +115,11 @@ impl PoliceAudioStreamManager {
             handle.abort();
         }
         state.audio_senders.write().await.remove(police_stream_id);
+        state
+            .server_sent_event_senders
+            .write()
+            .await
+            .remove(police_stream_id);
         state.active_clients.write().await.remove(police_stream_id);
     }
 }

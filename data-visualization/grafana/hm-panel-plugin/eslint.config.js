@@ -23,6 +23,7 @@ module.exports = [
       '**/.vagrant',
       '**/.venv',
       '**/.vscode',
+      '**/.windsurfrules',
       '**/*.aliases',
       '**/*.asv',
       '**/*.cache',
