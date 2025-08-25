@@ -32,7 +32,7 @@ async fn main() {
         .init();
     let schema = schema::create_schema();
     let compression = CompressionLayer::new();
-    let timeout = TimeoutLayer::new(Duration::from_secs(10));
+    let timeout = TimeoutLayer::new(Duration::from_secs(30));
     let allowed_origins: Vec<HeaderValue> = config
         .cors_allowed_origins
         .iter()
@@ -59,21 +59,30 @@ async fn main() {
             .unwrap(),
     ));
 
-    let app = Router::new()
-        .route("/", get(handlers::root::root))
+    // Routes that need timeout protection
+    let timeout_routes = Router::new()
+        .route("/", get(handlers::get_root::get_root))
         .route("/graphiql", get(schema::graphiql))
         .route("/graphql", post(schema::graphql_handler))
+        .layer(timeout);
+
+    // Long-lived connection routes (SSE, WebSocket) without timeout
+    let streaming_routes = Router::new()
+        .route("/sse/events", get(handlers::get_sse_events::get_sse_events))
         .route(
             "/ws/police-audio-stream",
-            get(handlers::police_audio_stream::get_police_audio_stream),
+            get(handlers::get_police_audio_stream::get_police_audio_stream),
         )
         .route_service(
             "/ws",
             async_graphql_axum::GraphQLSubscription::new(schema.clone()),
-        )
+        );
+
+    let app = Router::new()
+        .merge(timeout_routes)
+        .merge(streaming_routes)
         .with_state(schema)
         .layer(compression)
-        .layer(timeout)
         .layer(cors)
         .layer(trace)
         .layer(governor);

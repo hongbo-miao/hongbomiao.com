@@ -1,4 +1,4 @@
-use crate::handlers::root::root;
+use crate::handlers::get_root::get_root;
 use axum::body::to_bytes;
 use axum::{
     Router,
@@ -9,7 +9,7 @@ use tower::ServiceExt;
 
 #[tokio::test]
 async fn test_root_handler() {
-    let app = Router::new().route("/", axum::routing::get(root));
+    let app = Router::new().route("/", axum::routing::get(get_root));
     let res = app
         .oneshot(
             Request::builder()

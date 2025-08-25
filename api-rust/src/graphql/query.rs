@@ -1,7 +1,7 @@
-use crate::handlers::police_audio_stream::POLICE_STREAM_STATE;
 use crate::shared::openai::types::chat_response::ChatResponse;
 use crate::shared::openai::utils::chat::chat;
 use crate::shared::police_audio_stream::constants::police_streams::POLICE_STREAMS;
+use crate::shared::police_audio_stream::utils::police_stream_state::POLICE_STREAM_STATE;
 use async_graphql::{Object, SimpleObject};
 
 #[derive(SimpleObject)]
