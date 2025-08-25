@@ -1,21 +1,14 @@
-use std::sync::Arc;
-
 use axum::{
     extract::{Query, ws::WebSocketUpgrade},
     http::StatusCode,
     response::IntoResponse,
 };
-use once_cell::sync::Lazy;
 use serde::Deserialize;
 
 use crate::shared::police_audio_stream::constants::police_streams::POLICE_STREAMS;
 use crate::shared::police_audio_stream::utils::handle_police_audio_websocket::handle_police_audio_websocket;
-use crate::shared::police_audio_stream::utils::police_audio_stream_manager::{
-    PoliceAudioStreamManager, PoliceAudioStreamState,
-};
-
-pub static POLICE_STREAM_STATE: Lazy<Arc<PoliceAudioStreamState>> =
-    Lazy::new(|| Arc::new(PoliceAudioStreamState::new()));
+use crate::shared::police_audio_stream::utils::police_audio_stream_manager::PoliceAudioStreamManager;
+use crate::shared::police_audio_stream::utils::police_stream_state::POLICE_STREAM_STATE;
 
 #[derive(Deserialize)]
 pub struct WebSocketParams {
