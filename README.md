@@ -130,10 +130,13 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **tower-governor** - Rate limiting
 - **Serde** - Serialization and deserialization framework
 - **futures-rs** - Foundational traits and utilities for async programming (Future, Stream, Sink)
+- **OnceCell** - Lazy initialization of static values and global state
 - **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
 - **ort** - ONNX Runtime
 - **opencv-rust** - OpenCV bindings
 - **async-openai** - OpenAI API library
+- **Hound** - WAV file encoding and decoding
+- **webrtc-vad** - WebRTC Voice Activity Detector (VAD)
 - **Tracing** - Tracing
   - **tracing-subscriber** - Utilities for implementing and composing tracing subscribers
 - **dotenvy** - Environment variables loading
