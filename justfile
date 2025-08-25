@@ -220,6 +220,9 @@ rustup-update:
 cargo-new:
     cargo new xxx
 
+cargo-clean:
+    cargo clean
+
 cargo-update-lock-file:
     cargo generate-lockfile
 
@@ -240,6 +243,18 @@ cargo-add-dev:
 
 cargo-add-build:
     cargo add xxx --build
+
+cargo-build-development:
+    cargo build
+
+cargo-build-production:
+    cargo build --release
+
+cargo-run-development:
+    cargo run
+
+cargo-run-production:
+    cargo run --release
 
 # Lint
 lint-ansible:
