@@ -1,29 +1,17 @@
-rust-install-toolchain:
+install-toolchain:
     rustup install
 
-cargo-clean:
-    cargo clean
-
-cargo-update:
+update:
     cargo update
 
-cargo-check:
+check:
     cargo check
 
-cargo-test:
+test:
     cargo test --all-features
 
-cargo-build-development:
-    cargo build
-
-cargo-build-production:
-    cargo build --release
-
-cargo-run-development:
+dev:
     cargo run
-
-cargo-run-production:
-    cargo run --release
 
 lint-rust-rustfmt:
     cargo fmt --all -- --check
