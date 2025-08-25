@@ -31,6 +31,7 @@ export default [
       '**/.vagrant',
       '**/.venv',
       '**/.vscode',
+      '**/.windsurfrules',
       '**/*.aliases',
       '**/*.asv',
       '**/*.cache',
