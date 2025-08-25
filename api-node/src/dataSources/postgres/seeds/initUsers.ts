@@ -15,8 +15,8 @@ const initUsers = async (): Promise<void> => {
         {
           email: faker.internet.email(),
           password: faker.internet.password(),
-          firstName: faker.name.firstName(),
-          lastName: faker.name.lastName(),
+          firstName: faker.person.firstName(),
+          lastName: faker.person.lastName(),
           bio: faker.lorem.sentence(),
         },
       ];
