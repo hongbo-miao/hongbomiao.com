@@ -63,6 +63,10 @@ async fn main() {
         .route("/", get(handlers::root::root))
         .route("/graphiql", get(schema::graphiql))
         .route("/graphql", post(schema::graphql_handler))
+        .route(
+            "/ws/police-audio-stream",
+            get(handlers::police_audio_stream::get_police_audio_stream),
+        )
         .route_service(
             "/ws",
             async_graphql_axum::GraphQLSubscription::new(schema.clone()),
