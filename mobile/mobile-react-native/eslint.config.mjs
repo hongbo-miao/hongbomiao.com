@@ -20,8 +20,7 @@ export default [
       '**/__pycache__',
       '**/.deepeval',
       '**/.DS_Store',
-      '**/.env.development.local',
-      '**/.env.production.local',
+      '**/.env.*.local',
       '**/.gitkeep',
       '**/.idea',
       '**/.pytest_cache',
@@ -132,6 +131,7 @@ export default [
         },
       ],
       'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
       'spaced-comment': [
         'error',
         'always',
