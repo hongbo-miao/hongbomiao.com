@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-from config import Config
+from config import config
 from llama_index.core import Settings, SimpleDirectoryReader, VectorStoreIndex
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.litellm import LiteLLM
@@ -18,8 +18,6 @@ def chat_with_pdf(pdf_path: Path, question: str) -> str:
 
 
 def main() -> None:
-    config = Config()
-
     Settings.embed_model = HuggingFaceEmbedding(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
     )

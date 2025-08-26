@@ -1,9 +1,9 @@
 import os
 
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-def get_env_file() -> list[str]:
+def get_env_files() -> list[str]:
     env = os.getenv("ENV")
     if env == "production":
         return [".env.production", ".env.production.local"]
@@ -15,9 +15,7 @@ class Config(BaseSettings):
     SENTRY_DSN: str
     KAFKA_BOOTSTRAP_SERVERS: str
 
-    model_config = {
-        "env_file": get_env_file(),
-    }
+    model_config = SettingsConfigDict(env_file=get_env_files())
 
 
-config = Config()
+config = Config.model_validate({})
