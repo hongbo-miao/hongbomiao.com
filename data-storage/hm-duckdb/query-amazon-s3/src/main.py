@@ -3,7 +3,7 @@ from pathlib import Path
 
 import duckdb
 import xxhash
-from config import Config
+from config import config
 from utils.clean_table_name import clean_table_name
 from utils.get_file_true_stem import get_file_true_stem
 
@@ -17,7 +17,6 @@ def get_cache_table_name(parquet_url: str) -> str:
 
 
 def main(parquet_url: str) -> None:
-    config = Config()
     duckdb_cache_db_path = Path("data/cache.duckdb")
     logger.info(f"Using DuckDB cache file: {duckdb_cache_db_path}")
 
