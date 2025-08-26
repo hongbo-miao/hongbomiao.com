@@ -14,7 +14,8 @@ pub static POLICE_STREAMS: Lazy<HashMap<&'static str, PoliceStreamInfo>> = Lazy:
         "chicago_police_department_zone_08",
         PoliceStreamInfo {
             name: "Chicago Police Department Zone 08",
-            stream_url: "https://listen.broadcastify.com/vgb2pt9ms5jr8qc.mp3",
+            // https://www.broadcastify.com/webPlayer/37361
+            stream_url: "https://listen.broadcastify.com/hgk5bns9j24wy8v.mp3",
             location: "Chicago, IL",
         },
     );
