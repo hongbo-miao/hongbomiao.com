@@ -137,6 +137,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **async-openai** - OpenAI API library
 - **Hound** - WAV file encoding and decoding
 - **webrtc-vad** - WebRTC Voice Activity Detector (VAD)
+- **FFmpeg Sidecar** - Iterator-based FFmpeg wrapper
 - **Tracing** - Tracing
   - **tracing-subscriber** - Utilities for implementing and composing tracing subscribers
 - **dotenvy** - Environment variables loading

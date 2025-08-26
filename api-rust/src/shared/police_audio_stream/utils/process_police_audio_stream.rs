@@ -1,8 +1,9 @@
-use std::{collections::VecDeque, process::Stdio, time::Duration};
+use ffmpeg_sidecar::command::FfmpegCommand;
+use std::{collections::VecDeque, time::Duration};
 use tokio::io::AsyncReadExt;
-use tokio::process::Command;
+use tokio::process::ChildStdout;
 use tokio::sync::broadcast;
-use tracing::{error, info, warn};
+use tracing::{error, info};
 
 use crate::config::AppConfig;
 use crate::shared::audio::utils::webrtc_vad_processor::{SpeechState, WebRtcVadProcessor};
@@ -22,36 +23,35 @@ pub async fn process_police_audio_stream(
     );
 
     loop {
-        let mut ffmpeg_child = match Command::new("ffmpeg")
+        let mut ffmpeg_child = match FfmpegCommand::new()
+            .input(&stream_url)
+            .arg("-nostdin")
+            .hide_banner()
+            .args(["-loglevel", "quiet"])
             .args([
-                "-nostdin",
-                "-hide_banner",
-                "-loglevel",
-                "quiet",
-                "-i",
-                &stream_url,
                 "-filter:a",
                 "pan=mono|c0=0.707107*FL+0.707107*FR,aresample=resampler=soxr:sample_rate=16000",
-                "-f",
-                "s16le",
-                "pipe:1",
             ])
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
+            .format("s16le")
+            .pipe_stdout()
             .spawn()
         {
             Ok(child) => child,
             Err(error) => {
-                error!("Failed to spawn ffmpeg for {}: {}", police_stream_id, error);
+                error!("Failed to spawn ffmpeg for {police_stream_id}: {error}");
                 tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
                 continue;
             }
         };
 
-        let mut stdout = ffmpeg_child
+        let stdout = ffmpeg_child
+            .as_inner_mut()
             .stdout
             .take()
             .expect("ffmpeg child process did not have a stdout pipe");
+
+        let mut stdout =
+            ChildStdout::from_std(stdout).expect("Failed to convert to tokio ChildStdout");
 
         // Reuse a single reqwest client for all transcription calls
         let reqwest_client = match reqwest::Client::builder()
@@ -181,11 +181,8 @@ pub async fn process_police_audio_stream(
         }
 
         // Clean up the process
-        if let Err(error) = ffmpeg_child.kill().await {
-            warn!(
-                "Failed to kill ffmpeg process for {}: {}",
-                police_stream_id, error
-            );
+        if let Err(error) = ffmpeg_child.kill() {
+            error!("Failed to kill ffmpeg process for {police_stream_id}: {error}");
         }
 
         // Wait before retrying
