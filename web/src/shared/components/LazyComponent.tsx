@@ -1,4 +1,4 @@
-import React, { ReactNode, Suspense } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import HmLoading from './Loading';
 
 type Props = {

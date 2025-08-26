@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import useRandomInterval from '../hooks/useRandomInterval.hook';
 import generateSparkle from '../utils/generateSparkle';
 import HmSparkle from './Sparkle';

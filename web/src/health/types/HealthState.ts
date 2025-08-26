@@ -1,5 +1,3 @@
-type HealthState = {
+export type HealthState = {
   ping?: string;
 };
-
-export default HealthState;

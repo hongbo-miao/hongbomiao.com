@@ -1,4 +1,4 @@
-import { EnumChangefreq, SitemapItemLoose, SitemapStreamOptions } from 'sitemap';
+import { EnumChangefreq, type SitemapItemLoose, type SitemapStreamOptions } from 'sitemap';
 import generateSitemap from '../../../scripts/generateSitemap';
 
 describe('generateSitemap', () => {

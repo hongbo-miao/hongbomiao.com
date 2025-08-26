@@ -1,4 +1,4 @@
-import { SitemapItemLoose, SitemapStream, SitemapStreamOptions, streamToPromise } from 'sitemap';
+import { SitemapStream, streamToPromise, type SitemapItemLoose, type SitemapStreamOptions } from 'sitemap';
 
 const generateSitemap = async (
   options: SitemapStreamOptions,
