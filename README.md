@@ -194,7 +194,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **expressjs/cors** - Cross-Origin Resource Sharing (CORS)
 - **jsonwebtoken**, **express-jwt** - JSON Web Token (JWT)
 - **bcrypt** - Password hashing
-- **axios** - HTTP client
 - **Helmet** - HTTP header `Content-Security-Policy`, `Referrer-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-DNS-Prefetch-Control`, `X-Download-Options`, `X-Frame-Options`, `X-Permitted-Cross-Domain-Policies`, `X-XSS-Protection`
 - **Report To** - HTTP header `Report-To`
 - **Network Error Logging** - HTTP header `NEL`
