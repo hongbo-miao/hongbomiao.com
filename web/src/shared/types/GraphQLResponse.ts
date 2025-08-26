@@ -1,5 +1,3 @@
-type GraphQLResponse<T> = {
+export type GraphQLResponse<T> = {
   data: T;
 };
-
-export default GraphQLResponse;

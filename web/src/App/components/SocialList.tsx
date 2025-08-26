@@ -1,4 +1,4 @@
-import type Website from '../types/Website';
+import type { Website } from '../types/Website';
 import './SocialList.css';
 
 type Props = {

@@ -2,7 +2,7 @@ import githubLogo from '../../App/images/github.svg';
 import linkedinLogo from '../../App/images/linkedin.svg';
 import pinterestLogo from '../../App/images/pinterest.svg';
 import twitterLogo from '../../App/images/twitter.svg';
-import Website from '../../App/types/Website';
+import type { Website } from '../../App/types/Website';
 
 const WEBSITES: ReadonlyArray<Website> = [
   {
