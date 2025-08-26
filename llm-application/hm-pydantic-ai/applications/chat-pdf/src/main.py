@@ -5,7 +5,7 @@ from typing import Any
 
 import faiss
 import numpy as np
-from config import Config
+from config import config
 from docling.datamodel.base_models import InputFormat
 from docling.datamodel.pipeline_options import (
     EasyOcrOptions,
@@ -37,7 +37,6 @@ class ChatResponse(BaseModel):
 
 
 def create_openai_model() -> OpenAIModel:
-    config = Config()
     return OpenAIModel(
         model_name="claude-sonnet-4",
         provider=OpenAIProvider(

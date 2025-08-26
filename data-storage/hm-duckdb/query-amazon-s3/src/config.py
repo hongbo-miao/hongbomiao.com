@@ -1,16 +1,19 @@
 import os
 
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-def get_env_file() -> str:
+def get_env_files() -> list[str]:
     env = os.getenv("ENV")
-    return ".env.production.local" if env == "production" else ".env.development.local"
+    if env == "production":
+        return [".env.production", ".env.production.local"]
+    return [".env.development", ".env.development.local"]
 
 
 class Config(BaseSettings):
     HTTP_AUTH_TOKEN: str
 
-    model_config = {
-        "env_file": get_env_file(),
-    }
+    model_config = SettingsConfigDict(env_file=get_env_files())
+
+
+config = Config.model_validate({})
