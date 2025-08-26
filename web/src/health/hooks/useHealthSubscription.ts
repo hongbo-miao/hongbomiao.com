@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { Observable } from 'rxjs';
-import GraphQLResponse from '../../shared/types/GraphQLResponse';
+import type { GraphQLResponse } from '../../shared/types/GraphQLResponse';
 import graphQLSubscriptionClient from '../../shared/utils/graphQLSubscriptionClient';
 import pingSubscription from '../queries/pingSubscription';
-import GraphQLPing from '../types/GraphQLPing';
+import type { GraphQLPing } from '../types/GraphQLPing';
 
 const subscribePing$ = (query: string): Observable<GraphQLResponse<GraphQLPing>> => {
   return new Observable((observer) => {

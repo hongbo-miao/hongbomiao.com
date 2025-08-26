@@ -1,5 +1,5 @@
 import { promises as fsp } from 'fs';
-import { EnumChangefreq, SitemapItemLoose, SitemapStreamOptions } from 'sitemap';
+import { EnumChangefreq, type SitemapItemLoose, type SitemapStreamOptions } from 'sitemap';
 import Paths from '../src/shared/utils/paths.js';
 import generateSitemap from './generateSitemap.js';
 
