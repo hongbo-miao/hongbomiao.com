@@ -14,7 +14,7 @@ const profileMe = async (): Promise<autocannon.Result> => {
   return autocannon({
     connections: config.autocannon.connections,
     amount: config.autocannon.amount,
-    url: `${config.serverURL}/graphql`,
+    url: `${config.serverUrl}/graphql`,
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({

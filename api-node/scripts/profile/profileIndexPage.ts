@@ -5,7 +5,7 @@ const profileIndexPage = async (): Promise<autocannon.Result> => {
   return autocannon({
     connections: config.autocannon.connections,
     amount: config.autocannon.amount,
-    url: config.serverURL,
+    url: config.serverUrl,
     method: 'GET',
   });
 };

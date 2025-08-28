@@ -1,12 +1,12 @@
 import * as Sentry from '@sentry/react';
 
-const { MODE, VITE_SERVER_WS_PROTOCOL } = import.meta.env;
+const { MODE, VITE_SERVER_WEB_SOCKET_PROTOCOL } = import.meta.env;
 
 if (MODE !== 'development' && MODE !== 'production' && MODE !== 'test') {
   throw new Error('Failed to read MODE.');
 }
-if (VITE_SERVER_WS_PROTOCOL == null || VITE_SERVER_WS_PROTOCOL === '') {
-  throw new Error('Failed to read VITE_SERVER_WS_PROTOCOL.');
+if (VITE_SERVER_WEB_SOCKET_PROTOCOL == null || VITE_SERVER_WEB_SOCKET_PROTOCOL === '') {
+  throw new Error('Failed to read VITE_SERVER_WEB_SOCKET_PROTOCOL.');
 }
 
 type Config = {
@@ -28,7 +28,7 @@ const config: Config = {
   nodeEnv: MODE,
   githubUrl: 'https://github.com/hongbo-miao/hongbomiao.com',
   serverApiBaseUrl: MODE === 'development' ? 'http://localhost:58136' : '',
-  serverWebSocketBaseUrl: `${VITE_SERVER_WS_PROTOCOL}://${window.location.host}`,
+  serverWebSocketBaseUrl: `${VITE_SERVER_WEB_SOCKET_PROTOCOL}://${window.location.host}`,
   googleTagManagerOptions: {
     containerId: 'GTM-MKMQ55P',
   },

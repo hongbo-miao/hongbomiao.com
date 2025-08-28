@@ -5,7 +5,7 @@ import logger from '../utils/logger.js';
 
 const pinoMiddleware = (): RequestHandler => {
   return pinoHTTP({
-    autoLogging: !config.shouldHideHTTPLog,
+    autoLogging: !config.shouldHideHttpLog,
     logger,
     serializers: {
       req: (req) => {

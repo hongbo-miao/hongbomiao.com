@@ -3,7 +3,7 @@ import GraphQLPlanet from '../../../graphQL/types/GraphQLPlanet.js';
 import formatPlanet from './formatPlanet.js';
 
 const fetchPlanetById = async (id: string): Promise<GraphQLPlanet | null> => {
-  const response = await fetch(`${config.swapiURL}/api/planets/${id}/`);
+  const response = await fetch(`${config.swapiUrl}/api/planets/${id}/`);
   if (!response.ok) {
     throw new Error(`Failed to fetch planet ${id}: ${response.status} ${response.statusText}`);
   }
