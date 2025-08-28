@@ -82,7 +82,7 @@ export default [
       'caddy/public',
       'cloud-cost/komiser/komiser.db',
       'cloud-infrastructure/hm-pulumi/passphrase.txt',
-      'cloud-infrastructure/terraform/environments/production/aws/data/files/amazon-msk/*/plugins/*.zip',
+      'cloud-infrastructure/opentofu/environments/production/aws/data/files/amazon-msk/*/plugins/*.zip',
       'cloud-platform/aws/aws-secrets-manager/secrets/*-credentials.json',
       'cloud-security/hm-prowler/output',
       'compiler-infrastructure/llvm-ir/output',
