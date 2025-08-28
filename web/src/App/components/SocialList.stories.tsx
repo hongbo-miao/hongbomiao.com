@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import WEBSITES from '../../Home/fixtures/WEBSITES';
-import HmSocialList from './SocialList';
+import HmSocialList from '@/App/components/SocialList';
+import WEBSITES from '@/Home/fixtures/WEBSITES';
 
 type Story = StoryObj<typeof HmSocialList>;
 

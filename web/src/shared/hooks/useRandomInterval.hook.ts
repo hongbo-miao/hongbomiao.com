@@ -1,5 +1,5 @@
 import React from 'react';
-import random from '../utils/random';
+import random from '@/shared/utils/random';
 
 type Callback = () => void;
 

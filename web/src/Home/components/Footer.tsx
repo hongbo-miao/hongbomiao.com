@@ -1,7 +1,7 @@
-import HmCopyright from '../../App/components/Copyright';
-import HmSocialList from '../../App/components/SocialList';
-import WEBSITES from '../fixtures/WEBSITES';
-import './Footer.css';
+import HmCopyright from '@/App/components/Copyright';
+import HmSocialList from '@/App/components/SocialList';
+import WEBSITES from '@/Home/fixtures/WEBSITES';
+import '@/Home/components/Footer.css';
 
 function Footer() {
   const year = new Date().getFullYear();
