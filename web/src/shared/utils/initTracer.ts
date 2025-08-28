@@ -21,11 +21,11 @@ const initTracer = (): void => {
   }
 
   if (isProduction()) {
-    const { token, traceURL } = config.lightstep;
+    const { token, traceUrl } = config.lightstep;
     spanProcessors.push(
       new BatchSpanProcessor(
         new OTLPTraceExporter({
-          url: traceURL,
+          url: traceUrl,
           headers: {
             'Lightstep-Access-Token': token,
           },

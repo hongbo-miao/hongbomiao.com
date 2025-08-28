@@ -5,7 +5,7 @@ import type { GraphQLPing } from '@/health/types/GraphQLPing';
 import type { GraphQLResponse } from '@/shared/types/GraphQLResponse';
 
 const fetchPing = async (query: string): Promise<GraphQLResponse<GraphQLPing>> => {
-  const response = await fetch(config.graphqlServerGraphQLURL, {
+  const response = await fetch(`${config.serverApiBaseUrl}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
