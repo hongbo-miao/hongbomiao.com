@@ -11,30 +11,30 @@ if (VITE_SERVER_WS_PROTOCOL == null || VITE_SERVER_WS_PROTOCOL === '') {
 
 type Config = {
   nodeEnv: 'development' | 'production' | 'test';
-  githubURL: string;
-  graphqlServerGraphQLURL: string;
-  webSocketGraphQLURL: string;
+  githubUrl: string;
+  serverApiBaseUrl: string;
+  serverWebSocketBaseUrl: string;
   googleTagManagerOptions: {
     containerId: string;
   };
   lightstep: {
     token: string;
-    traceURL: string;
+    traceUrl: string;
   };
   sentryOptions: Sentry.BrowserOptions;
 };
 
 const config: Config = {
   nodeEnv: MODE,
-  githubURL: 'https://github.com/hongbo-miao/hongbomiao.com',
-  graphqlServerGraphQLURL: MODE === 'development' ? 'http://localhost:58136/graphql' : '/graphql',
-  webSocketGraphQLURL: `${VITE_SERVER_WS_PROTOCOL}://${window.location.host}/graphql`,
+  githubUrl: 'https://github.com/hongbo-miao/hongbomiao.com',
+  serverApiBaseUrl: MODE === 'development' ? 'http://localhost:58136' : '',
+  serverWebSocketBaseUrl: `${VITE_SERVER_WS_PROTOCOL}://${window.location.host}`,
   googleTagManagerOptions: {
     containerId: 'GTM-MKMQ55P',
   },
   lightstep: {
     token: 'W2sFPG0uCgnCAjr/d0NfngMArOSUEb1SN/5UlOLnZxQ3/4hWndgg/J3jZX74b/c0AF4+o+h0lRGY2vHHFWJBuMh4CKMyILo3pMznB4xd',
-    traceURL: 'https://ingest.lightstep.com/api/v2/otel/trace',
+    traceUrl: 'https://ingest.lightstep.com/api/v2/otel/trace',
   },
   sentryOptions: {
     dsn: 'https://a0ff55d9ee00403ca144425a33c318eb@o379185.ingest.sentry.io/4504195581018112',
