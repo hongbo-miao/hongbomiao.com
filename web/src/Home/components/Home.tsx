@@ -1,17 +1,17 @@
 import React from 'react';
-import config from '../../config';
-import useHealthSubscription from '../../health/hooks/useHealthSubscription';
-import HmAudioPlayer from '../../shared/components/AudioPlayer';
-import HmImage from '../../shared/components/Image';
-import HmSparkles from '../../shared/components/Sparkles';
-import analytics from '../../shared/utils/analytics';
-import springWaltzMP3 from '../audio/spring-waltz.mp3';
-import hatAVIF from '../images/hat.avif';
-import hatPNG from '../images/hat.png';
-import magicAVIF from '../images/magic.avif';
-import magicPNG from '../images/magic.png';
-import HmFooter from './Footer';
-import './Home.css';
+import springWaltzMP3 from '@/Home/audio/spring-waltz.mp3';
+import HmFooter from '@/Home/components/Footer';
+import hatAVIF from '@/Home/images/hat.avif';
+import hatPNG from '@/Home/images/hat.png';
+import magicAVIF from '@/Home/images/magic.avif';
+import magicPNG from '@/Home/images/magic.png';
+import config from '@/config';
+import useHealthSubscription from '@/health/hooks/useHealthSubscription';
+import HmAudioPlayer from '@/shared/components/AudioPlayer';
+import HmImage from '@/shared/components/Image';
+import HmSparkles from '@/shared/components/Sparkles';
+import analytics from '@/shared/utils/analytics';
+import '@/Home/components/Home.css';
 
 function Home() {
   useHealthSubscription();

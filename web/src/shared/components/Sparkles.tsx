@@ -1,8 +1,8 @@
 import React, { type ReactNode } from 'react';
-import useRandomInterval from '../hooks/useRandomInterval.hook';
-import generateSparkle from '../utils/generateSparkle';
-import HmSparkle from './Sparkle';
-import './Sparkles.css';
+import HmSparkle from '@/shared/components/Sparkle';
+import useRandomInterval from '@/shared/hooks/useRandomInterval.hook';
+import generateSparkle from '@/shared/utils/generateSparkle';
+import '@/shared/components/Sparkles.css';
 
 type Props = {
   children: ReactNode;

@@ -1,5 +1,5 @@
 import { Suspense, type ReactNode } from 'react';
-import HmLoading from './Loading';
+import HmLoading from '@/shared/components/Loading';
 
 type Props = {
   children: ReactNode;

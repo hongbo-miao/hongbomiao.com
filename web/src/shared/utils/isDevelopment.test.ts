@@ -1,5 +1,5 @@
-import NodeEnv from './NodeEnv';
-import isDevelopment from './isDevelopment';
+import NodeEnv from '@/shared/utils/NodeEnv';
+import isDevelopment from '@/shared/utils/isDevelopment';
 
 describe('isDevelopment', () => {
   test('return true for development', () => {

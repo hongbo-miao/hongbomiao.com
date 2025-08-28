@@ -1,5 +1,5 @@
-import NodeEnv from './NodeEnv';
-import isProduction from './isProduction';
+import NodeEnv from '@/shared/utils/NodeEnv';
+import isProduction from '@/shared/utils/isProduction';
 
 describe('isProduction', () => {
   test('return true for production', () => {

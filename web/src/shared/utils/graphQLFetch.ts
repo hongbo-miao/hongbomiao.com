@@ -1,4 +1,4 @@
-import config from '../../config';
+import config from '@/config';
 
 const graphQLFetch = async (query: string): Promise<Response> => {
   const response = await fetch(config.graphqlServerGraphQLURL, {

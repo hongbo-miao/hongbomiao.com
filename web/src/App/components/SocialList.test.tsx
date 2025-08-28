@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
-import WEBSITES from '../../Home/fixtures/WEBSITES';
-import HmSocialList from './SocialList';
+import HmSocialList from '@/App/components/SocialList';
+import WEBSITES from '@/Home/fixtures/WEBSITES';
 
 describe('SocialList', () => {
   const component = <HmSocialList websites={WEBSITES} />;
