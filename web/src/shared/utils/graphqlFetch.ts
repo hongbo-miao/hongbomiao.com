@@ -1,7 +1,7 @@
 import config from '@/config';
 
-const graphQLFetch = async (query: string): Promise<Response> => {
-  const response = await fetch(config.graphqlServerGraphQLURL, {
+const graphqlFetch = async (query: string): Promise<Response> => {
+  const response = await fetch(`${config.serverApiBaseUrl}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -18,4 +18,4 @@ const graphQLFetch = async (query: string): Promise<Response> => {
   return response;
 };
 
-export default graphQLFetch;
+export default graphqlFetch;

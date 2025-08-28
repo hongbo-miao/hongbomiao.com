@@ -1,10 +1,10 @@
 import React from 'react';
-import springWaltzMP3 from '@/Home/audio/spring-waltz.mp3';
+import springWaltzMp3 from '@/Home/audio/spring-waltz.mp3';
 import HmFooter from '@/Home/components/Footer';
-import hatAVIF from '@/Home/images/hat.avif';
-import hatPNG from '@/Home/images/hat.png';
-import magicAVIF from '@/Home/images/magic.avif';
-import magicPNG from '@/Home/images/magic.png';
+import hatAvif from '@/Home/images/hat.avif';
+import hatPng from '@/Home/images/hat.png';
+import magicAvif from '@/Home/images/magic.avif';
+import magicPng from '@/Home/images/magic.png';
 import config from '@/config';
 import useHealthSubscription from '@/health/hooks/useHealthSubscription';
 import HmAudioPlayer from '@/shared/components/AudioPlayer';
@@ -31,21 +31,21 @@ function Home() {
           <div className="hm-name-container">
             <h1 className="hm-name">{name}</h1>
             <div className="hm-audio-player-wrapper">
-              <HmAudioPlayer audioSrc={springWaltzMP3} />
+              <HmAudioPlayer audioSrc={springWaltzMp3} />
             </div>
           </div>
           <HmSparkles>
-            <a className="hm-bio-container" href={config.githubURL} target="_blank" rel="noopener noreferrer">
+            <a className="hm-bio-container" href={config.githubUrl} target="_blank" rel="noopener noreferrer">
               <HmImage
-                avifSrc={hatAVIF}
-                fallbackSrc={hatPNG}
+                avifSrc={hatAvif}
+                fallbackSrc={hatPng}
                 style={{ height: '26px', width: '26px' }}
                 alt="Magical Hat"
               />
               <div className="hm-bio">{bio}</div>
               <HmImage
-                avifSrc={magicAVIF}
-                fallbackSrc={magicPNG}
+                avifSrc={magicAvif}
+                fallbackSrc={magicPng}
                 style={{ height: '26px', width: '26px' }}
                 alt="Magic"
               />
