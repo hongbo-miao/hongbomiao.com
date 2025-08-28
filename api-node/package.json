@@ -12,7 +12,7 @@
     "build-scripts": "tsc && swc scripts --out-dir build/scripts --extensions .ts",
     "build-web": "bash bin/build_web.sh",
     "debug": "npm run build && NODE_ENV=development node --inspect-brk build/src/index.js",
-    "dev": "nodemon --ext ts --exec 'npm run build && NODE_ENV=development node build/src/index.js -- --hideHTTPLog --prettifyLog'",
+    "dev": "nodemon --ext ts --exec 'npm run build && NODE_ENV=development node build/src/index.js -- --hideHttpLog --prettifyLog'",
     "serve": "NODE_ENV=production node build/src/index.js",
     "lint-javascript": "eslint .",
     "lint-javascript-fix": "eslint . --fix",

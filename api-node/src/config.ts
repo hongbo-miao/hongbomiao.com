@@ -11,11 +11,11 @@ dotenvFlow.config();
 const {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
-  argv: { hideHTTPLog, prettifyLog },
+  argv: { hideHttpLog, prettifyLog },
 } = yargs(hideBin(process.argv));
 
-if (hideHTTPLog != null && typeof hideHTTPLog !== 'boolean') {
-  throw new Error('Failed to read hideHTTPLog.');
+if (hideHttpLog != null && typeof hideHttpLog !== 'boolean') {
+  throw new Error('Failed to read hideHttpLog.');
 }
 if (prettifyLog != null && typeof prettifyLog !== 'boolean') {
   throw new Error('Failed to read prettifyLog.');
@@ -40,7 +40,7 @@ const {
   SEED_USER_FIRST_NAME,
   SEED_USER_LAST_NAME,
   SEED_USER_PASSWORD,
-  WS_PROTOCOL,
+  WEB_SOCKET_PROTOCOL,
 } = process.env;
 
 if (HOST == null || HOST === '') {
@@ -97,12 +97,12 @@ if (SEED_USER_LAST_NAME == null || SEED_USER_LAST_NAME === '') {
 if (SEED_USER_PASSWORD == null || SEED_USER_PASSWORD === '') {
   throw new Error('Failed to read SEED_USER_PASSWORD.');
 }
-if (WS_PROTOCOL == null || WS_PROTOCOL === '') {
-  throw new Error('Failed to read WS_PROTOCOL.');
+if (WEB_SOCKET_PROTOCOL == null || WEB_SOCKET_PROTOCOL === '') {
+  throw new Error('Failed to read WEB_SOCKET_PROTOCOL.');
 }
 
-const sharedCSPConnectSrc = [
-  `${WS_PROTOCOL}://${HOST}:${PORT}`, // For Safari, "'self'" is not enough for WebSocket.
+const sharedCspConnectSrc = [
+  `${WEB_SOCKET_PROTOCOL}://${HOST}:${PORT}`, // For Safari, "'self'" is not enough for WebSocket.
   'https://ingest.lightstep.com', // Lightstep
 ];
 const sharedCORSAllowOrigins = [
@@ -112,18 +112,18 @@ const sharedCORSAllowOrigins = [
 ];
 
 type Config = {
-  shouldHideHTTPLog: boolean;
+  shouldHideHttpLog: boolean;
   shouldPrettifyLog: boolean;
   nodeEnv: 'development' | 'production' | 'test';
   httpProtocol: string;
   port: number;
-  devCORSAllowOrigins: ReadonlyArray<string>;
-  prodCORSAllowOrigins: ReadonlyArray<string>;
-  devCSPConnectSrc: ReadonlyArray<string>;
-  prodCSPConnectSrc: ReadonlyArray<string>;
-  reportURI: {
+  developmentCorsAllowOrigins: ReadonlyArray<string>;
+  productionCorsAllowOrigins: ReadonlyArray<string>;
+  developmentCspConnectSrc: ReadonlyArray<string>;
+  productionCspConnectSrc: ReadonlyArray<string>;
+  reportUri: {
     cspReportURI: string;
-    reportToURL: string;
+    reportToUrl: string;
   };
   jwtSecret: string;
   redisOptions: RedisOptions;
@@ -131,39 +131,43 @@ type Config = {
   seedUser: PostgresInputUser;
   lightstep: {
     token: string;
-    traceURL: string;
+    traceUrl: string;
   };
   sentryOptions: Sentry.NodeOptions;
-  swapiURL: string;
+  swapiUrl: string;
 };
 
 const config: Config = {
-  shouldHideHTTPLog: hideHTTPLog === true,
+  shouldHideHttpLog: hideHttpLog === true,
   shouldPrettifyLog: prettifyLog === true,
   nodeEnv: NODE_ENV,
   httpProtocol: HTTP_PROTOCOL,
   port: Number(PORT),
-  devCORSAllowOrigins: [
+  developmentCorsAllowOrigins: [
     ...sharedCORSAllowOrigins,
     `${HTTP_PROTOCOL}://${HOST}:80`,
     `${HTTP_PROTOCOL}://${HOST}:62470`,
     'https://www.k8s-hongbomiao.com',
   ],
-  prodCORSAllowOrigins: [
+  productionCorsAllowOrigins: [
     ...sharedCORSAllowOrigins,
     'https://hongbomiao-com.onrender.com',
     'https://www.hongbomiao.com',
   ],
-  devCSPConnectSrc: [...sharedCSPConnectSrc, `${WS_PROTOCOL}://${HOST}:80`, 'wss://www.k8s-hongbomiao.com'],
-  prodCSPConnectSrc: [
-    ...sharedCSPConnectSrc,
+  developmentCspConnectSrc: [
+    ...sharedCspConnectSrc,
+    `${WEB_SOCKET_PROTOCOL}://${HOST}:80`,
+    'wss://www.k8s-hongbomiao.com',
+  ],
+  productionCspConnectSrc: [
+    ...sharedCspConnectSrc,
 
     // For Safari, "'self'" is not enough for WebSocket.
     'wss://www.hongbomiao.com',
   ],
-  reportURI: {
+  reportUri: {
     cspReportURI: 'https://hongbomiao.report-uri.com/r/d/csp/enforce',
-    reportToURL: 'https://hongbomiao.report-uri.com/a/d/g',
+    reportToUrl: 'https://hongbomiao.report-uri.com/a/d/g',
   },
   jwtSecret: JWT_SECRET,
   redisOptions: {
@@ -188,13 +192,13 @@ const config: Config = {
   },
   lightstep: {
     token: '+vWuQYt3zPOA+eurdLSoF5ksPKxwso69BKMecNlBUj+JkdAts+nwEOOVYHMG0AWIUUPbFX3JM/Z3MkaA9bWU/+16mluwwryRtmIz3Gnx',
-    traceURL: 'https://ingest.lightstep.com/api/v2/otel/trace',
+    traceUrl: 'https://ingest.lightstep.com/api/v2/otel/trace',
   },
   sentryOptions: {
     dsn: 'https://2f46725646834700b4c2675abbc2da6a@o379185.ingest.sentry.io/5375232',
     environment: NODE_ENV,
   },
-  swapiURL: 'https://swapi.dev',
+  swapiUrl: 'https://swapi.dev',
 };
 
 export default config;
