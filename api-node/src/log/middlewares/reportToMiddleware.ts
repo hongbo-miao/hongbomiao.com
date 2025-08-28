@@ -5,7 +5,7 @@ import isProduction from '../../shared/utils/isProduction.js';
 
 const REPORT_TO_ENDPOINT: Endpoint = isProduction()
   ? {
-      url: config.reportURI.reportToURL,
+      url: config.reportUri.reportToUrl,
       priority: 1,
     }
   : {

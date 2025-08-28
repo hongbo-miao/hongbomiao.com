@@ -5,7 +5,7 @@ import logger from '../../log/utils/logger.js';
 import meter from '../../reliability/utils/meter.js';
 import isProduction from '../../shared/utils/isProduction.js';
 
-const ALLOW_LIST = isProduction() ? config.prodCORSAllowOrigins : config.devCORSAllowOrigins;
+const ALLOW_LIST = isProduction() ? config.productionCorsAllowOrigins : config.developmentCorsAllowOrigins;
 
 const corsMiddleware = (allowOrigins: ReadonlyArray<string> = ALLOW_LIST): RequestHandler => {
   const corsViolationCounter = meter.createCounter('corsViolationCounter', {

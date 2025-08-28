@@ -20,7 +20,7 @@ initPostgres();
 const { nodeEnv, port } = config;
 
 const httpServer = http.createServer(app);
-const wsServer = new WebSocketServer({
+const webSocketServer = new WebSocketServer({
   server: httpServer,
   path: '/graphql',
 });
@@ -35,7 +35,7 @@ useServer(
     execute,
     subscribe,
   },
-  wsServer,
+  webSocketServer,
 );
 
 createTerminus(httpServer);
