@@ -12,7 +12,7 @@ name: . Static Type Check
       python:
         required: true
         type: boolean
-      terraform:
+      opentofu:
         required: true
         type: boolean
       # Applications
@@ -210,185 +210,185 @@ jobs:
           uv run poe static-type-check-python --package=scientific-computing.surrogate-model
           uv run poe static-type-check-python --package=tokenization.byte-pair-encoding
 
-  static-type-check-terraform-production-airbyte:
-    name: Terraform (production/airbyte)
-    if: ${{ inputs.workflow || inputs.terraform }}
+  static-type-check-opentofu-production-airbyte:
+    name: OpenTofu (production/airbyte)
+    if: ${{ inputs.workflow || inputs.opentofu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3.1.2
-      - name: Initialize Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/airbyte
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/airbyte
         run: |
-          terraform init -backend=false
-      - name: Static type check Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/airbyte
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/airbyte
         run: |
-          terraform validate
+          tofu validate
 
-  static-type-check-terraform-production-aws-data:
-    name: Terraform (production/aws/data)
-    if: ${{ inputs.workflow || inputs.terraform }}
+  static-type-check-opentofu-production-aws-data:
+    name: OpenTofu (production/aws/data)
+    if: ${{ inputs.workflow || inputs.opentofu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3.1.2
-      - name: Initialize Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/aws/data
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/aws/data
         run: |
-          terraform init -backend=false
-      - name: Static type check Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/aws/data
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/aws/data
         run: |
-          terraform validate
+          tofu validate
 
-  static-type-check-terraform-production-aws-general:
-    name: Terraform (production/aws/general)
-    if: ${{ inputs.workflow || inputs.terraform }}
+  static-type-check-opentofu-production-aws-general:
+    name: OpenTofu (production/aws/general)
+    if: ${{ inputs.workflow || inputs.opentofu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3.1.2
-      - name: Initialize Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/aws/general
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/aws/general
         run: |
-          terraform init -backend=false
-      - name: Static type check Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/aws/general
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/aws/general
         run: |
-          terraform validate
+          tofu validate
 
-  static-type-check-terraform-production-aws-kubernetes:
-    name: Terraform (production/aws/kubernetes)
-    if: ${{ inputs.workflow || inputs.terraform }}
+  static-type-check-opentofu-production-aws-kubernetes:
+    name: OpenTofu (production/aws/kubernetes)
+    if: ${{ inputs.workflow || inputs.opentofu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3.1.2
-      - name: Initialize Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/aws/kubernetes
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/aws/kubernetes
         run: |
-          terraform init -backend=false
-      - name: Static type check Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/aws/kubernetes
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/aws/kubernetes
         run: |
-          terraform validate
+          tofu validate
 
-  static-type-check-terraform-production-aws-network:
-    name: Terraform (production/aws/network)
-    if: ${{ inputs.workflow || inputs.terraform }}
+  static-type-check-opentofu-production-aws-network:
+    name: OpenTofu (production/aws/network)
+    if: ${{ inputs.workflow || inputs.opentofu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3.1.2
-      - name: Initialize Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/aws/network
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/aws/network
         run: |
-          terraform init -backend=false
-      - name: Static type check Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/aws/network
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/aws/network
         run: |
-          terraform validate
+          tofu validate
 
-  static-type-check-terraform-production-harbor:
-    name: Terraform (production/harbor)
-    if: ${{ inputs.workflow || inputs.terraform }}
+  static-type-check-opentofu-production-harbor:
+    name: OpenTofu (production/harbor)
+    if: ${{ inputs.workflow || inputs.opentofu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3.1.2
-      - name: Initialize Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/harbor
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/harbor
         run: |
-          terraform init -backend=false
-      - name: Static type check Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/harbor
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/harbor
         run: |
-          terraform validate
+          tofu validate
 
-  static-type-check-terraform-production-snowflake-account:
-    name: Terraform (production/snowflake/account)
-    if: ${{ inputs.workflow || inputs.terraform }}
+  static-type-check-opentofu-production-snowflake-account:
+    name: OpenTofu (production/snowflake/account)
+    if: ${{ inputs.workflow || inputs.opentofu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3.1.2
-      - name: Initialize Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/account
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/account
         run: |
-          terraform init -backend=false
-      - name: Static type check Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/account
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/account
         run: |
-          terraform validate
+          tofu validate
 
-  static-type-check-terraform-production-snowflake-data:
-    name: Terraform (production/snowflake/data)
-    if: ${{ inputs.workflow || inputs.terraform }}
+  static-type-check-opentofu-production-snowflake-data:
+    name: OpenTofu (production/snowflake/data)
+    if: ${{ inputs.workflow || inputs.opentofu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3.1.2
-      - name: Initialize Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/data
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/data
         run: |
-          terraform init -backend=false
-      - name: Static type check Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/data
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/data
         run: |
-          terraform validate
+          tofu validate
 
-  static-type-check-terraform-production-snowflake-general:
-    name: Terraform (production/snowflake/general)
-    if: ${{ inputs.workflow || inputs.terraform }}
+  static-type-check-opentofu-production-snowflake-general:
+    name: OpenTofu (production/snowflake/general)
+    if: ${{ inputs.workflow || inputs.opentofu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3
-      - name: Initialize Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/general
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/general
         run: |
-          terraform init -backend=false
-      - name: Static type check Terraform
-        working-directory: cloud-infrastructure/terraform/environments/production/snowflake/general
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/general
         run: |
-          terraform validate
+          tofu validate
 
   static-type-check-typescript-api-node:
     name: TypeScript (api-node)

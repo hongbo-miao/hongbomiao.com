@@ -414,11 +414,11 @@ lint-sql-fix:
     uv run poe lint-sql-fix --dialect=trino trino/queries
     uv run poe lint-sql-fix --dialect=tsql data-storage/microsoft-sql-server/queries
 
-lint-terraform:
-    terraform fmt -recursive -check
+lint-opentofu:
+    tofu fmt -recursive -check
 
-lint-terraform-fix:
-    terraform fmt -recursive
+lint-opentofu-fix:
+    tofu fmt -recursive
 
 lint-toml:
     taplo fmt --check
@@ -574,15 +574,15 @@ static-type-check-python:
     uv run poe static-type-check-python --package=tokenization.byte-pair-encoding
 
 static-type-check-terraform:
-    cd cloud-infrastructure/terraform/environments/production/airbyte && terraform validate
-    cd cloud-infrastructure/terraform/environments/production/aws/data && terraform validate
-    cd cloud-infrastructure/terraform/environments/production/aws/general && terraform validate
-    cd cloud-infrastructure/terraform/environments/production/aws/kubernetes && terraform validate
-    cd cloud-infrastructure/terraform/environments/production/aws/network && terraform validate
-    cd cloud-infrastructure/terraform/environments/production/harbor && terraform validate
-    cd cloud-infrastructure/terraform/environments/production/snowflake/account && terraform validate
-    cd cloud-infrastructure/terraform/environments/production/snowflake/data && terraform validate
-    cd cloud-infrastructure/terraform/environments/production/snowflake/general && terraform validate
+    cd cloud-infrastructure/opentofu/environments/production/airbyte && tofu validate
+    cd cloud-infrastructure/opentofu/environments/production/aws/data && tofu validate
+    cd cloud-infrastructure/opentofu/environments/production/aws/general && tofu validate
+    cd cloud-infrastructure/opentofu/environments/production/aws/kubernetes && tofu validate
+    cd cloud-infrastructure/opentofu/environments/production/aws/network && tofu validate
+    cd cloud-infrastructure/opentofu/environments/production/harbor && tofu validate
+    cd cloud-infrastructure/opentofu/environments/production/snowflake/account && tofu validate
+    cd cloud-infrastructure/opentofu/environments/production/snowflake/data && tofu validate
+    cd cloud-infrastructure/opentofu/environments/production/snowflake/general && tofu validate
 
 static-type-check-typescript:
     cd api-node && npm run static-type-check-typescript

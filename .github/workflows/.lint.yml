@@ -63,7 +63,7 @@ name: . Lint
       sql:
         required: true
         type: boolean
-      terraform:
+      opentofu:
         required: true
         type: boolean
       toml:
@@ -1235,20 +1235,20 @@ jobs:
           # uv run poe lint-sql --dialect=trino trino/queries
           # uv run poe lint-sql --dialect=tsql data-storage/microsoft-sql-server/queries
 
-  lint-terraform:
-    name: Terraform
-    if: ${{ inputs.workflow || inputs.terraform }}
+  lint-opentofu:
+    name: OpenTofu
+    if: ${{ inputs.workflow || inputs.opentofu }}
     runs-on: ubuntu-24.04
     environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3.1.2
-      - name: Lint Terraform
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Lint OpenTofu
         run: |
-          terraform fmt -recursive -check
+          tofu fmt -recursive -check
 
   lint-toml:
     name: TOML
