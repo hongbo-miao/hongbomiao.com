@@ -68,7 +68,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Vite** - JavaScript build tool and development server
 - **TanStack Query** - Hooks for fetching, caching and updating asynchronous data
 - **TanStack Router** - Router
-- **RxJS** - Asynchronous programming with observable streams
 - **shadcn/ui** - UI component library
 - **Tailwind CSS** - Utility-first CSS framework
 - **Radix Primitives** - Low-level, unstyled, accessible UI primitives
@@ -863,7 +862,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Testing
 
 - **Unit testing**
-- **Marble testing**
 - **Snapshot testing**
 - **Visual testing**
 - **Instrumented testing**
