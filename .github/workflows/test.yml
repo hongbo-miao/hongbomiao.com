@@ -207,11 +207,11 @@ jobs:
               - '.sqlfluff'
               - '.sqlfluffignore'
               - '**/*.sql'
-            terraform:
+            opentofu:
               - '**/*.tf'
               - '**/*.tfvars'
               - '**/.terraform.lock.hcl'
-              - 'cloud-infrastructure/terraform/**'
+              - 'cloud-infrastructure/opentofu/**'
             toml:
               - 'taplo.toml'
               - '**/*.toml'
@@ -270,9 +270,9 @@ jobs:
             decode-can-trc-data:
               - 'embedded-system/decode-can-trc-data/**'
             development-aws-glue-spark-scripts:
-              - 'cloud-infrastructure/terraform/environments/development/aws/general/files/aws-glue/spark-scripts/**'
+              - 'cloud-infrastructure/opentofu/environments/development/aws/general/files/aws-glue/spark-scripts/**'
             production-aws-glue-spark-scripts:
-              - 'cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/**'
+              - 'cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/**'
             ethereum:
               - '.github/workflows/.lint.yml'
               - 'ethereum/**'
@@ -594,13 +594,13 @@ jobs:
       markdown: ${{ steps.filter.outputs.markdown }}
       matlab: ${{ steps.filter.outputs.matlab }}
       natural-language: ${{ steps.filter.outputs.natural-language }}
+      opentofu: ${{ steps.filter.outputs.opentofu }}
       python: ${{ steps.filter.outputs.python }}
       qml: ${{ steps.filter.outputs.qml }}
       ruby: ${{ steps.filter.outputs.ruby }}
       shell: ${{ steps.filter.outputs.shell }}
       solidity: ${{ steps.filter.outputs.solidity }}
       sql: ${{ steps.filter.outputs.sql }}
-      terraform: ${{ steps.filter.outputs.terraform }}
       toml: ${{ steps.filter.outputs.toml }}
       verilog: ${{ steps.filter.outputs.verilog }}
       vhdl: ${{ steps.filter.outputs.vhdl }}
@@ -786,13 +786,13 @@ jobs:
       markdown: ${{ needs.detect-changes.outputs.markdown == 'true' }}
       matlab: ${{ needs.detect-changes.outputs.matlab == 'true' }}
       natural-language: ${{ needs.detect-changes.outputs.natural-language == 'true' }}
+      opentofu: ${{ needs.detect-changes.outputs.opentofu == 'true' }}
       python: ${{ needs.detect-changes.outputs.python == 'true' }}
       qml: ${{ needs.detect-changes.outputs.qml == 'true' }}
       ruby: ${{ needs.detect-changes.outputs.ruby == 'true' }}
       shell: ${{ needs.detect-changes.outputs.shell == 'true' }}
       solidity: ${{ needs.detect-changes.outputs.solidity == 'true' }}
       sql: ${{ needs.detect-changes.outputs.sql == 'true' }}
-      terraform: ${{ needs.detect-changes.outputs.terraform == 'true' }}
       toml: ${{ needs.detect-changes.outputs.toml == 'true' }}
       verilog: ${{ needs.detect-changes.outputs.verilog == 'true' }}
       vhdl: ${{ needs.detect-changes.outputs.vhdl == 'true' }}
@@ -830,8 +830,8 @@ jobs:
       # Workflows
       workflow: ${{ needs.detect-changes.outputs.workflow-static-type-check == 'true' }}
       # Languages
+      opentofu: ${{ needs.detect-changes.outputs.opentofu == 'true' }}
       python: ${{ needs.detect-changes.outputs.python == 'true' }}
-      terraform: ${{ needs.detect-changes.outputs.terraform == 'true' }}
       # Applications
       api-go: ${{ needs.detect-changes.outputs.api-go == 'true' }}
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
