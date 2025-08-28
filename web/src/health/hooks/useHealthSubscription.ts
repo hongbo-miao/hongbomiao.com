@@ -1,48 +1,32 @@
 import { useQuery } from '@tanstack/react-query';
-import { Observable } from 'rxjs';
+import config from '../../config';
 import type { GraphQLResponse } from '../../shared/types/GraphQLResponse';
-import graphQLSubscriptionClient from '../../shared/utils/graphQLSubscriptionClient';
 import pingSubscription from '../queries/pingSubscription';
 import type { GraphQLPing } from '../types/GraphQLPing';
 
-const subscribePing$ = (query: string): Observable<GraphQLResponse<GraphQLPing>> => {
-  return new Observable((observer) => {
-    return graphQLSubscriptionClient.subscribe(
-      {
-        query,
-      },
-      {
-        next: (res: GraphQLResponse<GraphQLPing>) => {
-          observer.next(res);
-        },
-        error: (err: Error) => {
-          observer.error(err);
-        },
-        complete: () => {
-          observer.complete();
-        },
-      },
-    );
+const fetchPing = async (query: string): Promise<GraphQLResponse<GraphQLPing>> => {
+  const response = await fetch(config.graphqlServerGraphQLURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query,
+    }),
   });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return response.json();
 };
 
 const useHealthSubscription = () => {
-  useQuery({
+  return useQuery({
     queryKey: ['health', 'ping'],
-    queryFn: () => {
-      const subscription = subscribePing$(pingSubscription);
-      return new Promise((resolve) => {
-        subscription.subscribe({
-          next: (response) => {
-            resolve(response);
-          },
-          error: (error) => {
-            console.error('Health subscription error:', error);
-          },
-        });
-      });
-    },
-    refetchInterval: 30000, // Refetch every 30 seconds
+    queryFn: () => fetchPing(pingSubscription),
+    refetchInterval: 30000, // 30 seconds
   });
 };
 
