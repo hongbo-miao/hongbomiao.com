@@ -1,8 +1,8 @@
 import { clsx } from 'clsx';
 import { useAudio } from 'react-use';
-import flashingMusicalNoteGIF from '../images/musical-note-flashing.gif';
-import playingMusicalNoteGIF from '../images/musical-note-playing.gif';
-import './AudioPlayer.css';
+import flashingMusicalNoteGIF from '@/shared/images/musical-note-flashing.gif';
+import playingMusicalNoteGIF from '@/shared/images/musical-note-playing.gif';
+import '@/shared/components/AudioPlayer.css';
 
 interface Props {
   audioSrc: string;

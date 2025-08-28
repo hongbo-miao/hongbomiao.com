@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import HmCopyright from './Copyright';
+import HmCopyright from '@/App/components/Copyright';
 
 type Story = StoryObj<typeof HmCopyright>;
 

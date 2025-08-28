@@ -1,5 +1,5 @@
-import type { Website } from '../types/Website';
-import './SocialList.css';
+import type { Website } from '@/App/types/Website';
+import '@/App/components/SocialList.css';
 
 type Props = {
   websites: ReadonlyArray<Website>;
