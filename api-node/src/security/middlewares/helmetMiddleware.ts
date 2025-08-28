@@ -5,8 +5,8 @@ import config from '../../config.js';
 import isProduction from '../../shared/utils/isProduction.js';
 import createCSPNonce from '../utils/createCSPNonce.js';
 
-const CSP_CONNECT_SRC = isProduction() ? config.prodCSPConnectSrc : config.devCSPConnectSrc;
-const CSP_REPORT_URI = isProduction() ? config.reportURI.cspReportURI : '/api/violation/report-csp-violation';
+const CSP_CONNECT_SRC = isProduction() ? config.productionCspConnectSrc : config.developmentCspConnectSrc;
+const CSP_REPORT_URI = isProduction() ? config.reportUri.cspReportURI : '/api/violation/report-csp-violation';
 
 const helmetMiddleware = (
   cspConnectSrc: ReadonlyArray<string> = CSP_CONNECT_SRC,
