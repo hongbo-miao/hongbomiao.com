@@ -669,7 +669,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Cloud Infrastructure
 
-- **Terraform** - Infrastructure as code (IaC)
+- **OpenTofu** - Infrastructure as code (IaC)
 - **Pulumi** - Infrastructure as code (IaC)
 - **Karpenter** - Kubernetes node autoscaler
 
@@ -820,6 +820,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **markdownlint-cli2** - Markdown linter
 - **MISS_HIT** - MATLAB code formatter
 - **textlint** - Natural language linter
+- **tofu** - OpenTofu code formatter
 - **Buf** - Protocol Buffers linter
 - **Ruff** - Python code formatter and linter
 - **Mypy** - Python static type checker
@@ -834,7 +835,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Solhint** - Solidity linter
 - **SQLFluff** - SQL code formatter and linter
 - **Taplo** - TOML code formatter
-- **terraform** - Terraform code formatter
 - **tsc** - TypeScript static type checker
 - **Verible** - Verilog code formatter and linter
 - **VHDL Style Guide (VSG)** - VHDL code formatter

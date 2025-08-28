@@ -141,23 +141,23 @@ jobs:
         with:
           version: 0.8.13
           enable-cache: true
-          cache-dependency-glob: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/uv.lock
+          cache-dependency-glob: cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v5.6.0
         with:
-          python-version-file: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts/pyproject.toml
+          python-version-file: cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/pyproject.toml
       - name: Install dependencies
-        working-directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
+        working-directory: cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts
         run: |
           uv sync --dev
       - name: Test
-        working-directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
+        working-directory: cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.0
         with:
-          directory: cloud-infrastructure/terraform/environments/production/aws/general/files/aws-glue/spark-scripts
+          directory: cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts
 
   # Cloud Security
   prowler-test:
