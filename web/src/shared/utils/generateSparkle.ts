@@ -1,4 +1,4 @@
-import random from './random';
+import random from '@/shared/utils/random';
 
 const SPARKLE_COLOR = '#FFC700';
 

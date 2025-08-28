@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import HmLoading from './Loading';
+import HmLoading from '@/shared/components/Loading';
 
 describe('Loading', () => {
   test('render Loading', () => {
