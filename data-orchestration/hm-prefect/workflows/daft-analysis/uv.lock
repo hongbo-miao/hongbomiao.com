@@ -2,7 +2,8 @@ version = 1
 revision = 3
 requires-python = ">=3.13.4, <3.14"
 resolution-markers = [
-    "sys_platform == 'darwin'",
+    "platform_machine == 'x86_64' and sys_platform == 'darwin'",
+    "platform_machine != 'x86_64' and sys_platform == 'darwin'",
     "sys_platform != 'darwin' and sys_platform != 'win32'",
     "sys_platform == 'win32'",
 ]
@@ -324,21 +325,22 @@ wheels = [
 
 [[package]]
 name = "daft"
-version = "0.5.21"
+version = "0.5.22"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "fsspec" },
-    { name = "pyarrow" },
+    { name = "pyarrow", version = "17.0.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
+    { name = "pyarrow", version = "21.0.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
     { name = "tqdm" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f7/c2/488ed593e0fd38b633dbe846b794d2803ff2f9c0c9842d6fe75668773b60/daft-0.5.21.tar.gz", hash = "sha256:0cd8c10d1002ed3dd18c8f60bbddcd5e0b679546e47b48344e78ff7519c1c0fe", size = 7347070, upload-time = "2025-08-21T23:41:05.062Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0f/b8/6c52bf8a80d4e0420f9712acd9fef28554b2dd14c280af1af4946b47ce23/daft-0.5.22.tar.gz", hash = "sha256:402dfb70ed1f2791aaefc3a298ec9decf2479221e1311e6b0d769653c42e276c", size = 7733209, upload-time = "2025-08-28T17:54:43.598Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/21/65/0f125a4c0d7c05d134f86e93fd4781b9ccefb5fc300e9ac1863badd2dd93/daft-0.5.21-cp39-abi3-macosx_10_12_x86_64.whl", hash = "sha256:87dca076939993177e881d6915308e2977661644b450924296667a96aeeb82d9", size = 45757207, upload-time = "2025-08-21T23:40:38.572Z" },
-    { url = "https://files.pythonhosted.org/packages/23/cb/612926b4ffc5eea4c6ad78f519733e90f292346716686f7eec1af84ee05a/daft-0.5.21-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:ebe5239210f1aa8e25bc556a584db2d7849bed9aa3ce447ba19d19f3e6dd5e5c", size = 41852617, upload-time = "2025-08-21T23:40:42.377Z" },
-    { url = "https://files.pythonhosted.org/packages/37/fb/eeb55b4ffeddb4a72853c6a4d109dc0e0fe3264a808fd0bc42aa3e0ccc12/daft-0.5.21-cp39-abi3-manylinux_2_24_aarch64.whl", hash = "sha256:8c22d7ddc489bee4ffa7bd40fba6d909e9232bfd74f44978de3331704cb93132", size = 43026377, upload-time = "2025-08-21T23:40:45.556Z" },
-    { url = "https://files.pythonhosted.org/packages/06/83/8c05d67d31090097d4ae31ec78f52c4d6a16d3f7d09804bf4c41829e9cf9/daft-0.5.21-cp39-abi3-manylinux_2_24_x86_64.whl", hash = "sha256:59cac11866d708b6f11f23f122be53d9ca96c403b6e9adef59f093b9c48850c3", size = 45966280, upload-time = "2025-08-21T23:40:48.699Z" },
-    { url = "https://files.pythonhosted.org/packages/7d/dd/fea6c6f9f709d142382a6124179e418b6ded7cb56746cb8f780a2af5d471/daft-0.5.21-cp39-abi3-win_amd64.whl", hash = "sha256:4bdd7417f55ee044cf7b0e1ea163a2441a75d380dd0d55d7f796570ebea98cc0", size = 44648231, upload-time = "2025-08-21T23:40:51.914Z" },
+    { url = "https://files.pythonhosted.org/packages/a9/53/f250618ef978eba76bfd01f27261a8fe3444742344f4621056a299ab5a1a/daft-0.5.22-cp39-abi3-macosx_10_12_x86_64.whl", hash = "sha256:3ea79057c8792e48974de26e18b779e6d062caee97684f5cb4887c576be44ba9", size = 46251830, upload-time = "2025-08-28T17:54:12.802Z" },
+    { url = "https://files.pythonhosted.org/packages/86/a5/07c4ce3a79a8a5d5a63d4ca833ec555d9d80799733f84a7cd92f2dbde122/daft-0.5.22-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:21f82a20634c34c4fae582a572f4dd763f89556303e9c02d4db5cd8f5e20cb6b", size = 42345468, upload-time = "2025-08-28T17:54:17.251Z" },
+    { url = "https://files.pythonhosted.org/packages/14/c3/ebd5ff7144ecde6e69a0e557b81695a6736ce85258fb5dbc711bd4dd526a/daft-0.5.22-cp39-abi3-manylinux_2_24_aarch64.whl", hash = "sha256:a7dfe76be2a408d9cc6b75610e880d4d970c79af19fd7b769689b46effe974b8", size = 43534302, upload-time = "2025-08-28T17:54:21.134Z" },
+    { url = "https://files.pythonhosted.org/packages/0d/c9/b208cea97ca90800765429bb9e776d9f4481ec83cc30e0c565ae6eb4b673/daft-0.5.22-cp39-abi3-manylinux_2_24_x86_64.whl", hash = "sha256:d38cf492620af76f2d5bebf57cf58f3204d40cecfc4be5c640f5bd3940414f9f", size = 46548093, upload-time = "2025-08-28T17:54:25.209Z" },
+    { url = "https://files.pythonhosted.org/packages/99/8b/a3ea6fdd3ce34053bf94984defd7475ad6baaac2b8fbfd190f586b59904c/daft-0.5.22-cp39-abi3-win_amd64.whl", hash = "sha256:80bbfcbda6fdb647fb5be0006571710f7af041d58366fdd04d3daca77c596932", size = 45231206, upload-time = "2025-08-28T17:54:29.017Z" },
 ]
 
 [package.optional-dependencies]
@@ -1077,7 +1079,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "daft", extras = ["aws", "deltalake", "ray"], specifier = "==0.5.21" },
+    { name = "daft", extras = ["aws", "deltalake", "ray"], specifier = "==0.5.22" },
     { name = "prefect-client", specifier = "==3.4.14" },
 ]
 
@@ -1114,8 +1116,25 @@ wheels = [
 
 [[package]]
 name = "pyarrow"
+version = "17.0.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "platform_machine == 'x86_64' and sys_platform == 'darwin'",
+]
+dependencies = [
+    { name = "numpy", marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/27/4e/ea6d43f324169f8aec0e57569443a38bab4b398d09769ca64f7b4d467de3/pyarrow-17.0.0.tar.gz", hash = "sha256:4beca9521ed2c0921c1023e68d097d0299b62c362639ea315572a58f3f50fd28", size = 1112479, upload-time = "2024-07-17T10:41:25.092Z" }
+
+[[package]]
+name = "pyarrow"
 version = "21.0.0"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "platform_machine != 'x86_64' and sys_platform == 'darwin'",
+    "sys_platform != 'darwin' and sys_platform != 'win32'",
+    "sys_platform == 'win32'",
+]
 sdist = { url = "https://files.pythonhosted.org/packages/ef/c2/ea068b8f00905c06329a3dfcd40d0fcc2b7d0f2e355bdb25b65e0a0e4cd4/pyarrow-21.0.0.tar.gz", hash = "sha256:5051f2dccf0e283ff56335760cbc8622cf52264d67e359d5569541ac11b6d5bc", size = 1133487, upload-time = "2025-07-18T00:57:31.761Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/16/ca/c7eaa8e62db8fb37ce942b1ea0c6d7abfe3786ca193957afa25e71b81b66/pyarrow-21.0.0-cp313-cp313-macosx_12_0_arm64.whl", hash = "sha256:e99310a4ebd4479bcd1964dff9e14af33746300cb014aa4a3781738ac63baf4a", size = 31154306, upload-time = "2025-07-18T00:56:04.42Z" },
@@ -1332,7 +1351,7 @@ wheels = [
 
 [[package]]
 name = "ray"
-version = "2.48.0"
+version = "2.47.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -1345,10 +1364,10 @@ dependencies = [
     { name = "requests" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d9/7f/0dc9f5464181ecad93ec2d6f106084d46e5c5ec9a8718c1ba60610ea65fe/ray-2.48.0-cp313-cp313-macosx_12_0_arm64.whl", hash = "sha256:a7a6d830d9dc5ae8bb156fcde9a1adab7f4edb004f03918a724d885eceb8264d", size = 67250116, upload-time = "2025-07-18T22:33:36.572Z" },
-    { url = "https://files.pythonhosted.org/packages/22/ef/bf5dc762663475fc40680f44df716c553f5d619c6648c8b43ccde00f13ce/ray-2.48.0-cp313-cp313-macosx_12_0_x86_64.whl", hash = "sha256:5742b72a514afe5d60f41330200cd508376e16c650f6962e62337aa482d6a0c6", size = 69763475, upload-time = "2025-07-18T22:33:42.297Z" },
-    { url = "https://files.pythonhosted.org/packages/f3/7c/498ceb9684971cb5c9722a2c8400919cd886473b77416c23c23e4e7ddc67/ray-2.48.0-cp313-cp313-manylinux2014_aarch64.whl", hash = "sha256:622e6bcdb78d98040d87bea94e65d0bb6ccc0ae1b43294c6bd69f542bf28e092", size = 69062026, upload-time = "2025-07-18T22:33:48.058Z" },
-    { url = "https://files.pythonhosted.org/packages/dd/4f/bb511598091f06cc7d781868caf833a0c3459b4f51c0b36cfb75dfaa7e4e/ray-2.48.0-cp313-cp313-manylinux2014_x86_64.whl", hash = "sha256:25e4b79fcc8f849d72db1acc4f03f37008c5c0b745df63d8a30cd35676b6545e", size = 70039793, upload-time = "2025-07-18T22:33:54.072Z" },
+    { url = "https://files.pythonhosted.org/packages/7b/85/4dbf9a126f080a1114ec7738d9274759c256ff2a1c21662b09123311bbf0/ray-2.47.1-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:8cd625d469ce15391e5f1f44ddf8dd30b2380f917603fa0172661229acb0011f", size = 66082130, upload-time = "2025-06-17T22:27:38.631Z" },
+    { url = "https://files.pythonhosted.org/packages/5a/8e/e893176ca3c02a310bb962b287436508f5b61fd179a7283f37610c0e0087/ray-2.47.1-cp313-cp313-macosx_12_0_x86_64.whl", hash = "sha256:e578929f58b3f0c59c7544a96d864e26278238b755d13cd19ae798070c848e57", size = 68507369, upload-time = "2025-06-17T22:27:44.945Z" },
+    { url = "https://files.pythonhosted.org/packages/0c/97/f36e8a19885d930ab0dbcb0b7b6706e630412336b08fa3312bcaaad818b7/ray-2.47.1-cp313-cp313-manylinux2014_aarch64.whl", hash = "sha256:d6ed6d182e25d6f77179dc77bc97a749c81765b13cb671a46db3203029389663", size = 67875541, upload-time = "2025-06-17T22:27:51.191Z" },
+    { url = "https://files.pythonhosted.org/packages/52/60/83430886d17526f4757e298b77268533afeedc74ed934f911d522f191ef2/ray-2.47.1-cp313-cp313-manylinux2014_x86_64.whl", hash = "sha256:252a471e8afb918b105cdbffb4cbebb0143baad75a06c8ffcde27ac317579ccb", size = 68848558, upload-time = "2025-06-17T22:27:57.97Z" },
 ]
 
 [package.optional-dependencies]
@@ -1359,7 +1378,8 @@ data = [
     { name = "fsspec" },
     { name = "numpy" },
     { name = "pandas" },
-    { name = "pyarrow" },
+    { name = "pyarrow", version = "17.0.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine == 'x86_64' and sys_platform == 'darwin'" },
+    { name = "pyarrow", version = "21.0.0", source = { registry = "https://pypi.org/simple" }, marker = "platform_machine != 'x86_64' or sys_platform != 'darwin'" },
 ]
 
 [[package]]
