@@ -27,18 +27,26 @@ provider "registry.opentofu.org/hashicorp/aws" {
 }
 
 provider "registry.opentofu.org/hashicorp/awscc" {
-  version     = "1.53.0"
-  constraints = "1.53.0"
+  version     = "1.54.0"
+  constraints = "1.54.0"
   hashes = [
-    "h1:4VBqg4zKDz/rkutCI17FD5dB/QxeD8ghxPayOaCTPUw=",
-    "zh:13c9b5469c588df953edd184090fe4c4ef1eae773cf795e8bb10f4c3bfb0f3de",
-    "zh:144e1a266acf54d96ce2a80d04df88b0f75ffc43ecf49f95c27dce00176786a1",
-    "zh:1ae9da5fa6b72638cee256ef23bde4e1c9c896b93b06e351016e0865635e5b43",
-    "zh:2c8f47f06a7ca17f3e844d9d8dd6b4a506149f39a4256abfdb0645ee7606529d",
-    "zh:59fac916b25d214a5600289a28456bb370f972ee39b9af8396f96372f2c80457",
-    "zh:613574a36370b862b42908d8e8335d261e7bc938b7d16affc7b56cd4125fc4bb",
-    "zh:81c097b3ad1c08104df7b6343f5fa7c2a343250a5a62004a38f76b18626ab86c",
-    "zh:cb06015bfc590fe155c3429438e4940e6756c8826b8940c63f665bbd209cf12c",
-    "zh:e434d0089de2b059a7729775c54cc89a0e2a26fb9219deda303675f322a67bfe",
+    "h1:AsskOMRI0vDOPYpMxMg39S2xEN+Dxn19cDeZnrLP58w=",
+    "h1:Duvzh3QDPKAC1pL1SAbwsTjva04DGMEhIlx1g8B2TyE=",
+    "h1:GTyoofjei4m5HZa81e2+GEl9kVuPWQ+acTB2489qyQk=",
+    "h1:KkGo0zqavkUwtbWro/889hgtGoHx8sbx5Cn3R5bufRs=",
+    "h1:NpVsi+e031tf6lR38AjYNt2w8e+0HTRCQYWU3SAzYv4=",
+    "h1:OILkOB4WrPPvdYMqFwS2QSFUUdM9z7TBpNP/tuL9E4s=",
+    "h1:PQy+J1ceT3231wEyzft/pGy4STATMVB6R7JlTlz/4rU=",
+    "h1:TUh5HCBG1Xmyt1aUlYgjGLK9Mwud47LDK6T1dWY2exI=",
+    "h1:ydLWna51mFNi02u4bbmEdAQnLQZKh5KuzLAvHAs/Ps4=",
+    "zh:47711b2573d7aa0cdc4569dd7126ebab267b813ed7d5a58f6fb41024e440aa83",
+    "zh:4d1b034aad759f8bd2b3006b8b12dfaa4adbc801c19c0a3cea212fedd0d06cac",
+    "zh:5960e1114d6e38125f980659095cfe4bfff313866cf4f9a0458006de5b2eb28b",
+    "zh:6791446279345bd4c527c54d83b5b0d35a1715a4c3ba666a88e11c64c92f7b62",
+    "zh:6bb9defd0e10e707871a5238a8d3b80bfb0bb3e3c8e66e9bf9659f9267723261",
+    "zh:8403f4ec003b76ad99032b8edd78876900a97bea892290a9de89ea569c73d3c6",
+    "zh:b313d7cbaea8bc21630ebd0d1e641a21746ddc019128f4bd818123cf3f48766f",
+    "zh:f0789848412cd10dc5ecd8a206bb2228ac679effcb77bf72b72091fc035826c3",
+    "zh:f9449f338e99631529eefcda439e0cc08acc635dc9eec0d2dd401658bf10b2db",
   ]
 }
