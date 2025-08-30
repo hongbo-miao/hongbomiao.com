@@ -5,11 +5,6 @@ terraform {
     key    = "production/aws/data/terraform.tfstate"
   }
   required_providers {
-    # https://registry.terraform.io/providers/gavinbunney/kubectl/latest
-    kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = "1.19.0"
-    }
     # https://registry.terraform.io/providers/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"
@@ -24,6 +19,11 @@ terraform {
     helm = {
       source  = "hashicorp/helm"
       version = "3.0.2"
+    }
+    # https://registry.terraform.io/providers/gavinbunney/kubectl/latest
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = "1.19.0"
     }
     # https://registry.terraform.io/providers/hashicorp/kubernetes/latest
     kubernetes = {
