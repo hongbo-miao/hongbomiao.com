@@ -21,7 +21,7 @@ data "aws_secretsmanager_secret_version" "hm_postgres_airbyte_user_secret_versio
   secret_id = data.aws_secretsmanager_secret.hm_postgres_airbyte_user_secret.id
 }
 module "airbyte_source_hm_postgres_iot_db_database_motor_schema" {
-  source                 = "../../../modules/airbyte/hm_airbyte_source_postgres"
+  source                 = "../../../modules/airbyte/airbyte_source_postgres"
   name                   = "${var.environment}-hm-postgres-iot-db-motor"
   workspace_id           = var.airbyte_workspace_id
   postgres_host          = "${var.environment}-hm-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com"
@@ -42,7 +42,7 @@ module "airbyte_source_hm_postgres_iot_db_database_motor_schema" {
 }
 # Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_IOT_DB_MOTOR
 module "airbyte_destination_snowflake_hm_airbyte_db_database_engineering_iot_db_database_motor_schema" {
-  source                                = "../../../modules/airbyte/hm_airbyte_destination_snowflake"
+  source                                = "../../../modules/airbyte/airbyte_destination_snowflake"
   name                                  = "${var.environment}-engineering-motor"
   workspace_id                          = var.airbyte_workspace_id
   snowflake_host                        = var.snowflake_host
@@ -58,7 +58,7 @@ module "airbyte_destination_snowflake_hm_airbyte_db_database_engineering_iot_db_
 # - Source - Postgres: production-hm-postgres | Database: iot_db | Schema: motor
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_IOT_DB_MOTOR
 module "airbyte_connection_snowflake_hm_airbyte_db_database_engineering_iot_db_database_motor_schema" {
-  source                               = "../../../modules/airbyte/hm_airbyte_connection"
+  source                               = "../../../modules/airbyte/airbyte_connection"
   source_id                            = module.airbyte_source_hm_postgres_iot_db_database_motor_schema.id
   destination_id                       = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.id
   destination_name                     = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_iot_db_database_motor_schema.name
@@ -94,7 +94,7 @@ data "aws_secretsmanager_secret_version" "production_manufacturing_iot_airbyte_u
   secret_id = data.aws_secretsmanager_secret.production_manufacturing_iot_airbyte_user_secret.id
 }
 module "manufacturing_airbyte_source_production_manufacturing_iot_db_database_dbo_schema" {
-  source                         = "../../../modules/airbyte/hm_airbyte_source_microsoft_sql_server"
+  source                         = "../../../modules/airbyte/airbyte_source_microsoft_sql_server"
   name                           = "production-manufacturing-iot-dbo"
   workspace_id                   = var.airbyte_workspace_id
   microsoft_sql_server_host      = "${var.environment}-hm-microsoft-sql-server.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com"
@@ -107,7 +107,7 @@ module "manufacturing_airbyte_source_production_manufacturing_iot_db_database_db
 }
 # Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: MANUFACTURING_IOT_DB_DBO
 module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_manufacturing_iot_dbo_schema" {
-  source                                = "../../../modules/airbyte/hm_airbyte_destination_snowflake"
+  source                                = "../../../modules/airbyte/airbyte_destination_snowflake"
   name                                  = "production-manufacturing-iot-dbo"
   workspace_id                          = var.airbyte_workspace_id
   snowflake_host                        = var.snowflake_host
@@ -123,7 +123,7 @@ module "hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_manuf
 # - Source - Microsoft SQL Server: production-hm-microsoft-sql-server | Database: iot_db | Schema: dbo
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: MANUFACTURING_IOT_DB_DBO
 module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_manufacturing_iot_dbo_schema" {
-  source                               = "../../../modules/airbyte/hm_airbyte_connection"
+  source                               = "../../../modules/airbyte/airbyte_connection"
   source_id                            = module.manufacturing_airbyte_source_production_manufacturing_iot_db_database_dbo_schema.id
   destination_id                       = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_manufacturing_iot_dbo_schema.id
   destination_name                     = module.hm_airbyte_destination_snowflake_production_hm_airbyte_db_database_manufacturing_iot_dbo_schema.name
@@ -149,7 +149,7 @@ module "hm_airbyte_connection_snowflake_production_hm_airbyte_db_database_manufa
 
 # Source - CSV: cities
 module "airbyte_source_csv_cities" {
-  source       = "../../../modules/airbyte/hm_airbyte_source_csv"
+  source       = "../../../modules/airbyte/airbyte_source_csv"
   name         = "cities"
   workspace_id = var.airbyte_workspace_id
   dataset_name = "cities"
@@ -157,7 +157,7 @@ module "airbyte_source_csv_cities" {
 }
 # Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_WORLD
 module "airbyte_destination_snowflake_hm_airbyte_db_database_engineering_world_schema" {
-  source                                = "../../../modules/airbyte/hm_airbyte_destination_snowflake"
+  source                                = "../../../modules/airbyte/airbyte_destination_snowflake"
   name                                  = "${var.environment}-engineering-world-cities"
   workspace_id                          = var.airbyte_workspace_id
   snowflake_host                        = var.snowflake_host
@@ -173,7 +173,7 @@ module "airbyte_destination_snowflake_hm_airbyte_db_database_engineering_world_s
 # - Source - CSV: cities
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_WORLD
 module "airbyte_connection_snowflake_hm_airbyte_db_database_engineering_world_schema" {
-  source                               = "../../../modules/airbyte/hm_airbyte_connection"
+  source                               = "../../../modules/airbyte/airbyte_connection"
   source_id                            = module.airbyte_source_csv_cities.id
   destination_id                       = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_world_schema.id
   destination_name                     = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_world_schema.name
@@ -200,7 +200,7 @@ data "aws_secretsmanager_secret_version" "hm_jira_secret_version" {
   secret_id = data.aws_secretsmanager_secret.hm_jira_secret.id
 }
 module "airbyte_source_jira" {
-  source              = "../../../modules/airbyte/hm_airbyte_source_jira"
+  source              = "../../../modules/airbyte/airbyte_source_jira"
   name                = "jira"
   workspace_id        = var.airbyte_workspace_id
   jira_domain         = "hongbomiao.atlassian.net"
@@ -209,7 +209,7 @@ module "airbyte_source_jira" {
 }
 # Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: ENGINEERING_JIRA
 module "airbyte_destination_snowflake_hm_airbyte_db_database_engineering_jira_schema" {
-  source                                = "../../../modules/airbyte/hm_airbyte_destination_snowflake"
+  source                                = "../../../modules/airbyte/airbyte_destination_snowflake"
   name                                  = "${var.environment}-engineering-jira"
   workspace_id                          = var.airbyte_workspace_id
   snowflake_host                        = var.snowflake_host
@@ -225,7 +225,7 @@ module "airbyte_destination_snowflake_hm_airbyte_db_database_engineering_jira_sc
 # - Source - Jira
 # - Destination - Snowflake | Database: PRODUCTION_HM_AIRBYTE_DB | Schema: JIRA
 module "airbyte_connection_snowflake_hm_airbyte_db_database_engineering_jira_schema" {
-  source                               = "../../../modules/airbyte/hm_airbyte_connection"
+  source                               = "../../../modules/airbyte/airbyte_connection"
   source_id                            = module.airbyte_source_jira.id
   destination_id                       = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_jira_schema.id
   destination_name                     = module.airbyte_destination_snowflake_hm_airbyte_db_database_engineering_jira_schema.name
