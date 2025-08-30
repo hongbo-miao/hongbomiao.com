@@ -127,7 +127,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "mlx-lm", specifier = "==0.26.4" }]
+requires-dist = [{ name = "mlx-lm", specifier = "==0.27.0" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -215,18 +215,21 @@ wheels = [
 
 [[package]]
 name = "mlx"
-version = "0.26.1"
+version = "0.29.0"
 source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "mlx-metal", marker = "sys_platform == 'darwin'" },
+]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a2/a7/871c451fe81274d37022a62f825c1dcd22b30e1f8bd2241f91d9f508c9b9/mlx-0.26.1-cp313-cp313-macosx_13_0_arm64.whl", hash = "sha256:ccd8662abad0f1340326412d6051c116fcb5c923c4d2a25ba1277ae65ab140dd", size = 32396333, upload-time = "2025-06-04T01:02:29.963Z" },
-    { url = "https://files.pythonhosted.org/packages/82/77/720bea5a67934b50372dfd5043864458f103743edcc7c30049e788ea3762/mlx-0.26.1-cp313-cp313-macosx_14_0_arm64.whl", hash = "sha256:0c113dd7c7ac13af6e39f0132d33a8dc78928e858ba8d18f8c89f8bfa694a358", size = 31871172, upload-time = "2025-06-04T01:03:05.075Z" },
-    { url = "https://files.pythonhosted.org/packages/15/4f/83f67bc4fe012dffffd2d96d2767b83fee9b2d7d185611d554ac659cfa4d/mlx-0.26.1-cp313-cp313-macosx_15_0_arm64.whl", hash = "sha256:2ec37131dbb06c0be78ce56b1731ddab6e56183012e7b83bea79b5329ef7d695", size = 31871791, upload-time = "2025-06-04T01:03:15.384Z" },
-    { url = "https://files.pythonhosted.org/packages/4f/fb/4123952002fd91f096ba07ce797b6bb6a32cc7a89c988565e261559f77dd/mlx-0.26.1-cp313-cp313-manylinux_2_31_x86_64.whl", hash = "sha256:db96a53466d8efc6cf2a2918b2d4e29cbf9f25174c838fb3c380c8717a40752f", size = 10120515, upload-time = "2025-06-06T23:07:38.428Z" },
+    { url = "https://files.pythonhosted.org/packages/de/8e/c11cbbcd61b2faad5aeec78fa3d326f47438dd3eccedeecfbc25a99f889c/mlx-0.29.0-cp313-cp313-macosx_13_0_arm64.whl", hash = "sha256:5a150c6097784b6f7a688f378f93daac7d3e87b5bf3ad357af19b364cb6845b8", size = 546440, upload-time = "2025-08-29T17:14:30.399Z" },
+    { url = "https://files.pythonhosted.org/packages/26/35/8443d8117a98b8a395723f83d4ccaae48c79e0d8a433a97213e8e51d02dc/mlx-0.29.0-cp313-cp313-macosx_14_0_arm64.whl", hash = "sha256:471817815dd0119fe646348f173f5a23a1fb112ea97aa346d988339978e2a248", size = 546438, upload-time = "2025-08-29T17:14:58.05Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/7a/1548b82c7d41614d472b9347dca66e56a0538c773a122d88e5a7dc117605/mlx-0.29.0-cp313-cp313-macosx_15_0_arm64.whl", hash = "sha256:c19e722a4ae74cdcddcbe6689a2c7d019b332e2209ba4afd84d498314bba025f", size = 546441, upload-time = "2025-08-29T17:14:02.171Z" },
+    { url = "https://files.pythonhosted.org/packages/42/ce/d8736d58e97e47d717cee0f1c01652aa6ca2318551683f5bd31c78d21487/mlx-0.29.0-cp313-cp313-manylinux_2_35_x86_64.whl", hash = "sha256:adf9eeb1829ebdff5c3c406ae6b50044b766354b10218c18d5f3304520a573cd", size = 644973, upload-time = "2025-08-29T17:18:05.83Z" },
 ]
 
 [[package]]
 name = "mlx-lm"
-version = "0.26.4"
+version = "0.27.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinja2" },
@@ -236,9 +239,19 @@ dependencies = [
     { name = "pyyaml" },
     { name = "transformers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/88/20/f3af9d99a5ad6ac42419a3d381290a28bf6d9899ed517a7ccc9fea08546e/mlx_lm-0.26.4.tar.gz", hash = "sha256:1bf21ede1d2d7b660ae312868790df9d73a8553dc50655cf7ae867a36ebcc08c", size = 176384, upload-time = "2025-08-25T15:57:41.723Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8c/4b/68a0b7cde71279ef47a3cbbbe663ea2007824d7ad93a19dc8a26ee68341a/mlx_lm-0.27.0.tar.gz", hash = "sha256:91da83708bc63e5985ff862bc1d66b1348e8af98baa8b7f873661661d8cabfd2", size = 178986, upload-time = "2025-08-29T18:00:07.404Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/de/6a/4d20d1b20cd690a3eeaf609c7cb9058f2d52c6d1081394f0d91bd12d08f7/mlx_lm-0.26.4-py3-none-any.whl", hash = "sha256:79bf3afb399ae3bb6073bf0fa6c04f33d70c831ccc6bbbc206c10567d4eef162", size = 242038, upload-time = "2025-08-25T15:57:40.181Z" },
+    { url = "https://files.pythonhosted.org/packages/82/9a/5d27af907b579495c5bbff3f42a4dbbe5834aaa62db1cd5f50465fa28a3d/mlx_lm-0.27.0-py3-none-any.whl", hash = "sha256:296e2fdd331db11fa14652161eca3622b2311439309b639d0832dec33fb47d55", size = 245622, upload-time = "2025-08-29T18:00:06.077Z" },
+]
+
+[[package]]
+name = "mlx-metal"
+version = "0.29.0"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/08/28/3fb942b27d53061cacd12883629e5c48821f9e661f01210f55d89dabe3a6/mlx_metal-0.29.0-py3-none-macosx_13_0_arm64.whl", hash = "sha256:7e8279851504a8394122497d491276db37ef85d29f2f54d8a711ac90edfef7bf", size = 34964891, upload-time = "2025-08-29T17:16:35.72Z" },
+    { url = "https://files.pythonhosted.org/packages/6d/82/582555232044bbdc0d74186077bcd79f1ce45f07a79e49b36afc25f9e313/mlx_metal-0.29.0-py3-none-macosx_14_0_arm64.whl", hash = "sha256:674fc7df4b9502dffe56c92cc95bae3a44950c70aa50f5b53291f228cfbbb631", size = 34694819, upload-time = "2025-08-29T17:16:32.636Z" },
+    { url = "https://files.pythonhosted.org/packages/30/d6/b3fc6d07b9bc814551078e53438ebfae8e44c47e4e5f762df244150e4e3a/mlx_metal-0.29.0-py3-none-macosx_15_0_arm64.whl", hash = "sha256:f69eb71128dcc55b5d9baa7606c31641bdd214b859d809deac51be4248d6fddb", size = 34685946, upload-time = "2025-08-29T17:15:25.028Z" },
 ]
 
 [[package]]
