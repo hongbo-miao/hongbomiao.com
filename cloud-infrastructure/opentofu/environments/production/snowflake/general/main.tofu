@@ -10,7 +10,7 @@ data "terraform_remote_state" "hm_terraform_remote_state_snowflake_data" {
 # Department warehouse
 module "department_wh_warehouse" {
   providers                = { snowflake = snowflake.opentofu_role }
-  source                   = "../../../../modules/snowflake/hm_snowflake_warehouse"
+  source                   = "../../../../modules/snowflake/snowflake_warehouse"
   snowflake_warehouse_name = "${var.environment}_DEPARTMENT_WH"
   snowflake_warehouse_size = "xsmall"
   auto_suspend_min         = var.department_warehouse_auto_suspend_min
@@ -73,13 +73,13 @@ locals {
 # Department role - read only role
 module "department_db_schema_read_only_role" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_account_role"
+  source              = "../../../../modules/snowflake/snowflake_account_role"
   for_each            = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
 }
 module "grant_database_privileges_to_department_db_schema_read_only_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_database_privileges_to_role"
   for_each                = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name     = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   privileges              = ["USAGE"]
@@ -90,7 +90,7 @@ module "grant_database_privileges_to_department_db_schema_read_only_role" {
 }
 module "grant_schema_privileges_to_department_db_schema_read_only_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_schema_privileges_to_role"
   for_each                = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name     = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   privileges              = ["USAGE"]
@@ -102,7 +102,7 @@ module "grant_schema_privileges_to_department_db_schema_read_only_role" {
 }
 module "grant_table_in_schema_privileges_to_department_db_schema_read_only_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_table_in_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_table_in_schema_privileges_to_role"
   for_each                = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name     = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   privileges              = ["SELECT"]
@@ -114,7 +114,7 @@ module "grant_table_in_schema_privileges_to_department_db_schema_read_only_role"
 }
 module "grant_view_in_schema_privileges_to_department_db_schema_read_only_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_view_in_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_view_in_schema_privileges_to_role"
   for_each                = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name     = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   privileges              = ["SELECT"]
@@ -126,7 +126,7 @@ module "grant_view_in_schema_privileges_to_department_db_schema_read_only_role" 
 }
 module "grant_warehouse_privileges_to_department_db_schema_read_only_role" {
   providers                = { snowflake = snowflake.opentofu_role }
-  source                   = "../../../../modules/snowflake/hm_snowflake_grant_warehouse_privileges_to_role"
+  source                   = "../../../../modules/snowflake/snowflake_grant_warehouse_privileges_to_role"
   for_each                 = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name      = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   privileges               = ["USAGE"]
@@ -138,7 +138,7 @@ module "grant_warehouse_privileges_to_department_db_schema_read_only_role" {
 }
 module "grant_department_db_schema_read_only_role_to_department_db_schema_read_only_user" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
+  source              = "../../../../modules/snowflake/snowflake_grant_role_to_user"
   for_each            = { for x in local.department_db_department_name_schema_name_read_only_user_name_list : "${x.department_name}.${x.schema_name}.${x.read_only_user_name}" => x }
   snowflake_role_name = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   snowflake_user_name = each.value.read_only_user_name
@@ -149,7 +149,7 @@ module "grant_department_db_schema_read_only_role_to_department_db_schema_read_o
 # Department role - read only service account
 module "department_db_schema_read_only_service_account" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_user"
+  source              = "../../../../modules/snowflake/snowflake_user"
   for_each            = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.read_only_service_account_rsa_public_key}" => x if x.read_only_service_account_rsa_public_key != null }
   snowflake_user_name = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_SERVICE_ACCOUNT"
   default_role        = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
@@ -162,13 +162,13 @@ module "department_db_schema_read_only_service_account" {
 # Department role - read write role
 module "department_db_schema_read_write_role" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_account_role"
+  source              = "../../../../modules/snowflake/snowflake_account_role"
   for_each            = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
 }
 module "grant_schema_privileges_to_department_db_schema_read_write_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_schema_privileges_to_role"
   for_each                = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name     = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
   privileges              = ["CREATE TABLE", "CREATE VIEW"]
@@ -180,7 +180,7 @@ module "grant_schema_privileges_to_department_db_schema_read_write_role" {
 }
 module "grant_table_in_schema_privileges_to_department_db_schema_read_write_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_table_in_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_table_in_schema_privileges_to_role"
   for_each                = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name     = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
   privileges              = ["INSERT", "UPDATE", "DELETE"]
@@ -192,7 +192,7 @@ module "grant_table_in_schema_privileges_to_department_db_schema_read_write_role
 }
 module "grant_view_in_schema_privileges_to_department_db_schema_read_write_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_view_in_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_view_in_schema_privileges_to_role"
   for_each                = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name     = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
   privileges              = ["INSERT", "UPDATE", "DELETE"]
@@ -204,7 +204,7 @@ module "grant_view_in_schema_privileges_to_department_db_schema_read_write_role"
 }
 module "grant_department_db_schema_read_only_role_to_department_db_schema_read_write_role" {
   providers                    = { snowflake = snowflake.opentofu_role }
-  source                       = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
+  source                       = "../../../../modules/snowflake/snowflake_grant_role_to_role"
   for_each                     = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name          = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_ONLY_ROLE"
   snowflake_grant_to_role_name = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
@@ -215,7 +215,7 @@ module "grant_department_db_schema_read_only_role_to_department_db_schema_read_w
 }
 module "grant_department_db_schema_read_write_role_to_department_db_schema_read_write_user" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
+  source              = "../../../../modules/snowflake/snowflake_grant_role_to_user"
   for_each            = { for x in local.department_db_department_name_schema_name_read_write_user_name_list : "${x.department_name}.${x.schema_name}.${x.read_write_user_name}" => x }
   snowflake_role_name = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
   snowflake_user_name = each.value.read_write_user_name
@@ -226,7 +226,7 @@ module "grant_department_db_schema_read_write_role_to_department_db_schema_read_
 # Department role - read write service account
 module "department_db_schema_read_write_service_account" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_user"
+  source              = "../../../../modules/snowflake/snowflake_user"
   for_each            = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.read_write_service_account_rsa_public_key}" => x if x.read_write_service_account_rsa_public_key != null }
   snowflake_user_name = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_SERVICE_ACCOUNT"
   default_role        = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
@@ -239,13 +239,13 @@ module "department_db_schema_read_write_service_account" {
 # Department role - admin role
 module "department_db_admin_role" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_account_role"
+  source              = "../../../../modules/snowflake/snowflake_account_role"
   for_each            = local.department_db_department_names
   snowflake_role_name = "${var.environment}_${each.value}_DB_ADMIN_ROLE"
 }
 module "grant_database_all_privileges_to_role_to_department_db_admin_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_all_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_database_all_privileges_to_role"
   for_each                = local.department_db_department_names
   snowflake_role_name     = "${var.environment}_${each.value}_DB_ADMIN_ROLE"
   snowflake_database_name = "${var.environment}_${each.value}_DB"
@@ -255,7 +255,7 @@ module "grant_database_all_privileges_to_role_to_department_db_admin_role" {
 }
 module "grant_schema_all_privileges_to_role_to_department_db_admin_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_all_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_schema_all_privileges_to_role"
   for_each                = local.department_db_department_names
   snowflake_role_name     = "${var.environment}_${each.value}_DB_ADMIN_ROLE"
   snowflake_database_name = "${var.environment}_${each.value}_DB"
@@ -265,7 +265,7 @@ module "grant_schema_all_privileges_to_role_to_department_db_admin_role" {
 }
 module "grant_table_all_privileges_to_role_to_department_db_admin_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_table_all_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_table_all_privileges_to_role"
   for_each                = local.department_db_department_names
   snowflake_role_name     = "${var.environment}_${each.value}_DB_ADMIN_ROLE"
   snowflake_database_name = "${var.environment}_${each.value}_DB"
@@ -275,7 +275,7 @@ module "grant_table_all_privileges_to_role_to_department_db_admin_role" {
 }
 module "grant_view_all_privileges_to_role_to_department_db_admin_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_view_all_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_view_all_privileges_to_role"
   for_each                = local.department_db_department_names
   snowflake_role_name     = "${var.environment}_${each.value}_DB_ADMIN_ROLE"
   snowflake_database_name = "${var.environment}_${each.value}_DB"
@@ -285,7 +285,7 @@ module "grant_view_all_privileges_to_role_to_department_db_admin_role" {
 }
 module "grant_department_db_schema_read_write_role_to_department_db_admin_role" {
   providers                    = { snowflake = snowflake.opentofu_role }
-  source                       = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
+  source                       = "../../../../modules/snowflake/snowflake_grant_role_to_role"
   for_each                     = { for x in local.department_db_department_name_schema_name_list : "${x.department_name}.${x.schema_name}" => x }
   snowflake_role_name          = "${var.environment}_${each.value.department_name}_DB_${each.value.schema_name}_READ_WRITE_ROLE"
   snowflake_grant_to_role_name = "${var.environment}_${each.value.department_name}_DB_ADMIN_ROLE"
@@ -296,7 +296,7 @@ module "grant_department_db_schema_read_write_role_to_department_db_admin_role" 
 }
 module "grant_department_db_schema_admin_role_to_department_db_schema_admin_user" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
+  source              = "../../../../modules/snowflake/snowflake_grant_role_to_user"
   for_each            = { for x in local.department_db_department_name_admin_user_name_list : "${x.department_name}.${x.admin_user_name}" => x }
   snowflake_role_name = "${var.environment}_${each.value.department_name}_DB_ADMIN_ROLE"
   snowflake_user_name = each.value.admin_user_name
@@ -308,7 +308,7 @@ module "grant_department_db_schema_admin_role_to_department_db_schema_admin_user
 # HM Airbyte warehouse
 module "hm_airbyte_wh_warehouse" {
   providers                = { snowflake = snowflake.opentofu_role }
-  source                   = "../../../../modules/snowflake/hm_snowflake_warehouse"
+  source                   = "../../../../modules/snowflake/snowflake_warehouse"
   snowflake_warehouse_name = "${var.environment}_HM_AIRBYTE_WH"
   snowflake_warehouse_size = "xsmall"
   auto_suspend_min         = var.airbyte_warehouse_auto_suspend_min
@@ -317,12 +317,12 @@ module "hm_airbyte_wh_warehouse" {
 # https://docs.airbyte.com/integrations/destinations/snowflake
 module "hm_airbyte_db_owner_role" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_account_role"
+  source              = "../../../../modules/snowflake/snowflake_account_role"
   snowflake_role_name = "${var.environment}_HM_AIRBYTE_DB_OWNER_ROLE"
 }
 module "snowflake_transfer_hm_airbyte_db_ownership_to_hm_airbyte_db_owner_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_transfer_database_ownership_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_transfer_database_ownership_to_role"
   snowflake_database_name = "${var.environment}_HM_AIRBYTE_DB"
   snowflake_role_name     = module.hm_airbyte_db_owner_role.name
   depends_on = [
@@ -332,7 +332,7 @@ module "snowflake_transfer_hm_airbyte_db_ownership_to_hm_airbyte_db_owner_role" 
 # HM Airbyte role - owner service account
 module "hm_airbyte_db_owner_service_account" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_user"
+  source              = "../../../../modules/snowflake/snowflake_user"
   snowflake_user_name = "${var.environment}_HM_AIRBYTE_DB_OWNER_SERVICE_ACCOUNT"
   default_role        = module.hm_airbyte_db_owner_role.name
   default_warehouse   = module.hm_airbyte_wh_warehouse.name
@@ -343,7 +343,7 @@ module "hm_airbyte_db_owner_service_account" {
 }
 module "grant_hm_airbyte_db_owner_role_to_hm_airbyte_db_owner_service_account" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
+  source              = "../../../../modules/snowflake/snowflake_grant_role_to_user"
   snowflake_role_name = module.hm_airbyte_db_owner_role.name
   snowflake_user_name = module.hm_airbyte_db_owner_service_account.name
   depends_on = [
@@ -355,7 +355,7 @@ module "grant_hm_airbyte_db_owner_role_to_hm_airbyte_db_owner_service_account" {
 # HM Kafka warehouse
 module "hm_kafka_wh_warehouse" {
   providers                = { snowflake = snowflake.opentofu_role }
-  source                   = "../../../../modules/snowflake/hm_snowflake_warehouse"
+  source                   = "../../../../modules/snowflake/snowflake_warehouse"
   snowflake_warehouse_name = "${var.environment}_HM_KAFKA_WH"
   snowflake_warehouse_size = "xsmall"
   auto_suspend_min         = var.kafka_warehouse_auto_suspend_min
@@ -374,13 +374,13 @@ locals {
 # HM Kafka role - read only role
 module "hm_kafka_db_department_read_only_role" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_account_role"
+  source              = "../../../../modules/snowflake/snowflake_account_role"
   for_each            = local.hm_kafka_db_department_names
   snowflake_role_name = "${var.environment}_HM_KAFKA_DB_${each.value}_READ_ONLY_ROLE"
 }
 module "grant_database_privileges_to_hm_kafka_db_department_read_only_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_database_privileges_to_role"
   for_each                = local.hm_kafka_db_department_names
   snowflake_role_name     = "${var.environment}_HM_KAFKA_DB_${each.value}_READ_ONLY_ROLE"
   privileges              = ["USAGE"]
@@ -391,7 +391,7 @@ module "grant_database_privileges_to_hm_kafka_db_department_read_only_role" {
 }
 module "grant_schema_privileges_to_hm_kafka_db_department_read_only_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_schema_privileges_to_role"
   for_each                = local.hm_kafka_db_department_names
   snowflake_role_name     = "${var.environment}_HM_KAFKA_DB_${each.value}_READ_ONLY_ROLE"
   privileges              = ["USAGE"]
@@ -403,7 +403,7 @@ module "grant_schema_privileges_to_hm_kafka_db_department_read_only_role" {
 }
 module "grant_warehouse_privileges_to_hm_kafka_db_department_read_only_role" {
   providers                = { snowflake = snowflake.opentofu_role }
-  source                   = "../../../../modules/snowflake/hm_snowflake_grant_warehouse_privileges_to_role"
+  source                   = "../../../../modules/snowflake/snowflake_grant_warehouse_privileges_to_role"
   for_each                 = local.hm_kafka_db_department_names
   snowflake_role_name      = "${var.environment}_HM_KAFKA_DB_${each.value}_READ_ONLY_ROLE"
   privileges               = ["USAGE"]
@@ -416,14 +416,14 @@ module "grant_warehouse_privileges_to_hm_kafka_db_department_read_only_role" {
 # HM Kafka role - read write role
 module "hm_kafka_db_department_read_write_role" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_account_role"
+  source              = "../../../../modules/snowflake/snowflake_account_role"
   for_each            = local.hm_kafka_db_department_names
   snowflake_role_name = "${var.environment}_HM_KAFKA_DB_${each.value}_READ_WRITE_ROLE"
 }
 # https://docs.snowflake.com/en/user-guide/kafka-connector-install
 module "grant_schema_privileges_to_hm_kafka_db_department_read_write_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_schema_privileges_to_role"
   for_each                = local.hm_kafka_db_department_names
   snowflake_role_name     = "${var.environment}_HM_KAFKA_DB_${each.value}_READ_WRITE_ROLE"
   privileges              = ["CREATE TABLE", "CREATE STAGE", "CREATE PIPE"]
@@ -435,7 +435,7 @@ module "grant_schema_privileges_to_hm_kafka_db_department_read_write_role" {
 }
 module "grant_hm_kafka_db_department_read_only_role_to_hm_kafka_db_department_read_write_role" {
   providers                    = { snowflake = snowflake.opentofu_role }
-  source                       = "../../../../modules/snowflake/hm_snowflake_grant_role_to_role"
+  source                       = "../../../../modules/snowflake/snowflake_grant_role_to_role"
   for_each                     = local.hm_kafka_db_department_names
   snowflake_role_name          = "${var.environment}_HM_KAFKA_DB_${each.value}_READ_ONLY_ROLE"
   snowflake_grant_to_role_name = "${var.environment}_HM_KAFKA_DB_${each.value}_READ_WRITE_ROLE"
@@ -447,7 +447,7 @@ module "grant_hm_kafka_db_department_read_only_role_to_hm_kafka_db_department_re
 # HM Kafka role - read write service account
 module "hm_kafka_db_department_read_write_service_account" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_user"
+  source              = "../../../../modules/snowflake/snowflake_user"
   for_each            = { for x in local.hm_kafka_db_department_name_read_write_service_account_rsa_public_key_list : "${x.department_name}.${x.read_write_service_account_rsa_public_key}" => x }
   snowflake_user_name = "${var.environment}_HM_KAFKA_DB_${each.value.department_name}_READ_WRITE_SERVICE_ACCOUNT"
   default_role        = "${var.environment}_HM_KAFKA_DB_${each.value.department_name}_READ_WRITE_ROLE"
@@ -459,7 +459,7 @@ module "hm_kafka_db_department_read_write_service_account" {
 }
 module "grant_hm_kafka_db_department_read_write_role_to_hm_kafka_db_department_read_write_service_account" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
+  source              = "../../../../modules/snowflake/snowflake_grant_role_to_user"
   for_each            = local.hm_kafka_db_department_names
   snowflake_role_name = "${var.environment}_HM_KAFKA_DB_${each.value}_READ_WRITE_ROLE"
   snowflake_user_name = "${var.environment}_HM_KAFKA_DB_${each.value}_READ_WRITE_SERVICE_ACCOUNT"
@@ -472,7 +472,7 @@ module "grant_hm_kafka_db_department_read_write_role_to_hm_kafka_db_department_r
 # HM Streamlit warehouse
 module "hm_streamlit_wh_warehouse" {
   providers                = { snowflake = snowflake.opentofu_role }
-  source                   = "../../../../modules/snowflake/hm_snowflake_warehouse"
+  source                   = "../../../../modules/snowflake/snowflake_warehouse"
   snowflake_warehouse_name = "${var.environment}_HM_STREAMLIT_WH"
   snowflake_warehouse_size = "xsmall"
   auto_suspend_min         = var.streamlit_warehouse_auto_suspend_min
@@ -503,13 +503,13 @@ locals {
 }
 module "hm_streamlit_db_department_creator_role" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_account_role"
+  source              = "../../../../modules/snowflake/snowflake_account_role"
   for_each            = local.hm_streamlit_db_department_names
   snowflake_role_name = "${var.environment}_HM_STREAMLIT_DB_${each.value}_CREATOR_ROLE"
 }
 module "grant_database_privileges_to_hm_streamlit_db_creator_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_database_privileges_to_role"
   for_each                = local.hm_streamlit_db_department_names
   snowflake_role_name     = "${var.environment}_HM_STREAMLIT_DB_${each.value}_CREATOR_ROLE"
   privileges              = ["USAGE"]
@@ -520,7 +520,7 @@ module "grant_database_privileges_to_hm_streamlit_db_creator_role" {
 }
 module "grant_schema_privileges_to_hm_streamlit_db_creator_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_schema_privileges_to_role"
   for_each                = local.hm_streamlit_db_department_names
   snowflake_role_name     = "${var.environment}_HM_STREAMLIT_DB_${each.value}_CREATOR_ROLE"
   privileges              = ["USAGE", "CREATE STREAMLIT", "CREATE STAGE"]
@@ -532,7 +532,7 @@ module "grant_schema_privileges_to_hm_streamlit_db_creator_role" {
 }
 module "grant_hm_streamlit_db_schema_creator_role_to_user" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
+  source              = "../../../../modules/snowflake/snowflake_grant_role_to_user"
   for_each            = { for x in local.hm_streamlit_db_department_name_creator_name_list : "${x.department_name}.${x.creator_name}" => x }
   snowflake_role_name = "${var.environment}_HM_STREAMLIT_DB_${each.value.department_name}_CREATOR_ROLE"
   snowflake_user_name = each.value.creator_name
@@ -542,7 +542,7 @@ module "grant_hm_streamlit_db_schema_creator_role_to_user" {
 }
 module "grant_warehouse_privileges_to_hm_streamlit_db_department_creator_role" {
   providers                = { snowflake = snowflake.opentofu_role }
-  source                   = "../../../../modules/snowflake/hm_snowflake_grant_warehouse_privileges_to_role"
+  source                   = "../../../../modules/snowflake/snowflake_grant_warehouse_privileges_to_role"
   for_each                 = local.hm_streamlit_db_department_names
   snowflake_role_name      = "${var.environment}_HM_STREAMLIT_DB_${each.value}_CREATOR_ROLE"
   privileges               = ["USAGE"]
@@ -555,13 +555,13 @@ module "grant_warehouse_privileges_to_hm_streamlit_db_department_creator_role" {
 # HM Streamlit role - user role
 module "hm_streamlit_db_department_user_role" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_account_role"
+  source              = "../../../../modules/snowflake/snowflake_account_role"
   for_each            = local.hm_streamlit_db_department_names
   snowflake_role_name = "${var.environment}_HM_STREAMLIT_DB_${each.value}_USER_ROLE"
 }
 module "grant_database_privileges_to_hm_streamlit_db_user_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_database_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_database_privileges_to_role"
   for_each                = local.hm_streamlit_db_department_names
   snowflake_role_name     = "${var.environment}_HM_STREAMLIT_DB_${each.value}_USER_ROLE"
   privileges              = ["USAGE"]
@@ -572,7 +572,7 @@ module "grant_database_privileges_to_hm_streamlit_db_user_role" {
 }
 module "grant_schema_privileges_to_hm_streamlit_db_user_role" {
   providers               = { snowflake = snowflake.opentofu_role }
-  source                  = "../../../../modules/snowflake/hm_snowflake_grant_schema_privileges_to_role"
+  source                  = "../../../../modules/snowflake/snowflake_grant_schema_privileges_to_role"
   for_each                = local.hm_streamlit_db_department_names
   snowflake_role_name     = "${var.environment}_HM_STREAMLIT_DB_${each.value}_USER_ROLE"
   privileges              = ["USAGE"]
@@ -584,7 +584,7 @@ module "grant_schema_privileges_to_hm_streamlit_db_user_role" {
 }
 module "grant_hm_streamlit_db_schema_user_role_to_user" {
   providers           = { snowflake = snowflake.opentofu_role }
-  source              = "../../../../modules/snowflake/hm_snowflake_grant_role_to_user"
+  source              = "../../../../modules/snowflake/snowflake_grant_role_to_user"
   for_each            = { for x in local.hm_streamlit_db_department_name_user_name_list : "${x.department_name}.${x.user_name}" => x }
   snowflake_role_name = "${var.environment}_HM_STREAMLIT_DB_${each.value.department_name}_USER_ROLE"
   snowflake_user_name = each.value.user_name
@@ -594,7 +594,7 @@ module "grant_hm_streamlit_db_schema_user_role_to_user" {
 }
 module "grant_warehouse_privileges_to_hm_streamlit_db_department_user_role" {
   providers                = { snowflake = snowflake.opentofu_role }
-  source                   = "../../../../modules/snowflake/hm_snowflake_grant_warehouse_privileges_to_role"
+  source                   = "../../../../modules/snowflake/snowflake_grant_warehouse_privileges_to_role"
   for_each                 = local.hm_streamlit_db_department_names
   snowflake_role_name      = "${var.environment}_HM_STREAMLIT_DB_${each.value}_USER_ROLE"
   privileges               = ["USAGE"]
