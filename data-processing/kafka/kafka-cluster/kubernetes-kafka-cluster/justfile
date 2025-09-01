@@ -50,7 +50,7 @@ kubernetes-kafka-topic-consume-from-beginning:
 kubernetes-kafka-avro-console-produce:
     kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
         kafka-avro-console-producer \
-            --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
+            --bootstrap-server=kafka-kafka-bootstrap.hm-kafka.svc:9092 \
             --topic=my-avro-topic \
             --property=schema.registry.url=http://localhost:8081 \
             --property=value.schema='{"type": "record", "name": "myrecord", "fields": [{"name": "f1", "type": "string"}]}'
@@ -59,14 +59,14 @@ kubernetes-kafka-avro-console-produce:
 kubernetes-kafka-avro-console-consume:
     kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
         kafka-avro-console-consumer \
-            --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
+            --bootstrap-server=kafka-kafka-bootstrap.hm-kafka.svc:9092 \
             --topic=my-avro-topic \
             --property=schema.registry.url=http://localhost:8081
 
 kubernetes-kafka-avro-console-consumer-from-beginning:
     kubectl exec confluent-schema-registry-0 --namespace=hm-confluent-schema-registry --stdin --tty -- \
         kafka-avro-console-consumer \
-            --bootstrap-server=hm-kafka-kafka-bootstrap.hm-kafka.svc:9092 \
+            --bootstrap-server=kafka-kafka-bootstrap.hm-kafka.svc:9092 \
             --topic=my-avro-topic \
             --property=schema.registry.url=http://localhost:8081 \
             --from-beginning
