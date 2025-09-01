@@ -16,7 +16,6 @@ jobs:
   detect-changes:
     name: Detect Changes
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     permissions:
       pull-requests: read
@@ -1186,7 +1185,6 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-genesis == 'true' }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -1220,7 +1218,6 @@ jobs:
     if: ${{ false }}
     # if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.call-matlab-function-in-python == 'true' }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -1257,7 +1254,6 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.arrow-flight-client == 'true' }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -1289,7 +1285,6 @@ jobs:
     name: UDP Sender | Test
     if: ${{ inputs.workflow || inputs.arrow-flight-server }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -1316,7 +1311,6 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.rti-connext-dds == 'true' }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -1349,7 +1343,6 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-xxhash == 'true' }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -1382,7 +1375,6 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -1401,7 +1393,6 @@ jobs:
     if: ${{ false }}
     # if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.robot-operating-system == 'true' }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 20
     container:
       image: ubuntu:noble
@@ -1423,7 +1414,6 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-opal-client == 'true' }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -1442,7 +1432,6 @@ jobs:
     name: Code Review
     if: ${{ false }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     permissions:
       contents: read
