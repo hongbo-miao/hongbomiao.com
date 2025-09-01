@@ -24,7 +24,6 @@ jobs:
     name: Mobile - Android | Lint
     if: ${{ inputs.workflow || inputs.mobile-android }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -45,7 +44,6 @@ jobs:
     name: Mobile - Android | Test
     if: ${{ inputs.workflow || inputs.mobile-android }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -68,7 +66,6 @@ jobs:
     # Ubuntu displays the message: "You're running a Linux VM where hardware acceleration is not available. Please consider using a macOS VM instead to take advantage of native hardware acceleration support provided by HAXM."
     # https://github.com/ReactiveCircus/android-emulator-runner#a-note-on-vm-acceleration-and-why-we-dont-need-haxm-anymore
     runs-on: macos-13
-    environment: test
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -93,7 +90,6 @@ jobs:
     name: Mobile - iOS | Test
     if: ${{ inputs.workflow || inputs.mobile-ios }}
     runs-on: macos-14
-    environment: test
     timeout-minutes: 90
     env:
       # To use a Gemfile which is not at the root
@@ -142,7 +138,6 @@ jobs:
     name: Mobile - React Native | Test
     if: ${{ inputs.workflow || inputs.mobile-react-native }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout

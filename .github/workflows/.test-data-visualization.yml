@@ -45,7 +45,6 @@ jobs:
     name: Grafana (hm-dashboard) | Test
     if: ${{ inputs.workflow || inputs.grafana-hm-dashboard }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -77,7 +76,6 @@ jobs:
     name: Grafana (hm-panel-plugin) | Test
     if: ${{ inputs.workflow || inputs.grafana-hm-panel-plugin }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -105,7 +103,6 @@ jobs:
     name: PyGWalker | Test
     if: ${{ inputs.workflow || inputs.hm-pygwalker }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -137,7 +134,6 @@ jobs:
     name: Plotly (heatmap) | Test
     if: ${{ inputs.workflow || inputs.plotly-heatmap }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -169,7 +165,6 @@ jobs:
     name: Dash (csv-visualizer) | Test
     if: ${{ inputs.workflow || inputs.hm-dash-csv-visualizer }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -201,7 +196,6 @@ jobs:
     name: Dash (parquet-visualizer) | Test
     if: ${{ inputs.workflow || inputs.hm-dash-parquet-visualizer }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -233,7 +227,6 @@ jobs:
     name: IADS (iads-config-reader) | Test
     if: ${{ inputs.workflow || inputs.iads-config-reader }}
     runs-on: windows-2025
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -265,7 +258,6 @@ jobs:
     name: IADS (iads-data-reader) | Test
     if: ${{ inputs.workflow || inputs.iads-data-reader }}
     runs-on: windows-2025
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -297,7 +289,6 @@ jobs:
     name: IADS (iads-data-producer) | Test
     if: ${{ inputs.workflow || inputs.iads-data-producer }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -317,7 +308,6 @@ jobs:
     name: IADS (zeromq-iads-bridge) | Test
     if: ${{ inputs.workflow || inputs.zeromq-iads-bridge }}
     runs-on: windows-2025
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
