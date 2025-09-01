@@ -14,7 +14,7 @@ spec:
       targetRevision: 0.25.1
       chart: akhq
       helm:
-        releaseName: hm-akhq
+        releaseName: akhq
         values: |
           # https://github.com/tchiotludo/akhq/blob/dev/helm/akhq/values.yaml
           ---
@@ -32,7 +32,7 @@ spec:
                     sasl.client.callback.handler.class: software.amazon.msk.auth.iam.IAMClientCallbackHandler
                   schema-registry:
                     type: confluent
-                    url: http://hm-confluent-schema-registry-service.production-hm-confluent-schema-registry.svc:8081
+                    url: http://confluent-schema-registry-service.production-hm-confluent-schema-registry.svc:8081
           serviceAccount:
             create: true
             annotations:

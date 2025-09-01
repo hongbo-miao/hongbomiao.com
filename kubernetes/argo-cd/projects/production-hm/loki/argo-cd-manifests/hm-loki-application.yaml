@@ -14,7 +14,7 @@ spec:
       targetRevision: 6.27.0
       chart: loki
       helm:
-        releaseName: hm-loki
+        releaseName: loki
         values: |
           # https://github.com/grafana/loki/blob/main/production/helm/loki/values.yaml
           # https://github.com/grafana/loki/blob/main/production/helm/loki/distributed-values.yaml
@@ -86,7 +86,7 @@ spec:
                   region: us-west-2
                   bucketnames: production-hm-loki-ruler-bucket
                   s3forcepathstyle: false
-                alertmanager_url: http://hm-prometheus-kube-pr-alertmanager.production-hm-prometheus:9093
+                alertmanager_url: http://prometheus-kube-pr-alertmanager.production-hm-prometheus:9093
             storage:
               type: s3
               s3:
