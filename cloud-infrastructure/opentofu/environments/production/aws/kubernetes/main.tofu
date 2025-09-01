@@ -2,7 +2,7 @@ data "terraform_remote_state" "production_aws_network_terraform_remote_state" {
   backend = "s3"
   config = {
     region = "us-west-2"
-    bucket = "hm-opentofu-bucket"
+    bucket = "production-hm-opentofu-bucket"
     key    = "production/aws/network/terraform.tfstate"
   }
 }
@@ -257,7 +257,7 @@ module "argo_cd_helm_chart" {
   source              = "../../../../modules/kubernetes/helm_chart"
   repository          = "https://argoproj.github.io/argo-helm"
   chart_name          = "argo-cd"
-  chart_version       = "7.3.5" # https://artifacthub.io/packages/helm/argo/argo-cd
+  chart_version       = "8.3.1" # https://artifacthub.io/packages/helm/argo/argo-cd
   release_name        = "argo-cd"
   namespace           = module.kubernetes_namespace_hm_argo_cd.namespace
   my_values_yaml_path = "files/argo-cd/helm/my-values.yaml"
