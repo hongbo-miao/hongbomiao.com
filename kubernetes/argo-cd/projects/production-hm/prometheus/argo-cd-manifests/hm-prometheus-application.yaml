@@ -14,7 +14,7 @@ spec:
     targetRevision: 68.3.2
     chart: kube-prometheus-stack
     helm:
-      releaseName: hm-prometheus
+      releaseName: prometheus
       values: |
         # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
         ---
@@ -60,7 +60,7 @@ spec:
           prometheusSpec:
             # https://grafana.com/docs/grafana-cloud/monitor-infrastructure/kubernetes-monitoring/configuration/config-other-methods/prometheus/remote-write-helm-operator/#create-a-helm-values-file-with-prometheus-remote_write-configuration
             remoteWrite:
-              - url: http://hm-mimir-distributor-headless.production-hm-mimir.svc:8080/api/v1/push
+              - url: http://mimir-distributor-headless.production-hm-mimir.svc:8080/api/v1/push
                 headers:
                   X-Scope-OrgID: hm
             tsdb:
