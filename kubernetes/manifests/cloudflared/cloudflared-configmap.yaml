@@ -34,7 +34,7 @@ data:
     # The first rule proxies traffic to the httpbin sample Service defined in app.yaml
     # Elastic
     - hostname: elasticsearch.hongbomiao.com
-      service: https://hm-elasticsearch-es-http.hm-elastic.svc:9200
+      service: https://elasticsearch-es-http.hm-elastic.svc:9200
       originRequest:
         noTLSVerify: true
     # Grafana
@@ -45,7 +45,7 @@ data:
       service: http://influxdb.hm-influxdb.svc:8086
     # Kibana
     - hostname: kibana.hongbomiao.com
-      service: https://hm-kibana-kb-http.hm-elastic.svc:5601
+      service: https://kibana-kb-http.hm-elastic.svc:5601
       originRequest:
         noTLSVerify: true
     # Kubeflow
