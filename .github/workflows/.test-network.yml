@@ -21,7 +21,6 @@ jobs:
     name: UDP Receiver | Test
     if: ${{ inputs.workflow || inputs.udp-receiver }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -47,7 +46,6 @@ jobs:
     name: UDP Sender | Test
     if: ${{ inputs.workflow || inputs.udp-sender }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout

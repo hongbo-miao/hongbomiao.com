@@ -24,7 +24,6 @@ jobs:
     name: Web | Test
     if: ${{ inputs.workflow || inputs.web }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -52,7 +51,6 @@ jobs:
     name: Web | End-to-End Test
     if: ${{ inputs.workflow || inputs.api-node || inputs.web || inputs.web-cypress }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -91,7 +89,6 @@ jobs:
     name: Web | Lighthouse
     if: ${{ inputs.workflow || inputs.web }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -122,7 +119,6 @@ jobs:
     name: Web | Visual Test
     if: ${{ inputs.workflow || inputs.web }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 20
     steps:
       - name: Checkout
