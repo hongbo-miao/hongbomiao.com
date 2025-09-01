@@ -48,7 +48,6 @@ jobs:
     name: CuPy | Test
     if: ${{ inputs.workflow || inputs.hm-cupy }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -80,7 +79,6 @@ jobs:
     name: Numba | Test
     if: ${{ inputs.workflow || inputs.hm-numba }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -112,7 +110,6 @@ jobs:
     name: pandas (analyze-transactions) | Test
     if: ${{ inputs.workflow || inputs.hm-pandas-analyze-transactions }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -144,7 +141,6 @@ jobs:
     name: cuDF (analyze-transactions) | Test
     if: ${{ inputs.workflow || inputs.hm-cudf-analyze-transactions }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -176,7 +172,6 @@ jobs:
     name: Daft (analyze-transactions) | Test
     if: ${{ inputs.workflow || inputs.hm-daft-analyze-transactions }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -208,7 +203,6 @@ jobs:
     name: Polars (analyze-transactions-cpu) | Test
     if: ${{ inputs.workflow || inputs.hm-polars-analyze-transactions-cpu }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -240,7 +234,6 @@ jobs:
     name: Polars (analyze-transactions-gpu) | Test
     if: ${{ inputs.workflow || inputs.hm-polars-analyze-transactions-gpu }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -272,7 +265,6 @@ jobs:
     name: GeoPandas | Test
     if: ${{ inputs.workflow || inputs.hm-geopandas }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -304,7 +296,6 @@ jobs:
     name: Narwhals | Test
     if: ${{ inputs.workflow || inputs.hm-narwhals }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -336,7 +327,6 @@ jobs:
     name: NetworkX | Test
     if: ${{ inputs.workflow || inputs.hm-networkx }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -368,7 +358,6 @@ jobs:
     name: marimo | Test
     if: ${{ inputs.workflow || inputs.hm-marimo }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout

@@ -27,7 +27,6 @@ jobs:
     name: API - Go | Test
     if: ${{ inputs.workflow || inputs.api-go }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -50,7 +49,6 @@ jobs:
     name: API - Node.js | Test
     if: ${{ inputs.workflow || inputs.api-node }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -78,7 +76,6 @@ jobs:
     name: API - Node.js | Mutation Test
     if: ${{ inputs.workflow || inputs.api-node }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -104,7 +101,6 @@ jobs:
     name: API - Python | Test
     if: ${{ inputs.workflow || inputs.api-python }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -152,7 +148,6 @@ jobs:
     name: API - Rust | Test
     if: ${{ inputs.workflow || inputs.api-rust }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
