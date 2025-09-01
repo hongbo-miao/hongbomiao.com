@@ -330,6 +330,46 @@ jobs:
         run: |
           tofu validate
 
+  static-type-check-opentofu-production-nebius-data:
+    name: OpenTofu (production/nebius/data)
+    if: ${{ inputs.workflow || inputs.opentofu }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/nebius/data
+        run: |
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/nebius/data
+        run: |
+          tofu validate
+
+  static-type-check-opentofu-production-nebius-kubernetes:
+    name: OpenTofu (production/nebius/kubernetes)
+    if: ${{ inputs.workflow || inputs.opentofu }}
+    runs-on: ubuntu-24.04
+    environment: test
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/nebius/kubernetes
+        run: |
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/nebius/kubernetes
+        run: |
+          tofu validate
+
   static-type-check-opentofu-production-snowflake-account:
     name: OpenTofu (production/snowflake/account)
     if: ${{ inputs.workflow || inputs.opentofu }}

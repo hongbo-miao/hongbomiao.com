@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     region = "us-west-2"
-    bucket = "hm-opentofu-bucket"
+    bucket = "production-hm-opentofu-bucket"
     key    = "production/snowflake/general/terraform.tfstate"
   }
   required_providers {
