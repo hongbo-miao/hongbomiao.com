@@ -14,7 +14,7 @@ spec:
       targetRevision: 9.2.9
       chart: grafana
       helm:
-        releaseName: hm-grafana
+        releaseName: grafana
         values: |
           # https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
           ---
@@ -94,12 +94,12 @@ spec:
                 - name: hm-prometheus
                   type: prometheus
                   isDefault: true
-                  url: http://hm-prometheus-kube-pr-prometheus.production-hm-prometheus.svc:9090
+                  url: http://prometheus-kube-pr-prometheus.production-hm-prometheus.svc:9090
                   access: proxy
                 - name: hm-mimir
                   type: prometheus
                   isDefault: false
-                  url: http://hm-mimir-query-frontend.production-hm-mimir.svc:8080/prometheus
+                  url: http://mimir-query-frontend.production-hm-mimir.svc:8080/prometheus
                   access: proxy
                   jsonData:
                     prometheusType: Mimir
@@ -109,7 +109,7 @@ spec:
                 - name: hm-loki
                   type: loki
                   isDefault: false
-                  url: http://hm-loki-gateway.production-hm-loki.svc:80
+                  url: http://loki-gateway.production-hm-loki.svc:80
                   access: proxy
                   jsonData:
                     httpHeaderName1: X-Scope-OrgID
@@ -118,7 +118,7 @@ spec:
                 - name: hm-tempo
                   type: tempo
                   isDefault: false
-                  url: http://hm-tempo-query-frontend.production-hm-tempo:3100
+                  url: http://tempo-query-frontend.production-hm-tempo:3100
                   access: proxy
                   # https://grafana.com/docs/grafana/next/datasources/tempo/configure-tempo-data-source/#example-file
                   jsonData:
@@ -175,7 +175,7 @@ spec:
                   type: victoriametrics-metrics-datasource
                   isDefault: false
                   access: proxy
-                  url: http://hm-victoria-metrics-cluster-vmselect.production-hm-victoria-metrics-cluster.svc:8481/select/0/prometheus
+                  url: http://victoria-metrics-cluster-vmselect.production-hm-victoria-metrics-cluster.svc:8481/select/0/prometheus
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1

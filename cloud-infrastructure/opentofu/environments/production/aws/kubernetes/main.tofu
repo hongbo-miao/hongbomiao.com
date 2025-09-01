@@ -258,7 +258,7 @@ module "argo_cd_helm_chart" {
   repository          = "https://argoproj.github.io/argo-helm"
   chart_name          = "argo-cd"
   chart_version       = "7.3.5" # https://artifacthub.io/packages/helm/argo/argo-cd
-  release_name        = "hm-argo-cd"
+  release_name        = "argo-cd"
   namespace           = module.kubernetes_namespace_hm_argo_cd.namespace
   my_values_yaml_path = "files/argo-cd/helm/my-values.yaml"
   depends_on = [

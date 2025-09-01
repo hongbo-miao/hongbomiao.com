@@ -7,7 +7,7 @@ from prefect import flow
 
 @flow
 def hm_daft_analysis() -> None:
-    ray_address = "ray://hm-ray-cluster-head-svc.production-hm-ray-cluster.svc:10001"
+    ray_address = "ray://ray-cluster-head-svc.production-hm-ray-cluster.svc:10001"
     ray.init(
         ray_address,
         runtime_env={

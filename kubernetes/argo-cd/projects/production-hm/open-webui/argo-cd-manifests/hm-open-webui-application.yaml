@@ -14,7 +14,7 @@ spec:
       targetRevision: 6.17.0
       chart: open-webui
       helm:
-        releaseName: hm-open-webui
+        releaseName: open-webui
         values: |
           # https://github.com/open-webui/helm-charts/blob/main/charts/open-webui/values.yaml
           ---
@@ -41,7 +41,7 @@ spec:
             - name: WEBUI_URL
               value: https://open-webui.hongbomiao.com
             - name: OPENAI_API_BASE_URLS
-              value: http://hm-litellm-service.production-hm-litellm.svc:80;http://hm-open-webui-pipelines.production-hm-open-webui-pipelines.svc:9099
+              value: http://litellm-service.production-hm-litellm.svc:80;http://open-webui-pipelines.production-hm-open-webui-pipelines.svc:9099
             - name: OPENAI_API_KEYS
               valueFrom:
                 secretKeyRef:
