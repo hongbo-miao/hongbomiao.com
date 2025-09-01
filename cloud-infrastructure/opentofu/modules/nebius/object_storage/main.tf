@@ -13,4 +13,7 @@ resource "nebius_storage_v1_bucket" "main" {
   default_storage_class = var.default_storage_class
   versioning_policy     = var.versioning_policy
   labels                = var.labels
+  lifecycle {
+    prevent_destroy = true
+  }
 }
