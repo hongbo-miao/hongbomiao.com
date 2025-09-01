@@ -2,7 +2,7 @@ data "terraform_remote_state" "production_aws_network_terraform_remote_state" {
   backend = "s3"
   config = {
     region = "us-west-2"
-    bucket = "hm-opentofu-bucket"
+    bucket = "production-hm-opentofu-bucket"
     key    = "production/aws/network/terraform.tfstate"
   }
 }
@@ -10,7 +10,7 @@ data "terraform_remote_state" "production_aws_data_terraform_remote_state" {
   backend = "s3"
   config = {
     region = "us-west-2"
-    bucket = "hm-opentofu-bucket"
+    bucket = "production-hm-opentofu-bucket"
     key    = "production/aws/data/terraform.tfstate"
   }
 }

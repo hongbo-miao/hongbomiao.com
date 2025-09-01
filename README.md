@@ -624,6 +624,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Cloud Platform
 
+- **Nebius**
+  - **Object Storage** - Object storage
+  - **Managed Service for Kubernetes** - Kubernetes
 - **Amazon Web Services**
   - **Amazon Athena** - Serverless query service
   - **Amazon Bedrock** - Generative AI model service
