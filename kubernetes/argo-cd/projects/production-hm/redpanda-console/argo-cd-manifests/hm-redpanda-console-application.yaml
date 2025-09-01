@@ -14,7 +14,7 @@ spec:
       targetRevision: 0.7.30
       chart: console
       helm:
-        releaseName: hm-redpanda-console
+        releaseName: redpanda-console
         values: |
           # https://github.com/redpanda-data/helm-charts/blob/main/charts/console/values.yaml
           ---
@@ -39,7 +39,7 @@ spec:
                 schemaRegistry:
                   enabled: true
                   urls:
-                    - http://hm-confluent-schema-registry-service.production-hm-confluent-schema-registry.svc:8081
+                    - http://confluent-schema-registry-service.production-hm-confluent-schema-registry.svc:8081
                 protobuf:
                   enabled: true
                   schemaRegistry:

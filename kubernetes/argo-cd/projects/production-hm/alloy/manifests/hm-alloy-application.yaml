@@ -14,7 +14,7 @@ spec:
     targetRevision: 0.11.0
     chart: alloy
     helm:
-      releaseName: hm-alloy
+      releaseName: alloy
       values: |
         # https://github.com/grafana/alloy/blob/main/operations/helm/charts/alloy/values.yaml
         ---
@@ -45,11 +45,11 @@ spec:
                 - SYS_PTRACE
           extraEnv:
             - name: LOKI_URL
-              value: http://hm-loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
+              value: http://loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
             - name: TEMPO_ENDPOINT
-              value: hm-tempo-distributor.production-hm-tempo.svc:4317
+              value: tempo-distributor.production-hm-tempo.svc:4317
             - name: MIMIR_URL
-              value: http://hm-mimir-distributor-headless.production-hm-mimir.svc:8080/api/v1/push
+              value: http://mimir-distributor-headless.production-hm-mimir.svc:8080/api/v1/push
           configMap:
             content: |-
               // https://grafana.com/docs/alloy/latest/configure/kubernetes/
