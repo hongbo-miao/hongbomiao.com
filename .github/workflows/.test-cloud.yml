@@ -34,7 +34,6 @@ jobs:
     name: Amazon SageMaker (pytorch-mnist) | Test
     if: ${{ inputs.workflow || inputs.amazon-sagemaker-pytorch-mnist }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -67,7 +66,6 @@ jobs:
     name: AWS ParallelCluster | Test
     if: ${{ inputs.workflow || inputs.hm-aws-parallelcluster }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -99,7 +97,6 @@ jobs:
     name: Pulumi | Test
     if: ${{ inputs.workflow || inputs.hm-pulumi }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -131,7 +128,6 @@ jobs:
     name: AWS Glue (production spark-scripts) | Test
     if: ${{ inputs.workflow || inputs.production-aws-glue-spark-scripts }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -164,7 +160,6 @@ jobs:
     name: Prowler | Test
     if: ${{ inputs.workflow || inputs.hm-prowler }}
     runs-on: ubuntu-24.04
-    environment: test
     timeout-minutes: 10
     steps:
       - name: Checkout
