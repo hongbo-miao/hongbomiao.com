@@ -170,7 +170,7 @@ wheels = [
 
 [[package]]
 name = "docling"
-version = "2.48.0"
+version = "2.49.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "accelerate" },
@@ -188,6 +188,7 @@ dependencies = [
     { name = "pandas" },
     { name = "pillow" },
     { name = "pluggy" },
+    { name = "polyfactory" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "pylatexenc" },
@@ -200,9 +201,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/be/32/e117cb0dcc76c93828d2cd9b45c3f8ccf6c86314a60e9c65f16067d3df26/docling-2.48.0.tar.gz", hash = "sha256:e94a5f75c544ec1bbb9169d2f4da72e1f497fd2fcda57cfacc454c93b1c92a8e", size = 189422, upload-time = "2025-08-26T05:31:02.666Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/82/01/098b9573c97bf128f2b61c606bd47a5ef279e104e07585986e4f43723885/docling-2.49.0.tar.gz", hash = "sha256:d32fa939d09638e652b1710a9adb6771419554fd33ee7d0dad79213b344cc01c", size = 196032, upload-time = "2025-09-01T16:41:16.858Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/04/32/a9c6677c66178a397b89b5b6fe1e7b3d3de98ddc2b331fbcd7440419b9f0/docling-2.48.0-py3-none-any.whl", hash = "sha256:8a1c1dfd5ed84cadb0f81fcb1464e5d501c4bfaa121e15306e09e3c0c983cc3e", size = 212266, upload-time = "2025-08-26T05:31:00.779Z" },
+    { url = "https://files.pythonhosted.org/packages/4b/0d/165d554879f0c1e6e7592907e307d3f05a980b2722ae3fcfa75733c5a700/docling-2.49.0-py3-none-any.whl", hash = "sha256:706488ed94cf07d5a2746fb98f828313e12230afa101f6322f510e46bdae6c0b", size = 223657, upload-time = "2025-09-01T16:41:14.818Z" },
 ]
 
 [[package]]
@@ -338,6 +339,18 @@ wheels = [
 ]
 
 [[package]]
+name = "faker"
+version = "37.6.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "tzdata" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/24/cd/f7679c20f07d9e2013123b7f7e13809a3450a18d938d58e86081a486ea15/faker-37.6.0.tar.gz", hash = "sha256:0f8cc34f30095184adf87c3c24c45b38b33ad81c35ef6eb0a3118f301143012c", size = 1907960, upload-time = "2025-08-26T15:56:27.419Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/61/7d/8b50e4ac772719777be33661f4bde320793400a706f5eb214e4de46f093c/faker-37.6.0-py3-none-any.whl", hash = "sha256:3c5209b23d7049d596a51db5d76403a0ccfea6fc294ffa2ecfef6a8843b1e6a7", size = 1949837, upload-time = "2025-08-26T15:56:25.33Z" },
+]
+
+[[package]]
 name = "filelock"
 version = "3.18.0"
 source = { registry = "https://pypi.org/simple" }
@@ -437,7 +450,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "docling", specifier = "==2.48.0" },
+    { name = "docling", specifier = "==2.49.0" },
     { name = "faiss-cpu", specifier = "==1.12.0" },
     { name = "openai", specifier = "==1.102.0" },
     { name = "pydantic-ai-slim", extras = ["openai"], specifier = "==0.8.1" },
@@ -1142,6 +1155,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/a5/f2/273fe54a78dc5c6c8dd63db71f5a6ceb95e4648516b5aeaeff4bde804e44/poethepoet-0.37.0.tar.gz", hash = "sha256:73edf458707c674a079baa46802e21455bda3a7f82a408e58c31b9f4fe8e933d", size = 68570, upload-time = "2025-08-11T18:00:29.103Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/92/1b/5337af1a6a478d25a3e3c56b9b4b42b0a160314e02f4a0498d5322c8dac4/poethepoet-0.37.0-py3-none-any.whl", hash = "sha256:861790276315abcc8df1b4bd60e28c3d48a06db273edd3092f3c94e1a46e5e22", size = 90062, upload-time = "2025-08-11T18:00:27.595Z" },
+]
+
+[[package]]
+name = "polyfactory"
+version = "2.22.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "faker" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/4e/a6/950d13856d995705df33b92451559fd317207a9c43629ab1771135a0c966/polyfactory-2.22.2.tar.gz", hash = "sha256:a3297aa0b004f2b26341e903795565ae88507c4d86e68b132c2622969028587a", size = 254462, upload-time = "2025-08-15T06:23:21.28Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e7/fe/d52c90e07c458f38b26f9972a25cb011b2744813f76fcd6121dde64744fa/polyfactory-2.22.2-py3-none-any.whl", hash = "sha256:9bea58ac9a80375b4153cd60820f75e558b863e567e058794d28c6a52b84118a", size = 63715, upload-time = "2025-08-15T06:23:19.664Z" },
 ]
 
 [[package]]
