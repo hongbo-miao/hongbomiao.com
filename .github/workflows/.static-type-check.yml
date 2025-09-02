@@ -227,6 +227,25 @@ jobs:
         run: |
           tofu validate
 
+  static-type-check-opentofu-production-argo-cd:
+    name: OpenTofu (production/argo-cd)
+    if: ${{ inputs.workflow || inputs.opentofu }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/argo-cd
+        run: |
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: cloud-infrastructure/opentofu/environments/production/argo-cd
+        run: |
+          tofu validate
+
   static-type-check-opentofu-production-aws-data:
     name: OpenTofu (production/aws/data)
     if: ${{ inputs.workflow || inputs.opentofu }}
