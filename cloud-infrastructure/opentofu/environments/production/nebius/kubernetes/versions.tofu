@@ -4,11 +4,9 @@ terraform {
     key     = "production/nebius/kubernetes/terraform.tfstate"
     region  = "us-central1"
     profile = "nebius"
-
     endpoints = {
       "s3" = "https://storage.us-central1.nebius.cloud"
     }
-
     # Skip AWS-specific validations as Nebius provides different settings
     skip_credentials_validation = true
     skip_requesting_account_id  = true
