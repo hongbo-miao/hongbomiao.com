@@ -5,10 +5,10 @@ module "hm_kubernetes_cluster" {
   vpc_subnet_id           = var.vpc_subnet_id
   labels                  = var.common_labels
 }
-module "hm_kubernetes_node_group_1" {
+module "hm_kubernetes_node_group_dragon" {
   source         = "../../../../modules/nebius/kubernetes_node_group"
   parent_id      = module.hm_kubernetes_cluster.id
-  name           = "node-group-1"
+  name           = "node-group-dragon"
   min_node_count = 3
   max_node_count = 5
   platform       = "cpu-d3"
