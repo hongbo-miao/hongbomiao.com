@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://traefik.github.io/charts
     # https://artifacthub.io/packages/helm/traefik/traefik
-    targetRevision: 34.2.0
+    targetRevision: 37.0.0
     chart: traefik
     helm:
       releaseName: traefik
@@ -52,10 +52,10 @@ spec:
         resources:
           requests:
             cpu: 50m
-            memory: 128Mi
+            memory: 512Mi
           limits:
-            cpu: 100m
-            memory: 256Mi
+            cpu: 200m
+            memory: 1Gi
         globalArguments: []
         # additionalArguments:
         #   - --log.level=DEBUG

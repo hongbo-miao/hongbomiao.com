@@ -26,10 +26,11 @@ use crate::graphql::schema;
 #[tokio::main]
 async fn main() {
     let config = AppConfig::get();
-
     tracing_subscriber::fmt()
         .with_max_level(config.log_level)
         .init();
+    ffmpeg_sidecar::download::auto_download().expect("Failed to download FFmpeg");
+
     let schema = schema::create_schema();
     let compression = CompressionLayer::new();
     let timeout = TimeoutLayer::new(Duration::from_secs(30));
