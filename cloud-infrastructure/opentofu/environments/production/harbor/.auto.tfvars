@@ -1,5 +1,5 @@
 common_tags = {
-  "hm:environment" = "production"
-  "hm:team"        = "hongbomiao"
+  "hm_environment" = "production"
+  "hm_team"        = "hongbomiao"
 }
 environment = "production"
