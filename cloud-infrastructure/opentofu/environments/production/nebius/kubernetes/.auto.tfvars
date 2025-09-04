@@ -1,6 +1,6 @@
 common_labels = {
-  "hm:environment" = "production"
-  "hm:team"        = "hongbomiao"
+  "hm_environment" = "production"
+  "hm_team"        = "hongbomiao"
 }
 environment   = "production"
 project_id    = "project-xxxxxxxxxxxxxxxxxxxxxx"

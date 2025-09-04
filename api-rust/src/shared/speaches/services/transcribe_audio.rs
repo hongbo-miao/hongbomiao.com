@@ -14,6 +14,7 @@ pub async fn transcribe_audio(
                 .mime_str("audio/wav")?,
         )
         .text("model", model.to_string())
+        .text("vad_filter", "false".to_string())
         .text("language", "en".to_string());
 
     let response = reqwest_client
