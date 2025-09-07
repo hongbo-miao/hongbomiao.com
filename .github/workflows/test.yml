@@ -1427,18 +1427,3 @@ jobs:
           file: ./security/hm-opal-client/Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-  code-review:
-    name: Code Review
-    if: ${{ false }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - name: Code Review
-        uses: anc95/ChatGPT-CodeReview@v1.0.22
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
