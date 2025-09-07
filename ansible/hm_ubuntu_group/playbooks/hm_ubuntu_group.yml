@@ -1,4 +1,19 @@
 ---
+- name: Configure user access
+  hosts: all
+  become: true
+  roles:
+    - robertdebock.users
+  vars:
+    users:
+      - name: hongbo-miao
+        group: sudo
+        groups: [users]
+        sudo_options: "ALL=(ALL) NOPASSWD: ALL"
+        password_lock: true
+        authorized_keys:
+          - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWhR5NV13iw0X8lKqsrSRqbcIJcA5AVMjyfJjOrplwH hongbo-miao"
+
 - name: Install common packages
   hosts: hm-ubuntu
   tasks:
@@ -8,7 +23,16 @@
         name:
           - btop
           - htop
+          - nvtop
           - vnstat
+        state: present
+    - name: Install common packages from Snap (classic confinement)
+      become: true
+      community.general.snap:
+        name:
+          - astral-uv
+          - just
+        classic: true
         state: present
     - name: Install common packages from apt
       become: true
@@ -17,37 +41,28 @@
           - tshark
         state: present
 
-- name: Install pyenv
-  hosts: hm-ubuntu
+- name: Install Docker
+  hosts: all
+  become: true
+  roles:
+    - geerlingguy.docker
   vars:
-    python_version: 3.11.4
-  roles:
-    - role: staticdev.pyenv
-      vars:
-        # https://github.com/pyenv/pyenv/releases
-        pyenv_version: v2.3.23
-        pyenv_env: user
-        pyenv_python_versions:
-          - "{{ python_version }}"
-        pyenv_global:
-          - "{{ python_version }}"
-  tasks:
-    - name: Creates directory ~/pyenv/
-      ansible.builtin.file:
-        path: "{{ ansible_env.HOME }}/pyenv/"
-        state: directory
-    - name: Set global Python version
-      ansible.builtin.copy:
-        dest: "{{ ansible_env.HOME }}/pyenv/version"
-        content: "{{ python_version }}"
-        mode: 0644
+    docker_edition: ce
+    docker_packages:
+      - "docker-{{ docker_edition }}"
+      - "docker-{{ docker_edition }}-cli"
+      - "docker-{{ docker_edition }}-rootless-extras"
+    docker_packages_state: present
 
-- name: Install Poetry
-  hosts: hm-ubuntu
+- name: Install NVIDIA CUDA Toolkit
+  hosts: all
+  become: true
   roles:
-    - role: bartdorlandt.poetry
-      vars:
-        virtualenvs_in_project: true
+    - role: roles/nvidia_cuda
+  vars:
+    ubuntu_version: 2404
+    nvidia_cuda_version: 13.0.1
+    nvidia_cuda_driver_version: 580.82.07
 
 - name: Install Rclone
   hosts: hm-ubuntu
@@ -83,42 +98,38 @@
               region: us-west-2
               storage_class: STANDARD
 
-- name: Start Prefect agent
-  hosts: hm-ubuntu
-  tasks:
-    - name: Install packages from pip
-      ansible.builtin.pip:
-        name: prefect==2.11.3
-        executable: "{{ ansible_env.HOME }}/pyenv/shims/pip"
-      register: pip_package
-    - name: Create systemd service file
-      become: true
-      ansible.builtin.template:
-        src: templates/prefect-agent.service
-        dest: /etc/systemd/system/prefect-agent.service
-        mode: 0644
-      register: systemd_unit
-    - name: Start Prefect agent
-      become: true
-      ansible.builtin.systemd_service:
-        name: prefect-agent
-        state: "{{ 'restarted' if pip_package.changed or systemd_unit.changed else 'started' }}"
-        enabled: true
-        daemon_reload: "{{ systemd_unit.changed }}"
-
 - name: Install Kafka
   hosts: hm-ubuntu
   become: true
   roles:
     - role: dragomirr.kafka
-      kafka_version: 3.8.0
-      kafka_scala_version: 2.13
-      kafka_java_version: 17
-      kafka_install_dependencies: true
-      kafka_heap_size: 2G
-      kafka_topics:
-        - name: production.iot.motor.proto
-          replication_factor: 1
-          partitions: 1
-      kafka_additional_config:
-        message.max.bytes: 1048576  # 1 MiB
+  vars:
+    kafka_version: 3.8.0
+    kafka_scala_version: 2.13
+    kafka_java_version: 17
+    kafka_install_dependencies: true
+    kafka_heap_size: 2G
+    kafka_topics:
+      - name: production.iot.motor.proto
+        replication_factor: 1
+        partitions: 1
+    kafka_additional_config:
+      message.max.bytes: 1048576  # 1 MiB
+
+- name: Deploy Ollama
+  hosts: all
+  become: true
+  roles:
+    - role: roles/ollama
+  vars:
+    ollama_docker_image: docker.io/ollama/ollama:0.11.10
+    ollama_port: 11434
+
+- name: Deploy Speaches
+  hosts: all
+  become: true
+  roles:
+    - role: roles/speaches
+  vars:
+    speaches_docker_image: ghcr.io/speaches-ai/speaches:0.8.2-cuda
+    speaches_port: 34796
