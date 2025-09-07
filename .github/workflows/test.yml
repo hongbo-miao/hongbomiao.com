@@ -386,7 +386,7 @@ jobs:
             hm-olmocr:
               - 'data-extraction/hm-olmocr/**'
             hm-opal-client:
-              - 'authorization/hm-opal-client/**'
+              - 'security/hm-opal-client/**'
             hm-open3d:
               - 'computer-vision/hm-open3d/**'
             hm-openaerostruct:
@@ -408,7 +408,7 @@ jobs:
             hm-protobuf:
               - 'data-storage/hm-protobuf/**'
             hm-prowler:
-              - 'cloud-security/hm-prowler/**'
+              - 'security/hm-prowler/**'
             hm-pulumi:
               - 'infrastructure/hm-pulumi/**'
             hm-pydantic-ai-chat-pdf:
@@ -1424,7 +1424,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          file: ./authorization/hm-opal-client/Dockerfile
+          file: ./security/hm-opal-client/Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
