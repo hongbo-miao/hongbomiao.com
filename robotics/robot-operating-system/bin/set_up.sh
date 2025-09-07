@@ -1,27 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-echo "# Install pyenv"
-# https://github.com/pyenv/pyenv-installer
-sudo apt-get update
-sudo apt-get install --yes git
-curl https://pyenv.run | bash
-{
-  export PYENV_ROOT="$HOME/.pyenv"
-  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-} >> ~/.bashrc
-pyenv install 3.11
-echo "=================================================="
-
-echo "# Install Poetry"
-# https://python-poetry.org/docs/
-curl --silent --fail --show-error --location https://install.python-poetry.org | python3 -
-# shellcheck disable=SC2016
-echo 'export PATH="/home/parallels/.local/bin:$PATH"' >> ~/.bashrc
-echo "=================================================="
-
 echo "# Install ROS"
 # https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
 locale

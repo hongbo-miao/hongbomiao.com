@@ -127,55 +127,6 @@ pyenv-global:
 pyenv-deactivate:
     pyenv shell system
 
-poetry-config-list:
-    poetry config --list
-
-poetry-config-show:
-    poetry config virtualenvs.in-project
-
-poetry-config-set:
-    poetry config virtualenvs.in-project true
-
-poetry-self-update:
-    poetry self update
-
-poetry-version:
-    poetry --version
-
-poetry-env-list:
-    # ~/Library/Caches/pypoetry/virtualenvs
-    poetry env list
-
-poetry-env-use:
-    poetry env use python3.13
-
-poetry-env-remove:
-    poetry env remove xxx
-
-poetry-update-lock-file:
-    poetry lock --no-update
-
-poetry-install:
-    poetry install
-
-poetry-install-no-root:
-    poetry install --no-root
-
-poetry-add:
-    poetry add xxx
-
-poetry-add-dev:
-    poetry add xxx --group=dev
-
-poetry-shell:
-    poetry shell
-
-poetry-check:
-    poetry check
-
-poetry-cache-clear:
-    poetry cache clear pypi --all
-
 # uv
 uv-install-python:
     uv python install

@@ -17,6 +17,7 @@ required-version = ">=0.8.0"
 
 [tool.poe.tasks]
 install = "ansible-galaxy install --role-file=requirements.yml"
+upgrade = "ansible-galaxy install --force --role-file=requirements.yml"
 deploy-hm-macos-group = "ansible-playbook --inventory=hm_macos_group/inventories/hm_macos_group.yaml hm_macos_group/playbooks/hm_macos_group.yml"
 deploy-hm-ubuntu-group = "ansible-playbook --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml hm_ubuntu_group/playbooks/hm_ubuntu_group.yml"
 deploy-hm-windows-group = "ansible-playbook --inventory=hm_windows_group/inventories/hm_windows_group.yaml hm_windows_group/playbooks/hm_windows_group.yml"
