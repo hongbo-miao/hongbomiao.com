@@ -46,28 +46,28 @@ ansible-doc-list:
     uv run ansible-doc --list
 
 ansible-inventory-list:
-    uv run ansible-inventory --inventory=inventory.yaml --list
+    uv run ansible-inventory --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --list
 
 ansible-inventory-graph:
-    uv run ansible-inventory --inventory=inventory.yaml --graph
+    uv run ansible-inventory --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --graph
 
 ansible-run-ping:
-    uv run ansible hm_ubuntu_group --inventory=inventory.yaml --vault-password-file=secrets/.ansible_vault_pass --module-name=ping
+    uv run ansible hm_ubuntu_group --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass --module-name=ping
 
 ansible-run-show-system-info:
-    uv run ansible hm_ubuntu_group --inventory=inventory.yaml --vault-password-file=secrets/.ansible_vault_pass --module-name=setup
+    uv run ansible hm_ubuntu_group --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass --module-name=setup
 
 ansible-run-uptime:
-    uv run ansible hm_ubuntu_group --inventory=inventory.yaml --vault-password-file=secrets/.ansible_vault_pass --args=uptime
+    uv run ansible hm_ubuntu_group --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass --args=uptime
 
 ansible-playbook-list-tags:
-    uv run ansible-playbook hm_ubuntu_group/playbook.yml --list-tags
+    uv run ansible-playbook hm_ubuntu_group/playbooks/hm_ubuntu_group.yml --list-tags
 
 ansible-playbook-hm-macos-group:
-    uv run ansible-playbook --inventory=inventory.yaml --vault-password-file=secrets/.ansible_vault_pass hm_macos_group/playbook.yml
+    uv run ansible-playbook --inventory=hm_macos_group/inventories/hm_macos_group.yaml --vault-password-file=secrets/.ansible_vault_pass hm_macos_group/playbooks/hm_macos_group.yml
 
 ansible-playbook-hm-ubuntu-group:
-    uv run ansible-playbook --inventory=inventory.yaml --vault-password-file=secrets/.ansible_vault_pass hm_ubuntu_group/playbook.yml
+    uv run ansible-playbook --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass hm_ubuntu_group/playbooks/hm_ubuntu_group.yml
 
 ansible-playbook-hm-windows-group:
-    uv run ansible-playbook --inventory=inventory.yaml --vault-password-file=secrets/.ansible_vault_pass hm_windows_group/playbook.yml
+    uv run ansible-playbook --inventory=hm_windows_group/inventories/hm_windows_group.yaml --vault-password-file=secrets/.ansible_vault_pass hm_windows_group/playbooks/hm_windows_group.yml
