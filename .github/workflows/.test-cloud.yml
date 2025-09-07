@@ -106,23 +106,23 @@ jobs:
         with:
           version: 0.8.15
           enable-cache: true
-          cache-dependency-glob: cloud-infrastructure/hm-pulumi/uv.lock
+          cache-dependency-glob: infrastructure/hm-pulumi/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: cloud-infrastructure/hm-pulumi/pyproject.toml
+          python-version-file: infrastructure/hm-pulumi/pyproject.toml
       - name: Install dependencies
-        working-directory: cloud-infrastructure/hm-pulumi
+        working-directory: infrastructure/hm-pulumi
         run: |
           uv sync --dev
       - name: Test
-        working-directory: cloud-infrastructure/hm-pulumi
+        working-directory: infrastructure/hm-pulumi
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
-          directory: cloud-infrastructure/hm-pulumi
+          directory: infrastructure/hm-pulumi
 
   production-aws-glue-spark-scripts-test:
     name: AWS Glue (production spark-scripts) | Test
@@ -137,23 +137,23 @@ jobs:
         with:
           version: 0.8.15
           enable-cache: true
-          cache-dependency-glob: cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/uv.lock
+          cache-dependency-glob: infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/pyproject.toml
+          python-version-file: infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/pyproject.toml
       - name: Install dependencies
-        working-directory: cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts
+        working-directory: infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts
         run: |
           uv sync --dev
       - name: Test
-        working-directory: cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts
+        working-directory: infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
-          directory: cloud-infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts
+          directory: infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts
 
   # Cloud Security
   prowler-test:
