@@ -24,11 +24,31 @@ show-usb-devices:
 show-kernel-ring-buffer-messages:
     sudo dmesg
 
+show-command-location:
+    which xxx
+
+# User
+add-user:
+    sudo adduser xxx
+
+add-user-to-sudo-group:
+    sudo usermod --append --groups=sudo xxx
+
 show-current-user:
     whoami
 
-show-command-location:
-    which xxx
+show-users:
+    cat /etc/passwd
+
+show-non-system-users:
+    awk -F: '$3 >= 1000 && $7 !~ /(nologin|false)/ {print $1}' /etc/passwd
+
+show-non-system-users-last-login:
+    lastlog --user=1000-60000
+
+remove-user:
+    sudo deluser --remove-home xxx
+    sudo delgroup xxx
 
 # Install
 apt-update:
