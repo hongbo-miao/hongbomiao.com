@@ -219,11 +219,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/airbyte
+        working-directory: infrastructure/opentofu/environments/production/airbyte
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/airbyte
+        working-directory: infrastructure/opentofu/environments/production/airbyte
         run: |
           tofu validate
 
@@ -238,11 +238,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/argo-cd
+        working-directory: infrastructure/opentofu/environments/production/argo-cd
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/argo-cd
+        working-directory: infrastructure/opentofu/environments/production/argo-cd
         run: |
           tofu validate
 
@@ -257,11 +257,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/aws/data
+        working-directory: infrastructure/opentofu/environments/production/aws/data
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/aws/data
+        working-directory: infrastructure/opentofu/environments/production/aws/data
         run: |
           tofu validate
 
@@ -276,11 +276,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/aws/general
+        working-directory: infrastructure/opentofu/environments/production/aws/general
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/aws/general
+        working-directory: infrastructure/opentofu/environments/production/aws/general
         run: |
           tofu validate
 
@@ -295,11 +295,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/aws/kubernetes
+        working-directory: infrastructure/opentofu/environments/production/aws/kubernetes
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/aws/kubernetes
+        working-directory: infrastructure/opentofu/environments/production/aws/kubernetes
         run: |
           tofu validate
 
@@ -314,11 +314,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/aws/network
+        working-directory: infrastructure/opentofu/environments/production/aws/network
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/aws/network
+        working-directory: infrastructure/opentofu/environments/production/aws/network
         run: |
           tofu validate
 
@@ -333,11 +333,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/harbor
+        working-directory: infrastructure/opentofu/environments/production/harbor
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/harbor
+        working-directory: infrastructure/opentofu/environments/production/harbor
         run: |
           tofu validate
 
@@ -352,11 +352,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/nebius/data
+        working-directory: infrastructure/opentofu/environments/production/nebius/data
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/nebius/data
+        working-directory: infrastructure/opentofu/environments/production/nebius/data
         run: |
           tofu validate
 
@@ -371,11 +371,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/nebius/kubernetes
+        working-directory: infrastructure/opentofu/environments/production/nebius/kubernetes
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/nebius/kubernetes
+        working-directory: infrastructure/opentofu/environments/production/nebius/kubernetes
         run: |
           tofu validate
 
@@ -390,11 +390,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/account
+        working-directory: infrastructure/opentofu/environments/production/snowflake/account
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/account
+        working-directory: infrastructure/opentofu/environments/production/snowflake/account
         run: |
           tofu validate
 
@@ -409,11 +409,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/data
+        working-directory: infrastructure/opentofu/environments/production/snowflake/data
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/data
+        working-directory: infrastructure/opentofu/environments/production/snowflake/data
         run: |
           tofu validate
 
@@ -428,11 +428,11 @@ jobs:
       - name: Set up OpenTofu
         uses: opentofu/setup-opentofu@v1.0.6
       - name: Initialize OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/general
+        working-directory: infrastructure/opentofu/environments/production/snowflake/general
         run: |
           tofu init -backend=false
       - name: Static type check OpenTofu
-        working-directory: cloud-infrastructure/opentofu/environments/production/snowflake/general
+        working-directory: infrastructure/opentofu/environments/production/snowflake/general
         run: |
           tofu validate
 

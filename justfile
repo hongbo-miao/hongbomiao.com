@@ -488,15 +488,18 @@ static-type-check-python:
     uv run poe static-type-check-python --package=tokenization.byte-pair-encoding
 
 static-type-check-terraform:
-    cd cloud-infrastructure/opentofu/environments/production/airbyte && tofu validate
-    cd cloud-infrastructure/opentofu/environments/production/aws/data && tofu validate
-    cd cloud-infrastructure/opentofu/environments/production/aws/general && tofu validate
-    cd cloud-infrastructure/opentofu/environments/production/aws/kubernetes && tofu validate
-    cd cloud-infrastructure/opentofu/environments/production/aws/network && tofu validate
-    cd cloud-infrastructure/opentofu/environments/production/harbor && tofu validate
-    cd cloud-infrastructure/opentofu/environments/production/snowflake/account && tofu validate
-    cd cloud-infrastructure/opentofu/environments/production/snowflake/data && tofu validate
-    cd cloud-infrastructure/opentofu/environments/production/snowflake/general && tofu validate
+    cd infrastructure/opentofu/environments/production/airbyte && tofu validate
+    cd infrastructure/opentofu/environments/production/argo-cd && tofu validate
+    cd infrastructure/opentofu/environments/production/aws/data && tofu validate
+    cd infrastructure/opentofu/environments/production/aws/general && tofu validate
+    cd infrastructure/opentofu/environments/production/aws/kubernetes && tofu validate
+    cd infrastructure/opentofu/environments/production/aws/network && tofu validate
+    cd infrastructure/opentofu/environments/production/harbor && tofu validate
+    cd infrastructure/opentofu/environments/production/nebius/data && tofu validate
+    cd infrastructure/opentofu/environments/production/nebius/kubernetes && tofu validate
+    cd infrastructure/opentofu/environments/production/snowflake/account && tofu validate
+    cd infrastructure/opentofu/environments/production/snowflake/data && tofu validate
+    cd infrastructure/opentofu/environments/production/snowflake/general && tofu validate
 
 static-type-check-typescript:
     cd api-node && npm run static-type-check-typescript

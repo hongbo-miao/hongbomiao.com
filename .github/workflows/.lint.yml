@@ -169,7 +169,7 @@ jobs:
         run: uv sync --dev
       - name: Install dependencies from Ansible Galaxy
         run: |
-          uv run poe ansible-galaxy-install --role-file=ansible/requirements.yml
+          uv run poe ansible-galaxy-install --role-file=infrastructure/ansible/requirements.yml
       - name: Lint Ansible
         run: |
           uv run poe lint-ansible
