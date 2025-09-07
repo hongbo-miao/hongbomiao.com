@@ -90,25 +90,6 @@ dotnet-tool-install:
 dotnet-tool-list:
     dotnet tool list
 
-# Python
-conda-create:
-    conda create --name=xxx python=3.12 --yes
-
-conda-env-remove:
-    conda env remove --name=xxx
-
-conda-activate:
-    conda activate xxx
-
-conda-deactivate:
-    conda deactivate
-
-conda-env-list:
-    conda env list
-
-conda-list-packages:
-    conda list
-
 # uv
 uv-install-python:
     uv python install
