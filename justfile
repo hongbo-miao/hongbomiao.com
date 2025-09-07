@@ -438,7 +438,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-tdms
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.veristand.hm-veristand
     uv run poe static-type-check-python --package=hm-locust
-    uv run poe static-type-check-python --package=hm-xxhash
     uv run poe static-type-check-python --package=llm-application.hm-langchain.applications.chat-pdf
     uv run poe static-type-check-python --package=llm-application.hm-langgraph.applications.chat-pdf
     uv run poe static-type-check-python --package=llm-application.hm-llama-index.applications.chat-pdf
@@ -485,6 +484,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=quantum-computing
     uv run poe static-type-check-python --package=scientific-computing.hm-sunpy
     uv run poe static-type-check-python --package=scientific-computing.surrogate-model
+    uv run poe static-type-check-python --package=system-tool.hm-xxhash
     uv run poe static-type-check-python --package=tokenization.byte-pair-encoding
 
 static-type-check-terraform:
