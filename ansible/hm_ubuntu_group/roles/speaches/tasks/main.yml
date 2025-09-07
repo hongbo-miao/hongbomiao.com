@@ -1,0 +1,14 @@
+---
+- name: Create systemd service file for Speaches
+  ansible.builtin.template:
+    src: speaches.service.j2
+    dest: /etc/systemd/system/speaches.service
+    mode: 0644
+  register: systemd_unit
+
+- name: Ensure Speaches service is running and enabled
+  ansible.builtin.systemd_service:
+    name: speaches
+    state: "{{ 'restarted' if systemd_unit.changed else 'started' }}"
+    enabled: true
+    daemon_reload: "{{ systemd_unit.changed }}"
