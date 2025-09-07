@@ -669,12 +669,6 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Looker Studio** - Data visualization
   - **Vertex AI** - Machine learning platform
 
-### Cloud Infrastructure
-
-- **OpenTofu** - Infrastructure as code (IaC)
-- **Pulumi** - Infrastructure as code (IaC)
-- **Karpenter** - Kubernetes node autoscaler
-
 ### Cloud Security
 
 - **Prowler** - Cloud security assessments
@@ -682,6 +676,14 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Cloud Cost
 
 - **Komiser** - Cloud cost monitoring
+
+### Infrastructure
+
+- **OpenTofu** - Infrastructure as code (IaC)
+- **Pulumi** - Infrastructure as code (IaC)
+- **Ansible** - IT automation system
+- **Vagrant** - Development environments building and distributing
+- **Karpenter** - Kubernetes node autoscaler
 
 ## Ops
 
@@ -693,8 +695,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **OpenCost** - Kubernetes cost monitoring
 - **Kubecost** - Kubernetes cost monitoring
 - **Diun** - Container image update notifier
-- **Vagrant** - Development environments building and distributing
-- **Ansible** - IT automation system
 - **Discord** - ChatOps
 - **Opsgenie** - Incident management platform
 - **[GitHub Actions](https://github.com/hongbo-miao/hongbomiao.com/actions)** - Continuous integration
@@ -708,7 +708,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **CodeQL** - Variant analysis
 - **Gitleaks** - Git secret scanning
 - **GitGuardian** - Git secret scanning
-- **xxHash** - Hash algorithm
 
 ## System Tool
 
@@ -718,6 +717,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Vim** - Terminal-based text editor
 - **Zellij** - Terminal multiplexer
 - **Just** - Command runner for managing project-specific tasks
+- **xxHash** - Hash algorithm
 
 ## Reverse Engineering
 
