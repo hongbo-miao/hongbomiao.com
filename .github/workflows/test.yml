@@ -468,7 +468,7 @@ jobs:
             hm-whisperx:
               - 'audio/automatic-speech-recognition/hm-whisperx/**'
             hm-xxhash:
-              - 'hm-xxhash/**'
+              - 'system-tool/hm-xxhash/**'
             hugging-face-analyze-sentiment:
               - 'machine-learning/hugging-face/analyze-sentiment/**'
             hyperparameter-optimization:
@@ -1352,23 +1352,23 @@ jobs:
         with:
           version: 0.8.15
           enable-cache: true
-          cache-dependency-glob: hm-xxhash/uv.lock
+          cache-dependency-glob: system-tool/hm-xxhash/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: hm-xxhash/pyproject.toml
+          python-version-file: system-tool/hm-xxhash/pyproject.toml
       - name: Install dependencies
-        working-directory: hm-xxhash
+        working-directory: system-tool/hm-xxhash
         run: |
           uv sync --dev
       - name: Test
-        working-directory: hm-xxhash
+        working-directory: system-tool/hm-xxhash
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
-          directory: hm-xxhash
+          directory: system-tool/hm-xxhash
 
   opa-test:
     name: OPA | Test
