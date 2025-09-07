@@ -169,20 +169,20 @@ jobs:
         with:
           version: 0.8.15
           enable-cache: true
-          cache-dependency-glob: cloud-security/hm-prowler/uv.lock
+          cache-dependency-glob: security/hm-prowler/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: cloud-security/hm-prowler/pyproject.toml
+          python-version-file: security/hm-prowler/pyproject.toml
       - name: Install dependencies
-        working-directory: cloud-security/hm-prowler
+        working-directory: security/hm-prowler
         run: |
           uv sync --dev
       - name: Test
-        working-directory: cloud-security/hm-prowler
+        working-directory: security/hm-prowler
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
-          directory: cloud-security/hm-prowler
+          directory: security/hm-prowler

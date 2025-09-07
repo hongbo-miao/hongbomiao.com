@@ -669,10 +669,6 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Looker Studio** - Data visualization
   - **Vertex AI** - Machine learning platform
 
-### Cloud Security
-
-- **Prowler** - Cloud security assessments
-
 ### Cloud Cost
 
 - **Komiser** - Cloud cost monitoring
@@ -705,6 +701,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Ory Hydra** - OAuth 2.0 and OpenID Connect server
 - **Open Policy Agent (OPA)** - Policy-based control
 - **OPAL** - Open-policy administration layer
+- **Prowler** - Cloud security assessments
 - **CodeQL** - Variant analysis
 - **Gitleaks** - Git secret scanning
 - **GitGuardian** - Git secret scanning
