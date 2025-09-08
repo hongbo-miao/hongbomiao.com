@@ -55,18 +55,21 @@
           ManageForeignRoutes=no
           ManageForeignRoutingPolicyRules=no
       register: networkd_patch
-    - name: Force systemd to reread configs
-      ansible.builtin.systemd:
-        daemon_reload: true
-      when: networkd_patch.changed
-    - name: Check if {{ rke2_api_ip }} is pingable
-      ansible.builtin.shell: "ping -c 1 {{ rke2_api_ip }}"
+      notify: Reload systemd daemon
+    - name: Check if RKE2 API IP is pingable
+      ansible.builtin.command: "ping -c 1 {{ rke2_api_ip }}"
       register: ping_result
       ignore_errors: true
-    - name: Add the {{ rke2_api_ip }} address to the first node if no ICMP reply
-      ansible.builtin.shell: "ip addr add {{ rke2_api_ip }}/32 dev {{ rke2_interface }}"
+      changed_when: false
+    - name: Add the RKE2 API IP address to the first node if no ICMP reply
+      ansible.builtin.command: "ip addr add {{ rke2_api_ip }}/32 dev {{ rke2_interface }}"
       when:
         - ping_result.failed
         - inventory_hostname == groups[rke2_servers_group_name].0
+      changed_when: true
+  handlers:
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: true
   roles:
     - role: lablabs.rke2
