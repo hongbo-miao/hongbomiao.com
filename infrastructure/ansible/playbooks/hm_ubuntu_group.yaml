@@ -17,6 +17,13 @@
 - name: Install common packages
   hosts: hm-ubuntu
   tasks:
+    - name: Install common packages from apt
+      become: true
+      ansible.builtin.apt:
+        name:
+          - ncdu
+          - tshark
+        state: present
     - name: Install common packages from Snap
       become: true
       community.general.snap:
@@ -33,14 +40,8 @@
           - astral-uv
           - just
           - kubectl
+          - zellij
         classic: true
-        state: present
-    - name: Install common packages from apt
-      become: true
-      ansible.builtin.apt:
-        name:
-          - ncdu
-          - tshark
         state: present
 
 - name: Install Docker
