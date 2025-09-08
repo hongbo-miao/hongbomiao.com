@@ -15,16 +15,16 @@
           - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWhR5NV13iw0X8lKqsrSRqbcIJcA5AVMjyfJjOrplwH hongbo-miao"
 
 - name: Install common packages
-  hosts: hm-ubuntu
+  hosts: all
   tasks:
-    - name: Install common packages from apt
+    - name: Install packages from apt
       become: true
       ansible.builtin.apt:
         name:
           - ncdu
           - tshark
         state: present
-    - name: Install common packages from Snap
+    - name: Install packages from Snap
       become: true
       community.general.snap:
         name:
@@ -33,7 +33,7 @@
           - nvtop
           - vnstat
         state: present
-    - name: Install common packages from Snap (classic confinement)
+    - name: Install packages from Snap (classic confinement)
       become: true
       community.general.snap:
         name:
@@ -68,7 +68,7 @@
     nvidia_cuda_driver_version: 580.82.07
 
 - name: Install Rclone
-  hosts: hm-ubuntu
+  hosts: all
   roles:
     - role: stefangweichinger.ansible_rclone
       vars:
@@ -102,7 +102,7 @@
               storage_class: STANDARD
 
 - name: Install Kafka
-  hosts: hm-ubuntu
+  hosts: all
   become: true
   roles:
     - role: dragomirr.kafka
