@@ -18,6 +18,7 @@ export default [
     ignores: [
       // Anywhere
       '**/__pycache__',
+      '**/.ansible',
       '**/.deepeval',
       '**/.DS_Store',
       '**/.env.*.local',

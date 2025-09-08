@@ -11,6 +11,9 @@ ansible-galaxy-install:
 ansible-galaxy-upgrade:
     uv run poe upgrade
 
+lint-ansible:
+    uv run poe lint-ansible
+
 # Ansible Vault
 encrypt-string:
     uv run ansible-vault encrypt_string 'xxx' \
@@ -25,52 +28,34 @@ deploy-hm-macos-group:
 
 # Ansible
 ansible-galaxy-update:
-    uv run ansible-galaxy install --role-file=requirements.yml --force
-
-ansible-galaxy-collection-list:
-    uv run ansible-galaxy collection list
-
-ansible-galaxy-collection-install:
-    uv run ansible-galaxy collection install xxx
-
-ansible-galaxy-collection-update:
-    uv run ansible-galaxy collection install xxx --force
-
-ansible-galaxy-role-list:
-    uv run ansible-galaxy role list
-
-ansible-galaxy-role-install:
-    uv run ansible-galaxy install xxx
-
-ansible-galaxy-role-update:
-    uv run ansible-galaxy install xxx --force
+    uv run ansible-galaxy install --role-file=requirements.yaml --force
 
 ansible-doc-list:
     uv run ansible-doc --list
 
 ansible-inventory-list:
-    uv run ansible-inventory --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --list
+    uv run ansible-inventory --inventory=inventories/hm_ubuntu_group.yaml --list
 
 ansible-inventory-graph:
-    uv run ansible-inventory --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --graph
+    uv run ansible-inventory --inventory=inventories/hm_ubuntu_group.yaml --graph
 
 ansible-run-ping:
-    uv run ansible hm_ubuntu_group --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass --module-name=ping
+    uv run ansible hm_ubuntu_group --inventory=inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass --module-name=ping
 
 ansible-run-show-system-info:
-    uv run ansible hm_ubuntu_group --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass --module-name=setup
+    uv run ansible hm_ubuntu_group --inventory=inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass --module-name=setup
 
 ansible-run-uptime:
-    uv run ansible hm_ubuntu_group --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass --args=uptime
+    uv run ansible hm_ubuntu_group --inventory=inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass --args=uptime
 
 ansible-playbook-list-tags:
-    uv run ansible-playbook hm_ubuntu_group/playbooks/hm_ubuntu_group.yml --list-tags
+    uv run ansible-playbook playbooks/hm_ubuntu_group.yaml --list-tags
 
 ansible-playbook-hm-macos-group:
-    uv run ansible-playbook --inventory=hm_macos_group/inventories/hm_macos_group.yaml --vault-password-file=secrets/.ansible_vault_pass hm_macos_group/playbooks/hm_macos_group.yml
+    uv run ansible-playbook --inventory=inventories/hm_macos_group.yaml --vault-password-file=secrets/.ansible_vault_pass playbooks/hm_macos_group.yaml
 
 ansible-playbook-hm-ubuntu-group:
-    uv run ansible-playbook --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass hm_ubuntu_group/playbooks/hm_ubuntu_group.yml
+    uv run ansible-playbook --inventory=inventories/hm_ubuntu_group.yaml --vault-password-file=secrets/.ansible_vault_pass playbooks/hm_ubuntu_group.yaml
 
 ansible-playbook-hm-windows-group:
-    uv run ansible-playbook --inventory=hm_windows_group/inventories/hm_windows_group.yaml --vault-password-file=secrets/.ansible_vault_pass hm_windows_group/playbooks/hm_windows_group.yml
+    uv run ansible-playbook --inventory=inventories/hm_windows_group.yaml --vault-password-file=secrets/.ansible_vault_pass playbooks/hm_windows_group.yaml
