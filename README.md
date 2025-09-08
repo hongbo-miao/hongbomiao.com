@@ -854,7 +854,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Bots
 
 - **Renovate** - Dependency updating
-- **CodeReview BOT** - Code reviewing
+- **Gemini Code Assist** - Code reviewing
 - **Mergify** - Automatically merging
 - **Stale** - Stale issues and pull requests closing
 - **semantic-release** - Version management and package publishing
