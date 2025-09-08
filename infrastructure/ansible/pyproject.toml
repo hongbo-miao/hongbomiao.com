@@ -8,6 +8,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+  "ansible-lint==25.8.2",
   "poethepoet==0.37.0",
 ]
 
@@ -16,9 +17,10 @@ package = false
 required-version = ">=0.8.0"
 
 [tool.poe.tasks]
-install = "ansible-galaxy install --role-file=requirements.yml"
-upgrade = "ansible-galaxy install --force --role-file=requirements.yml"
-deploy-hm-macos-group = "ansible-playbook --inventory=hm_macos_group/inventories/hm_macos_group.yaml hm_macos_group/playbooks/hm_macos_group.yml"
-deploy-hm-ubuntu-group = "ansible-playbook --inventory=hm_ubuntu_group/inventories/hm_ubuntu_group.yaml hm_ubuntu_group/playbooks/hm_ubuntu_group.yml"
-deploy-hm-windows-group = "ansible-playbook --inventory=hm_windows_group/inventories/hm_windows_group.yaml hm_windows_group/playbooks/hm_windows_group.yml"
-deploy-hm-rke2-group = "ansible-playbook --inventory=hm_rke2_group/inventories/hm_rke2_group.yaml hm_rke2_group/playbooks/hm_rke2_group.yml"
+ansible-galaxy-install = "ansible-galaxy install --role-file=requirements.yaml"
+ansible-galaxy-upgrade = "ansible-galaxy install --role-file=requirements.yaml --force"
+lint-ansible = { shell = "ansible-lint $(git ls-files '**/playbooks/**.yaml')" }
+deploy-hm-macos-group = "ansible-playbook --inventory=inventories/hm_macos_group.yaml playbooks/hm_macos_group.yml"
+deploy-hm-ubuntu-group = "ansible-playbook --inventory=inventories/hm_ubuntu_group.yaml playbooks/hm_ubuntu_group.yml"
+deploy-hm-windows-group = "ansible-playbook --inventory=inventories/hm_windows_group.yaml playbooks/hm_windows_group.yml"
+deploy-hm-rke2-group = "ansible-playbook --inventory=inventories/hm_rke2_group.yaml playbooks/hm_rke2_group.yml"
