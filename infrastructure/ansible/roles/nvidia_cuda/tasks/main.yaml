@@ -1,0 +1,68 @@
+# https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=24.04&target_type=deb_local
+---
+- name: Check if NVIDIA CUDA toolkit is already installed
+  ansible.builtin.stat:
+    path: /usr/local/cuda/version.json
+  register: nvidia_cuda_version_file_check
+
+- name: Process existing CUDA version information
+  when: nvidia_cuda_version_file_check.stat.exists
+  block:
+    - name: Read CUDA version from version.json
+      ansible.builtin.slurp:
+        src: /usr/local/cuda/version.json
+      register: nvidia_cuda_version_content
+
+    - name: Parse CUDA version
+      ansible.builtin.set_fact:
+        nvidia_cuda_installed_cuda_version: "{{ (nvidia_cuda_version_content.content | b64decode | from_json).cuda.version }}"
+
+- name: Check if correct CUDA version is installed
+  ansible.builtin.set_fact:
+    nvidia_cuda_version_check: "{{ nvidia_cuda_version_file_check.stat.exists and (nvidia_cuda_installed_cuda_version | default('')) == nvidia_cuda_version }}"
+
+- name: Install NVIDIA CUDA toolkit if not present
+  become: true
+  when: not nvidia_cuda_version_check
+  block:
+    - name: Download NVIDIA CUDA repository pin file
+      ansible.builtin.get_url:
+        url: "{{ nvidia_cuda_pin_url }}"
+        dest: /etc/apt/preferences.d/cuda-repository-pin-600
+        mode: '0644'
+
+    - name: Download NVIDIA CUDA repository package
+      ansible.builtin.get_url:
+        url: "{{ nvidia_cuda_repo_url }}"
+        dest: "/tmp/{{ nvidia_cuda_repo_package }}"
+        mode: '0644'
+
+    - name: Install NVIDIA CUDA repository package
+      ansible.builtin.apt:
+        deb: "/tmp/{{ nvidia_cuda_repo_package }}"
+        state: present
+
+    - name: Copy NVIDIA CUDA keyring
+      ansible.builtin.shell: |
+        cp /var/cuda-repo-ubuntu{{ nvidia_cuda_ubuntu_version }}-{{ nvidia_cuda_major_minor_version }}-local/cuda-*-keyring.gpg /usr/share/keyrings/
+      args:
+        creates: /usr/share/keyrings/cuda-archive-keyring.gpg
+
+    - name: Update apt package cache
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Install NVIDIA CUDA toolkit
+      ansible.builtin.apt:
+        name: "{{ nvidia_cuda_toolkit_package }}"
+        state: present
+
+    - name: Install NVIDIA open driver
+      ansible.builtin.apt:
+        name: nvidia-open
+        state: present
+
+    - name: Clean up temporary files
+      ansible.builtin.file:
+        path: "/tmp/{{ nvidia_cuda_repo_package }}"
+        state: absent

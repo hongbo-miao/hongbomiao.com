@@ -1,0 +1,153 @@
+---
+- name: Configure user access
+  hosts: all
+  become: true
+  roles:
+    - robertdebock.users
+  vars:
+    users:
+      - name: hongbo-miao
+        group: sudo
+        groups: [users]
+        sudo_options: "ALL=(ALL) NOPASSWD: ALL"
+        password_lock: true
+        authorized_keys:
+          - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWhR5NV13iw0X8lKqsrSRqbcIJcA5AVMjyfJjOrplwH hongbo-miao"
+
+- name: Install common packages
+  hosts: hm-ubuntu
+  tasks:
+    - name: Install common packages from Snap
+      become: true
+      community.general.snap:
+        name:
+          - btop
+          - htop
+          - nvtop
+          - vnstat
+        state: present
+    - name: Install common packages from Snap (classic confinement)
+      become: true
+      community.general.snap:
+        name:
+          - astral-uv
+          - just
+          - kubectl
+        classic: true
+        state: present
+    - name: Install common packages from apt
+      become: true
+      ansible.builtin.apt:
+        name:
+          - ncdu
+          - tshark
+        state: present
+
+- name: Install Docker
+  hosts: all
+  become: true
+  roles:
+    - geerlingguy.docker
+  vars:
+    docker_edition: ce
+    docker_packages:
+      - "docker-{{ docker_edition }}"
+      - "docker-{{ docker_edition }}-cli"
+      - "docker-{{ docker_edition }}-rootless-extras"
+    docker_packages_state: present
+
+- name: Install NVIDIA CUDA Toolkit
+  hosts: all
+  become: true
+  roles:
+    - role: nvidia_cuda
+  vars:
+    ubuntu_version: 2404
+    nvidia_cuda_version: 13.0.1
+    nvidia_cuda_driver_version: 580.82.07
+
+- name: Install Rclone
+  hosts: hm-ubuntu
+  roles:
+    - role: stefangweichinger.ansible_rclone
+      vars:
+        # https://github.com/stefangweichinger/ansible-rclone/blob/main/defaults/main.yml
+        rclone_arch: arm64
+        rclone_config_location: "{{ ansible_env.HOME }}/.config/rclone/rclone.conf"
+        rclone_config_owner:
+          OWNER: "{{ ansible_env.USER }}"
+          GROUP: "{{ ansible_env.USER }}"
+        rclone_configs:
+          - name: hm-s3
+            properties:
+              type: s3
+              provider: AWS
+              access_key_id: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                35643735623839616262323630356332626638393930643866356235343938633631363564636231
+                3738656534316365376666626166643663353032653431650a363639306465303839656234343931
+                65626139626137633461393865323339623737383262366663653663316136323764643564393061
+                3730366635386166660a396231393038626233386439333863383363343034643332646635303030
+                39336632653764373162373630653332666138633363633239383334356436646638
+              secret_access_key: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                64646138613535386234383331313439653434383239616137313363663636343231383137333834
+                6633636666353764323035616634666337343235646438340a303466333763356135656436386532
+                63346433346238336235643762393432633138613462626433653336643835653562653831383537
+                6164353632646238630a383132663334643462616635373037366331373462393632303766333865
+                66326464303037623839643430396566373832336364666261633261326530613830643561346565
+                3133636366303031396632393836393834393232323231666361
+              region: us-west-2
+              storage_class: STANDARD
+
+- name: Install Kafka
+  hosts: hm-ubuntu
+  become: true
+  roles:
+    - role: dragomirr.kafka
+  vars:
+    kafka_version: 3.8.0
+    kafka_scala_version: 2.13
+    kafka_java_version: 17
+    kafka_install_dependencies: true
+    kafka_heap_size: 2G
+    kafka_topics:
+      - name: production.iot.motor.proto
+        replication_factor: 1
+        partitions: 1
+    kafka_additional_config:
+      message.max.bytes: 1048576  # 1 MiB
+
+- name: Deploy Speaches
+  hosts: all
+  become: true
+  roles:
+    - role: speaches
+  vars:
+    speaches_docker_image: ghcr.io/speaches-ai/speaches:0.8.2-cuda
+    speaches_port: 34796
+    speaches_gpu_devices: '"device=0"'
+
+- name: Deploy Ollama
+  hosts: all
+  become: true
+  roles:
+    - role: ollama
+  vars:
+    ollama_docker_image: docker.io/ollama/ollama:0.11.10
+    ollama_port: 11434
+    ollama_gpu_devices: '"device=0"'
+
+- name: Deploy vLLM
+  hosts: all
+  become: true
+  roles:
+    - role: vllm
+  vars:
+    vllm_docker_image: docker.io/vllm/vllm-openai:v0.10.1.1
+    vllm_port: 44194
+    vllm_model: Qwen/Qwen3-14B-AWQ
+    vllm_max_model_len: 4096
+    vllm_gpu_memory_utilization: 0.8
+    vllm_tensor_parallel_size: 1
+    vllm_gpu_devices: '"device=0"'

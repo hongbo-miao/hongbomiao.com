@@ -1,0 +1,51 @@
+---
+- name: Deploy RKE2
+  hosts: all
+  become: true
+  vars:
+    # https://github.com/rancher/rke2/releases
+    rke2_version: v1.33.1+rke2r1
+    rke2_download_kubeconf: true
+    rke2_download_kubeconf_path: /tmp
+    rke2_download_kubeconf_file_name: rke2.yaml
+    disable_kube_proxy: true
+    rke2_disable:
+      - rke2-canal
+      - rke2-ingress-nginx
+    rke2_cni:
+      - cilium
+    rke2_custom_manifests:
+      - templates/rke2-cilium-values.yaml.j2
+    rke2_custom_registry_mirrors:
+      - name: docker.io
+        endpoint:
+          - https://harbor.hongbomiao.com
+        rewrite: '"^(.*)$": "docker-hub-proxy-cache/$1"'
+  # https://github.com/lablabs/ansible-role-rke2/issues/157#issuecomment-2817301798
+  pre_tasks:
+    - name: Do not manage foreign routes
+      ansible.builtin.blockinfile:
+        path: /etc/systemd/networkd.conf
+        insertafter: "^\\[Network\\]"
+        block: |
+          ManageForeignRoutes=no
+          ManageForeignRoutingPolicyRules=no
+      register: networkd_patch
+      notify: Reload systemd daemon
+    - name: Check if RKE2 API IP is pingable
+      ansible.builtin.command: "ping -c 1 {{ rke2_api_ip }}"
+      register: ping_result
+      ignore_errors: true
+      changed_when: false
+    - name: Add the RKE2 API IP address to the first node if no ICMP reply
+      ansible.builtin.command: "ip addr add {{ rke2_api_ip }}/32 dev {{ rke2_interface }}"
+      when:
+        - ping_result.failed
+        - inventory_hostname == groups[rke2_servers_group_name].0
+      changed_when: true
+  handlers:
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: true
+  roles:
+    - role: lablabs.rke2

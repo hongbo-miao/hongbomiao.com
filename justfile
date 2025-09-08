@@ -172,7 +172,7 @@ cargo-run-production:
 
 # Lint
 lint-ansible:
-    uv run poe lint-ansible
+    cd infrastructure/ansible && uv run poe lint-ansible
 
 lint-c-cpp-cpplint:
     uv run poe lint-c-cpp-cpplint --repository=asterios/led-blinker --extensions=c,h --recursive asterios/led-blinker

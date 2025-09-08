@@ -160,17 +160,20 @@ jobs:
         with:
           version: 0.8.15
           enable-cache: true
-          cache-dependency-glob: uv.lock
+          cache-dependency-glob: infrastructure/ansible/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: pyproject.toml
+          python-version-file: infrastructure/ansible/pyproject.toml
       - name: Install dependencies
+        working-directory: infrastructure/ansible
         run: uv sync --dev
       - name: Install dependencies from Ansible Galaxy
+        working-directory: infrastructure/ansible
         run: |
-          uv run poe ansible-galaxy-install --role-file=infrastructure/ansible/requirements.yml
+          uv run poe ansible-galaxy-install
       - name: Lint Ansible
+        working-directory: infrastructure/ansible
         run: |
           uv run poe lint-ansible
 
