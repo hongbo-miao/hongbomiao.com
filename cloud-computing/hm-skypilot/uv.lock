@@ -98,6 +98,18 @@ wheels = [
 ]
 
 [[package]]
+name = "aiosqlite"
+version = "0.21.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/13/7d/8bca2bf9a247c2c5dfeec1d7a5f40db6518f88d314b8bca9da29670d2671/aiosqlite-0.21.0.tar.gz", hash = "sha256:131bb8056daa3bc875608c631c678cda73922a2d4ba8aec373b19f18c17e7aa3", size = 13454, upload-time = "2025-02-03T07:30:16.235Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f5/10/6c25ed6de94c49f88a91fa5018cb4c0f3625f31d5be9f771ebe5cc7cd506/aiosqlite-0.21.0-py3-none-any.whl", hash = "sha256:2549cf4057f95f53dcba16f2b64e8e2791d7e1adedb13197dd8ed77bb226d7d0", size = 15792, upload-time = "2025-02-03T07:30:13.6Z" },
+]
+
+[[package]]
 name = "alembic"
 version = "1.16.4"
 source = { registry = "https://pypi.org/simple" }
@@ -837,7 +849,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "skypilot", extras = ["aws", "gcp", "lambda", "nebius", "runpod", "vast"], specifier = "==0.10.2" }]
+requires-dist = [{ name = "skypilot", extras = ["aws", "gcp", "lambda", "nebius", "runpod", "vast"], specifier = "==0.10.3" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -1294,6 +1306,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/49/6b/00187a044f98255225f172de653941e61da37104a9ea60e4f6887717e2b5/pillow-11.3.0-cp313-cp313t-win32.whl", hash = "sha256:2a3117c06b8fb646639dce83694f2f9eac405472713fcb1ae887469c0d4f6788", size = 6277546, upload-time = "2025-07-01T09:15:11.311Z" },
     { url = "https://files.pythonhosted.org/packages/e8/5c/6caaba7e261c0d75bab23be79f1d06b5ad2a2ae49f028ccec801b0e853d6/pillow-11.3.0-cp313-cp313t-win_amd64.whl", hash = "sha256:857844335c95bea93fb39e0fa2726b4d9d758850b34075a7e3ff4f4fa3aa3b31", size = 6985102, upload-time = "2025-07-01T09:15:13.164Z" },
     { url = "https://files.pythonhosted.org/packages/f3/7e/b623008460c09a0cb38263c93b828c666493caee2eb34ff67f778b87e58c/pillow-11.3.0-cp313-cp313t-win_arm64.whl", hash = "sha256:8797edc41f3e8536ae4b10897ee2f637235c94f27404cac7297f7b607dd0716e", size = 2424803, upload-time = "2025-07-01T09:15:15.695Z" },
+]
+
+[[package]]
+name = "pip"
+version = "25.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/20/16/650289cd3f43d5a2fadfd98c68bd1e1e7f2550a1a5326768cddfbcedb2c5/pip-25.2.tar.gz", hash = "sha256:578283f006390f85bb6282dffb876454593d637f5d1be494b5202ce4877e71f2", size = 1840021, upload-time = "2025-07-30T21:50:15.401Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/3f/945ef7ab14dc4f9d7f40288d2df998d1837ee0888ec3659c813487572faa/pip-25.2-py3-none-any.whl", hash = "sha256:6d67a2b4e7f14d8b31b8b52648866fa717f45a1eb70e83002f4331d07e953717", size = 1752557, upload-time = "2025-07-30T21:50:13.323Z" },
 ]
 
 [[package]]
@@ -2050,12 +2071,15 @@ wheels = [
 
 [[package]]
 name = "skypilot"
-version = "0.10.2"
+version = "0.10.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiofiles" },
     { name = "aiohttp" },
+    { name = "aiosqlite" },
     { name = "alembic" },
+    { name = "anyio" },
+    { name = "bcrypt" },
     { name = "cachetools" },
     { name = "casbin" },
     { name = "click" },
@@ -2072,6 +2096,7 @@ dependencies = [
     { name = "pandas" },
     { name = "passlib" },
     { name = "pendulum" },
+    { name = "pip" },
     { name = "prettytable" },
     { name = "prometheus-client" },
     { name = "psutil" },
@@ -2085,6 +2110,7 @@ dependencies = [
     { name = "requests" },
     { name = "rich" },
     { name = "setproctitle" },
+    { name = "setuptools" },
     { name = "sqlalchemy" },
     { name = "sqlalchemy-adapter" },
     { name = "tabulate" },
@@ -2093,9 +2119,9 @@ dependencies = [
     { name = "uvicorn", extra = ["standard"] },
     { name = "wheel" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d5/91/f1e4a34653c2403c5c3190b5e23cc63f04767973817997f073ae5800cd83/skypilot-0.10.2.tar.gz", hash = "sha256:d881fab16b8c49f80299198de06744f8c881a4555e136dd9b676a9f00aa445b9", size = 2452110, upload-time = "2025-08-27T07:54:15.297Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a4/ac/2a6df456faa6bfde9873e92626731cb37f1cf25854c1fbd72d55ede00635/skypilot-0.10.3.tar.gz", hash = "sha256:0b28e579f3d1917bfc287c1a04d1fc1effcffb86e219ddd78dcee3343a105ed4", size = 2482585, upload-time = "2025-09-09T23:00:49.054Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f8/48/83a41abebeab0d15fe2535926c9d0d9edc3ffe04b1691c98fc11f62d26e6/skypilot-0.10.2-py3-none-any.whl", hash = "sha256:74d4177f65b78404ddae206fd374003d51d8b322ecc7a41fee85931a88be5311", size = 2687022, upload-time = "2025-08-27T07:54:13.075Z" },
+    { url = "https://files.pythonhosted.org/packages/b8/62/a9851aa708620a1bfe82d72779129b674d105e28d44e5a657ee8fc534237/skypilot-0.10.3-py3-none-any.whl", hash = "sha256:06d523e9f499b8134901e9b3fd933a9f1f441e42f8f0d3fb16df18a847a91b21", size = 2714815, upload-time = "2025-09-09T23:00:46.169Z" },
 ]
 
 [package.optional-dependencies]
