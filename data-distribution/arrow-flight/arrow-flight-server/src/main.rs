@@ -8,14 +8,14 @@ use arrow_flight::{
     HandshakeRequest, HandshakeResponse, Location, PollInfo, PutResult, SchemaResult, Ticket,
 };
 use futures_util::future::{self, Ready};
-use futures_util::{stream, TryStreamExt};
+use futures_util::{TryStreamExt, stream};
 use parquet::arrow::arrow_reader::ParquetRecordBatchReader;
 use parquet::file::reader::{FileReader, SerializedFileReader};
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use tokio::fs;
 use tonic::codegen::Bytes;
-use tonic::{transport::Server, Request, Response, Status, Streaming};
+use tonic::{Request, Response, Status, Streaming, transport::Server};
 
 struct FlightSqlServer {
     parquet_files: HashMap<String, PathBuf>,

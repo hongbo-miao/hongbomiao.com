@@ -495,6 +495,7 @@ static-type-check-terraform:
     cd infrastructure/opentofu/environments/production/aws/kubernetes && tofu validate
     cd infrastructure/opentofu/environments/production/aws/network && tofu validate
     cd infrastructure/opentofu/environments/production/harbor && tofu validate
+    cd infrastructure/opentofu/environments/production/nebius/applications && tofu validate
     cd infrastructure/opentofu/environments/production/nebius/data && tofu validate
     cd infrastructure/opentofu/environments/production/nebius/kubernetes && tofu validate
     cd infrastructure/opentofu/environments/production/snowflake/account && tofu validate

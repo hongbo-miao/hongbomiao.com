@@ -28,7 +28,9 @@ pub async fn process_police_audio_stream(
             .arg("-nostdin")
             .hide_banner()
             .args(["-loglevel", "quiet"])
-            .filter_complex("pan=mono|c0=0.707107*FL+0.707107*FR,aresample=resampler=soxr:sample_rate=16000")
+            .filter_complex(
+                "pan=mono|c0=0.707107*FL+0.707107*FR,aresample=resampler=soxr:sample_rate=16000",
+            )
             .format("s16le")
             .pipe_stdout()
             .spawn()
