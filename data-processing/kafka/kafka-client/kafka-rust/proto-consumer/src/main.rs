@@ -47,21 +47,19 @@ async fn main() {
             Ok(msg) => {
                 if let Some(payload) = msg.payload() {
                     match decoder.decode(Some(payload)).await {
-                        Ok(Some(decoded)) => {
-                            match Motor::decode(&*decoded.bytes) {
-                                Ok(motor) => {
-                                    println!("Received motor data:");
-                                    println!("  id: {:?}", motor.id);
-                                    println!("  timestamp_ns: {:?}", motor.timestamp_ns);
-                                    println!("  temperature1: {:?}", motor.temperature1);
-                                    println!("  temperature2: {:?}", motor.temperature2);
-                                    println!("  temperature3: {:?}", motor.temperature3);
-                                    println!("  temperature4: {:?}", motor.temperature4);
-                                    println!("  temperature5: {:?}", motor.temperature5);
-                                }
-                                Err(e) => eprintln!("Failed to decode motor data: {}", e),
+                        Ok(Some(decoded)) => match Motor::decode(&*decoded.bytes) {
+                            Ok(motor) => {
+                                println!("Received motor data:");
+                                println!("  id: {:?}", motor.id);
+                                println!("  timestamp_ns: {:?}", motor.timestamp_ns);
+                                println!("  temperature1: {:?}", motor.temperature1);
+                                println!("  temperature2: {:?}", motor.temperature2);
+                                println!("  temperature3: {:?}", motor.temperature3);
+                                println!("  temperature4: {:?}", motor.temperature4);
+                                println!("  temperature5: {:?}", motor.temperature5);
                             }
-                        }
+                            Err(e) => eprintln!("Failed to decode motor data: {}", e),
+                        },
                         Ok(None) => eprintln!("No data decoded"),
                         Err(e) => eprintln!("Error decoding message: {}", e),
                     }

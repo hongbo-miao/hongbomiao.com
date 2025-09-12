@@ -1,10 +1,10 @@
 #![forbid(unsafe_code)]
 
+use chrono::{Datelike, TimeZone, Utc};
 use rand::Rng;
 use tokio::io::AsyncWriteExt;
 use tokio::net::TcpListener;
-use tokio::time::{sleep, Duration};
-use chrono::{Datelike, TimeZone, Utc};
+use tokio::time::{Duration, sleep};
 
 // Constants for packet structure
 const HEADER_SIZE_BYTE: i32 = 32;
@@ -45,9 +45,7 @@ fn get_year_start_ns() -> i64 {
 
 fn get_iads_time() -> i64 {
     let year_start_ns = get_year_start_ns();
-    let current_ns = Utc::now()
-        .timestamp_nanos_opt()
-        .unwrap();
+    let current_ns = Utc::now().timestamp_nanos_opt().unwrap();
     current_ns - year_start_ns
 }
 
@@ -78,7 +76,8 @@ async fn send_data_stream(
         buffer[offset + VALUE_SIZE_BYTE as usize * 2..offset + VALUE_SIZE_BYTE as usize * 3]
             .copy_from_slice(&packet_counter.to_le_bytes());
         for i in 3..8 {
-            buffer[offset + VALUE_SIZE_BYTE as usize * i..offset + VALUE_SIZE_BYTE as usize * (i + 1)]
+            buffer[offset + VALUE_SIZE_BYTE as usize * i
+                ..offset + VALUE_SIZE_BYTE as usize * (i + 1)]
                 .copy_from_slice(&0i32.to_le_bytes());
         }
         offset += HEADER_SIZE_BYTE as usize;
@@ -113,9 +112,11 @@ async fn send_data_stream(
             let value1: f32 = rng.random_range(0.0..100.0);
             let value2: f32 = rng.random_range(0.0..100.0);
 
-            buffer[offset..offset + VALUE_SIZE_BYTE as usize].copy_from_slice(&value1.to_le_bytes());
+            buffer[offset..offset + VALUE_SIZE_BYTE as usize]
+                .copy_from_slice(&value1.to_le_bytes());
             offset += VALUE_SIZE_BYTE as usize;
-            buffer[offset..offset + VALUE_SIZE_BYTE as usize].copy_from_slice(&value2.to_le_bytes());
+            buffer[offset..offset + VALUE_SIZE_BYTE as usize]
+                .copy_from_slice(&value2.to_le_bytes());
             offset += VALUE_SIZE_BYTE as usize;
         }
 

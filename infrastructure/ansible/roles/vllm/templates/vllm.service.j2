@@ -8,10 +8,10 @@ Type=simple
 Environment=PATH=/usr/bin:/bin
 TimeoutStartSec=1200
 TimeoutStopSec=120
-ExecStartPre=/usr/bin/env docker volume create {{ vllm_volume_name }}
-ExecStartPre=/bin/sh -c '/usr/bin/env docker rm --force {{ vllm_container_name }} || true'
-ExecStartPre=/usr/bin/env docker pull {{ vllm_docker_image }}
-ExecStart=/usr/bin/env docker run \
+ExecStartPre=docker volume create {{ vllm_volume_name }}
+ExecStartPre=-docker rm --force {{ vllm_container_name }}
+ExecStartPre=docker pull {{ vllm_docker_image }}
+ExecStart=docker run \
   --name={{ vllm_container_name }} \
   --publish={{ vllm_port }}:8000 \
   --volume={{ vllm_volume_name }}:{{ vllm_volume_mount }} \
@@ -24,7 +24,7 @@ ExecStart=/usr/bin/env docker run \
     --max-model-len={{ vllm_max_model_len }} \
     --gpu-memory-utilization={{ vllm_gpu_memory_utilization }} \
     --tensor-parallel-size={{ vllm_tensor_parallel_size }}
-ExecStop=/usr/bin/env docker stop {{ vllm_container_name }}
+ExecStop=docker stop {{ vllm_container_name }}
 Restart=always
 RestartSec=30
 

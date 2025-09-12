@@ -127,7 +127,7 @@
   vars:
     speaches_docker_image: ghcr.io/speaches-ai/speaches:0.8.2-cuda
     speaches_port: 34796
-    speaches_gpu_devices: '"device=0"'
+    speaches_gpu_devices: "'\"device=0\"'"
 
 - name: Deploy Ollama
   hosts: all
@@ -137,7 +137,7 @@
   vars:
     ollama_docker_image: docker.io/ollama/ollama:0.11.10
     ollama_port: 11434
-    ollama_gpu_devices: '"device=0"'
+    ollama_gpu_devices: "'\"device=0\"'"
 
 - name: Deploy vLLM
   hosts: all
@@ -151,4 +151,4 @@
     vllm_max_model_len: 4096
     vllm_gpu_memory_utilization: 0.8
     vllm_tensor_parallel_size: 1
-    vllm_gpu_devices: '"device=0"'
+    vllm_gpu_devices: "'\"device=0\"'"
