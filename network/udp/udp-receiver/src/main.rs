@@ -1,7 +1,7 @@
 #![forbid(unsafe_code)]
 
 use prost::Message;
-use socket2::{Socket, Domain, Type};
+use socket2::{Domain, Socket, Type};
 use std::error::Error;
 use std::net::SocketAddr;
 use tokio::net::UdpSocket;

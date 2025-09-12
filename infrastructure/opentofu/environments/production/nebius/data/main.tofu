@@ -16,6 +16,7 @@ module "hm_postgres_cluster" {
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.hm_postgres_bootstrap_user_password
+  public_access                = false
   disk_size_gib                = 32
   host_count                   = 3
   platform                     = "cpu-d3"

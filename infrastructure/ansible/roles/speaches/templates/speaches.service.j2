@@ -6,10 +6,10 @@ Wants=network-online.target
 [Service]
 Type=simple
 Environment=PATH=/usr/bin:/bin
-ExecStartPre=/usr/bin/env docker volume create {{ speaches_volume_name }}
-ExecStartPre=/bin/sh -c '/usr/bin/env docker rm --force {{ speaches_container_name }} || true'
-ExecStartPre=/usr/bin/env docker pull {{ speaches_docker_image }}
-ExecStart=/usr/bin/env docker run \
+ExecStartPre=docker volume create {{ speaches_volume_name }}
+ExecStartPre=-docker rm --force {{ speaches_container_name }}
+ExecStartPre=docker pull {{ speaches_docker_image }}
+ExecStart=docker run \
   --name={{ speaches_container_name }} \
   --publish={{ speaches_port }}:8000 \
   --volume={{ speaches_volume_name }}:{{ speaches_volume_mount }} \
@@ -17,7 +17,7 @@ ExecStart=/usr/bin/env docker run \
   --detach=false \
   --env=HF_TOKEN={{ hugging_face_token }} \
   {{ speaches_docker_image }}
-ExecStop=/usr/bin/env docker stop {{ speaches_container_name }}
+ExecStop=docker stop {{ speaches_container_name }}
 Restart=always
 RestartSec=10
 

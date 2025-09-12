@@ -3,8 +3,8 @@
 use chrono::Utc;
 use prost::Message;
 use rand::Rng;
-use tokio::net::UdpSocket;
 use std::time::Instant;
+use tokio::net::UdpSocket;
 
 pub mod iot {
     include!(concat!(env!("OUT_DIR"), "/production.iot.rs"));
