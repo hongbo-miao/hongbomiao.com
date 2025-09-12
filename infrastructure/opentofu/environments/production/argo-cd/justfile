@@ -8,11 +8,5 @@ opentofu-plan:
     tofu plan
 
 opentofu-apply:
-    argocd login localhost:31026 --username=admin --insecure
-    export TF_VAR_git_repository_hongbomiao_com_ssh_private_key="$(cat <<'EOF'
-    -----BEGIN OPENSSH PRIVATE KEY-----
-    xxx
-    -----END OPENSSH PRIVATE KEY-----
-    EOF
-    )"
+    # argocd login localhost:31026 --username=admin --insecure
     tofu apply

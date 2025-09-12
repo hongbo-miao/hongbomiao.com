@@ -1,19 +1,19 @@
 #![forbid(unsafe_code)]
 
 use prost::Message;
+use rdkafka::ClientConfig;
 use rdkafka::producer::{FutureProducer, FutureRecord};
 use rdkafka::util::Timeout;
-use rdkafka::ClientConfig;
 use schema_registry_converter::async_impl::easy_proto_raw::EasyProtoRawEncoder;
 use schema_registry_converter::async_impl::schema_registry::SrSettings;
 use schema_registry_converter::schema_registry_common::SubjectNameStrategy;
+use std::env;
 use std::error::Error;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 use tokio::sync::mpsc;
 use zeromq::{Socket, SocketRecv, SubSocket};
-use std::env;
 
 pub mod production {
     pub mod iot {
@@ -40,8 +40,7 @@ impl Config {
         dotenvy::from_filename(".env.production").ok();
 
         Self {
-            zeromq_host: env::var("ZEROMQ_HOST")
-                .expect("ZEROMQ_HOST must be set in environment"),
+            zeromq_host: env::var("ZEROMQ_HOST").expect("ZEROMQ_HOST must be set in environment"),
             zeromq_port: env::var("ZEROMQ_PORT")
                 .expect("ZEROMQ_PORT must be set in environment")
                 .parse()
@@ -50,8 +49,7 @@ impl Config {
                 .expect("KAFKA_BOOTSTRAP_SERVERS must be set in environment"),
             schema_registry_url: env::var("SCHEMA_REGISTRY_URL")
                 .expect("SCHEMA_REGISTRY_URL must be set in environment"),
-            kafka_topic: env::var("KAFKA_TOPIC")
-                .expect("KAFKA_TOPIC must be set in environment"),
+            kafka_topic: env::var("KAFKA_TOPIC").expect("KAFKA_TOPIC must be set in environment"),
             channel_buffer_size: env::var("CHANNEL_BUFFER_SIZE")
                 .expect("CHANNEL_BUFFER_SIZE must be set in environment")
                 .parse()

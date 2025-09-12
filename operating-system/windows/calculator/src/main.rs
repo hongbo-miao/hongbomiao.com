@@ -1,10 +1,10 @@
-use windows::core::{s, Interface, Result};
+use windows::UI::UIAutomation::AutomationElement;
 use windows::Win32::System::Com::{
-    CoCreateInstance, CoInitializeEx, CLSCTX_ALL, COINIT_MULTITHREADED,
+    CLSCTX_ALL, COINIT_MULTITHREADED, CoCreateInstance, CoInitializeEx,
 };
 use windows::Win32::UI::Accessibility::{CUIAutomation, IUIAutomation, IUIAutomationElement};
 use windows::Win32::UI::WindowsAndMessaging::FindWindowA;
-use windows::UI::UIAutomation::AutomationElement;
+use windows::core::{Interface, Result, s};
 
 fn main() -> Result<()> {
     unsafe {

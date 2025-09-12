@@ -18,8 +18,16 @@ resource "nebius_msp_postgresql_v1alpha1_cluster" "main" {
   }
   config = {
     version       = var.postgres_version
-    public_access = false
+    public_access = var.public_access
+    pooler_config = {
+      pooling_mode  = "TRANSACTION"
+      max_pool_size = 100
+    }
     template = {
+      disk = {
+        size_gibibytes = var.disk_size_gib
+        type           = "network-ssd"
+      }
       hosts = {
         count = var.host_count
       }
@@ -27,14 +35,6 @@ resource "nebius_msp_postgresql_v1alpha1_cluster" "main" {
         platform = var.platform
         preset   = var.preset
       }
-      disk = {
-        size_gibibytes = var.disk_size_gib
-        type           = "network-ssd"
-      }
-    }
-    pooler_config = {
-      pooling_mode  = "TRANSACTION"
-      max_pool_size = 100
     }
   }
   backup = {

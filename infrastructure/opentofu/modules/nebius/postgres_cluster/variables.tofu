@@ -19,6 +19,9 @@ variable "bootstrap_user_name" {
 variable "bootstrap_user_password" {
   type = string
 }
+variable "public_access" {
+  type = bool
+}
 variable "disk_size_gib" {
   type = number
 }

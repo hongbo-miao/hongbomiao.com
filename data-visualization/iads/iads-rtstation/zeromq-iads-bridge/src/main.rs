@@ -16,9 +16,12 @@ use tokio::net::TcpListener;
 use tokio::net::TcpStream;
 use tokio::process::Command;
 use tokio::sync::RwLock;
-use windows::core::{HSTRING, PCWSTR};
-use windows::Win32::System::Com::{CLSIDFromProgID, CoCreateInstance, CoInitializeEx, CLSCTX_ALL, COINIT_MULTITHREADED, IDispatch, DISPPARAMS, DISPATCH_METHOD};
+use windows::Win32::System::Com::{
+    CLSCTX_ALL, CLSIDFromProgID, COINIT_MULTITHREADED, CoCreateInstance, CoInitializeEx,
+    DISPATCH_METHOD, DISPPARAMS, IDispatch,
+};
 use windows::Win32::System::Variant::VARIANT;
+use windows::core::{HSTRING, PCWSTR};
 use zeromq::{Socket, SocketRecv, SubSocket};
 
 pub mod production {
