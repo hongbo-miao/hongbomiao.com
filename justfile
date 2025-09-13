@@ -207,11 +207,17 @@ lint-html:
 lint-html-fix:
     npm run lint-html-fix
 
-lint-json:
-    npm run lint-json
+lint-json-eslint:
+    npm run lint-json-eslint
 
-lint-json-fix:
-    npm run lint-json-fix
+lint-json-eslint-fix:
+    npm run lint-json-eslint-fix
+
+lint-json-prettier:
+    npm run lint-json-prettier
+
+lint-json-prettier-fix:
+    npm run lint-json-prettier-fix
 
 lint-justfile:
     uv run poe lint-justfile

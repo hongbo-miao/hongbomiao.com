@@ -24,7 +24,6 @@ export default [
       '**/.env.*.local',
       '**/.gitkeep',
       '**/.idea',
-      '**/.local.auto.tfvars',
       '**/.pytest_cache',
       '**/.ruff_cache',
       '**/.terraform',
@@ -52,6 +51,7 @@ export default [
       '**/codegen',
       '**/coverage',
       '**/node_modules',
+      '**/secrets.auto.tfvars',
       '**/slprj',
       '**/target',
 
