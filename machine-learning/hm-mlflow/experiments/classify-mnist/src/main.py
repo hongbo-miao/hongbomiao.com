@@ -31,7 +31,7 @@ class LitAutoEncoder(L.LightningModule):
         batch: tuple[torch.Tensor, torch.Tensor],
         _batch_idx: int,
     ) -> torch.Tensor:
-        x, y = batch
+        x, _y = batch
         x = x.view(x.size(0), -1)
         z = self.encoder(x)
         x_hat = self.decoder(z)

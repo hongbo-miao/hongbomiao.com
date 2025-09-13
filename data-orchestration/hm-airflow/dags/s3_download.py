@@ -2,13 +2,13 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from airflow import DAG
-from airflow.decorators import task
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
+from airflow.sdk import task
 
 with DAG(
     "s3_download",
     start_date=datetime(2022, 1, 1, tzinfo=UTC),
-    schedule_interval="@once",
+    schedule="@once",
     catchup=False,
 ) as dag:
 

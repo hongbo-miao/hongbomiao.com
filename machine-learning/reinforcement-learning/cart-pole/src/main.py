@@ -11,7 +11,7 @@ def main() -> None:
     logger.info(observation, info)
     for _ in range(1000):
         action = env.action_space.sample()
-        observation, reward, terminated, truncated, info = env.step(action)
+        observation, _reward, terminated, truncated, info = env.step(action)
 
         if terminated or truncated:
             observation, info = env.reset()

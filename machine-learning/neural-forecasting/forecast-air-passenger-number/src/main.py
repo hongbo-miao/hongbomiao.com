@@ -28,7 +28,7 @@ def main() -> None:
     y_hat_df = nf.predict()
     y_hat_df = y_hat_df.reset_index()
 
-    fig, ax = plt.subplots(1, 1, figsize=(20, 7))
+    _fig, ax = plt.subplots(1, 1, figsize=(20, 7))
     plot_df = pd.concat([y_df, y_hat_df]).set_index("ds")
     plot_df[["y", "LSTM", "NHITS"]].plot(ax=ax, linewidth=2)
     ax.set_title("Forecast Air Passenger Number", fontsize=22)

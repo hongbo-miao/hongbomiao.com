@@ -1,14 +1,13 @@
 from datetime import UTC, datetime
 
-from airflow.decorators import task, task_group
-from airflow.models import DAG
 from airflow.models.taskinstance import TaskInstance
-from airflow.operators.bash import BashOperator
+from airflow.providers.standard.operators.bash import BashOperator
+from airflow.sdk import DAG, task, task_group
 
 with DAG(
     "greet",
     start_date=datetime(2022, 1, 1, tzinfo=UTC),
-    schedule_interval="@once",
+    schedule="@once",
     catchup=False,
     params={
         "first_name": "Hongbo",
