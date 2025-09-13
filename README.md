@@ -798,45 +798,45 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Code
 
 - **ansible-lint** - Ansible linter
-- **dotnet format** - C# code formatter
-- **CSharpier** - C# code formatter
-- **ClangFormat** - C/C++ code formatter
+- **dotnet format** - C# formatter
+- **CSharpier** - C# formatter
+- **ClangFormat** - C/C++ formatter
 - **cpplint** - C/C++ linter
 - **CMakeLint** - CMake linter
-- **Prettier** - Code formatter
 - **commitlint** - Commit message linter
 - **Stylelint** - CSS linter
 - **hadolint** - Dockerfile linter
-- **gofmt** - Go code formatter
+- **gofmt** - Go formatter
 - **golangci-lint** - Go linter
 - **@html-eslint** - HTML linter
 - **ESLint** - JavaScript linter
+- **Prettier** - JSON formatter
 - **@eslint/json** - JSON linter
-- **Just** - justfile code formatter
-- **Ktlint** - Kotlin code formatter and linter
+- **Just** - justfile formatter
+- **Ktlint** - Kotlin formatter and linter
 - **detekt** - Kotlin static type checker
 - **Kubeconform** - Kubernetes manifest linter
 - **markdownlint-cli2** - Markdown linter
-- **MISS_HIT** - MATLAB code formatter
+- **MISS_HIT** - MATLAB formatter
 - **textlint** - Natural language linter
-- **tofu** - OpenTofu code formatter
+- **tofu** - OpenTofu formatter
 - **Buf** - Protocol Buffers linter
-- **Ruff** - Python code formatter and linter
+- **Ruff** - Python formatter and linter
 - **Mypy** - Python static type checker
 - **qmllint** - QML linter
-- **opa** - Rego code formatter
-- **RuboCop** - Ruby code formatter and linter
-- **rustfmt** - Rust code formatter
+- **opa** - Rego formatter
+- **RuboCop** - Ruby formatter and linter
+- **rustfmt** - Rust formatter
 - **Clippy** - Rust linter
-- **Scalafmt** - Scala code formatter
+- **Scalafmt** - Scala formatter
 - **Scalafix** - Scala linter
 - **ShellCheck** - Shell linter
 - **Solhint** - Solidity linter
-- **SQLFluff** - SQL code formatter and linter
-- **Taplo** - TOML code formatter
+- **SQLFluff** - SQL formatter and linter
+- **Taplo** - TOML formatter
 - **tsc** - TypeScript static type checker
-- **Verible** - Verilog code formatter and linter
-- **VHDL Style Guide (VSG)** - VHDL code formatter
+- **Verible** - Verilog formatter and linter
+- **VHDL Style Guide (VSG)** - VHDL formatter
 - **@prettier/plugin-xml** - XML formatter
 - **yamllint** - YAML linter
 - **GitHub** - Version control
