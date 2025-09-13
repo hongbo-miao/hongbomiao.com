@@ -17,7 +17,6 @@ module.exports = [
       '**/.env.*.local',
       '**/.gitkeep',
       '**/.idea',
-      '**/.local.auto.tfvars',
       '**/.pytest_cache',
       '**/.ruff_cache',
       '**/.terraform',
@@ -45,6 +44,7 @@ module.exports = [
       '**/codegen',
       '**/coverage',
       '**/node_modules',
+      '**/secrets.auto.tfvars',
       '**/slprj',
       '**/target',
 
