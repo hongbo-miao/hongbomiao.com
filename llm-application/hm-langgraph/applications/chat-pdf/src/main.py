@@ -91,7 +91,7 @@ def retrieve_context(
         faiss.normalize_L2(query_embedding)
 
         k = 3  # Number of chunks to retrieve
-        scores, indices = index.search(query_embedding, k)
+        _scores, indices = index.search(query_embedding, k)
 
         relevant_chunks = [chunks[idx] for idx in indices[0]]
         state["context"] = "\n".join(relevant_chunks)
@@ -154,7 +154,7 @@ def chat_with_pdf(pdf_path: Path, question: str) -> str:
     try:
         # Process PDF and setup vector store
         chunks = process_pdf(pdf_path)
-        index, embeddings, model = setup_vector_store(chunks)
+        index, _embeddings, model = setup_vector_store(chunks)
 
         # Create initial state
         initial_state = MessagesState(
