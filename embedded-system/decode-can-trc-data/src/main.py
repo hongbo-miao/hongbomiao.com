@@ -150,7 +150,7 @@ class TrcUtil:
 
         with can.TRCReader(trc_path) as reader:
             for frame in reader:
-                unit_type, unit_id, message = TrcUtil.process_frame(
+                unit_type, _unit_id, message = TrcUtil.process_frame(
                     frame,
                     dbc_dict,
                     unit_dict,

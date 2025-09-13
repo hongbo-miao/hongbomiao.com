@@ -16,7 +16,7 @@ def main() -> None:
     mlflow.sklearn.autolog()
 
     diabetes = load_diabetes()
-    x_train, x_test, y_train, y_test = train_test_split(diabetes.data, diabetes.target)
+    x_train, x_test, y_train, _y_test = train_test_split(diabetes.data, diabetes.target)
 
     random_forest_regressor = RandomForestRegressor(
         n_estimators=100,

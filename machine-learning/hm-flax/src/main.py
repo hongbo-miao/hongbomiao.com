@@ -58,7 +58,7 @@ def train_step(
     batch: dict[str, jnp.ndarray],
 ) -> tuple[train_state.TrainState, jnp.ndarray]:
     grad_fn = jax.value_and_grad(loss_fn, has_aux=True)
-    (loss, logits), grads = grad_fn(
+    (loss, _logits), grads = grad_fn(
         state.params,
         state.apply_fn,
         batch["image"],

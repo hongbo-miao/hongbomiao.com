@@ -17,7 +17,7 @@ def main(data_dirname: str, ratings_filename: str, movies_filename: str) -> None
         inferSchema=True,
     )
 
-    training, test = ratings_df.randomSplit([0.8, 0.2])
+    training, _test = ratings_df.randomSplit([0.8, 0.2])
 
     als = ALS(
         maxIter=5,

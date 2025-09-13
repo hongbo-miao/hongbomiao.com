@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 import pytest
@@ -63,7 +64,9 @@ FlightDate = 01/01/25
         test_file.write_text(test_content)
         with pytest.raises(
             ValueError,
-            match="End time '315:20:00:00.000' must be greater than start time '315:20:30:00.000'",
+            match=re.escape(
+                "End time '315:20:00:00.000' must be greater than start time '315:20:30:00.000'",
+            ),
         ):
             IadsUtil.get_irig_times(test_file)
 
@@ -79,7 +82,9 @@ FlightDate = 01/01/25
         test_file.write_text(test_content)
         with pytest.raises(
             ValueError,
-            match="Start time '365:00:00:00.000' cannot be bigger than 364:23:59:59.999",
+            match=re.escape(
+                "Start time '365:00:00:00.000' cannot be bigger than 364:23:59:59.999",
+            ),
         ):
             IadsUtil.get_irig_times(test_file)
 
@@ -95,7 +100,9 @@ FlightDate = 01/01/25
         test_file.write_text(test_content)
         with pytest.raises(
             ValueError,
-            match="End time '000:00:00:00.000' cannot be 000:00:00:00.000 or bigger than 364:23:59:59.999",
+            match=re.escape(
+                "End time '000:00:00:00.000' cannot be 000:00:00:00.000 or bigger than 364:23:59:59.999",
+            ),
         ):
             IadsUtil.get_irig_times(test_file)
 
@@ -111,7 +118,9 @@ FlightDate = 01/01/25
         test_file.write_text(test_content)
         with pytest.raises(
             ValueError,
-            match="End time '365:00:00:00.000' cannot be 000:00:00:00.000 or bigger than 364:23:59:59.999",
+            match=re.escape(
+                "End time '365:00:00:00.000' cannot be 000:00:00:00.000 or bigger than 364:23:59:59.999",
+            ),
         ):
             IadsUtil.get_irig_times(test_file)
 
