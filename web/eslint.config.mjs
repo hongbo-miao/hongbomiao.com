@@ -11,6 +11,7 @@ import jestDomPlugin from 'eslint-plugin-jest-dom';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import prettierPluginRecommended from 'eslint-plugin-prettier/recommended';
 import reactPlugin from 'eslint-plugin-react';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import securityPlugin from 'eslint-plugin-security';
 import testingLibraryPlugin from 'eslint-plugin-testing-library';
@@ -94,6 +95,7 @@ export default [
       'jest-dom': jestDomPlugin,
       'jsx-a11y': jsxA11yPlugin,
       react: reactPlugin,
+      'react-hooks': reactHooksPlugin,
       'react-refresh': reactRefreshPlugin,
       security: securityPlugin,
       'testing-library': testingLibraryPlugin,
@@ -120,6 +122,7 @@ export default [
       ...jestDomPlugin.configs.recommended.rules,
       ...jsxA11yPlugin.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
+      ...reactHooksPlugin.configs.recommended.rules,
       ...reactRefreshPlugin.configs.vite.rules,
       ...tanstackQueryPlugin.configs.recommended.rules,
       ...securityPlugin.configs.recommended.rules,
