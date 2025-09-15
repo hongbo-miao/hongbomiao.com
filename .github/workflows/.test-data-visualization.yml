@@ -294,7 +294,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5.0.0
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: data-visualization/iads/iads-rtstation/iads-data-producer
       - name: Install dependencies
         working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
         run: |
@@ -319,7 +321,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 28.3
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
       - name: Install dependencies
         working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
         run: |
