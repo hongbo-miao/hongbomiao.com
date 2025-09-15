@@ -51,13 +51,13 @@ rbenv-install-list-latest-stable-versions:
     rbenv install --list
 
 rbenv-install:
-    rbenv install 3.3.6
+    rbenv install 3.4.5
 
 rbenv-list-versions:
     rbenv versions
 
 rbenv-uninstall:
-    rbenv uninstall --force 3.3.6
+    rbenv uninstall --force 3.4.5
 
 bundle-init:
     bundle init

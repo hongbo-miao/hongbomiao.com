@@ -1,20 +1,20 @@
 build:
     xcodebuild build-for-testing \
-        -project HMMobile.xcodeproj \
-        -scheme HMMobile \
-        -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
+        -project mobile-ios.xcodeproj \
+        -scheme mobile-ios \
+        -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.6"
 
 test:
     xcodebuild test-without-building \
-        -project HMMobile.xcodeproj \
-        -scheme HMMobile \
-        -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
+        -project mobile-ios.xcodeproj \
+        -scheme mobile-ios \
+        -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.6"
 
 build-test:
     xcodebuild test \
-        -project HMMobile.xcodeproj \
-        -scheme HMMobile \
-        -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.1"
+        -project mobile-ios.xcodeproj \
+        -scheme mobile-ios \
+        -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.6"
 
 bundle-install:
     bundle install
@@ -30,3 +30,12 @@ bundle-add-platform:
 
 bundle-exec-test-coverage:
     bundle exec slather
+
+tuist-install:
+    tuist install
+
+tuist-generate:
+    tuist generate
+
+tuist-generate-no-open:
+    tuist generate --no-open
