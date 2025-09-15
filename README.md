@@ -94,6 +94,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Mobile - iOS
 
+- **Tuist** - Xcode project generation and management tool
 - **SwiftUI** - UI framework
 - **XCTest** - Unit testing, performance testing
 - **Slather** - Code coverage reports generating
