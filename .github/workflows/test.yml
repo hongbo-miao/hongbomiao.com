@@ -1294,7 +1294,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 28.3
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: data-distribution/arrow-flight/arrow-flight-server
       - name: Install dependencies
         working-directory: data-distribution/arrow-flight/arrow-flight-server
         run: |

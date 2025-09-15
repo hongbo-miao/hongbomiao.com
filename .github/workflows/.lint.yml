@@ -744,7 +744,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5.0.0
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: api-rust
       - name: Set up
         run: |
           sudo apt-get update
@@ -771,7 +773,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5.0.0
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: data-visualization/iads/iads-rtstation/iads-data-producer
       - name: Install dependencies
         working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
         run: |
@@ -800,7 +804,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 28.3
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
       - name: Install dependencies
         working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
         run: |
@@ -845,7 +851,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 28.3
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
       - name: Install dependencies
         working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
         run: |
@@ -890,7 +898,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 28.3
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/proto-producer
       - name: Install dependencies
         working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-producer
         run: |
@@ -935,7 +945,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 28.3
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
       - name: Install dependencies
         working-directory: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
         run: |
@@ -980,7 +992,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 28.3
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
       - name: Install dependencies
         working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
         run: |
@@ -1009,7 +1023,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 28.3
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: network/udp/udp-receiver
       - name: Install dependencies
         working-directory: network/udp/udp-receiver
         run: |
@@ -1038,7 +1054,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 28.3
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: network/udp/udp-sender
       - name: Install dependencies
         working-directory: network/udp/udp-sender
         run: |
@@ -1061,7 +1079,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5.0.0
       - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.14.1
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.0
+        with:
+          rust-src-dir: operating-system/windows/calculator
       - name: Install dependencies
         working-directory: operating-system/windows/calculator
         run: |
