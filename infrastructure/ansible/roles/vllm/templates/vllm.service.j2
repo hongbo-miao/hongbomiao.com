@@ -23,7 +23,9 @@ ExecStart=docker run \
     --model={{ vllm_model }} \
     --max-model-len={{ vllm_max_model_len }} \
     --gpu-memory-utilization={{ vllm_gpu_memory_utilization }} \
-    --tensor-parallel-size={{ vllm_tensor_parallel_size }}
+    --tensor-parallel-size={{ vllm_tensor_parallel_size }} \
+    --enable-auto-tool-choice \
+    --tool-call-parser={{ vllm_tool_call_parser }}
 ExecStop=docker stop {{ vllm_container_name }}
 Restart=always
 RestartSec=30
