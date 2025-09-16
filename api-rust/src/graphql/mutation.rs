@@ -1,17 +1,18 @@
 use async_graphql::{Context, Object, SimpleObject, Upload};
 use serde::Serialize;
 use std::io::Read;
+use utoipa::ToSchema;
 
 use crate::shared::image::utils::load_labels::load_labels;
 use crate::shared::image::utils::load_model::load_model;
 use crate::shared::image::utils::process_image::process_image;
 
-#[derive(SimpleObject)]
+#[derive(SimpleObject, ToSchema)]
 pub struct UpdateResponse {
     pub value: String,
 }
 
-#[derive(SimpleObject, Serialize)]
+#[derive(SimpleObject, Serialize, ToSchema)]
 pub struct ClassificationResponse {
     pub class_name: String,
     pub confidence: f64,

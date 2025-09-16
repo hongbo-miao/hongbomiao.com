@@ -3,20 +3,21 @@ use crate::shared::openai::utils::chat::chat;
 use crate::shared::police_audio_stream::constants::police_streams::POLICE_STREAMS;
 use crate::shared::police_audio_stream::utils::police_stream_state::POLICE_STREAM_STATE;
 use async_graphql::{Object, SimpleObject};
+use utoipa::ToSchema;
 
-#[derive(SimpleObject)]
+#[derive(SimpleObject, ToSchema)]
 pub struct HelloResponse {
     pub message: String,
 }
 
-#[derive(SimpleObject)]
+#[derive(SimpleObject, ToSchema)]
 pub struct PoliceStream {
     pub id: String,
     pub name: String,
     pub location: String,
 }
 
-#[derive(SimpleObject)]
+#[derive(SimpleObject, ToSchema)]
 pub struct PoliceStreamStatus {
     pub id: String,
     pub client_count: i32,
