@@ -123,6 +123,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### API Server - Rust
 
 - **axum** - Web framework
+  - **Axum Test** - End-to-end testing
 - **Tokio** - Asynchronous runtime
   - **tokio-stream** - Stream utilities and adapters
 - **tower** - Service trait and middleware library
