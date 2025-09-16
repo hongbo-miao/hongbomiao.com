@@ -124,6 +124,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **axum** - Web framework
   - **Axum Test** - End-to-end testing
+- **utoipa** - OpenAPI document generation
+  - **utoipa-swagger-ui** - Swagger UI integration
 - **Tokio** - Asynchronous runtime
   - **tokio-stream** - Stream utilities and adapters
 - **tower** - Service trait and middleware library

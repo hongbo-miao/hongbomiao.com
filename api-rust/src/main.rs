@@ -3,6 +3,7 @@
 mod config;
 mod graphql;
 mod handlers;
+mod openapi;
 mod shared;
 
 use axum::Router;
@@ -19,6 +20,10 @@ use tower_http::cors::{Any, CorsLayer};
 use tower_http::timeout::TimeoutLayer;
 use tower_http::trace::TraceLayer;
 use tracing::info;
+
+use crate::openapi::ApiDoc;
+use utoipa::OpenApi;
+use utoipa_swagger_ui::SwaggerUi;
 
 use crate::config::AppConfig;
 use crate::graphql::schema;
@@ -65,6 +70,7 @@ async fn main() {
         .route("/", get(handlers::get_root::get_root))
         .route("/graphiql", get(schema::graphiql))
         .route("/graphql", post(schema::graphql_handler))
+        .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
         .layer(timeout);
 
     // Long-lived connection routes (SSE, WebSocket) without timeout
