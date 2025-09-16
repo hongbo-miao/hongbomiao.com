@@ -14,6 +14,12 @@
         authorized_keys:
           - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWhR5NV13iw0X8lKqsrSRqbcIJcA5AVMjyfJjOrplwH hongbo-miao"
 
+- name: Install Cargo
+  hosts: all
+  become: true
+  roles:
+    - role: robertdebock.cargo
+
 - name: Install common packages
   hosts: all
   tasks:
@@ -43,6 +49,12 @@
           - zellij
         classic: true
         state: present
+    - name: Install packages from Cargo
+      become: true
+      community.general.cargo:
+        name:
+          - ouch
+        path: /usr/local
 
 - name: Install Docker
   hosts: all
@@ -152,3 +164,4 @@
     vllm_gpu_memory_utilization: 0.8
     vllm_tensor_parallel_size: 1
     vllm_gpu_devices: "'\"device=0\"'"
+    vllm_tool_call_parser: hermes
