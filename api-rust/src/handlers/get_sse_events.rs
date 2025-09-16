@@ -5,6 +5,20 @@ use tokio_stream::{StreamExt, wrappers::BroadcastStream};
 use crate::shared::server_sent_event::types::server_sent_event_query::ServerSentEventQuery;
 use crate::shared::server_sent_event::utils::server_sent_event_manager::SERVER_SENT_EVENT_MANAGER;
 
+/// Server-Sent Events endpoint for real-time data streaming
+#[utoipa::path(
+    get,
+    path = "/sse/events",
+    params(
+        ("message_type" = String, Query, description = "Type of messages to subscribe to"),
+        ("stream" = bool, Query, description = "Enable streaming mode")
+    ),
+    responses(
+        (status = 200, description = "SSE stream established", content_type = "text/event-stream"),
+        (status = 400, description = "Invalid query parameters", body = String)
+    ),
+    tag = "streaming"
+)]
 pub async fn get_sse_events(
     Query(params): Query<ServerSentEventQuery>,
 ) -> Result<
