@@ -1,6 +1,7 @@
 import React from 'react';
 import springWaltzMp3 from '@/Home/audio/spring-waltz.mp3';
 import HmFooter from '@/Home/components/Footer';
+import { ThemeToggleButton } from '@/Home/components/ThemeToggleButton';
 import hatAvif from '@/Home/images/hat.avif';
 import hatPng from '@/Home/images/hat.png';
 import magicAvif from '@/Home/images/magic.avif';
@@ -26,6 +27,7 @@ function Home() {
 
   return (
     <div className="hm-home">
+      <ThemeToggleButton />
       <div className="hm-body">
         <div className="mx-auto hm-home-container">
           <div className="hm-name-container">
