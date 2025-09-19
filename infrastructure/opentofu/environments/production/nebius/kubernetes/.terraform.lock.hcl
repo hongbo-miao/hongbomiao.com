@@ -60,14 +60,14 @@ provider "registry.opentofu.org/hashicorp/kubernetes" {
 }
 
 provider "terraform-provider.storage.eu-north1.nebius.cloud/nebius/nebius" {
-  version     = "0.5.107"
-  constraints = "0.5.107"
+  version     = "0.5.109"
+  constraints = "0.5.109"
   hashes = [
-    "h1:KjlhAfps+nqAjZdYe67bL3YWTNlj7icdTSjNNgHDqDw=",
-    "zh:37d0541f8d191cf9df943adc3d42f56e8a706d26f835c85650504b2ee6febaa0",
-    "zh:5967ce5666c3a0359f4a15984712c957234890ef559c90a3c97ffa633a90547e",
-    "zh:95ff20d501b5e08cbb60a76ecb9b07fa679d95769a96cc0e484ab0914e5627fc",
-    "zh:d8e2caa1428cee4a0209470b80c378e7d6a1ad1a62e91a2ae8363d75c31a1f02",
-    "zh:e2b9ec8df7bf2c87defc6467b08524b7cf72a66b5b2f7bf71d3a99c023e36a7c",
+    "h1:ljVcl0DwMNougM/VkfusyCDIPsKx4kewox4UfF6SP10=",
+    "zh:21328ccd3d4dc640e02f54d88cf9120583048adfcbdbb015715e1bc9543c2ede",
+    "zh:28e978606700a7ac7141d7debfa42b554414b4a3678de8e59d065ea1e9517ff1",
+    "zh:9458883cb88cd36f30aaecdb696a500d6484eed6dc6432ca25e140d823a0b8b6",
+    "zh:e64a7e63731102d7f250476211cf8f97a1ae83c4ea3b80f3cd1cb56f60267afc",
+    "zh:ef68c42e00de1d33f2481211cfe2c652d3cd2adb9999e2b84c27cd79b3aa768c",
   ]
 }
