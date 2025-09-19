@@ -66,6 +66,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **React** - Web framework
 - **Vite** - JavaScript build tool and development server
+- **Zustand** - State management
 - **TanStack Query** - Hooks for fetching, caching and updating asynchronous data
 - **TanStack Router** - Router
 - **shadcn/ui** - UI component library
@@ -124,8 +125,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **axum** - Web framework
   - **Axum Test** - End-to-end testing
-- **utoipa** - OpenAPI document generation
-  - **utoipa-swagger-ui** - Swagger UI integration
 - **Tokio** - Asynchronous runtime
   - **tokio-stream** - Stream utilities and adapters
 - **tower** - Service trait and middleware library
@@ -144,6 +143,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Tracing** - Tracing
   - **tracing-subscriber** - Utilities for implementing and composing tracing subscribers
 - **dotenvy** - Environment variables loading
+- **utoipa** - OpenAPI document generation
+  - **utoipa-swagger-ui** - Swagger UI integration
 
 ### API Server - Go
 
