@@ -2,16 +2,16 @@ data "nebius_iam_v1_group" "editors_group" {
   name      = "editors"
   parent_id = var.tenant_id
 }
-module "editors_group_membership" {
+
+# MLflow
+module "editors_group_member_hm_mlflow_service_account" {
   source    = "../../../../modules/nebius/iam_group_membership"
   parent_id = data.nebius_iam_v1_group.editors_group.id
   member_id = module.hm_mlflow_service_account.id
   labels    = var.common_labels
 }
-
-# MLflow
 module "hm_mlflow_service_account" {
-  source               = "../../../../modules/nebius/service_account"
+  source               = "../../../../modules/nebius/iam_service_account"
   project_id           = var.project_id
   service_account_name = "mlflow-service-account"
   labels               = var.common_labels

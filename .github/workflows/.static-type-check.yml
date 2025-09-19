@@ -379,6 +379,25 @@ jobs:
         run: |
           tofu validate
 
+  static-type-check-opentofu-production-nebius-general:
+    name: OpenTofu (production/nebius/general)
+    if: ${{ inputs.workflow || inputs.opentofu }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.6
+      - name: Initialize OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/nebius/general
+        run: |
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/nebius/general
+        run: |
+          tofu validate
+
   static-type-check-opentofu-production-nebius-kubernetes:
     name: OpenTofu (production/nebius/kubernetes)
     if: ${{ inputs.workflow || inputs.opentofu }}
