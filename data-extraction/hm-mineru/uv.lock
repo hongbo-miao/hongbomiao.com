@@ -668,7 +668,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "mineru", extras = ["core"], specifier = "==2.2.2" },
+    { name = "mineru", extras = ["core"], specifier = "==2.5.1" },
     { name = "torch", index = "https://download.pytorch.org/whl/cu128" },
 ]
 
@@ -884,6 +884,24 @@ wheels = [
 ]
 
 [[package]]
+name = "magika"
+version = "0.6.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "numpy" },
+    { name = "onnxruntime" },
+    { name = "python-dotenv" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fe/b6/8fdd991142ad3e037179a494b153f463024e5a211ef3ad948b955c26b4de/magika-0.6.2.tar.gz", hash = "sha256:37eb6ae8020f6e68f231bc06052c0a0cbe8e6fa27492db345e8dc867dbceb067", size = 3036634, upload-time = "2025-05-02T14:54:18.88Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c2/07/4f7748f34279f2852068256992377474f9700b6fbad6735d6be58605178f/magika-0.6.2-py3-none-any.whl", hash = "sha256:5ef72fbc07723029b3684ef81454bc224ac5f60986aa0fc5a28f4456eebcb5b2", size = 2967609, upload-time = "2025-05-02T14:54:09.696Z" },
+    { url = "https://files.pythonhosted.org/packages/64/6d/0783af677e601d8a42258f0fbc47663abf435f927e58a8d2928296743099/magika-0.6.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:9109309328a1553886c8ff36c2ee9a5e9cfd36893ad81b65bf61a57debdd9d0e", size = 12404787, upload-time = "2025-05-02T14:54:16.963Z" },
+    { url = "https://files.pythonhosted.org/packages/8a/ad/42e39748ddc4bbe55c2dc1093ce29079c04d096ac0d844f8ae66178bc3ed/magika-0.6.2-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:57cd1d64897634d15de552bd6b3ae9c6ff6ead9c60d384dc46497c08288e4559", size = 15091089, upload-time = "2025-05-02T14:54:11.59Z" },
+    { url = "https://files.pythonhosted.org/packages/b0/1f/28e412d0ccedc068fbccdae6a6233faaa97ec3e5e2ffd242e49655b10064/magika-0.6.2-py3-none-win_amd64.whl", hash = "sha256:711f427a633e0182737dcc2074748004842f870643585813503ff2553b973b9f", size = 12385740, upload-time = "2025-05-02T14:54:14.096Z" },
+]
+
+[[package]]
 name = "markdown-it-py"
 version = "3.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -965,7 +983,7 @@ wheels = [
 
 [[package]]
 name = "mineru"
-version = "2.2.2"
+version = "2.5.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -976,6 +994,8 @@ dependencies = [
     { name = "huggingface-hub" },
     { name = "json-repair" },
     { name = "loguru" },
+    { name = "magika" },
+    { name = "mineru-vl-utils" },
     { name = "modelscope" },
     { name = "numpy" },
     { name = "openai" },
@@ -991,7 +1011,7 @@ dependencies = [
     { name = "tqdm" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/45/38/04a7181211ad4f2132551a8116bec3bb8b30513c28278922d6d1327b731f/mineru-2.2.2-py3-none-any.whl", hash = "sha256:adcc02e8b225dec134468a9c9b4fd95797d97f79b4e7ddf38423146cd11f1d8c", size = 1317630, upload-time = "2025-09-10T06:48:13.861Z" },
+    { url = "https://files.pythonhosted.org/packages/13/14/43e8f85ee132e7d9536a14c320c3a522efe8d6b6beb83d7ff9a0d74ae08d/mineru-2.5.1-py3-none-any.whl", hash = "sha256:86358d9831ab00e55a3069765910574b6d221977f715317e4868cccdf497d5ce", size = 1289417, upload-time = "2025-09-19T03:49:31.714Z" },
 ]
 
 [package.optional-dependencies]
@@ -1007,7 +1027,6 @@ core = [
     { name = "omegaconf" },
     { name = "onnxruntime" },
     { name = "pyclipper" },
-    { name = "pydantic" },
     { name = "python-multipart" },
     { name = "pyyaml" },
     { name = "shapely" },
@@ -1016,6 +1035,21 @@ core = [
     { name = "transformers" },
     { name = "ultralytics" },
     { name = "uvicorn" },
+]
+
+[[package]]
+name = "mineru-vl-utils"
+version = "0.1.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aiofiles" },
+    { name = "httpx" },
+    { name = "pillow" },
+    { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/09/76/161520d9db4c0d65a2995d38e45cf7cd54814d344f49f8542a2181aa3f9c/mineru_vl_utils-0.1.7.tar.gz", hash = "sha256:1a7f6f795eef5255753b75a5ddf912812a1e222073c0f1ea0e7747b22935e8a9", size = 43090, upload-time = "2025-09-19T01:34:07.943Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/76/1b/88c1a199b3e94f40e6913441a7fe305f0e5af998a882864d843496abd20a/mineru_vl_utils-0.1.7-py3-none-any.whl", hash = "sha256:97c699b4c1268d35a5f63599f797aa009ae551eff09b31c6710875a01b716207", size = 49597, upload-time = "2025-09-19T01:34:06.071Z" },
 ]
 
 [[package]]
