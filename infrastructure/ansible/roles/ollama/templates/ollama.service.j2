@@ -5,18 +5,17 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-Environment=PATH=/usr/bin:/bin
-ExecStartPre=docker volume create {{ ollama_volume_name }}
-ExecStartPre=-docker rm --force {{ ollama_container_name }}
-ExecStartPre=docker pull {{ ollama_docker_image }}
-ExecStart=docker run \
+ExecStartPre=/usr/bin/docker volume create {{ ollama_volume_name }}
+ExecStartPre=-/usr/bin/docker rm --force {{ ollama_container_name }}
+ExecStartPre=/usr/bin/docker pull {{ ollama_docker_image }}
+ExecStart=/usr/bin/docker run \
   --name={{ ollama_container_name }} \
   --publish={{ ollama_port }}:11434 \
   --volume={{ ollama_volume_name }}:{{ ollama_volume_mount }} \
   --gpus {{ ollama_gpu_devices }} \
   --detach=false \
   {{ ollama_docker_image }}
-ExecStop=docker stop {{ ollama_container_name }}
+ExecStop=/usr/bin/docker stop {{ ollama_container_name }}
 Restart=always
 RestartSec=10
 

@@ -2,6 +2,7 @@ use axum::{extract::Query, http::StatusCode, response::Sse};
 use futures_util::stream::{self, Stream};
 use tokio_stream::{StreamExt, wrappers::BroadcastStream};
 
+use crate::config::AppConfig;
 use crate::shared::server_sent_event::types::server_sent_event_query::ServerSentEventQuery;
 use crate::shared::server_sent_event::utils::server_sent_event_manager::SERVER_SENT_EVENT_MANAGER;
 
@@ -43,14 +44,20 @@ pub async fn get_sse_events(
 
     // Create initial retry event
     let retry_event = stream::once(async {
-        Ok(axum::response::sse::Event::default().retry(std::time::Duration::from_millis(3000)))
+        Ok(
+            axum::response::sse::Event::default().retry(std::time::Duration::from_millis(
+                AppConfig::get().server_sent_event_retry_ms,
+            )),
+        )
     });
 
     let combined_stream = retry_event.chain(stream);
 
     Ok(Sse::new(combined_stream).keep_alive(
         axum::response::sse::KeepAlive::new()
-            .interval(std::time::Duration::from_secs(15))
+            .interval(std::time::Duration::from_secs(
+                AppConfig::get().server_sent_event_keep_alive_interval_s,
+            ))
             .text("keep-alive"),
     ))
 }
