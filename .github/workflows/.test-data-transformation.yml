@@ -43,4 +43,5 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-transformation/dbt/projects/dbt_hm_postgres

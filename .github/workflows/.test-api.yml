@@ -43,6 +43,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: api-go
 
   api-node-test:
@@ -70,6 +71,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: api-node
 
   api-node-mutation-test:
@@ -142,6 +144,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: api-python
 
   api-rust-test:

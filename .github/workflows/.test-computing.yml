@@ -80,6 +80,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: scientific-computing/hm-sunpy
 
   surrogate-model-test:
@@ -111,6 +112,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: scientific-computing/surrogate-model
 
   # Parallel Computing
@@ -143,6 +145,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: parallel-computing/hm-taichi/count-primes
 
   taichi-fluid-solver-test:
@@ -174,6 +177,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: parallel-computing/hm-taichi/fluid-solver
 
   triton-test:
@@ -205,6 +209,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: parallel-computing/hm-triton
 
   # High-Performance Computing
@@ -237,6 +242,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: high-performance-computing/hm-jax
 
   # Quantum Computing
@@ -269,6 +275,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: quantum-computing
 
   # Cloud Computing
@@ -301,6 +308,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: cloud-computing/hm-ray/applications/calculate
 
   ray-daft-analysis-test:
@@ -332,6 +340,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: cloud-computing/hm-ray/applications/daft-analysis
 
   ray-process-flight-data-test:
@@ -363,6 +372,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: cloud-computing/hm-ray/applications/process-flight-data
 
   skypilot-test:
@@ -394,4 +404,5 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: cloud-computing/hm-skypilot
