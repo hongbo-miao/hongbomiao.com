@@ -47,7 +47,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/pyproject.toml
+          python-version-file: cloud-platform/aws/amazon-sagemaker/pytorch-mnist/.python-version
       - name: Install dependencies
         working-directory: cloud-platform/aws/amazon-sagemaker/pytorch-mnist
         run: |
@@ -81,7 +81,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: cloud-platform/aws/aws-parallelcluster/pcluster/pyproject.toml
+          python-version-file: cloud-platform/aws/aws-parallelcluster/pcluster/.python-version
       - name: Install dependencies
         working-directory: cloud-platform/aws/aws-parallelcluster/pcluster
         run: |
@@ -114,7 +114,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: infrastructure/hm-pulumi/pyproject.toml
+          python-version-file: infrastructure/hm-pulumi/.python-version
       - name: Install dependencies
         working-directory: infrastructure/hm-pulumi
         run: |
@@ -147,7 +147,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/pyproject.toml
+          python-version-file: infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/.python-version
       - name: Install dependencies
         working-directory: infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts
         run: |
@@ -181,7 +181,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: security/hm-prowler/pyproject.toml
+          python-version-file: security/hm-prowler/.python-version
       - name: Install dependencies
         working-directory: security/hm-prowler
         run: |
