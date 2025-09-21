@@ -9,7 +9,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
 
 WORKDIR /app
 
-COPY ["pyproject.toml", "uv.lock", "./"]
+COPY ["pyproject.toml", "uv.lock", ".python-version", "./"]
 RUN uv sync --frozen
 COPY src/ ./src/
 EXPOSE 8050
