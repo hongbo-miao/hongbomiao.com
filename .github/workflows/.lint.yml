@@ -180,27 +180,19 @@ jobs:
   lint-csharp-national-instruments-veristand-zeromq-bridge:
     name: C# (national-instruments-veristand-zeromq-bridge)
     if: ${{ inputs.workflow || inputs.national-instruments-veristand-zeromq-bridge }}
-    runs-on: windows-2025
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Set up NuGet
-        uses: nuget/setup-nuget@v2.0.1
-        with:
-          # https://www.nuget.org/packages/NuGet.Versioning#versions-body-tab
-          nuget-version: 6.14.0
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v5.0.0
         with:
           global-json-file: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/global.json
-        env:
-          # https://github.com/dotnet/sdk/issues/44957
-          DOTNET_INSTALL_DIR: ${{ runner.temp }}/.dotnet
       - name: Install dependencies
         working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
         run: |
-          nuget restore VeriStandZeroMQBridge.sln
+          dotnet restore VeriStandZeroMQBridge.sln
           dotnet tool restore
       - name: Lint C# (format)
         working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
