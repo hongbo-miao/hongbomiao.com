@@ -32,9 +32,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          # https://developer.android.com/build/jdks#compileSdk
-          java-version: '21'
           cache: gradle
+          java-version-file: mobile/mobile-android/.java-version
       - name: Lint
         working-directory: mobile/mobile-android
         run: |
@@ -52,9 +51,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          # https://developer.android.com/build/jdks#compileSdk
-          java-version: '21'
           cache: gradle
+          java-version-file: mobile/mobile-android/.java-version
       - name: Test
         working-directory: mobile/mobile-android
         run: |
@@ -74,9 +72,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          # https://developer.android.com/build/jdks#compileSdk
-          java-version: '21'
           cache: gradle
+          java-version-file: mobile/mobile-android/.java-version
       - name: Instrumented Test
         uses: reactivecircus/android-emulator-runner@v2.34.0
         with:

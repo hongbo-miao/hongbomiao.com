@@ -551,8 +551,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          java-version: '21'
           cache: gradle
+          java-version-file: mobile/mobile-android/.java-version
       - name: Lint Kotlin
         working-directory: mobile/mobile-android
         run: |
@@ -1109,8 +1109,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          java-version: '17'
           cache: sbt
+          java-version-file: data-processing/hm-spark/applications/find-retired-people-scala/.java-version
       - name: Set up sbt
         uses: sbt/setup-sbt@v1.1.13
       - name: Lint Scala (Scalafmt)
@@ -1134,8 +1134,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          java-version: '17'
           cache: sbt
+          java-version-file: data-processing/hm-spark/applications/ingest-from-s3-to-kafka/.java-version
       - name: Set up sbt
         uses: sbt/setup-sbt@v1.1.13
       - name: Lint Scala (Scalafmt)

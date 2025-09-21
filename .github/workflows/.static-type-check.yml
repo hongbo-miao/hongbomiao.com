@@ -54,8 +54,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          java-version: '21'
           cache: gradle
+          java-version-file: mobile/mobile-android/.java-version
       - name: Static type check Kotlin
         working-directory: mobile/mobile-android
         run: |
