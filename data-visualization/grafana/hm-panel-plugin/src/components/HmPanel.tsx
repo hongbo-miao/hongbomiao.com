@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PanelProps } from '@grafana/data';
 import { SimpleOptions } from 'types';
 import { css, cx } from '@emotion/css';
 import { Button, InlineLabel, useStyles2 } from '@grafana/ui';
-import useSeed from '../hooks/useSeed';
-import { QueryClientProvider } from '@tanstack/react-query';
-import queryClient from '../utils/queryClient';
 
 interface Props extends PanelProps<SimpleOptions> {}
 
@@ -24,23 +21,23 @@ const getStyles = () => {
   };
 };
 
-function HMPanel(props: Props) {
+function HmPanel(props: Props) {
   const { options, data, width, height } = props;
 
   const styles = useStyles2(getStyles);
-  const { seed } = useSeed();
+  const [counter, setCounter] = useState(0);
 
-  const onIncreaseSeed = () => {
-    console.log('Hi');
+  const onIncreaseCounter = () => {
+    setCounter(previousCounter => previousCounter + 1);
   };
 
   return (
     <div>
-      <InlineLabel width="auto" tooltip="Seed Number">
-        {seed?.seedNumber}
+      <InlineLabel width="auto" tooltip="Counter">
+        {counter}
       </InlineLabel>
-      <Button variant="primary" type="button" onClick={onIncreaseSeed}>
-        Click seed
+      <Button variant="primary" type="button" onClick={onIncreaseCounter}>
+        Increase counter
       </Button>
       <div
         className={cx(
@@ -60,12 +57,4 @@ function HMPanel(props: Props) {
   );
 }
 
-function addQueryClientProvider(Component: React.FC<Props>) {
-  return (props: Props) => (
-    <QueryClientProvider client={queryClient}>
-      <Component {...props} />
-    </QueryClientProvider>
-  );
-}
-
-export default addQueryClientProvider(HMPanel);
+export default HmPanel;
