@@ -9,7 +9,6 @@ dependencies = [
   "pydantic-settings==2.10.1",
   "python-dotenv==1.1.1",
   "sentence-transformers==5.1.0",
-  "torch",
 ]
 
 [dependency-groups]
@@ -22,14 +21,6 @@ dev = [
 [tool.uv]
 package = false
 required-version = ">=0.8.0"
-
-[tool.uv.sources]
-torch = [{ index = "pytorch-cu128" }]
-
-[[tool.uv.index]]
-name = "pytorch-cu128"
-url = "https://download.pytorch.org/whl/cu128"
-explicit = true
 
 [tool.poe.tasks]
 dev = "python src/main.py"

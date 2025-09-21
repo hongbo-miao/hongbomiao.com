@@ -3,7 +3,6 @@ name = "hm-olmocr"
 version = "1.0.0"
 dependencies = [
   "olmocr[gpu]==0.3.4",
-  "torch",
 ]
 
 [dependency-groups]
@@ -16,14 +15,6 @@ dev = [
 [tool.uv]
 package = false
 required-version = ">=0.8.0"
-
-[tool.uv.sources]
-torch = [{ index = "pytorch-cu128" }]
-
-[[tool.uv.index]]
-name = "pytorch-cu128"
-url = "https://download.pytorch.org/whl/cu128"
-explicit = true
 
 [tool.poe.tasks]
 dev = "python src/main.py"
