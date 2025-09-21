@@ -125,8 +125,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          java-version: '17'
           cache: sbt
+          java-version-file: data-processing/hm-spark/applications/find-retired-people-scala/.java-version
       - name: Set up sbt
         uses: sbt/setup-sbt@v1.1.13
       - name: Test
@@ -212,8 +212,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          java-version: '17'
           cache: sbt
+          java-version-file: data-processing/hm-spark/applications/ingest-from-s3-to-kafka/.java-version
       - name: Set up sbt
         uses: sbt/setup-sbt@v1.1.13
       - name: Test
@@ -266,8 +266,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          java-version: '11'
           cache: maven
+          java-version-file: data-processing/flink/applications/stream-tweets/.java-version
       - name: Test
         working-directory: data-processing/flink/applications/stream-tweets
         run: |
