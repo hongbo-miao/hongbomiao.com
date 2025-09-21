@@ -21,7 +21,7 @@ jobs:
           sudo apt-get install --yes cloc
       - name: Count code lines
         run: |
-          echo "CODE_LINE_COUNT=$(bin/count_code_lines.sh)" >> $GITHUB_ENV
+          echo "CODE_LINE_COUNT=$(scripts/count_code_lines.sh)" >> $GITHUB_ENV
       - name: Create badge
         uses: schneegans/dynamic-badges-action@v1.7.0
         with:
