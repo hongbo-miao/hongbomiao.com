@@ -1208,6 +1208,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: physics/hm-genesis
 
   call-matlab-function-in-python:
@@ -1245,6 +1246,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: matlab/call-matlab-function-in-python
 
   arrow-flight-client-test:
@@ -1277,6 +1279,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-distribution/arrow-flight/arrow-flight-client
 
   arrow-flight-server-test:
@@ -1337,6 +1340,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-distribution/rti-connext-dds
 
   xxhash-test:
@@ -1369,6 +1373,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: system-tool/hm-xxhash
 
   opa-test:

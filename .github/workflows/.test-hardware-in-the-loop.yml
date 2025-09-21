@@ -49,6 +49,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: hardware-in-the-loop/national-instruments/hm-pyvisa
 
   national-instruments-hm-tdms-test:
@@ -80,6 +81,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: hardware-in-the-loop/national-instruments/hm-tdms
 
   national-instruments-hm-veristand-test:
@@ -111,4 +113,5 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: hardware-in-the-loop/national-instruments/veristand/hm-veristand
