@@ -5,7 +5,7 @@ dependencies = [
   "datasets==4.1.1",
   "evaluate==0.4.6",
   "jiwer==4.0.0",
-  "torch",
+  "torch==2.8.0",
   "transformers[audio,torch]==4.56.2",
 ]
 
@@ -20,14 +20,6 @@ dev = [
 [tool.uv]
 package = false
 required-version = ">=0.8.0"
-
-[tool.uv.sources]
-torch = [{ index = "pytorch-cu128" }]
-
-[[tool.uv.index]]
-name = "pytorch-cu128"
-url = "https://download.pytorch.org/whl/cu128"
-explicit = true
 
 [tool.poe.tasks]
 hugging-face-sign-in = "huggingface-cli login"
