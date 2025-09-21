@@ -226,10 +226,10 @@ lint-justfile-fix:
     uv run poe lint-justfile-fix
 
 lint-kotlin:
-    cd mobile-android && ./gradlew ktlintCheck
+    cd mobile/mobile-android && ./gradlew ktlintCheck
 
 lint-kotlin-fix:
-    cd mobile-android && ./gradlew ktlintFormat
+    cd mobile/mobile-android && ./gradlew ktlintFormat
 
 lint-kubernetes-manifest:
     kubeconform \
@@ -503,6 +503,7 @@ static-type-check-terraform:
     cd infrastructure/opentofu/environments/production/harbor && tofu validate
     cd infrastructure/opentofu/environments/production/nebius/applications && tofu validate
     cd infrastructure/opentofu/environments/production/nebius/data && tofu validate
+    cd infrastructure/opentofu/environments/production/nebius/general && tofu validate
     cd infrastructure/opentofu/environments/production/nebius/kubernetes && tofu validate
     cd infrastructure/opentofu/environments/production/snowflake/account && tofu validate
     cd infrastructure/opentofu/environments/production/snowflake/data && tofu validate
