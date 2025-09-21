@@ -1,5 +1,5 @@
 ---
-nvidia_cuda_ubuntu_version: 2404
+nvidia_cuda_ubuntu_version: "{{ ansible_distribution_version | replace('.', '') }}"
 nvidia_cuda_version: 13.0.1
 nvidia_cuda_driver_version: 580.82.07
 nvidia_cuda_major_minor_version: "{{ nvidia_cuda_version.split('.')[0] }}-{{ nvidia_cuda_version.split('.')[1] }}"

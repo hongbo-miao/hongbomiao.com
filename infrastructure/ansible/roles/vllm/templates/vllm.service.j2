@@ -5,13 +5,12 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-Environment=PATH=/usr/bin:/bin
 TimeoutStartSec=1200
 TimeoutStopSec=120
-ExecStartPre=docker volume create {{ vllm_volume_name }}
-ExecStartPre=-docker rm --force {{ vllm_container_name }}
-ExecStartPre=docker pull {{ vllm_docker_image }}
-ExecStart=docker run \
+ExecStartPre=/usr/bin/docker volume create {{ vllm_volume_name }}
+ExecStartPre=-/usr/bin/docker rm --force {{ vllm_container_name }}
+ExecStartPre=/usr/bin/docker pull {{ vllm_docker_image }}
+ExecStart=/usr/bin/docker run \
   --name={{ vllm_container_name }} \
   --publish={{ vllm_port }}:8000 \
   --volume={{ vllm_volume_name }}:{{ vllm_volume_mount }} \
@@ -26,7 +25,7 @@ ExecStart=docker run \
     --tensor-parallel-size={{ vllm_tensor_parallel_size }} \
     --enable-auto-tool-choice \
     --tool-call-parser={{ vllm_tool_call_parser }}
-ExecStop=docker stop {{ vllm_container_name }}
+ExecStop=/usr/bin/docker stop {{ vllm_container_name }}
 Restart=always
 RestartSec=30
 

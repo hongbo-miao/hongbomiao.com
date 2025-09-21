@@ -31,22 +31,17 @@
         dest: /etc/apt/preferences.d/cuda-repository-pin-600
         mode: '0644'
 
-    - name: Download NVIDIA CUDA repository package
-      ansible.builtin.get_url:
-        url: "{{ nvidia_cuda_repo_url }}"
-        dest: "/tmp/{{ nvidia_cuda_repo_package }}"
-        mode: '0644'
-
     - name: Install NVIDIA CUDA repository package
       ansible.builtin.apt:
-        deb: "/tmp/{{ nvidia_cuda_repo_package }}"
+        deb: "{{ nvidia_cuda_repo_url }}"
         state: present
 
     - name: Copy NVIDIA CUDA keyring
-      ansible.builtin.shell: |
-        cp /var/cuda-repo-ubuntu{{ nvidia_cuda_ubuntu_version }}-{{ nvidia_cuda_major_minor_version }}-local/cuda-*-keyring.gpg /usr/share/keyrings/
-      args:
-        creates: /usr/share/keyrings/cuda-archive-keyring.gpg
+      ansible.builtin.copy:
+        src: "/var/cuda-repo-ubuntu{{ nvidia_cuda_ubuntu_version }}-{{ nvidia_cuda_major_minor_version }}-local/cuda-archive-keyring.gpg"
+        dest: /usr/share/keyrings/cuda-archive-keyring.gpg
+        remote_src: true
+        mode: '0644'
 
     - name: Update apt package cache
       ansible.builtin.apt:
@@ -61,8 +56,3 @@
       ansible.builtin.apt:
         name: nvidia-open
         state: present
-
-    - name: Clean up temporary files
-      ansible.builtin.file:
-        path: "/tmp/{{ nvidia_cuda_repo_package }}"
-        state: absent

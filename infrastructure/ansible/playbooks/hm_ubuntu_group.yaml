@@ -5,14 +5,29 @@
   roles:
     - robertdebock.users
   vars:
+    users_groups:
+      - name: shared
+        state: present
     users:
       - name: hongbo-miao
         group: sudo
-        groups: [users]
+        groups: [users, shared]
         sudo_options: "ALL=(ALL) NOPASSWD: ALL"
         password_lock: true
         authorized_keys:
           - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPWhR5NV13iw0X8lKqsrSRqbcIJcA5AVMjyfJjOrplwH hongbo-miao"
+
+- name: Create shared directory
+  hosts: all
+  become: true
+  tasks:
+    - name: Create shared directory
+      ansible.builtin.file:
+        path: /srv/shared
+        state: directory
+        owner: root
+        group: shared
+        mode: '2775'
 
 - name: Install Cargo
   hosts: all
@@ -75,7 +90,6 @@
   roles:
     - role: nvidia_cuda
   vars:
-    ubuntu_version: 2404
     nvidia_cuda_version: 13.0.1
     nvidia_cuda_driver_version: 580.82.07
 
@@ -181,7 +195,7 @@
     vllm_docker_image: docker.io/vllm/vllm-openai:v0.10.1.1
     vllm_port: 44194
     vllm_model: Qwen/Qwen3-14B-AWQ
-    vllm_max_model_len: 4096
+    vllm_max_model_len: 8192
     vllm_gpu_memory_utilization: 0.8
     vllm_tensor_parallel_size: 1
     vllm_gpu_devices: "'\"device=0\"'"
