@@ -156,18 +156,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./web/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-web:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./web/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-web:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-api-node:
     name: Build hm-api-node
@@ -192,18 +188,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./api-node/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-api-node:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./api-node/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-api-node:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-api-python:
     name: Build hm-api-python
@@ -228,18 +220,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./api-python/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-api-python:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./api-python/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-api-python:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-api-rust:
     name: Build hm-api-rust
@@ -264,18 +252,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./api-rust/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-api-rust:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./api-rust/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-api-rust:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-graphql-server:
     name: Build hm-graphql-server
@@ -300,18 +284,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./api-go/build/package/graphql_server/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-graphql-server:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./api-go/build/package/graphql_server/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-graphql-server:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-grpc-server:
     name: Build hm-grpc-server
@@ -336,18 +316,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./api-go/build/package/grpc_server/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-grpc-server:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./api-go/build/package/grpc_server/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-grpc-server:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-config-loader:
     name: Build hm-config-loader
@@ -372,18 +348,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./api-go/build/package/config_loader/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-config-loader:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./api-go/build/package/config_loader/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-config-loader:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-decision-logger:
     name: Build hm-decision-logger
@@ -408,18 +380,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./api-go/build/package/decision_logger/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-decision-logger:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./api-go/build/package/decision_logger/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-decision-logger:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-prefect-calculate:
     name: Build prefect-calculate
@@ -444,18 +412,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: ./data-orchestration/hm-prefect/workflows/calculate
-            file: ./data-orchestration/hm-prefect/workflows/calculate/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/prefect-calculate:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: ./data-orchestration/hm-prefect/workflows/calculate
+          file: ./data-orchestration/hm-prefect/workflows/calculate/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/prefect-calculate:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-prefect-daft-analysis:
     name: Build prefect-daft-analysis
@@ -480,18 +444,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: ./data-orchestration/hm-prefect/workflows/daft-analysis
-            file: ./data-orchestration/hm-prefect/workflows/daft-analysis/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/prefect-daft-analysis:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: ./data-orchestration/hm-prefect/workflows/daft-analysis
+          file: ./data-orchestration/hm-prefect/workflows/daft-analysis/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/prefect-daft-analysis:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-prefect-greet:
     name: Build prefect-greet
@@ -516,18 +476,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: ./data-orchestration/hm-prefect/workflows/greet
-            file: ./data-orchestration/hm-prefect/workflows/greet/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/prefect-greet:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: ./data-orchestration/hm-prefect/workflows/greet
+          file: ./data-orchestration/hm-prefect/workflows/greet/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/prefect-greet:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-prefect-print-platform:
     name: Build prefect-print-platform
@@ -552,18 +508,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: ./data-orchestration/hm-prefect/workflows/print-platform
-            file: ./data-orchestration/hm-prefect/workflows/print-platform/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/prefect-print-platform:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: ./data-orchestration/hm-prefect/workflows/print-platform
+          file: ./data-orchestration/hm-prefect/workflows/print-platform/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/prefect-print-platform:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-spark-find-retired-people-python:
     name: Build hm-spark-find-retired-people-python
@@ -588,18 +540,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./data-processing/hm-spark/applications/find-retired-people-python/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-spark-find-retired-people-python:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./data-processing/hm-spark/applications/find-retired-people-python/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-spark-find-retired-people-python:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-spark-find-retired-people-scala:
     name: Build hm-spark-find-retired-people-scala
@@ -624,18 +572,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./data-processing/hm-spark/applications/find-retired-people-scala/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./data-processing/hm-spark/applications/find-retired-people-scala/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-spark-find-retired-people-scala:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-spark-ingest-from-s3-to-kafka:
     name: Build hm-spark-ingest-from-s3-to-kafka
@@ -660,18 +604,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./data-processing/hm-spark/applications/ingest-from-s3-to-kafka/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./data-processing/hm-spark/applications/ingest-from-s3-to-kafka/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-spark-ingest-from-s3-to-kafka:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-kafka-iot-kafka-connect:
     name: Build hm-kafka-iot-kafka-connect
@@ -696,18 +636,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./data-processing/kafka/kafka-connect-cluster/iot-kafka-connect/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-kafka-iot-kafka-connect:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./data-processing/kafka/kafka-connect-cluster/iot-kafka-connect/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-kafka-iot-kafka-connect:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-kafka-logging-kafka-connect:
     name: Build hm-kafka-logging-kafka-connect
@@ -732,18 +668,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./data-processing/kafka/kafka-connect-cluster/logging-kafka-connect/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./data-processing/kafka/kafka-connect-cluster/logging-kafka-connect/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-kafka-logging-kafka-connect:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-kafka-opa-kafka-connect:
     name: Build hm-kafka-opa-kafka-connect
@@ -768,18 +700,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./data-processing/kafka/kafka-connect-cluster/opa-kafka-connect/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-kafka-opa-kafka-connect:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./data-processing/kafka/kafka-connect-cluster/opa-kafka-connect/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-kafka-opa-kafka-connect:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-confluent-schema-registry:
     name: Build hm-confluent-schema-registry
@@ -804,18 +732,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./kubernetes/argo-cd/projects/production-hm/confluent-schema-registry/build/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-confluent-schema-registry:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./kubernetes/argo-cd/projects/production-hm/confluent-schema-registry/build/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-confluent-schema-registry:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-dash-parquet-visualizer:
     name: Build hm-dash-parquet-visualizer
@@ -840,18 +764,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: ./data-visualization/hm-dash/parquet-visualizer
-            file: ./data-visualization/hm-dash/parquet-visualizer/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-dash-parquet-visualizer:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: ./data-visualization/hm-dash/parquet-visualizer
+          file: ./data-visualization/hm-dash/parquet-visualizer/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-dash-parquet-visualizer:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-opal-client:
     name: Build hm-opal-client
@@ -876,18 +796,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./security/hm-opal-client/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-opal-client:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./security/hm-opal-client/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-opal-client:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-flink-stream-tweets:
     name: Build flink-stream-tweets
@@ -918,18 +834,14 @@ jobs:
         run: |
           echo $HM_STEAMING_APPLICATION_PROPERTIES_BASE64 | base64 --decode > application-production.properties
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./data-processing/flink/applications/stream-tweets/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-flink-stream-tweets:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./data-processing/flink/applications/stream-tweets/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-flink-stream-tweets:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-traefik:
     name: Build hm-traefik
@@ -954,18 +866,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./hm-traefik/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-traefik:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./hm-traefik/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-traefik:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   build-hm-alpine:
     name: Build hm-alpine
@@ -990,18 +898,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: wandalen/wretry.action@v3.8.0
+        uses: docker/build-push-action@v5.1.0
         with:
-          action: docker/build-push-action@v5.1.0
-          with: |
-            context: .
-            file: ./hm-alpine/Dockerfile
-            push: true
-            tags: ghcr.io/hongbo-miao/hm-alpine:latest
-            cache-from: type=gha
-            cache-to: type=gha,mode=max
-          attempt_limit: 3
-          attempt_delay: 2000
+          context: .
+          file: ./hm-alpine/Dockerfile
+          push: true
+          tags: ghcr.io/hongbo-miao/hm-alpine:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   upload-pgbackrest:
     name: Upload pgbackrest
