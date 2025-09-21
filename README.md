@@ -72,7 +72,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **shadcn/ui** - UI component library
 - **Tailwind CSS** - Utility-first CSS framework
 - **Radix Primitives** - Low-level, unstyled, accessible UI primitives
-- **PurgeCSS** - Unused CSS removing
 - **Jest** - Unit testing, snapshot testing
 - **React Testing Library** - React component testing
 - **Storybook** - Visual testing
