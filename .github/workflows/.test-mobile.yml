@@ -123,16 +123,12 @@ jobs:
             -scheme mobile-ios \
             -destination "platform=iOS Simulator,name=iPhone 17,OS=26.0"
       - name: Test
-        uses: wandalen/wretry.action@v3.8.0
-        with:
-          current_path: mobile/mobile-ios
-          command: |
-            xcodebuild test-without-building \
-              -project mobile-ios.xcodeproj \
-              -scheme mobile-ios \
-              -destination "platform=iOS Simulator,name=iPhone 17,OS=26.0"
-          attempt_limit: 3
-          attempt_delay: 2000
+        working-directory: mobile/mobile-ios
+        run: |
+          xcodebuild test-without-building \
+            -project mobile-ios.xcodeproj \
+            -scheme mobile-ios \
+            -destination "platform=iOS Simulator,name=iPhone 17,OS=26.0"
       - name: Convert coverage to Cobertura XML format
         working-directory: mobile/mobile-ios
         run: |
