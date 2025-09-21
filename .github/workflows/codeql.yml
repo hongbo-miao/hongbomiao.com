@@ -79,8 +79,8 @@ jobs:
         uses: actions/setup-java@v5.0.0
         with:
           distribution: corretto
-          java-version: '21'
           cache: gradle
+          java-version-file: .java-version
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3.30.3
         with:

@@ -22,7 +22,7 @@ android {
         }
     }
     kotlin {
-        jvmToolchain(21)
+        jvmToolchain(file("../.java-version").readText().trim().toInt())
     }
 }
 dependencies {
