@@ -8,13 +8,13 @@
   "scripts": {
     "build": "webpack -c ./.config/webpack/webpack.config.ts --env production",
     "dev": "webpack -w -c ./.config/webpack/webpack.config.ts --env development",
+    "dev-grafana": "docker compose up --build",
     "test": "jest",
     "test-watch": "jest --watch",
     "test-coverage": "jest --coverage",
     "lint-javascript": "eslint .",
     "lint-javascript-fix": "eslint . --fix",
-    "static-type-check-typescript": "tsc",
-    "server": "docker-compose up --build"
+    "static-type-check-typescript": "tsc"
   },
   "dependencies": {
     "@emotion/css": "11.13.5",
