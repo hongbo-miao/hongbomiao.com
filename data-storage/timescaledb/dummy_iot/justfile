@@ -14,20 +14,20 @@ timescaledb-start:
         timescale/timescaledb:latest-pg15
 
 timescaledb-migrate:
-    sh bin/macos/migrate_timescaledb_iot_db.sh
+    sh scripts/macos/migrate_timescaledb_iot_db.sh
 
 # Ubuntu
 ubuntu-timescaledb-migrate:
-    sh bin/ubuntu/migrate_timescaledb_iot_db.sh
+    sh scripts/ubuntu/migrate_timescaledb_iot_db.sh
 
 ubuntu-timescaledb-logical-backup:
-    sh bin/ubuntu/logical_backup_timescaledb_iot_db.sh
+    sh scripts/ubuntu/logical_backup_timescaledb_iot_db.sh
 
 ubuntu-timescaledb-physical-backup:
-    sh bin/ubuntu/physical_backup_timescaledb.sh
+    sh scripts/ubuntu/physical_backup_timescaledb.sh
 
 ubuntu-timescaledb-physical-restore:
-    sh bin/ubuntu/physical_restore_timescaledb.sh
+    sh scripts/ubuntu/physical_restore_timescaledb.sh
 
 psql:
     sudo -u postgres psql
