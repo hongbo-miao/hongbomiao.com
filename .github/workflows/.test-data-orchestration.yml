@@ -55,6 +55,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-orchestration/hm-airflow
 
   prefect-calculate-test:
@@ -86,6 +87,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-orchestration/hm-prefect/workflows/calculate
 
   prefect-daft-analysis-test:
@@ -117,6 +119,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-orchestration/hm-prefect/workflows/daft-analysis
 
   prefect-greet-test:
@@ -148,6 +151,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-orchestration/hm-prefect/workflows/greet
 
   prefect-print-platform-test:
@@ -179,4 +183,5 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-orchestration/hm-prefect/workflows/print-platform

@@ -76,6 +76,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-processing/hm-spark/applications/analyze-coffee-customers
 
   spark-find-retired-people-python-test:
@@ -107,6 +108,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-processing/hm-spark/applications/find-retired-people-python
 
   spark-find-retired-people-scala-test:
@@ -159,6 +161,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-processing/hm-spark/applications/find-taxi-top-routes
 
   spark-find-taxi-top-routes-sql-test:
@@ -190,6 +193,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-processing/hm-spark/applications/find-taxi-top-routes-sql
 
   spark-ingest-from-s3-to-kafka-test:
@@ -242,6 +246,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: data-processing/hm-spark/applications/recommend-movies
 
   flink-stream-tweets-test:

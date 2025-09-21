@@ -58,6 +58,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: embedded-system/decode-can-blf-data
 
   decode-can-mf4-data-test:
@@ -89,6 +90,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: embedded-system/decode-can-mf4-data
 
   decode-can-trc-data-test:
@@ -120,6 +122,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: embedded-system/decode-can-trc-data
 
   format-can-data-test:
@@ -151,6 +154,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: embedded-system/format-can-data
 
   serial-test:
@@ -182,6 +186,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: embedded-system/hm-serial
 
   pack-unpack-data-test:
@@ -213,4 +218,5 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           directory: embedded-system/pack-unpack-data
