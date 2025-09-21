@@ -17,10 +17,10 @@
     "lint-javascript": "eslint .",
     "lint-javascript-fix": "eslint . --fix",
     "static-type-check-typescript": "tsc",
-    "test": "jest",
-    "test-watch": "jest --watch",
-    "test-coverage": "jest --coverage",
-    "test-stryker": "stryker run",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
+    "test-watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
+    "test-coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --coverage",
+    "test-stryker": "NODE_OPTIONS='--experimental-vm-modules' stryker run",
     "autocannon": "autocannon http://localhost:58136",
     "profile-endpoints": "npm run build-scripts && NODE_ENV=production node build/scripts/profileEndpoints.js",
     "profile-bubbleprof": "npm run build-scripts && NODE_ENV=production clinic bubbleprof --on-port 'bash bin/profile.sh' -- node build/src/index.js",
@@ -83,7 +83,7 @@
     "spdy": "4.0.2",
     "validator": "13.15.15",
     "ws": "8.18.3",
-    "yargs": "17.7.2"
+    "yargs": "18.0.0"
   },
   "devDependencies": {
     "@eslint/js": "9.36.0",
