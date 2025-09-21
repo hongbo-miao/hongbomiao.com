@@ -1,24 +1,64 @@
+DEVELOPMENT_DOCKER_IMAGE_TAG := "ghcr.io/hongbo-miao/hm-api-node:development"
+PRODUCTION_DOCKER_IMAGE_TAG := "ghcr.io/hongbo-miao/hm-api-node:latest"
+
+update-lock-file:
+    npm install --package-lock-only
+
+install-dependencies:
+    npm install
+
+dev:
+    npm run dev
+
+test:
+    npm run test
+
+lint-javascript:
+    npm run lint-javascript
+
+lint-javascript-fix:
+    npm run lint-javascript-fix
+
+static-type-check-typescript:
+    npm run static-type-check-typescript
+
 docker-build-development:
     cd .. && \
-    docker build --file=api-node/Dockerfile.development --tag=ghcr.io/hongbo-miao/hm-api-node-dev:latest .
+    docker build \
+        --file=api-node/Dockerfile.development \
+        --tag="{{ DEVELOPMENT_DOCKER_IMAGE_TAG }}" \
+        .
 
 docker-push-development:
-    docker push ghcr.io/hongbo-miao/hm-api-node-dev:latest
+    docker push "{{ DEVELOPMENT_DOCKER_IMAGE_TAG }}"
 
 docker-run-development:
     cd .. && \
-    docker run --publish=58136:58136 --name=hm-api-node --rm --env-file=api-node/.env.development.local.example.docker ghcr.io/hongbo-miao/hm-api-node-dev:latest
+    docker run \
+        --rm \
+        --name=hm-api-node \
+        --publish=58136:58136 \
+        --env-file=api-node/.env.development.local.example.docker \
+        "{{ DEVELOPMENT_DOCKER_IMAGE_TAG }}"
 
 docker-build-production:
     cd .. && \
-    docker build --file=api-node/Dockerfile --tag=ghcr.io/hongbo-miao/hm-api-node:latest .
+    docker build \
+        --file=api-node/Dockerfile \
+        --tag="{{ PRODUCTION_DOCKER_IMAGE_TAG }}" \
+        .
 
 docker-push-production:
-    docker push ghcr.io/hongbo-miao/hm-api-node:latest
+    docker push "{{ PRODUCTION_DOCKER_IMAGE_TAG }}"
 
 docker-run-production:
     cd .. && \
-    docker run --publish=58136:58136 --name=hm-api-node --rm --env-file=api-node/.env.production.local.example ghcr.io/hongbo-miao/hm-api-node:latest
+    docker run \
+        --rm \
+        --name=hm-api-node \
+        --publish=58136:58136 \
+        --env-file=api-node/.env.production.local.example \
+        "{{ PRODUCTION_DOCKER_IMAGE_TAG }}"
 
 # Docker Compose
 docker-compose-build:
