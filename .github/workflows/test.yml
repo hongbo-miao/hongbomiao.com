@@ -73,7 +73,6 @@ jobs:
             ansible:
               - 'infrastructure/ansible/**'
             c-cpp:
-              - '.clang-format'
               - '**/*.c'
               - '**/*.cpp'
               - '**/*.cu'
@@ -81,56 +80,55 @@ jobs:
               - '**/*.h'
               - '**/*.hpp'
               - '**/*.ino'
+              - '.clang-format'
             cmake:
+              - '**/CMakeLists.txt'
+              - '.python-version'
               - 'pyproject.toml'
               - 'uv.lock'
-              - '**/CMakeLists.txt'
             css:
+              - '**/*.css'
               - '.node-version'
               - '.npmrc'
-              - 'package.json'
-              - 'package-lock.json'
               - '.stylelintignore'
               - '.stylelintrc.mjs'
-              - '**/*.css'
+              - 'package-lock.json'
+              - 'package.json'
             dockerfile:
-              - '.hadolint.yaml'
               - '**/Dockerfile*'
+              - '.hadolint.yaml'
             html:
-              - '.node-version'
-              - '.npmrc'
-              - 'package.json'
-              - 'package-lock.json'
               - '**/*.html'
-            json:
               - '.node-version'
               - '.npmrc'
-              - 'package.json'
               - 'package-lock.json'
+              - 'package.json'
+            json:
               - '**/*.json'
+              - '.node-version'
+              - '.npmrc'
+              - 'package-lock.json'
+              - 'package.json'
             justfile:
+              - '**/justfile'
+              - '.python-version'
               - 'pyproject.toml'
               - 'uv.lock'
-              - '**/justfile'
             kubernetes:
               - 'kubernetes/manifests/**'
             markdown:
+              - '**/*.md'
               - '.node-version'
               - '.npmrc'
-              - 'package.json'
               - 'package-lock.json'
-              - '**/*.md'
+              - 'package.json'
             matlab:
+              - '**/*.m'
+              - '.python-version'
               - 'pyproject.toml'
               - 'uv.lock'
-              - '**/*.m'
             natural-language:
-              - '.node-version'
-              - '.npmrc'
-              - 'package.json'
-              - 'package-lock.json'
-              - '.textlintrc.json'
-              - '.textlintignore'
+              - '**/*.WizardFile'
               - '**/*.c'
               - '**/*.cjs'
               - '**/*.cpp'
@@ -170,69 +168,79 @@ jobs:
               - '**/*.ts'
               - '**/*.tsx'
               - '**/*.vhd'
-              - '**/*.WizardFile'
               - '**/*.xml'
               - '**/*.yaml'
               - '**/*.yml'
+              - '.node-version'
+              - '.npmrc'
+              - '.textlintignore'
+              - '.textlintrc.json'
+              - 'package-lock.json'
+              - 'package.json'
             ruby:
-              - 'Gemfile'
-              - 'Gemfile.lock'
               # https://github.com/rubocop/rubocop/blob/master/config/default.yml
               - '**/*.gemfile'
               - '**/Vagrantfile'
+              - 'Gemfile'
+              - 'Gemfile.lock'
             python:
+              - '**/*.py'
+              - '.mypy.ini'
+              - '.python-version'
+              - '.ruff.toml'
               - 'pyproject.toml'
               - 'uv.lock'
-              - '.mypy.ini'
-              - '.ruff.toml'
-              - '**/*.py'
             qml:
               - '**/*.qml'
             shell:
               - '**/*.sh'
             solidity:
+              - '**/*.sol'
               - '.node-version'
               - '.npmrc'
-              - 'package.json'
-              - 'package-lock.json'
               - '.solhint.json'
               - '.solhintignore'
-              - '**/*.sol'
+              - 'package-lock.json'
+              - 'package.json'
             sql:
-              - 'pyproject.toml'
-              - 'uv.lock'
+              - '**/*.sql'
+              - '.python-version'
               - '.sqlfluff'
               - '.sqlfluffignore'
-              - '**/*.sql'
+              - 'pyproject.toml'
+              - 'uv.lock'
             opentofu:
-              - '**/.terraform.lock.hcl'
               - '**/*.tfvars'
               - '**/*.tofu'
+              - '**/.terraform.lock.hcl'
               - 'infrastructure/opentofu/**'
             toml:
-              - 'taplo.toml'
               - '**/*.toml'
+              - 'taplo.toml'
             verilog:
-              - 'pyproject.toml'
-              - 'uv.lock'
               - '**/*.v'
-            vhdl:
+              - '.python-version'
               - 'pyproject.toml'
               - 'uv.lock'
+            vhdl:
               - '**/*.vhd'
+              - '.python-version'
+              - 'pyproject.toml'
+              - 'uv.lock'
             xml:
+              - '**/*.xml'
               - '.node-version'
               - '.npmrc'
-              - 'package.json'
-              - 'package-lock.json'
               - '.prettierignore'
               - '.prettierrc.mjs'
-              - '**/*.xml'
+              - 'package-lock.json'
+              - 'package.json'
             yaml:
+              - '**/*.yaml'
+              - '.python-version'
+              - '.yamllint.yaml'
               - 'pyproject.toml'
               - 'uv.lock'
-              - '.yamllint.yaml'
-              - '**/*.yaml'
             # Applications
             amazon-sagemaker-pytorch-mnist:
               - 'cloud-platform/aws/amazon-sagemaker/pytorch-mnist/**'
@@ -1196,7 +1204,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: physics/hm-genesis/pyproject.toml
+          python-version-file: physics/hm-genesis/.python-version
       - name: Install dependencies
         working-directory: physics/hm-genesis
         run: |
@@ -1235,7 +1243,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: matlab/call-matlab-function-in-python/pyproject.toml
+          python-version-file: matlab/call-matlab-function-in-python/.python-version
       - name: Install dependencies
         working-directory: matlab/call-matlab-function-in-python
         run: |
@@ -1269,7 +1277,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: data-distribution/arrow-flight/arrow-flight-client/pyproject.toml
+          python-version-file: data-distribution/arrow-flight/arrow-flight-client/.python-version
       - name: Install dependencies
         working-directory: data-distribution/arrow-flight/arrow-flight-client
         run: |
@@ -1331,7 +1339,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: data-distribution/rti-connext-dds/pyproject.toml
+          python-version-file: data-distribution/rti-connext-dds/.python-version
       - name: Install dependencies
         working-directory: data-distribution/rti-connext-dds
         run: |
@@ -1365,7 +1373,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: system-tool/hm-xxhash/pyproject.toml
+          python-version-file: system-tool/hm-xxhash/.python-version
       - name: Install dependencies
         working-directory: system-tool/hm-xxhash
         run: |
