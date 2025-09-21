@@ -19,14 +19,6 @@ dev = [
 package = false
 required-version = ">=0.8.0"
 
-[tool.uv.sources]
-torch = [{ index = "pytorch-cu128" }]
-
-[[tool.uv.index]]
-name = "pytorch-cu128"
-url = "https://download.pytorch.org/whl/cu128"
-explicit = true
-
 [tool.poe.tasks]
 test = "pytest --verbose --verbose"
 test-coverage = "pytest --cov=. --cov-report=xml"
