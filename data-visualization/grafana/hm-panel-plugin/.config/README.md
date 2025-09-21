@@ -25,6 +25,7 @@ Edit the `.eslintrc` file in the project root in order to extend the ESLint conf
   }
 }
 ```
+
 ---
 
 ### Extending the Prettier config
@@ -41,6 +42,7 @@ module.exports = {
   semi: false,
 };
 ```
+
 ---
 
 ### Extending the Jest config
@@ -67,6 +69,7 @@ module.exports = {
   transformIgnorePatterns: [nodeModulesToTransform([...grafanaESModules, 'packageName'])],
 };
 ```
+
 ---
 
 ### Extending the TypeScript config
@@ -83,6 +86,7 @@ Edit the `tsconfig.json` file in the project root in order to extend the TypeScr
   }
 }
 ```
+
 ---
 
 ### Extending the Webpack config
@@ -156,4 +160,5 @@ services:
 ```
 
 In this example, we assign the environment variable `GRAFANA_IMAGE` to the build arg `grafana_image` with a default value of `grafana`. This will allow you to set the value while running the docker compose commands, which might be convenient in some scenarios.
+
 ---
