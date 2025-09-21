@@ -1,4 +1,3 @@
-import { clsx } from 'clsx';
 import { useAudio } from 'react-use';
 import flashingMusicalNoteGIF from '@/shared/images/musical-note-flashing.gif';
 import playingMusicalNoteGIF from '@/shared/images/musical-note-playing.gif';
@@ -23,12 +22,11 @@ function AudioPlayer(props: Props) {
   };
 
   const musicalNoteGIF = audioState.paused ? flashingMusicalNoteGIF : playingMusicalNoteGIF;
-  const playButtonClassName = clsx('button', 'hm-play-button');
 
   return (
     <>
       {audioElement}
-      <button className={playButtonClassName} type="button" onClick={onTogglePlay}>
+      <button className="button hm-play-button" type="button" onClick={onTogglePlay}>
         <img className="hm-musical-note" width="20" height="20" src={musicalNoteGIF} alt="Music" />
       </button>
     </>
