@@ -224,6 +224,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Velero** - Kubernetes backup and disaster recovery
 - **Hasura** - GraphQL Engine
   - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
+- **Cilium** - eBPF-based networking, observability, security
 - **Linkerd** - Service mesh
 - **Caddy** - Web server, reverse proxy, load balancer
 - **Traefik** - Web server, reverse proxy, load balancer
