@@ -6,6 +6,7 @@ const grafanaConfig = require("@grafana/eslint-config/flat");
  * @type {Array<import('eslint').Linter.Config>}
  */
 module.exports = [
+  ...grafanaConfig,
   {
     // https://eslint.org/docs/latest/use/configure/ignore#the-eslintignore-file
     ignores: [
@@ -51,9 +52,6 @@ module.exports = [
       // Directories
       'dist',
     ],
-  },
-  {
-    ...grafanaConfig,
   },
   {
     files: ['**/*.{js,ts,tsx}'],

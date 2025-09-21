@@ -1,8 +1,8 @@
 import { PanelPlugin } from '@grafana/data';
 import { SimpleOptions } from './types';
-import HMPanel from './components/HMPanel';
+import HmPanel from './components/HmPanel';
 
-export const plugin = new PanelPlugin<SimpleOptions>(HMPanel).setPanelOptions((builder) => {
+export const plugin = new PanelPlugin<SimpleOptions>(HmPanel).setPanelOptions((builder) => {
   return builder
     .addTextInput({
       path: 'text',
