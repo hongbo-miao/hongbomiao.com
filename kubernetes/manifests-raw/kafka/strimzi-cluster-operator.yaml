@@ -127,7 +127,6 @@ spec:
             requests:
               cpu: 200m
               memory: 384Mi
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -142,7 +141,6 @@ rules:
       - nodes
     verbs:
       - get
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -159,7 +157,6 @@ roleRef:
   kind: ClusterRole
   name: strimzi-cluster-operator-leader-election
   apiGroup: rbac.authorization.k8s.io
-
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -168,7 +165,6 @@ metadata:
   labels:
     app: strimzi
   namespace: hm-kafka
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -643,7 +639,7 @@ spec:
                             configuration.
                       description: >-
                         `ConfigMap` entry where the logging configuration is
-                        stored. 
+                        stored.
                   required:
                     - type
                   description: Logging configuration for Kafka Connect.
@@ -2487,7 +2483,7 @@ spec:
                                     while building the new container. If not
                                     specified, the downloaded artifact will not
                                     be verified. Not applicable to the `maven`
-                                    artifact type. 
+                                    artifact type.
                                 type:
                                   type: string
                                   enum:
@@ -2646,7 +2642,6 @@ spec:
                     The current number of pods being used to provide this
                     resource.
               description: The status of the Kafka Connect cluster.
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -2778,7 +2773,6 @@ rules:
       - delete
       - patch
       - update
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -2795,7 +2789,6 @@ roleRef:
   kind: ClusterRole
   name: strimzi-cluster-operator-watched
   apiGroup: rbac.authorization.k8s.io
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -2948,7 +2941,6 @@ spec:
                     type: string
                   description: The list of topics used by the Kafka Connector.
               description: The status of the Kafka Connector.
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -3384,7 +3376,7 @@ spec:
                             configuration.
                       description: >-
                         `ConfigMap` entry where the logging configuration is
-                        stored. 
+                        stored.
                   required:
                     - type
                   description: Logging configuration for Kafka Bridge.
@@ -4385,7 +4377,6 @@ spec:
                     The current number of pods being used to provide this
                     resource.
               description: The status of the Kafka Bridge.
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -5111,7 +5102,7 @@ spec:
                             configuration.
                       description: >-
                         `ConfigMap` entry where the logging configuration is
-                        stored. 
+                        stored.
                   required:
                     - type
                   description: Logging configuration for MirrorMaker.
@@ -5972,7 +5963,6 @@ spec:
                     The current number of pods being used to provide this
                     resource.
               description: The status of Kafka MirrorMaker.
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -6014,7 +6004,6 @@ rules:
       - delete
       - patch
       - update
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -6047,7 +6036,6 @@ rules:
       - nodes
     verbs:
       - list
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -6062,7 +6050,6 @@ rules:
       - nodes
     verbs:
       - get
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -6078,7 +6065,6 @@ roleRef:
   kind: ClusterRole
   name: strimzi-kafka-client
   apiGroup: rbac.authorization.k8s.io
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -6218,7 +6204,6 @@ spec:
                     Number of pods managed by the StrimziPodSet controller that
                     have the current revision.
               description: The status of the StrimziPodSet.
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -6235,7 +6220,6 @@ roleRef:
   kind: ClusterRole
   name: strimzi-cluster-operator-namespaced
   apiGroup: rbac.authorization.k8s.io
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -6252,7 +6236,6 @@ roleRef:
   kind: ClusterRole
   name: strimzi-entity-operator
   apiGroup: rbac.authorization.k8s.io
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -6306,7 +6289,6 @@ rules:
       - delete
       - patch
       - update
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -6334,7 +6316,6 @@ rules:
       - delete
       - patch
       - update
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -6350,7 +6331,6 @@ roleRef:
   kind: ClusterRole
   name: strimzi-cluster-operator-global
   apiGroup: rbac.authorization.k8s.io
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -7034,7 +7014,7 @@ spec:
                             configuration.
                       description: >-
                         `ConfigMap` entry where the logging configuration is
-                        stored. 
+                        stored.
                   required:
                     - type
                   description: Logging configuration for Kafka Connect.
@@ -8895,7 +8875,6 @@ spec:
                     The current number of pods being used to provide this
                     resource.
               description: The status of the Kafka MirrorMaker 2.0 cluster.
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -9007,7 +8986,7 @@ spec:
                             description: >
                               Type of the listener. Currently the supported
                               types are `internal`, `route`, `loadbalancer`,
-                              `nodeport` and `ingress`. 
+                              `nodeport` and `ingress`.
 
 
                               * `internal` type exposes Kafka internally only
@@ -9361,7 +9340,7 @@ spec:
                                   URI of the User Info Endpoint to use as a
                                   fallback to obtaining the user id when the
                                   Introspection Endpoint does not return
-                                  information that can be used for the user id. 
+                                  information that can be used for the user id.
                               userNameClaim:
                                 type: string
                                 description: >-
@@ -10323,7 +10302,7 @@ spec:
                                 the configuration.
                           description: >-
                             `ConfigMap` entry where the logging configuration is
-                            stored. 
+                            stored.
                       required:
                         - type
                       description: Logging configuration for Kafka.
@@ -11768,7 +11747,7 @@ spec:
                                 the configuration.
                           description: >-
                             `ConfigMap` entry where the logging configuration is
-                            stored. 
+                            stored.
                       required:
                         - type
                       description: Logging configuration for ZooKeeper.
@@ -12821,7 +12800,7 @@ spec:
                                     containing the configuration.
                               description: >-
                                 `ConfigMap` entry where the logging
-                                configuration is stored. 
+                                configuration is stored.
                           required:
                             - type
                           description: Logging configuration.
@@ -13001,7 +12980,7 @@ spec:
                                     containing the configuration.
                               description: >-
                                 `ConfigMap` entry where the logging
-                                configuration is stored. 
+                                configuration is stored.
                           required:
                             - type
                           description: Logging configuration.
@@ -14378,7 +14357,7 @@ spec:
                                 the configuration.
                           description: >-
                             `ConfigMap` entry where the logging configuration is
-                            stored. 
+                            stored.
                       required:
                         - type
                       description: Logging configuration (Log4j 2) for Cruise Control.
@@ -16984,7 +16963,6 @@ spec:
               description: >-
                 The status of the Kafka and ZooKeeper clusters, and Topic
                 Operator.
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -17055,7 +17033,7 @@ spec:
                     Mode to run the rebalancing. The supported modes are `full`,
                     `add-brokers`, `remove-brokers`.
 
-                    If not specified, the `full` mode is used by default. 
+                    If not specified, the `full` mode is used by default.
 
 
                     * `full` mode runs the rebalancing across all the brokers in
@@ -17198,7 +17176,6 @@ spec:
                   type: object
                   description: A JSON object describing the optimization result.
               description: The status of the Kafka rebalance.
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -17531,7 +17508,6 @@ spec:
                   type: string
                   description: Topic name.
               description: The status of the topic.
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -17547,7 +17523,6 @@ roleRef:
   kind: ClusterRole
   name: strimzi-kafka-broker
   apiGroup: rbac.authorization.k8s.io
-
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -17608,7 +17583,6 @@ data:
     logger.okhttp3.name = okhttp3
 
     logger.okhttp3.level = INFO
-
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -17700,7 +17674,7 @@ spec:
                   description: >-
                     Authentication mechanism enabled for this Kafka user. The
                     supported authentication mechanisms are `scram-sha-512`,
-                    `tls`, and `tls-external`. 
+                    `tls`, and `tls-external`.
 
 
                     * `scram-sha-512` generates a secret with SASL SCRAM-SHA-512
@@ -18021,7 +17995,7 @@ spec:
                   description: >-
                     Authentication mechanism enabled for this Kafka user. The
                     supported authentication mechanisms are `scram-sha-512`,
-                    `tls`, and `tls-external`. 
+                    `tls`, and `tls-external`.
 
 
                     * `scram-sha-512` generates a secret with SASL SCRAM-SHA-512
@@ -18342,7 +18316,7 @@ spec:
                   description: >-
                     Authentication mechanism enabled for this Kafka user. The
                     supported authentication mechanisms are `scram-sha-512`,
-                    `tls`, and `tls-external`. 
+                    `tls`, and `tls-external`.
 
 
                     * `scram-sha-512` generates a secret with SASL SCRAM-SHA-512
