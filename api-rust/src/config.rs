@@ -2,14 +2,18 @@ use std::sync::OnceLock;
 
 #[derive(Debug, Clone)]
 pub struct AppConfig {
-    pub port: u16,
-    pub log_level: tracing::Level,
+    pub server_port: u16,
+    pub server_log_level: tracing::Level,
     pub openai_api_base_url: String,
     pub openai_api_key: String,
     pub openai_model: String,
     pub speaches_base_url: String,
     pub transcription_model: String,
-    pub cors_allowed_origins: Vec<String>,
+    pub server_cors_allowed_origins: Vec<String>,
+    pub server_rate_limit_per_second: u64,
+    pub server_rate_limit_per_second_burst: u32,
+    pub server_sent_event_retry_ms: u64,
+    pub server_sent_event_keep_alive_interval_s: u64,
     pub webrtc_vad_sample_rate_number: u32,
     pub webrtc_vad_frame_duration_ms: u64,
     pub webrtc_vad_mode: String,
@@ -44,24 +48,33 @@ impl AppConfig {
         }
 
         let app_config = AppConfig {
-            port: std::env::var("PORT")?.parse()?,
-            log_level: std::env::var("LOG_LEVEL")
+            server_port: std::env::var("SERVER_PORT")?.parse()?,
+            server_log_level: std::env::var("SERVER_LOG_LEVEL")
                 .unwrap_or_else(|_| "INFO".to_string())
                 .parse::<tracing::Level>()
                 .expect(
-                    "LOG_LEVEL must be a valid tracing level (TRACE, DEBUG, INFO, WARN, ERROR)",
+                    "SERVER_LOG_LEVEL must be a valid tracing level (TRACE, DEBUG, INFO, WARN, ERROR)",
                 ),
             openai_api_base_url: std::env::var("OPENAI_API_BASE_URL")?,
             openai_api_key: std::env::var("OPENAI_API_KEY")?,
             openai_model: std::env::var("OPENAI_MODEL")?,
             speaches_base_url: std::env::var("SPEACHES_BASE_URL")?,
             transcription_model: std::env::var("TRANSCRIPTION_MODEL")?,
-            cors_allowed_origins: std::env::var("CORS_ALLOWED_ORIGINS")
-                .unwrap_or_else(|_| "*".to_string())
+            server_cors_allowed_origins: std::env::var("SERVER_CORS_ALLOWED_ORIGINS")?
                 .split(',')
-                .map(|s| s.trim().to_string())
-                .filter(|s| !s.is_empty())
+                .map(|origin| origin.trim().to_string())
+                .filter(|origin| !origin.is_empty())
                 .collect(),
+            server_rate_limit_per_second: std::env::var("SERVER_RATE_LIMIT_PER_SECOND")?.parse()?,
+            server_rate_limit_per_second_burst: std::env::var("SERVER_RATE_LIMIT_PER_SECOND_BURST")?.parse()?,
+            server_sent_event_retry_ms: std::env::var(
+                "SERVER_SENT_EVENT_RETRY_MS",
+            )?
+            .parse()?,
+            server_sent_event_keep_alive_interval_s: std::env::var(
+                "SERVER_SENT_EVENT_KEEP_ALIVE_INTERVAL_S",
+            )?
+            .parse()?,
             webrtc_vad_min_silence_duration_ms: std::env::var(
                 "WEBRTC_VAD_MIN_SILENCE_DURATION_MS",
             )?

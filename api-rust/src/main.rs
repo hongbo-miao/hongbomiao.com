@@ -32,7 +32,7 @@ use crate::graphql::schema;
 async fn main() {
     let config = AppConfig::get();
     tracing_subscriber::fmt()
-        .with_max_level(config.log_level)
+        .with_max_level(config.server_log_level)
         .init();
     ffmpeg_sidecar::download::auto_download().expect("Failed to download FFmpeg");
 
@@ -40,7 +40,7 @@ async fn main() {
     let compression = CompressionLayer::new();
     let timeout = TimeoutLayer::new(Duration::from_secs(30));
     let allowed_origins: Vec<HeaderValue> = config
-        .cors_allowed_origins
+        .server_cors_allowed_origins
         .iter()
         .filter_map(|origin| HeaderValue::from_str(origin).ok())
         .collect();
@@ -58,8 +58,8 @@ async fn main() {
     let trace = TraceLayer::new_for_http();
     let governor = GovernorLayer::new(Arc::new(
         GovernorConfigBuilder::default()
-            .per_second(20)
-            .burst_size(50)
+            .per_second(config.server_rate_limit_per_second)
+            .burst_size(config.server_rate_limit_per_second_burst)
             .key_extractor(SmartIpKeyExtractor)
             .finish()
             .unwrap(),
@@ -94,9 +94,13 @@ async fn main() {
         .layer(trace)
         .layer(governor);
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], config.port));
-    info!("Listening on {}", addr);
-    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
+    let address = format!("[::]:{}", config.server_port)
+        .parse::<SocketAddr>()
+        .expect("Failed to parse socket address");
+    info!("Listening on {}", address);
+    let listener = tokio::net::TcpListener::bind(address)
+        .await
+        .expect("Failed to bind TCP listener");
     axum::serve(
         listener,
         app.into_make_service_with_connect_info::<SocketAddr>(),
