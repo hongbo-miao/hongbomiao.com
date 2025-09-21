@@ -101,7 +101,7 @@ jobs:
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1.6.0
         with:
-          xcode-version: 16.4.0
+          xcode-version: 26.0.0
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -121,7 +121,7 @@ jobs:
           xcodebuild build-for-testing \
             -project mobile-ios.xcodeproj \
             -scheme mobile-ios \
-            -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.6"
+            -destination "platform=iOS Simulator,name=iPhone 17,OS=26.0"
       - name: Test
         uses: wandalen/wretry.action@v3.8.0
         with:
@@ -130,7 +130,7 @@ jobs:
             xcodebuild test-without-building \
               -project mobile-ios.xcodeproj \
               -scheme mobile-ios \
-              -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.6"
+              -destination "platform=iOS Simulator,name=iPhone 17,OS=26.0"
           attempt_limit: 3
           attempt_delay: 2000
       - name: Convert coverage to Cobertura XML format
