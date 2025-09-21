@@ -4,11 +4,17 @@ update-lock-file:
 install-dependencies:
     npm install
 
-dev:
-    npm run dev
+test-cypress-gui-8080:
+    npm run test-cypress-gui-8080
 
-test:
-    npm run test
+test-cypress-gui-58136:
+    npm run test-cypress-gui-58136
+
+test-cypress-headless-8080:
+    npm run test-cypress-headless-8080
+
+test-cypress-headless-58136:
+    npm run test-cypress-headless-58136
 
 lint-javascript:
     npm run lint-javascript
@@ -18,10 +24,3 @@ lint-javascript-fix:
 
 static-type-check-typescript:
     npm run static-type-check-typescript
-
-docker-build:
-    cd .. && \
-    docker build --file=web/Dockerfile --tag=ghcr.io/hongbo-miao/hm-web:latest .
-
-docker-push:
-    docker push ghcr.io/hongbo-miao/hm-web:latest
