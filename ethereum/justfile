@@ -4,12 +4,6 @@ update-lock-file:
 install-dependencies:
     npm install
 
-dev:
-    npm run dev
-
-test:
-    npm run test
-
 lint-javascript:
     npm run lint-javascript
 
@@ -18,10 +12,3 @@ lint-javascript-fix:
 
 static-type-check-typescript:
     npm run static-type-check-typescript
-
-docker-build:
-    cd .. && \
-    docker build --file=web/Dockerfile --tag=ghcr.io/hongbo-miao/hm-web:latest .
-
-docker-push:
-    docker push ghcr.io/hongbo-miao/hm-web:latest

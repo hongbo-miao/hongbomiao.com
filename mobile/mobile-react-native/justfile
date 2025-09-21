@@ -7,6 +7,15 @@ install-dependencies:
 dev:
     npm run dev
 
+dev-android:
+    npm run dev-android
+
+dev-ios:
+    npm run dev-ios
+
+dev-web:
+    npm run dev-web
+
 test:
     npm run test
 
@@ -18,10 +27,3 @@ lint-javascript-fix:
 
 static-type-check-typescript:
     npm run static-type-check-typescript
-
-docker-build:
-    cd .. && \
-    docker build --file=web/Dockerfile --tag=ghcr.io/hongbo-miao/hm-web:latest .
-
-docker-push:
-    docker push ghcr.io/hongbo-miao/hm-web:latest

@@ -7,6 +7,9 @@ install-dependencies:
 dev:
     npm run dev
 
+dev-grafana:
+    npm run dev-grafana
+
 test:
     npm run test
 
@@ -18,10 +21,3 @@ lint-javascript-fix:
 
 static-type-check-typescript:
     npm run static-type-check-typescript
-
-docker-build:
-    cd .. && \
-    docker build --file=web/Dockerfile --tag=ghcr.io/hongbo-miao/hm-web:latest .
-
-docker-push:
-    docker push ghcr.io/hongbo-miao/hm-web:latest
