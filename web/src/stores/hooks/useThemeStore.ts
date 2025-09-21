@@ -1,20 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { ThemeState } from '@/stores/types/ThemeState';
+import initialTheme from '../theme/constants/initialTheme';
+import applyTheme from '../theme/utils/applyTheme';
+import type { ThemeState } from '@/stores/theme/types/ThemeState';
 
-const applyTheme = (theme: 'light' | 'dark') => {
-  const root = document.documentElement;
-  if (theme === 'dark') {
-    root.classList.add('dark');
-  } else {
-    root.classList.remove('dark');
-  }
-};
-
-export const useThemeStore = create<ThemeState>()(
+const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
-      theme: 'light',
+      theme: initialTheme,
       setTheme: (theme) => {
         set({ theme });
         applyTheme(theme);
@@ -30,3 +23,5 @@ export const useThemeStore = create<ThemeState>()(
     },
   ),
 );
+
+export default useThemeStore;
