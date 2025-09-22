@@ -187,7 +187,7 @@ lint-c-cpp-cpplint:
     uv run poe lint-c-cpp-cpplint --repository=robotics/robot-operating-system/src/hm_cpp_package --extensions=cpp,hpp --recursive robotics/robot-operating-system
 
 lint-c-cpp-clang-format-fix:
-    clang-format -i -style=file $(git ls-files "**/*.c" "**/*.cpp" "**/*.cu" "**/*.h" "**/*.ino")
+    clang-format -i -style=file $(git ls-files '**/*.c' '**/*.cpp' '**/*.cu' '**/*.h' '**/*.ino')
 
 lint-cmake:
     uv run poe lint-cmake
@@ -199,7 +199,7 @@ lint-css-fix:
     npm run lint-css-fix
 
 lint-dockerfile:
-    hadolint $(git ls-files "**/Dockerfile*")
+    hadolint $(git ls-files '**/Dockerfile*')
 
 lint-html:
     npm run lint-html
@@ -233,7 +233,7 @@ lint-kotlin-fix:
 
 lint-kubernetes-manifest:
     kubeconform \
-        -kubernetes-version=1.26.0 \
+        -kubernetes-version=1.34.0 \
         -ignore-filename-pattern='.*trafficsplit.yaml' \
         -ignore-filename-pattern='.*my-values.yaml' \
         -ignore-filename-pattern=kubernetes/manifests/argocd/ \
@@ -273,7 +273,7 @@ lint-python-fix:
     uv run poe lint-python-fix
 
 lint-qml:
-    qmllint $(git ls-files "**/*.qml")
+    qmllint $(git ls-files '**/*.qml')
 
 lint-ruby:
     bundle exec rubocop
@@ -282,15 +282,15 @@ lint-ruby-fix:
     bundle exec rubocop --autocorrect-all
 
 lint-scala:
-    cd data-processing/hm-spark/applications/find-retired-people-scala && sbt scalafmtCheckAll && sbt "scalafixAll --check"
-    cd data-processing/hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtCheckAll && sbt "scalafixAll --check"
+    cd data-processing/hm-spark/applications/find-retired-people-scala && sbt scalafmtCheckAll && sbt 'scalafixAll --check'
+    cd data-processing/hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtCheckAll && sbt 'scalafixAll --check'
 
 lint-scala-fix:
     cd data-processing/hm-spark/applications/find-retired-people-scala && sbt scalafmtAll && sbt scalafixAll
     cd data-processing/hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtAll && sbt scalafixAll
 
 lint-shell:
-    shellcheck $(git ls-files "**/*.sh")
+    shellcheck $(git ls-files '**/*.sh')
 
 lint-solidity:
     npm run lint-solidity
@@ -347,10 +347,10 @@ lint-toml-fix:
     taplo fmt
 
 lint-verilog:
-    verible-verilog-lint $(git ls-files "**/*.v") && verible-verilog-format --verify $(git ls-files "**/*.v")
+    verible-verilog-lint $(git ls-files '**/*.v') && verible-verilog-format --verify $(git ls-files '**/*.v')
 
 lint-verilog-fix:
-    verible-verilog-lint --autofix=inplace $(git ls-files "**/*.v") && verible-verilog-format --inplace $(git ls-files "**/*.v")
+    verible-verilog-lint --autofix=inplace $(git ls-files '**/*.v') && verible-verilog-format --inplace $(git ls-files '**/*.v')
 
 lint-vhdl:
     uv run poe lint-vhdl
