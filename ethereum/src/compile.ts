@@ -1,7 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 import solc from 'solc';
 
 const inboxPath = path.resolve(__dirname, 'contracts', 'Storage.sol');
