@@ -3,13 +3,14 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: ['config:recommended'],
+  prConcurrentLimit: 50,
+  prHourlyLimit: 0,
   lockFileMaintenance: {
     enabled: true,
     commitMessageExtra: '({{packageFile}})',
   },
   additionalBranchPrefix: '{{parentDir}}-',
   semanticCommitScope: '{{#if parentDir}}{{parentDir}}{{else}}deps{{/if}}',
-  prHourlyLimit: 0,
   packageRules: [
     {
       // Group Android related packages
