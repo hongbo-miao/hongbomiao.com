@@ -5,8 +5,8 @@ docker-build:
 docker-run:
     docker run --interactive --tty --rm --entrypoint=sh ghcr.io/hongbo-miao/hm-pgbackrest:latest
 
-setup:
-    sh scripts/ubuntu/setup.sh
+set-up:
+    sh scripts/ubuntu/set_up.sh
 
 sql-show-pgbackrest-info:
     psql postgresql://postgres:passw0rd@localhost:5432/postgres --file=sql/pgsql-pgbackrest-info.sql
