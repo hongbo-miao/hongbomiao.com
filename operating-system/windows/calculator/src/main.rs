@@ -1,4 +1,6 @@
 #![deny(dead_code)]
+#![deny(unreachable_code)]
+#![deny(unsafe_code)]
 #![forbid(unused_must_use)]
 
 use windows::UI::UIAutomation::AutomationElement;
@@ -9,6 +11,7 @@ use windows::Win32::UI::Accessibility::{CUIAutomation, IUIAutomation, IUIAutomat
 use windows::Win32::UI::WindowsAndMessaging::FindWindowA;
 use windows::core::{Interface, Result, s};
 
+#[allow(unsafe_code)]
 fn main() -> Result<()> {
     unsafe {
         CoInitializeEx(None, COINIT_MULTITHREADED).ok()?;
