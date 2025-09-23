@@ -1,3 +1,7 @@
+#![deny(dead_code)]
+#![forbid(unsafe_code)]
+#![forbid(unused_must_use)]
+
 use arrow::array::RecordBatchReader;
 use arrow_flight::encode::FlightDataEncoderBuilder;
 use arrow_flight::error::FlightError;
