@@ -1,7 +1,8 @@
 [Unit]
 Description=Speaches container service
-After=network-online.target
 Wants=network-online.target
+After=network-online.target docker.service
+Requires=docker.service
 
 [Service]
 Type=simple
@@ -14,7 +15,7 @@ ExecStart=/usr/bin/docker run \
   --volume={{ speaches_volume_name }}:{{ speaches_volume_mount }} \
   --gpus {{ speaches_gpu_devices }} \
   --detach=false \
-  --env=HF_TOKEN={{ hugging_face_token }} \
+  --env=HF_TOKEN={{ speaches_hugging_face_token }} \
   {{ speaches_docker_image }}
 ExecStop=/usr/bin/docker stop {{ speaches_container_name }}
 Restart=always

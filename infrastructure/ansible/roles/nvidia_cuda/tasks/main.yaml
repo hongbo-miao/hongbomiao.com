@@ -3,23 +3,23 @@
 - name: Check if NVIDIA CUDA toolkit is already installed
   ansible.builtin.stat:
     path: /usr/local/cuda/version.json
-  register: nvidia_cuda_version_file_check
+  register: nvidia_cuda_version_file_check_result
 
 - name: Process existing CUDA version information
-  when: nvidia_cuda_version_file_check.stat.exists
+  when: nvidia_cuda_version_file_check_result.stat.exists
   block:
     - name: Read CUDA version from version.json
       ansible.builtin.slurp:
         src: /usr/local/cuda/version.json
-      register: nvidia_cuda_version_content
+      register: nvidia_cuda_version_content_result
 
     - name: Parse CUDA version
       ansible.builtin.set_fact:
-        nvidia_cuda_installed_cuda_version: "{{ (nvidia_cuda_version_content.content | b64decode | from_json).cuda.version }}"
+        nvidia_cuda_installed_cuda_version: "{{ (nvidia_cuda_version_content_result.content | b64decode | from_json).cuda.version }}"
 
 - name: Check if correct CUDA version is installed
   ansible.builtin.set_fact:
-    nvidia_cuda_version_check: "{{ nvidia_cuda_version_file_check.stat.exists and (nvidia_cuda_installed_cuda_version | default('')) == nvidia_cuda_version }}"
+    nvidia_cuda_version_check: "{{ nvidia_cuda_version_file_check_result.stat.exists and (nvidia_cuda_installed_cuda_version | default('')) == nvidia_cuda_version }}"
 
 - name: Install NVIDIA CUDA toolkit if not present
   become: true
