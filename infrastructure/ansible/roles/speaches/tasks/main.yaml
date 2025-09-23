@@ -4,11 +4,11 @@
     src: speaches.service.j2
     dest: /etc/systemd/system/speaches.service
     mode: '0644'
-  register: speaches_systemd_unit
+  register: speaches_systemd_unit_result
 
 - name: Ensure Speaches service is running and enabled
   ansible.builtin.systemd_service:
     name: speaches
-    state: "{{ 'restarted' if speaches_systemd_unit.changed else 'started' }}"
+    state: "{{ 'restarted' if speaches_systemd_unit_result.changed else 'started' }}"
     enabled: true
-    daemon_reload: "{{ speaches_systemd_unit.changed }}"
+    daemon_reload: "{{ speaches_systemd_unit_result.changed }}"
