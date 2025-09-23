@@ -148,7 +148,17 @@
                 6431366663326265340a313139366266333334353038636461393233643330336530613038643838
                 3633
 
-- name: Install Kafka
+- name: Deploy GitHub Actions Runner
+  hosts: all
+  become: true
+  roles:
+    - role: github_actions_runner
+  vars:
+    github_actions_runner_docker_image: myoung34/github-runner:2.328.0-ubuntu-noble
+    github_actions_runner_repo_url: https://github.com/hongbo-miao/hongbomiao.com
+    github_actions_runner_access_token: "{{ hostvars[inventory_hostname]['github_actions_runner_access_token'] }}"
+
+- name: Deploy Kafka
   hosts: all
   become: true
   roles:
@@ -166,16 +176,6 @@
     kafka_additional_config:
       message.max.bytes: 1048576  # 1 MiB
 
-- name: Deploy Speaches
-  hosts: all
-  become: true
-  roles:
-    - role: speaches
-  vars:
-    speaches_docker_image: ghcr.io/speaches-ai/speaches:0.8.2-cuda
-    speaches_port: 34796
-    speaches_gpu_devices: "'\"device=0\"'"
-
 - name: Deploy Ollama
   hosts: all
   become: true
@@ -185,6 +185,17 @@
     ollama_docker_image: docker.io/ollama/ollama:0.11.10
     ollama_port: 11434
     ollama_gpu_devices: "'\"device=0\"'"
+
+- name: Deploy Speaches
+  hosts: all
+  become: true
+  roles:
+    - role: speaches
+  vars:
+    speaches_docker_image: ghcr.io/speaches-ai/speaches:0.8.2-cuda
+    speaches_port: 34796
+    speaches_gpu_devices: "'\"device=0\"'"
+    speaches_hugging_face_token: "{{ hostvars[inventory_hostname]['hugging_face_token'] }}"
 
 - name: Deploy vLLM
   hosts: all
@@ -200,3 +211,4 @@
     vllm_tensor_parallel_size: 1
     vllm_gpu_devices: "'\"device=0\"'"
     vllm_tool_call_parser: hermes
+    vllm_hugging_face_token: "{{ hostvars[inventory_hostname]['hugging_face_token'] }}"

@@ -1,0 +1,21 @@
+---
+- name: Create environment file for GitHub Actions runner
+  ansible.builtin.template:
+    src: github-actions-runner.env.j2
+    dest: "{{ github_actions_runner_env_file }}"
+    mode: '0600'
+  register: github_actions_runner_env_file_result
+
+- name: Create systemd service file for GitHub Actions runner
+  ansible.builtin.template:
+    src: github-actions-runner.service.j2
+    dest: "/etc/systemd/system/github-actions-runner.service"
+    mode: '0644'
+  register: github_actions_runner_systemd_unit_result
+
+- name: Ensure GitHub Actions runner service is running and enabled
+  ansible.builtin.systemd_service:
+    name: "github-actions-runner"
+    state: "{{ 'restarted' if (github_actions_runner_systemd_unit_result.changed or github_actions_runner_env_file_result.changed) else 'started' }}"
+    enabled: true
+    daemon_reload: "{{ github_actions_runner_systemd_unit_result.changed or github_actions_runner_env_file_result.changed }}"
