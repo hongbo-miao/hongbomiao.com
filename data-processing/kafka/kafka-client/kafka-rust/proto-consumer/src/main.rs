@@ -1,4 +1,5 @@
 #![deny(dead_code)]
+#![deny(unreachable_code)]
 #![forbid(unsafe_code)]
 #![forbid(unused_must_use)]
 
