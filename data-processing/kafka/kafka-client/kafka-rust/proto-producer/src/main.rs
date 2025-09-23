@@ -1,3 +1,7 @@
+#![deny(dead_code)]
+#![forbid(unsafe_code)]
+#![forbid(unused_must_use)]
+
 use chrono::Utc;
 use prost::Message;
 use rand::Rng;
