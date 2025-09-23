@@ -1,4 +1,6 @@
 #![deny(dead_code)]
+#![deny(unreachable_code)]
+#![deny(unsafe_code)]
 #![forbid(unused_must_use)]
 
 use axum::http::StatusCode;
@@ -115,6 +117,7 @@ async fn get_iads_status(
     axum::Json(iads_status.clone())
 }
 
+#[allow(unsafe_code)]
 async fn stop_iads() -> Result<(), Box<dyn Error>> {
     unsafe {
         CoInitializeEx(None, COINIT_MULTITHREADED).ok()?;
