@@ -1,0 +1,21 @@
+[Unit]
+Description=Ephemeral GitHub Actions Runner Container
+Wants=network-online.target
+After=network-online.target docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker rm --force %N
+ExecStartPre=-/usr/bin/docker pull {{ github_actions_runner_docker_image }}
+ExecStart=/usr/bin/docker run --rm \
+  --env-file={{ github_actions_runner_env_file }} \
+  --env=RUNNER_NAME=%H \
+  --volume=/var/run/docker.sock:/var/run/docker.sock \
+  --name=%N \
+  {{ github_actions_runner_docker_image }}
+ExecStop=/usr/bin/docker stop %N
+
+[Install]
+WantedBy=multi-user.target
