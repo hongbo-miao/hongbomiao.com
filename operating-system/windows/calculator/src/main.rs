@@ -1,3 +1,6 @@
+#![deny(dead_code)]
+#![forbid(unused_must_use)]
+
 use windows::UI::UIAutomation::AutomationElement;
 use windows::Win32::System::Com::{
     CLSCTX_ALL, COINIT_MULTITHREADED, CoCreateInstance, CoInitializeEx,

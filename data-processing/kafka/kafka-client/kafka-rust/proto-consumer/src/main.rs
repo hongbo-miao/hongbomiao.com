@@ -1,4 +1,6 @@
+#![deny(dead_code)]
 #![forbid(unsafe_code)]
+#![forbid(unused_must_use)]
 
 use prost::Message;
 use rdkafka::config::ClientConfig;

@@ -1,3 +1,6 @@
+#![deny(dead_code)]
+#![forbid(unused_must_use)]
+
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
 use chrono::{DateTime, Datelike, TimeZone, Utc};
