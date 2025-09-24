@@ -1,4 +1,11 @@
 ---
+- name: Pull vLLM Docker image
+  community.docker.docker_image:
+    name: "{{ vllm_docker_image }}"
+    source: pull
+    force_source: false
+  register: vllm_docker_image_result
+
 - name: Create systemd service file for vLLM
   ansible.builtin.template:
     src: vllm.service.j2
@@ -9,6 +16,6 @@
 - name: Ensure vLLM service is running and enabled
   ansible.builtin.systemd_service:
     name: vllm
-    state: "{{ 'restarted' if vllm_systemd_unit_result.changed else 'started' }}"
+    state: "{{ 'restarted' if (vllm_systemd_unit_result.changed or vllm_docker_image_result.changed) else 'started' }}"
     enabled: true
     daemon_reload: "{{ vllm_systemd_unit_result.changed }}"

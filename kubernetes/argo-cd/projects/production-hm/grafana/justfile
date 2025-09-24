@@ -6,11 +6,11 @@ sealed-secrets-seal:
     	--format=yaml \
     	> kubernetes-manifests/hm-grafana-secret.yaml
 
-argo-cd-app-create:
+create:
     argocd app create production-hm-grafana --file=argo-cd-manifests/hm-grafana-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-grafana --file=argo-cd-manifests/hm-grafana-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-grafana --yes

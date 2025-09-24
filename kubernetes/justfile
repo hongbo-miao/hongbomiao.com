@@ -506,7 +506,7 @@ linkerd-get-secret-yaml:
     kubectl get secrets --namespace=linkerd linkerd-identity-issuer --output=yaml
 
 # Pixie
-pixie-login:
+pixie-sign-in:
     px auth login
 
 pixie-deploy:
@@ -521,53 +521,6 @@ kibana-ui:
 
 kibana-get-password:
     kubectl get secret hm-elasticsearch-es-elastic-user --namespace=hm-elastic --output=jsonpath="{.data.elastic}" | base64 --decode; echo
-
-# Argo CD
-argo-cd-install:
-    kubectl create namespace argocd
-    kubectl apply --namespace=argocd --filename=https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
-argo-cd-ui:
-    kubectl port-forward service/argocd-server --namespace=argocd 31026:443 &
-
-argo-cd-get-password:
-    kubectl get secret argocd-initial-admin-secret --namespace=argocd --output=jsonpath="{.data.password}" | base64 -d && echo
-
-argo-cd-login:
-    $(eval ARGOCD_PASSWORD := $(shell kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo))
-    argocd login localhost:31026 --username=admin --password=$(ARGOCD_PASSWORD) --insecure
-
-argo-cd-enable-auth-sync:
-    argocd app set hm-application --sync-policy=automated
-
-argo-cd-disable-auth-sync:
-    argocd app set hm-application --sync-policy=none
-
-argo-cd-diff:
-    argocd app diff hm-application --local=manifests
-
-argo-cd-apply:
-    kubectl apply --filename=manifests/argocd/hm-application.yaml
-
-argo-cd-sync:
-    kubectl apply --filename=manifests/argocd/hm-application.yaml
-    argocd app sync hm-application --grpc-web
-
-argo-cd-sync-local:
-    argocd app sync hm-application --grpc-web --local=manifests/west
-
-argo-cd-sync-local-full:
-    kubectl create namespace hm
-    ELASTIC_APM_TOKEN=$(kubectl get secret hm-apm-apm-token --namespace=hm-elastic --output=go-template='{{{{index .data "secret-token" | base64decode}}')
-    kubectl create secret generic hm-elastic-apm --namespace=hm --from-literal="token=${ELASTIC_APM_TOKEN}"
-    kubectl apply --filename=manifests/argocd/hm-application.yaml
-    argocd app sync hm-application --grpc-web --local=manifests/west
-
-argo-cd-list:
-    argocd app list
-
-argo-cd-delete:
-    argocd app delete production-hm-application --yes
 
 kubectl-get-pods-argocd:
     kubectl get pods --namespace=argocd
@@ -672,7 +625,7 @@ curl-cat:
 cloudflared-install:
     brew install cloudflared
 
-cloudflare-tunnel-login:
+cloudflare-tunnel-sign-in:
     cloudflared tunnel login
 
 cloudflare-tunnel-list:

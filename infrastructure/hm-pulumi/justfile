@@ -10,23 +10,24 @@ test:
 test-coverage:
     uv run poe test-coverage
 
-pulumi-login:
+# Pulumi
+sign-in:
     pulumi login s3://hongbomiao-pulumi-bucket
 
-pulumi-init:
+initialize:
     pulumi new aws-python
 
-pulumi-up:
+up:
     export PULUMI_CONFIG_PASSPHRASE_FILE="passphrase.txt" && pulumi up
 
-pulumi-down:
+down:
     export PULUMI_CONFIG_PASSPHRASE_FILE="passphrase.txt" && pulumi destroy
 
-pulumi-stack-list:
+stack-list:
     pulumi stack ls
 
-pulumi-stack-init:
+stack-initialize:
     pulumi stack init development
 
-pulumi-convert:
+convert:
     pulumi convert --from=tofu --language=python --out=my-pulumi --generate-only

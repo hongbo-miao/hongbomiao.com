@@ -1,10 +1,10 @@
-argo-cd-app-create:
+create:
     argocd app create production-hm-karpenter --file=argo-cd-manifests/hm-karpenter-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-karpenter --file=argo-cd-manifests/hm-karpenter-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-karpenter --yes
 
 describe-ec2-node-class:

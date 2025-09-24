@@ -6,11 +6,11 @@ sealed-secrets-seal:
     	--format=yaml \
     	> kubernetes-manifests/hm-prefect-server-secret.yaml
 
-argo-cd-app-create:
+create:
     argocd app create production-hm-prefect-server --file=argo-cd-manifests/hm-prefect-server-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-prefect-server --file=argo-cd-manifests/hm-prefect-server-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-prefect-server --yes

@@ -1,42 +1,42 @@
-opentofu-init:
+initialize:
     tofu init
     tofu init -upgrade
     tofu init -reconfigure
     tofu init -backend=false
 
-opentofu-plan:
+plan:
     tofu plan
     tofu plan -parallelism=8
 
-opentofu-apply:
+apply:
     tofu apply
     tofu apply -auto-approve
     tofu apply -parallelism=8
 
-opentofu-refresh:
+refresh:
     tofu refresh
 
-opentofu-destroy:
+destroy:
     tofu destroy
 
-opentofu-get:
+get:
     tofu get
 
-opentofu-graph:
+graph:
     tofu graph
 
-opentofu-login:
+sign-in:
     tofu login
 
-opentofu-show:
+show:
     tofu show
 
-opentofu-state-list:
+state-list:
     tofu state list
 
-opentofu-output:
+output:
     tofu output
 
-opentofu-console:
+console:
     tofu console
     # substr(module.snowflake_development_hm_kafka_db_product_read_write_user_rsa_key.public_key_pem, 27, 747)

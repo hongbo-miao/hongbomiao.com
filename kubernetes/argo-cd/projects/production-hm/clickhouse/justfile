@@ -6,11 +6,11 @@ sealed-secrets-seal:
     	--format=yaml \
     	> kubernetes-manifests/hm-clickhouse-secret.yaml
 
-argo-cd-app-create:
+create:
     argocd app create production-hm-clickhouse --file=argo-cd-manifests/hm-clickhouse-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-clickhouse --file=argo-cd-manifests/hm-clickhouse-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-clickhouse --yes

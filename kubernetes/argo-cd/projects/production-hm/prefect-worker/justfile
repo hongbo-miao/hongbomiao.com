@@ -14,11 +14,11 @@ sealed-secrets-seal-hm-harbor-secret:
     	--format=yaml \
     	> kubernetes-manifests/hm-harbor-secret.yaml
 
-argo-cd-app-create:
+create:
     argocd app create production-hm-prefect-worker --file=argo-cd-manifests/hm-prefect-worker-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-prefect-worker --file=argo-cd-manifests/hm-prefect-worker-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-prefect-worker --yes

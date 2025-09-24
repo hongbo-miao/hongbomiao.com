@@ -1,4 +1,11 @@
 ---
+- name: Pull Speaches Docker image
+  community.docker.docker_image:
+    name: "{{ speaches_docker_image }}"
+    source: pull
+    force_source: false
+  register: speaches_docker_image_result
+
 - name: Create systemd service file for Speaches
   ansible.builtin.template:
     src: speaches.service.j2
@@ -9,6 +16,6 @@
 - name: Ensure Speaches service is running and enabled
   ansible.builtin.systemd_service:
     name: speaches
-    state: "{{ 'restarted' if speaches_systemd_unit_result.changed else 'started' }}"
+    state: "{{ 'restarted' if (speaches_systemd_unit_result.changed or speaches_docker_image_result.changed) else 'started' }}"
     enabled: true
     daemon_reload: "{{ speaches_systemd_unit_result.changed }}"
