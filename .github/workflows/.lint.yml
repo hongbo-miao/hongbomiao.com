@@ -177,1175 +177,1175 @@ jobs:
         run: |
           uv run poe lint-ansible
 
-  lint-csharp-national-instruments-veristand-zeromq-bridge:
-    name: C# (national-instruments-veristand-zeromq-bridge)
-    if: ${{ inputs.workflow || inputs.national-instruments-veristand-zeromq-bridge }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v5.0.0
-        with:
-          global-json-file: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/global.json
-      - name: Install dependencies
-        working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
-        run: |
-          dotnet restore VeriStandZeroMQBridge.sln
-          dotnet tool restore
-      - name: Lint C# (format)
-        working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
-        run: |
-          dotnet format VeriStandZeroMQBridge.sln --verify-no-changes
-      - name: Lint C# (CSharpier)
-        working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
-        run: |
-          dotnet csharpier check .
+  # lint-csharp-national-instruments-veristand-zeromq-bridge:
+  #   name: C# (national-instruments-veristand-zeromq-bridge)
+  #   if: ${{ inputs.workflow || inputs.national-instruments-veristand-zeromq-bridge }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up .NET Core
+  #       uses: actions/setup-dotnet@v5.0.0
+  #       with:
+  #         global-json-file: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/global.json
+  #     - name: Install dependencies
+  #       working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
+  #       run: |
+  #         dotnet restore VeriStandZeroMQBridge.sln
+  #         dotnet tool restore
+  #     - name: Lint C# (format)
+  #       working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
+  #       run: |
+  #         dotnet format VeriStandZeroMQBridge.sln --verify-no-changes
+  #     - name: Lint C# (CSharpier)
+  #       working-directory: hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge
+  #       run: |
+  #         dotnet csharpier check .
 
-  lint-c-cpp:
-    name: C, C++
-    if: ${{ inputs.workflow || inputs.c-cpp }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Lint C, C++ (ClangFormat)
-        uses: DoozyX/clang-format-lint-action@v0.18.2
-        with:
-          source: .
-          extensions: c,cpp,cu,cuh,h,hpp,ino
-          clangFormatVersion: 18
-          style: file
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: .python-version
-      - name: Install dependencies
-        run: |
-          uv sync --dev
-      - name: Lint C, C++ (cpplint)
-        run: |
-          uv run poe lint-c-cpp-cpplint --repository=asterios/led-blinker --extensions=c,h --recursive asterios/led-blinker
-          uv run poe lint-c-cpp-cpplint --repository=compiler-infrastructure/llvm --extensions=cpp,hpp --recursive compiler-infrastructure/llvm
-          uv run poe lint-c-cpp-cpplint --repository=data-processing/kafka/kafka-client/kafka-c/avro-producer --extensions=c,h --recursive data-processing/kafka/kafka-client/kafka-c/avro-producer
-          uv run poe lint-c-cpp-cpplint --repository=embedded-system/freertos --extensions=ino --recursive embedded-system/freertos
-          uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
-          uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
-          uv run poe lint-c-cpp-cpplint --repository=parallel-computing/cuda --extensions=cu,cuh --recursive parallel-computing/cuda
-          uv run poe lint-c-cpp-cpplint --repository=reverse-engineering/hello-c --extensions=c,h --recursive reverse-engineering/hello-c
-          uv run poe lint-c-cpp-cpplint --repository=reverse-engineering/hello-cpp --extensions=cpp,hpp --recursive reverse-engineering/hello-cpp
-          uv run poe lint-c-cpp-cpplint --repository=robotics/robot-operating-system/src/hm_cpp_package --extensions=cpp,hpp --recursive robotics/robot-operating-system
+  # lint-c-cpp:
+  #   name: C, C++
+  #   if: ${{ inputs.workflow || inputs.c-cpp }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Lint C, C++ (ClangFormat)
+  #       uses: DoozyX/clang-format-lint-action@v0.18.2
+  #       with:
+  #         source: .
+  #         extensions: c,cpp,cu,cuh,h,hpp,ino
+  #         clangFormatVersion: 18
+  #         style: file
+  #     - name: Install uv
+  #       uses: astral-sh/setup-uv@v6.7.0
+  #       with:
+  #         version: 0.8.22
+  #         enable-cache: true
+  #         cache-dependency-glob: uv.lock
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v6.0.0
+  #       with:
+  #         python-version-file: .python-version
+  #     - name: Install dependencies
+  #       run: |
+  #         uv sync --dev
+  #     - name: Lint C, C++ (cpplint)
+  #       run: |
+  #         uv run poe lint-c-cpp-cpplint --repository=asterios/led-blinker --extensions=c,h --recursive asterios/led-blinker
+  #         uv run poe lint-c-cpp-cpplint --repository=compiler-infrastructure/llvm --extensions=cpp,hpp --recursive compiler-infrastructure/llvm
+  #         uv run poe lint-c-cpp-cpplint --repository=data-processing/kafka/kafka-client/kafka-c/avro-producer --extensions=c,h --recursive data-processing/kafka/kafka-client/kafka-c/avro-producer
+  #         uv run poe lint-c-cpp-cpplint --repository=embedded-system/freertos --extensions=ino --recursive embedded-system/freertos
+  #         uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
+  #         uv run poe lint-c-cpp-cpplint --repository=matlab/call-c-function-in-matlab --extensions=c,h --recursive matlab/call-c-function-in-matlab
+  #         uv run poe lint-c-cpp-cpplint --repository=parallel-computing/cuda --extensions=cu,cuh --recursive parallel-computing/cuda
+  #         uv run poe lint-c-cpp-cpplint --repository=reverse-engineering/hello-c --extensions=c,h --recursive reverse-engineering/hello-c
+  #         uv run poe lint-c-cpp-cpplint --repository=reverse-engineering/hello-cpp --extensions=cpp,hpp --recursive reverse-engineering/hello-cpp
+  #         uv run poe lint-c-cpp-cpplint --repository=robotics/robot-operating-system/src/hm_cpp_package --extensions=cpp,hpp --recursive robotics/robot-operating-system
 
-  lint-cmake:
-    name: CMake
-    if: ${{ inputs.workflow || inputs.cmake }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: .python-version
-      - name: Install dependencies
-        run: |
-          uv sync --dev
-      - name: Lint CMake
-        run: |
-          uv run poe lint-cmake
+  # lint-cmake:
+  #   name: CMake
+  #   if: ${{ inputs.workflow || inputs.cmake }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Install uv
+  #       uses: astral-sh/setup-uv@v6.7.0
+  #       with:
+  #         version: 0.8.22
+  #         enable-cache: true
+  #         cache-dependency-glob: uv.lock
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v6.0.0
+  #       with:
+  #         python-version-file: .python-version
+  #     - name: Install dependencies
+  #       run: |
+  #         uv sync --dev
+  #     - name: Lint CMake
+  #       run: |
+  #         uv run poe lint-cmake
 
-  lint-commit-message:
-    name: Commit Message
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Lint commit message
-        uses: wagoid/commitlint-github-action@v6.2.1
+  # lint-commit-message:
+  #   name: Commit Message
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Lint commit message
+  #       uses: wagoid/commitlint-github-action@v6.2.1
 
-  lint-css:
-    name: CSS
-    if: ${{ inputs.workflow || inputs.css }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: .node-version
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies
-        run: |
-          npm ci
-      - name: Lint CSS
-        run: |
-          npm run lint-css
+  # lint-css:
+  #   name: CSS
+  #   if: ${{ inputs.workflow || inputs.css }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: npm
+  #         cache-dependency-path: package-lock.json
+  #     - name: Install dependencies
+  #       run: |
+  #         npm ci
+  #     - name: Lint CSS
+  #       run: |
+  #         npm run lint-css
 
-  lint-dockerfile:
-    name: Dockerfile
-    if: ${{ inputs.workflow || inputs.dockerfile }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Lint Dockerfile
-        uses: jbergstroem/hadolint-gh-action@v1.13.0
-        with:
-          dockerfile: '**/Dockerfile*'
+  # lint-dockerfile:
+  #   name: Dockerfile
+  #   if: ${{ inputs.workflow || inputs.dockerfile }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Lint Dockerfile
+  #       uses: jbergstroem/hadolint-gh-action@v1.13.0
+  #       with:
+  #         dockerfile: '**/Dockerfile*'
 
-  lint-go-api-go:
-    name: Go (api-go)
-    if: ${{ inputs.workflow || inputs.api-go }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Go
-        uses: actions/setup-go@v6.0.0
-        with:
-          go-version-file: api-go/go.mod
-          cache-dependency-path: api-go/go.sum
-      - name: Lint Go
-        uses: golangci/golangci-lint-action@v8.0.0
-        with:
-          version: latest
-          working-directory: api-go
-          args: --timeout=10m
+  # lint-go-api-go:
+  #   name: Go (api-go)
+  #   if: ${{ inputs.workflow || inputs.api-go }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Go
+  #       uses: actions/setup-go@v6.0.0
+  #       with:
+  #         go-version-file: api-go/go.mod
+  #         cache-dependency-path: api-go/go.sum
+  #     - name: Lint Go
+  #       uses: golangci/golangci-lint-action@v8.0.0
+  #       with:
+  #         version: latest
+  #         working-directory: api-go
+  #         args: --timeout=10m
 
-  lint-html:
-    name: HTML
-    if: ${{ inputs.workflow || inputs.html }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: .node-version
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies
-        run: |
-          npm ci
-      - name: Lint HTML
-        run: |
-          npm run lint-html
+  # lint-html:
+  #   name: HTML
+  #   if: ${{ inputs.workflow || inputs.html }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: npm
+  #         cache-dependency-path: package-lock.json
+  #     - name: Install dependencies
+  #       run: |
+  #         npm ci
+  #     - name: Lint HTML
+  #       run: |
+  #         npm run lint-html
 
-  lint-javascript-api-node:
-    name: JavaScript (api-node)
-    if: ${{ inputs.workflow || inputs.api-node }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: api-node/.node-version
-          cache: npm
-          cache-dependency-path: api-node/package-lock.json
-      - name: Install dependencies
-        working-directory: api-node
-        run: |
-          npm ci
-      - name: Lint JavaScript
-        working-directory: api-node
-        run: |
-          npm run lint-javascript
+  # lint-javascript-api-node:
+  #   name: JavaScript (api-node)
+  #   if: ${{ inputs.workflow || inputs.api-node }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: api-node/.node-version
+  #         cache: npm
+  #         cache-dependency-path: api-node/package-lock.json
+  #     - name: Install dependencies
+  #       working-directory: api-node
+  #       run: |
+  #         npm ci
+  #     - name: Lint JavaScript
+  #       working-directory: api-node
+  #       run: |
+  #         npm run lint-javascript
 
-  lint-javascript-ethereum:
-    name: JavaScript (ethereum)
-    if: ${{ inputs.workflow || inputs.ethereum }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: ethereum/.node-version
-          cache: npm
-          cache-dependency-path: ethereum/package-lock.json
-      - name: Install dependencies
-        working-directory: ethereum
-        run: |
-          npm ci
-      - name: Lint JavaScript
-        working-directory: ethereum
-        run: |
-          npm run lint-javascript
+  # lint-javascript-ethereum:
+  #   name: JavaScript (ethereum)
+  #   if: ${{ inputs.workflow || inputs.ethereum }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: ethereum/.node-version
+  #         cache: npm
+  #         cache-dependency-path: ethereum/package-lock.json
+  #     - name: Install dependencies
+  #       working-directory: ethereum
+  #       run: |
+  #         npm ci
+  #     - name: Lint JavaScript
+  #       working-directory: ethereum
+  #       run: |
+  #         npm run lint-javascript
 
-  lint-javascript-grafana-hm-panel-plugin:
-    name: JavaScript (grafana-hm-panel-plugin)
-    if: ${{ inputs.workflow || inputs.grafana-hm-panel-plugin }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: data-visualization/grafana/hm-panel-plugin/.node-version
-          cache: npm
-          cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
-      - name: Install dependencies
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          npm ci
-      - name: Lint JavaScript
-        working-directory: data-visualization/grafana/hm-panel-plugin
-        run: |
-          npm run lint-javascript
+  # lint-javascript-grafana-hm-panel-plugin:
+  #   name: JavaScript (grafana-hm-panel-plugin)
+  #   if: ${{ inputs.workflow || inputs.grafana-hm-panel-plugin }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: data-visualization/grafana/hm-panel-plugin/.node-version
+  #         cache: npm
+  #         cache-dependency-path: data-visualization/grafana/hm-panel-plugin/package-lock.json
+  #     - name: Install dependencies
+  #       working-directory: data-visualization/grafana/hm-panel-plugin
+  #       run: |
+  #         npm ci
+  #     - name: Lint JavaScript
+  #       working-directory: data-visualization/grafana/hm-panel-plugin
+  #       run: |
+  #         npm run lint-javascript
 
-  lint-javascript-mobile-react-native:
-    name: JavaScript (mobile-react-native)
-    if: ${{ inputs.workflow || inputs.mobile-react-native }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: mobile/mobile-react-native/.node-version
-          cache: npm
-          cache-dependency-path: mobile/mobile-react-native/package-lock.json
-      - name: Install dependencies
-        working-directory: mobile/mobile-react-native
-        run: |
-          npm ci
-      - name: Lint JavaScript
-        working-directory: mobile/mobile-react-native
-        run: |
-          npm run lint-javascript
+  # lint-javascript-mobile-react-native:
+  #   name: JavaScript (mobile-react-native)
+  #   if: ${{ inputs.workflow || inputs.mobile-react-native }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: mobile/mobile-react-native/.node-version
+  #         cache: npm
+  #         cache-dependency-path: mobile/mobile-react-native/package-lock.json
+  #     - name: Install dependencies
+  #       working-directory: mobile/mobile-react-native
+  #       run: |
+  #         npm ci
+  #     - name: Lint JavaScript
+  #       working-directory: mobile/mobile-react-native
+  #       run: |
+  #         npm run lint-javascript
 
-  lint-javascript-web:
-    name: JavaScript (web)
-    if: ${{ inputs.workflow || inputs.web }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: web/.node-version
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install dependencies
-        working-directory: web
-        run: |
-          npm ci
-      - name: Lint JavaScript
-        working-directory: web
-        run: |
-          npm run lint-javascript
+  # lint-javascript-web:
+  #   name: JavaScript (web)
+  #   if: ${{ inputs.workflow || inputs.web }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: web/.node-version
+  #         cache: npm
+  #         cache-dependency-path: web/package-lock.json
+  #     - name: Install dependencies
+  #       working-directory: web
+  #       run: |
+  #         npm ci
+  #     - name: Lint JavaScript
+  #       working-directory: web
+  #       run: |
+  #         npm run lint-javascript
 
-  lint-javascript-web-cypress:
-    name: JavaScript (web-cypress)
-    if: ${{ inputs.workflow || inputs.web-cypress }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: web-cypress/.node-version
-          cache: npm
-          cache-dependency-path: web-cypress/package-lock.json
-      - name: Install dependencies
-        working-directory: web-cypress
-        run: |
-          npm ci
-      - name: Lint JavaScript
-        working-directory: web-cypress
-        run: |
-          npm run lint-javascript
+  # lint-javascript-web-cypress:
+  #   name: JavaScript (web-cypress)
+  #   if: ${{ inputs.workflow || inputs.web-cypress }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: web-cypress/.node-version
+  #         cache: npm
+  #         cache-dependency-path: web-cypress/package-lock.json
+  #     - name: Install dependencies
+  #       working-directory: web-cypress
+  #       run: |
+  #         npm ci
+  #     - name: Lint JavaScript
+  #       working-directory: web-cypress
+  #       run: |
+  #         npm run lint-javascript
 
-  lint-json:
-    name: JSON
-    if: ${{ inputs.workflow || inputs.json }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: .node-version
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies
-        run: |
-          npm ci
-      - name: Lint JSON
-        run: |
-          npm run lint-json-eslint
-          npm run lint-json-prettier
+  # lint-json:
+  #   name: JSON
+  #   if: ${{ inputs.workflow || inputs.json }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: npm
+  #         cache-dependency-path: package-lock.json
+  #     - name: Install dependencies
+  #       run: |
+  #         npm ci
+  #     - name: Lint JSON
+  #       run: |
+  #         npm run lint-json-eslint
+  #         npm run lint-json-prettier
 
-  lint-justfile:
-    name: justfile
-    if: ${{ inputs.workflow || inputs.justfile }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: .python-version
-      - name: Install dependencies
-        run: |
-          uv sync --dev
-      - name: Lint justfile
-        run: |
-          uv run poe lint-justfile
+  # lint-justfile:
+  #   name: justfile
+  #   if: ${{ inputs.workflow || inputs.justfile }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Install uv
+  #       uses: astral-sh/setup-uv@v6.7.0
+  #       with:
+  #         version: 0.8.22
+  #         enable-cache: true
+  #         cache-dependency-glob: uv.lock
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v6.0.0
+  #       with:
+  #         python-version-file: .python-version
+  #     - name: Install dependencies
+  #       run: |
+  #         uv sync --dev
+  #     - name: Lint justfile
+  #       run: |
+  #         uv run poe lint-justfile
 
-  lint-kotlin-mobile-android:
-    name: Kotlin (mobile-android)
-    if: ${{ inputs.workflow || inputs.mobile-android }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Java
-        uses: actions/setup-java@v5.0.0
-        with:
-          distribution: corretto
-          cache: gradle
-          java-version-file: mobile/mobile-android/.java-version
-      - name: Lint Kotlin
-        working-directory: mobile/mobile-android
-        run: |
-          ./gradlew ktlintCheck
+  # lint-kotlin-mobile-android:
+  #   name: Kotlin (mobile-android)
+  #   if: ${{ inputs.workflow || inputs.mobile-android }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 30
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Java
+  #       uses: actions/setup-java@v5.0.0
+  #       with:
+  #         distribution: corretto
+  #         cache: gradle
+  #         java-version-file: mobile/mobile-android/.java-version
+  #     - name: Lint Kotlin
+  #       working-directory: mobile/mobile-android
+  #       run: |
+  #         ./gradlew ktlintCheck
 
-  lint-kubernetes-manifest:
-    name: Kubernetes Manifest
-    if: ${{ inputs.workflow || inputs.kubernetes }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Lint Kubernetes
-        run: |
-          docker run \
-            --rm \
-            --volume="$(pwd)/kubernetes:/kubernetes" \
-            ghcr.io/yannh/kubeconform:latest-alpine \
-              -kubernetes-version=1.34.0 \
-              -ignore-filename-pattern='.*trafficsplit.yaml' \
-              -ignore-filename-pattern='.*my-values.yaml' \
-              -ignore-filename-pattern=kubernetes/manifests/argocd/ \
-              -ignore-filename-pattern=kubernetes/manifests/elastic/ \
-              -ignore-filename-pattern=kubernetes/manifests/hm-kafka/ \
-              -ignore-filename-pattern=kubernetes/manifests/kubeflow/kubeflow-training-operator/ \
-              -ignore-filename-pattern=kubernetes/manifests/postgres-operator/ \
-              -ignore-filename-pattern=kubernetes/manifests/prometheus/ \
-              -ignore-filename-pattern=kubernetes/manifests/yugabyte/ \
-              kubernetes/manifests/
+  # lint-kubernetes-manifest:
+  #   name: Kubernetes Manifest
+  #   if: ${{ inputs.workflow || inputs.kubernetes }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Lint Kubernetes
+  #       run: |
+  #         docker run \
+  #           --rm \
+  #           --volume="$(pwd)/kubernetes:/kubernetes" \
+  #           ghcr.io/yannh/kubeconform:latest-alpine \
+  #             -kubernetes-version=1.34.0 \
+  #             -ignore-filename-pattern='.*trafficsplit.yaml' \
+  #             -ignore-filename-pattern='.*my-values.yaml' \
+  #             -ignore-filename-pattern=kubernetes/manifests/argocd/ \
+  #             -ignore-filename-pattern=kubernetes/manifests/elastic/ \
+  #             -ignore-filename-pattern=kubernetes/manifests/hm-kafka/ \
+  #             -ignore-filename-pattern=kubernetes/manifests/kubeflow/kubeflow-training-operator/ \
+  #             -ignore-filename-pattern=kubernetes/manifests/postgres-operator/ \
+  #             -ignore-filename-pattern=kubernetes/manifests/prometheus/ \
+  #             -ignore-filename-pattern=kubernetes/manifests/yugabyte/ \
+  #             kubernetes/manifests/
 
-  lint-markdown:
-    name: Markdown
-    if: ${{ inputs.workflow || inputs.markdown }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: .node-version
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies
-        run: |
-          npm ci
-      - name: Lint Markdown
-        run: |
-          npm run lint-markdown
+  # lint-markdown:
+  #   name: Markdown
+  #   if: ${{ inputs.workflow || inputs.markdown }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: npm
+  #         cache-dependency-path: package-lock.json
+  #     - name: Install dependencies
+  #       run: |
+  #         npm ci
+  #     - name: Lint Markdown
+  #       run: |
+  #         npm run lint-markdown
 
-  lint-matlab:
-    name: MATLAB
-    if: ${{ inputs.workflow || inputs.matlab }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: .python-version
-      - name: Install dependencies
-        run: |
-          uv sync --dev
-      - name: Lint MATLAB
-        run: |
-          uv run poe lint-matlab
+  # lint-matlab:
+  #   name: MATLAB
+  #   if: ${{ inputs.workflow || inputs.matlab }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Install uv
+  #       uses: astral-sh/setup-uv@v6.7.0
+  #       with:
+  #         version: 0.8.22
+  #         enable-cache: true
+  #         cache-dependency-glob: uv.lock
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v6.0.0
+  #       with:
+  #         python-version-file: .python-version
+  #     - name: Install dependencies
+  #       run: |
+  #         uv sync --dev
+  #     - name: Lint MATLAB
+  #       run: |
+  #         uv run poe lint-matlab
 
-  lint-natural-language:
-    name: Natural Language
-    if: ${{ inputs.workflow || inputs.natural-language }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: .node-version
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies
-        run: |
-          npm ci
-      - name: Lint natural language
-        run: |
-          npm run lint-natural-language
+  # lint-natural-language:
+  #   name: Natural Language
+  #   if: ${{ inputs.workflow || inputs.natural-language }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: npm
+  #         cache-dependency-path: package-lock.json
+  #     - name: Install dependencies
+  #       run: |
+  #         npm ci
+  #     - name: Lint natural language
+  #       run: |
+  #         npm run lint-natural-language
 
-  lint-protocol-buffers-api-go:
-    name: Protocol Buffers (api-go)
-    if: ${{ inputs.workflow || inputs.api-go }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Lint Protocol Buffers
-        working-directory: api-go
-        run: |
-          docker run \
-            --rm \
-            --volume="$(pwd):/workspace" \
-            --workdir=/workspace \
-            bufbuild/buf \
-            lint
+  # lint-protocol-buffers-api-go:
+  #   name: Protocol Buffers (api-go)
+  #   if: ${{ inputs.workflow || inputs.api-go }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Lint Protocol Buffers
+  #       working-directory: api-go
+  #       run: |
+  #         docker run \
+  #           --rm \
+  #           --volume="$(pwd):/workspace" \
+  #           --workdir=/workspace \
+  #           bufbuild/buf \
+  #           lint
 
-  lint-python:
-    name: Python
-    if: ${{ inputs.workflow || inputs.python }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: .python-version
-      - name: Install dependencies
-        run: |
-          uv sync --dev
-      - name: Lint Python
-        run: |
-          uv run poe lint-python
+  # lint-python:
+  #   name: Python
+  #   if: ${{ inputs.workflow || inputs.python }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Install uv
+  #       uses: astral-sh/setup-uv@v6.7.0
+  #       with:
+  #         version: 0.8.22
+  #         enable-cache: true
+  #         cache-dependency-glob: uv.lock
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v6.0.0
+  #       with:
+  #         python-version-file: .python-version
+  #     - name: Install dependencies
+  #       run: |
+  #         uv sync --dev
+  #     - name: Lint Python
+  #       run: |
+  #         uv run poe lint-python
 
-  lint-qml:
-    name: QML
-    if: ${{ inputs.workflow || inputs.qml }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Qt
-        uses: jurplel/install-qt-action@v4.3.0
-        with:
-          version: 6.6.1
-          cache: true
-      - name: Lint QML
-        run: |
-          qmllint $(git ls-files '**/*.qml')
+  # lint-qml:
+  #   name: QML
+  #   if: ${{ inputs.workflow || inputs.qml }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 30
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Qt
+  #       uses: jurplel/install-qt-action@v4.3.0
+  #       with:
+  #         version: 6.6.1
+  #         cache: true
+  #     - name: Lint QML
+  #       run: |
+  #         qmllint $(git ls-files '**/*.qml')
 
-  lint-ruby:
-    name: Ruby
-    if: ${{ inputs.workflow || inputs.ruby }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-      - name: Lint Ruby
-        run: |
-          bundle exec rubocop
+  # lint-ruby:
+  #   name: Ruby
+  #   if: ${{ inputs.workflow || inputs.ruby }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 30
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Ruby
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         bundler-cache: true
+  #     - name: Lint Ruby
+  #       run: |
+  #         bundle exec rubocop
 
-  lint-rust-api-rust:
-    name: Rust (api-rust)
-    if: ${{ inputs.workflow || inputs.api-rust }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
-        with:
-          cache: true
-          rust-src-dir: api-rust
-      - name: Set up
-        uses: awalsh128/cache-apt-pkgs-action@v1.5.3
-        with:
-          packages: clang libclang-dev libopenblas-dev libopencv-dev
-          version: 1.0
-      - name: Install dependencies
-        working-directory: api-rust
-        run: |
-          cargo build
-      - name: Lint Rust (rustfmt)
-        working-directory: api-rust
-        run: |
-          cargo fmt --all  -- --check
-      - name: Lint Rust (Clippy)
-        working-directory: api-rust
-        run: |
-          cargo clippy
+  # lint-rust-api-rust:
+  #   name: Rust (api-rust)
+  #   if: ${{ inputs.workflow || inputs.api-rust }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 30
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Rust
+  #       uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
+  #       with:
+  #         cache: true
+  #         rust-src-dir: api-rust
+  #     - name: Set up
+  #       uses: awalsh128/cache-apt-pkgs-action@v1.5.3
+  #       with:
+  #         packages: clang libclang-dev libopenblas-dev libopencv-dev
+  #         version: 1.0
+  #     - name: Install dependencies
+  #       working-directory: api-rust
+  #       run: |
+  #         cargo build
+  #     - name: Lint Rust (rustfmt)
+  #       working-directory: api-rust
+  #       run: |
+  #         cargo fmt --all  -- --check
+  #     - name: Lint Rust (Clippy)
+  #       working-directory: api-rust
+  #       run: |
+  #         cargo clippy
 
-  lint-rust-iads-data-producer:
-    name: Rust (iads-data-producer)
-    if: ${{ inputs.workflow || inputs.iads-data-producer }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
-        with:
-          cache: true
-          rust-src-dir: data-visualization/iads/iads-rtstation/iads-data-producer
-      - name: Install dependencies
-        working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
-        run: |
-          cargo build
-      - name: Lint Rust (rustfmt)
-        working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
-        run: |
-          cargo fmt --all  -- --check
-      - name: Lint Rust (Clippy)
-        working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
-        run: |
-          cargo clippy
+  # lint-rust-iads-data-producer:
+  #   name: Rust (iads-data-producer)
+  #   if: ${{ inputs.workflow || inputs.iads-data-producer }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Rust
+  #       uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
+  #       with:
+  #         cache: true
+  #         rust-src-dir: data-visualization/iads/iads-rtstation/iads-data-producer
+  #     - name: Install dependencies
+  #       working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
+  #       run: |
+  #         cargo build
+  #     - name: Lint Rust (rustfmt)
+  #       working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
+  #       run: |
+  #         cargo fmt --all  -- --check
+  #     - name: Lint Rust (Clippy)
+  #       working-directory: data-visualization/iads/iads-rtstation/iads-data-producer
+  #       run: |
+  #         cargo clippy
 
-  lint-rust-zeromq-iads-bridge:
-    name: Rust (zeromq-iads-bridge)
-    if: ${{ inputs.workflow || inputs.zeromq-iads-bridge }}
-    runs-on: windows-2025
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
-        with:
-          cache: true
-          rust-src-dir: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
-      - name: Install dependencies
-        working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
-        run: |
-          cargo build
-      - name: Lint Rust (rustfmt)
-        working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
-        run: |
-          cargo fmt --all  -- --check
-      - name: Lint Rust (Clippy)
-        working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
-        run: |
-          cargo clippy
+  # lint-rust-zeromq-iads-bridge:
+  #   name: Rust (zeromq-iads-bridge)
+  #   if: ${{ inputs.workflow || inputs.zeromq-iads-bridge }}
+  #   runs-on: windows-2025
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     # protoc is for prost
+  #     - name: Install protoc
+  #       uses: arduino/setup-protoc@v3.0.0
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         version: 28.3
+  #     - name: Set up Rust
+  #       uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
+  #       with:
+  #         cache: true
+  #         rust-src-dir: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
+  #     - name: Install dependencies
+  #       working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
+  #       run: |
+  #         cargo build
+  #     - name: Lint Rust (rustfmt)
+  #       working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
+  #       run: |
+  #         cargo fmt --all  -- --check
+  #     - name: Lint Rust (Clippy)
+  #       working-directory: data-visualization/iads/iads-rtstation/zeromq-iads-bridge
+  #       run: |
+  #         cargo clippy
 
-  lint-rust-kafka-rust-proto-consumer:
-    name: Rust (kafka-rust-proto-consumer)
-    if: ${{ inputs.workflow || inputs.kafka-rust-proto-consumer }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      # librdkafka is for rdkafka
-      - name: Install librdkafka
-        env:
-          LIBRDKAFKA_VERSION: 2.11.1
-        run: |
-          # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz "https://github.com/edenhill/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz"
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd "librdkafka-${LIBRDKAFKA_VERSION}"
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
-        with:
-          cache: true
-          rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
-      - name: Install dependencies
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
-        run: |
-          cargo build
-      - name: Lint Rust (rustfmt)
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
-        run: |
-          cargo fmt --all  -- --check
-      - name: Lint Rust (Clippy)
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
-        run: |
-          cargo clippy
+  # lint-rust-kafka-rust-proto-consumer:
+  #   name: Rust (kafka-rust-proto-consumer)
+  #   if: ${{ inputs.workflow || inputs.kafka-rust-proto-consumer }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     # librdkafka is for rdkafka
+  #     - name: Install librdkafka
+  #       env:
+  #         LIBRDKAFKA_VERSION: 2.11.1
+  #       run: |
+  #         # https://github.com/confluentinc/librdkafka#build-from-source
+  #         wget --no-verbose --output-document=librdkafka.tar.gz "https://github.com/edenhill/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz"
+  #         tar -x -f librdkafka.tar.gz
+  #         rm -f librdkafka.tar.gz
+  #         cd "librdkafka-${LIBRDKAFKA_VERSION}"
+  #         ./configure
+  #         make
+  #         sudo make install
+  #         sudo ldconfig
+  #         cd ..
+  #         rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
+  #     # protoc is for prost
+  #     - name: Install protoc
+  #       uses: arduino/setup-protoc@v3.0.0
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         version: 28.3
+  #     - name: Set up Rust
+  #       uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
+  #       with:
+  #         cache: true
+  #         rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
+  #     - name: Install dependencies
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
+  #       run: |
+  #         cargo build
+  #     - name: Lint Rust (rustfmt)
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
+  #       run: |
+  #         cargo fmt --all  -- --check
+  #     - name: Lint Rust (Clippy)
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-consumer
+  #       run: |
+  #         cargo clippy
 
-  lint-rust-kafka-rust-proto-producer:
-    name: Rust (kafka-rust-proto-producer)
-    if: ${{ inputs.workflow || inputs.kafka-rust-proto-producer }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      # librdkafka is for rdkafka
-      - name: Install librdkafka
-        env:
-          LIBRDKAFKA_VERSION: 2.11.1
-        run: |
-          # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz "https://github.com/edenhill/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz"
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd "librdkafka-${LIBRDKAFKA_VERSION}"
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
-        with:
-          cache: true
-          rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/proto-producer
-      - name: Install dependencies
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-producer
-        run: |
-          cargo build
-      - name: Lint Rust (rustfmt)
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-producer
-        run: |
-          cargo fmt --all  -- --check
-      - name: Lint Rust (Clippy)
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-producer
-        run: |
-          cargo clippy
+  # lint-rust-kafka-rust-proto-producer:
+  #   name: Rust (kafka-rust-proto-producer)
+  #   if: ${{ inputs.workflow || inputs.kafka-rust-proto-producer }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     # librdkafka is for rdkafka
+  #     - name: Install librdkafka
+  #       env:
+  #         LIBRDKAFKA_VERSION: 2.11.1
+  #       run: |
+  #         # https://github.com/confluentinc/librdkafka#build-from-source
+  #         wget --no-verbose --output-document=librdkafka.tar.gz "https://github.com/edenhill/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz"
+  #         tar -x -f librdkafka.tar.gz
+  #         rm -f librdkafka.tar.gz
+  #         cd "librdkafka-${LIBRDKAFKA_VERSION}"
+  #         ./configure
+  #         make
+  #         sudo make install
+  #         sudo ldconfig
+  #         cd ..
+  #         rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
+  #     # protoc is for prost
+  #     - name: Install protoc
+  #       uses: arduino/setup-protoc@v3.0.0
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         version: 28.3
+  #     - name: Set up Rust
+  #       uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
+  #       with:
+  #         cache: true
+  #         rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/proto-producer
+  #     - name: Install dependencies
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-producer
+  #       run: |
+  #         cargo build
+  #     - name: Lint Rust (rustfmt)
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-producer
+  #       run: |
+  #         cargo fmt --all  -- --check
+  #     - name: Lint Rust (Clippy)
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/proto-producer
+  #       run: |
+  #         cargo clippy
 
-  lint-rust-kafka-rust-udp-kafka-bridge:
-    name: Rust (kafka-rust-udp-kafka-bridge)
-    if: ${{ inputs.workflow || inputs.kafka-rust-udp-kafka-bridge }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      # librdkafka is for rdkafka
-      - name: Install librdkafka
-        env:
-          LIBRDKAFKA_VERSION: 2.11.1
-        run: |
-          # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz "https://github.com/edenhill/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz"
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd "librdkafka-${LIBRDKAFKA_VERSION}"
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
-        with:
-          cache: true
-          rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
-      - name: Install dependencies
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
-        run: |
-          cargo build
-      - name: Lint Rust (rustfmt)
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
-        run: |
-          cargo fmt --all  -- --check
-      - name: Lint Rust (Clippy)
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
-        run: |
-          cargo clippy
+  # lint-rust-kafka-rust-udp-kafka-bridge:
+  #   name: Rust (kafka-rust-udp-kafka-bridge)
+  #   if: ${{ inputs.workflow || inputs.kafka-rust-udp-kafka-bridge }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     # librdkafka is for rdkafka
+  #     - name: Install librdkafka
+  #       env:
+  #         LIBRDKAFKA_VERSION: 2.11.1
+  #       run: |
+  #         # https://github.com/confluentinc/librdkafka#build-from-source
+  #         wget --no-verbose --output-document=librdkafka.tar.gz "https://github.com/edenhill/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz"
+  #         tar -x -f librdkafka.tar.gz
+  #         rm -f librdkafka.tar.gz
+  #         cd "librdkafka-${LIBRDKAFKA_VERSION}"
+  #         ./configure
+  #         make
+  #         sudo make install
+  #         sudo ldconfig
+  #         cd ..
+  #         rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
+  #     # protoc is for prost
+  #     - name: Install protoc
+  #       uses: arduino/setup-protoc@v3.0.0
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         version: 28.3
+  #     - name: Set up Rust
+  #       uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
+  #       with:
+  #         cache: true
+  #         rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
+  #     - name: Install dependencies
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
+  #       run: |
+  #         cargo build
+  #     - name: Lint Rust (rustfmt)
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
+  #       run: |
+  #         cargo fmt --all  -- --check
+  #     - name: Lint Rust (Clippy)
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge
+  #       run: |
+  #         cargo clippy
 
-  lint-rust-kafka-rust-zeromq-kafka-bridge:
-    name: Rust (kafka-rust-zeromq-kafka-bridge)
-    if: ${{ inputs.workflow || inputs.kafka-rust-zeromq-kafka-bridge }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      # librdkafka is for rdkafka
-      - name: Install librdkafka
-        env:
-          LIBRDKAFKA_VERSION: 2.11.1
-        run: |
-          # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz "https://github.com/edenhill/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz"
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd "librdkafka-${LIBRDKAFKA_VERSION}"
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
-        with:
-          cache: true
-          rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
-      - name: Install dependencies
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
-        run: |
-          cargo build
-      - name: Lint Rust (rustfmt)
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
-        run: |
-          cargo fmt --all  -- --check
-      - name: Lint Rust (Clippy)
-        working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
-        run: |
-          cargo clippy
+  # lint-rust-kafka-rust-zeromq-kafka-bridge:
+  #   name: Rust (kafka-rust-zeromq-kafka-bridge)
+  #   if: ${{ inputs.workflow || inputs.kafka-rust-zeromq-kafka-bridge }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     # librdkafka is for rdkafka
+  #     - name: Install librdkafka
+  #       env:
+  #         LIBRDKAFKA_VERSION: 2.11.1
+  #       run: |
+  #         # https://github.com/confluentinc/librdkafka#build-from-source
+  #         wget --no-verbose --output-document=librdkafka.tar.gz "https://github.com/edenhill/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz"
+  #         tar -x -f librdkafka.tar.gz
+  #         rm -f librdkafka.tar.gz
+  #         cd "librdkafka-${LIBRDKAFKA_VERSION}"
+  #         ./configure
+  #         make
+  #         sudo make install
+  #         sudo ldconfig
+  #         cd ..
+  #         rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
+  #     # protoc is for prost
+  #     - name: Install protoc
+  #       uses: arduino/setup-protoc@v3.0.0
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         version: 28.3
+  #     - name: Set up Rust
+  #       uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
+  #       with:
+  #         cache: true
+  #         rust-src-dir: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+  #     - name: Install dependencies
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+  #       run: |
+  #         cargo build
+  #     - name: Lint Rust (rustfmt)
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+  #       run: |
+  #         cargo fmt --all  -- --check
+  #     - name: Lint Rust (Clippy)
+  #       working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
+  #       run: |
+  #         cargo clippy
 
-  lint-rust-udp-receiver:
-    name: Rust (udp-receiver)
-    if: ${{ inputs.workflow || inputs.udp-receiver }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
-        with:
-          cache: true
-          rust-src-dir: network/udp/udp-receiver
-      - name: Install dependencies
-        working-directory: network/udp/udp-receiver
-        run: |
-          cargo build
-      - name: Lint Rust (rustfmt)
-        working-directory: network/udp/udp-receiver
-        run: |
-          cargo fmt --all  -- --check
-      - name: Lint Rust (Clippy)
-        working-directory: network/udp/udp-receiver
-        run: |
-          cargo clippy
+  # lint-rust-udp-receiver:
+  #   name: Rust (udp-receiver)
+  #   if: ${{ inputs.workflow || inputs.udp-receiver }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     # protoc is for prost
+  #     - name: Install protoc
+  #       uses: arduino/setup-protoc@v3.0.0
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         version: 28.3
+  #     - name: Set up Rust
+  #       uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
+  #       with:
+  #         cache: true
+  #         rust-src-dir: network/udp/udp-receiver
+  #     - name: Install dependencies
+  #       working-directory: network/udp/udp-receiver
+  #       run: |
+  #         cargo build
+  #     - name: Lint Rust (rustfmt)
+  #       working-directory: network/udp/udp-receiver
+  #       run: |
+  #         cargo fmt --all  -- --check
+  #     - name: Lint Rust (Clippy)
+  #       working-directory: network/udp/udp-receiver
+  #       run: |
+  #         cargo clippy
 
-  lint-rust-udp-sender:
-    name: Rust (udp-sender)
-    if: ${{ inputs.workflow || inputs.udp-sender }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
-        with:
-          cache: true
-          rust-src-dir: network/udp/udp-sender
-      - name: Install dependencies
-        working-directory: network/udp/udp-sender
-        run: |
-          cargo build
-      - name: Lint Rust (rustfmt)
-        working-directory: network/udp/udp-sender
-        run: |
-          cargo fmt --all  -- --check
-      - name: Lint Rust (Clippy)
-        working-directory: network/udp/udp-sender
-        run: |
-          cargo clippy
+  # lint-rust-udp-sender:
+  #   name: Rust (udp-sender)
+  #   if: ${{ inputs.workflow || inputs.udp-sender }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     # protoc is for prost
+  #     - name: Install protoc
+  #       uses: arduino/setup-protoc@v3.0.0
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         version: 28.3
+  #     - name: Set up Rust
+  #       uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
+  #       with:
+  #         cache: true
+  #         rust-src-dir: network/udp/udp-sender
+  #     - name: Install dependencies
+  #       working-directory: network/udp/udp-sender
+  #       run: |
+  #         cargo build
+  #     - name: Lint Rust (rustfmt)
+  #       working-directory: network/udp/udp-sender
+  #       run: |
+  #         cargo fmt --all  -- --check
+  #     - name: Lint Rust (Clippy)
+  #       working-directory: network/udp/udp-sender
+  #       run: |
+  #         cargo clippy
 
-  lint-rust-windows-calculator:
-    name: Rust (windows-calculator)
-    if: ${{ inputs.workflow || inputs.windows-calculator }}
-    runs-on: windows-2025
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
-        with:
-          cache: true
-          rust-src-dir: operating-system/windows/calculator
-      - name: Install dependencies
-        working-directory: operating-system/windows/calculator
-        run: |
-          cargo build
-      - name: Lint Rust (rustfmt)
-        working-directory: operating-system/windows/calculator
-        run: |
-          cargo fmt --all  -- --check
-      - name: Lint Rust (Clippy)
-        working-directory: operating-system/windows/calculator
-        run: |
-          cargo clippy
+  # lint-rust-windows-calculator:
+  #   name: Rust (windows-calculator)
+  #   if: ${{ inputs.workflow || inputs.windows-calculator }}
+  #   runs-on: windows-2025
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Rust
+  #       uses: actions-rust-lang/setup-rust-toolchain@v1.15.1
+  #       with:
+  #         cache: true
+  #         rust-src-dir: operating-system/windows/calculator
+  #     - name: Install dependencies
+  #       working-directory: operating-system/windows/calculator
+  #       run: |
+  #         cargo build
+  #     - name: Lint Rust (rustfmt)
+  #       working-directory: operating-system/windows/calculator
+  #       run: |
+  #         cargo fmt --all  -- --check
+  #     - name: Lint Rust (Clippy)
+  #       working-directory: operating-system/windows/calculator
+  #       run: |
+  #         cargo clippy
 
-  lint-scala-hm-spark-find-retired-people-scala:
-    name: Scala (hm-spark-find-retired-people-scala)
-    if: ${{ inputs.workflow || inputs.hm-spark-find-retired-people-scala }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Java
-        uses: actions/setup-java@v5.0.0
-        with:
-          distribution: corretto
-          cache: sbt
-          java-version-file: data-processing/hm-spark/applications/find-retired-people-scala/.java-version
-      - name: Set up sbt
-        uses: sbt/setup-sbt@v1.1.13
-      - name: Lint Scala (Scalafmt)
-        working-directory: data-processing/hm-spark/applications/find-retired-people-scala
-        run: |
-          sbt scalafmtCheckAll
-      - name: Lint Scala (Scalafix)
-        working-directory: data-processing/hm-spark/applications/find-retired-people-scala
-        run: |
-          sbt 'scalafixAll --check'
+  # lint-scala-hm-spark-find-retired-people-scala:
+  #   name: Scala (hm-spark-find-retired-people-scala)
+  #   if: ${{ inputs.workflow || inputs.hm-spark-find-retired-people-scala }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Java
+  #       uses: actions/setup-java@v5.0.0
+  #       with:
+  #         distribution: corretto
+  #         cache: sbt
+  #         java-version-file: data-processing/hm-spark/applications/find-retired-people-scala/.java-version
+  #     - name: Set up sbt
+  #       uses: sbt/setup-sbt@v1.1.13
+  #     - name: Lint Scala (Scalafmt)
+  #       working-directory: data-processing/hm-spark/applications/find-retired-people-scala
+  #       run: |
+  #         sbt scalafmtCheckAll
+  #     - name: Lint Scala (Scalafix)
+  #       working-directory: data-processing/hm-spark/applications/find-retired-people-scala
+  #       run: |
+  #         sbt 'scalafixAll --check'
 
-  lint-scala-hm-spark-ingest-from-s3-to-kafka:
-    name: Scala (hm-spark-ingest-from-s3-to-kafka)
-    if: ${{ inputs.workflow || inputs.hm-spark-ingest-from-s3-to-kafka }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Java
-        uses: actions/setup-java@v5.0.0
-        with:
-          distribution: corretto
-          cache: sbt
-          java-version-file: data-processing/hm-spark/applications/ingest-from-s3-to-kafka/.java-version
-      - name: Set up sbt
-        uses: sbt/setup-sbt@v1.1.13
-      - name: Lint Scala (Scalafmt)
-        working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
-        run: |
-          sbt scalafmtCheckAll
-      - name: Lint Scala (Scalafix)
-        working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
-        run: |
-          sbt 'scalafixAll --check'
+  # lint-scala-hm-spark-ingest-from-s3-to-kafka:
+  #   name: Scala (hm-spark-ingest-from-s3-to-kafka)
+  #   if: ${{ inputs.workflow || inputs.hm-spark-ingest-from-s3-to-kafka }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Java
+  #       uses: actions/setup-java@v5.0.0
+  #       with:
+  #         distribution: corretto
+  #         cache: sbt
+  #         java-version-file: data-processing/hm-spark/applications/ingest-from-s3-to-kafka/.java-version
+  #     - name: Set up sbt
+  #       uses: sbt/setup-sbt@v1.1.13
+  #     - name: Lint Scala (Scalafmt)
+  #       working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
+  #       run: |
+  #         sbt scalafmtCheckAll
+  #     - name: Lint Scala (Scalafix)
+  #       working-directory: data-processing/hm-spark/applications/ingest-from-s3-to-kafka
+  #       run: |
+  #         sbt 'scalafixAll --check'
 
-  lint-shell:
-    name: Shell
-    if: ${{ inputs.workflow || inputs.shell }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Lint Shell
-        run: |
-          shellcheck $(git ls-files '**/*.sh')
+  # lint-shell:
+  #   name: Shell
+  #   if: ${{ inputs.workflow || inputs.shell }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Lint Shell
+  #       run: |
+  #         shellcheck $(git ls-files '**/*.sh')
 
-  lint-solidity:
-    name: Solidity
-    if: ${{ inputs.workflow || inputs.solidity }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: .node-version
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies
-        run: |
-          npm ci
-      - name: Lint Solidity
-        run: |
-          npm run lint-solidity
+  # lint-solidity:
+  #   name: Solidity
+  #   if: ${{ inputs.workflow || inputs.solidity }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: npm
+  #         cache-dependency-path: package-lock.json
+  #     - name: Install dependencies
+  #       run: |
+  #         npm ci
+  #     - name: Lint Solidity
+  #       run: |
+  #         npm run lint-solidity
 
-  lint-sql:
-    name: SQL
-    if: ${{ inputs.workflow || inputs.sql }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: .python-version
-      - name: Install dependencies
-        run: |
-          uv sync --dev
-      - name: Lint SQL
-        run: |
-          # uv run poe lint-sql --dialect=athena cloud-platform/aws/amazon-athena/queries
-          # uv run poe lint-sql --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
-          # uv run poe lint-sql --dialect=clickhouse data-storage/clickhouse/cpu_metrics
-          uv run poe lint-sql --dialect=postgres hasura-graphql-engine/migrations
-          uv run poe lint-sql --dialect=postgres hasura-graphql-engine/seeds
-          uv run poe lint-sql --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-          uv run poe lint-sql --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
-          uv run poe lint-sql --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
-          uv run poe lint-sql --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
-          uv run poe lint-sql --dialect=postgres data-storage/timescaledb/motor/migrations
-          # uv run poe lint-sql --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
-          # uv run poe lint-sql --dialect=snowflake data-storage/snowflake/queries
-          uv run poe lint-sql --dialect=sparksql data-storage/delta-lake/queries
-          uv run poe lint-sql --dialect=sqlite data-storage/sqlite/queries
-          # uv run poe lint-sql --dialect=trino trino/queries
-          # uv run poe lint-sql --dialect=tsql data-storage/microsoft-sql-server/queries
+  # lint-sql:
+  #   name: SQL
+  #   if: ${{ inputs.workflow || inputs.sql }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Install uv
+  #       uses: astral-sh/setup-uv@v6.7.0
+  #       with:
+  #         version: 0.8.22
+  #         enable-cache: true
+  #         cache-dependency-glob: uv.lock
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v6.0.0
+  #       with:
+  #         python-version-file: .python-version
+  #     - name: Install dependencies
+  #       run: |
+  #         uv sync --dev
+  #     - name: Lint SQL
+  #       run: |
+  #         # uv run poe lint-sql --dialect=athena cloud-platform/aws/amazon-athena/queries
+  #         # uv run poe lint-sql --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
+  #         # uv run poe lint-sql --dialect=clickhouse data-storage/clickhouse/cpu_metrics
+  #         uv run poe lint-sql --dialect=postgres hasura-graphql-engine/migrations
+  #         uv run poe lint-sql --dialect=postgres hasura-graphql-engine/seeds
+  #         uv run poe lint-sql --dialect=postgres kubernetes/data/postgres/opa_db/migrations
+  #         uv run poe lint-sql --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
+  #         uv run poe lint-sql --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
+  #         uv run poe lint-sql --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
+  #         uv run poe lint-sql --dialect=postgres data-storage/timescaledb/motor/migrations
+  #         # uv run poe lint-sql --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
+  #         # uv run poe lint-sql --dialect=snowflake data-storage/snowflake/queries
+  #         uv run poe lint-sql --dialect=sparksql data-storage/delta-lake/queries
+  #         uv run poe lint-sql --dialect=sqlite data-storage/sqlite/queries
+  #         # uv run poe lint-sql --dialect=trino trino/queries
+  #         # uv run poe lint-sql --dialect=tsql data-storage/microsoft-sql-server/queries
 
-  lint-opentofu:
-    name: OpenTofu
-    if: ${{ inputs.workflow || inputs.opentofu }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v1.0.6
-      - name: Lint OpenTofu
-        run: |
-          tofu fmt -recursive -check
+  # lint-opentofu:
+  #   name: OpenTofu
+  #   if: ${{ inputs.workflow || inputs.opentofu }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up OpenTofu
+  #       uses: opentofu/setup-opentofu@v1.0.6
+  #     - name: Lint OpenTofu
+  #       run: |
+  #         tofu fmt -recursive -check
 
-  lint-toml:
-    name: TOML
-    if: ${{ inputs.workflow || inputs.toml }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Lint TOML
-        run: |
-          docker run \
-            --rm \
-            --volume="$(pwd):/workspace" \
-            --workdir=/workspace \
-            tamasfe/taplo:latest \
-            fmt \
-              --check
+  # lint-toml:
+  #   name: TOML
+  #   if: ${{ inputs.workflow || inputs.toml }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Lint TOML
+  #       run: |
+  #         docker run \
+  #           --rm \
+  #           --volume="$(pwd):/workspace" \
+  #           --workdir=/workspace \
+  #           tamasfe/taplo:latest \
+  #           fmt \
+  #             --check
 
-  lint-verilog:
-    name: Verilog
-    if: ${{ inputs.workflow || inputs.verilog }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Lint Verilog
-        run: |
-          git ls-files '**/*.v' | \
-            xargs docker run \
-              --rm \
-              --volume="$(pwd):/workspace" \
-              --workdir=/workspace \
-              hdlc/verible:latest \
-              verible-verilog-lint
-          git ls-files '**/*.v' | \
-            xargs docker run \
-              --rm \
-              --volume="$(pwd):/workspace" \
-              --workdir=/workspace \
-              hdlc/verible:latest \
-              verible-verilog-format \
-                --verify
+  # lint-verilog:
+  #   name: Verilog
+  #   if: ${{ inputs.workflow || inputs.verilog }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Lint Verilog
+  #       run: |
+  #         git ls-files '**/*.v' | \
+  #           xargs docker run \
+  #             --rm \
+  #             --volume="$(pwd):/workspace" \
+  #             --workdir=/workspace \
+  #             hdlc/verible:latest \
+  #             verible-verilog-lint
+  #         git ls-files '**/*.v' | \
+  #           xargs docker run \
+  #             --rm \
+  #             --volume="$(pwd):/workspace" \
+  #             --workdir=/workspace \
+  #             hdlc/verible:latest \
+  #             verible-verilog-format \
+  #               --verify
 
-  lint-vhdl:
-    name: VHDL
-    if: ${{ inputs.workflow || inputs.vhdl }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: .python-version
-      - name: Install dependencies
-        run: |
-          uv sync --dev
-      - name: Lint VHDL
-        run: |
-          uv run poe lint-vhdl
+  # lint-vhdl:
+  #   name: VHDL
+  #   if: ${{ inputs.workflow || inputs.vhdl }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Install uv
+  #       uses: astral-sh/setup-uv@v6.7.0
+  #       with:
+  #         version: 0.8.22
+  #         enable-cache: true
+  #         cache-dependency-glob: uv.lock
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v6.0.0
+  #       with:
+  #         python-version-file: .python-version
+  #     - name: Install dependencies
+  #       run: |
+  #         uv sync --dev
+  #     - name: Lint VHDL
+  #       run: |
+  #         uv run poe lint-vhdl
 
-  lint-xml:
-    name: XML
-    if: ${{ inputs.workflow || inputs.xml }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Set up Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          node-version-file: .node-version
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: Install dependencies
-        run: |
-          npm ci
-      - name: Lint XML
-        run: |
-          npm run lint-xml
+  # lint-xml:
+  #   name: XML
+  #   if: ${{ inputs.workflow || inputs.xml }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v5.0.0
+  #       with:
+  #         node-version-file: .node-version
+  #         cache: npm
+  #         cache-dependency-path: package-lock.json
+  #     - name: Install dependencies
+  #       run: |
+  #         npm ci
+  #     - name: Lint XML
+  #       run: |
+  #         npm run lint-xml
 
-  lint-yaml:
-    name: YAML
-    if: ${{ inputs.workflow || inputs.yaml }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: .python-version
-      - name: Install dependencies
-        run: |
-          uv sync --dev
-      - name: Lint YAML
-        run: |
-          uv run poe lint-yaml
+  # lint-yaml:
+  #   name: YAML
+  #   if: ${{ inputs.workflow || inputs.yaml }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     - name: Install uv
+  #       uses: astral-sh/setup-uv@v6.7.0
+  #       with:
+  #         version: 0.8.22
+  #         enable-cache: true
+  #         cache-dependency-glob: uv.lock
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v6.0.0
+  #       with:
+  #         python-version-file: .python-version
+  #     - name: Install dependencies
+  #       run: |
+  #         uv sync --dev
+  #     - name: Lint YAML
+  #       run: |
+  #         uv run poe lint-yaml
