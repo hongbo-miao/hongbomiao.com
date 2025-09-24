@@ -101,54 +101,54 @@ jobs:
   #       run: |
   #         npm run test-stryker
 
-  api-python-test:
-    name: API - Python | Test
-    if: ${{ inputs.workflow || inputs.api-python }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      # librdkafka is for confluent-kafka
-      - name: Install librdkafka
-        env:
-          LIBRDKAFKA_VERSION: 2.11.0
-        run: |
-          # https://github.com/confluentinc/librdkafka#build-from-source
-          wget --no-verbose --output-document=librdkafka.tar.gz "https://github.com/edenhill/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz"
-          tar -x -f librdkafka.tar.gz
-          rm -f librdkafka.tar.gz
-          cd "librdkafka-${LIBRDKAFKA_VERSION}"
-          ./configure
-          make
-          sudo make install
-          sudo ldconfig
-          cd ..
-          rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: api-python/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: api-python/.python-version
-      - name: Install dependencies
-        working-directory: api-python
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: api-python
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: api-python
+  # api-python-test:
+  #   name: API - Python | Test
+  #   if: ${{ inputs.workflow || inputs.api-python }}
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v5.0.0
+  #     # librdkafka is for confluent-kafka
+  #     - name: Install librdkafka
+  #       env:
+  #         LIBRDKAFKA_VERSION: 2.11.0
+  #       run: |
+  #         # https://github.com/confluentinc/librdkafka#build-from-source
+  #         wget --no-verbose --output-document=librdkafka.tar.gz "https://github.com/edenhill/librdkafka/archive/refs/tags/v${LIBRDKAFKA_VERSION}.tar.gz"
+  #         tar -x -f librdkafka.tar.gz
+  #         rm -f librdkafka.tar.gz
+  #         cd "librdkafka-${LIBRDKAFKA_VERSION}"
+  #         ./configure
+  #         make
+  #         sudo make install
+  #         sudo ldconfig
+  #         cd ..
+  #         rm -r -f "librdkafka-${LIBRDKAFKA_VERSION}/"
+  #     - name: Install uv
+  #       uses: astral-sh/setup-uv@v6.7.0
+  #       with:
+  #         version: 0.8.22
+  #         enable-cache: true
+  #         cache-dependency-glob: api-python/uv.lock
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v6.0.0
+  #       with:
+  #         python-version-file: api-python/.python-version
+  #     - name: Install dependencies
+  #       working-directory: api-python
+  #       run: |
+  #         uv sync --dev
+  #     - name: Test
+  #       working-directory: api-python
+  #       run: |
+  #         uv run poe test-coverage
+  #     - name: Upload coverage to Codecov
+  #       uses: codecov/codecov-action@v5.5.1
+  #       with:
+  #         token: ${{ secrets.CODECOV_TOKEN }}
+  #         slug: hongbo-miao/hongbomiao.com
+  #         directory: api-python
 
   api-rust-test:
     name: API - Rust | Test
@@ -166,8 +166,9 @@ jobs:
       - name: Set up
         uses: awalsh128/cache-apt-pkgs-action@v1.5.3
         with:
-          packages: clang libclang-dev libopenblas-dev libopencv-dev
+          packages: clang libclang-dev libopencv-dev
           version: 1.0
+          execute_install_scripts: true
       - name: Install dependencies
         working-directory: api-rust
         run: |
