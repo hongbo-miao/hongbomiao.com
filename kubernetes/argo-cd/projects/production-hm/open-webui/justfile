@@ -6,11 +6,11 @@ sealed-secrets-seal:
     	--format=yaml \
     	> kubernetes-manifests/hm-open-webui-secret.yaml
 
-argo-cd-app-create:
+create:
     argocd app create production-hm-open-webui --file=argo-cd-manifests/hm-open-webui-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-open-webui --file=argo-cd-manifests/hm-open-webui-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-open-webui --yes

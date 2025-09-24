@@ -8,7 +8,6 @@ Requires=docker.service
 Type=simple
 ExecStartPre=/usr/bin/docker volume create {{ speaches_volume_name }}
 ExecStartPre=-/usr/bin/docker rm --force {{ speaches_container_name }}
-ExecStartPre=/usr/bin/docker pull {{ speaches_docker_image }}
 ExecStart=/usr/bin/docker run \
   --name={{ speaches_container_name }} \
   --publish={{ speaches_port }}:8000 \

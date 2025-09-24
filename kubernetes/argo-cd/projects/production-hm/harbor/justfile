@@ -6,11 +6,11 @@ sealed-secrets-seal:
     	--format=yaml \
     	> kubernetes-manifests/hm-harbor-secret.yaml
 
-argo-cd-app-create:
+create:
     argocd app create production-hm-harbor --file=argo-cd-manifests/hm-harbor-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-harbor --file=argo-cd-manifests/hm-harbor-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-harbor --yes

@@ -5,17 +5,17 @@ After=network-online.target docker.service
 Requires=docker.service
 
 [Service]
-TimeoutStartSec=0
-Restart=always
+Type=simple
 ExecStartPre=-/usr/bin/docker rm --force %N
-ExecStartPre=-/usr/bin/docker pull {{ github_actions_runner_docker_image }}
 ExecStart=/usr/bin/docker run --rm \
+  --name=%N \
+  --volume=/var/run/docker.sock:/var/run/docker.sock \
   --env-file={{ github_actions_runner_env_file }} \
   --env=RUNNER_NAME=%H \
-  --volume=/var/run/docker.sock:/var/run/docker.sock \
-  --name=%N \
   {{ github_actions_runner_docker_image }}
 ExecStop=/usr/bin/docker stop %N
+Restart=always
+RestartSec=10
 
 [Install]
 WantedBy=multi-user.target

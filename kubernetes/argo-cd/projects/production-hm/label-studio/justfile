@@ -6,11 +6,11 @@ sealed-secrets-seal:
     	--format=yaml \
     	> kubernetes-manifests/hm-label-studio-secret.yaml
 
-argo-cd-app-create:
+create:
     argocd app create production-hm-label-studio --file=argo-cd-manifests/hm-label-studio-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-label-studio --file=argo-cd-manifests/hm-label-studio-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-label-studio --yes

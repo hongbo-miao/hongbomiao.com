@@ -1,5 +1,5 @@
 # Docker
-docker-login:
+docker-sign-in:
     docker login
 
 docker-sh:
@@ -59,7 +59,7 @@ rbenv-list-versions:
 rbenv-uninstall:
     rbenv uninstall --force 3.4.5
 
-bundle-init:
+bundle-initialize:
     bundle init
 
 bundle-install:
@@ -281,6 +281,62 @@ lint-ruby:
 lint-ruby-fix:
     bundle exec rubocop --autocorrect-all
 
+lint-rust-rustfmt:
+    cd api-rust && cargo fmt --all -- --check
+    cd data-distribution/arrow-flight/arrow-flight-server && cargo fmt --all -- --check
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && cargo fmt --all -- --check
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && cargo fmt --all -- --check
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && cargo fmt --all -- --check
+    cd data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge && cargo fmt --all -- --check
+    cd data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge && cargo fmt --all -- --check
+    cd data-visualization/iads/iads-rtstation/iads-data-producer && cargo fmt --all -- --check
+    cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && cargo fmt --all -- --check
+    cd network/udp/udp-receiver && cargo fmt --all -- --check
+    cd network/udp/udp-sender && cargo fmt --all -- --check
+    cd operating-system/windows/calculator && cargo fmt --all -- --check
+
+lint-rust-rustfmt-fix:
+    cd api-rust && cargo fmt --all
+    cd data-distribution/arrow-flight/arrow-flight-server && cargo fmt --all
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && cargo fmt --all
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && cargo fmt --all
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && cargo fmt --all
+    cd data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge && cargo fmt --all
+    cd data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge && cargo fmt --all
+    cd data-visualization/iads/iads-rtstation/iads-data-producer && cargo fmt --all
+    cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && cargo fmt --all
+    cd network/udp/udp-receiver && cargo fmt --all
+    cd network/udp/udp-sender && cargo fmt --all
+    cd operating-system/windows/calculator && cargo fmt --all
+
+lint-rust-clippy:
+    cd api-rust && cargo clippy
+    cd data-distribution/arrow-flight/arrow-flight-server && cargo clippy
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && cargo clippy
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && cargo clippy
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && cargo clippy
+    cd data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge && cargo clippy
+    cd data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge && cargo clippy
+    cd data-visualization/iads/iads-rtstation/iads-data-producer && cargo clippy
+    cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && cargo clippy
+    cd network/udp/udp-receiver && cargo clippy
+    cd network/udp/udp-sender && cargo clippy
+    cd operating-system/windows/calculator && cargo clippy
+
+lint-rust-clippy-fix:
+    cd api-rust && cargo clippy --fix --allow-dirty --allow-staged
+    cd data-distribution/arrow-flight/arrow-flight-server && cargo clippy --fix --allow-dirty --allow-staged
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && cargo clippy --fix --allow-dirty --allow-staged
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && cargo clippy --fix --allow-dirty --allow-staged
+    cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && cargo clippy --fix --allow-dirty --allow-staged
+    cd data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge && cargo clippy --fix --allow-dirty --allow-staged
+    cd data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge && cargo clippy --fix --allow-dirty --allow-staged
+    cd data-visualization/iads/iads-rtstation/iads-data-producer && cargo clippy --fix --allow-dirty --allow-staged
+    cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && cargo clippy --fix --allow-dirty --allow-staged
+    cd network/udp/udp-receiver && cargo clippy --fix --allow-dirty --allow-staged
+    cd network/udp/udp-sender && cargo clippy --fix --allow-dirty --allow-staged
+    cd operating-system/windows/calculator && cargo clippy --fix --allow-dirty --allow-staged
+
 lint-scala:
     cd data-processing/hm-spark/applications/find-retired-people-scala && sbt scalafmtCheckAll && sbt 'scalafixAll --check'
     cd data-processing/hm-spark/applications/ingest-from-s3-to-kafka && sbt scalafmtCheckAll && sbt 'scalafixAll --check'
@@ -368,6 +424,22 @@ lint-yaml:
     uv run poe lint-yaml
 
 # Static type check
+static-type-check-opentofu:
+    cd infrastructure/opentofu/environments/production/airbyte && tofu validate
+    cd infrastructure/opentofu/environments/production/argo-cd && tofu validate
+    cd infrastructure/opentofu/environments/production/aws/data && tofu validate
+    cd infrastructure/opentofu/environments/production/aws/general && tofu validate
+    cd infrastructure/opentofu/environments/production/aws/kubernetes && tofu validate
+    cd infrastructure/opentofu/environments/production/aws/network && tofu validate
+    cd infrastructure/opentofu/environments/production/harbor && tofu validate
+    cd infrastructure/opentofu/environments/production/nebius/applications && tofu validate
+    cd infrastructure/opentofu/environments/production/nebius/data && tofu validate
+    cd infrastructure/opentofu/environments/production/nebius/general && tofu validate
+    cd infrastructure/opentofu/environments/production/nebius/kubernetes && tofu validate
+    cd infrastructure/opentofu/environments/production/snowflake/account && tofu validate
+    cd infrastructure/opentofu/environments/production/snowflake/data && tofu validate
+    cd infrastructure/opentofu/environments/production/snowflake/general && tofu validate
+
 static-type-check-python:
     uv run poe static-type-check-python --package=aerospace.hm-aerosandbox
     uv run poe static-type-check-python --package=aerospace.hm-openaerostruct
@@ -492,22 +564,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=security.hm-opal-client
     uv run poe static-type-check-python --package=system-tool.hm-xxhash
     uv run poe static-type-check-python --package=tokenization.byte-pair-encoding
-
-static-type-check-terraform:
-    cd infrastructure/opentofu/environments/production/airbyte && tofu validate
-    cd infrastructure/opentofu/environments/production/argo-cd && tofu validate
-    cd infrastructure/opentofu/environments/production/aws/data && tofu validate
-    cd infrastructure/opentofu/environments/production/aws/general && tofu validate
-    cd infrastructure/opentofu/environments/production/aws/kubernetes && tofu validate
-    cd infrastructure/opentofu/environments/production/aws/network && tofu validate
-    cd infrastructure/opentofu/environments/production/harbor && tofu validate
-    cd infrastructure/opentofu/environments/production/nebius/applications && tofu validate
-    cd infrastructure/opentofu/environments/production/nebius/data && tofu validate
-    cd infrastructure/opentofu/environments/production/nebius/general && tofu validate
-    cd infrastructure/opentofu/environments/production/nebius/kubernetes && tofu validate
-    cd infrastructure/opentofu/environments/production/snowflake/account && tofu validate
-    cd infrastructure/opentofu/environments/production/snowflake/data && tofu validate
-    cd infrastructure/opentofu/environments/production/snowflake/general && tofu validate
 
 static-type-check-typescript:
     cd api-node && npm run static-type-check-typescript
