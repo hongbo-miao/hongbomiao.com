@@ -8,7 +8,6 @@ Requires=docker.service
 Type=simple
 ExecStartPre=/usr/bin/docker volume create {{ ollama_volume_name }}
 ExecStartPre=-/usr/bin/docker rm --force {{ ollama_container_name }}
-ExecStartPre=/usr/bin/docker pull {{ ollama_docker_image }}
 ExecStart=/usr/bin/docker run \
   --name={{ ollama_container_name }} \
   --publish={{ ollama_port }}:11434 \

@@ -6,11 +6,11 @@ sealed-secrets-seal:
     	--format=yaml \
     	> kubernetes-manifests/hm-trino-secret.yaml
 
-argo-cd-app-create:
+create:
     argocd app create production-hm-trino --file=argo-cd-manifests/hm-trino-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-trino --file=argo-cd-manifests/hm-trino-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-trino --yes

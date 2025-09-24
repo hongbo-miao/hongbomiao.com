@@ -1,12 +1,12 @@
-opentofu-init:
+initialize:
     tofu init -backend=false -upgrade
 
-opentofu-validate:
-    tofu validate
-
-opentofu-plan:
+plan:
     tofu plan
 
-opentofu-apply:
+apply:
     # argocd login localhost:31026 --username=admin --insecure
     tofu apply
+
+static-type-check-opentofu:
+    tofu validate

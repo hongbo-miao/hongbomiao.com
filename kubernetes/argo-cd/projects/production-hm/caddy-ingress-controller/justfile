@@ -1,8 +1,8 @@
-argo-cd-app-create:
+create:
     argocd app create production-hm-caddy-ingress-controller --file=argo-cd-manifests/hm-caddy-ingress-controller-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-caddy-ingress-controller --file=argo-cd-manifests/hm-caddy-ingress-controller-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-caddy-ingress-controller --yes

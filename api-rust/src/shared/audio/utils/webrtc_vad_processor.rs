@@ -100,7 +100,7 @@ impl WebRtcVadProcessor {
     /// Normalize frame to expected size
     fn normalize_frame(app_config: &AppConfig, frame: &[i16]) -> Vec<i16> {
         let samples_per_frame = (app_config.webrtc_vad_sample_rate_number as u64
-            * app_config.webrtc_vad_frame_duration_ms
+            * app_config.webrtc_vad_frame_duration_ms as u64
             / 1000) as usize;
         let mut normalized = frame.to_vec();
         if normalized.len() < samples_per_frame {
@@ -222,7 +222,7 @@ impl WebRtcVadProcessor {
         frame_buffer: &VecDeque<Vec<i16>>,
     ) {
         let samples_per_frame = (app_config.webrtc_vad_sample_rate_number as u64
-            * app_config.webrtc_vad_frame_duration_ms
+            * app_config.webrtc_vad_frame_duration_ms as u64
             / 1000) as usize;
         let padding_frames = (app_config
             .webrtc_vad_padding_duration_ms
@@ -255,7 +255,7 @@ impl WebRtcVadProcessor {
             as usize)
             .max(1);
         let samples_per_frame = (app_config.webrtc_vad_sample_rate_number as u64
-            * app_config.webrtc_vad_frame_duration_ms
+            * app_config.webrtc_vad_frame_duration_ms as u64
             / 1000) as usize;
 
         if speech_duration_frames >= min_speech_frames
@@ -373,7 +373,8 @@ impl WebRtcVadProcessor {
 
     /// Get samples per frame for external frame processing
     pub fn samples_per_frame(app_config: &AppConfig) -> usize {
-        (app_config.webrtc_vad_sample_rate_number as u64 * app_config.webrtc_vad_frame_duration_ms
+        (app_config.webrtc_vad_sample_rate_number as u64
+            * app_config.webrtc_vad_frame_duration_ms as u64
             / 1000) as usize
     }
 }

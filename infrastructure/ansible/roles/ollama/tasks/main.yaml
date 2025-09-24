@@ -1,4 +1,11 @@
 ---
+- name: Pull Ollama Docker image
+  community.docker.docker_image:
+    name: "{{ ollama_docker_image }}"
+    source: pull
+    force_source: false
+  register: ollama_docker_image_result
+
 - name: Create systemd service file for Ollama
   ansible.builtin.template:
     src: ollama.service.j2
@@ -9,6 +16,6 @@
 - name: Ensure Ollama service is running and enabled
   ansible.builtin.systemd_service:
     name: ollama
-    state: "{{ 'restarted' if ollama_systemd_unit_result.changed else 'started' }}"
+    state: "{{ 'restarted' if (ollama_systemd_unit_result.changed or ollama_docker_image_result.changed) else 'started' }}"
     enabled: true
     daemon_reload: "{{ ollama_systemd_unit_result.changed }}"

@@ -1,19 +1,22 @@
 # Argo CD
-argo-cd-password-reset:
+reset-password:
     argocd account bcrypt --password=xxx
     # $2a$10$xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     kubectl patch secret argocd-secret \
         --namespace=production-hm-argo-cd \
         --patch='{"stringData": {"admin.password": "$2a$10$xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "admin.passwordMtime": "'$(date +%FT%T%Z)'"}}'
 
-argo-cd-sign-in:
+sign-in:
     argocd login argo-cd.hongbomiao.com --username=admin
 
-argo-cd-project-list:
+list-projects:
     argocd proj list
 
-argo-cd-repo-list:
+list-repositories:
     argocd repo list
 
-argo-cd-app-sync:
+list-applications:
+    argocd app list
+
+sync-application:
     argocd app sync xxx

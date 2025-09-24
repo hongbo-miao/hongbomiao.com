@@ -61,8 +61,8 @@ async fn main() {
     let trace = TraceLayer::new_for_http();
     let governor = GovernorLayer::new(Arc::new(
         GovernorConfigBuilder::default()
-            .per_second(config.server_rate_limit_per_second)
-            .burst_size(config.server_rate_limit_per_second_burst)
+            .per_second(config.server_rate_limit_per_second.into())
+            .burst_size(config.server_rate_limit_per_second_burst.into())
             .key_extractor(SmartIpKeyExtractor)
             .finish()
             .unwrap(),

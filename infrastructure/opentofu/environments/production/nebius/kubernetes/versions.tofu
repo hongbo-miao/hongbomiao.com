@@ -16,7 +16,7 @@ terraform {
   required_providers {
     nebius = {
       source  = "terraform-provider.storage.eu-north1.nebius.cloud/nebius/nebius"
-      version = "0.5.109"
+      version = "0.5.111"
     }
     # https://registry.terraform.io/providers/hashicorp/helm/latest
     helm = {
