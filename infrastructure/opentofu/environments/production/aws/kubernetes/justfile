@@ -1,14 +1,14 @@
-opentofu-init:
+initialize:
     tofu init -backend=false -upgrade
 
-opentofu-validate:
-    tofu validate
-
-opentofu-plan:
+plan:
     tofu plan
 
-opentofu-apply:
+apply:
     tofu apply
+
+static-type-check-opentofu:
+    tofu validate
 
 download-gateway-api-custom-resource-definition:
     curl --silent --fail --show-error --location https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/experimental-install.yaml > files/gateway-api/manifests/experimental-install.yaml

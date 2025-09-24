@@ -6,14 +6,14 @@ sealed-secrets-seal:
     	--format=yaml \
     	> kubernetes-manifests/hm-ray-cluster-secret.yaml
 
-argo-cd-app-create:
+create:
     argocd app create production-hm-ray-cluster --file=argo-cd-manifests/hm-ray-cluster-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-ray-cluster --file=argo-cd-manifests/hm-ray-cluster-application.yaml --upsert
 
 ray-cluster-delete:
     kubectl delete raycluster hm-ray-cluster --namespace=production-hm-ray-cluster
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-ray-cluster --yes

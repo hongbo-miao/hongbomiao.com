@@ -6,11 +6,11 @@ sealed-secrets-seal:
     	--format=yaml \
     	> kubernetes-manifests/hm-odoo-secret.yaml
 
-argo-cd-app-create:
+create:
     argocd app create production-hm-odoo --file=argo-cd-manifests/hm-odoo-application.yaml
 
-argo-cd-app-update:
+update:
     argocd app create production-hm-odoo --file=argo-cd-manifests/hm-odoo-application.yaml --upsert
 
-argo-cd-app-delete:
+delete:
     argocd app delete production-hm-odoo --yes

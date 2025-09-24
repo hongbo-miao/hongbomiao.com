@@ -46,7 +46,7 @@ pub async fn get_sse_events(
     let retry_event = stream::once(async {
         Ok(
             axum::response::sse::Event::default().retry(std::time::Duration::from_millis(
-                AppConfig::get().server_sent_event_retry_ms,
+                AppConfig::get().server_sent_event_retry_ms.into(),
             )),
         )
     });
@@ -56,7 +56,9 @@ pub async fn get_sse_events(
     Ok(Sse::new(combined_stream).keep_alive(
         axum::response::sse::KeepAlive::new()
             .interval(std::time::Duration::from_secs(
-                AppConfig::get().server_sent_event_keep_alive_interval_s,
+                AppConfig::get()
+                    .server_sent_event_keep_alive_interval_s
+                    .into(),
             ))
             .text("keep-alive"),
     ))

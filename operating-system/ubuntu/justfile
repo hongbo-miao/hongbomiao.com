@@ -43,7 +43,7 @@ show-users:
 show-non-system-users:
     awk -F: '$3 >= 1000 && $7 !~ /(nologin|false)/ {print $1}' /etc/passwd
 
-show-non-system-users-last-login:
+show-non-system-users-last-sign-in:
     lastlog --user=1000-60000
 
 remove-user:

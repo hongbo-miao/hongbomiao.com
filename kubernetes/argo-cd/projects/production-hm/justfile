@@ -1,11 +1,11 @@
-argo-cd-project-create:
+create-project:
     argocd proj create production-hm --file
 
-argo-cd-project-delete:
+delete-project:
     argocd proj delete production-hm
 
-argo-cd-repo-add:
+add-repository:
     argocd repo add git@github.com:hongbo-miao/hongbomiao.com.git --ssh-private-key-path="$HOME/.ssh/hm_argo_cd_id_ed25519" --project=production-hm --upsert
 
-argo-cd-repo-remove:
+remove-repository:
     argocd repo rm git@github.com:hongbo-miao/hongbomiao.com.git

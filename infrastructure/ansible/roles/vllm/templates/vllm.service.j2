@@ -10,7 +10,6 @@ TimeoutStartSec=1200
 TimeoutStopSec=120
 ExecStartPre=/usr/bin/docker volume create {{ vllm_volume_name }}
 ExecStartPre=-/usr/bin/docker rm --force {{ vllm_container_name }}
-ExecStartPre=/usr/bin/docker pull {{ vllm_docker_image }}
 ExecStart=/usr/bin/docker run \
   --name={{ vllm_container_name }} \
   --publish={{ vllm_port }}:8000 \
