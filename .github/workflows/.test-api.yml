@@ -166,14 +166,14 @@ jobs:
       - name: Set up
         uses: awalsh128/cache-apt-pkgs-action@v1.5.3
         with:
-          packages: clang libclang-dev libopencv-dev
+          packages: clang libclang-dev libopencv-dev libblas3 liblapack3
           version: 1.0
-      - name: Configure BLAS/LAPACK linking
-        run: |
-          export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
-          export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
-          echo "PKG_CONFIG_PATH=$PKG_CONFIG_PATH" >> $GITHUB_ENV
-          echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
+      # - name: Configure BLAS/LAPACK linking
+      #   run: |
+      #     export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
+      #     export LD_LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
+      #     echo "PKG_CONFIG_PATH=$PKG_CONFIG_PATH" >> $GITHUB_ENV
+      #     echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $GITHUB_ENV
       - name: Install dependencies
         working-directory: api-rust
         run: |
