@@ -15,10 +15,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
-      - name: Install cloc
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes cloc
+      - name: Set up
+        uses: awalsh128/cache-apt-pkgs-action@v1.5.3
+        with:
+          packages: cloc
+          version: 1.0
       - name: Count code lines
         run: |
           echo "CODE_LINE_COUNT=$(scripts/count_code_lines.sh)" >> $GITHUB_ENV
