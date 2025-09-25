@@ -164,10 +164,9 @@ jobs:
           cache: true
           rust-src-dir: api-rust
       - name: Set up
-        uses: awalsh128/cache-apt-pkgs-action@v1.5.3
-        with:
-          packages: clang libblas-dev libclang-dev liblapack-dev libopencv-dev
-          version: 1.0
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes clang libclang-dev libopencv-dev
       - name: Install dependencies
         working-directory: api-rust
         run: |
