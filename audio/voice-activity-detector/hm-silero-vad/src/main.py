@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 SAMPLE_RATE: int = 16000
 SPEACHES_API_URL: str = "http://localhost:34796/v1/audio/transcriptions"
-MODEL_NAME: str = "Systran/faster-distil-whisper-medium.en"
+MODEL_NAME: str = "Systran/faster-whisper-medium.en"
 
 
 class VadProcessor:
