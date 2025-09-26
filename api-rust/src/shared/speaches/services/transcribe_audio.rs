@@ -14,8 +14,11 @@ pub async fn transcribe_audio(
                 .mime_str("audio/wav")?,
         )
         .text("model", model.to_string())
+        .text("language", "en".to_string())
         .text("vad_filter", "false".to_string())
-        .text("language", "en".to_string());
+        .text("without_timestamps", "true".to_string())
+        .text("response_format", "verbose_json".to_string())
+        .text("timestamp_granularities[]", "word");
 
     let response = reqwest_client
         .post(format!("{speaches_base_url}/v1/audio/transcriptions"))
