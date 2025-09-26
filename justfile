@@ -26,19 +26,6 @@ docker-prune:
 docker-prune-build-cache:
     docker builder prune --all
 
-# Node.js
-nvm-install:
-    nvm install xxx
-
-nvm-uninstall:
-    nvm uninstall xxx
-
-nvm-use:
-    nvm ls xxx
-
-nvm-alias-default:
-    nvm alias default xxx
-
 # rsvg-convert
 convert-svg-to-png:
     rsvg-convert Architecture.svg > Architecture.png
