@@ -1,31 +1,27 @@
+SPEACHES_BASE_URL := "http://localhost:34796"
+
 update-lock-file:
     uv lock
 
 install-dependencies:
     uv sync --dev
 
-host:
-    docker run \
-    --publish=34796:8000 \
-    --name=speaches \
-    --volume="hf-hub-cache:$HOME/.cache/huggingface/hub" \
-    --gpus=all \
-    --detach \
-    --rm \
-    ghcr.io/speaches-ai/speaches:0.8.2-cuda
-
 list:
-    export SPEACHES_BASE_URL=http://localhost:34796 && \
+    SPEACHES_BASE_URL={{ SPEACHES_BASE_URL }} \
     uv run speaches-cli registry ls --task automatic-speech-recognition | jq '.data[] | .id'
 
 download:
-    export SPEACHES_BASE_URL=http://localhost:34796 && \
-    uv run speaches-cli model download Systran/faster-distil-whisper-medium.en
+    curl --request POST {{ SPEACHES_BASE_URL }}/v1/models/Systran/faster-whisper-medium.en
 
 transcribe:
-    export SPEACHES_BASE_URL=http://localhost:34796 && \
-    export TRANSCRIPTION_MODEL_ID=Systran/faster-distil-whisper-medium.en && \
-    curl --silent "$SPEACHES_BASE_URL/v1/audio/transcriptions" --form "file=@data/audio.wav" --form "model=$TRANSCRIPTION_MODEL_ID"
+    curl --request POST {{ SPEACHES_BASE_URL }}/v1/audio/transcriptions \
+        --form file=@/path/to/audio.wav \
+        --form model=Systran/faster-whisper-medium.en \
+        --form language=en \
+        --form vad_filter=false \
+        --form without_timestamps=true \
+        --form response_format=verbose_json \
+        --form 'timestamp_granularities[]=word'
 
 test:
     uv run poe test
