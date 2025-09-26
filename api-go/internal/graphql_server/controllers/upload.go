@@ -28,7 +28,7 @@ func Upload(minioClient *minio.Client) gin.HandlerFunc {
 		}
 
 		ctx := context.Background()
-		bucketName := "hm-bucket"
+		bucketName := "production-hm-bucket"
 
 		err = minioClient.MakeBucket(ctx, bucketName, minio.MakeBucketOptions{})
 		if err != nil {
