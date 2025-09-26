@@ -714,6 +714,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## System Tool
 
 - **Ouch!** - Compressing and decompressing program
+- **s5cmd** - S3 and cloud object storage command-line tool
 - **Rclone** - Cloud storage sync program
 - **restic** - Encrypted backup program
 - **Vim** - Terminal-based text editor
