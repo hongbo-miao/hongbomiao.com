@@ -14,17 +14,17 @@ import webrtcvad
 
 logger = logging.getLogger(__name__)
 
-SAMPLE_RATE: int = 16000
-FRAME_DURATION: int = 30  # ms
+SAMPLE_RATE_HZ: int = 16000
+FRAME_DURATION_MS: int = 30
 SPEACHES_API_URL: str = "http://localhost:34796/v1/audio/transcriptions"
-MODEL_NAME: str = "Systran/faster-distil-whisper-medium.en"
+MODEL_NAME: str = "Systran/faster-whisper-medium.en"
 
 
 class VadProcessor:
     def __init__(
         self,
-        sample_rate: int = SAMPLE_RATE,
-        frame_duration: int = FRAME_DURATION,
+        sample_rate: int = SAMPLE_RATE_HZ,
+        frame_duration: int = FRAME_DURATION_MS,
     ) -> None:
         self.sample_rate: int = sample_rate
         self.frame_size: int = int(sample_rate * frame_duration / 1000)
@@ -156,7 +156,7 @@ class VadProcessor:
         logger.info("Parameters:")
         logger.info(f"  - Min speech frames: {self.min_speech_frames}")
         logger.info(
-            f"  - Max silence frames: {self.max_silence_frames} ({self.max_silence_frames * FRAME_DURATION / 1000:.1f}s)",
+            f"  - Max silence frames: {self.max_silence_frames} ({self.max_silence_frames * FRAME_DURATION_MS / 1000:.1f}s)",
         )
         logger.info(
             f"  - Min audio length: {self.min_audio_length / self.sample_rate:.1f}s",
