@@ -25,4 +25,4 @@ required-version = ">=0.8.0"
 dev = { cmd = "uvicorn main:app --port=35903 --reload", env = { ENV = "development" } }
 serve = { cmd = "uvicorn main:app --port=35903", env = { ENV = "production" } }
 test = { cmd = "pytest --verbose --verbose", env = { ENV = "test" } }
-test-coverage = "pytest --cov=. --cov-report=xml"
+test-coverage = { cmd = "pytest --cov=. --cov-report=xml", env = { ENV = "test" } }
