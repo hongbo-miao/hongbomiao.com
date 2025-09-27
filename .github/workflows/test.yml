@@ -873,7 +873,6 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-web == 'true' }}
       # Applications
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
-      hm-locust: ${{ needs.detect-changes.outputs.hm-locust == 'true' }}
       web-cypress: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
       web: ${{ needs.detect-changes.outputs.web == 'true' }}
 
@@ -890,6 +889,7 @@ jobs:
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
       api-python: ${{ needs.detect-changes.outputs.api-python == 'true' }}
       api-rust: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
+      hm-locust: ${{ needs.detect-changes.outputs.hm-locust == 'true' }}
 
   test-data-orchestration:
     name: Test Data Orchestration
