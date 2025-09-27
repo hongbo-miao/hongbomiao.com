@@ -151,35 +151,3 @@ jobs:
         run: |
           npm run storybook-publish -- --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-zero-on-changes
 
-  locust-test:
-    name: Locust | Test
-    if: ${{ inputs.workflow || inputs.hm-locust }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: load-testing/hm-locust/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: load-testing/hm-locust/.python-version
-      - name: Install dependencies
-        working-directory: load-testing/hm-locust
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: load-testing/hm-locust
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: load-testing/hm-locust
