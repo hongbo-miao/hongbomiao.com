@@ -215,6 +215,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Node.js** - JavaScript runtime
 - **npm** - JavaScript package management
 
+## Load Testing
+
+- **Locust** - Load testing
+
 ## Cloud Native
 
 - **Sealed Secrets** - Kubernetes secret encrypting
@@ -234,7 +238,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
 - **Multipass** - VM management
-- **Locust** - Load testing
 - **Cloudflare Tunnel** - Tunneling
 - **Vertical Pod Autoscaler** - Kubernetes vertical pod autoscaler
 - **KEDA** - Kubernetes event-driven autoscaler

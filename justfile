@@ -501,7 +501,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-pyvisa
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-tdms
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.veristand.hm-veristand
-    uv run poe static-type-check-python --package=hm-locust
     uv run poe static-type-check-python --package=llm-application.hm-langchain.applications.chat-pdf
     uv run poe static-type-check-python --package=llm-application.hm-langgraph.applications.chat-pdf
     uv run poe static-type-check-python --package=llm-application.hm-llama-index.applications.chat-pdf
@@ -518,6 +517,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=llm-post-training.fine-tuning.hm-unsloth
     uv run poe static-type-check-python --package=llm-post-training.post-training-quantization
     uv run poe static-type-check-python --package=llm-training.automatic-mixed-precision
+    uv run poe static-type-check-python --package=load-testing.hm-locust
     uv run poe static-type-check-python --package=machine-learning.convolutional-neural-network
     uv run poe static-type-check-python --package=machine-learning.feature-store
     uv run poe static-type-check-python --package=machine-learning.graph-neural-network
