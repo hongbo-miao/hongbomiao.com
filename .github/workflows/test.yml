@@ -371,6 +371,8 @@ jobs:
               - 'llm-post-training/fine-tuning/hm-llama-factory/**'
             hm-llama-index-chat-pdf:
               - 'llm-application/hm-llama-index/applications/chat-pdf/**'
+            hm-locust:
+              - 'load-testing/hm-locust/**'
             hm-marimo:
               - 'data-analytics/hm-marimo/**'
             hm-mineru:
@@ -675,6 +677,7 @@ jobs:
       hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
       hm-llama-factory: ${{ steps.filter.outputs.hm-llama-factory }}
       hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
+      hm-locust: ${{ steps.filter.outputs.hm-locust }}
       hm-marimo: ${{ steps.filter.outputs.hm-marimo }}
       hm-mineru: ${{ steps.filter.outputs.hm-mineru }}
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
@@ -870,6 +873,7 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-web == 'true' }}
       # Applications
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
+      hm-locust: ${{ needs.detect-changes.outputs.hm-locust == 'true' }}
       web-cypress: ${{ needs.detect-changes.outputs.web-cypress == 'true' }}
       web: ${{ needs.detect-changes.outputs.web == 'true' }}
 
