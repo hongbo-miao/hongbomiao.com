@@ -24,6 +24,9 @@ name: . Test API
       hm-locust:
         required: true
         type: boolean
+      k6:
+        required: true
+        type: boolean
 
 jobs:
   api-go-test:
@@ -178,6 +181,24 @@ jobs:
         working-directory: api-rust
         run: |
           cargo test --all-features
+
+  k6-load-test:
+    name: k6 | Load Test
+    if: ${{ inputs.workflow || inputs.k6 }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Set up k6
+        uses: grafana/setup-k6-action@v1.1.0
+      - name: Load Test
+        uses: grafana/run-k6-action@v1.3.1
+        with:
+          disable-analytics: true
+          parallel: false
+          path: |
+            load-testing/k6/src/main.js
 
   locust-test:
     name: Locust | Test
