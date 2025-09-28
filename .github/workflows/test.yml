@@ -533,6 +533,8 @@ jobs:
               - 'data-storage/prometheus/**'
             quantum-computing:
               - 'quantum-computing/**'
+            qwen-vl:
+              - 'vision-language-model/qwen-vl/**'
             reinforcement-learning-cart-pole:
               - 'machine-learning/reinforcement-learning/cart-pole/**'
             robot-operating-system:
@@ -759,6 +761,7 @@ jobs:
       production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
+      qwen-vl: ${{ steps.filter.outputs.qwen-vl }}
       reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
@@ -1109,6 +1112,7 @@ jobs:
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
       open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
       post-training-quantization: ${{ needs.detect-changes.outputs.post-training-quantization == 'true' }}
+      qwen-vl: ${{ needs.detect-changes.outputs.qwen-vl == 'true' }}
       reinforcement-learning-cart-pole: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
