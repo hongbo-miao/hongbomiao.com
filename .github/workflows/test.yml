@@ -487,6 +487,8 @@ jobs:
               - 'data-visualization/iads/iads-rtstation/iads-data-producer/**'
             iads-data-reader:
               - 'data-visualization/iads/iads-data-manager/iads-data-reader/**'
+            k6:
+              - 'load-testing/k6/**'
             kafka-rust-proto-consumer:
               - 'data-processing/kafka/kafka-client/kafka-rust/proto-consumer/**'
             kafka-rust-proto-producer:
@@ -734,6 +736,7 @@ jobs:
       iads-config-reader: ${{ steps.filter.outputs.iads-config-reader }}
       iads-data-producer: ${{ steps.filter.outputs.iads-data-producer }}
       iads-data-reader: ${{ steps.filter.outputs.iads-data-reader }}
+      k6: ${{ steps.filter.outputs.k6 }}
       kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
       kafka-rust-udp-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-udp-kafka-bridge }}
@@ -890,6 +893,7 @@ jobs:
       api-python: ${{ needs.detect-changes.outputs.api-python == 'true' }}
       api-rust: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
       hm-locust: ${{ needs.detect-changes.outputs.hm-locust == 'true' }}
+      k6: ${{ needs.detect-changes.outputs.k6 == 'true' }}
 
   test-data-orchestration:
     name: Test Data Orchestration

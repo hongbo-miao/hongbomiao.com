@@ -217,6 +217,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Load Testing
 
+- **Grafana k6** - Load testing
 - **Locust** - Load testing
 
 ## Cloud Native
@@ -254,6 +255,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Grafana Loki** - Log aggregation system
   - **Grafana Mimir** - Long-term storage for Prometheus
   - **Grafana Tempo** - Distributed tracing backend
+  - **Grafana k6** - Load testing
 - **Vector** - Log collector
 - **Fluent Bit** - Log collector
 - **Prometheus** - Time-series database
