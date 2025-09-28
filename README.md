@@ -56,7 +56,8 @@ A personal research and development (R&D) lab that facilitates the sharing of kn
 
 The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
 
-(The diagram here may take a moment to load. Please wait patiently.)
+> [!NOTE]
+> The diagram here may take a moment to load. Please wait patiently.
 
 ![Architecture](https://github.com/user-attachments/assets/80a8865b-d3e9-43e4-abc2-fe29a619ce6b)
 
