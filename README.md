@@ -35,7 +35,7 @@
     <a href="https://github.com/hongbo-miao"><img alt="GitHub follow" src="https://img.shields.io/github/followers/hongbo-miao?label=Follow&style=social" /></a>
   </p>
   <p>
-    <a href="https://www.chromatic.com/builds?appId=5d626a63a601530020759b10"><img alt="Storybook" src="https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg" /></a>
+    <a href="https://deepwiki.com/hongbo-miao/hongbomiao.com"><img alt="DeepWiki" src="https://deepwiki.com/badge.svg" /></a>
   </p>
 </div>
 
