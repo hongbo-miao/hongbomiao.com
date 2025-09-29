@@ -356,7 +356,7 @@ lint-sql:
     uv run poe lint-sql --dialect=snowflake data-storage/snowflake/queries
     uv run poe lint-sql --dialect=sparksql data-storage/delta-lake/queries
     uv run poe lint-sql --dialect=sqlite data-storage/sqlite/queries
-    uv run poe lint-sql --dialect=trino trino/queries
+    uv run poe lint-sql --dialect=trino data-processing/trino/queries
     uv run poe lint-sql --dialect=tsql data-storage/microsoft-sql-server/queries
 
 lint-sql-fix:
@@ -374,7 +374,7 @@ lint-sql-fix:
     uv run poe lint-sql-fix --dialect=snowflake data-storage/snowflake/queries
     uv run poe lint-sql-fix --dialect=sparksql queries
     uv run poe lint-sql-fix --dialect=sqlite data-storage/sqlite/queries
-    uv run poe lint-sql-fix --dialect=trino trino/queries
+    uv run poe lint-sql-fix --dialect=trino data-processing/trino/queries
     uv run poe lint-sql-fix --dialect=tsql data-storage/microsoft-sql-server/queries
 
 lint-opentofu:
