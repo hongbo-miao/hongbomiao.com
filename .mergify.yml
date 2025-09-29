@@ -620,14 +620,17 @@ pull_request_rules:
       #     - check-success=Test Machine Learning / DeepEval | Test
       #     - check-skipped=Test Machine Learning / DeepEval | Test
       - or:
+          - check-success=Test Machine Learning / Qwen VL | Test
+          - check-skipped=Test Machine Learning / Qwen VL | Test
+      - or:
+          - check-success=Test Machine Learning / CNN | Test
+          - check-skipped=Test Machine Learning / CNN | Test
+      - or:
           - check-success=Test Machine Learning / GNN | Test
           - check-skipped=Test Machine Learning / GNN | Test
       - or:
           - check-success=Test Machine Learning / GNN | Train
           - check-skipped=Test Machine Learning / GNN | Train
-      - or:
-          - check-success=Test Machine Learning / CNN | Test
-          - check-skipped=Test Machine Learning / CNN | Test
       - or:
           - check-success=Test Computer Vision / supervision (detect-objects) | Test
           - check-skipped=Test Computer Vision / supervision (detect-objects) | Test

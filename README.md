@@ -515,7 +515,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **NVIDIA Triton Inference Server** - Inference server
 - **NVIDIA Modulus** - Physics-informed machine learning framework
 
-### Generative AI (GenAI)
+### Large Language Model (LLM)
 
 - Data Annotation
   - **Label Studio** - Data annotation
@@ -554,11 +554,6 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **DeepEval** - LLM evaluation framework
 - LLM Gateway
   - **LiteLLM** - LLM gateway
-- Vector Database
-  - **Faiss** - Vector search and similarity library
-  - **LanceDB** - Embedded vector database
-  - **Qdrant** - Distributed vector database
-  - **Chroma** - Distributed vector database
 - LLM Application
   - **PydanticAI** - LLM agent framework
   - **LangGraph** - LLM workflow library
@@ -567,6 +562,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 - AI Chat Interface
   - **Open WebUI** - AI chat interface
     - **Open WebUI Pipelines** - OpenAI API plugin framework
+- Vector Database
+  - **Faiss** - Vector search and similarity library
+  - **LanceDB** - Embedded vector database
+  - **Qdrant** - Distributed vector database
+  - **Chroma** - Distributed vector database
 - Agent Communication Protocol
   - **Model Context Protocol (MCP)**
   - **Agent Communication Protocol (ACP)**
@@ -576,7 +576,12 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **Stable Diffusion** - Text-to-image generation model
   - **ComfyUI** - Node-based interface for diffusion model workflows
 
-## Audio
+### Vision Language Model (VLM)
+
+- Vision Language Model (VLM)
+  - **Qwen VL** - Vision language model
+
+### Audio
 
 - Voice Activity Detector (VAD)
   - **Silero VAD** - Voice activity detector
