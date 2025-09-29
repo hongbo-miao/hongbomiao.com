@@ -1,7 +1,7 @@
-FROM docker.io/node:22.20.0-bookworm-slim AS web-base
+FROM docker.io/node:22.20.0-trixie-slim AS base
 WORKDIR /usr/src/app
 
-FROM web-base AS web-builder
+FROM base AS web-builder
 COPY ["web/package.json", "web/package-lock.json", "web/.npmrc", "./"]
 RUN npm ci
 # https://create-react-app.dev/docs/adding-custom-environment-variables/
@@ -13,10 +13,7 @@ COPY web ./
 RUN rm -f ./.eslintrc.js \
   && npm run build
 
-FROM docker.io/node:22.20.0-bookworm-slim AS api-node-base
-WORKDIR /usr/src/app
-
-FROM api-node-base AS api-node-builder
+FROM base AS api-node-builder
 COPY ["api-node/package.json", "api-node/package-lock.json", "api-node/.npmrc", "./"]
 RUN npm ci
 COPY --from=web-builder /usr/src/app/dist ./public

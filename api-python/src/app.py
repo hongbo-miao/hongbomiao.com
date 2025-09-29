@@ -2,10 +2,11 @@ import logging
 
 import sentry_sdk
 from config import config
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from routers import health, motor
 from sentry_sdk.integrations.fastapi import FastApiIntegration
+from shared.routers import health, motor
+from shared.routers.http_exception_handler import http_exception_handler
 from utils.logger import logger
 
 logger.setLevel(logging.INFO)
@@ -28,3 +29,4 @@ app.add_middleware(
 )
 app.include_router(health.router)
 app.include_router(motor.router)
+app.add_exception_handler(HTTPException, http_exception_handler)
