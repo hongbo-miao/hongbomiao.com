@@ -22,7 +22,7 @@ package = false
 required-version = ">=0.8.0"
 
 [tool.poe.tasks]
-dev = { cmd = "uvicorn main:app --port=35903 --reload", env = { ENV = "development" } }
-serve = { cmd = "uvicorn main:app --port=35903", env = { ENV = "production" } }
+dev = { cmd = "python src/main.py", env = { ENV = "development" } }
+serve = { cmd = "python src/main.py", env = { ENV = "production" } }
 test = { cmd = "pytest --verbose --verbose", env = { ENV = "test" } }
 test-coverage = { cmd = "pytest --cov=. --cov-report=xml", env = { ENV = "test" } }

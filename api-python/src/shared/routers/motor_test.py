@@ -1,12 +1,12 @@
 from unittest.mock import MagicMock, patch
 
+from app import app
 from fastapi.testclient import TestClient
-from main import app
 
 client = TestClient(app)
 
 
-@patch("routers.motor.Producer")
+@patch("shared.routers.motor.Producer")
 def test_generate_motor_data(mock_producer: MagicMock) -> None:
     mock_producer_instance = MagicMock()
     mock_producer.return_value = mock_producer_instance

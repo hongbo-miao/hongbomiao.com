@@ -1,4 +1,4 @@
-FROM docker.io/python:3.13.7-alpine AS base
+FROM ghcr.io/astral-sh/uv:0.8.22-python3.13-trixie-slim AS base
 WORKDIR /usr/src/app
 ENV PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1 \
@@ -11,9 +11,14 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   UV_COMPILE_BYTECODE=1 \
   UV_LINK_MODE=copy
 ARG LIBRDKAFKA_VERSION=2.11.0
-# gcc, g++, make, bash are for building librdkafka
+# gcc, g++, make are for building librdkafka
 # hadolint ignore=DL3003
-RUN apk add --no-cache gcc g++ make bash \
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends \
+    gcc \
+    g++ \
+    make \
+    wget \
   && python -m venv /venv/ \
   # Install librdkafka
   # https://github.com/confluentinc/librdkafka#build-from-source
@@ -26,7 +31,7 @@ RUN apk add --no-cache gcc g++ make bash \
   && make install \
   && cd .. \
   && rm -r -f librdkafka-${LIBRDKAFKA_VERSION}/
-COPY --from=ghcr.io/astral-sh/uv:0.8.22-python3.13-alpine /usr/local/bin/uv /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.8.22-python3.13-trixie-slim /usr/local/bin/uv /bin/
 COPY ["api-python/pyproject.toml", "api-python/uv.lock", "api-python/.python-version", "./"]
 RUN . /venv/bin/activate \
   && uv sync --frozen
@@ -35,7 +40,13 @@ RUN . /venv/bin/activate \
   && uv build \
   && pip install --no-cache-dir dist/*.whl \
   && pip wheel --no-cache-dir --no-deps --wheel-dir /wheels dist/*.whl \
-  && apk del gcc g++ make bash
+  && DEBIAN_FRONTEND=noninteractive apt-get purge --yes \
+    g++ \
+    gcc \
+    make \
+    wget \
+  && apt-get autoremove --yes \
+  && rm -r -f /var/lib/apt/lists/*
 
 FROM base AS release
 COPY --from=builder /venv/ /venv/
