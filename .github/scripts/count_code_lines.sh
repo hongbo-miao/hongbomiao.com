@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-# Get the location of this script
-SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )/.."
+# Get the repository root
+SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )/../.."
 
 # Run cloc - this counts code lines, blank lines and comment lines for the specified languages.
 # We are only interested in the summary, therefore the tail -1
