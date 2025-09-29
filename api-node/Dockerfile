@@ -1,17 +1,14 @@
-FROM docker.io/node:22.20.0-alpine AS web-base
+FROM docker.io/node:22.20.0-bookworm-slim AS node-base
 WORKDIR /usr/src/app
 
-FROM web-base AS web-builder
+FROM node-base AS web-builder
 COPY ["web/package.json", "web/package-lock.json", "web/.npmrc", "./"]
 RUN npm ci
 COPY web ./
 RUN npm run build \
   && npm prune --production
 
-FROM docker.io/node:22.20.0-alpine AS api-node-base
-WORKDIR /usr/src/app
-
-FROM api-node-base AS api-node-builder
+FROM node-base AS api-node-builder
 COPY ["api-node/package.json", "api-node/package-lock.json", "api-node/.npmrc", "./"]
 RUN npm ci
 COPY api-node ./
@@ -19,7 +16,7 @@ COPY --from=web-builder /usr/src/app/dist ./public
 RUN npm run build \
   && npm prune --production
 
-FROM api-node-base AS release
+FROM node-base AS release
 RUN apk add --no-cache dumb-init
 ENV NODE_ENV production
 USER node
