@@ -1,3 +1,5 @@
+PRODUCTION_DOCKER_IMAGE_TAG := "ghcr.io/hongbo-miao/hm-api-python:latest"
+
 update-lock-file:
     uv lock
 
@@ -21,10 +23,10 @@ test-coverage:
 
 docker-build:
     cd .. && \
-    docker build --file=api-python/Dockerfile --tag=ghcr.io/hongbo-miao/hm-api-python:latest .
+    docker build --file=api-python/Dockerfile --tag="{{ PRODUCTION_DOCKER_IMAGE_TAG }}" .
 
 docker-push:
-    docker push ghcr.io/hongbo-miao/hm-api-python:latest
+    docker push "{{ PRODUCTION_DOCKER_IMAGE_TAG }}"
 
 docker-run:
-    docker run --publish=35903:35903 --name=hm-api-python --rm ghcr.io/hongbo-miao/hm-api-python:latest
+    docker run --publish=35903:35903 --name=hm-api-python --rm "{{ PRODUCTION_DOCKER_IMAGE_TAG }}"
