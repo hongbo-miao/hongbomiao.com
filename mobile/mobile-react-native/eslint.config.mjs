@@ -51,6 +51,8 @@ export default [
       '**/cmake-build-debug/**/*',
       '**/codegen/**/*',
       '**/coverage.xml',
+      '**/coverage/**/*',
+      '**/data/**/*',
       '**/node_modules/**/*',
       '**/secrets.auto.tfvars',
       '**/slprj/**/*',

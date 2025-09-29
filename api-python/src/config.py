@@ -19,6 +19,11 @@ class Config(BaseSettings):
     SERVER_PORT: int
     SERVER_RELOAD: bool
     SENTRY_DSN: str
+    DOCUMENT_LANCE_DB_DIR: str
+    EMBEDDING_MODEL: str
+    CHAT_MODEL: str
+    OPENAI_API_BASE_URL: str
+    OPENAI_API_KEY: str | None = None
     KAFKA_BOOTSTRAP_SERVERS: str
 
     model_config = SettingsConfigDict(env_file=get_env_files())
