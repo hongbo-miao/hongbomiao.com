@@ -159,6 +159,9 @@ name: . Test Machine Learning
       post-training-quantization:
         required: true
         type: boolean
+      qwen-vl:
+        required: true
+        type: boolean
       reinforcement-learning-cart-pole:
         required: true
         type: boolean
@@ -1906,6 +1909,72 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: llm-evaluation/hm-deepeval
 
+  qwen-vl-test:
+    name: Qwen VL | Test
+    if: ${{ inputs.workflow || inputs.qwen-vl }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.7.0
+        with:
+          version: 0.8.22
+          enable-cache: true
+          cache-dependency-glob: vision-language-model/qwen-vl/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: vision-language-model/qwen-vl/.python-version
+      - name: Install dependencies
+        working-directory: vision-language-model/qwen-vl
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: vision-language-model/qwen-vl
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: vision-language-model/qwen-vl
+
+  convolutional-neural-network-test:
+    name: CNN | Test
+    if: ${{ inputs.workflow || inputs.convolutional-neural-network }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.7.0
+        with:
+          version: 0.8.22
+          enable-cache: true
+          cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: machine-learning/convolutional-neural-network/.python-version
+      - name: Install dependencies
+        working-directory: machine-learning/convolutional-neural-network
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/convolutional-neural-network
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: machine-learning/convolutional-neural-network
+
   graph-neural-network-test:
     name: GNN | Test
     if: ${{ inputs.workflow || inputs.graph-neural-network }}
@@ -1967,36 +2036,3 @@ jobs:
           WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
         run: |
           uv run poe dev --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
-
-  convolutional-neural-network-test:
-    name: CNN | Test
-    if: ${{ inputs.workflow || inputs.convolutional-neural-network }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6.7.0
-        with:
-          version: 0.8.22
-          enable-cache: true
-          cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: machine-learning/convolutional-neural-network/.python-version
-      - name: Install dependencies
-        working-directory: machine-learning/convolutional-neural-network
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/convolutional-neural-network
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/convolutional-neural-network
