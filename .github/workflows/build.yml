@@ -868,8 +868,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6.18.0
         with:
-          context: .
-          file: ./hm-traefik/Dockerfile
+          context: ./kubernetes/hm-traefik
+          file: ./kubernetes/hm-traefik/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-traefik:latest
           cache-from: type=gha
@@ -900,8 +900,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6.18.0
         with:
-          context: .
-          file: ./hm-alpine/Dockerfile
+          context: ./kubernetes/hm-alpine
+          file: ./kubernetes/hm-alpine/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-alpine:latest
           cache-from: type=gha
