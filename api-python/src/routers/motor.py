@@ -7,7 +7,7 @@ from typing import Annotated
 from config import config
 from confluent_kafka import Producer
 from fastapi import APIRouter, Depends
-from utils.kafka_util import delivery_report
+from shared.kafka.utils.report_delivery import report_delivery
 
 router = APIRouter()
 
@@ -35,7 +35,7 @@ async def generate_motor_data(
         producer.produce(
             "hm.motor",
             json.dumps(data).encode("utf-8"),
-            callback=delivery_report,
+            callback=report_delivery,
         )
         await asyncio.sleep(1)
     return {"body": True}
