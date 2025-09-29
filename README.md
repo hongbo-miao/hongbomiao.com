@@ -727,6 +727,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Zellij** - Terminal multiplexer
 - **Just** - Command runner for managing project-specific tasks
 - **xxHash** - Hash algorithm
+- **Valgrind** - Memory debugging and profiling
 
 ## Reverse Engineering
 
@@ -751,7 +752,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **pySerial** - Serial communication library
 - **cantools** - Controller Area Network (CAN) bus tools
 - **python-can** - Controller Area Network (CAN) bus library
-- **Valgrind** - Memory debugging and profiling
 - **Yocto Project** - Linux distribution creating
 - **ROS** - Robot operating system
 - **FreeRTOS** - Real-time operating system
