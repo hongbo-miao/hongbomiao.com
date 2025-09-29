@@ -19,7 +19,8 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@v1.5.3
         with:
           packages: cloc
-          version: 1.98
+          # https://github.com/AlDanial/cloc/tags
+          version: 2.06
       - name: Count code lines
         run: |
           echo "CODE_LINE_COUNT=$(.github/scripts/count_code_lines.sh)" >> $GITHUB_ENV
