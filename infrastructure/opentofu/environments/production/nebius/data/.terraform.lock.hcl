@@ -2,14 +2,14 @@
 # Manual edits may be lost in future updates.
 
 provider "terraform-provider.storage.eu-north1.nebius.cloud/nebius/nebius" {
-  version     = "0.5.111"
-  constraints = "0.5.111"
+  version     = "0.5.113"
+  constraints = "0.5.113"
   hashes = [
-    "h1:iisVK1hbpwTA72gNe8SqDuHILo5YeTjVAtApB6/1bus=",
-    "zh:230638bbf90754609d06b1d593a7b6f2872f8cc24dd84e4c6b0f45a4a258db40",
-    "zh:4f6d7b8ac050dddba50310856a204ded78f9669f1a8a381aaf6df6554df684bd",
-    "zh:979233d3d24c48969ce0c3aed339342f49bc532506dc53e3114db1e2e54b861a",
-    "zh:9a2474777d21e102d4beaac97acfc4b2db52ab5fe219132a2e03af90305c4218",
-    "zh:a073094d8bb870cb31fa7081d8783c3c0c4a7c664042647a763cdc6996386c3d",
+    "h1:6Ujmekw6tHyRcqcu66m1efH3Ef2ezLNeixSNF2m5lKQ=",
+    "zh:6f4a0ad082ca0e6ffa675b4461607f50f0bd638754fca137fe55457b82d3860f",
+    "zh:72d2fcc7b6536582de9549d0bab3027fdb590d03151966547cfc3074f6e5ca7d",
+    "zh:9771b428ce76c5cf9cb27cee7c7d91f7d92135da6469e7a4b25f57737c0d249a",
+    "zh:c33e8c48f5850dafb2f2d5608778843d2cd2582a8db273474bf2169a184434e5",
+    "zh:e40a5c6b00be7aa7908e9dcc2876a11ac061e695a06b5fc31bda0ad1fe78c506",
   ]
 }
