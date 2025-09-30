@@ -4,9 +4,9 @@ from shared.openai.types.role import Role
 
 
 def extract_user_question(request: ChatCompletionRequest) -> str:
-    user_messages = [
-        message for message in request.messages if message.role == Role.USER
-    ]
+    user_messages = list(
+        filter(lambda message: message.role == Role.USER, request.messages),
+    )
     if not user_messages:
         raise HTTPException(
             status_code=400,
