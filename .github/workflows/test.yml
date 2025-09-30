@@ -329,6 +329,8 @@ jobs:
               - 'data-visualization/hm-dash/csv-visualizer/**'
             hm-dash-parquet-visualizer:
               - 'data-visualization/hm-dash/parquet-visualizer/**'
+            hm-diart:
+              - 'audio/speaker-diarization/hm-diart/**'
             hm-docling:
               - 'data-extraction/hm-docling/**'
             hm-duckdb-query-duckdb:
@@ -1078,6 +1080,7 @@ jobs:
       hm-crawl4ai: ${{ needs.detect-changes.outputs.hm-crawl4ai == 'true' }}
       hm-cuml: ${{ needs.detect-changes.outputs.hm-cuml == 'true' }}
       hm-deepeval: ${{ needs.detect-changes.outputs.hm-deepeval == 'true' }}
+      hm-diart: ${{ needs.detect-changes.outputs.hm-diart == 'true' }}
       hm-docling: ${{ needs.detect-changes.outputs.hm-docling == 'true' }}
       hm-faster-whisper: ${{ needs.detect-changes.outputs.hm-faster-whisper == 'true' }}
       hm-firecrawl: ${{ needs.detect-changes.outputs.hm-firecrawl == 'true' }}
