@@ -1,0 +1,25 @@
+[project]
+name = "hm-senko"
+version = "1.0.0"
+dependencies = [
+  "senko",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.37.0",
+  "pytest-cov==7.0.0",
+  "pytest==8.4.2",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.8.0"
+
+[tool.uv.sources]
+senko = { git = "https://github.com/narcotic-sh/senko.git" }
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
