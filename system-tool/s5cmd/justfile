@@ -9,3 +9,17 @@ list:
     AWS_REGION={{ AWS_REGION }} \
     S3_ENDPOINT_URL={{ S3_ENDPOINT_URL }} \
     s5cmd ls s3://production-hm-bucket
+
+upload:
+    AWS_ACCESS_KEY_ID={{ AWS_ACCESS_KEY_ID }} \
+    AWS_SECRET_ACCESS_KEY={{ AWS_SECRET_ACCESS_KEY }} \
+    AWS_REGION={{ AWS_REGION }} \
+    S3_ENDPOINT_URL={{ S3_ENDPOINT_URL }} \
+    s5cmd cp /tmp/folder/ s3://production-hm-bucket/folder/
+
+download:
+    AWS_ACCESS_KEY_ID={{ AWS_ACCESS_KEY_ID }} \
+    AWS_SECRET_ACCESS_KEY={{ AWS_SECRET_ACCESS_KEY }} \
+    AWS_REGION={{ AWS_REGION }} \
+    S3_ENDPOINT_URL={{ S3_ENDPOINT_URL }} \
+    s5cmd cp "s3://production-hm-bucket/folder/**" /tmp/folder/
