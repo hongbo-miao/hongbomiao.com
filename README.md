@@ -588,6 +588,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **py-webrtcvad-wheels** - Voice activity detector
 - Speaker Diarization
   - **Senko** - Speaker diarization
+  - **Diart** - Real-time speaker diarization
 - Automatic Speech Recognition (ASR)
   - **Faster Whisper** - Fast Whisper inference using CTranslate2
   - **WhisperX** – Whisper-based transcription with word-level timestamps and speaker diarization
