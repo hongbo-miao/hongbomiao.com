@@ -48,6 +48,7 @@ module.exports = [
       '**/coverage/**/*',
       '**/data/**/*',
       '**/node_modules/**/*',
+      '**/output/**/*',
       '**/secrets.auto.tfvars',
       '**/slprj/**/*',
       '**/target/**/*',

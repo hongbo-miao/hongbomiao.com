@@ -62,6 +62,7 @@ export default [
       '**/coverage/**/*',
       '**/data/**/*',
       '**/node_modules/**/*',
+      '**/output/**/*',
       '**/secrets.auto.tfvars',
       '**/slprj/**/*',
       '**/target/**/*',
