@@ -12,3 +12,4 @@ class ChatCompletionRequest(BaseModel):
     frequency_penalty: float | None = Field(default=0.0, ge=-2.0, le=2.0)
     presence_penalty: float | None = Field(default=0.0, ge=-2.0, le=2.0)
     stop: str | list[str] | None = Field(default=None)
+    user_id: str | None = Field(default=None)
