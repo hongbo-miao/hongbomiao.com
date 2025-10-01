@@ -10,7 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import completions, health, models, motor
 from routers.handle_http_exception import handle_http_exception
 from sentry_sdk.integrations.fastapi import FastApiIntegration
-from shared.lance_db.services.document_lance_db_service import DocumentLanceDbService
+from shared.lance_db.utils.load_document_lance_db import load_document_lance_db
+from shared.memory.services.create_memory_client import create_memory_client
 
 sentry_sdk.init(
     dsn=config.SENTRY_DSN,
@@ -22,14 +23,17 @@ sentry_sdk.init(
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
-    app.state.document_context = DocumentLanceDbService.load_document_lance_db(
+    app.state.document_context = load_document_lance_db(
         Path(config.DOCUMENT_LANCE_DB_DIR),
     )
     app.state.httpx_client = httpx.AsyncClient(timeout=30.0)
+    app.state.memory_client = create_memory_client()
     yield
     if app.state.document_context:
         del app.state.document_context
     await app.state.httpx_client.aclose()
+    if app.state.memory_client:
+        del app.state.memory_client
 
 
 app = FastAPI(lifespan=lifespan)
