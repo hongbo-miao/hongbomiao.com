@@ -171,13 +171,16 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### API Server - Python
 
 - **FastAPI** - Web framework
-- **Uvicorn** - Asynchronous server gateway interface (ASGI) server
-- **asyncpg** - PostgreSQL client library
+- **PydanticAI** - LLM agent framework
 - **openai** - OpenAI API library
-- **Tenacity** - General-purpose retrying library
+- **Mem0** - Memory layer
+- **Sentence Transformers** - Sentence embedding
+- **LanceDB** - Embedded vector database
 - **pydantic** - Data validation
 - **HTTPX** - HTTP client
+- **asyncpg** - PostgreSQL client library
 - **pytest** - Unit testing
+- **Uvicorn** - Asynchronous server gateway interface (ASGI) server
 - **Poe the Poet** - Task runner
 - **uv** - Python package management
 
