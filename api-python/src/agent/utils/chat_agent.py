@@ -3,6 +3,7 @@ import textwrap
 from agent.models.chat_dependencies import ChatAgentDependencies
 from agent.models.chat_response import ChatResponse
 from agent.utils.retrieve_relevant_context import retrieve_relevant_context
+from config import config
 from pydantic_ai import Agent
 from shared.llm_model.utils.create_chat_model import create_chat_model
 
@@ -11,8 +12,8 @@ chat_agent = Agent(
     output_type=ChatResponse,
     deps_type=ChatAgentDependencies,
     model_settings={
-        "temperature": 0,
-        "top_p": 1,
+        "temperature": config.CHAT_MODEL_TEMPERATURE,
+        "max_tokens": config.CHAT_MODEL_MAX_TOKENS,
     },
     tools=[retrieve_relevant_context],
     system_prompt=textwrap.dedent("""

@@ -1,8 +1,11 @@
 import logging
+from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import StreamingResponse
+from mem0 import Memory
 from shared.lance_db.models.document_lance_db_context import DocumentLanceDbContext
+from shared.memory.services.get_memory_client import get_memory_client
 from shared.openai.types.chat_completion_request import ChatCompletionRequest
 from shared.openai.types.chat_completion_response import ChatCompletionResponse
 from shared.openai.utils.create_non_streaming_completion import (
@@ -20,6 +23,7 @@ router = APIRouter(tags=["completions"])
 async def create_chat_completion(
     request: ChatCompletionRequest,
     fastapi_request: Request,
+    memory_client: Annotated[Memory, Depends(get_memory_client)],
 ) -> ChatCompletionResponse:
     try:
         document_context: DocumentLanceDbContext | None = (
@@ -29,6 +33,7 @@ async def create_chat_completion(
         if request.stream:
             return StreamingResponse(
                 create_streaming_completion(
+                    memory_client,
                     request,
                     question,
                     document_context,
@@ -41,6 +46,7 @@ async def create_chat_completion(
                 },
             )
         return await create_non_streaming_completion(
+            memory_client,
             request,
             question,
             document_context,
