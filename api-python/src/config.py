@@ -22,6 +22,12 @@ class Config(BaseSettings):
     DOCUMENT_LANCE_DB_DIR: str
     EMBEDDING_MODEL: str
     CHAT_MODEL: str
+    CHAT_MODEL_TEMPERATURE: float
+    CHAT_MODEL_MAX_TOKENS: int
+    MEMORY_MODEL: str
+    MEMORY_LIMIT: int
+    MEMORY_MODEL_TEMPERATURE: float
+    MEMORY_MODEL_MAX_TOKENS: int
     OPENAI_API_BASE_URL: str
     OPENAI_API_KEY: str | None = None
     KAFKA_BOOTSTRAP_SERVERS: str
