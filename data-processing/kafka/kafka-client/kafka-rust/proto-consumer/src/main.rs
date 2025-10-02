@@ -61,17 +61,17 @@ async fn main() {
                                 println!("  temperature4: {:?}", motor.temperature4);
                                 println!("  temperature5: {:?}", motor.temperature5);
                             }
-                            Err(e) => eprintln!("Failed to decode motor data: {}", e),
+                            Err(error) => eprintln!("Failed to decode motor data: {error}"),
                         },
                         Ok(None) => eprintln!("No data decoded"),
-                        Err(e) => eprintln!("Error decoding message: {}", e),
+                        Err(error) => eprintln!("Error decoding message: {error}"),
                     }
                 }
                 consumer
                     .commit_message(&message, CommitMode::Async)
                     .unwrap();
             }
-            Err(e) => eprintln!("Error while receiving message: {}", e),
+            Err(error) => eprintln!("Error while receiving message: {error}"),
         }
     }
 }

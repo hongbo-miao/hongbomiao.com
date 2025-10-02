@@ -238,12 +238,12 @@ impl FlightService for FlightSqlServer {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let addr = "[::1]:50841".parse()?;
+    let address = "[::1]:50841".parse()?;
     let server = FlightSqlServer::new("data").await?;
-    println!("Flight SQL Server listening on {}", addr);
+    println!("Flight SQL Server listening on {address}");
     Server::builder()
         .add_service(FlightServiceServer::new(server))
-        .serve(addr)
+        .serve(address)
         .await?;
     Ok(())
 }

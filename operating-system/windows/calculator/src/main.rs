@@ -23,7 +23,7 @@ fn main() -> Result<()> {
 
         // Use COM API
         let name = element.CurrentName()?;
-        println!("Window name: {}", name);
+        println!("Window name: {name}");
 
         // Query for WinRT API (will fail on earlier versions of Windows)
         let element: Result<AutomationElement> = element.cast();
