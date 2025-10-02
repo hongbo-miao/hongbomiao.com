@@ -62,7 +62,7 @@ async fn main() -> Result<()> {
     let topic = "production.iot.motor.proto";
     let motor_ids = ["motor_001", "motor_002", "motor_003"];
 
-    println!("Sending data to Kafka topic: {}", topic);
+    println!("Sending data to Kafka topic: {topic}");
     loop {
         interval.tick().await;
 
@@ -90,8 +90,8 @@ async fn main() -> Result<()> {
             .await
         {
             Ok(_) => {}
-            Err((err, _)) => {
-                eprintln!("Failed to send data for motor {}: {}", motor_id, err);
+            Err((error, _)) => {
+                eprintln!("Failed to send data for motor {motor_id}: {error}");
             }
         }
     }
