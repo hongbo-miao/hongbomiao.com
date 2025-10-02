@@ -23,6 +23,6 @@ package = false
 required-version = ">=0.8.0"
 
 [tool.poe.tasks]
-dev = "python src/main.py"
-test = "pytest --verbose --verbose"
-test-coverage = "pytest --cov=. --cov-report=xml"
+dev = { cmd = "python src/main.py", env = { ENV = "development" } }
+test = { cmd = "pytest --verbose --verbose", env = { ENV = "test" } }
+test-coverage = { cmd = "pytest --cov=. --cov-report=xml", env = { ENV = "test" } }

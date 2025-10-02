@@ -18,8 +18,8 @@ with DAG(
     @task(task_id="get_name")
     def get_name(params: dict[str, str] | None = None) -> dict[str, str]:
         if params is None:
-            msg = "params cannot be None"
-            raise ValueError(msg)
+            message = "params cannot be None"
+            raise ValueError(message)
         return {
             "first_name": params["first_name"],
             "last_name": params["last_name"],
@@ -45,12 +45,12 @@ with DAG(
     @task
     def greet(initials: str, ti: TaskInstance | None = None) -> str:
         if ti is None:
-            msg = "TaskInstance cannot be None"
-            raise ValueError(msg)
+            message = "TaskInstance cannot be None"
+            raise ValueError(message)
         time = ti.xcom_pull(task_ids="get_time")
         if time is None:
-            msg = "Failed to get time from xcom"
-            raise ValueError(msg)
+            message = "Failed to get time from xcom"
+            raise ValueError(message)
         dt = datetime.strptime(time, "%Y-%m-%d %H:%M:%S").astimezone(UTC)
         return f"Hello {initials}, {dt.strftime('at %H:%M on %B %d, %Y')}!"
 

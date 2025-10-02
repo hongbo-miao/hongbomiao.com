@@ -61,8 +61,8 @@ def deploy() -> None:
     }
     region = boto3.Session().region_name
     if region not in aws_account_id_dict:
-        msg = "Unsupported region"
-        raise ValueError(msg)
+        message = "Unsupported region"
+        raise ValueError(message)
     base = "amazonaws.com.cn" if region.startswith("cn-") else "amazonaws.com"
     triton_server_image_uri = f"{aws_account_id_dict[region]}.dkr.ecr.{region}.{base}/sagemaker-tritonserver:22.07-py3"
 

@@ -202,7 +202,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
             drop(last_time);
 
             println!(
-                "Messages received: {}, sent: {}, in flight: {}, Channel capacity: {} ({:.1}%)\nInterval speed: {:.2} msg/s",
+                "Messages received: {}, sent: {}, in flight: {}, Channel capacity: {} ({:.1}%)\nInterval speed: {:.2} messages/s",
                 received,
                 sent,
                 received - sent,
