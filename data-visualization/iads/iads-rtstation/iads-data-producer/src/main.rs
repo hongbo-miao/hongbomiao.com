@@ -123,8 +123,8 @@ async fn send_data_stream(
             offset += VALUE_SIZE_BYTE as usize;
         }
 
-        if let Err(e) = stream.write_all(&buffer).await {
-            println!("Send error: {}", e);
+        if let Err(error) = stream.write_all(&buffer).await {
+            println!("Send error: {error}");
             return Ok(());
         }
 
@@ -147,7 +147,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 send_data_stream(stream, &config).await?;
                 println!("Client disconnected");
             }
-            Err(e) => println!("Accept failed: {}", e),
+            Err(error) => println!("Accept failed: {error}"),
         }
     }
 }

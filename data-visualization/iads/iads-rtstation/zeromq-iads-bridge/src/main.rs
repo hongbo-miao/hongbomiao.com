@@ -170,10 +170,10 @@ async fn run_api_server(shared_iads_status: SharedIadsStatus, api_server_port: u
         )
         .with_state(shared_iads_status);
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], api_server_port));
-    println!("API server listening on {}", addr);
+    let address = SocketAddr::from(([0, 0, 0, 0], api_server_port));
+    println!("API server listening on {address}");
 
-    let listener = TcpListener::bind(addr).await.unwrap();
+    let listener = TcpListener::bind(address).await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
 
@@ -276,8 +276,8 @@ async fn process_zeromq_data(
         // Deserialize prost message
         let signals = match Signals::decode(&bytes[..]) {
             Ok(signals) => signals,
-            Err(e) => {
-                println!("Failed to decode protobuf message: {}", e);
+            Err(error) => {
+                println!("Failed to decode protobuf message: {error}");
                 continue;
             }
         };
@@ -297,11 +297,11 @@ async fn process_zeromq_data(
 
         // Print signal information for the first message or when count changes
         if packet_counter == 0 {
-            println!("\nSignal Count: {}", signal_count);
+            println!("\nSignal Count: {signal_count}");
             println!("Timestamp: {} ns", signals.timestamp_ns);
             println!("Signal Names:");
             for (i, signal) in signals.signals.iter().enumerate() {
-                println!(" {}: {} = {}", i, signal.name, signal.value);
+                println!(" {i}: {} = {}", signal.name, signal.value);
             }
             println!("\nStarting data processing...\n");
         }
@@ -375,8 +375,8 @@ async fn process_zeromq_data(
         }
 
         // Send to IADS
-        if let Err(e) = iads_stream.write_all(&buffer).await {
-            println!("IADS send error: {}", e);
+        if let Err(error) = iads_stream.write_all(&buffer).await {
+            println!("IADS send error: {error}");
             break;
         }
 
@@ -465,8 +465,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .expect("Failed to start IADS");
 
     tokio::spawn(async move {
-        if let Err(e) = child.wait().await {
-            eprintln!("IADS process exited with error: {}", e);
+        if let Err(error) = child.wait().await {
+            eprintln!("IADS process exited with error: {error}");
         } else {
             println!("IADS process exited gracefully.");
         }
@@ -486,10 +486,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     iads_status.is_iads_connected = true;
                 }
 
-                if let Err(e) =
+                if let Err(error) =
                     process_zeromq_data(stream, &config, shared_iads_status.clone()).await
                 {
-                    println!("Error processing data: {}", e);
+                    println!("Error processing data: {error}");
                 }
 
                 {
@@ -498,7 +498,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                 }
                 println!("IADS client disconnected...");
             }
-            Err(e) => eprintln!("Error accepting connection: {}", e),
+            Err(error) => eprintln!("Error accepting connection: {error}"),
         }
     }
 }

@@ -41,11 +41,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
             Ok(_motor) => {
                 message_count += 1;
                 if message_count % 10000 == 0 {
-                    println!("Total messages received: {}", message_count);
+                    println!("Total messages received: {message_count}");
                 }
             }
-            Err(e) => {
-                eprintln!("Failed to decode protobuf message: {}", e);
+            Err(error) => {
+                eprintln!("Failed to decode protobuf message: {error}");
             }
         }
     }
