@@ -42,6 +42,7 @@
       become: true
       ansible.builtin.apt:
         name:
+          - btop
           - ncdu
           - tshark
         state: present
@@ -49,7 +50,6 @@
       become: true
       community.general.snap:
         name:
-          - btop
           - htop
           - nvtop
           - vnstat
