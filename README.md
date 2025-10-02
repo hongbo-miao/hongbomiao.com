@@ -586,6 +586,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Audio
 
+- **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
 - Voice Activity Detector (VAD)
   - **Silero VAD** - Voice activity detector
   - **py-webrtcvad-wheels** - Voice activity detector
