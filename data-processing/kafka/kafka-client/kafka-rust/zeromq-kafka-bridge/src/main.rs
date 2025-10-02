@@ -164,8 +164,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     let ctx = processing_context.clone();
                     last_message_time = Instant::now();
                     handles.push(tokio::spawn(async move {
-                        if let Err(e) = process_message(ctx, signals).await {
-                            eprintln!("Error processing message: {}", e);
+                        if let Err(error) = process_message(ctx, signals).await {
+                            eprintln!("Error processing message: {error}");
                         }
                     }));
                     handles.retain(|handle| !handle.is_finished());
@@ -178,13 +178,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
                         println!("Inactivity detected, flushing remaining messages...");
                         let received = processing_context.messages_received.load(Ordering::Relaxed);
                         let sent = processing_context.messages_sent.load(Ordering::Relaxed);
-                        println!("Messages received: {}, Messages sent to Kafka: {}, Messages in flight: {}",
-                            received, sent, received - sent);
+                        println!("Messages received: {received}, Messages sent to Kafka: {sent}, Messages in flight: {}",
+                            received - sent);
                         futures::future::join_all(handles.drain(..)).await;
                         let final_received = processing_context.messages_received.load(Ordering::Relaxed);
                         let final_sent = processing_context.messages_sent.load(Ordering::Relaxed);
-                        println!("After flush - Messages received: {}, Messages sent to Kafka: {}, Messages in flight: {}",
-                            final_received, final_sent, final_received - final_sent);
+                        println!("After flush - Messages received: {final_received}, Messages sent to Kafka: {final_sent}, Messages in flight: {}",
+                            final_received - final_sent);
                     }
                 }
             }
@@ -199,12 +199,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
         match Signals::decode(&bytes[..]) {
             Ok(signals) => {
                 context.messages_received.fetch_add(1, Ordering::Relaxed);
-                if let Err(e) = tx.send(signals).await {
-                    eprintln!("Failed to send message to processing task: {}", e);
+                if let Err(error) = tx.send(signals).await {
+                    eprintln!("Failed to send message to processing task: {error}");
                 }
             }
-            Err(e) => {
-                eprintln!("Failed to decode protobuf message: {}", e);
+            Err(error) => {
+                eprintln!("Failed to decode protobuf message: {error}");
             }
         }
 
