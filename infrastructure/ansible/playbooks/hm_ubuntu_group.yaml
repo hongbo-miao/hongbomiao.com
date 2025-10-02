@@ -196,7 +196,7 @@
     speaches_docker_image: ghcr.io/speaches-ai/speaches:0.8.2-cuda
     speaches_port: 34796
     speaches_gpu_devices: "'\"device=0\"'"
-    speaches_hugging_face_token: "{{ hostvars[inventory_hostname]['hugging_face_token'] }}"
+    speaches_hugging_face_hub_token: "{{ hostvars[inventory_hostname]['hugging_face_hub_token'] }}"
 
 - name: Deploy vLLM
   hosts: all
@@ -212,4 +212,4 @@
     vllm_tensor_parallel_size: 1
     vllm_gpu_devices: "'\"device=0\"'"
     vllm_tool_call_parser: hermes
-    vllm_hugging_face_token: "{{ hostvars[inventory_hostname]['hugging_face_token'] }}"
+    vllm_hugging_face_hub_token: "{{ hostvars[inventory_hostname]['hugging_face_hub_token'] }}"
