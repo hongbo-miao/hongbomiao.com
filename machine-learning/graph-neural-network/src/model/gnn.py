@@ -34,8 +34,8 @@ class GNN(torch.nn.Module):
         self.graph_pooling = graph_pooling
 
         if self.num_layer < 2:
-            msg = "Number of GNN layers must be greater than 1."
-            raise ValueError(msg)
+            message = "Number of GNN layers must be greater than 1."
+            raise ValueError(message)
 
         # GNN to generate node embeddings
         if virtual_node:
@@ -76,8 +76,8 @@ class GNN(torch.nn.Module):
         elif self.graph_pooling == "set2set":
             self.pool = Set2Set(emb_dim, processing_steps=2)
         else:
-            msg = "Invalid graph pooling type."
-            raise ValueError(msg)
+            message = "Invalid graph pooling type."
+            raise ValueError(message)
 
         if graph_pooling == "set2set":
             self.graph_pred_linear = torch.nn.Linear(2 * self.emb_dim, self.num_tasks)

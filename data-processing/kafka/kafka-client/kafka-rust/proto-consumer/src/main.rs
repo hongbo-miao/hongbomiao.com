@@ -47,8 +47,8 @@ async fn main() {
 
     loop {
         match consumer.recv().await {
-            Ok(msg) => {
-                if let Some(payload) = msg.payload() {
+            Ok(message) => {
+                if let Some(payload) = message.payload() {
                     match decoder.decode(Some(payload)).await {
                         Ok(Some(decoded)) => match Motor::decode(&*decoded.bytes) {
                             Ok(motor) => {
@@ -67,7 +67,9 @@ async fn main() {
                         Err(e) => eprintln!("Error decoding message: {}", e),
                     }
                 }
-                consumer.commit_message(&msg, CommitMode::Async).unwrap();
+                consumer
+                    .commit_message(&message, CommitMode::Async)
+                    .unwrap();
             }
             Err(e) => eprintln!("Error while receiving message: {}", e),
         }

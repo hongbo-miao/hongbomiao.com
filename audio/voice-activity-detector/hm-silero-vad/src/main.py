@@ -35,9 +35,9 @@ class VadProcessor:
         elif sample_rate == 8000:
             self.vad_window_size = 256  # 32ms at 8kHz
         else:
-            msg = f"Unsupported sample rate: {sample_rate}. Use 8000 or 16000."
+            message = f"Unsupported sample rate: {sample_rate}. Use 8000 or 16000."
             raise ValueError(
-                msg,
+                message,
             )
 
         # Buffers

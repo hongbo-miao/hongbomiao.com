@@ -471,15 +471,15 @@ class Batch(UserDict):
     def __getitem__(self, item: str) -> Tensor:
         if isinstance(item, str):
             return self.data[item]
-        msg = "Invalid key. Only string keys are available"
-        raise KeyError(msg)
+        message = "Invalid key. Only string keys are available"
+        raise KeyError(message)
 
     def __getattr__(self, item: str) -> Tensor:
         try:
             return self.data[item]
         except KeyError:
-            msg = f"Attribute {item} not found"
-            raise AttributeError(msg) from None
+            message = f"Attribute {item} not found"
+            raise AttributeError(message) from None
 
     def to(self, device: str | torch.device) -> "Batch":
         """Move batch to specified device."""
