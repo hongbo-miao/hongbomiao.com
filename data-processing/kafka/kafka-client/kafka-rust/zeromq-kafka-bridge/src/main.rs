@@ -193,9 +193,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // Main ZeroMQ receiving loop
     loop {
-        let msg = socket.recv().await?;
+        let message = socket.recv().await?;
         let default_bytes = prost::bytes::Bytes::new();
-        let bytes = msg.get(0).unwrap_or(&default_bytes);
+        let bytes = message.get(0).unwrap_or(&default_bytes);
         match Signals::decode(&bytes[..]) {
             Ok(signals) => {
                 context.messages_received.fetch_add(1, Ordering::Relaxed);
@@ -222,7 +222,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
             drop(last_time);
 
             println!(
-                "Messages received: {}, sent: {}, in flight: {}, capacity: {} ({:.1}%)\nInterval speed: {:.2} msg/s",
+                "Messages received: {}, sent: {}, in flight: {}, capacity: {} ({:.1}%)\nInterval speed: {:.2} messages/s",
                 received,
                 sent,
                 received - sent,

@@ -223,9 +223,9 @@ async fn wait_for_first_message(get_zeromq_address: &str) -> Result<Signals, Box
     subscriber.connect(get_zeromq_address).await?;
     subscriber.subscribe("").await?;
 
-    let msg = subscriber.recv().await?;
+    let message = subscriber.recv().await?;
     let default_bytes = prost::bytes::Bytes::new();
-    let bytes = msg.get(0).unwrap_or(&default_bytes);
+    let bytes = message.get(0).unwrap_or(&default_bytes);
     let signals = Signals::decode(&bytes[..])?;
 
     Ok(signals)
@@ -269,9 +269,9 @@ async fn process_zeromq_data(
     iads_stream.write_all(&100i32.to_le_bytes()).await?;
 
     loop {
-        let msg = subscriber.recv().await?;
+        let message = subscriber.recv().await?;
         let default_bytes = prost::bytes::Bytes::new();
-        let bytes = msg.get(0).unwrap_or(&default_bytes);
+        let bytes = message.get(0).unwrap_or(&default_bytes);
 
         // Deserialize prost message
         let signals = match Signals::decode(&bytes[..]) {

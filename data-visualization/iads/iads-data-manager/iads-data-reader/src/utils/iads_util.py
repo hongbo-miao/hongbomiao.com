@@ -63,9 +63,11 @@ class IadsUtil:
                     year = date.year
 
         if not irig_start_time or not irig_end_time or year is None:
-            msg = "Could not find start time, end time, or year in archive info file"
+            message = (
+                "Could not find start time, end time, or year in archive info file"
+            )
             raise ValueError(
-                msg,
+                message,
             )
 
         # Validate IRIG time
@@ -75,19 +77,19 @@ class IadsUtil:
             time_pattern,
             irig_end_time,
         ):
-            msg = "Invalid time format in archive info file"
-            raise ValueError(msg)
+            message = "Invalid time format in archive info file"
+            raise ValueError(message)
         if irig_start_time > max_irig_time:
-            msg = (
+            message = (
                 f"Start time '{irig_start_time}' cannot be bigger than {max_irig_time}"
             )
-            raise ValueError(msg)
+            raise ValueError(message)
         if irig_end_time == "000:00:00:00.000" or irig_end_time > max_irig_time:
-            msg = f"End time '{irig_end_time}' cannot be 000:00:00:00.000 or bigger than {max_irig_time}"
-            raise ValueError(msg)
+            message = f"End time '{irig_end_time}' cannot be 000:00:00:00.000 or bigger than {max_irig_time}"
+            raise ValueError(message)
         if irig_end_time <= irig_start_time:
-            msg = f"End time '{irig_end_time}' must be greater than start time '{irig_start_time}'"
-            raise ValueError(msg)
+            message = f"End time '{irig_end_time}' must be greater than start time '{irig_start_time}'"
+            raise ValueError(message)
 
         return irig_start_time, irig_end_time, year
 
@@ -127,8 +129,8 @@ class IadsUtil:
         result = subprocess.run(cmd, capture_output=True, text=True, check=False)  # noqa: S603
         if result.returncode == 0:
             return parquet_file_path
-        msg = f"Error output: {result}"
-        raise ValueError(msg)
+        message = f"Error output: {result}"
+        raise ValueError(message)
 
     @staticmethod
     def convert_irig_to_unix_time_ns(
