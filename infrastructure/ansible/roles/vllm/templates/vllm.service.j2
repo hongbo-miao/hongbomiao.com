@@ -16,7 +16,7 @@ ExecStart=/usr/bin/docker run \
   --volume={{ vllm_volume_name }}:{{ vllm_volume_mount }} \
   --gpus {{ vllm_gpu_devices }} \
   --ipc=host \
-  --env=HUGGING_FACE_HUB_TOKEN={{ vllm_hugging_face_token }} \
+  --env=HUGGING_FACE_HUB_TOKEN={{ vllm_hugging_face_hub_token }} \
   --detach=false \
   {{ vllm_docker_image }} \
     --model={{ vllm_model }} \
