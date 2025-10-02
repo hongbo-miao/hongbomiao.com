@@ -14,8 +14,8 @@ def get_event_id(event_name: str) -> str:
     """  # noqa: S608
     event_df = daft.read_sql(sql_query, TRINO_URL)
     if event_df.count_rows() == 0:
-        msg = f"No event found with name: {event_name}"
-        raise ValueError(msg)
+        message = f"No event found with name: {event_name}"
+        raise ValueError(message)
     return event_df.to_arrow()["id"][0].as_py()
 
 

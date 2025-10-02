@@ -5,12 +5,14 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 def get_env_files() -> list[str]:
     env = os.getenv("ENV")
-    if env == "production":
-        return [".env.production", ".env.production.local"]
-    if env in {"development", "test"}:
-        return [".env.development", ".env.development.local"]
-    msg = f"Invalid ENV value: {env}."
-    raise ValueError(msg)
+    match env:
+        case "production":
+            return [".env.production", ".env.production.local"]
+        case "development" | "test":
+            return [".env.development", ".env.development.local"]
+        case _:
+            message = f"Invalid ENV value: {env}."
+            raise ValueError(message)
 
 
 class Config(BaseSettings):

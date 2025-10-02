@@ -16,8 +16,8 @@ class TargetControlNode(Node):
         self.create_subscription(Pose, "turtle1/pose", self.subscribe_target_pose, 10)
         self.create_timer(1.0, self.control_loop)
 
-    def subscribe_target_pose(self, msg: Pose) -> None:
-        self._target_pose = msg
+    def subscribe_target_pose(self, message: Pose) -> None:
+        self._target_pose = message
 
     def control_loop(self) -> None:
         if self._target_pose is None:
@@ -30,10 +30,10 @@ class TargetControlNode(Node):
         dist_y = target_y - self._target_pose.y
         distance = math.sqrt(dist_x**2 + dist_y**2)
 
-        msg = Twist()
+        message = Twist()
 
         # position
-        msg.linear.x = 1.0 * distance
+        message.linear.x = 1.0 * distance
 
         # orientation
         goal_theta = math.atan2(dist_y, dist_x)
@@ -42,9 +42,9 @@ class TargetControlNode(Node):
             diff -= 2 * math.pi
         elif diff < -math.pi:
             diff += 2 * math.pi
-        msg.angular.z = 2 * diff
+        message.angular.z = 2 * diff
 
-        self._cmd_vel_publisher.publish(msg)
+        self._cmd_vel_publisher.publish(message)
 
 
 def main(args: list[str] | None = None) -> None:

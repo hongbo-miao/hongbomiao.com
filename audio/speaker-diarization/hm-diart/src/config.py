@@ -9,8 +9,8 @@ def get_env_files() -> list[str]:
         return [".env.production", ".env.production.local"]
     if env in {"development", "test"}:
         return [".env.development", ".env.development.local"]
-    msg = f"Invalid ENV value: {env}."
-    raise ValueError(msg)
+    message = f"Invalid ENV value: {env}."
+    raise ValueError(message)
 
 
 class Config(BaseSettings):
