@@ -99,6 +99,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **SwiftUI** - UI framework
 - **XCTest** - Unit testing, performance testing
 - **Slather** - Code coverage reports generating
+- **Mint** - Package management
 
 ### Mobile - Android
 
@@ -242,7 +243,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Telegraf** - Plugin-driven server agent
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
-- **Multipass** - VM management
+- **Multipass** - Virtual machine management
 - **Cloudflare Tunnel** - Tunneling
 - **Vertical Pod Autoscaler** - Kubernetes vertical pod autoscaler
 - **KEDA** - Kubernetes event-driven autoscaler
@@ -857,6 +858,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **ShellCheck** - Shell linter
 - **Solhint** - Solidity linter
 - **SQLFluff** - SQL formatter and linter
+- **swift-format** - Swift formatter and linter
 - **Taplo** - TOML formatter
 - **tsc** - TypeScript static type checker
 - **Verible** - Verilog formatter and linter
