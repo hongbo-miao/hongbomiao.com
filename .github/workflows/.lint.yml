@@ -121,6 +121,9 @@ name: . Lint
       mobile-android:
         required: true
         type: boolean
+      mobile-ios:
+        required: true
+        type: boolean
       mobile-react-native:
         required: true
         type: boolean
@@ -1219,6 +1222,29 @@ jobs:
           uv run poe lint-sql --dialect=sqlite data-storage/sqlite/queries
           # uv run poe lint-sql --dialect=trino data-processing/trino/queries
           # uv run poe lint-sql --dialect=tsql data-storage/microsoft-sql-server/queries
+
+  lint-swift-mobile-ios:
+    name: Swift (mobile-ios)
+    if: ${{ inputs.workflow || inputs.mobile-ios }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Set up Mint
+        uses: irgaly/setup-mint@v1.7.0
+        with:
+          mint-directory: mobile/mobile-ios
+          use-cache: true
+          bootstrap: true
+      - name: Lint Swift (format)
+        working-directory: mobile/mobile-ios
+        run: |
+          mint run swift-format format . --recursive
+      - name: Lint Swift (lint)
+        working-directory: mobile/mobile-ios
+        run: |
+          mint run swift-format lint . --recursive --strict
 
   lint-opentofu:
     name: OpenTofu

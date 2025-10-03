@@ -41,3 +41,15 @@ tuist-generate:
 
 tuist-generate-no-open:
     tuist generate --no-open
+
+mint-bootstrap:
+    mint bootstrap
+
+lint-swift-format:
+    mint run swift-format format . --recursive
+
+lint-swift-format-fix:
+    mint run swift-format format . --recursive --in-place
+
+lint-swift-lint:
+    mint run swift-format lint . --recursive --strict
