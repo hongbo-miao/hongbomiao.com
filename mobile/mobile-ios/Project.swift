@@ -1,7 +1,18 @@
+import Foundation
 import ProjectDescription
+
+let swiftVersion = try! String(
+  contentsOfFile: ".swift-version",
+  encoding: .utf8
+).trimmingCharacters(in: .whitespacesAndNewlines)
 
 let project = Project(
   name: "mobile-ios",
+  settings: .settings(
+    base: [
+      "SWIFT_VERSION": .string(swiftVersion)
+    ]
+  ),
   targets: [
     .target(
       name: "mobile-ios",
