@@ -40,10 +40,10 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v6.0.0
         with:
-          go-version-file: api-go/go.mod
-          cache-dependency-path: api-go/go.sum
+          go-version-file: api/api-go/go.mod
+          cache-dependency-path: api/api-go/go.sum
       - name: Test
-        working-directory: api-go
+        working-directory: api/api-go
         run: |
           go test ./... -race -coverprofile=coverage.txt -covermode=atomic
       - name: Upload coverage to Codecov
@@ -51,7 +51,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: api-go
+          directory: api/api-go
 
   api-node-test:
     name: API - Node.js | Test
@@ -64,15 +64,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v5.0.0
         with:
-          node-version-file: api-node/.node-version
+          node-version-file: api/api-node/.node-version
           cache: npm
-          cache-dependency-path: api-node/package-lock.json
+          cache-dependency-path: api/api-node/package-lock.json
       - name: Install dependencies
-        working-directory: api-node
+        working-directory: api/api-node
         run: |
           npm ci
       - name: Test
-        working-directory: api-node
+        working-directory: api/api-node
         run: |
           npm run test-coverage
       - name: Upload coverage to Codecov
@@ -80,7 +80,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: api-node
+          directory: api/api-node
 
   api-node-mutation-test:
     name: API - Node.js | Mutation Test
@@ -93,15 +93,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v5.0.0
         with:
-          node-version-file: api-node/.node-version
+          node-version-file: api/api-node/.node-version
           cache: npm
-          cache-dependency-path: api-node/package-lock.json
+          cache-dependency-path: api/api-node/package-lock.json
       - name: Install dependencies
-        working-directory: api-node
+        working-directory: api/api-node
         run: |
           npm ci
       - name: Stryker
-        working-directory: api-node
+        working-directory: api/api-node
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: |
@@ -136,17 +136,17 @@ jobs:
         with:
           version: 0.8.22
           enable-cache: true
-          cache-dependency-glob: api-python/uv.lock
+          cache-dependency-glob: api/api-python/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: api-python/.python-version
+          python-version-file: api/api-python/.python-version
       - name: Install dependencies
-        working-directory: api-python
+        working-directory: api/api-python
         run: |
           uv sync --dev
       - name: Test
-        working-directory: api-python
+        working-directory: api/api-python
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -154,7 +154,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: api-python
+          directory: api/api-python
 
   api-rust-test:
     name: API - Rust | Test
@@ -174,11 +174,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes clang libclang-dev libopencv-dev
       - name: Install dependencies
-        working-directory: api-rust
+        working-directory: api/api-rust
         run: |
           cargo build
       - name: Test
-        working-directory: api-rust
+        working-directory: api/api-rust
         run: |
           cargo test --all-features
 

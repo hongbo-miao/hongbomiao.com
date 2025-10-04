@@ -1,0 +1,55 @@
+install-toolchain:
+    rustup install
+
+clean:
+    cargo clean
+
+update:
+    cargo update
+
+check:
+    cargo check
+
+test:
+    cargo test --all-features
+
+dev:
+    cargo run
+
+lint-rust-clippy:
+    cargo clippy
+
+lint-rust-clippy-fix:
+    cargo clippy --fix --allow-dirty --allow-staged
+
+lint-rust-rustfmt:
+    cargo fmt --all -- --check
+
+lint-rust-rustfmt-fix:
+    cargo fmt --all
+
+docker-build:
+    cd ../.. && \
+    docker build --file=api/api-rust/Dockerfile --tag=ghcr.io/hongbo-miao/hm-api-rust:latest .
+
+docker-push:
+    docker push ghcr.io/hongbo-miao/hm-api-rust:latest
+
+docker-run:
+    docker run --publish=36147:36147 --name=hm-api-rust --rm ghcr.io/hongbo-miao/hm-api-rust:latest
+
+brew-install-opencv:
+    brew install opencv
+
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+download-model:
+    uv run poe download-model
+
+listen-police-audio-stream:
+    websocat --binary 'ws://localhost:36147/ws/police-audio-stream?police_stream_id=chicago_police_department_zone_08' \
+        | sox --type=raw --rate=16000 --encoding=signed --bits=16 --channels=1 - --default-device

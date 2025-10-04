@@ -17,7 +17,7 @@ OPAL_AUTH_PRIVATE_KEY_PASSPHRASE="ds6l3qYYx9UsYcgshmlbsMJTXs1lVH9ndf13Xp1xNKxbqj
 ssh-keygen -t rsa -b 4096 -m pem -f "${OPAL_SERVER_DATA_PATH}/opal_auth_private_key.pem" -N "${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}"
 rm -f "${OPAL_SERVER_DATA_PATH}/opal_auth_private_key.pem.pub"
 ssh-keygen -e -m pkcs8 -f "${OPAL_SERVER_DATA_PATH}/opal_auth_private_key.pem" -P "${OPAL_AUTH_PRIVATE_KEY_PASSPHRASE}" > "${OPAL_SERVER_DATA_PATH}/opal_auth_public_key.pem"
-cp "${OPAL_SERVER_DATA_PATH}/opal_auth_public_key.pem" api-go/config/config_loader/opal_auth_public_key.pem
+cp "${OPAL_SERVER_DATA_PATH}/opal_auth_public_key.pem" api/api-go/config/config_loader/opal_auth_public_key.pem
 cp "${OPAL_SERVER_DATA_PATH}/opal_auth_public_key.pem" kubernetes/data/config-loader/opal_auth_public_key.pem
 echo "=================================================="
 

@@ -2,7 +2,7 @@
 set -e
 
 echo "# Install hm-api-python"
-kubectl apply --filename=kubernetes/manifests/hm-api-python/hm-api-python-namespace.yaml
+kubectl apply --filename=kubernetes/manifests/hm-api/api-python/hm-api-python-namespace.yaml
 kubectl apply --filename=kubernetes/manifests/hm-api-python
 
 # Delete:

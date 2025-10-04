@@ -68,14 +68,14 @@ jobs:
         run: |
           npm ci
       - name: Pull Docker images
-        working-directory: api-node
+        working-directory: api/api-node
         run: |
           docker compose --file=docker-compose.cypress.yaml pull
       - name: Cache Docker images
         uses: jpribyl/action-docker-layer-caching@v0.1.1
         continue-on-error: true
       - name: Start Docker
-        working-directory: api-node
+        working-directory: api/api-node
         run: |
           docker compose --file=docker-compose.cypress.yaml up --detach
       - name: Cypress
@@ -83,7 +83,7 @@ jobs:
         run: |
           npm run test-cypress-headless-58136
       - name: Stop Docker
-        working-directory: api-node
+        working-directory: api/api-node
         run: |
           docker compose --file=docker-compose.cypress.yaml down
 
