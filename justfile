@@ -269,7 +269,7 @@ lint-ruby-fix:
     bundle exec rubocop --autocorrect-all
 
 lint-rust-rustfmt:
-    cd api-rust && just lint-rust-rustfmt
+    cd api/api-rust && just lint-rust-rustfmt
     cd data-distribution/arrow-flight/arrow-flight-server && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt
@@ -283,7 +283,7 @@ lint-rust-rustfmt:
     cd operating-system/windows/calculator && just lint-rust-rustfmt
 
 lint-rust-rustfmt-fix:
-    cd api-rust && just lint-rust-rustfmt-fix
+    cd api/api-rust && just lint-rust-rustfmt-fix
     cd data-distribution/arrow-flight/arrow-flight-server && just lint-rust-rustfmt-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt-fix
@@ -297,7 +297,7 @@ lint-rust-rustfmt-fix:
     cd operating-system/windows/calculator && just lint-rust-rustfmt-fix
 
 lint-rust-clippy:
-    cd api-rust && just lint-rust-clippy
+    cd api/api-rust && just lint-rust-clippy
     cd data-distribution/arrow-flight/arrow-flight-server && just lint-rust-clippy
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy
@@ -311,7 +311,7 @@ lint-rust-clippy:
     cd operating-system/windows/calculator && just lint-rust-clippy
 
 lint-rust-clippy-fix:
-    cd api-rust && just lint-rust-clippy-fix
+    cd api/api-rust && just lint-rust-clippy-fix
     cd data-distribution/arrow-flight/arrow-flight-server && just lint-rust-clippy-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy-fix
@@ -441,8 +441,8 @@ static-type-check-python:
     uv run poe static-type-check-python --package=aerospace.hm-openaerostruct
     uv run poe static-type-check-python --package=aerospace.x-plane.rest-api
     uv run poe static-type-check-python --package=aerospace.x-plane.udp
-    uv run poe static-type-check-python --package=api-python
-    uv run poe static-type-check-python --package=api-rust
+    uv run poe static-type-check-python --package=api.api-python
+    uv run poe static-type-check-python --package=api.api-rust
     uv run poe static-type-check-python --package=audio.automatic-speech-recognition.hm-faster-whisper
     uv run poe static-type-check-python --package=audio.automatic-speech-recognition.hm-speaches
     uv run poe static-type-check-python --package=audio.automatic-speech-recognition.hm-whisperx
@@ -562,7 +562,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=tokenization.byte-pair-encoding
 
 static-type-check-typescript:
-    cd api-node && just static-type-check-typescript
+    cd api/api-node && just static-type-check-typescript
     cd ethereum && just static-type-check-typescript
     cd data-visualization/grafana/hm-panel-plugin && just static-type-check-typescript
     cd mobile/mobile-react-native && just static-type-check-typescript
