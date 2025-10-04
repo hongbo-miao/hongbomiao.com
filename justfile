@@ -345,8 +345,8 @@ lint-sql:
     uv run poe lint-sql --dialect=athena cloud-platform/aws/amazon-athena/queries
     uv run poe lint-sql --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
     uv run poe lint-sql --dialect=clickhouse data-storage/clickhouse/cpu_metrics
-    uv run poe lint-sql --dialect=postgres hasura-graphql-engine/migrations
-    uv run poe lint-sql --dialect=postgres hasura-graphql-engine/seeds
+    uv run poe lint-sql --dialect=postgres api/hasura-graphql-engine/migrations
+    uv run poe lint-sql --dialect=postgres api/hasura-graphql-engine/seeds
     uv run poe lint-sql --dialect=postgres kubernetes/data/postgres/opa_db/migrations
     uv run poe lint-sql --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
     uv run poe lint-sql --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
@@ -363,8 +363,8 @@ lint-sql-fix:
     uv run poe lint-sql-fix --dialect=athena cloud-platform/aws/amazon-athena/queries
     uv run poe lint-sql-fix --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
     uv run poe lint-sql-fix --dialect=clickhouse data-storage/clickhouse/cpu_metrics
-    uv run poe lint-sql-fix --dialect=postgres hasura-graphql-engine/migrations
-    uv run poe lint-sql-fix --dialect=postgres hasura-graphql-engine/seeds
+    uv run poe lint-sql-fix --dialect=postgres api/hasura-graphql-engine/migrations
+    uv run poe lint-sql-fix --dialect=postgres api/hasura-graphql-engine/seeds
     uv run poe lint-sql-fix --dialect=postgres kubernetes/data/postgres/opa_db/migrations
     uv run poe lint-sql-fix --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
     uv run poe lint-sql-fix --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
