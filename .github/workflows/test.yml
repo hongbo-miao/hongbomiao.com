@@ -248,13 +248,13 @@ jobs:
             amazon-sagemaker-triton-resnet-50-infer:
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/**'
             api-go:
-              - 'api-go/**'
+              - 'api/api-go/**'
             api-node:
-              - 'api-node/**'
+              - 'api/api-node/**'
             api-python:
-              - 'api-python/**'
+              - 'api/api-python/**'
             api-rust:
-              - 'api-rust/**'
+              - 'api/api-rust/**'
             arrow-flight-client:
               - 'data-distribution/arrow-flight/arrow-flight-client/**'
             arrow-flight-server:
@@ -1423,7 +1423,7 @@ jobs:
           version: 0.70.0
       - name: Test
         run: |
-          opa test api-go/internal/graphql_server/policies/*.rego -v
+          opa test api/api-go/internal/graphql_server/policies/*.rego -v
 
   ros-test:
     name: ROS | Test

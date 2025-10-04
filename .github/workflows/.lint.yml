@@ -327,13 +327,13 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v6.0.0
         with:
-          go-version-file: api-go/go.mod
-          cache-dependency-path: api-go/go.sum
+          go-version-file: api/api-go/go.mod
+          cache-dependency-path: api/api-go/go.sum
       - name: Lint Go
         uses: golangci/golangci-lint-action@v8.0.0
         with:
           version: latest
-          working-directory: api-go
+          working-directory: api/api-go
           args: --timeout=10m
 
   lint-html:
@@ -368,15 +368,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v5.0.0
         with:
-          node-version-file: api-node/.node-version
+          node-version-file: api/api-node/.node-version
           cache: npm
-          cache-dependency-path: api-node/package-lock.json
+          cache-dependency-path: api/api-node/package-lock.json
       - name: Install dependencies
-        working-directory: api-node
+        working-directory: api/api-node
         run: |
           npm ci
       - name: Lint JavaScript
-        working-directory: api-node
+        working-directory: api/api-node
         run: |
           npm run lint-javascript
 
@@ -663,7 +663,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5.0.0
       - name: Lint Protocol Buffers
-        working-directory: api-go
+        working-directory: api/api-go
         run: |
           docker run \
             --rm \
@@ -748,15 +748,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes clang libclang-dev libopencv-dev
       - name: Install dependencies
-        working-directory: api-rust
+        working-directory: api/api-rust
         run: |
           cargo build
       - name: Lint Rust (rustfmt)
-        working-directory: api-rust
+        working-directory: api/api-rust
         run: |
           cargo fmt --all  -- --check
       - name: Lint Rust (Clippy)
-        working-directory: api-rust
+        working-directory: api/api-rust
         run: |
           cargo clippy
 
