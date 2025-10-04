@@ -3,10 +3,10 @@ package main
 import (
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
-	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/config_loader/controllers"
-	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/config_loader/utils"
-	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/shared/controllers"
-	"github.com/hongbo-miao/hongbomiao.com/api-go/internal/shared/utils"
+	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/config_loader/controllers"
+	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/config_loader/utils"
+	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/shared/controllers"
+	"github.com/hongbo-miao/hongbomiao.com/api/api-go/internal/shared/utils"
 	"github.com/rs/zerolog/log"
 	"go.elastic.co/apm/module/apmgin/v2"
 )
