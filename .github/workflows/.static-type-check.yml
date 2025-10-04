@@ -88,8 +88,8 @@ jobs:
           uv run poe static-type-check-python --package=aerospace.hm-openaerostruct
           uv run poe static-type-check-python --package=aerospace.x-plane.rest-api
           uv run poe static-type-check-python --package=aerospace.x-plane.udp
-          uv run poe static-type-check-python --package=api-python
-          uv run poe static-type-check-python --package=api-rust
+          uv run poe static-type-check-python --package=api.api-python
+          uv run poe static-type-check-python --package=api.api-rust
           uv run poe static-type-check-python --package=audio.automatic-speech-recognition.hm-faster-whisper
           uv run poe static-type-check-python --package=audio.automatic-speech-recognition.hm-speaches
           uv run poe static-type-check-python --package=audio.automatic-speech-recognition.hm-whisperx
@@ -485,15 +485,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v5.0.0
         with:
-          node-version-file: api-node/.node-version
+          node-version-file: api/api-node/.node-version
           cache: npm
-          cache-dependency-path: api-node/package-lock.json
+          cache-dependency-path: api/api-node/package-lock.json
       - name: Install dependencies
-        working-directory: api-node
+        working-directory: api/api-node
         run: |
           npm ci
       - name: Static type check TypeScript
-        working-directory: api-node
+        working-directory: api/api-node
         run: |
           npm run static-type-check-typescript
 

@@ -26,19 +26,19 @@ jobs:
             api-go:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'api-go/**'
+              - 'api/api-go/**'
             api-node:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'api-node/**'
+              - 'api/api-node/**'
             api-python:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'api-python/**'
+              - 'api/api-python/**'
             api-rust:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'api-rust/**'
+              - 'api/api-rust/**'
             flink-stream-tweets:
               - '.dockerignore'
               - '.github/workflows/build.yml'
@@ -191,7 +191,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          file: ./api-node/Dockerfile
+          file: ./api/api-node/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-api-node:latest
           cache-from: type=gha
@@ -223,7 +223,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          file: ./api-python/Dockerfile
+          file: ./api/api-python/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-api-python:latest
           cache-from: type=gha
@@ -255,7 +255,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          file: ./api-rust/Dockerfile
+          file: ./api/api-rust/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-api-rust:latest
           cache-from: type=gha
@@ -287,7 +287,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          file: ./api-go/build/package/graphql_server/Dockerfile
+          file: ./api/api-go/deployment/graphql_server/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-graphql-server:latest
           cache-from: type=gha
@@ -319,7 +319,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          file: ./api-go/build/package/grpc_server/Dockerfile
+          file: ./api/api-go/deployment/grpc_server/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-grpc-server:latest
           cache-from: type=gha
@@ -351,7 +351,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          file: ./api-go/build/package/config_loader/Dockerfile
+          file: ./api/api-go/deployment/config_loader/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-config-loader:latest
           cache-from: type=gha
@@ -383,7 +383,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          file: ./api-go/build/package/decision_logger/Dockerfile
+          file: ./api/api-go/deployment/decision_logger/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-decision-logger:latest
           cache-from: type=gha
