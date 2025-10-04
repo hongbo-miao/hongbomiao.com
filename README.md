@@ -22,7 +22,7 @@
   <p>
     <a href="https://developer.mozilla.org/en-US/observatory/analyze?host=www.hongbomiao.com"><img alt="Mozilla HTTP observatory grade" src="https://img.shields.io/mozilla-observatory/grade/www.hongbomiao.com" /></a>
     <a href="https://app.codacy.com/gh/hongbo-miao/hongbomiao.com/dashboard"><img alt="Codacy grade" src="https://img.shields.io/codacy/grade/dc922acc14014b4abc978afd0810e56b" /></a>
-    <a href="https://goreportcard.com/report/github.com/hongbo-miao/hongbomiao.com/api-go"><img alt="Go report card" src="https://goreportcard.com/badge/github.com/hongbo-miao/hongbomiao.com/api-go" /></a>
+    <a href="https://goreportcard.com/report/github.com/hongbo-miao/hongbomiao.com/api/api-go"><img alt="Go report card" src="https://goreportcard.com/badge/github.com/hongbo-miao/hongbomiao.com/api/api-go" /></a>
     <a href="https://codecov.io/gh/hongbo-miao/hongbomiao.com"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/hongbo-miao/hongbomiao.com" /></a>
   </p>
   <p>
