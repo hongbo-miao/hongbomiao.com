@@ -15,6 +15,9 @@ name: . Test Machine Learning
       amazon-sagemaker-triton-resnet-50-infer:
         required: true
         type: boolean
+      amortized-prefill:
+        required: true
+        type: boolean
       automatic-mixed-precision:
         required: true
         type: boolean
@@ -1013,6 +1016,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: llm-inference/kv-caching
+
+  amortized-prefill-test:
+    name: Amortized Prefill | Test
+    if: ${{ inputs.workflow || inputs.amortized-prefill }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6.8.0
+        with:
+          version: 0.8.23
+          enable-cache: true
+          cache-dependency-glob: llm-inference/amortized-prefill/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: llm-inference/amortized-prefill/.python-version
+      - name: Install dependencies
+        working-directory: llm-inference/amortized-prefill
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: llm-inference/amortized-prefill
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: llm-inference/amortized-prefill
 
   speculative-decoding-test:
     name: Speculative Decoding | Test

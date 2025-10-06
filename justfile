@@ -517,6 +517,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=llm-application.hm-llama-index.applications.chat-pdf
     uv run poe static-type-check-python --package=llm-application.hm-pydantic-ai.applications.chat-pdf
     uv run poe static-type-check-python --package=llm-evaluation.hm-deepeval
+    uv run poe static-type-check-python --package=llm-inference.amortized-prefill
     uv run poe static-type-check-python --package=llm-inference.hm-mlx-lm
     uv run poe static-type-check-python --package=llm-inference.hm-sglang
     uv run poe static-type-check-python --package=llm-inference.kv-caching

@@ -247,6 +247,8 @@ jobs:
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/**'
             amazon-sagemaker-triton-resnet-50-infer:
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/**'
+            amortized-prefill:
+              - 'llm-inference/amortized-prefill/**'
             api-go:
               - 'api/api-go/**'
             api-node:
@@ -624,6 +626,7 @@ jobs:
       amazon-sagemaker-pytorch-mnist: ${{ steps.filter.outputs.amazon-sagemaker-pytorch-mnist }}
       amazon-sagemaker-triton-resnet-50-deploy: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-deploy }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-infer }}
+      amortized-prefill: ${{ steps.filter.outputs.amortized-prefill }}
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
@@ -1069,6 +1072,7 @@ jobs:
       # Applications
       amazon-sagemaker-triton-resnet-50-deploy: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-deploy == 'true' }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
+      amortized-prefill: ${{ needs.detect-changes.outputs.amortized-prefill == 'true' }}
       automatic-mixed-precision: ${{ needs.detect-changes.outputs.automatic-mixed-precision == 'true' }}
       byte-pair-encoding: ${{ needs.detect-changes.outputs.byte-pair-encoding == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
