@@ -1,49 +1,28 @@
 IOS_SIMULATOR := "platform=iOS Simulator,name=iPhone 17,OS=26.0"
 
-build:
-    xcodebuild build-for-testing \
-        -project mobile-ios.xcodeproj \
-        -scheme mobile-ios \
-        -destination "{{ IOS_SIMULATOR }}"
+bundle-install:
+    bundle install
+
+mint-install:
+    mint bootstrap
+
+tuist-install:
+    tuist install
+
+generate-xcode-workspace:
+    tuist generate --no-open
+
+open-xcode-workspace:
+    open mobile-ios.xcworkspace
 
 test:
-    xcodebuild test-without-building \
-        -project mobile-ios.xcodeproj \
-        -scheme mobile-ios \
-        -destination "{{ IOS_SIMULATOR }}"
-
-build-test:
     xcodebuild test \
         -project mobile-ios.xcodeproj \
         -scheme mobile-ios \
         -destination "{{ IOS_SIMULATOR }}"
 
-bundle-install:
-    bundle install
-
-bundle-add:
-    bundle add xxx
-
-bundle-update:
-    bundle update
-
-bundle-add-platform:
-    bundle lock --add-platform x86_64-darwin-21
-
-bundle-exec-test-coverage:
+test-coverage:
     bundle exec slather
-
-tuist-install:
-    tuist install
-
-dev:
-    tuist generate
-
-dev-no-open:
-    tuist generate --no-open
-
-mint-bootstrap:
-    mint bootstrap
 
 lint-swift-format:
     mint run swift-format format . --recursive

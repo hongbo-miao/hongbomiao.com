@@ -58,7 +58,8 @@ bundle-add:
 bundle-update:
     bundle update
 
-bundle-lock:
+bundle-add-platform:
+    bundle lock --add-platform x86_64-darwin-21
     bundle lock --add-platform x86_64-linux
 
 # .NET
