@@ -91,6 +91,7 @@ jobs:
       # To use a Gemfile which is not at the root
       # https://github.com/ruby/setup-ruby#caching-bundle-install-automatically
       BUNDLE_GEMFILE: ${{ github.workspace }}/mobile/mobile-ios/Gemfile
+      IOS_SIMULATOR: platform=iOS Simulator,name=iPhone 17,OS=26.0
     steps:
       - name: Checkout
         uses: actions/checkout@v5.0.0
@@ -117,14 +118,14 @@ jobs:
           xcodebuild build-for-testing \
             -project mobile-ios.xcodeproj \
             -scheme mobile-ios \
-            -destination "platform=iOS Simulator,name=iPhone 17,OS=26.0"
+            -destination "$IOS_SIMULATOR"
       - name: Test
         working-directory: mobile/mobile-ios
         run: |
           xcodebuild test-without-building \
             -project mobile-ios.xcodeproj \
             -scheme mobile-ios \
-            -destination "platform=iOS Simulator,name=iPhone 17,OS=26.0"
+            -destination "$IOS_SIMULATOR"
       - name: Convert coverage to Cobertura XML format
         working-directory: mobile/mobile-ios
         run: |
