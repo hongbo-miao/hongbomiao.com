@@ -73,7 +73,7 @@ def prepare_datasets(
         problems = examples["problem"]
         solutions = examples["generated_solution"]
         conversations = []
-        for problem, solution in zip(problems, solutions, strict=False):
+        for problem, solution in zip(problems, solutions, strict=True):
             conversations.append(
                 [
                     {"role": "user", "content": problem},
