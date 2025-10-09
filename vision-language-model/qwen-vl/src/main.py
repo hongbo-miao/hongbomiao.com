@@ -60,7 +60,7 @@ def main() -> None:
     generated_ids = model.generate(**inputs, max_new_tokens=128)
     generated_ids_trimmed = [
         out_ids[len(in_ids) :]
-        for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+        for in_ids, out_ids in zip(inputs.input_ids, generated_ids, strict=True)
     ]
     output_text = processor.batch_decode(
         generated_ids_trimmed,
