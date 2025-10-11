@@ -453,6 +453,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=audio.voice-activity-detector.hm-webrtcvad
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.calculate
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.process-flight-data
+    uv run poe static-type-check-python --package=cloud-computing.hm-ray.hm-ray
     uv run poe static-type-check-python --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
     uv run poe static-type-check-python --package=cloud-platform.aws.aws-parallelcluster.pcluster
     uv run poe static-type-check-python --package=computer-vision.hm-open3d
