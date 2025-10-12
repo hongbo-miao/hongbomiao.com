@@ -428,6 +428,8 @@ jobs:
               - 'data-visualization/hm-pygwalker/**'
             hm-pyvista-mount-saint-helens:
               - 'computer-vision/hm-pyvista/mount-saint-helens/**'
+            hm-ray:
+              - 'cloud-computing/hm-ray/hm-ray/**'
             hm-ray-calculate:
               - 'cloud-computing/hm-ray/applications/calculate/**'
             hm-ray-daft-analysis:
@@ -715,6 +717,7 @@ jobs:
       hm-pydantic-ai-chat-pdf: ${{ steps.filter.outputs.hm-pydantic-ai-chat-pdf }}
       hm-pygwalker: ${{ steps.filter.outputs.hm-pygwalker }}
       hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
+      hm-ray: ${{ steps.filter.outputs.hm-ray }}
       hm-ray-calculate: ${{ steps.filter.outputs.hm-ray-calculate }}
       hm-ray-daft-analysis: ${{ steps.filter.outputs.hm-ray-daft-analysis }}
       hm-ray-process-flight-data: ${{ steps.filter.outputs.hm-ray-process-flight-data }}
@@ -1041,6 +1044,7 @@ jobs:
       # Quantum Computing
       quantum-computing: ${{ needs.detect-changes.outputs.quantum-computing == 'true' }}
       # Cloud Computing
+      hm-ray: ${{ needs.detect-changes.outputs.hm-ray == 'true' }}
       hm-ray-calculate: ${{ needs.detect-changes.outputs.hm-ray-calculate == 'true' }}
       hm-ray-daft-analysis: ${{ needs.detect-changes.outputs.hm-ray-daft-analysis == 'true' }}
       hm-ray-process-flight-data: ${{ needs.detect-changes.outputs.hm-ray-process-flight-data == 'true' }}
@@ -1223,7 +1227,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: physics/hm-genesis/uv.lock
       - name: Set up Python
@@ -1262,7 +1266,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: matlab/call-matlab-function-in-python/uv.lock
       - name: Set up Python
@@ -1296,7 +1300,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: data-distribution/arrow-flight/arrow-flight-client/uv.lock
       - name: Set up Python
@@ -1358,7 +1362,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: data-distribution/rti-connext-dds/uv.lock
       - name: Set up Python
@@ -1392,7 +1396,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: system-tool/hm-xxhash/uv.lock
       - name: Set up Python

@@ -36,6 +36,9 @@ name: . Test Computing
         required: true
         type: boolean
       # Cloud Computing
+      hm-ray:
+        required: true
+        type: boolean
       hm-ray-calculate:
         required: true
         type: boolean
@@ -62,7 +65,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: scientific-computing/hm-sunpy/uv.lock
       - name: Set up Python
@@ -95,7 +98,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: scientific-computing/surrogate-model/uv.lock
       - name: Set up Python
@@ -129,7 +132,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: parallel-computing/hm-taichi/count-primes/uv.lock
       - name: Set up Python
@@ -162,7 +165,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: parallel-computing/hm-taichi/fluid-solver/uv.lock
       - name: Set up Python
@@ -195,7 +198,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: parallel-computing/hm-triton/uv.lock
       - name: Set up Python
@@ -229,7 +232,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: high-performance-computing/hm-jax/uv.lock
       - name: Set up Python
@@ -263,7 +266,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: quantum-computing/uv.lock
       - name: Set up Python
@@ -286,6 +289,39 @@ jobs:
           directory: quantum-computing
 
   # Cloud Computing
+  ray-test:
+    name: Ray | Test
+    if: ${{ inputs.workflow || inputs.hm-ray }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.0.0
+        with:
+          version: 0.9.2
+          enable-cache: true
+          cache-dependency-glob: cloud-computing/hm-ray/hm-ray/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: cloud-computing/hm-ray/hm-ray/.python-version
+      - name: Install dependencies
+        working-directory: cloud-computing/hm-ray/hm-ray
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: cloud-computing/hm-ray/hm-ray
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: cloud-computing/hm-ray/hm-ray
+
   ray-calculate-test:
     name: Ray (calculate) | Test
     if: ${{ inputs.workflow || inputs.hm-ray-calculate }}
@@ -297,7 +333,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: cloud-computing/hm-ray/applications/calculate/uv.lock
       - name: Set up Python
@@ -330,7 +366,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: cloud-computing/hm-ray/applications/daft-analysis/uv.lock
       - name: Set up Python
@@ -363,7 +399,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: cloud-computing/hm-ray/applications/process-flight-data/uv.lock
       - name: Set up Python
@@ -396,7 +432,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.0.0
         with:
-          version: 0.9.0
+          version: 0.9.2
           enable-cache: true
           cache-dependency-glob: cloud-computing/hm-skypilot/uv.lock
       - name: Set up Python
