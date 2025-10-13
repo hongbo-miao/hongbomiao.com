@@ -35,6 +35,15 @@ data:
         litellm_params:
           model: bedrock/amazon.titan-text-premier-v1:0
           aws_region_name: us-east-1
+      # Google Gemini
+      - model_name: gemini-pro-2-5
+        litellm_params:
+          model: gemini/gemini-2.5-pro
+          api_key: os.environ/GEMINI_API_KEY
+      - model_name: gemini-flash-2-5
+        litellm_params:
+          model: gemini/gemini-2.5-flash
+          api_key: os.environ/GEMINI_API_KEY
     litellm_settings:
       drop_params: True
       modify_params: True
