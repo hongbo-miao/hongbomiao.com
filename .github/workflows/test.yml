@@ -255,6 +255,8 @@ jobs:
               - 'api/api-python/**'
             api-rust:
               - 'api/api-rust/**'
+            api-rust-scripts:
+              - 'api/api-rust/scripts/**'
             arrow-flight-client:
               - 'data-distribution/arrow-flight/arrow-flight-client/**'
             arrow-flight-server:
@@ -632,6 +634,7 @@ jobs:
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
       api-rust: ${{ steps.filter.outputs.api-rust }}
+      api-rust-scripts: ${{ steps.filter.outputs.api-rust-scripts }}
       arrow-flight-client: ${{ steps.filter.outputs.arrow-flight-client }}
       arrow-flight-server: ${{ steps.filter.outputs.arrow-flight-server }}
       automatic-mixed-precision: ${{ steps.filter.outputs.automatic-mixed-precision }}
@@ -909,6 +912,7 @@ jobs:
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}
       api-python: ${{ needs.detect-changes.outputs.api-python == 'true' }}
       api-rust: ${{ needs.detect-changes.outputs.api-rust == 'true' }}
+      api-rust-scripts: ${{ needs.detect-changes.outputs.api-rust-scripts == 'true' }}
       hm-locust: ${{ needs.detect-changes.outputs.hm-locust == 'true' }}
       k6: ${{ needs.detect-changes.outputs.k6 == 'true' }}
 

@@ -41,15 +41,6 @@ docker-run:
 brew-install-opencv:
     brew install opencv
 
-update-lock-file:
-    uv lock
-
-install-dependencies:
-    uv sync --dev
-
-download-model:
-    uv run poe download-model
-
 listen-police-audio-stream:
     websocat --binary 'ws://localhost:36147/ws/police-audio-stream?police_stream_id=chicago_police_department_zone_08' \
         | sox --type=raw --rate=16000 --encoding=signed --bits=16 --channels=1 - --default-device
