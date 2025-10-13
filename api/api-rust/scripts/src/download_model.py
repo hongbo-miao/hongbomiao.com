@@ -9,11 +9,11 @@ from torchvision import models
 logger = logging.getLogger(__name__)
 
 
-def download_labels() -> None:
+def download_labels(models_folder: Path) -> None:
     labels_url = (
         "https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt"
     )
-    labels_path = Path("models/labels.txt")
+    labels_path = models_folder / "labels.txt"
 
     if not labels_path.exists():
         logger.info("Downloading labels...")
@@ -25,8 +25,8 @@ def download_labels() -> None:
         logger.info("Labels file already exists")
 
 
-def download_resnet18() -> None:
-    model_path = Path("models/resnet18.onnx")
+def download_resnet18(models_folder: Path) -> None:
+    model_path = models_folder / "resnet18.onnx"
 
     if not model_path.exists():
         logger.info("Downloading ResNet18...")
@@ -57,8 +57,9 @@ def download_resnet18() -> None:
 
 
 def main() -> None:
-    download_labels()
-    download_resnet18()
+    models_folder = Path("../models")
+    download_labels(models_folder)
+    download_resnet18(models_folder)
 
 
 if __name__ == "__main__":
