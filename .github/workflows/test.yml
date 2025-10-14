@@ -284,6 +284,8 @@ jobs:
               - 'ethereum/**'
             format-can-data:
               - 'embedded-system/format-can-data/**'
+            cart-pole:
+              - 'machine-learning/reinforcement-learning/cart-pole/**'
             convolutional-neural-network:
               - 'machine-learning/convolutional-neural-network/**'
             dbt-hm-postgres:
@@ -540,12 +542,12 @@ jobs:
               - 'llm-post-training/post-training-quantization/**'
             prometheus:
               - 'data-storage/prometheus/**'
+            q-learning:
+              - 'machine-learning/reinforcement-learning/q-learning/**'
             quantum-computing:
               - 'quantum-computing/**'
             qwen-vl:
               - 'vision-language-model/qwen-vl/**'
-            reinforcement-learning-cart-pole:
-              - 'machine-learning/reinforcement-learning/cart-pole/**'
             robot-operating-system:
               - 'robotics/robot-operating-system/**'
             rti-connext-dds:
@@ -633,14 +635,15 @@ jobs:
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
-      api-rust: ${{ steps.filter.outputs.api-rust }}
       api-rust-scripts: ${{ steps.filter.outputs.api-rust-scripts }}
+      api-rust: ${{ steps.filter.outputs.api-rust }}
       arrow-flight-client: ${{ steps.filter.outputs.arrow-flight-client }}
       arrow-flight-server: ${{ steps.filter.outputs.arrow-flight-server }}
       automatic-mixed-precision: ${{ steps.filter.outputs.automatic-mixed-precision }}
       bluesky: ${{ steps.filter.outputs.bluesky }}
       byte-pair-encoding: ${{ steps.filter.outputs.byte-pair-encoding }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
+      cart-pole: ${{ steps.filter.outputs.cart-pole }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
       decode-can-blf-data: ${{ steps.filter.outputs.decode-can-blf-data }}
@@ -720,10 +723,10 @@ jobs:
       hm-pydantic-ai-chat-pdf: ${{ steps.filter.outputs.hm-pydantic-ai-chat-pdf }}
       hm-pygwalker: ${{ steps.filter.outputs.hm-pygwalker }}
       hm-pyvista-mount-saint-helens: ${{ steps.filter.outputs.hm-pyvista-mount-saint-helens }}
-      hm-ray: ${{ steps.filter.outputs.hm-ray }}
       hm-ray-calculate: ${{ steps.filter.outputs.hm-ray-calculate }}
       hm-ray-daft-analysis: ${{ steps.filter.outputs.hm-ray-daft-analysis }}
       hm-ray-process-flight-data: ${{ steps.filter.outputs.hm-ray-process-flight-data }}
+      hm-ray: ${{ steps.filter.outputs.hm-ray }}
       hm-scikit-learn: ${{ steps.filter.outputs.hm-scikit-learn }}
       hm-senko: ${{ steps.filter.outputs.hm-senko }}
       hm-serial: ${{ steps.filter.outputs.hm-serial }}
@@ -775,9 +778,9 @@ jobs:
       post-training-quantization: ${{ steps.filter.outputs.post-training-quantization }}
       production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
+      q-learning: ${{ steps.filter.outputs.q-learning }}
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
       qwen-vl: ${{ steps.filter.outputs.qwen-vl }}
-      reinforcement-learning-cart-pole: ${{ steps.filter.outputs.reinforcement-learning-cart-pole }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
       speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
@@ -1085,6 +1088,7 @@ jobs:
       amazon-sagemaker-triton-resnet-50-infer: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
       automatic-mixed-precision: ${{ needs.detect-changes.outputs.automatic-mixed-precision == 'true' }}
       byte-pair-encoding: ${{ needs.detect-changes.outputs.byte-pair-encoding == 'true' }}
+      cart-pole: ${{ needs.detect-changes.outputs.cart-pole == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
       feature-store: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
       fine-tune-whisper: ${{ needs.detect-changes.outputs.fine-tune-whisper == 'true' }}
@@ -1114,8 +1118,8 @@ jobs:
       hm-nvidia-modulus: ${{ needs.detect-changes.outputs.hm-nvidia-modulus == 'true' }}
       hm-olmocr: ${{ needs.detect-changes.outputs.hm-olmocr == 'true' }}
       hm-pydantic-ai-chat-pdf: ${{ needs.detect-changes.outputs.hm-pydantic-ai-chat-pdf == 'true' }}
-      hm-senko: ${{ needs.detect-changes.outputs.hm-senko == 'true' }}
       hm-scikit-learn: ${{ needs.detect-changes.outputs.hm-scikit-learn == 'true' }}
+      hm-senko: ${{ needs.detect-changes.outputs.hm-senko == 'true' }}
       hm-sglang: ${{ needs.detect-changes.outputs.hm-sglang == 'true' }}
       hm-silero-vad: ${{ needs.detect-changes.outputs.hm-silero-vad == 'true' }}
       hm-speaches: ${{ needs.detect-changes.outputs.hm-speaches == 'true' }}
@@ -1133,8 +1137,8 @@ jobs:
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
       open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
       post-training-quantization: ${{ needs.detect-changes.outputs.post-training-quantization == 'true' }}
+      q-learning: ${{ needs.detect-changes.outputs.q-learning == 'true' }}
       qwen-vl: ${{ needs.detect-changes.outputs.qwen-vl == 'true' }}
-      reinforcement-learning-cart-pole: ${{ needs.detect-changes.outputs.reinforcement-learning-cart-pole == 'true' }}
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
