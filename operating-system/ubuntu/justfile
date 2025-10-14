@@ -159,6 +159,9 @@ service-enable:
 service-disable:
     sudo systemctl disable xxx
 
+kill-port:
+    sudo kill -9 $(lsof -t -i:8080)
+
 # History
 history-show:
     history
