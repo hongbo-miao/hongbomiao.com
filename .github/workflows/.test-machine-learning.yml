@@ -1394,17 +1394,17 @@ jobs:
         with:
           version: 0.9.2
           enable-cache: true
-          cache-dependency-glob: machine-learning/reinforcement-learning/cart-pole/uv.lock
+          cache-dependency-glob: reinforcement-learning/cart-pole/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: machine-learning/reinforcement-learning/cart-pole/.python-version
+          python-version-file: reinforcement-learning/cart-pole/.python-version
       - name: Install dependencies
-        working-directory: machine-learning/reinforcement-learning/cart-pole
+        working-directory: reinforcement-learning/cart-pole
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/reinforcement-learning/cart-pole
+        working-directory: reinforcement-learning/cart-pole
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1412,7 +1412,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/reinforcement-learning/cart-pole
+          directory: reinforcement-learning/cart-pole
 
   reinforcement-learning-q-learning-test:
     name: Reinforcement Learning (q-learning) | Test
@@ -1427,17 +1427,17 @@ jobs:
         with:
           version: 0.9.2
           enable-cache: true
-          cache-dependency-glob: machine-learning/reinforcement-learning/q-learning/uv.lock
+          cache-dependency-glob: reinforcement-learning/q-learning/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: machine-learning/reinforcement-learning/q-learning/.python-version
+          python-version-file: reinforcement-learning/q-learning/.python-version
       - name: Install dependencies
-        working-directory: machine-learning/reinforcement-learning/q-learning
+        working-directory: reinforcement-learning/q-learning
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/reinforcement-learning/q-learning
+        working-directory: reinforcement-learning/q-learning
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1445,7 +1445,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/reinforcement-learning/q-learning
+          directory: reinforcement-learning/q-learning
 
   silero-vad-test:
     name: Silero VAD | Test
