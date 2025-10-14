@@ -21,6 +21,9 @@ name: . Test Machine Learning
       byte-pair-encoding:
         required: true
         type: boolean
+      cart-pole:
+        required: true
+        type: boolean
       convolutional-neural-network:
         required: true
         type: boolean
@@ -165,10 +168,10 @@ name: . Test Machine Learning
       post-training-quantization:
         required: true
         type: boolean
-      qwen-vl:
+      q-learning:
         required: true
         type: boolean
-      reinforcement-learning-cart-pole:
+      qwen-vl:
         required: true
         type: boolean
       speculative-decoding:
@@ -1380,7 +1383,7 @@ jobs:
 
   reinforcement-learning-cart-pole-test:
     name: Reinforcement Learning (cart-pole) | Test
-    if: ${{ inputs.workflow || inputs.reinforcement-learning-cart-pole }}
+    if: ${{ inputs.workflow || inputs.cart-pole }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -1410,6 +1413,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: machine-learning/reinforcement-learning/cart-pole
+
+  reinforcement-learning-q-learning-test:
+    name: Reinforcement Learning (q-learning) | Test
+    if: ${{ inputs.workflow || inputs.reinforcement-learning-q-learning }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.0
+        with:
+          version: 0.9.2
+          enable-cache: true
+          cache-dependency-glob: machine-learning/reinforcement-learning/q-learning/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: machine-learning/reinforcement-learning/q-learning/.python-version
+      - name: Install dependencies
+        working-directory: machine-learning/reinforcement-learning/q-learning
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/reinforcement-learning/q-learning
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: machine-learning/reinforcement-learning/q-learning
 
   silero-vad-test:
     name: Silero VAD | Test
