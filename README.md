@@ -585,6 +585,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Vision Language Model (VLM)
   - **Qwen VL** - Vision language model
 
+### Reinforcement Learning (RL)
+
+- **Q-Learning** - Model-free reinforcement learning algorithm for learning optimal actions
+- **Gymnasium** - Reinforcement learning environment toolkit
+
 ### Audio
 
 - **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
