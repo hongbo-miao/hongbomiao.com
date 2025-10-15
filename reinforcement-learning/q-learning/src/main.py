@@ -34,12 +34,12 @@ class TrainingEnvironment:
         return self.state, reward, is_done
 
 
-def q_learning(
+def train_q_table(
     training_environment: TrainingEnvironment,
-    alpha: float = 0.8,
-    gamma: float = 0.95,
-    epsilon: float = 0.1,
-    episodes: int = 500,
+    alpha: float,
+    gamma: float,
+    epsilon: float,
+    episode_number: int,
 ) -> np.ndarray:
     """
     Train Q-learning algorithm.
@@ -49,7 +49,7 @@ def q_learning(
         alpha: Learning rate.
         gamma: Discount factor.
         epsilon: Exploration rate.
-        episodes: Number of training episodes.
+        episode_number: Number of training episodes.
 
     Returns:
         Trained Q-table as a NumPy array.
@@ -58,7 +58,7 @@ def q_learning(
     q_table: np.ndarray = np.zeros(
         (training_environment.n_states, training_environment.n_actions),
     )
-    for _ in range(episodes):
+    for _ in range(episode_number):
         state: int = training_environment.reset()
         is_done: bool = False
         while not is_done:
@@ -83,12 +83,11 @@ def q_learning(
             #
             # Intuition:
             # Move Q(s,a) toward the "target" value: (r + γ * best future Q)  # noqa: RUF003
-            best_next: int = int(np.argmax(q_table[next_state]))
-            temporal_difference_target: float = (
-                reward + gamma * q_table[next_state, best_next]
-            )
+            next_action: int = int(np.argmax(q_table[next_state]))
             q_table[state, action] += alpha * (
-                temporal_difference_target - q_table[state, action]
+                reward
+                + gamma * q_table[next_state, next_action]
+                - q_table[state, action]
             )
             state = next_state
     return q_table
@@ -122,7 +121,13 @@ def evaluate_policy(
 
 def main() -> None:
     training_environment = TrainingEnvironment()
-    q_table = q_learning(training_environment)
+    q_table = train_q_table(
+        training_environment,
+        alpha=0.8,
+        gamma=0.95,
+        epsilon=0.1,
+        episode_number=500,
+    )
     logger.info(f"Training finished. Learned Q-table:\n{q_table}")
     trajectory = evaluate_policy(training_environment, q_table)
     logger.info(f"Optimal trajectory: {trajectory}")
