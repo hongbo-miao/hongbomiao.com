@@ -1,0 +1,9 @@
+---
+nvidia_cuda_toolkit_ubuntu_version: "{{ ansible_distribution_version | replace('.', '') }}"
+nvidia_cuda_toolkit_version: 13.0.2
+nvidia_cuda_toolkit_driver_version: 580.95.05
+nvidia_cuda_toolkit_major_minor_version: "{{ nvidia_cuda_toolkit_version.split('.')[0] }}-{{ nvidia_cuda_toolkit_version.split('.')[1] }}"
+nvidia_cuda_toolkit_package: "cuda-toolkit-{{ nvidia_cuda_toolkit_major_minor_version }}"
+nvidia_cuda_toolkit_pin_url: "https://developer.download.nvidia.com/compute/cuda/repos/ubuntu{{ nvidia_cuda_toolkit_ubuntu_version }}/x86_64/cuda-ubuntu{{ nvidia_cuda_toolkit_ubuntu_version }}.pin"
+nvidia_cuda_toolkit_repo_url: "https://developer.download.nvidia.com/compute/cuda/{{ nvidia_cuda_toolkit_version }}/local_installers/cuda-repo-ubuntu{{ nvidia_cuda_toolkit_ubuntu_version }}-{{ nvidia_cuda_toolkit_major_minor_version }}-local_{{ nvidia_cuda_toolkit_version }}-{{ nvidia_cuda_toolkit_driver_version }}-1_amd64.deb"
+nvidia_cuda_toolkit_repo_package: "cuda-repo-ubuntu{{ nvidia_cuda_toolkit_ubuntu_version }}-{{ nvidia_cuda_toolkit_major_minor_version }}-local_{{ nvidia_cuda_toolkit_version }}-{{ nvidia_cuda_toolkit_driver_version }}-1_amd64.deb"
