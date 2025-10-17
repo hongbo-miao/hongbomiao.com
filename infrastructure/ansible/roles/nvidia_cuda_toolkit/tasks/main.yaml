@@ -12,7 +12,6 @@
       ansible.builtin.slurp:
         src: /usr/local/cuda/version.json
       register: nvidia_cuda_toolkit_version_content_result
-
     - name: Parse CUDA version
       ansible.builtin.set_fact:
         nvidia_cuda_toolkit_installed_cuda_version: "{{ (nvidia_cuda_toolkit_version_content_result.content | b64decode | from_json).cuda.version }}"
@@ -30,18 +29,15 @@
         url: "{{ nvidia_cuda_toolkit_pin_url }}"
         dest: /etc/apt/preferences.d/cuda-repository-pin-600
         mode: '0644'
-
     - name: Install NVIDIA CUDA repository package
       ansible.builtin.apt:
         deb: "{{ nvidia_cuda_toolkit_repo_url }}"
         state: present
-
     - name: Find NVIDIA CUDA keyring file
       ansible.builtin.find:
         paths: "/var/cuda-repo-ubuntu{{ nvidia_cuda_toolkit_ubuntu_version }}-{{ nvidia_cuda_toolkit_major_minor_version }}-local/"
         patterns: "cuda-*-keyring.gpg"
       register: nvidia_cuda_toolkit_keyring_file_result
-
     - name: Copy NVIDIA CUDA keyring
       ansible.builtin.copy:
         src: "{{ nvidia_cuda_toolkit_keyring_file_result.files[0].path }}"
@@ -49,14 +45,12 @@
         remote_src: true
         mode: '0644'
       when: nvidia_cuda_toolkit_keyring_file_result.files | length > 0
-
     - name: Install NVIDIA CUDA toolkit
       ansible.builtin.apt:
         name: "{{ nvidia_cuda_toolkit_package }}"
         state: present
         update_cache: true
         cache_valid_time: 3600
-
     - name: Install NVIDIA open driver
       ansible.builtin.apt:
         name: nvidia-open
