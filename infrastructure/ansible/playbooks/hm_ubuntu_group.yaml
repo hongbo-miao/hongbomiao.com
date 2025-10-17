@@ -43,9 +43,13 @@
       ansible.builtin.apt:
         name:
           - btop
+          - build-essential
+          - libclang-dev
           - ncdu
           - tshark
         state: present
+        update_cache: true
+        cache_valid_time: 3600
     - name: Install packages from Snap
       become: true
       community.general.snap:
@@ -71,28 +75,6 @@
           - fnm
           - ouch
         path: /usr/local
-
-- name: Install Docker
-  hosts: all
-  become: true
-  roles:
-    - geerlingguy.docker
-  vars:
-    docker_edition: ce
-    docker_packages:
-      - "docker-{{ docker_edition }}"
-      - "docker-{{ docker_edition }}-cli"
-      - "docker-{{ docker_edition }}-rootless-extras"
-    docker_packages_state: present
-
-- name: Install NVIDIA CUDA Toolkit
-  hosts: all
-  become: true
-  roles:
-    - role: nvidia_cuda
-  vars:
-    nvidia_cuda_version: 13.0.1
-    nvidia_cuda_driver_version: 580.82.07
 
 - name: Install Rclone
   hosts: all
@@ -149,15 +131,69 @@
                 6431366663326265340a313139366266333334353038636461393233643330336530613038643838
                 3633
 
-- name: Deploy GitHub Actions Runner
+- name: Install Docker
+  hosts: all
+  become: true
+  roles:
+    - role: geerlingguy.docker
+      vars:
+        docker_edition: ce
+        docker_packages:
+          - "docker-{{ docker_edition }}"
+          - "docker-{{ docker_edition }}-cli"
+          - "docker-{{ docker_edition }}-rootless-extras"
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        docker_packages_state: present
+        docker_daemon_options:
+          bip: 172.31.0.1/16
+          default-address-pools:
+            - base: 172.32.0.0/12
+              size: 24
+
+- name: Deploy Docker containers
   hosts: all
   become: true
   roles:
     - role: github_actions_runner
-  vars:
-    github_actions_runner_docker_image: myoung34/github-runner:2.328.0-ubuntu-noble
-    github_actions_runner_repo_url: https://github.com/hongbo-miao/hongbomiao.com
-    github_actions_runner_access_token: "{{ hostvars[inventory_hostname]['github_actions_runner_access_token'] }}"
+      vars:
+        github_actions_runner_docker_image: myoung34/github-runner:2.328.0-ubuntu-noble
+        github_actions_runner_repo_url: https://github.com/hongbo-miao/hongbomiao.com
+        github_actions_runner_access_token: "{{ hostvars[inventory_hostname]['github_actions_runner_access_token'] }}"
+    - role: ollama
+      vars:
+        ollama_docker_image: docker.io/ollama/ollama:0.11.10
+        ollama_port: 11434
+        ollama_gpu_devices: "'\"device=0\"'"
+    - role: speaches
+      vars:
+        speaches_docker_image: ghcr.io/speaches-ai/speaches:0.8.2-cuda
+        speaches_port: 34796
+        speaches_gpu_devices: "'\"device=0\"'"
+        speaches_hugging_face_hub_token: "{{ hostvars[inventory_hostname]['hugging_face_hub_token'] }}"
+    - role: vllm
+      vars:
+        vllm_docker_image: docker.io/vllm/vllm-openai:v0.10.1.1
+        vllm_port: 44194
+        vllm_model: Qwen/Qwen3-14B-AWQ
+        vllm_max_model_len: 8192
+        vllm_gpu_memory_utilization: 0.8
+        vllm_tensor_parallel_size: 1
+        vllm_gpu_devices: "'\"device=0\"'"
+        vllm_tool_call_parser: hermes
+        vllm_hugging_face_hub_token: "{{ hostvars[inventory_hostname]['hugging_face_hub_token'] }}"
+
+- name: Install NVIDIA toolkits
+  hosts: all
+  become: true
+  roles:
+    - role: nvidia_cuda_toolkit
+      vars:
+        nvidia_cuda_toolkit_version: 13.0.2
+        nvidia_cuda_toolkit_driver_version: 580.95.05
+    - role: nvidia_container_toolkit
+      vars:
+        nvidia_container_toolkit_version: 1.17.8-1
 
 - name: Deploy Kafka
   hosts: all
@@ -176,40 +212,3 @@
         partitions: 1
     kafka_additional_config:
       message.max.bytes: 1048576  # 1 MiB
-
-- name: Deploy Ollama
-  hosts: all
-  become: true
-  roles:
-    - role: ollama
-  vars:
-    ollama_docker_image: docker.io/ollama/ollama:0.11.10
-    ollama_port: 11434
-    ollama_gpu_devices: "'\"device=0\"'"
-
-- name: Deploy Speaches
-  hosts: all
-  become: true
-  roles:
-    - role: speaches
-  vars:
-    speaches_docker_image: ghcr.io/speaches-ai/speaches:0.8.2-cuda
-    speaches_port: 34796
-    speaches_gpu_devices: "'\"device=0\"'"
-    speaches_hugging_face_hub_token: "{{ hostvars[inventory_hostname]['hugging_face_hub_token'] }}"
-
-- name: Deploy vLLM
-  hosts: all
-  become: true
-  roles:
-    - role: vllm
-  vars:
-    vllm_docker_image: docker.io/vllm/vllm-openai:v0.10.1.1
-    vllm_port: 44194
-    vllm_model: Qwen/Qwen3-14B-AWQ
-    vllm_max_model_len: 8192
-    vllm_gpu_memory_utilization: 0.8
-    vllm_tensor_parallel_size: 1
-    vllm_gpu_devices: "'\"device=0\"'"
-    vllm_tool_call_parser: hermes
-    vllm_hugging_face_hub_token: "{{ hostvars[inventory_hostname]['hugging_face_hub_token'] }}"
