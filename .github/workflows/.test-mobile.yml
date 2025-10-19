@@ -108,6 +108,10 @@ jobs:
         run: |
           brew tap tuist/tuist
           brew install --formula tuist
+      - name: Install dependencies
+        working-directory: mobile/mobile-ios
+        run: |
+          tuist install
       - name: Generate Xcode project
         working-directory: mobile/mobile-ios
         run: |
@@ -116,14 +120,14 @@ jobs:
         working-directory: mobile/mobile-ios
         run: |
           xcodebuild build-for-testing \
-            -project mobile-ios.xcodeproj \
+            -workspace mobile-ios.xcworkspace \
             -scheme mobile-ios \
             -destination "$IOS_SIMULATOR"
       - name: Test
         working-directory: mobile/mobile-ios
         run: |
           xcodebuild test-without-building \
-            -project mobile-ios.xcodeproj \
+            -workspace mobile-ios.xcworkspace \
             -scheme mobile-ios \
             -destination "$IOS_SIMULATOR"
       - name: Convert coverage to Cobertura XML format
