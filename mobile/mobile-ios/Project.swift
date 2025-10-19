@@ -31,7 +31,9 @@ let project = Project(
         "mobile-ios/Sources",
         "mobile-ios/Resources",
       ],
-      dependencies: []
+      dependencies: [
+        .external(name: "WhisperKit")
+      ]
     ),
     .target(
       name: "mobile-iosTests",
