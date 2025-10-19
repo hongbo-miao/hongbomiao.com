@@ -424,13 +424,13 @@ lint-yaml:
 static-type-check-opentofu:
     cd infrastructure/opentofu/environments/production/airbyte && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/argo-cd && just static-type-check-opentofu
-    cd infrastructure/opentofu/environments/production/aws/data && just static-type-check-opentofu
+    cd infrastructure/opentofu/environments/production/aws/storage && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/aws/general && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/aws/kubernetes && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/aws/network && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/harbor && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/nebius/applications && just static-type-check-opentofu
-    cd infrastructure/opentofu/environments/production/nebius/data && just static-type-check-opentofu
+    cd infrastructure/opentofu/environments/production/nebius/storage && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/nebius/general && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/nebius/kubernetes && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/snowflake/account && just static-type-check-opentofu
