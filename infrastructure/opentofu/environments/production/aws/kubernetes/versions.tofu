@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     region = "us-west-2"
     bucket = "production-hm-opentofu-bucket"
-    key    = "production/aws/data/terraform.tfstate"
+    key    = "production/aws/kubernetes/terraform.tfstate"
   }
   required_providers {
     # https://registry.terraform.io/providers/hashicorp/aws/latest

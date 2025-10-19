@@ -11,7 +11,7 @@ data "terraform_remote_state" "production_aws_data_terraform_remote_state" {
   config = {
     region = "us-west-2"
     bucket = "production-hm-opentofu-bucket"
-    key    = "production/aws/data/terraform.tfstate"
+    key    = "production/aws/general/terraform.tfstate"
   }
 }
 
