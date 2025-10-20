@@ -16,6 +16,6 @@ let package = Package(
   name: "mobile-ios",
   dependencies: [
     .package(url: "https://github.com/argmaxinc/WhisperKit", from: "0.14.1"),
-    .package(url: "https://github.com/ml-explore/mlx-swift-examples", from: "2.25.7"),
+    .package(url: "https://github.com/ml-explore/mlx-swift-examples", from: "2.25.9"),
   ]
 )
