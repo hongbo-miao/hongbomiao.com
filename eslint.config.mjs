@@ -140,6 +140,7 @@ export default [
       'mobile/mobile-ios/Tuist/Package.resolved',
       'mobile/mobile-ios/buildServer.json',
       'mobile/mobile-ios/cobertura.xml',
+      'mobile/mobile-ios/mobile-ios/Resources/Audio/**/*',
       'mobile/mobile-react-native/.expo/**/*',
       'reverse-engineering/*/main',
       'robotics/robot-operating-system/bags/**/*',
