@@ -97,6 +97,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **Tuist** - Xcode project generation and management tool
 - **SwiftUI** - UI framework
+- **MLXLLM** - Large language model (LLM) framework
 - **WhisperKit** - Speech-to-text framework
 - **XCTest** - Unit testing, performance testing
 - **Slather** - Code coverage reports generating

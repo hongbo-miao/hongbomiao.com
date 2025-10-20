@@ -10,7 +10,8 @@ let project = Project(
   name: "mobile-ios",
   settings: .settings(
     base: [
-      "SWIFT_VERSION": .string(swiftVersion)
+      "SWIFT_VERSION": .string(swiftVersion),
+      "DEVELOPMENT_TEAM": .string("KJUGT5LXHP"),
     ]
   ),
   targets: [
@@ -32,7 +33,9 @@ let project = Project(
         "mobile-ios/Resources",
       ],
       dependencies: [
-        .external(name: "WhisperKit")
+        .external(name: "WhisperKit"),
+        .external(name: "MLXLLM"),
+        .external(name: "MLXLMCommon"),
       ]
     ),
     .target(

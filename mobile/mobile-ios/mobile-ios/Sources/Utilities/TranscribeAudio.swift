@@ -1,27 +1,51 @@
 import Foundation
+@preconcurrency import WhisperKit
 
-func transcribeAudio(audioResourceName: String, audioResourceExtension: String) async -> (
-  transcribedText: String?, statusMessage: String
-) {
+private enum AudioTranscriptionError: Error, LocalizedError {
+  case pipelineLoadFailed(Error)
+  case audioFileNotFound(name: String, ext: String)
+  case transcriptionFailed(Error)
+
+  var errorDescription: String? {
+    switch self {
+    case .pipelineLoadFailed(let underlyingError):
+      "Failed to load WhisperKit pipeline: \(underlyingError.localizedDescription)"
+    case .audioFileNotFound(let name, let ext):
+      "File \(name).\(ext) was not found in the app bundle."
+    case .transcriptionFailed(let underlyingError):
+      "Failed to transcribe audio: \(underlyingError.localizedDescription)"
+    }
+  }
+}
+
+func transcribeAudio(audioResourceName: String, audioResourceExtension: String) async throws
+  -> String?
+{
+  let pipeline: WhisperKit
   do {
-    let pipeline = try await WhisperKitPipelineProvider.loadWhisperKitPipeline()
-
-    guard
-      let audioPath = Bundle.main.url(
-        forResource: audioResourceName, withExtension: audioResourceExtension)
-    else {
-      return (
-        nil, "File \(audioResourceName).\(audioResourceExtension) was not found in the app bundle."
-      )
-    }
-
-    let transcriptionResults = try await pipeline.transcribe(audioPath: audioPath.path)
-
-    guard let text = transcriptionResults.first?.text, !text.isEmpty else {
-      return (nil, "WhisperKit returned an empty transcription.")
-    }
-    return (text, "Transcription succeeded.")
+    pipeline = try await WhisperKitPipelineProvider.loadWhisperKitPipeline()
   } catch {
-    return (nil, "Failed to transcribe audio: \(error.localizedDescription)")
+    throw AudioTranscriptionError.pipelineLoadFailed(error)
+  }
+
+  guard
+    let audioPath = Bundle.main.url(
+      forResource: audioResourceName, withExtension: audioResourceExtension)
+  else {
+    throw AudioTranscriptionError.audioFileNotFound(
+      name: audioResourceName,
+      ext: audioResourceExtension
+    )
+  }
+
+  do {
+    let transcriptionResults = try await pipeline.transcribe(audioPath: audioPath.path)
+    let transcriptionText = transcriptionResults.first?.text ?? ""
+    let trimmedTranscriptionText = transcriptionText.trimmingCharacters(
+      in: .whitespacesAndNewlines
+    )
+    return trimmedTranscriptionText.isEmpty ? nil : trimmedTranscriptionText
+  } catch {
+    throw AudioTranscriptionError.transcriptionFailed(error)
   }
 }
