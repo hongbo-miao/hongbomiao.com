@@ -2,40 +2,16 @@ import SwiftUI
 @preconcurrency import WhisperKit
 
 struct ContentView: View {
-  @State private var isTranscribingAudio: Bool = false
-  @State private var transcriptionStatusMessage: String = ""
-  @State private var transcribedText: String = ""
-
-  private let audioResourceName: String = "audio"
-  private let audioResourceExtension: String = "wav"
+  @StateObject private var contentViewModel: ContentViewModel = ContentViewModel()
 
   var body: some View {
     VStack(spacing: 24) {
       Button(
         action: {
-          guard !isTranscribingAudio else {
-            return
-          }
-
-          isTranscribingAudio = true
-          transcriptionStatusMessage = ""
-          transcribedText = ""
-
-          Task {
-            let transcriptionOutcome = await transcribeAudio(
-              audioResourceName: audioResourceName,
-              audioResourceExtension: audioResourceExtension
-            )
-
-            await MainActor.run {
-              transcribedText = transcriptionOutcome.transcribedText ?? ""
-              transcriptionStatusMessage = transcriptionOutcome.statusMessage
-              isTranscribingAudio = false
-            }
-          }
+          contentViewModel.handleTranscribeAudioButtonTapped()
         },
         label: {
-          if isTranscribingAudio {
+          if contentViewModel.isTranscribingAudio {
             ProgressView()
           } else {
             Text("Transcribe Audio")
@@ -44,14 +20,32 @@ struct ContentView: View {
       )
       .buttonStyle(.borderedProminent)
 
-      if !transcriptionStatusMessage.isEmpty {
-        Text(transcriptionStatusMessage)
-          .multilineTextAlignment(.center)
+      if !contentViewModel.transcribedText.isEmpty {
+        ScrollView {
+          Text(contentViewModel.transcribedText)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
       }
 
-      if !transcribedText.isEmpty {
+      Divider()
+
+      Button(
+        action: {
+          contentViewModel.handleGenerateJokeButtonTapped()
+        },
+        label: {
+          if contentViewModel.isGeneratingJoke {
+            ProgressView()
+          } else {
+            Text("Generate Joke")
+          }
+        }
+      )
+      .buttonStyle(.borderedProminent)
+
+      if !contentViewModel.jokeText.isEmpty {
         ScrollView {
-          Text(transcribedText)
+          Text(contentViewModel.jokeText)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
       }
@@ -59,7 +53,6 @@ struct ContentView: View {
     .padding()
   }
 }
-
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     ContentView()
