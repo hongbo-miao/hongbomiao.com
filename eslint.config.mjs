@@ -137,7 +137,6 @@ export default [
       'mobile/mobile-ios/*.xcworkspace/**/*',
       'mobile/mobile-ios/Derived/**/*',
       'mobile/mobile-ios/Tuist/.build/**/*',
-      'mobile/mobile-ios/Tuist/Package.resolved',
       'mobile/mobile-ios/buildServer.json',
       'mobile/mobile-ios/cobertura.xml',
       'mobile/mobile-ios/mobile-ios/Resources/Audio/**/*',
