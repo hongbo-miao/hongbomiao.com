@@ -1,0 +1,18 @@
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+dev:
+    uv run swift sft \
+        --model=Qwen/Qwen3-4B-Instruct-2507 \
+        --dataset=AI-ModelScope/alpaca-gpt4-data-en \
+        --train_type=lora \
+        --output_dir=output
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage

@@ -542,8 +542,9 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Automatic Mixed Precision** - Mixed precision FP16/FP32 training
 - LLM Post-Training
   - Fine-Tuning
-    - **LLaMA-Factory** - LLM fine-tuning
+    - **SWIFT** - LLM fine-tuning
     - **Unsloth** - LLM fine-tuning
+    - **LLaMA-Factory** - LLM fine-tuning
     - **torchtune** - LLM fine-tuning
     - **Axolotl** - LLM fine-tuning
   - Quantization
