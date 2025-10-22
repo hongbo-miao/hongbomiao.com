@@ -33,7 +33,6 @@
         name: "{{ nvidia_container_toolkit_packages }}"
         state: present
         update_cache: true
-        cache_valid_time: 3600
   always:
     - name: Clean up NVIDIA Container Toolkit GPG key
       ansible.builtin.file:
