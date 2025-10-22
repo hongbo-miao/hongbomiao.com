@@ -797,19 +797,19 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.1.1
         with:
-          version: 0.9.4
+          version: 0.9.5
           enable-cache: true
-          cache-dependency-glob: data-extraction/hm-gliner/uv.lock
+          cache-dependency-glob: named-entity-recognition/hm-gliner/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: data-extraction/hm-gliner/.python-version
+          python-version-file: named-entity-recognition/hm-gliner/.python-version
       - name: Install dependencies
-        working-directory: data-extraction/hm-gliner
+        working-directory: named-entity-recognition/hm-gliner
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-extraction/hm-gliner
+        working-directory: named-entity-recognition/hm-gliner
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -817,7 +817,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: data-extraction/hm-gliner
+          directory: named-entity-recognition/hm-gliner
 
   byte-pair-encoding-test:
     name: Byte-Pair Encoding | Test

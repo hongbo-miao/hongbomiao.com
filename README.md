@@ -529,7 +529,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Crawl4AI** - Web data scraping, crawling
   - **Firecrawl** - Web data scraping, crawling, extraction
 - Data Extraction
-  - Document data extraction
+  - Document Data Extraction
     - **MinerU** - Document data extraction
     - **olmOCR** - Document data extraction
     - **Docling** - Document data extraction
