@@ -49,7 +49,6 @@
           - tshark
         state: present
         update_cache: true
-        cache_valid_time: 3600
     - name: Install packages from Snap
       become: true
       community.general.snap:
@@ -146,9 +145,8 @@
           - docker-compose-plugin
         docker_packages_state: present
         docker_daemon_options:
-          bip: 172.31.0.1/16
           default-address-pools:
-            - base: 172.32.0.0/12
+            - base: 172.17.0.0/16
               size: 24
 
 - name: Deploy Docker containers
