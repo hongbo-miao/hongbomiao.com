@@ -1,4 +1,9 @@
 ---
+- name: Add NVIDIA Container Toolkit GPG key to keyring
+  ansible.builtin.command:
+    cmd: gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg /tmp/nvidia-container-toolkit-gpgkey
+  changed_when: true
+
 - name: Restart Docker service
   become: true
   ansible.builtin.systemd_service:

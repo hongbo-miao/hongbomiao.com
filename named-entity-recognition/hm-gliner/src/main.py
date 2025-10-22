@@ -17,11 +17,11 @@ def main() -> None:
     He is the only player to have scored 100 goals with four different clubs.
     He has made over 1,200 professional career appearances, the most by an outfield player, and has scored over 900 official senior career goals for club and country, making him the top goalscorer of all time.
     """)
-    labels = ["person", "award", "date", "competitions", "teams"]
+    labels = ["person", "award", "date", "competition", "team"]
 
     entities = model.predict_entities(text, labels, threshold=0.5)
     for entity in entities:
-        logger.info(f"{entity['text']} => {entity['label']}")
+        logger.info(f"{entity['label']}: {entity['text']}")
 
 
 if __name__ == "__main__":
