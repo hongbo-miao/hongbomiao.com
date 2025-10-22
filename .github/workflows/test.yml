@@ -356,6 +356,8 @@ jobs:
               - 'physics/hm-genesis/**'
             hm-geopandas:
               - 'data-analytics/hm-geopandas/**'
+            hm-gliner:
+              - 'named-entity-recognition/hm-gliner/**'
             hm-gradio-classify-image:
               - 'machine-learning/hm-gradio/applications/classify-image/**'
             hm-hdf5:
@@ -687,6 +689,7 @@ jobs:
       hm-flax: ${{ steps.filter.outputs.hm-flax }}
       hm-genesis: ${{ steps.filter.outputs.hm-genesis }}
       hm-geopandas: ${{ steps.filter.outputs.hm-geopandas }}
+      hm-gliner: ${{ steps.filter.outputs.hm-gliner }}
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
       hm-hdf5: ${{ steps.filter.outputs.hm-hdf5 }}
       hm-imagebind: ${{ steps.filter.outputs.hm-imagebind }}
@@ -1106,6 +1109,7 @@ jobs:
       hm-faster-whisper: ${{ needs.detect-changes.outputs.hm-faster-whisper == 'true' }}
       hm-firecrawl: ${{ needs.detect-changes.outputs.hm-firecrawl == 'true' }}
       hm-flax: ${{ needs.detect-changes.outputs.hm-flax == 'true' }}
+      hm-gliner: ${{ needs.detect-changes.outputs.hm-gliner == 'true' }}
       hm-gradio-classify-image: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
       hm-imagebind: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
       hm-kubeflow-calculate: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}

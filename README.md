@@ -529,10 +529,13 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Crawl4AI** - Web data scraping, crawling
   - **Firecrawl** - Web data scraping, crawling, extraction
 - Data Extraction
-  - **MinerU** - Document data extraction
-  - **olmOCR** - Document data extraction
-  - **Docling** - Document data extraction
-  - **pypdf** - PDF manipulation
+  - Document data extraction
+    - **MinerU** - Document data extraction
+    - **olmOCR** - Document data extraction
+    - **Docling** - Document data extraction
+    - **pypdf** - PDF manipulation
+  - Named Entity Recognition
+    - **GLiNER** - Named entity recognition
 - Tokenization
   - **Byte-Pair Encoding (BPE)** - Subword tokenization
 - Embedding
