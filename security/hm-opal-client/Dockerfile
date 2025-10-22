@@ -1,4 +1,4 @@
-FROM docker.io/permitio/opal-client:0.8.3
+FROM docker.io/permitio/opal-client:0.9.0
 WORKDIR /usr/src/app
 
 COPY ["security/hm-opal-client/requirements.txt", "./"]
