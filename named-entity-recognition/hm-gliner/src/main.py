@@ -1,0 +1,32 @@
+import logging
+import textwrap
+
+from gliner import GLiNER
+
+logger = logging.getLogger(__name__)
+
+
+def main() -> None:
+    model = GLiNER.from_pretrained("urchade/gliner_medium-v2.1")
+
+    text = textwrap.dedent("""
+    Cristiano Ronaldo dos Santos Aveiro (born 5 February 1985) is a Portuguese professional footballer who plays as a forward for, and captains, both Saudi Pro League club Al-Nassr and the Portugal national team.
+    Nicknamed CR7, he is widely regarded as one of the greatest players in history, and has won numerous individual accolades throughout his career, including five Ballon d'Ors, a record three UEFA Men's Player of the Year Awards, four European Golden Shoes, and was named five times the world's best player by FIFA.
+    He has won 34 trophies in his career, including five UEFA Champions Leagues and the UEFA European Championship.
+    He holds the records for most goals (140) and assists (42) in the Champions League, goals (14) and assists (8) in the European Championship, and most international appearances (225) and international goals (143).
+    He is the only player to have scored 100 goals with four different clubs.
+    He has made over 1,200 professional career appearances, the most by an outfield player, and has scored over 900 official senior career goals for club and country, making him the top goalscorer of all time.
+    """)
+    labels = ["person", "award", "date", "competitions", "teams"]
+
+    entities = model.predict_entities(text, labels, threshold=0.5)
+    for entity in entities:
+        logger.info(f"{entity['text']} => {entity['label']}")
+
+
+if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
+    main()
