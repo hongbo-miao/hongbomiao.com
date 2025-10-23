@@ -502,6 +502,8 @@ jobs:
               - 'data-visualization/iads/iads-rtstation/iads-data-producer/**'
             iads-data-reader:
               - 'data-visualization/iads/iads-data-manager/iads-data-reader/**'
+            ingest-flac-to-parquet:
+              - 'data-processing/ingest-flac-to-parquet/**'
             k6:
               - 'load-testing/k6/**'
             kafka-rust-proto-consumer:
@@ -761,6 +763,7 @@ jobs:
       iads-config-reader: ${{ steps.filter.outputs.iads-config-reader }}
       iads-data-producer: ${{ steps.filter.outputs.iads-data-producer }}
       iads-data-reader: ${{ steps.filter.outputs.iads-data-reader }}
+      ingest-flac-to-parquet: ${{ steps.filter.outputs.ingest-flac-to-parquet }}
       k6: ${{ steps.filter.outputs.k6 }}
       kafka-rust-proto-consumer: ${{ steps.filter.outputs.kafka-rust-proto-consumer }}
       kafka-rust-proto-producer: ${{ steps.filter.outputs.kafka-rust-proto-producer }}
@@ -957,6 +960,7 @@ jobs:
       hm-spark-find-taxi-top-routes: ${{ needs.detect-changes.outputs.hm-spark-find-taxi-top-routes == 'true' }}
       hm-spark-ingest-from-s3-to-kafka: ${{ needs.detect-changes.outputs.hm-spark-ingest-from-s3-to-kafka == 'true' }}
       hm-spark-recommend-movies: ${{ needs.detect-changes.outputs.hm-spark-recommend-movies == 'true' }}
+      ingest-flac-to-parquet: ${{ needs.detect-changes.outputs.ingest-flac-to-parquet == 'true' }}
       kafka-rust-proto-consumer: ${{ needs.detect-changes.outputs.kafka-rust-proto-consumer == 'true' }}
       kafka-rust-proto-producer: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
       kafka-rust-udp-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}

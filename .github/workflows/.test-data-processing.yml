@@ -33,6 +33,9 @@ name: . Test Data Processing
       hm-spark-recommend-movies:
         required: true
         type: boolean
+      ingest-flac-to-parquet:
+        required: true
+        type: boolean
       kafka-rust-proto-consumer:
         required: true
         type: boolean
@@ -47,6 +50,39 @@ name: . Test Data Processing
         type: boolean
 
 jobs:
+  ingest-flac-to-parquet-test:
+    name: ingest-flac-to-parquet | Test
+    if: ${{ inputs.workflow || inputs.hm-ingest-flac-to-parquet }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.1
+        with:
+          version: 0.9.5
+          enable-cache: true
+          cache-dependency-glob: data-processing/ingest-flac-to-parquet/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: data-processing/ingest-flac-to-parquet/.python-version
+      - name: Install dependencies
+        working-directory: data-processing/ingest-flac-to-parquet
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-processing/ingest-flac-to-parquet
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-processing/ingest-flac-to-parquet
+
   spark-analyze-coffee-customers-test:
     name: Spark (analyze-coffee-customers) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-analyze-coffee-customers }}
