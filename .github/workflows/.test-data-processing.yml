@@ -48,6 +48,12 @@ name: . Test Data Processing
       kafka-rust-zeromq-kafka-bridge:
         required: true
         type: boolean
+      nats-publisher:
+        required: true
+        type: boolean
+      nats-subscriber:
+        required: true
+        type: boolean
 
 jobs:
   ingest-flac-to-parquet-test:
@@ -484,3 +490,69 @@ jobs:
         working-directory: data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge
         run: |
           cargo test --all-features
+
+  nats-publisher-test:
+    name: NATS (publisher) | Test
+    if: ${{ inputs.workflow || inputs.nats-publisher }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.1
+        with:
+          version: 0.9.5
+          enable-cache: true
+          cache-dependency-glob: data-processing/nats/publisher/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: data-processing/nats/publisher/.python-version
+      - name: Install dependencies
+        working-directory: data-processing/nats/publisher
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-processing/nats/publisher
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-processing/nats/publisher
+
+  nats-subscriber-test:
+    name: NATS (subscriber) | Test
+    if: ${{ inputs.workflow || inputs.nats-subscriber }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.1
+        with:
+          version: 0.9.5
+          enable-cache: true
+          cache-dependency-glob: data-processing/nats/subscriber/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: data-processing/nats/subscriber/.python-version
+      - name: Install dependencies
+        working-directory: data-processing/nats/subscriber
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-processing/nats/subscriber
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-processing/nats/subscriber
