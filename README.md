@@ -341,6 +341,7 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **AKHQ** - Kafka management
     - **UI for Apache Kafka** - Kafka management
     - **topicctl** - Kafka topic management
+- **NATS** - Edge and cloud native messaging system
 
 ### Data Transformation
 
