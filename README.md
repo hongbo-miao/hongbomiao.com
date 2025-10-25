@@ -315,6 +315,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **flink-connector-twitter** - Flink Twitter connector
   - **flink-connector-jdbc** - Flink JDBC Connector
   - **flink-connector-redis** - Flink Redis connector
+- **NATS** - Edge and cloud native messaging system
 - **Apache Kafka** - Distributed event streaming platform
   - Client
     - **librdkafka** - Kafka C/C++ client
@@ -341,7 +342,6 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **AKHQ** - Kafka management
     - **UI for Apache Kafka** - Kafka management
     - **topicctl** - Kafka topic management
-- **NATS** - Edge and cloud native messaging system
 
 ### Data Transformation
 
@@ -554,13 +554,13 @@ The diagram illustrates the repository's architecture, which is considered overl
   - Quantization
     - **torchao** - Quantization and sparsification
 - LLM Inference
-  - **vLLM** – High-throughput LLM serving
-  - **SGLang** – LLM and VLM serving
-  - **Ollama** – Local LLM serving
+  - **vLLM** - High-throughput LLM serving
+  - **SGLang** - LLM and VLM serving
+  - **Ollama** - Local LLM serving
   - **GPT4All** - Local LLM serving
-  - **MLX LM** – LLM serving for Apple silicon
-  - **KV Caching** – Memory optimization technique caching key/value pairs from self-attention to accelerate auto-regressive decoding
-  - **Speculative Decoding** – Acceleration technique using draft models
+  - **MLX LM** - LLM serving for Apple silicon
+  - **KV Caching** - Memory optimization technique caching key/value pairs from self-attention to accelerate auto-regressive decoding
+  - **Speculative Decoding** - Acceleration technique using draft models
 - LLM Evaluation
   - **DeepEval** - LLM evaluation framework
 - LLM Gateway
@@ -599,7 +599,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Audio
 
-- **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
+- **Icecast** - Streaming media server
 - Voice Activity Detector (VAD)
   - **Silero VAD** - Voice activity detector
   - **py-webrtcvad-wheels** - Voice activity detector
@@ -608,8 +608,9 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Diart** - Real-time speaker diarization
 - Automatic Speech Recognition (ASR)
   - **Faster Whisper** - Fast Whisper inference using CTranslate2
-  - **WhisperX** – Whisper-based transcription with word-level timestamps and speaker diarization
+  - **WhisperX** - Whisper-based transcription with word-level timestamps and speaker diarization
   - **Speaches** - OpenAI-compatible inference server for streaming transcription, translation, and speech generation
+- **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
 
 ## Computer Vision
 
@@ -1013,7 +1014,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Network Analysis
 
-- **TShark** – Network protocol analyzer
+- **TShark** - Network protocol analyzer
 
 ### Communication Standard
 
