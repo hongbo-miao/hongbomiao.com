@@ -10,12 +10,12 @@ publish:
     ffmpeg \
         -re \
         -stream_loop -1 \
-        -i data/audio.flac \
+        -i data/audio-1.flac \
         -c:a libopus \
         -b:a 128k \
         -content_type audio/webm \
         -f webm \
-        icecast://source:passw0rd1@localhost:52231/stream
+        icecast://source:passw0rd1@localhost:52231/audio-1
 
 subscribe:
-    ffplay http://localhost:52231/stream
+    ffplay http://localhost:52231/audio-1
