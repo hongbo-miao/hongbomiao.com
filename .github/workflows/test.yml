@@ -534,10 +534,10 @@ jobs:
               - 'hardware-in-the-loop/national-instruments/veristand/hm-veristand/**'
             national-instruments-veristand-zeromq-bridge:
               - 'hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/**'
-            nats-publisher:
-              - 'data-processing/nats/publisher/**'
-            nats-subscriber:
-              - 'data-processing/nats/subscriber/**'
+            nats-audio-file-publisher:
+              - 'data-processing/nats/audio-file-publisher/**'
+            nats-audio-file-subscriber:
+              - 'data-processing/nats/audio-file-subscriber/**'
             neural-forecasting-forecast-air-passenger-number:
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
             nvidia-dali:
@@ -783,8 +783,8 @@ jobs:
       national-instruments-hm-tdms: ${{ steps.filter.outputs.national-instruments-hm-tdms }}
       national-instruments-hm-veristand: ${{ steps.filter.outputs.national-instruments-hm-veristand }}
       national-instruments-veristand-zeromq-bridge: ${{ steps.filter.outputs.national-instruments-veristand-zeromq-bridge }}
-      nats-publisher: ${{ steps.filter.outputs.nats-publisher }}
-      nats-subscriber: ${{ steps.filter.outputs.nats-subscriber }}
+      nats-audio-file-publisher: ${{ steps.filter.outputs.nats-audio-file-publisher }}
+      nats-audio-file-subscriber: ${{ steps.filter.outputs.nats-audio-file-subscriber }}
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
       nvidia-dali: ${{ steps.filter.outputs.nvidia-dali }}
       open-clip: ${{ steps.filter.outputs.open-clip }}
@@ -971,8 +971,8 @@ jobs:
       kafka-rust-proto-producer: ${{ needs.detect-changes.outputs.kafka-rust-proto-producer == 'true' }}
       kafka-rust-udp-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-udp-kafka-bridge == 'true' }}
       kafka-rust-zeromq-kafka-bridge: ${{ needs.detect-changes.outputs.kafka-rust-zeromq-kafka-bridge == 'true' }}
-      nats-publisher: ${{ needs.detect-changes.outputs.nats-publisher == 'true' }}
-      nats-subscriber: ${{ needs.detect-changes.outputs.nats-subscriber == 'true' }}
+      nats-audio-file-publisher: ${{ needs.detect-changes.outputs.nats-audio-file-publisher == 'true' }}
+      nats-audio-file-subscriber: ${{ needs.detect-changes.outputs.nats-audio-file-subscriber == 'true' }}
 
   test-data-transformation:
     name: Test Data Transformation
