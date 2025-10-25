@@ -48,10 +48,10 @@ name: . Test Data Processing
       kafka-rust-zeromq-kafka-bridge:
         required: true
         type: boolean
-      nats-publisher:
+      nats-audio-file-publisher:
         required: true
         type: boolean
-      nats-subscriber:
+      nats-audio-file-subscriber:
         required: true
         type: boolean
 
@@ -491,9 +491,9 @@ jobs:
         run: |
           cargo test --all-features
 
-  nats-publisher-test:
-    name: NATS (publisher) | Test
-    if: ${{ inputs.workflow || inputs.nats-publisher }}
+  nats-audio-file-publisher-test:
+    name: NATS (audio-file-publisher) | Test
+    if: ${{ inputs.workflow || inputs.nats-audio-file-publisher }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -504,17 +504,17 @@ jobs:
         with:
           version: 0.9.5
           enable-cache: true
-          cache-dependency-glob: data-processing/nats/publisher/uv.lock
+          cache-dependency-glob: data-processing/nats/audio-file-publisher/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: data-processing/nats/publisher/.python-version
+          python-version-file: data-processing/nats/audio-file-publisher/.python-version
       - name: Install dependencies
-        working-directory: data-processing/nats/publisher
+        working-directory: data-processing/nats/audio-file-publisher
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-processing/nats/publisher
+        working-directory: data-processing/nats/audio-file-publisher
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -522,11 +522,11 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: data-processing/nats/publisher
+          directory: data-processing/nats/audio-file-publisher
 
-  nats-subscriber-test:
-    name: NATS (subscriber) | Test
-    if: ${{ inputs.workflow || inputs.nats-subscriber }}
+  nats-audio-file-subscriber-test:
+    name: NATS (audio-file-subscriber) | Test
+    if: ${{ inputs.workflow || inputs.nats-audio-file-subscriber }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -537,17 +537,17 @@ jobs:
         with:
           version: 0.9.5
           enable-cache: true
-          cache-dependency-glob: data-processing/nats/subscriber/uv.lock
+          cache-dependency-glob: data-processing/nats/audio-file-subscriber/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: data-processing/nats/subscriber/.python-version
+          python-version-file: data-processing/nats/audio-file-subscriber/.python-version
       - name: Install dependencies
-        working-directory: data-processing/nats/subscriber
+        working-directory: data-processing/nats/audio-file-subscriber
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-processing/nats/subscriber
+        working-directory: data-processing/nats/audio-file-subscriber
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -555,4 +555,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: data-processing/nats/subscriber
+          directory: data-processing/nats/audio-file-subscriber
