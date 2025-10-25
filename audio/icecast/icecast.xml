@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<icecast>
+  <location>Local Studio</location>
+  <admin>admin@example.com</admin>
+  <limits>
+    <clients>100</clients>
+    <sources>2</sources>
+    <queue-size>524288</queue-size>
+    <client-timeout>30</client-timeout>
+    <header-timeout>15</header-timeout>
+    <source-timeout>10</source-timeout>
+    <burst-on-connect>1</burst-on-connect>
+    <burst-size>65535</burst-size>
+  </limits>
+  <authentication>
+    <source-password>passw0rd1</source-password>
+    <relay-password>passw0rd2</relay-password>
+    <admin-user>admin</admin-user>
+    <admin-password>passw0rd3</admin-password>
+  </authentication>
+  <hostname>localhost</hostname>
+  <listen-socket>
+    <port>8000</port>
+  </listen-socket>
+  <files>
+    <basedir>/usr/share/icecast2</basedir>
+  </files>
+  <paths>
+    <logdir>/var/log/icecast2</logdir>
+    <webroot>/usr/share/icecast2/web</webroot>
+    <adminroot>/usr/share/icecast2/admin</adminroot>
+    <pidfile>/var/run/icecast2/icecast.pid</pidfile>
+  </paths>
+  <logging>
+    <accesslog>access.log</accesslog>
+    <errorlog>error.log</errorlog>
+    <loglevel>3</loglevel>
+    <logsize>10000</logsize>
+  </logging>
+  <security>
+    <chroot>1</chroot>
+  </security>
+  <mount>
+    <mount-name>/stream</mount-name>
+    <stream-name>Icecast Stream</stream-name>
+    <stream-description>Icecast stream</stream-description>
+    <stream-url>http://localhost:8000/stream</stream-url>
+    <genre>Variety</genre>
+  </mount>
+</icecast>
