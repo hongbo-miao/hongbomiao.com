@@ -54,6 +54,9 @@ name: . Test Data Processing
       nats-audio-file-subscriber:
         required: true
         type: boolean
+      nats-audio-stream-publisher:
+        required: true
+        type: boolean
 
 jobs:
   ingest-flac-to-parquet-test:
@@ -556,3 +559,36 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: data-processing/nats/audio-file-subscriber
+
+  nats-audio-stream-publisher-test:
+    name: NATS (audio-stream-publisher) | Test
+    if: ${{ inputs.workflow || inputs.nats-audio-stream-publisher }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.1
+        with:
+          version: 0.9.5
+          enable-cache: true
+          cache-dependency-glob: data-processing/nats/audio-stream-publisher/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: data-processing/nats/audio-stream-publisher/.python-version
+      - name: Install dependencies
+        working-directory: data-processing/nats/audio-stream-publisher
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-processing/nats/audio-stream-publisher
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-processing/nats/audio-stream-publisher
