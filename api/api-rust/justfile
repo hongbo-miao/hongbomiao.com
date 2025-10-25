@@ -42,5 +42,9 @@ brew-install-opencv:
     brew install opencv
 
 listen-police-audio-stream:
-    websocat --binary 'ws://localhost:36147/ws/police-audio-stream?police_stream_id=chicago_police_department_zone_08' \
+    websocat --binary 'ws://localhost:36147/ws/police-audio-stream?police_stream_id=chicago_police' \
+        | sox --type=raw --rate=16000 --encoding=signed --bits=16 --channels=1 - --default-device
+
+listen-fire-audio-stream:
+    websocat --binary 'ws://localhost:36147/ws/fire-audio-stream?fire_stream_id=lincoln_fire' \
         | sox --type=raw --rate=16000 --encoding=signed --bits=16 --channels=1 - --default-device
