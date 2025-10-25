@@ -7,6 +7,17 @@ pub mod audio {
         pub mod webrtc_vad_processor;
     }
 }
+pub mod fire_audio_stream {
+    pub mod constants {
+        pub mod fire_streams;
+    }
+    pub mod utils {
+        pub mod fire_audio_stream_manager;
+        pub mod fire_stream_state;
+        pub mod handle_fire_audio_websocket;
+        pub mod process_fire_audio_stream;
+    }
+}
 pub mod image {
     pub mod utils {
         pub mod load_labels;

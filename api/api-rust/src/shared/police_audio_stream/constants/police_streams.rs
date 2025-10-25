@@ -11,11 +11,11 @@ pub struct PoliceStreamInfo {
 pub static POLICE_STREAMS: Lazy<HashMap<&'static str, PoliceStreamInfo>> = Lazy::new(|| {
     let mut police_streams_map = HashMap::new();
     police_streams_map.insert(
-        "chicago_police_department_zone_08",
+        "chicago_police",
         PoliceStreamInfo {
-            name: "Chicago Police Department Zone 08",
+            name: "Chicago Police",
             // https://www.broadcastify.com/webPlayer/37361
-            stream_url: "https://listen.broadcastify.com/hgk5bns9j24wy8v.mp3",
+            stream_url: "https://listen.broadcastify.com/f6jrv8hnq2csb5z.mp3",
             location: "Chicago, IL",
         },
     );

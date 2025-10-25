@@ -73,7 +73,7 @@ async def publish_flac_files(
     return published_count
 
 
-async def run_publisher() -> None:
+async def main() -> None:
     nats_client = None
     try:
         logger.info(f"Connecting to NATS at {NATS_URL}")
@@ -101,4 +101,4 @@ if __name__ == "__main__":
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
-    asyncio.run(run_publisher())
+    asyncio.run(main())
