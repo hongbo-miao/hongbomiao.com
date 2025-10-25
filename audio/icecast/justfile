@@ -1,0 +1,21 @@
+icecast:
+    docker run \
+        --rm \
+        --name=icecast2 \
+        --publish=52231:8000 \
+        --volume="$(pwd)/icecast.xml:/etc/icecast2/icecast.xml" \
+        pltnk/icecast2
+
+publish:
+    ffmpeg \
+        -re \
+        -stream_loop -1 \
+        -i data/audio.flac \
+        -c:a libopus \
+        -b:a 128k \
+        -content_type audio/webm \
+        -f webm \
+        icecast://source:passw0rd1@localhost:52231/stream
+
+subscribe:
+    ffplay http://localhost:52231/stream
