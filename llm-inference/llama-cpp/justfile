@@ -1,0 +1,12 @@
+# https://huggingface.co/unsloth/Qwen3-1.7B-GGUF
+
+MODEL_PATH := "models/Qwen3-1.7B-BF16.gguf"
+
+install:
+    brew install llama.cpp
+
+generate-text:
+    llama-cli --model "{{ MODEL_PATH }}" --prompt "I believe the meaning of life is" --predict 128 --no-conversation
+
+chat:
+    llama-cli --model "{{ MODEL_PATH }}" --system-prompt "You are a helpful assistant"
