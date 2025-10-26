@@ -539,11 +539,12 @@ The diagram illustrates the repository's architecture, which is considered overl
   - Quantization
     - **torchao** - Quantization and sparsification
 - LLM Inference
-  - **vLLM** - High-throughput LLM serving
-  - **SGLang** - LLM and VLM serving
-  - **Ollama** - Local LLM serving
-  - **GPT4All** - Local LLM serving
-  - **MLX LM** - LLM serving for Apple silicon
+  - **GPT4All** - Local LLM inference
+  - **Ollama** - Local LLM inference
+  - **llama.cpp** - High-performance LLM inference in C/C++
+  - **MLX LM** - LLM inference for Apple silicon
+  - **vLLM** - High-throughput LLM inference
+  - **SGLang** - High-throughput LLM and VLM inference
   - **KV Caching** - Memory optimization technique caching key/value pairs from self-attention to accelerate auto-regressive decoding
   - **Speculative Decoding** - Acceleration technique using draft models
 - LLM Evaluation
@@ -597,7 +598,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **WhisperX** - Whisper-based transcription with word-level timestamps and speaker diarization
   - **Speaches** - OpenAI-compatible inference server for streaming transcription, translation, and speech generation
   - **WhisperKit** - On-device Whisper for Apple
-  - **whisper.cpp** - High-performance C/C++ port of Whisper
+  - **whisper.cpp** - High-performance Whisper inference in C/C++
 
 ## Computer Vision
 
