@@ -81,6 +81,7 @@ export default [
       'api/api-node/reports/**/*',
       'api/api-python/dist/**/*',
       'api/api-rust/models/**/*',
+      'audio/whisper.cpp/models/**/*',
       'caddy/public/**/*',
       'cloud-cost/komiser/komiser.db',
       'cloud-platform/aws/aws-secrets-manager/secrets/*-credentials.json',

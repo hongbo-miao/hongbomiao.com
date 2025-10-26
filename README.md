@@ -277,22 +277,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Data
 
-### Data Annotation
-
-- **Label Studio** - Data annotation
-
-### Data Crawling
-
-- **Crawl4AI** - Web data scraping, crawling
-- **Firecrawl** - Web data scraping, crawling, extraction
-
-### Data Extraction
-
-- **MinerU** - Document data extraction
-- **olmOCR** - Document data extraction
-- **Docling** - Document data extraction
-- **pypdf** - PDF manipulation
-
 ### Data Ingestion
 
 - **Airbyte** - Data integration
@@ -600,6 +584,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Audio
 
 - **Icecast** - Streaming media server
+- **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
 - Voice Activity Detector (VAD)
   - **Silero VAD** - Voice activity detector
   - **py-webrtcvad-wheels** - Voice activity detector
@@ -610,7 +595,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Faster Whisper** - Fast Whisper inference using CTranslate2
   - **WhisperX** - Whisper-based transcription with word-level timestamps and speaker diarization
   - **Speaches** - OpenAI-compatible inference server for streaming transcription, translation, and speech generation
-- **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
+  - **WhisperKit** - On-device Whisper for Apple
+  - **whisper.cpp** - High-performance C/C++ port of Whisper
 
 ## Computer Vision
 
