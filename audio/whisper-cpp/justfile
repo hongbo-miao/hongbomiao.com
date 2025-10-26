@@ -1,0 +1,10 @@
+MODEL := "models/ggml-tiny.en.bin"
+AUDIO := "data/audio.flac"
+
+install:
+    brew install whisper-cpp
+
+transcribe:
+    whisper-cli --model {{ MODEL }} --file {{ AUDIO }} --output-txt
+    whisper-cli --model {{ MODEL }} --file {{ AUDIO }} --output-json
+    whisper-cli --model {{ MODEL }} --file {{ AUDIO }} --output-json-full
