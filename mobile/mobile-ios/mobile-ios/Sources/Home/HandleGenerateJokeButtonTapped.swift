@@ -12,7 +12,6 @@ extension ContentViewModel {
     Task {
       do {
         let jokeTextResult = try await generateJoke()
-
         await MainActor.run {
           jokeText = jokeTextResult ?? ""
           isGeneratingJoke = false
