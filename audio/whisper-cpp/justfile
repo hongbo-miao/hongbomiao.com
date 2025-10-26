@@ -1,10 +1,12 @@
-MODEL := "models/ggml-tiny.en.bin"
-AUDIO := "data/audio.flac"
+# https://huggingface.co/ggerganov/whisper.cpp/tree/main
+
+MODEL_PATH := "models/ggml-tiny.en.bin"
+AUDIO_PATH := "data/audio.flac"
 
 install:
     brew install whisper-cpp
 
 transcribe:
-    whisper-cli --model {{ MODEL }} --file {{ AUDIO }} --output-txt
-    whisper-cli --model {{ MODEL }} --file {{ AUDIO }} --output-json
-    whisper-cli --model {{ MODEL }} --file {{ AUDIO }} --output-json-full
+    whisper-cli --model "{{ MODEL_PATH }}" --file "{{ AUDIO_PATH }}" --output-txt
+    whisper-cli --model "{{ MODEL_PATH }}" --file "{{ AUDIO_PATH }}" --output-json
+    whisper-cli --model "{{ MODEL_PATH }}" --file "{{ AUDIO_PATH }}" --output-json-full
