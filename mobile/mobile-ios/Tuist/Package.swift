@@ -17,5 +17,6 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/argmaxinc/WhisperKit", from: "0.14.1"),
     .package(url: "https://github.com/ml-explore/mlx-swift-examples", from: "2.25.7"),
+    .package(url: "https://github.com/Blaizzy/mlx-audio.git", from: "0.2.5"),
   ]
 )

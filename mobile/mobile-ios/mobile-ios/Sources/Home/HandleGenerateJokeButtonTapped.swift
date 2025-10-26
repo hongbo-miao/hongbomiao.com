@@ -16,6 +16,10 @@ extension ContentViewModel {
           jokeText = jokeTextResult ?? ""
           isGeneratingJoke = false
         }
+
+        if let jokeTextResult = jokeTextResult {
+          try await speakJokeText(jokeText: jokeTextResult)
+        }
       } catch {
         await MainActor.run {
           isGeneratingJoke = false

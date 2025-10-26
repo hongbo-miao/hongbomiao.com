@@ -36,6 +36,7 @@ let project = Project(
         .external(name: "WhisperKit"),
         .external(name: "MLXLLM"),
         .external(name: "MLXLMCommon"),
+        .external(name: "mlx-swift-audio"),
       ]
     ),
     .target(
