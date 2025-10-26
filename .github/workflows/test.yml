@@ -263,6 +263,8 @@ jobs:
               - 'data-distribution/arrow-flight/arrow-flight-server/**'
             automatic-mixed-precision:
               - 'llm-training/automatic-mixed-precision/**'
+            bert:
+              - 'named-entity-recognition/bert/**'
             bluesky:
               - 'aerospace/bluesky/**'
             byte-pair-encoding:
@@ -277,8 +279,6 @@ jobs:
               - 'embedded-system/decode-can-trc-data/**'
             development-aws-glue-spark-scripts:
               - 'infrastructure/opentofu/environments/development/aws/general/files/aws-glue/spark-scripts/**'
-            production-aws-glue-spark-scripts:
-              - 'infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/**'
             ethereum:
               - '.github/workflows/.lint.yml'
               - 'ethereum/**'
@@ -552,6 +552,8 @@ jobs:
               - 'data-visualization/hm-plotly/heatmap/**'
             post-training-quantization:
               - 'llm-post-training/post-training-quantization/**'
+            production-aws-glue-spark-scripts:
+              - 'infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/**'
             prometheus:
               - 'data-storage/prometheus/**'
             q-learning:
@@ -652,6 +654,7 @@ jobs:
       arrow-flight-client: ${{ steps.filter.outputs.arrow-flight-client }}
       arrow-flight-server: ${{ steps.filter.outputs.arrow-flight-server }}
       automatic-mixed-precision: ${{ steps.filter.outputs.automatic-mixed-precision }}
+      bert: ${{ steps.filter.outputs.bert }}
       bluesky: ${{ steps.filter.outputs.bluesky }}
       byte-pair-encoding: ${{ steps.filter.outputs.byte-pair-encoding }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
@@ -1109,6 +1112,7 @@ jobs:
       amazon-sagemaker-triton-resnet-50-deploy: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-deploy == 'true' }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
       automatic-mixed-precision: ${{ needs.detect-changes.outputs.automatic-mixed-precision == 'true' }}
+      bert: ${{ needs.detect-changes.outputs.bert == 'true' }}
       byte-pair-encoding: ${{ needs.detect-changes.outputs.byte-pair-encoding == 'true' }}
       cart-pole: ${{ needs.detect-changes.outputs.cart-pole == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}

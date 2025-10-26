@@ -520,6 +520,7 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **Docling** - Document data extraction
     - **pypdf** - PDF manipulation
   - Named Entity Recognition
+    - **BERT** - General-purpose language model (fine-tuned for named entity recognition)
     - **GLiNER** - Named entity recognition
 - Tokenization
   - **Byte-Pair Encoding (BPE)** - Subword tokenization
