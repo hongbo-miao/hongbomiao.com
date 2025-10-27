@@ -1,5 +1,5 @@
 import math
-import secrets
+from random import SystemRandom
 
 import rclpy
 from geometry_msgs.msg import Twist
@@ -23,8 +23,9 @@ class TargetControlNode(Node):
         if self._target_pose is None:
             return
 
-        target_x = secrets.SystemRandom().uniform(0.0, 10.0)
-        target_y = secrets.SystemRandom().uniform(0.0, 10.0)
+        random_number_generator = SystemRandom()
+        target_x = random_number_generator.uniform(0.0, 10.0)
+        target_y = random_number_generator.uniform(0.0, 10.0)
 
         dist_x = target_x - self._target_pose.x
         dist_y = target_y - self._target_pose.y
