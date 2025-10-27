@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 NATS_URL = "nats://localhost:4222"
 STREAM_NAME = "AUDIO_STREAMS"
 SUBJECT_PREFIX = "AUDIO_STREAMS"
-SUBJECT_PATTERN = f"{SUBJECT_PREFIX}.*"
+SUBJECT_PATTERN = f"{SUBJECT_PREFIX}.>"
 CONSUMER_NAME = "audio_consumer"
 
 
