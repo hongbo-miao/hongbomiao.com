@@ -1,3 +1,5 @@
+STREAM_NAME := "AUDIO_STREAMS"
+
 update-lock-file:
     uv lock
 
@@ -14,10 +16,10 @@ test-coverage:
     uv run poe test-coverage
 
 stream-create:
-    nats stream add --config=AUDIO_STREAMS.json
+    nats stream add --config="{{ STREAM_NAME }}.json"
 
 stream-delete:
-    nats stream delete AUDIO_STREAMS --force
+    nats stream delete "{{ STREAM_NAME }}" --force
 
 stream-info:
-    nats stream info AUDIO_STREAMS
+    nats stream info "{{ STREAM_NAME }}"
