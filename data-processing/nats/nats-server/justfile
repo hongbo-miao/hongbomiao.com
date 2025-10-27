@@ -1,3 +1,5 @@
+STREAM_NAME := "xxx"
+
 install:
     # NATS server
     brew install nats-server
@@ -10,3 +12,15 @@ start:
 
 stream-list:
     nats stream ls
+
+stream-create:
+    nats stream add --config="{{ STREAM_NAME }}.json"
+
+stream-delete:
+    nats stream delete "{{ STREAM_NAME }}" --force
+
+stream-info:
+    nats stream info "{{ STREAM_NAME }}"
+
+consumer-list:
+    nats consumer ls "{{ STREAM_NAME }}"
