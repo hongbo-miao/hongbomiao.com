@@ -473,7 +473,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "torch", index = "https://download.pytorch.org/whl/cu128" },
-    { name = "unsloth", extras = ["cu128-torch270"], specifier = "==2025.10.9" },
+    { name = "unsloth", extras = ["cu128-torch270"], specifier = "==2025.10.10" },
 ]
 
 [package.metadata.requires-dev]
@@ -1755,7 +1755,7 @@ wheels = [
 
 [[package]]
 name = "unsloth"
-version = "2025.10.9"
+version = "2025.10.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "accelerate" },
@@ -1782,9 +1782,9 @@ dependencies = [
     { name = "wheel" },
     { name = "xformers", marker = "(platform_machine == 'AMD64' and 'linux' in sys_platform) or (platform_machine == 'x86_64' and 'linux' in sys_platform) or (platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'x86_64' and sys_platform == 'win32')" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a6/2d/900faffa520931d74b02cb34e91295da784877db8f6d293b2bcc540123f6/unsloth-2025.10.9.tar.gz", hash = "sha256:280b2a90803d7ea11f7560240b283bd4c20ee02efa12209f027fb464bfcf0432", size = 4741470, upload-time = "2025-10-23T12:55:14.332Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/bf/e4/bef6eda55e8d87c425f3479cd210ea0a580a60f8e7e6abe9888b3c8fddbc/unsloth-2025.10.10.tar.gz", hash = "sha256:d03d1d87b88c30c062cc78c61bb59b2c7ea9a91d5d06b0d75e055aed7f679d2d", size = 4742928, upload-time = "2025-10-27T06:48:24.893Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/35/a2/5933c80e8a35d3eeb7cb2cbd3abbd61a4ffbbd698960b4ec0be383d27d92/unsloth-2025.10.9-py3-none-any.whl", hash = "sha256:e3bf3a92a30db30784e1940302cb2df9808a170d859defc1c0f8ebd8bb96d1b4", size = 346731, upload-time = "2025-10-23T12:55:07.231Z" },
+    { url = "https://files.pythonhosted.org/packages/99/20/b0e263dc9b353b05628e0fc365db1d1cf8dd79347c1284af1fe3c23abf68/unsloth-2025.10.10-py3-none-any.whl", hash = "sha256:c665eb70eaf8be7bb9f02526fbb2228786156adb5d08e108771ee2f3a1d2d7ef", size = 347153, upload-time = "2025-10-27T06:48:16.258Z" },
 ]
 
 [package.optional-dependencies]
@@ -1813,7 +1813,7 @@ cu128-torch270 = [
 
 [[package]]
 name = "unsloth-zoo"
-version = "2025.10.10"
+version = "2025.10.12"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "accelerate" },
@@ -1835,16 +1835,16 @@ dependencies = [
     { name = "torchao" },
     { name = "tqdm" },
     { name = "transformers" },
-    { name = "triton", marker = "sys_platform == 'linux'" },
-    { name = "triton-windows", marker = "sys_platform == 'win32'" },
+    { name = "triton", marker = "'linux' in sys_platform" },
+    { name = "triton-windows", marker = "(platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'x86_64' and sys_platform == 'win32')" },
     { name = "trl" },
     { name = "typing-extensions" },
     { name = "tyro" },
     { name = "wheel" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ba/9b/5835a85cd32b74cf90ded5740c90f4c67ae279f50143d12a28c028900890/unsloth_zoo-2025.10.10.tar.gz", hash = "sha256:6d02f27bdb08b8d8ae4763429099b4a14f05f940fae62854c09eea1badd67540", size = 251591, upload-time = "2025-10-23T12:50:24.539Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/92/c0/5cfb1fd10160965366ec10536bc0fe7e054dc2cb7c1220f5b758e454e57d/unsloth_zoo-2025.10.12.tar.gz", hash = "sha256:1ae3607582428acbe949ef54e48e5772187cdbe00a2aa4ad2afee9af5b7263b3", size = 253435, upload-time = "2025-10-27T07:30:32.473Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d4/5d/16ff1dafa2eedab3b95ecdc4673537b512b37e0d4bd37882180683f7b998/unsloth_zoo-2025.10.10-py3-none-any.whl", hash = "sha256:cd31d8da88053c01b51c95022a58b3ea931e08b1b62b20e2ca8d6b61e60eb3d5", size = 270444, upload-time = "2025-10-23T12:50:22.84Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/76/45e0bf8f274e1a25cd389ddf8cc6fe1392398cac3051e19ba52839193870/unsloth_zoo-2025.10.12-py3-none-any.whl", hash = "sha256:2e5cf8074d04fc9e4b2c019fb3dc0e785b82d5664c8afe5eb3f4a9bcfca25529", size = 272238, upload-time = "2025-10-27T07:30:31.023Z" },
 ]
 
 [[package]]
