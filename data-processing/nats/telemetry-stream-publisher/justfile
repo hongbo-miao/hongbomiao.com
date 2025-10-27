@@ -1,0 +1,28 @@
+STREAM_NAME := "SENSOR_TELEMETRY_STREAMS"
+
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+dev:
+    uv run poe dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
+
+stream-create:
+    nats stream add --config="{{ STREAM_NAME }}.json"
+
+stream-delete:
+    nats stream delete "{{ STREAM_NAME }}" --force
+
+stream-info:
+    nats stream info "{{ STREAM_NAME }}"
+
+stream-subscribe:
+    nats subscribe --stream="{{ STREAM_NAME }}"
