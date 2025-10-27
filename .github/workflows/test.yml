@@ -540,6 +540,10 @@ jobs:
               - 'data-processing/nats/audio-file-subscriber/**'
             nats-audio-stream-publisher:
               - 'data-processing/nats/audio-stream-publisher/**'
+            nats-telemetry-stream-publisher:
+              - 'data-processing/nats/telemetry-stream-publisher/**'
+            nats-telemetry-stream-subscriber:
+              - 'data-processing/nats/telemetry-stream-subscriber/**'
             neural-forecasting-forecast-air-passenger-number:
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
             nvidia-dali:
@@ -791,6 +795,8 @@ jobs:
       nats-audio-file-publisher: ${{ steps.filter.outputs.nats-audio-file-publisher }}
       nats-audio-file-subscriber: ${{ steps.filter.outputs.nats-audio-file-subscriber }}
       nats-audio-stream-publisher: ${{ steps.filter.outputs.nats-audio-stream-publisher }}
+      nats-telemetry-stream-publisher: ${{ steps.filter.outputs.nats-telemetry-stream-publisher }}
+      nats-telemetry-stream-subscriber: ${{ steps.filter.outputs.nats-telemetry-stream-subscriber }}
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
       nvidia-dali: ${{ steps.filter.outputs.nvidia-dali }}
       open-clip: ${{ steps.filter.outputs.open-clip }}
@@ -980,6 +986,8 @@ jobs:
       nats-audio-file-publisher: ${{ needs.detect-changes.outputs.nats-audio-file-publisher == 'true' }}
       nats-audio-file-subscriber: ${{ needs.detect-changes.outputs.nats-audio-file-subscriber == 'true' }}
       nats-audio-stream-publisher: ${{ needs.detect-changes.outputs.nats-audio-stream-publisher == 'true' }}
+      nats-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.nats-telemetry-stream-publisher == 'true' }}
+      nats-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-telemetry-stream-subscriber == 'true' }}
 
   test-data-transformation:
     name: Test Data Transformation
