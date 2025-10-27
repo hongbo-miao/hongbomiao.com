@@ -48,13 +48,9 @@ pub async fn consume_fire_audio_stream_from_nats(
         match messages.next().await {
             Some(Ok(message)) => {
                 let chunk = message.payload.to_vec();
-
+                let _ = audio_sender.send(chunk);
                 if let Err(error) = message.ack().await {
                     error!("Failed to acknowledge message: {}", error);
-                }
-
-                if audio_sender.receiver_count() > 0 {
-                    let _ = audio_sender.send(chunk);
                 }
             }
             Some(Err(error)) => {
