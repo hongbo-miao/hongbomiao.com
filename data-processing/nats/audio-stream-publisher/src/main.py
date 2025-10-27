@@ -1,6 +1,7 @@
 import asyncio
 import logging
 from typing import cast
+from uuid import uuid4
 
 import nats
 from nats.js.client import JetStreamContext
@@ -70,16 +71,12 @@ async def publish_audio_stream(
                 break
 
             published_chunk_count += 1
-            headers = {
-                "Content-Type": "audio/pcm",
-                "X-Stream-Name": FIRE_STREAM_METADATA["name"],
-                "X-Stream-Location": FIRE_STREAM_METADATA["location"],
-                "X-Chunk-Sequence-Number": str(published_chunk_count),
-            }
             publish_acknowledgement = await jetstream_context.publish(
                 subject,
                 pcm_chunk,
-                headers=headers,
+                headers={
+                    "Nats-Msg-Id": str(uuid4()),
+                },
             )
 
             if published_chunk_count % 50 == 0:
