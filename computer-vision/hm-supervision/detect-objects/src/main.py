@@ -1,6 +1,6 @@
 import logging
-import secrets
 from pathlib import Path
+from random import SystemRandom
 
 import cv2
 import supervision as sv
@@ -11,10 +11,12 @@ logger = logging.getLogger(__name__)
 class_colors = {}
 
 
-def generate_random_color() -> tuple[int, int, int]:
-    r = secrets.randbelow(256)
-    g = secrets.randbelow(256)
-    b = secrets.randbelow(256)
+def generate_random_color(
+    random_number_generator: SystemRandom,
+) -> tuple[int, int, int]:
+    r = random_number_generator.randint(0, 255)
+    g = random_number_generator.randint(0, 255)
+    b = random_number_generator.randint(0, 255)
     return r, g, b
 
 
@@ -25,6 +27,7 @@ def main(model_path: Path, image_path: Path) -> None:
     detections = sv.Detections.from_ultralytics(res)
     detections = detections[detections.confidence > 0.3]
     class_names = model.names
+    random_number_generator = SystemRandom()
 
     for detection in detections:
         logger.info(detection)
@@ -39,7 +42,7 @@ def main(model_path: Path, image_path: Path) -> None:
         label = class_names[class_id]
 
         if class_id not in class_colors:
-            class_colors[class_id] = generate_random_color()
+            class_colors[class_id] = generate_random_color(random_number_generator)
 
         color = class_colors[class_id]
 

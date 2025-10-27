@@ -1,7 +1,7 @@
 import logging
-import secrets
 from datetime import UTC, datetime
 from pathlib import Path
+from random import SystemRandom
 
 import torch
 from diffusers import DPMSolverMultistepScheduler, StableDiffusionPipeline
@@ -68,7 +68,7 @@ class StableDiffusionGenerator:
 
         # Set up seed for reproducibility
         if seed is None:
-            seed = secrets.randbelow(2**32)
+            seed = SystemRandom().randint(0, 2**32 - 1)
 
         device = StableDiffusionGenerator.get_device()
         generator = torch.Generator(device).manual_seed(seed)
