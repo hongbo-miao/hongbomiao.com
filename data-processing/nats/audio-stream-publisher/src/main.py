@@ -3,42 +3,21 @@ import logging
 from typing import cast
 
 import nats
-from nats.js.api import RetentionPolicy, StorageType
 from nats.js.client import JetStreamContext
-from nats.js.errors import NotFoundError
 
 logger = logging.getLogger(__name__)
 
 NATS_URL = "nats://localhost:4222"
-STREAM_NAME = "FIRE_AUDIO_STREAMS"
-
-
 FIRE_STREAM_METADATA = {
     "identifier": "lincoln_fire",
     "name": "Lincoln Fire",
     # https://www.broadcastify.com/webPlayer/14395
-    "stream_url": "https://listen.broadcastify.com/5kdxn2cj1sp68qb.mp3",
+    "stream_url": "https://listen.broadcastify.com/qmydkwhnjbzf80t.mp3",
     "location": "Lincoln, NE",
 }
-
-STREAM_SUBJECT = f"audio.streams.fire.{FIRE_STREAM_METADATA['identifier']}"
+SUBJECT_PREFIX = "FIRE_AUDIO_STREAMS"
+STREAM_SUBJECT = f"{SUBJECT_PREFIX}.{FIRE_STREAM_METADATA['identifier']}"
 PCM_CHUNK_SIZE_BYTES = int(16000 * 2 * 1 * (200 / 1000))  # 200ms at 16kHz mono s16le
-
-
-async def ensure_stream_exists(jetstream_context: JetStreamContext) -> None:
-    try:
-        await jetstream_context.stream_info(STREAM_NAME)
-        logger.info(f"Stream '{STREAM_NAME}' already exists")
-    except NotFoundError:
-        logger.info(f"Creating stream '{STREAM_NAME}'")
-        await jetstream_context.add_stream(
-            name=STREAM_NAME,
-            subjects=[STREAM_SUBJECT],
-            retention=RetentionPolicy.LIMITS,
-            storage=StorageType.FILE,
-            max_age=86_400,  # 1 day
-        )
-        logger.info(f"Stream '{STREAM_NAME}' created successfully")
 
 
 async def publish_audio_stream(
@@ -132,8 +111,6 @@ async def main() -> None:
         logger.info(f"Connecting to NATS at {NATS_URL}")
         nats_client = await nats.connect(NATS_URL)
         jetstream_context = nats_client.jetstream()
-
-        await ensure_stream_exists(jetstream_context)
 
         published_chunk_count = await publish_audio_stream(
             jetstream_context=jetstream_context,

@@ -16,7 +16,7 @@ pub static FIRE_STREAMS: Lazy<HashMap<&'static str, FireStreamInfo>> = Lazy::new
         "lincoln_fire",
         FireStreamInfo {
             name: "Lincoln Fire",
-            nats_subject: "audio.streams.fire.lincoln_fire",
+            nats_subject: "FIRE_AUDIO_STREAMS.lincoln_fire",
             location: "Lincoln, NE",
         },
     );

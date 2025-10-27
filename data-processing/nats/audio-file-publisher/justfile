@@ -12,3 +12,12 @@ test:
 
 test-coverage:
     uv run poe test-coverage
+
+stream-create:
+    nats stream add --config=AUDIO_STREAMS.json
+
+stream-delete:
+    nats stream delete AUDIO_STREAMS --force
+
+stream-info:
+    nats stream info AUDIO_STREAMS

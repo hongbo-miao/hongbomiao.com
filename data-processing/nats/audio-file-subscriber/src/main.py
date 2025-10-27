@@ -5,33 +5,14 @@ from pathlib import Path
 
 import nats
 from nats.aio.msg import Msg
-from nats.js.api import RetentionPolicy, StorageType
-from nats.js.client import JetStreamContext
-from nats.js.errors import NotFoundError
 
 logger = logging.getLogger(__name__)
 
 NATS_URL = "nats://localhost:4222"
 STREAM_NAME = "AUDIO_STREAMS"
-SUBJECT_PREFIX = "audio.streams.flac"
-SUBJECT_PATTERN = f"{SUBJECT_PREFIX}.>"
-CONSUMER_NAME = "audio_flac_consumer"
-
-
-async def ensure_stream_exists(jetstream_context: JetStreamContext) -> None:
-    try:
-        await jetstream_context.stream_info(STREAM_NAME)
-        logger.info(f"Stream '{STREAM_NAME}' already exists")
-    except NotFoundError:
-        logger.info(f"Creating stream '{STREAM_NAME}'")
-        await jetstream_context.add_stream(
-            name=STREAM_NAME,
-            subjects=[SUBJECT_PATTERN],
-            retention=RetentionPolicy.LIMITS,
-            storage=StorageType.FILE,
-            max_age=86400,  # 24 hours in seconds
-        )
-        logger.info(f"Stream '{STREAM_NAME}' created successfully")
+SUBJECT_PREFIX = "AUDIO_STREAMS"
+SUBJECT_PATTERN = f"{SUBJECT_PREFIX}.*"
+CONSUMER_NAME = "audio_consumer"
 
 
 def create_message_handler(
@@ -40,13 +21,13 @@ def create_message_handler(
     async def handle_audio_message(message: Msg) -> None:
         try:
             subject_suffix = message.subject.removeprefix(f"{SUBJECT_PREFIX}.")
-            flac_path = data_directory.joinpath(f"{subject_suffix}.flac")
+            audio_path = data_directory.joinpath(f"{subject_suffix}.flac")
 
-            flac_path.write_bytes(message.data)
+            audio_path.write_bytes(message.data)
             await message.ack()
 
             logger.info(
-                f"Saved '{flac_path.name}' from subject '{message.subject}' "
+                f"Saved '{audio_path.name}' from subject '{message.subject}' "
                 f"(size: {len(message.data)} bytes)",
             )
         except Exception:
@@ -63,11 +44,9 @@ async def main() -> None:
         nats_client = await nats.connect(NATS_URL)
         jetstream_context = nats_client.jetstream()
 
-        await ensure_stream_exists(jetstream_context)
-
         data_directory = Path("data")
         data_directory.mkdir(parents=True, exist_ok=True)
-        logger.info(f"Saving FLAC files to: {data_directory}")
+        logger.info(f"Saving audio files to: {data_directory}")
 
         message_handler = create_message_handler(data_directory)
 

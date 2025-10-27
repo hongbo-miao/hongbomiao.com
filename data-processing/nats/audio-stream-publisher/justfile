@@ -12,3 +12,12 @@ test:
 
 test-coverage:
     uv run poe test-coverage
+
+stream-create:
+    nats stream add --config=FIRE_AUDIO_STREAMS.json
+
+stream-delete:
+    nats stream delete FIRE_AUDIO_STREAMS --force
+
+stream-info:
+    nats stream info FIRE_AUDIO_STREAMS
