@@ -1040,6 +1040,8 @@ The diagram illustrates the repository's architecture, which is considered overl
         - **Avro**
         - **Thrift**
         - **Protocol Buffers (Protobuf)**
+        - **FlatBuffers**
+        - **Cap'n Proto**
   - Layer 7: Application layer
     - **Hypertext Transfer Protocol (HTTP)**
       - **Hypertext Transfer Protocol Secure (HTTPS)**
