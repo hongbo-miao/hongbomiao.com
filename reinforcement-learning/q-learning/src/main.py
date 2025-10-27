@@ -1,5 +1,5 @@
 import logging
-import secrets
+from random import SystemRandom
 
 import numpy as np
 
@@ -58,13 +58,17 @@ def train_q_table(
     q_table: np.ndarray = np.zeros(
         (training_environment.n_states, training_environment.n_actions),
     )
+    random_number_generator = SystemRandom()
     for _ in range(episode_number):
         state: int = training_environment.reset()
         is_done: bool = False
         while not is_done:
             # ε-greedy policy
-            if secrets.SystemRandom().random() < epsilon:
-                action: int = secrets.randbelow(training_environment.n_actions)
+            if random_number_generator.random() < epsilon:
+                action: int = random_number_generator.randint(
+                    0,
+                    training_environment.n_actions - 1,
+                )
             else:
                 action = int(np.argmax(q_table[state]))
             next_state, reward, is_done = training_environment.step(action)
