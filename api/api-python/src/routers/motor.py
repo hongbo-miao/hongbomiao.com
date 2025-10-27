@@ -1,7 +1,7 @@
 import asyncio
 import json
-import secrets
 import time
+from random import SystemRandom
 from typing import Annotated
 
 from config import config
@@ -24,12 +24,13 @@ def get_producer() -> Producer:
 async def generate_motor_data(
     producer: Annotated[Producer, Depends(get_producer)],
 ) -> dict[str, bool]:
+    random_number_generator = SystemRandom()
     for _ in range(5):
         data = {
             "timestamp": time.time() * 1000,
-            "current": secrets.SystemRandom().uniform(0, 10),
-            "voltage": secrets.SystemRandom().uniform(0, 20),
-            "temperature": secrets.SystemRandom().uniform(0, 50) + 25,
+            "current": random_number_generator.uniform(0, 10),
+            "voltage": random_number_generator.uniform(0, 20),
+            "temperature": random_number_generator.uniform(0, 50) + 25,
         }
         producer.poll(0)
         producer.produce(
