@@ -1,6 +1,7 @@
 import asyncio
 import logging
 from pathlib import Path
+from uuid import uuid4
 
 import nats
 from nats.js.client import JetStreamContext
@@ -18,8 +19,13 @@ async def publish_single_flac(
     try:
         flac_bytes = audio_path.read_bytes()
         subject = f"{SUBJECT_PREFIX}.{audio_path.stem}"
-
-        ack = await jetstream_context.publish(subject, flac_bytes)
+        ack = await jetstream_context.publish(
+            subject,
+            flac_bytes,
+            headers={
+                "Nats-Msg-Id": str(uuid4()),
+            },
+        )
     except Exception:
         logger.exception(f"Failed to publish '{audio_path.name}'")
         return False
