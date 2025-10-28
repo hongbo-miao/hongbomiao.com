@@ -138,6 +138,15 @@ wheels = [
 ]
 
 [[package]]
+name = "makefun"
+version = "1.16.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/7b/cf/6780ab8bc3b84a1cce3e4400aed3d64b6db7d5e227a2f75b6ded5674701a/makefun-1.16.0.tar.gz", hash = "sha256:e14601831570bff1f6d7e68828bcd30d2f5856f24bad5de0ccb22921ceebc947", size = 73565, upload-time = "2025-05-09T15:00:42.313Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/c0/4bc973defd1270b89ccaae04cef0d5fa3ea85b59b108ad2c08aeea9afb76/makefun-1.16.0-py2.py3-none-any.whl", hash = "sha256:43baa4c3e7ae2b17de9ceac20b669e9a67ceeadff31581007cca20a07bbe42c4", size = 22923, upload-time = "2025-05-09T15:00:41.042Z" },
+]
+
+[[package]]
 name = "markupsafe"
 version = "3.0.3"
 source = { registry = "https://pypi.org/simple" }
@@ -337,7 +346,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "numpy", specifier = "==2.3.4" },
-    { name = "nvidia-dali-cuda120", specifier = "==1.51.2" },
+    { name = "nvidia-dali-cuda120", specifier = "==1.52.0" },
     { name = "torch", specifier = "==2.9.0" },
 ]
 
@@ -350,18 +359,20 @@ dev = [
 
 [[package]]
 name = "nvidia-dali-cuda120"
-version = "1.51.2"
+version = "1.52.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "astunparse" },
     { name = "dm-tree" },
     { name = "gast" },
+    { name = "makefun" },
     { name = "nvidia-nvcomp-cu12" },
     { name = "nvidia-nvimgcodec-cu12", extra = ["all"] },
+    { name = "nvtx" },
     { name = "packaging" },
     { name = "six" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/48/42/6f502c17368b03265d2fe204ad514d4b8206d62641ed9129601493643cc4/nvidia_dali_cuda120-1.51.2.tar.gz", hash = "sha256:f68b9faa84bf76d98c8f673ffd2b99c6dd27e3317a7fa71c281a5c78d735d38f", size = 1622, upload-time = "2025-08-13T10:12:42.745Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8a/6e/e43f74033e2ae931f36e24161186932c330bdbbf8dae195d54bce2f90002/nvidia_dali_cuda120-1.52.0.tar.gz", hash = "sha256:27fd5380381c99bf68c12063b17646eff5da5d39c1eeb555a1fc414082dc290f", size = 1686, upload-time = "2025-10-28T14:32:53.865Z" }
 
 [[package]]
 name = "nvidia-nccl-cu12"
@@ -452,6 +463,12 @@ source = { registry = "https://pypi.org/simple" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a2/eb/86626c1bbc2edb86323022371c39aa48df6fd8b0a1647bc274577f72e90b/nvidia_nvtx_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:5b17e2001cc0d751a5bc2c6ec6d26ad95913324a4adb86788c944f8ce9ba441f", size = 89954, upload-time = "2025-03-07T01:42:44.131Z" },
 ]
+
+[[package]]
+name = "nvtx"
+version = "0.2.13"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/97/02/b3fd3da4ba51764cfc0e4d2b22d5a61511fa79d825344d4704f8429c0bd6/nvtx-0.2.13.tar.gz", hash = "sha256:9db7ba135168e14e1f038866100bf8ed42d3e00b404e9bc7b6280ee3af828b92", size = 112104, upload-time = "2025-08-05T03:27:16.383Z" }
 
 [[package]]
 name = "packaging"
