@@ -19,7 +19,7 @@ let project = Project(
       name: "mobile-ios",
       destinations: .iOS,
       product: .app,
-      bundleId: "dev.tuist.mobile-ios",
+      bundleId: "com.hongbomiao.mobile-ios",
       infoPlist: .extendingDefault(
         with: [
           "UILaunchScreen": [
@@ -42,7 +42,7 @@ let project = Project(
       name: "mobile-iosTests",
       destinations: .iOS,
       product: .unitTests,
-      bundleId: "dev.tuist.mobile-iosTests",
+      bundleId: "com.hongbomiao.mobile-iosTests",
       infoPlist: .default,
       buildableFolders: [
         "mobile-ios/Tests"
