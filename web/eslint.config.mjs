@@ -56,6 +56,7 @@ export default [
       '**/.windsurfrules',
       '**/__pycache__/**/*',
       '**/build/**/*',
+      '**/certificates/**/*',
       '**/cmake-build-debug/**/*',
       '**/codegen/**/*',
       '**/coverage.xml',
@@ -68,6 +69,8 @@ export default [
       '**/target/**/*',
 
       // eslint.config.mjs specific
+      '.lighthouseci/**/*',
+      'dist/**/*',
       'src/components/ui/**/*',
       'storybook-static/**/*',
       'tmp/**/*',
@@ -168,6 +171,7 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react-refresh/only-export-components': 'error',
       'security/detect-non-literal-fs-filename': 'off',
+      'security/detect-object-injection': 'off',
       'spaced-comment': [
         'error',
         'always',
