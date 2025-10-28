@@ -165,6 +165,12 @@ name: . Test Machine Learning
       model-context-protocol:
         required: true
         type: boolean
+      modern-bert:
+        required: true
+        type: boolean
+      neo-bert:
+        required: true
+        type: boolean
       neural-forecasting-forecast-air-passenger-number:
         required: true
         type: boolean
@@ -788,6 +794,72 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: data-extraction/hm-docling
+
+  modern-bert-test:
+    name: ModernBERT | Test
+    if: ${{ inputs.workflow || inputs.hm-modern-bert }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.2
+        with:
+          version: 0.9.5
+          enable-cache: true
+          cache-dependency-glob: masked-language-modeling/modern-bert/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: masked-language-modeling/modern-bert/.python-version
+      - name: Install dependencies
+        working-directory: masked-language-modeling/modern-bert
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: masked-language-modeling/modern-bert
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: masked-language-modeling/modern-bert
+
+  neo-bert-test:
+    name: NeoBERT | Test
+    if: ${{ inputs.workflow || inputs.hm-neo-bert }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.2
+        with:
+          version: 0.9.5
+          enable-cache: true
+          cache-dependency-glob: masked-language-modeling/neo-bert/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: masked-language-modeling/neo-bert/.python-version
+      - name: Install dependencies
+        working-directory: masked-language-modeling/neo-bert
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: masked-language-modeling/neo-bert
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: masked-language-modeling/neo-bert
 
   bert-test:
     name: BERT | Test
