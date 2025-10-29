@@ -282,6 +282,8 @@ jobs:
             ethereum:
               - '.github/workflows/.lint.yml'
               - 'ethereum/**'
+            flightradar24:
+              - 'aerospace/flightradar24/**'
             format-can-data:
               - 'embedded-system/format-can-data/**'
             cart-pole:
@@ -679,6 +681,7 @@ jobs:
       ethereum: ${{ steps.filter.outputs.ethereum }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
       fine-tune-whisper: ${{ steps.filter.outputs.fine-tune-whisper }}
+      flightradar24: ${{ steps.filter.outputs.flightradar24 }}
       flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
       format-can-data: ${{ steps.filter.outputs.format-can-data }}
       grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
@@ -1262,6 +1265,7 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-aerospace == 'true' }}
       # Applications
       bluesky: ${{ needs.detect-changes.outputs.bluesky == 'true' }}
+      flightradar24: ${{ needs.detect-changes.outputs.flightradar24 == 'true' }}
       hm-aerosandbox: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
       hm-openaerostruct: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
       x-plane-rest-api: ${{ needs.detect-changes.outputs.x-plane-rest-api == 'true' }}
