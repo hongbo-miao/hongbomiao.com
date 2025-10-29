@@ -20,12 +20,10 @@ const checkHealth = async (): Promise<Health> => {
     if (res.status === 'fulfilled' && res.value) {
       healthStatus = 'ok';
     } else {
-      // eslint-disable-next-line security/detect-object-injection
       logger.error({ name: services[idx].name, res }, 'health');
     }
     health = {
       ...health,
-      // eslint-disable-next-line security/detect-object-injection
       [services[idx].name]: healthStatus,
     };
   });

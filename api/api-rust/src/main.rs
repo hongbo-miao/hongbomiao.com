@@ -8,6 +8,7 @@ mod graphql;
 mod handlers;
 mod openapi;
 mod shared;
+mod webtransport;
 
 use axum::Router;
 use axum::http::{HeaderValue, Method};
@@ -22,7 +23,7 @@ use tower_http::compression::CompressionLayer;
 use tower_http::cors::{Any, CorsLayer};
 use tower_http::timeout::TimeoutLayer;
 use tower_http::trace::TraceLayer;
-use tracing::info;
+use tracing::{error, info};
 
 use crate::openapi::ApiDoc;
 use utoipa::OpenApi;
@@ -30,6 +31,7 @@ use utoipa_swagger_ui::SwaggerUi;
 
 use crate::config::AppConfig;
 use crate::graphql::schema;
+use crate::webtransport::services::webtransport_server::WebTransportServer;
 
 #[tokio::main]
 async fn main() {
@@ -38,6 +40,17 @@ async fn main() {
         .with_max_level(config.server_log_level)
         .init();
     ffmpeg_sidecar::download::auto_download().expect("Failed to download FFmpeg");
+
+    // Start WebTransport server in parallel
+    let webtransport_port = config.server_port + 1;
+    let webtransport_server = WebTransportServer::create(webtransport_port)
+        .await
+        .expect("Failed to create WebTransport server");
+    let webtransport_handle = tokio::spawn(async move {
+        if let Err(error) = webtransport_server.serve().await {
+            error!("WebTransport server error: {error}");
+        }
+    });
 
     let schema = schema::create_schema();
     let compression = CompressionLayer::new();
@@ -104,14 +117,27 @@ async fn main() {
     let address = format!("[::]:{}", config.server_port)
         .parse::<SocketAddr>()
         .expect("Failed to parse socket address");
-    info!("Listening on {}", address);
+    info!("HTTP server listening on {}", address);
+    info!(
+        "WebTransport server listening on port {}",
+        webtransport_port
+    );
     let listener = tokio::net::TcpListener::bind(address)
         .await
         .expect("Failed to bind TCP listener");
-    axum::serve(
-        listener,
-        app.into_make_service_with_connect_info::<SocketAddr>(),
-    )
-    .await
-    .unwrap();
+
+    // Run both servers concurrently
+    tokio::select! {
+        result = axum::serve(
+            listener,
+            app.into_make_service_with_connect_info::<SocketAddr>(),
+        ) => {
+            if let Err(error) = result {
+                error!("Axum server error: {}", error);
+            }
+        }
+        _ = webtransport_handle => {
+            error!("WebTransport server stopped unexpectedly");
+        }
+    }
 }

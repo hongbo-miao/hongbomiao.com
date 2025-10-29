@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from collections.abc import AsyncIterator
 from typing import cast
 from uuid import uuid4
 
@@ -13,7 +14,7 @@ FIRE_STREAM_METADATA = {
     "identifier": "lincoln_fire",
     "name": "Lincoln Fire",
     # https://www.broadcastify.com/webPlayer/14395
-    "stream_url": "https://listen.broadcastify.com/qmydkwhnjbzf80t.mp3",
+    "stream_url": "https://listen.broadcastify.com/ws0gmfjkyxrp7nz.mp3",
     "location": "Lincoln, NE",
 }
 SUBJECT_PREFIX = "FIRE_AUDIO_STREAMS"
@@ -21,16 +22,34 @@ STREAM_SUBJECT = f"{SUBJECT_PREFIX}.{FIRE_STREAM_METADATA['identifier']}"
 PCM_CHUNK_SIZE_BYTES = int(16000 * 2 * 1 * (200 / 1000))  # 200ms at 16kHz mono s16le
 
 
+def validate_ffmpeg_stdout(process: asyncio.subprocess.Process) -> asyncio.StreamReader:
+    if process.stdout is None:
+        message = "FFmpeg stdout is not available"
+        raise RuntimeError(message)
+    return cast("asyncio.StreamReader", process.stdout)
+
+
+async def iterate_pcm_messages(stdout: asyncio.StreamReader) -> AsyncIterator[bytes]:
+    buffer = b""
+    while True:
+        new_data = await stdout.read(PCM_CHUNK_SIZE_BYTES * 2)
+        if not new_data:
+            break
+
+        buffer += new_data
+
+        while len(buffer) >= PCM_CHUNK_SIZE_BYTES:
+            pcm_chunk = buffer[:PCM_CHUNK_SIZE_BYTES]
+            buffer = buffer[PCM_CHUNK_SIZE_BYTES:]
+
+            yield len(pcm_chunk).to_bytes(4, "little") + pcm_chunk
+
+
 async def publish_audio_stream(
     jetstream_context: JetStreamContext,
     stream_url: str,
     subject: str,
 ) -> int:
-    def validate_ffmpeg_stdout(process: asyncio.subprocess.Process) -> None:
-        if process.stdout is None:
-            message = "FFmpeg stdout is not available"
-            raise RuntimeError(message)
-
     published_chunk_count = 0
     ffmpeg_process = None
     try:
@@ -59,21 +78,14 @@ async def publish_audio_stream(
             f"from {FIRE_STREAM_METADATA['location']}",
         )
 
-        validate_ffmpeg_stdout(ffmpeg_process)
+        stdout = validate_ffmpeg_stdout(ffmpeg_process)
 
-        # Type narrowing: validated by validate_ffmpeg_stdout
-        stdout = cast("asyncio.StreamReader", ffmpeg_process.stdout)
-
-        # Read PCM chunks from FFmpeg stdout
-        while True:
-            pcm_chunk = await stdout.read(PCM_CHUNK_SIZE_BYTES)
-            if not pcm_chunk:
-                break
-
+        # Read PCM chunks from FFmpeg stdout and publish
+        async for message_to_publish in iterate_pcm_messages(stdout):
             published_chunk_count += 1
             publish_acknowledgement = await jetstream_context.publish(
                 subject,
-                pcm_chunk,
+                message_to_publish,
                 headers={
                     "Nats-Msg-Id": str(uuid4()),
                 },

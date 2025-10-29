@@ -13,6 +13,9 @@ check:
 test:
     cargo test --all-features
 
+set-up:
+    mkcert -cert-file certificates/development.pem -key-file certificates/development-key.pem localhost 127.0.0.1 ::1
+
 dev:
     cargo run
 
@@ -47,4 +50,5 @@ listen-police-audio-stream:
 
 listen-fire-audio-stream:
     websocat --binary 'ws://localhost:36147/ws/fire-audio-stream?fire_stream_id=lincoln_fire' \
+        | perl -e 'while (read(STDIN, $len, 4)) { $n = unpack("V", $len); read(STDIN, $buf, $n); print $buf; }' \
         | sox --type=raw --rate=16000 --encoding=signed --bits=16 --channels=1 - --default-device
