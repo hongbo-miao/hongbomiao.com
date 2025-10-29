@@ -815,6 +815,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Aerospace
 
+- **fr24sdk** - Flightradar24 SDK
 - **AeroSandbox** - Aircraft design and optimization
 - **OpenAeroStruct** - Aerostructural optimization
 - **OpenMDAO** - Multidisciplinary analysis and optimization
