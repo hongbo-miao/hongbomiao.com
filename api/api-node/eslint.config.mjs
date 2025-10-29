@@ -49,6 +49,7 @@ export default [
       '**/.windsurfrules',
       '**/__pycache__/**/*',
       '**/build/**/*',
+      '**/certificates/**/*',
       '**/cmake-build-debug/**/*',
       '**/codegen/**/*',
       '**/coverage.xml',
@@ -136,6 +137,7 @@ export default [
       'jest/expect-expect': 'off',
       'multiline-comment-style': ['error', 'starred-block'],
       'security/detect-non-literal-fs-filename': 'off',
+      'security/detect-object-injection': 'off',
       'spaced-comment': [
         'error',
         'always',
