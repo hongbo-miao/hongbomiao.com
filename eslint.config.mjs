@@ -43,6 +43,7 @@ export default [
       '**/.windsurfrules',
       '**/__pycache__/**/*',
       '**/build/**/*',
+      '**/certificates/**/*',
       '**/cmake-build-debug/**/*',
       '**/codegen/**/*',
       '**/coverage.xml',

@@ -14,6 +14,8 @@ pub struct AppConfig {
     pub server_rate_limit_per_second_burst: u16,
     pub server_sent_event_retry_ms: u16,
     pub server_sent_event_keep_alive_interval_s: u16,
+    pub webtransport_certificate_path: String,
+    pub webtransport_private_key_path: String,
     pub webrtc_vad_sample_rate_number: u32,
     pub webrtc_vad_frame_duration_ms: u32,
     pub webrtc_vad_mode: String,
@@ -75,6 +77,8 @@ impl AppConfig {
                 "SERVER_SENT_EVENT_KEEP_ALIVE_INTERVAL_S",
             )?
             .parse()?,
+            webtransport_certificate_path: std::env::var("WEBTRANSPORT_CERTIFICATE_PATH")?,
+            webtransport_private_key_path: std::env::var("WEBTRANSPORT_PRIVATE_KEY_PATH")?,
             webrtc_vad_min_silence_duration_ms: std::env::var(
                 "WEBRTC_VAD_MIN_SILENCE_DURATION_MS",
             )?
