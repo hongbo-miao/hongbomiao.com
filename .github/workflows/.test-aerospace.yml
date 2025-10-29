@@ -9,6 +9,9 @@ name: . Test Aerospace
         required: true
         type: boolean
       # Applications
+      flightradar24:
+        required: true
+        type: boolean
       bluesky:
         required: true
         type: boolean
@@ -26,6 +29,39 @@ name: . Test Aerospace
         type: boolean
 
 jobs:
+  flightradar24-test:
+    name: Flightradar24 | Test
+    if: ${{ inputs.workflow || inputs.flightradar24 }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.2
+        with:
+          version: 0.9.5
+          enable-cache: true
+          cache-dependency-glob: aerospace/flightradar24/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: aerospace/flightradar24/.python-version
+      - name: Install dependencies
+        working-directory: aerospace/flightradar24
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: aerospace/flightradar24
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: aerospace/flightradar24
+
   bluesky-test:
     name: BlueSky | Test
     if: ${{ inputs.workflow || inputs.bluesky }}
