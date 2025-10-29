@@ -1036,6 +1036,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - Layer 5: Session layer
     - **WebSocket**
     - **Web Real-Time Communication (WebRTC)**
+    - **WebTransport**
   - Layer 6: Presentation layer
     - **Remote Procedure Call (RPC)**
       - RPC frameworks

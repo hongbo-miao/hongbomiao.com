@@ -50,10 +50,7 @@ def main() -> None:
                 logger.info(f"{usage = }")
 
     except AuthenticationError:
-        logger.exception("Authentication failed. Please check your API token.")
-        logger.exception(
-            "Set FR24_API_TOKEN environment variable or pass token to Client()",
-        )
+        logger.exception("Authentication failed")
     except Fr24SdkError:
         logger.exception("SDK Error")
     except Exception:
