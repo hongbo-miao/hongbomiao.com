@@ -1,0 +1,23 @@
+[project]
+name = "flightradar24"
+version = "1.0.0"
+dependencies = [
+  "fr24sdk==0.2.0",
+  "pydantic-settings==2.11.0",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.37.0",
+  "pytest-cov==7.0.0",
+  "pytest==8.4.2",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.8.0"
+
+[tool.poe.tasks]
+dev = { cmd = "python src/main.py", env = { ENV = "development" } }
+test = { cmd = "pytest --verbose --verbose", env = { ENV = "test" } }
+test-coverage = { cmd = "pytest --cov=. --cov-report=xml", env = { ENV = "test" } }
