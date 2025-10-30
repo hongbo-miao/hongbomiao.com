@@ -610,6 +610,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **OpenCV** - Computer vision library
 - **supervision** - Computer vision library
 - **Ultralytics YOLOv8** - Object detection model
+- **DINOv3** - Self-supervised vision transformer (ViT) model
 - **Open3D** - 3D data processing
 - **PyVista** - 3D plotting and mesh analysis
 - **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization

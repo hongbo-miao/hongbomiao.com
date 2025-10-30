@@ -298,6 +298,8 @@ jobs:
               - 'data-storage/delta-lake/read-delta-lake-by-trino/**'
             delta-lake-write-to-delta-lake:
               - 'data-storage/delta-lake/write-to-delta-lake/**'
+            dinov3:
+              - 'computer-vision/dinov3/**'
             feature-store:
               - 'machine-learning/feature-store/**'
             fine-tune-whisper:
@@ -678,6 +680,7 @@ jobs:
       delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
       delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
       development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
+      dinov3: ${{ steps.filter.outputs.dinov3 }}
       ethereum: ${{ steps.filter.outputs.ethereum }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
       fine-tune-whisper: ${{ steps.filter.outputs.fine-tune-whisper }}
@@ -1199,6 +1202,7 @@ jobs:
       # Workflows
       workflow: ${{ needs.detect-changes.outputs.workflow-test-computer-vision == 'true' }}
       # Applications
+      dinov3: ${{ needs.detect-changes.outputs.dinov3 == 'true' }}
       hm-open3d: ${{ needs.detect-changes.outputs.hm-open3d == 'true' }}
       hm-pyvista-mount-saint-helens: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
       hm-supervision-detect-objects: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
