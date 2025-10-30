@@ -40,6 +40,8 @@ module.exports = [
       '**/.venv/**/*',
       '**/.vscode/**/*',
       '**/.windsurfrules',
+      '**/CLAUDE.md',
+      '**/GEMINI.md',
       '**/__pycache__/**/*',
       '**/build/**/*',
       '**/certificates/**/*',
