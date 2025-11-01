@@ -1,9 +1,8 @@
 from datetime import UTC, datetime
 from pathlib import Path
 
-from airflow import DAG
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
-from airflow.sdk import task
+from airflow.sdk import DAG, task
 
 with DAG(
     "s3_download",
