@@ -1,6 +1,6 @@
 import logging
 
-from ui.pages.create_gradio_interface import create_gradio_interface
+from ui.views.create_gradio_interface import create_gradio_interface
 
 
 def main() -> None:
