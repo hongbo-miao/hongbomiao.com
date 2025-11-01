@@ -5,7 +5,7 @@ from shared.image.utils.pad_image_to_multiple import pad_image_to_multiple
 from torchvision import transforms
 
 
-def preprocess_image_no_resize(
+def pad_and_normalize_image(
     pil_image: Image.Image,
     multiple: int = 16,
 ) -> tuple[dict[str, torch.Tensor], np.ndarray, tuple[int, int, int, int]]:

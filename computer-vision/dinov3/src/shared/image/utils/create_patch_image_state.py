@@ -4,7 +4,7 @@ from typing import TypedDict
 import numpy as np
 import torch
 from PIL import Image
-from shared.image.utils.preprocess_image_no_resize import preprocess_image_no_resize
+from shared.image.utils.pad_and_normalize_image import pad_and_normalize_image
 from transformers import PreTrainedModel
 
 logger = logging.getLogger(__name__)
@@ -32,7 +32,7 @@ def create_patch_image_state(
     patch_size: int,
 ) -> PatchImageState:
     """Compute patch-level image embeddings and metadata for a single image."""
-    inputs, display_numpy, _ = preprocess_image_no_resize(
+    inputs, display_numpy, _ = pad_and_normalize_image(
         pil_image,
         multiple=patch_size,
     )
