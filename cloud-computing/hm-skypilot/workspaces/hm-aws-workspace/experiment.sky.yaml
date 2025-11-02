@@ -3,9 +3,10 @@
 name: experiment-task
 resources:
   infra: aws
+  accelerators: L4:1
+  autostop: 10m
   any_of:
     - infra: aws/us-west-2
-  accelerators: L4:1
   image_id:
     # Deep Learning Base OSS Nvidia Driver GPU AMI (Ubuntu 24.04)
     us-west-2: ami-07886a480c06fb92a
