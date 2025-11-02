@@ -8,7 +8,7 @@ feast-initialize:
     feast init driver_features
 
 download-driver-stats:
-    curl --silent --fail --show-error --location https://raw.githubusercontent.com/hongbo-miao/hm-driver-stats/main/driver_stats.parquet > features/data/driver_stats.parquet
+    curl --silent --fail --show-error --location --output features/data/driver_stats.parquet https://raw.githubusercontent.com/hongbo-miao/hongbomiao.com-data/main/feature-store/driver_stats.parquet
 
 test:
     uv run poe test
