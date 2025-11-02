@@ -528,8 +528,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Tokenization
   - **Byte-Pair Encoding (BPE)** - Subword tokenization
 - Masked Language Modeling (MLM)
-  - **ModernBERT** - Modernized BERT-style encoder with Rotary Positional Embedding (RoPE), Flash Attention, GeGLU activations, and a context length of 8,192 tokens.
-  - **NeoBERT** - Next-generation BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.
+  - **ModernBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), Flash Attention, GeGLU activations, and a context length of 8,192 tokens.
+  - **NeoBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.
 - Embedding
   - **ImageBind** - Multimodal embedding model for images, text, audio, video, depth, thermal, and inertial measurement units (IMUs)
   - **OpenCLIP** - Multimodal embedding model for images and text
