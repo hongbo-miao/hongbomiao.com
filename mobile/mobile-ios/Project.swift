@@ -33,9 +33,11 @@ let project = Project(
         "mobile-ios/Resources",
       ],
       dependencies: [
-        .external(name: "WhisperKit"),
+        .external(name: "KokoroSwift"),
         .external(name: "MLXLLM"),
         .external(name: "MLXLMCommon"),
+        .external(name: "MLXUtilsLibrary"),
+        .external(name: "WhisperKit"),
       ]
     ),
     .target(
