@@ -452,6 +452,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=audio.speaker-diarization.hm-senko
     uv run poe static-type-check-python --package=audio.voice-activity-detector.hm-silero-vad
     uv run poe static-type-check-python --package=audio.voice-activity-detector.hm-webrtcvad
+    uv run poe static-type-check-python --package=causal-language-modeling.qwen
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.calculate
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.process-flight-data
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.hm-ray
@@ -576,6 +577,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=security.hm-opal-client
     uv run poe static-type-check-python --package=system-tool.hm-xxhash
     uv run poe static-type-check-python --package=tokenization.byte-pair-encoding
+    uv run poe static-type-check-python --package=vision-language-model.qwen-vl
 
 static-type-check-typescript:
     cd api/api-node && just static-type-check-typescript

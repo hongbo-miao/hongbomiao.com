@@ -527,6 +527,8 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **GLiNER** - Named entity recognition
 - Tokenization
   - **Byte-Pair Encoding (BPE)** - Subword tokenization
+- Causal Language Modeling (CLM)
+  - **Qwen3** - Decoder-only transformer model for autoregressive text generation
 - Masked Language Modeling (MLM)
   - **ModernBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), Flash Attention, GeGLU activations, and a context length of 8,192 tokens.
   - **NeoBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.

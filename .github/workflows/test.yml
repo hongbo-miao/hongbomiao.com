@@ -574,6 +574,8 @@ jobs:
               - 'quantum-computing/**'
             qwen-vl:
               - 'vision-language-model/qwen-vl/**'
+            qwen:
+              - 'causal-language-modeling/qwen/**'
             robot-operating-system:
               - 'robotics/robot-operating-system/**'
             rti-connext-dds:
@@ -820,6 +822,7 @@ jobs:
       q-learning: ${{ steps.filter.outputs.q-learning }}
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
       qwen-vl: ${{ steps.filter.outputs.qwen-vl }}
+      qwen: ${{ steps.filter.outputs.qwen }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
       speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
@@ -1189,6 +1192,7 @@ jobs:
       post-training-quantization: ${{ needs.detect-changes.outputs.post-training-quantization == 'true' }}
       q-learning: ${{ needs.detect-changes.outputs.q-learning == 'true' }}
       qwen-vl: ${{ needs.detect-changes.outputs.qwen-vl == 'true' }}
+      qwen: ${{ needs.detect-changes.outputs.qwen == 'true' }}
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
