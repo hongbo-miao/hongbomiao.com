@@ -3,6 +3,8 @@
 name: experiment-task
 resources:
   infra: lambda
+  accelerators: A10:1
+  autostop: 10m
   any_of:
     # U.S.
     - infra: lambda/us-east-1
@@ -17,7 +19,6 @@ resources:
     - infra: lambda/us-west-3
     # Europe
     - infra: lambda/europe-central-1
-  accelerators: A10:1
 setup: |
   # Install Guest Agent
   # https://docs.lambda.ai/public-cloud/guest-agent
