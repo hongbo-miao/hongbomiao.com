@@ -3,6 +3,8 @@
 name: experiment-task
 resources:
   infra: vast
+  accelerators: H100:1
+  autostop: 10m
   any_of:
     # U.S.
     - infra: vast/California, US, NA
@@ -33,5 +35,4 @@ resources:
     - infra: vast/Zeeland, NL, EU
     # Australia
     - infra: vast/Australia, AU, OC
-  accelerators: H100:1
   image_id: vastai/pytorch:2.7.1-cuda-12.8.1-py312-24.04
