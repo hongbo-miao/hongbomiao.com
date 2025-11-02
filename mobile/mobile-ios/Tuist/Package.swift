@@ -5,10 +5,11 @@ import PackageDescription
   import struct ProjectDescription.PackageSettings
 
   let packageSettings = PackageSettings(
-    // Customize the product types for specific package product
-    // Default is .staticFramework
-    // productTypes: ["Alamofire": .framework,]
-    productTypes: [:]
+    productTypes: [
+      "KokoroSwift": .staticFramework,
+      "MisakiSwift": .staticFramework,
+      "MLXUtilsLibrary": .staticFramework,
+    ]
   )
 #endif
 
@@ -17,5 +18,6 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/argmaxinc/WhisperKit", from: "0.14.1"),
     .package(url: "https://github.com/ml-explore/mlx-swift-examples", from: "2.25.7"),
+    .package(url: "https://github.com/mlalma/kokoro-ios.git", from: "1.0.8"),
   ]
 )
