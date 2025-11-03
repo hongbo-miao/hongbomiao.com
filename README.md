@@ -484,6 +484,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Streamlit** - Data application building
 - **Dash** - Data application and dashboard building
 
+### Evolutionary Algorithm (EA)
+
+- **Genetic Algorithm (GA)** - Optimization algorithm inspired by natural selection, using mutation, crossover, and selection
+
 ## Machine Learning (ML)
 
 - **scikit-learn** - Machine learning library
@@ -585,10 +589,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - Vision Language Model (VLM)
   - **Qwen VL** - Vision language model
-
-### Evolutionary Algorithm
-
-- **Genetic Algorithm** - Optimization algorithm inspired by natural selection, using mutation, crossover, and selection
 
 ### Reinforcement Learning (RL)
 
@@ -958,6 +958,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **CUDA C++**
 - **C#**
 - **CSS**
+- **Cap'n Proto Schema Language**
 - **Cypher**
 - **Docker**
 - **Flux**
@@ -980,7 +981,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **OpenSCAD**
 - **P4**
 - **PowerShell**
-- **Protocol Buffers**
+- **Protocol Buffers Schema Language**
 - **Python**
   - **Taichi**
   - **Triton**
