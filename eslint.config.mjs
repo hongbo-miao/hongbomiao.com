@@ -29,6 +29,7 @@ export default [
       '**/*.unsealed.yaml',
       '**/.DS_Store',
       '**/.ansible/**/*',
+      '**/.claude/**/*',
       '**/.coverage/**/*',
       '**/.deepeval/**/*',
       '**/.env.*.local',
