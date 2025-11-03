@@ -586,6 +586,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Vision Language Model (VLM)
   - **Qwen VL** - Vision language model
 
+### Evolutionary Algorithm
+
+- **Genetic Algorithm** - Optimization algorithm inspired by natural selection, using mutation, crossover, and selection
+
 ### Reinforcement Learning (RL)
 
 - **Q-Learning** - Model-free reinforcement learning algorithm for learning optimal actions

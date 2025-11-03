@@ -306,6 +306,8 @@ jobs:
               - 'llm-post-training/fine-tuning/fine-tune-whisper/**'
             flink-stream-tweets:
               - 'data-processing/flink/applications/stream-tweets/**'
+            genetic-algorithm:
+              - 'evolutionary-algorithm/genetic-algorithm/**'
             grafana-hm-dashboard:
               - 'data-visualization/grafana/hm-dashboard/**'
             grafana-hm-panel-plugin:
@@ -689,6 +691,7 @@ jobs:
       flightradar24: ${{ steps.filter.outputs.flightradar24 }}
       flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
       format-can-data: ${{ steps.filter.outputs.format-can-data }}
+      genetic-algorithm: ${{ steps.filter.outputs.genetic-algorithm }}
       grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
@@ -1087,6 +1090,8 @@ jobs:
       # Workflows
       workflow: ${{ needs.detect-changes.outputs.workflow-test-computing == 'true' }}
       # Applications
+      # Evolutionary Algorithm
+      genetic-algorithm: ${{ needs.detect-changes.outputs.genetic-algorithm == 'true' }}
       # Scientific Computing
       hm-sunpy: ${{ needs.detect-changes.outputs.hm-sunpy == 'true' }}
       surrogate-model: ${{ needs.detect-changes.outputs.surrogate-model == 'true' }}
