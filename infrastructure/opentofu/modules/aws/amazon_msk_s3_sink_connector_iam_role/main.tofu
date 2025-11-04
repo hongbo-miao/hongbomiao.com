@@ -174,8 +174,8 @@ resource "aws_iam_role_policy" "hm_amazon_msk_connector_iam_role_data_s3_policy"
       {
         Effect = "Allow"
         Action = [
-          "s3:ListBucket",
-          "s3:GetBucketLocation"
+          "s3:GetBucketLocation",
+          "s3:ListBucket"
         ]
         Resource = [
           "arn:aws:s3:::${var.msk_data_s3_bucket_name}"

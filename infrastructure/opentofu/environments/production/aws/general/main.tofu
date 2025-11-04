@@ -517,3 +517,31 @@ module "hm_amazon_sagemaker_notebook_instance" {
   instance_type                           = "ml.g4dn.4xlarge"
   common_tags                             = var.common_tags
 }
+
+# Labelbox
+# Labelbox - S3 bucket
+module "amazon_s3_bucket_hm_labelbox" {
+  providers      = { aws = aws.production }
+  source         = "../../../../modules/aws/amazon_s3_bucket"
+  s3_bucket_name = "${var.environment}-hm-labelbox-archer"
+  common_tags    = var.common_tags
+}
+# Labelbox - S3 bucket CORS configuration
+module "amazon_s3_bucket_hm_labelbox_cors_configuration" {
+  source       = "../../../../modules/aws/amazon_s3_bucket_cors_configuration"
+  s3_bucket_id = module.amazon_s3_bucket_hm_labelbox.id
+  allowed_origins = [
+    "https://app.labelbox.com",
+    "https://editor.labelbox.com"
+  ]
+}
+# Labelbox - IAM role
+module "labelbox_iam_role" {
+  providers                     = { aws = aws.production }
+  source                        = "../../../../modules/aws/labelbox_iam_role"
+  labelbox_service_account_name = "hm-labelbox"
+  labelbox_aws_account_id       = "340636424752"
+  external_id                   = "xxxxxxxxxxxxxxxxxxxxxxxxx"
+  s3_bucket_name                = module.amazon_s3_bucket_hm_labelbox.name
+  common_tags                   = var.common_tags
+}
