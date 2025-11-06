@@ -20,7 +20,7 @@ locals {
 # Amazon EKS Access Entry - IAM role
 module "amazon_eks_access_entry_iam" {
   providers                    = { aws = aws.production }
-  source                       = "../../../../modules/kubernetes/amazon_eks_access_entry_iam_role"
+  source                       = "../../../../modules/amazon-eks/amazon_eks_access_entry_iam_role"
   amazon_eks_access_entry_name = local.amazon_eks_cluster_name
   amazon_eks_cluster_name_hash = local.amazon_eks_cluster_name_hash
   common_tags                  = var.common_tags
@@ -28,7 +28,7 @@ module "amazon_eks_access_entry_iam" {
 # Amazon EBS CSI Driver - IAM role
 module "amazon_ebs_csi_driver_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/amazon_ebs_csi_driver_iam_role"
+  source                               = "../../../../modules/amazon-eks/amazon_ebs_csi_driver_iam_role"
   amazon_eks_cluster_name              = module.amazon_eks_cluster.cluster_name
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
@@ -45,7 +45,7 @@ module "s3_bucket_eks_cluster_mount" {
 # Amazon S3 CSI driver mountpoint - IAM role
 module "amazon_s3_csi_driver_mountpoint_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/amazon_s3_csi_driver_mountpoint_iam_role"
+  source                               = "../../../../modules/amazon-eks/amazon_s3_csi_driver_mountpoint_iam_role"
   amazon_eks_cluster_name              = module.amazon_eks_cluster.cluster_name
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
@@ -228,7 +228,7 @@ module "s3_bucket_eks_cluster_elastic_load_balancer" {
 }
 module "s3_bucket_eks_cluster_network_load_balancer_policy" {
   providers      = { aws = aws.production }
-  source         = "../../../../modules/kubernetes/aws_network_load_balancer_s3_bucket_policy"
+  source         = "../../../../modules/amazon-eks/aws_network_load_balancer_s3_bucket_policy"
   s3_bucket_name = module.s3_bucket_eks_cluster_elastic_load_balancer.name
 }
 # Gateway API - CRDs
@@ -270,7 +270,7 @@ module "argo_cd_helm_chart" {
 # ExternalDNS - IAM role
 module "external_dns_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/external_dns_iam_role"
+  source                               = "../../../../modules/amazon-eks/external_dns_iam_role"
   external_dns_service_account_name    = "hm-external-dns"
   external_dns_namespace               = "${var.environment}-hm-external-dns"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -295,7 +295,7 @@ module "kubernetes_namespace_hm_external_dns" {
 # cert-manager - IAM role
 module "cert_manager_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/cert_manager_iam_role"
+  source                               = "../../../../modules/amazon-eks/cert_manager_iam_role"
   cert_manager_service_account_name    = "hm-cert-manager"
   cert_manager_namespace               = "${var.environment}-hm-cert-manager"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -417,7 +417,7 @@ module "s3_bucket_hm_velero" {
 # Velero - IAM role
 module "velero_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/velero_iam_role"
+  source                               = "../../../../modules/amazon-eks/velero_iam_role"
   velero_service_account_name          = "hm-velero"
   velero_namespace                     = "${var.environment}-hm-velero"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -448,7 +448,7 @@ module "s3_bucket_hm_airbyte" {
 # Airbyte - IAM user
 module "airbyte_iam_user" {
   providers         = { aws = aws.production }
-  source            = "../../../../modules/kubernetes/airbyte_iam_user"
+  source            = "../../../../modules/amazon-eks/airbyte_iam_user"
   aws_iam_user_name = "${var.environment}_hm_airbyte_user"
   s3_bucket_name    = module.s3_bucket_hm_airbyte.name
   common_tags       = var.common_tags
@@ -534,7 +534,7 @@ module "amazon_s3_bucket_hm_label_studio" {
 # Label Studio - IAM role
 module "label_studio_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/label_studio_iam_role"
+  source                               = "../../../../modules/amazon-eks/label_studio_iam_role"
   label_studio_service_account_name    = "hm-label-studio"
   label_studio_namespace               = "${var.environment}-hm-label-studio"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -616,7 +616,7 @@ module "s3_bucket_hm_mlflow" {
 # MLflow - IAM role
 module "mlflow_tracking_server_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/mlflow_tracking_server_iam_role"
+  source                               = "../../../../modules/amazon-eks/mlflow_tracking_server_iam_role"
   mlflow_service_account_name          = "hm-mlflow-tracking"
   mlflow_namespace                     = "${var.environment}-hm-mlflow"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -626,7 +626,7 @@ module "mlflow_tracking_server_iam_role" {
 }
 module "mlflow_run_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/mlflow_run_iam_role"
+  source                               = "../../../../modules/amazon-eks/mlflow_run_iam_role"
   mlflow_service_account_name          = "hm-mlflow-run"
   mlflow_namespace                     = "${var.environment}-hm-mlflow"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -712,7 +712,7 @@ module "kubernetes_namespace_hm_kuberay_operator" {
 # Ray Cluster - IAM role
 module "ray_cluster_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/ray_cluster_iam_role"
+  source                               = "../../../../modules/amazon-eks/ray_cluster_iam_role"
   ray_cluster_service_account_name     = "hm-ray-cluster-service-account"
   ray_cluster_namespace                = "${var.environment}-hm-ray-cluster"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -852,7 +852,7 @@ module "s3_bucket_hm_mimir_ruler" {
 }
 module "mimir_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/mimir_iam_role"
+  source                               = "../../../../modules/amazon-eks/mimir_iam_role"
   mimir_service_account_name           = "hm-mimir"
   mimir_namespace                      = "${var.environment}-hm-mimir"
   mimir_alertmanager_s3_bucket_name    = module.s3_bucket_hm_mimir_alertmanager.name
@@ -901,7 +901,7 @@ module "s3_bucket_hm_loki_ruler" {
 }
 module "loki_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/loki_iam_role"
+  source                               = "../../../../modules/amazon-eks/loki_iam_role"
   loki_service_account_name            = "hm-loki"
   loki_namespace                       = "${var.environment}-hm-loki"
   loki_admin_s3_bucket_name            = module.s3_bucket_hm_loki_admin.name
@@ -956,7 +956,7 @@ module "s3_bucket_hm_tempo_trace" {
 }
 module "tempo_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/tempo_iam_role"
+  source                               = "../../../../modules/amazon-eks/tempo_iam_role"
   tempo_service_account_name           = "hm-tempo"
   tempo_namespace                      = "${var.environment}-hm-tempo"
   tempo_admin_s3_bucket_name           = module.s3_bucket_hm_tempo_admin.name
@@ -1107,7 +1107,7 @@ module "kubernetes_namespace_hm_prefect_server" {
 # Prefect Worker - IAM role
 module "prefect_worker_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/prefect_worker_iam_role"
+  source                               = "../../../../modules/amazon-eks/prefect_worker_iam_role"
   prefect_worker_service_account_name  = "hm-prefect-worker"
   prefect_worker_namespace             = "${var.environment}-hm-prefect-worker"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -1172,7 +1172,7 @@ module "kubernetes_namespace_hm_doris" {
 # StarRocks - IAM role
 module "starrocks_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/starrocks_iam_role"
+  source                               = "../../../../modules/amazon-eks/starrocks_iam_role"
   starrocks_service_account_name       = "hm-starrocks-service-account"
   starrocks_namespace                  = "${var.environment}-hm-starrocks"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -1272,7 +1272,7 @@ module "kubernetes_namespace_hm_opencost" {
 # Confluent Schema Registry - IAM role
 module "confluent_schema_registry_iam_role" {
   providers                                          = { aws = aws.production }
-  source                                             = "../../../../modules/kubernetes/confluent_schema_registry_iam_role"
+  source                                             = "../../../../modules/amazon-eks/confluent_schema_registry_iam_role"
   confluent_schema_registry_service_account_nickname = "hm-schema-registry-service-account"
   confluent_schema_registry_service_account_name     = "hm-confluent-schema-registry-service-account"
   confluent_schema_registry_namespace                = "production-hm-confluent-schema-registry"
@@ -1297,7 +1297,7 @@ module "kubernetes_namespace_hm_confluent_schema_registry" {
 # Redpanda Console - IAM role
 module "redpanda_console_iam_role" {
   providers                             = { aws = aws.production }
-  source                                = "../../../../modules/kubernetes/redpanda_console_iam_role"
+  source                                = "../../../../modules/amazon-eks/redpanda_console_iam_role"
   redpanda_console_service_account_name = "hm-redpanda-console"
   redpanda_console_namespace            = "${var.environment}-hm-redpanda-console"
   amazon_eks_cluster_oidc_provider      = module.amazon_eks_cluster.oidc_provider
@@ -1320,7 +1320,7 @@ module "kubernetes_namespace_hm_redpanda_console" {
 # Kafbat UI - IAM role
 module "kafbat_ui_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/kafbat_ui_iam_role"
+  source                               = "../../../../modules/amazon-eks/kafbat_ui_iam_role"
   kafbat_ui_service_account_name       = "hm-kafbat-ui"
   kafbat_ui_namespace                  = "${var.environment}-hm-kafbat-ui"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -1343,7 +1343,7 @@ module "kubernetes_namespace_hm_kafbat_ui" {
 # LiteLLM - IAM role
 module "litellm_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/litellm_iam_role"
+  source                               = "../../../../modules/amazon-eks/litellm_iam_role"
   litellm_service_account_name         = "hm-litellm-service-account"
   litellm_namespace                    = "${var.environment}-hm-litellm"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
@@ -1397,7 +1397,7 @@ module "s3_bucket_hm_harbor" {
 # Harbor - IAM user
 module "harbor_iam_user" {
   providers         = { aws = aws.production }
-  source            = "../../../../modules/kubernetes/harbor_iam_user"
+  source            = "../../../../modules/amazon-eks/harbor_iam_user"
   aws_iam_user_name = "${var.environment}-hm-harbor-user"
   s3_bucket_name    = module.s3_bucket_hm_harbor.name
   common_tags       = var.common_tags
@@ -1552,7 +1552,7 @@ module "kubernetes_namespace_hm_s3_browser" {
 # Trino - IAM role
 module "trino_iam_role" {
   providers                            = { aws = aws.production }
-  source                               = "../../../../modules/kubernetes/trino_iam_role"
+  source                               = "../../../../modules/amazon-eks/trino_iam_role"
   trino_service_account_name           = "hm-trino"
   trino_namespace                      = "${var.environment}-hm-trino"
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
