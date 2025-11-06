@@ -42,6 +42,14 @@ pub mod parallel_calculation {
         pub mod calculate_parallel;
     }
 }
+pub mod python_parallel_calculation {
+    pub mod types {
+        pub mod python_calculation_response;
+    }
+    pub mod utils {
+        pub mod calculate_with_python;
+    }
+}
 pub mod police_audio_stream {
     pub mod constants {
         pub mod police_streams;
