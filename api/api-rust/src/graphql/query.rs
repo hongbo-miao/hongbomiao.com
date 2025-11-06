@@ -1,5 +1,7 @@
 use crate::shared::openai::types::chat_response::ChatResponse;
 use crate::shared::openai::utils::chat::chat;
+use crate::shared::parallel_calculation::types::calculation_response::CalculationResponse;
+use crate::shared::parallel_calculation::utils::calculate_parallel::calculate_parallel;
 use crate::shared::police_audio_stream::constants::police_streams::POLICE_STREAMS;
 use crate::shared::police_audio_stream::utils::police_stream_state::POLICE_STREAM_STATE;
 use async_graphql::{Object, SimpleObject};
@@ -35,6 +37,27 @@ impl Query {
 
     async fn chat(&self, message: String) -> Result<ChatResponse, String> {
         chat(message).await
+    }
+
+    #[graphql(name = "parallelCalculation")]
+    async fn parallel_calculation(
+        &self,
+        #[graphql(desc = "Number of items to process in parallel", default = 10000)]
+        items_count: i32,
+    ) -> Result<CalculationResponse, String> {
+        if items_count <= 0 {
+            return Err("items_count must be greater than 0".to_string());
+        }
+        if items_count > 100_000_000 {
+            return Err("items_count must be less than or equal to 100,000,000".to_string());
+        }
+
+        // Run the blocking Rayon computation in a blocking task
+        let result = tokio::task::spawn_blocking(move || calculate_parallel(items_count as usize))
+            .await
+            .map_err(|error| format!("Task join error: {error}"))?;
+
+        Ok(result)
     }
 
     #[graphql(name = "policeStreams")]

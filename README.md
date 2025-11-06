@@ -139,6 +139,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **futures-rs** - Foundational traits and utilities for async programming (Future, Stream, Sink)
 - **OnceCell** - Lazy initialization of static values and global state
 - **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
+- **Rayon** - Data parallelism
 - **ort** - ONNX Runtime
 - **opencv-rust** - OpenCV bindings
 - **async-openai** - OpenAI API library
