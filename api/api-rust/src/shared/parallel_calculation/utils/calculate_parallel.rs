@@ -1,5 +1,5 @@
 use crate::shared::parallel_calculation::types::calculation_response::CalculationResponse;
-use rayon::prelude::*;
+use rayon::prelude::{IntoParallelIterator, ParallelIterator};
 use std::time::Instant;
 
 pub fn calculate_parallel(items_count: usize) -> CalculationResponse {
