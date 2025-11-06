@@ -34,6 +34,14 @@ pub mod openai {
         pub mod chat;
     }
 }
+pub mod parallel_calculation {
+    pub mod types {
+        pub mod calculation_response;
+    }
+    pub mod utils {
+        pub mod calculate_parallel;
+    }
+}
 pub mod police_audio_stream {
     pub mod constants {
         pub mod police_streams;
