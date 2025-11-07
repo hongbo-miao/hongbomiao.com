@@ -15,6 +15,7 @@ test:
 
 set-up:
     mkcert -cert-file certificates/development.pem -key-file certificates/development-key.pem localhost 127.0.0.1 ::1
+    docker run --publish=5432:5432 --name=hm-postgres --env=POSTGRES_PASSWORD=passw0rd --detach docker.io/supabase/postgres:17.6.1.040
 
 dev:
     cargo run

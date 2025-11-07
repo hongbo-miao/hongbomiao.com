@@ -1,3 +1,5 @@
+use crate::shared::database::types::pg_graphql_request::PgGraphqlRequest;
+use crate::shared::database::utils::resolve_graphql::resolve_graphql;
 use crate::shared::openai::types::chat_response::ChatResponse;
 use crate::shared::openai::utils::chat::chat;
 use crate::shared::parallel_calculation::types::calculation_response::CalculationResponse;
@@ -6,7 +8,8 @@ use crate::shared::police_audio_stream::constants::police_streams::POLICE_STREAM
 use crate::shared::police_audio_stream::utils::police_stream_state::POLICE_STREAM_STATE;
 use crate::shared::python_parallel_calculation::types::python_calculation_response::PythonCalculationResponse;
 use crate::shared::python_parallel_calculation::utils::calculate_with_python::calculate_with_python;
-use async_graphql::{Object, SimpleObject};
+use async_graphql::{Context, Object, SimpleObject};
+use sqlx::PgPool;
 use utoipa::ToSchema;
 
 #[derive(SimpleObject, ToSchema)]
@@ -101,6 +104,41 @@ impl Query {
                 client_count: v.len() as i32,
             })
             .collect()
+    }
+
+    async fn database(
+        &self,
+        ctx: &Context<'_>,
+        query: String,
+        variables: Option<serde_json::Value>,
+        operation_name: Option<String>,
+    ) -> Result<serde_json::Value, String> {
+        let pool = ctx
+            .data::<PgPool>()
+            .map_err(|error| format!("Failed to get database pool: {error:?}"))?;
+
+        let request = PgGraphqlRequest {
+            query,
+            variables,
+            operation_name,
+        };
+
+        let response = resolve_graphql(pool, request)
+            .await
+            .map_err(|error| format!("Failed to execute database query: {error}"))?;
+
+        if let Some(errors) = response.errors {
+            if !errors.is_empty() {
+                return Err(format!(
+                    "Database query errors: {}",
+                    serde_json::to_string(&errors).unwrap_or_else(|_| "Unknown error".to_string())
+                ));
+            }
+        }
+
+        response
+            .data
+            .ok_or_else(|| "No data returned from database query".to_string())
     }
 }
 

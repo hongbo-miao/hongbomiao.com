@@ -31,6 +31,8 @@ use utoipa_swagger_ui::SwaggerUi;
 
 use crate::config::AppConfig;
 use crate::graphql::schema;
+use crate::shared::application::types::application_state::ApplicationState;
+use crate::shared::database::utils::initialize_pool::initialize_pool;
 use crate::webtransport::services::webtransport_server::WebTransportServer;
 
 #[tokio::main]
@@ -40,6 +42,10 @@ async fn main() {
         .with_max_level(config.server_log_level)
         .init();
     ffmpeg_sidecar::download::auto_download().expect("Failed to download FFmpeg");
+
+    let pool = initialize_pool(&config.database_url)
+        .await
+        .expect("Failed to initialize database pool");
 
     // Start WebTransport server in parallel
     let webtransport_port = config.server_port + 1;
@@ -52,7 +58,10 @@ async fn main() {
         }
     });
 
-    let schema = schema::create_schema();
+    let schema = schema::create_schema(pool.clone());
+    let application_state = ApplicationState {
+        schema: schema.clone(),
+    };
     let compression = CompressionLayer::new();
     let timeout = TimeoutLayer::new(Duration::from_secs(30));
     let allowed_origins: Vec<HeaderValue> = config
@@ -108,7 +117,7 @@ async fn main() {
     let app = Router::new()
         .merge(timeout_routes)
         .merge(streaming_routes)
-        .with_state(schema)
+        .with_state(application_state)
         .layer(compression)
         .layer(cors)
         .layer(trace)
