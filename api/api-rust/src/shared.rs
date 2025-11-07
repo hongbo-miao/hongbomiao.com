@@ -18,6 +18,7 @@ pub mod database {
         pub mod pg_graphql_response;
     }
     pub mod utils {
+        pub mod execute_database_graphql;
         pub mod initialize_pool;
         pub mod resolve_graphql;
     }
