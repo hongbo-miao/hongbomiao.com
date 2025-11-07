@@ -43,7 +43,7 @@ async fn main() {
         .init();
     ffmpeg_sidecar::download::auto_download().expect("Failed to download FFmpeg");
 
-    let pool = initialize_pool(&config.database_url)
+    let pool = initialize_pool(&config.database_url, config.database_max_connection_count)
         .await
         .expect("Failed to initialize database pool");
 

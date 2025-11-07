@@ -1,5 +1,4 @@
-use crate::shared::database::types::pg_graphql_request::PgGraphqlRequest;
-use crate::shared::database::utils::resolve_graphql::resolve_graphql;
+use crate::shared::database::utils::execute_database_graphql::execute_database_graphql;
 use crate::shared::openai::types::chat_response::ChatResponse;
 use crate::shared::openai::utils::chat::chat;
 use crate::shared::parallel_calculation::types::calculation_response::CalculationResponse;
@@ -117,28 +116,7 @@ impl Query {
             .data::<PgPool>()
             .map_err(|error| format!("Failed to get database pool: {error:?}"))?;
 
-        let request = PgGraphqlRequest {
-            query,
-            variables,
-            operation_name,
-        };
-
-        let response = resolve_graphql(pool, request)
-            .await
-            .map_err(|error| format!("Failed to execute database query: {error}"))?;
-
-        if let Some(errors) = response.errors {
-            if !errors.is_empty() {
-                return Err(format!(
-                    "Database query errors: {}",
-                    serde_json::to_string(&errors).unwrap_or_else(|_| "Unknown error".to_string())
-                ));
-            }
-        }
-
-        response
-            .data
-            .ok_or_else(|| "No data returned from database query".to_string())
+        execute_database_graphql(pool, query, variables, operation_name).await
     }
 }
 
