@@ -139,6 +139,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **futures-rs** - Foundational traits and utilities for async programming (Future, Stream, Sink)
 - **OnceCell** - Lazy initialization of static values and global state
 - **async-graphql** - GraphQL (query, mutation, subscription, depth limit, complexity limit)
+- **SQLx** - Async SQL toolkit
 - **Rayon** - Data parallelism
 - **PyO3** - Rust bindings to the Python interpreter
 - **ort** - ONNX Runtime
@@ -353,6 +354,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Patroni** - PostgreSQL high-availability (HA) template
   - **Postgres Operator** - PostgreSQL cluster provisioning
   - **pgAdmin** - PostgreSQL management tool
+  - Extension
+    - **pg_graphql** - GraphQL
 - **MySQL** - Relational database
   - **MariaDB** - Fork of MySQL
 - **Hydra** - Column-oriented SQL database
