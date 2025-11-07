@@ -4,6 +4,7 @@ use std::sync::OnceLock;
 pub struct AppConfig {
     pub server_port: u16,
     pub server_log_level: tracing::Level,
+    pub database_url: String,
     pub openai_api_base_url: String,
     pub openai_api_key: String,
     pub openai_model: String,
@@ -57,6 +58,7 @@ impl AppConfig {
                 .expect(
                     "SERVER_LOG_LEVEL must be a valid tracing level (TRACE, DEBUG, INFO, WARN, ERROR)",
                 ),
+            database_url: std::env::var("DATABASE_URL")?,
             openai_api_base_url: std::env::var("OPENAI_API_BASE_URL")?,
             openai_api_key: std::env::var("OPENAI_API_KEY")?,
             openai_model: std::env::var("OPENAI_MODEL")?,
