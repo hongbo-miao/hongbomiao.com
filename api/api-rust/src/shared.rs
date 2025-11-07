@@ -1,3 +1,8 @@
+pub mod application {
+    pub mod types {
+        pub mod application_state;
+    }
+}
 pub mod audio {
     pub mod types {
         pub mod speech_segment;
@@ -5,6 +10,16 @@ pub mod audio {
     pub mod utils {
         pub mod convert_pcm_bytes_to_wav;
         pub mod webrtc_vad_processor;
+    }
+}
+pub mod database {
+    pub mod types {
+        pub mod pg_graphql_request;
+        pub mod pg_graphql_response;
+    }
+    pub mod utils {
+        pub mod initialize_pool;
+        pub mod resolve_graphql;
     }
 }
 pub mod fire_audio_stream {
