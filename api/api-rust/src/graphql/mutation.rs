@@ -4,8 +4,7 @@ use sqlx::PgPool;
 use std::io::Read;
 use utoipa::ToSchema;
 
-use crate::shared::database::types::pg_graphql_request::PgGraphqlRequest;
-use crate::shared::database::utils::resolve_graphql::resolve_graphql;
+use crate::shared::database::utils::execute_database_graphql::execute_database_graphql;
 use crate::shared::image::utils::load_labels::load_labels;
 use crate::shared::image::utils::load_model::load_model;
 use crate::shared::image::utils::process_image::process_image;
@@ -113,27 +112,6 @@ impl Mutation {
             .data::<PgPool>()
             .map_err(|error| format!("Failed to get database pool: {error:?}"))?;
 
-        let request = PgGraphqlRequest {
-            query,
-            variables,
-            operation_name,
-        };
-
-        let response = resolve_graphql(pool, request)
-            .await
-            .map_err(|error| format!("Failed to execute database mutation: {error}"))?;
-
-        if let Some(errors) = response.errors {
-            if !errors.is_empty() {
-                return Err(format!(
-                    "Database mutation errors: {}",
-                    serde_json::to_string(&errors).unwrap_or_else(|_| "Unknown error".to_string())
-                ));
-            }
-        }
-
-        response
-            .data
-            .ok_or_else(|| "No data returned from database mutation".to_string())
+        execute_database_graphql(pool, query, variables, operation_name).await
     }
 }
