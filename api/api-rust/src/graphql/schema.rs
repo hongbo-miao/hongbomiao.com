@@ -1,18 +1,24 @@
 use async_graphql::Schema;
 use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
 use axum::{extract::State, response::IntoResponse};
+use sqlx::PgPool;
 
 use super::mutation::Mutation;
 use super::query::Query;
 use super::subscription::Subscription;
+use crate::shared::application::types::application_state::ApplicationState;
 
 pub type ApiSchema = Schema<Query, Mutation, Subscription>;
 
 pub async fn graphql_handler(
-    State(schema): State<ApiSchema>,
+    State(application_state): State<ApplicationState>,
     req: GraphQLRequest,
 ) -> GraphQLResponse {
-    schema.execute(req.into_inner()).await.into()
+    application_state
+        .schema
+        .execute(req.into_inner())
+        .await
+        .into()
 }
 
 pub async fn graphiql() -> impl IntoResponse {
@@ -24,8 +30,9 @@ pub async fn graphiql() -> impl IntoResponse {
     )
 }
 
-pub fn create_schema() -> ApiSchema {
+pub fn create_schema(pool: PgPool) -> ApiSchema {
     Schema::build(Query, Mutation, Subscription)
+        .data(pool)
         .limit_depth(100)
         .limit_complexity(1000)
         .finish()
