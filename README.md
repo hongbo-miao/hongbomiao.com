@@ -73,7 +73,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **shadcn/ui** - UI component library
 - **Tailwind CSS** - Utility-first CSS framework
 - **Radix Primitives** - Low-level, unstyled, accessible UI primitives
-- **Jest** - Unit testing, snapshot testing
+- **Vitest** - Unit testing, snapshot testing
 - **React Testing Library** - React component testing
 - **Storybook** - Visual testing
   - **[Chromatic](https://www.chromatic.com/builds?appId=5d626a63a601530020759b10)** - Storybook reviewing
@@ -221,6 +221,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Terminus** - Health check and graceful shutdown
 - **pino** - Logging
 - **dotenv-flow** - Environment variables loading
+- **Jest** - Unit testing
 - **Stryker** - Mutation testing
 - **SuperTest** - HTTP testing
 - **autocannon** - HTTP benchmarking
