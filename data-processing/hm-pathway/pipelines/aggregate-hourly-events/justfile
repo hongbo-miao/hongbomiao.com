@@ -1,0 +1,17 @@
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+set-up:
+    curl --silent --fail --show-error --location --output data/ticker.csv https://gist.githubusercontent.com/janchorowski/e351af72ecd8d206a34763a428826ab7/raw/ticker.csv
+
+dev:
+    uv run poe dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
