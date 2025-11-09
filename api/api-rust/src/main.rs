@@ -10,6 +10,7 @@ mod openapi;
 mod shared;
 mod webtransport;
 
+use anyhow::Result;
 use axum::Router;
 use axum::http::{HeaderValue, Method};
 use axum::routing::{get, post};
@@ -36,22 +37,18 @@ use crate::shared::database::utils::initialize_pool::initialize_pool;
 use crate::webtransport::services::webtransport_server::WebTransportServer;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<()> {
     let config = AppConfig::get();
     tracing_subscriber::fmt()
         .with_max_level(config.server_log_level)
         .init();
-    ffmpeg_sidecar::download::auto_download().expect("Failed to download FFmpeg");
+    ffmpeg_sidecar::download::auto_download()?;
 
-    let pool = initialize_pool(&config.database_url, config.database_max_connection_count)
-        .await
-        .expect("Failed to initialize database pool");
+    let pool = initialize_pool(&config.database_url, config.database_max_connection_count).await?;
 
     // Start WebTransport server in parallel
     let webtransport_port = config.server_port + 1;
-    let webtransport_server = WebTransportServer::create(webtransport_port)
-        .await
-        .expect("Failed to create WebTransport server");
+    let webtransport_server = WebTransportServer::create(webtransport_port).await?;
     let webtransport_handle = tokio::spawn(async move {
         if let Err(error) = webtransport_server.serve().await {
             error!("WebTransport server error: {error}");
@@ -123,17 +120,13 @@ async fn main() {
         .layer(trace)
         .layer(governor);
 
-    let address = format!("[::]:{}", config.server_port)
-        .parse::<SocketAddr>()
-        .expect("Failed to parse socket address");
+    let address = format!("[::]:{}", config.server_port).parse::<SocketAddr>()?;
     info!("HTTP server listening on {}", address);
     info!(
         "WebTransport server listening on port {}",
         webtransport_port
     );
-    let listener = tokio::net::TcpListener::bind(address)
-        .await
-        .expect("Failed to bind TCP listener");
+    let listener = tokio::net::TcpListener::bind(address).await?;
 
     // Run both servers concurrently
     tokio::select! {
@@ -149,4 +142,6 @@ async fn main() {
             error!("WebTransport server stopped unexpectedly");
         }
     }
+
+    Ok(())
 }
