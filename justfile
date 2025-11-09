@@ -495,7 +495,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-processing.ingest-flac-to-parquet
     uv run poe static-type-check-python --package=data-processing.nats.audio-file-publisher
     uv run poe static-type-check-python --package=data-processing.nats.audio-file-subscriber
-    uv run poe static-type-check-python --package=data-processing.nats.audio-stream-publisher
     uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-amazon-athena
     uv run poe static-type-check-python --package=data-storage.delta-lake.read-delta-lake-by-trino
     uv run poe static-type-check-python --package=data-storage.delta-lake.write-to-delta-lake
