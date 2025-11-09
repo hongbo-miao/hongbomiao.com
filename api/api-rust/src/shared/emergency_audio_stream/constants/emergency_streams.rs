@@ -10,15 +10,15 @@ pub struct FireStreamInfo {
     pub location: &'static str,
 }
 
-pub static FIRE_STREAMS: Lazy<HashMap<&'static str, FireStreamInfo>> = Lazy::new(|| {
-    let mut fire_streams_map = HashMap::new();
-    fire_streams_map.insert(
-        "lincoln_fire",
+pub static EMERGENCY_STREAMS: Lazy<HashMap<&'static str, FireStreamInfo>> = Lazy::new(|| {
+    let mut emergency_streams_map = HashMap::new();
+    emergency_streams_map.insert(
+        "lincoln.fire",
         FireStreamInfo {
             name: "Lincoln Fire",
-            nats_subject: "FIRE_AUDIO_STREAMS.lincoln_fire",
+            nats_subject: "EMERGENCY_AUDIO_STREAMS.lincoln.fire",
             location: "Lincoln, NE",
         },
     );
-    fire_streams_map
+    emergency_streams_map
 });

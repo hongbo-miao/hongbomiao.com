@@ -3,13 +3,13 @@ use futures_util::StreamExt;
 use tokio::sync::broadcast;
 use tracing::{error, info};
 
-use crate::shared::fire_audio_stream::constants::fire_streams::FIRE_STREAMS;
+use crate::shared::emergency_audio_stream::constants::emergency_streams::EMERGENCY_STREAMS;
 
 const NATS_URL: &str = "nats://localhost:4222";
-const STREAM_NAME: &str = "FIRE_AUDIO_STREAMS";
+const STREAM_NAME: &str = "EMERGENCY_AUDIO_STREAMS";
 
-pub async fn consume_fire_audio_stream_from_nats(
-    fire_stream_id: &str,
+pub async fn consume_emergency_audio_stream_from_nats(
+    emergency_stream_id: &str,
     audio_sender: &broadcast::Sender<Vec<u8>>,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let nats_client = async_nats::connect(NATS_URL).await?;
@@ -17,15 +17,15 @@ pub async fn consume_fire_audio_stream_from_nats(
 
     let jetstream_context = jetstream::new(nats_client);
 
-    let fire_stream_info = FIRE_STREAMS
-        .get(fire_stream_id)
-        .ok_or_else(|| format!("Unknown fire_stream_id: {}", fire_stream_id))?;
+    let emergency_stream_info = EMERGENCY_STREAMS
+        .get(emergency_stream_id)
+        .ok_or_else(|| format!("Unknown emergency_stream_id: {}", emergency_stream_id))?;
 
     let stream = jetstream_context.get_stream(STREAM_NAME).await?;
 
     let consumer = stream
         .create_consumer(jetstream::consumer::pull::Config {
-            filter_subject: fire_stream_info.nats_subject.to_string(),
+            filter_subject: emergency_stream_info.nats_subject.to_string(),
             deliver_policy: jetstream::consumer::DeliverPolicy::New,
             ack_policy: jetstream::consumer::AckPolicy::Explicit,
             ..Default::default()
@@ -34,7 +34,7 @@ pub async fn consume_fire_audio_stream_from_nats(
 
     info!(
         "Consuming from NATS subject: {}",
-        fire_stream_info.nats_subject
+        emergency_stream_info.nats_subject
     );
 
     let mut messages = consumer
@@ -58,7 +58,7 @@ pub async fn consume_fire_audio_stream_from_nats(
                 break;
             }
             None => {
-                info!("Message stream ended for {}", fire_stream_id);
+                info!("Message stream ended for {}", emergency_stream_id);
                 break;
             }
         }
