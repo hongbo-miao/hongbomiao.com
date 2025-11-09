@@ -416,6 +416,8 @@ jobs:
               - 'computer-vision/hm-openaerostruct/**'
             hm-pandas-analyze-transactions:
               - 'data-analytics/hm-pandas/analyze-transactions/**'
+            hm-pathway-aggregate-hourly-events:
+              - 'data-processing/hm-pathway/pipelines/aggregate-hourly-events/**'
             hm-polars-analyze-transactions-cpu:
               - 'data-analytics/hm-polars/analyze-transactions-cpu/**'
             hm-polars-analyze-transactions-gpu:
@@ -746,6 +748,7 @@ jobs:
       hm-open3d: ${{ steps.filter.outputs.hm-open3d }}
       hm-openaerostruct: ${{ steps.filter.outputs.hm-openaerostruct }}
       hm-pandas-analyze-transactions: ${{ steps.filter.outputs.hm-pandas-analyze-transactions }}
+      hm-pathway-aggregate-hourly-events: ${{ steps.filter.outputs.hm-pathway-aggregate-hourly-events }}
       hm-polars-analyze-transactions-cpu: ${{ steps.filter.outputs.hm-polars-analyze-transactions-cpu }}
       hm-polars-analyze-transactions-gpu: ${{ steps.filter.outputs.hm-polars-analyze-transactions-gpu }}
       hm-prefect-calculate: ${{ steps.filter.outputs.hm-prefect-calculate }}
@@ -989,6 +992,7 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-data-processing == 'true' }}
       # Applications
       flink-stream-tweets: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
+      hm-pathway-aggregate-hourly-events: ${{ needs.detect-changes.outputs.hm-pathway == 'true' }}
       hm-spark-analyze-coffee-customers: ${{ needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
       hm-spark-find-retired-people-python: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
       hm-spark-find-retired-people-scala: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-scala == 'true' }}

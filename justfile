@@ -486,6 +486,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.daft-analysis
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.greet
     uv run poe static-type-check-python --package=data-orchestration.hm-prefect.workflows.print-platform
+    uv run poe static-type-check-python --package=data-processing.hm-pathway.pipelines.aggregate-hourly-events
     uv run poe static-type-check-python --package=data-processing.hm-spark.applications.analyze-coffee-customers
     uv run poe static-type-check-python --package=data-processing.hm-spark.applications.find-retired-people-python
     uv run poe static-type-check-python --package=data-processing.hm-spark.applications.find-taxi-top-routes
