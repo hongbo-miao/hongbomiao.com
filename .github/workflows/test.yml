@@ -552,6 +552,8 @@ jobs:
               - 'data-processing/nats/audio-stream-publisher/**'
             nats-audio-stream-transcriber:
               - 'data-processing/nats/audio-stream-transcriber/**'
+            nats-postgres-bridge:
+              - 'data-processing/nats/nats-postgres-bridge/**'
             nats-telemetry-stream-publisher:
               - 'data-processing/nats/telemetry-stream-publisher/**'
             nats-telemetry-stream-subscriber:
@@ -817,6 +819,7 @@ jobs:
       nats-audio-file-subscriber: ${{ steps.filter.outputs.nats-audio-file-subscriber }}
       nats-audio-stream-publisher: ${{ steps.filter.outputs.nats-audio-stream-publisher }}
       nats-audio-stream-transcriber: ${{ steps.filter.outputs.nats-audio-stream-transcriber }}
+      nats-postgres-bridge: ${{ steps.filter.outputs.nats-postgres-bridge }}
       nats-telemetry-stream-publisher: ${{ steps.filter.outputs.nats-telemetry-stream-publisher }}
       nats-telemetry-stream-subscriber: ${{ steps.filter.outputs.nats-telemetry-stream-subscriber }}
       neo-bert: ${{ steps.filter.outputs.neo-bert }}
@@ -1012,6 +1015,7 @@ jobs:
       nats-audio-file-subscriber: ${{ needs.detect-changes.outputs.nats-audio-file-subscriber == 'true' }}
       nats-audio-stream-publisher: ${{ needs.detect-changes.outputs.nats-audio-stream-publisher == 'true' }}
       nats-audio-stream-transcriber: ${{ needs.detect-changes.outputs.nats-audio-stream-transcriber == 'true' }}
+      nats-postgres-bridge: ${{ needs.detect-changes.outputs.nats-postgres-bridge == 'true' }}
       nats-telemetry-stream-publisher: ${{ needs.detect-changes.outputs.nats-telemetry-stream-publisher == 'true' }}
       nats-telemetry-stream-subscriber: ${{ needs.detect-changes.outputs.nats-telemetry-stream-subscriber == 'true' }}
 
