@@ -99,8 +99,8 @@ async fn main() -> Result<()> {
     let streaming_routes = Router::new()
         .route("/sse/events", get(handlers::get_sse_events::get_sse_events))
         .route(
-            "/ws/fire-audio-stream",
-            get(handlers::get_fire_audio_stream::get_fire_audio_stream),
+            "/ws/emergency-audio-stream",
+            get(handlers::get_emergency_audio_stream::get_emergency_audio_stream),
         )
         .route(
             "/ws/police-audio-stream",

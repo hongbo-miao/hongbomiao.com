@@ -66,7 +66,7 @@ async fn publish_audio_stream(
 
     info!(
         "Streaming '{}' from {}",
-        config.fire_stream_name, config.fire_stream_location
+        config.emergency_stream_name, config.emergency_stream_location
     );
 
     let stdout = ffmpeg_process
@@ -131,10 +131,17 @@ async fn main() -> Result<()> {
 
     let subject = format!(
         "{}.{}",
-        config.subject_prefix, config.fire_stream_identifier
+        config.subject_prefix, config.emergency_stream_identifier
     );
 
-    match publish_audio_stream(config, jetstream_context, &config.fire_stream_url, &subject).await {
+    match publish_audio_stream(
+        config,
+        jetstream_context,
+        &config.emergency_stream_url,
+        &subject,
+    )
+    .await
+    {
         Ok(published_chunk_count) => {
             info!("Audio streaming completed with {published_chunk_count} chunks published");
         }

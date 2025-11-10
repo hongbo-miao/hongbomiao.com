@@ -48,7 +48,9 @@ impl AppConfig {
                     let _ = dotenvy::from_filename_override(&env_local_file);
                 }
                 environment => {
-                    eprintln!("Unknown ENVIRONMENT value '{environment}'");
+                    return Err(anyhow::anyhow!(
+                        "Unknown ENVIRONMENT value '{environment}'."
+                    ));
                 }
             }
         }

@@ -23,16 +23,16 @@ pub mod database {
         pub mod resolve_graphql;
     }
 }
-pub mod fire_audio_stream {
+pub mod emergency_audio_stream {
     pub mod constants {
-        pub mod fire_streams;
+        pub mod emergency_streams;
     }
     pub mod utils {
-        pub mod consume_fire_audio_stream_from_nats;
-        pub mod fire_audio_stream_manager;
-        pub mod fire_stream_state;
-        pub mod handle_fire_audio_websocket;
-        pub mod process_fire_audio_stream;
+        pub mod consume_emergency_audio_stream_from_nats;
+        pub mod emergency_audio_stream_manager;
+        pub mod emergency_stream_state;
+        pub mod handle_emergency_audio_websocket;
+        pub mod process_emergency_audio_stream;
     }
 }
 pub mod image {

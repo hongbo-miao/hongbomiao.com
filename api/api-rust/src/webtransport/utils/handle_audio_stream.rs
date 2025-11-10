@@ -4,31 +4,39 @@ use futures_util::StreamExt;
 use tokio_stream::wrappers::BroadcastStream;
 use wtransport::connection::Connection;
 
-use crate::shared::fire_audio_stream::utils::fire_audio_stream_manager::{
+use crate::shared::emergency_audio_stream::utils::emergency_audio_stream_manager::{
     FireAudioStreamManager, FireAudioStreamState,
 };
 
-use crate::webtransport::types::fire_stream::FireAudioStreamIdentifier;
+use crate::webtransport::types::emergency_stream::FireAudioStreamIdentifier;
 
 pub async fn handle_audio_stream(
     connection: Connection,
-    fire_audio_stream_id: FireAudioStreamIdentifier,
-    fire_audio_stream_state: Arc<FireAudioStreamState>,
+    emergency_audio_stream_id: FireAudioStreamIdentifier,
+    emergency_audio_stream_state: Arc<FireAudioStreamState>,
 ) -> anyhow::Result<()> {
-    FireAudioStreamManager::start_stream(&fire_audio_stream_state, &fire_audio_stream_id).await;
-    let client_identifier =
-        FireAudioStreamManager::add_client(&fire_audio_stream_state, &fire_audio_stream_id).await;
+    FireAudioStreamManager::start_stream(&emergency_audio_stream_state, &emergency_audio_stream_id)
+        .await;
+    let client_identifier = FireAudioStreamManager::add_client(
+        &emergency_audio_stream_state,
+        &emergency_audio_stream_id,
+    )
+    .await;
 
-    let audio_sender =
-        FireAudioStreamManager::get_audio_sender(&fire_audio_stream_state, &fire_audio_stream_id)
-            .await
-            .ok_or_else(|| anyhow::anyhow!("Stream sender not found"))?;
+    let audio_sender = FireAudioStreamManager::get_audio_sender(
+        &emergency_audio_stream_state,
+        &emergency_audio_stream_id,
+    )
+    .await
+    .ok_or_else(|| anyhow::anyhow!("Stream sender not found"))?;
 
     let mut audio_stream = BroadcastStream::new(audio_sender.subscribe());
 
     tracing::info!(
         "{}",
-        format!("Starting to stream audio data for fire_audio_stream_id: {fire_audio_stream_id}")
+        format!(
+            "Starting to stream audio data for emergency_audio_stream_id: {emergency_audio_stream_id}"
+        )
     );
 
     let mut stream = connection.open_uni().await?.await?;
@@ -48,8 +56,8 @@ pub async fn handle_audio_stream(
     }
 
     FireAudioStreamManager::remove_client(
-        &fire_audio_stream_state,
-        &fire_audio_stream_id,
+        &emergency_audio_stream_state,
+        &emergency_audio_stream_id,
         client_identifier,
     )
     .await;

@@ -5,10 +5,10 @@ use std::sync::OnceLock;
 pub struct AppConfig {
     pub log_level: tracing::Level,
     pub nats_url: String,
-    pub fire_stream_name: String,
-    pub fire_stream_identifier: String,
-    pub fire_stream_url: String,
-    pub fire_stream_location: String,
+    pub emergency_stream_name: String,
+    pub emergency_stream_identifier: String,
+    pub emergency_stream_url: String,
+    pub emergency_stream_location: String,
     pub subject_prefix: String,
     pub pcm_chunk_size_bytes: u32,
 }
@@ -33,7 +33,9 @@ impl AppConfig {
                     let _ = dotenvy::from_filename_override(&env_local_file);
                 }
                 environment => {
-                    eprintln!("Unknown ENVIRONMENT value '{environment}'");
+                    return Err(anyhow::anyhow!(
+                        "Unknown ENVIRONMENT value '{environment}'."
+                    ));
                 }
             }
         }
@@ -46,14 +48,14 @@ impl AppConfig {
                     "LOG_LEVEL must be a valid tracing level (TRACE, DEBUG, INFO, WARN, ERROR)",
                 )?,
             nats_url: std::env::var("NATS_URL").context("NATS_URL must be set")?,
-            fire_stream_name: std::env::var("FIRE_STREAM_NAME")
-                .context("FIRE_STREAM_NAME must be set")?,
-            fire_stream_identifier: std::env::var("FIRE_STREAM_IDENTIFIER")
-                .context("FIRE_STREAM_IDENTIFIER must be set")?,
-            fire_stream_url: std::env::var("FIRE_STREAM_URL")
-                .context("FIRE_STREAM_URL must be set")?,
-            fire_stream_location: std::env::var("FIRE_STREAM_LOCATION")
-                .context("FIRE_STREAM_LOCATION must be set")?,
+            emergency_stream_name: std::env::var("EMERGENCY_STREAM_NAME")
+                .context("EMERGENCY_STREAM_NAME must be set")?,
+            emergency_stream_identifier: std::env::var("EMERGENCY_STREAM_IDENTIFIER")
+                .context("EMERGENCY_STREAM_IDENTIFIER must be set")?,
+            emergency_stream_url: std::env::var("EMERGENCY_STREAM_URL")
+                .context("EMERGENCY_STREAM_URL must be set")?,
+            emergency_stream_location: std::env::var("EMERGENCY_STREAM_LOCATION")
+                .context("EMERGENCY_STREAM_LOCATION must be set")?,
             subject_prefix: std::env::var("SUBJECT_PREFIX")
                 .context("SUBJECT_PREFIX must be set")?,
             pcm_chunk_size_bytes: std::env::var("PCM_CHUNK_SIZE_BYTES")
