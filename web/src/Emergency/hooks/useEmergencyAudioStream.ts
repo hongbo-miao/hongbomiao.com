@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-export type FireAudioStreamState = {
+export type EmergencyAudioStreamState = {
   isConnecting: boolean;
   isConnected: boolean;
   errorMessage: string | null;
   chunkCount: number;
 };
 
-type FireAudioStreamControls = {
-  state: FireAudioStreamState;
-  connectToFireAudioStream: () => Promise<void>;
-  disconnectFromFireAudioStream: () => Promise<void>;
+type EmergencyAudioStreamControls = {
+  state: EmergencyAudioStreamState;
+  connectToEmergencyAudioStream: () => Promise<void>;
+  disconnectFromEmergencyAudioStream: () => Promise<void>;
 };
 
 const pcmSampleRateHz = 16000;
@@ -18,8 +18,8 @@ const pcmChannelCount = 1;
 const initialBufferDelaySeconds = 0.5;
 const maxBufferAheadSeconds = 2.0;
 
-function useFireAudioStream(): FireAudioStreamControls {
-  const [state, setState] = useState<FireAudioStreamState>({
+function useEmergencyAudioStream(): EmergencyAudioStreamControls {
+  const [state, setState] = useState<EmergencyAudioStreamState>({
     isConnecting: false,
     isConnected: false,
     errorMessage: null,
@@ -107,7 +107,7 @@ function useFireAudioStream(): FireAudioStreamControls {
     [ensureAudioContext],
   );
 
-  const connectToFireAudioStream = useCallback(async () => {
+  const connectToEmergencyAudioStream = useCallback(async () => {
     if (!('WebTransport' in window)) {
       setState((previousState) => ({
         ...previousState,
@@ -121,7 +121,7 @@ function useFireAudioStream(): FireAudioStreamControls {
     const currentOrigin = window.location.origin;
     const defaultSecureOrigin = currentOrigin.replace('http://', 'https://');
     const defaultWebTransportOrigin = defaultSecureOrigin.replace(/:\d+$/, ':36148');
-    const serverUrl = `${defaultWebTransportOrigin}/fire-audio-stream/lincoln_fire`;
+    const serverUrl = `${defaultWebTransportOrigin}/emergency-audio-stream/lincoln.fire`;
 
     try {
       const webTransport = new WebTransport(serverUrl);
@@ -176,13 +176,13 @@ function useFireAudioStream(): FireAudioStreamControls {
         }
       }
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to connect to Lincoln Fire audio stream.';
+      const message = error instanceof Error ? error.message : 'Failed to connect to Lincoln Emergency audio stream.';
       setState({ isConnecting: false, isConnected: false, errorMessage: message, chunkCount: 0 });
       transportRef.current = null;
     }
   }, [scheduleChunk]);
 
-  const disconnectFromFireAudioStream = useCallback(async () => {
+  const disconnectFromEmergencyAudioStream = useCallback(async () => {
     setState((previousState) => ({
       ...previousState,
       isConnecting: false,
@@ -214,11 +214,11 @@ function useFireAudioStream(): FireAudioStreamControls {
   return useMemo(
     () => ({
       state,
-      connectToFireAudioStream,
-      disconnectFromFireAudioStream,
+      connectToEmergencyAudioStream,
+      disconnectFromEmergencyAudioStream,
     }),
-    [connectToFireAudioStream, disconnectFromFireAudioStream, state],
+    [connectToEmergencyAudioStream, disconnectFromEmergencyAudioStream, state],
   );
 }
 
-export default useFireAudioStream;
+export default useEmergencyAudioStream;

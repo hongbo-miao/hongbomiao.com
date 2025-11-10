@@ -55,10 +55,10 @@ brew-install-opencv:
     brew install opencv
 
 listen-police-audio-stream:
-    websocat --binary 'ws://localhost:36147/ws/police-audio-stream?police_stream_id=chicago_police' \
+    websocat --binary 'ws://localhost:36147/ws/police-audio-stream?police_stream_id=chicago.police' \
         | sox --type=raw --rate=16000 --encoding=signed --bits=16 --channels=1 - --default-device
 
-listen-fire-audio-stream:
-    websocat --binary 'ws://localhost:36147/ws/fire-audio-stream?fire_stream_id=lincoln_fire' \
+listen-emergency-audio-stream:
+    websocat --binary 'ws://localhost:36147/ws/emergency-audio-stream?emergency_stream_id=lincoln.fire' \
         | perl -e 'while (read(STDIN, $len, 4)) { $n = unpack("V", $len); read(STDIN, $buf, $n); print $buf; }' \
         | sox --type=raw --rate=16000 --encoding=signed --bits=16 --channels=1 - --default-device
