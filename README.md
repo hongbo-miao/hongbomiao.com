@@ -146,6 +146,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **opencv-rust** - OpenCV bindings
 - **async-openai** - OpenAI API library
 - **Hound** - WAV file encoding and decoding
+- **flacenc-rs** - FLAC encoding
 - **webrtc-vad** - WebRTC Voice Activity Detector (VAD)
 - **FFmpeg Sidecar** - Iterator-based FFmpeg wrapper
 - **Anyhow** - Error handling

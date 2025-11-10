@@ -1,5 +1,5 @@
 use crate::config::AppConfig;
-use crate::shared::audio::utils::convert_pcm_bytes_to_wav::convert_pcm_bytes_to_wav;
+use crate::shared::audio::utils::encode_pcm_i16_to_flac_bytes::encode_pcm_i16_to_flac_bytes;
 use crate::shared::webrtc_vad::states::speech_state::SpeechState;
 use crate::shared::webrtc_vad::types::speech_segment::SpeechSegment;
 use crate::shared::webrtc_vad::types::webrtc_vad_process_result::WebRtcVadProcessResult;
@@ -243,18 +243,15 @@ impl WebRtcVadProcessor {
             as f64
             * app_config.webrtc_vad_frame_duration_ms as f64)
             / 1000.0;
-
-        let pcm_bytes: Vec<u8> = speech_state
-            .current_speech_samples
-            .iter()
-            .flat_map(|&sample| sample.to_le_bytes())
-            .collect();
-
-        let wav_data = match convert_pcm_bytes_to_wav(&pcm_bytes) {
+        let flac_data = match encode_pcm_i16_to_flac_bytes(
+            &speech_state.current_speech_samples,
+            app_config.webrtc_vad_sample_rate_number as u32,
+            1,
+        ) {
             Ok(data) => data,
             Err(error) => {
                 error!(
-                    "Failed to convert PCM to WAV for segment ({:.2}s - {:.2}s): {}",
+                    "Failed to encode PCM to FLAC for segment ({:.2}s - {:.2}s): {}",
                     start_time, end_time, error
                 );
                 return None;
@@ -264,7 +261,7 @@ impl WebRtcVadProcessor {
         Some(SpeechSegment {
             start: start_time,
             end: end_time,
-            audio_data: wav_data,
+            audio_data: flac_data,
         })
     }
 
@@ -290,15 +287,12 @@ impl WebRtcVadProcessor {
                 let end_time = (speech_state.total_frame_count as f64
                     * app_config.webrtc_vad_frame_duration_ms as f64)
                     / 1000.0;
-
-                let pcm_bytes: Vec<u8> = speech_state
-                    .current_speech_samples
-                    .iter()
-                    .flat_map(|&sample| sample.to_le_bytes())
-                    .collect();
-
-                match convert_pcm_bytes_to_wav(&pcm_bytes) {
-                    Ok(wav_data) => {
+                match encode_pcm_i16_to_flac_bytes(
+                    &speech_state.current_speech_samples,
+                    app_config.webrtc_vad_sample_rate_number as u32,
+                    1,
+                ) {
+                    Ok(flac_data) => {
                         debug!(
                             "WebRTC VAD final segment: {:.2}s - {:.2}s ({:.2}s duration, {} samples)",
                             start_time,
@@ -310,12 +304,12 @@ impl WebRtcVadProcessor {
                         return Some(SpeechSegment {
                             start: start_time,
                             end: end_time,
-                            audio_data: wav_data,
+                            audio_data: flac_data,
                         });
                     }
                     Err(error) => {
                         error!(
-                            "Failed to convert PCM to WAV for final segment ({:.2}s - {:.2}s): {}",
+                            "Failed to encode PCM to FLAC for final segment ({:.2}s - {:.2}s): {}",
                             start_time, end_time, error
                         );
                         return None;
