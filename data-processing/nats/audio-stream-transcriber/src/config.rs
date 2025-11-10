@@ -7,6 +7,7 @@ pub struct AppConfig {
     pub nats_url: String,
     pub nats_stream_name: String,
     pub subject_filter: String,
+    pub transcription_subject_prefix: String,
     pub speaches_base_url: String,
     pub transcription_model: String,
     pub webrtc_vad_debounce_frame_number: usize,
@@ -57,6 +58,8 @@ impl AppConfig {
                 .context("NATS_STREAM_NAME must be set")?,
             subject_filter: std::env::var("SUBJECT_FILTER")
                 .context("SUBJECT_FILTER must be set")?,
+            transcription_subject_prefix: std::env::var("TRANSCRIPTION_SUBJECT_PREFIX")
+                .context("TRANSCRIPTION_SUBJECT_PREFIX must be set")?,
             speaches_base_url: std::env::var("SPEACHES_BASE_URL")
                 .context("SPEACHES_BASE_URL must be set")?,
             transcription_model: std::env::var("TRANSCRIPTION_MODEL")

@@ -26,16 +26,18 @@ pub fn spawn_transcription_and_broadcast(
         {
             Ok(text) => {
                 if !text.is_empty() {
-                    info!(stream_id = %stream_id_clone, %text, "Transcription received");
+                    info!("Transcription received (stream_id={stream_id_clone}): {text}");
 
                     // Broadcast via SSE
                     if let Err(error) =
                         broadcast_transcription_result(stream_id_clone.clone(), text.clone()).await
                     {
-                        tracing::error!(%error, stream_id = %stream_id_clone, "Failed to broadcast transcription via SSE");
+                        tracing::error!(
+                            "Failed to broadcast transcription via SSE (stream_id={stream_id_clone}): {error}"
+                        );
                     }
 
-                    // Also send via direct broadcast for WebSocket compatibility
+                    // Also send via direct broadcast for Server-Sent Events (SSE)
                     let message = format!(
                         "{{\"stream_id\":\"{}\",\"transcription\":\"{}\"}}",
                         stream_id_clone,
@@ -43,11 +45,15 @@ pub fn spawn_transcription_and_broadcast(
                     );
                     let _ = server_sent_event_sender.send(message);
                 } else {
-                    tracing::warn!(stream_id = %stream_id_clone, "Transcription empty string returned");
+                    tracing::warn!(
+                        "Transcription empty string returned (stream_id={stream_id_clone})"
+                    );
                 }
             }
             Err(error) => {
-                tracing::error!(%error, stream_id = %stream_id_clone, "Transcription failed or service unavailable");
+                tracing::error!(
+                    "Transcription failed or service unavailable (stream_id={stream_id_clone}): {error}"
+                );
             }
         }
     });

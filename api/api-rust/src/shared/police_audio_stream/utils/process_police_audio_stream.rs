@@ -145,11 +145,10 @@ pub async fn process_police_audio_stream(
                     let reqwest_client_clone = reqwest_client.clone();
 
                     info!(
-                        police_stream_id = %stream_id_clone,
-                        start_time = %segment.start,
-                        end_time = %segment.end,
-                        wav_size = segment.audio_data.len(),
-                        "WebRTC VAD segment finalized; sending for transcription"
+                        "WebRTC VAD segment finalized; sending for transcription (police_stream_id={stream_id_clone}, start={}, end={}, wav_size={})",
+                        segment.start,
+                        segment.end,
+                        segment.audio_data.len()
                     );
 
                     spawn_transcription_and_broadcast(
@@ -169,7 +168,7 @@ pub async fn process_police_audio_stream(
                     WebRtcVadProcessor::create_initial_state();
                 speech_state = new_speech_state;
                 frame_buffer = new_frame_buffer;
-                info!(police_stream_id = %police_stream_id, "WebRTC VAD processor reset due to inactivity");
+                info!("WebRTC VAD processor reset due to inactivity for {police_stream_id}");
             }
         }
 
@@ -181,11 +180,10 @@ pub async fn process_police_audio_stream(
             let reqwest_client_clone = reqwest_client.clone();
 
             info!(
-                police_stream_id = %stream_id_clone,
-                start_time = %final_segment.start,
-                end_time = %final_segment.end,
-                wav_size = final_segment.audio_data.len(),
-                "Final WebRTC VAD segment; sending for transcription"
+                "Final WebRTC VAD segment; sending for transcription (police_stream_id={stream_id_clone}, start={}, end={}, wav_size={})",
+                final_segment.start,
+                final_segment.end,
+                final_segment.audio_data.len()
             );
 
             spawn_transcription_and_broadcast(

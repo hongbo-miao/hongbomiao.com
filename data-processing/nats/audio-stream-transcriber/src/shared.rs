@@ -1,18 +1,24 @@
 pub mod audio {
     pub mod utils {
-        pub mod convert_pcm_bytes_to_wav;
+        pub mod encode_pcm_i16_to_flac_bytes;
     }
 }
 
 pub mod nats {
     pub mod services {
-        pub mod audio_stream_processor;
+        pub mod process_audio_stream_from_nats;
+    }
+    pub mod utils {
+        pub mod publish_transcription;
     }
 }
 
 pub mod speaches {
     pub mod services {
-        pub mod transcription_service;
+        pub mod transcribe_audio;
+    }
+    pub mod types {
+        pub mod transcription_response;
     }
 }
 

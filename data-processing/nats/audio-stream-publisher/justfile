@@ -28,7 +28,7 @@ lint-rust-rustfmt-fix:
     cargo fmt --all
 
 stream-create:
-    nats stream add --config "EMERGENCY_AUDIO_STREAMS.json"
+    nats stream add --config="src/{{ STREAM_NAME }}.json"
 
 stream-delete:
     nats stream delete "{{ STREAM_NAME }}" --force
@@ -37,4 +37,4 @@ stream-info:
     nats stream info "{{ STREAM_NAME }}"
 
 stream-subscribe:
-    nats subscribe --stream "{{ STREAM_NAME }}"
+    nats subscribe --stream="{{ STREAM_NAME }}"
