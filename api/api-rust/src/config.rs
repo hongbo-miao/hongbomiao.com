@@ -5,8 +5,8 @@ use std::sync::OnceLock;
 pub struct AppConfig {
     pub server_port: u16,
     pub server_log_level: tracing::Level,
-    pub database_url: String,
-    pub database_max_connection_count: u8,
+    pub postgres_url: String,
+    pub postgres_max_connection_count: u8,
     pub openai_api_base_url: String,
     pub openai_api_key: String,
     pub openai_model: String,
@@ -66,12 +66,12 @@ impl AppConfig {
                 .context(
                     "SERVER_LOG_LEVEL must be a valid tracing level (TRACE, DEBUG, INFO, WARN, ERROR)",
                 )?,
-            database_url: std::env::var("DATABASE_URL")
-                .context("DATABASE_URL must be set")?,
-            database_max_connection_count: std::env::var("DATABASE_MAX_CONNECTION_COUNT")
-                .context("DATABASE_MAX_CONNECTION_COUNT must be set")?
+            postgres_url: std::env::var("POSTGRES_URL")
+                .context("POSTGRES_URL must be set")?,
+            postgres_max_connection_count: std::env::var("POSTGRES_MAX_CONNECTION_COUNT")
+                .context("POSTGRES_MAX_CONNECTION_COUNT must be set")?
                 .parse()
-                .context("DATABASE_MAX_CONNECTION_COUNT must be a valid positive integer")?,
+                .context("POSTGRES_MAX_CONNECTION_COUNT must be a valid positive integer")?,
             openai_api_base_url: std::env::var("OPENAI_API_BASE_URL")
                 .context("OPENAI_API_BASE_URL must be set")?,
             openai_api_key: std::env::var("OPENAI_API_KEY")
