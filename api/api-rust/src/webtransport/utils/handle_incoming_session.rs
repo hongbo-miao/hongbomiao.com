@@ -1,7 +1,7 @@
 use wtransport::endpoint::{IncomingSession, SessionRequest};
 
-use crate::webtransport::types::fire_stream::FireAudioStreamIdentifier;
-use crate::webtransport::utils::extract_fire_stream_id::extract_fire_stream_id;
+use crate::webtransport::types::emergency_stream::FireAudioStreamIdentifier;
+use crate::webtransport::utils::extract_emergency_stream_id::extract_emergency_stream_id;
 
 pub async fn handle_incoming_session(
     incoming_session: IncomingSession,
@@ -11,6 +11,6 @@ pub async fn handle_incoming_session(
     let path = session_request.path().to_string();
     let authority = session_request.authority().to_string();
     tracing::info!("New session: Authority: '{authority}', Path: '{path}'");
-    let fire_audio_stream_id = extract_fire_stream_id(&path)?;
-    Ok((session_request, fire_audio_stream_id))
+    let emergency_audio_stream_id = extract_emergency_stream_id(&path)?;
+    Ok((session_request, emergency_audio_stream_id))
 }
