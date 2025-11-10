@@ -1,3 +1,5 @@
+STREAM_NAME := "EMERGENCY_TRANSCRIPTIONS"
+
 install-toolchain:
     rustup install
 
@@ -24,3 +26,15 @@ lint-rust-rustfmt:
 
 lint-rust-rustfmt-fix:
     cargo fmt --all
+
+stream-create:
+    nats stream add --config="src/{{ STREAM_NAME }}.json"
+
+stream-delete:
+    nats stream delete "{{ STREAM_NAME }}" --force
+
+stream-info:
+    nats stream info "{{ STREAM_NAME }}"
+
+stream-subscribe:
+    nats subscribe --stream="{{ STREAM_NAME }}"

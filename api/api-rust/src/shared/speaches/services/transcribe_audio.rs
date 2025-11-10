@@ -9,7 +9,7 @@ pub async fn transcribe_audio(
     let form = reqwest::multipart::Form::new()
         .part(
             "file",
-            reqwest::multipart::Part::bytes(audio_data.to_vec())
+            reqwest::multipart::Part::bytes(audio_data.to_owned())
                 .file_name("audio.wav")
                 .mime_str("audio/wav")?,
         )

@@ -1,8 +1,13 @@
 mod config;
 mod shared;
 
+#[allow(clippy::all)]
+mod transcript_capnp {
+    include!(concat!(env!("OUT_DIR"), "/transcript_capnp.rs"));
+}
+
 use crate::config::AppConfig;
-use crate::shared::nats::services::audio_stream_processor::process_audio_stream_from_nats;
+use crate::shared::nats::services::process_audio_stream_from_nats::process_audio_stream_from_nats;
 use anyhow::Result;
 use tracing::{error, info};
 

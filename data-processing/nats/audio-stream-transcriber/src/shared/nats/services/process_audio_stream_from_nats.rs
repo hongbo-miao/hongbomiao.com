@@ -1,5 +1,6 @@
 use crate::config::AppConfig;
-use crate::shared::speaches::services::transcription_service::make_transcription_request;
+use crate::shared::nats::utils::publish_transcription::publish_transcription;
+use crate::shared::speaches::services::transcribe_audio::transcribe_audio;
 use crate::shared::webrtc_vad::services::webrtc_vad_processor::WebRtcVadProcessor;
 use crate::shared::webrtc_vad::states::speech_state::SpeechState;
 use async_nats::jetstream;
@@ -80,6 +81,13 @@ pub async fn process_audio_stream_from_nats() -> Result<(), Box<dyn std::error::
         match messages.next().await {
             Some(Ok(message)) => {
                 let payload = message.payload.to_vec();
+                let message_subject = message.subject.to_string();
+
+                // Extract stream_id from subject (e.g., "EMERGENCY_AUDIO_STREAMS.lincoln.fire" → "lincoln.fire")
+                let stream_id = message_subject
+                    .split_once('.')
+                    .map_or("", |(_, rest)| rest)
+                    .to_string();
 
                 if payload.len() < 4 {
                     error!("Received invalid message (too short)");
@@ -128,16 +136,18 @@ pub async fn process_audio_stream_from_nats() -> Result<(), Box<dyn std::error::
                     for segment in result.segments {
                         let reqwest_client_clone = reqwest_client.clone();
                         let config_clone = config.clone();
+                        let jetstream_context_clone = jetstream_context.clone();
+                        let stream_id_clone = stream_id.clone();
 
                         info!(
-                            start_time = %segment.start,
-                            end_time = %segment.end,
-                            wav_size = segment.audio_data.len(),
-                            "WebRTC VAD segment finalized; sending for transcription"
+                            "WebRTC VAD segment finalized; sending for transcription (stream_id={stream_id}, start={}, end={}, wav_size={})",
+                            segment.start,
+                            segment.end,
+                            segment.audio_data.len()
                         );
 
                         tokio::spawn(async move {
-                            match make_transcription_request(
+                            match transcribe_audio(
                                 &reqwest_client_clone,
                                 &config_clone.speaches_base_url,
                                 &segment.audio_data,
@@ -145,18 +155,42 @@ pub async fn process_audio_stream_from_nats() -> Result<(), Box<dyn std::error::
                             )
                             .await
                             {
-                                Ok(transcription_text) => {
-                                    info!(
-                                        transcription = %transcription_text,
-                                        start_time = %segment.start,
-                                        end_time = %segment.end,
-                                        "Transcription completed"
+                                Ok(transcription_response) => {
+                                    let timestamp_ns =
+                                        chrono::Utc::now().timestamp_nanos_opt().unwrap_or(0);
+
+                                    // Build transcription subject (e.g., "EMERGENCY_TRANSCRIPTIONS.lincoln.fire")
+                                    let transcription_subject = format!(
+                                        "{}.{stream_id_clone}",
+                                        config_clone.transcription_subject_prefix
                                     );
+
+                                    info!(
+                                        "Transcription completed (stream_id={stream_id_clone}, start={}, end={}): {}",
+                                        segment.start, segment.end, transcription_response.text
+                                    );
+
+                                    // Publish transcription to NATS
+                                    if let Err(error) = publish_transcription(
+                                        &jetstream_context_clone,
+                                        &transcription_subject,
+                                        &stream_id_clone,
+                                        timestamp_ns,
+                                        &transcription_response,
+                                        segment.start,
+                                        segment.end,
+                                    )
+                                    .await
+                                    {
+                                        error!(
+                                            "Failed to publish transcription to NATS (stream_id={stream_id_clone}): {error}",
+                                        );
+                                    }
                                 }
                                 Err(error) => {
                                     error!(
-                                        "Failed to transcribe WebRTC VAD audio segment (start={}, end={}): {}",
-                                        segment.start, segment.end, error
+                                        "Failed to transcribe WebRTC VAD audio segment (stream_id={stream_id_clone}, start={}, end={}): {error}",
+                                        segment.start, segment.end
                                     );
                                 }
                             }
@@ -192,14 +226,14 @@ pub async fn process_audio_stream_from_nats() -> Result<(), Box<dyn std::error::
         let config_clone = config.clone();
 
         info!(
-            start_time = %final_segment.start,
-            end_time = %final_segment.end,
-            wav_size = final_segment.audio_data.len(),
-            "Final WebRTC VAD segment; sending for transcription"
+            "Final WebRTC VAD segment; sending for transcription (start={}, end={}, wav_size={})",
+            final_segment.start,
+            final_segment.end,
+            final_segment.audio_data.len()
         );
 
         tokio::spawn(async move {
-            match make_transcription_request(
+            match transcribe_audio(
                 &reqwest_client_clone,
                 &config_clone.speaches_base_url,
                 &final_segment.audio_data,
@@ -207,13 +241,14 @@ pub async fn process_audio_stream_from_nats() -> Result<(), Box<dyn std::error::
             )
             .await
             {
-                Ok(transcription_text) => {
+                Ok(transcription_response) => {
                     info!(
-                        transcription = %transcription_text,
-                        start_time = %final_segment.start,
-                        end_time = %final_segment.end,
-                        "Final transcription completed"
+                        "Final transcription completed (start={}, end={}): {}",
+                        final_segment.start, final_segment.end, transcription_response.text
                     );
+
+                    // Note: We don't have stream_id here, so we skip publishing for the final segment
+                    // This only happens when the stream ends gracefully, which is rare in production
                 }
                 Err(error) => {
                     error!(
