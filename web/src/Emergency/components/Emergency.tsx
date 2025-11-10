@@ -1,18 +1,18 @@
 import { Loader2, Play, Square } from 'lucide-react';
-import useFireAudioStream from '@/Fire/hooks/useFireAudioStream';
+import useEmergencyAudioStream from '@/Emergency/hooks/useEmergencyAudioStream';
 import { Button } from '@/components/ui/button';
 
-function Fire() {
+function Emergency() {
   const {
     state: { isConnecting, isConnected, errorMessage, chunkCount },
-    connectToFireAudioStream,
-    disconnectFromFireAudioStream,
-  } = useFireAudioStream();
+    connectToEmergencyAudioStream,
+    disconnectFromEmergencyAudioStream,
+  } = useEmergencyAudioStream();
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col p-6">
       <div>
-        <h1 className="text-3xl font-semibold">Fire</h1>
+        <h1 className="text-3xl font-semibold">Emergency</h1>
       </div>
 
       <div className="flex flex-wrap items-center gap-4">
@@ -20,7 +20,7 @@ function Fire() {
           type="button"
           size="icon"
           className="cursor-pointer disabled:cursor-not-allowed"
-          onClick={() => void connectToFireAudioStream()}
+          onClick={() => void connectToEmergencyAudioStream()}
           disabled={isConnecting || isConnected}
         >
           {isConnecting ? (
@@ -34,7 +34,7 @@ function Fire() {
           size="icon"
           variant="outline"
           className="cursor-pointer disabled:cursor-not-allowed"
-          onClick={() => void disconnectFromFireAudioStream()}
+          onClick={() => void disconnectFromEmergencyAudioStream()}
           disabled={!isConnected}
         >
           <Square aria-hidden="true" className="h-4 w-4" />
@@ -47,4 +47,4 @@ function Fire() {
   );
 }
 
-export default Fire;
+export default Emergency;
