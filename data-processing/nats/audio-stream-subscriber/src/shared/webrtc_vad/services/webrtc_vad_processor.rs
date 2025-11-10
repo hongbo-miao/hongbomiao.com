@@ -87,9 +87,13 @@ impl WebRtcVadProcessor {
     }
 
     fn detect_voice_activity(webrtc_vad: &mut Vad, frame: &[i16]) -> bool {
-        webrtc_vad
-            .is_voice_segment(frame)
-            .expect("WebRTC VAD should process frame successfully")
+        match webrtc_vad.is_voice_segment(frame) {
+            Ok(is_voice) => is_voice,
+            Err(error) => {
+                error!("WebRTC VAD failed to process frame: {error:?}");
+                false
+            }
+        }
     }
 
     fn update_speech_counters(speech_state: &mut SpeechState, is_voice: bool) {

@@ -4,7 +4,7 @@ use std::io::Cursor;
 use anyhow::{Result, bail};
 
 pub fn convert_pcm_bytes_to_wav(pcm_data: &[u8]) -> Result<Vec<u8>> {
-    let wav_spec = WavSpec {
+    let spec = WavSpec {
         channels: 1,
         sample_rate: 16000,
         bits_per_sample: 16,
@@ -19,16 +19,14 @@ pub fn convert_pcm_bytes_to_wav(pcm_data: &[u8]) -> Result<Vec<u8>> {
     }
 
     let mut cursor = Cursor::new(Vec::new());
-    {
-        let mut wav_writer = WavWriter::new(&mut cursor, wav_spec)?;
+    let mut writer = WavWriter::new(&mut cursor, spec)?;
 
-        for chunk in pcm_data.chunks_exact(2) {
-            let sample = i16::from_le_bytes([chunk[0], chunk[1]]);
-            wav_writer.write_sample(sample)?;
-        }
-
-        wav_writer.finalize()?;
+    // Convert bytes to i16 samples and write
+    for chunk in pcm_data.chunks_exact(2) {
+        let sample = i16::from_le_bytes([chunk[0], chunk[1]]);
+        writer.write_sample(sample)?;
     }
 
+    writer.finalize()?;
     Ok(cursor.into_inner())
 }
