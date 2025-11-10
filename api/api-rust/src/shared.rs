@@ -4,12 +4,8 @@ pub mod application {
     }
 }
 pub mod audio {
-    pub mod types {
-        pub mod speech_segment;
-    }
     pub mod utils {
         pub mod convert_pcm_bytes_to_wav;
-        pub mod webrtc_vad_processor;
     }
 }
 pub mod database {
@@ -91,5 +87,17 @@ pub mod server_sent_event {
     pub mod utils {
         pub mod broadcast_transcription_result;
         pub mod server_sent_event_manager;
+    }
+}
+pub mod webrtc_vad {
+    pub mod services {
+        pub mod webrtc_vad_processor;
+    }
+    pub mod states {
+        pub mod speech_state;
+    }
+    pub mod types {
+        pub mod speech_segment;
+        pub mod webrtc_vad_process_result;
     }
 }

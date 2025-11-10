@@ -4,10 +4,12 @@ use tokio::io::AsyncReadExt;
 use tokio::process::ChildStdout;
 use tokio::sync::broadcast;
 use tracing::{error, info};
+use webrtc_vad::{SampleRate, Vad, VadMode};
 
 use crate::config::AppConfig;
-use crate::shared::audio::utils::webrtc_vad_processor::{SpeechState, WebRtcVadProcessor};
 use crate::shared::police_audio_stream::utils::spawn_transcription_and_broadcast::spawn_transcription_and_broadcast;
+use crate::shared::webrtc_vad::services::webrtc_vad_processor::WebRtcVadProcessor;
+use crate::shared::webrtc_vad::states::speech_state::SpeechState;
 
 pub async fn process_police_audio_stream(
     police_stream_id: String,
@@ -111,9 +113,25 @@ pub async fn process_police_audio_stream(
                     .map(|chunk| i16::from_le_bytes([chunk[0], chunk[1]]))
                     .collect();
 
+                // Create Vad instance for this frame to avoid Send issues across await boundaries
+                let webrtc_vad_mode = match config.webrtc_vad_mode.as_str() {
+                    "Quality" => VadMode::Quality,
+                    "LowBitrate" => VadMode::LowBitrate,
+                    "Aggressive" => VadMode::Aggressive,
+                    "VeryAggressive" => VadMode::VeryAggressive,
+                    _ => VadMode::Aggressive,
+                };
+                let mut webrtc_vad =
+                    Vad::new_with_rate_and_mode(SampleRate::Rate16kHz, webrtc_vad_mode);
+
                 // Process frame with WebRTC VAD processor
-                let result =
-                    WebRtcVadProcessor::process_frame(config, speech_state, frame_buffer, &samples);
+                let result = WebRtcVadProcessor::process_frame(
+                    config,
+                    &mut webrtc_vad,
+                    speech_state,
+                    frame_buffer,
+                    &samples,
+                );
 
                 // Update state for next iteration
                 speech_state = result.speech_state;
