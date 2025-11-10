@@ -44,7 +44,7 @@ async fn main() -> Result<()> {
         .init();
     ffmpeg_sidecar::download::auto_download()?;
 
-    let pool = initialize_pool(&config.database_url, config.database_max_connection_count).await?;
+    let pool = initialize_pool(&config.postgres_url, config.postgres_max_connection_count).await?;
 
     // Start WebTransport server in parallel
     let webtransport_port = config.server_port + 1;
