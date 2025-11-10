@@ -63,6 +63,9 @@ name: . Test Data Processing
       nats-audio-stream-transcriber:
         required: true
         type: boolean
+      nats-postgres-bridge:
+        required: true
+        type: boolean
       nats-telemetry-stream-publisher:
         required: true
         type: boolean
@@ -652,6 +655,34 @@ jobs:
           cargo build
       - name: Test
         working-directory: data-processing/nats/audio-stream-transcriber
+        run: |
+          cargo test --all-features
+
+  nats-postgres-bridge-test:
+    name: NATS (nats-postgres-bridge) | Test
+    if: ${{ inputs.workflow || inputs.nats-postgres-bridge }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
+        with:
+          cache: true
+          rust-src-dir: data-processing/nats/nats-postgres-bridge
+      - name: Set up
+        uses: awalsh128/cache-apt-pkgs-action@v1.6.0
+        with:
+          # capnproto is for capnp
+          packages: capnproto
+          version: 1.0
+      - name: Install dependencies
+        working-directory: data-processing/nats/nats-postgres-bridge
+        run: |
+          cargo build
+      - name: Test
+        working-directory: data-processing/nats/nats-postgres-bridge
         run: |
           cargo test --all-features
 
