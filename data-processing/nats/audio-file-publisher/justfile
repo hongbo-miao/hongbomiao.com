@@ -16,7 +16,7 @@ test-coverage:
     uv run poe test-coverage
 
 stream-create:
-    nats stream add --config="{{ STREAM_NAME }}.json"
+    nats stream add --config="src/{{ STREAM_NAME }}.json"
 
 stream-delete:
     nats stream delete "{{ STREAM_NAME }}" --force
