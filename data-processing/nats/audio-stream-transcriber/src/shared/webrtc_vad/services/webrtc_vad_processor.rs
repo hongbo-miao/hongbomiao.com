@@ -245,7 +245,7 @@ impl WebRtcVadProcessor {
             / 1000.0;
         let flac_data = match encode_pcm_i16_to_flac_bytes(
             &speech_state.current_speech_samples,
-            app_config.webrtc_vad_sample_rate_number as u32,
+            app_config.webrtc_vad_sample_rate_number,
             1,
         ) {
             Ok(data) => data,
@@ -289,7 +289,7 @@ impl WebRtcVadProcessor {
                     / 1000.0;
                 match encode_pcm_i16_to_flac_bytes(
                     &speech_state.current_speech_samples,
-                    app_config.webrtc_vad_sample_rate_number as u32,
+                    app_config.webrtc_vad_sample_rate_number,
                     1,
                 ) {
                     Ok(flac_data) => {

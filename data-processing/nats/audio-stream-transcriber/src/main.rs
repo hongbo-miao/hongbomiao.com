@@ -1,7 +1,6 @@
 mod config;
 mod shared;
 
-#[allow(clippy::all)]
 mod transcript_capnp {
     include!(concat!(env!("OUT_DIR"), "/transcript_capnp.rs"));
 }
