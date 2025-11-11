@@ -16,8 +16,8 @@ import PackageDescription
 let package = Package(
   name: "mobile-ios",
   dependencies: [
-    .package(url: "https://github.com/argmaxinc/WhisperKit", from: "0.14.1"),
-    .package(url: "https://github.com/ml-explore/mlx-swift-examples", from: "2.25.7"),
-    .package(url: "https://github.com/mlalma/kokoro-ios.git", from: "1.0.8"),
+    .package(url: "https://github.com/argmaxinc/WhisperKit", from: "0.15.0"),
+    .package(url: "https://github.com/ml-explore/mlx-swift-lm", from: "2.29.2"),
+    .package(url: "https://github.com/mlalma/kokoro-ios", from: "1.0.8"),
   ]
 )
