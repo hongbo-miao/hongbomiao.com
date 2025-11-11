@@ -16,7 +16,7 @@ pub async fn publish_transcription(
     segment_end_s: f64,
 ) -> Result<()> {
     // Build and serialize the Cap'n Proto message completely before any async operations
-    let transcript_bytes = {
+    let transcription_bytes = {
         let mut message = capnp::message::Builder::new_default();
         {
             let mut transcription =
@@ -52,7 +52,7 @@ pub async fn publish_transcription(
     );
 
     match jetstream_context
-        .publish_with_headers(subject.to_string(), headers, transcript_bytes.into())
+        .publish_with_headers(subject.to_string(), headers, transcription_bytes.into())
         .await
     {
         Ok(_acknowledgement) => {

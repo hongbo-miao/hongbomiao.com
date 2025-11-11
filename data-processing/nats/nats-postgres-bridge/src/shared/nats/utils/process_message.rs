@@ -1,6 +1,6 @@
 use crate::shared::postgres::services::write_transcription_to_postgres::write_transcription_to_postgres;
 use crate::shared::transcripts::types::transcript::{Transcript, TranscriptWord};
-use crate::transcript_capnp;
+use crate::transcription_capnp;
 use anyhow::{Context, Result};
 use sqlx::PgPool;
 
@@ -11,31 +11,31 @@ pub async fn process_message(pool: &PgPool, payload: &[u8]) -> Result<()> {
     )
     .context("Failed to read Cap'n Proto message")?;
 
-    let transcript_reader = message_reader
-        .get_root::<transcript_capnp::transcript::Reader>()
-        .context("Failed to get transcript root")?;
+    let transcription_reader = message_reader
+        .get_root::<transcription_capnp::transcription::Reader>()
+        .context("Failed to get transcription root")?;
 
-    let stream_id = transcript_reader
+    let stream_id = transcription_reader
         .get_stream_id()
         .context("Failed to get stream_id")?
         .to_string()
         .context("Failed to convert stream_id to string")?;
-    let timestamp_ns = transcript_reader.get_timestamp_ns();
-    let text = transcript_reader
+    let timestamp_ns = transcription_reader.get_timestamp_ns();
+    let text = transcription_reader
         .get_text()
         .context("Failed to get text")?
         .to_string()
         .context("Failed to convert text to string")?;
-    let language = transcript_reader
+    let language = transcription_reader
         .get_language()
         .context("Failed to get language")?
         .to_string()
         .context("Failed to convert language to string")?;
-    let duration_s = transcript_reader.get_duration_s();
-    let segment_start_s = transcript_reader.get_segment_start_s();
-    let segment_end_s = transcript_reader.get_segment_end_s();
+    let duration_s = transcription_reader.get_duration_s();
+    let segment_start_s = transcription_reader.get_segment_start_s();
+    let segment_end_s = transcription_reader.get_segment_end_s();
 
-    let words_reader = transcript_reader
+    let words_reader = transcription_reader
         .get_words()
         .context("Failed to get words")?;
 
