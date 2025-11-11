@@ -400,11 +400,14 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Nessie** - Transactional data catalog
 - **AWS Glue Data Catalog** - Central metadata repository
 
-### Data Distribution
+### Data Transport
 
 - **Arrow Flight** - High-performance data transport framework
-- **RTI Connext** - Real-time, distributed systems framework
-- **DDS** - Data distribution service
+- **ZeroMQ** - High-performance asynchronous messaging library
+  - **NetMQ** - C# implementation of ZeroMQ
+  - **zmq.rs** - Rust implementation of ZeroMQ
+- **RTI Connext DDS** - Data distribution service (DDS) middleware framework
+- **Dust DDS** - Data distribution service (DDS) middleware framework
 
 ### Data Visualization
 
@@ -1019,9 +1022,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Network Programmability
 
 - **P4** - Programming Protocol-independent Packet Processors
-- **ZeroMQ** - High-performance asynchronous messaging library
-  - **NetMQ** - C# implementation of ZeroMQ
-  - **zmq.rs** - Rust implementation of ZeroMQ
 
 ### Network Analysis
 
