@@ -9,18 +9,12 @@ use dust_dds::{
         },
         status::NO_STATUS,
         time::DurationKind,
-        type_support::DdsType,
     },
     listener::NO_LISTENER,
 };
 use std::{thread, time::Duration};
 
-#[derive(Debug, DdsType)]
-struct HelloWorldType {
-    #[dust_dds(key)]
-    id: u8,
-    message: String,
-}
+include!(concat!(env!("OUT_DIR"), "/hm_message.rs"));
 
 fn main() -> Result<()> {
     let domain_id = 0;
@@ -31,9 +25,9 @@ fn main() -> Result<()> {
         .context("Failed to create domain participant")?;
 
     let topic = participant
-        .create_topic::<HelloWorldType>(
-            "HelloWorld",
-            "HelloWorldType",
+        .create_topic::<HmMessage>(
+            "HmMessage",
+            "HmMessage",
             QosKind::Default,
             NO_LISTENER,
             NO_STATUS,
@@ -61,7 +55,7 @@ fn main() -> Result<()> {
     };
 
     let reader = subscriber
-        .create_datareader::<HelloWorldType>(
+        .create_datareader::<HmMessage>(
             &topic,
             QosKind::Specific(reader_qos),
             NO_LISTENER,
@@ -73,8 +67,8 @@ fn main() -> Result<()> {
 
     loop {
         match reader.read_next_sample() {
-            Ok(hello_world_sample) => {
-                let data = hello_world_sample
+            Ok(message_sample) => {
+                let data = message_sample
                     .data
                     .context("Failed to extract sample data")?;
                 println!("Received: {data:?}");
