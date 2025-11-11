@@ -9,18 +9,12 @@ use dust_dds::{
         },
         status::NO_STATUS,
         time::DurationKind,
-        type_support::DdsType,
     },
     listener::NO_LISTENER,
 };
 use std::{thread, time::Duration};
 
-#[derive(DdsType)]
-struct HelloWorldType {
-    #[dust_dds(key)]
-    id: u8,
-    message: String,
-}
+include!(concat!(env!("OUT_DIR"), "/hm_message.rs"));
 
 fn main() -> Result<()> {
     let domain_id = 0;
@@ -31,9 +25,9 @@ fn main() -> Result<()> {
         .context("Failed to create domain participant")?;
 
     let topic = participant
-        .create_topic::<HelloWorldType>(
-            "HelloWorld",
-            "HelloWorldType",
+        .create_topic::<HmMessage>(
+            "HmMessage",
+            "HmMessage",
             QosKind::Default,
             NO_LISTENER,
             NO_STATUS,
@@ -61,7 +55,7 @@ fn main() -> Result<()> {
     };
 
     let writer = publisher
-        .create_datawriter::<HelloWorldType>(
+        .create_datawriter::<HmMessage>(
             &topic,
             QosKind::Specific(writer_qos),
             NO_LISTENER,
@@ -69,19 +63,23 @@ fn main() -> Result<()> {
         )
         .context("Failed to create data writer")?;
 
-    let hello_world = HelloWorldType {
-        id: 8,
-        message: "Hello world!".to_string(),
-    };
+    println!("Publishing messages...");
 
-    writer
-        .write(hello_world, None)
-        .context("Failed to write message")?;
+    let mut count = 0;
+    loop {
+        count += 1;
 
-    println!("Published message: id=8, message=Hello world!");
-    println!("Waiting for subscribers to receive data...");
+        let message = HmMessage {
+            message: "Hello, World!".to_string(),
+            count,
+        };
 
-    thread::sleep(Duration::from_secs(1));
+        writer
+            .write(message, None)
+            .context("Failed to write message")?;
 
-    Ok(())
+        println!("Published message: message=Hello, World!, count={count}");
+
+        thread::sleep(Duration::from_secs(1));
+    }
 }
