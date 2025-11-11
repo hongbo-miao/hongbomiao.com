@@ -400,15 +400,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Nessie** - Transactional data catalog
 - **AWS Glue Data Catalog** - Central metadata repository
 
-### Data Transport
-
-- **Arrow Flight** - High-performance data transport framework
-- **ZeroMQ** - High-performance asynchronous messaging library
-  - **NetMQ** - C# implementation of ZeroMQ
-  - **zmq.rs** - Rust implementation of ZeroMQ
-- **RTI Connext DDS** - Data distribution service (DDS) middleware framework
-- **Dust DDS** - Data distribution service (DDS) middleware framework
-
 ### Data Visualization
 
 - **Plotly** - Interactive scientific, engineering, and business data visualization
@@ -494,6 +485,15 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Gradio** - Machine learning application building
 - **Streamlit** - Data application building
 - **Dash** - Data application and dashboard building
+
+### Data Transport
+
+- **Arrow Flight** - High-performance data transport framework
+- **ZeroMQ** - High-performance asynchronous messaging library
+  - **NetMQ** - C# implementation of ZeroMQ
+  - **zmq.rs** - Rust implementation of ZeroMQ
+- **RTI Connext DDS** - Data distribution service (DDS) middleware framework
+- **Dust DDS** - Data distribution service (DDS) middleware framework
 
 ### Evolutionary Algorithm (EA)
 
@@ -632,6 +632,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Open3D** - 3D data processing
 - **PyVista** - 3D plotting and mesh analysis
 - **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization
+- **GStreamer** - Pipeline-based multimedia framework
 
 ## Computing
 
