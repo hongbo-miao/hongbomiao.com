@@ -271,12 +271,17 @@ lint-ruby-fix:
 
 lint-rust-rustfmt:
     cd api/api-rust && just lint-rust-rustfmt
-    cd data-distribution/arrow-flight/arrow-flight-server && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge && just lint-rust-rustfmt
     cd data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge && just lint-rust-rustfmt
+    cd data-processing/nats/audio-stream-publisher && just lint-rust-rustfmt
+    cd data-processing/nats/audio-stream-transcriber && just lint-rust-rustfmt
+    cd data-processing/nats/nats-postgres-bridge && just lint-rust-rustfmt
+    cd data-transport/arrow-flight/arrow-flight-server && just lint-rust-rustfmt
+    cd data-transport/dust-dds/dust-dds-publisher && just lint-rust-rustfmt
+    cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-rustfmt
     cd data-visualization/iads/iads-rtstation/iads-data-producer && just lint-rust-rustfmt
     cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && just lint-rust-rustfmt
     cd network/udp/udp-receiver && just lint-rust-rustfmt
@@ -285,12 +290,17 @@ lint-rust-rustfmt:
 
 lint-rust-rustfmt-fix:
     cd api/api-rust && just lint-rust-rustfmt-fix
-    cd data-distribution/arrow-flight/arrow-flight-server && just lint-rust-rustfmt-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-rustfmt-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && just lint-rust-rustfmt-fix
     cd data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge && just lint-rust-rustfmt-fix
     cd data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge && just lint-rust-rustfmt-fix
+    cd data-processing/nats/audio-stream-publisher && just lint-rust-rustfmt-fix
+    cd data-processing/nats/audio-stream-transcriber && just lint-rust-rustfmt-fix
+    cd data-processing/nats/nats-postgres-bridge && just lint-rust-rustfmt-fix
+    cd data-transport/arrow-flight/arrow-flight-server && just lint-rust-rustfmt-fix
+    cd data-transport/dust-dds/dust-dds-publisher && just lint-rust-rustfmt-fix
+    cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-rustfmt-fix
     cd data-visualization/iads/iads-rtstation/iads-data-producer && just lint-rust-rustfmt-fix
     cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && just lint-rust-rustfmt-fix
     cd network/udp/udp-receiver && just lint-rust-rustfmt-fix
@@ -299,12 +309,17 @@ lint-rust-rustfmt-fix:
 
 lint-rust-clippy:
     cd api/api-rust && just lint-rust-clippy
-    cd data-distribution/arrow-flight/arrow-flight-server && just lint-rust-clippy
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy
     cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && just lint-rust-clippy
     cd data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge && just lint-rust-clippy
     cd data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge && just lint-rust-clippy
+    cd data-processing/nats/audio-stream-publisher && just lint-rust-clippy
+    cd data-processing/nats/audio-stream-transcriber && just lint-rust-clippy
+    cd data-processing/nats/nats-postgres-bridge && just lint-rust-clippy
+    cd data-transport/arrow-flight/arrow-flight-server && just lint-rust-clippy
+    cd data-transport/dust-dds/dust-dds-publisher && just lint-rust-clippy
+    cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-clippy
     cd data-visualization/iads/iads-rtstation/iads-data-producer && just lint-rust-clippy
     cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && just lint-rust-clippy
     cd network/udp/udp-receiver && just lint-rust-clippy
@@ -313,12 +328,17 @@ lint-rust-clippy:
 
 lint-rust-clippy-fix:
     cd api/api-rust && just lint-rust-clippy-fix
-    cd data-distribution/arrow-flight/arrow-flight-server && just lint-rust-clippy-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-consumer && just lint-rust-clippy-fix
     cd data-processing/kafka/kafka-client/kafka-rust/proto-producer && just lint-rust-clippy-fix
     cd data-processing/kafka/kafka-client/kafka-rust/udp-kafka-bridge && just lint-rust-clippy-fix
     cd data-processing/kafka/kafka-client/kafka-rust/zeromq-kafka-bridge && just lint-rust-clippy-fix
+    cd data-processing/nats/audio-stream-publisher && just lint-rust-clippy-fix
+    cd data-processing/nats/audio-stream-transcriber && just lint-rust-clippy-fix
+    cd data-processing/nats/nats-postgres-bridge && just lint-rust-clippy-fix
+    cd data-transport/arrow-flight/arrow-flight-server && just lint-rust-clippy-fix
+    cd data-transport/dust-dds/dust-dds-publisher && just lint-rust-clippy-fix
+    cd data-transport/dust-dds/dust-dds-subscriber && just lint-rust-clippy-fix
     cd data-visualization/iads/iads-rtstation/iads-data-producer && just lint-rust-clippy-fix
     cd data-visualization/iads/iads-rtstation/zeromq-iads-bridge && just lint-rust-clippy-fix
     cd network/udp/udp-receiver && just lint-rust-clippy-fix
@@ -476,8 +496,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-analytics.hm-polars.analyze-transactions-gpu
     uv run poe static-type-check-python --package=data-crawling.hm-crawl4ai
     uv run poe static-type-check-python --package=data-crawling.hm-firecrawl
-    uv run poe static-type-check-python --package=data-distribution.arrow-flight.arrow-flight-client
-    uv run poe static-type-check-python --package=data-distribution.rti-connext-dds
     uv run poe static-type-check-python --package=data-extraction.hm-docling
     uv run poe static-type-check-python --package=data-extraction.hm-mineru
     uv run poe static-type-check-python --package=data-extraction.hm-olmocr
@@ -506,6 +524,8 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-storage.hm-lancedb
     uv run poe static-type-check-python --package=data-storage.hm-protobuf
     uv run poe static-type-check-python --package=data-storage.lance
+    uv run poe static-type-check-python --package=data-transport.arrow-flight.arrow-flight-client
+    uv run poe static-type-check-python --package=data-transport.rti-connext-dds
     uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
     uv run poe static-type-check-python --package=data-visualization.hm-dash.csv-visualizer
     uv run poe static-type-check-python --package=data-visualization.hm-dash.parquet-visualizer

@@ -5,6 +5,6 @@ fn main() -> Result<()> {
         .src_prefix("src")
         .file("src/transcription.capnp")
         .run()
-        .expect("Failed to compile Cap'n Proto schema");
+        .map_err(|error| std::io::Error::new(std::io::ErrorKind::Other, error))?;
     Ok(())
 }
