@@ -1,5 +1,5 @@
 use crate::shared::speaches::types::transcription_response::TranscriptionResponse;
-use crate::transcript_capnp;
+use crate::transcription_capnp;
 use anyhow::Result;
 use async_nats::header::{HeaderName, HeaderValue};
 use async_nats::jetstream;
@@ -19,18 +19,19 @@ pub async fn publish_transcription(
     let transcript_bytes = {
         let mut message = capnp::message::Builder::new_default();
         {
-            let mut transcript = message.init_root::<transcript_capnp::transcript::Builder>();
-            transcript.set_stream_id(stream_id);
-            transcript.set_timestamp_ns(timestamp_ns);
-            transcript.set_text(&transcription_response.text);
-            transcript.set_language(&transcription_response.language);
-            transcript.set_duration_s(transcription_response.duration);
-            transcript.set_segment_start_s(segment_start_s);
-            transcript.set_segment_end_s(segment_end_s);
+            let mut transcription =
+                message.init_root::<transcription_capnp::transcription::Builder>();
+            transcription.set_stream_id(stream_id);
+            transcription.set_timestamp_ns(timestamp_ns);
+            transcription.set_text(&transcription_response.text);
+            transcription.set_language(&transcription_response.language);
+            transcription.set_duration_s(transcription_response.duration);
+            transcription.set_segment_start_s(segment_start_s);
+            transcription.set_segment_end_s(segment_end_s);
 
             // Build words list
             let word_count = transcription_response.words.len() as u32;
-            let mut words_builder = transcript.init_words(word_count);
+            let mut words_builder = transcription.init_words(word_count);
             for (index, transcription_word) in transcription_response.words.iter().enumerate() {
                 let mut word_builder = words_builder.reborrow().get(index as u32);
                 word_builder.set_word(&transcription_word.word);
