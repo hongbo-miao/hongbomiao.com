@@ -1,6 +1,6 @@
 @0xe3a426facb631d59;
 
-struct Transcript {
+struct Transcription {
   streamId @0 :Text;
   timestampNs @1 :Int64;
   text @2 :Text;
