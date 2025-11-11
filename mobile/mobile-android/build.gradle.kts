@@ -4,5 +4,5 @@ plugins {
     id("com.android.library") version "8.13.1" apply false
     id("org.jetbrains.kotlin.android") version "2.2.21" apply false
     id("io.gitlab.arturbosch.detekt") version "1.23.8"
-    id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
+    id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
 }
