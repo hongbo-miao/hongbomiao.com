@@ -258,9 +258,9 @@ jobs:
             api-rust-scripts:
               - 'api/api-rust/scripts/**'
             arrow-flight-client:
-              - 'data-distribution/arrow-flight/arrow-flight-client/**'
+              - 'data-transport/arrow-flight/arrow-flight-client/**'
             arrow-flight-server:
-              - 'data-distribution/arrow-flight/arrow-flight-server/**'
+              - 'data-transport/arrow-flight/arrow-flight-server/**'
             automatic-mixed-precision:
               - 'llm-training/automatic-mixed-precision/**'
             bert:
@@ -279,6 +279,10 @@ jobs:
               - 'embedded-system/decode-can-trc-data/**'
             development-aws-glue-spark-scripts:
               - 'infrastructure/opentofu/environments/development/aws/general/files/aws-glue/spark-scripts/**'
+            dust-dds-publisher:
+              - 'data-transport/dust-dds/dust-dds-publisher/**'
+            dust-dds-subscriber:
+              - 'data-transport/dust-dds/dust-dds-subscriber/**'
             ethereum:
               - '.github/workflows/.lint.yml'
               - 'ethereum/**'
@@ -587,7 +591,7 @@ jobs:
             robot-operating-system:
               - 'robotics/robot-operating-system/**'
             rti-connext-dds:
-              - 'data-distribution/rti-connext-dds/**'
+              - 'data-transport/rti-connext-dds/**'
             speculative-decoding:
               - 'llm-inference/speculative-decoding/**'
             stable-diffusion:
@@ -691,6 +695,8 @@ jobs:
       delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
       development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
       dinov3: ${{ steps.filter.outputs.dinov3 }}
+      dust-dds-publisher: ${{ steps.filter.outputs.dust-dds-publisher }}
+      dust-dds-subscriber: ${{ steps.filter.outputs.dust-dds-subscriber }}
       ethereum: ${{ steps.filter.outputs.ethereum }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
       fine-tune-whisper: ${{ steps.filter.outputs.fine-tune-whisper }}
@@ -1237,6 +1243,11 @@ jobs:
       # Workflows
       workflow: ${{ needs.detect-changes.outputs.workflow-test-network == 'true' }}
       # Applications
+      arrow-flight-client: ${{ needs.detect-changes.outputs.arrow-flight-client == 'true' }}
+      arrow-flight-server: ${{ needs.detect-changes.outputs.arrow-flight-server == 'true' }}
+      dust-dds-publisher: ${{ needs.detect-changes.outputs.dust-dds-publisher == 'true' }}
+      dust-dds-subscriber: ${{ needs.detect-changes.outputs.dust-dds-subscriber == 'true' }}
+      rti-connext-dds: ${{ needs.detect-changes.outputs.rti-connext-dds == 'true' }}
       udp-receiver: ${{ needs.detect-changes.outputs.udp-receiver == 'true' }}
       udp-sender: ${{ needs.detect-changes.outputs.udp-sender == 'true' }}
 
@@ -1368,102 +1379,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: matlab/call-matlab-function-in-python
-
-  arrow-flight-client-test:
-    name: Data Distribution Service | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.arrow-flight-client == 'true' }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.3
-        with:
-          version: 0.9.8
-          enable-cache: true
-          cache-dependency-glob: data-distribution/arrow-flight/arrow-flight-client/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: data-distribution/arrow-flight/arrow-flight-client/.python-version
-      - name: Install dependencies
-        working-directory: data-distribution/arrow-flight/arrow-flight-client
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-distribution/arrow-flight/arrow-flight-client
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: data-distribution/arrow-flight/arrow-flight-client
-
-  arrow-flight-server-test:
-    name: UDP Sender | Test
-    if: ${{ inputs.workflow || inputs.arrow-flight-server }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      # protoc is for prost
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3.0.0
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 28.3
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
-        with:
-          cache: true
-          rust-src-dir: data-distribution/arrow-flight/arrow-flight-server
-      - name: Install dependencies
-        working-directory: data-distribution/arrow-flight/arrow-flight-server
-        run: |
-          cargo build
-      - name: Test
-        working-directory: data-distribution/arrow-flight/arrow-flight-server
-        run: |
-          cargo test --all-features
-
-  rti-connext-dds-test:
-    name: Data Distribution Service | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.rti-connext-dds == 'true' }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.3
-        with:
-          version: 0.9.8
-          enable-cache: true
-          cache-dependency-glob: data-distribution/rti-connext-dds/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version-file: data-distribution/rti-connext-dds/.python-version
-      - name: Install dependencies
-        working-directory: data-distribution/rti-connext-dds
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-distribution/rti-connext-dds
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: data-distribution/rti-connext-dds
 
   xxhash-test:
     name: xxHash | Test
