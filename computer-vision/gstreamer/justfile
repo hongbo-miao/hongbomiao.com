@@ -1,0 +1,8 @@
+show-version:
+    gst-launch-1.0 --version
+
+generate-cpu-encoded-test-video:
+    gst-launch-1.0 videotestsrc num-buffers=100 ! videoconvert ! x264enc ! mp4mux ! filesink location=video.mp4
+
+generate-gpu-encoded-test-video:
+    gst-launch-1.0 videotestsrc num-buffers=100 ! nvvidconv ! nvv4l2h264enc ! h264parse ! mp4mux ! filesink location=video.mp4
