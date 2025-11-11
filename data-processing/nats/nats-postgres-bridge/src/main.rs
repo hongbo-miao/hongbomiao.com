@@ -1,8 +1,8 @@
 mod config;
 mod shared;
 
-mod transcript_capnp {
-    include!(concat!(env!("OUT_DIR"), "/transcript_capnp.rs"));
+mod transcription_capnp {
+    include!(concat!(env!("OUT_DIR"), "/transcription_capnp.rs"));
 }
 
 use crate::config::AppConfig;
