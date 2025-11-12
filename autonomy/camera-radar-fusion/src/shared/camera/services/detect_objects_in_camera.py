@@ -31,18 +31,18 @@ def detect_objects_in_camera(
     for result in results:
         boxes = result.boxes
 
-        for index in range(len(boxes)):
-            confidence = float(boxes.conf[index])
+        for box in boxes:
+            confidence = float(box.conf[0])
 
             # Filter by confidence
             if confidence < confidence_threshold:
                 continue
 
             # Extract bounding box coordinates [x1, y1, x2, y2]
-            bounding_box = boxes.xyxy[index].cpu().numpy()
+            bounding_box = box.xyxy[0].cpu().numpy()
 
             # Get class information
-            class_id = int(boxes.cls[index])
+            class_id = int(box.cls[0])
             class_name = model.names[class_id]
 
             detection = CameraDetection(
