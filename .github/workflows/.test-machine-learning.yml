@@ -1076,17 +1076,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-training/automatic-mixed-precision/uv.lock
+          cache-dependency-glob: large-language-model-training/automatic-mixed-precision/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-training/automatic-mixed-precision/.python-version
+          python-version-file: large-language-model-training/automatic-mixed-precision/.python-version
       - name: Install dependencies
-        working-directory: llm-training/automatic-mixed-precision
+        working-directory: large-language-model-training/automatic-mixed-precision
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-training/automatic-mixed-precision
+        working-directory: large-language-model-training/automatic-mixed-precision
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1094,7 +1094,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-training/automatic-mixed-precision
+          directory: large-language-model-training/automatic-mixed-precision
 
   sglang-test:
     name: SGLang | Test
@@ -1116,17 +1116,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-inference/hm-sglang/uv.lock
+          cache-dependency-glob: large-language-model-inference/hm-sglang/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-inference/hm-sglang/.python-version
+          python-version-file: large-language-model-inference/hm-sglang/.python-version
       - name: Install dependencies
-        working-directory: llm-inference/hm-sglang
+        working-directory: large-language-model-inference/hm-sglang
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-inference/hm-sglang
+        working-directory: large-language-model-inference/hm-sglang
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1134,7 +1134,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-inference/hm-sglang
+          directory: large-language-model-inference/hm-sglang
 
   mlx-lm-test:
     name: MLX LM | Test
@@ -1149,17 +1149,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-inference/hm-mlx-lm/uv.lock
+          cache-dependency-glob: large-language-model-inference/hm-mlx-lm/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-inference/hm-mlx-lm/.python-version
+          python-version-file: large-language-model-inference/hm-mlx-lm/.python-version
       - name: Install dependencies
-        working-directory: llm-inference/hm-mlx-lm
+        working-directory: large-language-model-inference/hm-mlx-lm
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-inference/hm-mlx-lm
+        working-directory: large-language-model-inference/hm-mlx-lm
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1167,7 +1167,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-inference/hm-mlx-lm
+          directory: large-language-model-inference/hm-mlx-lm
 
   kv-caching-test:
     name: KV Caching | Test
@@ -1182,17 +1182,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-inference/kv-caching/uv.lock
+          cache-dependency-glob: large-language-model-inference/kv-caching/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-inference/kv-caching/.python-version
+          python-version-file: large-language-model-inference/kv-caching/.python-version
       - name: Install dependencies
-        working-directory: llm-inference/kv-caching
+        working-directory: large-language-model-inference/kv-caching
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-inference/kv-caching
+        working-directory: large-language-model-inference/kv-caching
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1200,7 +1200,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-inference/kv-caching
+          directory: large-language-model-inference/kv-caching
 
   speculative-decoding-test:
     name: Speculative Decoding | Test
@@ -1215,17 +1215,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-inference/speculative-decoding/uv.lock
+          cache-dependency-glob: large-language-model-inference/speculative-decoding/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-inference/speculative-decoding/.python-version
+          python-version-file: large-language-model-inference/speculative-decoding/.python-version
       - name: Install dependencies
-        working-directory: llm-inference/speculative-decoding
+        working-directory: large-language-model-inference/speculative-decoding
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-inference/speculative-decoding
+        working-directory: large-language-model-inference/speculative-decoding
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1233,7 +1233,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-inference/speculative-decoding
+          directory: large-language-model-inference/speculative-decoding
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
@@ -1314,17 +1314,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-application/hm-langchain/applications/chat-pdf/uv.lock
+          cache-dependency-glob: large-language-model-application/hm-langchain/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-application/hm-langchain/applications/chat-pdf/.python-version
+          python-version-file: large-language-model-application/hm-langchain/applications/chat-pdf/.python-version
       - name: Install dependencies
-        working-directory: llm-application/hm-langchain/applications/chat-pdf
+        working-directory: large-language-model-application/hm-langchain/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-application/hm-langchain/applications/chat-pdf
+        working-directory: large-language-model-application/hm-langchain/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1332,7 +1332,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-application/hm-langchain/applications/chat-pdf
+          directory: large-language-model-application/hm-langchain/applications/chat-pdf
 
   pydantic-ai-chat-pdf-test:
     name: PydanticAI (chat-pdf) | Test
@@ -1347,17 +1347,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-application/hm-pydantic-ai/applications/chat-pdf/uv.lock
+          cache-dependency-glob: large-language-model-application/hm-pydantic-ai/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-application/hm-pydantic-ai/applications/chat-pdf/.python-version
+          python-version-file: large-language-model-application/hm-pydantic-ai/applications/chat-pdf/.python-version
       - name: Install dependencies
-        working-directory: llm-application/hm-pydantic-ai/applications/chat-pdf
+        working-directory: large-language-model-application/hm-pydantic-ai/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-application/hm-pydantic-ai/applications/chat-pdf
+        working-directory: large-language-model-application/hm-pydantic-ai/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1365,7 +1365,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-application/hm-pydantic-ai/applications/chat-pdf
+          directory: large-language-model-application/hm-pydantic-ai/applications/chat-pdf
 
   langgraph-chat-pdf-test:
     name: LangGraph (chat-pdf) | Test
@@ -1380,17 +1380,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-application/hm-langgraph/applications/chat-pdf/uv.lock
+          cache-dependency-glob: large-language-model-application/hm-langgraph/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-application/hm-langgraph/applications/chat-pdf/.python-version
+          python-version-file: large-language-model-application/hm-langgraph/applications/chat-pdf/.python-version
       - name: Install dependencies
-        working-directory: llm-application/hm-langgraph/applications/chat-pdf
+        working-directory: large-language-model-application/hm-langgraph/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-application/hm-langgraph/applications/chat-pdf
+        working-directory: large-language-model-application/hm-langgraph/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1398,7 +1398,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-application/hm-langgraph/applications/chat-pdf
+          directory: large-language-model-application/hm-langgraph/applications/chat-pdf
 
   llama-index-chat-pdf-test:
     name: LlamaIndex (chat-pdf) | Test
@@ -1413,17 +1413,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-application/hm-llama-index/applications/chat-pdf/uv.lock
+          cache-dependency-glob: large-language-model-application/hm-llama-index/applications/chat-pdf/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-application/hm-llama-index/applications/chat-pdf/.python-version
+          python-version-file: large-language-model-application/hm-llama-index/applications/chat-pdf/.python-version
       - name: Install dependencies
-        working-directory: llm-application/hm-llama-index/applications/chat-pdf
+        working-directory: large-language-model-application/hm-llama-index/applications/chat-pdf
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-application/hm-llama-index/applications/chat-pdf
+        working-directory: large-language-model-application/hm-llama-index/applications/chat-pdf
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1431,7 +1431,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-application/hm-llama-index/applications/chat-pdf
+          directory: large-language-model-application/hm-llama-index/applications/chat-pdf
 
   model-context-protocol-test:
     name: Model Context Protocol | Test
@@ -1980,17 +1980,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-post-training/post-training-quantization/uv.lock
+          cache-dependency-glob: large-language-model-post-training/post-training-quantization/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-post-training/post-training-quantization/.python-version
+          python-version-file: large-language-model-post-training/post-training-quantization/.python-version
       - name: Install dependencies
-        working-directory: llm-post-training/post-training-quantization
+        working-directory: large-language-model-post-training/post-training-quantization
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-post-training/post-training-quantization
+        working-directory: large-language-model-post-training/post-training-quantization
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1998,7 +1998,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-post-training/post-training-quantization
+          directory: large-language-model-post-training/post-training-quantization
 
   axolotl-test:
     name: Axolotl | Test
@@ -2014,19 +2014,19 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-post-training/fine-tuning/hm-axolotl/uv.lock
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/hm-axolotl/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-post-training/fine-tuning/hm-axolotl/.python-version
+          python-version-file: large-language-model-post-training/fine-tuning/hm-axolotl/.python-version
       - name: Install dependencies
-        working-directory: llm-post-training/fine-tuning/hm-axolotl
+        working-directory: large-language-model-post-training/fine-tuning/hm-axolotl
         run: |
           uv sync --extra=build
           uv sync --extra=build --extra=compile
           uv sync --extra=build --extra=compile --dev
       - name: Test
-        working-directory: llm-post-training/fine-tuning/hm-axolotl
+        working-directory: large-language-model-post-training/fine-tuning/hm-axolotl
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2034,7 +2034,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-post-training/fine-tuning/hm-axolotl
+          directory: large-language-model-post-training/fine-tuning/hm-axolotl
 
   llama-factory-test:
     name: LLaMA-Factory | Test
@@ -2049,17 +2049,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-post-training/fine-tuning/hm-llama-factory/uv.lock
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/hm-llama-factory/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-post-training/fine-tuning/hm-llama-factory/.python-version
+          python-version-file: large-language-model-post-training/fine-tuning/hm-llama-factory/.python-version
       - name: Install dependencies
-        working-directory: llm-post-training/fine-tuning/hm-llama-factory
+        working-directory: large-language-model-post-training/fine-tuning/hm-llama-factory
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-post-training/fine-tuning/hm-llama-factory
+        working-directory: large-language-model-post-training/fine-tuning/hm-llama-factory
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2067,7 +2067,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-post-training/fine-tuning/hm-llama-factory
+          directory: large-language-model-post-training/fine-tuning/hm-llama-factory
 
   swift-test:
     name: SWIFT | Test
@@ -2082,17 +2082,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-post-training/fine-tuning/hm-swift/uv.lock
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/hm-swift/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-post-training/fine-tuning/hm-swift/.python-version
+          python-version-file: large-language-model-post-training/fine-tuning/hm-swift/.python-version
       - name: Install dependencies
-        working-directory: llm-post-training/fine-tuning/hm-swift
+        working-directory: large-language-model-post-training/fine-tuning/hm-swift
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-post-training/fine-tuning/hm-swift
+        working-directory: large-language-model-post-training/fine-tuning/hm-swift
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2100,7 +2100,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-post-training/fine-tuning/hm-swift
+          directory: large-language-model-post-training/fine-tuning/hm-swift
 
   torchtune-test:
     name: torchtune | Test
@@ -2115,17 +2115,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-post-training/fine-tuning/hm-torchtune/uv.lock
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/hm-torchtune/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-post-training/fine-tuning/hm-torchtune/.python-version
+          python-version-file: large-language-model-post-training/fine-tuning/hm-torchtune/.python-version
       - name: Install dependencies
-        working-directory: llm-post-training/fine-tuning/hm-torchtune
+        working-directory: large-language-model-post-training/fine-tuning/hm-torchtune
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-post-training/fine-tuning/hm-torchtune
+        working-directory: large-language-model-post-training/fine-tuning/hm-torchtune
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2133,7 +2133,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-post-training/fine-tuning/hm-torchtune
+          directory: large-language-model-post-training/fine-tuning/hm-torchtune
 
   unsloth-test:
     name: Unsloth | Test
@@ -2148,17 +2148,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-post-training/fine-tuning/hm-unsloth/uv.lock
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/hm-unsloth/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-post-training/fine-tuning/hm-unsloth/.python-version
+          python-version-file: large-language-model-post-training/fine-tuning/hm-unsloth/.python-version
       - name: Install dependencies
-        working-directory: llm-post-training/fine-tuning/hm-unsloth
+        working-directory: large-language-model-post-training/fine-tuning/hm-unsloth
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-post-training/fine-tuning/hm-unsloth
+        working-directory: large-language-model-post-training/fine-tuning/hm-unsloth
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2166,7 +2166,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-post-training/fine-tuning/hm-unsloth
+          directory: large-language-model-post-training/fine-tuning/hm-unsloth
 
   fine-tune-whisper-test:
     name: Fine Tune Whisper | Test
@@ -2181,17 +2181,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-post-training/fine-tuning/fine-tune-whisper/uv.lock
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/fine-tune-whisper/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-post-training/fine-tuning/fine-tune-whisper/.python-version
+          python-version-file: large-language-model-post-training/fine-tuning/fine-tune-whisper/.python-version
       - name: Install dependencies
-        working-directory: llm-post-training/fine-tuning/fine-tune-whisper
+        working-directory: large-language-model-post-training/fine-tuning/fine-tune-whisper
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-post-training/fine-tuning/fine-tune-whisper
+        working-directory: large-language-model-post-training/fine-tuning/fine-tune-whisper
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2199,7 +2199,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-post-training/fine-tuning/fine-tune-whisper
+          directory: large-language-model-post-training/fine-tuning/fine-tune-whisper
 
   deepeval-test:
     name: DeepEval | Test
@@ -2215,17 +2215,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: llm-evaluation/hm-deepeval/uv.lock
+          cache-dependency-glob: large-language-model-evaluation/hm-deepeval/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: llm-evaluation/hm-deepeval/.python-version
+          python-version-file: large-language-model-evaluation/hm-deepeval/.python-version
       - name: Install dependencies
-        working-directory: llm-evaluation/hm-deepeval
+        working-directory: large-language-model-evaluation/hm-deepeval
         run: |
           uv sync --dev
       - name: Test
-        working-directory: llm-evaluation/hm-deepeval
+        working-directory: large-language-model-evaluation/hm-deepeval
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2233,7 +2233,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: llm-evaluation/hm-deepeval
+          directory: large-language-model-evaluation/hm-deepeval
 
   qwen-vl-test:
     name: Qwen VL | Test
