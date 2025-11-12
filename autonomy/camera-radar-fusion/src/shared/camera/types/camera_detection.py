@@ -1,34 +1,30 @@
 import numpy as np
+from pydantic import BaseModel, ConfigDict, Field
 
 
-class CameraDetection:
+class CameraDetection(BaseModel):
     """Represents a single camera object detection."""
 
-    def __init__(
-        self,
-        bounding_box: np.ndarray,
-        confidence: float,
-        class_id: int,
-        class_name: str,
-    ) -> None:
-        """
-        Initialize camera detection.
+    bounding_box: np.ndarray = Field(
+        description="[x1, y1, x2, y2] in pixel coordinates",
+    )
+    confidence: float = Field(description="Detection confidence score (0-1)")
+    class_id: int = Field(description="Class ID from detector")
+    class_name: str = Field(
+        description="Human-readable class name (e.g., 'car', 'person')",
+    )
 
-        Args:
-            bounding_box: [x1, y1, x2, y2] in pixel coordinates
-            confidence: Detection confidence score (0-1)
-            class_id: Class ID from detector
-            class_name: Human-readable class name (e.g., "car", "person")
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
-        """
-        self.bounding_box = bounding_box
-        self.confidence = confidence
-        self.class_id = class_id
-        self.class_name = class_name
+    @property
+    def center_x(self) -> float:
+        """Calculate center x coordinate in pixel coordinates."""
+        return (self.bounding_box[0] + self.bounding_box[2]) / 2
 
-        # Calculate center point in pixel coordinates
-        self.center_x = (bounding_box[0] + bounding_box[2]) / 2
-        self.center_y = (bounding_box[1] + bounding_box[3]) / 2
+    @property
+    def center_y(self) -> float:
+        """Calculate center y coordinate in pixel coordinates."""
+        return (self.bounding_box[1] + self.bounding_box[3]) / 2
 
     def __repr__(self) -> str:
         return (

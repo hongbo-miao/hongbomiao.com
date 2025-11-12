@@ -1,5 +1,6 @@
 import logging
 
+from config import config
 from shared.camera.types.camera_detection import CameraDetection
 from shared.fusion.types.fused_track import FusedTrack
 from shared.radar.types.radar_detection import RadarDetection
@@ -29,7 +30,10 @@ def create_fused_track(
     """
     # Calculate combined confidence
     # Weight camera confidence more heavily as it provides classification
-    fusion_confidence = 0.7 * camera_detection.confidence + 0.3
+    fusion_confidence = (
+        config.CAMERA_CONFIDENCE_WEIGHT * camera_detection.confidence
+        + config.FUSION_BASE_CONFIDENCE
+    )
 
     track = FusedTrack(
         camera_detection=camera_detection,

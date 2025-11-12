@@ -14,7 +14,7 @@ def associate_camera_radar_detections(
     camera_detections: list[CameraDetection],
     radar_detections: list[RadarDetection],
     distance_threshold_pixels: float = 100.0,
-) -> list[tuple[CameraDetection, RadarDetection]]:
+) -> list[tuple[int, int]]:
     """
     Associate camera and radar detections using spatial proximity.
 
@@ -28,7 +28,7 @@ def associate_camera_radar_detections(
         distance_threshold_pixels: Maximum distance for association
 
     Returns:
-        List of matched pairs (camera_detection, radar_detection)
+        List of matched pairs as (camera_index, radar_index) tuples
 
     """
     if not camera_detections or not radar_detections:
@@ -65,12 +65,7 @@ def associate_camera_radar_detections(
         if camera_index in used_camera_indices or radar_index in used_radar_indices:
             continue
 
-        matched_pairs.append(
-            (
-                camera_detections[camera_index],
-                radar_detections[radar_index],
-            ),
-        )
+        matched_pairs.append((camera_index, radar_index))
         used_camera_indices.add(camera_index)
         used_radar_indices.add(radar_index)
 

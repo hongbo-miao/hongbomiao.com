@@ -833,6 +833,10 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Simulink** - Simulation and model-based designing
     - **Simscape** - Multidomain physical systems simulation
 
+## Autonomy
+
+- **nuscenes-devkit** - nuScenes autonomous driving dataset toolkit
+
 ## Aerospace
 
 - **fr24sdk** - Flightradar24 SDK
