@@ -1,8 +1,8 @@
 create:
-    argocd app create production-hm-litellm --file=argo-cd-manifests/hm-litellm-application.yaml
+    argocd app create production-hm-litellm --file=argo-cd-manifests/hm-litellm.yaml
 
 update:
-    argocd app create production-hm-litellm --file=argo-cd-manifests/hm-litellm-application.yaml --upsert
+    argocd app create production-hm-litellm --file=argo-cd-manifests/hm-litellm.yaml --upsert
 
 delete:
     argocd app delete production-hm-litellm --yes
