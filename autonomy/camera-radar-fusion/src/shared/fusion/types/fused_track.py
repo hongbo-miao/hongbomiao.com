@@ -1,45 +1,63 @@
+import numpy as np
+from config import config
+from pydantic import BaseModel, ConfigDict, Field
 from shared.camera.types.camera_detection import CameraDetection
 from shared.radar.types.radar_detection import RadarDetection
 
 
-class FusedTrack:
+class FusedTrack(BaseModel):
     """Represents a fused track combining camera and radar information."""
 
-    def __init__(
-        self,
-        camera_detection: CameraDetection,
-        radar_detection: RadarDetection,
-        fusion_confidence: float,
-    ) -> None:
-        """
-        Initialize fused track.
+    camera_detection: CameraDetection = Field(description="Associated camera detection")
+    radar_detection: RadarDetection = Field(description="Associated radar detection")
+    fusion_confidence: float = Field(description="Combined confidence score (0-1)")
 
-        Args:
-            camera_detection: Associated camera detection
-            radar_detection: Associated radar detection
-            fusion_confidence: Combined confidence score (0-1)
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
-        """
-        self.camera_detection = camera_detection
-        self.radar_detection = radar_detection
-        self.fusion_confidence = fusion_confidence
+    @property
+    def bounding_box(self) -> np.ndarray:
+        """Fused bounding box from camera detection."""
+        return self.camera_detection.bounding_box
 
-        # Fused properties combining both sensors
-        self.bounding_box = camera_detection.bounding_box
-        self.class_name = camera_detection.class_name
-        self.class_id = camera_detection.class_id
+    @property
+    def class_name(self) -> str:
+        """Fused class name from camera detection."""
+        return self.camera_detection.class_name
 
-        # 3D position and velocity from radar
-        self.position_3d = radar_detection.position_3d
-        self.velocity = radar_detection.velocity
-        self.distance = radar_detection.distance
+    @property
+    def class_id(self) -> int:
+        """Fused class ID from camera detection."""
+        return self.camera_detection.class_id
 
-        # Image coordinates (use center of bounding box)
-        self.image_coordinate_x = camera_detection.center_x
-        self.image_coordinate_y = camera_detection.center_y
+    @property
+    def position_3d(self) -> np.ndarray:
+        """3D position from radar detection."""
+        return self.radar_detection.position_3d
 
-        # Movement classification
-        self.is_moving = self.velocity > 0.5  # threshold in m/s
+    @property
+    def velocity(self) -> float:
+        """Velocity from radar detection."""
+        return self.radar_detection.velocity
+
+    @property
+    def distance(self) -> float:
+        """Distance from radar detection."""
+        return self.radar_detection.distance
+
+    @property
+    def image_coordinate_x(self) -> float:
+        """Image x coordinate (center of bounding box)."""
+        return self.camera_detection.center_x
+
+    @property
+    def image_coordinate_y(self) -> float:
+        """Image y coordinate (center of bounding box)."""
+        return self.camera_detection.center_y
+
+    @property
+    def is_moving(self) -> bool:
+        """Movement classification based on velocity threshold."""
+        return self.velocity > config.MOVEMENT_VELOCITY_THRESHOLD_MPS
 
     def __repr__(self) -> str:
         return (

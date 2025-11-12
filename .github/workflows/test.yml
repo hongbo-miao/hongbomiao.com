@@ -271,6 +271,8 @@ jobs:
               - 'tokenization/byte-pair-encoding/**'
             call-matlab-function-in-python:
               - 'matlab/call-matlab-function-in-python/**'
+            camera-radar-fusion:
+              - 'autonomy/camera-radar-fusion/**'
             decode-can-blf-data:
               - 'embedded-system/decode-can-blf-data/**'
             decode-can-mf4-data:
@@ -646,6 +648,7 @@ jobs:
       # Languages
       ansible: ${{ steps.filter.outputs.ansible }}
       c-cpp: ${{ steps.filter.outputs.c-cpp }}
+      camera-radar-fusion: ${{ steps.filter.outputs.camera-radar-fusion }}
       cmake: ${{ steps.filter.outputs.cmake }}
       css: ${{ steps.filter.outputs.css }}
       dockerfile: ${{ steps.filter.outputs.dockerfile }}
@@ -1301,6 +1304,7 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-aerospace == 'true' }}
       # Applications
       bluesky: ${{ needs.detect-changes.outputs.bluesky == 'true' }}
+      camera-radar-fusion: ${{ needs.detect-changes.outputs.camera-radar-fusion == 'true' }}
       flightradar24: ${{ needs.detect-changes.outputs.flightradar24 == 'true' }}
       hm-aerosandbox: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
       hm-openaerostruct: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
