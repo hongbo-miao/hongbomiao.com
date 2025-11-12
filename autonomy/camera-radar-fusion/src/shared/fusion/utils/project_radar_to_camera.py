@@ -19,7 +19,7 @@ def project_radar_to_camera(
 
     """
     if radar_points.shape[0] == 0:
-        return np.array([])
+        return np.empty((0, 2))
 
     # Convert to homogeneous coordinates
     radar_points_homogeneous = np.hstack(
@@ -32,7 +32,7 @@ def project_radar_to_camera(
     # Filter points behind camera
     valid_mask = camera_points[:, 2] > 0
     if not np.any(valid_mask):
-        return np.array([])
+        return np.empty((0, 2))
 
     camera_points = camera_points[valid_mask]
 

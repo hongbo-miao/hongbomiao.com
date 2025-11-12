@@ -3,10 +3,14 @@ from pathlib import Path
 
 import cv2
 import numpy as np
+from config import config
 from nuscenes.nuscenes import NuScenes
 from scipy.spatial.transform import Rotation
-from shared.constants.colors import COLOR_RADAR
+from shared.constants.colors import COLOR_BLACK, COLOR_BLUE, COLOR_GREEN, COLOR_YELLOW
 from shared.fusion.services.fuse_camera_radar import fuse_camera_radar
+from shared.fusion.utils.convert_nuscenes_quaternion_to_scipy import (
+    convert_nuscenes_quaternion_to_scipy,
+)
 from shared.fusion.utils.project_radar_to_camera import project_radar_to_camera
 from shared.radar.services.load_radar_data import load_radar_data
 from ultralytics import YOLO
@@ -16,25 +20,25 @@ logger = logging.getLogger(__name__)
 
 def visualize_camera_radar_fusion(
     nuscenes_instance: NuScenes,
-    scene_index: int = 0,
-    max_frames: int = 100,
+    nuscenes_scene_index: int,
+    visualization_frame_count: int,
 ) -> None:
     """
     Visualize camera-radar fusion for a nuScenes scene.
 
     Args:
         nuscenes_instance: NuScenes dataset instance
-        scene_index: Index of scene to visualize (0-9 for mini dataset)
-        max_frames: Maximum number of frames to process
+        nuscenes_scene_index: Index of scene to visualize (0-9 for mini dataset)
+        visualization_frame_count: Maximum number of frames to process
 
     """
     # Load YOLO model for camera object detection
     logger.info("Loading YOLO model...")
-    yolo_model = YOLO(Path("data/yolo12m.pt"))
+    yolo_model = YOLO(Path(config.YOLO_MODEL_PATH))
     logger.info("YOLO model loaded")
 
     # Get scene
-    scene = nuscenes_instance.scene[scene_index]
+    scene = nuscenes_instance.scene[nuscenes_scene_index]
     logger.info(
         f"Processing scene: {scene['name']}, Description: {scene['description']}",
     )
@@ -43,7 +47,7 @@ def visualize_camera_radar_fusion(
     sample_token = scene["first_sample_token"]
 
     frame_count = 0
-    while sample_token != "" and frame_count < max_frames:
+    while sample_token != "" and frame_count < visualization_frame_count:
         sample = nuscenes_instance.get("sample", sample_token)
 
         # Get front camera data
@@ -83,28 +87,18 @@ def visualize_camera_radar_fusion(
         # Build transformation matrix from radar to camera
         # First: radar -> vehicle, then: vehicle -> camera
         radar_to_vehicle = np.eye(4)
-        # nuScenes stores quaternions as [w, x, y, z], scipy expects [x, y, z, w]
-        radar_quaternion = radar_calibration["rotation"]
-        radar_quaternion_scipy = [
-            radar_quaternion[1],
-            radar_quaternion[2],
-            radar_quaternion[3],
-            radar_quaternion[0],
-        ]
+        radar_quaternion_scipy = convert_nuscenes_quaternion_to_scipy(
+            radar_calibration["rotation"],
+        )
         radar_rotation = Rotation.from_quat(radar_quaternion_scipy)
         radar_to_vehicle[:3, :3] = radar_rotation.as_matrix()
         radar_to_vehicle[:3, 3] = np.array(radar_calibration["translation"])
 
         # Build camera to vehicle transformation (then invert to get vehicle to camera)
         camera_to_vehicle = np.eye(4)
-        # nuScenes stores quaternions as [w, x, y, z], scipy expects [x, y, z, w]
-        camera_quaternion = camera_calibration["rotation"]
-        camera_quaternion_scipy = [
-            camera_quaternion[1],
-            camera_quaternion[2],
-            camera_quaternion[3],
-            camera_quaternion[0],
-        ]
+        camera_quaternion_scipy = convert_nuscenes_quaternion_to_scipy(
+            camera_calibration["rotation"],
+        )
         camera_rotation = Rotation.from_quat(camera_quaternion_scipy)
         camera_to_vehicle[:3, :3] = camera_rotation.as_matrix()
         camera_to_vehicle[:3, 3] = np.array(camera_calibration["translation"])
@@ -142,8 +136,8 @@ def visualize_camera_radar_fusion(
         for track in fused_tracks:
             x1, y1, x2, y2 = track.bounding_box.astype(int)
 
-            # Green bounding box for fused tracks
-            cv2.rectangle(visualization, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            # Bounding box for fused tracks
+            cv2.rectangle(visualization, (x1, y1), (x2, y2), COLOR_GREEN, 2)
 
             # Label with class, distance, and velocity
             label = f"{track.class_name} {track.distance:.1f}m"
@@ -161,7 +155,7 @@ def visualize_camera_radar_fusion(
                 visualization,
                 (x1, y1 - text_size[1] - 4),
                 (x1 + text_size[0], y1),
-                (0, 255, 0),
+                COLOR_GREEN,
                 -1,
             )
 
@@ -172,21 +166,21 @@ def visualize_camera_radar_fusion(
                 (x1, y1 - 2),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.5,
-                (0, 0, 0),
+                COLOR_BLACK,
                 1,
             )
 
             # Draw center point
             center_x = int(track.image_coordinate_x)
             center_y = int(track.image_coordinate_y)
-            cv2.circle(visualization, (center_x, center_y), 5, (0, 255, 0), -1)
+            cv2.circle(visualization, (center_x, center_y), 5, COLOR_GREEN, -1)
 
         # Draw unmatched camera detections (blue bounding boxes)
         for camera_detection in unmatched_camera:
             x1, y1, x2, y2 = camera_detection.bounding_box.astype(int)
 
             # Blue bounding box for camera-only detections
-            cv2.rectangle(visualization, (x1, y1), (x2, y2), (255, 0, 0), 2)
+            cv2.rectangle(visualization, (x1, y1), (x2, y2), COLOR_BLUE, 2)
 
             label = f"{camera_detection.class_name} (cam only)"
 
@@ -197,7 +191,7 @@ def visualize_camera_radar_fusion(
                 (x1, y1 - 5),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.4,
-                (255, 0, 0),
+                COLOR_BLUE,
                 1,
             )
 
@@ -216,7 +210,7 @@ def visualize_camera_radar_fusion(
                     3,
                     min(10, int(radar_detection.radar_cross_section / 10)),
                 )
-                cv2.circle(visualization, (pixel_x, pixel_y), radius, COLOR_RADAR, -1)
+                cv2.circle(visualization, (pixel_x, pixel_y), radius, COLOR_YELLOW, -1)
 
                 # Draw distance
                 cv2.putText(
@@ -225,7 +219,7 @@ def visualize_camera_radar_fusion(
                     (pixel_x + 8, pixel_y - 8),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.4,
-                    COLOR_RADAR,
+                    COLOR_YELLOW,
                     1,
                 )
 

@@ -75,27 +75,29 @@ def fuse_camera_radar(
 
     # Step 4: Create fused tracks
     fused_tracks = []
-    matched_camera_set = set()
-    matched_radar_set = set()
+    matched_camera_indices = set()
+    matched_radar_indices = set()
 
-    for camera_detection, radar_detection in matched_pairs:
+    for camera_index, radar_index in matched_pairs:
+        camera_detection = camera_detections[camera_index]
+        radar_detection = radar_detections[radar_index]
         track = create_fused_track(camera_detection, radar_detection)
         fused_tracks.append(track)
 
-        matched_camera_set.add(id(camera_detection))
-        matched_radar_set.add(id(radar_detection))
+        matched_camera_indices.add(camera_index)
+        matched_radar_indices.add(radar_index)
 
     # Separate unmatched detections
     unmatched_camera_detections = [
         detection
-        for detection in camera_detections
-        if id(detection) not in matched_camera_set
+        for index, detection in enumerate(camera_detections)
+        if index not in matched_camera_indices
     ]
 
     unmatched_radar_detections = [
         detection
-        for detection in radar_detections
-        if id(detection) not in matched_radar_set
+        for index, detection in enumerate(radar_detections)
+        if index not in matched_radar_indices
     ]
 
     logger.info(
