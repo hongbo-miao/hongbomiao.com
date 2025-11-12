@@ -97,7 +97,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **Tuist** - Xcode project generation and management tool
 - **SwiftUI** - UI framework
-- **MLXLLM** - Large language model (LLM) framework
+- **MLX Swift LM** - Large language model (LLM) and vision language model (VLM) inference and fine-tuning framework
 - **WhisperKit** - Speech-to-text (STT) framework
 - **kokoro-ios** - Text-to-speech (TTS) framework
 - **XCTest** - Unit testing, performance testing
@@ -181,7 +181,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### API Server - Python
 
 - **FastAPI** - Web framework
-- **PydanticAI** - LLM agent framework
+- **PydanticAI** - Large language model (LLM) agent framework
 - **openai** - OpenAI API library
 - **Mem0** - Memory layer
 - **Sentence Transformers** - Sentence embedding
@@ -550,35 +550,35 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Embedding
   - **ImageBind** - Multimodal embedding model for images, text, audio, video, depth, thermal, and inertial measurement units (IMUs)
   - **OpenCLIP** - Multimodal embedding model for images and text
-- LLM Training
+- Large Language Model (LLM) Training
   - **Automatic Mixed Precision** - Mixed precision FP16/FP32 training
-- LLM Post-Training
+- Large Language Model (LLM) Post-Training
   - Fine-Tuning
-    - **SWIFT** - LLM fine-tuning
-    - **Unsloth** - LLM fine-tuning
-    - **LLaMA-Factory** - LLM fine-tuning
-    - **torchtune** - LLM fine-tuning
-    - **Axolotl** - LLM fine-tuning
+    - **SWIFT** - Large language model (LLM) fine-tuning
+    - **Unsloth** - Large language model (LLM) fine-tuning
+    - **LLaMA-Factory** - Large language model (LLM) fine-tuning
+    - **torchtune** - Large language model (LLM) fine-tuning
+    - **Axolotl** - Large language model (LLM) fine-tuning
   - Quantization
     - **torchao** - Quantization and sparsification
-- LLM Inference
-  - **GPT4All** - Local LLM inference
-  - **Ollama** - Local LLM inference
-  - **llama.cpp** - High-performance LLM inference in C/C++
-  - **MLX LM** - LLM inference for Apple silicon
-  - **vLLM** - High-throughput LLM inference
-  - **SGLang** - High-throughput LLM and VLM inference
+- Large Language Model (LLM) Inference
+  - **GPT4All** - Local large language model (LLM) inference
+  - **Ollama** - Local large language model (LLM) inference
+  - **llama.cpp** - High-performance large language model (LLM) inference in C/C++
+  - **MLX LM** - Large language model (LLM) inference for Apple silicon
+  - **vLLM** - High-throughput large language model (LLM) inference
+  - **SGLang** - High-throughput large language model (LLM) and vision language model (VLM) inference
   - **KV Caching** - Memory optimization technique caching key/value pairs from self-attention to accelerate auto-regressive decoding
   - **Speculative Decoding** - Acceleration technique using draft models
-- LLM Evaluation
-  - **DeepEval** - LLM evaluation framework
-- LLM Gateway
-  - **LiteLLM** - LLM gateway
-- LLM Application
-  - **PydanticAI** - LLM agent framework
-  - **LangGraph** - LLM workflow library
-  - **LangChain** - LLM application framework
-  - **LlamaIndex** - LLM data framework
+- Large Language Model (LLM) Evaluation
+  - **DeepEval** - Large language model (LLM) evaluation framework
+- Large Language Model (LLM) Gateway
+  - **LiteLLM** - Large language model (LLM) gateway
+- Large Language Model (LLM) Application
+  - **PydanticAI** - Large language model (LLM) agent framework
+  - **LangGraph** - Large language model (LLM) workflow library
+  - **LangChain** - Large language model (LLM) application framework
+  - **LlamaIndex** - Large language model (LLM) data framework
 - AI Chat Interface
   - **Open WebUI** - AI chat interface
     - **Open WebUI Pipelines** - OpenAI API plugin framework
