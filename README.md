@@ -627,7 +627,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **OpenCV** - Computer vision library
 - **supervision** - Computer vision library
-- **Ultralytics YOLOv8** - Object detection model
+- **Ultralytics YOLOv12** - Object detection model
 - **DINOv3** - Self-supervised vision transformer (ViT) model
 - **Open3D** - 3D data processing
 - **PyVista** - 3D plotting and mesh analysis
@@ -1118,29 +1118,25 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 # 🏞 Highlight
 
-## Simulation
+## Autonomy
+
+### Camera-Radar Fusion
+
+![Camera-radar fusion screenshot](https://github.com/user-attachments/assets/d717dcf4-1bbe-46a1-b367-52dc6d51e325)
+
+### MATLAB Automated Driving Toolbox - ADAS and Autonomous Driving Systems Design, Simulation, and Testing
+
+![MATLAB automated driving toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/687b55f2-145e-4197-a213-ac2c51f113d4)
+
+### MATLAB Lidar Toolbox - Lidar Processing Systems Design, Analysis, and Testing
+
+![MATLAB lidar toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/32796b6c-330d-4da3-9fcb-c3cfd78ca50f)
+
+## Aerospace
 
 ### X-Plane - Flight Simulator
 
 ![X-Plane screenshot](https://github.com/user-attachments/assets/3ee9d6fb-1d44-4039-a6bc-ffa13b7980e4)
-
-### AnyLogic - Simulation Modeling Tool
-
-The following presents a model of a radar-based air defense system. Bombers are dispatched to destroy ground facilities, while the buildings are safeguarded by the air defense system, comprising two radars equipped with guided surface-to-air missiles.
-
-![AnyLogic screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc2c8c2e-8acc-4df5-8a1a-fdf1da7c6f43)
-
-### LabVIEW - Graphical Programming Environment
-
-![LabVIEW screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/acf44d58-a3f4-433b-9045-f4d913b05dfd)
-
-### VeriStand - Real-Time Testing and Simulation
-
-![VeriStand screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc7d0c92-7d55-4251-9d39-c53eaac699e2)
-
-### CoppeliaSim - Robot Simulation
-
-![CoppeliaSim screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/e167e2b9-6428-40c2-a1d9-377eb630a991)
 
 ### OpenFOAM - Computational Fluid Dynamics (CFD)
 
@@ -1156,51 +1152,19 @@ OpenFOAM simulation results viewed by ParaView.
 
 ![AeroSandbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/b64356f4-fc8a-4fa8-9b8a-b752f5570b32)
 
-### MATLAB
+#### MATLAB Aerospace Toolbox - Aerospace Vehicle Motion Analysis and Visualization
 
-#### 5G Toolbox - 5G Communications Systems Simulation, Analysis, and Testing
+![MATLAB aerospace toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7f84f5d5-4a85-4bcd-97e3-7c5f853f03c0)
 
-![5G Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/acd927ee-3296-4139-9ea6-1ddcb2cb0e96)
+#### MATLAB Satellite Communications Toolbox - Satellite Communications Systems Simulation
 
-#### Aerospace Toolbox - Aerospace Vehicle Motion Analysis and Visualization
+![MATLAB satellite communications toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/693e5605-de66-4dd4-9ab5-47e713f6dbc1)
 
-![Aerospace Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/7f84f5d5-4a85-4bcd-97e3-7c5f853f03c0)
+### AnyLogic - Simulation Modeling Tool
 
-#### Automated Driving Toolbox - ADAS and Autonomous Driving Systems Design, Simulation, and Testing
+The following presents a model of a radar-based air defense system. Bombers are dispatched to destroy ground facilities, while the buildings are safeguarded by the air defense system, comprising two radars equipped with guided surface-to-air missiles.
 
-![Automated Driving Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/687b55f2-145e-4197-a213-ac2c51f113d4)
-
-#### Bioinformatics Toolbox - Genomic and Proteomic Data Analysis and Visualization
-
-![Bioinformatics Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/cee09bb5-4633-4e81-82c7-d2dbcf99e49b)
-
-#### Lidar Toolbox - Lidar Processing Systems Design, Analysis, and Testing
-
-![Lidar Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/32796b6c-330d-4da3-9fcb-c3cfd78ca50f)
-
-#### Satellite Communications Toolbox - Satellite Communications Systems Simulation
-
-![Satellite Communications Toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/693e5605-de66-4dd4-9ab5-47e713f6dbc1)
-
-#### Simscape - Multidomain Physical Systems Simulation
-
-![Simscape screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
-
-## Embedded System
-
-### ASTERIOS - Real-Time, Safety-Critical Applications Development
-
-![ASTERIOS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/716ac0aa-7087-4507-8a63-619bc7c01e64)
-
-### RTI Connext - Real-Time, Distributed Systems Framework
-
-![RTI Connext screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/3022ac89-a5d6-4bf6-a5cc-f6ad14d74f61)
-
-### ROS - Robot Operating System
-
-![ROS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/4e4ab425-53a1-428d-abb9-408eb48553da)
-
-![ROS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/6728d19c-9f04-4ec9-a603-46fd8ee0e2b0)
+![AnyLogic screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc2c8c2e-8acc-4df5-8a1a-fdf1da7c6f43)
 
 ### PX4 - Flight Control Software
 
@@ -1211,6 +1175,52 @@ OpenFOAM simulation results viewed by ParaView.
 The toroidal propeller allows a small multirotor aircraft to operate more quietly than the ones that use traditional propellers.
 
 ![OpenSCAD screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/00b3e679-66a7-4d9c-8d68-c31c124e0a54)
+
+## Robotics
+
+### CoppeliaSim - Robot Simulation
+
+![CoppeliaSim screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/e167e2b9-6428-40c2-a1d9-377eb630a991)
+
+### ROS - Robot Operating System
+
+![ROS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/4e4ab425-53a1-428d-abb9-408eb48553da)
+
+![ROS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/6728d19c-9f04-4ec9-a603-46fd8ee0e2b0)
+
+## Simulation
+
+### LabVIEW - Graphical Programming Environment
+
+![LabVIEW screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/acf44d58-a3f4-433b-9045-f4d913b05dfd)
+
+### VeriStand - Real-Time Testing and Simulation
+
+![VeriStand screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/dc7d0c92-7d55-4251-9d39-c53eaac699e2)
+
+### MATLAB
+
+#### MATLAB 5G Toolbox - 5G Communications Systems Simulation, Analysis, and Testing
+
+![MATLAB 5G toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/acd927ee-3296-4139-9ea6-1ddcb2cb0e96)
+
+#### MATLAB Bioinformatics Toolbox - Genomic and Proteomic Data Analysis and Visualization
+
+![MATLAB bioinformatics toolbox screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/cee09bb5-4633-4e81-82c7-d2dbcf99e49b)
+
+#### MATLAB Simscape - Multidomain Physical Systems Simulation
+
+![MATLAB Simscape screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/53574809-fe05-46c3-b2fa-633b5516b2e0)
+
+## Embedded System
+
+### ASTERIOS - Real-Time, Safety-Critical Applications Development
+
+![ASTERIOS screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/716ac0aa-7087-4507-8a63-619bc7c01e64)
+
+### RTI Connext - Real-Time, Distributed Systems Framework
+
+![RTI Connext screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/3022ac89-a5d6-4bf6-a5cc-f6ad14d74f61)
 
 ### VHDL - Hardware Description Language
 
