@@ -1,6 +1,7 @@
 import logging
 from pathlib import Path
 
+from config import config
 from nuscenes.nuscenes import NuScenes
 from shared.fusion.services.visualize_camera_radar_fusion import (
     visualize_camera_radar_fusion,
@@ -10,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    dataset_path = Path("data/v1.0-mini")
+    dataset_path = Path(config.NUSCENES_DATASET_PATH)
 
     if not dataset_path.exists():
         logger.error(f"nuScenes dataset not found at {dataset_path}")
@@ -19,7 +20,7 @@ def main() -> None:
     # Load dataset
     logger.info(f"Loading nuScenes dataset from {dataset_path}")
     nuscenes_instance = NuScenes(
-        version="v1.0-mini",
+        version=config.NUSCENES_VERSION,
         dataroot=str(dataset_path),
         verbose=True,
     )
@@ -27,8 +28,12 @@ def main() -> None:
     logger.info(f"Dataset loaded: {len(nuscenes_instance.scene)} scenes available")
     logger.info("Controls: 'q' = quit, 'space' = pause")
 
-    # Visualize first scene
-    visualize_camera_radar_fusion(nuscenes_instance, scene_index=0, max_frames=100)
+    # Visualize scene
+    visualize_camera_radar_fusion(
+        nuscenes_instance,
+        nuscenes_scene_index=config.NUSCENES_SCENE_INDEX,
+        visualization_frame_count=config.VISUALIZATION_FRAME_COUNT,
+    )
 
 
 if __name__ == "__main__":
