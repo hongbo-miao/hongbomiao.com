@@ -59,6 +59,6 @@ if __name__ == "__main__":
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
     data_dir_path = Path("data")
-    external_model_path = data_dir_path / Path("yolov8x.pt")
+    external_model_path = data_dir_path / Path("yolo12n.pt")
     external_image_path = data_dir_path / Path("image.jpg")
     main(external_model_path, external_image_path)
