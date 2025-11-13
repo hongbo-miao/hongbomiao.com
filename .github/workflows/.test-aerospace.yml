@@ -9,7 +9,10 @@ name: . Test Aerospace
         required: true
         type: boolean
       # Applications
-      camera-radar-fusion:
+      camera-radar-fusion-python:
+        required: true
+        type: boolean
+      camera-radar-fusion-rust:
         required: true
         type: boolean
       flightradar24:
@@ -230,9 +233,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: aerospace/x-plane/udp
 
-  camera-radar-fusion-test:
-    name: Camera-Radar Fusion | Test
-    if: ${{ inputs.workflow || inputs.camera-radar-fusion }}
+  camera-radar-fusion-python-test:
+    name: Camera-Radar Fusion (Python) | Test
+    if: ${{ inputs.workflow || inputs.camera-radar-fusion-python }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -243,17 +246,17 @@ jobs:
         with:
           version: 0.9.8
           enable-cache: true
-          cache-dependency-glob: autonomy/camera-radar-fusion/uv.lock
+          cache-dependency-glob: autonomy/camera-radar-fusion-python/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: autonomy/camera-radar-fusion/.python-version
+          python-version-file: autonomy/camera-radar-fusion-python/.python-version
       - name: Install dependencies
-        working-directory: autonomy/camera-radar-fusion
+        working-directory: autonomy/camera-radar-fusion-python
         run: |
           uv sync --dev
       - name: Test
-        working-directory: autonomy/camera-radar-fusion
+        working-directory: autonomy/camera-radar-fusion-python
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -261,4 +264,30 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: autonomy/camera-radar-fusion
+          directory: autonomy/camera-radar-fusion-python
+
+  camera-radar-fusion-rust-test:
+    name: Camera-Radar Fusion (Rust) | Test
+    if: ${{ inputs.workflow || inputs.camera-radar-fusion-rust }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
+        with:
+          cache: true
+          rust-src-dir: autonomy/camera-radar-fusion-rust
+      - name: Set up
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes clang libclang-dev libopencv-dev
+      - name: Install dependencies
+        working-directory: autonomy/camera-radar-fusion-rust
+        run: |
+          cargo build
+      - name: Test
+        working-directory: autonomy/camera-radar-fusion-rust
+        run: |
+          cargo test --all-features

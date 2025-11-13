@@ -11,17 +11,17 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    dataset_path = Path(config.NUSCENES_DATASET_PATH)
+    nuscenes_dataset_directory_path = Path(config.NUSCENES_DATASET_DIRECTORY_PATH)
 
-    if not dataset_path.exists():
-        logger.error(f"nuScenes dataset not found at {dataset_path}")
+    if not nuscenes_dataset_directory_path.exists():
+        logger.error(f"nuScenes dataset not found at {nuscenes_dataset_directory_path}")
         return
 
     # Load dataset
-    logger.info(f"Loading nuScenes dataset from {dataset_path}")
+    logger.info(f"Loading nuScenes dataset from {nuscenes_dataset_directory_path}")
     nuscenes_instance = NuScenes(
         version=config.NUSCENES_VERSION,
-        dataroot=str(dataset_path),
+        dataroot=nuscenes_dataset_directory_path,
         verbose=True,
     )
 
