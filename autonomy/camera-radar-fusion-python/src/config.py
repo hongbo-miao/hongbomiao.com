@@ -18,7 +18,7 @@ def get_env_files() -> list[str]:
 class Config(BaseSettings):
     ENV: str
     MOVEMENT_VELOCITY_THRESHOLD_MPS: float
-    NUSCENES_DATASET_PATH: str
+    NUSCENES_DATASET_DIRECTORY_PATH: str
     NUSCENES_VERSION: str
     NUSCENES_SCENE_INDEX: int
     VISUALIZATION_FRAME_COUNT: int

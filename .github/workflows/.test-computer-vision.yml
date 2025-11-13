@@ -12,6 +12,9 @@ name: . Test Computer Vision
       dinov3:
         required: true
         type: boolean
+      export-yolo-to-onnx:
+        required: true
+        type: boolean
       hm-open3d:
         required: true
         type: boolean
@@ -88,6 +91,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: computer-vision/dinov3
+
+  export-yolo-to-onnx-test:
+    name: Export YOLO to ONNX | Test
+    if: ${{ inputs.workflow || inputs.export-yolo-to-onnx }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.3
+        with:
+          version: 0.9.8
+          enable-cache: true
+          cache-dependency-glob: computer-vision/export-yolo-to-onnx/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: computer-vision/export-yolo-to-onnx/.python-version
+      - name: Install dependencies
+        working-directory: computer-vision/export-yolo-to-onnx
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: computer-vision/export-yolo-to-onnx
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: computer-vision/export-yolo-to-onnx
 
   open3d-test:
     name: Open3D | Test
