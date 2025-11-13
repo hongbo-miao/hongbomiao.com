@@ -271,8 +271,10 @@ jobs:
               - 'tokenization/byte-pair-encoding/**'
             call-matlab-function-in-python:
               - 'matlab/call-matlab-function-in-python/**'
-            camera-radar-fusion:
-              - 'autonomy/camera-radar-fusion/**'
+            camera-radar-fusion-python:
+              - 'autonomy/camera-radar-fusion-python/**'
+            camera-radar-fusion-rust:
+              - 'autonomy/camera-radar-fusion-rust/**'
             decode-can-blf-data:
               - 'embedded-system/decode-can-blf-data/**'
             decode-can-mf4-data:
@@ -306,6 +308,8 @@ jobs:
               - 'data-storage/delta-lake/write-to-delta-lake/**'
             dinov3:
               - 'computer-vision/dinov3/**'
+            export-yolo-to-onnx:
+              - 'computer-vision/export-yolo-to-onnx/**'
             feature-store:
               - 'machine-learning/feature-store/**'
             fine-tune-whisper:
@@ -648,7 +652,8 @@ jobs:
       # Languages
       ansible: ${{ steps.filter.outputs.ansible }}
       c-cpp: ${{ steps.filter.outputs.c-cpp }}
-      camera-radar-fusion: ${{ steps.filter.outputs.camera-radar-fusion }}
+      camera-radar-fusion-python: ${{ steps.filter.outputs.camera-radar-fusion-python }}
+      camera-radar-fusion-rust: ${{ steps.filter.outputs.camera-radar-fusion-rust }}
       cmake: ${{ steps.filter.outputs.cmake }}
       css: ${{ steps.filter.outputs.css }}
       dockerfile: ${{ steps.filter.outputs.dockerfile }}
@@ -701,6 +706,7 @@ jobs:
       dust-dds-publisher: ${{ steps.filter.outputs.dust-dds-publisher }}
       dust-dds-subscriber: ${{ steps.filter.outputs.dust-dds-subscriber }}
       ethereum: ${{ steps.filter.outputs.ethereum }}
+      export-yolo-to-onnx: ${{ steps.filter.outputs.export-yolo-to-onnx }}
       feature-store: ${{ steps.filter.outputs.feature-store }}
       fine-tune-whisper: ${{ steps.filter.outputs.fine-tune-whisper }}
       flightradar24: ${{ steps.filter.outputs.flightradar24 }}
@@ -1233,6 +1239,7 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-computer-vision == 'true' }}
       # Applications
       dinov3: ${{ needs.detect-changes.outputs.dinov3 == 'true' }}
+      export-yolo-to-onnx: ${{ needs.detect-changes.outputs.export-yolo-to-onnx == 'true' }}
       hm-open3d: ${{ needs.detect-changes.outputs.hm-open3d == 'true' }}
       hm-pyvista-mount-saint-helens: ${{ needs.detect-changes.outputs.hm-pyvista-mount-saint-helens == 'true' }}
       hm-supervision-detect-objects: ${{ needs.detect-changes.outputs.hm-supervision-detect-objects == 'true' }}
@@ -1304,7 +1311,8 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-aerospace == 'true' }}
       # Applications
       bluesky: ${{ needs.detect-changes.outputs.bluesky == 'true' }}
-      camera-radar-fusion: ${{ needs.detect-changes.outputs.camera-radar-fusion == 'true' }}
+      camera-radar-fusion-python: ${{ needs.detect-changes.outputs.camera-radar-fusion-python == 'true' }}
+      camera-radar-fusion-rust: ${{ needs.detect-changes.outputs.camera-radar-fusion-rust == 'true' }}
       flightradar24: ${{ needs.detect-changes.outputs.flightradar24 == 'true' }}
       hm-aerosandbox: ${{ needs.detect-changes.outputs.hm-aerosandbox == 'true' }}
       hm-openaerostruct: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}

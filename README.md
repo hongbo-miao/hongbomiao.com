@@ -144,6 +144,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **PyO3** - Rust bindings to the Python interpreter
 - **ort** - ONNX Runtime
 - **opencv-rust** - OpenCV bindings
+- **flate2** - DEFLATE, Gzip, and Zlib compression and decompression library
+- **ndarray** - N-dimensional array library
+- **nalgebra** - Linear algebra library
 - **async-openai** - OpenAI API library
 - **Hound** - WAV file encoding and decoding
 - **flacenc-rs** - FLAC encoding
@@ -1126,7 +1129,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Camera-Radar Fusion
 
-![Camera-radar fusion screenshot](https://github.com/user-attachments/assets/d717dcf4-1bbe-46a1-b367-52dc6d51e325)
+![Camera-radar fusion screenshot](https://github.com/user-attachments/assets/73f74bbe-8bff-464c-922c-b10ec6a57c9d)
 
 ### MATLAB Automated Driving Toolbox - ADAS and Autonomous Driving Systems Design, Simulation, and Testing
 
