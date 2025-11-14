@@ -2,7 +2,7 @@ use crate::config::AppConfig;
 use crate::shared::camera::services::detect_objects_in_camera::{
     YoloModel, detect_objects_in_camera,
 };
-use crate::shared::constants::colors::{
+use crate::shared::fusion::constants::colors::{
     COLOR_BLACK_SCALAR, COLOR_BLUE_SCALAR, COLOR_GREEN_SCALAR, COLOR_YELLOW_SCALAR,
 };
 use crate::shared::fusion::services::fuse_camera_radar::fuse_camera_radar;
