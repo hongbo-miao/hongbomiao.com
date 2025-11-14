@@ -643,7 +643,7 @@ jobs:
         with:
           cache: true
           rust-src-dir: data-processing/nats/audio-stream-transcriber
-      - name: Set up
+      - name: Install system dependencies
         uses: awalsh128/cache-apt-pkgs-action@v1.6.0
         with:
           # capnproto is for capnp
@@ -671,7 +671,7 @@ jobs:
         with:
           cache: true
           rust-src-dir: data-processing/nats/nats-postgres-bridge
-      - name: Set up
+      - name: Install system dependencies
         uses: awalsh128/cache-apt-pkgs-action@v1.6.0
         with:
           # capnproto is for capnp
