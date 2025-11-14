@@ -16,6 +16,9 @@ pub mod radar {
     }
 }
 pub mod fusion {
+    pub mod constants {
+        pub mod colors;
+    }
     pub mod types {
         pub mod fused_track;
     }
@@ -30,7 +33,4 @@ pub mod fusion {
         pub mod fuse_camera_radar;
         pub mod visualize_camera_radar_fusion;
     }
-}
-pub mod constants {
-    pub mod colors;
 }
