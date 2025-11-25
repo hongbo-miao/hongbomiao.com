@@ -400,7 +400,7 @@ lint-sql-fix:
     uv run poe lint-sql-fix --dialect=postgres kubernetes/data/postgres/opa_db/migrations
     uv run poe lint-sql-fix --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
     uv run poe lint-sql-fix --dialect=snowflake data-storage/snowflake/queries
-    uv run poe lint-sql-fix --dialect=sparksql queries
+    uv run poe lint-sql-fix --dialect=sparksql data-storage/delta-lake/queries
     uv run poe lint-sql-fix --dialect=sqlite data-storage/sqlite/queries
     uv run poe lint-sql-fix --dialect=trino data-processing/trino/queries
     uv run poe lint-sql-fix --dialect=tsql data-storage/microsoft-sql-server/queries
