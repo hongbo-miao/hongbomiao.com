@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+
 	"github.com/buger/jsonparser"
 	"github.com/dgraph-io/dgo/v230"
 	"github.com/dgraph-io/dgo/v230/protos/api"
@@ -39,10 +40,10 @@ func VerifyPassword(uid string, password string) (bool, error) {
 	}(txn, ctx)
 
 	q := `query VerifyPassword($uid: string, $password: string) {
-	  verifyPassword(func: uid($uid)) {
-        checkpwd(password, $password)
-	  }
-    }`
+		verifyPassword(func: uid($uid)) {
+			checkpwd(password, $password)
+		}
+	}`
 	req := &api.Request{
 		Query: q,
 		Vars: map[string]string{

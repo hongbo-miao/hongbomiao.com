@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+
 	"github.com/buger/jsonparser"
 	"github.com/dgraph-io/dgo/v230"
 	"github.com/dgraph-io/dgo/v230/protos/api"
@@ -48,13 +49,13 @@ func GetMe(id string) (*Me, error) {
 	}(txn, ctx)
 
 	q := `query Me($uid: string) {
-	  me(func: uid($uid)) {
-		name
-		age
-		email
-		roles
-	  }
-    }`
+		me(func: uid($uid)) {
+			name
+			age
+			email
+			roles
+		}
+	}`
 	req := &api.Request{
 		Query: q,
 		Vars:  map[string]string{"$uid": id},
