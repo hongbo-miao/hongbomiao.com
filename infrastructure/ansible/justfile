@@ -17,14 +17,14 @@ lint-ansible:
 # Ansible Vault
 encrypt-string:
     uv run ansible-vault encrypt_string 'xxx' \
-    	--vault-password-file=secrets/.ansible_vault_pass
+        --vault-password-file=secrets/.ansible_vault_pass
 
 decrypt-string:
     echo '$ANSIBLE_VAULT;1.1;AES256 xxx' | tr -d ' ' | uv run ansible-vault decrypt && echo
 
 deploy-hm-macos-group:
     uv run poe deploy-hm-macos-group \
-    	--vault-password-file=secrets/.ansible_vault_pass
+        --vault-password-file=secrets/.ansible_vault_pass
 
 # Ansible
 ansible-galaxy-update:
