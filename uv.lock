@@ -78,6 +78,12 @@ wheels = [
 ]
 
 [[package]]
+name = "editorconfig-checker"
+version = "3.5.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/8e/3c/cba67a671c608e83f0cde15465105c0d4fb6f0b319b6a5344e61a21a21fa/editorconfig_checker-3.5.0.tar.gz", hash = "sha256:249c71b9dca6e288d396b903be9168ddb72eb6b16698aebb394605c8feae2a44", size = 4772, upload-time = "2025-11-22T14:14:00.181Z" }
+
+[[package]]
 name = "fastjsonschema"
 version = "2.21.2"
 source = { registry = "https://pypi.org/simple" }
@@ -95,6 +101,7 @@ source = { virtual = "." }
 dev = [
     { name = "cmakelint", marker = "sys_platform != 'win32'" },
     { name = "cpplint", marker = "sys_platform != 'win32'" },
+    { name = "editorconfig-checker", marker = "sys_platform != 'win32'" },
     { name = "miss-hit", marker = "sys_platform != 'win32'" },
     { name = "mypy", marker = "sys_platform != 'win32'" },
     { name = "nb-clean", marker = "sys_platform != 'win32'" },
@@ -113,6 +120,7 @@ dev = [
 dev = [
     { name = "cmakelint", specifier = "==1.4.3" },
     { name = "cpplint", specifier = "==2.0.2" },
+    { name = "editorconfig-checker", specifier = "==3.5.0" },
     { name = "miss-hit", specifier = "==0.9.44" },
     { name = "mypy", specifier = "==1.18.2" },
     { name = "nb-clean", specifier = "==4.0.1" },

@@ -2,8 +2,8 @@ create or replace function trigger_update_updated_at()
 returns trigger as
 $$
 begin
-  new.updated_at = now();
-  return new;
+    new.updated_at = now();
+    return new;
 end;
 $$ language plpgsql;
 

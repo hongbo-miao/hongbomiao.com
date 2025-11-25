@@ -189,6 +189,9 @@ lint-css-fix:
 lint-dockerfile:
     hadolint $(git ls-files '**/Dockerfile*')
 
+lint-editorconfig:
+    uv run poe lint-editorconfig
+
 lint-html:
     npm run lint-html
 
@@ -371,6 +374,7 @@ lint-sql:
     uv run poe lint-sql --dialect=postgres api/hasura-graphql-engine/seeds
     uv run poe lint-sql --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
     uv run poe lint-sql --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
+    uv run poe lint-sql --dialect=postgres data-storage/hm-pgbackrest/sql
     uv run poe lint-sql --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
     uv run poe lint-sql --dialect=postgres data-storage/timescaledb/motor/migrations
     uv run poe lint-sql --dialect=postgres kubernetes/data/postgres/opa_db/migrations
@@ -390,6 +394,7 @@ lint-sql-fix:
     uv run poe lint-sql-fix --dialect=postgres api/hasura-graphql-engine/seeds
     uv run poe lint-sql-fix --dialect=postgres data-ingestion/airbyte/sources/postgres/production-iot
     uv run poe lint-sql-fix --dialect=postgres data-processing/flink/applications/stream-tweets/migrations
+    uv run poe lint-sql-fix --dialect=postgres data-storage/hm-pgbackrest/sql
     uv run poe lint-sql-fix --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
     uv run poe lint-sql-fix --dialect=postgres data-storage/timescaledb/motor/migrations
     uv run poe lint-sql-fix --dialect=postgres kubernetes/data/postgres/opa_db/migrations
