@@ -6,6 +6,7 @@ version = "1.0.0"
 dev = [
   "cmakelint==1.4.3",
   "cpplint==2.0.2",
+  "editorconfig-checker==3.5.0",
   "miss-hit==0.9.44",
   "mypy==1.18.2",
   "nb-clean==4.0.1",
@@ -28,6 +29,7 @@ clean-jupyter-notebook = { shell = "nb-clean clean $(git ls-files '**/*.ipynb')"
 sqlfluff-list-dialects = "sqlfluff dialects"
 lint-c-cpp-cpplint = "cpplint"
 lint-cmake = { shell = "cmakelint $(git ls-files '**/CMakeLists.txt')" }
+lint-editorconfig = "ec"
 lint-justfile = { shell = "git ls-files '**/justfile' justfile | xargs --verbose -I {} just --fmt --check --unstable --justfile={}" }
 lint-justfile-fix = { shell = "git ls-files '**/justfile' justfile | xargs --verbose -I {} just --fmt --unstable --justfile={}" }
 lint-matlab = { shell = "mh_style $(git ls-files '**/*.m')" }
@@ -35,7 +37,7 @@ lint-matlab-fix = { shell = "mh_style --fix $(git ls-files '**/*.m')" }
 lint-python = { shell = "ruff check && ruff format --check" }
 lint-python-fix = { shell = "ruff check --fix --unsafe-fixes && ruff format" }
 lint-sql = "sqlfluff lint"
-lint-sql-fix = "sqlfluff fix --force"
+lint-sql-fix = "sqlfluff fix"
 lint-vhdl = { shell = "vsg --filename $(git ls-files '**/*.vhd')" }
 lint-vhdl-fix = { shell = "vsg --filename $(git ls-files '**/*.vhd') --fix" }
 lint-yaml = "yamllint ."

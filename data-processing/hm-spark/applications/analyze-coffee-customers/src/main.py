@@ -39,9 +39,9 @@ def main() -> None:
     df = sedona.sql(
         """
         select
-          points1.point as point1,
-          points2.point as point2,
-          st_distance(points1.point, points2.point) as distance
+            points1.point as point1,
+            points2.point as point2,
+            st_distance(points1.point, points2.point) as distance
         from points1, points2
         where 0.0 < st_distance(points1.point, points2.point) and st_distance(points1.point, points2.point) < 2.0
         order by distance asc

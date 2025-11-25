@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+
 	"github.com/buger/jsonparser"
 	"github.com/dgraph-io/dgo/v230"
 	"github.com/dgraph-io/dgo/v230/protos/api"
@@ -40,11 +41,11 @@ func GetUserByEmail(email string) (*types.User, error) {
 	}(txn, ctx)
 
 	q := `query user($email: string) {
-	  user(func: eq(email, $email)) {
-		uid
-		name
-	  }
-    }`
+		user(func: eq(email, $email)) {
+			uid
+			name
+		}
+	}`
 	req := &api.Request{
 		Query: q,
 		Vars:  map[string]string{"$email": email},

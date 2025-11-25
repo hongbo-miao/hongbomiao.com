@@ -32,8 +32,8 @@ class LatticeBoltzmannSolver:
     :param grid_size_y: Number of grid points along the y-axis
     :param kinematic_viscosity: Fluid's kinematic viscosity, determines the Reynolds number
     :param boundary_types: Boundary conditions for [left, top, right, bottom] walls.
-                         0: Dirichlet boundary (fixed velocity),
-                         1: Neumann boundary (zero gradient)
+        0: Dirichlet boundary (fixed velocity),
+        1: Neumann boundary (zero gradient)
     :param boundary_values: Velocity values for Dirichlet boundaries
     :param has_cylinder: Flag to include a cylindrical obstacle (0: no, 1: yes), defaults to 0
     :param cylinder_params: Cylinder parameters [center_x, center_y, radius], defaults to [0.0, 0.0, 0.0]

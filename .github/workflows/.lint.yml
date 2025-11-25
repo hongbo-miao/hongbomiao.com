@@ -24,6 +24,9 @@ name: . Lint
       dockerfile:
         required: true
         type: boolean
+      editorconfig:
+        required: true
+        type: boolean
       html:
         required: true
         type: boolean
@@ -315,6 +318,31 @@ jobs:
         uses: jbergstroem/hadolint-gh-action@v1.13.0
         with:
           dockerfile: '**/Dockerfile*'
+
+  lint-editorconfig:
+    name: EditorConfig
+    if: ${{ inputs.workflow || inputs.editorconfig }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.3
+        with:
+          version: 0.9.8
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.0.0
+        with:
+          python-version-file: .python-version
+      - name: Install dependencies
+        run: |
+          uv sync --dev
+      - name: Lint EditorConfig
+        run: |
+          uv run poe lint-editorconfig
 
   lint-go-api-go:
     name: Go (api-go)
