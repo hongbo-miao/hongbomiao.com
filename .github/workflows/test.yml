@@ -97,6 +97,10 @@ jobs:
             dockerfile:
               - '**/Dockerfile*'
               - '.hadolint.yaml'
+            editorconfig:
+              - '**/*'
+              - '.editorconfig'
+              - '.editorconfig-checker.json'
             html:
               - '**/*.html'
               - '.node-version'
@@ -657,6 +661,7 @@ jobs:
       cmake: ${{ steps.filter.outputs.cmake }}
       css: ${{ steps.filter.outputs.css }}
       dockerfile: ${{ steps.filter.outputs.dockerfile }}
+      editorconfig: ${{ steps.filter.outputs.editorconfig }}
       html: ${{ steps.filter.outputs.html }}
       json: ${{ steps.filter.outputs.json }}
       justfile: ${{ steps.filter.outputs.justfile }}
@@ -881,6 +886,7 @@ jobs:
       cmake: ${{ needs.detect-changes.outputs.cmake == 'true' }}
       css: ${{ needs.detect-changes.outputs.css == 'true' }}
       dockerfile: ${{ needs.detect-changes.outputs.dockerfile == 'true' }}
+      editorconfig: ${{ needs.detect-changes.outputs.editorconfig == 'true' }}
       html: ${{ needs.detect-changes.outputs.html == 'true' }}
       json: ${{ needs.detect-changes.outputs.json == 'true' }}
       justfile: ${{ needs.detect-changes.outputs.justfile == 'true' }}

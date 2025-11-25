@@ -8,7 +8,7 @@ create schema monitor;
 
 -- Get pgBackRest info in JSON format
 create function monitor.pgbackrest_info()
-    returns jsonb AS $$
+returns jsonb as $$
 declare
     data jsonb;
 begin
@@ -21,8 +21,8 @@ begin
             'pgbackrest --output=json info' (format text);
 
     select replace(temp_pgbackrest_data.data, E'\n', '\n')::jsonb
-      into data
-      from temp_pgbackrest_data;
+        into data
+        from temp_pgbackrest_data;
 
     drop table temp_pgbackrest_data;
 

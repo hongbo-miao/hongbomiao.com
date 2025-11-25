@@ -4,40 +4,40 @@
       - name: OPALClient
         query: |
           query OPALClient {
-          	opal_client {
-          		id
-          		name
-          		created_at
-          		updated_at
-          	}
+            opal_client {
+              id
+              name
+              created_at
+              updated_at
+            }
           }
       - name: OPALClientCount
         query: |
           query OPALClientCount {
-          	opal_client_aggregate {
-          		aggregate {
-          			count
-          		}
-          	}
+            opal_client_aggregate {
+              aggregate {
+                count
+              }
+            }
           }
       - name: CurrentTime
         query: |
           query CurrentTime {
-          	currentTime {
-          		now
-          	}
+            currentTime {
+              now
+            }
           }
       - name: Seed
         query: |
           query Seed {
-          	seed {
-          		seedNumber
-          	}
+            seed {
+              seedNumber
+            }
           }
       - name: SetSeed
         query: |
           mutation SetSeed ($n: Int!) {
-          	setSeed(n: $n) {
-          		seedNumber
-          	}
+            setSeed(n: $n) {
+              seedNumber
+            }
           }

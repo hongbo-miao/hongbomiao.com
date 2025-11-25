@@ -865,6 +865,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **commitlint** - Commit message linter
 - **Stylelint** - CSS linter
 - **hadolint** - Dockerfile linter
+- **editorconfig-checker** - EditorConfig linter
 - **gofmt** - Go formatter
 - **golangci-lint** - Go linter
 - **@html-eslint** - HTML linter
