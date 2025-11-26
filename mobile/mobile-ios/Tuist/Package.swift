@@ -18,6 +18,6 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/argmaxinc/WhisperKit", from: "0.15.0"),
     .package(url: "https://github.com/ml-explore/mlx-swift-lm", from: "2.29.2"),
-    .package(url: "https://github.com/mlalma/kokoro-ios", from: "1.0.8"),
+    .package(url: "https://github.com/mlalma/kokoro-ios", from: "1.0.9"),
   ]
 )
