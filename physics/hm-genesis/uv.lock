@@ -460,7 +460,7 @@ wheels = [
 
 [[package]]
 name = "genesis-world"
-version = "0.3.6"
+version = "0.3.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "coacd" },
@@ -489,13 +489,13 @@ dependencies = [
     { name = "rtree" },
     { name = "scikit-image" },
     { name = "scipy" },
-    { name = "tetgen" },
+    { name = "tetgen", marker = "platform_machine != 'aarch64'" },
     { name = "trimesh" },
-    { name = "usd-core" },
+    { name = "vtk" },
     { name = "z3-solver" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c8/f3/05f09d1ea0b6d0ab9614e19b6a0787bd63ba468fc6a900466862af0cd8d1/genesis_world-0.3.6-py3-none-any.whl", hash = "sha256:e443b2d223ea9086a06f7ba0bf2878bf94aa81883e5c9a99db04cbdf878f2c74", size = 82479678, upload-time = "2025-10-30T16:06:06.233Z" },
+    { url = "https://files.pythonhosted.org/packages/21/50/5e41152c90b36d173522cb43bd9403e7174ecf3bbb2cb28f76e0122e5f7b/genesis_world-0.3.7-py3-none-any.whl", hash = "sha256:06cd98bf23c6146a858e9254e4b648f509bfa35161a95905182314a9aea5b107", size = 82481395, upload-time = "2025-11-12T15:23:28.44Z" },
 ]
 
 [[package]]
@@ -524,7 +524,7 @@ wheels = [
 
 [[package]]
 name = "gstaichi"
-version = "3.1.1"
+version = "4.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cffi" },
@@ -536,12 +536,14 @@ dependencies = [
     { name = "setuptools" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ed/86/58ca4dc4f83c935d306d5b2987fc76458dc65a6aeee5df3d332991f7d0de/gstaichi-3.1.1-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:f03b724f31aa904f0b92778808513eed949d66a7c6ce47734b83cc77c524ba15", size = 26889327, upload-time = "2025-10-24T08:25:07.473Z" },
-    { url = "https://files.pythonhosted.org/packages/bf/c3/937ae8dc502c7f055ab024a5c5f42748f0591dcc47786f400a4e180bd05a/gstaichi-3.1.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:db999fca7420d42d9153aa66400d2173c1b2a46366c2762cb88aae9ee55be1bb", size = 32682886, upload-time = "2025-10-24T08:19:06.013Z" },
-    { url = "https://files.pythonhosted.org/packages/c5/73/8f3f94773bbb39350501fd8090458a7f0a823c49a134e403b3f8fb578508/gstaichi-3.1.1-cp312-cp312-win_amd64.whl", hash = "sha256:07605de1ab7f5d3bb6a40513da833ecb60714cc06eafcbefb316b616c306e86f", size = 52308237, upload-time = "2025-10-24T08:24:53.792Z" },
-    { url = "https://files.pythonhosted.org/packages/a8/19/06be6e60daeba0833f12da4220c3803adec7c64b804352e1fce33f0f6a00/gstaichi-3.1.1-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:905fcc75204889386e694fa1dd5c918785b8698980f490a3bbcd883e4cbc1a7c", size = 26891853, upload-time = "2025-10-24T08:24:57.146Z" },
-    { url = "https://files.pythonhosted.org/packages/c9/48/8831137f7fd3fe9cb615a832ed3c5c4863a7f8e7edd9c3880f940d5065e4/gstaichi-3.1.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:f895acc0d28b2e43bca4a5a1c9cb3e4fc80779c46236ad7c56cda0a3ac976e2f", size = 32684121, upload-time = "2025-10-24T08:19:01.808Z" },
-    { url = "https://files.pythonhosted.org/packages/02/0a/7c01a0d5ca1863d6281e116a5566c03cc54e9cd5529a24d66d54ebba3eff/gstaichi-3.1.1-cp313-cp313-win_amd64.whl", hash = "sha256:3ab1fb6b1bbaf963e1a5479e2fd20489b1544552ed11f34207646c50deb5b64e", size = 52308461, upload-time = "2025-10-24T08:24:52.758Z" },
+    { url = "https://files.pythonhosted.org/packages/38/fc/52885a672e628408db4f7aceb54fc93909460ebabd24b277c29a23ecd948/gstaichi-4.0.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:11c63058de09b68fa350f8fec30cc6f2e344c112b10c5762d849a356b091d4fc", size = 26851023, upload-time = "2025-11-12T11:35:38.254Z" },
+    { url = "https://files.pythonhosted.org/packages/96/6b/4b04f4cbb532d5188fb5bc55d871f7e3f6179e429b6d3104b679cd0449ce/gstaichi-4.0.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_34_aarch64.whl", hash = "sha256:abe49011ec8e366b4b8ae453cb7b6c38638648d2cd7b44f9aab22a13315ca511", size = 30225130, upload-time = "2025-11-12T11:11:48.601Z" },
+    { url = "https://files.pythonhosted.org/packages/fb/ba/b0cda2b1d14f0eadcb1a1e68b5725f03cf9ecdb86a1fe5cd5172de470fc2/gstaichi-4.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:62de68bd8237c5d4f9ff99c0d65fa54f81c75aa61fe71dadf9b12b0a4c573617", size = 32816940, upload-time = "2025-11-12T11:11:55.564Z" },
+    { url = "https://files.pythonhosted.org/packages/9f/19/59d8f77897387c91e9f0c20ba7e4c3a3d8e33e76d36ee3e41e94825fc95b/gstaichi-4.0.0-cp312-cp312-win_amd64.whl", hash = "sha256:4233bff6836c317c2e140c038ba317ebe8a6e8f1f9be59b2a3a3fc2fd29ac8e9", size = 52273635, upload-time = "2025-11-12T11:11:29.634Z" },
+    { url = "https://files.pythonhosted.org/packages/0a/de/723ff063f1880456e12c3d6e237ded8a24b4cb86fc442a6d802d34759bcc/gstaichi-4.0.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:1072e58fa1482f8acfcc159b6491a1f21caa915b19a73df75087dc6caeaedb22", size = 26851267, upload-time = "2025-11-12T11:35:36.578Z" },
+    { url = "https://files.pythonhosted.org/packages/0e/1c/69d5f4e1a6ff8626bacbded60d202bfde44e9d248ee9d137097eba00dd3c/gstaichi-4.0.0-cp313-cp313-manylinux_2_27_aarch64.manylinux_2_34_aarch64.whl", hash = "sha256:74a6969f5f00a12381e3c8a4184ce2138b7d41aeb2e98c52c8e29c4ba2bd3336", size = 30226569, upload-time = "2025-11-12T11:11:56.667Z" },
+    { url = "https://files.pythonhosted.org/packages/7e/69/dfb4eb7461df0906380fe6af437e2e5d29c9996f464c48a8463b4313ea6c/gstaichi-4.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b5d085364211c321d1c953686ac83c1a6cd9c914b626d91b9b4ae23f841ada17", size = 32817283, upload-time = "2025-11-12T11:11:53.637Z" },
+    { url = "https://files.pythonhosted.org/packages/90/cd/5caaa6f4cfc26289d4bc128f03c53d291164c0c1fc521f94de01476ea6c2/gstaichi-4.0.0-cp313-cp313-win_amd64.whl", hash = "sha256:670571bb49753cac1a29466e3f5a0aaaab25acae5d81dc4dceb95086676121a0", size = 52273314, upload-time = "2025-11-12T11:11:47.475Z" },
 ]
 
 [[package]]
@@ -562,7 +564,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "genesis-world", specifier = "==0.3.6" },
+    { name = "genesis-world", specifier = "==0.3.7" },
     { name = "torch", specifier = "==2.9.0" },
 ]
 
@@ -1374,9 +1376,9 @@ name = "pooch"
 version = "1.8.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "packaging" },
-    { name = "platformdirs" },
-    { name = "requests" },
+    { name = "packaging", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "platformdirs", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "requests", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c6/77/b3d3e00c696c16cf99af81ef7b1f5fe73bd2a307abca41bd7605429fe6e5/pooch-1.8.2.tar.gz", hash = "sha256:76561f0de68a01da4df6af38e9955c4c9d1a5c90da73f7e40276a5728ec83d10", size = 59353, upload-time = "2024-06-06T16:53:46.224Z" }
 wheels = [
@@ -1657,13 +1659,13 @@ name = "pyvista"
 version = "0.46.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "matplotlib" },
-    { name = "numpy" },
-    { name = "pillow" },
-    { name = "pooch" },
-    { name = "scooby" },
-    { name = "typing-extensions" },
-    { name = "vtk" },
+    { name = "matplotlib", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "pillow", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "pooch", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "scooby", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "typing-extensions", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "vtk", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fe/2d/20d948877f0f1e4f56b8646c06dc723ef799ad5690bc6a0c9bbc12b32981/pyvista-0.46.3.tar.gz", hash = "sha256:1f8e6e39516d24d93bc227f278841a0d72ec3722959f612cf4616d2720a8afe1", size = 2397947, upload-time = "2025-08-26T14:00:32.315Z" }
 wheels = [
@@ -1721,10 +1723,10 @@ name = "requests"
 version = "2.32.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "certifi" },
-    { name = "charset-normalizer" },
-    { name = "idna" },
-    { name = "urllib3" },
+    { name = "certifi", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "charset-normalizer", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "idna", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "urllib3", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c9/74/b3ff8e6c8446842c3f5c837e9c3dfcfe2018ea6ecef224c710c85ef728f4/requests-2.32.5.tar.gz", hash = "sha256:dbba0bac56e100853db0ea71b82b4dfd5fe2bf6d3754a8893c3af500cec7d7cf", size = 134517, upload-time = "2025-08-18T20:46:02.573Z" }
 wheels = [
@@ -1903,8 +1905,8 @@ name = "tetgen"
 version = "0.6.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy" },
-    { name = "pyvista" },
+    { name = "numpy", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
+    { name = "pyvista", marker = "platform_machine != 'aarch64' or sys_platform != 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7a/f0/806fe5eb8abe92c97a4e010cba9d3ea4118956cf68cd24f5af8aa06cd14e/tetgen-0.6.7.tar.gz", hash = "sha256:d0be1f81be046dc954b8804567f5164ceb2eb4d5b335d97ca450a9fdb294af16", size = 515797, upload-time = "2025-07-28T17:03:24.824Z" }
 wheels = [
@@ -2059,19 +2061,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/15/22/9ee70a2574a4f4599c47dd506532914ce044817c7752a79b6a51286319bc/urllib3-2.5.0.tar.gz", hash = "sha256:3fc47733c7e419d4bc3f6b3dc2b4f890bb743906a30d56ba4a5bfa4bbff92760", size = 393185, upload-time = "2025-06-18T14:07:41.644Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a7/c2/fe1e52489ae3122415c51f387e221dd0773709bad6c6cdaa599e8a2c5185/urllib3-2.5.0-py3-none-any.whl", hash = "sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc", size = 129795, upload-time = "2025-06-18T14:07:40.39Z" },
-]
-
-[[package]]
-name = "usd-core"
-version = "25.8"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/72/b9/2097f0a856c20a9bf952185e0e5ce97f17a1f1a2e6a739e559186a7f77f6/usd_core-25.8-cp312-none-macosx_10_9_universal2.whl", hash = "sha256:0d509e35d4fd56e7119ddde39886debdfafd219abc5584d011fe67e8e383a0a8", size = 37431221, upload-time = "2025-07-31T19:20:08.961Z" },
-    { url = "https://files.pythonhosted.org/packages/1d/27/aac9f2eb7cf3934d990ba6566379662ca4493f7cbb7270aa5f860e60fcbe/usd_core-25.8-cp312-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:cf52c5a77a314681ffb571528dd5e14c0a2e591437606671b90ee4390700e384", size = 26623647, upload-time = "2025-07-31T19:20:18.671Z" },
-    { url = "https://files.pythonhosted.org/packages/c0/2b/7ba6d5f5e8e21c5056f27cc31bd31861d068caf8cb32803b2ae94f787168/usd_core-25.8-cp312-none-win_amd64.whl", hash = "sha256:ddb4845c7a7a42c8bf1bb6fcc4a3d7a3b1fecfdab105ad5e4ed9fa8dcd40ba95", size = 12771730, upload-time = "2025-07-31T19:20:21.34Z" },
-    { url = "https://files.pythonhosted.org/packages/18/b2/f07c4706c4809169ecae0f18da05ff37e47069a6c9978bb3e43c500f2c44/usd_core-25.8-cp313-none-macosx_10_9_universal2.whl", hash = "sha256:992756dac5ea29ad40eaac085126ae22e15b3f37174735d409ee0995420b584e", size = 37431897, upload-time = "2025-07-31T19:20:24.254Z" },
-    { url = "https://files.pythonhosted.org/packages/43/7b/f275eeb308883cf64f5b36a466efe45c12c72e0ddf011feff393ae67f329/usd_core-25.8-cp313-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e1882ee4821c9dda9e749caf1d7d80ac29b0f4000554cdb35dd4191d4816d3cc", size = 26624317, upload-time = "2025-07-31T19:20:27.689Z" },
-    { url = "https://files.pythonhosted.org/packages/63/5f/c32bf32ae163e6ad5257ec0cfcb58966275de5c55ae0a884bad71cd5f625/usd_core-25.8-cp313-none-win_amd64.whl", hash = "sha256:6d98ad58514afc5c28c9610b4e1017da9b460932192ce564cf311b2451b308de", size = 12771777, upload-time = "2025-07-31T19:20:30.362Z" },
 ]
 
 [[package]]
