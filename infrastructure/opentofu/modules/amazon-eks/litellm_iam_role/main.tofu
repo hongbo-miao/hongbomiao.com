@@ -57,14 +57,14 @@ resource "aws_iam_role_policy" "hm_litellm_iam_role_policy" {
         # https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html
         Resource = [
           # Claude Haiku
-          "arn:aws:bedrock:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:inference-profile/us.anthropic.claude-haiku-4-5-20251001-v1:0",
+          "arn:aws:bedrock:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:inference-profile/global.anthropic.claude-haiku-4-5-20251001-v1:0",
           "arn:aws:bedrock:*::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0",
           # Claude Sonnet
-          "arn:aws:bedrock:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:inference-profile/us.anthropic.claude-sonnet-4-5-20250929-v1:0",
+          "arn:aws:bedrock:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:inference-profile/global.anthropic.claude-sonnet-4-5-20250929-v1:0",
           "arn:aws:bedrock:*::foundation-model/anthropic.claude-sonnet-4-5-20250929-v1:0",
           # Claude Opus
-          "arn:aws:bedrock:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:inference-profile/us.anthropic.claude-opus-4-1-20250805-v1:0",
-          "arn:aws:bedrock:*::foundation-model/anthropic.claude-opus-4-1-20250805-v1:0",
+          "arn:aws:bedrock:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:inference-profile/global.anthropic.claude-opus-4-5-20251101-v1:0",
+          "arn:aws:bedrock:*::foundation-model/anthropic.claude-opus-4-5-20251101-v1:0",
           # Amazon Titan Text G1 - Premier
           "arn:aws:bedrock:*::foundation-model/amazon.titan-text-premier-v1:0"
         ]
