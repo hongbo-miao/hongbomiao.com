@@ -3,7 +3,7 @@ use crate::shared::camera::services::detect_objects_in_camera::{
     YoloModel, detect_objects_in_camera,
 };
 use crate::shared::fusion::constants::colors::{
-    COLOR_BLACK_SCALAR, COLOR_BLUE_SCALAR, COLOR_MINT_GREEN_SCALAR,
+    COLOR_BLACK_SCALAR, COLOR_BLUE_SCALAR, COLOR_GREEN_SCALAR,
 };
 use crate::shared::fusion::services::fuse_camera_radar_lidar::fuse_camera_radar_lidar;
 use crate::shared::fusion::utils::calculate_distance_color::calculate_distance_color;
@@ -289,7 +289,7 @@ pub fn visualize_camera_radar_lidar_fusion<P: AsRef<Path>>(
         rectangle(
             &mut visualization,
             Rect::new(x1, y1, x2 - x1, y2 - y1),
-            COLOR_MINT_GREEN_SCALAR,
+            COLOR_GREEN_SCALAR,
             2,
             LINE_8,
             0,
@@ -367,7 +367,7 @@ pub fn visualize_camera_radar_lidar_fusion<P: AsRef<Path>>(
                 text_size.width,
                 text_size.height + 4,
             ),
-            COLOR_MINT_GREEN_SCALAR,
+            COLOR_GREEN_SCALAR,
             -1,
             LINE_8,
             0,
@@ -391,7 +391,7 @@ pub fn visualize_camera_radar_lidar_fusion<P: AsRef<Path>>(
             &mut visualization,
             Point::new(center_x, center_y),
             5,
-            COLOR_MINT_GREEN_SCALAR,
+            COLOR_GREEN_SCALAR,
             -1,
             LINE_8,
             0,
@@ -404,7 +404,7 @@ pub fn visualize_camera_radar_lidar_fusion<P: AsRef<Path>>(
                 &mut visualization,
                 Point::new(lidar_x, lidar_y),
                 2,
-                COLOR_MINT_GREEN_SCALAR,
+                COLOR_GREEN_SCALAR,
                 -1,
                 LINE_8,
                 0,
