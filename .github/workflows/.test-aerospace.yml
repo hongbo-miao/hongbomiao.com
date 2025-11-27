@@ -9,7 +9,7 @@ name: . Test Aerospace
         required: true
         type: boolean
       # Applications
-      camera-radar-fusion-python:
+      camera-radar-fusion:
         required: true
         type: boolean
       camera-radar-lidar-fusion:
@@ -233,9 +233,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: aerospace/x-plane/udp
 
-  camera-radar-fusion-python-test:
-    name: Camera-Radar Fusion (Python) | Test
-    if: ${{ inputs.workflow || inputs.camera-radar-fusion-python }}
+  camera-radar-fusion-test:
+    name: Camera-Radar Fusion | Test
+    if: ${{ inputs.workflow || inputs.camera-radar-fusion }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -246,17 +246,17 @@ jobs:
         with:
           version: 0.9.13
           enable-cache: true
-          cache-dependency-glob: autonomy/camera-radar-fusion-python/uv.lock
+          cache-dependency-glob: autonomy/camera-radar-fusion/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.0.0
         with:
-          python-version-file: autonomy/camera-radar-fusion-python/.python-version
+          python-version-file: autonomy/camera-radar-fusion/.python-version
       - name: Install dependencies
-        working-directory: autonomy/camera-radar-fusion-python
+        working-directory: autonomy/camera-radar-fusion
         run: |
           uv sync --dev
       - name: Test
-        working-directory: autonomy/camera-radar-fusion-python
+        working-directory: autonomy/camera-radar-fusion
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -264,10 +264,10 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: autonomy/camera-radar-fusion-python
+          directory: autonomy/camera-radar-fusion
 
   camera-radar-lidar-fusion-test:
-    name: Camera-Radar Fusion (Rust) | Test
+    name: Camera-Radar-Lidar Fusion | Test
     if: ${{ inputs.workflow || inputs.camera-radar-lidar-fusion }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10

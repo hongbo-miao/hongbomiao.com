@@ -15,11 +15,11 @@ upload:
     AWS_SECRET_ACCESS_KEY={{ AWS_SECRET_ACCESS_KEY }} \
     AWS_REGION={{ AWS_REGION }} \
     S3_ENDPOINT_URL={{ S3_ENDPOINT_URL }} \
-    s5cmd cp /tmp/folder/ s3://production-hm-bucket/folder/
+    s5cmd cp --show-progress /tmp/folder/ s3://production-hm-bucket/folder/
 
 download:
     AWS_ACCESS_KEY_ID={{ AWS_ACCESS_KEY_ID }} \
     AWS_SECRET_ACCESS_KEY={{ AWS_SECRET_ACCESS_KEY }} \
     AWS_REGION={{ AWS_REGION }} \
     S3_ENDPOINT_URL={{ S3_ENDPOINT_URL }} \
-    s5cmd cp "s3://production-hm-bucket/folder/**" /tmp/folder/
+    s5cmd cp --show-progress "s3://production-hm-bucket/folder/**" /tmp/folder/
