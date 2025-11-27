@@ -1,0 +1,35 @@
+DYLD_FALLBACK_LIBRARY_PATH := "/Library/Developer/CommandLineTools/usr/lib"
+
+install-toolchain:
+    rustup install
+
+update:
+    cargo update
+
+check:
+    cargo check
+
+set-up:
+    # Download nuScenes "Full dataset (v1.0) - Mini - Metadata and sensor file blobs (3.88 GB)" from https://www.nuscenes.org/download and extract to data/v1.0-mini/
+    curl --silent --fail --show-error --location --output data/yolo12m.onnx https://raw.githubusercontent.com/hongbo-miao/hongbomiao.com-data/main/camera-radar-lidar-fusion/yolo12m.onnx
+
+dev:
+    DYLD_FALLBACK_LIBRARY_PATH="{{ DYLD_FALLBACK_LIBRARY_PATH }}" \
+    ENVIRONMENT=development cargo run
+
+test:
+    cargo test
+
+lint-rust-clippy:
+    DYLD_FALLBACK_LIBRARY_PATH="{{ DYLD_FALLBACK_LIBRARY_PATH }}" \
+    cargo clippy
+
+lint-rust-clippy-fix:
+    DYLD_FALLBACK_LIBRARY_PATH="{{ DYLD_FALLBACK_LIBRARY_PATH }}" \
+    cargo clippy --fix --allow-dirty --allow-staged
+
+lint-rust-rustfmt:
+    cargo fmt --all -- --check
+
+lint-rust-rustfmt-fix:
+    cargo fmt --all

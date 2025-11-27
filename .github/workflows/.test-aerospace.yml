@@ -12,7 +12,7 @@ name: . Test Aerospace
       camera-radar-fusion-python:
         required: true
         type: boolean
-      camera-radar-fusion-rust:
+      camera-radar-lidar-fusion:
         required: true
         type: boolean
       flightradar24:
@@ -266,9 +266,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: autonomy/camera-radar-fusion-python
 
-  camera-radar-fusion-rust-test:
+  camera-radar-lidar-fusion-test:
     name: Camera-Radar Fusion (Rust) | Test
-    if: ${{ inputs.workflow || inputs.camera-radar-fusion-rust }}
+    if: ${{ inputs.workflow || inputs.camera-radar-lidar-fusion }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -278,16 +278,16 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
         with:
           cache: true
-          rust-src-dir: autonomy/camera-radar-fusion-rust
+          rust-src-dir: autonomy/camera-radar-lidar-fusion
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install --yes clang libclang-dev libopencv-dev
       - name: Install dependencies
-        working-directory: autonomy/camera-radar-fusion-rust
+        working-directory: autonomy/camera-radar-lidar-fusion
         run: |
           cargo build
       - name: Test
-        working-directory: autonomy/camera-radar-fusion-rust
+        working-directory: autonomy/camera-radar-lidar-fusion
         run: |
           cargo test --all-features
