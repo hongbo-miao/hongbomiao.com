@@ -8,12 +8,18 @@ mod shared;
 
 use crate::config::AppConfig;
 use crate::shared::camera::services::detect_objects_in_camera::YoloModel;
+use crate::shared::camera::services::log_camera_to_rerun::log_camera_to_rerun;
 use crate::shared::camera::services::visualize_camera_only::visualize_camera_only;
 use crate::shared::fusion::services::visualize_camera_lidar_fusion::visualize_camera_lidar_fusion;
 use crate::shared::fusion::services::visualize_camera_radar_fusion::visualize_camera_radar_fusion;
 use crate::shared::fusion::services::visualize_camera_radar_lidar_fusion::visualize_camera_radar_lidar_fusion;
+use crate::shared::lidar::services::load_lidar_data::load_lidar_data;
+use crate::shared::lidar::services::log_lidar_to_rerun::log_lidar_to_rerun;
+use crate::shared::radar::services::load_radar_data::load_radar_data;
+use crate::shared::radar::services::log_radar_to_rerun::log_radar_to_rerun;
 use anyhow::{Context, Result, bail};
 use nalgebra::{Matrix3, Matrix4, Quaternion, UnitQuaternion};
+use rerun as rr;
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::fs;
@@ -96,6 +102,11 @@ fn run_visualization() -> Result<()> {
     tracing_subscriber::fmt()
         .with_max_level(tracing::Level::INFO)
         .init();
+
+    // Initialize Rerun for 3D visualization
+    let recording = rr::RecordingStreamBuilder::new("camera_radar_lidar_fusion")
+        .spawn()
+        .context("Failed to spawn Rerun viewer")?;
 
     let dataset_root = Path::new("data/v1.0-mini");
     let json_root = if dataset_root.join("scene.json").exists() {
@@ -313,6 +324,19 @@ fn run_visualization() -> Result<()> {
                 (lidar_to_camera, lidar_file_path)
             },
         );
+
+        // Log sensor data to Rerun for 3D visualization
+        log_camera_to_rerun(&recording, &camera_image_path, "world/camera/image").ok();
+        if let Some((_, ref radar_file_path)) = radar_info
+            && let Ok(radar_data) = load_radar_data(radar_file_path)
+        {
+            log_radar_to_rerun(&recording, &radar_data, "world/sensors/radar").ok();
+        }
+        if let Some((_, ref lidar_file_path)) = lidar_info
+            && let Ok(lidar_data) = load_lidar_data(lidar_file_path)
+        {
+            log_lidar_to_rerun(&recording, &lidar_data, "world/sensors/lidar").ok();
+        }
 
         // Route to appropriate visualization based on available sensors
         let should_continue = match (radar_info, lidar_info) {
