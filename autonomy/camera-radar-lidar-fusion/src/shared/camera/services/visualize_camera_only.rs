@@ -2,7 +2,7 @@ use crate::config::AppConfig;
 use crate::shared::camera::services::detect_objects_in_camera::{
     YoloModel, detect_objects_in_camera,
 };
-use crate::shared::fusion::constants::colors::{COLOR_BLACK_SCALAR, COLOR_CORAL_RED_SCALAR};
+use crate::shared::fusion::constants::colors::{COLOR_BLACK_SCALAR, COLOR_RED_SCALAR};
 use anyhow::{Context, Result};
 use opencv::core::{Point, Rect, Scalar};
 use opencv::highgui::{imshow, wait_key};
@@ -44,7 +44,7 @@ pub fn visualize_camera_only<P: AsRef<Path>>(
         rectangle(
             &mut visualization,
             Rect::new(x1, y1, x2 - x1, y2 - y1),
-            COLOR_CORAL_RED_SCALAR,
+            COLOR_RED_SCALAR,
             2,
             LINE_8,
             0,
@@ -72,7 +72,7 @@ pub fn visualize_camera_only<P: AsRef<Path>>(
                 text_size.width,
                 text_size.height + 4,
             ),
-            COLOR_CORAL_RED_SCALAR,
+            COLOR_RED_SCALAR,
             -1,
             LINE_8,
             0,
