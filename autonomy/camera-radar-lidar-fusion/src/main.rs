@@ -15,6 +15,15 @@ use crate::shared::fusion::services::visualize_camera_radar_fusion::visualize_ca
 use crate::shared::fusion::services::visualize_camera_radar_lidar_fusion::visualize_camera_radar_lidar_fusion;
 use crate::shared::lidar::services::load_lidar_data::load_lidar_data;
 use crate::shared::lidar::services::log_lidar_to_rerun::log_lidar_to_rerun;
+use crate::shared::map::services::load_ego_pose::load_ego_poses;
+use crate::shared::map::services::log_ego_position_to_rerun::log_ego_position_to_rerun;
+use crate::shared::map::services::log_ego_trajectory_to_rerun::log_ego_trajectory_to_rerun;
+use crate::shared::nuscenes::types::nuscenes_calibrated_sensor::NuscenesCalibratedSensor;
+use crate::shared::nuscenes::types::nuscenes_log::NuscenesLog;
+use crate::shared::nuscenes::types::nuscenes_sample::NuscenesSample;
+use crate::shared::nuscenes::types::nuscenes_sample_data::NuscenesSampleData;
+use crate::shared::nuscenes::types::nuscenes_scene::NuscenesScene;
+use crate::shared::nuscenes::types::nuscenes_sensor::NuscenesSensor;
 use crate::shared::radar::services::load_radar_data::load_radar_data;
 use crate::shared::radar::services::log_radar_to_rerun::log_radar_to_rerun;
 use anyhow::{Context, Result, bail};
@@ -24,52 +33,6 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
-
-#[derive(Debug, Deserialize)]
-struct Scene {
-    pub first_sample_token: String,
-    pub name: String,
-}
-
-#[derive(Debug, Deserialize)]
-struct Sample {
-    pub token: String,
-    pub next: String,
-    #[allow(dead_code)]
-    pub prev: String,
-    #[allow(dead_code)]
-    pub scene_token: String,
-}
-
-#[derive(Debug, Deserialize)]
-struct SampleData {
-    #[allow(dead_code)]
-    pub token: String,
-    pub sample_token: String,
-    pub calibrated_sensor_token: String,
-    pub filename: String,
-    pub is_key_frame: bool,
-    #[allow(dead_code)]
-    pub width: u32,
-    #[allow(dead_code)]
-    pub height: u32,
-}
-
-#[derive(Debug, Deserialize)]
-struct CalibratedSensor {
-    pub token: String,
-    pub sensor_token: String,
-    pub rotation: [f64; 4],
-    pub translation: [f64; 3],
-    #[serde(default)]
-    pub camera_intrinsic: Vec<Vec<f64>>,
-}
-
-#[derive(Debug, Deserialize)]
-struct Sensor {
-    pub token: String,
-    pub channel: String,
-}
 
 fn read_json_array<T: for<'de> Deserialize<'de>>(path: &Path) -> Result<Vec<T>> {
     let bytes = fs::read(path).with_context(|| format!("Failed to read {}", path.display()))?;
@@ -109,6 +72,7 @@ fn run_visualization() -> Result<()> {
         .context("Failed to spawn Rerun viewer")?;
 
     let dataset_root = Path::new("data/v1.0-mini");
+
     let json_root = if dataset_root.join("scene.json").exists() {
         dataset_root.to_path_buf()
     } else if dataset_root.join("v1.0-mini/scene.json").exists() {
@@ -130,98 +94,124 @@ fn run_visualization() -> Result<()> {
             .unwrap_or_else(|| json_root.clone())
     };
 
-    let scenes: Vec<Scene> = read_json_array(&json_root.join("scene.json"))?;
-    let samples: Vec<Sample> = read_json_array(&json_root.join("sample.json"))?;
-    let sample_data: Vec<SampleData> = read_json_array(&json_root.join("sample_data.json"))?;
-    let calibrated: Vec<CalibratedSensor> =
+    let nuscenes_scenes: Vec<NuscenesScene> = read_json_array(&json_root.join("scene.json"))?;
+    let nuscenes_samples: Vec<NuscenesSample> = read_json_array(&json_root.join("sample.json"))?;
+    let nuscenes_sample_data: Vec<NuscenesSampleData> =
+        read_json_array(&json_root.join("sample_data.json"))?;
+    let nuscenes_calibrated_sensors: Vec<NuscenesCalibratedSensor> =
         read_json_array(&json_root.join("calibrated_sensor.json"))?;
-    let sensors: Vec<Sensor> = read_json_array(&json_root.join("sensor.json"))?;
+    let nuscenes_sensors: Vec<NuscenesSensor> = read_json_array(&json_root.join("sensor.json"))?;
+    let nuscenes_logs: Vec<NuscenesLog> = read_json_array(&json_root.join("log.json"))?;
+    let ego_poses = load_ego_poses(&json_root)?;
 
     // Index by token for quick lookup
-    let mut sample_by_token = HashMap::new();
-    for sample in &samples {
-        sample_by_token.insert(sample.token.clone(), sample);
+    let mut nuscenes_sample_by_token = HashMap::new();
+    for nuscenes_sample in &nuscenes_samples {
+        nuscenes_sample_by_token.insert(nuscenes_sample.token.clone(), nuscenes_sample);
     }
 
-    let mut sample_data_by_sample: HashMap<&str, Vec<&SampleData>> = HashMap::new();
-    for sample_data_item in &sample_data {
-        sample_data_by_sample
-            .entry(sample_data_item.sample_token.as_str())
+    let mut nuscenes_sample_data_by_sample: HashMap<&str, Vec<&NuscenesSampleData>> =
+        HashMap::new();
+    for nuscenes_sample_data_item in &nuscenes_sample_data {
+        nuscenes_sample_data_by_sample
+            .entry(nuscenes_sample_data_item.sample_token.as_str())
             .or_default()
-            .push(sample_data_item);
+            .push(nuscenes_sample_data_item);
     }
 
-    let mut calib_by_token = HashMap::new();
-    for calibration in &calibrated {
-        calib_by_token.insert(calibration.token.clone(), calibration);
+    let mut nuscenes_calibrated_sensor_by_token = HashMap::new();
+    for nuscenes_calibrated_sensor in &nuscenes_calibrated_sensors {
+        nuscenes_calibrated_sensor_by_token.insert(
+            nuscenes_calibrated_sensor.token.clone(),
+            nuscenes_calibrated_sensor,
+        );
     }
 
-    let mut sensor_channel_by_token: HashMap<&str, &str> = HashMap::new();
-    for sensor in &sensors {
-        sensor_channel_by_token.insert(sensor.token.as_str(), sensor.channel.as_str());
+    let mut nuscenes_sensor_channel_by_token: HashMap<&str, &str> = HashMap::new();
+    for nuscenes_sensor in &nuscenes_sensors {
+        nuscenes_sensor_channel_by_token.insert(
+            nuscenes_sensor.token.as_str(),
+            nuscenes_sensor.channel.as_str(),
+        );
     }
 
     let mut channel_by_calibration: HashMap<&str, &str> = HashMap::new();
-    for calibration in &calibrated {
-        if let Some(channel) = sensor_channel_by_token.get(calibration.sensor_token.as_str()) {
-            channel_by_calibration.insert(calibration.token.as_str(), *channel);
+    for nuscenes_calibrated_sensor in &nuscenes_calibrated_sensors {
+        if let Some(channel) =
+            nuscenes_sensor_channel_by_token.get(nuscenes_calibrated_sensor.sensor_token.as_str())
+        {
+            channel_by_calibration.insert(nuscenes_calibrated_sensor.token.as_str(), *channel);
         }
     }
 
+    // Build log lookup map
+    let nuscenes_log_by_token: HashMap<_, _> = nuscenes_logs
+        .iter()
+        .map(|nuscenes_log| (nuscenes_log.token.clone(), nuscenes_log))
+        .collect();
+
     // Scene index and frame cap
     let scene_index: usize = 0;
-    let scene = &scenes[scene_index];
-    tracing::info!("Processing scene {scene_index} ({})", scene.name);
+    let nuscenes_scene = &nuscenes_scenes[scene_index];
+    tracing::info!("Processing scene {scene_index} ({})", nuscenes_scene.name);
+
+    // Get location for GPS coordinate conversion
+    let location = nuscenes_log_by_token
+        .get(&nuscenes_scene.log_token)
+        .map(|nuscenes_log| nuscenes_log.location.as_str())
+        .unwrap_or("singapore-onenorth");
 
     // Prepare YOLO model
     let mut yolo_model = YoloModel::new(Path::new(&config.yolo_model_path))?;
 
     // Walk samples via next chain
-    let mut current_token = scene.first_sample_token.clone();
+    let mut current_token = nuscenes_scene.first_sample_token.clone();
     let mut frames = 0usize;
+    let mut trajectory_ego_poses = Vec::new();
 
     while !current_token.is_empty() && frames < config.max_frame_count {
-        let sample = match sample_by_token.get(&current_token) {
-            Some(sample_value) => *sample_value,
+        let nuscenes_sample = match nuscenes_sample_by_token.get(&current_token) {
+            Some(nuscenes_sample_value) => *nuscenes_sample_value,
             None => break,
         };
-        let sample_datas = match sample_data_by_sample.get(sample.token.as_str()) {
-            Some(list) => list,
-            None => {
-                current_token = sample.next.clone();
-                continue;
-            }
-        };
+        let nuscenes_sample_data_list =
+            match nuscenes_sample_data_by_sample.get(nuscenes_sample.token.as_str()) {
+                Some(list) => list,
+                None => {
+                    current_token = nuscenes_sample.next.clone();
+                    continue;
+                }
+            };
 
-        let mut camera_sample_data_option: Option<&SampleData> = None;
-        let mut radar_sample_data_option: Option<&SampleData> = None;
-        let mut lidar_sample_data_option: Option<&SampleData> = None;
-        for sample_data_item in sample_datas {
+        let mut camera_sample_data_option: Option<&NuscenesSampleData> = None;
+        let mut radar_sample_data_option: Option<&NuscenesSampleData> = None;
+        let mut lidar_sample_data_option: Option<&NuscenesSampleData> = None;
+        for nuscenes_sample_data_item in nuscenes_sample_data_list {
             let channel = channel_by_calibration
-                .get(sample_data_item.calibrated_sensor_token.as_str())
+                .get(nuscenes_sample_data_item.calibrated_sensor_token.as_str())
                 .copied()
-                .unwrap_or_else(|| infer_channel(&sample_data_item.filename));
-            let is_sample_path = sample_data_item.filename.contains("samples/");
+                .unwrap_or_else(|| infer_channel(&nuscenes_sample_data_item.filename));
+            let is_sample_path = nuscenes_sample_data_item.filename.contains("samples/");
             match channel {
                 "CAM_FRONT" => {
                     if camera_sample_data_option.is_none()
-                        || (sample_data_item.is_key_frame && is_sample_path)
+                        || (nuscenes_sample_data_item.is_key_frame && is_sample_path)
                     {
-                        camera_sample_data_option = Some(sample_data_item);
+                        camera_sample_data_option = Some(nuscenes_sample_data_item);
                     }
                 }
                 "RADAR_FRONT" => {
                     if radar_sample_data_option.is_none()
-                        || (sample_data_item.is_key_frame && is_sample_path)
+                        || (nuscenes_sample_data_item.is_key_frame && is_sample_path)
                     {
-                        radar_sample_data_option = Some(sample_data_item);
+                        radar_sample_data_option = Some(nuscenes_sample_data_item);
                     }
                 }
                 "LIDAR_TOP" => {
                     if lidar_sample_data_option.is_none()
-                        || (sample_data_item.is_key_frame && is_sample_path)
+                        || (nuscenes_sample_data_item.is_key_frame && is_sample_path)
                     {
-                        lidar_sample_data_option = Some(sample_data_item);
+                        lidar_sample_data_option = Some(nuscenes_sample_data_item);
                     }
                 }
                 _ => {}
@@ -230,35 +220,71 @@ fn run_visualization() -> Result<()> {
 
         // Camera is required (industry standard)
         let camera_sample_data = match camera_sample_data_option {
-            Some(sample_data_item) if sample_data_item.filename.contains("CAM_FRONT") => {
-                sample_data_item
+            Some(nuscenes_sample_data_item)
+                if nuscenes_sample_data_item.filename.contains("CAM_FRONT") =>
+            {
+                nuscenes_sample_data_item
             }
             _ => {
-                tracing::warn!("Sample {} has no CAM_FRONT data; skipping", sample.token);
-                current_token = sample.next.clone();
+                tracing::warn!(
+                    "Sample {} has no CAM_FRONT data; skipping",
+                    nuscenes_sample.token
+                );
+                current_token = nuscenes_sample.next.clone();
                 continue;
             }
         };
 
+        // Log and collect ego pose for trajectory
+        if let Some(ego_pose) = ego_poses.get(&camera_sample_data.ego_pose_token) {
+            // Log current position to MapView
+            if let Err(error) = log_ego_position_to_rerun(
+                &recording,
+                ego_pose,
+                location,
+                "world/ego_vehicle/position",
+            ) {
+                tracing::warn!("Failed to log ego position: {error}");
+            }
+
+            // Collect for trajectory
+            trajectory_ego_poses.push(ego_pose);
+
+            // Log accumulated trajectory so far (growing line)
+            if let Err(error) = log_ego_trajectory_to_rerun(
+                &recording,
+                &trajectory_ego_poses,
+                location,
+                "world/ego_vehicle/trajectory",
+            ) {
+                tracing::warn!("Failed to log ego trajectory: {error}");
+            }
+        }
+
         // Radar and Lidar are optional
-        let radar_sample_data_result = radar_sample_data_option
-            .filter(|sample_data_item| sample_data_item.filename.contains("RADAR_FRONT"));
-        let lidar_sample_data_result = lidar_sample_data_option
-            .filter(|sample_data_item| sample_data_item.filename.contains("LIDAR_TOP"));
+        let radar_sample_data_result =
+            radar_sample_data_option.filter(|nuscenes_sample_data_item| {
+                nuscenes_sample_data_item.filename.contains("RADAR_FRONT")
+            });
+        let lidar_sample_data_result =
+            lidar_sample_data_option.filter(|nuscenes_sample_data_item| {
+                nuscenes_sample_data_item.filename.contains("LIDAR_TOP")
+            });
 
         // Get camera calibration (required)
-        let camera_calibration =
-            match calib_by_token.get(&camera_sample_data.calibrated_sensor_token) {
-                Some(calibration_value) => *calibration_value,
-                None => {
-                    tracing::warn!(
-                        "Missing calibration for camera sensor {}; skipping",
-                        camera_sample_data.calibrated_sensor_token
-                    );
-                    current_token = sample.next.clone();
-                    continue;
-                }
-            };
+        let camera_calibration = match nuscenes_calibrated_sensor_by_token
+            .get(&camera_sample_data.calibrated_sensor_token)
+        {
+            Some(nuscenes_calibrated_sensor_value) => *nuscenes_calibrated_sensor_value,
+            None => {
+                tracing::warn!(
+                    "Missing calibration for camera sensor {}; skipping",
+                    camera_sample_data.calibrated_sensor_token
+                );
+                current_token = nuscenes_sample.next.clone();
+                continue;
+            }
+        };
 
         // Validate camera intrinsic
         if camera_calibration.camera_intrinsic.len() != 3
@@ -271,7 +297,7 @@ fn run_visualization() -> Result<()> {
                 "Camera intrinsic not available for sensor {}; skipping frame",
                 camera_sample_data.calibrated_sensor_token
             );
-            current_token = sample.next.clone();
+            current_token = nuscenes_sample.next.clone();
             continue;
         }
         let flat_intrinsic: Vec<f64> = camera_calibration
@@ -283,14 +309,14 @@ fn run_visualization() -> Result<()> {
 
         // Get optional radar calibration
         let radar_calibration_result = radar_sample_data_result.and_then(|radar_sample_data| {
-            calib_by_token
+            nuscenes_calibrated_sensor_by_token
                 .get(&radar_sample_data.calibrated_sensor_token)
                 .copied()
         });
 
         // Get optional lidar calibration
         let lidar_calibration_result = lidar_sample_data_result.and_then(|lidar_sample_data| {
-            calib_by_token
+            nuscenes_calibrated_sensor_by_token
                 .get(&lidar_sample_data.calibrated_sensor_token)
                 .copied()
         });
@@ -326,16 +352,22 @@ fn run_visualization() -> Result<()> {
         );
 
         // Log sensor data to Rerun for 3D visualization
-        log_camera_to_rerun(&recording, &camera_image_path, "world/camera/image").ok();
+        if let Err(error) =
+            log_camera_to_rerun(&recording, &camera_image_path, "world/camera/image")
+        {
+            tracing::warn!("Failed to log camera image: {error}");
+        }
         if let Some((_, ref radar_file_path)) = radar_info
             && let Ok(radar_data) = load_radar_data(radar_file_path)
+            && let Err(error) = log_radar_to_rerun(&recording, &radar_data, "world/sensors/radar")
         {
-            log_radar_to_rerun(&recording, &radar_data, "world/sensors/radar").ok();
+            tracing::warn!("Failed to log radar data: {error}");
         }
         if let Some((_, ref lidar_file_path)) = lidar_info
             && let Ok(lidar_data) = load_lidar_data(lidar_file_path)
+            && let Err(error) = log_lidar_to_rerun(&recording, &lidar_data, "world/sensors/lidar")
         {
-            log_lidar_to_rerun(&recording, &lidar_data, "world/sensors/lidar").ok();
+            tracing::warn!("Failed to log lidar data: {error}");
         }
 
         // Route to appropriate visualization based on available sensors
@@ -401,10 +433,10 @@ fn run_visualization() -> Result<()> {
         }
 
         frames += 1;
-        if current_token == sample.next {
+        if current_token == nuscenes_sample.next {
             break;
         }
-        current_token = sample.next.clone();
+        current_token = nuscenes_sample.next.clone();
     }
 
     Ok(())
