@@ -4,6 +4,7 @@ pub mod camera {
     }
     pub mod services {
         pub mod detect_objects_in_camera;
+        pub mod log_camera_to_rerun;
         pub mod visualize_camera_only;
     }
 }
@@ -14,6 +15,7 @@ pub mod radar {
     pub mod services {
         pub mod create_radar_detection;
         pub mod load_radar_data;
+        pub mod log_radar_to_rerun;
     }
     pub mod utils {
         pub mod project_radar_to_camera;
@@ -26,6 +28,7 @@ pub mod lidar {
     pub mod services {
         pub mod create_lidar_detection;
         pub mod load_lidar_data;
+        pub mod log_lidar_to_rerun;
     }
     pub mod utils {
         pub mod project_lidar_to_camera;
