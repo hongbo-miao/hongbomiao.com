@@ -32,6 +32,7 @@ pub mod lidar {
     }
     pub mod utils {
         pub mod project_lidar_to_camera;
+        pub mod transform_lidar_to_vehicle;
     }
 }
 pub mod fusion {
@@ -69,6 +70,7 @@ pub mod map {
         pub mod load_ego_pose;
         pub mod log_ego_position_to_rerun;
         pub mod log_ego_trajectory_to_rerun;
+        pub mod log_ego_vehicle_to_rerun;
     }
     pub mod utils {
         pub mod derive_latitude_longitude;
@@ -83,5 +85,16 @@ pub mod nuscenes {
         pub mod nuscenes_sample_data;
         pub mod nuscenes_scene;
         pub mod nuscenes_sensor;
+    }
+}
+pub mod occupancy {
+    pub mod types {
+        pub mod occupancy_grid;
+    }
+    pub mod services {
+        pub mod build_occupancy_grid_from_lidar;
+        pub mod clear_distant_voxels;
+        pub mod decay_occupancy_probabilities;
+        pub mod log_occupancy_grid_to_rerun;
     }
 }
