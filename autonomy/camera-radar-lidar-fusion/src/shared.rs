@@ -61,3 +61,27 @@ pub mod fusion {
         pub mod visualize_camera_radar_lidar_fusion;
     }
 }
+pub mod map {
+    pub mod types {
+        pub mod ego_pose;
+    }
+    pub mod services {
+        pub mod load_ego_pose;
+        pub mod log_ego_position_to_rerun;
+        pub mod log_ego_trajectory_to_rerun;
+    }
+    pub mod utils {
+        pub mod derive_latitude_longitude;
+        pub mod get_reference_coordinate;
+    }
+}
+pub mod nuscenes {
+    pub mod types {
+        pub mod nuscenes_calibrated_sensor;
+        pub mod nuscenes_log;
+        pub mod nuscenes_sample;
+        pub mod nuscenes_sample_data;
+        pub mod nuscenes_scene;
+        pub mod nuscenes_sensor;
+    }
+}
