@@ -23,7 +23,7 @@ pub fn load_lidar_data<P: AsRef<Path>>(lidar_file_path: P) -> Result<Matrix4xX<f
 
     const BYTES_PER_POINT: usize = 20;
 
-    if data_bytes.len() % BYTES_PER_POINT != 0 {
+    if !data_bytes.len().is_multiple_of(BYTES_PER_POINT) {
         bail!(
             "Lidar file size {} is not a multiple of {} bytes per point",
             data_bytes.len(),

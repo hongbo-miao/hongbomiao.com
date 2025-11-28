@@ -94,6 +94,9 @@ name: . Lint
       api-rust:
         required: true
         type: boolean
+      camera-radar-lidar-fusion:
+        required: true
+        type: boolean
       ethereum:
         required: true
         type: boolean
@@ -785,6 +788,64 @@ jobs:
           cargo fmt --all  -- --check
       - name: Lint Rust (Clippy)
         working-directory: api/api-rust
+        run: |
+          cargo clippy
+
+  lint-rust-camera-radar-lidar-fusion:
+    name: Rust (camera-radar-lidar-fusion)
+    if: ${{ inputs.workflow || inputs.camera-radar-lidar-fusion }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.1
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1.15.2
+        with:
+          cache: true
+          cache-key: opencv-4.12.0
+          rust-src-dir: autonomy/camera-radar-lidar-fusion
+      - name: Install system dependencies
+        run: |
+          # OpenCV
+          # https://docs.opencv.org/4.12.0/d2/de6/tutorial_py_setup_in_ubuntu.html
+          sudo apt-get update
+          sudo apt-get install --yes \
+            build-essential \
+            clang \
+            cmake \
+            libavcodec-dev \
+            libavformat-dev \
+            libclang-dev \
+            libgtk-3-dev \
+            libjpeg-dev \
+            libpng-dev \
+            libswscale-dev \
+            libtbb-dev \
+            libtiff-dev \
+            pkg-config
+          git clone --depth 1 --branch 4.12.0 https://github.com/opencv/opencv.git /tmp/opencv
+          mkdir /tmp/opencv/build
+          cmake -S /tmp/opencv -B /tmp/opencv/build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_LIST=core,imgproc,imgcodecs,dnn,highgui \
+            -DBUILD_TESTS=OFF \
+            -DBUILD_PERF_TESTS=OFF \
+            -DBUILD_EXAMPLES=OFF \
+            -DBUILD_opencv_apps=OFF
+          cmake --build /tmp/opencv/build --parallel $(nproc)
+          sudo cmake --install /tmp/opencv/build
+          sudo ldconfig
+      - name: Install dependencies
+        working-directory: autonomy/camera-radar-lidar-fusion
+        run: |
+          cargo build
+      - name: Lint Rust (rustfmt)
+        working-directory: autonomy/camera-radar-lidar-fusion
+        run: |
+          cargo fmt --all  -- --check
+      - name: Lint Rust (Clippy)
+        working-directory: autonomy/camera-radar-lidar-fusion
         run: |
           cargo clippy
 

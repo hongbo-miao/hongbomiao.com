@@ -8,7 +8,7 @@ use opencv::core::{Point, Rect, Scalar};
 use opencv::highgui::{imshow, wait_key};
 use opencv::imgcodecs::imread;
 use opencv::imgproc::{HersheyFonts, LINE_8, get_text_size, put_text, rectangle};
-use opencv::prelude::*;
+use opencv::prelude::MatTraitConst;
 use std::path::Path;
 use tracing::info;
 
