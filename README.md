@@ -411,6 +411,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Apache Superset** - Business intelligence (BI) data visualization
 - **Tableau** - Business intelligence (BI) data visualization
 - **IADS** - Flight test data visualization
+- **Rerun** - Multimodal data visualization for computer vision and robotics
 
 ### Data Analytics
 
@@ -1131,6 +1132,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Camera-Radar-Lidar Fusion
 
 ![Camera-radar-lidar fusion screenshot](https://github.com/user-attachments/assets/d4fa77a1-843e-43dd-9733-e5ec18859be4)
+
+![Rerun screenshot](https://github.com/user-attachments/assets/27201804-626c-4bcb-8420-27506b82249d)
 
 ### MATLAB Automated Driving Toolbox - ADAS and Autonomous Driving Systems Design, Simulation, and Testing
 
