@@ -15,15 +15,22 @@ use crate::shared::fusion::services::visualize_camera_radar_fusion::visualize_ca
 use crate::shared::fusion::services::visualize_camera_radar_lidar_fusion::visualize_camera_radar_lidar_fusion;
 use crate::shared::lidar::services::load_lidar_data::load_lidar_data;
 use crate::shared::lidar::services::log_lidar_to_rerun::log_lidar_to_rerun;
+use crate::shared::lidar::utils::transform_lidar_to_vehicle::transform_lidar_to_vehicle;
 use crate::shared::map::services::load_ego_pose::load_ego_poses;
 use crate::shared::map::services::log_ego_position_to_rerun::log_ego_position_to_rerun;
 use crate::shared::map::services::log_ego_trajectory_to_rerun::log_ego_trajectory_to_rerun;
+use crate::shared::map::services::log_ego_vehicle_to_rerun::log_ego_vehicle_to_rerun;
 use crate::shared::nuscenes::types::nuscenes_calibrated_sensor::NuscenesCalibratedSensor;
 use crate::shared::nuscenes::types::nuscenes_log::NuscenesLog;
 use crate::shared::nuscenes::types::nuscenes_sample::NuscenesSample;
 use crate::shared::nuscenes::types::nuscenes_sample_data::NuscenesSampleData;
 use crate::shared::nuscenes::types::nuscenes_scene::NuscenesScene;
 use crate::shared::nuscenes::types::nuscenes_sensor::NuscenesSensor;
+use crate::shared::occupancy::services::build_occupancy_grid_from_lidar::build_occupancy_grid_from_lidar;
+use crate::shared::occupancy::services::clear_distant_voxels::clear_distant_voxels;
+use crate::shared::occupancy::services::decay_occupancy_probabilities::decay_occupancy_probabilities;
+use crate::shared::occupancy::services::log_occupancy_grid_to_rerun::log_occupancy_grid_to_rerun;
+use crate::shared::occupancy::types::occupancy_grid::{OccupancyGrid, OccupancyGridConfig};
 use crate::shared::radar::services::load_radar_data::load_radar_data;
 use crate::shared::radar::services::log_radar_to_rerun::log_radar_to_rerun;
 use anyhow::{Context, Result, bail};
@@ -163,6 +170,26 @@ fn run_visualization() -> Result<()> {
 
     // Prepare YOLO model
     let mut yolo_model = YoloModel::new(Path::new(&config.yolo_model_path))?;
+
+    // Initialize occupancy grid from config
+    let occupancy_grid_config = OccupancyGridConfig::new(
+        config.occupancy_voxel_size_m,
+        nalgebra::Vector3::new(
+            config.occupancy_min_bound_x_m,
+            config.occupancy_min_bound_y_m,
+            config.occupancy_min_bound_z_m,
+        ),
+        nalgebra::Vector3::new(
+            config.occupancy_max_bound_x_m,
+            config.occupancy_max_bound_y_m,
+            config.occupancy_max_bound_z_m,
+        ),
+        config.occupancy_occupied_threshold,
+        config.occupancy_free_threshold,
+        config.occupancy_occupied_probability_increment,
+        config.occupancy_free_probability_decrement,
+    );
+    let mut occupancy_grid = OccupancyGrid::new(occupancy_grid_config);
 
     // Walk samples via next chain
     let mut current_token = nuscenes_scene.first_sample_token.clone();
@@ -347,7 +374,7 @@ fn run_visualization() -> Result<()> {
                     build_transform(lidar_calibration.rotation, lidar_calibration.translation);
                 let lidar_to_camera = vehicle_to_camera * lidar_to_vehicle;
                 let lidar_file_path = files_root.join(Path::new(&lidar_sample_data.filename));
-                (lidar_to_camera, lidar_file_path)
+                (lidar_to_camera, lidar_to_vehicle, lidar_file_path)
             },
         );
 
@@ -357,17 +384,73 @@ fn run_visualization() -> Result<()> {
         {
             tracing::warn!("Failed to log camera image: {error}");
         }
+
+        // Log ego vehicle representation (box + forward arrow)
+        if let Err(error) = log_ego_vehicle_to_rerun(
+            &recording,
+            "world/ego_vehicle",
+            config.ego_vehicle_half_length_m,
+            config.ego_vehicle_half_width_m,
+            config.ego_vehicle_half_height_m,
+            config.ego_vehicle_elevation_m,
+        ) {
+            tracing::warn!("Failed to log ego vehicle: {error}");
+        }
+
         if let Some((_, ref radar_file_path)) = radar_info
             && let Ok(radar_data) = load_radar_data(radar_file_path)
             && let Err(error) = log_radar_to_rerun(&recording, &radar_data, "world/sensors/radar")
         {
             tracing::warn!("Failed to log radar data: {error}");
         }
-        if let Some((_, ref lidar_file_path)) = lidar_info
+        if let Some((_, ref lidar_to_vehicle, ref lidar_file_path)) = lidar_info
             && let Ok(lidar_data) = load_lidar_data(lidar_file_path)
-            && let Err(error) = log_lidar_to_rerun(&recording, &lidar_data, "world/sensors/lidar")
         {
-            tracing::warn!("Failed to log lidar data: {error}");
+            // Log raw LiDAR point cloud (sensor frame)
+            if let Err(error) = log_lidar_to_rerun(&recording, &lidar_data, "world/sensors/lidar") {
+                tracing::warn!("Failed to log lidar data: {error}");
+            }
+
+            // Apply decay to existing voxels (for dynamic obstacle handling)
+            decay_occupancy_probabilities(&mut occupancy_grid, config.occupancy_decay_rate);
+
+            // Clear voxels outside local area (keep grid centered on vehicle)
+            clear_distant_voxels(&mut occupancy_grid, config.occupancy_clear_distance_m);
+
+            // Transform LiDAR points to vehicle frame
+            if let Ok(lidar_data_vehicle) =
+                transform_lidar_to_vehicle(&lidar_data, lidar_to_vehicle)
+            {
+                // Sensor origin in vehicle frame (from lidar_to_vehicle translation)
+                let sensor_origin = lidar_to_vehicle.column(3).xyz().cast::<f32>();
+
+                // Build occupancy grid from LiDAR data in vehicle frame
+                if let Err(error) = build_occupancy_grid_from_lidar(
+                    &mut occupancy_grid,
+                    &lidar_data_vehicle,
+                    &sensor_origin,
+                ) {
+                    tracing::warn!("Failed to build occupancy grid: {error}");
+                } else {
+                    // Log occupancy grid visualization
+                    if let Err(error) = log_occupancy_grid_to_rerun(
+                        &recording,
+                        &occupancy_grid,
+                        "world/occupancy_grid",
+                    ) {
+                        tracing::warn!("Failed to log occupancy grid: {error}");
+                    } else {
+                        tracing::info!(
+                            "Occupancy grid: {} occupied, {} free, {} unknown voxels (vehicle frame)",
+                            occupancy_grid.occupied_voxel_count(),
+                            occupancy_grid.free_voxel_count(),
+                            occupancy_grid.unknown_voxel_count()
+                        );
+                    }
+                }
+            } else {
+                tracing::warn!("Failed to transform LiDAR data to vehicle frame");
+            }
         }
 
         // Route to appropriate visualization based on available sensors
@@ -375,7 +458,7 @@ fn run_visualization() -> Result<()> {
             // Case 1: Camera + Radar + Lidar (all three sensors)
             (
                 Some((radar_to_camera, radar_file_path)),
-                Some((lidar_to_camera, lidar_file_path)),
+                Some((lidar_to_camera, _lidar_to_vehicle, lidar_file_path)),
             ) => {
                 tracing::info!("Using Camera + Radar + Lidar fusion");
                 visualize_camera_radar_lidar_fusion(
@@ -404,7 +487,7 @@ fn run_visualization() -> Result<()> {
             }
 
             // Case 3: Camera + Lidar (no radar)
-            (None, Some((lidar_to_camera, lidar_file_path))) => {
+            (None, Some((lidar_to_camera, _lidar_to_vehicle, lidar_file_path))) => {
                 tracing::info!("Using Camera + Lidar fusion");
                 visualize_camera_lidar_fusion(
                     &camera_image_path,
