@@ -12,7 +12,7 @@ mod webtransport;
 
 use anyhow::Result;
 use axum::Router;
-use axum::http::{HeaderValue, Method};
+use axum::http::{HeaderValue, Method, StatusCode};
 use axum::routing::{get, post};
 use std::net::SocketAddr;
 use std::sync::Arc;
@@ -60,7 +60,8 @@ async fn main() -> Result<()> {
         schema: schema.clone(),
     };
     let compression = CompressionLayer::new();
-    let timeout = TimeoutLayer::new(Duration::from_secs(30));
+    let timeout =
+        TimeoutLayer::with_status_code(StatusCode::REQUEST_TIMEOUT, Duration::from_secs(30));
     let allowed_origins: Vec<HeaderValue> = config
         .server_cors_allowed_origins
         .iter()
