@@ -8,6 +8,7 @@ mod shared;
 
 use crate::config::AppConfig;
 use crate::shared::camera::services::detect_objects_in_camera::YoloModel;
+use crate::shared::camera::services::log_camera_calibration_to_rerun::log_camera_calibration_to_rerun;
 use crate::shared::camera::services::log_camera_to_rerun::log_camera_to_rerun;
 use crate::shared::camera::services::visualize_camera_only::visualize_camera_only;
 use crate::shared::fusion::services::visualize_camera_lidar_fusion::visualize_camera_lidar_fusion;
@@ -40,6 +41,15 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
+
+const CAMERA_NAMES: [&str; 6] = [
+    "CAM_FRONT_LEFT",
+    "CAM_FRONT",
+    "CAM_FRONT_RIGHT",
+    "CAM_BACK_RIGHT",
+    "CAM_BACK",
+    "CAM_BACK_LEFT",
+];
 
 fn read_json_array<T: for<'de> Deserialize<'de>>(path: &Path) -> Result<Vec<T>> {
     let bytes = fs::read(path).with_context(|| format!("Failed to read {}", path.display()))?;
@@ -210,48 +220,40 @@ fn run_visualization() -> Result<()> {
                 }
             };
 
-        let mut camera_sample_data_option: Option<&NuscenesSampleData> = None;
+        let mut camera_sample_data_map: HashMap<&str, &NuscenesSampleData> = HashMap::new();
         let mut radar_sample_data_option: Option<&NuscenesSampleData> = None;
         let mut lidar_sample_data_option: Option<&NuscenesSampleData> = None;
+
         for nuscenes_sample_data_item in nuscenes_sample_data_list {
             let channel = channel_by_calibration
                 .get(nuscenes_sample_data_item.calibrated_sensor_token.as_str())
                 .copied()
                 .unwrap_or_else(|| infer_channel(&nuscenes_sample_data_item.filename));
             let is_sample_path = nuscenes_sample_data_item.filename.contains("samples/");
-            match channel {
-                "CAM_FRONT" => {
-                    if camera_sample_data_option.is_none()
-                        || (nuscenes_sample_data_item.is_key_frame && is_sample_path)
-                    {
-                        camera_sample_data_option = Some(nuscenes_sample_data_item);
-                    }
+
+            if CAMERA_NAMES.contains(&channel) {
+                if !camera_sample_data_map.contains_key(channel)
+                    || (nuscenes_sample_data_item.is_key_frame && is_sample_path)
+                {
+                    camera_sample_data_map.insert(channel, nuscenes_sample_data_item);
                 }
-                "RADAR_FRONT" => {
-                    if radar_sample_data_option.is_none()
-                        || (nuscenes_sample_data_item.is_key_frame && is_sample_path)
-                    {
-                        radar_sample_data_option = Some(nuscenes_sample_data_item);
-                    }
+            } else if channel == "RADAR_FRONT" {
+                if radar_sample_data_option.is_none()
+                    || (nuscenes_sample_data_item.is_key_frame && is_sample_path)
+                {
+                    radar_sample_data_option = Some(nuscenes_sample_data_item);
                 }
-                "LIDAR_TOP" => {
-                    if lidar_sample_data_option.is_none()
-                        || (nuscenes_sample_data_item.is_key_frame && is_sample_path)
-                    {
-                        lidar_sample_data_option = Some(nuscenes_sample_data_item);
-                    }
-                }
-                _ => {}
+            } else if channel == "LIDAR_TOP"
+                && (lidar_sample_data_option.is_none()
+                    || (nuscenes_sample_data_item.is_key_frame && is_sample_path))
+            {
+                lidar_sample_data_option = Some(nuscenes_sample_data_item);
             }
         }
 
-        // Camera is required (industry standard)
-        let camera_sample_data = match camera_sample_data_option {
-            Some(nuscenes_sample_data_item)
-                if nuscenes_sample_data_item.filename.contains("CAM_FRONT") =>
-            {
-                nuscenes_sample_data_item
-            }
+        // Camera is required (industry standard) - use CAM_FRONT for fusion
+        let camera_sample_data = match camera_sample_data_map.get("CAM_FRONT") {
+            Some(&nuscenes_sample_data_item) => nuscenes_sample_data_item,
             _ => {
                 tracing::warn!(
                     "Sample {} has no CAM_FRONT data; skipping",
@@ -378,11 +380,52 @@ fn run_visualization() -> Result<()> {
             },
         );
 
-        // Log sensor data to Rerun for 3D visualization
-        if let Err(error) =
-            log_camera_to_rerun(&recording, &camera_image_path, "world/camera/image")
-        {
-            tracing::warn!("Failed to log camera image: {error}");
+        // Log all camera views to Rerun for 3D visualization
+        for (camera_name, camera_data) in &camera_sample_data_map {
+            let camera_path = files_root.join(Path::new(&camera_data.filename));
+            let entity_path = format!("world/ego_vehicle/{}", camera_name);
+
+            // Get camera calibration
+            if let Some(camera_calibration) =
+                nuscenes_calibrated_sensor_by_token.get(&camera_data.calibrated_sensor_token)
+            {
+                if camera_calibration.camera_intrinsic.len() != 3
+                    || camera_calibration
+                        .camera_intrinsic
+                        .iter()
+                        .any(|row| row.len() != 3)
+                {
+                    tracing::warn!(
+                        "Invalid camera intrinsic for sensor {}; skipping calibration logging",
+                        camera_data.calibrated_sensor_token
+                    );
+                } else if let Err(error) = log_camera_calibration_to_rerun(
+                    &recording,
+                    &entity_path,
+                    &nalgebra::Matrix3::from_row_slice(&[
+                        camera_calibration.camera_intrinsic[0][0],
+                        camera_calibration.camera_intrinsic[0][1],
+                        camera_calibration.camera_intrinsic[0][2],
+                        camera_calibration.camera_intrinsic[1][0],
+                        camera_calibration.camera_intrinsic[1][1],
+                        camera_calibration.camera_intrinsic[1][2],
+                        camera_calibration.camera_intrinsic[2][0],
+                        camera_calibration.camera_intrinsic[2][1],
+                        camera_calibration.camera_intrinsic[2][2],
+                    ]),
+                    camera_calibration.rotation,
+                    camera_calibration.translation,
+                    camera_data.width,
+                    camera_data.height,
+                ) {
+                    tracing::warn!("Failed to log {} camera calibration: {error}", camera_name);
+                }
+            }
+
+            // Log camera image
+            if let Err(error) = log_camera_to_rerun(&recording, &camera_path, &entity_path) {
+                tracing::warn!("Failed to log {} camera image: {error}", camera_name);
+            }
         }
 
         // Log ego vehicle representation (box + forward arrow)
