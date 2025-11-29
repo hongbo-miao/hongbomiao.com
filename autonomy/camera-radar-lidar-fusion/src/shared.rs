@@ -4,6 +4,7 @@ pub mod camera {
     }
     pub mod services {
         pub mod detect_objects_in_camera;
+        pub mod log_camera_calibration_to_rerun;
         pub mod log_camera_to_rerun;
         pub mod visualize_camera_only;
     }
