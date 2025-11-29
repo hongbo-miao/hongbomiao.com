@@ -251,6 +251,8 @@ jobs:
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/**'
             amazon-sagemaker-triton-resnet-50-infer:
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/**'
+            analyze-sentiment:
+              - 'large-language-model-inference/analyze-sentiment/**'
             api-go:
               - 'api/api-go/**'
             api-node:
@@ -514,8 +516,6 @@ jobs:
               - 'audio/automatic-speech-recognition/hm-whisperx/**'
             hm-xxhash:
               - 'system-tool/hm-xxhash/**'
-            hugging-face-analyze-sentiment:
-              - 'machine-learning/hugging-face/analyze-sentiment/**'
             hyperparameter-optimization:
               - 'machine-learning/hyperparameter-optimization/**'
             iads-config-reader:
@@ -685,6 +685,7 @@ jobs:
       amazon-sagemaker-pytorch-mnist: ${{ steps.filter.outputs.amazon-sagemaker-pytorch-mnist }}
       amazon-sagemaker-triton-resnet-50-deploy: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-deploy }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-infer }}
+      analyze-sentiment: ${{ steps.filter.outputs.analyze-sentiment }}
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
@@ -814,7 +815,6 @@ jobs:
       hm-webrtcvad: ${{ steps.filter.outputs.hm-webrtcvad }}
       hm-whisperx: ${{ steps.filter.outputs.hm-whisperx }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
-      hugging-face-analyze-sentiment: ${{ steps.filter.outputs.hugging-face-analyze-sentiment }}
       iads-config-reader: ${{ steps.filter.outputs.iads-config-reader }}
       iads-data-producer: ${{ steps.filter.outputs.iads-data-producer }}
       iads-data-reader: ${{ steps.filter.outputs.iads-data-reader }}
@@ -1173,6 +1173,7 @@ jobs:
       # Applications
       amazon-sagemaker-triton-resnet-50-deploy: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-deploy == 'true' }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
+      analyze-sentiment: ${{ needs.detect-changes.outputs.analyze-sentiment == 'true' }}
       automatic-mixed-precision: ${{ needs.detect-changes.outputs.automatic-mixed-precision == 'true' }}
       bert: ${{ needs.detect-changes.outputs.bert == 'true' }}
       byte-pair-encoding: ${{ needs.detect-changes.outputs.byte-pair-encoding == 'true' }}
@@ -1219,7 +1220,6 @@ jobs:
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
       hm-webrtcvad: ${{ needs.detect-changes.outputs.hm-webrtcvad == 'true' }}
       hm-whisperx: ${{ needs.detect-changes.outputs.hm-whisperx == 'true' }}
-      hugging-face-analyze-sentiment: ${{ needs.detect-changes.outputs.hugging-face-analyze-sentiment == 'true' }}
       hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
       kv-caching: ${{ needs.detect-changes.outputs.kv-caching == 'true' }}
       model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
