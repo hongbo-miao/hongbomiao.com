@@ -398,6 +398,8 @@ jobs:
               - 'large-language-model-application/hm-langchain/applications/chat-pdf/**'
             hm-langgraph-chat-pdf:
               - 'large-language-model-application/hm-langgraph/applications/chat-pdf/**'
+            hm-librosa:
+              - 'audio/audio-signal-analysis/hm-librosa/**'
             hm-llama-factory:
               - 'large-language-model-post-training/fine-tuning/hm-llama-factory/**'
             hm-llama-index-chat-pdf:
@@ -756,6 +758,7 @@ jobs:
       hm-lancedb: ${{ steps.filter.outputs.hm-lancedb }}
       hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
       hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
+      hm-librosa: ${{ steps.filter.outputs.hm-librosa }}
       hm-llama-factory: ${{ steps.filter.outputs.hm-llama-factory }}
       hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
       hm-locust: ${{ steps.filter.outputs.hm-locust }}
@@ -1092,7 +1095,6 @@ jobs:
       hm-networkx: ${{ needs.detect-changes.outputs.hm-networkx == 'true' }}
       hm-numba: ${{ needs.detect-changes.outputs.hm-numba == 'true' }}
       hm-pandas-analyze-transactions: ${{ needs.detect-changes.outputs.hm-pandas-analyze-transactions == 'true' }}
-      hm-polars-analyze-transactions-cpu: ${{ needs.detect-changes.outputs.hm-polars-analyze-transactions-cpu == 'true' }}
       hm-polars-analyze-transactions-gpu: ${{ needs.detect-changes.outputs.hm-polars-analyze-transactions-gpu == 'true' }}
 
   test-data-visualization:
@@ -1199,6 +1201,7 @@ jobs:
       hm-kubeflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
       hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
       hm-langgraph-chat-pdf: ${{ needs.detect-changes.outputs.hm-langgraph-chat-pdf == 'true' }}
+      hm-librosa: ${{ needs.detect-changes.outputs.hm-librosa == 'true' }}
       hm-llama-factory: ${{ needs.detect-changes.outputs.hm-llama-factory == 'true' }}
       hm-llama-index-chat-pdf: ${{ needs.detect-changes.outputs.hm-llama-index-chat-pdf == 'true' }}
       hm-mineru: ${{ needs.detect-changes.outputs.hm-mineru == 'true' }}
