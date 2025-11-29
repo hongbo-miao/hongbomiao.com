@@ -807,7 +807,7 @@ jobs:
       - name: Install system dependencies
         uses: awalsh128/cache-apt-pkgs-action@v1.6.0
         with:
-          packages: build-essential clang cmake libavcodec-dev libavformat-dev libclang-dev libgtk-3-dev libjpeg-dev libpng-dev libswscale-dev libtbb-dev libtiff-dev pkg-config
+          packages: build-essential clang cmake libavcodec-dev libavformat-dev libclang-dev libjpeg-dev libpng-dev libswscale-dev libtbb-dev libtiff-dev pkg-config
           version: 1.0
       - name: Install OpenCV
         run: |
@@ -816,7 +816,7 @@ jobs:
           mkdir /tmp/opencv/build
           cmake -S /tmp/opencv -B /tmp/opencv/build \
             -DCMAKE_BUILD_TYPE=Release \
-            -DBUILD_LIST=core,imgproc,imgcodecs,dnn,highgui \
+            -DBUILD_LIST=core,imgproc,imgcodecs,dnn \
             -DBUILD_TESTS=OFF \
             -DBUILD_PERF_TESTS=OFF \
             -DBUILD_EXAMPLES=OFF \
