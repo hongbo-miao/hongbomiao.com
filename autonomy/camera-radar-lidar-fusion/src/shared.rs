@@ -98,3 +98,11 @@ pub mod occupancy {
         pub mod log_occupancy_grid_to_rerun;
     }
 }
+pub mod rerun {
+    pub mod constants {
+        pub mod entity_paths;
+    }
+    pub mod services {
+        pub mod log_rerun_image;
+    }
+}

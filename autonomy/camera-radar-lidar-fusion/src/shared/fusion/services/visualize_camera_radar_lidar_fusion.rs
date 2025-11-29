@@ -13,18 +13,21 @@ use crate::shared::lidar::utils::project_lidar_to_camera::project_lidar_to_camer
 use crate::shared::radar::services::create_radar_detection::create_radar_detection;
 use crate::shared::radar::services::load_radar_data::load_radar_data;
 use crate::shared::radar::utils::project_radar_to_camera::project_radar_to_camera;
+use crate::shared::rerun::constants::entity_paths::FUSION_VISUALIZATION_ENTITY_PATH;
+use crate::shared::rerun::services::log_rerun_image::log_rerun_image;
 use anyhow::{Context, Result};
 use nalgebra::{Matrix3, Matrix4, Vector3};
 use opencv::core::{Point, Rect, Scalar};
-use opencv::highgui::{imshow, wait_key};
 use opencv::imgcodecs::imread;
 use opencv::imgproc::{HersheyFonts, LINE_8, get_text_size, put_text, rectangle};
 use opencv::prelude::MatTraitConst;
+use rerun as rr;
 use std::path::Path;
-use tracing::{info, warn};
+use tracing::warn;
 
 #[allow(clippy::too_many_arguments)]
 pub fn visualize_camera_radar_lidar_fusion<P: AsRef<Path>>(
+    recording: &rr::RecordingStream,
     camera_image_path: P,
     radar_data_path: P,
     lidar_data_path: P,
@@ -33,7 +36,7 @@ pub fn visualize_camera_radar_lidar_fusion<P: AsRef<Path>>(
     lidar_to_camera: Matrix4<f64>,
     yolo_model: &mut YoloModel,
     config: AppConfig,
-) -> Result<bool> {
+) -> Result<()> {
     let image = imread(
         camera_image_path
             .as_ref()
@@ -45,7 +48,7 @@ pub fn visualize_camera_radar_lidar_fusion<P: AsRef<Path>>(
 
     if image.empty() {
         warn!("Failed to load image");
-        return Ok(true);
+        return Ok(());
     }
 
     let radar_data = load_radar_data(radar_data_path)?;
@@ -444,39 +447,7 @@ pub fn visualize_camera_radar_lidar_fusion<P: AsRef<Path>>(
         false,
     )?;
 
-    let controls_text = "Controls: [Space] Pause/Resume | [q] Quit";
-    put_text(
-        &mut visualization,
-        controls_text,
-        Point::new(10, 85),
-        HersheyFonts::FONT_HERSHEY_SIMPLEX as i32,
-        0.3,
-        Scalar::new(255.0, 255.0, 255.0, 0.0),
-        1,
-        LINE_8,
-        false,
-    )?;
+    log_rerun_image(recording, &visualization, FUSION_VISUALIZATION_ENTITY_PATH)?;
 
-    imshow("Camera-Radar-Lidar Fusion", &visualization)?;
-    let key = wait_key(10)?;
-    if key == 'q' as i32 {
-        info!("Visualization stopped by user request");
-        return Ok(false);
-    } else if key == ' ' as i32 {
-        info!("Paused - Press [Space] to resume or [q] to quit");
-        loop {
-            let pause_key = wait_key(0)?;
-            if pause_key == ' ' as i32 {
-                info!("Resumed");
-                break;
-            } else if pause_key == 'q' as i32 {
-                info!("Visualization stopped by user request");
-                return Ok(false);
-            }
-        }
-    }
-
-    info!("Visualization complete");
-
-    Ok(true)
+    Ok(())
 }
