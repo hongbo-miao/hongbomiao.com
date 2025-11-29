@@ -15,6 +15,9 @@ name: . Test Machine Learning
       amazon-sagemaker-triton-resnet-50-infer:
         required: true
         type: boolean
+      analyze-sentiment:
+        required: true
+        type: boolean
       automatic-mixed-precision:
         required: true
         type: boolean
@@ -151,9 +154,6 @@ name: . Test Machine Learning
         required: true
         type: boolean
       hm-whisperx:
-        required: true
-        type: boolean
-      hugging-face-analyze-sentiment:
         required: true
         type: boolean
       hyperparameter-optimization:
@@ -334,39 +334,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: machine-learning/hm-cuml
-
-  hugging-face-analyze-sentiment-test:
-    name: Hugging Face (analyze-sentiment) | Test
-    if: ${{ inputs.workflow || inputs.hugging-face-analyze-sentiment }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.4
-        with:
-          version: 0.9.13
-          enable-cache: true
-          cache-dependency-glob: machine-learning/hugging-face/analyze-sentiment/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: machine-learning/hugging-face/analyze-sentiment/.python-version
-      - name: Install dependencies
-        working-directory: machine-learning/hugging-face/analyze-sentiment
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/hugging-face/analyze-sentiment
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/hugging-face/analyze-sentiment
 
   gradio-classify-image-test:
     name: Gradio (classify-image) | Test
@@ -1234,6 +1201,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-inference/speculative-decoding
+
+  analyze-sentiment-test:
+    name: Analyze Sentiment | Test
+    if: ${{ inputs.workflow || inputs.analyze-sentiment }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.4
+        with:
+          version: 0.9.13
+          enable-cache: true
+          cache-dependency-glob: large-language-model-inference/analyze-sentiment/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: large-language-model-inference/analyze-sentiment/.python-version
+      - name: Install dependencies
+        working-directory: large-language-model-inference/analyze-sentiment
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: large-language-model-inference/analyze-sentiment
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: large-language-model-inference/analyze-sentiment
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
