@@ -93,6 +93,9 @@ name: . Test Machine Learning
       hm-langgraph-chat-pdf:
         required: true
         type: boolean
+      hm-librosa:
+        required: true
+        type: boolean
       hm-llama-factory:
         required: true
         type: boolean
@@ -1762,6 +1765,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: audio/speaker-diarization/hm-diart
+
+  librosa-test:
+    name: Librosa | Test
+    if: ${{ inputs.workflow || inputs.hm-librosa }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.4
+        with:
+          version: 0.9.13
+          enable-cache: true
+          cache-dependency-glob: audio/audio-signal-analysis/hm-librosa/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: audio/audio-signal-analysis/hm-librosa/.python-version
+      - name: Install dependencies
+        working-directory: audio/audio-signal-analysis/hm-librosa
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: audio/audio-signal-analysis/hm-librosa
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: audio/audio-signal-analysis/hm-librosa
 
   faster-whisper-test:
     name: Faster Whisper | Test
