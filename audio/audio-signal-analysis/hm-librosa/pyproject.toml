@@ -1,0 +1,23 @@
+[project]
+name = "hm-librosa"
+version = "1.0.0"
+dependencies = [
+  "librosa==0.11.0",
+  "numpy==2.3.5",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.38.0",
+  "pytest-cov==7.0.0",
+  "pytest==9.0.1",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.8.0"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

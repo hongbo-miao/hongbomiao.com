@@ -472,6 +472,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=aerospace.x-plane.udp
     uv run poe static-type-check-python --package=api.api-python
     uv run poe static-type-check-python --package=api.api-rust.scripts
+    uv run poe static-type-check-python --package=audio.audio-signal-analysis.hm-librosa
     uv run poe static-type-check-python --package=audio.automatic-speech-recognition.hm-faster-whisper
     uv run poe static-type-check-python --package=audio.automatic-speech-recognition.hm-speaches
     uv run poe static-type-check-python --package=audio.automatic-speech-recognition.hm-whisperx
