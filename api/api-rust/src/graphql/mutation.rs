@@ -1,4 +1,5 @@
 use async_graphql::{Context, Object, SimpleObject, Upload};
+use ndarray::{Array4, CowArray};
 use serde::Serialize;
 use sqlx::PgPool;
 use std::io::Read;
@@ -50,8 +51,8 @@ impl Mutation {
         let session = load_model()?;
 
         // Create input tensor for ONNX Runtime
-        let input_array = ndarray::CowArray::from(
-            ndarray::Array4::from_shape_vec((1, 3, 224, 224), image_data_processed)
+        let input_array = CowArray::from(
+            Array4::from_shape_vec((1, 3, 224, 224), image_data_processed)
                 .map_err(|error| format!("Failed to create input array: {}", error))?,
         )
         .into_dyn();
