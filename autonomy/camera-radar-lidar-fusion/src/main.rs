@@ -454,7 +454,7 @@ fn run_visualization() -> Result<()> {
         }
 
         // Route to appropriate visualization based on available sensors
-        let should_continue = match (radar_info, lidar_info) {
+        match (radar_info, lidar_info) {
             // Case 1: Camera + Radar + Lidar (all three sensors)
             (
                 Some((radar_to_camera, radar_file_path)),
@@ -462,6 +462,7 @@ fn run_visualization() -> Result<()> {
             ) => {
                 tracing::info!("Using Camera + Radar + Lidar fusion");
                 visualize_camera_radar_lidar_fusion(
+                    &recording,
                     &camera_image_path,
                     &radar_file_path,
                     &lidar_file_path,
@@ -470,49 +471,47 @@ fn run_visualization() -> Result<()> {
                     lidar_to_camera,
                     &mut yolo_model,
                     AppConfig::get().clone(),
-                )?
+                )?;
             }
 
             // Case 2: Camera + Radar (no lidar)
             (Some((radar_to_camera, radar_file_path)), None) => {
                 tracing::info!("Using Camera + Radar fusion");
                 visualize_camera_radar_fusion(
+                    &recording,
                     &camera_image_path,
                     &radar_file_path,
                     camera_intrinsic,
                     radar_to_camera,
                     &mut yolo_model,
                     AppConfig::get().clone(),
-                )?
+                )?;
             }
 
             // Case 3: Camera + Lidar (no radar)
             (None, Some((lidar_to_camera, _lidar_to_vehicle, lidar_file_path))) => {
                 tracing::info!("Using Camera + Lidar fusion");
                 visualize_camera_lidar_fusion(
+                    &recording,
                     &camera_image_path,
                     &lidar_file_path,
                     camera_intrinsic,
                     lidar_to_camera,
                     &mut yolo_model,
                     AppConfig::get().clone(),
-                )?
+                )?;
             }
 
             // Case 4: Camera only (no radar, no lidar)
             (None, None) => {
                 tracing::info!("Using Camera only");
                 visualize_camera_only(
+                    &recording,
                     &camera_image_path,
                     &mut yolo_model,
                     AppConfig::get().clone(),
-                )?
+                )?;
             }
-        };
-
-        if !should_continue {
-            tracing::info!("Exiting visualization loop");
-            break;
         }
 
         frames += 1;

@@ -3,20 +3,22 @@ use crate::shared::camera::services::detect_objects_in_camera::{
     YoloModel, detect_objects_in_camera,
 };
 use crate::shared::fusion::constants::colors::{COLOR_BLACK_SCALAR, COLOR_RED_SCALAR};
+use crate::shared::rerun::constants::entity_paths::FUSION_VISUALIZATION_ENTITY_PATH;
+use crate::shared::rerun::services::log_rerun_image::log_rerun_image;
 use anyhow::{Context, Result};
 use opencv::core::{Point, Rect, Scalar};
-use opencv::highgui::{imshow, wait_key};
 use opencv::imgcodecs::imread;
 use opencv::imgproc::{HersheyFonts, LINE_8, get_text_size, put_text, rectangle};
 use opencv::prelude::MatTraitConst;
+use rerun as rr;
 use std::path::Path;
-use tracing::info;
 
 pub fn visualize_camera_only<P: AsRef<Path>>(
+    recording: &rr::RecordingStream,
     camera_image_path: P,
     yolo_model: &mut YoloModel,
     _config: AppConfig,
-) -> Result<bool> {
+) -> Result<()> {
     let image = imread(
         camera_image_path
             .as_ref()
@@ -27,7 +29,7 @@ pub fn visualize_camera_only<P: AsRef<Path>>(
     .context("Failed to load camera image")?;
 
     if image.empty() {
-        return Ok(true);
+        return Ok(());
     }
 
     let camera_detections = detect_objects_in_camera(&image, yolo_model, 0.6)?;
@@ -104,39 +106,7 @@ pub fn visualize_camera_only<P: AsRef<Path>>(
         false,
     )?;
 
-    let controls_text = "Controls: [Space] Pause/Resume | [q] Quit";
-    put_text(
-        &mut visualization,
-        controls_text,
-        Point::new(10, 60),
-        HersheyFonts::FONT_HERSHEY_SIMPLEX as i32,
-        0.3,
-        Scalar::new(255.0, 255.0, 255.0, 0.0),
-        1,
-        LINE_8,
-        false,
-    )?;
+    log_rerun_image(recording, &visualization, FUSION_VISUALIZATION_ENTITY_PATH)?;
 
-    imshow("Camera Only", &visualization)?;
-    let key = wait_key(50)?;
-    if key == 'q' as i32 {
-        info!("Visualization stopped by user request");
-        return Ok(false);
-    } else if key == ' ' as i32 {
-        info!("Paused - Press [Space] to resume or [q] to quit");
-        loop {
-            let pause_key = wait_key(0)?;
-            if pause_key == ' ' as i32 {
-                info!("Resumed");
-                break;
-            } else if pause_key == 'q' as i32 {
-                info!("Visualization stopped by user request");
-                return Ok(false);
-            }
-        }
-    }
-
-    info!("Visualization complete");
-
-    Ok(true)
+    Ok(())
 }
