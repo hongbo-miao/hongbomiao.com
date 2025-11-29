@@ -7,7 +7,6 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-  "huggingface-hub==0.36.0",
   "poethepoet==0.38.0",
   "pytest-cov==7.0.0",
   "pytest==9.0.1",
@@ -18,7 +17,6 @@ package = false
 required-version = ">=0.8.0"
 
 [tool.poe.tasks]
-download-model = "python src/download_model.py"
 launch-server = "python -m sglang.launch_server --model-path=Qwen/Qwen2.5-0.5B-Instruct --port=19863"
 
 dev = "python src/main.py"
