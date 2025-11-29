@@ -11,7 +11,6 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-  "huggingface-hub==0.36.0",
   "poethepoet==0.38.0",
   "pytest-cov==7.0.0",
   "pytest==9.0.1",
@@ -22,7 +21,6 @@ package = false
 required-version = ">=0.8.0"
 
 [tool.poe.tasks]
-hugging-face-sign-in = "huggingface-cli login"
 dev = "torchrun --nproc_per_node=1 src/main.py"
 test = "pytest --verbose --verbose"
 test-coverage = "pytest --cov=. --cov-report=xml"

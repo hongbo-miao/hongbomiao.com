@@ -1,5 +1,3 @@
-"""Whisper Fine-tuning for Multilingual ASR."""
-
 import logging
 from dataclasses import dataclass
 from typing import Any
