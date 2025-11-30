@@ -6,7 +6,7 @@ pub mod camera {
         pub mod detect_objects_in_camera;
         pub mod log_camera_calibration_to_rerun;
         pub mod log_camera_to_rerun;
-        pub mod visualize_camera_only;
+        pub mod visualize_camera_detections;
     }
 }
 pub mod radar {
@@ -71,7 +71,6 @@ pub mod map {
         pub mod load_ego_pose;
         pub mod log_ego_position_to_rerun;
         pub mod log_ego_trajectory_to_rerun;
-        pub mod log_ego_vehicle_to_rerun;
     }
     pub mod utils {
         pub mod derive_latitude_longitude;

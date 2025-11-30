@@ -10,7 +10,7 @@ use crate::config::AppConfig;
 use crate::shared::camera::services::detect_objects_in_camera::YoloModel;
 use crate::shared::camera::services::log_camera_calibration_to_rerun::log_camera_calibration_to_rerun;
 use crate::shared::camera::services::log_camera_to_rerun::log_camera_to_rerun;
-use crate::shared::camera::services::visualize_camera_only::visualize_camera_only;
+use crate::shared::camera::services::visualize_camera_detections::visualize_camera_detections;
 use crate::shared::fusion::services::visualize_camera_lidar_fusion::visualize_camera_lidar_fusion;
 use crate::shared::fusion::services::visualize_camera_radar_fusion::visualize_camera_radar_fusion;
 use crate::shared::fusion::services::visualize_camera_radar_lidar_fusion::visualize_camera_radar_lidar_fusion;
@@ -20,7 +20,6 @@ use crate::shared::lidar::utils::transform_lidar_to_vehicle::transform_lidar_to_
 use crate::shared::map::services::load_ego_pose::load_ego_poses;
 use crate::shared::map::services::log_ego_position_to_rerun::log_ego_position_to_rerun;
 use crate::shared::map::services::log_ego_trajectory_to_rerun::log_ego_trajectory_to_rerun;
-use crate::shared::map::services::log_ego_vehicle_to_rerun::log_ego_vehicle_to_rerun;
 use crate::shared::nuscenes::types::nuscenes_calibrated_sensor::NuscenesCalibratedSensor;
 use crate::shared::nuscenes::types::nuscenes_log::NuscenesLog;
 use crate::shared::nuscenes::types::nuscenes_sample::NuscenesSample;
@@ -34,6 +33,11 @@ use crate::shared::occupancy::services::log_occupancy_grid_to_rerun::log_occupan
 use crate::shared::occupancy::types::occupancy_grid::{OccupancyGrid, OccupancyGridConfig};
 use crate::shared::radar::services::load_radar_data::load_radar_data;
 use crate::shared::radar::services::log_radar_to_rerun::log_radar_to_rerun;
+use crate::shared::rerun::constants::entity_paths::{
+    CAMERA_ENTITY_PATH_PREFIX, EGO_VEHICLE_POSITION_ENTITY_PATH,
+    EGO_VEHICLE_TRAJECTORY_ENTITY_PATH, LIDAR_TOP_ENTITY_PATH, OCCUPANCY_GRID_ENTITY_PATH,
+    RADAR_ENTITY_PATH_PREFIX,
+};
 use anyhow::{Context, Result, bail};
 use nalgebra::{Matrix3, Matrix4, Quaternion, UnitQuaternion};
 use rerun as rr;
@@ -49,6 +53,14 @@ const CAMERA_NAMES: [&str; 6] = [
     "CAM_BACK_RIGHT",
     "CAM_BACK",
     "CAM_BACK_LEFT",
+];
+
+const RADAR_NAMES: [&str; 5] = [
+    "RADAR_BACK_LEFT",
+    "RADAR_BACK_RIGHT",
+    "RADAR_FRONT",
+    "RADAR_FRONT_LEFT",
+    "RADAR_FRONT_RIGHT",
 ];
 
 fn read_json_array<T: for<'de> Deserialize<'de>>(path: &Path) -> Result<Vec<T>> {
@@ -221,7 +233,7 @@ fn run_visualization() -> Result<()> {
             };
 
         let mut camera_sample_data_map: HashMap<&str, &NuscenesSampleData> = HashMap::new();
-        let mut radar_sample_data_option: Option<&NuscenesSampleData> = None;
+        let mut radar_sample_data_map: HashMap<&str, &NuscenesSampleData> = HashMap::new();
         let mut lidar_sample_data_option: Option<&NuscenesSampleData> = None;
 
         for nuscenes_sample_data_item in nuscenes_sample_data_list {
@@ -237,11 +249,11 @@ fn run_visualization() -> Result<()> {
                 {
                     camera_sample_data_map.insert(channel, nuscenes_sample_data_item);
                 }
-            } else if channel == "RADAR_FRONT" {
-                if radar_sample_data_option.is_none()
+            } else if RADAR_NAMES.contains(&channel) {
+                if !radar_sample_data_map.contains_key(channel)
                     || (nuscenes_sample_data_item.is_key_frame && is_sample_path)
                 {
-                    radar_sample_data_option = Some(nuscenes_sample_data_item);
+                    radar_sample_data_map.insert(channel, nuscenes_sample_data_item);
                 }
             } else if channel == "LIDAR_TOP"
                 && (lidar_sample_data_option.is_none()
@@ -271,7 +283,7 @@ fn run_visualization() -> Result<()> {
                 &recording,
                 ego_pose,
                 location,
-                "world/ego_vehicle/position",
+                EGO_VEHICLE_POSITION_ENTITY_PATH,
             ) {
                 tracing::warn!("Failed to log ego position: {error}");
             }
@@ -284,17 +296,19 @@ fn run_visualization() -> Result<()> {
                 &recording,
                 &trajectory_ego_poses,
                 location,
-                "world/ego_vehicle/trajectory",
+                EGO_VEHICLE_TRAJECTORY_ENTITY_PATH,
             ) {
                 tracing::warn!("Failed to log ego trajectory: {error}");
             }
         }
 
         // Radar and Lidar are optional
-        let radar_sample_data_result =
-            radar_sample_data_option.filter(|nuscenes_sample_data_item| {
+        let radar_sample_data_result = radar_sample_data_map
+            .get("RADAR_FRONT")
+            .filter(|nuscenes_sample_data_item| {
                 nuscenes_sample_data_item.filename.contains("RADAR_FRONT")
-            });
+            })
+            .copied();
         let lidar_sample_data_result =
             lidar_sample_data_option.filter(|nuscenes_sample_data_item| {
                 nuscenes_sample_data_item.filename.contains("LIDAR_TOP")
@@ -383,7 +397,7 @@ fn run_visualization() -> Result<()> {
         // Log all camera views to Rerun for 3D visualization
         for (camera_name, camera_data) in &camera_sample_data_map {
             let camera_path = files_root.join(Path::new(&camera_data.filename));
-            let entity_path = format!("world/ego_vehicle/{}", camera_name);
+            let entity_path = format!("{}/{}", CAMERA_ENTITY_PATH_PREFIX, camera_name);
 
             // Get camera calibration
             if let Some(camera_calibration) =
@@ -428,71 +442,124 @@ fn run_visualization() -> Result<()> {
             }
         }
 
-        // Log ego vehicle representation (box + forward arrow)
-        if let Err(error) = log_ego_vehicle_to_rerun(
-            &recording,
-            "world/ego_vehicle",
-            config.ego_vehicle_half_length_m,
-            config.ego_vehicle_half_width_m,
-            config.ego_vehicle_half_height_m,
-            config.ego_vehicle_elevation_m,
-        ) {
-            tracing::warn!("Failed to log ego vehicle: {error}");
-        }
+        // Log all radar sensors with their transforms
+        for (radar_name, radar_sample_data) in &radar_sample_data_map {
+            if let Some(radar_calibration) =
+                nuscenes_calibrated_sensor_by_token.get(&radar_sample_data.calibrated_sensor_token)
+            {
+                let entity_path = format!("{}/{}", RADAR_ENTITY_PATH_PREFIX, radar_name);
 
-        if let Some((_, ref radar_file_path)) = radar_info
-            && let Ok(radar_data) = load_radar_data(radar_file_path)
-            && let Err(error) = log_radar_to_rerun(&recording, &radar_data, "world/sensors/radar")
-        {
-            tracing::warn!("Failed to log radar data: {error}");
+                // Convert rotation from wxyz to xyzw for Rerun and cast to f32
+                let rotation_xyzw = [
+                    radar_calibration.rotation[1] as f32,
+                    radar_calibration.rotation[2] as f32,
+                    radar_calibration.rotation[3] as f32,
+                    radar_calibration.rotation[0] as f32,
+                ];
+
+                let translation_xyz_f32 = radar_calibration
+                    .translation
+                    .map(|translation_component| translation_component as f32);
+
+                // Log the transform for this radar sensor
+                if let Err(error) = recording.log_static(
+                    entity_path.as_str(),
+                    &rr::Transform3D::from_translation_rotation(
+                        translation_xyz_f32,
+                        rr::Quaternion::from_xyzw(rotation_xyzw),
+                    )
+                    .with_relation(rr::TransformRelation::ParentFromChild),
+                ) {
+                    tracing::warn!("Failed to log {radar_name} transform: {error}");
+                }
+
+                // Log radar data
+                let radar_file_path = files_root.join(Path::new(&radar_sample_data.filename));
+                if let Ok(radar_data) = load_radar_data(&radar_file_path)
+                    && let Err(error) = log_radar_to_rerun(&recording, &radar_data, &entity_path)
+                {
+                    tracing::warn!("Failed to log {radar_name} radar data: {error}");
+                }
+            }
         }
-        if let Some((_, ref lidar_to_vehicle, ref lidar_file_path)) = lidar_info
-            && let Ok(lidar_data) = load_lidar_data(lidar_file_path)
-        {
-            // Log raw LiDAR point cloud (sensor frame)
-            if let Err(error) = log_lidar_to_rerun(&recording, &lidar_data, "world/sensors/lidar") {
-                tracing::warn!("Failed to log lidar data: {error}");
+        if let Some((_, ref lidar_to_vehicle, ref lidar_file_path)) = lidar_info {
+            // Log lidar transform
+            if let Some(lidar_sample_data) = lidar_sample_data_result
+                && let Some(lidar_calibration) = nuscenes_calibrated_sensor_by_token
+                    .get(&lidar_sample_data.calibrated_sensor_token)
+            {
+                // Convert rotation from wxyz to xyzw for Rerun and cast to f32
+                let rotation_xyzw = [
+                    lidar_calibration.rotation[1] as f32,
+                    lidar_calibration.rotation[2] as f32,
+                    lidar_calibration.rotation[3] as f32,
+                    lidar_calibration.rotation[0] as f32,
+                ];
+
+                let translation_xyz_f32 = lidar_calibration
+                    .translation
+                    .map(|translation_component| translation_component as f32);
+
+                if let Err(error) = recording.log_static(
+                    LIDAR_TOP_ENTITY_PATH,
+                    &rr::Transform3D::from_translation_rotation(
+                        translation_xyz_f32,
+                        rr::Quaternion::from_xyzw(rotation_xyzw),
+                    )
+                    .with_relation(rr::TransformRelation::ParentFromChild),
+                ) {
+                    tracing::warn!("Failed to log LIDAR_TOP transform: {error}");
+                }
             }
 
-            // Apply decay to existing voxels (for dynamic obstacle handling)
-            decay_occupancy_probabilities(&mut occupancy_grid, config.occupancy_decay_rate);
-
-            // Clear voxels outside local area (keep grid centered on vehicle)
-            clear_distant_voxels(&mut occupancy_grid, config.occupancy_clear_distance_m);
-
-            // Transform LiDAR points to vehicle frame
-            if let Ok(lidar_data_vehicle) =
-                transform_lidar_to_vehicle(&lidar_data, lidar_to_vehicle)
-            {
-                // Sensor origin in vehicle frame (from lidar_to_vehicle translation)
-                let sensor_origin = lidar_to_vehicle.column(3).xyz().cast::<f32>();
-
-                // Build occupancy grid from LiDAR data in vehicle frame
-                if let Err(error) = build_occupancy_grid_from_lidar(
-                    &mut occupancy_grid,
-                    &lidar_data_vehicle,
-                    &sensor_origin,
-                ) {
-                    tracing::warn!("Failed to build occupancy grid: {error}");
-                } else {
-                    // Log occupancy grid visualization
-                    if let Err(error) = log_occupancy_grid_to_rerun(
-                        &recording,
-                        &occupancy_grid,
-                        "world/occupancy_grid",
-                    ) {
-                        tracing::warn!("Failed to log occupancy grid: {error}");
-                    } else {
-                        tracing::info!(
-                            "Occupancy grid: {} occupied, {} free, {} unknown voxels (vehicle frame)",
-                            occupancy_grid.occupied_voxel_count(),
-                            occupancy_grid.free_voxel_count(),
-                            occupancy_grid.unknown_voxel_count()
-                        );
-                    }
+            // Log raw LiDAR point cloud (sensor frame)
+            if let Ok(lidar_data) = load_lidar_data(lidar_file_path) {
+                if let Err(error) =
+                    log_lidar_to_rerun(&recording, &lidar_data, LIDAR_TOP_ENTITY_PATH)
+                {
+                    tracing::warn!("Failed to log lidar data: {error}");
                 }
-            } else {
-                tracing::warn!("Failed to transform LiDAR data to vehicle frame");
+
+                // Apply decay to existing voxels (for dynamic obstacle handling)
+                decay_occupancy_probabilities(&mut occupancy_grid, config.occupancy_decay_rate);
+
+                // Clear voxels outside local area (keep grid centered on vehicle)
+                clear_distant_voxels(&mut occupancy_grid, config.occupancy_clear_distance_m);
+
+                // Transform LiDAR points to vehicle frame
+                if let Ok(lidar_data_vehicle) =
+                    transform_lidar_to_vehicle(&lidar_data, lidar_to_vehicle)
+                {
+                    // Sensor origin in vehicle frame (from lidar_to_vehicle translation)
+                    let sensor_origin = lidar_to_vehicle.column(3).xyz().cast::<f32>();
+
+                    // Build occupancy grid from LiDAR data in vehicle frame
+                    if let Err(error) = build_occupancy_grid_from_lidar(
+                        &mut occupancy_grid,
+                        &lidar_data_vehicle,
+                        &sensor_origin,
+                    ) {
+                        tracing::warn!("Failed to build occupancy grid: {error}");
+                    } else {
+                        // Log occupancy grid visualization
+                        if let Err(error) = log_occupancy_grid_to_rerun(
+                            &recording,
+                            &occupancy_grid,
+                            OCCUPANCY_GRID_ENTITY_PATH,
+                        ) {
+                            tracing::warn!("Failed to log occupancy grid: {error}");
+                        } else {
+                            tracing::info!(
+                                "Occupancy grid: {} occupied, {} free, {} unknown voxels (vehicle frame)",
+                                occupancy_grid.occupied_voxel_count(),
+                                occupancy_grid.free_voxel_count(),
+                                occupancy_grid.unknown_voxel_count()
+                            );
+                        }
+                    }
+                } else {
+                    tracing::warn!("Failed to transform LiDAR data to vehicle frame");
+                }
             }
         }
 
@@ -548,7 +615,7 @@ fn run_visualization() -> Result<()> {
             // Case 4: Camera only (no radar, no lidar)
             (None, None) => {
                 tracing::info!("Using Camera only");
-                visualize_camera_only(
+                visualize_camera_detections(
                     &recording,
                     &camera_image_path,
                     &mut yolo_model,
@@ -574,6 +641,14 @@ fn main() -> Result<()> {
 fn infer_channel(filename: &str) -> &str {
     if filename.contains("CAM_FRONT") {
         "CAM_FRONT"
+    } else if filename.contains("RADAR_BACK_LEFT") {
+        "RADAR_BACK_LEFT"
+    } else if filename.contains("RADAR_BACK_RIGHT") {
+        "RADAR_BACK_RIGHT"
+    } else if filename.contains("RADAR_FRONT_LEFT") {
+        "RADAR_FRONT_LEFT"
+    } else if filename.contains("RADAR_FRONT_RIGHT") {
+        "RADAR_FRONT_RIGHT"
     } else if filename.contains("RADAR_FRONT") {
         "RADAR_FRONT"
     } else if filename.contains("LIDAR_TOP") {
