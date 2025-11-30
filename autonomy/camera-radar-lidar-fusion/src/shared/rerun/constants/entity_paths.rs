@@ -17,4 +17,4 @@ pub const FUSION_PROJECTION_CAM_FRONT_ENTITY_PATH: &str =
     "world/ego_vehicle/perception/fusion/projection/CAM_FRONT";
 
 // Annotation paths
-pub const BOXES_3D_ENTITY_PATH: &str = "world/ego_vehicle/annotations/boxes_3d";
+pub const ANNOTATIONS_ENTITY_PATH: &str = "world/annotations";
