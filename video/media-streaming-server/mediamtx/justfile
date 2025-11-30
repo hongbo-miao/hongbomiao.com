@@ -1,0 +1,23 @@
+run:
+    docker run --rm --interactive --tty \
+        --env=MTX_RTSPTRANSPORTS=tcp \
+        --env=MTX_WEBRTCADDITIONALHOSTS=192.168.x.x \
+        --publish=8554:8554 \
+        --publish=1935:1935 \
+        --publish=8888:8888 \
+        --publish=8889:8889 \
+        --publish=8890:8890/udp \
+        --publish=8189:8189/udp \
+        bluenviron/mediamtx:1.15.4
+
+publish:
+    gst-launch-1.0 \
+        filesrc location=data/video.mp4 ! \
+        qtdemux name=d \
+        d.video_0 ! \
+        queue ! \
+        h264parse ! \
+        rtspclientsink location=rtsp://localhost:8554/video protocols=tcp
+
+subscribe:
+    gst-play-1.0 rtsp://localhost:8554/video

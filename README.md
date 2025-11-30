@@ -610,10 +610,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Q-Learning** - Model-free reinforcement learning algorithm for learning optimal actions
 - **Gymnasium** - Reinforcement learning environment toolkit
 
+## Media
+
 ### Audio
 
-- Media Streaming Server
-  - **Icecast** - Media streaming server
 - Live Coding
   - **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
 - Voice Activity Detector (VAD)
@@ -630,6 +630,12 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Speaches** - OpenAI-compatible inference server for streaming transcription, translation, and speech generation
   - **WhisperKit** - On-device Whisper for Apple
   - **whisper.cpp** - High-performance Whisper inference in C/C++
+
+### Video
+
+- Media Streaming Server
+  - **MediaMTX** - Media streaming server
+  - **Icecast** - Media streaming server
 
 ## Computer Vision
 
