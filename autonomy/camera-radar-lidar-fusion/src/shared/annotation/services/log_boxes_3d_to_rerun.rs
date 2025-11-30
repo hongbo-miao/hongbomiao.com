@@ -8,6 +8,7 @@ pub fn log_boxes_3d_to_rerun(
     sizes: Vec<[f32; 3]>,
     quaternions: Vec<[f32; 4]>,
     class_ids: Vec<u16>,
+    latitude_longitude_positions: Vec<(f64, f64)>,
 ) -> Result<()> {
     if centers.is_empty() {
         return Ok(());
@@ -19,6 +20,13 @@ pub fn log_boxes_3d_to_rerun(
             .with_quaternions(quaternions)
             .with_class_ids(class_ids),
     )?;
+
+    if !latitude_longitude_positions.is_empty() {
+        recording.log(
+            entity_path,
+            &rr::GeoPoints::from_lat_lon(latitude_longitude_positions),
+        )?;
+    }
 
     Ok(())
 }
