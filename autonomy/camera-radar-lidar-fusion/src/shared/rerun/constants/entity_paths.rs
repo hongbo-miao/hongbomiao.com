@@ -15,3 +15,6 @@ pub const LIDAR_TOP_ENTITY_PATH: &str = "world/ego_vehicle/sensors/lidar/LIDAR_T
 pub const OCCUPANCY_GRID_ENTITY_PATH: &str = "world/ego_vehicle/perception/occupancy_grid";
 pub const FUSION_PROJECTION_CAM_FRONT_ENTITY_PATH: &str =
     "world/ego_vehicle/perception/fusion/projection/CAM_FRONT";
+
+// Annotation paths
+pub const BOXES_3D_ENTITY_PATH: &str = "world/ego_vehicle/annotations/boxes_3d";
