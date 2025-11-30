@@ -22,10 +22,6 @@ pub struct AppConfig {
     pub occupancy_free_threshold: f32,
     pub occupancy_occupied_probability_increment: f32,
     pub occupancy_free_probability_decrement: f32,
-    pub ego_vehicle_half_length_m: f32,
-    pub ego_vehicle_half_width_m: f32,
-    pub ego_vehicle_half_height_m: f32,
-    pub ego_vehicle_elevation_m: f32,
 }
 
 impl AppConfig {
@@ -136,22 +132,6 @@ impl AppConfig {
             .context("OCCUPANCY_FREE_PROBABILITY_DECREMENT must be set")?
             .parse::<f32>()
             .context("OCCUPANCY_FREE_PROBABILITY_DECREMENT must be a valid number")?,
-            ego_vehicle_half_length_m: std::env::var("EGO_VEHICLE_HALF_LENGTH_M")
-                .context("EGO_VEHICLE_HALF_LENGTH_M must be set")?
-                .parse::<f32>()
-                .context("EGO_VEHICLE_HALF_LENGTH_M must be a valid number")?,
-            ego_vehicle_half_width_m: std::env::var("EGO_VEHICLE_HALF_WIDTH_M")
-                .context("EGO_VEHICLE_HALF_WIDTH_M must be set")?
-                .parse::<f32>()
-                .context("EGO_VEHICLE_HALF_WIDTH_M must be a valid number")?,
-            ego_vehicle_half_height_m: std::env::var("EGO_VEHICLE_HALF_HEIGHT_M")
-                .context("EGO_VEHICLE_HALF_HEIGHT_M must be set")?
-                .parse::<f32>()
-                .context("EGO_VEHICLE_HALF_HEIGHT_M must be a valid number")?,
-            ego_vehicle_elevation_m: std::env::var("EGO_VEHICLE_ELEVATION_M")
-                .context("EGO_VEHICLE_ELEVATION_M must be set")?
-                .parse::<f32>()
-                .context("EGO_VEHICLE_ELEVATION_M must be a valid number")?,
         };
         Ok(app_config)
     }
