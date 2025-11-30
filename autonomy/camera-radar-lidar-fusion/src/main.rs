@@ -7,6 +7,7 @@ mod config;
 mod shared;
 
 use crate::config::AppConfig;
+use crate::shared::annotation::services::log_annotation_context_to_rerun::log_annotation_context_to_rerun;
 use crate::shared::annotation::services::log_boxes_3d_to_rerun::log_boxes_3d_to_rerun;
 use crate::shared::camera::services::detect_objects_in_camera::YoloModel;
 use crate::shared::camera::services::log_camera_calibration_to_rerun::log_camera_calibration_to_rerun;
@@ -21,6 +22,7 @@ use crate::shared::lidar::utils::transform_lidar_to_vehicle::transform_lidar_to_
 use crate::shared::map::services::load_ego_pose::load_ego_poses;
 use crate::shared::map::services::log_ego_position_to_rerun::log_ego_position_to_rerun;
 use crate::shared::map::services::log_ego_trajectory_to_rerun::log_ego_trajectory_to_rerun;
+use crate::shared::map::utils::derive_latitude_longitude::derive_latitude_longitude;
 use crate::shared::nuscenes::types::nuscenes_calibrated_sensor::NuscenesCalibratedSensor;
 use crate::shared::nuscenes::types::nuscenes_category::NuscenesCategory;
 use crate::shared::nuscenes::types::nuscenes_instance::NuscenesInstance;
@@ -38,7 +40,7 @@ use crate::shared::occupancy::types::occupancy_grid::{OccupancyGrid, OccupancyGr
 use crate::shared::radar::services::load_radar_data::load_radar_data;
 use crate::shared::radar::services::log_radar_to_rerun::log_radar_to_rerun;
 use crate::shared::rerun::constants::entity_paths::{
-    BOXES_3D_ENTITY_PATH, CAMERA_ENTITY_PATH_PREFIX, EGO_VEHICLE_POSITION_ENTITY_PATH,
+    ANNOTATIONS_ENTITY_PATH, CAMERA_ENTITY_PATH_PREFIX, EGO_VEHICLE_POSITION_ENTITY_PATH,
     EGO_VEHICLE_TRAJECTORY_ENTITY_PATH, LIDAR_TOP_ENTITY_PATH, OCCUPANCY_GRID_ENTITY_PATH,
     RADAR_ENTITY_PATH_PREFIX,
 };
@@ -256,6 +258,19 @@ fn run_visualization() -> Result<()> {
         config.occupancy_free_probability_decrement,
     );
     let mut occupancy_grid = OccupancyGrid::new(occupancy_grid_config);
+
+    // Log annotation context (static)
+    let annotation_context: Vec<(u16, String)> = nuscenes_categories
+        .iter()
+        .enumerate()
+        .map(|(category_index, category)| (category_index as u16, category.name.clone()))
+        .collect();
+
+    if let Err(error) =
+        log_annotation_context_to_rerun(&recording, ANNOTATIONS_ENTITY_PATH, annotation_context)
+    {
+        tracing::warn!("Failed to log annotation context: {error}");
+    }
 
     // Walk samples via next chain
     let mut current_token = nuscenes_scene.first_sample_token.clone();
@@ -542,6 +557,7 @@ fn run_visualization() -> Result<()> {
             let mut sizes = Vec::new();
             let mut quaternions = Vec::new();
             let mut class_ids = Vec::new();
+            let mut latitude_longitude_positions = Vec::new();
 
             for annotation in annotations {
                 // Get category name from instance -> category chain
@@ -603,16 +619,26 @@ fn run_visualization() -> Result<()> {
                         tracing::warn!("Unknown category name: {}", category.name);
                         class_ids.push(0);
                     }
+
+                    // Derive latitude/longitude from global position
+                    if let Some((latitude, longitude)) = derive_latitude_longitude(
+                        location,
+                        annotation.translation[0],
+                        annotation.translation[1],
+                    ) {
+                        latitude_longitude_positions.push((latitude, longitude));
+                    }
                 }
             }
 
             if let Err(error) = log_boxes_3d_to_rerun(
                 &recording,
-                BOXES_3D_ENTITY_PATH,
+                ANNOTATIONS_ENTITY_PATH,
                 centers,
                 sizes,
                 quaternions,
                 class_ids,
+                latitude_longitude_positions,
             ) {
                 tracing::warn!("Failed to log 3D boxes: {error}");
             }
