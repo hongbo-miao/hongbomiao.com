@@ -1,5 +1,6 @@
 pub mod annotation {
     pub mod services {
+        pub mod log_annotation_context_to_rerun;
         pub mod log_boxes_3d_to_rerun;
     }
 }
