@@ -612,8 +612,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Audio
 
-- **Icecast** - Streaming media server
-- **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
+- Media Streaming Server
+  - **Icecast** - Media streaming server
+- Live Coding
+  - **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
 - Voice Activity Detector (VAD)
   - **Silero VAD** - Voice activity detector
   - **py-webrtcvad-wheels** - Voice activity detector
