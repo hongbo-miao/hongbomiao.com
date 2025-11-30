@@ -1133,7 +1133,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Camera-Radar-Lidar Fusion
 
-![Camera-radar-lidar fusion screenshot](https://github.com/user-attachments/assets/1674cfee-d8ab-419d-b09e-4507810edc5f)
+![Camera-radar-lidar fusion screenshot](https://github.com/user-attachments/assets/683d72b6-6769-4e9c-9403-d247461fcf41)
 
 ### MATLAB Automated Driving Toolbox - ADAS and Autonomous Driving Systems Design, Simulation, and Testing
 
