@@ -41,8 +41,8 @@ use crate::shared::radar::services::load_radar_data::load_radar_data;
 use crate::shared::radar::services::log_radar_to_rerun::log_radar_to_rerun;
 use crate::shared::rerun::constants::entity_paths::{
     ANNOTATIONS_ENTITY_PATH, CAMERA_ENTITY_PATH_PREFIX, EGO_VEHICLE_POSITION_ENTITY_PATH,
-    EGO_VEHICLE_TRAJECTORY_ENTITY_PATH, LIDAR_TOP_ENTITY_PATH, OCCUPANCY_GRID_ENTITY_PATH,
-    RADAR_ENTITY_PATH_PREFIX,
+    EGO_VEHICLE_TRAJECTORY_ENTITY_PATH, FUSION_PROJECTION_CAM_FRONT_ENTITY_PATH,
+    LIDAR_TOP_ENTITY_PATH, OCCUPANCY_GRID_ENTITY_PATH, RADAR_ENTITY_PATH_PREFIX,
 };
 use anyhow::{Context, Result, bail};
 use nalgebra::{Matrix3, Matrix4, Quaternion, UnitQuaternion};
@@ -267,7 +267,7 @@ fn run_visualization() -> Result<()> {
         .collect();
 
     if let Err(error) =
-        log_annotation_context_to_rerun(&recording, ANNOTATIONS_ENTITY_PATH, annotation_context)
+        log_annotation_context_to_rerun(&recording, ANNOTATIONS_ENTITY_PATH, &annotation_context)
     {
         tracing::warn!("Failed to log annotation context: {error}");
     }
@@ -408,6 +408,20 @@ fn run_visualization() -> Result<()> {
             .flat_map(|row| row.iter().copied())
             .collect();
         let camera_intrinsic = Matrix3::from_row_slice(&flat_intrinsic);
+
+        // Log CAM_FRONT calibration to fusion projection entity
+        // This allows 3D annotations to be projected onto the fusion visualization
+        if let Err(error) = log_camera_calibration_to_rerun(
+            &recording,
+            FUSION_PROJECTION_CAM_FRONT_ENTITY_PATH,
+            &camera_intrinsic,
+            camera_calibration.rotation,
+            camera_calibration.translation,
+            camera_sample_data.width,
+            camera_sample_data.height,
+        ) {
+            tracing::warn!("Failed to log fusion projection camera calibration: {error}");
+        }
 
         // Get optional radar calibration
         let radar_calibration_result = radar_sample_data_result.and_then(|radar_sample_data| {
