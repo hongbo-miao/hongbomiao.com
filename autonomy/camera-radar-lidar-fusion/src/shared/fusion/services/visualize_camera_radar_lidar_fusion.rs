@@ -13,7 +13,7 @@ use crate::shared::lidar::utils::project_lidar_to_camera::project_lidar_to_camer
 use crate::shared::radar::services::create_radar_detection::create_radar_detection;
 use crate::shared::radar::services::load_radar_data::load_radar_data;
 use crate::shared::radar::utils::project_radar_to_camera::project_radar_to_camera;
-use crate::shared::rerun::constants::entity_paths::FUSION_VISUALIZATION_ENTITY_PATH;
+use crate::shared::rerun::constants::entity_paths::FUSION_PROJECTION_CAM_FRONT_ENTITY_PATH;
 use crate::shared::rerun::services::log_rerun_image::log_rerun_image;
 use anyhow::{Context, Result};
 use nalgebra::{Matrix3, Matrix4, Vector3};
@@ -447,7 +447,11 @@ pub fn visualize_camera_radar_lidar_fusion<P: AsRef<Path>>(
         false,
     )?;
 
-    log_rerun_image(recording, &visualization, FUSION_VISUALIZATION_ENTITY_PATH)?;
+    log_rerun_image(
+        recording,
+        &visualization,
+        FUSION_PROJECTION_CAM_FRONT_ENTITY_PATH,
+    )?;
 
     Ok(())
 }
