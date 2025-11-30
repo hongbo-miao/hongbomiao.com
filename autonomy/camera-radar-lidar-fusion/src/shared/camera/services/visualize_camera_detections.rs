@@ -3,7 +3,7 @@ use crate::shared::camera::services::detect_objects_in_camera::{
     YoloModel, detect_objects_in_camera,
 };
 use crate::shared::fusion::constants::colors::{COLOR_BLACK_SCALAR, COLOR_RED_SCALAR};
-use crate::shared::rerun::constants::entity_paths::FUSION_VISUALIZATION_ENTITY_PATH;
+use crate::shared::rerun::constants::entity_paths::FUSION_PROJECTION_CAM_FRONT_ENTITY_PATH;
 use crate::shared::rerun::services::log_rerun_image::log_rerun_image;
 use anyhow::{Context, Result};
 use opencv::core::{Point, Rect, Scalar};
@@ -13,7 +13,7 @@ use opencv::prelude::MatTraitConst;
 use rerun as rr;
 use std::path::Path;
 
-pub fn visualize_camera_only<P: AsRef<Path>>(
+pub fn visualize_camera_detections<P: AsRef<Path>>(
     recording: &rr::RecordingStream,
     camera_image_path: P,
     yolo_model: &mut YoloModel,
@@ -106,7 +106,11 @@ pub fn visualize_camera_only<P: AsRef<Path>>(
         false,
     )?;
 
-    log_rerun_image(recording, &visualization, FUSION_VISUALIZATION_ENTITY_PATH)?;
+    log_rerun_image(
+        recording,
+        &visualization,
+        FUSION_PROJECTION_CAM_FRONT_ENTITY_PATH,
+    )?;
 
     Ok(())
 }
