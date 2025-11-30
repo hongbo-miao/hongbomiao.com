@@ -1,10 +1,9 @@
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
-pub struct EgoPose {
+pub struct NuscenesCategory {
     pub token: String,
+    pub name: String,
     #[allow(dead_code)]
-    pub timestamp: u64,
-    pub rotation: [f64; 4],
-    pub translation: [f64; 3],
+    pub description: String,
 }
