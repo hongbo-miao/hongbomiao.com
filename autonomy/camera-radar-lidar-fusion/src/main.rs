@@ -7,6 +7,7 @@ mod config;
 mod shared;
 
 use crate::config::AppConfig;
+use crate::shared::annotation::services::log_boxes_3d_to_rerun::log_boxes_3d_to_rerun;
 use crate::shared::camera::services::detect_objects_in_camera::YoloModel;
 use crate::shared::camera::services::log_camera_calibration_to_rerun::log_camera_calibration_to_rerun;
 use crate::shared::camera::services::log_camera_to_rerun::log_camera_to_rerun;
@@ -21,8 +22,11 @@ use crate::shared::map::services::load_ego_pose::load_ego_poses;
 use crate::shared::map::services::log_ego_position_to_rerun::log_ego_position_to_rerun;
 use crate::shared::map::services::log_ego_trajectory_to_rerun::log_ego_trajectory_to_rerun;
 use crate::shared::nuscenes::types::nuscenes_calibrated_sensor::NuscenesCalibratedSensor;
+use crate::shared::nuscenes::types::nuscenes_category::NuscenesCategory;
+use crate::shared::nuscenes::types::nuscenes_instance::NuscenesInstance;
 use crate::shared::nuscenes::types::nuscenes_log::NuscenesLog;
 use crate::shared::nuscenes::types::nuscenes_sample::NuscenesSample;
+use crate::shared::nuscenes::types::nuscenes_sample_annotation::NuscenesSampleAnnotation;
 use crate::shared::nuscenes::types::nuscenes_sample_data::NuscenesSampleData;
 use crate::shared::nuscenes::types::nuscenes_scene::NuscenesScene;
 use crate::shared::nuscenes::types::nuscenes_sensor::NuscenesSensor;
@@ -34,7 +38,7 @@ use crate::shared::occupancy::types::occupancy_grid::{OccupancyGrid, OccupancyGr
 use crate::shared::radar::services::load_radar_data::load_radar_data;
 use crate::shared::radar::services::log_radar_to_rerun::log_radar_to_rerun;
 use crate::shared::rerun::constants::entity_paths::{
-    CAMERA_ENTITY_PATH_PREFIX, EGO_VEHICLE_POSITION_ENTITY_PATH,
+    BOXES_3D_ENTITY_PATH, CAMERA_ENTITY_PATH_PREFIX, EGO_VEHICLE_POSITION_ENTITY_PATH,
     EGO_VEHICLE_TRAJECTORY_ENTITY_PATH, LIDAR_TOP_ENTITY_PATH, OCCUPANCY_GRID_ENTITY_PATH,
     RADAR_ENTITY_PATH_PREFIX,
 };
@@ -100,6 +104,14 @@ fn run_visualization() -> Result<()> {
         .spawn()
         .context("Failed to spawn Rerun viewer")?;
 
+    // Set up ego vehicle-centric coordinate system
+    // nuScenes uses: X=forward, Y=left, Z=up
+    // This keeps the ego vehicle at the center of the 3D view
+    recording.log_static(
+        "world/ego_vehicle",
+        &rr::ViewCoordinates::FLU(), // Forward, Left, Up (nuScenes/ROS convention)
+    )?;
+
     let dataset_root = Path::new("data/v1.0-mini");
 
     let json_root = if dataset_root.join("scene.json").exists() {
@@ -131,6 +143,12 @@ fn run_visualization() -> Result<()> {
         read_json_array(&json_root.join("calibrated_sensor.json"))?;
     let nuscenes_sensors: Vec<NuscenesSensor> = read_json_array(&json_root.join("sensor.json"))?;
     let nuscenes_logs: Vec<NuscenesLog> = read_json_array(&json_root.join("log.json"))?;
+    let nuscenes_sample_annotations: Vec<NuscenesSampleAnnotation> =
+        read_json_array(&json_root.join("sample_annotation.json"))?;
+    let nuscenes_instances: Vec<NuscenesInstance> =
+        read_json_array(&json_root.join("instance.json"))?;
+    let nuscenes_categories: Vec<NuscenesCategory> =
+        read_json_array(&json_root.join("category.json"))?;
     let ego_poses = load_ego_poses(&json_root)?;
 
     // Index by token for quick lookup
@@ -172,6 +190,32 @@ fn run_visualization() -> Result<()> {
             channel_by_calibration.insert(nuscenes_calibrated_sensor.token.as_str(), *channel);
         }
     }
+
+    // Build annotation indexes
+    let mut nuscenes_annotations_by_sample: HashMap<&str, Vec<&NuscenesSampleAnnotation>> =
+        HashMap::new();
+    for annotation in &nuscenes_sample_annotations {
+        nuscenes_annotations_by_sample
+            .entry(annotation.sample_token.as_str())
+            .or_default()
+            .push(annotation);
+    }
+
+    let nuscenes_instance_by_token: HashMap<_, _> = nuscenes_instances
+        .iter()
+        .map(|instance| (instance.token.as_str(), instance))
+        .collect();
+
+    let nuscenes_category_by_token: HashMap<_, _> = nuscenes_categories
+        .iter()
+        .map(|category| (category.token.as_str(), category))
+        .collect();
+
+    let category_name_to_id: HashMap<&str, u16> = nuscenes_categories
+        .iter()
+        .enumerate()
+        .map(|(category_index, category)| (category.name.as_str(), category_index as u16))
+        .collect();
 
     // Build log lookup map
     let nuscenes_log_by_token: HashMap<_, _> = nuscenes_logs
@@ -482,6 +526,98 @@ fn run_visualization() -> Result<()> {
                 }
             }
         }
+
+        // Log 3D bounding box annotations
+        if let Some(annotations) =
+            nuscenes_annotations_by_sample.get(nuscenes_sample.token.as_str())
+            && let Some(ego_pose) = ego_poses.get(&camera_sample_data.ego_pose_token)
+        {
+            // Build world-to-vehicle transform (inverse of ego pose)
+            let vehicle_to_world = build_transform(ego_pose.rotation, ego_pose.translation);
+            let world_to_vehicle = vehicle_to_world
+                .try_inverse()
+                .context("Failed to invert vehicle_to_world")?;
+
+            let mut centers = Vec::new();
+            let mut sizes = Vec::new();
+            let mut quaternions = Vec::new();
+            let mut class_ids = Vec::new();
+
+            for annotation in annotations {
+                // Get category name from instance -> category chain
+                if let Some(instance) =
+                    nuscenes_instance_by_token.get(annotation.instance_token.as_str())
+                    && let Some(category) =
+                        nuscenes_category_by_token.get(instance.category_token.as_str())
+                {
+                    // Transform position from global to ego vehicle coordinates
+                    let global_pos = nalgebra::Vector4::new(
+                        annotation.translation[0],
+                        annotation.translation[1],
+                        annotation.translation[2],
+                        1.0,
+                    );
+                    let local_pos = world_to_vehicle * global_pos;
+
+                    centers.push([local_pos.x as f32, local_pos.y as f32, local_pos.z as f32]);
+
+                    // nuScenes sizes are [width (y), length (x), height (z)]
+                    // Rerun assumes FLU axes (x forward, y left, z up), so swap width/length before halving
+                    let annotation_width_m = annotation.size[0] as f32;
+                    let annotation_length_m = annotation.size[1] as f32;
+                    let annotation_height_m = annotation.size[2] as f32;
+
+                    // Half sizes (Rerun expects half sizes, nuScenes provides full sizes)
+                    sizes.push([
+                        annotation_length_m / 2.0,
+                        annotation_width_m / 2.0,
+                        annotation_height_m / 2.0,
+                    ]);
+
+                    // Transform rotation from global to ego vehicle frame
+                    let global_quat = Quaternion::new(
+                        annotation.rotation[0],
+                        annotation.rotation[1],
+                        annotation.rotation[2],
+                        annotation.rotation[3],
+                    );
+                    let ego_quat = Quaternion::new(
+                        ego_pose.rotation[0],
+                        ego_pose.rotation[1],
+                        ego_pose.rotation[2],
+                        ego_pose.rotation[3],
+                    );
+                    let local_quat = ego_quat.conjugate() * global_quat;
+
+                    // Convert to xyzw format for Rerun
+                    quaternions.push([
+                        local_quat.i as f32,
+                        local_quat.j as f32,
+                        local_quat.k as f32,
+                        local_quat.w as f32,
+                    ]);
+
+                    if let Some(class_id) = category_name_to_id.get(category.name.as_str()) {
+                        class_ids.push(*class_id);
+                    } else {
+                        tracing::warn!("Unknown category name: {}", category.name);
+                        class_ids.push(0);
+                    }
+                }
+            }
+
+            if let Err(error) = log_boxes_3d_to_rerun(
+                &recording,
+                BOXES_3D_ENTITY_PATH,
+                centers,
+                sizes,
+                quaternions,
+                class_ids,
+            ) {
+                tracing::warn!("Failed to log 3D boxes: {error}");
+            }
+        }
+
         if let Some((_, ref lidar_to_vehicle, ref lidar_file_path)) = lidar_info {
             // Log lidar transform
             if let Some(lidar_sample_data) = lidar_sample_data_result

@@ -1,3 +1,8 @@
+pub mod annotation {
+    pub mod services {
+        pub mod log_boxes_3d_to_rerun;
+    }
+}
 pub mod camera {
     pub mod types {
         pub mod camera_detection;
@@ -80,8 +85,11 @@ pub mod map {
 pub mod nuscenes {
     pub mod types {
         pub mod nuscenes_calibrated_sensor;
+        pub mod nuscenes_category;
+        pub mod nuscenes_instance;
         pub mod nuscenes_log;
         pub mod nuscenes_sample;
+        pub mod nuscenes_sample_annotation;
         pub mod nuscenes_sample_data;
         pub mod nuscenes_scene;
         pub mod nuscenes_sensor;
