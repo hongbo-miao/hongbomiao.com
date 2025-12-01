@@ -4,11 +4,11 @@
 
 ### Image-Space Association
 
-Each camera detection \(j\) is represented by a 2D bounding box
-\([x_{1,j}, y_{1,j}, x_{2,j}, y_{2,j}]\) in image coordinates. Radar and lidar
-detections provide projected image points \((u_k, v_k)\).
+Each camera detection $j$ is represented by a 2D bounding box
+$[x_{1,j}, y_{1,j}, x_{2,j}, y_{2,j}]$ in image coordinates. Radar and lidar
+detections provide projected image points $(u_k, v_k)$.
 
-For a radar detection \(k\), the distance to box \(j\) is
+For a radar detection $k$, the distance to box $j$ is
 
 1. If the point lies inside the bounding box,
 
@@ -35,9 +35,9 @@ For a radar detection \(k\), the distance to box \(j\) is
     d_{jk}^{\text{radar}} = \sqrt{\bigl(u_k - u_k^{\text{closest}}\bigr)^2 + \bigl(v_k - v_k^{\text{closest}}\bigr)^2}
     ```
 
-The same formula is used for lidar detections, giving distances \(d_{jk}^{\text{lidar}}\) from lidar image points to camera bounding boxes.
+The same formula is used for lidar detections, giving distances $d_{jk}^{\text{lidar}}$ from lidar image points to camera bounding boxes.
 
-Only pairs with distance below a configured threshold \(d_{\text{max}}\) (environment variable `ASSOCIATION_DISTANCE_THRESHOLD_PIXELS`) are considered:
+Only pairs with distance below a configured threshold $d_{\text{max}}$ (environment variable `ASSOCIATION_DISTANCE_THRESHOLD_PIXELS`) are considered:
 
 ```math
 d_{jk} \le d_{\text{max}}
@@ -59,8 +59,8 @@ be the measured distances, and let
 \sigma_{\text{lidar}}, \quad \sigma_{\text{radar}}
 ```
 
-be their standard deviations (for example, \(\sigma_{\text{lidar}} = 0.02\,
-\text{m}\), \(\sigma_{\text{radar}} = 0.5\,\text{m}\)). The variances are
+be their standard deviations (for example, $\sigma_{\text{lidar}} = 0.02\,
+\text{m}$, $\sigma_{\text{radar}} = 0.5\,\text{m}$). The variances are
 
 ```math
 \sigma_{\text{lidar}}^2, \quad \sigma_{\text{radar}}^2,
@@ -108,7 +108,7 @@ This scalar confidence is stored in each `FusedTrack` alongside the fused distan
 
 ## Occupancy Grid
 
-We represent the occupancy of each voxel \(i\) with a probability
+We represent the occupancy of each voxel $i$ with a probability
 
 ```math
 p_i = P(\text{occupied}_i)
@@ -128,13 +128,13 @@ p_i = \frac{1}{1 + e^{-\ell_i}}
 
 ### Measurement Update (Bayesian Log-Odds)
 
-For each measurement, we use a measurement probability \(p_z\) derived from configuration (for example, `OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_OCCUPIED_EVIDENCE` for occupied evidence and `OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_FREE_EVIDENCE` for free-space evidence). The corresponding measurement log-odds is
+For each measurement, we use a measurement probability $p_z$ derived from configuration (for example, `OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_OCCUPIED_EVIDENCE` for occupied evidence and `OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_FREE_EVIDENCE` for free-space evidence). The corresponding measurement log-odds is
 
 ```math
 \ell_z = \ln \frac{p_z}{1 - p_z}
 ```
 
-Given the previous log-odds \(\ell_i^{t-1}\), the updated log-odds after incorporating the measurement is
+Given the previous log-odds $\ell_i^{t-1}$, the updated log-odds after incorporating the measurement is
 
 ```math
 \ell_i^{t} = \ell_i^{t-1} + \ell_z
@@ -148,7 +148,7 @@ p_i^{t} = \frac{1}{1 + e^{-\ell_i^{t}}}
 
 ### Voxel State Classification
 
-Given occupancy thresholds \(p_{\text{occ}}\) and \(p_{\text{free}}\), a voxel state is classified as
+Given occupancy thresholds $p_{\text{occ}}$ and $p_{\text{free}}$, a voxel state is classified as
 
 ```math
 \text{state}_i^{t} =
@@ -161,7 +161,7 @@ Given occupancy thresholds \(p_{\text{occ}}\) and \(p_{\text{free}}\), a voxel s
 
 ### Temporal Decay
 
-To keep the grid focused on the recent environment, log-odds are decayed toward zero (corresponding to \(p_i = 0.5\), an unknown state). With decay rate \(\lambda\) (configured by `OCCUPANCY_DECAY_RATE`), the per-step update is
+To keep the grid focused on the recent environment, log-odds are decayed toward zero (corresponding to $p_i = 0.5$, an unknown state). With decay rate $\lambda$ (configured by `OCCUPANCY_DECAY_RATE`), the per-step update is
 
 ```math
 \ell_i^{t} =
