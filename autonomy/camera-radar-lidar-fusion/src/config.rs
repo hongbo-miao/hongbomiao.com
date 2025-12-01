@@ -20,8 +20,8 @@ pub struct AppConfig {
     pub occupancy_clear_distance_m: f32,
     pub occupancy_occupied_threshold: f32,
     pub occupancy_free_threshold: f32,
-    pub occupancy_occupied_probability_increment: f32,
-    pub occupancy_free_probability_decrement: f32,
+    pub occupancy_occupied_probability_given_occupied_evidence: f32,
+    pub occupancy_occupied_probability_given_free_evidence: f32,
 }
 
 impl AppConfig {
@@ -120,18 +120,24 @@ impl AppConfig {
                 .context("OCCUPANCY_FREE_THRESHOLD must be set")?
                 .parse::<f32>()
                 .context("OCCUPANCY_FREE_THRESHOLD must be a valid number")?,
-            occupancy_occupied_probability_increment: std::env::var(
-                "OCCUPANCY_OCCUPIED_PROBABILITY_INCREMENT",
+            occupancy_occupied_probability_given_occupied_evidence: std::env::var(
+                "OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_OCCUPIED_EVIDENCE",
             )
-            .context("OCCUPANCY_OCCUPIED_PROBABILITY_INCREMENT must be set")?
+            .context(
+                "OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_OCCUPIED_EVIDENCE must be set",
+            )?
             .parse::<f32>()
-            .context("OCCUPANCY_OCCUPIED_PROBABILITY_INCREMENT must be a valid number")?,
-            occupancy_free_probability_decrement: std::env::var(
-                "OCCUPANCY_FREE_PROBABILITY_DECREMENT",
+            .context(
+                "OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_OCCUPIED_EVIDENCE must be a valid number",
+            )?,
+            occupancy_occupied_probability_given_free_evidence: std::env::var(
+                "OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_FREE_EVIDENCE",
             )
-            .context("OCCUPANCY_FREE_PROBABILITY_DECREMENT must be set")?
+            .context("OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_FREE_EVIDENCE must be set")?
             .parse::<f32>()
-            .context("OCCUPANCY_FREE_PROBABILITY_DECREMENT must be a valid number")?,
+            .context(
+                "OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_FREE_EVIDENCE must be a valid number",
+            )?,
         };
         Ok(app_config)
     }

@@ -12,6 +12,7 @@ pub enum VoxelState {
 pub struct Voxel {
     pub state: VoxelState,
     pub occupancy_probability: f32,
+    pub occupancy_log_odds: f32,
     pub center: Vector3<f32>,
 }
 
@@ -20,25 +21,33 @@ impl Voxel {
         Self {
             state: VoxelState::Unknown,
             occupancy_probability: 0.5,
+            occupancy_log_odds: 0.0,
             center,
         }
     }
 
+    // Bayesian occupancy grids with log-odds updates
     pub fn update_occupancy(
         &mut self,
         is_occupied: bool,
         occupied_threshold: f32,
         free_threshold: f32,
-        occupied_probability_increment: f32,
-        free_probability_decrement: f32,
+        occupied_probability_given_occupied_evidence: f32,
+        occupied_probability_given_free_evidence: f32,
     ) {
-        if is_occupied {
-            self.occupancy_probability =
-                (self.occupancy_probability + occupied_probability_increment).min(1.0);
+        let measurement_probability = if is_occupied {
+            occupied_probability_given_occupied_evidence
         } else {
-            self.occupancy_probability =
-                (self.occupancy_probability - free_probability_decrement).max(0.0);
-        }
+            occupied_probability_given_free_evidence
+        };
+
+        // Clamp away from 0 and 1 to avoid infinite log-odds and keep updates numerically stable
+        // ln(0.001 / 0.999) ≈ -6.9 and ln(0.999 / 0.001) ≈ +6.9, so each update is strong but finite
+        let clamped_measurement_probability = measurement_probability.clamp(0.001, 0.999);
+        let measurement_log_odds =
+            (clamped_measurement_probability / (1.0 - clamped_measurement_probability)).ln();
+        self.occupancy_log_odds += measurement_log_odds;
+        self.occupancy_probability = 1.0 / (1.0 + (-self.occupancy_log_odds).exp());
 
         if self.occupancy_probability >= occupied_threshold {
             self.state = VoxelState::Occupied;
@@ -70,8 +79,8 @@ pub struct OccupancyGridConfig {
     pub max_bound: Vector3<f32>,
     pub occupied_threshold: f32,
     pub free_threshold: f32,
-    pub occupied_probability_increment: f32,
-    pub free_probability_decrement: f32,
+    pub occupied_probability_given_occupied_evidence: f32,
+    pub occupied_probability_given_free_evidence: f32,
 }
 
 impl OccupancyGridConfig {
@@ -81,8 +90,8 @@ impl OccupancyGridConfig {
         max_bound: Vector3<f32>,
         occupied_threshold: f32,
         free_threshold: f32,
-        occupied_probability_increment: f32,
-        free_probability_decrement: f32,
+        occupied_probability_given_occupied_evidence: f32,
+        occupied_probability_given_free_evidence: f32,
     ) -> Self {
         Self {
             voxel_size,
@@ -90,8 +99,8 @@ impl OccupancyGridConfig {
             max_bound,
             occupied_threshold,
             free_threshold,
-            occupied_probability_increment,
-            free_probability_decrement,
+            occupied_probability_given_occupied_evidence,
+            occupied_probability_given_free_evidence,
         }
     }
 }
