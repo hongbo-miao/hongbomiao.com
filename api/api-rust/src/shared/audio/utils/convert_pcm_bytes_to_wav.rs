@@ -11,7 +11,7 @@ pub fn convert_pcm_bytes_to_wav(pcm_data: &[u8]) -> Result<Vec<u8>> {
         sample_format: SampleFormat::Int,
     };
 
-    if pcm_data.len() % 2 != 0 {
+    if !pcm_data.len().is_multiple_of(2) {
         bail!(
             "PCM data length must be even (16-bit samples), got {}",
             pcm_data.len()
