@@ -1,0 +1,25 @@
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+dev:
+    export COCOINDEX_DATABASE_URL="postgresql://cocoindex_user:passw0rd@localhost:5432/cocoindex_db" && \
+    uv run poe dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
+
+postgres:
+    docker run \
+        --publish=5432:5432 \
+        --name=cocoindex-postgres \
+        --env=POSTGRES_DB=cocoindex_db \
+        --env=POSTGRES_USER=cocoindex_user \
+        --env=POSTGRES_PASSWORD=passw0rd \
+        --detach \
+        docker.io/pgvector/pgvector:0.8.1-pg18-trixie
