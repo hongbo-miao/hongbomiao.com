@@ -340,6 +340,8 @@ jobs:
               - 'large-language-model-post-training/fine-tuning/hm-axolotl/**'
             hm-aws-parallelcluster:
               - 'cloud-platform/aws/aws-parallelcluster/pcluster/**'
+            hm-cocoindex-embed-markdown-to-postgres:
+              - 'data-processing/hm-cocoindex/flows/embed-markdown-to-postgres/**'
             hm-crawl4ai:
               - 'data-crawling/hm-crawl4ai/**'
             hm-cudf-analyze-transactions:
@@ -729,6 +731,7 @@ jobs:
       hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
       hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
       hm-axolotl: ${{ steps.filter.outputs.hm-axolotl }}
+      hm-cocoindex-embed-markdown-to-postgres: ${{ steps.filter.outputs.hm-cocoindex-embed-markdown-to-postgres }}
       hm-crawl4ai: ${{ steps.filter.outputs.hm-crawl4ai }}
       hm-cudf-analyze-transactions: ${{ steps.filter.outputs.hm-cudf-analyze-transactions }}
       hm-cuml: ${{ steps.filter.outputs.hm-cuml }}
@@ -1023,6 +1026,7 @@ jobs:
       workflow: ${{ needs.detect-changes.outputs.workflow-test-data-processing == 'true' }}
       # Applications
       flink-stream-tweets: ${{ needs.detect-changes.outputs.flink-stream-tweets == 'true' }}
+      hm-cocoindex-embed-markdown-to-postgres: ${{ needs.detect-changes.outputs.hm-cocoindex-embed-markdown-to-postgres == 'true' }}
       hm-pathway-aggregate-hourly-events: ${{ needs.detect-changes.outputs.hm-pathway-aggregate-hourly-events == 'true' }}
       hm-spark-analyze-coffee-customers: ${{ needs.detect-changes.outputs.hm-spark-analyze-coffee-customers == 'true' }}
       hm-spark-find-retired-people-python: ${{ needs.detect-changes.outputs.hm-spark-find-retired-people-python == 'true' }}
