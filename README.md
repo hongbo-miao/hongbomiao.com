@@ -300,6 +300,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Data Processing
 
+- **CocoIndex** - AI-native data transformation framework
 - **Pathway** - Real-time data processing framework
 - **Apache Spark** - Data processing framework
   - **Spark ML** - Spark machine learning
