@@ -20,8 +20,12 @@ pub fn build_occupancy_grid_from_lidar(
         // Cache config values to avoid overlapping borrows
         let occupied_threshold = occupancy_grid.config.occupied_threshold;
         let free_threshold = occupancy_grid.config.free_threshold;
-        let occupied_probability_increment = occupancy_grid.config.occupied_probability_increment;
-        let free_probability_decrement = occupancy_grid.config.free_probability_decrement;
+        let occupied_probability_given_occupied_evidence = occupancy_grid
+            .config
+            .occupied_probability_given_occupied_evidence;
+        let occupied_probability_given_free_evidence = occupancy_grid
+            .config
+            .occupied_probability_given_free_evidence;
 
         // Mark the voxel containing the point as occupied
         let voxel_index = occupancy_grid.world_to_voxel_index(&point);
@@ -30,8 +34,8 @@ pub fn build_occupancy_grid_from_lidar(
             true,
             occupied_threshold,
             free_threshold,
-            occupied_probability_increment,
-            free_probability_decrement,
+            occupied_probability_given_occupied_evidence,
+            occupied_probability_given_free_evidence,
         );
 
         // Ray casting: mark free space from sensor origin to the point
@@ -65,8 +69,12 @@ fn mark_free_space_along_ray(
         // Cache config values to avoid overlapping borrows
         let occupied_threshold = occupancy_grid.config.occupied_threshold;
         let free_threshold = occupancy_grid.config.free_threshold;
-        let occupied_probability_increment = occupancy_grid.config.occupied_probability_increment;
-        let free_probability_decrement = occupancy_grid.config.free_probability_decrement;
+        let occupied_probability_given_occupied_evidence = occupancy_grid
+            .config
+            .occupied_probability_given_occupied_evidence;
+        let occupied_probability_given_free_evidence = occupancy_grid
+            .config
+            .occupied_probability_given_free_evidence;
 
         // Don't overwrite occupied voxels
         if let Some(existing_voxel) = occupancy_grid.get_voxel(&voxel_index)
@@ -80,8 +88,8 @@ fn mark_free_space_along_ray(
             false,
             occupied_threshold,
             free_threshold,
-            occupied_probability_increment,
-            free_probability_decrement,
+            occupied_probability_given_occupied_evidence,
+            occupied_probability_given_free_evidence,
         );
     }
 

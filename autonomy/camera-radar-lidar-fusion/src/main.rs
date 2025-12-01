@@ -254,8 +254,8 @@ fn run_visualization() -> Result<()> {
         ),
         config.occupancy_occupied_threshold,
         config.occupancy_free_threshold,
-        config.occupancy_occupied_probability_increment,
-        config.occupancy_free_probability_decrement,
+        config.occupancy_occupied_probability_given_occupied_evidence,
+        config.occupancy_occupied_probability_given_free_evidence,
     );
     let mut occupancy_grid = OccupancyGrid::new(occupancy_grid_config);
 
