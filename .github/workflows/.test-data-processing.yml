@@ -12,6 +12,9 @@ name: . Test Data Processing
       flink-stream-tweets:
         required: true
         type: boolean
+      hm-cocoindex-embed-markdown-to-postgres:
+        required: true
+        type: boolean
       hm-pathway-aggregate-hourly-events:
         required: true
         type: boolean
@@ -106,6 +109,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: data-processing/ingest-flac-to-parquet
+
+  cocoindex-embed-markdown-to-postgres-test:
+    name: CocoIndex (embed-markdown-to-postgres) | Test
+    if: ${{ inputs.workflow || inputs.hm-cocoindex-embed-markdown-to-postgres }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.4
+        with:
+          version: 0.9.13
+          enable-cache: true
+          cache-dependency-glob: data-processing/hm-cocoindex/flows/embed-markdown-to-postgres/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: data-processing/hm-cocoindex/flows/embed-markdown-to-postgres/.python-version
+      - name: Install dependencies
+        working-directory: data-processing/hm-cocoindex/flows/embed-markdown-to-postgres
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-processing/hm-cocoindex/flows/embed-markdown-to-postgres
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-processing/hm-cocoindex/flows/embed-markdown-to-postgres
 
   pathway-aggregate-hourly-events-test:
     name: Pathway (aggregate-hourly-events) | Test

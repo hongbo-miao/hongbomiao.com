@@ -1,0 +1,24 @@
+[project]
+name = "cocoindex-embed-markdown-to-postgres"
+version = "1.0.0"
+dependencies = [
+  "cocoindex[embeddings]==0.3.12",
+  "pydantic==2.12.5",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.38.0",
+  "prefect==3.6.4",
+  "pytest-cov==7.0.0",
+  "pytest==9.0.1",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.8.0"
+
+[tool.poe.tasks]
+dev = "cocoindex update src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
