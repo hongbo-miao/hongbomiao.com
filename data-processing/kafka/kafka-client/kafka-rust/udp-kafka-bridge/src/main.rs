@@ -188,7 +188,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
         // Print statistics every 100,000 messages
         let received = context.messages_received.load(Ordering::Relaxed);
-        if received % 100_000 == 0 {
+        if received.is_multiple_of(100_000) {
             let sent = context.messages_sent.load(Ordering::Relaxed);
             let current_capacity = tx.capacity();
 
