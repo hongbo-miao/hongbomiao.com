@@ -480,8 +480,9 @@ The diagram illustrates the repository's architecture, which is considered overl
     - Adaptive boosting
       - AdaBoost
     - Gradient boosting
-      - CatBoost
       - XGBoost
+      - LightGBM
+      - CatBoost
   - Stacking
 
 ### Data Application

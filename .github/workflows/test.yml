@@ -340,6 +340,8 @@ jobs:
               - 'large-language-model-post-training/fine-tuning/hm-axolotl/**'
             hm-aws-parallelcluster:
               - 'cloud-platform/aws/aws-parallelcluster/pcluster/**'
+            hm-catboost:
+              - 'boosting/hm-catboost/**'
             hm-cocoindex-embed-markdown-to-postgres:
               - 'data-processing/hm-cocoindex/flows/embed-markdown-to-postgres/**'
             hm-crawl4ai:
@@ -402,6 +404,8 @@ jobs:
               - 'large-language-model-application/hm-langgraph/applications/chat-pdf/**'
             hm-librosa:
               - 'audio/audio-signal-analysis/hm-librosa/**'
+            hm-lightgbm:
+              - 'boosting/hm-lightgbm/**'
             hm-llama-factory:
               - 'large-language-model-post-training/fine-tuning/hm-llama-factory/**'
             hm-llama-index-chat-pdf:
@@ -518,6 +522,8 @@ jobs:
               - 'audio/voice-activity-detector/hm-webrtcvad/**'
             hm-whisperx:
               - 'audio/automatic-speech-recognition/hm-whisperx/**'
+            hm-xgboost:
+              - 'boosting/hm-xgboost/**'
             hm-xxhash:
               - 'system-tool/hm-xxhash/**'
             hyperparameter-optimization:
@@ -731,6 +737,7 @@ jobs:
       hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
       hm-aws-parallelcluster: ${{ steps.filter.outputs.hm-aws-parallelcluster }}
       hm-axolotl: ${{ steps.filter.outputs.hm-axolotl }}
+      hm-catboost: ${{ steps.filter.outputs.hm-catboost }}
       hm-cocoindex-embed-markdown-to-postgres: ${{ steps.filter.outputs.hm-cocoindex-embed-markdown-to-postgres }}
       hm-crawl4ai: ${{ steps.filter.outputs.hm-crawl4ai }}
       hm-cudf-analyze-transactions: ${{ steps.filter.outputs.hm-cudf-analyze-transactions }}
@@ -762,6 +769,7 @@ jobs:
       hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
       hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
       hm-librosa: ${{ steps.filter.outputs.hm-librosa }}
+      hm-lightgbm: ${{ steps.filter.outputs.hm-lightgbm }}
       hm-llama-factory: ${{ steps.filter.outputs.hm-llama-factory }}
       hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
       hm-locust: ${{ steps.filter.outputs.hm-locust }}
@@ -820,6 +828,7 @@ jobs:
       hm-unsloth: ${{ steps.filter.outputs.hm-unsloth }}
       hm-webrtcvad: ${{ steps.filter.outputs.hm-webrtcvad }}
       hm-whisperx: ${{ steps.filter.outputs.hm-whisperx }}
+      hm-xgboost: ${{ steps.filter.outputs.hm-xgboost }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
       iads-config-reader: ${{ steps.filter.outputs.iads-config-reader }}
       iads-data-producer: ${{ steps.filter.outputs.iads-data-producer }}
@@ -1191,6 +1200,7 @@ jobs:
       graph-neural-network: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
       hm-autogluon: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
       hm-axolotl: ${{ needs.detect-changes.outputs.hm-axolotl == 'true' }}
+      hm-catboost: ${{ needs.detect-changes.outputs.hm-catboost == 'true' }}
       hm-crawl4ai: ${{ needs.detect-changes.outputs.hm-crawl4ai == 'true' }}
       hm-cuml: ${{ needs.detect-changes.outputs.hm-cuml == 'true' }}
       hm-deepeval: ${{ needs.detect-changes.outputs.hm-deepeval == 'true' }}
@@ -1207,6 +1217,7 @@ jobs:
       hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
       hm-langgraph-chat-pdf: ${{ needs.detect-changes.outputs.hm-langgraph-chat-pdf == 'true' }}
       hm-librosa: ${{ needs.detect-changes.outputs.hm-librosa == 'true' }}
+      hm-lightgbm: ${{ needs.detect-changes.outputs.hm-lightgbm == 'true' }}
       hm-llama-factory: ${{ needs.detect-changes.outputs.hm-llama-factory == 'true' }}
       hm-llama-index-chat-pdf: ${{ needs.detect-changes.outputs.hm-llama-index-chat-pdf == 'true' }}
       hm-mineru: ${{ needs.detect-changes.outputs.hm-mineru == 'true' }}
@@ -1228,6 +1239,7 @@ jobs:
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
       hm-webrtcvad: ${{ needs.detect-changes.outputs.hm-webrtcvad == 'true' }}
       hm-whisperx: ${{ needs.detect-changes.outputs.hm-whisperx == 'true' }}
+      hm-xgboost: ${{ needs.detect-changes.outputs.hm-xgboost == 'true' }}
       hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
       kv-caching: ${{ needs.detect-changes.outputs.kv-caching == 'true' }}
       model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
