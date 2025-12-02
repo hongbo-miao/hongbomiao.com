@@ -123,9 +123,7 @@ impl AppConfig {
             occupancy_occupied_probability_given_occupied_evidence: std::env::var(
                 "OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_OCCUPIED_EVIDENCE",
             )
-            .context(
-                "OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_OCCUPIED_EVIDENCE must be set",
-            )?
+            .context("OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_OCCUPIED_EVIDENCE must be set")?
             .parse::<f32>()
             .context(
                 "OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_OCCUPIED_EVIDENCE must be a valid number",
@@ -135,9 +133,7 @@ impl AppConfig {
             )
             .context("OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_FREE_EVIDENCE must be set")?
             .parse::<f32>()
-            .context(
-                "OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_FREE_EVIDENCE must be a valid number",
-            )?,
+            .context("OCCUPANCY_OCCUPIED_PROBABILITY_GIVEN_FREE_EVIDENCE must be a valid number")?,
         };
         Ok(app_config)
     }
