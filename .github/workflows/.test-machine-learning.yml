@@ -48,6 +48,9 @@ name: . Test Machine Learning
       hm-axolotl:
         required: true
         type: boolean
+      hm-catboost:
+        required: true
+        type: boolean
       hm-crawl4ai:
         required: true
         type: boolean
@@ -94,6 +97,9 @@ name: . Test Machine Learning
         required: true
         type: boolean
       hm-librosa:
+        required: true
+        type: boolean
+      hm-lightgbm:
         required: true
         type: boolean
       hm-llama-factory:
@@ -157,6 +163,9 @@ name: . Test Machine Learning
         required: true
         type: boolean
       hm-whisperx:
+        required: true
+        type: boolean
+      hm-xgboost:
         required: true
         type: boolean
       hyperparameter-optimization:
@@ -304,6 +313,105 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: machine-learning/hm-scikit-learn
+
+  xgboost-test:
+    name: XGBoost | Test
+    if: ${{ inputs.workflow || inputs.hm-xgboost }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.4
+        with:
+          version: 0.9.14
+          enable-cache: true
+          cache-dependency-glob: boosting/hm-xgboost/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: boosting/hm-xgboost/.python-version
+      - name: Install dependencies
+        working-directory: boosting/hm-xgboost
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: boosting/hm-xgboost
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: boosting/hm-xgboost
+
+  lightgbm-test:
+    name: LightGBM | Test
+    if: ${{ inputs.workflow || inputs.hm-lightgbm }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.4
+        with:
+          version: 0.9.14
+          enable-cache: true
+          cache-dependency-glob: boosting/hm-lightgbm/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: boosting/hm-lightgbm/.python-version
+      - name: Install dependencies
+        working-directory: boosting/hm-lightgbm
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: boosting/hm-lightgbm
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: boosting/hm-lightgbm
+
+  catboost-test:
+    name: CatBoost | Test
+    if: ${{ inputs.workflow || inputs.hm-catboost }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.4
+        with:
+          version: 0.9.14
+          enable-cache: true
+          cache-dependency-glob: boosting/hm-catboost/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: boosting/hm-catboost/.python-version
+      - name: Install dependencies
+        working-directory: boosting/hm-catboost
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: boosting/hm-catboost
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: boosting/hm-catboost
 
   cuml-test:
     name: cuML | Test
