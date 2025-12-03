@@ -1,0 +1,15 @@
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+dev:
+    export TINKER_API_KEY=xxx && \
+    uv run poe dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
