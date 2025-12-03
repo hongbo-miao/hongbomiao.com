@@ -153,6 +153,9 @@ name: . Test Machine Learning
       hm-swift:
         required: true
         type: boolean
+      hm-tinker:
+        required: true
+        type: boolean
       hm-torchtune:
         required: true
         type: boolean
@@ -2144,6 +2147,72 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-post-training/post-training-quantization
 
+  unsloth-test:
+    name: Unsloth | Test
+    if: ${{ inputs.workflow || inputs.hm-unsloth }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.4
+        with:
+          version: 0.9.14
+          enable-cache: true
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/hm-unsloth/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: large-language-model-post-training/fine-tuning/hm-unsloth/.python-version
+      - name: Install dependencies
+        working-directory: large-language-model-post-training/fine-tuning/hm-unsloth
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: large-language-model-post-training/fine-tuning/hm-unsloth
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: large-language-model-post-training/fine-tuning/hm-unsloth
+
+  torchtune-test:
+    name: torchtune | Test
+    if: ${{ inputs.workflow || inputs.hm-torchtune }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.0
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.4
+        with:
+          version: 0.9.14
+          enable-cache: true
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/hm-torchtune/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: large-language-model-post-training/fine-tuning/hm-torchtune/.python-version
+      - name: Install dependencies
+        working-directory: large-language-model-post-training/fine-tuning/hm-torchtune
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: large-language-model-post-training/fine-tuning/hm-torchtune
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: large-language-model-post-training/fine-tuning/hm-torchtune
+
   axolotl-test:
     name: Axolotl | Test
     # if: ${{ inputs.workflow || inputs.hm-axolotl }}
@@ -2246,9 +2315,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-post-training/fine-tuning/hm-swift
 
-  torchtune-test:
-    name: torchtune | Test
-    if: ${{ inputs.workflow || inputs.hm-torchtune }}
+  tinker-test:
+    name: Tinker | Test
+    if: ${{ inputs.workflow || inputs.hm-tinker }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -2259,17 +2328,17 @@ jobs:
         with:
           version: 0.9.14
           enable-cache: true
-          cache-dependency-glob: large-language-model-post-training/fine-tuning/hm-torchtune/uv.lock
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/hm-tinker/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-post-training/fine-tuning/hm-torchtune/.python-version
+          python-version-file: large-language-model-post-training/fine-tuning/hm-tinker/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-post-training/fine-tuning/hm-torchtune
+        working-directory: large-language-model-post-training/fine-tuning/hm-tinker
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-post-training/fine-tuning/hm-torchtune
+        working-directory: large-language-model-post-training/fine-tuning/hm-tinker
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2277,40 +2346,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-post-training/fine-tuning/hm-torchtune
-
-  unsloth-test:
-    name: Unsloth | Test
-    if: ${{ inputs.workflow || inputs.hm-unsloth }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.0
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.4
-        with:
-          version: 0.9.14
-          enable-cache: true
-          cache-dependency-glob: large-language-model-post-training/fine-tuning/hm-unsloth/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: large-language-model-post-training/fine-tuning/hm-unsloth/.python-version
-      - name: Install dependencies
-        working-directory: large-language-model-post-training/fine-tuning/hm-unsloth
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: large-language-model-post-training/fine-tuning/hm-unsloth
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-post-training/fine-tuning/hm-unsloth
+          directory: large-language-model-post-training/fine-tuning/hm-tinker
 
   fine-tune-whisper-test:
     name: Fine Tune Whisper | Test
