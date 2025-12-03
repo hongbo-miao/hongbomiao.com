@@ -560,13 +560,14 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Automatic Mixed Precision** - Mixed precision FP16/FP32 training
 - Large Language Model (LLM) Post-Training
   - Fine-Tuning
-    - **SWIFT** - Large language model (LLM) fine-tuning
-    - **Unsloth** - Large language model (LLM) fine-tuning
-    - **LLaMA-Factory** - Large language model (LLM) fine-tuning
-    - **torchtune** - Large language model (LLM) fine-tuning
-    - **Axolotl** - Large language model (LLM) fine-tuning
+    - **Unsloth** - Efficient large language model (LLM) fine-tuning on single GPU via custom Triton kernels
+    - **torchtune** - PyTorch-native, modular distributed large language model (LLM) fine-tuning
+    - **Axolotl** - YAML-driven distributed large language model (LLM) fine-tuning
+    - **LLaMA-Factory** - Distributed large language model (LLM) fine-tuning with optional web interface
+    - **SWIFT** - Distributed large language model (LLM) fine-tuning with support for multiple algorithms and optimization techniques
+    - **Tinker** - Managed distributed training API with low-level control
   - Quantization
-    - **torchao** - Quantization and sparsification
+    - **torchao** - PyTorch-native quantization and sparsification
 - Large Language Model (LLM) Inference
   - **GPT4All** - Local large language model (LLM) inference
   - **Ollama** - Local large language model (LLM) inference
