@@ -19,40 +19,40 @@
   additionalBranchPrefix: '{{parentDir}}-',
   semanticCommitScope: '{{#if parentDir}}{{parentDir}}{{else}}deps{{/if}}',
   packageRules: [
+    // Group Android related packages
     {
-      // Group Android related packages
       groupName: 'android related packages',
       matchPackageNames: [
         'com.android.application:com.android.application.gradle.plugin',
         'com.android.library:com.android.library.gradle.plugin',
       ],
     },
+    // Group Arrow related packages
     {
-      // Group Arrow related packages
       groupName: 'arrow related packages',
       matchPackageNames: [
         'arrow',
         'arrow-flight',
       ],
     },
+    // Group async-graphql related packages
     {
-      // Group async-graphql related packages
       groupName: 'async-graphql related packages',
       matchPackageNames: [
         'async-graphql',
         'async-graphql-axum',
       ],
     },
+    // Group CUDA related packages
     {
-      // Group CUDA related packages
       groupName: 'cuda related packages',
       matchPackageNames: [
         'cudf-cu12',
         'cuml-cu12',
       ],
     },
+    // Group ESLint related packages
     {
-      // Group ESLint related packages
       groupName: 'eslint related packages',
       matchPackageNames: [
         '@eslint/js',
@@ -84,8 +84,8 @@
         'eslint-webpack-plugin',
       ],
     },
+    // Group GraphQL related packages
     {
-      // Group GraphQL related packages
       groupName: 'graphql related packages',
       matchPackageNames: [
         '@types/graphql-depth-limit',
@@ -99,8 +99,8 @@
         'graphql-ws',
       ],
     },
+    // Group JAX related packages
     {
-      // Group JAX related packages
       groupName: 'jax related packages',
       matchPackageNames: [
         'flax',
@@ -108,8 +108,8 @@
         'optax',
       ],
     },
+    // Group LangChain related packages
     {
-      // Group LangChain related packages
       groupName: 'langchain related packages',
       matchPackageNames: [
         'langchain',
@@ -117,8 +117,8 @@
         'langchain-text-splitters',
       ],
     },
+    // Group LlamaIndex related packages
     {
-      // Group LlamaIndex related packages
       groupName: 'llamaindex related packages',
       matchPackageNames: [
         'llama-index',
@@ -126,8 +126,8 @@
         'llama-index-llms-litellm',
       ],
     },
+    // Group Node.js related packages
     {
-      // Group Node.js related packages
       groupName: 'node.js related packages',
       matchPackageNames: [
         '@types/node',
@@ -135,8 +135,8 @@
         'node',
       ],
     },
+    // Group OPAL related packages
     {
-      // Group OPAL related packages
       groupName: 'opal related packages',
       matchPackageNames: [
         'docker.io/permitio/opal-client',
@@ -144,8 +144,8 @@
         'opal-common',
       ],
     },
+    // Group OpenTelemetry related packages
     {
-      // Group OpenTelemetry related packages
       groupName: 'opentelemetry related packages',
       matchPackageNames: [
         '@opentelemetry/api',
@@ -168,8 +168,8 @@
         '@opentelemetry/semantic-conventions',
       ],
     },
+    // Group Prefect related packages
     {
-      // Group Prefect related packages
       groupName: 'prefect related packages',
       matchPackageNames: [
         'docker.io/prefecthq/prefect',
@@ -178,32 +178,33 @@
         'prefect-kubernetes',
       ],
     },
+    // Group Prettier related packages
     {
-      // Group Prettier related packages
       groupName: 'prettier related packages',
       matchPackageNames: [
         '@prettier/plugin-xml',
         'prettier',
       ],
     },
+    // Group Pulumi related packages
     {
-      // Group Pulumi related packages
       groupName: 'pulumi related packages',
       matchPackageNames: [
         'pulumi',
         'pulumi-aws',
       ],
     },
+    // Group pytest related packages
     {
-      // Group pytest related packages
       groupName: 'pytest related packages',
       matchPackageNames: [
         'pytest',
         'pytest-cov',
       ],
     },
+    // Group Python related packages
     {
-      // Group Python related packages
+      // Group Python related packages per project
       groupName: 'python related packages',
       matchPackageNames: [
         'docker.io/python',
@@ -211,7 +212,17 @@
       ],
     },
     {
-      // Group PyTorch related packages
+      // Group Python related packages (patch updates) across all projects
+      groupName: 'python related packages (patch updates)',
+      matchPackageNames: [
+        'docker.io/python',
+        'python',
+      ],
+      matchUpdateTypes: ['patch'],
+      additionalBranchPrefix: '',
+    },
+    // Group PyTorch related packages
+    {
       groupName: 'pytorch related packages',
       matchPackageNames: [
         'torch',
@@ -220,8 +231,8 @@
         'xformers',
       ],
     },
+    // Group React Native related packages
     {
-      // React Native related packages
       groupName: 'react native related packages',
       matchPackageNames: [
         '@testing-library/react-native',
@@ -235,16 +246,16 @@
         'react-native-web',
       ],
     },
+    // Group Serde related packages
     {
-      // Group Serde related packages
       groupName: 'serde related packages',
       matchPackageNames: [
         'serde',
         'serde_json',
       ],
     },
+    // Group Storybook related packages
     {
-      // Group Storybook related packages
       groupName: 'storybook related packages',
       matchPackageNames: [
         '@chromatic-com/storybook',
@@ -253,8 +264,8 @@
         'storybook',
       ],
     },
+    // Group Stylelint related packages
     {
-      // Group Stylelint related packages
       groupName: 'stylelint related packages',
       matchPackageNames: [
         'stylelint',
@@ -266,15 +277,15 @@
         'stylelint-prettier',
       ],
     },
+    // Use custom regex versioning for Bitnami Docker images
     {
-      // Use custom regex versioning for Bitnami Docker images
       versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(:?-(?<compatibility>.+)(?<build>\\d+)-r(?<revision>\\d+))?$',
       matchPackageNames: [
         'docker.io/bitnami/spark',
       ],
     },
+    // Only allow Node.js to upgrade to LTS versions
     {
-      // Only allow Node.js to upgrade to LTS versions
       allowedVersions: '/^(\\d*[02468])\\..+$/',
       matchPackageNames: [
         '@types/node',
@@ -282,8 +293,8 @@
         'node',
       ],
     },
+    // Only allow .NET SDK to upgrade to LTS versions
     {
-      // Only allow .NET SDK to upgrade to LTS versions
       allowedVersions: '/^(\\d*[02468])\\..+$/',
       matchPackageNames: [
         'dotnet-sdk',
