@@ -330,17 +330,17 @@ jobs:
         with:
           version: 0.9.15
           enable-cache: true
-          cache-dependency-glob: boosting/hm-xgboost/uv.lock
+          cache-dependency-glob: ensemble-learning/boosting/hm-xgboost/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: boosting/hm-xgboost/.python-version
+          python-version-file: ensemble-learning/boosting/hm-xgboost/.python-version
       - name: Install dependencies
-        working-directory: boosting/hm-xgboost
+        working-directory: ensemble-learning/boosting/hm-xgboost
         run: |
           uv sync --dev
       - name: Test
-        working-directory: boosting/hm-xgboost
+        working-directory: ensemble-learning/boosting/hm-xgboost
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -348,7 +348,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: boosting/hm-xgboost
+          directory: ensemble-learning/boosting/hm-xgboost
 
   lightgbm-test:
     name: LightGBM | Test
@@ -363,17 +363,17 @@ jobs:
         with:
           version: 0.9.15
           enable-cache: true
-          cache-dependency-glob: boosting/hm-lightgbm/uv.lock
+          cache-dependency-glob: ensemble-learning/boosting/hm-lightgbm/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: boosting/hm-lightgbm/.python-version
+          python-version-file: ensemble-learning/boosting/hm-lightgbm/.python-version
       - name: Install dependencies
-        working-directory: boosting/hm-lightgbm
+        working-directory: ensemble-learning/boosting/hm-lightgbm
         run: |
           uv sync --dev
       - name: Test
-        working-directory: boosting/hm-lightgbm
+        working-directory: ensemble-learning/boosting/hm-lightgbm
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -381,7 +381,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: boosting/hm-lightgbm
+          directory: ensemble-learning/boosting/hm-lightgbm
 
   catboost-test:
     name: CatBoost | Test
@@ -396,17 +396,17 @@ jobs:
         with:
           version: 0.9.15
           enable-cache: true
-          cache-dependency-glob: boosting/hm-catboost/uv.lock
+          cache-dependency-glob: ensemble-learning/boosting/hm-catboost/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: boosting/hm-catboost/.python-version
+          python-version-file: ensemble-learning/boosting/hm-catboost/.python-version
       - name: Install dependencies
-        working-directory: boosting/hm-catboost
+        working-directory: ensemble-learning/boosting/hm-catboost
         run: |
           uv sync --dev
       - name: Test
-        working-directory: boosting/hm-catboost
+        working-directory: ensemble-learning/boosting/hm-catboost
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -414,7 +414,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: boosting/hm-catboost
+          directory: ensemble-learning/boosting/hm-catboost
 
   cuml-test:
     name: cuML | Test
