@@ -120,6 +120,9 @@ name: . Test Machine Learning
       hm-mlx-lm:
         required: true
         type: boolean
+      hm-model2vec:
+        required: true
+        type: boolean
       hm-nvidia-modulus:
         required: true
         type: boolean
@@ -1078,9 +1081,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: tokenization/byte-pair-encoding
 
-  imagebind-test:
-    name: ImageBind | Test
-    if: ${{ inputs.workflow || inputs.hm-imagebind }}
+  model2vec-test:
+    name: Model2Vec | Test
+    if: ${{ inputs.workflow || inputs.hm-model2vec }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -1091,17 +1094,17 @@ jobs:
         with:
           version: 0.9.15
           enable-cache: true
-          cache-dependency-glob: embedding/hm-imagebind/uv.lock
+          cache-dependency-glob: embedding/hm-model2vec/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: embedding/hm-imagebind/.python-version
+          python-version-file: embedding/hm-model2vec/.python-version
       - name: Install dependencies
-        working-directory: embedding/hm-imagebind
+        working-directory: embedding/hm-model2vec
         run: |
           uv sync --dev
       - name: Test
-        working-directory: embedding/hm-imagebind
+        working-directory: embedding/hm-model2vec
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1109,7 +1112,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: embedding/hm-imagebind
+          directory: embedding/hm-model2vec
 
   open-clip-test:
     name: OpenCLIP | Test
@@ -1143,6 +1146,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: embedding/open-clip
+
+  imagebind-test:
+    name: ImageBind | Test
+    if: ${{ inputs.workflow || inputs.hm-imagebind }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.4
+        with:
+          version: 0.9.15
+          enable-cache: true
+          cache-dependency-glob: embedding/hm-imagebind/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: embedding/hm-imagebind/.python-version
+      - name: Install dependencies
+        working-directory: embedding/hm-imagebind
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: embedding/hm-imagebind
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: embedding/hm-imagebind
 
   automatic-mixed-precision-test:
     name: Automatic Mixed Precision | Test
