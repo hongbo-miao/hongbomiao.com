@@ -554,8 +554,9 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **ModernBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), Flash Attention, GeGLU activations, and a context length of 8,192 tokens.
   - **NeoBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.
 - Embedding
-  - **ImageBind** - Multimodal embedding model for images, text, audio, video, depth, thermal, and inertial measurement units (IMUs)
+  - **Model2Vec** - Fast static text embeddings distilled from Sentence Transformers
   - **OpenCLIP** - Multimodal embedding model for images and text
+  - **ImageBind** - Multimodal embedding model for images, text, audio, video, depth, thermal, and inertial measurement units (IMUs)
 - Large Language Model (LLM) Training
   - **Automatic Mixed Precision** - Mixed precision FP16/FP32 training
 - Large Language Model (LLM) Post-Training
