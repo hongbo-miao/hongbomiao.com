@@ -422,6 +422,8 @@ jobs:
               - 'machine-learning/hm-mlflow/experiments/predict-diabetes/**'
             hm-mlx-lm:
               - 'large-language-model-inference/hm-mlx-lm/**'
+            hm-model2vec:
+              - 'embedding/hm-model2vec/**'
             hm-narwhals:
               - 'data-analytics/hm-narwhals/**'
             hm-networkx:
@@ -780,6 +782,7 @@ jobs:
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
       hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
       hm-mlx-lm: ${{ steps.filter.outputs.hm-mlx-lm }}
+      hm-model2vec: ${{ steps.filter.outputs.hm-model2vec }}
       hm-narwhals: ${{ steps.filter.outputs.hm-narwhals }}
       hm-networkx: ${{ steps.filter.outputs.hm-networkx }}
       hm-numba: ${{ steps.filter.outputs.hm-numba }}
@@ -1227,6 +1230,7 @@ jobs:
       hm-mlflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
       hm-mlflow-predict-diabetes: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}
       hm-mlx-lm: ${{ needs.detect-changes.outputs.hm-mlx-lm == 'true' }}
+      hm-model2vec: ${{ needs.detect-changes.outputs.hm-model2vec == 'true' }}
       hm-nvidia-modulus: ${{ needs.detect-changes.outputs.hm-nvidia-modulus == 'true' }}
       hm-olmocr: ${{ needs.detect-changes.outputs.hm-olmocr == 'true' }}
       hm-pydantic-ai-chat-pdf: ${{ needs.detect-changes.outputs.hm-pydantic-ai-chat-pdf == 'true' }}
