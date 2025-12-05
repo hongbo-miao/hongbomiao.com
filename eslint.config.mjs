@@ -86,7 +86,7 @@ export default [
       'api/api-python/dist/**/*',
       'api/api-rust/models/**/*',
       'audio/whisper-cpp/models/**/*',
-      'boosting/hm-catboost/catboost_info/**/*',
+      'ensemble-learning/boosting/hm-catboost/catboost_info/**/*',
       'caddy/public/**/*',
       'cloud-cost/komiser/komiser.db',
       'cloud-platform/aws/aws-secrets-manager/secrets/*-credentials.json',
