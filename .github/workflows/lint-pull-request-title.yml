@@ -1,0 +1,23 @@
+---
+name: Lint - Pull Request Title
+
+'on':
+  pull_request_target:
+    types:
+      - edited
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  lint-pull-request-title:
+    name: Pull Request Title
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Lint pull request title
+        uses: amannn/action-semantic-pull-request@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
