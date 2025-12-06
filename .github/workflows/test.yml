@@ -373,7 +373,7 @@ jobs:
             hm-deepeval:
               - 'large-language-model-evaluation/hm-deepeval/**'
             hm-faster-whisper:
-              - 'audio/automatic-speech-recognition/hm-faster-whisper/**'
+              - 'audio/automatic-speech-recognition-inference/hm-faster-whisper/**'
             hm-firecrawl:
               - 'data-crawling/hm-firecrawl/**'
             hm-flax:
@@ -392,6 +392,8 @@ jobs:
               - 'embedding/hm-imagebind/**'
             hm-jax:
               - 'high-performance-computing/hm-jax/**'
+            hm-jiwer:
+              - 'audio/automatic-speech-recognition-evaluation/hm-jiwer/**'
             hm-kubeflow-calculate:
               - 'machine-learning/hm-kubeflow/pipelines/calculate/**'
             hm-kubeflow-classify-mnist:
@@ -503,7 +505,7 @@ jobs:
             hm-spark-recommend-movies:
               - 'data-processing/hm-spark/applications/recommend-movies/**'
             hm-speaches:
-              - 'audio/automatic-speech-recognition/hm-speaches/**'
+              - 'audio/automatic-speech-recognition-inference/hm-speaches/**'
             hm-streamlit-live-line-chart:
               - 'machine-learning/hm-streamlit/applications/live-line-chart/**'
             hm-streamlit-map:
@@ -523,7 +525,7 @@ jobs:
             hm-unsloth:
               - 'large-language-model-post-training/fine-tuning/hm-unsloth/**'
             hm-whisperx:
-              - 'audio/automatic-speech-recognition/hm-whisperx/**'
+              - 'audio/automatic-speech-recognition-inference/hm-whisperx/**'
             hm-xgboost:
               - 'ensemble-learning/boosting/hm-xgboost/**'
             hm-xxhash:
@@ -769,6 +771,7 @@ jobs:
       hm-hdf5: ${{ steps.filter.outputs.hm-hdf5 }}
       hm-imagebind: ${{ steps.filter.outputs.hm-imagebind }}
       hm-jax: ${{ steps.filter.outputs.hm-jax }}
+      hm-jiwer: ${{ steps.filter.outputs.hm-jiwer }}
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
       hm-lancedb: ${{ steps.filter.outputs.hm-lancedb }}
@@ -1221,6 +1224,7 @@ jobs:
       hm-gliner: ${{ needs.detect-changes.outputs.hm-gliner == 'true' }}
       hm-gradio-classify-image: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
       hm-imagebind: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
+      hm-jiwer: ${{ needs.detect-changes.outputs.hm-jiwer == 'true' }}
       hm-kubeflow-calculate: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
       hm-kubeflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
       hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
