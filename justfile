@@ -479,7 +479,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=audio.speaker-diarization.hm-diart
     uv run poe static-type-check-python --package=audio.speaker-diarization.hm-senko
     uv run poe static-type-check-python --package=audio.voice-activity-detector.hm-silero-vad
-    uv run poe static-type-check-python --package=audio.voice-activity-detector.hm-webrtcvad
+    uv run poe static-type-check-python --package=audio.voice-activity-detector.hm-webrtc-vad
     uv run poe static-type-check-python --package=autonomy.camera-radar-fusion
     uv run poe static-type-check-python --package=causal-language-modeling.qwen
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.calculate

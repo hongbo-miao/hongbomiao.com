@@ -522,8 +522,8 @@ jobs:
               - 'parallel-computing/hm-triton/**'
             hm-unsloth:
               - 'large-language-model-post-training/fine-tuning/hm-unsloth/**'
-            hm-webrtcvad:
-              - 'audio/voice-activity-detector/hm-webrtcvad/**'
+            hm-webrtc-vad:
+              - 'audio/voice-activity-detector/hm-webrtc-vad/**'
             hm-whisperx:
               - 'audio/automatic-speech-recognition/hm-whisperx/**'
             hm-xgboost:
@@ -832,7 +832,7 @@ jobs:
       hm-torchtune: ${{ steps.filter.outputs.hm-torchtune }}
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
       hm-unsloth: ${{ steps.filter.outputs.hm-unsloth }}
-      hm-webrtcvad: ${{ steps.filter.outputs.hm-webrtcvad }}
+      hm-webrtc-vad: ${{ steps.filter.outputs.hm-webrtc-vad }}
       hm-whisperx: ${{ steps.filter.outputs.hm-whisperx }}
       hm-xgboost: ${{ steps.filter.outputs.hm-xgboost }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
@@ -1245,7 +1245,7 @@ jobs:
       hm-tinker: ${{ needs.detect-changes.outputs.hm-tinker == 'true' }}
       hm-torchtune: ${{ needs.detect-changes.outputs.hm-torchtune == 'true' }}
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
-      hm-webrtcvad: ${{ needs.detect-changes.outputs.hm-webrtcvad == 'true' }}
+      hm-webrtc-vad: ${{ needs.detect-changes.outputs.hm-webrtc-vad == 'true' }}
       hm-whisperx: ${{ needs.detect-changes.outputs.hm-whisperx == 'true' }}
       hm-xgboost: ${{ needs.detect-changes.outputs.hm-xgboost == 'true' }}
       hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
