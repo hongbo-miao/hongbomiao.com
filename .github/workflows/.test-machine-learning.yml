@@ -165,7 +165,7 @@ name: . Test Machine Learning
       hm-unsloth:
         required: true
         type: boolean
-      hm-webrtcvad:
+      hm-webrtc-vad:
         required: true
         type: boolean
       hm-whisperx:
@@ -1814,9 +1814,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: audio/voice-activity-detector/hm-silero-vad
 
-  webrtcvad-test:
-    name: webrtcvad | Test
-    if: ${{ inputs.workflow || inputs.hm-webrtcvad }}
+  webrtc-vad-test:
+    name: WebRTC VAD | Test
+    if: ${{ inputs.workflow || inputs.hm-webrtc-vad }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -1827,17 +1827,17 @@ jobs:
         with:
           version: 0.9.15
           enable-cache: true
-          cache-dependency-glob: audio/voice-activity-detector/hm-webrtcvad/uv.lock
+          cache-dependency-glob: audio/voice-activity-detector/hm-webrtc-vad/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: audio/voice-activity-detector/hm-webrtcvad/.python-version
+          python-version-file: audio/voice-activity-detector/hm-webrtc-vad/.python-version
       - name: Install dependencies
-        working-directory: audio/voice-activity-detector/hm-webrtcvad
+        working-directory: audio/voice-activity-detector/hm-webrtc-vad
         run: |
           uv sync --dev
       - name: Test
-        working-directory: audio/voice-activity-detector/hm-webrtcvad
+        working-directory: audio/voice-activity-detector/hm-webrtc-vad
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1845,7 +1845,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: audio/voice-activity-detector/hm-webrtcvad
+          directory: audio/voice-activity-detector/hm-webrtc-vad
 
   senko-test:
     name: Senko | Test
