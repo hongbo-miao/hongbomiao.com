@@ -1,189 +1,162 @@
 import logging
 import struct
-import tempfile
-import threading
-import time
 from pathlib import Path
-from typing import BinaryIO
 
-import httpx
 import numpy as np
 import scipy.io.wavfile as wav
-import sounddevice as sd
+import scipy.signal
 import webrtcvad
 
 logger = logging.getLogger(__name__)
 
 SAMPLE_RATE_HZ: int = 16000
-FRAME_DURATION_MS: int = 30
-SPEACHES_API_URL: str = "http://localhost:34796/v1/audio/transcriptions"
-MODEL_NAME: str = "Systran/faster-whisper-medium.en"
+VAD_WINDOW_DURATION_MS: int = 30
+MIN_SPEECH_WINDOW_COUNT: int = 5
+MAX_SILENCE_WINDOW_COUNT: int = 31  # ~1 second of silence
+MIN_AUDIO_LENGTH_S: float = 0.3
+MIN_SEGMENT_DURATION_S: float = 0.5
+MAX_SEGMENT_DURATION_S: float = 10.0
+AUDIO_FILE_PATH: Path = Path("data/audio.wav")
+
+
+class VadState:
+    def __init__(self) -> None:
+        self.audio_buffer: list[np.int16] = []
+        self.silence_window_count: int = 0
+        self.speech_window_count: int = 0
+        self.segment_count: int = 0
 
 
 class VadProcessor:
-    def __init__(
-        self,
+    @staticmethod
+    def is_segment_complete(
+        state: VadState,
+        sample_rate: int,
+        min_audio_length: int,
+        min_speech_window_count: int,
+        max_silence_window_count: int,
+    ) -> bool:
+        audio_length: int = len(state.audio_buffer)
+        duration: float = audio_length / sample_rate
+
+        if (
+            audio_length < min_audio_length
+            or state.speech_window_count < min_speech_window_count
+        ):
+            return False
+
+        return (
+            state.silence_window_count >= max_silence_window_count
+            and duration >= MIN_SEGMENT_DURATION_S
+        ) or duration > MAX_SEGMENT_DURATION_S
+
+    @staticmethod
+    def process_segment(state: VadState, sample_rate: int) -> None:
+        if not state.audio_buffer:
+            return
+
+        audio_data: np.ndarray = np.array(state.audio_buffer, dtype=np.int16)
+        state.segment_count += 1
+
+        # Reset buffers
+        state.audio_buffer = []
+        state.silence_window_count = 0
+        state.speech_window_count = 0
+
+        duration: float = len(audio_data) / sample_rate
+        logger.info(f"Segment {state.segment_count} detected ({duration:.2f}s)")
+
+    @staticmethod
+    def process_audio_file(
+        audio_file_path: Path,
+        vad: webrtcvad.Vad,
         sample_rate: int = SAMPLE_RATE_HZ,
-        frame_duration: int = FRAME_DURATION_MS,
+        vad_window_duration: int = VAD_WINDOW_DURATION_MS,
+        min_speech_window_count: int = MIN_SPEECH_WINDOW_COUNT,
+        max_silence_window_count: int = MAX_SILENCE_WINDOW_COUNT,
+        min_audio_length_s: float = MIN_AUDIO_LENGTH_S,
     ) -> None:
-        self.sample_rate: int = sample_rate
-        self.frame_size: int = int(sample_rate * frame_duration / 1000)
-        self.vad: webrtcvad.Vad = webrtcvad.Vad(1)  # aggressiveness level 1
+        vad_window_size: int = int(sample_rate * vad_window_duration / 1000)
+        min_audio_length: int = int(min_audio_length_s * sample_rate)
+        state: VadState = VadState()
 
-        # Buffers
-        self.audio_buffer: list[np.int16] = []
-        self.frame_buffer: list[np.int16] = []
-        self.silence_frames: int = 0
-        self.speech_frames_count: int = 0
-        self.sentence_count: int = 0
+        logger.info(f"Processing audio file: {audio_file_path}")
+        logger.info("Parameters:")
+        logger.info(
+            f"  - VAD window size: {vad_window_size} samples ({vad_window_duration:.1f}ms)",
+        )
+        logger.info(f"  - Min speech window count: {min_speech_window_count}")
+        logger.info(
+            f"  - Max silence window count: {max_silence_window_count} ({max_silence_window_count * vad_window_duration / 1000:.1f}s)",
+        )
+        logger.info(
+            f"  - Min audio length: {min_audio_length / sample_rate:.1f}s",
+        )
 
-        # Thresholds
-        self.min_speech_frames: int = 5
-        self.max_silence_frames: int = int(1000 / frame_duration)  # 1 second
-        self.min_audio_length: int = int(0.3 * sample_rate)
+        file_sample_rate, audio_data = wav.read(audio_file_path)
+        if file_sample_rate != sample_rate:
+            logger.info(
+                f"Resampling audio from {file_sample_rate} Hz to {sample_rate} Hz",
+            )
+            sample_count: int = int(
+                len(audio_data) * sample_rate / file_sample_rate,
+            )
+            audio_data = scipy.signal.resample(audio_data, sample_count)
 
-    def audio_callback(
-        self,
-        indata: np.ndarray,
-        frames: int,  # noqa: ARG002
-        time_info: dict,  # noqa: ARG002
-        status: sd.CallbackFlags | None,
-    ) -> None:
-        if status:
-            logger.warning(f"Audio status: {status}")
+        # Convert to mono if stereo
+        if len(audio_data.shape) > 1:
+            audio_data = audio_data[:, 0]
 
-        # Convert to mono int16
-        chunk: np.ndarray = indata[:, 0] if len(indata.shape) > 1 else indata.flatten()
-        chunk_int16: np.ndarray = (chunk * 32767).astype(np.int16)
+        # Convert to int16 if needed
+        if audio_data.dtype in (np.float32, np.float64):
+            audio_data = (audio_data * 32767).astype(np.int16)
+        elif audio_data.dtype != np.int16:
+            audio_data = audio_data.astype(np.int16)
 
-        self.frame_buffer.extend(chunk_int16)
-        self.audio_buffer.extend(chunk_int16)
+        total_duration: float = len(audio_data) / sample_rate
+        logger.info(f"Audio duration: {total_duration:.2f}s")
 
-        # Process complete frames
-        while len(self.frame_buffer) >= self.frame_size:
-            frame: np.ndarray = np.array(self.frame_buffer[: self.frame_size])
-            self.frame_buffer = self.frame_buffer[self.frame_size :]
+        # Process window by window
+        position: int = 0
+        while position + vad_window_size <= len(audio_data):
+            window: np.ndarray = audio_data[position : position + vad_window_size]
+            position += vad_window_size
+
+            state.audio_buffer.extend(window)
 
             # VAD check
-            frame_bytes: bytes = struct.pack(f"{len(frame)}h", *frame)
+            window_bytes: bytes = struct.pack(f"{len(window)}h", *window)
             try:
-                is_speech: bool = self.vad.is_speech(frame_bytes, self.sample_rate)
+                is_speech: bool = vad.is_speech(window_bytes, sample_rate)
                 if is_speech:
-                    self.silence_frames = 0
-                    self.speech_frames_count += 1
+                    state.silence_window_count = 0
+                    state.speech_window_count += 1
                 else:
-                    self.silence_frames += 1
+                    state.silence_window_count += 1
 
-                # Check if sentence is complete
-                if self._is_complete():
-                    self._process_audio()
+                if VadProcessor.is_segment_complete(
+                    state,
+                    sample_rate,
+                    min_audio_length,
+                    min_speech_window_count,
+                    max_silence_window_count,
+                ):
+                    VadProcessor.process_segment(state, sample_rate)
 
             except Exception:
                 logger.exception("VAD error.")
 
-    def _is_complete(self) -> bool:
-        audio_length: int = len(self.audio_buffer)
-        duration: float = audio_length / self.sample_rate
+        # Process remaining audio
+        if len(state.audio_buffer) > min_audio_length:
+            logger.info("Processing final audio segment...")
+            VadProcessor.process_segment(state, sample_rate)
 
-        # Basic conditions
-        if (
-            audio_length < self.min_audio_length
-            or self.speech_frames_count < self.min_speech_frames
-        ):
-            return False
-
-        # Sentence complete conditions
-        return (
-            (self.silence_frames >= self.max_silence_frames and duration >= 0.5)
-            or duration > 10.0  # Prevent infinite buffering
-        )
-
-    def _process_audio(self) -> None:
-        if not self.audio_buffer:
-            return
-
-        audio_data: np.ndarray = np.array(self.audio_buffer, dtype=np.int16)
-        self.sentence_count += 1
-
-        # Reset buffers
-        self.audio_buffer = []
-        self.frame_buffer = []
-        self.silence_frames = 0
-        self.speech_frames_count = 0
-
-        logger.info(f"🎯 Sentence {self.sentence_count} detected!")
-
-        # Process in separate thread
-        thread: threading.Thread = threading.Thread(
-            target=self._transcribe,
-            args=(audio_data, self.sentence_count),
-            daemon=True,
-        )
-        thread.start()
-
-    def _transcribe(self, audio_data: np.ndarray, sentence_num: int) -> None:
-        try:
-            duration: float = len(audio_data) / self.sample_rate
-            logger.info(f"Processing sentence {sentence_num} ({duration:.2f}s)...")
-
-            with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp_file:
-                wav.write(tmp_file.name, self.sample_rate, audio_data)
-                result: str = self._send_to_api(tmp_file.name)
-                logger.info(f"🎤 Sentence {sentence_num}: {result}")
-
-        except Exception:
-            logger.exception(f"Error processing sentence {sentence_num}.")
-
-    def _send_to_api(self, file_path: str) -> str:
-        with Path(file_path).open("rb") as f:
-            files: dict[str, tuple[str, BinaryIO, str]] = {
-                "file": (Path(file_path).name, f, "audio/wav"),
-            }
-            data: dict[str, str] = {"model": MODEL_NAME}
-            with httpx.Client(timeout=30.0) as client:
-                response: httpx.Response = client.post(
-                    SPEACHES_API_URL,
-                    data=data,
-                    files=files,
-                )
-                response.raise_for_status()
-                transcription: str = response.json()["text"]
-                return transcription
-
-    def start_recording(self) -> None:
-        chunk_size: int = int(self.sample_rate * 0.1)  # 100ms chunks
-        logger.info("Starting recording. Speak naturally, press Ctrl+C to stop.")
-        logger.info("Parameters:")
-        logger.info(f"  - Min speech frames: {self.min_speech_frames}")
-        logger.info(
-            f"  - Max silence frames: {self.max_silence_frames} ({self.max_silence_frames * FRAME_DURATION_MS / 1000:.1f}s)",
-        )
-        logger.info(
-            f"  - Min audio length: {self.min_audio_length / self.sample_rate:.1f}s",
-        )
-
-        try:
-            with sd.InputStream(
-                callback=self.audio_callback,
-                channels=1,
-                samplerate=self.sample_rate,
-                blocksize=chunk_size,
-                dtype=np.float32,
-            ):
-                while True:
-                    time.sleep(0.1)
-
-        except KeyboardInterrupt:
-            logger.info("Stopping...")
-            # Process any remaining audio
-            if len(self.audio_buffer) > self.min_audio_length:
-                logger.info("Processing final audio segment...")
-                self._process_audio()
+        logger.info(f"Processing complete. Total segments: {state.segment_count}")
 
 
 def main() -> None:
-    processor: VadProcessor = VadProcessor()
-    processor.start_recording()
+    vad = webrtcvad.Vad(1)  # aggressiveness level 1
+    VadProcessor.process_audio_file(AUDIO_FILE_PATH, vad)
 
 
 if __name__ == "__main__":
