@@ -33,7 +33,7 @@ RUN if [ "${development}" = "true" ]; then \
       DEBIAN_FRONTEND=noninteractive && \
       apt-get update && \
       apt-get install -y supervisor inotify-tools git && \
-      rm -rf /var/lib/apt/lists/*; \
+      rm -r -f /var/lib/apt/lists/*; \
     else \
       echo 'ERROR: Unsupported base image' && /bin/false; \
     fi \

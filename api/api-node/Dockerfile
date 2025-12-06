@@ -17,8 +17,10 @@ RUN npm run build \
   && npm prune --production
 
 FROM base AS release
-RUN apk add --no-cache dumb-init
-ENV NODE_ENV production
+RUN apt-get update \
+  && apt-get install --yes --no-install-recommends dumb-init \
+  && rm -r -f /var/lib/apt/lists/*
+ENV NODE_ENV=production
 USER node
 COPY --from=api-node-builder --chown=node:node /usr/src/app/public ./public
 COPY --from=api-node-builder --chown=node:node /usr/src/app/build ./build
