@@ -897,6 +897,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **textlint** - Natural language linter
 - **tofu** - OpenTofu formatter
 - **Buf** - Protocol Buffers linter
+- **action-semantic-pull-request** - Pull request title linter
 - **Ruff** - Python formatter and linter
 - **Mypy** - Python static type checker
 - **qmllint** - QML linter
