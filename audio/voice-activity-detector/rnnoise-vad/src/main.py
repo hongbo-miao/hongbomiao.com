@@ -5,22 +5,21 @@ from pathlib import Path
 import numpy as np
 import scipy.io.wavfile as wav
 import scipy.signal
-import torch
-from silero_vad import load_silero_vad
+from pyrnnoise import RNNoise
 
 logger = logging.getLogger(__name__)
 
-SAMPLE_RATE_HZ: int = 16000
+SAMPLE_RATE_HZ: int = 48000  # RNNoise requires 48kHz
 MIN_SPEECH_WINDOW_COUNT: int = 5
-MAX_SILENCE_WINDOW_COUNT: int = 31  # ~1 second of silence
+MAX_SILENCE_WINDOW_COUNT: int = 100  # ~1 second of silence (100 frames * 10ms)
 MIN_AUDIO_LENGTH_S: float = 0.3
-SPEECH_THRESHOLD: float = 0.3  # VAD threshold (lower = more sensitive to silence)
+SPEECH_THRESHOLD: float = 0.5  # VAD threshold for speech probability
 MIN_SEGMENT_DURATION_S: float = 0.5
 MAX_SEGMENT_DURATION_S: float = 10.0
 AUDIO_FILE_PATH: Path = Path("data/audio.wav")
 
 
-VAD_WINDOW_SIZE: int = 512  # 32ms at 16kHz (sample_rate * window_duration_ms / 1000)
+VAD_WINDOW_SIZE: int = 480  # RNNoise frame size: 480 samples at 48kHz (10ms)
 
 
 class VadState:
@@ -35,8 +34,7 @@ class VadProcessor:
     @staticmethod
     def check_speech(
         audio_window: np.ndarray,
-        vad: torch.nn.Module,
-        sample_rate: int,
+        denoiser: RNNoise,
         vad_window_size: int,
         speech_threshold: float,
     ) -> bool:
@@ -47,8 +45,17 @@ class VadProcessor:
                 )
                 return False
 
-            audio_tensor = torch.from_numpy(audio_window).float()
-            speech_prob = vad(audio_tensor, sample_rate).item()
+            # Convert float32 [-1, 1] to int16 for RNNoise
+            audio_int16 = (audio_window * 32767).astype(np.int16)
+            # RNNoise expects shape [num_channels, num_samples]
+            audio_frame = audio_int16.reshape(1, -1)
+            speech_prob = 0.0
+            # Use denoise_chunk which properly initializes channels before processing
+            for speech_prob_list, _ in denoiser.denoise_chunk(
+                audio_frame,
+                partial=True,
+            ):
+                speech_prob = speech_prob_list[0]
         except Exception:
             logger.exception("Speech detection error.")
             return False
@@ -96,7 +103,7 @@ class VadProcessor:
     @staticmethod
     def process_audio_file(
         audio_file_path: Path,
-        vad: torch.nn.Module,
+        denoiser: RNNoise,
         sample_rate: int = SAMPLE_RATE_HZ,
         vad_window_size: int = VAD_WINDOW_SIZE,
         min_speech_window_count: int = MIN_SPEECH_WINDOW_COUNT,
@@ -157,8 +164,7 @@ class VadProcessor:
             try:
                 is_speech: bool = VadProcessor.check_speech(
                     window,
-                    vad,
-                    sample_rate,
+                    denoiser,
                     vad_window_size,
                     speech_threshold,
                 )
@@ -193,12 +199,12 @@ class VadProcessor:
 
 def main() -> None:
     model_load_start_time = time.perf_counter()
-    vad = load_silero_vad()
+    denoiser = RNNoise(sample_rate=SAMPLE_RATE_HZ)
     model_load_duration = time.perf_counter() - model_load_start_time
     logger.info(f"Model load time: {model_load_duration:.3f}s")
 
     vad_start_time = time.perf_counter()
-    VadProcessor.process_audio_file(AUDIO_FILE_PATH, vad)
+    VadProcessor.process_audio_file(AUDIO_FILE_PATH, denoiser)
     vad_duration = time.perf_counter() - vad_start_time
     logger.info(f"VAD processing time: {vad_duration:.3f}s")
 
