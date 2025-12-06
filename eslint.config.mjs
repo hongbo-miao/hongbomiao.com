@@ -85,7 +85,7 @@ export default [
       'api/api-node/reports/**/*',
       'api/api-python/dist/**/*',
       'api/api-rust/models/**/*',
-      'audio/whisper-cpp/models/**/*',
+      'audio/automatic-speech-recognition-inference/whisper-cpp/models/**/*',
       'ensemble-learning/boosting/hm-catboost/catboost_info/**/*',
       'caddy/public/**/*',
       'cloud-cost/komiser/komiser.db',
