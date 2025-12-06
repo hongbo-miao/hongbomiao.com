@@ -522,8 +522,6 @@ jobs:
               - 'parallel-computing/hm-triton/**'
             hm-unsloth:
               - 'large-language-model-post-training/fine-tuning/hm-unsloth/**'
-            hm-webrtc-vad:
-              - 'audio/voice-activity-detector/hm-webrtc-vad/**'
             hm-whisperx:
               - 'audio/automatic-speech-recognition/hm-whisperx/**'
             hm-xgboost:
@@ -612,6 +610,8 @@ jobs:
               - 'vision-language-model/qwen-vl/**'
             qwen:
               - 'causal-language-modeling/qwen/**'
+            rnnoise-vad:
+              - 'audio/voice-activity-detector/rnnoise-vad/**'
             robot-operating-system:
               - 'robotics/robot-operating-system/**'
             rti-connext-dds:
@@ -632,10 +632,12 @@ jobs:
               - 'network/udp/udp-receiver/**'
             udp-sender:
               - 'network/udp/udp-sender/**'
-            web:
-              - 'web/**'
             web-cypress:
               - 'web-cypress/**'
+            web:
+              - 'web/**'
+            webrtc-vad:
+              - 'audio/voice-activity-detector/webrtc-vad/**'
             windows-calculator:
               - 'operating-system/windows/calculator/**'
             x-plane-rest-api:
@@ -832,7 +834,6 @@ jobs:
       hm-torchtune: ${{ steps.filter.outputs.hm-torchtune }}
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
       hm-unsloth: ${{ steps.filter.outputs.hm-unsloth }}
-      hm-webrtc-vad: ${{ steps.filter.outputs.hm-webrtc-vad }}
       hm-whisperx: ${{ steps.filter.outputs.hm-whisperx }}
       hm-xgboost: ${{ steps.filter.outputs.hm-xgboost }}
       hm-xxhash: ${{ steps.filter.outputs.hm-xxhash }}
@@ -876,6 +877,7 @@ jobs:
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
       qwen-vl: ${{ steps.filter.outputs.qwen-vl }}
       qwen: ${{ steps.filter.outputs.qwen }}
+      rnnoise-vad: ${{ steps.filter.outputs.rnnoise-vad }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
       speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
@@ -888,6 +890,7 @@ jobs:
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
       web: ${{ steps.filter.outputs.web }}
+      webrtc-vad: ${{ steps.filter.outputs.webrtc-vad }}
       windows-calculator: ${{ steps.filter.outputs.windows-calculator }}
       x-plane-rest-api: ${{ steps.filter.outputs.x-plane-rest-api }}
       x-plane-udp: ${{ steps.filter.outputs.x-plane-udp }}
@@ -1245,7 +1248,6 @@ jobs:
       hm-tinker: ${{ needs.detect-changes.outputs.hm-tinker == 'true' }}
       hm-torchtune: ${{ needs.detect-changes.outputs.hm-torchtune == 'true' }}
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
-      hm-webrtc-vad: ${{ needs.detect-changes.outputs.hm-webrtc-vad == 'true' }}
       hm-whisperx: ${{ needs.detect-changes.outputs.hm-whisperx == 'true' }}
       hm-xgboost: ${{ needs.detect-changes.outputs.hm-xgboost == 'true' }}
       hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
@@ -1260,9 +1262,11 @@ jobs:
       q-learning: ${{ needs.detect-changes.outputs.q-learning == 'true' }}
       qwen-vl: ${{ needs.detect-changes.outputs.qwen-vl == 'true' }}
       qwen: ${{ needs.detect-changes.outputs.qwen == 'true' }}
+      rnnoise-vad: ${{ needs.detect-changes.outputs.rnnoise-vad == 'true' }}
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
+      webrtc-vad: ${{ needs.detect-changes.outputs.webrtc-vad == 'true' }}
 
   test-computer-vision:
     name: Test Computer Vision
