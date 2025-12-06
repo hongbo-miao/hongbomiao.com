@@ -1,5 +1,6 @@
 import logging
 import struct
+import time
 from pathlib import Path
 
 import numpy as np
@@ -21,7 +22,7 @@ AUDIO_FILE_PATH: Path = Path("data/audio.wav")
 
 class VadState:
     def __init__(self) -> None:
-        self.audio_buffer: list[np.int16] = []
+        self.audio_buffer: list[np.ndarray] = []
         self.silence_window_count: int = 0
         self.speech_window_count: int = 0
         self.segment_count: int = 0
@@ -36,7 +37,7 @@ class VadProcessor:
         min_speech_window_count: int,
         max_silence_window_count: int,
     ) -> bool:
-        audio_length: int = len(state.audio_buffer)
+        audio_length: int = sum(chunk.size for chunk in state.audio_buffer)
         duration: float = audio_length / sample_rate
 
         if (
@@ -55,7 +56,7 @@ class VadProcessor:
         if not state.audio_buffer:
             return
 
-        audio_data: np.ndarray = np.array(state.audio_buffer, dtype=np.int16)
+        audio_data: np.ndarray = np.concatenate(state.audio_buffer)
         state.segment_count += 1
 
         # Reset buffers
@@ -122,7 +123,7 @@ class VadProcessor:
             window: np.ndarray = audio_data[position : position + vad_window_size]
             position += vad_window_size
 
-            state.audio_buffer.extend(window)
+            state.audio_buffer.append(window)
 
             # VAD check
             window_bytes: bytes = struct.pack(f"{len(window)}h", *window)
@@ -147,7 +148,10 @@ class VadProcessor:
                 logger.exception("VAD error.")
 
         # Process remaining audio
-        if len(state.audio_buffer) > min_audio_length:
+        if (
+            state.audio_buffer
+            and sum(chunk.size for chunk in state.audio_buffer) > min_audio_length
+        ):
             logger.info("Processing final audio segment...")
             VadProcessor.process_segment(state, sample_rate)
 
@@ -155,8 +159,15 @@ class VadProcessor:
 
 
 def main() -> None:
+    model_load_start_time = time.perf_counter()
     vad = webrtcvad.Vad(1)  # aggressiveness level 1
+    model_load_duration = time.perf_counter() - model_load_start_time
+    logger.info(f"Model load time: {model_load_duration:.3f}s")
+
+    vad_start_time = time.perf_counter()
     VadProcessor.process_audio_file(AUDIO_FILE_PATH, vad)
+    vad_duration = time.perf_counter() - vad_start_time
+    logger.info(f"VAD processing time: {vad_duration:.3f}s")
 
 
 if __name__ == "__main__":
