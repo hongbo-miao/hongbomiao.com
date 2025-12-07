@@ -11,4 +11,6 @@ enum Config {
   static let sileroVadMinSpeechDurationS: Double = 0.25
   static let sileroVadMinSilenceDurationS: Double = 1.0
   static let sileroVadMaxSegmentDurationS: Double = 10.0
+  static let realTimeAudioBufferFrameCount: Int = 4096
+  static let realTimeAudioProcessingIntervalNanosecondCount: UInt64 = 2 * 1_000_000_000
 }
