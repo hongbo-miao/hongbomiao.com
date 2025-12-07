@@ -8,7 +8,11 @@ enum WhisperKitPipelineProvider {
         // https://huggingface.co/argmaxinc/whisperkit-coreml/tree/main
         model: "openai_whisper-tiny.en",
         computeOptions: ModelComputeOptions(
-          audioEncoderCompute: .cpuAndNeuralEngine, textDecoderCompute: .cpuAndNeuralEngine)))
+          audioEncoderCompute: .cpuAndNeuralEngine,
+          textDecoderCompute: .cpuAndNeuralEngine,
+        ),
+      ),
+    )
   }
 
   static func loadWhisperKitPipeline() async throws -> WhisperKit {
