@@ -2317,8 +2317,7 @@ jobs:
 
   axolotl-test:
     name: Axolotl | Test
-    # if: ${{ inputs.workflow || inputs.hm-axolotl }}
-    if: ${{ false }}
+    if: ${{ inputs.workflow || inputs.hm-axolotl }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -2337,9 +2336,7 @@ jobs:
       - name: Install dependencies
         working-directory: large-language-model-post-training/fine-tuning/hm-axolotl
         run: |
-          uv sync --extra=build
-          uv sync --extra=build --extra=compile
-          uv sync --extra=build --extra=compile --dev
+          uv sync --dev
       - name: Test
         working-directory: large-language-model-post-training/fine-tuning/hm-axolotl
         run: |
