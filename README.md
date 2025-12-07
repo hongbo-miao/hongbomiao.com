@@ -97,7 +97,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **Tuist** - Xcode project generation and management tool
 - **SwiftUI** - UI framework
-- **MLX Swift LM** - Large language model (LLM) and vision language model (VLM) inference and fine-tuning framework using MLX optimized for GPU (Metal)
+- **MLX Swift LM** - Large language model (LLM) and vision language model (VLM) fine-tuning and inference framework using MLX optimized for GPU (Metal)
 - **kokoro-ios** - Text-to-speech (TTS) framework using MLX optimized for GPU (Metal)
 - **FluidAudio** - Real-time automatic speech recognition (ASR), speaker diarization, voice activity detector (VAD), and text-to-speech (TTS) framework using Core ML optimized exclusively for NPU (Apple Neural Engine (ANE))
 - **WhisperKit** - Automatic speech recognition (ASR) framework using Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)
