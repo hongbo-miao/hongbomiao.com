@@ -3,8 +3,12 @@ import Foundation
 
 enum WhisperKitPipelineProvider {
   static let pipelineTask = Task<WhisperKit, Error> {
-    // https://huggingface.co/argmaxinc/whisperkit-coreml/tree/main
-    try await WhisperKit(WhisperKitConfig(model: "openai_whisper-tiny.en"))
+    try await WhisperKit(
+      WhisperKitConfig(
+        // https://huggingface.co/argmaxinc/whisperkit-coreml/tree/main
+        model: "openai_whisper-tiny.en",
+        computeOptions: ModelComputeOptions(
+          audioEncoderCompute: .cpuAndNeuralEngine, textDecoderCompute: .cpuAndNeuralEngine)))
   }
 
   static func loadWhisperKitPipeline() async throws -> WhisperKit {
