@@ -8,6 +8,29 @@ struct ContentView: View {
     VStack(spacing: 24) {
       Button(
         action: {
+          contentViewModel.handleRealTimeAudioTranscriptionButtonTapped()
+        },
+        label: {
+          if contentViewModel.isStreamingAudioTranscription {
+            Text("Stop Live Transcription")
+          } else {
+            Text("Start Live Transcription")
+          }
+        }
+      )
+      .buttonStyle(.borderedProminent)
+
+      if !contentViewModel.streamingTranscribedText.isEmpty {
+        ScrollView {
+          Text(contentViewModel.streamingTranscribedText)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+      }
+
+      Divider()
+
+      Button(
+        action: {
           contentViewModel.handleTranscribeAudioButtonTapped()
         },
         label: {
