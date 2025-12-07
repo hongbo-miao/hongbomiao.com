@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 
 import lightgbm as lgb
 from sklearn.datasets import load_breast_cancer
@@ -15,6 +16,8 @@ ITERATION_COUNT = 100
 
 def main() -> None:
     random_seed_number = 42
+    artifact_directory_path = Path("output")
+    text_model_path = artifact_directory_path / "model.txt"
 
     logger.info("Load breast cancer dataset")
     dataset = load_breast_cancer()
@@ -70,6 +73,9 @@ def main() -> None:
         (prediction_label_array == label_test_array).sum() / label_test_array.shape[0],
     )
     logger.info(f"Breast cancer test accuracy: {accuracy_value}")
+
+    logger.info(f"Save model in text format to {text_model_path}")
+    model.save_model(text_model_path)
 
 
 if __name__ == "__main__":
