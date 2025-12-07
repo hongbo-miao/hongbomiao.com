@@ -2,7 +2,7 @@
 name = "hm-axolotl"
 version = "1.0.0"
 dependencies = [
-  "axolotl[deepspeed]==0.12.2",
+  "axolotl[deepspeed, flash-attn]==0.12.2",
 ]
 
 [dependency-groups]
@@ -12,28 +12,15 @@ dev = [
   "pytest==9.0.2",
 ]
 
-[project.optional-dependencies]
-build = [
-  "setuptools",
-  "torch",
-]
-compile = [
-  "flash-attn==2.8.3",
-]
-
 [tool.uv]
 package = false
 required-version = ">=0.8.0"
-no-build-isolation-package = ["flash-attn"]
-override-dependencies = ["torch==2.7.1"]
 
-[tool.uv.sources]
-torch = [{ index = "pytorch-cu128" }]
+[tool.uv.extra-build-dependencies]
+flash-attn = [{ requirement = "torch", match-runtime = true }]
 
-[[tool.uv.index]]
-name = "pytorch-cu128"
-url = "https://download.pytorch.org/whl/cu128"
-explicit = true
+[tool.uv.extra-build-variables]
+flash-attn = { FLASH_ATTENTION_SKIP_CUDA_BUILD = "TRUE" }
 
 [tool.poe.tasks]
 test = "pytest --verbose --verbose"
