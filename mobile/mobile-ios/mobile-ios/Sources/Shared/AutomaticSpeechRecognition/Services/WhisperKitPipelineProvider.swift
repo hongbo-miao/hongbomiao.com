@@ -5,8 +5,7 @@ enum WhisperKitPipelineProvider {
   static let pipelineTask = Task<WhisperKit, Error> {
     try await WhisperKit(
       WhisperKitConfig(
-        // https://huggingface.co/argmaxinc/whisperkit-coreml/tree/main
-        model: "openai_whisper-tiny.en",
+        model: AppConfig.whisperKitModelName,
         computeOptions: ModelComputeOptions(
           audioEncoderCompute: .cpuAndNeuralEngine,
           textDecoderCompute: .cpuAndNeuralEngine,

@@ -10,6 +10,8 @@ final class ContentViewModel: ObservableObject {
   @Published var streamingTranscribedText: String = ""
   @Published var isPredictingBreastCancer: Bool = false
   @Published var breastCancerPredictionText: String = ""
+  @Published var isRunningModernBertMaskedLanguageModelExample: Bool = false
+  @Published var modernBertPredictionDescription: String = ""
 
   var realTimeAudioTranscriptionService: RealTimeAudioTranscriptionService?
 }

@@ -12,8 +12,8 @@ extension ContentViewModel {
     Task {
       do {
         let transcriptionText = try await transcribeAudioWithVoiceActivityDetection(
-          audioResourceName: Config.audioResourceName,
-          audioResourceExtension: Config.audioResourceExtension
+          audioResourceName: AppConfig.audioResourceName,
+          audioResourceExtension: AppConfig.audioResourceExtension
         )
 
         await MainActor.run {
@@ -22,8 +22,8 @@ extension ContentViewModel {
 
           do {
             try playAudio(
-              audioResourceName: Config.audioResourceName,
-              audioResourceExtension: Config.audioResourceExtension
+              audioResourceName: AppConfig.audioResourceName,
+              audioResourceExtension: AppConfig.audioResourceExtension
             )
           } catch {
             print("Failed to play audio: \(error.localizedDescription)")

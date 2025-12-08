@@ -14,8 +14,8 @@ func generateJoke() async throws -> String? {
     )
 
     let generateParameters = GenerateParameters(
-      maxTokens: Config.llmMaxTokenCount,
-      temperature: Config.llmTemperature
+      maxTokens: AppConfig.llmMaxTokenCount,
+      temperature: AppConfig.llmTemperature
     )
     let jokeResult = try MLXLMCommon.generate(
       input: jokeInput,
