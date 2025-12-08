@@ -15,7 +15,7 @@ func speakJokeText(jokeText: String, voiceStyleName: String) async throws {
 
   // Set GPU memory limit to prevent crashes on devices with limited memory
   logger.info("Set GPU memory limit")
-  MLX.GPU.set(memoryLimit: Config.mlxGpuMemoryLimitByteCount)
+  MLX.GPU.set(memoryLimit: AppConfig.mlxGpuMemoryLimitByteCount)
 
   // Initialize Kokoro TTS
   let modelPath = try KokoroVoiceLoader.getModelPath()

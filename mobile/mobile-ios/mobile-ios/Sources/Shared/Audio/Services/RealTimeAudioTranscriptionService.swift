@@ -47,7 +47,7 @@ final class RealTimeAudioTranscriptionService: @unchecked Sendable {
     inputNode.removeTap(onBus: 0)
     inputNode.installTap(
       onBus: 0,
-      bufferSize: AVAudioFrameCount(Config.realTimeAudioBufferFrameCount),
+      bufferSize: AVAudioFrameCount(AppConfig.realTimeAudioBufferFrameCount),
       format: inputFormat
     ) { [weak self] buffer, _ in
       guard let self, let audioFile = self.audioFile else {
@@ -120,7 +120,7 @@ final class RealTimeAudioTranscriptionService: @unchecked Sendable {
       }
 
       do {
-        try await Task.sleep(nanoseconds: Config.realTimeAudioProcessingIntervalNanosecondCount)
+        try await Task.sleep(nanoseconds: AppConfig.realTimeAudioProcessingIntervalNanosecondCount)
       } catch {
         break
       }
