@@ -601,6 +601,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
     uv run poe static-type-check-python --package=machine-learning.stable-diffusion
     uv run poe static-type-check-python --package=machine-learning.transformer
+    uv run poe static-type-check-python --package=masked-language-modeling.convert-modern-bert-to-core-ml
     uv run poe static-type-check-python --package=masked-language-modeling.modern-bert
     uv run poe static-type-check-python --package=masked-language-modeling.neo-bert
     uv run poe static-type-check-python --package=named-entity-recognition.bert

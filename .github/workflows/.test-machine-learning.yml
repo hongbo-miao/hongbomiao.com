@@ -30,6 +30,9 @@ name: . Test Machine Learning
       cart-pole:
         required: true
         type: boolean
+      convert-modern-bert-to-core-ml:
+        required: true
+        type: boolean
       convolutional-neural-network:
         required: true
         type: boolean
@@ -2483,7 +2486,7 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-post-training/fine-tuning/fine-tune-whisper
 
-  coremltools-test:
+  core-ml-tools-test:
     name: Core ML Tools | Test
     if: ${{ inputs.workflow || inputs.core-ml-tools }}
     runs-on: ubuntu-24.04
@@ -2515,6 +2518,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: machine-learning/core-ml-tools
+
+  convert-modern-bert-to-core-ml-test:
+    name: Convert ModernBERT to Core ML | Test
+    if: ${{ inputs.workflow || inputs.convert-modern-bert-to-core-ml }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.5
+        with:
+          version: 0.9.16
+          enable-cache: true
+          cache-dependency-glob: masked-language-modeling/convert-modern-bert-to-core-ml/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: masked-language-modeling/convert-modern-bert-to-core-ml/.python-version
+      - name: Install dependencies
+        working-directory: masked-language-modeling/convert-modern-bert-to-core-ml
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: masked-language-modeling/convert-modern-bert-to-core-ml
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: masked-language-modeling/convert-modern-bert-to-core-ml
 
   deepeval-test:
     name: DeepEval | Test
