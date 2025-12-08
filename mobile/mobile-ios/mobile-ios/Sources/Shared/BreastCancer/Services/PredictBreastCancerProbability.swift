@@ -17,11 +17,6 @@ func predictBreastCancerProbability(featureValues: [Double]) throws -> Double {
     withExtension: "mlmodelc"
   ) {
     modelUrl = compiledModelUrl
-  } else if let uncompiledModelUrl = bundle.url(
-    forResource: "breast_cancer_catboost",
-    withExtension: "mlmodel"
-  ) {
-    modelUrl = try MLModel.compileModel(at: uncompiledModelUrl)
   } else {
     throw BreastCancerPredictionError.modelNotFound
   }

@@ -13,12 +13,13 @@ extension ContentViewModel {
     Task {
       do {
         let probability = try predictBreastCancerProbability(
-          featureValues: Config.breastCancerSampleFeatureValues
+          featureValues: AppConfig.breastCancerSampleFeatureValues
         )
         let probabilityPercentage = probability * 100
         let formattedProbability = String(format: "%.2f%%", probabilityPercentage)
         let riskDescription =
-          probability >= Config.breastCancerHighRiskProbabilityThreshold ? "High risk" : "Low risk"
+          probability >= AppConfig.breastCancerHighRiskProbabilityThreshold
+          ? "High risk" : "Low risk"
 
         await MainActor.run {
           breastCancerPredictionText =
