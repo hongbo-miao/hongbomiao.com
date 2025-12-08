@@ -12,6 +12,9 @@ let project = Project(
     base: [
       "SWIFT_VERSION": .string(swiftVersion),
       "DEVELOPMENT_TEAM": .string("KJUGT5LXHP"),
+      "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS": .string("YES"),
+      "ENABLE_USER_SCRIPT_SANDBOXING": .string("YES"),
+      "STRING_CATALOG_GENERATE_SYMBOLS": .string("YES"),
     ]
   ),
   targets: [
