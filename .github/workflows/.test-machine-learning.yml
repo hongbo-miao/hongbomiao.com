@@ -33,6 +33,9 @@ name: . Test Machine Learning
       convolutional-neural-network:
         required: true
         type: boolean
+      core-ml-tools:
+        required: true
+        type: boolean
       feature-store:
         required: true
         type: boolean
@@ -2479,6 +2482,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-post-training/fine-tuning/fine-tune-whisper
+
+  coremltools-test:
+    name: Core ML Tools | Test
+    if: ${{ inputs.workflow || inputs.core-ml-tools }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.4
+        with:
+          version: 0.9.16
+          enable-cache: true
+          cache-dependency-glob: machine-learning/core-ml-tools/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: machine-learning/core-ml-tools/.python-version
+      - name: Install dependencies
+        working-directory: machine-learning/core-ml-tools
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/core-ml-tools
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: machine-learning/core-ml-tools
 
   deepeval-test:
     name: DeepEval | Test

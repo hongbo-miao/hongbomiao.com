@@ -101,6 +101,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **kokoro-ios** - Text-to-speech (TTS) framework using MLX optimized for GPU (Metal)
 - **FluidAudio** - Real-time automatic speech recognition (ASR), speaker diarization, voice activity detector (VAD), and text-to-speech (TTS) framework using Core ML optimized exclusively for NPU (Apple Neural Engine (ANE))
 - **WhisperKit** - Automatic speech recognition (ASR) framework using Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)
+- **Core ML Tools** - Core ML model conversion, editing, and validation for iOS/macOS
 - **XCTest** - Unit testing, performance testing
 - **Slather** - Code coverage reports generating
 - **Mint** - Package management
