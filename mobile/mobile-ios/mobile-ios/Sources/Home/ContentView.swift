@@ -15,13 +15,13 @@ struct ContentView: View {
           .fixedSize(horizontal: false, vertical: true)
 
           Text(
-            "• WhisperKit (automatic speech recognition (ASR)) uses Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)."
+            "• WhisperKit (automatic speech recognition (ASR): whisper-tiny.en) uses Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)."
           )
           .multilineTextAlignment(.leading)
           .fixedSize(horizontal: false, vertical: true)
 
           Text(
-            "• MLX Swift LM (large language model (LLM)) uses MLX optimized for GPU (Metal)."
+            "• MLX Swift LM (large language model (LLM): Qwen3-1.7B-4bit) uses MLX optimized for GPU (Metal)."
           )
           .multilineTextAlignment(.leading)
           .fixedSize(horizontal: false, vertical: true)
@@ -71,13 +71,13 @@ struct ContentView: View {
 
           VStack(alignment: .leading, spacing: 4) {
             Text(
-              "1. FluidAudio (Silero VAD)"
+              "1. FluidAudio (voice activity detector (VAD): Silero VAD)"
             )
             .multilineTextAlignment(.leading)
             .fixedSize(horizontal: false, vertical: true)
 
             Text(
-              "2. WhisperKit (automatic speech recognition (ASR))"
+              "2. WhisperKit (automatic speech recognition (ASR): whisper-tiny.en)"
             )
             .multilineTextAlignment(.leading)
             .fixedSize(horizontal: false, vertical: true)
@@ -119,7 +119,7 @@ struct ContentView: View {
             .fixedSize(horizontal: false, vertical: true)
 
             Text(
-              "2. WhisperKit (automatic speech recognition (ASR))"
+              "2. WhisperKit (automatic speech recognition (ASR): whisper-tiny.en)"
             )
             .multilineTextAlignment(.leading)
             .fixedSize(horizontal: false, vertical: true)
@@ -154,10 +154,10 @@ struct ContentView: View {
           .buttonStyle(.borderedProminent)
 
           VStack(alignment: .leading, spacing: 4) {
-            Text("1. MLX Swift LM (large language model (LLM))")
+            Text("1. MLX Swift LM (large language model (LLM): Qwen3-1.7B-4bit)")
               .multilineTextAlignment(.leading)
               .fixedSize(horizontal: false, vertical: true)
-            Text("2. kokoro-ios (text-to-speech (TTS))")
+            Text("2. kokoro-ios (text-to-speech (TTS): Kokoro TTS)")
               .multilineTextAlignment(.leading)
               .fixedSize(horizontal: false, vertical: true)
           }
@@ -191,7 +191,7 @@ struct ContentView: View {
           .buttonStyle(.borderedProminent)
 
           VStack(alignment: .leading, spacing: 4) {
-            Text("1. CatBoost model in Core ML format")
+            Text("1. CatBoost (gradient boosting) in Core ML format")
               .multilineTextAlignment(.leading)
               .fixedSize(horizontal: false, vertical: true)
           }
@@ -226,7 +226,7 @@ struct ContentView: View {
             Text("1. swift-transformers (tokenizer)")
               .multilineTextAlignment(.leading)
               .fixedSize(horizontal: false, vertical: true)
-            Text("2. ModernBERT (masked language modeling (MLM))")
+            Text("2. ModernBERT (masked language modeling (MLM)) in Core ML format")
               .multilineTextAlignment(.leading)
               .fixedSize(horizontal: false, vertical: true)
           }
