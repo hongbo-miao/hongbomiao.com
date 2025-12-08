@@ -304,6 +304,8 @@ jobs:
               - 'reinforcement-learning/cart-pole/**'
             convolutional-neural-network:
               - 'machine-learning/convolutional-neural-network/**'
+            core-ml-tools:
+              - 'machine-learning/core-ml-tools/**'
             dbt-hm-postgres:
               - 'data-transformation/dbt/projects/dbt_hm_postgres/**'
             delta-lake-read-delta-lake-by-amazon-athena:
@@ -718,6 +720,7 @@ jobs:
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
       cart-pole: ${{ steps.filter.outputs.cart-pole }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
+      core-ml-tools: ${{ steps.filter.outputs.core-ml-tools }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
       decode-can-blf-data: ${{ steps.filter.outputs.decode-can-blf-data }}
       decode-can-mf4-data: ${{ steps.filter.outputs.decode-can-mf4-data }}
@@ -1207,6 +1210,7 @@ jobs:
       byte-pair-encoding: ${{ needs.detect-changes.outputs.byte-pair-encoding == 'true' }}
       cart-pole: ${{ needs.detect-changes.outputs.cart-pole == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
+      core-ml-tools: ${{ needs.detect-changes.outputs.core-ml-tools == 'true' }}
       feature-store: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
       fine-tune-whisper: ${{ needs.detect-changes.outputs.fine-tune-whisper == 'true' }}
       graph-neural-network: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
