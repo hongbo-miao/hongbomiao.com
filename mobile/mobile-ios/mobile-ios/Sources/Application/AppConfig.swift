@@ -1,4 +1,5 @@
 import Foundation
+import MLXLLM
 
 enum AppConfig {
   static let audioResourceExtension: String = "wav"
@@ -11,6 +12,8 @@ enum AppConfig {
     2019.0, 0.1622, 0.6656, 0.7119, 0.2654, 0.4601, 0.1189,
   ]
   static let kokoroVoiceStyleName: String = "af_bella"
+  // https://github.com/ml-explore/mlx-swift-examples/blob/main/Applications/MLXChatExample/Services/MLXService.swift
+  static let largeLanguageModelRegistryConfiguration = LLMRegistry.qwen3_1_7b_4bit
   static let llmMaxTokenCount: Int = 1024
   static let llmTemperature: Float = 0.6
   static let mlxGpuMemoryLimitByteCount: Int = 500 * 1024 * 1024  // 500 MiB

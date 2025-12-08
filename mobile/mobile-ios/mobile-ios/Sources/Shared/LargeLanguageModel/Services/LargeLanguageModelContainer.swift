@@ -5,8 +5,7 @@ import MLXLMCommon
 enum LargeLanguageModelContainer {
   private static let modelContainerTask = Task<ModelContainer, Error> {
     try await LLMModelFactory.shared.loadContainer(
-      // https://github.com/ml-explore/mlx-swift-examples/blob/main/Applications/MLXChatExample/Services/MLXService.swift
-      configuration: LLMRegistry.qwen3_1_7b_4bit
+      configuration: AppConfig.largeLanguageModelRegistryConfiguration
     ) { _ in }
   }
 
