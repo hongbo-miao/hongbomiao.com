@@ -17,7 +17,7 @@ def main() -> None:
     random_seed_number = 42
     artifact_directory_path = Path("output")
     cbm_model_path = artifact_directory_path / "model.cbm"
-    coreml_model_path = artifact_directory_path / "model.mlmodel"
+    core_ml_model_path = artifact_directory_path / "model.mlmodel"
 
     logger.info("Load breast cancer dataset")
     dataset = load_breast_cancer()
@@ -67,8 +67,8 @@ def main() -> None:
 
     logger.info(f"Save model in CBM format to {cbm_model_path}")
     model.save_model(cbm_model_path, format="cbm")
-    logger.info(f"Save model in CoreML format to {coreml_model_path}")
-    model.save_model(coreml_model_path, format="coreml")
+    logger.info(f"Save model in Core ML format to {core_ml_model_path}")
+    model.save_model(core_ml_model_path, format="coreml")
 
 
 if __name__ == "__main__":

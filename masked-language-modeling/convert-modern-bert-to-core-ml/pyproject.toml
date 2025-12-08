@@ -1,0 +1,24 @@
+[project]
+name = "convert-modern-bert-to-core-ml"
+version = "1.0.0"
+dependencies = [
+  "coremltools==8.0",
+  "torch==2.9.1",
+  "transformers==4.57.3",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.38.0",
+  "pytest-cov==7.0.0",
+  "pytest==9.0.2",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.8.0"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

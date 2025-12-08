@@ -281,6 +281,8 @@ jobs:
               - 'autonomy/camera-radar-fusion/**'
             camera-radar-lidar-fusion:
               - 'autonomy/camera-radar-lidar-fusion/**'
+            convert-modern-bert-to-core-ml:
+              - 'masking-language-modeling/convert-modern-bert-to-core-ml/**'
             decode-can-blf-data:
               - 'embedded-system/decode-can-blf-data/**'
             decode-can-mf4-data:
@@ -719,6 +721,7 @@ jobs:
       byte-pair-encoding: ${{ steps.filter.outputs.byte-pair-encoding }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
       cart-pole: ${{ steps.filter.outputs.cart-pole }}
+      convert-modern-bert-to-core-ml: ${{ steps.filter.outputs.convert-modern-bert-to-core-ml }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       core-ml-tools: ${{ steps.filter.outputs.core-ml-tools }}
       dbt-hm-postgres: ${{ steps.filter.outputs.dbt-hm-postgres }}
@@ -1209,6 +1212,7 @@ jobs:
       bert: ${{ needs.detect-changes.outputs.bert == 'true' }}
       byte-pair-encoding: ${{ needs.detect-changes.outputs.byte-pair-encoding == 'true' }}
       cart-pole: ${{ needs.detect-changes.outputs.cart-pole == 'true' }}
+      convert-modern-bert-to-core-ml: ${{ needs.detect-changes.outputs.convert-modern-bert-to-core-ml == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
       core-ml-tools: ${{ needs.detect-changes.outputs.core-ml-tools == 'true' }}
       feature-store: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
