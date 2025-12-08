@@ -19,7 +19,7 @@ extension ContentViewModel {
 
         if let jokeTextResult = jokeTextResult {
           try await speakJokeText(
-            jokeText: jokeTextResult, voiceStyleName: Config.kokoroVoiceStyleName)
+            jokeText: jokeTextResult, voiceStyleName: AppConfig.kokoroVoiceStyleName)
         }
       } catch {
         await MainActor.run {
