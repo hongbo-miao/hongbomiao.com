@@ -10,7 +10,7 @@ func detectVoiceActivityFromAudioFile(
   audioFileUrl: URL
 ) async throws -> [SpeechSegment] {
   let vadManager = try await VadManager(
-    config: VadConfig(defaultThreshold: Config.sileroVadSpeechThreshold)
+    config: VadConfig(defaultThreshold: AppConfig.sileroVadSpeechThreshold)
   )
 
   let audioConverter = AudioConverter()
@@ -22,9 +22,9 @@ func detectVoiceActivityFromAudioFile(
   }
 
   let segmentationConfig = VadSegmentationConfig(
-    minSpeechDuration: Config.sileroVadMinSpeechDurationS,
-    minSilenceDuration: Config.sileroVadMinSilenceDurationS,
-    maxSpeechDuration: Config.sileroVadMaxSegmentDurationS
+    minSpeechDuration: AppConfig.sileroVadMinSpeechDurationS,
+    minSilenceDuration: AppConfig.sileroVadMinSilenceDurationS,
+    maxSpeechDuration: AppConfig.sileroVadMaxSegmentDurationS
   )
 
   let segments = try await vadManager.segmentSpeech(samples, config: segmentationConfig)

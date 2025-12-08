@@ -36,11 +36,13 @@ let project = Project(
         "mobile-ios/Resources",
       ],
       dependencies: [
+        .external(name: "FluidAudio"),
+        .external(name: "Hub"),
         .external(name: "KokoroSwift"),
         .external(name: "MLXLLM"),
         .external(name: "MLXLMCommon"),
         .external(name: "MLXUtilsLibrary"),
-        .external(name: "FluidAudio"),
+        .external(name: "Tokenizers"),
         .external(name: "WhisperKit"),
       ]
     ),
