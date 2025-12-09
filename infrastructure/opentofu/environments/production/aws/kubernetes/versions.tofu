@@ -28,7 +28,7 @@ terraform {
     # https://registry.terraform.io/providers/hashicorp/kubernetes/latest
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "3.0.0"
+      version = "3.0.1"
     }
   }
   required_version = ">= 1.10"
