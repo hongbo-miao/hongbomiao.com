@@ -1,3 +1,4 @@
+import FluidAudio
 import Foundation
 @preconcurrency import WhisperKit
 
@@ -22,6 +23,44 @@ func transcribeAudioWithVoiceActivityDetection(
   let speechSegments = try await detectVoiceActivityFromAudioFile(
     audioFileUrl: audioFileUrl
   )
+
+  // Step 3: Prepare speaker diarization
+  let diarizerConfig = DiarizerConfig(
+    clusteringThreshold: AppConfig.diarizerClusteringThreshold,
+    minSpeechDuration: AppConfig.diarizerMinSpeechDurationS,
+    minEmbeddingUpdateDuration: AppConfig.diarizerMinEmbeddingUpdateDurationS,
+    minSilenceGap: AppConfig.diarizerMinSilenceGapS,
+    numClusters: AppConfig.diarizerExpectedSpeakerCount,
+    minActiveFramesCount: AppConfig.diarizerMinActiveFramesCount,
+    chunkDuration: AppConfig.diarizerChunkDurationS,
+    chunkOverlap: AppConfig.diarizerChunkOverlapS
+  )
+  let diarizerManager = DiarizerManager(config: diarizerConfig)
+  let diarizationSegments: [TimedSpeakerSegment]
+
+  do {
+    let diarizerModels = try await loadBundledDiarizerModels()
+    diarizerManager.initialize(models: diarizerModels)
+
+    let audioConverter = AudioConverter()
+    let diarizationSamples = try audioConverter.resampleAudioFile(audioFileUrl)
+    let diarizationResult = try diarizerManager.performCompleteDiarization(
+      diarizationSamples
+    )
+    diarizationSegments = diarizationResult.segments
+  } catch DiarizerError.notInitialized {
+    throw AudioTranscriptionError.diarizationModelLoadFailed(DiarizerError.notInitialized)
+  } catch {
+    if error is DiarizerError {
+      throw AudioTranscriptionError.diarizationFailed(error)
+    }
+
+    throw AudioTranscriptionError.diarizationModelLoadFailed(error)
+  }
+
+  defer {
+    diarizerManager.cleanup()
+  }
 
   // Log detected speech segments
   for (index, segment) in speechSegments.enumerated() {
@@ -59,15 +98,39 @@ func transcribeAudioWithVoiceActivityDetection(
       let trimmedText = transcriptionText.trimmingCharacters(
         in: CharacterSet.whitespacesAndNewlines
       )
-      if !trimmedText.isEmpty {
-        let formattedLine = String(
-          format: "[%.1f-%.1fs] %@",
-          segment.startTime,
-          segment.endTime,
-          trimmedText
-        )
-        transcribedLines.append(formattedLine)
+      if trimmedText.isEmpty {
+        continue
       }
+
+      let speakerMatch =
+        diarizationSegments
+        .map { speakerSegment in
+          (
+            segment: speakerSegment,
+            overlap: max(
+              0,
+              min(Double(speakerSegment.endTimeSeconds), segment.endTime)
+                - max(Double(speakerSegment.startTimeSeconds), segment.startTime)
+            )
+          )
+        }
+        .max(by: { first, second in first.overlap < second.overlap })
+
+      let speakerLabel: String
+      if let match = speakerMatch, match.overlap > 0 {
+        speakerLabel = "Speark \(match.segment.speakerId)"
+      } else {
+        speakerLabel = "Unknown speaker"
+      }
+
+      let timeRangeDescription = String(
+        format: "%.1f-%.1fs",
+        segment.startTime,
+        segment.endTime
+      )
+
+      let formattedLine = "[\(speakerLabel), \(timeRangeDescription)] \(trimmedText)"
+      transcribedLines.append(formattedLine)
     } catch {
       throw AudioTranscriptionError.transcriptionFailed(error)
     }
