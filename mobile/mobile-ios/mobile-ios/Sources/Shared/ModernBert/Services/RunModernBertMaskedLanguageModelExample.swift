@@ -207,6 +207,6 @@ func runModernBertMaskedLanguageModelExample() throws
 
 extension NSNumber {
   fileprivate var intValue: Int {
-    self.intValue
+    Int(truncating: self)
   }
 }
