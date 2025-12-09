@@ -18,12 +18,16 @@ generate-xcode-workspace:
 set-up:
     mkdir -p mobile-ios/Resources/Audio
     mkdir -p mobile-ios/Resources/Models
-    curl --silent --fail --show-error --location --output mobile-ios/Resources/Audio/audio.wav https://raw.githubusercontent.com/hongbo-miao/hongbomiao.com-data/main/mobile-ios/audio.wav
+    curl --silent --fail --show-error --location --output mobile-ios/Resources/Audio/audio.wav https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/audio.wav
     curl --silent --fail --show-error --location --output mobile-ios/Resources/Models/kokoro-v1_0.safetensors https://huggingface.co/mlx-community/Kokoro-82M-bf16/resolve/main/kokoro-v1_0.safetensors
     curl --silent --fail --show-error --location --output mobile-ios/Resources/Models/voices.npz https://raw.githubusercontent.com/mlalma/KokoroTestApp/main/Resources/voices.npz
     curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/ModernBERTMaskedLM.mlpackage.tar.gz | tar -x -z -C mobile-ios/Resources/Models/
     curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/ModernBERTTokenizer.tar.gz | tar -x -z -C mobile-ios/Resources/Models/
     curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/breast_cancer_catboost.mlmodelc.tar.gz | tar -x -z -C mobile-ios/Resources/Models/
+    # https://huggingface.co/FluidInference/speaker-diarization-coreml/tree/main/pyannote_segmentation.mlmodelc
+    curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/pyannote_segmentation.mlmodelc.tar.gz | tar -x -z -C mobile-ios/Resources/Models/
+    # https://huggingface.co/FluidInference/speaker-diarization-coreml/tree/main/wespeaker_v2.mlmodelc
+    curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/wespeaker_v2.mlmodelc.tar.gz | tar -x -z -C mobile-ios/Resources/Models/
 
 open-xcode-workspace:
     open mobile-ios.xcworkspace

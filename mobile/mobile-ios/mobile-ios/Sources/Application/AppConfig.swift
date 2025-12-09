@@ -23,9 +23,17 @@ enum AppConfig {
   static let realTimeAudioBufferFrameCount: Int = 4096
   static let realTimeAudioProcessingIntervalNanosecondCount: UInt64 = 2 * 1_000_000_000
   static let sileroVadMaxSegmentDurationS: Double = 10.0
-  static let sileroVadMinSilenceDurationS: Double = 1.0
-  static let sileroVadMinSpeechDurationS: Double = 0.25
-  static let sileroVadSpeechThreshold: Float = 0.5
+  static let sileroVadMinSilenceDurationS: Double = 0.35
+  static let sileroVadMinSpeechDurationS: Double = 0.12
+  static let sileroVadSpeechThreshold: Float = 0.35
+  static let diarizerClusteringThreshold: Float = 0.6
+  static let diarizerMinSpeechDurationS: Float = 0.6
+  static let diarizerMinEmbeddingUpdateDurationS: Float = 1.0
+  static let diarizerMinSilenceGapS: Float = 0.22
+  static let diarizerMinActiveFramesCount: Float = 6.0
+  static let diarizerChunkDurationS: Float = 8.0
+  static let diarizerChunkOverlapS: Float = 2.0
+  static let diarizerExpectedSpeakerCount: Int = 2
   // https://huggingface.co/argmaxinc/whisperkit-coreml/tree/main
   static let whisperKitModelName: String = "openai_whisper-tiny.en"
 }
