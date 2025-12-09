@@ -15,6 +15,12 @@ struct ContentView: View {
           .fixedSize(horizontal: false, vertical: true)
 
           Text(
+            "• FluidAudio (speaker diarization: Pyannote Segmentation (segmentation) + WeSpeaker (embedding)) uses Core ML optimized exclusively for NPU (Apple Neural Engine (ANE))."
+          )
+          .multilineTextAlignment(.leading)
+          .fixedSize(horizontal: false, vertical: true)
+
+          Text(
             "• WhisperKit (automatic speech recognition (ASR): whisper-tiny.en) uses Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)."
           )
           .multilineTextAlignment(.leading)
@@ -119,7 +125,13 @@ struct ContentView: View {
             .fixedSize(horizontal: false, vertical: true)
 
             Text(
-              "2. WhisperKit (automatic speech recognition (ASR): whisper-tiny.en)"
+              "2. FluidAudio (speaker diarization: Pyannote Segmentation (segmentation) + WeSpeaker (embedding))"
+            )
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+
+            Text(
+              "3. WhisperKit (automatic speech recognition (ASR): whisper-tiny.en)"
             )
             .multilineTextAlignment(.leading)
             .fixedSize(horizontal: false, vertical: true)
