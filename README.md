@@ -59,7 +59,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 > [!NOTE]
 > The diagram here may take a moment to load. Please wait patiently.
 
-![Architecture](https://github.com/user-attachments/assets/c1f577fc-9515-44b4-93e3-0e770f1a87bc)
+![Architecture](https://github.com/user-attachments/assets/875efe31-1601-4825-b76f-ab0452f67ff4)
 
 # 🧱 Tech Stack
 
@@ -552,9 +552,9 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **GLiNER** - Named entity recognition
 - Tokenization
   - **Byte-Pair Encoding (BPE)** - Subword tokenization
-- Causal Language Modeling (CLM)
+- Causal Language Model (CLM)
   - **Qwen3** - Decoder-only transformer model for autoregressive text generation
-- Masked Language Modeling (MLM)
+- Masked Language Model (MLM)
   - **ModernBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), Flash Attention, GeGLU activations, and a context length of 8,192 tokens.
   - **NeoBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.
 - Embedding
@@ -624,10 +624,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - Live Coding
   - **Strudel** - JavaScript port of Tidal Cycles for live coding dynamic music patterns
-- Voice Activity Detector (VAD)
-  - **WebRTC VAD** - Voice activity detector
-  - **RNNoise VAD** - Voice activity detector
-  - **Silero VAD** - Voice activity detector
+- Voice Activity Detection (VAD)
+  - **WebRTC VAD** - Voice activity detection
+  - **RNNoise VAD** - Voice activity detection
+  - **Silero VAD** - Voice activity detection
 - Speaker Diarization
   - **Senko** - Speaker diarization
   - **Diart** - Real-time speaker diarization
