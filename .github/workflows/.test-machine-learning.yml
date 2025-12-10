@@ -907,17 +907,17 @@ jobs:
         with:
           version: 0.9.16
           enable-cache: true
-          cache-dependency-glob: causal-language-modeling/qwen/uv.lock
+          cache-dependency-glob: causal-language-model/qwen/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: causal-language-modeling/qwen/.python-version
+          python-version-file: causal-language-model/qwen/.python-version
       - name: Install dependencies
-        working-directory: causal-language-modeling/qwen
+        working-directory: causal-language-model/qwen
         run: |
           uv sync --dev
       - name: Test
-        working-directory: causal-language-modeling/qwen
+        working-directory: causal-language-model/qwen
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -925,7 +925,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: causal-language-modeling/qwen
+          directory: causal-language-model/qwen
 
 
   modern-bert-test:
@@ -941,17 +941,17 @@ jobs:
         with:
           version: 0.9.16
           enable-cache: true
-          cache-dependency-glob: masked-language-modeling/modern-bert/uv.lock
+          cache-dependency-glob: masked-language-model/modern-bert/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: masked-language-modeling/modern-bert/.python-version
+          python-version-file: masked-language-model/modern-bert/.python-version
       - name: Install dependencies
-        working-directory: masked-language-modeling/modern-bert
+        working-directory: masked-language-model/modern-bert
         run: |
           uv sync --dev
       - name: Test
-        working-directory: masked-language-modeling/modern-bert
+        working-directory: masked-language-model/modern-bert
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -959,7 +959,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: masked-language-modeling/modern-bert
+          directory: masked-language-model/modern-bert
 
   neo-bert-test:
     name: NeoBERT | Test
@@ -974,17 +974,17 @@ jobs:
         with:
           version: 0.9.16
           enable-cache: true
-          cache-dependency-glob: masked-language-modeling/neo-bert/uv.lock
+          cache-dependency-glob: masked-language-model/neo-bert/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: masked-language-modeling/neo-bert/.python-version
+          python-version-file: masked-language-model/neo-bert/.python-version
       - name: Install dependencies
-        working-directory: masked-language-modeling/neo-bert
+        working-directory: masked-language-model/neo-bert
         run: |
           uv sync --dev
       - name: Test
-        working-directory: masked-language-modeling/neo-bert
+        working-directory: masked-language-model/neo-bert
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -992,7 +992,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: masked-language-modeling/neo-bert
+          directory: masked-language-model/neo-bert
 
   bert-test:
     name: BERT | Test
@@ -1806,17 +1806,17 @@ jobs:
         with:
           version: 0.9.16
           enable-cache: true
-          cache-dependency-glob: audio/voice-activity-detector/webrtc-vad/uv.lock
+          cache-dependency-glob: audio/voice-activity-detection/webrtc-vad/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: audio/voice-activity-detector/webrtc-vad/.python-version
+          python-version-file: audio/voice-activity-detection/webrtc-vad/.python-version
       - name: Install dependencies
-        working-directory: audio/voice-activity-detector/webrtc-vad
+        working-directory: audio/voice-activity-detection/webrtc-vad
         run: |
           uv sync --dev
       - name: Test
-        working-directory: audio/voice-activity-detector/webrtc-vad
+        working-directory: audio/voice-activity-detection/webrtc-vad
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1824,7 +1824,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: audio/voice-activity-detector/webrtc-vad
+          directory: audio/voice-activity-detection/webrtc-vad
 
   rnnoise-vad-test:
     name: RNNoise VAD | Test
@@ -1839,17 +1839,17 @@ jobs:
         with:
           version: 0.9.16
           enable-cache: true
-          cache-dependency-glob: audio/voice-activity-detector/rnnoise-vad/uv.lock
+          cache-dependency-glob: audio/voice-activity-detection/rnnoise-vad/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: audio/voice-activity-detector/rnnoise-vad/.python-version
+          python-version-file: audio/voice-activity-detection/rnnoise-vad/.python-version
       - name: Install dependencies
-        working-directory: audio/voice-activity-detector/rnnoise-vad
+        working-directory: audio/voice-activity-detection/rnnoise-vad
         run: |
           uv sync --dev
       - name: Test
-        working-directory: audio/voice-activity-detector/rnnoise-vad
+        working-directory: audio/voice-activity-detection/rnnoise-vad
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1857,7 +1857,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: audio/voice-activity-detector/rnnoise-vad
+          directory: audio/voice-activity-detection/rnnoise-vad
 
   silero-vad-test:
     name: Silero VAD | Test
@@ -1872,17 +1872,17 @@ jobs:
         with:
           version: 0.9.16
           enable-cache: true
-          cache-dependency-glob: audio/voice-activity-detector/hm-silero-vad/uv.lock
+          cache-dependency-glob: audio/voice-activity-detection/hm-silero-vad/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: audio/voice-activity-detector/hm-silero-vad/.python-version
+          python-version-file: audio/voice-activity-detection/hm-silero-vad/.python-version
       - name: Install dependencies
-        working-directory: audio/voice-activity-detector/hm-silero-vad
+        working-directory: audio/voice-activity-detection/hm-silero-vad
         run: |
           uv sync --dev
       - name: Test
-        working-directory: audio/voice-activity-detector/hm-silero-vad
+        working-directory: audio/voice-activity-detection/hm-silero-vad
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1890,7 +1890,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: audio/voice-activity-detector/hm-silero-vad
+          directory: audio/voice-activity-detection/hm-silero-vad
 
   senko-test:
     name: Senko | Test
@@ -2532,17 +2532,17 @@ jobs:
         with:
           version: 0.9.16
           enable-cache: true
-          cache-dependency-glob: masked-language-modeling/convert-modern-bert-to-core-ml/uv.lock
+          cache-dependency-glob: masked-language-model/convert-modern-bert-to-core-ml/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: masked-language-modeling/convert-modern-bert-to-core-ml/.python-version
+          python-version-file: masked-language-model/convert-modern-bert-to-core-ml/.python-version
       - name: Install dependencies
-        working-directory: masked-language-modeling/convert-modern-bert-to-core-ml
+        working-directory: masked-language-model/convert-modern-bert-to-core-ml
         run: |
           uv sync --dev
       - name: Test
-        working-directory: masked-language-modeling/convert-modern-bert-to-core-ml
+        working-directory: masked-language-model/convert-modern-bert-to-core-ml
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2550,7 +2550,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: masked-language-modeling/convert-modern-bert-to-core-ml
+          directory: masked-language-model/convert-modern-bert-to-core-ml
 
   deepeval-test:
     name: DeepEval | Test
