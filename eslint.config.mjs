@@ -184,7 +184,7 @@ export default [
     },
   },
   {
-    files: ['**/*.json'],
+    files: ['**/*.{geojson,json,kp}'],
     language: 'json/json',
     plugins: {
       json: jsonPlugin,
@@ -206,16 +206,6 @@ export default [
   {
     files: ['**/*.json5'],
     language: 'json/json5',
-    plugins: {
-      json: jsonPlugin,
-    },
-    rules: {
-      ...jsonPlugin.configs.recommended.rules,
-    },
-  },
-  {
-    files: ['**/*.kp'],
-    language: 'json/json',
     plugins: {
       json: jsonPlugin,
     },
