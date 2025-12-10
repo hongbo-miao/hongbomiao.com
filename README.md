@@ -349,14 +349,15 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Data Format
 
-- **Protocol Buffers (Protobuf)** - Data serialization format
 - **Apache Arrow** - Columnar memory format for big data
 - **Apache Parquet** - Columnar file format for big data
-- **Lance** - Columnar file format for machine learning
-- **HDF5** - Hierarchical data format
 - **BLF** - Binary log format
-- **TRC** - PEAK-System trace capture
+- **GeoJSON** - Geospatial data interchange format
+- **HDF5** - Hierarchical data format
+- **Lance** - Columnar file format for machine learning
 - **MF4** - Measurement data format (MDF)
+- **Protocol Buffers (Protobuf)** - Data serialization format
+- **TRC** - PEAK-System trace capture
 
 ### Database, Data Warehouse, Data Lakehouse
 
