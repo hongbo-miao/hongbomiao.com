@@ -522,6 +522,8 @@ jobs:
               - 'large-language-model-post-training/fine-tuning/hm-swift/**'
             hm-tinker:
               - 'large-language-model-post-training/fine-tuning/hm-tinker/**'
+            hm-torchdiffeq:
+              - 'machine-learning/hm-torchdiffeq/**'
             hm-torchtune:
               - 'large-language-model-post-training/fine-tuning/hm-torchtune/**'
             hm-triton:
@@ -840,6 +842,7 @@ jobs:
       hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
       hm-swift: ${{ steps.filter.outputs.hm-swift }}
       hm-tinker: ${{ steps.filter.outputs.hm-tinker }}
+      hm-torchdiffeq: ${{ steps.filter.outputs.hm-torchdiffeq }}
       hm-torchtune: ${{ steps.filter.outputs.hm-torchtune }}
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
       hm-unsloth: ${{ steps.filter.outputs.hm-unsloth }}
@@ -1258,6 +1261,7 @@ jobs:
       hm-streamlit-map: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
       hm-swift: ${{ needs.detect-changes.outputs.hm-swift == 'true' }}
       hm-tinker: ${{ needs.detect-changes.outputs.hm-tinker == 'true' }}
+      hm-torchdiffeq: ${{ needs.detect-changes.outputs.hm-torchdiffeq == 'true' }}
       hm-torchtune: ${{ needs.detect-changes.outputs.hm-torchtune == 'true' }}
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
       hm-whisperx: ${{ needs.detect-changes.outputs.hm-whisperx == 'true' }}
