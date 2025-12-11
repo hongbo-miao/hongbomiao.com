@@ -1,17 +1,17 @@
 import SwiftUI
 
 extension ContentViewModel {
-  func handleRunModernBertMaskedLanguageModelExampleButtonTapped() {
-    guard !isRunningModernBertMaskedLanguageModelExample else {
+  func handleRunModernBertMaskedLanguageModelButtonTapped() {
+    guard !isRunningModernBertMaskedLanguageModel else {
       return
     }
 
-    isRunningModernBertMaskedLanguageModelExample = true
+    isRunningModernBertMaskedLanguageModel = true
     modernBertPredictionDescription = ""
 
     Task {
       do {
-        let predictionGroups = try runModernBertMaskedLanguageModelExample()
+        let predictionGroups = try runModernBertMaskedLanguageModel()
         let formattedResult =
           predictionGroups
           .enumerated()
@@ -31,13 +31,13 @@ extension ContentViewModel {
 
         await MainActor.run {
           modernBertPredictionDescription = formattedResult
-          isRunningModernBertMaskedLanguageModelExample = false
+          isRunningModernBertMaskedLanguageModel = false
         }
       } catch {
         await MainActor.run {
           modernBertPredictionDescription =
-            "ModernBERT example failed: \(error.localizedDescription)"
-          isRunningModernBertMaskedLanguageModelExample = false
+            "ModernBERT masked language model failed: \(error.localizedDescription)"
+          isRunningModernBertMaskedLanguageModel = false
         }
       }
     }
