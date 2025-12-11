@@ -168,6 +168,9 @@ name: . Test Machine Learning
       hm-tinker:
         required: true
         type: boolean
+      hm-torchdiffeq:
+        required: true
+        type: boolean
       hm-torchtune:
         required: true
         type: boolean
@@ -2122,6 +2125,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: audio/automatic-speech-recognition-evaluation/hm-jiwer
+
+  torchdiffeq-test:
+    name: torchdiffeq | Test
+    if: ${{ inputs.workflow || inputs.hm-torchdiffeq }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.5
+        with:
+          version: 0.9.17
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-torchdiffeq/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: machine-learning/hm-torchdiffeq/.python-version
+      - name: Install dependencies
+        working-directory: machine-learning/hm-torchdiffeq
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-torchdiffeq
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: machine-learning/hm-torchdiffeq
 
   stable-diffusion-test:
     name: Stable Diffusion | Test
