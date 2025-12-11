@@ -516,6 +516,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **PyTorch** - Machine learning
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
+  - **torchdiffeq** - PyTorch differentiable ordinary differential equation (ODE) solvers
 - **Flax** - Neural network for JAX
   - **Optax** - Gradient processing and optimization for JAX
 - **Lightning** - Deep Learning framework
