@@ -136,7 +136,7 @@ def save_prediction_plot(
     vector_field_axis.set_title("Learned Vector Field")
     vector_field_axis.set_xlabel("x")
     vector_field_axis.set_ylabel("y")
-    y_grid, x_grid = np.mgrid[-2:2:21j, -2:2:21j]
+    y_grid, x_grid = np.mgrid[-2:2:21j, -2:2:21j]  # type: ignore[misc]
     grid_tensor = torch.tensor(
         np.stack([x_grid, y_grid], -1).reshape(21 * 21, 2),
         dtype=true_trajectory.dtype,
