@@ -1,5 +1,11 @@
-compress:
+compress-folder:
     tar -c -z -f folder.tar.gz folder/
 
-decompress:
+decompress-folder:
     tar -x -z -f folder.tar.gz -C /tmp/
+
+compress-folder-into-parts:
+    tar -c -z -f - folder/ | split -b 1G - folder.tar.gz.part-
+
+decompress-folder-from-parts:
+    cat folder.tar.gz.part-* | tar -x -z -C /tmp/
