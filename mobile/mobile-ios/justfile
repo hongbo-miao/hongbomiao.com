@@ -24,6 +24,12 @@ set-up:
     curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/ModernBERTMaskedLM.mlpackage.tar.gz | tar -x -z -C mobile-ios/Resources/Models/
     curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/ModernBERTTokenizer.tar.gz | tar -x -z -C mobile-ios/Resources/Models/
     curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/breast_cancer_catboost.mlmodelc.tar.gz | tar -x -z -C mobile-ios/Resources/Models/
+    # https://huggingface.co/apple/coreml-stable-diffusion-xl-base-ios/tree/main/coreml-stable-diffusion-xl-base-ios_split_einsum_compiled
+    (
+    curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/coreml-stable-diffusion-xl-base-ios.tar.gz.part-aa
+    curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/coreml-stable-diffusion-xl-base-ios.tar.gz.part-ab
+    curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/coreml-stable-diffusion-xl-base-ios.tar.gz.part-ac
+    ) | tar -x -z -C mobile-ios/Resources/Models/
     # https://huggingface.co/FluidInference/speaker-diarization-coreml/tree/main/pyannote_segmentation.mlmodelc
     curl --silent --fail --show-error --location https://media.githubusercontent.com/media/hongbo-miao/hongbomiao.com-data/refs/heads/main/mobile-ios/pyannote_segmentation.mlmodelc.tar.gz | tar -x -z -C mobile-ios/Resources/Models/
     # https://huggingface.co/FluidInference/speaker-diarization-coreml/tree/main/wespeaker_v2.mlmodelc

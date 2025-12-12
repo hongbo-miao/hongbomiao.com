@@ -9,7 +9,13 @@ struct ContentView: View {
       VStack(spacing: 24) {
         VStack(alignment: .leading, spacing: 4) {
           Text(
-            "• FluidAudio (voice activity detector (VAD): Silero VAD) uses Core ML optimized exclusively for NPU (Apple Neural Engine (ANE))."
+            "• Core ML Stable Diffusion (text-to-image generation: SDXL) uses Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)."
+          )
+          .multilineTextAlignment(.leading)
+          .fixedSize(horizontal: false, vertical: true)
+
+          Text(
+            "• FluidAudio (voice activity detection (VAD): Silero VAD) uses Core ML optimized exclusively for NPU (Apple Neural Engine (ANE))."
           )
           .multilineTextAlignment(.leading)
           .fixedSize(horizontal: false, vertical: true)
@@ -33,13 +39,13 @@ struct ContentView: View {
           .fixedSize(horizontal: false, vertical: true)
 
           Text(
-            "• kokoro-ios (text-to-speech (TTS)) uses MLX optimized for GPU (Metal)."
+            "• kokoro-ios (text-to-speech (TTS): Kokoro TTS) uses MLX optimized for GPU (Metal)."
           )
           .multilineTextAlignment(.leading)
           .fixedSize(horizontal: false, vertical: true)
 
           Text(
-            "• swift-transformers (tokenizer)."
+            "• swift-transformers (tokenization)."
           )
           .multilineTextAlignment(.leading)
           .fixedSize(horizontal: false, vertical: true)
@@ -59,6 +65,55 @@ struct ContentView: View {
         .font(.caption)
         .foregroundColor(.secondary)
         .frame(maxWidth: .infinity, alignment: .leading)
+
+        Divider()
+
+        VStack(alignment: .leading, spacing: 8) {
+          Button(
+            action: {
+              contentViewModel.handleGenerateStableDiffusionImageButtonTapped()
+            },
+            label: {
+              if contentViewModel.isGeneratingStableDiffusionImage {
+                ProgressView()
+              } else {
+                Text("Generate Image")
+              }
+            }
+          )
+          .buttonStyle(.borderedProminent)
+
+          VStack(alignment: .leading, spacing: 4) {
+            Text("1. Core ML Stable Diffusion (text-to-image generation: SDXL)")
+              .multilineTextAlignment(.leading)
+              .fixedSize(horizontal: false, vertical: true)
+          }
+          .font(.caption)
+          .foregroundColor(.secondary)
+          .frame(maxWidth: .infinity, alignment: .leading)
+        }
+
+        if let stableDiffusionImage = contentViewModel.stableDiffusionImage {
+          VStack(alignment: .leading, spacing: 8) {
+            Text("Prompt:")
+              .font(.caption)
+              .foregroundColor(.secondary)
+
+            Text(AppConfig.stableDiffusionSamplePrompt)
+              .frame(maxWidth: .infinity, alignment: .leading)
+
+            Image(decorative: stableDiffusionImage, scale: 1.0)
+              .resizable()
+              .scaledToFit()
+              .cornerRadius(16)
+              .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                  .stroke(.secondary.opacity(0.2))
+              )
+          }
+        }
+
+        Divider()
 
         VStack(alignment: .leading, spacing: 8) {
           Button(
@@ -222,10 +277,10 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: 8) {
           Button(
             action: {
-              contentViewModel.handleRunModernBertMaskedLanguageModelExampleButtonTapped()
+              contentViewModel.handleRunModernBertMaskedLanguageModelButtonTapped()
             },
             label: {
-              if contentViewModel.isRunningModernBertMaskedLanguageModelExample {
+              if contentViewModel.isRunningModernBertMaskedLanguageModel {
                 ProgressView()
               } else {
                 Text("Predict Masked Tokens")
