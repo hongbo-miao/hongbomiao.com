@@ -36,4 +36,16 @@ enum AppConfig {
   static let diarizerExpectedSpeakerCount: Int = 2
   // https://huggingface.co/argmaxinc/whisperkit-coreml/tree/main
   static let whisperKitModelName: String = "openai_whisper-tiny.en"
+  static let stableDiffusionResourceDirectoryName: String =
+    "Models/coreml-stable-diffusion-xl-base-ios"
+  static let stableDiffusionSamplePrompt: String =
+    "A cute dog"
+  static let stableDiffusionNegativePromptText: String =
+    "blur, low quality, bad anatomy, worst quality, low resolution, watermark, text, signature, copyright, logo, brand name"
+  static let stableDiffusionStepCount: Int = 20
+  static let stableDiffusionGuidanceScaleValue: Float = 7.5
+  static let stableDiffusionSeedValue: UInt32 = 42
+  static let stableDiffusionShouldDisableSafetyCheck: Bool = false
+  static let stableDiffusionShouldReduceMemoryFootprint: Bool = true
+  static let stableDiffusionTargetImageDimensionPixelCount: Int = 768
 }
