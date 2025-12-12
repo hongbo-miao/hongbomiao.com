@@ -42,6 +42,7 @@ let project = Project(
         .external(name: "MLXLLM"),
         .external(name: "MLXLMCommon"),
         .external(name: "MLXUtilsLibrary"),
+        .external(name: "StableDiffusion"),
         .external(name: "Tokenizers"),
         .external(name: "WhisperKit"),
       ]
