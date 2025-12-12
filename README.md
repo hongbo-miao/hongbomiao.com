@@ -59,7 +59,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 > [!NOTE]
 > The diagram here may take a moment to load. Please wait patiently.
 
-![Architecture](https://github.com/user-attachments/assets/d8c0c3b5-8c58-42a5-a738-e3d04042d927)
+![Architecture](https://github.com/user-attachments/assets/3cda86da-542e-4786-848a-a1e849abbdee)
 
 # 🧱 Tech Stack
 
@@ -101,7 +101,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **kokoro-ios** - Text-to-speech (TTS) framework using MLX optimized for GPU (Metal)
 - **FluidAudio** - Real-time automatic speech recognition (ASR), speaker diarization, voice activity detector (VAD), and text-to-speech (TTS) framework using Core ML optimized exclusively for NPU (Apple Neural Engine (ANE))
 - **WhisperKit** - Automatic speech recognition (ASR) framework using Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)
-- **Core ML Stable Diffusion** - Stable Diffusion framework using Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)
+- **Core ML Stable Diffusion** - Text-to-image (T2I) framework using Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)
 - **swift-transformers** - Transformers-like API with tokenization and Hugging Face Hub integration
 - **Core ML Tools** - Core ML model conversion, editing, and validation for iOS/macOS
 - **XCTest** - Unit testing, performance testing
