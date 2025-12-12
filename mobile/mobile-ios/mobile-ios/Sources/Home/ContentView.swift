@@ -9,7 +9,7 @@ struct ContentView: View {
       VStack(spacing: 24) {
         VStack(alignment: .leading, spacing: 4) {
           Text(
-            "• Core ML Stable Diffusion (text-to-image generation: SDXL) uses Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)."
+            "• Core ML Stable Diffusion (text-to-image (T2I): SDXL) uses Core ML optimized for both NPU (Apple Neural Engine (ANE)) and GPU (Metal)."
           )
           .multilineTextAlignment(.leading)
           .fixedSize(horizontal: false, vertical: true)
@@ -84,7 +84,7 @@ struct ContentView: View {
           .buttonStyle(.borderedProminent)
 
           VStack(alignment: .leading, spacing: 4) {
-            Text("1. Core ML Stable Diffusion (text-to-image generation: SDXL)")
+            Text("1. Core ML Stable Diffusion (text-to-image (T2I): SDXL)")
               .multilineTextAlignment(.leading)
               .fixedSize(horizontal: false, vertical: true)
           }
