@@ -3,7 +3,7 @@ import Foundation
 import Hub
 import Tokenizers
 
-func runModernBertMaskedLanguageModelExample() throws
+func runModernBertMaskedLanguageModel() throws
   -> [ModernBertMaskedLanguageModelPredictionGroup]
 {
   func loadTokenizerJsonConfig(resourceName: String, bundle: Bundle) throws -> Config {

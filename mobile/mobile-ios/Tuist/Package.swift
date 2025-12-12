@@ -21,5 +21,6 @@ let package = Package(
     .package(url: "https://github.com/huggingface/swift-transformers", from: "1.1.5"),
     .package(url: "https://github.com/ml-explore/mlx-swift-lm", from: "2.29.2"),
     .package(url: "https://github.com/mlalma/kokoro-ios", from: "1.0.10"),
+    .package(url: "https://github.com/apple/ml-stable-diffusion.git", from: "1.1.1"),
   ]
 )
