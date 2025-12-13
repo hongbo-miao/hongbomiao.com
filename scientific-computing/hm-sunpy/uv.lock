@@ -2,9 +2,12 @@ version = 1
 revision = 3
 requires-python = ">=3.13"
 resolution-markers = [
-    "sys_platform == 'darwin'",
-    "platform_machine == 'aarch64' and sys_platform == 'linux'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux')",
+    "python_full_version == '3.14.*' and sys_platform == 'darwin'",
+    "python_full_version != '3.14.*' and sys_platform == 'darwin'",
+    "python_full_version == '3.14.*' and platform_machine == 'aarch64' and sys_platform == 'linux'",
+    "python_full_version != '3.14.*' and platform_machine == 'aarch64' and sys_platform == 'linux'",
+    "(python_full_version == '3.14.*' and platform_machine != 'aarch64' and sys_platform == 'linux') or (python_full_version == '3.14.*' and sys_platform != 'darwin' and sys_platform != 'linux')",
+    "(python_full_version != '3.14.*' and platform_machine != 'aarch64' and sys_platform == 'linux') or (python_full_version != '3.14.*' and sys_platform != 'darwin' and sys_platform != 'linux')",
 ]
 
 [[package]]
@@ -649,7 +652,7 @@ dev = [
 requires-dist = [
     { name = "matplotlib", specifier = "==3.10.8" },
     { name = "scipy", specifier = "==1.16.3" },
-    { name = "sunpy", extras = ["all"], specifier = "==7.0.4" },
+    { name = "sunpy", extras = ["all"], specifier = "==7.1.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -1573,7 +1576,7 @@ wheels = [
 
 [[package]]
 name = "sunpy"
-version = "7.0.4"
+version = "7.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "astropy" },
@@ -1584,13 +1587,14 @@ dependencies = [
     { name = "pyerfa" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/30/e3/51949a88145d6626c6da0d841dc46378b7432ee203131970dc89e6b06b2d/sunpy-7.0.4.tar.gz", hash = "sha256:3e87f67fcb1039cbe798b236b4c8a741e97787bc15b01a533c1ac528caea9f7a", size = 4425345, upload-time = "2025-12-04T13:39:21.701Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/90/47/51e60a50775b72650dad5ce9fecbb96ca2997625ed49ea7120564e3e680c/sunpy-7.1.0.tar.gz", hash = "sha256:14fc177b66e233468c32a4da3479748405278271e2d1497b9dfb31a7f4a9340b", size = 4483251, upload-time = "2025-12-08T15:25:28.614Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/43/01/cb1c8b0bc1d2f003953cff0074541fd853735dea03dbea242e8ad5d885bc/sunpy-7.0.4-cp311-abi3-macosx_10_9_x86_64.whl", hash = "sha256:2fe34be1c27192f82c7366a972c45ed8c02b686024b9dac38b26b2d38e39d368", size = 3678281, upload-time = "2025-12-04T13:32:52.954Z" },
-    { url = "https://files.pythonhosted.org/packages/1e/be/b300f3f7dae830d119b3155938ebb6609d5b92748333d80e30febd840bc7/sunpy-7.0.4-cp311-abi3-macosx_11_0_arm64.whl", hash = "sha256:8cca66bfecfb8c7c2500b256aa9b9127fff95f29388701b8a9d41826cc4764d7", size = 3678554, upload-time = "2025-12-04T13:32:55.584Z" },
-    { url = "https://files.pythonhosted.org/packages/b8/b6/2b07711639166b72fb698681851457048a858cd90382e19ca6a6c83668bf/sunpy-7.0.4-cp311-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:8b5803a4fe423d009ddd0a15604c3cafe548596ceda597ea32269cc26f875faa", size = 3725435, upload-time = "2025-12-04T13:32:57.722Z" },
-    { url = "https://files.pythonhosted.org/packages/b5/ca/f1eb3798999517fd5a5faf4425d1bf3c9c9c55b0bd6f52b31b6c8389f58e/sunpy-7.0.4-cp311-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:8cb92f848765ea705b08390bf58f9540b622842effe92671464cbc301ee4b88b", size = 3729179, upload-time = "2025-12-04T13:32:59.503Z" },
-    { url = "https://files.pythonhosted.org/packages/76/3e/6741a450e4eea018fe1ea69d90d3d8c4036ea5466d17c1f7996bd82671ed/sunpy-7.0.4-py3-none-any.whl", hash = "sha256:3cf677dfdd932f9cd7dfd76decf25368c21a0615ef9fa193c8507b1fc2713889", size = 3649452, upload-time = "2025-12-04T13:39:20.28Z" },
+    { url = "https://files.pythonhosted.org/packages/76/42/92ba521ed4ad3948783c842a8c679c77dad7d95284b4081c4e27665e132d/sunpy-7.1.0-cp312-abi3-macosx_10_13_x86_64.whl", hash = "sha256:e23894ee4f48faf61e95ab3bfaabe5dde86f00b3d422f1cb9cf9e180dcb3cc2b", size = 3684156, upload-time = "2025-12-08T15:18:37.182Z" },
+    { url = "https://files.pythonhosted.org/packages/19/d0/5b3afde08a8dab2254fb7d4ad2ccc529c89462fd32e0dca358f1e792d7bb/sunpy-7.1.0-cp312-abi3-macosx_11_0_arm64.whl", hash = "sha256:890d5cb2873ad4e1b779f40ff37cbdf9f812019a5cc434cea2ea1dfbd7ceab95", size = 3684383, upload-time = "2025-12-08T15:18:39.369Z" },
+    { url = "https://files.pythonhosted.org/packages/37/ac/3035937aed992a4467bc37f1ac28916e4247058a3091927db7612bb9896a/sunpy-7.1.0-cp312-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:2375a28bf81edd4fe97ff02ebab734bed865a727a9f2980f32787d057bdb3c2c", size = 3731336, upload-time = "2025-12-08T15:18:41.151Z" },
+    { url = "https://files.pythonhosted.org/packages/bc/16/fa7f611df7987d43c8108e23d24337a82da30df4dcd4e83dd0979eea6e0d/sunpy-7.1.0-cp312-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:02fa7835a626c39d5322ea8c51d600289823f2025ba632f5774cf4885d8a2565", size = 3735092, upload-time = "2025-12-08T15:18:42.38Z" },
+    { url = "https://files.pythonhosted.org/packages/01/66/0c470086cc4b7920aeeec2cea2864d92997f0dca07b54e473dceac7eff7e/sunpy-7.1.0-cp312-abi3-win_amd64.whl", hash = "sha256:57f68ef1ec1335f94bbc6f6cf4dd215cebdf5c97c92f91476638f7c2329880f8", size = 3684100, upload-time = "2025-12-08T15:18:43.694Z" },
+    { url = "https://files.pythonhosted.org/packages/f1/38/99a9195abdb60eb55c5b2ae21f085f75ceb53688764e30ae2e8694597197/sunpy-7.1.0-py3-none-any.whl", hash = "sha256:a1630f237036df625f1cde30cf93f51517496b20d3d8b7bee812024d468cdbd2", size = 3654934, upload-time = "2025-12-08T15:25:26.519Z" },
 ]
 
 [package.optional-dependencies]
