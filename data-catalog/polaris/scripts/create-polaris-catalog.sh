@@ -13,19 +13,19 @@ S3_SECRET_KEY="${S3_SECRET_KEY:-minio_passw0rd}"
 S3_REGION="${S3_REGION:-us-west-2}"
 
 echo "Waiting for Polaris to be ready..."
-until curl -s "http://${POLARIS_HOST}:8182/q/health" > /dev/null 2>&1; do
+until curl --silent "http://${POLARIS_HOST}:8182/q/health" > /dev/null 2>&1; do
   echo "Polaris not ready yet, waiting..."
   sleep 2
 done
 echo "Polaris is ready!"
 
 echo "Getting OAuth2 token..."
-TOKEN_RESPONSE=$(curl -s -X POST "http://${POLARIS_HOST}:${POLARIS_PORT}/api/catalog/v1/oauth/tokens" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "grant_type=client_credentials" \
-  -d "client_id=${CLIENT_ID}" \
-  -d "client_secret=${CLIENT_SECRET}" \
-  -d "scope=PRINCIPAL_ROLE:ALL")
+TOKEN_RESPONSE=$(curl --silent --request POST "http://${POLARIS_HOST}:${POLARIS_PORT}/api/catalog/v1/oauth/tokens" \
+  --header "Content-Type: application/x-www-form-urlencoded" \
+  --data "grant_type=client_credentials" \
+  --data "client_id=${CLIENT_ID}" \
+  --data "client_secret=${CLIENT_SECRET}" \
+  --data "scope=PRINCIPAL_ROLE:ALL")
 
 ACCESS_TOKEN=$(echo "${TOKEN_RESPONSE}" | sed -n 's/.*"access_token":"\([^"]*\)".*/\1/p')
 
@@ -36,10 +36,10 @@ fi
 echo "Got access token successfully!"
 
 echo "Creating catalog '${CATALOG_NAME}'..."
-CATALOG_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "http://${POLARIS_HOST}:${POLARIS_PORT}/api/management/v1/catalogs" \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d "{
+CATALOG_RESPONSE=$(curl --silent --write-out "\n%{http_code}" --request POST "http://${POLARIS_HOST}:${POLARIS_PORT}/api/management/v1/catalogs" \
+  --header "Authorization: Bearer ${ACCESS_TOKEN}" \
+  --header "Content-Type: application/json" \
+  --data "{
     \"name\": \"${CATALOG_NAME}\",
     \"type\": \"INTERNAL\",
     \"properties\": {
@@ -65,10 +65,10 @@ else
 fi
 
 echo "Granting CATALOG_MANAGE_CONTENT privilege to catalog_admin role..."
-GRANT_RESPONSE=$(curl -s -w "\n%{http_code}" -X PUT "http://${POLARIS_HOST}:${POLARIS_PORT}/api/management/v1/catalogs/${CATALOG_NAME}/catalog-roles/catalog_admin/grants" \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d "{
+GRANT_RESPONSE=$(curl --silent --write-out "\n%{http_code}" --request PUT "http://${POLARIS_HOST}:${POLARIS_PORT}/api/management/v1/catalogs/${CATALOG_NAME}/catalog-roles/catalog_admin/grants" \
+  --header "Authorization: Bearer ${ACCESS_TOKEN}" \
+  --header "Content-Type: application/json" \
+  --data "{
     \"type\": \"catalog\",
     \"privilege\": \"CATALOG_MANAGE_CONTENT\"
   }")
