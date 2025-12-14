@@ -1,0 +1,154 @@
+# https://docs.docker.com/reference/compose-file/
+---
+services:
+  lakekeeper-postgres:
+    image: docker.io/library/postgres:18.1-trixie
+    container_name: lakekeeper-postgres
+    environment:
+      POSTGRES_USER: postgres_admin
+      POSTGRES_PASSWORD: postgres_passw0rd
+      POSTGRES_DB: lakekeeper
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres_admin -p 5432 -d lakekeeper"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - postgres-data:/var/lib/postgresql
+
+  lakekeeper-migrate:
+    image: quay.io/lakekeeper/catalog:v0.10.4
+    container_name: lakekeeper-migrate
+    environment:
+      LAKEKEEPER__PG_ENCRYPTION_KEY: lakekeeper_secr3t
+      LAKEKEEPER__PG_DATABASE_URL_READ: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
+      LAKEKEEPER__PG_DATABASE_URL_WRITE: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
+      RUST_LOG: info
+    command: ["migrate"]
+    restart: "no"
+    depends_on:
+      lakekeeper-postgres:
+        condition: service_healthy
+
+  lakekeeper:
+    image: quay.io/lakekeeper/catalog:v0.10.4
+    container_name: lakekeeper
+    ports:
+      - 8181:8181
+    environment:
+      LAKEKEEPER__PG_ENCRYPTION_KEY: lakekeeper_secr3t
+      LAKEKEEPER__PG_DATABASE_URL_READ: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
+      LAKEKEEPER__PG_DATABASE_URL_WRITE: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
+      RUST_LOG: info
+    command: ["serve"]
+    healthcheck:
+      test: ["CMD", "/home/nonroot/lakekeeper", "healthcheck"]
+      interval: 1s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      lakekeeper-migrate:
+        condition: service_completed_successfully
+      lakekeeper-postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+
+  minio:
+    image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
+    container_name: minio
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      MINIO_ROOT_USER: minio_admin
+      MINIO_ROOT_PASSWORD: minio_passw0rd
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio-initialize:
+    image: docker.io/minio/mc:RELEASE.2025-08-13T08-35-41Z
+    container_name: minio-initialize
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set hm_minio http://minio:9000 minio_admin minio_passw0rd;
+      mc mb hm_minio/warehouse --ignore-existing;
+      exit 0;
+      "
+
+  lakekeeper-bootstrap:
+    image: docker.io/curlimages/curl:8.17.0
+    container_name: lakekeeper-bootstrap
+    depends_on:
+      lakekeeper:
+        condition: service_healthy
+    restart: "no"
+    command:
+      - -w
+      - "%{http_code}"
+      - "-X"
+      - "POST"
+      - "-v"
+      - "http://lakekeeper:8181/management/v1/bootstrap"
+      - "-H"
+      - "Content-Type: application/json"
+      - "--data"
+      - '{"accept-terms-of-use": true}'
+      - "-o"
+      - "/dev/null"
+
+  lakekeeper-initialize:
+    image: docker.io/curlimages/curl:8.17.0
+    container_name: lakekeeper-initialize
+    depends_on:
+      lakekeeper:
+        condition: service_healthy
+      lakekeeper-bootstrap:
+        condition: service_completed_successfully
+      minio-initialize:
+        condition: service_completed_successfully
+    volumes:
+      - ./scripts/create-lakekeeper-warehouse.sh:/create-lakekeeper-warehouse.sh:ro
+    command: ["/bin/sh", "/create-lakekeeper-warehouse.sh"]
+
+  trino:
+    image: docker.io/trinodb/trino:478
+    container_name: trino
+    ports:
+      - 8080:8080
+    depends_on:
+      lakekeeper-initialize:
+        condition: service_completed_successfully
+    volumes:
+      - ./etc/trino/catalog:/etc/trino/catalog:ro
+    healthcheck:
+      test: ["CMD", "trino", "--execute", "SELECT 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  trino-initialize:
+    image: docker.io/trinodb/trino:478
+    container_name: trino-initialize
+    depends_on:
+      trino:
+        condition: service_healthy
+    volumes:
+      - ./scripts/insert-sensor-data.sql:/insert-sensor-data.sql:ro
+    entrypoint: ["trino", "--server", "trino:8080", "--file", "/insert-sensor-data.sql"]
+
+volumes:
+  minio-data:
+  postgres-data:
