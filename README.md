@@ -408,8 +408,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Data Catalog
 
 - **AWS Glue Data Catalog** - Serverless, centralized metadata repository
-- **Nessie** - Transactional data catalog for Apache Iceberg
-- **Apache Polaris** - REST catalog for Apache Iceberg
+- **Nessie** - Apache Iceberg transactional data catalog
+- **Lakekeeper** - Apache Iceberg REST catalog
+- **Apache Polaris** - Apache Iceberg REST catalog
 
 ### Data Visualization
 

@@ -1,6 +1,35 @@
 # https://docs.docker.com/reference/compose-file/
 ---
 services:
+  polaris-postgres:
+    image: docker.io/library/postgres:18.1-trixie
+    container_name: polaris-postgres
+    environment:
+      POSTGRES_USER: postgres_admin
+      POSTGRES_PASSWORD: postgres_passw0rd
+      POSTGRES_DB: polaris
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres_admin -p 5432 -d polaris"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - postgres-data:/var/lib/postgresql
+
+  polaris-bootstrap:
+    image: docker.io/apache/polaris-admin-tool:1.2.0-incubating
+    container_name: polaris-bootstrap
+    environment:
+      POLARIS_PERSISTENCE_TYPE: relational-jdbc
+      QUARKUS_DATASOURCE_USERNAME: postgres_admin
+      QUARKUS_DATASOURCE_PASSWORD: postgres_passw0rd
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://polaris-postgres:5432/polaris
+    command: ["bootstrap", "--realm", "POLARIS", "--credential", "POLARIS,root,polaris_passw0rd"]
+    depends_on:
+      polaris-postgres:
+        condition: service_healthy
+
   polaris:
     image: docker.io/apache/polaris:1.2.0-incubating
     container_name: polaris
@@ -11,15 +40,31 @@ services:
       AWS_ACCESS_KEY_ID: minio_admin
       AWS_SECRET_ACCESS_KEY: minio_passw0rd
       AWS_ENDPOINT_URL_S3: http://minio:9000
-      POLARIS_BOOTSTRAP_CREDENTIALS: POLARIS,root,polaris_passw0rd
+      POLARIS_PERSISTENCE_TYPE: relational-jdbc
+      QUARKUS_DATASOURCE_USERNAME: postgres_admin
+      QUARKUS_DATASOURCE_PASSWORD: postgres_passw0rd
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://polaris-postgres:5432/polaris
+    depends_on:
+      polaris-bootstrap:
+        condition: service_completed_successfully
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8182/q/health"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 30s
-    networks:
-      - iceberg-network
+
+  polaris-initialize:
+    image: docker.io/curlimages/curl:8.17.0
+    container_name: polaris-initialize
+    depends_on:
+      polaris:
+        condition: service_healthy
+      minio-initialize:
+        condition: service_completed_successfully
+    volumes:
+      - ./scripts/create-polaris-catalog.sh:/create-polaris-catalog.sh:ro
+    command: ["/bin/sh", "/create-polaris-catalog.sh"]
 
   minio:
     image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
@@ -38,8 +83,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - iceberg-network
 
   minio-initialize:
     image: docker.io/minio/mc:RELEASE.2025-08-13T08-35-41Z
@@ -53,22 +96,6 @@ services:
       mc mb hm_minio/warehouse --ignore-existing;
       exit 0;
       "
-    networks:
-      - iceberg-network
-
-  polaris-initialize:
-    image: docker.io/curlimages/curl:8.17.0
-    container_name: polaris-initialize
-    depends_on:
-      polaris:
-        condition: service_healthy
-      minio-initialize:
-        condition: service_completed_successfully
-    volumes:
-      - ./scripts/create-polaris-catalog.sh:/create-polaris-catalog.sh:ro
-    command: ["/bin/sh", "/create-polaris-catalog.sh"]
-    networks:
-      - iceberg-network
 
   trino:
     image: docker.io/trinodb/trino:478
@@ -86,8 +113,6 @@ services:
       timeout: 10s
       retries: 10
       start_period: 30s
-    networks:
-      - iceberg-network
 
   trino-initialize:
     image: docker.io/trinodb/trino:478
@@ -98,12 +123,7 @@ services:
     volumes:
       - ./scripts/insert-sensor-data.sql:/insert-sensor-data.sql:ro
     entrypoint: ["trino", "--server", "trino:8080", "--file", "/insert-sensor-data.sql"]
-    networks:
-      - iceberg-network
-
-networks:
-  iceberg-network:
-    driver: bridge
 
 volumes:
   minio-data:
+  postgres-data:
