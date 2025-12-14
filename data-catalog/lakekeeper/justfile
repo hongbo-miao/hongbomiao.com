@@ -1,0 +1,12 @@
+docker-compose-up:
+    docker compose --project-name=hm-lakekeeper --file=docker-compose.development.yaml up --detach
+
+docker-compose-stop:
+    docker compose --project-name=hm-lakekeeper --file=docker-compose.development.yaml stop
+
+docker-compose-down:
+    docker compose --project-name=hm-lakekeeper --file=docker-compose.development.yaml down --volumes
+
+docker-compose-restart:
+    docker compose --project-name=hm-lakekeeper --file=docker-compose.development.yaml down --volumes
+    docker compose --project-name=hm-lakekeeper --file=docker-compose.development.yaml up --detach
