@@ -59,7 +59,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 > [!NOTE]
 > The diagram here may take a moment to load. Please wait patiently.
 
-![Architecture](https://github.com/user-attachments/assets/2a113edd-96fe-48ad-914b-72df7447566f)
+![Architecture](https://github.com/user-attachments/assets/aa65f7d8-5e72-4c65-9561-7e5df38a4324)
 
 # 🧱 Tech Stack
 
@@ -757,7 +757,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **OpenTofu** - Infrastructure as code (IaC)
 - **Pulumi** - Infrastructure as code (IaC)
-- **Ansible** - IT automation system
+- **Ansible** - Configuration management and automation
 - **Vagrant** - Development environments building and distributing
 - **Karpenter** - Kubernetes node autoscaler
 
