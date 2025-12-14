@@ -1,64 +1,10 @@
 # https://docs.docker.com/reference/compose-file/
 ---
 services:
-  lakekeeper-postgres:
-    image: docker.io/library/postgres:18.1-trixie
-    container_name: lakekeeper-postgres
-    environment:
-      POSTGRES_USER: postgres_admin
-      POSTGRES_PASSWORD: postgres_passw0rd
-      POSTGRES_DB: lakekeeper
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres_admin -p 5432 -d lakekeeper"]
-      interval: 2s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
-    volumes:
-      - postgres-data:/var/lib/postgresql
-
-  lakekeeper-migrate:
-    image: quay.io/lakekeeper/catalog:v0.10.4
-    container_name: lakekeeper-migrate
-    environment:
-      LAKEKEEPER__PG_ENCRYPTION_KEY: lakekeeper_secr3t
-      LAKEKEEPER__PG_DATABASE_URL_READ: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
-      LAKEKEEPER__PG_DATABASE_URL_WRITE: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
-      RUST_LOG: info
-    command: ["migrate"]
-    restart: "no"
-    depends_on:
-      lakekeeper-postgres:
-        condition: service_healthy
-
-  lakekeeper:
-    image: quay.io/lakekeeper/catalog:v0.10.4
-    container_name: lakekeeper
-    ports:
-      - 8181:8181
-    environment:
-      LAKEKEEPER__PG_ENCRYPTION_KEY: lakekeeper_secr3t
-      LAKEKEEPER__PG_DATABASE_URL_READ: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
-      LAKEKEEPER__PG_DATABASE_URL_WRITE: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
-      RUST_LOG: info
-    command: ["serve"]
-    healthcheck:
-      test: ["CMD", "/home/nonroot/lakekeeper", "healthcheck"]
-      interval: 1s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
-    depends_on:
-      lakekeeper-migrate:
-        condition: service_completed_successfully
-      lakekeeper-postgres:
-        condition: service_healthy
-      minio:
-        condition: service_healthy
-
   minio:
     image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
     container_name: minio
+    restart: unless-stopped
     ports:
       - 9000:9000
       - 9001:9001
@@ -77,6 +23,7 @@ services:
   minio-initialize:
     image: docker.io/minio/mc:RELEASE.2025-08-13T08-35-41Z
     container_name: minio-initialize
+    restart: "no"
     depends_on:
       minio:
         condition: service_healthy
@@ -87,13 +34,70 @@ services:
       exit 0;
       "
 
+  lakekeeper-postgres:
+    image: docker.io/library/postgres:18.1-trixie
+    container_name: lakekeeper-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres_admin
+      POSTGRES_PASSWORD: postgres_passw0rd
+      POSTGRES_DB: lakekeeper
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres_admin -p 5432 -d lakekeeper"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+
+  lakekeeper-migrate:
+    image: quay.io/lakekeeper/catalog:v0.10.4
+    container_name: lakekeeper-migrate
+    restart: "no"
+    depends_on:
+      lakekeeper-postgres:
+        condition: service_healthy
+    environment:
+      LAKEKEEPER__PG_ENCRYPTION_KEY: lakekeeper_secr3t
+      LAKEKEEPER__PG_DATABASE_URL_READ: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
+      LAKEKEEPER__PG_DATABASE_URL_WRITE: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
+      RUST_LOG: info
+    command: ["migrate"]
+
+  lakekeeper:
+    image: quay.io/lakekeeper/catalog:v0.10.4
+    container_name: lakekeeper
+    restart: unless-stopped
+    depends_on:
+      lakekeeper-postgres:
+        condition: service_healthy
+      lakekeeper-migrate:
+        condition: service_completed_successfully
+      minio:
+        condition: service_healthy
+    ports:
+      - 8181:8181
+    environment:
+      LAKEKEEPER__PG_ENCRYPTION_KEY: lakekeeper_secr3t
+      LAKEKEEPER__PG_DATABASE_URL_READ: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
+      LAKEKEEPER__PG_DATABASE_URL_WRITE: postgresql://postgres_admin:postgres_passw0rd@lakekeeper-postgres:5432/lakekeeper
+      RUST_LOG: info
+    command: ["serve"]
+    healthcheck:
+      test: ["CMD", "/home/nonroot/lakekeeper", "healthcheck"]
+      interval: 1s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
   lakekeeper-bootstrap:
     image: docker.io/curlimages/curl:8.17.0
     container_name: lakekeeper-bootstrap
+    restart: "no"
     depends_on:
       lakekeeper:
         condition: service_healthy
-    restart: "no"
     command:
       - -w
       - "%{http_code}"
@@ -111,6 +115,7 @@ services:
   lakekeeper-initialize:
     image: docker.io/curlimages/curl:8.17.0
     container_name: lakekeeper-initialize
+    restart: "no"
     depends_on:
       lakekeeper:
         condition: service_healthy
@@ -125,11 +130,12 @@ services:
   trino:
     image: docker.io/trinodb/trino:478
     container_name: trino
-    ports:
-      - 8080:8080
+    restart: unless-stopped
     depends_on:
       lakekeeper-initialize:
         condition: service_completed_successfully
+    ports:
+      - 8080:8080
     volumes:
       - ./etc/trino/catalog:/etc/trino/catalog:ro
     healthcheck:
@@ -142,6 +148,7 @@ services:
   trino-initialize:
     image: docker.io/trinodb/trino:478
     container_name: trino-initialize
+    restart: "no"
     depends_on:
       trino:
         condition: service_healthy
