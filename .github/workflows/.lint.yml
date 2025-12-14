@@ -21,6 +21,9 @@ name: . Lint
       css:
         required: true
         type: boolean
+      docker-compose:
+        required: true
+        type: boolean
       dockerfile:
         required: true
         type: boolean
@@ -308,6 +311,27 @@ jobs:
       - name: Lint CSS
         run: |
           npm run lint-css
+
+  lint-docker-compose:
+    name: Docker Compose
+    if: ${{ inputs.workflow || inputs.docker-compose }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Set up Node.js
+        uses: actions/setup-node@v6.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Lint Docker Compose
+        run: |
+          npm run lint-docker-compose
 
   lint-dockerfile:
     name: Dockerfile
