@@ -189,6 +189,12 @@ lint-css-fix:
 lint-dockerfile:
     hadolint $(git ls-files '**/Dockerfile*')
 
+lint-docker-compose:
+    npm run lint-docker-compose
+
+lint-docker-compose-fix:
+    npm run lint-docker-compose-fix
+
 lint-editorconfig:
     uv run poe lint-editorconfig
 
