@@ -398,6 +398,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Apache Hive** - Distributed data warehousing and SQL-like query language system built on top of Apache Hadoop
 - **Trino** - Distributed SQL query engine
 - **Delta Lake** - Data lakehouse
+- **Apache Iceberg** - Data lakehouse
 - **Apache Doris** - High-performance analytical database
 - **StarRocks** - High-performance analytical database
 - **Snowflake** - Data warehouse
@@ -406,8 +407,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Data Catalog
 
-- **Nessie** - Transactional data catalog
-- **AWS Glue Data Catalog** - Central metadata repository
+- **AWS Glue Data Catalog** - Serverless, centralized metadata repository
+- **Nessie** - Transactional data catalog for Apache Iceberg
+- **Apache Polaris** - REST catalog for Apache Iceberg
 
 ### Data Visualization
 
