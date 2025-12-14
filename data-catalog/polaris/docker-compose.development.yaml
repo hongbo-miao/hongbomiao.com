@@ -1,74 +1,10 @@
 # https://docs.docker.com/reference/compose-file/
 ---
 services:
-  polaris-postgres:
-    image: docker.io/library/postgres:18.1-trixie
-    container_name: polaris-postgres
-    environment:
-      POSTGRES_USER: postgres_admin
-      POSTGRES_PASSWORD: postgres_passw0rd
-      POSTGRES_DB: polaris
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres_admin -p 5432 -d polaris"]
-      interval: 2s
-      timeout: 10s
-      retries: 5
-      start_period: 10s
-    volumes:
-      - postgres-data:/var/lib/postgresql
-
-  polaris-bootstrap:
-    image: docker.io/apache/polaris-admin-tool:1.2.0-incubating
-    container_name: polaris-bootstrap
-    environment:
-      POLARIS_PERSISTENCE_TYPE: relational-jdbc
-      QUARKUS_DATASOURCE_USERNAME: postgres_admin
-      QUARKUS_DATASOURCE_PASSWORD: postgres_passw0rd
-      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://polaris-postgres:5432/polaris
-    command: ["bootstrap", "--realm", "POLARIS", "--credential", "POLARIS,root,polaris_passw0rd"]
-    depends_on:
-      polaris-postgres:
-        condition: service_healthy
-
-  polaris:
-    image: docker.io/apache/polaris:1.2.0-incubating
-    container_name: polaris
-    ports:
-      - 8181:8181
-    environment:
-      AWS_REGION: us-west-2
-      AWS_ACCESS_KEY_ID: minio_admin
-      AWS_SECRET_ACCESS_KEY: minio_passw0rd
-      AWS_ENDPOINT_URL_S3: http://minio:9000
-      POLARIS_PERSISTENCE_TYPE: relational-jdbc
-      QUARKUS_DATASOURCE_USERNAME: postgres_admin
-      QUARKUS_DATASOURCE_PASSWORD: postgres_passw0rd
-      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://polaris-postgres:5432/polaris
-    depends_on:
-      polaris-bootstrap:
-        condition: service_completed_successfully
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8182/q/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
-
-  polaris-initialize:
-    image: docker.io/curlimages/curl:8.17.0
-    container_name: polaris-initialize
-    depends_on:
-      polaris:
-        condition: service_healthy
-      minio-initialize:
-        condition: service_completed_successfully
-    volumes:
-      - ./scripts/create-polaris-catalog.sh:/create-polaris-catalog.sh:ro
-    command: ["/bin/sh", "/create-polaris-catalog.sh"]
-
   minio:
     image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
     container_name: minio
+    restart: unless-stopped
     ports:
       - 9000:9000
       - 9001:9001
@@ -87,6 +23,7 @@ services:
   minio-initialize:
     image: docker.io/minio/mc:RELEASE.2025-08-13T08-35-41Z
     container_name: minio-initialize
+    restart: "no"
     depends_on:
       minio:
         condition: service_healthy
@@ -97,14 +34,86 @@ services:
       exit 0;
       "
 
+  polaris-postgres:
+    image: docker.io/library/postgres:18.1-trixie
+    container_name: polaris-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres_admin
+      POSTGRES_PASSWORD: postgres_passw0rd
+      POSTGRES_DB: polaris
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres_admin -p 5432 -d polaris"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - postgres-data:/var/lib/postgresql
+
+  polaris-bootstrap:
+    image: docker.io/apache/polaris-admin-tool:1.2.0-incubating
+    container_name: polaris-bootstrap
+    restart: "no"
+    depends_on:
+      polaris-postgres:
+        condition: service_healthy
+    environment:
+      POLARIS_PERSISTENCE_TYPE: relational-jdbc
+      QUARKUS_DATASOURCE_USERNAME: postgres_admin
+      QUARKUS_DATASOURCE_PASSWORD: postgres_passw0rd
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://polaris-postgres:5432/polaris
+    command: ["bootstrap", "--realm", "POLARIS", "--credential", "POLARIS,root,polaris_passw0rd"]
+
+  polaris:
+    image: docker.io/apache/polaris:1.2.0-incubating
+    container_name: polaris
+    restart: unless-stopped
+    depends_on:
+      polaris-bootstrap:
+        condition: service_completed_successfully
+      minio:
+        condition: service_healthy
+    ports:
+      - 8181:8181
+    environment:
+      AWS_REGION: us-west-2
+      AWS_ACCESS_KEY_ID: minio_admin
+      AWS_SECRET_ACCESS_KEY: minio_passw0rd
+      AWS_ENDPOINT_URL_S3: http://minio:9000
+      POLARIS_PERSISTENCE_TYPE: relational-jdbc
+      QUARKUS_DATASOURCE_USERNAME: postgres_admin
+      QUARKUS_DATASOURCE_PASSWORD: postgres_passw0rd
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://polaris-postgres:5432/polaris
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8182/q/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  polaris-initialize:
+    image: docker.io/curlimages/curl:8.17.0
+    container_name: polaris-initialize
+    restart: "no"
+    depends_on:
+      polaris:
+        condition: service_healthy
+      minio-initialize:
+        condition: service_completed_successfully
+    command: ["/bin/sh", "/create-polaris-catalog.sh"]
+    volumes:
+      - ./scripts/create-polaris-catalog.sh:/create-polaris-catalog.sh:ro
+
   trino:
     image: docker.io/trinodb/trino:478
     container_name: trino
-    ports:
-      - 8080:8080
+    restart: unless-stopped
     depends_on:
       polaris-initialize:
         condition: service_completed_successfully
+    ports:
+      - 8080:8080
     volumes:
       - ./etc/trino/catalog:/etc/trino/catalog:ro
     healthcheck:
@@ -117,12 +126,13 @@ services:
   trino-initialize:
     image: docker.io/trinodb/trino:478
     container_name: trino-initialize
+    restart: "no"
     depends_on:
       trino:
         condition: service_healthy
+    entrypoint: ["trino", "--server", "trino:8080", "--file", "/insert-sensor-data.sql"]
     volumes:
       - ./scripts/insert-sensor-data.sql:/insert-sensor-data.sql:ro
-    entrypoint: ["trino", "--server", "trino:8080", "--file", "/insert-sensor-data.sql"]
 
 volumes:
   minio-data:
