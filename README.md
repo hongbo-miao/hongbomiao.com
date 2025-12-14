@@ -892,6 +892,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **CMakeLint** - CMake linter
 - **commitlint** - Commit message linter
 - **Stylelint** - CSS linter
+- **DCLint** - Docker Compose linter
 - **hadolint** - Dockerfile linter
 - **editorconfig-checker** - EditorConfig linter
 - **gofmt** - Go formatter
