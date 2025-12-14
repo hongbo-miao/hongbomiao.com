@@ -59,7 +59,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 > [!NOTE]
 > The diagram here may take a moment to load. Please wait patiently.
 
-![Architecture](https://github.com/user-attachments/assets/aa65f7d8-5e72-4c65-9561-7e5df38a4324)
+![Architecture](https://github.com/user-attachments/assets/972dcf3b-1c8f-4bb8-b874-8c0333ec687c)
 
 # 🧱 Tech Stack
 
