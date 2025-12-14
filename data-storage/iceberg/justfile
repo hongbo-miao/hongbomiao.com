@@ -8,8 +8,5 @@ docker-compose-down:
     docker compose --project-name=hm-iceberg --file=docker-compose.development.yaml down --volumes
 
 docker-compose-restart:
-    #!/usr/bin/env bash
-    if [ -n "$(docker compose --project-name=hm-iceberg ps --quiet)" ]; then
-        docker compose --project-name=hm-iceberg --file=docker-compose.development.yaml down --volumes
-    fi
+    docker compose --project-name=hm-iceberg --file=docker-compose.development.yaml down --volumes
     docker compose --project-name=hm-iceberg --file=docker-compose.development.yaml up --detach
