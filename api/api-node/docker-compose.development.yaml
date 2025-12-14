@@ -1,48 +1,45 @@
 # https://docs.docker.com/reference/compose-file/
 ---
+name: api-node-development
 services:
-  # API
   api-node:
-    container_name: hm_api_node
     build:
       context: ../..
       dockerfile: api/api-node/Dockerfile.development
-    env_file:
-      - .env.development.local.example.docker
+    container_name: hm_api_node
+    depends_on:
+      - postgres
+      - redis
     volumes:
       - ./:/usr/src/app/api/api-node/
       - /usr/src/app/api/api-node/node_modules/
-    restart: unless-stopped
+    env_file:
+      - .env.development.local.example.docker
     ports:
-      - 58136:58136
-    depends_on:
-      - redis
-      - postgres
-
-  # Redis
-  redis:
-    container_name: hm_redis
-    image: redis:8.4.0-alpine
-    volumes:
-      - redis_data:/data
+      - '127.0.0.1:58136:58136'
     restart: unless-stopped
-    ports:
-      - 6379:6379
 
-  # PostgreSQL
   postgres:
-    container_name: hm_postgres
     image: postgres:18.1-alpine
+    container_name: hm_postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/init_up.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - ./postgres/.env.development.local.example
-    restart: unless-stopped
     ports:
-      - 5432:5432
+      - '127.0.0.1:5432:5432'
+    restart: unless-stopped
 
-# For persistence between restarts
+  redis:
+    image: redis:8.4.0-alpine
+    container_name: hm_redis
+    volumes:
+      - redis_data:/data
+    ports:
+      - '127.0.0.1:6379:6379'
+    restart: unless-stopped
+
 volumes:
   redis_data: {}
   postgres_data: {}

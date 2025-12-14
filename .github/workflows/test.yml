@@ -94,6 +94,10 @@ jobs:
               - '.stylelintrc.mjs'
               - 'package-lock.json'
               - 'package.json'
+            docker-compose:
+              - '**/docker-compose.*.yaml'
+              - '**/docker-compose.yaml'
+              - 'dclint.config.json'
             dockerfile:
               - '**/Dockerfile*'
               - '.hadolint.yaml'
@@ -684,6 +688,7 @@ jobs:
       camera-radar-lidar-fusion: ${{ steps.filter.outputs.camera-radar-lidar-fusion }}
       cmake: ${{ steps.filter.outputs.cmake }}
       css: ${{ steps.filter.outputs.css }}
+      docker-compose: ${{ steps.filter.outputs.docker-compose }}
       dockerfile: ${{ steps.filter.outputs.dockerfile }}
       editorconfig: ${{ steps.filter.outputs.editorconfig }}
       html: ${{ steps.filter.outputs.html }}
@@ -921,6 +926,7 @@ jobs:
       c-cpp: ${{ needs.detect-changes.outputs.c-cpp == 'true' }}
       cmake: ${{ needs.detect-changes.outputs.cmake == 'true' }}
       css: ${{ needs.detect-changes.outputs.css == 'true' }}
+      docker-compose: ${{ needs.detect-changes.outputs.docker-compose == 'true' }}
       dockerfile: ${{ needs.detect-changes.outputs.dockerfile == 'true' }}
       editorconfig: ${{ needs.detect-changes.outputs.editorconfig == 'true' }}
       html: ${{ needs.detect-changes.outputs.html == 'true' }}
