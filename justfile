@@ -561,6 +561,9 @@ static-type-check-python:
     uv run poe static-type-check-python --package=ensemble-learning.boosting.hm-lightgbm
     uv run poe static-type-check-python --package=ensemble-learning.boosting.hm-xgboost
     uv run poe static-type-check-python --package=evolutionary-algorithm.genetic-algorithm
+    uv run poe static-type-check-python --package=generative-model.flow-matching
+    uv run poe static-type-check-python --package=generative-model.hm-torchdiffeq
+    uv run poe static-type-check-python --package=generative-model.stable-diffusion
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-pyvisa
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-tdms
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.veristand.hm-veristand
@@ -598,7 +601,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.hm-scikit-learn
     uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.live-line-chart
     uv run poe static-type-check-python --package=machine-learning.hm-streamlit.applications.map
-    uv run poe static-type-check-python --package=machine-learning.hm-torchdiffeq
     uv run poe static-type-check-python --package=machine-learning.hugging-face
     uv run poe static-type-check-python --package=machine-learning.hyperparameter-optimization
     uv run poe static-type-check-python --package=machine-learning.model-context-protocol
@@ -606,7 +608,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.nvidia-dali
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.deploy
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
-    uv run poe static-type-check-python --package=machine-learning.stable-diffusion
     uv run poe static-type-check-python --package=machine-learning.transformer
     uv run poe static-type-check-python --package=masked-language-model.convert-modern-bert-to-core-ml
     uv run poe static-type-check-python --package=masked-language-model.modern-bert
