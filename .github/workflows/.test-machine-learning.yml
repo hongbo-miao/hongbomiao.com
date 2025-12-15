@@ -45,6 +45,9 @@ name: . Test Machine Learning
       fine-tune-whisper:
         required: true
         type: boolean
+      flow-matching:
+        required: true
+        type: boolean
       graph-neural-network:
         required: true
         type: boolean
@@ -2126,39 +2129,6 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: audio/automatic-speech-recognition-evaluation/hm-jiwer
 
-  torchdiffeq-test:
-    name: torchdiffeq | Test
-    if: ${{ inputs.workflow || inputs.hm-torchdiffeq }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.17
-          enable-cache: true
-          cache-dependency-glob: machine-learning/hm-torchdiffeq/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: machine-learning/hm-torchdiffeq/.python-version
-      - name: Install dependencies
-        working-directory: machine-learning/hm-torchdiffeq
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/hm-torchdiffeq
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/hm-torchdiffeq
-
   stable-diffusion-test:
     name: Stable Diffusion | Test
     if: ${{ inputs.workflow || inputs.stable-diffusion }}
@@ -2172,17 +2142,17 @@ jobs:
         with:
           version: 0.9.17
           enable-cache: true
-          cache-dependency-glob: machine-learning/stable-diffusion/uv.lock
+          cache-dependency-glob: generative-model/stable-diffusion/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: machine-learning/stable-diffusion/.python-version
+          python-version-file: generative-model/stable-diffusion/.python-version
       - name: Install dependencies
-        working-directory: machine-learning/stable-diffusion
+        working-directory: generative-model/stable-diffusion
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/stable-diffusion
+        working-directory: generative-model/stable-diffusion
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2190,7 +2160,73 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/stable-diffusion
+          directory: generative-model/stable-diffusion
+
+  torchdiffeq-test:
+    name: torchdiffeq | Test
+    if: ${{ inputs.workflow || inputs.hm-torchdiffeq }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.17
+          enable-cache: true
+          cache-dependency-glob: generative-model/hm-torchdiffeq/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: generative-model/hm-torchdiffeq/.python-version
+      - name: Install dependencies
+        working-directory: generative-model/hm-torchdiffeq
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: generative-model/hm-torchdiffeq
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: generative-model/hm-torchdiffeq
+
+  flow-matching-test:
+    name: Flow Matching | Test
+    if: ${{ inputs.workflow || inputs.flow-matching }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.17
+          enable-cache: true
+          cache-dependency-glob: generative-model/flow-matching/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: generative-model/flow-matching/.python-version
+      - name: Install dependencies
+        working-directory: generative-model/flow-matching
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: generative-model/flow-matching
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: generative-model/flow-matching
 
   transformer-test:
     name: Transformer | Test

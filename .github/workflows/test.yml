@@ -330,6 +330,8 @@ jobs:
               - 'large-language-model-post-training/fine-tuning/fine-tune-whisper/**'
             flink-stream-tweets:
               - 'data-processing/flink/applications/stream-tweets/**'
+            flow-matching:
+              - 'generative-model/flow-matching/**'
             genetic-algorithm:
               - 'evolutionary-algorithm/genetic-algorithm/**'
             grafana-hm-dashboard:
@@ -527,7 +529,7 @@ jobs:
             hm-tinker:
               - 'large-language-model-post-training/fine-tuning/hm-tinker/**'
             hm-torchdiffeq:
-              - 'machine-learning/hm-torchdiffeq/**'
+              - 'generative-model/hm-torchdiffeq/**'
             hm-torchtune:
               - 'large-language-model-post-training/fine-tuning/hm-torchtune/**'
             hm-triton:
@@ -631,7 +633,7 @@ jobs:
             speculative-decoding:
               - 'large-language-model-inference/speculative-decoding/**'
             stable-diffusion:
-              - 'machine-learning/stable-diffusion/**'
+              - 'generative-model/stable-diffusion/**'
             surrogate-model:
               - 'scientific-computing/surrogate-model/**'
             taichi-count-primes:
@@ -748,6 +750,7 @@ jobs:
       fine-tune-whisper: ${{ steps.filter.outputs.fine-tune-whisper }}
       flightradar24: ${{ steps.filter.outputs.flightradar24 }}
       flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
+      flow-matching: ${{ steps.filter.outputs.flow-matching }}
       format-can-data: ${{ steps.filter.outputs.format-can-data }}
       genetic-algorithm: ${{ steps.filter.outputs.genetic-algorithm }}
       grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
@@ -1226,6 +1229,7 @@ jobs:
       core-ml-tools: ${{ needs.detect-changes.outputs.core-ml-tools == 'true' }}
       feature-store: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
       fine-tune-whisper: ${{ needs.detect-changes.outputs.fine-tune-whisper == 'true' }}
+      flow-matching: ${{ needs.detect-changes.outputs.flow-matching == 'true' }}
       graph-neural-network: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
       hm-autogluon: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
       hm-axolotl: ${{ needs.detect-changes.outputs.hm-axolotl == 'true' }}
