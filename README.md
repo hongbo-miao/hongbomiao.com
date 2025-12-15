@@ -630,7 +630,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Flow Matching** - Continuous-time generative modeling technique that learns a probability flow to generate samples
 - **Diffusion Model** - Continuous-time generative modeling technique that learns to reverse a noising process to generate samples
 - **Diffusers** - Diffusion models
-- **Stable Diffusion** - Text-to-image generation model
+- **Stable Diffusion** - Text-to-image (T2I) generation model
 - **ComfyUI** - Node-based interface for diffusion model workflows
 
 ### Reinforcement Learning (RL)
