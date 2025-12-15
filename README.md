@@ -609,10 +609,15 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Agent Communication Protocol (ACP)**
   - **Agent2Agent Protocol (A2A)**
 
+### Small Language Model (SLM)
+
+- Small Language Model (SLM)
+  - **SmolLM** - Small language model (SLM)
+
 ### Vision Language Model (VLM)
 
 - Vision Language Model (VLM)
-  - **Qwen VL** - Vision language model
+  - **Qwen VL** - Vision language model (VLM)
 
 ### Computer Vision
 

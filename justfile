@@ -624,6 +624,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=scientific-computing.hm-sunpy
     uv run poe static-type-check-python --package=scientific-computing.surrogate-model
     uv run poe static-type-check-python --package=security.hm-opal-client
+    uv run poe static-type-check-python --package=small-language-model.smollm
     uv run poe static-type-check-python --package=system-tool.hm-xxhash
     uv run poe static-type-check-python --package=tokenization.byte-pair-encoding
     uv run poe static-type-check-python --package=vision-language-model.qwen-vl
