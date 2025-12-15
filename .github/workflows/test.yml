@@ -630,6 +630,8 @@ jobs:
               - 'robotics/robot-operating-system/**'
             rti-connext-dds:
               - 'data-transport/rti-connext-dds/**'
+            smollm:
+              - 'small-language-model/smollm/**'
             speculative-decoding:
               - 'large-language-model-inference/speculative-decoding/**'
             stable-diffusion:
@@ -900,6 +902,7 @@ jobs:
       rnnoise-vad: ${{ steps.filter.outputs.rnnoise-vad }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
+      smollm: ${{ steps.filter.outputs.smollm }}
       speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
       stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
       surrogate-model: ${{ steps.filter.outputs.surrogate-model }}
@@ -1289,6 +1292,7 @@ jobs:
       qwen-vl: ${{ needs.detect-changes.outputs.qwen-vl == 'true' }}
       qwen: ${{ needs.detect-changes.outputs.qwen == 'true' }}
       rnnoise-vad: ${{ needs.detect-changes.outputs.rnnoise-vad == 'true' }}
+      smollm: ${{ needs.detect-changes.outputs.smollm == 'true' }}
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
