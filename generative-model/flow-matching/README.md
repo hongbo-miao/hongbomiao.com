@@ -9,7 +9,7 @@ Flow Matching learns a time dependent velocity field $v_\theta(\mathbf{x}, t)$ t
 - Prior (noise):
   - $\mathbf{x}_0 \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$
 - Target (data):
-  - $\mathbf{x}_1 \sim p_\text{data}$ (two moons samples)
+  - $\mathbf{x}\_1 \sim p\_\text{data}$ (two moons samples)
 
 The code uses a linear interpolation path between noise and data with $t \sim \mathcal{U}(0, 1)$:
 
@@ -44,7 +44,7 @@ In code:
 - Sample $t \sim \mathcal{U}(0, 1)$ (`time_values`)
 - Compute $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ (`interpolated_points`)
 - Compute $\mathbf{v}_\text{target} = \mathbf{x}_1 - \mathbf{x}_0$ (`true_velocity`)
-- Predict $\hat{\mathbf{v}} = v_\theta(\mathbf{x}_t, t)$ (`predicted_velocity`) and minimize MSE against $\mathbf{v}_\text{target}$ (`true_velocity`)
+- Predict $\hat{\mathbf{v}} = v\_\theta(\mathbf{x}\_t, t)$ (`predicted_velocity`) and minimize MSE against $\mathbf{v}\_{\mathrm{target}}$ (`true_velocity`)
 
 ### Sampling (Generation)
 
