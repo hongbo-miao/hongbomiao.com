@@ -608,15 +608,30 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Model Context Protocol (MCP)**
   - **Agent Communication Protocol (ACP)**
   - **Agent2Agent Protocol (A2A)**
-- Diffusion Model
-  - **Diffusers** - Diffusion models
-    - **Stable Diffusion** - Text-to-image generation model
-  - **ComfyUI** - Node-based interface for diffusion model workflows
 
 ### Vision Language Model (VLM)
 
 - Vision Language Model (VLM)
   - **Qwen VL** - Vision language model
+
+### Computer Vision
+
+- **OpenCV** - Computer vision library
+- **supervision** - Computer vision library
+- **Ultralytics YOLOv12** - Object detection model
+- **DINOv3** - Self-supervised vision transformer (ViT) model
+- **Open3D** - 3D data processing
+- **PyVista** - 3D plotting and mesh analysis
+- **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization
+- **GStreamer** - Pipeline-based multimedia framework
+
+### Generative Model
+
+- **Flow Matching** - Continuous-time generative modeling technique that learns a probability flow to generate samples
+- **Diffusion Model** - Continuous-time generative modeling technique that learns to reverse a noising process to generate samples
+- **Diffusers** - Diffusion models
+- **Stable Diffusion** - Text-to-image generation model
+- **ComfyUI** - Node-based interface for diffusion model workflows
 
 ### Reinforcement Learning (RL)
 
@@ -653,17 +668,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Media Streaming Server
   - **MediaMTX** - Media streaming server
   - **Icecast** - Media streaming server
-
-## Computer Vision
-
-- **OpenCV** - Computer vision library
-- **supervision** - Computer vision library
-- **Ultralytics YOLOv12** - Object detection model
-- **DINOv3** - Self-supervised vision transformer (ViT) model
-- **Open3D** - 3D data processing
-- **PyVista** - 3D plotting and mesh analysis
-- **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization
-- **GStreamer** - Pipeline-based multimedia framework
 
 ## Computing
 
