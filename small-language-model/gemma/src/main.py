@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    model_id = "HuggingFaceTB/SmolLM3-3B"
+    model_id = "google/gemma-3-270m-it"
 
     if torch.cuda.is_available():
         device = "cuda"

@@ -48,6 +48,9 @@ name: . Test Machine Learning
       flow-matching:
         required: true
         type: boolean
+      gemma:
+        required: true
+        type: boolean
       graph-neural-network:
         required: true
         type: boolean
@@ -223,9 +226,6 @@ name: . Test Machine Learning
         required: true
         type: boolean
       rnnoise-vad:
-        required: true
-        type: boolean
-      smollm:
         required: true
         type: boolean
       speculative-decoding:
@@ -1373,9 +1373,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-inference/speculative-decoding
 
-  smollm-test:
-    name: SmolLM | Test
-    if: ${{ inputs.workflow || inputs.smollm }}
+  gemma-test:
+    name: Gemma | Test
+    if: ${{ inputs.workflow || inputs.gemma }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -1386,17 +1386,17 @@ jobs:
         with:
           version: 0.9.17
           enable-cache: true
-          cache-dependency-glob: small-language-model/smollm/uv.lock
+          cache-dependency-glob: small-language-model/gemma/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: small-language-model/smollm/.python-version
+          python-version-file: small-language-model/gemma/.python-version
       - name: Install dependencies
-        working-directory: small-language-model/smollm
+        working-directory: small-language-model/gemma
         run: |
           uv sync --dev
       - name: Test
-        working-directory: small-language-model/smollm
+        working-directory: small-language-model/gemma
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1404,7 +1404,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: small-language-model/smollm
+          directory: small-language-model/gemma
 
   analyze-sentiment-test:
     name: Analyze Sentiment | Test
