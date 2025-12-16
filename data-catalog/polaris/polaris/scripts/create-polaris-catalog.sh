@@ -6,7 +6,7 @@ POLARIS_PORT="${POLARIS_PORT:-8181}"
 CLIENT_ID="${CLIENT_ID:-root}"
 CLIENT_SECRET="${CLIENT_SECRET:-polaris_passw0rd}"
 CATALOG_NAME="${CATALOG_NAME:-warehouse}"
-S3_BUCKET="${S3_BUCKET:-warehouse}"
+S3_BUCKET_NAME="${S3_BUCKET_NAME:-warehouse}"
 S3_ENDPOINT="${S3_ENDPOINT:-http://minio:9000}"
 S3_ACCESS_KEY="${S3_ACCESS_KEY:-minio_admin}"
 S3_SECRET_KEY="${S3_SECRET_KEY:-minio_passw0rd}"
@@ -43,11 +43,11 @@ CATALOG_RESPONSE=$(curl --silent --write-out "\n%{http_code}" --request POST "ht
     \"name\": \"${CATALOG_NAME}\",
     \"type\": \"INTERNAL\",
     \"properties\": {
-      \"default-base-location\": \"s3://${S3_BUCKET}\"
+      \"default-base-location\": \"s3://${S3_BUCKET_NAME}\"
     },
     \"storageConfigInfo\": {
       \"storageType\": \"S3\",
-      \"allowedLocations\": [\"s3://${S3_BUCKET}\"],
+      \"allowedLocations\": [\"s3://${S3_BUCKET_NAME}\"],
       \"endpointInternal\": \"${S3_ENDPOINT}\",
       \"pathStyleAccess\": true
     }

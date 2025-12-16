@@ -60,7 +60,7 @@ services:
       minio-initialize:
         condition: service_completed_successfully
     volumes:
-      - ./scripts/create-lakekeeper-warehouse.sh:/create-lakekeeper-warehouse.sh:ro
+      - ./lakekeeper/scripts/create-lakekeeper-warehouse.sh:/create-lakekeeper-warehouse.sh:ro
     command: ["/bin/sh", "/create-lakekeeper-warehouse.sh"]
     restart: "no"
 
@@ -82,7 +82,7 @@ services:
     image: docker.io/library/postgres:18.1-trixie
     container_name: lakekeeper-postgres
     volumes:
-      - postgres-data:/var/lib/postgresql
+      - lakekeeper-postgres-data:/var/lib/postgresql
     environment:
       POSTGRES_USER: postgres_admin
       POSTGRES_PASSWORD: postgres_passw0rd
@@ -134,7 +134,7 @@ services:
       lakekeeper-initialize:
         condition: service_completed_successfully
     volumes:
-      - ./etc/trino/catalog:/etc/trino/catalog:ro
+      - ./trino/etc/trino/catalog:/etc/trino/catalog:ro
     ports:
       - '127.0.0.1:8080:8080'
     restart: unless-stopped
@@ -152,10 +152,10 @@ services:
       trino:
         condition: service_healthy
     volumes:
-      - ./scripts/insert-sensor-data.sql:/insert-sensor-data.sql:ro
+      - ./trino/scripts/insert-sensor-data.sql:/insert-sensor-data.sql:ro
     entrypoint: ["trino", "--server", "trino:8080", "--file", "/insert-sensor-data.sql"]
     restart: "no"
 
 volumes:
   minio-data:
-  postgres-data:
+  lakekeeper-postgres-data:
