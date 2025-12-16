@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket  = "production-hm-opentofu-bucket"
-    key     = "production/nebius/applications/terraform.tfstate"
+    key     = "production/nebius/network/terraform.tfstate"
     region  = "us-central1"
     profile = "nebius"
     endpoints = {
