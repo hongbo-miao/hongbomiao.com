@@ -332,6 +332,8 @@ jobs:
               - 'data-processing/flink/applications/stream-tweets/**'
             flow-matching:
               - 'generative-model/flow-matching/**'
+            gemma:
+              - 'small-language-model/gemma/**'
             genetic-algorithm:
               - 'evolutionary-algorithm/genetic-algorithm/**'
             grafana-hm-dashboard:
@@ -630,8 +632,6 @@ jobs:
               - 'robotics/robot-operating-system/**'
             rti-connext-dds:
               - 'data-transport/rti-connext-dds/**'
-            smollm:
-              - 'small-language-model/smollm/**'
             speculative-decoding:
               - 'large-language-model-inference/speculative-decoding/**'
             stable-diffusion:
@@ -754,6 +754,7 @@ jobs:
       flink-stream-tweets: ${{ steps.filter.outputs.flink-stream-tweets }}
       flow-matching: ${{ steps.filter.outputs.flow-matching }}
       format-can-data: ${{ steps.filter.outputs.format-can-data }}
+      gemma: ${{ steps.filter.outputs.gemma }}
       genetic-algorithm: ${{ steps.filter.outputs.genetic-algorithm }}
       grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
@@ -902,7 +903,6 @@ jobs:
       rnnoise-vad: ${{ steps.filter.outputs.rnnoise-vad }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
-      smollm: ${{ steps.filter.outputs.smollm }}
       speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
       stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
       surrogate-model: ${{ steps.filter.outputs.surrogate-model }}
@@ -1292,7 +1292,7 @@ jobs:
       qwen-vl: ${{ needs.detect-changes.outputs.qwen-vl == 'true' }}
       qwen: ${{ needs.detect-changes.outputs.qwen == 'true' }}
       rnnoise-vad: ${{ needs.detect-changes.outputs.rnnoise-vad == 'true' }}
-      smollm: ${{ needs.detect-changes.outputs.smollm == 'true' }}
+      gemma: ${{ needs.detect-changes.outputs.gemma == 'true' }}
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
