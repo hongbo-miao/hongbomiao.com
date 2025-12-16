@@ -612,7 +612,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Small Language Model (SLM)
 
 - Small Language Model (SLM)
-  - **SmolLM** - Small language model (SLM)
+  - **Gemma 3 270M** - Small language model (SLM)
 
 ### Vision Language Model (VLM)
 
