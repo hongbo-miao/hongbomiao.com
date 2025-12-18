@@ -29,6 +29,7 @@ module.exports = [
       '**/.DS_Store',
       '**/.ansible/**/*',
       '**/.claude/**/*',
+      '**/.coverage',
       '**/.coverage/**/*',
       '**/.deepeval/**/*',
       '**/.env.*.local',

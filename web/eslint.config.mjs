@@ -43,6 +43,7 @@ export default [
       '**/.DS_Store',
       '**/.ansible/**/*',
       '**/.claude/**/*',
+      '**/.coverage',
       '**/.coverage/**/*',
       '**/.deepeval/**/*',
       '**/.env.*.local',
