@@ -348,16 +348,20 @@ jobs:
 
   lint-dotenv:
     name: dotenv
-    if: ${{ inputs.workflow || inputs.dockerfile }}
+    if: ${{ inputs.workflow || inputs.dotenv }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
       - name: Lint dotenv
-        uses: dotenv-linter/action-dotenv-linter@v2.25.0
-        with:
-          fail_on_error: true
+        run: |
+          docker run \
+            --volume="$(pwd):/workspace" \
+            --workdir=/workspace \
+            docker.io/dotenvlinter/dotenv-linter:latest \
+            check \
+              $(git ls-files '**/.env*')
 
   lint-editorconfig:
     name: EditorConfig
