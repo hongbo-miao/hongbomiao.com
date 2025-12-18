@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:0.9.17-python3.13-trixie-slim AS base
+FROM ghcr.io/astral-sh/uv:0.9.18-python3.13-trixie-slim AS base
 WORKDIR /usr/src/app
 ENV PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1 \
@@ -31,7 +31,7 @@ RUN apt-get update \
   && make install \
   && cd .. \
   && rm -r -f librdkafka-${LIBRDKAFKA_VERSION}/
-COPY --from=ghcr.io/astral-sh/uv:0.9.17-python3.13-trixie-slim /usr/local/bin/uv /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.9.18-python3.13-trixie-slim /usr/local/bin/uv /bin/
 COPY ["api/api-python/pyproject.toml", "api/api-python/uv.lock", "api/api-python/.python-version", "./"]
 RUN . /venv/bin/activate \
   && uv sync --frozen
