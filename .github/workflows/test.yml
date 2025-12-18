@@ -101,6 +101,8 @@ jobs:
             dockerfile:
               - '**/Dockerfile*'
               - '.hadolint.yaml'
+            dotenv:
+              - '**/*.env*'
             editorconfig:
               - '**/*'
               - '.editorconfig'
@@ -694,6 +696,7 @@ jobs:
       css: ${{ steps.filter.outputs.css }}
       docker-compose: ${{ steps.filter.outputs.docker-compose }}
       dockerfile: ${{ steps.filter.outputs.dockerfile }}
+      dotenv: ${{ steps.filter.outputs.dotenv }}
       editorconfig: ${{ steps.filter.outputs.editorconfig }}
       html: ${{ steps.filter.outputs.html }}
       json: ${{ steps.filter.outputs.json }}
