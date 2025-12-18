@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:0.9.17-python3.12-trixie-slim
+FROM ghcr.io/astral-sh/uv:0.9.18-python3.12-trixie-slim
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
   PIP_NO_CACHE_DIR=1 \
