@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
 
-import config
 import magic
+from config import config
 from locust import HttpUser, between, task
 
 
@@ -22,8 +22,8 @@ class WebsiteUser(HttpUser):
             }
         """
         variables = {
-            "email": config.seed_user_email,
-            "password": config.seed_user_password,
+            "email": config.SEED_USER_EMAIL,
+            "password": config.SEED_USER_PASSWORD,
         }
         res = self.client.post(
             "/graphql",
