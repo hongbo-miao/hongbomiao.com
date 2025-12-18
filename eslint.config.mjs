@@ -57,7 +57,7 @@ export default [
       '**/slprj/**/*',
       '**/target/**/*',
 
-      // Root (Cannot have leading /)
+      // Root (cannot have leading /)
       '.aider.chat.history.md',
       '.aider.tags.cache.v3/**/*',
       '.git/**/*',
