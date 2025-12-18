@@ -1,2 +1,2 @@
-FROM docker.io/traefik:v3.6.4
+FROM docker.io/traefik:v3.6.5
 COPY ["plugins-local/",  "/plugins-local/"]
