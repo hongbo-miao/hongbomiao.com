@@ -2,10 +2,10 @@ import logging
 import tempfile
 from pathlib import Path
 
-import config
 import mlflow
 import polars as pl
 import ray
+from config import config
 
 logger = logging.getLogger(__name__)
 

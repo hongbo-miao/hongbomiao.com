@@ -186,14 +186,20 @@ lint-css:
 lint-css-fix:
     npm run lint-css-fix
 
-lint-dockerfile:
-    hadolint $(git ls-files '**/Dockerfile*')
-
 lint-docker-compose:
     npm run lint-docker-compose
 
 lint-docker-compose-fix:
     npm run lint-docker-compose-fix
+
+lint-dockerfile:
+    hadolint $(git ls-files '**/Dockerfile*')
+
+lint-dotenv:
+    dotenv-linter check $(git ls-files '**/.env*')
+
+lint-dotenv-fix:
+    dotenv-linter fix --no-backup $(git ls-files '**/.env*')
 
 lint-editorconfig:
     uv run poe lint-editorconfig

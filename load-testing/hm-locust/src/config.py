@@ -1,10 +1,25 @@
 import os
-from pathlib import Path
 
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-env_path = Path("../../api/api-node") / ".env.development.local"
-load_dotenv(env_path)
 
-seed_user_email = os.getenv("SEED_USER_EMAIL")
-seed_user_password = os.getenv("SEED_USER_PASSWORD")
+def get_env_files() -> list[str]:
+    env = os.getenv("ENV")
+    match env:
+        case "production":
+            return [".env.production", ".env.production.local"]
+        case "development" | "test":
+            return [".env.development", ".env.development.local"]
+        case _:
+            message = f"Invalid ENV value: {env}."
+            raise ValueError(message)
+
+
+class Config(BaseSettings):
+    SEED_USER_EMAIL: str
+    SEED_USER_PASSWORD: str
+
+    model_config = SettingsConfigDict(env_file=get_env_files())
+
+
+config = Config.model_validate({})

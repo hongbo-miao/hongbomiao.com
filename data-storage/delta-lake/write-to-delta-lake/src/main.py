@@ -1,9 +1,9 @@
 import time
 
-import config
 import numpy as np
 import pandas as pd
 import pyarrow as pa
+from config import config
 from deltalake.writer import write_deltalake
 
 
@@ -21,9 +21,9 @@ def main(row_count: int) -> None:
     }
     df = pd.DataFrame(data)
     storage_options = {
-        "AWS_DEFAULT_REGION": config.aws_default_region,
-        "AWS_ACCESS_KEY_ID": config.aws_access_key_id,
-        "AWS_SECRET_ACCESS_KEY": config.aws_secret_access_key,
+        "AWS_DEFAULT_REGION": config.AWS_DEFAULT_REGION,
+        "AWS_ACCESS_KEY_ID": config.AWS_ACCESS_KEY_ID,
+        "AWS_SECRET_ACCESS_KEY": config.AWS_SECRET_ACCESS_KEY,
         "AWS_S3_ALLOW_UNSAFE_RENAME": "true",
     }
     schema = pa.schema(
@@ -35,7 +35,7 @@ def main(row_count: int) -> None:
         ],
     )
     write_deltalake(
-        config.s3_path,
+        config.S3_PATH,
         df,
         mode="append",
         schema=schema,

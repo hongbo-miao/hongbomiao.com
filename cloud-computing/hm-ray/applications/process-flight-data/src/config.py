@@ -1,11 +1,29 @@
 import os
 
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-load_dotenv(".env.production.local")
 
-MLFLOW_TRACKING_USERNAME = os.getenv("MLFLOW_TRACKING_USERNAME")
-MLFLOW_TRACKING_PASSWORD = os.getenv("MLFLOW_TRACKING_PASSWORD")
+def get_env_files() -> list[str]:
+    env = os.getenv("ENV")
+    if env is None:
+        env = "production"
+    match env:
+        case "production":
+            return [".env.production", ".env.production.local"]
+        case "development" | "test":
+            return [".env.development", ".env.development.local"]
+        case _:
+            message = f"Invalid ENV value: {env}."
+            raise ValueError(message)
 
-MLFLOW_TRACKING_SERVER_HOST = os.getenv("MLFLOW_TRACKING_SERVER_HOST")
-MLFLOW_EXPERIMENT_NAME = os.getenv("MLFLOW_EXPERIMENT_NAME")
+
+class Config(BaseSettings):
+    MLFLOW_EXPERIMENT_NAME: str
+    MLFLOW_TRACKING_PASSWORD: str
+    MLFLOW_TRACKING_SERVER_HOST: str
+    MLFLOW_TRACKING_USERNAME: str
+
+    model_config = SettingsConfigDict(env_file=get_env_files())
+
+
+config = Config.model_validate({})

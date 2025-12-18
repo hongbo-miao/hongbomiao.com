@@ -903,6 +903,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Stylelint** - CSS linter
 - **DCLint** - Docker Compose linter
 - **hadolint** - Dockerfile linter
+- **dotenv-linter** - dotenv linter
 - **editorconfig-checker** - EditorConfig linter
 - **gofmt** - Go formatter
 - **golangci-lint** - Go linter

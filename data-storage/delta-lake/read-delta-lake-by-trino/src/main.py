@@ -1,7 +1,7 @@
 import logging
 
-import config
 import pandas as pd
+from config import config
 from sqlalchemy import create_engine, text
 from trino.sqlalchemy import URL
 
@@ -13,7 +13,7 @@ def main() -> None:
     field_names = ["current", "voltage", "temperature"]
 
     engine = create_engine(
-        URL(host=config.trino_host, port=config.trino_port, user=config.trino_user),
+        URL(host=config.TRINO_HOST, port=config.TRINO_PORT, user=config.TRINO_USER),
     )
     with engine.connect() as conn:
         column_names = ", ".join(field_names)
