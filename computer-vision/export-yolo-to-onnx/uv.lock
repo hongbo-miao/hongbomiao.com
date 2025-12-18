@@ -1271,6 +1271,26 @@ wheels = [
 ]
 
 [[package]]
+name = "onnxslim"
+version = "0.1.80"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "colorama" },
+    { name = "ml-dtypes", version = "0.4.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "ml-dtypes", version = "0.5.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "onnx", version = "1.17.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin'" },
+    { name = "onnx", version = "1.19.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13' and sys_platform != 'darwin'" },
+    { name = "onnx", version = "1.19.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13' and sys_platform != 'darwin'" },
+    { name = "packaging", version = "23.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "packaging", version = "25.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "sympy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5d/a4/3c0d946f0cda16d7acf96908498d3d2e23739f733319e7ab27addf960e85/onnxslim-0.1.80.tar.gz", hash = "sha256:0ff5c51019de3c114721032ebe710aacb4163ef042526de0cfe1a182d496665f", size = 143702, upload-time = "2025-12-15T00:37:00.663Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/87/d0/ac16f8170fdddcd664693ed9e536795a4a577031925d98c7b36762891afe/onnxslim-0.1.80-py3-none-any.whl", hash = "sha256:1c74770858359b252c5f2bd2cbd0d990c98f1dd252c8a5c4ba88760cf9282586", size = 167422, upload-time = "2025-12-15T00:36:59.449Z" },
+]
+
+[[package]]
 name = "opencv-python"
 version = "4.11.0.86"
 source = { registry = "https://pypi.org/simple" }
@@ -2462,7 +2482,7 @@ wheels = [
 
 [[package]]
 name = "ultralytics"
-version = "8.3.239"
+version = "8.3.240"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "matplotlib" },
@@ -2478,9 +2498,9 @@ dependencies = [
     { name = "torchvision" },
     { name = "ultralytics-thop" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2b/6c/131444eff8eb20a61d080d7408e9891c282f2eb75e58338af84aaf5c161c/ultralytics-8.3.239.tar.gz", hash = "sha256:f68b7ceed1d91ed970635656ef90bce4eee203311bce06b4222c51857ca223c1", size = 984161, upload-time = "2025-12-15T22:47:02.785Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/54/47/f5801fd9fb41fc176fc09435ba719c4afac9ff455759fead9126d3d5a355/ultralytics-8.3.240.tar.gz", hash = "sha256:dac0a0e1b999ace2e42845f600156b1c1a6987647a0de302290e6ede8492ff82", size = 984421, upload-time = "2025-12-17T13:13:22.602Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/cb/1a/0652519915c4af033342a1a84e72d38c06f0d76c46a7b1e15c11fe019426/ultralytics-8.3.239-py3-none-any.whl", hash = "sha256:2e33c46303d63e5deea14b19599aecd1562aeb1d3ddcdfff786cad66aa431083", size = 1147503, upload-time = "2025-12-15T22:47:01.173Z" },
+    { url = "https://files.pythonhosted.org/packages/b6/cd/0c4ae4c85f15b230085efa2f12c1c96c7a0f7bef6f70e3a614ea5b334be6/ultralytics-8.3.240-py3-none-any.whl", hash = "sha256:b21179e8af29a5ca8c063e662b79b8a6ab7a84b788a200270d8723f4d611d3e1", size = 1147668, upload-time = "2025-12-17T13:13:20.511Z" },
 ]
 
 [package.optional-dependencies]
@@ -2491,6 +2511,7 @@ export = [
     { name = "onnx", version = "1.17.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin'" },
     { name = "onnx", version = "1.19.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13' and sys_platform != 'darwin'" },
     { name = "onnx", version = "1.19.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13' and sys_platform != 'darwin'" },
+    { name = "onnxslim" },
     { name = "openvino" },
     { name = "scikit-learn", marker = "python_full_version < '3.14' and sys_platform != 'win32'" },
     { name = "tensorflow", version = "2.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
@@ -2654,7 +2675,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ultralytics", extras = ["export"], specifier = "==8.3.239" }]
+requires-dist = [{ name = "ultralytics", extras = ["export"], specifier = "==8.3.240" }]
 
 [package.metadata.requires-dev]
 dev = [
