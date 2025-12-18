@@ -57,6 +57,11 @@ git-remove-secret:
     git log -p -S xxx > git_log.txt
     git filter-repo --replace-text=<(echo 'xxx==>yyy') --refs=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx^..HEAD --force
 
+git-remove-secret-file:
+    git filter-repo --path path/to/secret --invert-paths
+    git remote add origin https://github.com/hongbo-miao/hongbomiao.com.git
+    git push origin --force --all
+
 # Rewrite Git history to move files to Git LFS
 rewrite-git-history-to-move-files-to-git-lfs:
     git lfs track "*.onnx"
