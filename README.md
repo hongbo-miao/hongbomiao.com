@@ -666,6 +666,7 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **WhisperKit** - On-device Whisper for Apple
     - **whisper.cpp** - High-performance Whisper inference in C/C++
   - Automatic Speech Recognition (ASR) Evaluation
+    - **NVIDIA NeMo** - Conversational AI toolkit for building, training, and fine-tuning speech AI models (automatic speech recognition (ASR), text-to-speech (TTS)) and large language models (LLMs)
     - **JiWER** - Automatic speech recognition evaluation, including word error rate (WER), match error rate (MER), word information lost (WIL), word information preserved (WIP), and character error rate (CER)
 
 ### Video
