@@ -20,7 +20,7 @@ async def create_streaming_completion(
     question: str,
     document_context: DocumentLanceDbContext | None,
     httpx_client: httpx.AsyncClient,
-) -> AsyncGenerator[str, None]:
+) -> AsyncGenerator[str]:
     completion_id, created, _ = generate_completion_meta(request)
     full_answer = ""
     async for delta_text in stream_answer(
