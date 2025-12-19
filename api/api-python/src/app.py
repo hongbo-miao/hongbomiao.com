@@ -22,7 +22,7 @@ sentry_sdk.init(
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
     app.state.document_context = load_document_lance_db(
         Path(config.DOCUMENT_LANCE_DB_DIR),
     )

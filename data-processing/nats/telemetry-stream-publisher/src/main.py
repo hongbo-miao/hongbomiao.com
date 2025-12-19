@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from random import SystemRandom
 from uuid import uuid4
@@ -37,7 +37,7 @@ async def publish_random_telemetry_stream(
     try:
         # Generate and stream random telemetry samples
         while True:
-            timestamp = datetime.now(timezone.utc).isoformat()
+            timestamp = datetime.now(UTC).isoformat()
             sensor_entries: list[tuple[str, float | None]] = []
 
             for entry_name, value_range in SENSOR_DEFINITIONS.items():
