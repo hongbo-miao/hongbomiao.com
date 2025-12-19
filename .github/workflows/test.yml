@@ -608,6 +608,8 @@ jobs:
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
             nvidia-dali:
               - 'machine-learning/nvidia-dali/**'
+            nvidia-nemo:
+              - 'audio/automatic-speech-recognition-inference/nvidia-nemo/**'
             open-clip:
               - 'embedding/open-clip/**'
             pack-unpack-data:
@@ -893,6 +895,7 @@ jobs:
       neo-bert: ${{ steps.filter.outputs.neo-bert }}
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
       nvidia-dali: ${{ steps.filter.outputs.nvidia-dali }}
+      nvidia-nemo: ${{ steps.filter.outputs.nvidia-nemo }}
       open-clip: ${{ steps.filter.outputs.open-clip }}
       pack-unpack-data: ${{ steps.filter.outputs.pack-unpack-data }}
       plotly-heatmap: ${{ steps.filter.outputs.plotly-heatmap }}
@@ -937,6 +940,7 @@ jobs:
       css: ${{ needs.detect-changes.outputs.css == 'true' }}
       docker-compose: ${{ needs.detect-changes.outputs.docker-compose == 'true' }}
       dockerfile: ${{ needs.detect-changes.outputs.dockerfile == 'true' }}
+      dotenv: ${{ needs.detect-changes.outputs.dotenv == 'true' }}
       editorconfig: ${{ needs.detect-changes.outputs.editorconfig == 'true' }}
       html: ${{ needs.detect-changes.outputs.html == 'true' }}
       json: ${{ needs.detect-changes.outputs.json == 'true' }}
@@ -1289,6 +1293,7 @@ jobs:
       neo-bert: ${{ needs.detect-changes.outputs.neo-bert == 'true' }}
       neural-forecasting-forecast-air-passenger-number: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
+      nvidia-nemo: ${{ needs.detect-changes.outputs.nvidia-nemo == 'true' }}
       open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
       post-training-quantization: ${{ needs.detect-changes.outputs.post-training-quantization == 'true' }}
       q-learning: ${{ needs.detect-changes.outputs.q-learning == 'true' }}
