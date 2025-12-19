@@ -16,7 +16,7 @@ import PackageDescription
 let package = Package(
   name: "mobile-ios",
   dependencies: [
-    .package(url: "https://github.com/FluidInference/FluidAudio.git", from: "0.7.12"),
+    .package(url: "https://github.com/FluidInference/FluidAudio.git", from: "0.8.0"),
     .package(url: "https://github.com/argmaxinc/WhisperKit", from: "0.15.0"),
     .package(url: "https://github.com/huggingface/swift-transformers", from: "1.1.6"),
     .package(url: "https://github.com/ml-explore/mlx-swift-lm", from: "2.29.2"),
