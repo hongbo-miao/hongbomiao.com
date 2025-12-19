@@ -18,7 +18,7 @@ async def stream_answer(
     httpx_client: httpx.AsyncClient,
     question: str,
     user_id: str | None,
-) -> AsyncGenerator[str, None]:
+) -> AsyncGenerator[str]:
     try:
         async with chat_agent.run_stream(
             build_prompt(memory_client, question, user_id),
