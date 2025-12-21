@@ -962,6 +962,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **Renovate** - Dependency updating
 - **Gemini Code Assist** - Code reviewing
+- **CodeRabbit** - Code reviewing
 - **Mergify** - Automatically merging
 - **Stale** - Stale issues and pull requests closing
 - **semantic-release** - Version management and package publishing
