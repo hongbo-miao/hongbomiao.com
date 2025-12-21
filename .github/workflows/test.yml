@@ -257,8 +257,6 @@ jobs:
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/**'
             amazon-sagemaker-triton-resnet-50-infer:
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/**'
-            analyze-sentiment:
-              - 'large-language-model-inference/analyze-sentiment/**'
             api-go:
               - 'api/api-go/**'
             api-node:
@@ -536,6 +534,8 @@ jobs:
               - 'generative-model/hm-torchdiffeq/**'
             hm-torchtune:
               - 'large-language-model-post-training/fine-tuning/hm-torchtune/**'
+            hm-transformers:
+              - 'large-language-model-inference/hm-transformers/**'
             hm-triton:
               - 'parallel-computing/hm-triton/**'
             hm-unsloth:
@@ -723,7 +723,6 @@ jobs:
       amazon-sagemaker-pytorch-mnist: ${{ steps.filter.outputs.amazon-sagemaker-pytorch-mnist }}
       amazon-sagemaker-triton-resnet-50-deploy: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-deploy }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-infer }}
-      analyze-sentiment: ${{ steps.filter.outputs.analyze-sentiment }}
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
@@ -860,6 +859,7 @@ jobs:
       hm-tinker: ${{ steps.filter.outputs.hm-tinker }}
       hm-torchdiffeq: ${{ steps.filter.outputs.hm-torchdiffeq }}
       hm-torchtune: ${{ steps.filter.outputs.hm-torchtune }}
+      hm-transformers: ${{ steps.filter.outputs.hm-transformers }}
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
       hm-unsloth: ${{ steps.filter.outputs.hm-unsloth }}
       hm-whisperx: ${{ steps.filter.outputs.hm-whisperx }}
@@ -1229,7 +1229,6 @@ jobs:
       # Applications
       amazon-sagemaker-triton-resnet-50-deploy: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-deploy == 'true' }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
-      analyze-sentiment: ${{ needs.detect-changes.outputs.analyze-sentiment == 'true' }}
       automatic-mixed-precision: ${{ needs.detect-changes.outputs.automatic-mixed-precision == 'true' }}
       bert: ${{ needs.detect-changes.outputs.bert == 'true' }}
       byte-pair-encoding: ${{ needs.detect-changes.outputs.byte-pair-encoding == 'true' }}
@@ -1283,6 +1282,7 @@ jobs:
       hm-tinker: ${{ needs.detect-changes.outputs.hm-tinker == 'true' }}
       hm-torchdiffeq: ${{ needs.detect-changes.outputs.hm-torchdiffeq == 'true' }}
       hm-torchtune: ${{ needs.detect-changes.outputs.hm-torchtune == 'true' }}
+      hm-transformers: ${{ needs.detect-changes.outputs.hm-transformers == 'true' }}
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
       hm-whisperx: ${{ needs.detect-changes.outputs.hm-whisperx == 'true' }}
       hm-xgboost: ${{ needs.detect-changes.outputs.hm-xgboost == 'true' }}

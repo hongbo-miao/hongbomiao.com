@@ -15,9 +15,6 @@ name: . Test Machine Learning
       amazon-sagemaker-triton-resnet-50-infer:
         required: true
         type: boolean
-      analyze-sentiment:
-        required: true
-        type: boolean
       automatic-mixed-precision:
         required: true
         type: boolean
@@ -178,6 +175,9 @@ name: . Test Machine Learning
         required: true
         type: boolean
       hm-torchtune:
+        required: true
+        type: boolean
+      hm-transformers:
         required: true
         type: boolean
       hm-unsloth:
@@ -1409,9 +1409,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: small-language-model/gemma
 
-  analyze-sentiment-test:
-    name: Analyze Sentiment | Test
-    if: ${{ inputs.workflow || inputs.analyze-sentiment }}
+  hm-transformers-test:
+    name: Transformers | Test
+    if: ${{ inputs.workflow || inputs.hm-transformers }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -1422,17 +1422,17 @@ jobs:
         with:
           version: 0.9.18
           enable-cache: true
-          cache-dependency-glob: large-language-model-inference/analyze-sentiment/uv.lock
+          cache-dependency-glob: large-language-model-inference/hm-transformers/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-inference/analyze-sentiment/.python-version
+          python-version-file: large-language-model-inference/hm-transformers/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-inference/analyze-sentiment
+        working-directory: large-language-model-inference/hm-transformers
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-inference/analyze-sentiment
+        working-directory: large-language-model-inference/hm-transformers
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1440,7 +1440,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-inference/analyze-sentiment
+          directory: large-language-model-inference/hm-transformers
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
