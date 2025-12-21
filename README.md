@@ -525,7 +525,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Optax** - Gradient processing and optimization for JAX
 - **Lightning** - Deep Learning framework
 - **NeuralForecast** - Neural forecasting
-- **Transformers** - Machine learning models
+- **Transformers** - Model-definition framework for machine learning models
 - **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
 - **Optuna** - Hyperparameter optimization framework
