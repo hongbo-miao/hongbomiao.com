@@ -1,4 +1,5 @@
 VLLM_URL := "http://localhost:8000"
+MODEL := "cpatonn/Qwen3-Omni-30B-A3B-Instruct-AWQ-4bit"
 AUDIO_PATH := "data/audio.wav"
 
 run:
@@ -8,13 +9,14 @@ run:
         --volume="$HOME/.cache/huggingface:/root/.cache/huggingface" \
         --publish=8000:8000 \
         --entrypoint=/bin/bash \
-        horizon-harbor.int.archer.com/docker-hub-proxy-cache/vllm/vllm-openai:v0.13.0 \
+        vllm/vllm-openai:v0.13.0 \
             -c "pip install vllm[audio] && python3 -m vllm.entrypoints.openai.api_server \
-                --model=cpatonn/Qwen3-Omni-30B-A3B-Instruct-AWQ-4bit \
-                --limit-mm-per-prompt='{\"audio\":1}' \
-                --max-model-len=4096 \
+                --tensor-parallel-size=2 \
                 --gpu-memory-utilization=0.9 \
-                --max-num-seqs=1"
+                --model={{ MODEL }} \
+                --max-num-seqs=10 \
+                --limit-mm-per-prompt='{\"audio\":1}' \
+                --max-model-len=8192"
 
 query:
     #!/usr/bin/env bash
@@ -22,7 +24,7 @@ query:
         --header "Content-Type: application/json" \
         --data @-
     {
-        "model": "cpatonn/Qwen3-Omni-30B-A3B-Instruct-AWQ-4bit",
+        "model": "{{ MODEL }}",
         "messages": [
             {
                 "role": "user",
