@@ -141,6 +141,9 @@ name: . Test Machine Learning
       hm-olmocr:
         required: true
         type: boolean
+      hm-optimum:
+        required: true
+        type: boolean
       hm-pydantic-ai-chat-pdf:
         required: true
         type: boolean
@@ -1441,6 +1444,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-inference/hm-transformers
+
+  hm-optimum-test:
+    name: Optimum | Test
+    if: ${{ inputs.workflow || inputs.hm-optimum }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: large-language-model-inference/hm-optimum/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: large-language-model-inference/hm-optimum/.python-version
+      - name: Install dependencies
+        working-directory: large-language-model-inference/hm-optimum
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: large-language-model-inference/hm-optimum
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: large-language-model-inference/hm-optimum
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
