@@ -1,21 +1,24 @@
+NVIDIA_TRITON_INFERENCE_SERVER_URL := "http://localhost:8000"
+MODEL := "Qwen/Qwen2.5-0.5B-Instruct"
+
 run:
     docker run --gpus=all \
         --volume="$HOME/.cache/huggingface:/root/.cache/huggingface" \
         --publish=8000:8000 \
         nvcr.io/nvidia/tritonserver:25.05-vllm-python-py3 \
             python3 -m vllm.entrypoints.openai.api_server \
-                --model=Qwen/Qwen2.5-0.5B-Instruct \
                 --port=8000 \
-                --gpu-memory-utilization=0.75 \
-                --max_model_len=8192 \
-                --tensor-parallel-size=1 \
-                --max_num_seqs=128
+                --tensor-parallel-size=2 \
+                --gpu-memory-utilization=0.9 \
+                --model={{ MODEL }} \
+                --max_num_seqs=128 \
+                --max_model_len=8192
 
 query:
-    curl http://localhost:8000/v1/chat/completions \
+    curl {{ NVIDIA_TRITON_INFERENCE_SERVER_URL }}/v1/chat/completions \
         --header "Content-Type: application/json" \
         --data '{ \
-            "model": "Qwen/Qwen2.5-0.5B-Instruct", \
+            "model": "{{ MODEL }}", \
             "messages": [ \
                 {"role": "system", "content": "You are a helpful assistant."}, \
                 {"role": "user", "content": "Tell me a joke."} \
