@@ -618,7 +618,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Vision Language Model (VLM)
 
 - Vision Language Model (VLM)
-  - **Qwen VL** - Vision language model (VLM)
+  - **Qwen3-VL** - Vision language model (VLM)
+  - **Qwen3-Omni** - Omni multimodal model with text, audio, image, video understanding and real-time speech generation
 
 ### Computer Vision
 
