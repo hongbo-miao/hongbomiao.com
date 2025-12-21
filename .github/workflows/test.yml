@@ -454,6 +454,8 @@ jobs:
               - 'computer-vision/hm-open3d/**'
             hm-openaerostruct:
               - 'computer-vision/hm-openaerostruct/**'
+            hm-optimum:
+              - 'large-language-model-inference/hm-optimum/**'
             hm-pandas-analyze-transactions:
               - 'data-analytics/hm-pandas/analyze-transactions/**'
             hm-pathway-aggregate-hourly-events:
@@ -819,6 +821,7 @@ jobs:
       hm-opal-client: ${{ steps.filter.outputs.hm-opal-client }}
       hm-open3d: ${{ steps.filter.outputs.hm-open3d }}
       hm-openaerostruct: ${{ steps.filter.outputs.hm-openaerostruct }}
+      hm-optimum: ${{ steps.filter.outputs.hm-optimum }}
       hm-pandas-analyze-transactions: ${{ steps.filter.outputs.hm-pandas-analyze-transactions }}
       hm-pathway-aggregate-hourly-events: ${{ steps.filter.outputs.hm-pathway-aggregate-hourly-events }}
       hm-polars-analyze-transactions-cpu: ${{ steps.filter.outputs.hm-polars-analyze-transactions-cpu }}
@@ -1270,6 +1273,7 @@ jobs:
       hm-model2vec: ${{ needs.detect-changes.outputs.hm-model2vec == 'true' }}
       hm-nvidia-modulus: ${{ needs.detect-changes.outputs.hm-nvidia-modulus == 'true' }}
       hm-olmocr: ${{ needs.detect-changes.outputs.hm-olmocr == 'true' }}
+      hm-optimum: ${{ needs.detect-changes.outputs.hm-optimum == 'true' }}
       hm-pydantic-ai-chat-pdf: ${{ needs.detect-changes.outputs.hm-pydantic-ai-chat-pdf == 'true' }}
       hm-scikit-learn: ${{ needs.detect-changes.outputs.hm-scikit-learn == 'true' }}
       hm-senko: ${{ needs.detect-changes.outputs.hm-senko == 'true' }}
