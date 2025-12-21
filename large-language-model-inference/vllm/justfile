@@ -1,24 +1,42 @@
-run:
-    docker run --gpus=all \
-        --volume="$HOME/.cache/huggingface:/root/.cache/huggingface" \
-        --publish=44194:8000 \
-        nvcr.io/nvidia/tritonserver:25.05-vllm-python-py3 \
-            python3 -m vllm.entrypoints.openai.api_server \
-                --model=Qwen/Qwen2.5-0.5B-Instruct \
-                --port=8000 \
-                --gpu-memory-utilization=0.75 \
-                --max_model_len=8192 \
-                --tensor-parallel-size=1 \
-                --max_num_seqs=128 \
-                --enforce-eager
+VLLM_URL := "http://localhost:8000"
+AUDIO_PATH := "data/audio.wav"
 
-ask:
-    curl http://localhost:44194/v1/chat/completions \
+run:
+    docker run \
+        --gpus=all \
+        --ipc=host \
+        --volume="$HOME/.cache/huggingface:/root/.cache/huggingface" \
+        --publish=8000:8000 \
+        --entrypoint=/bin/bash \
+        horizon-harbor.int.archer.com/docker-hub-proxy-cache/vllm/vllm-openai:v0.13.0 \
+            -c "pip install vllm[audio] && python3 -m vllm.entrypoints.openai.api_server \
+                --model=cpatonn/Qwen3-Omni-30B-A3B-Instruct-AWQ-4bit \
+                --limit-mm-per-prompt='{\"audio\":1}' \
+                --max-model-len=4096 \
+                --gpu-memory-utilization=0.9 \
+                --max-num-seqs=1"
+
+query:
+    #!/usr/bin/env bash
+    cat <<EOF | curl "{{ VLLM_URL }}/v1/chat/completions" \
         --header "Content-Type: application/json" \
-        --data '{ \
-            "model": "Qwen/Qwen2.5-0.5B-Instruct", \
-            "messages": [ \
-                {"role": "system", "content": "You are a helpful assistant."}, \
-                {"role": "user", "content": "Tell me a joke."} \
-            ] \
-        }'
+        --data @-
+    {
+        "model": "cpatonn/Qwen3-Omni-30B-A3B-Instruct-AWQ-4bit",
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    { "type": "text", "text": "What is in this audio?" },
+                    {
+                        "type": "input_audio",
+                        "input_audio": {
+                            "data": "$(base64 < "{{ AUDIO_PATH }}" | tr -d '\n')",
+                            "format": "wav"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    EOF
