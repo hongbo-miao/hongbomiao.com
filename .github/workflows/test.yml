@@ -300,7 +300,6 @@ jobs:
             dust-dds-subscriber:
               - 'data-transport/dust-dds/dust-dds-subscriber/**'
             ethereum:
-              - '.github/workflows/.lint.yml'
               - 'ethereum/**'
             flightradar24:
               - 'aerospace/flightradar24/**'
@@ -656,6 +655,8 @@ jobs:
               - 'network/udp/udp-receiver/**'
             udp-sender:
               - 'network/udp/udp-sender/**'
+            variational-autoencoder:
+              - 'generative-model/variational-autoencoder/**'
             web-cypress:
               - 'web-cypress/**'
             web:
@@ -923,6 +924,7 @@ jobs:
       transformer: ${{ steps.filter.outputs.transformer }}
       udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
+      variational-autoencoder: ${{ steps.filter.outputs.variational-autoencoder }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
       web: ${{ steps.filter.outputs.web }}
       webrtc-vad: ${{ steps.filter.outputs.webrtc-vad }}
@@ -1312,6 +1314,7 @@ jobs:
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
+      variational-autoencoder: ${{ needs.detect-changes.outputs.variational-autoencoder == 'true' }}
       webrtc-vad: ${{ needs.detect-changes.outputs.webrtc-vad == 'true' }}
 
   test-computer-vision:
