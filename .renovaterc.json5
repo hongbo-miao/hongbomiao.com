@@ -267,7 +267,7 @@
       semanticCommitScope: 'deps',
     },
     // Group Python-related packages
-    // 1) Group Python-related packages per project
+    // 1) Group Python-related packages for major, minor updates per project
     {
       groupName: 'python-related packages',
       matchPackageNames: [
@@ -275,6 +275,7 @@
         'ghcr.io/astral-sh/uv',
         'python',
       ],
+      matchUpdateTypes: ['major', 'minor'],
     },
     // 2) Group Python-related packages for digest, patch, pin updates across all projects
     {
