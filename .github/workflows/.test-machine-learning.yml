@@ -120,6 +120,9 @@ name: . Test Machine Learning
       hm-llama-index-chat-pdf:
         required: true
         type: boolean
+      hm-metaflow-greet:
+        required: true
+        type: boolean
       hm-mineru:
         required: true
         type: boolean
@@ -1477,6 +1480,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-inference/hm-optimum
+
+  metaflow-greet-test:
+    name: Metaflow (greet) | Test
+    if: ${{ inputs.workflow || inputs.hm-metaflow-greet }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: machine-learning/hm-metaflow/flows/greet/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: machine-learning/hm-metaflow/flows/greet/.python-version
+      - name: Install dependencies
+        working-directory: machine-learning/hm-metaflow/flows/greet
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/hm-metaflow/flows/greet
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: machine-learning/hm-metaflow/flows/greet
 
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
