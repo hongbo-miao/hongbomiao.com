@@ -635,10 +635,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Generative Model
 
-- **Flow Matching** - Continuous-time generative modeling technique that learns a probability flow to generate samples
-- **Diffusion Model** - Continuous-time generative modeling technique that learns to reverse a noising process to generate samples
-- **Diffusers** - Diffusion models
-- **Stable Diffusion** - Text-to-image (T2I) generation model
+- **Flow Matching** - Continuous-time generative modeling technique that learns a vector field to transport a simple distribution to a complex data distribution
+- **Variational Autoencoder (VAE)** - Latent-variable generative modeling technique that learns to map data to a probabilistic distribution and reconstruct it via an encoder-decoder architecture
+- **Diffusion Model** - Continuous-time generative modeling technique that learns to reverse a multi-step noising process to reconstruct data from Gaussian noise
+- **Stable Diffusion** - Latent diffusion model (LDM) architecture designed for high-resolution text-to-image (T2I) generation by performing the diffusion process in a compressed latent space
+- **Diffusers** - Diffusion models for image, video, and audio generation
 - **ComfyUI** - Node-based interface for diffusion model workflows
 
 ### Reinforcement Learning (RL)
