@@ -604,6 +604,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.hm-gradio.applications.classify-image
     uv run poe static-type-check-python --package=machine-learning.hm-kubeflow.pipelines.calculate
     uv run poe static-type-check-python --package=machine-learning.hm-kubeflow.pipelines.classify-mnist
+    uv run poe static-type-check-python --package=machine-learning.hm-metaflow.flows.greet
     uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.classify-mnist
     uv run poe static-type-check-python --package=machine-learning.hm-mlflow.experiments.predict-diabetes
     uv run poe static-type-check-python --package=machine-learning.hm-nvidia-modulus

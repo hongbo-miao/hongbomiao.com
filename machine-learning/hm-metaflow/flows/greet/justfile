@@ -1,0 +1,21 @@
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+dev:
+    export AWS_ACCESS_KEY_ID=minio_user && \
+    export AWS_SECRET_ACCESS_KEY=minio_passw0rd && \
+    export METAFLOW_SERVICE_URL=http://localhost:8080 && \
+    export METAFLOW_DATASTORE_SYSROOT_S3=s3://metaflow/ && \
+    export METAFLOW_S3_ENDPOINT_URL=http://localhost:9000 && \
+    export METAFLOW_DEFAULT_DATASTORE=s3 && \
+    export METAFLOW_DEFAULT_METADATA=service && \
+    uv run poe dev
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage

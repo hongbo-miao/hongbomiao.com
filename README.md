@@ -530,10 +530,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Optuna** - Hyperparameter optimization framework
 - **DVC** - Data version control
 - **Feast** - Feature store
-- **Kubeflow** - Machine learning platform
-- **TensorBoard** - Machine learning experiment tracking
-- **MLflow** - Machine learning experiment tracking
-- **Weights & Biases** - Machine learning experiment tracking
+- **Metaflow** - Machine learning orchestration
+- **Kubeflow** - Machine learning orchestration, experiment tracking, model registry, model serving
+- **TensorBoard** - Experiment tracking and visualization
+- **MLflow** - Experiment tracking, model registry, model deployment
+- **Weights & Biases** - Experiment tracking, model registry
 - **NVIDIA Data Loading Library (DALI)** - GPU-accelerated data loading and preprocessing pipeline
 - **NVIDIA Triton Inference Server** - Inference server
 - **NVIDIA Modulus** - Physics-informed machine learning framework

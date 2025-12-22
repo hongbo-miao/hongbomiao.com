@@ -1,0 +1,22 @@
+[project]
+name = "metaflow-greet"
+version = "1.0.0"
+dependencies = [
+  "metaflow==2.19.15",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.38.0",
+  "pytest-cov==7.0.0",
+  "pytest==9.0.2",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.9.0"
+
+[tool.poe.tasks]
+dev = "python src/main.py run"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"

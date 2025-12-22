@@ -1,0 +1,109 @@
+# https://docs.docker.com/reference/compose-file/
+---
+name: metaflow-development
+services:
+  metaflow-metadata:
+    image: docker.io/netflixoss/metaflow_metadata_service:v2.5.0
+    container_name: metaflow-metadata
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      MF_METADATA_DB_HOST: postgres
+      MF_METADATA_DB_PORT: 5432
+      MF_METADATA_DB_USER: metaflow_user
+      MF_METADATA_DB_PSWD: metaflow_passw0rd
+      MF_METADATA_DB_NAME: metaflow_db
+      MF_METADATA_PORT: 8080
+      MF_METADATA_HOST: 0.0.0.0
+      AWS_ACCESS_KEY_ID: minio_user
+      AWS_SECRET_ACCESS_KEY: minio_passw0rd
+    ports:
+      - '127.0.0.1:8080:8080'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  metaflow-ui:
+    image: docker.io/netflixoss/metaflow_metadata_service:v2.5.0
+    container_name: metaflow-ui
+    depends_on:
+      metaflow-metadata:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      MF_METADATA_DB_HOST: postgres
+      MF_METADATA_DB_PORT: 5432
+      MF_METADATA_DB_USER: metaflow_user
+      MF_METADATA_DB_PSWD: metaflow_passw0rd
+      MF_METADATA_DB_NAME: metaflow_db
+      MF_UI_METADATA_PORT: 8083
+      MF_UI_METADATA_HOST: 0.0.0.0
+      UI_ENABLED: 1
+      AWS_ACCESS_KEY_ID: minio_user
+      AWS_SECRET_ACCESS_KEY: minio_passw0rd
+      FEATURE_ARTIFACT_SEARCH: 1
+      FEATURE_ARTIFACT_TABLE: 1
+      METAFLOW_DEFAULT_DATASTORE: s3
+      METAFLOW_DATASTORE_SYSROOT_S3: s3://metaflow/
+      METAFLOW_S3_ENDPOINT_URL: http://minio:9000/
+    ports:
+      - '127.0.0.1:8083:8083'
+    command: ["/opt/latest/bin/python3", "-m", "services.ui_backend_service.ui_server"]
+
+  minio:
+    image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
+    container_name: metaflow-minio
+    volumes:
+      - minio-data:/data
+    environment:
+      MINIO_ROOT_USER: minio_user
+      MINIO_ROOT_PASSWORD: minio_passw0rd
+    ports:
+      - '127.0.0.1:9000:9000'
+      - '127.0.0.1:9001:9001'
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio-initialize:
+    image: docker.io/minio/mc:RELEASE.2025-08-13T08-35-41Z
+    container_name: metaflow-minio-initialize
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set myminio http://minio:9000 minio_user minio_passw0rd;
+      mc mb myminio/metaflow || true;
+      mc anonymous set download myminio/metaflow;
+      exit 0;
+      "
+  postgres:
+    image: docker.io/library/postgres:18.1-trixie
+    container_name: metaflow-postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: metaflow_user
+      POSTGRES_PASSWORD: metaflow_passw0rd
+      POSTGRES_DB: metaflow_db
+    ports:
+      - '127.0.0.1:5432:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=metaflow_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  minio-data:
+  postgres-data:

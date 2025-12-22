@@ -134,6 +134,7 @@ export default [
       'machine-learning/graph-neural-network/dataset/**/*',
       'machine-learning/graph-neural-network/wandb/**/*',
       'machine-learning/hm-autogluon/AutogluonModels/**/*',
+      'machine-learning/hm-metaflow/flows/*/.metaflow/**/*',
       'machine-learning/hm-mlflow/experiments/*/lightning_logs/**/*',
       'machine-learning/hm-mlflow/experiments/*/mlruns/**/*',
       'machine-learning/hm-mlflow/experiments/*/wandb/**/*',
