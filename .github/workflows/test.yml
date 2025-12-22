@@ -428,6 +428,8 @@ jobs:
               - 'load-testing/hm-locust/**'
             hm-marimo:
               - 'data-analytics/hm-marimo/**'
+            hm-metaflow-greet:
+              - 'machine-learning/hm-metaflow/flows/greet/**'
             hm-mineru:
               - 'data-extraction/hm-mineru/**'
             hm-mlflow-classify-mnist:
@@ -808,6 +810,7 @@ jobs:
       hm-llama-index-chat-pdf: ${{ steps.filter.outputs.hm-llama-index-chat-pdf }}
       hm-locust: ${{ steps.filter.outputs.hm-locust }}
       hm-marimo: ${{ steps.filter.outputs.hm-marimo }}
+      hm-metaflow-greet: ${{ steps.filter.outputs.hm-metaflow-greet }}
       hm-mineru: ${{ steps.filter.outputs.hm-mineru }}
       hm-mlflow-classify-mnist: ${{ steps.filter.outputs.hm-mlflow-classify-mnist }}
       hm-mlflow-predict-diabetes: ${{ steps.filter.outputs.hm-mlflow-predict-diabetes }}
@@ -1266,6 +1269,7 @@ jobs:
       hm-lightgbm: ${{ needs.detect-changes.outputs.hm-lightgbm == 'true' }}
       hm-llama-factory: ${{ needs.detect-changes.outputs.hm-llama-factory == 'true' }}
       hm-llama-index-chat-pdf: ${{ needs.detect-changes.outputs.hm-llama-index-chat-pdf == 'true' }}
+      hm-metaflow-greet: ${{ needs.detect-changes.outputs.hm-metaflow-greet == 'true' }}
       hm-mineru: ${{ needs.detect-changes.outputs.hm-mineru == 'true' }}
       hm-mlflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-mlflow-classify-mnist == 'true' }}
       hm-mlflow-predict-diabetes: ${{ needs.detect-changes.outputs.hm-mlflow-predict-diabetes == 'true' }}

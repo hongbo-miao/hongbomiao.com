@@ -100,7 +100,7 @@ services:
       POSTGRES_DB: polaris
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres_admin -p 5432 -d polaris"]
+      test: ["CMD-SHELL", "pg_isready --username=postgres_admin -p 5432 -d polaris"]
       interval: 2s
       timeout: 10s
       retries: 5
