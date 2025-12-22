@@ -37,6 +37,26 @@
         'arrow-flight',
       ],
     },
+    // Group AWS-related packages
+    // 1) Group AWS-related packages per project
+    {
+      groupName: 'aws-related packages',
+      matchPackageNames: [
+        'hashicorp/aws',
+        'hashicorp/awscc',
+      ],
+    },
+    // 2) Group AWS-related packages for digest, minor, patch, pin updates across all projects
+    {
+      groupName: 'aws-related packages - digest, minor, patch, pin updates',
+      matchPackageNames: [
+        'hashicorp/aws',
+        'hashicorp/awscc',
+      ],
+      matchUpdateTypes: ['digest', 'minor', 'patch', 'pin'],
+      additionalBranchPrefix: '',
+      semanticCommitScope: 'deps',
+    },
     // Group async-graphql-related packages
     {
       groupName: 'async-graphql-related packages',
@@ -126,6 +146,24 @@
         'llama-index-embeddings-huggingface',
         'llama-index-llms-litellm',
       ],
+    },
+    // Group Nebius-related packages
+    // 1) Group Nebius-related packages per project
+    {
+      groupName: 'nebius-related packages',
+      matchPackageNames: [
+        'hashicorp/nebius',
+      ],
+    },
+    // 2) Group Nebius-related packages for digest, minor, patch, pin updates across all projects
+    {
+      groupName: 'nebius-related packages - digest, minor, patch, pin updates',
+      matchPackageNames: [
+        'hashicorp/nebius',
+      ],
+      matchUpdateTypes: ['digest', 'minor', 'patch', 'pin'],
+      additionalBranchPrefix: '',
+      semanticCommitScope: 'deps',
     },
     // Group Node.js-related packages
     {
