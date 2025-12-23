@@ -643,6 +643,8 @@ jobs:
               - 'large-language-model-inference/speculative-decoding/**'
             stable-diffusion:
               - 'generative-model/stable-diffusion/**'
+            streaming-sortformer-diarizer:
+              - 'audio/speaker-diarization/streaming-sortformer-diarizer/**'
             surrogate-model:
               - 'scientific-computing/surrogate-model/**'
             taichi-count-primes:
@@ -918,6 +920,7 @@ jobs:
       rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
       speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
       stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
+      streaming-sortformer-diarizer: ${{ steps.filter.outputs.streaming-sortformer-diarizer }}
       surrogate-model: ${{ steps.filter.outputs.surrogate-model }}
       taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
       taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
@@ -1247,6 +1250,7 @@ jobs:
       feature-store: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
       fine-tune-whisper: ${{ needs.detect-changes.outputs.fine-tune-whisper == 'true' }}
       flow-matching: ${{ needs.detect-changes.outputs.flow-matching == 'true' }}
+      gemma: ${{ needs.detect-changes.outputs.gemma == 'true' }}
       graph-neural-network: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
       hm-autogluon: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
       hm-axolotl: ${{ needs.detect-changes.outputs.hm-axolotl == 'true' }}
@@ -1310,9 +1314,9 @@ jobs:
       qwen-vl: ${{ needs.detect-changes.outputs.qwen-vl == 'true' }}
       qwen: ${{ needs.detect-changes.outputs.qwen == 'true' }}
       rnnoise-vad: ${{ needs.detect-changes.outputs.rnnoise-vad == 'true' }}
-      gemma: ${{ needs.detect-changes.outputs.gemma == 'true' }}
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
+      streaming-sortformer-diarizer: ${{ needs.detect-changes.outputs.streaming-sortformer-diarizer == 'true' }}
       transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
       variational-autoencoder: ${{ needs.detect-changes.outputs.variational-autoencoder == 'true' }}
       webrtc-vad: ${{ needs.detect-changes.outputs.webrtc-vad == 'true' }}

@@ -660,6 +660,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Speaker Diarization
   - **Senko** - Speaker diarization
   - **Diart** - Real-time speaker diarization
+  - **Streaming Sortformer Diarizer 4spk v2.1** - Real-time speaker diarization model for up to 4 speakers using a streaming Transformer-based architecture
 - Audio Signal Analysis
   - **Librosa** - Audio signal analysis
 - Automatic Speech Recognition (ASR)
