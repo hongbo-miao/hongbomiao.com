@@ -166,17 +166,15 @@ def save_prediction_plot(
     plt.close(figure)
 
 
-def resolve_device() -> torch.device:
-    if torch.cuda.is_available():
-        return torch.device("cuda")
-    if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
-        return torch.device("mps")
-    return torch.device("cpu")
-
-
 def main() -> None:
     ode_solver = select_ode_solver(USE_ADJOINT)
-    device = resolve_device()
+    device = (
+        "cuda"
+        if torch.cuda.is_available()
+        else "mps"
+        if torch.backends.mps.is_available()
+        else "cpu"
+    )
 
     dtype = torch.float32
     true_initial_state = torch.tensor([[2.0, 0.0]], dtype=dtype, device=device)

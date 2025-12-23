@@ -24,5 +24,5 @@ if __name__ == "__main__":
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
     # Must be a 16 kHz, mono, 16-bit WAV file
-    wav_path = Path("/path/to/audio.wav")
+    wav_path = Path("data/audio.wav")
     main(wav_path)

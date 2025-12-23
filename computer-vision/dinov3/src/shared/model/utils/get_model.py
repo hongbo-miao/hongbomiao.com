@@ -19,12 +19,13 @@ def get_model(
     if cache_state is None:
         cache_state = CACHE_STATE
     if cache_state.model is None:
-        if torch.cuda.is_available():
-            device = "cuda"
-        elif torch.backends.mps.is_available():
-            device = "mps"
-        else:
-            device = "cpu"
+        device = (
+            "cuda"
+            if torch.cuda.is_available()
+            else "mps"
+            if torch.backends.mps.is_available()
+            else "cpu"
+        )
         cache_state.device = torch.device(device)
         logger.info(f"Device: {cache_state.device}")
         logger.info(f"Loading model: {model_id}")
