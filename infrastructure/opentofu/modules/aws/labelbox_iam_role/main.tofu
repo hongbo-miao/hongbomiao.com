@@ -7,7 +7,7 @@ terraform {
 }
 
 locals {
-  aws_iam_role_name_prefix = "LabelStudioRole"
+  aws_iam_role_name_prefix = "LabelboxRole"
 }
 # https://docs.labelbox.com/docs/import-aws-s3-data
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role

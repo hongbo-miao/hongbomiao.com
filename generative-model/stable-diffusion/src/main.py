@@ -15,11 +15,13 @@ logger = logging.getLogger(__name__)
 class StableDiffusionGenerator:
     @staticmethod
     def get_device() -> str:
-        if torch.cuda.is_available():
-            return "cuda"
-        if torch.backends.mps.is_available():
-            return "mps"
-        return "cpu"
+        return (
+            "cuda"
+            if torch.cuda.is_available()
+            else "mps"
+            if torch.backends.mps.is_available()
+            else "cpu"
+        )
 
     @staticmethod
     def create_pipeline(
