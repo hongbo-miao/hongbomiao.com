@@ -5,12 +5,13 @@ from torchvision import models
 def main() -> None:
     model_name = "model.pt"
 
-    if torch.cuda.is_available():
-        device = "cuda"
-    elif torch.backends.mps.is_available():
-        device = "mps"
-    else:
-        device = "cpu"
+    device = (
+        "cuda"
+        if torch.cuda.is_available()
+        else "mps"
+        if torch.backends.mps.is_available()
+        else "cpu"
+    )
 
     resnet50 = models.resnet50(pretrained=True)
     resnet50 = resnet50.eval()
