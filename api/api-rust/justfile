@@ -13,7 +13,7 @@ check:
 
 set-up:
     mkcert -cert-file certificates/development.pem -key-file certificates/development-key.pem localhost 127.0.0.1 ::1
-    docker run --publish=5432:5432 --name=hm-postgres --env=POSTGRES_PASSWORD=passw0rd --detach docker.io/supabase/postgres:17.6.1.040
+    docker run --publish=0.0.0.0:5432:5432 --name=hm-postgres --env=POSTGRES_PASSWORD=passw0rd --detach docker.io/supabase/postgres:17.6.1.040
 
 migrate-up:
     migrate -database "{{ POSTGRES_URL }}" -path migrations up
@@ -50,7 +50,7 @@ docker-push:
     docker push ghcr.io/hongbo-miao/hm-api-rust:latest
 
 docker-run:
-    docker run --publish=36147:36147 --name=hm-api-rust --rm ghcr.io/hongbo-miao/hm-api-rust:latest
+    docker run --publish=0.0.0.0:36147:36147 --name=hm-api-rust --rm ghcr.io/hongbo-miao/hm-api-rust:latest
 
 brew-install-opencv:
     brew install opencv

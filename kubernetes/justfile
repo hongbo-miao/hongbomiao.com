@@ -538,11 +538,11 @@ dgraph-install-standalone:
         --interactive \
         --tty \
         --name=dgraph \
-        --publish=5080:5080 \
-        --publish=6080:6080 \
-        --publish=8080:8080 \
-        --publish=9080:9080 \
-        --publish=8000:8000 \
+        --publish=0.0.0.0:5080:5080 \
+        --publish=0.0.0.0:6080:6080 \
+        --publish=0.0.0.0:8080:8080 \
+        --publish=0.0.0.0:9080:9080 \
+        --publish=0.0.0.0:8000:8000 \
         --volume=~/dgraph:/dgraph \
         dgraph/standalone
 

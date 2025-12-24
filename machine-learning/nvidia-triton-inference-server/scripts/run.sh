@@ -12,9 +12,9 @@ cd server/docs/examples
 # Start Triton server
 docker run \
   --gpus=1 \
-  --publish=8000:8000 \
-  --publish=8001:8001 \
-  --publish=8002:8002 \
+  --publish=0.0.0.0:8000:8000 \
+  --publish=0.0.0.0:8001:8001 \
+  --publish=0.0.0.0:8002:8002 \
   --volume="${PWD}/model_repository:/models" \
   --rm \
   "nvcr.io/nvidia/tritonserver:${TRITON_SERVER_VERSION}-py3" \

@@ -7,9 +7,9 @@ run:
         --gpus=all \
         --ipc=host \
         --volume="$HOME/.cache/huggingface:/root/.cache/huggingface" \
-        --publish=8000:8000 \
+        --publish=0.0.0.0:8000:8000 \
         --entrypoint=/bin/bash \
-        vllm/vllm-openai:v0.13.0 \
+        docker.io/vllm/vllm-openai:v0.13.0 \
             -c "pip install vllm[audio] && python3 -m vllm.entrypoints.openai.api_server \
                 --tensor-parallel-size=2 \
                 --gpu-memory-utilization=0.9 \

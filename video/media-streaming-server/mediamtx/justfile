@@ -1,12 +1,15 @@
 run:
-    docker run --rm --interactive --tty \
+    docker run \
+        --rm \
+        --interactive \
+        --tty \
         --volume="$(pwd)/mediamtx.yml:/mediamtx.yml" \
-        --publish=8554:8554 \
-        --publish=1935:1935 \
-        --publish=8888:8888 \
-        --publish=8889:8889 \
-        --publish=8890:8890/udp \
-        --publish=8189:8189/udp \
+        --publish=0.0.0.0:8554:8554 \
+        --publish=0.0.0.0:1935:1935 \
+        --publish=0.0.0.0:8888:8888 \
+        --publish=0.0.0.0:8889:8889 \
+        --publish=0.0.0.0:8890:8890/udp \
+        --publish=0.0.0.0:8189:8189/udp \
         bluenviron/mediamtx:1.15.4
 
 publish:

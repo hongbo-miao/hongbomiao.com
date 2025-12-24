@@ -7,7 +7,8 @@ Requires=docker.service
 [Service]
 Type=simple
 ExecStartPre=-/usr/bin/docker rm --force %N
-ExecStart=/usr/bin/docker run --rm \
+ExecStart=/usr/bin/docker run \
+  --rm \
   --name=%N \
   --volume=/var/run/docker.sock:/var/run/docker.sock \
   --env-file={{ github_actions_runner_env_file }} \

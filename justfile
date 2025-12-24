@@ -3,7 +3,7 @@ docker-sign-in:
     docker login
 
 docker-sh:
-    docker run --interactive --tty --rm hm-graphql-server sh
+    docker run --rm --interactive --tty hm-graphql-server sh
 
 docker-ps:
     docker ps
