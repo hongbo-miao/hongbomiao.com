@@ -584,7 +584,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=large-language-model-evaluation.hm-deepeval
     uv run poe static-type-check-python --package=large-language-model-inference.hm-mlx-lm
     uv run poe static-type-check-python --package=large-language-model-inference.hm-optimum
-    uv run poe static-type-check-python --package=large-language-model-inference.hm-sglang
+    uv run poe static-type-check-python --package=large-language-model-inference.hm-sglang.hm-sglang
     uv run poe static-type-check-python --package=large-language-model-inference.hm-transformers
     uv run poe static-type-check-python --package=large-language-model-inference.kv-caching
     uv run poe static-type-check-python --package=large-language-model-inference.speculative-decoding
