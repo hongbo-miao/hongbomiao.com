@@ -3,7 +3,7 @@ docker-build:
     docker build --file=data-storage/hm-pgbackrest/Dockerfile --tag=ghcr.io/hongbo-miao/hm-pgbackrest:latest .
 
 docker-run:
-    docker run --interactive --tty --rm --entrypoint=sh ghcr.io/hongbo-miao/hm-pgbackrest:latest
+    docker run --rm --interactive --tty --entrypoint=sh ghcr.io/hongbo-miao/hm-pgbackrest:latest
 
 set-up:
     sh scripts/ubuntu/set_up.sh

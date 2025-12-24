@@ -2,7 +2,7 @@ run:
     docker run \
         --rm \
         --name=icecast2 \
-        --publish=52231:8000 \
+        --publish=0.0.0.0:52231:8000 \
         --volume="$(pwd)/icecast.xml:/etc/icecast2/icecast.xml" \
         docker.io/pltnk/icecast2:latest
 

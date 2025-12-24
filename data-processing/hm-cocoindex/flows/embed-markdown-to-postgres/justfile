@@ -16,7 +16,7 @@ test-coverage:
 
 postgres:
     docker run \
-        --publish=5432:5432 \
+        --publish=0.0.0.0:5432:5432 \
         --name=cocoindex-postgres \
         --env=POSTGRES_DB=cocoindex_db \
         --env=POSTGRES_USER=cocoindex_user \
