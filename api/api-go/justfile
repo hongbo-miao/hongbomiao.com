@@ -70,7 +70,7 @@ docker-push-config-loader:
     docker push ghcr.io/hongbo-miao/hm-config-loader:latest
 
 docker-run-config-loader:
-    docker run --publish=26660:26660 --name=hm-config-loader --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-config-loader
+    docker run --publish=0.0.0.0:26660:26660 --name=hm-config-loader --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-config-loader
 
 docker-build-decision-logger:
     cd ../.. && \
@@ -80,7 +80,7 @@ docker-push-decision-logger:
     docker push ghcr.io/hongbo-miao/hm-decision-logger:latest
 
 docker-run-decision-logger:
-    docker run --publish=41797:41797 --name=hm-decision-logger --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-decision-logger
+    docker run --publish=0.0.0.0:41797:41797 --name=hm-decision-logger --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-decision-logger
 
 docker-build-graphql-server:
     cd ../.. && \
@@ -90,7 +90,7 @@ docker-push-graphql-server:
     docker push ghcr.io/hongbo-miao/hm-graphql-server:latest
 
 docker-run-graphql-server:
-    docker run --publish=31800:31800 --name=hm-graphql-server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-graphql-server
+    docker run --publish=0.0.0.0:31800:31800 --name=hm-graphql-server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-graphql-server
 
 docker-build-grpc-server:
     cd ../.. && \
@@ -100,4 +100,4 @@ docker-push-grpc-server:
     docker push ghcr.io/hongbo-miao/hm-grpc-server:latest
 
 docker-run-grpc-server:
-    docker run --publish=45237:45237 --name=hm-grpc-server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-grpc-server
+    docker run --publish=0.0.0.0:45237:45237 --name=hm-grpc-server --rm --env=APP_ENV=production ghcr.io/hongbo-miao/hm-grpc-server

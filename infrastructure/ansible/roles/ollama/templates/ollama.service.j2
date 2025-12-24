@@ -10,7 +10,7 @@ ExecStartPre=/usr/bin/docker volume create {{ ollama_volume_name }}
 ExecStartPre=-/usr/bin/docker rm --force {{ ollama_container_name }}
 ExecStart=/usr/bin/docker run \
   --name={{ ollama_container_name }} \
-  --publish={{ ollama_port }}:11434 \
+  --publish=0.0.0.0:{{ ollama_port }}:11434 \
   --volume={{ ollama_volume_name }}:{{ ollama_volume_mount }} \
   --gpus {{ ollama_gpu_devices }} \
   --detach=false \

@@ -6,7 +6,7 @@ run:
         --gpus=all \
         --shm-size=32g \
         --volume="$HOME/.cache/huggingface:/root/.cache/huggingface" \
-        --publish=8000:8000 \
+        --publish=0.0.0.0:8000:8000 \
         --ipc=host \
         docker.io/lmsysorg/sglang:v0.5.6.post2 \
             python3 -m sglang.launch_server \
