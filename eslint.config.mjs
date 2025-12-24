@@ -104,7 +104,7 @@ export default [
       'data-visualization/grafana/hm-panel-plugin/.config/**/*',
       'data-visualization/grafana/hm-panel-plugin/dist/**/*',
       'data-visualization/metabase/plugins/**/*',
-      'desktop-qt/CMakeLists.txt.user',
+      'desktop/desktop-qt/CMakeLists.txt.user',
       'embedding/hm-imagebind/.checkpoints/**/*',
       'hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/VeriStandZeroMQBridge/bin/**/*',
       'hardware-in-the-loop/national-instruments/veristand/VeriStandZeroMQBridge/VeriStandZeroMQBridge/obj/**/*',
