@@ -1269,17 +1269,17 @@ jobs:
         with:
           version: 0.9.18
           enable-cache: true
-          cache-dependency-glob: large-language-model-inference/hm-sglang/uv.lock
+          cache-dependency-glob: large-language-model-inference/hm-sglang/hm-sglang/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-inference/hm-sglang/.python-version
+          python-version-file: large-language-model-inference/hm-sglang/hm-sglang/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-inference/hm-sglang
+        working-directory: large-language-model-inference/hm-sglang/hm-sglang
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-inference/hm-sglang
+        working-directory: large-language-model-inference/hm-sglang/hm-sglang
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1287,7 +1287,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-inference/hm-sglang
+          directory: large-language-model-inference/hm-sglang/hm-sglang
 
   mlx-lm-test:
     name: MLX LM | Test
