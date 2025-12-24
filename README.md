@@ -59,7 +59,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 > [!NOTE]
 > The diagram here may take a moment to load. Please wait patiently.
 
-![Architecture](https://github.com/user-attachments/assets/ebace435-5c08-4599-9486-bedf06a21ffa)
+![Architecture](https://github.com/user-attachments/assets/c20a6b14-1ec6-4e7b-8b61-a3cbf656cdbd)
 
 # 🧱 Tech Stack
 
@@ -171,10 +171,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **jwt-go** - JSON Web Token (JWT)
 - **gin-contrib/cors** - Cross-Origin Resource Sharing (CORS)
 - **opa** - Open Policy Agent
-- **dgo** - Dgraph client
-- **minio-go** - MinIO client
-- **go-redis** - Redis client
 - **pgx** - PostgreSQL driver
+- **dgo** - Dgraph client
+- **go-redis** - Redis client
+- **minio-go** - MinIO client
 - **Resty** - HTTP client
 - **Squirrel** - SQL query builder
 - **apm-agent-go** - Application performance monitoring (APM) agent
@@ -380,8 +380,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Loki** - Log aggregation system
 - **DuckDB** - Embedded analytical SQL database
 - **RocksDB** - Embedded key-value store
-- **Redis** - Distributed in-memory key-value store
-  - **Valkey** - Fork of Redis
+- **Valkey** - Distributed in-memory key-value store
 - **Apache Cassandra** - Distributed wide-column NoSQL database
 - **Faiss** - Vector search and similarity library
 - **LanceDB** - Embedded vector database
@@ -389,7 +388,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Chroma** - Embedded and distributed vector database
 - **Dgraph** - Distributed graph database
 - **Elasticsearch** - Distributed document-oriented search engine
-- **MinIO** - Object storage
+- **RustFS** - Distributed, high-performance object storage system
 - **Apache ZooKeeper** - Distributed coordination system
 - **Apache Hadoop** - Software utility collection
   - **Apache Hadoop HDFS (Distributed File System)** - Distributed file system
