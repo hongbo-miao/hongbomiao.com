@@ -29,4 +29,4 @@ docker-push:
     docker push "{{ PRODUCTION_DOCKER_IMAGE_TAG }}"
 
 docker-run:
-    docker run --publish=35903:35903 --name=hm-api-python --rm "{{ PRODUCTION_DOCKER_IMAGE_TAG }}"
+    docker run --publish=0.0.0.0:35903:35903 --name=hm-api-python --rm "{{ PRODUCTION_DOCKER_IMAGE_TAG }}"

@@ -3,7 +3,7 @@ trino-catalog-check:
     cat /etc/trino/catalog/postgresql.properties
 
 trino-docker-run:
-    docker run --publish=44116:8080 --name=hm-trino trinodb/trino
+    docker run --publish=0.0.0.0:44116:8080 --name=hm-trino trinodb/trino
 
 trino-docker-remove:
     docker rm hm-trino
