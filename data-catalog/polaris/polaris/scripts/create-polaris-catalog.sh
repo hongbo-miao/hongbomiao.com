@@ -6,10 +6,10 @@ POLARIS_PORT="${POLARIS_PORT:-8181}"
 CLIENT_ID="${CLIENT_ID:-root}"
 CLIENT_SECRET="${CLIENT_SECRET:-polaris_passw0rd}"
 CATALOG_NAME="${CATALOG_NAME:-warehouse}"
-S3_BUCKET_NAME="${S3_BUCKET_NAME:-warehouse}"
-S3_ENDPOINT="${S3_ENDPOINT:-http://minio:9000}"
-S3_ACCESS_KEY="${S3_ACCESS_KEY:-minio_admin}"
-S3_SECRET_KEY="${S3_SECRET_KEY:-minio_passw0rd}"
+S3_BUCKET_NAME="${S3_BUCKET_NAME:-iceberg-bucket}"
+S3_ENDPOINT="${S3_ENDPOINT:-http://rustfs:9000}"
+S3_ACCESS_KEY="${S3_ACCESS_KEY:-rustfs_admin}"
+S3_SECRET_KEY="${S3_SECRET_KEY:-rustfs_passw0rd}"
 S3_REGION="${S3_REGION:-us-west-2}"
 
 echo "Waiting for Polaris to be ready..."
@@ -49,7 +49,8 @@ CATALOG_RESPONSE=$(curl --silent --write-out "\n%{http_code}" --request POST "ht
       \"storageType\": \"S3\",
       \"allowedLocations\": [\"s3://${S3_BUCKET_NAME}\"],
       \"endpointInternal\": \"${S3_ENDPOINT}\",
-      \"pathStyleAccess\": true
+      \"pathStyleAccess\": true,
+      \"stsUnavailable\": true
     }
   }")
 

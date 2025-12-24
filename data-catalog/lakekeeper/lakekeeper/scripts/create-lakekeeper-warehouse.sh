@@ -5,10 +5,10 @@ LAKEKEEPER_HOST="${LAKEKEEPER_HOST:-lakekeeper}"
 LAKEKEEPER_PORT="${LAKEKEEPER_PORT:-8181}"
 WAREHOUSE_NAME="${WAREHOUSE_NAME:-warehouse}"
 PROJECT_ID="${PROJECT_ID:-00000000-0000-0000-0000-000000000000}"
-S3_BUCKET_NAME="${S3_BUCKET_NAME:-warehouse}"
-S3_ENDPOINT="${S3_ENDPOINT:-http://minio:9000}"
-S3_ACCESS_KEY="${S3_ACCESS_KEY:-minio_admin}"
-S3_SECRET_KEY="${S3_SECRET_KEY:-minio_passw0rd}"
+S3_BUCKET_NAME="${S3_BUCKET_NAME:-iceberg-bucket}"
+S3_ENDPOINT="${S3_ENDPOINT:-http://rustfs:9000}"
+S3_ACCESS_KEY="${S3_ACCESS_KEY:-rustfs_admin}"
+S3_SECRET_KEY="${S3_SECRET_KEY:-rustfs_passw0rd}"
 S3_REGION="${S3_REGION:-us-west-2}"
 
 echo "Waiting for Lakekeeper to be ready..."
@@ -33,7 +33,7 @@ WAREHOUSE_RESPONSE=$(curl --silent --write-out "\n%{http_code}" --request POST "
       \"region\": \"${S3_REGION}\",
       \"path-style-access\": true,
       \"flavor\": \"minio\",
-      \"sts-enabled\": true
+      \"sts-enabled\": false
     },
     \"storage-credential\": {
       \"type\": \"s3\",
