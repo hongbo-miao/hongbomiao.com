@@ -2,35 +2,37 @@
 ---
 name: polaris-development
 services:
-  minio:
-    image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
-    container_name: minio
+  rustfs:
+    image: docker.io/rustfs/rustfs:1.0.0-alpha.76
+    container_name: rustfs
     volumes:
-      - minio-data:/data
+      - rustfs-data:/data
     environment:
-      MINIO_ROOT_USER: minio_admin
-      MINIO_ROOT_PASSWORD: minio_passw0rd
+      RUSTFS_ACCESS_KEY: rustfs_admin
+      RUSTFS_SECRET_KEY: rustfs_passw0rd
     ports:
       - '127.0.0.1:9000:9000'
       - '127.0.0.1:9001:9001'
-    command: server /data --console-address ":9001"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mc", "ready", "local"]
+      test: ["CMD", "curl", "--fail", "http://localhost:9000/health"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  minio-initialize:
-    image: docker.io/minio/mc:RELEASE.2025-08-13T08-35-41Z
-    container_name: minio-initialize
+  rustfs-initialize:
+    image: docker.io/amazon/aws-cli:2.32.23
+    container_name: rustfs-initialize
     depends_on:
-      minio:
+      rustfs:
         condition: service_healthy
+    environment:
+      AWS_ACCESS_KEY_ID: rustfs_admin
+      AWS_SECRET_ACCESS_KEY: rustfs_passw0rd
+      AWS_DEFAULT_REGION: us-west-2
     entrypoint: >
       /bin/sh -c "
-      mc alias set hm_minio http://minio:9000 minio_admin minio_passw0rd;
-      mc mb hm_minio/warehouse --ignore-existing;
+      aws --endpoint-url http://rustfs:9000 s3 mb s3://iceberg-bucket || true;
       exit 0;
       "
     restart: "no"
@@ -39,15 +41,15 @@ services:
     image: docker.io/apache/polaris:1.2.0-incubating
     container_name: polaris
     depends_on:
-      minio:
+      rustfs:
         condition: service_healthy
       polaris-bootstrap:
         condition: service_completed_successfully
     environment:
       AWS_REGION: us-west-2
-      AWS_ACCESS_KEY_ID: minio_admin
-      AWS_SECRET_ACCESS_KEY: minio_passw0rd
-      AWS_ENDPOINT_URL_S3: http://minio:9000
+      AWS_ACCESS_KEY_ID: rustfs_admin
+      AWS_SECRET_ACCESS_KEY: rustfs_passw0rd
+      AWS_ENDPOINT_URL_S3: http://rustfs:9000
       POLARIS_PERSISTENCE_TYPE: relational-jdbc
       QUARKUS_DATASOURCE_USERNAME: postgres_admin
       QUARKUS_DATASOURCE_PASSWORD: postgres_passw0rd
@@ -59,8 +61,8 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8182/q/health"]
       interval: 10s
       timeout: 5s
-      retries: 5
-      start_period: 30s
+      retries: 20
+      start_period: 180s
 
   polaris-bootstrap:
     image: docker.io/apache/polaris-admin-tool:1.2.0-incubating
@@ -80,7 +82,7 @@ services:
     image: docker.io/curlimages/curl:8.17.0
     container_name: polaris-initialize
     depends_on:
-      minio-initialize:
+      rustfs-initialize:
         condition: service_completed_successfully
       polaris:
         condition: service_healthy
@@ -136,5 +138,5 @@ services:
     restart: "no"
 
 volumes:
-  minio-data:
+  rustfs-data:
   polaris-postgres-data:

@@ -10,7 +10,7 @@ services:
         condition: service_completed_successfully
       lakekeeper-postgres:
         condition: service_healthy
-      minio:
+      rustfs:
         condition: service_healthy
     environment:
       LAKEKEEPER__PG_ENCRYPTION_KEY: lakekeeper_secr3t
@@ -57,7 +57,7 @@ services:
         condition: service_healthy
       lakekeeper-bootstrap:
         condition: service_completed_successfully
-      minio-initialize:
+      rustfs-initialize:
         condition: service_completed_successfully
     volumes:
       - ./lakekeeper/scripts/create-lakekeeper-warehouse.sh:/create-lakekeeper-warehouse.sh:ro
@@ -94,35 +94,37 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
-  minio:
-    image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
-    container_name: minio
+  rustfs:
+    image: docker.io/rustfs/rustfs:1.0.0-alpha.76
+    container_name: rustfs
     volumes:
-      - minio-data:/data
+      - rustfs-data:/data
     environment:
-      MINIO_ROOT_USER: minio_admin
-      MINIO_ROOT_PASSWORD: minio_passw0rd
+      RUSTFS_ACCESS_KEY: rustfs_admin
+      RUSTFS_SECRET_KEY: rustfs_passw0rd
     ports:
       - '127.0.0.1:9000:9000'
       - '127.0.0.1:9001:9001'
-    command: server /data --console-address ":9001"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mc", "ready", "local"]
+      test: ["CMD", "curl", "--fail", "http://localhost:9000/health"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  minio-initialize:
-    image: docker.io/minio/mc:RELEASE.2025-08-13T08-35-41Z
-    container_name: minio-initialize
+  rustfs-initialize:
+    image: docker.io/amazon/aws-cli:2.32.23
+    container_name: rustfs-initialize
     depends_on:
-      minio:
+      rustfs:
         condition: service_healthy
+    environment:
+      AWS_ACCESS_KEY_ID: rustfs_admin
+      AWS_SECRET_ACCESS_KEY: rustfs_passw0rd
+      AWS_DEFAULT_REGION: us-west-2
     entrypoint: >
       /bin/sh -c "
-      mc alias set hm_minio http://minio:9000 minio_admin minio_passw0rd;
-      mc mb hm_minio/warehouse --ignore-existing;
+      aws --endpoint-url http://rustfs:9000 s3 mb s3://iceberg-bucket || true;
       exit 0;
       "
     restart: "no"
@@ -157,5 +159,5 @@ services:
     restart: "no"
 
 volumes:
-  minio-data:
+  rustfs-data:
   lakekeeper-postgres-data:
