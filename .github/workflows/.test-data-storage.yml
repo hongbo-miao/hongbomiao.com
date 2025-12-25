@@ -45,11 +45,14 @@ name: . Test Data Storage
       prometheus:
         required: true
         type: boolean
+      turso:
+        required: true
+        type: boolean
 
 jobs:
-  delta-lake-read-delta-lake-by-amazon-athena-test:
-    name: Delta Lake (read-delta-lake-by-amazon-athena) | Test
-    if: ${{ inputs.workflow || inputs.delta-lake-read-delta-lake-by-amazon-athena }}
+  turso-test:
+    name: Turso | Test
+    if: ${{ inputs.workflow || inputs.turso }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -60,17 +63,17 @@ jobs:
         with:
           version: 0.9.18
           enable-cache: true
-          cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-amazon-athena/uv.lock
+          cache-dependency-glob: data-storage/turso/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: data-storage/delta-lake/read-delta-lake-by-amazon-athena/.python-version
+          python-version-file: data-storage/turso/.python-version
       - name: Install dependencies
-        working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+        working-directory: data-storage/turso
         run: |
           uv sync --dev
       - name: Test
-        working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+        working-directory: data-storage/turso
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -78,73 +81,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
-
-  delta-lake-read-delta-lake-by-trino-test:
-    name: Delta Lake (read-delta-lake-by-trino) | Test
-    if: ${{ inputs.workflow || inputs.delta-lake-read-delta-lake-by-trino }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.18
-          enable-cache: true
-          cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-trino/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: data-storage/delta-lake/read-delta-lake-by-trino/.python-version
-      - name: Install dependencies
-        working-directory: data-storage/delta-lake/read-delta-lake-by-trino
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-storage/delta-lake/read-delta-lake-by-trino
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: data-storage/delta-lake/read-delta-lake-by-trino
-
-  delta-lake-write-to-delta-lake-test:
-    name: Delta Lake (write-to-delta-lake) | Test
-    if: ${{ inputs.workflow || inputs.delta-lake-write-to-delta-lake }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.18
-          enable-cache: true
-          cache-dependency-glob: data-storage/delta-lake/write-to-delta-lake/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: data-storage/delta-lake/write-to-delta-lake/.python-version
-      - name: Install dependencies
-        working-directory: data-storage/delta-lake/write-to-delta-lake
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: data-storage/delta-lake/write-to-delta-lake
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: data-storage/delta-lake/write-to-delta-lake
+          directory: data-storage/turso
 
   duckdb-query-duckdb-test:
     name: DuckDB (query-duckdb) | Test
@@ -277,6 +214,105 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: data-storage/hm-duckdb/query-protobuf
+
+  delta-lake-read-delta-lake-by-amazon-athena-test:
+    name: Delta Lake (read-delta-lake-by-amazon-athena) | Test
+    if: ${{ inputs.workflow || inputs.delta-lake-read-delta-lake-by-amazon-athena }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-amazon-athena/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: data-storage/delta-lake/read-delta-lake-by-amazon-athena/.python-version
+      - name: Install dependencies
+        working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-storage/delta-lake/read-delta-lake-by-amazon-athena
+
+  delta-lake-read-delta-lake-by-trino-test:
+    name: Delta Lake (read-delta-lake-by-trino) | Test
+    if: ${{ inputs.workflow || inputs.delta-lake-read-delta-lake-by-trino }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: data-storage/delta-lake/read-delta-lake-by-trino/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: data-storage/delta-lake/read-delta-lake-by-trino/.python-version
+      - name: Install dependencies
+        working-directory: data-storage/delta-lake/read-delta-lake-by-trino
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/delta-lake/read-delta-lake-by-trino
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-storage/delta-lake/read-delta-lake-by-trino
+
+  delta-lake-write-to-delta-lake-test:
+    name: Delta Lake (write-to-delta-lake) | Test
+    if: ${{ inputs.workflow || inputs.delta-lake-write-to-delta-lake }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: data-storage/delta-lake/write-to-delta-lake/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: data-storage/delta-lake/write-to-delta-lake/.python-version
+      - name: Install dependencies
+        working-directory: data-storage/delta-lake/write-to-delta-lake
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: data-storage/delta-lake/write-to-delta-lake
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: data-storage/delta-lake/write-to-delta-lake
 
   lance-test:
     name: Lance | Test
