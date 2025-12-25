@@ -561,6 +561,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Masked Language Model (MLM)
   - **ModernBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), Flash Attention, GeGLU activations, and a context length of 8,192 tokens.
   - **NeoBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.
+- State Space Model (SSM)
+  - **Mamba 2** - State space model architecture for efficient sequence modeling with linear-time complexity
 - Embedding
   - **Model2Vec** - Fast static text embeddings distilled from Sentence Transformers
 - Large Language Model (LLM) Training
