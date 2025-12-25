@@ -201,6 +201,9 @@ name: . Test Machine Learning
       kv-caching:
         required: true
         type: boolean
+      mamba2:
+        required: true
+        type: boolean
       model-context-protocol:
         required: true
         type: boolean
@@ -2476,6 +2479,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: machine-learning/transformer
+
+  mamba2-test:
+    name: Mamba 2 | Test
+    if: ${{ inputs.workflow || inputs.mamba2 }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: state-space-model/mamba2/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: state-space-model/mamba2/.python-version
+      - name: Install dependencies
+        working-directory: state-space-model/mamba2
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: state-space-model/mamba2
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: state-space-model/mamba2
 
   hyperparameter-optimization-test:
     name: Hyperparameter Optimization | Test
