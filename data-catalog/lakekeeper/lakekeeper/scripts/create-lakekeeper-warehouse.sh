@@ -1,15 +1,14 @@
 #!/bin/sh
 set -e
 
-LAKEKEEPER_HOST="${LAKEKEEPER_HOST:-lakekeeper}"
-LAKEKEEPER_PORT="${LAKEKEEPER_PORT:-8181}"
-WAREHOUSE_NAME="${WAREHOUSE_NAME:-warehouse}"
-PROJECT_ID="${PROJECT_ID:-00000000-0000-0000-0000-000000000000}"
-S3_BUCKET_NAME="${S3_BUCKET_NAME:-iceberg-bucket}"
-S3_ENDPOINT="${S3_ENDPOINT:-http://rustfs:9000}"
-S3_ACCESS_KEY="${S3_ACCESS_KEY:-rustfs_admin}"
-S3_SECRET_KEY="${S3_SECRET_KEY:-rustfs_passw0rd}"
-S3_REGION="${S3_REGION:-us-west-2}"
+LAKEKEEPER_HOST="lakekeeper"
+LAKEKEEPER_PORT="8181"
+WAREHOUSE_NAME="iot-warehouse"
+S3_BUCKET_NAME="iceberg-bucket"
+S3_ENDPOINT="http://rustfs:9000"
+S3_ACCESS_KEY="rustfs_admin"
+S3_SECRET_KEY="rustfs_passw0rd"
+S3_REGION="us-west-2"
 
 echo "Waiting for Lakekeeper to be ready..."
 until curl --silent "http://${LAKEKEEPER_HOST}:${LAKEKEEPER_PORT}/health" > /dev/null 2>&1; do
@@ -19,20 +18,18 @@ done
 echo "Lakekeeper is ready!"
 
 echo "Creating warehouse '${WAREHOUSE_NAME}'..."
+# https://docs.lakekeeper.io/docs/latest/storage/#configuration-parameters
 WAREHOUSE_RESPONSE=$(curl --silent --write-out "\n%{http_code}" --request POST "http://${LAKEKEEPER_HOST}:${LAKEKEEPER_PORT}/management/v1/warehouse" \
   --header "Content-Type: application/json" \
   --data "{
     \"warehouse-name\": \"${WAREHOUSE_NAME}\",
-    \"project-id\": \"${PROJECT_ID}\",
     \"storage-profile\": {
       \"type\": \"s3\",
       \"bucket\": \"${S3_BUCKET_NAME}\",
-      \"key-prefix\": \"\",
-      \"assume-role-arn\": null,
       \"endpoint\": \"${S3_ENDPOINT}\",
       \"region\": \"${S3_REGION}\",
       \"path-style-access\": true,
-      \"flavor\": \"minio\",
+      \"flavor\": \"s3-compat\",
       \"sts-enabled\": false
     },
     \"storage-credential\": {

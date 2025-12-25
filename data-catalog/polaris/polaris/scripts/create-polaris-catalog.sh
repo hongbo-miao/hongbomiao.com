@@ -1,16 +1,13 @@
 #!/bin/sh
 set -e
 
-POLARIS_HOST="${POLARIS_HOST:-polaris}"
-POLARIS_PORT="${POLARIS_PORT:-8181}"
-CLIENT_ID="${CLIENT_ID:-root}"
-CLIENT_SECRET="${CLIENT_SECRET:-polaris_passw0rd}"
-CATALOG_NAME="${CATALOG_NAME:-warehouse}"
-S3_BUCKET_NAME="${S3_BUCKET_NAME:-iceberg-bucket}"
-S3_ENDPOINT="${S3_ENDPOINT:-http://rustfs:9000}"
-S3_ACCESS_KEY="${S3_ACCESS_KEY:-rustfs_admin}"
-S3_SECRET_KEY="${S3_SECRET_KEY:-rustfs_passw0rd}"
-S3_REGION="${S3_REGION:-us-west-2}"
+POLARIS_HOST="polaris"
+POLARIS_PORT="8181"
+CLIENT_ID="root"
+CLIENT_SECRET="polaris_passw0rd"
+CATALOG_NAME="iot-catalog"
+S3_BUCKET_NAME="iceberg-bucket"
+S3_ENDPOINT="http://rustfs:9000"
 
 echo "Waiting for Polaris to be ready..."
 until curl --silent "http://${POLARIS_HOST}:8182/q/health" > /dev/null 2>&1; do
