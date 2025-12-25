@@ -362,6 +362,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Database, Data Warehouse, Data Lakehouse
 
+- **SQLite** - Embedded relational SQL database
+  - **Turso** - Edge-hosted distributed database
+- **DuckDB** - Embedded analytical SQL database
 - **PostgreSQL** - Object-relational database
   - **Patroni** - PostgreSQL high-availability (HA) template
   - **Postgres Operator** - PostgreSQL cluster provisioning
@@ -378,7 +381,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **InfluxDB** - Distributed time-series database
 - **VictoriaMetrics** - Distributed time-series database
 - **Loki** - Log aggregation system
-- **DuckDB** - Embedded analytical SQL database
 - **RocksDB** - Embedded key-value store
 - **Valkey** - Distributed in-memory key-value store
 - **Apache Cassandra** - Distributed wide-column NoSQL database
