@@ -405,6 +405,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Snowflake** - Data warehouse
 - **Odoo** - Enterprise resource planning (ERP) and customer relationship management (CRM)
 - **golang-migrate/migrate** - Database migrations
+- **Bytebase** - Database DevOps and CI/CD
 
 ### Data Catalog
 

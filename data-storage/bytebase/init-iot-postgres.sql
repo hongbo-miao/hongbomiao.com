@@ -1,0 +1,2 @@
+CREATE USER bytebase WITH ENCRYPTED PASSWORD 'bytebase_passw0rd';
+ALTER USER bytebase WITH SUPERUSER;

@@ -1,0 +1,56 @@
+# https://docs.docker.com/reference/compose-file/
+---
+name: bytebase-development
+services:
+  bytebase-postgres:
+    image: docker.io/library/postgres:18.1-trixie
+    container_name: bytebase-postgres
+    volumes:
+      - bytebase-postgres-data:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: bytebase_admin
+      POSTGRES_PASSWORD: bytebase_passw0rd
+      POSTGRES_DB: bytebase
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=bytebase_admin -p 5432 -d bytebase"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+  iot-postgres:
+    image: docker.io/library/postgres:18.1-trixie
+    container_name: iot-postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - iot-postgres-data:/var/lib/postgresql
+      - ./init-iot-postgres.sql:/docker-entrypoint-initdb.d/init-iot-postgres.sql:ro
+    environment:
+      POSTGRES_USER: postgres_admin
+      POSTGRES_PASSWORD: postgres_passw0rd
+      POSTGRES_DB: iot_db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=postgres_admin -p 5432 -d iot_db"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+  bytebase:
+    image: docker.io/bytebase/bytebase:3.13.0
+    container_name: bytebase
+    init: true
+    environment:
+      PG_URL: postgresql://bytebase_admin:bytebase_passw0rd@bytebase-postgres:5432/bytebase
+    ports:
+      - "8080:8080"
+    depends_on:
+      bytebase-postgres:
+        condition: service_healthy
+      iot-postgres:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  bytebase-postgres-data:
+  iot-postgres-data:
