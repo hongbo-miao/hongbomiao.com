@@ -549,6 +549,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=data-storage.hm-lancedb
     uv run poe static-type-check-python --package=data-storage.hm-protobuf
     uv run poe static-type-check-python --package=data-storage.lance
+    uv run poe static-type-check-python --package=data-storage.turso
     uv run poe static-type-check-python --package=data-transport.arrow-flight.arrow-flight-client
     uv run poe static-type-check-python --package=data-transport.rti-connext-dds
     uv run poe static-type-check-python --package=data-visualization.grafana.hm-dashboard
