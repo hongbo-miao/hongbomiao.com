@@ -1,7 +1,7 @@
 import logging
 
 import torch
-from shared.services.flow_matching_model import FlowMatchingModel
+from models.flow_matching_model import FlowMatchingModel
 from torch import nn
 
 logger = logging.getLogger(__name__)

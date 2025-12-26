@@ -1,5 +1,5 @@
 import torch
-from shared.services.flow_matching_model import FlowMatchingModel
+from models.flow_matching_model import FlowMatchingModel
 
 
 @torch.no_grad()

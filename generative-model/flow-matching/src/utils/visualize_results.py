@@ -27,7 +27,7 @@ def visualize_results(
     axes[1].set_aspect("equal")
 
     output_directory_path = Path("output")
-    output_file_path = output_directory_path / "flow_matching_results.png"
+    output_file_path = output_directory_path / "output.png"
 
     plt.tight_layout()
     plt.savefig(output_file_path, dpi=150)
