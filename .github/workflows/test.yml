@@ -257,6 +257,8 @@ jobs:
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/deploy/**'
             amazon-sagemaker-triton-resnet-50-infer:
               - 'machine-learning/nvidia-triton-inference-server/amazon-sagemaker-triton-resnet-50/infer/**'
+            anyup:
+              - 'computer-vision/anyup/**'
             api-go:
               - 'api/api-go/**'
             api-node:
@@ -734,6 +736,7 @@ jobs:
       amazon-sagemaker-pytorch-mnist: ${{ steps.filter.outputs.amazon-sagemaker-pytorch-mnist }}
       amazon-sagemaker-triton-resnet-50-deploy: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-deploy }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-infer }}
+      anyup: ${{ steps.filter.outputs.anyup }}
       api-go: ${{ steps.filter.outputs.api-go }}
       api-node: ${{ steps.filter.outputs.api-node }}
       api-python: ${{ steps.filter.outputs.api-python }}
@@ -1338,6 +1341,7 @@ jobs:
       # Workflows
       workflow: ${{ needs.detect-changes.outputs.workflow-test-computer-vision == 'true' }}
       # Applications
+      anyup: ${{ needs.detect-changes.outputs.anyup == 'true' }}
       dinov3: ${{ needs.detect-changes.outputs.dinov3 == 'true' }}
       export-yolo-to-onnx: ${{ needs.detect-changes.outputs.export-yolo-to-onnx == 'true' }}
       hm-open3d: ${{ needs.detect-changes.outputs.hm-open3d == 'true' }}
