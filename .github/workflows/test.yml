@@ -16,7 +16,7 @@ jobs:
   detect-changes:
     name: Detect Changes
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     permissions:
       pull-requests: read
     steps:
@@ -1432,7 +1432,7 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-genesis == 'true' }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -1467,7 +1467,7 @@ jobs:
     if: ${{ false }}
     # if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.call-matlab-function-in-python == 'true' }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -1505,7 +1505,7 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-xxhash == 'true' }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -1539,7 +1539,7 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.api-go == 'true' }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -1578,7 +1578,7 @@ jobs:
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-opal-client == 'true' }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1

@@ -36,7 +36,7 @@ jobs:
     name: UDP Receiver | Test
     if: ${{ inputs.workflow || inputs.udp-receiver }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -64,7 +64,7 @@ jobs:
     name: UDP Sender | Test
     if: ${{ inputs.workflow || inputs.udp-sender }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -92,7 +92,7 @@ jobs:
     name: Arrow Flight Client | Test
     if: ${{ inputs.workflow || inputs.arrow-flight-client }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -125,7 +125,7 @@ jobs:
     name: Arrow Flight Server | Test
     if: ${{ inputs.workflow || inputs.arrow-flight-server }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -147,7 +147,7 @@ jobs:
     name: RTI Connext DDS | Test
     if: ${{ inputs.workflow || inputs.rti-connext-dds }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -180,7 +180,7 @@ jobs:
     name: Dust DDS Publisher | Test
     if: ${{ inputs.workflow || inputs.dust-dds-publisher }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -202,7 +202,7 @@ jobs:
     name: Dust DDS Subscriber | Test
     if: ${{ inputs.workflow || inputs.dust-dds-subscriber }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
