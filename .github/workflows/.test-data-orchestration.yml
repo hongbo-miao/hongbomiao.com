@@ -30,7 +30,7 @@ jobs:
     name: Airflow | Test
     if: ${{ inputs.workflow || inputs.hm-airflow }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -63,7 +63,7 @@ jobs:
     name: Prefect (calculate) | Test
     if: ${{ inputs.workflow || inputs.hm-prefect-calculate }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -96,7 +96,7 @@ jobs:
     name: Prefect (daft-analysis) | Test
     if: ${{ inputs.workflow || inputs.hm-prefect-daft-analysis }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -129,7 +129,7 @@ jobs:
     name: Prefect (greet) | Test
     if: ${{ inputs.workflow || inputs.hm-prefect-greet }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -162,7 +162,7 @@ jobs:
     name: Prefect (print-platform) | Test
     if: ${{ inputs.workflow || inputs.hm-prefect-print-platform }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1

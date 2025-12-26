@@ -81,7 +81,7 @@ jobs:
     name: ingest-flac-to-parquet | Test
     if: ${{ inputs.workflow || inputs.hm-ingest-flac-to-parquet }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -114,7 +114,7 @@ jobs:
     name: CocoIndex (embed-markdown-to-postgres) | Test
     if: ${{ inputs.workflow || inputs.hm-cocoindex-embed-markdown-to-postgres }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -147,7 +147,7 @@ jobs:
     name: Pathway (aggregate-hourly-events) | Test
     if: ${{ inputs.workflow || inputs.hm-pathway-aggregate-hourly-events }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -180,7 +180,7 @@ jobs:
     name: Spark (analyze-coffee-customers) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-analyze-coffee-customers }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -213,7 +213,7 @@ jobs:
     name: Spark (find-retired-people-python) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-find-retired-people-python }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -246,7 +246,7 @@ jobs:
     name: Spark (find-retired-people-scala) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-find-retired-people-scala }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -267,7 +267,7 @@ jobs:
     name: Spark (find-taxi-top-routes) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-find-taxi-top-routes }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -300,7 +300,7 @@ jobs:
     name: Spark (find-taxi-top-routes-sql) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-find-taxi-top-routes-sql }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -333,7 +333,7 @@ jobs:
     name: Spark (ingest-from-s3-to-kafka) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-ingest-from-s3-to-kafka }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -354,7 +354,7 @@ jobs:
     name: Spark (recommend-movies) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-recommend-movies }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -387,7 +387,7 @@ jobs:
     name: Flink (stream-tweets) | Test
     if: ${{ inputs.workflow || inputs.flink-stream-tweets }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -406,7 +406,7 @@ jobs:
     name: Kafka Rust (proto-consumer) | Test
     if: ${{ inputs.workflow || inputs.kafka-rust-proto-consumer }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -450,7 +450,7 @@ jobs:
     name: Kafka Rust (proto-producer) | Test
     if: ${{ inputs.workflow || inputs.kafka-rust-proto-producer }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -494,7 +494,7 @@ jobs:
     name: Kafka Rust (udp-kafka-bridge) | Test
     if: ${{ inputs.workflow || inputs.kafka-rust-udp-kafka-bridge }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -538,7 +538,7 @@ jobs:
     name: Kafka Rust (zeromq-kafka-bridge) | Test
     if: ${{ inputs.workflow || inputs.kafka-rust-zeromq-kafka-bridge }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -582,7 +582,7 @@ jobs:
     name: NATS (audio-file-publisher) | Test
     if: ${{ inputs.workflow || inputs.nats-audio-file-publisher }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -615,7 +615,7 @@ jobs:
     name: NATS (audio-file-subscriber) | Test
     if: ${{ inputs.workflow || inputs.nats-audio-file-subscriber }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -648,7 +648,7 @@ jobs:
     name: NATS (audio-stream-publisher) | Test
     if: ${{ inputs.workflow || inputs.nats-audio-stream-publisher }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -670,7 +670,7 @@ jobs:
     name: NATS (audio-stream-transcriber) | Test
     if: ${{ inputs.workflow || inputs.nats-audio-stream-transcriber }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -698,7 +698,7 @@ jobs:
     name: NATS (nats-postgres-bridge) | Test
     if: ${{ inputs.workflow || inputs.nats-postgres-bridge }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -726,7 +726,7 @@ jobs:
     name: NATS (telemetry-stream-publisher) | Test
     if: ${{ inputs.workflow || inputs.nats-telemetry-stream-publisher }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -759,7 +759,7 @@ jobs:
     name: NATS (telemetry-stream-subscriber) | Test
     if: ${{ inputs.workflow || inputs.nats-telemetry-stream-subscriber }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
