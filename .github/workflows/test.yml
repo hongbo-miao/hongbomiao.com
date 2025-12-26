@@ -575,6 +575,8 @@ jobs:
               - 'large-language-model-inference/kv-caching/**'
             lance:
               - 'data-storage/lance/**'
+            liquid-neural-network:
+              - 'liquid-neural-network/**'
             mamba2:
               - 'state-space-model/mamba2/**'
             mobile-android:
@@ -892,6 +894,7 @@ jobs:
       kafka-rust-zeromq-kafka-bridge: ${{ steps.filter.outputs.kafka-rust-zeromq-kafka-bridge }}
       kv-caching: ${{ steps.filter.outputs.kv-caching }}
       lance: ${{ steps.filter.outputs.lance }}
+      liquid-neural-network: ${{ steps.filter.outputs.liquid-neural-network }}
       mamba2: ${{ steps.filter.outputs.mamba2 }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
@@ -1312,6 +1315,7 @@ jobs:
       hm-xgboost: ${{ needs.detect-changes.outputs.hm-xgboost == 'true' }}
       hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
       kv-caching: ${{ needs.detect-changes.outputs.kv-caching == 'true' }}
+      liquid-neural-network: ${{ needs.detect-changes.outputs.liquid-neural-network == 'true' }}
       mamba2: ${{ needs.detect-changes.outputs.mamba2 == 'true' }}
       model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
       modern-bert: ${{ needs.detect-changes.outputs.modern-bert == 'true' }}
