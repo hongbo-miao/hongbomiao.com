@@ -10,7 +10,7 @@ AUDIO_PATH = Path("data/audio.wav")
 
 
 def main() -> None:
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Using device: {device}")
 
     logger.info("Loading pretrained ASR model...")
