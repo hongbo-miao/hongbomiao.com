@@ -1,13 +1,13 @@
 import logging
 
 import torch
-from shared.services.flow_matching_model import FlowMatchingModel
-from shared.services.train_flow_matching import train_flow_matching
-from shared.utils.generate_samples import generate_samples
-from shared.utils.generate_two_moons_data import generate_two_moons_data
-from shared.utils.get_device import get_device
-from shared.utils.visualize_results import visualize_results
+from models.flow_matching_model import FlowMatchingModel
 from torch import nn
+from utils.generate_samples import generate_samples
+from utils.generate_two_moons_data import generate_two_moons_data
+from utils.get_device import get_device
+from utils.train_flow_matching import train_flow_matching
+from utils.visualize_results import visualize_results
 
 logger = logging.getLogger(__name__)
 
