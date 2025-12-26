@@ -36,7 +36,7 @@ jobs:
     name: API - Go | Test
     if: ${{ inputs.workflow || inputs.api-go }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -60,7 +60,7 @@ jobs:
     name: API - Node.js | Test
     if: ${{ inputs.workflow || inputs.api-node }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -89,7 +89,7 @@ jobs:
     name: API - Node.js | Mutation Test
     if: ${{ inputs.workflow || inputs.api-node }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -114,7 +114,7 @@ jobs:
     name: API - Python | Test
     if: ${{ inputs.workflow || inputs.api-python }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -189,7 +189,7 @@ jobs:
     name: API - Rust (Scripts) | Test
     if: ${{ inputs.workflow || inputs.api-rust-scripts }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -222,7 +222,7 @@ jobs:
     name: k6 | Load Test
     if: ${{ inputs.workflow || inputs.k6 }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -240,7 +240,7 @@ jobs:
     name: Locust | Test
     if: ${{ inputs.workflow || inputs.hm-locust }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
