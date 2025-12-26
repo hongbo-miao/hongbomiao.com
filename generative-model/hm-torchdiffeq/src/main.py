@@ -168,12 +168,12 @@ def save_prediction_plot(
 
 def main() -> None:
     ode_solver = select_ode_solver(USE_ADJOINT)
-    device = (
+    device = torch.device(
         "cuda"
         if torch.cuda.is_available()
         else "mps"
         if torch.backends.mps.is_available()
-        else "cpu"
+        else "cpu",
     )
 
     dtype = torch.float32

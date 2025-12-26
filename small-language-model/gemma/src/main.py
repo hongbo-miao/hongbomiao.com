@@ -9,12 +9,12 @@ logger = logging.getLogger(__name__)
 def main() -> None:
     model_id = "google/gemma-3-270m-it"
 
-    device = (
+    device = torch.device(
         "cuda"
         if torch.cuda.is_available()
         else "mps"
         if torch.backends.mps.is_available()
-        else "cpu"
+        else "cpu",
     )
 
     logger.info(f"Using device: {device}")

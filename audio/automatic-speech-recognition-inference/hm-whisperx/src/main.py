@@ -16,26 +16,30 @@ class WhisperXProcessor:
     def __init__(
         self,
         model_name: str,
-        sample_rate: int = SAMPLE_RATE,
-        device: str = "cuda" if torch.cuda.is_available() else "cpu",
-        compute_type: str = "float16" if torch.cuda.is_available() else "float32",
+        sample_rate: int,
+        device: torch.device,
+        compute_type: str | None = None,
     ) -> None:
         self.sample_rate = sample_rate
         self.device = device
-        self.compute_type = compute_type
+        self.compute_type = (
+            compute_type
+            if compute_type is not None
+            else ("float16" if torch.cuda.is_available() else "float32")
+        )
 
-        logger.info(f"Loading WhisperX model '{model_name}' on {device}...")
+        logger.info(f"Loading WhisperX model '{model_name}' on {self.device}...")
 
         self.model = whisperx.load_model(
             model_name,
-            device=device,
-            compute_type=compute_type,
+            device=self.device,
+            compute_type=self.compute_type,
         )
 
         # Load alignment model (for word-level timestamps)
         self.align_model, self.align_metadata = whisperx.load_align_model(
             language_code="en",
-            device=device,
+            device=self.device,
         )
 
         # Audio buffers
@@ -206,8 +210,11 @@ class WhisperXProcessor:
 
 
 def main() -> None:
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     processor = WhisperXProcessor(
         model_name="medium.en",  # or "large-v2", "small.en", etc.
+        sample_rate=SAMPLE_RATE,
+        device=device,
     )
     processor.start_recording()
 
