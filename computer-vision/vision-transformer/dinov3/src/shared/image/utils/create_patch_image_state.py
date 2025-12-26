@@ -31,16 +31,42 @@ def create_patch_image_state(
     device: torch.device,
     patch_size: int,
 ) -> PatchImageState:
-    """Compute patch-level image embeddings and metadata for a single image."""
+    """
+    Compute patch-level image embeddings and metadata for a single image.
+
+    Math:
+        Given image I in R^(H x W x 3), divide into P x P patches:
+            N_row = floor(H / P)
+            N_col = floor(W / P)
+            N_patches = N_row * N_col
+
+        ViT outputs hidden states:
+            H = [h_CLS, h_1, h_2, ..., h_{N_patches}] in R^((1 + N_patches) x D)
+
+            - h_CLS (index 0): CLS token that aggregates global image information,
+                used for image-level classification tasks.
+            - h_1 to h_{N_patches}: Patch embeddings with spatial locality.
+
+        We exclude h_CLS and use only patch embeddings h_i because we need
+        spatially localized features for pixel-level similarity matching.
+
+        L2-normalize each embedding (epsilon = 1e-8):
+            h_hat_i = h_i / (||h_i||_2 + epsilon)
+
+    """
     inputs, display_numpy, _ = pad_and_normalize_image(
         pil_image,
         multiple=patch_size,
     )
     pixel_values = inputs["pixel_values"].to(device)
     _, _, height, width = pixel_values.shape
+
+    # N_row = floor(H / P), N_col = floor(W / P)
     row_count = height // patch_size
     column_count = width // patch_size
 
+    # Forward pass through ViT to get hidden states
+    # Output shape: (1 + N_patches, D) where 1 is CLS token
     with torch.no_grad():
         output = model(pixel_values=pixel_values)
     hidden_states = output.last_hidden_state.squeeze(0).detach().cpu().numpy()
@@ -57,12 +83,20 @@ def create_patch_image_state(
             message,
         )
 
+    # Extract patch embeddings h_1 to h_{N_patches}, excluding h_CLS (index 0)
+    # We need spatially localized features, not global image representation
+    # Shape: (N_row, N_col, D)
     patch_embeddings = hidden_states[special_token_count:, :].reshape(
         row_count,
         column_count,
         dimension,
     )
+
+    # Flatten to (N_patches, D) for similarity computation
     embeddings_flat = patch_embeddings.reshape(-1, dimension)
+
+    # L2-normalize: h_hat_i = h_i / (||h_i||_2 + epsilon), epsilon = 1e-8
+    # This enables cosine similarity via dot product: s_i = h_hat_i dot q_hat
     embeddings_normalized = embeddings_flat / (
         np.linalg.norm(embeddings_flat, axis=1, keepdims=True) + 1e-8
     )

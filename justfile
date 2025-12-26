@@ -504,10 +504,10 @@ static-type-check-python:
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.hm-ray
     uv run poe static-type-check-python --package=cloud-platform.aws.amazon-sagemaker.pytorch-mnist
     uv run poe static-type-check-python --package=cloud-platform.aws.aws-parallelcluster.pcluster
-    uv run poe static-type-check-python --package=computer-vision.dinov3
     uv run poe static-type-check-python --package=computer-vision.hm-open3d
     uv run poe static-type-check-python --package=computer-vision.hm-pyvista.mount-saint-helens
     uv run poe static-type-check-python --package=computer-vision.hm-supervision.detect-objects
+    uv run poe static-type-check-python --package=computer-vision.vision-transformer.dinov3
     uv run poe static-type-check-python --package=data-analytics.hm-cudf.analyze-transactions
     uv run poe static-type-check-python --package=data-analytics.hm-cupy
     uv run poe static-type-check-python --package=data-analytics.hm-daft.analyze-transactions

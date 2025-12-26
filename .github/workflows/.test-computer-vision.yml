@@ -72,17 +72,17 @@ jobs:
         with:
           version: 0.9.18
           enable-cache: true
-          cache-dependency-glob: computer-vision/dinov3/uv.lock
+          cache-dependency-glob: computer-vision/vision-transformer/dinov3/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: computer-vision/dinov3/.python-version
+          python-version-file: computer-vision/vision-transformer/dinov3/.python-version
       - name: Install dependencies
-        working-directory: computer-vision/dinov3
+        working-directory: computer-vision/vision-transformer/dinov3
         run: |
           uv sync --dev
       - name: Test
-        working-directory: computer-vision/dinov3
+        working-directory: computer-vision/vision-transformer/dinov3
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -90,7 +90,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: computer-vision/dinov3
+          directory: computer-vision/vision-transformer/dinov3
 
   export-yolo-to-onnx-test:
     name: Export YOLO to ONNX | Test
