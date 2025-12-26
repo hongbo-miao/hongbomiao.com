@@ -12,12 +12,12 @@ MODEL_NAME = "nvidia/diar_streaming_sortformer_4spk-v2.1"
 
 
 def main() -> None:
-    device = (
+    device = torch.device(
         "cuda"
         if torch.cuda.is_available()
         else "mps"
         if torch.backends.mps.is_available()
-        else "cpu"
+        else "cpu",
     )
     logger.info(f"Using device: {device}")
 

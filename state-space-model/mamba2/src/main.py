@@ -22,13 +22,6 @@ import torch
 from simple_mamba2 import SimpleMamba2Block
 from torch import nn
 
-DEVICE = (
-    "cuda"
-    if torch.cuda.is_available()
-    else "mps"
-    if torch.backends.mps.is_available()
-    else "cpu"
-)
 PAD_TOKEN = 0
 COPY_TOKEN = 1
 VOCAB_START = 2
@@ -77,6 +70,7 @@ class SelectiveCopyModel(nn.Module):
 def generate_selective_copy_batch(
     batch_size: int,
     sequence_length: int,
+    device: torch.device,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """
     Generate a batch of selective copying examples.
@@ -106,7 +100,7 @@ def generate_selective_copy_batch(
                 ).item()
                 position += 1
 
-    return inputs.to(DEVICE), targets.to(DEVICE)
+    return inputs.to(device), targets.to(device)
 
 
 def main() -> None:
@@ -119,22 +113,34 @@ def main() -> None:
     epoch_count = 100
     learning_rate = 1e-3
 
+    device = torch.device(
+        "cuda"
+        if torch.cuda.is_available()
+        else "mps"
+        if torch.backends.mps.is_available()
+        else "cpu",
+    )
+
     model = SelectiveCopyModel(
         vocabulary_size=VOCAB_SIZE,
         embedding_dimension=embedding_dimension,
         state_dimension=state_dimension,
         head_count=head_count,
         layer_count=layer_count,
-    ).to(DEVICE)
+    ).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     loss_function = nn.CrossEntropyLoss(ignore_index=PAD_TOKEN)
 
-    logger.info(f"Training selective copy model on {DEVICE}")
+    logger.info(f"Training selective copy model on {device}")
     logger.info(f"Parameters: {sum(p.numel() for p in model.parameters()):,}")
 
     for epoch in range(epoch_count):
-        inputs, targets = generate_selective_copy_batch(batch_size, sequence_length)
+        inputs, targets = generate_selective_copy_batch(
+            batch_size,
+            sequence_length,
+            device,
+        )
 
         optimizer.zero_grad()
         logits = model(inputs)
@@ -162,7 +168,11 @@ def main() -> None:
     logger.info("Testing on new batch:")
     model.eval()
     with torch.no_grad():
-        test_inputs, test_targets = generate_selective_copy_batch(4, sequence_length)
+        test_inputs, test_targets = generate_selective_copy_batch(
+            4,
+            sequence_length,
+            device,
+        )
         test_logits = model(test_inputs)
         test_predictions = test_logits.argmax(dim=-1)
 

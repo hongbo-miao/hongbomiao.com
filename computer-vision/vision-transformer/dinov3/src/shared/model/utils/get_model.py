@@ -19,14 +19,13 @@ def get_model(
     if cache_state is None:
         cache_state = CACHE_STATE
     if cache_state.model is None:
-        device = (
+        cache_state.device = torch.device(
             "cuda"
             if torch.cuda.is_available()
             else "mps"
             if torch.backends.mps.is_available()
-            else "cpu"
+            else "cpu",
         )
-        cache_state.device = torch.device(device)
         logger.info(f"Device: {cache_state.device}")
         logger.info(f"Loading model: {model_id}")
         cache_state.model = AutoModel.from_pretrained(model_id).to(cache_state.device)
