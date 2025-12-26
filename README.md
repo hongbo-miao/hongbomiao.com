@@ -630,6 +630,10 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Multimodal Model
   - **Qwen3-Omni** - Omni multimodal model with text, audio, image, video understanding and real-time speech generation
 
+### Liquid Neural Network (LNN)
+
+- **Liquid Neural Network (LNN)** - A continuous-time recurrent neural architecture with adaptive, dynamic behavior inspired by biological neurons, optimized for robust time-series modeling, control, and robotics
+
 ### Computer Vision
 
 - **OpenCV** - Computer vision library
