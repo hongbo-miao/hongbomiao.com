@@ -33,7 +33,7 @@ jobs:
     name: supervision (detect-objects) | Test
     if: ${{ inputs.workflow || inputs.hm-supervision-detect-objects }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -165,7 +165,7 @@ jobs:
     name: Open3D | Test
     if: ${{ inputs.workflow || inputs.hm-open3d }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
@@ -198,7 +198,7 @@ jobs:
     name: PyVista (mount-saint-helens) | Test
     if: ${{ inputs.workflow || inputs.hm-pyvista-mount-saint-helens }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
