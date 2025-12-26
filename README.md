@@ -635,11 +635,12 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **OpenCV** - Computer vision library
 - **supervision** - Computer vision library
 - **Ultralytics YOLOv12** - Object detection model
-- **DINOv3** - Self-supervised vision transformer (ViT) model
 - **Open3D** - 3D data processing
 - **PyVista** - 3D plotting and mesh analysis
 - **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization
 - **GStreamer** - Pipeline-based multimedia framework
+- Vision Transformer (ViT)
+  - **DINOv3** - Self-supervised vision transformer (ViT) model
 
 ### Generative Model
 
@@ -654,8 +655,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **Q-Learning** - Model-free reinforcement learning algorithm for learning optimal actions
 - **Gymnasium** - Reinforcement learning environment toolkit
-
-## Media
 
 ### Audio
 
