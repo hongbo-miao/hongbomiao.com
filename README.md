@@ -639,6 +639,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **PyVista** - 3D plotting and mesh analysis
 - **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization
 - **GStreamer** - Pipeline-based multimedia framework
+- **AnyUp** - Universal feature upsampling
 - Vision Transformer (ViT)
   - **DINOv3** - Self-supervised vision transformer (ViT) model
 
