@@ -17,7 +17,9 @@ def load_models() -> tuple[PreTrainedModel, PreTrainedModel, PreTrainedTokenizer
     # Large model (target) and small model (draft)
     target_model_name: str = "EleutherAI/gpt-neo-1.3B"
     draft_model_name: str = "EleutherAI/gpt-neo-125M"
-    device: str = "cuda" if torch.cuda.is_available() else "cpu"
+    device: torch.device = torch.device(
+        "cuda" if torch.cuda.is_available() else "cpu",
+    )
     logger.info(f"Device: {device}")
 
     tokenizer: PreTrainedTokenizer = AutoTokenizer.from_pretrained(target_model_name)
