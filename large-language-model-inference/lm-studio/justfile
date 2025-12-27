@@ -1,0 +1,37 @@
+LM_STUDIO_URL := "http://localhost:1234"
+MODEL := "qwen3-0.6b@q3_k_l"
+
+sign-in:
+    lms login
+
+get-model:
+    lms get {{ MODEL }}
+
+load-model:
+    lms load {{ MODEL }}
+
+unload-model:
+    lms unload {{ MODEL }}
+
+list-models:
+    lms ls
+
+list-running-models:
+    lms ps
+
+start-server:
+    lms server start
+
+stop-server:
+    lms server stop
+
+query:
+    curl {{ LM_STUDIO_URL }}/v1/chat/completions \
+        --header "Content-Type: application/json" \
+        --data '{ \
+            "model": "{{ MODEL }}", \
+            "messages": [ \
+                {"role": "system", "content": "You are a helpful assistant."}, \
+                {"role": "user", "content": "What is gravity?"} \
+            ] \
+        }'
