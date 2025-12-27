@@ -14,9 +14,10 @@ test-coverage:
     uv run poe test-coverage
 
 deepeval-set-model:
-    uv run deepeval set-litellm anthropic/claude-sonnet-4 --api-base=https://litellm.hongbomiao.com --api-key=xxx
+    uv run deepeval set-litellm openai/claude-opus-4-5 --api-base=https://litellm.hongbomiao.com
 
 deepeval-test:
+    export OPENAI_API_KEY=xxx && \
     uv run deepeval test run src
 
 deepeval-view:

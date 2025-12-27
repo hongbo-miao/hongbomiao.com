@@ -579,7 +579,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-pyvisa
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.hm-tdms
     uv run poe static-type-check-python --package=hardware-in-the-loop.national-instruments.veristand.hm-veristand
-    uv run poe static-type-check-python --package=large-language-model-application.hm-langchain.applications.chat-pdf
     uv run poe static-type-check-python --package=large-language-model-application.hm-langgraph.applications.chat-pdf
     uv run poe static-type-check-python --package=large-language-model-application.hm-llama-index.applications.chat-pdf
     uv run poe static-type-check-python --package=large-language-model-application.hm-pydantic-ai.applications.chat-pdf
