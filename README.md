@@ -581,7 +581,6 @@ The diagram illustrates the repository's architecture, which is considered overl
   - Quantization
     - **torchao** - PyTorch-native quantization and sparsification
 - Large Language Model (LLM) Inference
-  - **GPT4All** - Local large language model (LLM) inference
   - **Ollama** - Local large language model (LLM) inference
   - **LM Studio** - Local large language model (LLM) inference
   - **Transformers** - Model-definition framework for machine learning models
@@ -599,7 +598,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Large Language Model (LLM) Application
   - **PydanticAI** - Large language model (LLM) agent framework
   - **LangGraph** - Large language model (LLM) workflow library
-  - **LangChain** - Large language model (LLM) application framework
   - **LlamaIndex** - Large language model (LLM) data framework
 - AI Chat Interface
   - **Open WebUI** - AI chat interface
