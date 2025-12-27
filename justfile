@@ -498,7 +498,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=audio.voice-activity-detection.rnnoise-vad
     uv run poe static-type-check-python --package=audio.voice-activity-detection.webrtc-vad
     uv run poe static-type-check-python --package=autonomy.camera-radar-fusion
-    uv run poe static-type-check-python --package=causal-language-model.qwen
+    uv run poe static-type-check-python --package=causal-language-model.qwen3
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.calculate
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.process-flight-data
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.hm-ray

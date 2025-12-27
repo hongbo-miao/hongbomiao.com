@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    model, tokenizer = load("Qwen/Qwen3-0.6B-MLX-4bit")
+    model, tokenizer = load("mlx-community/MiniMax-M2.1-3bit")
     prompt = "Hello, please introduce yourself and tell me what you can do."
 
     if tokenizer.chat_template is not None:
