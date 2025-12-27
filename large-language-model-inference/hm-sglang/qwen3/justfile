@@ -1,4 +1,4 @@
-SGLANG_SERVER_URL := "http://localhost:8000"
+SGLANG_URL := "http://localhost:8000"
 MODEL := "Qwen/Qwen3-0.6B"
 
 run:
@@ -20,7 +20,7 @@ run:
                 --attention-backend=flashinfer
 
 query:
-    curl {{ SGLANG_SERVER_URL }}/v1/chat/completions \
+    curl {{ SGLANG_URL }}/v1/chat/completions \
         --header "Content-Type: application/json" \
         --data '{ \
             "model": "{{ MODEL }}", \
