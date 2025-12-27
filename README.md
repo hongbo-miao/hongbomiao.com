@@ -560,6 +560,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Byte-Pair Encoding (BPE)** - Subword tokenization
 - Causal Language Model (CLM)
   - **Qwen3** - Decoder-only transformer model for autoregressive text generation
+  - **MiniMax M2.1** - Decoder-only sparse Mixture-of-Experts (MoE) model for autoregressive text generation
 - Masked Language Model (MLM)
   - **ModernBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), Flash Attention, GeGLU activations, and a context length of 8,192 tokens.
   - **NeoBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.
@@ -582,7 +583,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Large Language Model (LLM) Inference
   - **GPT4All** - Local large language model (LLM) inference
   - **Ollama** - Local large language model (LLM) inference
-  - **LLM Studio** - Local large language model (LLM) inference
+  - **LM Studio** - Local large language model (LLM) inference
   - **Transformers** - Model-definition framework for machine learning models
     - **Optimum** - Hardware-acceleration toolkit for optimizing model training and inference across specific backends (e.g., ONNX Runtime, Intel, AMD, AWS Trainium)
   - **llama.cpp** - High-performance large language model (LLM) inference in C/C++

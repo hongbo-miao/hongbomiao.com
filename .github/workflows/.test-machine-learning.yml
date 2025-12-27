@@ -937,17 +937,17 @@ jobs:
         with:
           version: 0.9.18
           enable-cache: true
-          cache-dependency-glob: causal-language-model/qwen/uv.lock
+          cache-dependency-glob: causal-language-model/qwen3/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: causal-language-model/qwen/.python-version
+          python-version-file: causal-language-model/qwen3/.python-version
       - name: Install dependencies
-        working-directory: causal-language-model/qwen
+        working-directory: causal-language-model/qwen3
         run: |
           uv sync --dev
       - name: Test
-        working-directory: causal-language-model/qwen
+        working-directory: causal-language-model/qwen3
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -955,7 +955,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: causal-language-model/qwen
+          directory: causal-language-model/qwen3
 
 
   modern-bert-test:
