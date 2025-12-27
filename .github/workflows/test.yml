@@ -413,8 +413,6 @@ jobs:
               - 'machine-learning/hm-kubeflow/pipelines/classify-mnist/**'
             hm-lancedb:
               - 'data-storage/hm-lancedb/**'
-            hm-langchain-chat-pdf:
-              - 'large-language-model-application/hm-langchain/applications/chat-pdf/**'
             hm-langgraph-chat-pdf:
               - 'large-language-model-application/hm-langgraph/applications/chat-pdf/**'
             hm-librosa:
@@ -814,7 +812,6 @@ jobs:
       hm-kubeflow-calculate: ${{ steps.filter.outputs.hm-kubeflow-calculate }}
       hm-kubeflow-classify-mnist: ${{ steps.filter.outputs.hm-kubeflow-classify-mnist }}
       hm-lancedb: ${{ steps.filter.outputs.hm-lancedb }}
-      hm-langchain-chat-pdf: ${{ steps.filter.outputs.hm-langchain-chat-pdf }}
       hm-langgraph-chat-pdf: ${{ steps.filter.outputs.hm-langgraph-chat-pdf }}
       hm-librosa: ${{ steps.filter.outputs.hm-librosa }}
       hm-lightgbm: ${{ steps.filter.outputs.hm-lightgbm }}
@@ -1282,7 +1279,6 @@ jobs:
       hm-jiwer: ${{ needs.detect-changes.outputs.hm-jiwer == 'true' }}
       hm-kubeflow-calculate: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
       hm-kubeflow-classify-mnist: ${{ needs.detect-changes.outputs.hm-kubeflow-classify-mnist == 'true' }}
-      hm-langchain-chat-pdf: ${{ needs.detect-changes.outputs.hm-langchain-chat-pdf == 'true' }}
       hm-langgraph-chat-pdf: ${{ needs.detect-changes.outputs.hm-langgraph-chat-pdf == 'true' }}
       hm-librosa: ${{ needs.detect-changes.outputs.hm-librosa == 'true' }}
       hm-lightgbm: ${{ needs.detect-changes.outputs.hm-lightgbm == 'true' }}

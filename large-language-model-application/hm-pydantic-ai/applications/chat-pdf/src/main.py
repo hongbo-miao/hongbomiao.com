@@ -38,7 +38,7 @@ class ChatResponse(BaseModel):
 
 def create_openai_model() -> OpenAIModel:
     return OpenAIModel(
-        model_name="claude-sonnet-4",
+        model_name="claude-opus-4-5",
         provider=OpenAIProvider(
             base_url="https://litellm.hongbomiao.com/v1",
             api_key=config.OPENAI_API_KEY,
