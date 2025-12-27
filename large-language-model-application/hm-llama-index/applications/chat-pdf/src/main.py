@@ -24,7 +24,7 @@ def main() -> None:
     Settings.llm = LiteLLM(
         api_base="https://litellm.hongbomiao.com",
         api_key=config.OPENAI_API_KEY,
-        model="openai/claude-sonnet-4",
+        model="openai/claude-opus-4-5",
         temperature=0.7,
     )
 
