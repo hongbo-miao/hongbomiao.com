@@ -581,6 +581,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=large-language-model-application.hm-langgraph.applications.chat-pdf
     uv run poe static-type-check-python --package=large-language-model-application.hm-llama-index.applications.chat-pdf
     uv run poe static-type-check-python --package=large-language-model-application.hm-pydantic-ai.applications.chat-pdf
+    uv run poe static-type-check-python --package=large-language-model-architecture.transformer
     uv run poe static-type-check-python --package=large-language-model-evaluation.hm-deepeval
     uv run poe static-type-check-python --package=large-language-model-inference.hm-mlx-lm
     uv run poe static-type-check-python --package=large-language-model-inference.hm-optimum
@@ -625,7 +626,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.nvidia-dali
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.deploy
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
-    uv run poe static-type-check-python --package=machine-learning.transformer
     uv run poe static-type-check-python --package=named-entity-recognition.bert
     uv run poe static-type-check-python --package=named-entity-recognition.hm-gliner
     uv run poe static-type-check-python --package=parallel-computing.hm-taichi.count-primes

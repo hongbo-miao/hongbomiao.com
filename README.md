@@ -558,13 +558,13 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **GLiNER** - Named entity recognition
 - Tokenization
   - **Byte-Pair Encoding (BPE)** - Subword tokenization
+- Embedding
+  - **Model2Vec** - Fast static text embeddings distilled from Sentence Transformers
 - Model Architecture
   - Transformer
     - Mixture of Experts (MoE)
   - State Space Model (SSM)
     - **Mamba 2** - State space model architecture for efficient sequence modeling with linear-time complexity
-- Embedding
-  - **Model2Vec** - Fast static text embeddings distilled from Sentence Transformers
 - Large Language Model (LLM) Training
   - Training Paradigm
     - Causal Language Model (CLM)
