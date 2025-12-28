@@ -498,7 +498,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=audio.voice-activity-detection.rnnoise-vad
     uv run poe static-type-check-python --package=audio.voice-activity-detection.webrtc-vad
     uv run poe static-type-check-python --package=autonomy.camera-radar-fusion
-    uv run poe static-type-check-python --package=causal-language-model.qwen3
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.calculate
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.applications.process-flight-data
     uv run poe static-type-check-python --package=cloud-computing.hm-ray.hm-ray
@@ -597,7 +596,11 @@ static-type-check-python:
     uv run poe static-type-check-python --package=large-language-model-post-training.fine-tuning.hm-torchtune
     uv run poe static-type-check-python --package=large-language-model-post-training.fine-tuning.hm-unsloth
     uv run poe static-type-check-python --package=large-language-model-post-training.post-training-quantization
-    uv run poe static-type-check-python --package=large-language-model-training.automatic-mixed-precision
+    uv run poe static-type-check-python --package=large-language-model-training.training-optimization.automatic-mixed-precision
+    uv run poe static-type-check-python --package=large-language-model-training.training-paradigm.causal-language-model.qwen3
+    uv run poe static-type-check-python --package=large-language-model-training.training-paradigm.masked-language-model.convert-modern-bert-to-core-ml
+    uv run poe static-type-check-python --package=large-language-model-training.training-paradigm.masked-language-model.modern-bert
+    uv run poe static-type-check-python --package=large-language-model-training.training-paradigm.masked-language-model.neo-bert
     uv run poe static-type-check-python --package=liquid-neural-network
     uv run poe static-type-check-python --package=load-testing.hm-locust
     uv run poe static-type-check-python --package=machine-learning.convolutional-neural-network
@@ -623,9 +626,6 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.deploy
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
     uv run poe static-type-check-python --package=machine-learning.transformer
-    uv run poe static-type-check-python --package=masked-language-model.convert-modern-bert-to-core-ml
-    uv run poe static-type-check-python --package=masked-language-model.modern-bert
-    uv run poe static-type-check-python --package=masked-language-model.neo-bert
     uv run poe static-type-check-python --package=named-entity-recognition.bert
     uv run poe static-type-check-python --package=named-entity-recognition.hm-gliner
     uv run poe static-type-check-python --package=parallel-computing.hm-taichi.count-primes
