@@ -36,6 +36,9 @@ name: . Test Machine Learning
       core-ml-tools:
         required: true
         type: boolean
+      dense-transformer:
+        required: true
+        type: boolean
       feature-store:
         required: true
         type: boolean
@@ -204,6 +207,9 @@ name: . Test Machine Learning
       mamba2:
         required: true
         type: boolean
+      mixture-of-experts:
+        required: true
+        type: boolean
       model-context-protocol:
         required: true
         type: boolean
@@ -247,9 +253,6 @@ name: . Test Machine Learning
         required: true
         type: boolean
       streaming-sortformer-diarizer:
-        required: true
-        type: boolean
-      transformer:
         required: true
         type: boolean
       variational-autoencoder:
@@ -2414,9 +2417,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: generative-model/flow-matching
 
-  transformer-test:
-    name: Transformer | Test
-    if: ${{ inputs.workflow || inputs.transformer }}
+  dense-transformer-test:
+    name: Dense Transformer | Test
+    if: ${{ inputs.workflow || inputs.dense-transformer }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -2427,17 +2430,17 @@ jobs:
         with:
           version: 0.9.18
           enable-cache: true
-          cache-dependency-glob: large-language-model-architecture/transformer/uv.lock
+          cache-dependency-glob: large-language-model-architecture/dense-transformer/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-architecture/transformer/.python-version
+          python-version-file: large-language-model-architecture/dense-transformer/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-architecture/transformer
+        working-directory: large-language-model-architecture/dense-transformer
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-architecture/transformer
+        working-directory: large-language-model-architecture/dense-transformer
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2445,7 +2448,40 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-architecture/transformer
+          directory: large-language-model-architecture/dense-transformer
+
+  mixture-of-experts-test:
+    name: Mixture of Experts | Test
+    if: ${{ inputs.workflow || inputs.mixture-of-experts }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: large-language-model-architecture/mixture-of-experts/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: large-language-model-architecture/mixture-of-experts/.python-version
+      - name: Install dependencies
+        working-directory: large-language-model-architecture/mixture-of-experts
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: large-language-model-architecture/mixture-of-experts
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: large-language-model-architecture/mixture-of-experts
 
   liquid-neural-network-test:
     name: Liquid Neural Network | Test
