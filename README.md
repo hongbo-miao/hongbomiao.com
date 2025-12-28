@@ -558,18 +558,23 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **GLiNER** - Named entity recognition
 - Tokenization
   - **Byte-Pair Encoding (BPE)** - Subword tokenization
-- Causal Language Model (CLM)
-  - **Qwen3** - Decoder-only transformer model for autoregressive text generation
-  - **MiniMax M2.1** - Decoder-only sparse Mixture-of-Experts (MoE) model for autoregressive text generation
-- Masked Language Model (MLM)
-  - **ModernBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), Flash Attention, GeGLU activations, and a context length of 8,192 tokens.
-  - **NeoBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.
-- State Space Model (SSM)
-  - **Mamba 2** - State space model architecture for efficient sequence modeling with linear-time complexity
+- Model Architecture
+  - Transformer
+    - Mixture of Experts (MoE)
+  - State Space Model (SSM)
+    - **Mamba 2** - State space model architecture for efficient sequence modeling with linear-time complexity
 - Embedding
   - **Model2Vec** - Fast static text embeddings distilled from Sentence Transformers
 - Large Language Model (LLM) Training
-  - **Automatic Mixed Precision** - Mixed precision FP16/FP32 training
+  - Training Paradigm
+    - Causal Language Model (CLM)
+      - **Qwen3** - Decoder-only transformer model for autoregressive text generation
+      - **MiniMax M2.1** - Decoder-only sparse Mixture-of-Experts (MoE) model for autoregressive text generation
+    - Masked Language Model (MLM)
+      - **ModernBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), Flash Attention, GeGLU activations, and a context length of 8,192 tokens.
+      - **NeoBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.
+  - Training Optimization
+    - **Automatic Mixed Precision** - Mixed precision FP16/FP32 training
 - Large Language Model (LLM) Post-Training
   - Fine-Tuning
     - **Unsloth** - Efficient large language model (LLM) fine-tuning on single GPU via custom Triton kernels
