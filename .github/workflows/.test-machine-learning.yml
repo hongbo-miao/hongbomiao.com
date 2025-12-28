@@ -2427,17 +2427,17 @@ jobs:
         with:
           version: 0.9.18
           enable-cache: true
-          cache-dependency-glob: machine-learning/transformer/uv.lock
+          cache-dependency-glob: large-language-model-architecture/transformer/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: machine-learning/transformer/.python-version
+          python-version-file: large-language-model-architecture/transformer/.python-version
       - name: Install dependencies
-        working-directory: machine-learning/transformer
+        working-directory: large-language-model-architecture/transformer
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/transformer
+        working-directory: large-language-model-architecture/transformer
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2445,7 +2445,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/transformer
+          directory: large-language-model-architecture/transformer
 
   liquid-neural-network-test:
     name: Liquid Neural Network | Test
