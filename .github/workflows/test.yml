@@ -295,6 +295,8 @@ jobs:
               - 'embedded-system/decode-can-mf4-data/**'
             decode-can-trc-data:
               - 'embedded-system/decode-can-trc-data/**'
+            dense-transformer:
+              - 'large-language-model-architecture/dense-transformer/**'
             development-aws-glue-spark-scripts:
               - 'infrastructure/opentofu/environments/development/aws/general/files/aws-glue/spark-scripts/**'
             dust-dds-publisher:
@@ -577,6 +579,8 @@ jobs:
               - 'liquid-neural-network/**'
             mamba2:
               - 'state-space-model/mamba2/**'
+            mixture-of-experts:
+              - 'large-language-model-architecture/mixture-of-experts/**'
             mobile-android:
               - 'mobile/mobile-android/**'
             mobile-ios:
@@ -655,8 +659,6 @@ jobs:
               - 'parallel-computing/hm-taichi/count-primes/**'
             taichi-fluid-solver:
               - 'parallel-computing/hm-taichi/fluid-solver/**'
-            transformer:
-              - 'large-language-model-architecture/transformer/**'
             turso:
               - 'data-storage/turso/**'
             udp-receiver:
@@ -760,6 +762,7 @@ jobs:
       delta-lake-read-delta-lake-by-amazon-athena: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-amazon-athena }}
       delta-lake-read-delta-lake-by-trino: ${{ steps.filter.outputs.delta-lake-read-delta-lake-by-trino }}
       delta-lake-write-to-delta-lake: ${{ steps.filter.outputs.delta-lake-write-to-delta-lake }}
+      dense-transformer: ${{ steps.filter.outputs.dense-transformer }}
       development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
       dinov3: ${{ steps.filter.outputs.dinov3 }}
       dust-dds-publisher: ${{ steps.filter.outputs.dust-dds-publisher }}
@@ -893,6 +896,7 @@ jobs:
       lance: ${{ steps.filter.outputs.lance }}
       liquid-neural-network: ${{ steps.filter.outputs.liquid-neural-network }}
       mamba2: ${{ steps.filter.outputs.mamba2 }}
+      mixture-of-experts: ${{ steps.filter.outputs.mixture-of-experts }}
       mobile-android: ${{ steps.filter.outputs.mobile-android }}
       mobile-ios: ${{ steps.filter.outputs.mobile-ios }}
       mobile-react-native: ${{ steps.filter.outputs.mobile-react-native }}
@@ -932,7 +936,6 @@ jobs:
       surrogate-model: ${{ steps.filter.outputs.surrogate-model }}
       taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
       taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
-      transformer: ${{ steps.filter.outputs.transformer }}
       turso: ${{ steps.filter.outputs.turso }}
       udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
@@ -1257,6 +1260,7 @@ jobs:
       convert-modern-bert-to-core-ml: ${{ needs.detect-changes.outputs.convert-modern-bert-to-core-ml == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
       core-ml-tools: ${{ needs.detect-changes.outputs.core-ml-tools == 'true' }}
+      dense-transformer: ${{ needs.detect-changes.outputs.dense-transformer == 'true' }}
       feature-store: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
       fine-tune-whisper: ${{ needs.detect-changes.outputs.fine-tune-whisper == 'true' }}
       flow-matching: ${{ needs.detect-changes.outputs.flow-matching == 'true' }}
@@ -1328,7 +1332,6 @@ jobs:
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       streaming-sortformer-diarizer: ${{ needs.detect-changes.outputs.streaming-sortformer-diarizer == 'true' }}
-      transformer: ${{ needs.detect-changes.outputs.transformer == 'true' }}
       variational-autoencoder: ${{ needs.detect-changes.outputs.variational-autoencoder == 'true' }}
       webrtc-vad: ${{ needs.detect-changes.outputs.webrtc-vad == 'true' }}
 

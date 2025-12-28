@@ -562,7 +562,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **Model2Vec** - Fast static text embeddings distilled from Sentence Transformers
 - Model Architecture
   - Transformer
-    - Mixture of Experts (MoE)
+    - **Dense Transformer** - Standard transformer where all parameters (attention + FFN layers) are active for every token using full self-attention across the sequence
+    - **Mixture of Experts (MoE)** - Sparse transformer that routes each token to top-k expert sub-networks, activating only a fraction of total parameters to scale model capacity efficiently
   - State Space Model (SSM)
     - **Mamba 2** - State space model architecture for efficient sequence modeling with linear-time complexity
 - Large Language Model (LLM) Training
