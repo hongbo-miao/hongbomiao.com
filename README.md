@@ -567,12 +567,6 @@ The diagram illustrates the repository's architecture, which is considered overl
   - State Space Model (SSM)
     - **Mamba 2** - State space model architecture for efficient sequence modeling with linear-time complexity
 - Large Language Model (LLM) Training
-  - **DeepSpeed** - Deep learning optimization library for easy, efficient, and effective distributed training and inference
-    - **Zero Redundancy Optimizer (ZeRO)** - Memory optimization through partitioning optimizer states, gradients, and parameters
-    - **ZeRO-Infinity** - CPU/Non-Volatile Memory Express (NVMe) offloading for training models beyond GPU memory limits
-    - **3D Parallelism** - Combined data, pipeline, and tensor parallelism strategy
-    - **Ulysses Sequence Parallelism** - Sequence splitting for efficient long-context processing
-    - **DeepSpeed-MoE** - Optimized training and inference for Mixture of Experts (MoE) models
   - Training Paradigm
     - Causal Language Model (CLM)
       - **Qwen3** - Decoder-only transformer model for autoregressive text generation
@@ -582,6 +576,12 @@ The diagram illustrates the repository's architecture, which is considered overl
       - **NeoBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.
   - Training Optimization
     - **Automatic Mixed Precision** - Mixed precision FP16/FP32 training
+    - **DeepSpeed** - Deep learning optimization library for easy, efficient, and effective distributed training and inference
+      - **Zero Redundancy Optimizer (ZeRO)** - Memory optimization through partitioning optimizer states, gradients, and parameters
+      - **ZeRO-Infinity** - CPU/Non-Volatile Memory Express (NVMe) offloading for training models beyond GPU memory limits
+      - **3D Parallelism** - Combined data, pipeline, and tensor parallelism strategy
+      - **Ulysses Sequence Parallelism** - Sequence splitting for efficient long-context processing
+      - **DeepSpeed-MoE** - Optimized training and inference for Mixture of Experts (MoE) models
 - Large Language Model (LLM) Post-Training
   - Fine-Tuning
     - **Unsloth** - Efficient large language model (LLM) fine-tuning on single GPU via custom Triton kernels
