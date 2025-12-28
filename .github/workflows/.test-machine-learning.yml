@@ -1039,17 +1039,17 @@ jobs:
         with:
           version: 0.9.18
           enable-cache: true
-          cache-dependency-glob: large-language-model-training/hm-deepspeed/uv.lock
+          cache-dependency-glob: large-language-model-training/training-optimization/hm-deepspeed/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-training/hm-deepspeed/.python-version
+          python-version-file: large-language-model-training/training-optimization/hm-deepspeed/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-training/hm-deepspeed
+        working-directory: large-language-model-training/training-optimization/hm-deepspeed
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-training/hm-deepspeed
+        working-directory: large-language-model-training/training-optimization/hm-deepspeed
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1057,7 +1057,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-training/hm-deepspeed
+          directory: large-language-model-training/training-optimization/hm-deepspeed
 
   qwen3-test:
     name: Qwen3 | Test
