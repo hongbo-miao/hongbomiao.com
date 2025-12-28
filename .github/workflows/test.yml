@@ -373,6 +373,8 @@ jobs:
               - 'data-visualization/hm-dash/csv-visualizer/**'
             hm-dash-parquet-visualizer:
               - 'data-visualization/hm-dash/parquet-visualizer/**'
+            hm-deepspeed:
+              - 'large-language-model-training/hm-deepspeed/**'
             hm-diart:
               - 'audio/speaker-diarization/hm-diart/**'
             hm-docling:
@@ -639,7 +641,7 @@ jobs:
               - 'quantum-computing/**'
             qwen-vl:
               - 'vision-language-model/qwen-vl/**'
-            qwen:
+            qwen3:
               - 'large-language-model-training/training-paradigm/causal-language-model/qwen3/**'
             rnnoise-vad:
               - 'audio/voice-activity-detection/rnnoise-vad/**'
@@ -795,6 +797,7 @@ jobs:
       hm-dash-csv-visualizer: ${{ steps.filter.outputs.hm-dash-csv-visualizer }}
       hm-dash-parquet-visualizer: ${{ steps.filter.outputs.hm-dash-parquet-visualizer }}
       hm-deepeval: ${{ steps.filter.outputs.hm-deepeval }}
+      hm-deepspeed: ${{ steps.filter.outputs.hm-deepspeed }}
       hm-diart: ${{ steps.filter.outputs.hm-diart }}
       hm-docling: ${{ steps.filter.outputs.hm-docling }}
       hm-duckdb-query-duckdb: ${{ steps.filter.outputs.hm-duckdb-query-duckdb }}
@@ -926,7 +929,7 @@ jobs:
       q-learning: ${{ steps.filter.outputs.q-learning }}
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
       qwen-vl: ${{ steps.filter.outputs.qwen-vl }}
-      qwen: ${{ steps.filter.outputs.qwen }}
+      qwen3: ${{ steps.filter.outputs.qwen3 }}
       rnnoise-vad: ${{ steps.filter.outputs.rnnoise-vad }}
       robot-operating-system: ${{ steps.filter.outputs.robot-operating-system }}
       rti-connext-dds: ${{ steps.filter.outputs.rti-connext-dds }}
@@ -1272,6 +1275,7 @@ jobs:
       hm-crawl4ai: ${{ needs.detect-changes.outputs.hm-crawl4ai == 'true' }}
       hm-cuml: ${{ needs.detect-changes.outputs.hm-cuml == 'true' }}
       hm-deepeval: ${{ needs.detect-changes.outputs.hm-deepeval == 'true' }}
+      hm-deepspeed: ${{ needs.detect-changes.outputs.hm-deepspeed == 'true' }}
       hm-diart: ${{ needs.detect-changes.outputs.hm-diart == 'true' }}
       hm-docling: ${{ needs.detect-changes.outputs.hm-docling == 'true' }}
       hm-faster-whisper: ${{ needs.detect-changes.outputs.hm-faster-whisper == 'true' }}
@@ -1317,6 +1321,7 @@ jobs:
       kv-caching: ${{ needs.detect-changes.outputs.kv-caching == 'true' }}
       liquid-neural-network: ${{ needs.detect-changes.outputs.liquid-neural-network == 'true' }}
       mamba2: ${{ needs.detect-changes.outputs.mamba2 == 'true' }}
+      mixture-of-experts: ${{ needs.detect-changes.outputs.mixture-of-experts == 'true' }}
       model-context-protocol: ${{ needs.detect-changes.outputs.model-context-protocol == 'true' }}
       modern-bert: ${{ needs.detect-changes.outputs.modern-bert == 'true' }}
       neo-bert: ${{ needs.detect-changes.outputs.neo-bert == 'true' }}
@@ -1327,7 +1332,7 @@ jobs:
       post-training-quantization: ${{ needs.detect-changes.outputs.post-training-quantization == 'true' }}
       q-learning: ${{ needs.detect-changes.outputs.q-learning == 'true' }}
       qwen-vl: ${{ needs.detect-changes.outputs.qwen-vl == 'true' }}
-      qwen: ${{ needs.detect-changes.outputs.qwen == 'true' }}
+      qwen3: ${{ needs.detect-changes.outputs.qwen3 == 'true' }}
       rnnoise-vad: ${{ needs.detect-changes.outputs.rnnoise-vad == 'true' }}
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
