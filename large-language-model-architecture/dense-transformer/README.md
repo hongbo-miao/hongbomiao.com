@@ -1,4 +1,4 @@
-# Transformer
+# Dense Transformer
 
 A from-scratch implementation of the Transformer architecture from "Attention Is All You Need" (Vaswani et al., 2017).
 

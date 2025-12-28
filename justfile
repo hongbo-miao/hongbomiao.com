@@ -581,8 +581,8 @@ static-type-check-python:
     uv run poe static-type-check-python --package=large-language-model-application.hm-langgraph.applications.chat-pdf
     uv run poe static-type-check-python --package=large-language-model-application.hm-llama-index.applications.chat-pdf
     uv run poe static-type-check-python --package=large-language-model-application.hm-pydantic-ai.applications.chat-pdf
-    uv run poe static-type-check-python --package=large-language-model-architecture.mixture-of-experts
     uv run poe static-type-check-python --package=large-language-model-architecture.dense-transformer
+    uv run poe static-type-check-python --package=large-language-model-architecture.mixture-of-experts
     uv run poe static-type-check-python --package=large-language-model-evaluation.hm-deepeval
     uv run poe static-type-check-python --package=large-language-model-inference.hm-mlx-lm
     uv run poe static-type-check-python --package=large-language-model-inference.hm-optimum
@@ -598,6 +598,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=large-language-model-post-training.fine-tuning.hm-torchtune
     uv run poe static-type-check-python --package=large-language-model-post-training.fine-tuning.hm-unsloth
     uv run poe static-type-check-python --package=large-language-model-post-training.post-training-quantization
+    uv run poe static-type-check-python --package=large-language-model-training.hm-deepspeed
     uv run poe static-type-check-python --package=large-language-model-training.training-optimization.automatic-mixed-precision
     uv run poe static-type-check-python --package=large-language-model-training.training-paradigm.causal-language-model.qwen3
     uv run poe static-type-check-python --package=large-language-model-training.training-paradigm.masked-language-model.convert-modern-bert-to-core-ml
