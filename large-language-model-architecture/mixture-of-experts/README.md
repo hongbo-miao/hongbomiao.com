@@ -74,6 +74,7 @@ Without regularization, the router might collapse to using only 1-2 experts. The
 ```
 
 where:
+
 - $N$: Number of experts
 - $f_i$: Fraction of tokens routed to expert $i$
 - $p_i$: Mean routing probability to expert $i$
@@ -189,21 +190,3 @@ flowchart TB
 | $\approx N \cdot \alpha$ | One expert dominates | Bad - expert collapse |
 
 When `load_balance_weight = 0.01` and experts are balanced, expect Balance Loss $\approx 0.01$.
-
-### Expert Utilization
-
-Good training shows roughly equal utilization:
-```
-Expert 0: 25.6%
-Expert 1: 24.3%
-Expert 2: 26.3%
-Expert 3: 23.7%
-```
-
-Bad training (collapse) would show:
-```
-Expert 0: 95.2%
-Expert 1: 2.1%
-Expert 2: 1.8%
-Expert 3: 0.9%
-```

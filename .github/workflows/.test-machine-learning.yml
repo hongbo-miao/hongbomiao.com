@@ -72,6 +72,9 @@ name: . Test Machine Learning
       hm-deepeval:
         required: true
         type: boolean
+      hm-deepspeed:
+        required: true
+        type: boolean
       hm-diart:
         required: true
         type: boolean
@@ -240,7 +243,7 @@ name: . Test Machine Learning
       qwen-vl:
         required: true
         type: boolean
-      qwen:
+      qwen3:
         required: true
         type: boolean
       rnnoise-vad:
@@ -924,9 +927,141 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: data-extraction/hm-docling
 
-  qwen-test:
-    name: Qwen | Test
-    if: ${{ inputs.workflow || inputs.qwen }}
+  dense-transformer-test:
+    name: Dense Transformer | Test
+    if: ${{ inputs.workflow || inputs.dense-transformer }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: large-language-model-architecture/dense-transformer/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: large-language-model-architecture/dense-transformer/.python-version
+      - name: Install dependencies
+        working-directory: large-language-model-architecture/dense-transformer
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: large-language-model-architecture/dense-transformer
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: large-language-model-architecture/dense-transformer
+
+  mixture-of-experts-test:
+    name: Mixture of Experts | Test
+    if: ${{ inputs.workflow || inputs.mixture-of-experts }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: large-language-model-architecture/mixture-of-experts/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: large-language-model-architecture/mixture-of-experts/.python-version
+      - name: Install dependencies
+        working-directory: large-language-model-architecture/mixture-of-experts
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: large-language-model-architecture/mixture-of-experts
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: large-language-model-architecture/mixture-of-experts
+
+  mamba2-test:
+    name: Mamba 2 | Test
+    if: ${{ inputs.workflow || inputs.mamba2 }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: state-space-model/mamba2/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: state-space-model/mamba2/.python-version
+      - name: Install dependencies
+        working-directory: state-space-model/mamba2
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: state-space-model/mamba2
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: state-space-model/mamba2
+
+  deepspeed-test:
+    name: DeepSpeed | Test
+    if: ${{ inputs.workflow || inputs.hm-deepspeed }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.18
+          enable-cache: true
+          cache-dependency-glob: large-language-model-training/hm-deepspeed/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: large-language-model-training/hm-deepspeed/.python-version
+      - name: Install dependencies
+        working-directory: large-language-model-training/hm-deepspeed
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: large-language-model-training/hm-deepspeed
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: large-language-model-training/hm-deepspeed
+
+  qwen3-test:
+    name: Qwen3 | Test
+    if: ${{ inputs.workflow || inputs.qwen3 }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -956,7 +1091,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-training/training-paradigm/causal-language-model/qwen3
-
 
   modern-bert-test:
     name: ModernBERT | Test
@@ -2417,72 +2551,6 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: generative-model/flow-matching
 
-  dense-transformer-test:
-    name: Dense Transformer | Test
-    if: ${{ inputs.workflow || inputs.dense-transformer }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.18
-          enable-cache: true
-          cache-dependency-glob: large-language-model-architecture/dense-transformer/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: large-language-model-architecture/dense-transformer/.python-version
-      - name: Install dependencies
-        working-directory: large-language-model-architecture/dense-transformer
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: large-language-model-architecture/dense-transformer
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-architecture/dense-transformer
-
-  mixture-of-experts-test:
-    name: Mixture of Experts | Test
-    if: ${{ inputs.workflow || inputs.mixture-of-experts }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.18
-          enable-cache: true
-          cache-dependency-glob: large-language-model-architecture/mixture-of-experts/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: large-language-model-architecture/mixture-of-experts/.python-version
-      - name: Install dependencies
-        working-directory: large-language-model-architecture/mixture-of-experts
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: large-language-model-architecture/mixture-of-experts
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-architecture/mixture-of-experts
-
   liquid-neural-network-test:
     name: Liquid Neural Network | Test
     if: ${{ inputs.workflow || inputs.liquid-neural-network }}
@@ -2515,39 +2583,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: liquid-neural-network
-
-  mamba2-test:
-    name: Mamba 2 | Test
-    if: ${{ inputs.workflow || inputs.mamba2 }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.18
-          enable-cache: true
-          cache-dependency-glob: state-space-model/mamba2/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: state-space-model/mamba2/.python-version
-      - name: Install dependencies
-        working-directory: state-space-model/mamba2
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: state-space-model/mamba2
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: state-space-model/mamba2
 
   hyperparameter-optimization-test:
     name: Hyperparameter Optimization | Test

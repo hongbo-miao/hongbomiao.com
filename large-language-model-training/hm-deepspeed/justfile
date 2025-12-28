@@ -1,0 +1,14 @@
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+dev:
+    uv run deepspeed --include localhost:0,1 src/main.py
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
