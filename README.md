@@ -567,6 +567,12 @@ The diagram illustrates the repository's architecture, which is considered overl
   - State Space Model (SSM)
     - **Mamba 2** - State space model architecture for efficient sequence modeling with linear-time complexity
 - Large Language Model (LLM) Training
+  - **DeepSpeed** - Deep learning optimization library for easy, efficient, and effective distributed training and inference
+    - **Zero Redundancy Optimizer (ZeRO)** - Memory optimization through partitioning optimizer states, gradients, and parameters
+    - **ZeRO-Infinity** - CPU/Non-Volatile Memory Express (NVMe) offloading for training models beyond GPU memory limits
+    - **3D Parallelism** - Combined data, pipeline, and tensor parallelism strategy
+    - **Ulysses Sequence Parallelism** - Sequence splitting for efficient long-context processing
+    - **DeepSpeed-MoE** - Optimized training and inference for Mixture of Experts (MoE) models
   - Training Paradigm
     - Causal Language Model (CLM)
       - **Qwen3** - Decoder-only transformer model for autoregressive text generation
