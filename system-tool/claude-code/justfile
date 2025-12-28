@@ -5,6 +5,11 @@ start:
     claude --model=claude-opus-4-5-20251101
 
 start-litellm:
+    export ANTHROPIC_BASE_URL=https://litellm.hongbomiao.com && \
+    export ANTHROPIC_AUTH_TOKEN=xxx && \
+    claude --model=claude-opus-4-5
+
+start-litellm-bedrock:
     # https://code.claude.com/docs/en/llm-gateway
     export ANTHROPIC_BEDROCK_BASE_URL=https://litellm.hongbomiao.com/bedrock && \
     export CLAUDE_CODE_SKIP_BEDROCK_AUTH=1 && \
