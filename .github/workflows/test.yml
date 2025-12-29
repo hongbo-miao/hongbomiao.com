@@ -625,6 +625,8 @@ jobs:
               - 'audio/automatic-speech-recognition-inference/nvidia-nemo/**'
             open-clip:
               - 'embedding/open-clip/**'
+            openvla:
+              - 'multimodal-model/vision-language-action-model/openvla/**'
             pack-unpack-data:
               - 'embedded-system/pack-unpack-data/**'
             plotly-heatmap:
@@ -921,6 +923,7 @@ jobs:
       nvidia-dali: ${{ steps.filter.outputs.nvidia-dali }}
       nvidia-nemo: ${{ steps.filter.outputs.nvidia-nemo }}
       open-clip: ${{ steps.filter.outputs.open-clip }}
+      openvla: ${{ steps.filter.outputs.openvla }}
       pack-unpack-data: ${{ steps.filter.outputs.pack-unpack-data }}
       plotly-heatmap: ${{ steps.filter.outputs.plotly-heatmap }}
       post-training-quantization: ${{ steps.filter.outputs.post-training-quantization }}
@@ -1329,6 +1332,7 @@ jobs:
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
       nvidia-nemo: ${{ needs.detect-changes.outputs.nvidia-nemo == 'true' }}
       open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
+      openvla: ${{ needs.detect-changes.outputs.openvla == 'true' }}
       post-training-quantization: ${{ needs.detect-changes.outputs.post-training-quantization == 'true' }}
       q-learning: ${{ needs.detect-changes.outputs.q-learning == 'true' }}
       qwen-vl: ${{ needs.detect-changes.outputs.qwen-vl == 'true' }}
