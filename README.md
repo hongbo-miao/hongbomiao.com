@@ -641,6 +641,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **ImageBind** - Multimodal embedding model for images, text, audio, video, depth, thermal, and inertial measurement units (IMUs)
 - Multimodal Model
   - **Qwen3-Omni** - Omni multimodal model with text, audio, image, video understanding and real-time speech generation
+  - Vision-Language-Action (VLA) Model
+    - **OpenVLA** - Vision-language-action model for robotic manipulation that processes visual observations and language instructions to generate robot actions, fine-tuned from prism-dinosiglip-224px (DINOv2 ViT-L/14 and ViT-SO400M-14-SigLIP vision backbones, LLaMA 2 language model)
 
 ### Liquid Neural Network (LNN)
 
