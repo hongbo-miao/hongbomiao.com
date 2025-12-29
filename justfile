@@ -628,6 +628,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=machine-learning.nvidia-dali
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.deploy
     uv run poe static-type-check-python --package=machine-learning.nvidia-triton-inference-server.amazon-sagemaker-triton-resnet-50.infer
+    uv run poe static-type-check-python --package=multimodal-model.vision-language-action-model.openvla
     uv run poe static-type-check-python --package=named-entity-recognition.bert
     uv run poe static-type-check-python --package=named-entity-recognition.hm-gliner
     uv run poe static-type-check-python --package=parallel-computing.hm-taichi.count-primes
