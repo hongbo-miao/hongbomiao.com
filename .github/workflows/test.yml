@@ -671,6 +671,10 @@ jobs:
               - 'network/udp/udp-sender/**'
             variational-autoencoder:
               - 'generative-model/variational-autoencoder/**'
+            vision-language-action-infer:
+              - 'multimodal-model/vision-language-action-model/vision-language-action/infer/**'
+            vision-language-action-train:
+              - 'multimodal-model/vision-language-action-model/vision-language-action/train/**'
             web-cypress:
               - 'web-cypress/**'
             web:
@@ -946,6 +950,8 @@ jobs:
       udp-receiver: ${{ steps.filter.outputs.udp-receiver }}
       udp-sender: ${{ steps.filter.outputs.udp-sender }}
       variational-autoencoder: ${{ steps.filter.outputs.variational-autoencoder }}
+      vision-language-action-infer: ${{ steps.filter.outputs.vision-language-action-infer }}
+      vision-language-action-train: ${{ steps.filter.outputs.vision-language-action-train }}
       web-cypress: ${{ steps.filter.outputs.web-cypress }}
       web: ${{ steps.filter.outputs.web }}
       webrtc-vad: ${{ steps.filter.outputs.webrtc-vad }}
@@ -1342,6 +1348,8 @@ jobs:
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       streaming-sortformer-diarizer: ${{ needs.detect-changes.outputs.streaming-sortformer-diarizer == 'true' }}
       variational-autoencoder: ${{ needs.detect-changes.outputs.variational-autoencoder == 'true' }}
+      vision-language-action-infer: ${{ needs.detect-changes.outputs.vision-language-action-infer == 'true' }}
+      vision-language-action-train: ${{ needs.detect-changes.outputs.vision-language-action-train == 'true' }}
       webrtc-vad: ${{ needs.detect-changes.outputs.webrtc-vad == 'true' }}
 
   test-computer-vision:

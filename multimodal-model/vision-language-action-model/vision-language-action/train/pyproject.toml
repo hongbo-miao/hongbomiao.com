@@ -1,0 +1,31 @@
+[project]
+name = "vision-language-action-train"
+version = "1.0.0"
+dependencies = [
+  "vision-language-action-lib",
+  "torch==2.9.1",
+  "torchvision==0.24.1",
+  "transformers==4.57.3",
+  "pydantic==2.12.5",
+  "pillow==12.0.0",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.39.0",
+  "pytest-cov==7.0.0",
+  "pytest==9.0.2",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.9.0"
+
+[tool.uv.sources]
+vision-language-action-lib = { path = "../lib" }
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
+validate-action-predictions = { cmd = "python src/scripts/validate_action_predictions.py", env = { PYTHONPATH = "src" } }
