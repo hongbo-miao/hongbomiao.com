@@ -1,0 +1,28 @@
+[project]
+name = "vision-language-action-infer"
+version = "1.0.0"
+dependencies = [
+  "vision-language-action-lib",
+  "isaacsim[all]==5.1.0.0",
+  "transformers==4.57.3",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet",
+  "pytest-cov",
+  "pytest==9.0.2",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.9.0"
+override-dependencies = ["pywin32; sys_platform == 'win32'"]
+
+[tool.uv.sources]
+vision-language-action-lib = { path = "../lib" }
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
