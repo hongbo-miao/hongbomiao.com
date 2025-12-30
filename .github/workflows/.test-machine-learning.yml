@@ -90,6 +90,9 @@ name: . Test Machine Learning
       hm-flax:
         required: true
         type: boolean
+      hm-genesis:
+        required: true
+        type: boolean
       hm-gliner:
         required: true
         type: boolean
@@ -1966,6 +1969,101 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: machine-learning/neural-forecasting/forecast-air-passenger-number
 
+  convolutional-neural-network-test:
+    name: Convolutional Neural Network | Test
+    if: ${{ inputs.workflow || inputs.convolutional-neural-network }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.20
+          enable-cache: true
+          cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: machine-learning/convolutional-neural-network/.python-version
+      - name: Install dependencies
+        working-directory: machine-learning/convolutional-neural-network
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/convolutional-neural-network
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: machine-learning/convolutional-neural-network
+
+  graph-neural-network-test:
+    name: Graph Neural Network | Test
+    if: ${{ inputs.workflow || inputs.graph-neural-network }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.20
+          enable-cache: true
+          cache-dependency-glob: machine-learning/graph-neural-network/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: machine-learning/graph-neural-network/.python-version
+      - name: Install dependencies
+        working-directory: machine-learning/graph-neural-network
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: machine-learning/graph-neural-network
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: machine-learning/graph-neural-network
+
+  graph-neural-network-train:
+    name: Graph Neural Network | Train
+    if: ${{ inputs.workflow || inputs.graph-neural-network }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.20
+          enable-cache: true
+          cache-dependency-glob: machine-learning/graph-neural-network/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: machine-learning/graph-neural-network/.python-version
+      - name: Install dependencies
+        working-directory: machine-learning/graph-neural-network
+        run: |
+          uv sync --dev
+      - name: Train model
+        working-directory: machine-learning/graph-neural-network
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+        run: |
+          uv run poe dev --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
+
   reinforcement-learning-cart-pole-test:
     name: Reinforcement Learning (cart-pole) | Test
     if: ${{ inputs.workflow || inputs.cart-pole }}
@@ -3122,9 +3220,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: multimodal-model/vision-language-action-model/vision-language-action/train
 
-  convolutional-neural-network-test:
-    name: CNN | Test
-    if: ${{ inputs.workflow || inputs.convolutional-neural-network }}
+  genesis-test:
+    name: Genesis | Test
+    if: ${{ inputs.workflow || inputs.hm-genesis }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -3135,17 +3233,17 @@ jobs:
         with:
           version: 0.9.20
           enable-cache: true
-          cache-dependency-glob: machine-learning/convolutional-neural-network/uv.lock
+          cache-dependency-glob: physics/hm-genesis/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: machine-learning/convolutional-neural-network/.python-version
+          python-version-file: physics/hm-genesis/.python-version
       - name: Install dependencies
-        working-directory: machine-learning/convolutional-neural-network
+        working-directory: physics/hm-genesis
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/convolutional-neural-network
+        working-directory: physics/hm-genesis
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -3153,66 +3251,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/convolutional-neural-network
-
-  graph-neural-network-test:
-    name: GNN | Test
-    if: ${{ inputs.workflow || inputs.graph-neural-network }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.20
-          enable-cache: true
-          cache-dependency-glob: machine-learning/graph-neural-network/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: machine-learning/graph-neural-network/.python-version
-      - name: Install dependencies
-        working-directory: machine-learning/graph-neural-network
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: machine-learning/graph-neural-network
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/graph-neural-network
-
-  graph-neural-network-train:
-    name: GNN | Train
-    if: ${{ inputs.workflow || inputs.graph-neural-network }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.20
-          enable-cache: true
-          cache-dependency-glob: machine-learning/graph-neural-network/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: machine-learning/graph-neural-network/.python-version
-      - name: Install dependencies
-        working-directory: machine-learning/graph-neural-network
-        run: |
-          uv sync --dev
-      - name: Train model
-        working-directory: machine-learning/graph-neural-network
-        env:
-          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
-        run: |
-          uv run poe dev --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
+          directory: physics/hm-genesis

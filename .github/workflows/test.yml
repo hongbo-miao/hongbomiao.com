@@ -1290,6 +1290,7 @@ jobs:
       hm-faster-whisper: ${{ needs.detect-changes.outputs.hm-faster-whisper == 'true' }}
       hm-firecrawl: ${{ needs.detect-changes.outputs.hm-firecrawl == 'true' }}
       hm-flax: ${{ needs.detect-changes.outputs.hm-flax == 'true' }}
+      hm-genesis: ${{ needs.detect-changes.outputs.hm-genesis == 'true' }}
       hm-gliner: ${{ needs.detect-changes.outputs.hm-gliner == 'true' }}
       hm-gradio-classify-image: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
       hm-imagebind: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
@@ -1442,40 +1443,6 @@ jobs:
       hm-openaerostruct: ${{ needs.detect-changes.outputs.hm-openaerostruct == 'true' }}
       x-plane-rest-api: ${{ needs.detect-changes.outputs.x-plane-rest-api == 'true' }}
       x-plane-udp: ${{ needs.detect-changes.outputs.x-plane-udp == 'true' }}
-
-  genesis-test:
-    name: Genesis | Test
-    needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-genesis == 'true' }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.20
-          enable-cache: true
-          cache-dependency-glob: physics/hm-genesis/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: physics/hm-genesis/.python-version
-      - name: Install dependencies
-        working-directory: physics/hm-genesis
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: physics/hm-genesis
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: physics/hm-genesis
 
   call-matlab-function-in-python:
     name: Call MATLAB Function in Python | Test
