@@ -3154,41 +3154,8 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: multimodal-model/vision-language-action-model/openvla
 
-  vision-language-action-infer-test:
-    name: vision-language-action-infer | Test
-    if: ${{ inputs.workflow || inputs.vision-language-action-infer }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.20
-          enable-cache: true
-          cache-dependency-glob: multimodal-model/vision-language-action-model/vision-language-action/infer/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: multimodal-model/vision-language-action-model/vision-language-action/infer/.python-version
-      - name: Install dependencies
-        working-directory: multimodal-model/vision-language-action-model/vision-language-action/infer
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: multimodal-model/vision-language-action-model/vision-language-action/infer
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: multimodal-model/vision-language-action-model/vision-language-action/infer
-
   vision-language-action-train-test:
-    name: vision-language-action-train | Test
+    name: Vision-Language-Action (Train) | Test
     if: ${{ inputs.workflow || inputs.vision-language-action-train }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -3219,6 +3186,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: multimodal-model/vision-language-action-model/vision-language-action/train
+
+  vision-language-action-infer-test:
+    name: Vision-Language-Action (Infer) | Test
+    if: ${{ inputs.workflow || inputs.vision-language-action-infer }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.20
+          enable-cache: true
+          cache-dependency-glob: multimodal-model/vision-language-action-model/vision-language-action/infer/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: multimodal-model/vision-language-action-model/vision-language-action/infer/.python-version
+      - name: Install dependencies
+        working-directory: multimodal-model/vision-language-action-model/vision-language-action/infer
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: multimodal-model/vision-language-action-model/vision-language-action/infer
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: multimodal-model/vision-language-action-model/vision-language-action/infer
 
   genesis-test:
     name: Genesis | Test
