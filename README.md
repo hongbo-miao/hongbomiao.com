@@ -875,17 +875,12 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Jetson TX2** - Single-board computer (SBC)
 - **RISC-V** - Open standard instruction set architecture (ISA)
 
-## Physics
-
-- **Genesis** - Physics platform for robotics, embodied AI, physical AI applications
-
 ## Simulation
 
 - **Surrogate Modeling Toolbox (SMT)** - Surrogate modeling
 - **AnyLogic** - Simulation modeling tool
 - **LabVIEW** - Graphical programming environment
 - **VeriStand** - Real-time testing and simulation
-- **CoppeliaSim** - Robot simulation
 - **OpenFOAM** - Computational fluid dynamics (CFD)
 - **SimScale** - Computational fluid dynamics (CFD), finite element analysis (FEA), thermal simulation
 - **BlueSky** - Air traffic simulator
@@ -907,6 +902,10 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **Signal Processing Toolbox** - Signal processing and analysis
     - **Simulink** - Simulation and model-based designing
       - **Simscape** - Multidomain physical systems simulation
+- **CoppeliaSim** - Robotics simulator with a distributed control architecture for fast prototyping, algorithm development, and factory automation
+- **Genesis** - Generative world and universal physics platform for general-purpose robotics and embodied AI learning
+- **NVIDIA Omniverse** - Collection of libraries and microservices for developing physical AI applications such as industrial digital twins
+  - **NVIDIA Isaac Sim** - Application to simulate, test, and validate physical AI-based robots and multi-robotic fleets
 
 ## Autonomy
 
