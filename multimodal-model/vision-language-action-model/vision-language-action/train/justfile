@@ -1,0 +1,17 @@
+update-lock-file:
+    uv lock
+
+install-dependencies:
+    uv sync --dev
+
+dev:
+    uv run poe dev
+
+validate-action-predictions:
+    uv run poe validate-action-predictions
+
+test:
+    uv run poe test
+
+test-coverage:
+    uv run poe test-coverage
