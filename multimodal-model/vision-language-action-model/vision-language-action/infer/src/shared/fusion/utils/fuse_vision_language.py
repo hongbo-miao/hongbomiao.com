@@ -17,12 +17,12 @@ def fuse_vision_language(
     Fuse vision and language tokens through the language model.
 
     Concatenates projected vision tokens with text embeddings and passes
-    through Qwen3 to get contextualized representations.
+    through the language model to get contextualized representations.
 
     Args:
         vision_tokens: Projected vision features [batch, num_patches, hidden_dim]
         text_embeddings: Text token embeddings [batch, seq_len, hidden_dim]
-        language_model: Qwen3 model
+        language_model: Language model for contextualization
         attention_mask: Optional attention mask for the fused sequence
 
     Returns:

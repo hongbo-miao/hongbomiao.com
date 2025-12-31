@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 CHECKPOINT_DIRECTORY = Path("output/checkpoints")
 
 DINOV3_MODEL_ID = "facebook/dinov3-vits16-pretrain-lvd1689m"
-QWEN3_EMBEDDING_MODEL_ID = "Qwen/Qwen3-Embedding-0.6B"
+QWEN3_MODEL_ID = "Qwen/Qwen3-0.6B"
 
 SAMPLE_COUNT = 5000
 BATCH_SIZE = 64
@@ -44,23 +44,23 @@ def main() -> None:
     )
     vision_dimension = vision_model.config.hidden_size
 
-    logger.info("Loading embedding model...")
-    embedding_model, tokenizer, _ = load_language_model(
-        model_id=QWEN3_EMBEDDING_MODEL_ID,
+    logger.info("Loading language model...")
+    language_model, tokenizer, _ = load_language_model(
+        model_id=QWEN3_MODEL_ID,
         device=device,
     )
-    embedding_dimension = embedding_model.config.hidden_size
+    language_dimension = language_model.config.hidden_size
 
     logger.info("Creating vision projection...")
     vision_projection = create_vision_projection(
         vision_dimension=vision_dimension,
-        language_dimension=embedding_dimension,
+        language_dimension=language_dimension,
         device=device,
     )
 
     logger.info("Creating Flow Matching policy...")
     context_dimension = (
-        embedding_dimension * 2
+        language_dimension * 2
     )  # vision_pooled + text_embedding concatenated
     policy = FlowMatchingPolicy(
         context_dimension=context_dimension,
@@ -73,7 +73,7 @@ def main() -> None:
     train_flow_matching_policy(
         policy=policy,
         vision_model=vision_model,
-        embedding_model=embedding_model,
+        language_model=language_model,
         tokenizer=tokenizer,
         vision_projection=vision_projection,
         device=device,

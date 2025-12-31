@@ -33,13 +33,13 @@ def apply_action_to_quadrotor(
 
     quadrotor = world.scene.get_object("quadrotor")
 
-    new_position_x = current_state.position_x + action.delta_x * action_scale
-    new_position_y = current_state.position_y + action.delta_y * action_scale
-    new_position_z = current_state.position_z + action.delta_z * action_scale
+    new_position_x = current_state.position_x + action.delta_x_mps * action_scale
+    new_position_y = current_state.position_y + action.delta_y_mps * action_scale
+    new_position_z = current_state.position_z + action.delta_z_mps * action_scale
 
-    new_roll = current_state.roll + action.delta_roll * action_scale
-    new_pitch = current_state.pitch + action.delta_pitch * action_scale
-    new_yaw = current_state.yaw + action.delta_yaw * action_scale
+    new_roll = current_state.roll + action.delta_roll_radps * action_scale
+    new_pitch = current_state.pitch + action.delta_pitch_radps * action_scale
+    new_yaw = current_state.yaw + action.delta_yaw_radps * action_scale
 
     new_position = np.array([new_position_x, new_position_y, new_position_z])
     new_orientation_quat = euler_angles_to_quat(
