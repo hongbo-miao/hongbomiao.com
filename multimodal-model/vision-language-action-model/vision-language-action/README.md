@@ -78,17 +78,6 @@ The network predicts the velocity field:
 
 ### Vision Projection
 
-The `VisionProjection` module is implemented as an `nn.Sequential` block:
-
-```python
-self.projection = nn.Sequential(
-    nn.Linear(vision_dimension, hidden_dimension),  # W1
-    nn.GELU(),
-    nn.Linear(hidden_dimension, language_dimension),  # W2
-    nn.LayerNorm(language_dimension),
-)
-```
-
 | Step | Formula | Code |
 | --- | --- | --- |
 | 1 | $\mathbf{h} = \text{GELU}(\mathbf{W}_1 \mathbf{v})$ | `nn.Linear` → `nn.GELU()` |
