@@ -15,7 +15,7 @@ def create_quadrotor(
     orientation: tuple[float, float, float, float] = (1.0, 0.0, 0.0, 0.0),
 ) -> "XFormPrim":
     """
-    Create a quadrotor (eVTOL) in the Isaac Sim scene.
+    Create a quadrotorquadrotor in the Isaac Sim scene.
 
     Args:
         prim_path: USD prim path for the quadrotor

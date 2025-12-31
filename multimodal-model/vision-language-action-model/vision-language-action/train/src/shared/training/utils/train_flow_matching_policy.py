@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 def train_flow_matching_policy(
     policy: FlowMatchingPolicy,
     vision_model: PreTrainedModel,
-    embedding_model: PreTrainedModel,
+    language_model: PreTrainedModel,
     tokenizer: PreTrainedTokenizerBase,
     vision_projection: VisionProjection,
     device: torch.device,
@@ -43,7 +43,7 @@ def train_flow_matching_policy(
         images=images,
         instructions=instructions,
         vision_model=vision_model,
-        embedding_model=embedding_model,
+        language_model=language_model,
         tokenizer=tokenizer,
         device=device,
     )
@@ -133,7 +133,7 @@ def precompute_features(
     images: list,
     instructions: list[str],
     vision_model: PreTrainedModel,
-    embedding_model: PreTrainedModel,
+    language_model: PreTrainedModel,
     tokenizer: PreTrainedTokenizerBase,
     device: torch.device,
 ) -> tuple[list[Tensor], list[Tensor]]:
@@ -161,7 +161,7 @@ def precompute_features(
             input_ids = tokens["input_ids"].to(device)
             attention_mask = tokens["attention_mask"].to(device)
 
-            outputs = embedding_model(
+            outputs = language_model(
                 input_ids=input_ids,
                 attention_mask=attention_mask,
             )

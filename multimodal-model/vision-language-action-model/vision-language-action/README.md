@@ -127,7 +127,7 @@ flowchart TB
 
     subgraph Language
         G[Tokenizer]
-        H[Qwen3 Embedding]
+        H[Qwen3]
         I["Text Embeddings<br>[batch, seq_len, 3584]"]
     end
 

@@ -12,12 +12,12 @@ SIMULATION_CONFIG = {
 }
 
 
-def create_evtol_environment(
+def create_quadrotor_environment(
     config: dict | None = None,
     headless: bool = False,
 ) -> SimulationApp:
     """
-    Create Isaac Sim environment for eVTOL simulation.
+    Create Isaac Sim environment for quadrotor simulation.
 
     Args:
         config: Optional simulation configuration overrides
