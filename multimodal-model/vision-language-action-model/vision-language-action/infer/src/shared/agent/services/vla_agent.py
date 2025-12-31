@@ -15,19 +15,19 @@ logger = logging.getLogger(__name__)
 
 
 class VLAAgent:
-    """Vision-Language-Action Agent using DINOv3 + Qwen3 Embedding + Flow Matching."""
+    """Vision-Language-Action Agent using DINOv3 + Qwen3 + Flow Matching."""
 
     def __init__(
         self,
         vision_model: PreTrainedModel,
-        embedding_model: PreTrainedModel,
+        language_model: PreTrainedModel,
         tokenizer: PreTrainedTokenizer,
         vision_projection: VisionProjection,
         policy: FlowMatchingPolicy,
         device: torch.device,
     ) -> None:
         self.vision_model = vision_model
-        self.embedding_model = embedding_model
+        self.language_model = language_model
         self.tokenizer = tokenizer
         self.vision_projection = vision_projection
         self.policy = policy
@@ -74,7 +74,7 @@ class VLAAgent:
         attention_mask = tokens["attention_mask"].to(self.device)
 
         with torch.no_grad():
-            outputs = self.embedding_model(
+            outputs = self.language_model(
                 input_ids=input_ids,
                 attention_mask=attention_mask,
             )
@@ -93,8 +93,8 @@ class VLAAgent:
         )
 
         logger.info(
-            f"Predicted action: dx={action.delta_x:.4f}, dy={action.delta_y:.4f}, dz={action.delta_z:.4f}, "
-            f"droll={action.delta_roll:.4f}, dpitch={action.delta_pitch:.4f}, dyaw={action.delta_yaw:.4f}",
+            f"Predicted action: dx={action.delta_x_mps:.4f} m/s, dy={action.delta_y_mps:.4f} m/s, dz={action.delta_z_mps:.4f} m/s, "
+            f"droll={action.delta_roll_radps:.4f} rad/s, dpitch={action.delta_pitch_radps:.4f} rad/s, dyaw={action.delta_yaw_radps:.4f} rad/s",
         )
 
         return action

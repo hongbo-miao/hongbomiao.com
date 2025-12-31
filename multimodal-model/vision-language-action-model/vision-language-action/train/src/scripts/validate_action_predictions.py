@@ -1,4 +1,5 @@
 import logging
+from random import SystemRandom
 
 import torch
 from PIL import Image
@@ -16,9 +17,10 @@ from vision_language_action_lib.vision.utils.encode_image import encode_image
 from vision_language_action_lib.vision.utils.load_vision_model import load_vision_model
 
 logger = logging.getLogger(__name__)
+random_number_generator = SystemRandom()
 
 DINOV3_MODEL_ID = "facebook/dinov3-vits16-pretrain-lvd1689m"
-QWEN3_EMBEDDING_MODEL_ID = "Qwen/Qwen3-Embedding-0.6B"
+QWEN3_MODEL_ID = "Qwen/Qwen3-0.6B"
 CHECKPOINT_DIRECTORY = "output/checkpoints"
 
 
@@ -36,17 +38,17 @@ def validate_action_predictions() -> None:
     vision_model, _ = load_vision_model(DINOV3_MODEL_ID, device)
     vision_dimension = vision_model.config.hidden_size
 
-    logger.info("Loading embedding model...")
-    embedding_model, tokenizer, _ = load_language_model(
-        QWEN3_EMBEDDING_MODEL_ID,
+    logger.info("Loading language model...")
+    language_model, tokenizer, _ = load_language_model(
+        QWEN3_MODEL_ID,
         device,
     )
-    embedding_dimension = embedding_model.config.hidden_size
+    language_dimension = language_model.config.hidden_size
 
     logger.info("Loading vision projection checkpoint...")
     vision_projection = create_vision_projection(
         vision_dimension,
-        embedding_dimension,
+        language_dimension,
         device,
     )
     vision_projection.load_state_dict(
@@ -55,7 +57,7 @@ def validate_action_predictions() -> None:
     vision_projection.eval()
 
     logger.info("Loading policy checkpoint...")
-    context_dimension = embedding_dimension * 2
+    context_dimension = language_dimension * 2
     policy = FlowMatchingPolicy(
         context_dimension=context_dimension,
         action_dimension=6,
@@ -86,7 +88,7 @@ def validate_action_predictions() -> None:
         attention_mask = tokens["attention_mask"].to(device)
 
         with torch.no_grad():
-            outputs = embedding_model(
+            outputs = language_model(
                 input_ids=input_ids,
                 attention_mask=attention_mask,
             )
@@ -106,29 +108,62 @@ def validate_action_predictions() -> None:
         action = torch.clamp(action, -2, 2)
         return action.squeeze().cpu().tolist()
 
-    high_altitude_image = create_altitude_image(simulated_altitude=7.0)
-    low_altitude_image = create_altitude_image(simulated_altitude=1.0)
-
-    logger.info("\nComparing delta_z for different instructions:\n")
+    logger.info("=" * 90)
+    logger.info("Validating action predictions")
+    logger.info("=" * 90)
     logger.info(
-        f"{'Instruction':<20} {'Altitude':>10} {'delta_z':>10} {'Direction':>10}",
+        f"{'Instruction':<40} {'Altitude(m)':>12} {'dz(m/s)':>10} {'Direction':>10}",
     )
-    logger.info("-" * 54)
+    logger.info("-" * 90)
 
-    landing_instructions = ["land", "landing", "descend", "go down"]
-    takeoff_instructions = ["fly up", "take off", "ascend", "go up"]
+    landing_instructions = [
+        "land",
+        "landing",
+        "descend",
+        "go down",
+        "To the ground!",
+        "Bring it down",
+        "Time to touch down",
+        "Return to earth",
+        "Set it on the ground",
+        "Come back down here",
+    ]
+    takeoff_instructions = [
+        "fly up",
+        "take off",
+        "ascend",
+        "go up",
+        "To the moon!",
+        "Reach for the sky",
+        "Up, up, and away!",
+        "Elevate the drone",
+        "Gain some altitude please",
+        "Let's go higher",
+    ]
 
     for instruction in landing_instructions:
-        action = get_action(high_altitude_image, instruction)
-        delta_z = action[2]
-        direction = "UP" if delta_z > 0 else "DOWN"
-        logger.info(f"{instruction:<20} {'HIGH':>10} {delta_z:>+10.4f} {direction:>10}")
+        altitude_m = random_number_generator.uniform(450.0, 1200.0)
+        image = create_altitude_image(simulated_altitude_m=altitude_m)
+        action = get_action(image, instruction)
+        delta_z_mps = action[2]
+        direction = "UP" if delta_z_mps > 0 else "DOWN"
+        expected = "DOWN"
+        status = "PASS" if direction == expected else "FAIL"
+        logger.info(
+            f"{instruction:<40} {altitude_m:>12.1f} {delta_z_mps:>+10.4f} {direction:>10} [{status}]",
+        )
 
     for instruction in takeoff_instructions:
-        action = get_action(low_altitude_image, instruction)
-        delta_z = action[2]
-        direction = "UP" if delta_z > 0 else "DOWN"
-        logger.info(f"{instruction:<20} {'LOW':>10} {delta_z:>+10.4f} {direction:>10}")
+        altitude_m = random_number_generator.uniform(0.0, 600.0)
+        image = create_altitude_image(simulated_altitude_m=altitude_m)
+        action = get_action(image, instruction)
+        delta_z_mps = action[2]
+        direction = "UP" if delta_z_mps > 0 else "DOWN"
+        expected = "UP"
+        status = "PASS" if direction == expected else "FAIL"
+        logger.info(
+            f"{instruction:<40} {altitude_m:>12.1f} {delta_z_mps:>+10.4f} {direction:>10} [{status}]",
+        )
 
 
 if __name__ == "__main__":

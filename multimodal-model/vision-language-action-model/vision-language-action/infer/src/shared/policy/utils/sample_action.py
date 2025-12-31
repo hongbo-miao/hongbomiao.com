@@ -79,10 +79,10 @@ def sample_action(
     logger.debug(f"Sampled action: {action_values}")
 
     return ActionOutput(
-        delta_x=action_values[0],
-        delta_y=action_values[1],
-        delta_z=action_values[2],
-        delta_roll=action_values[3],
-        delta_pitch=action_values[4],
-        delta_yaw=action_values[5],
+        delta_x_mps=action_values[0],
+        delta_y_mps=action_values[1],
+        delta_z_mps=action_values[2],
+        delta_roll_radps=action_values[3],
+        delta_pitch_radps=action_values[4],
+        delta_yaw_radps=action_values[5],
     )
