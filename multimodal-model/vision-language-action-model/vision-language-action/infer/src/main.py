@@ -4,8 +4,10 @@ from pathlib import Path
 import torch
 from shared.simulation.utils.apply_action_to_quadrotor import apply_action_to_quadrotor
 from shared.simulation.utils.create_camera import create_camera, update_camera_position
-from shared.simulation.utils.create_evtol_environment import create_evtol_environment
 from shared.simulation.utils.create_quadrotor import create_quadrotor
+from shared.simulation.utils.create_quadrotor_environment import (
+    create_quadrotor_environment,
+)
 from shared.simulation.utils.get_camera_observation import get_camera_observation
 from shared.simulation.utils.get_vehicle_state import get_vehicle_state
 from shared.visualization.utils.plot_trajectory import plot_trajectory
@@ -14,13 +16,12 @@ from shared.visualization.utils.save_camera_observation import save_camera_obser
 logger = logging.getLogger(__name__)
 
 DINOV3_MODEL_ID = "facebook/dinov3-vits16-pretrain-lvd1689m"
-QWEN3_EMBEDDING_MODEL_ID = "Qwen/Qwen3-Embedding-0.6B"
+QWEN3_MODEL_ID = "Qwen/Qwen3-0.6B"
 CHECKPOINT_DIRECTORY = Path("../train/output/checkpoints")
 FLOW_MATCHING_POLICY_CHECKPOINT_PATH = CHECKPOINT_DIRECTORY / "flow_matching_policy.pt"
 VISION_PROJECTION_CHECKPOINT_PATH = CHECKPOINT_DIRECTORY / "vision_projection.pt"
 
-INSTRUCTION = "fly up"
-# INSTRUCTION = "land"
+INSTRUCTION = "To the moon!"
 MAX_EPISODE_STEPS = 200
 OUTPUT_DIRECTORY = Path("output")
 
@@ -36,7 +37,7 @@ def run_vla_episode(
     logger.info(f"Visualization: headless={headless}, save_images={save_images}")
 
     logger.info("Creating Isaac Sim environment")
-    simulation_app = create_evtol_environment(headless=headless)
+    simulation_app = create_quadrotor_environment(headless=headless)
 
     from omni.isaac.core import World  # noqa: PLC0415
 
@@ -72,7 +73,7 @@ def run_vla_episode(
 
     agent = create_vla_agent(
         vision_model_id=DINOV3_MODEL_ID,
-        embedding_model_id=QWEN3_EMBEDDING_MODEL_ID,
+        language_model_id=QWEN3_MODEL_ID,
         flow_matching_policy_checkpoint_path=FLOW_MATCHING_POLICY_CHECKPOINT_PATH,
         vision_projection_checkpoint_path=VISION_PROJECTION_CHECKPOINT_PATH,
         flow_matching_policy_action_dimension=6,

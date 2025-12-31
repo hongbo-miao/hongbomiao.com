@@ -23,7 +23,7 @@ def load_language_model(
     if torch_dtype is None:
         torch_dtype = torch.bfloat16 if device.type == "cuda" else torch.float32
 
-    logger.info(f"Loading embedding model: {model_id}")
+    logger.info(f"Loading language model: {model_id}")
     logger.info(f"Device: {device}, dtype: {torch_dtype}")
 
     tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -35,5 +35,5 @@ def load_language_model(
     model = model.to(device)
     model.eval()
 
-    logger.info("Embedding model loaded successfully")
+    logger.info("Language model loaded successfully")
     return model, tokenizer, device

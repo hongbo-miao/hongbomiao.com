@@ -2,11 +2,11 @@ from pydantic import BaseModel
 
 
 class ActionOutput(BaseModel):
-    """Raw action output from Flow Matching policy (6-DoF)."""
+    """Raw action output from Flow Matching policy (6-DoF) in physical units."""
 
-    delta_x: float
-    delta_y: float
-    delta_z: float
-    delta_roll: float
-    delta_pitch: float
-    delta_yaw: float
+    delta_x_mps: float
+    delta_y_mps: float
+    delta_z_mps: float
+    delta_roll_radps: float
+    delta_pitch_radps: float
+    delta_yaw_radps: float
