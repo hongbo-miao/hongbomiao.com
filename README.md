@@ -519,6 +519,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **scikit-learn** - Machine learning library
   - **cuML** - GPU-accelerated machine learning library
 - **PyTorch** - Machine learning
+  - **torchvision** - PyTorch computer vision models and utilities
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
   - **torchdiffeq** - PyTorch differentiable ordinary differential equation (ODE) solvers
@@ -647,6 +648,14 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### World Foundation Model (WFM)
 
 - **NVIDIA Cosmos** - Platform for physical AI featuring generative world foundation models (WFMs), guardrails, and accelerated data processing pipelines
+
+### Convolutional Neural Network (CNN)
+
+- **Convolutional Neural Network (CNN)** - A deep learning architecture that uses learnable convolutional filters to automatically detect spatial hierarchies and local patterns in data, primarily used for image recognition, computer vision, and spatial data processing
+
+### Graph Neural Network (GNN)
+
+- **Graph Neural Network (GNN)** - A neural network architecture designed to process graph-structured data by iteratively aggregating information from neighboring nodes, enabling learning on non-Euclidean domains like social networks, molecules, and knowledge graphs
 
 ### Liquid Neural Network (LNN)
 
