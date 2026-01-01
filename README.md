@@ -635,6 +635,18 @@ The diagram illustrates the repository's architecture, which is considered overl
 - Vision Language Model (VLM)
   - **Qwen3-VL** - Vision language model (VLM)
 
+### Convolutional Neural Network (CNN)
+
+- **Convolutional Neural Network (CNN)** - A deep learning architecture that uses learnable convolutional filters to automatically detect spatial hierarchies and local patterns in data, primarily used for image recognition, computer vision, and spatial data processing
+
+### Graph Neural Network (GNN)
+
+- **Graph Neural Network (GNN)** - A neural network architecture designed to process graph-structured data by iteratively aggregating information from neighboring nodes, enabling learning on non-Euclidean domains like social networks, molecules, and knowledge graphs
+
+### Liquid Neural Network (LNN)
+
+- **Liquid Neural Network (LNN)** - A continuous-time recurrent neural architecture with adaptive, dynamic behavior inspired by biological neurons, optimized for robust time-series modeling, control, and robotics
+
 ### Multimodal Model
 
 - Embedding
@@ -649,31 +661,6 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **NVIDIA Cosmos** - Platform for physical AI featuring generative world foundation models (WFMs), guardrails, and accelerated data processing pipelines
 
-### Convolutional Neural Network (CNN)
-
-- **Convolutional Neural Network (CNN)** - A deep learning architecture that uses learnable convolutional filters to automatically detect spatial hierarchies and local patterns in data, primarily used for image recognition, computer vision, and spatial data processing
-
-### Graph Neural Network (GNN)
-
-- **Graph Neural Network (GNN)** - A neural network architecture designed to process graph-structured data by iteratively aggregating information from neighboring nodes, enabling learning on non-Euclidean domains like social networks, molecules, and knowledge graphs
-
-### Liquid Neural Network (LNN)
-
-- **Liquid Neural Network (LNN)** - A continuous-time recurrent neural architecture with adaptive, dynamic behavior inspired by biological neurons, optimized for robust time-series modeling, control, and robotics
-
-### Computer Vision
-
-- **OpenCV** - Computer vision library
-- **supervision** - Computer vision library
-- **Ultralytics YOLOv12** - Object detection model
-- **Open3D** - 3D data processing
-- **PyVista** - 3D plotting and mesh analysis
-- **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization
-- **GStreamer** - Pipeline-based multimedia framework
-- **AnyUp** - Universal feature upsampling
-- Vision Transformer (ViT)
-  - **DINOv3** - Self-supervised vision transformer (ViT) model
-
 ### Generative Model
 
 - **Flow Matching** - Continuous-time generative modeling technique that learns a vector field to transport a simple distribution to a complex data distribution
@@ -687,6 +674,19 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 - **Q-Learning** - Model-free reinforcement learning algorithm for learning optimal actions
 - **Gymnasium** - Reinforcement learning environment toolkit
+
+### Computer Vision
+
+- **OpenCV** - Computer vision library
+- **supervision** - Computer vision library
+- **Ultralytics YOLOv12** - Object detection model
+- **Open3D** - 3D data processing
+- **PyVista** - 3D plotting and mesh analysis
+- **Visualization Toolkit (VTK)** - Image processing, 3D graphics, volume rendering and visualization
+- **GStreamer** - Pipeline-based multimedia framework
+- **AnyUp** - Universal feature upsampling
+- Vision Transformer (ViT)
+  - **DINOv3** - Self-supervised vision transformer (ViT) model
 
 ### Audio
 
