@@ -644,6 +644,10 @@ The diagram illustrates the repository's architecture, which is considered overl
   - Vision-Language-Action (VLA) Model
     - **OpenVLA** - Vision-language-action model for robotic manipulation that processes visual observations and language instructions to generate robot actions, fine-tuned from prism-dinosiglip-224px (DINOv2 ViT-L/14 and ViT-SO400M-14-SigLIP vision backbones, LLaMA 2 language model)
 
+### World Foundation Model (WFM)
+
+- **NVIDIA Cosmos** - Platform for physical AI featuring generative world foundation models (WFMs), guardrails, and accelerated data processing pipelines
+
 ### Liquid Neural Network (LNN)
 
 - **Liquid Neural Network (LNN)** - A continuous-time recurrent neural architecture with adaptive, dynamic behavior inspired by biological neurons, optimized for robust time-series modeling, control, and robotics
