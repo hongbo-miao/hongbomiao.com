@@ -1305,72 +1305,6 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: embedding/hm-model2vec
 
-  open-clip-test:
-    name: OpenCLIP | Test
-    if: ${{ inputs.workflow || inputs.open-clip }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: embedding/open-clip/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: embedding/open-clip/.python-version
-      - name: Install dependencies
-        working-directory: embedding/open-clip
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: embedding/open-clip
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: embedding/open-clip
-
-  imagebind-test:
-    name: ImageBind | Test
-    if: ${{ inputs.workflow || inputs.hm-imagebind }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: embedding/hm-imagebind/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: embedding/hm-imagebind/.python-version
-      - name: Install dependencies
-        working-directory: embedding/hm-imagebind
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: embedding/hm-imagebind
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: embedding/hm-imagebind
-
   automatic-mixed-precision-test:
     name: Automatic Mixed Precision | Test
     if: ${{ inputs.workflow || inputs.automatic-mixed-precision }}
@@ -1972,167 +1906,6 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: machine-learning/neural-forecasting/forecast-air-passenger-number
 
-  convolutional-neural-network-test:
-    name: Convolutional Neural Network | Test
-    if: ${{ inputs.workflow || inputs.convolutional-neural-network }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: convolutional-neural-network/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: convolutional-neural-network/.python-version
-      - name: Install dependencies
-        working-directory: convolutional-neural-network
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: convolutional-neural-network
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: convolutional-neural-network
-
-  graph-neural-network-test:
-    name: Graph Neural Network | Test
-    if: ${{ inputs.workflow || inputs.graph-neural-network }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: graph-neural-network/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: graph-neural-network/.python-version
-      - name: Install dependencies
-        working-directory: graph-neural-network
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: graph-neural-network
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: graph-neural-network
-
-  graph-neural-network-train:
-    name: Graph Neural Network | Train
-    if: ${{ inputs.workflow || inputs.graph-neural-network }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: graph-neural-network/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: graph-neural-network/.python-version
-      - name: Install dependencies
-        working-directory: graph-neural-network
-        run: |
-          uv sync --dev
-      - name: Train model
-        working-directory: graph-neural-network
-        env:
-          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
-        run: |
-          uv run poe dev --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
-
-  reinforcement-learning-cart-pole-test:
-    name: Reinforcement Learning (cart-pole) | Test
-    if: ${{ inputs.workflow || inputs.cart-pole }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: reinforcement-learning/cart-pole/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: reinforcement-learning/cart-pole/.python-version
-      - name: Install dependencies
-        working-directory: reinforcement-learning/cart-pole
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: reinforcement-learning/cart-pole
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: reinforcement-learning/cart-pole
-
-  reinforcement-learning-q-learning-test:
-    name: Reinforcement Learning (q-learning) | Test
-    if: ${{ inputs.workflow || inputs.reinforcement-learning-q-learning }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: reinforcement-learning/q-learning/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: reinforcement-learning/q-learning/.python-version
-      - name: Install dependencies
-        working-directory: reinforcement-learning/q-learning
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: reinforcement-learning/q-learning
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: reinforcement-learning/q-learning
-
   webrtc-vad-test:
     name: WebRTC VAD | Test
     if: ${{ inputs.workflow || inputs.webrtc-vad }}
@@ -2661,39 +2434,6 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: generative-model/flow-matching
 
-  liquid-neural-network-test:
-    name: Liquid Neural Network | Test
-    if: ${{ inputs.workflow || inputs.liquid-neural-network }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: liquid-neural-network/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: liquid-neural-network/.python-version
-      - name: Install dependencies
-        working-directory: liquid-neural-network
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: liquid-neural-network
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: liquid-neural-network
-
   hyperparameter-optimization-test:
     name: Hyperparameter Optimization | Test
     if: ${{ inputs.workflow || inputs.hyperparameter-optimization }}
@@ -3124,39 +2864,6 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: vision-language-model/qwen-vl
 
-  openvla-test:
-    name: OpenVLA | Test
-    if: ${{ inputs.workflow || inputs.openvla }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: multimodal-model/vision-language-action-model/openvla/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: multimodal-model/vision-language-action-model/openvla/.python-version
-      - name: Install dependencies
-        working-directory: multimodal-model/vision-language-action-model/openvla
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: multimodal-model/vision-language-action-model/openvla
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: multimodal-model/vision-language-action-model/openvla
-
   vision-language-action-train-test:
     name: Vision-Language-Action (Train) | Test
     if: ${{ inputs.workflow || inputs.vision-language-action-train }}
@@ -3255,6 +2962,299 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: physics/hm-genesis
+
+  convolutional-neural-network-test:
+    name: Convolutional Neural Network | Test
+    if: ${{ inputs.workflow || inputs.convolutional-neural-network }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: convolutional-neural-network/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: convolutional-neural-network/.python-version
+      - name: Install dependencies
+        working-directory: convolutional-neural-network
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: convolutional-neural-network
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: convolutional-neural-network
+
+  graph-neural-network-test:
+    name: Graph Neural Network | Test
+    if: ${{ inputs.workflow || inputs.graph-neural-network }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: graph-neural-network/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: graph-neural-network/.python-version
+      - name: Install dependencies
+        working-directory: graph-neural-network
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: graph-neural-network
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: graph-neural-network
+
+  graph-neural-network-train:
+    name: Graph Neural Network | Train
+    if: ${{ inputs.workflow || inputs.graph-neural-network }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: graph-neural-network/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: graph-neural-network/.python-version
+      - name: Install dependencies
+        working-directory: graph-neural-network
+        run: |
+          uv sync --dev
+      - name: Train model
+        working-directory: graph-neural-network
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+        run: |
+          uv run poe dev --dataset=ogbg-molhiv --gnn=gcn --feature=simple --epochs=2
+
+  liquid-neural-network-test:
+    name: Liquid Neural Network | Test
+    if: ${{ inputs.workflow || inputs.liquid-neural-network }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: liquid-neural-network/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: liquid-neural-network/.python-version
+      - name: Install dependencies
+        working-directory: liquid-neural-network
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: liquid-neural-network
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: liquid-neural-network
+
+  open-clip-test:
+    name: OpenCLIP | Test
+    if: ${{ inputs.workflow || inputs.open-clip }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: embedding/open-clip/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: embedding/open-clip/.python-version
+      - name: Install dependencies
+        working-directory: embedding/open-clip
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: embedding/open-clip
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: embedding/open-clip
+
+  imagebind-test:
+    name: ImageBind | Test
+    if: ${{ inputs.workflow || inputs.hm-imagebind }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: embedding/hm-imagebind/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: embedding/hm-imagebind/.python-version
+      - name: Install dependencies
+        working-directory: embedding/hm-imagebind
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: embedding/hm-imagebind
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: embedding/hm-imagebind
+
+  openvla-test:
+    name: OpenVLA | Test
+    if: ${{ inputs.workflow || inputs.openvla }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: multimodal-model/vision-language-action-model/openvla/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: multimodal-model/vision-language-action-model/openvla/.python-version
+      - name: Install dependencies
+        working-directory: multimodal-model/vision-language-action-model/openvla
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: multimodal-model/vision-language-action-model/openvla
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: multimodal-model/vision-language-action-model/openvla
+
+  reinforcement-learning-cart-pole-test:
+    name: Reinforcement Learning (cart-pole) | Test
+    if: ${{ inputs.workflow || inputs.cart-pole }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: reinforcement-learning/cart-pole/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: reinforcement-learning/cart-pole/.python-version
+      - name: Install dependencies
+        working-directory: reinforcement-learning/cart-pole
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: reinforcement-learning/cart-pole
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: reinforcement-learning/cart-pole
+
+  reinforcement-learning-q-learning-test:
+    name: Reinforcement Learning (q-learning) | Test
+    if: ${{ inputs.workflow || inputs.q-learning }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: reinforcement-learning/q-learning/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: reinforcement-learning/q-learning/.python-version
+      - name: Install dependencies
+        working-directory: reinforcement-learning/q-learning
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: reinforcement-learning/q-learning
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: reinforcement-learning/q-learning
 
   nvidia-cosmos-test:
     name: Nvidia Cosmos | Test
