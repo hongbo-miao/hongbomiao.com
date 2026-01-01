@@ -672,8 +672,9 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Reinforcement Learning (RL)
 
-- **Q-Learning** - Model-free reinforcement learning algorithm for learning optimal actions
 - **Gymnasium** - Reinforcement learning environment toolkit
+- **Q-Learning** - Model-free reinforcement learning algorithm for learning optimal actions
+- **Actor-Critic Algorithm** - Policy gradient method combining actor (policy) and critic (value) networks
 
 ### Computer Vision
 
