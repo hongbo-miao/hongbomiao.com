@@ -27,9 +27,6 @@ name: . Test Machine Learning
       byte-pair-encoding:
         required: true
         type: boolean
-      cart-pole:
-        required: true
-        type: boolean
       convert-modern-bert-to-core-ml:
         required: true
         type: boolean
@@ -3193,41 +3190,8 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: multimodal-model/vision-language-action-model/openvla
 
-  reinforcement-learning-cart-pole-test:
-    name: Reinforcement Learning (cart-pole) | Test
-    if: ${{ inputs.workflow || inputs.cart-pole }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: reinforcement-learning/cart-pole/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: reinforcement-learning/cart-pole/.python-version
-      - name: Install dependencies
-        working-directory: reinforcement-learning/cart-pole
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: reinforcement-learning/cart-pole
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: reinforcement-learning/cart-pole
-
-  reinforcement-learning-q-learning-test:
-    name: Reinforcement Learning (q-learning) | Test
+  q-learning-test:
+    name: Q-Learning | Test
     if: ${{ inputs.workflow || inputs.q-learning }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
