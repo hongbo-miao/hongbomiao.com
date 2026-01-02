@@ -4,12 +4,12 @@ from torch import nn
 
 
 class SimpleMamba2(nn.Module):
-    """
+    r"""
     A simplified Mamba 2 block.
 
     Mamba 2 uses the State Space Duality (SSD) framework which shows:
-    - SSM with scalar A is equivalent to linear attention
-    - y = (L * (C @ B^T)) @ X, where L is a causal decay mask
+    - SSM with scalar $A$ is equivalent to linear attention
+    - $y = (L \odot (C B^T)) X$, where $L$ is a causal decay mask
 
     Args:
         dimension: Input/output dimension (d_model)
@@ -83,12 +83,12 @@ class SimpleMamba2(nn.Module):
         self.output_projection = nn.Linear(self.inner_dimension, dimension, bias=False)
 
     def forward(self, input_tensor: torch.Tensor) -> torch.Tensor:
-        """
+        r"""
         Forward pass through the Mamba 2 block.
 
         The key insight of Mamba 2 (SSD):
-        SSM can be computed as y = (L * (C @ B^T)) @ X
-        where L[i,j] = exp(sum of log_a from j to i) for i >= j
+        SSM can be computed as $y = (L \odot (C B^T)) X$
+        where $L[i,j] = \exp(\sum_{k=j}^{i} \log a_k)$ for $i \geq j$
 
         Args:
             input_tensor: Shape (batch_size, sequence_length, dimension)
@@ -165,15 +165,18 @@ class SimpleMamba2(nn.Module):
         batch_size: int,
         sequence_length: int,
     ) -> torch.Tensor:
-        """
+        r"""
         Compute SSM using State Space Duality.
 
         The SSD insight: SSM is equivalent to:
-            y_t = sum_{s<=t} (decay from s to t) * (C_t . B_s) * x_s
 
-        This is like attention: y = softmax(QK^T) V
-        But with: y = (L * (C @ B^T)) @ X
-        where L is the causal decay mask
+        $$
+        y_t = \sum_{s \leq t} (\text{decay from } s \text{ to } t) \cdot (C_t \cdot B_s) \cdot x_s
+        $$
+
+        This is like attention: $y = \text{softmax}(QK^T) V$
+        But with: $y = (L \odot (C B^T)) X$
+        where $L$ is the causal decay mask
 
         Args:
             x: Input, shape (batch, seq, head_count, head_dim)
@@ -207,23 +210,23 @@ class SimpleMamba2(nn.Module):
             c_t = c[:, t, :, :]  # (batch, head_count, state_dim)
             dt_t = dt[:, t, :]  # (batch, head_count)
 
-            # Discretize A: decay = exp(dt * a)
+            # Discretize A: $\text{decay} = \exp(\Delta t \cdot a)$
             # dt_t: (batch, head_count), a: (head_count,)
             # decay: (batch, head_count, 1, 1) for broadcasting
             decay = torch.exp(dt_t * a).unsqueeze(-1).unsqueeze(-1)
 
-            # Discretize B: b_bar = dt * b
+            # Discretize B: $\bar{B} = \Delta t \cdot B$
             # dt_t: (batch, head_count) -> (batch, head_count, 1)
             # b_t: (batch, head_count, state_dim)
             b_bar = dt_t.unsqueeze(-1) * b_t  # (batch, head_count, state_dim)
 
-            # State update: h = decay * h + b_bar outer x
+            # State update: $h = \text{decay} \cdot h + \bar{B} \otimes x$
             # b_bar: (batch, head_count, state_dim) -> (batch, head_count, state_dim, 1)
             # x_t: (batch, head_count, head_dim) -> (batch, head_count, 1, head_dim)
             # outer product: (batch, head_count, state_dim, head_dim)
             state = decay * state + b_bar.unsqueeze(-1) * x_t.unsqueeze(-2)
 
-            # Output: y = c . h (contract over state_dim)
+            # Output: $y = C \cdot h$ (contract over state_dim)
             # c_t: (batch, head_count, state_dim) -> (batch, head_count, state_dim, 1)
             # state: (batch, head_count, state_dim, head_dim)
             # sum over state_dim: (batch, head_count, head_dim)
@@ -233,29 +236,3 @@ class SimpleMamba2(nn.Module):
 
         # Stack: (batch, seq, head_count, head_dim)
         return torch.stack(outputs, dim=1)
-
-
-class SimpleMamba2Block(nn.Module):
-    """A complete Mamba 2 block with layer normalization and residual connection."""
-
-    def __init__(
-        self,
-        dimension: int,
-        state_dimension: int = 64,
-        head_count: int = 8,
-        expand_factor: int = 2,
-    ) -> None:
-        super().__init__()
-
-        self.layer_norm = nn.LayerNorm(dimension)
-        self.mamba = SimpleMamba2(
-            dimension=dimension,
-            state_dimension=state_dimension,
-            head_count=head_count,
-            expand_factor=expand_factor,
-        )
-
-    def forward(self, input_tensor: torch.Tensor) -> torch.Tensor:
-        normalized = self.layer_norm(input_tensor)
-        mamba_output = self.mamba(normalized)
-        return input_tensor + mamba_output

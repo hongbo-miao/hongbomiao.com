@@ -4,10 +4,10 @@ from torch import nn
 
 class FlowMatchingModel(nn.Module):
     """
-    Neural network that predicts the velocity field v(x, t).
+    Neural network that predicts the velocity field $v(x, t)$.
 
-    The model takes a point x and time t, and outputs the predicted velocity
-    at that point and time. This velocity tells us how to move x to transform
+    The model takes a point $x$ and time $t$, and outputs the predicted velocity
+    at that point and time. This velocity tells us how to move $x$ to transform
     the noise distribution into the data distribution.
 
     Dimensions:

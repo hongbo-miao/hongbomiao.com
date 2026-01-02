@@ -19,88 +19,17 @@ The model must learn to:
 import logging
 
 import torch
-from simple_mamba2 import SimpleMamba2Block
+from models.selective_copy_model import SelectiveCopyModel
 from torch import nn
+from utils.generate_selective_copy_batch import generate_selective_copy_batch
+from utils.get_device import get_device
+
+logger = logging.getLogger(__name__)
 
 PAD_TOKEN = 0
 COPY_TOKEN = 1
 VOCAB_START = 2
 VOCAB_SIZE = 12  # PAD, COPY, and 10 data tokens
-
-
-logger = logging.getLogger(__name__)
-
-
-class SelectiveCopyModel(nn.Module):
-    """Small Mamba 2 model for selective copying task."""
-
-    def __init__(
-        self,
-        vocabulary_size: int,
-        embedding_dimension: int,
-        state_dimension: int,
-        head_count: int,
-        layer_count: int,
-    ) -> None:
-        super().__init__()
-
-        self.embedding = nn.Embedding(vocabulary_size, embedding_dimension)
-        self.mamba_layers = nn.ModuleList(
-            [
-                SimpleMamba2Block(
-                    dimension=embedding_dimension,
-                    state_dimension=state_dimension,
-                    head_count=head_count,
-                    expand_factor=2,
-                )
-                for _ in range(layer_count)
-            ],
-        )
-        self.output_projection = nn.Linear(embedding_dimension, vocabulary_size)
-
-    def forward(self, input_tokens: torch.Tensor) -> torch.Tensor:
-        hidden = self.embedding(input_tokens)
-
-        for mamba_layer in self.mamba_layers:
-            hidden = mamba_layer(hidden)
-
-        return self.output_projection(hidden)
-
-
-def generate_selective_copy_batch(
-    batch_size: int,
-    sequence_length: int,
-    device: torch.device,
-) -> tuple[torch.Tensor, torch.Tensor]:
-    """
-    Generate a batch of selective copying examples.
-
-    Returns input sequences and target sequences.
-    Target is the token after COPY marker, PAD elsewhere.
-    """
-    inputs = torch.zeros(batch_size, sequence_length, dtype=torch.long)
-    targets = torch.full((batch_size, sequence_length), PAD_TOKEN, dtype=torch.long)
-
-    for batch_index in range(batch_size):
-        position = 0
-        while position < sequence_length - 1:
-            # Randomly insert COPY marker followed by a token to copy
-            if torch.rand(1).item() < 0.3 and position < sequence_length - 2:
-                inputs[batch_index, position] = COPY_TOKEN
-                token_to_copy = torch.randint(VOCAB_START, VOCAB_SIZE, (1,)).item()
-                inputs[batch_index, position + 1] = token_to_copy
-                targets[batch_index, position + 1] = token_to_copy
-                position += 2
-            else:
-                # Random non-COPY token
-                inputs[batch_index, position] = torch.randint(
-                    VOCAB_START,
-                    VOCAB_SIZE,
-                    (1,),
-                ).item()
-                position += 1
-
-    return inputs.to(device), targets.to(device)
 
 
 def main() -> None:
@@ -113,13 +42,7 @@ def main() -> None:
     epoch_count = 100
     learning_rate = 1e-3
 
-    device = torch.device(
-        "cuda"
-        if torch.cuda.is_available()
-        else "mps"
-        if torch.backends.mps.is_available()
-        else "cpu",
-    )
+    device = get_device()
 
     model = SelectiveCopyModel(
         vocabulary_size=VOCAB_SIZE,
@@ -137,9 +60,13 @@ def main() -> None:
 
     for epoch in range(epoch_count):
         inputs, targets = generate_selective_copy_batch(
-            batch_size,
-            sequence_length,
-            device,
+            batch_size=batch_size,
+            sequence_length=sequence_length,
+            device=device,
+            pad_token=PAD_TOKEN,
+            copy_token=COPY_TOKEN,
+            vocab_start=VOCAB_START,
+            vocab_size=VOCAB_SIZE,
         )
 
         optimizer.zero_grad()
@@ -169,9 +96,13 @@ def main() -> None:
     model.eval()
     with torch.no_grad():
         test_inputs, test_targets = generate_selective_copy_batch(
-            4,
-            sequence_length,
-            device,
+            batch_size=4,
+            sequence_length=sequence_length,
+            device=device,
+            pad_token=PAD_TOKEN,
+            copy_token=COPY_TOKEN,
+            vocab_start=VOCAB_START,
+            vocab_size=VOCAB_SIZE,
         )
         test_logits = model(test_inputs)
         test_predictions = test_logits.argmax(dim=-1)
