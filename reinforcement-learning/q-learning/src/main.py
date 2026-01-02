@@ -72,21 +72,9 @@ def train_q_table(
             else:
                 action = int(np.argmax(q_table[state]))
             next_state, reward, is_done = training_environment.step(action)
-            # Q-learning update rule:
-            #
-            #   Q(s, a) ← Q(s, a) + α [r + γ * max_{a'} Q(s', a') − Q(s, a)]  # noqa: RUF003
-            #
-            # where:
-            #   s  = current state
-            #   a  = current action
-            #   s' = next state
-            #   a' = possible next action
-            #   r  = reward received after taking action a in state s
-            #   α  = learning rate  # noqa: RUF003
-            #   γ  = discount factor  # noqa: RUF003
-            #
-            # Intuition:
-            # Move Q(s,a) toward the "target" value: (r + γ * best future Q)  # noqa: RUF003
+            # Q-learning update: $Q(s,a) \leftarrow Q(s,a) + \alpha \cdot (TD_{target} - Q(s,a))$
+            # Temporal difference (TD) target: $TD_{target} = r + \gamma \cdot \max_{a'} Q(s', a')$
+            # Temporal difference (TD) error: $TD_{error} = TD_{target} - Q(s, a)$
             next_action: int = int(np.argmax(q_table[next_state]))
             q_table[state, action] += alpha * (
                 reward

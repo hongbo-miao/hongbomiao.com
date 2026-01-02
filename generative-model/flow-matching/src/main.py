@@ -20,15 +20,15 @@ TIME_STEP_COUNT = 100
 
 
 def main() -> None:
-    """
+    r"""
     Run flow matching training and sampling.
 
-    Flow Matching learns a velocity field v(x, t) that transforms samples from
+    Flow Matching learns a velocity field $v(x, t)$ that transforms samples from
     a simple prior distribution (Gaussian) to a target data distribution.
     Key concepts:
-    1. We define a path x_t = (1-t)*x_0 + t*x_1 from noise x_0 to data x_1
-    2. The velocity along this path is: dx_t/dt = x_1 - x_0
-    3. We train a neural network to predict this velocity given (x_t, t)
+    1. We define a path $x_t = (1-t) \cdot x_0 + t \cdot x_1$ from noise $x_0$ to data $x_1$
+    2. The velocity along this path is: $dx_t/dt = x_1 - x_0$
+    3. We train a neural network to predict this velocity given $(x_t, t)$
     4. At inference, we integrate the learned velocity field to generate samples.
     """
     device = get_device()
