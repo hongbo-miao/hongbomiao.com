@@ -9,11 +9,11 @@ def generate_samples(
     time_step_count: int,
     device: torch.device,
 ) -> torch.Tensor:
-    """
+    r"""
     Generate samples by integrating the learned velocity field.
 
-    We use Euler integration: x_{t+dt} = x_t + v(x_t, t) * dt
-    Starting from Gaussian noise at t=0, we integrate to t=1 to get samples.
+    We use Euler integration: $x_{t+dt} = x_t + v(x_t, t) \cdot dt$
+    Starting from Gaussian noise at $t=0$, we integrate to $t=1$ to get samples.
     """
     model.eval()
 

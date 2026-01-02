@@ -24,7 +24,7 @@ ANYUP_REPO = "wimmerth/anyup"
 ANYUP_MODEL = "anyup_multi_backbone"
 
 
-# Load and normalize image to ImageNet statistics: I in R^(H x W x 3)
+# Load and normalize image to ImageNet statistics: $I \in \mathbb{R}^{H \times W \times 3}$
 # Output tensor shape: (1, 3, H, W) where H = W = image_size
 def load_image(
     image_path: Path,
@@ -54,8 +54,8 @@ def load_dinov2_model(device: torch.device) -> torch.nn.Module:
 
 # Extract low-resolution features from DINOv2
 # Input: image_tensor shape (1, 3, 518, 518) = (batch, 3, H, W)
-# Output: F_lr shape (1, 384, 37, 37) = (batch, C, h, w)
-# For patch size P=14 and image size H=W=518: h = w = H/P = 518/14 = 37
+# Output: $F_{lr}$ shape (1, 384, 37, 37) = (batch, C, h, w)
+# For patch size $P=14$ and image size $H=W=518$: $h = w = H/P = 518/14 = 37$
 # This is a 14x reduction in spatial resolution
 def extract_dinov2_features(
     dinov2: torch.nn.Module,
@@ -94,14 +94,14 @@ def load_anyup_model(device: torch.device) -> torch.nn.Module:
     return upsampler
 
 
-# Upsample features using image guidance: F_hr = AnyUp(I, F_lr)
-# Input: I shape (1, 3, 518, 518) = (batch, 3, H, W), F_lr shape (1, 384, 37, 37) = (batch, C, h, w)
-# Output: F_hr shape (1, 384, 518, 518) = (batch, C, H, W)
+# Upsample features using image guidance: $F_{hr} = \text{AnyUp}(I, F_{lr})$
+# Input: $I$ shape (1, 3, 518, 518) = (batch, 3, H, W), $F_{lr}$ shape (1, 384, 37, 37) = (batch, C, h, w)
+# Output: $F_{hr}$ shape (1, 384, 518, 518) = (batch, C, H, W)
 # Uses cross-attention where each high-res position attends to low-res positions:
-#   F_hr(x, y) = sum_{i,j} alpha_{(x,y),(i,j)} * F_lr(i, j)
-#   - (x, y): position in high-res output (H x W grid)
-#   - (i, j): position in low-res input (h x w grid)
-#   - alpha: attention weights computed from image features
+#   $F_{hr}(x, y) = \sum_{i,j} \alpha_{(x,y),(i,j)} \cdot F_{lr}(i, j)$
+#   - $(x, y)$: position in high-res output ($H \times W$ grid)
+#   - $(i, j)$: position in low-res input ($h \times w$ grid)
+#   - $\alpha$: attention weights computed from image features
 def upsample_features_with_anyup(
     upsampler: torch.nn.Module,
     high_resolution_image: torch.Tensor,
