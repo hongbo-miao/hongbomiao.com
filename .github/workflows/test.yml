@@ -251,6 +251,8 @@ jobs:
               - 'pyproject.toml'
               - 'uv.lock'
             # Applications
+            actor-critic-algorithm:
+              - 'reinforcement-learning/actor-critic-algorithm/**'
             amazon-sagemaker-pytorch-mnist:
               - 'cloud-platform/aws/amazon-sagemaker/pytorch-mnist/**'
             amazon-sagemaker-triton-resnet-50-deploy:
@@ -745,6 +747,7 @@ jobs:
       xml: ${{ steps.filter.outputs.xml }}
       yaml: ${{ steps.filter.outputs.yaml }}
       # Applications
+      actor-critic-algorithm: ${{ steps.filter.outputs.actor-critic-algorithm }}
       amazon-sagemaker-pytorch-mnist: ${{ steps.filter.outputs.amazon-sagemaker-pytorch-mnist }}
       amazon-sagemaker-triton-resnet-50-deploy: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-deploy }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ steps.filter.outputs.amazon-sagemaker-triton-resnet-50-infer }}
@@ -1266,6 +1269,7 @@ jobs:
       # Workflows
       workflow: ${{ needs.detect-changes.outputs.workflow-test-machine-learning == 'true' }}
       # Applications
+      actor-critic-algorithm: ${{ needs.detect-changes.outputs.actor-critic-algorithm == 'true' }}
       amazon-sagemaker-triton-resnet-50-deploy: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-deploy == 'true' }}
       amazon-sagemaker-triton-resnet-50-infer: ${{ needs.detect-changes.outputs.amazon-sagemaker-triton-resnet-50-infer == 'true' }}
       automatic-mixed-precision: ${{ needs.detect-changes.outputs.automatic-mixed-precision == 'true' }}
