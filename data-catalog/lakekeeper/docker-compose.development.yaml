@@ -3,7 +3,7 @@
 name: lakekeeper-development
 services:
   lakekeeper:
-    image: quay.io/lakekeeper/catalog:v0.10.4
+    image: quay.io/lakekeeper/catalog:v0.11.0
     container_name: lakekeeper
     depends_on:
       lakekeeper-migrate:
@@ -65,7 +65,7 @@ services:
     restart: "no"
 
   lakekeeper-migrate:
-    image: quay.io/lakekeeper/catalog:v0.10.4
+    image: quay.io/lakekeeper/catalog:v0.11.0
     container_name: lakekeeper-migrate
     depends_on:
       lakekeeper-postgres:
