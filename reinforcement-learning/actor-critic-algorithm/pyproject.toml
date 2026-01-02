@@ -1,0 +1,25 @@
+[project]
+name = "actor-critic-algorithm"
+version = "1.0.0"
+requires-python = "==3.13.11"
+dependencies = [
+  "gymnasium[classic-control]==1.2.3",
+  "torch==2.9.1",
+  "numpy==2.4.0",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.39.0",
+  "pytest-cov==7.0.0",
+  "pytest==9.0.2",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.9.0"
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
