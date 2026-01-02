@@ -311,8 +311,6 @@ jobs:
               - 'aerospace/flightradar24/**'
             format-can-data:
               - 'embedded-system/format-can-data/**'
-            cart-pole:
-              - 'reinforcement-learning/cart-pole/**'
             convolutional-neural-network:
               - 'convolutional-neural-network/**'
             core-ml-tools:
@@ -764,7 +762,6 @@ jobs:
       bluesky: ${{ steps.filter.outputs.bluesky }}
       byte-pair-encoding: ${{ steps.filter.outputs.byte-pair-encoding }}
       call-matlab-function-in-python: ${{ steps.filter.outputs.call-matlab-function-in-python }}
-      cart-pole: ${{ steps.filter.outputs.cart-pole }}
       convert-modern-bert-to-core-ml: ${{ steps.filter.outputs.convert-modern-bert-to-core-ml }}
       convolutional-neural-network: ${{ steps.filter.outputs.convolutional-neural-network }}
       core-ml-tools: ${{ steps.filter.outputs.core-ml-tools }}
@@ -1275,7 +1272,6 @@ jobs:
       automatic-mixed-precision: ${{ needs.detect-changes.outputs.automatic-mixed-precision == 'true' }}
       bert: ${{ needs.detect-changes.outputs.bert == 'true' }}
       byte-pair-encoding: ${{ needs.detect-changes.outputs.byte-pair-encoding == 'true' }}
-      cart-pole: ${{ needs.detect-changes.outputs.cart-pole == 'true' }}
       convert-modern-bert-to-core-ml: ${{ needs.detect-changes.outputs.convert-modern-bert-to-core-ml == 'true' }}
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
       core-ml-tools: ${{ needs.detect-changes.outputs.core-ml-tools == 'true' }}
