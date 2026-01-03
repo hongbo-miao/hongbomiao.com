@@ -54,7 +54,7 @@ A personal research and development (R&D) lab that facilitates the sharing of kn
 
 # 🚀 Architecture
 
-The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with before onboarding any technology into your project.
+The diagram illustrates the repository's architecture, which is considered overly complex. It is essential to thoroughly understand the tradeoffs associated with it before onboarding any technology into your project.
 
 > [!NOTE]
 > The diagram here may take a moment to load. Please wait patiently.
