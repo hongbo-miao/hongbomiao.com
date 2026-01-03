@@ -537,8 +537,6 @@ jobs:
               - 'large-language-model-post-training/fine-tuning/hm-swift/**'
             hm-tinker:
               - 'large-language-model-post-training/fine-tuning/hm-tinker/**'
-            hm-torchdiffeq:
-              - 'generative-model/hm-torchdiffeq/**'
             hm-torchtune:
               - 'large-language-model-post-training/fine-tuning/hm-torchtune/**'
             hm-transformers:
@@ -619,6 +617,8 @@ jobs:
               - 'large-language-model-training/training-paradigm/masked-language-model/neo-bert/**'
             neural-forecasting-forecast-air-passenger-number:
               - 'machine-learning/neural-forecasting/forecast-air-passenger-number/**'
+            neural-ordinary-differential-equation:
+              - 'generative-model/neural-ordinary-differential-equation/**'
             nvidia-cosmos:
               - 'world-foundation-model/nvidia-cosmos/**'
             nvidia-dali:
@@ -886,7 +886,6 @@ jobs:
       hm-supervision-detect-objects: ${{ steps.filter.outputs.hm-supervision-detect-objects }}
       hm-swift: ${{ steps.filter.outputs.hm-swift }}
       hm-tinker: ${{ steps.filter.outputs.hm-tinker }}
-      hm-torchdiffeq: ${{ steps.filter.outputs.hm-torchdiffeq }}
       hm-torchtune: ${{ steps.filter.outputs.hm-torchtune }}
       hm-transformers: ${{ steps.filter.outputs.hm-transformers }}
       hm-triton: ${{ steps.filter.outputs.hm-triton }}
@@ -926,6 +925,7 @@ jobs:
       nats-telemetry-stream-subscriber: ${{ steps.filter.outputs.nats-telemetry-stream-subscriber }}
       neo-bert: ${{ steps.filter.outputs.neo-bert }}
       neural-forecasting-forecast-air-passenger-number: ${{ steps.filter.outputs.neural-forecasting-forecast-air-passenger-number }}
+      neural-ordinary-differential-equation: ${{ steps.filter.outputs.neural-ordinary-differential-equation }}
       nvidia-cosmos: ${{ steps.filter.outputs.nvidia-cosmos }}
       nvidia-dali: ${{ steps.filter.outputs.nvidia-dali }}
       nvidia-nemo: ${{ steps.filter.outputs.nvidia-nemo }}
@@ -1324,7 +1324,6 @@ jobs:
       hm-streamlit-map: ${{ needs.detect-changes.outputs.hm-streamlit-map == 'true' }}
       hm-swift: ${{ needs.detect-changes.outputs.hm-swift == 'true' }}
       hm-tinker: ${{ needs.detect-changes.outputs.hm-tinker == 'true' }}
-      hm-torchdiffeq: ${{ needs.detect-changes.outputs.hm-torchdiffeq == 'true' }}
       hm-torchtune: ${{ needs.detect-changes.outputs.hm-torchtune == 'true' }}
       hm-transformers: ${{ needs.detect-changes.outputs.hm-transformers == 'true' }}
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
@@ -1339,6 +1338,7 @@ jobs:
       modern-bert: ${{ needs.detect-changes.outputs.modern-bert == 'true' }}
       neo-bert: ${{ needs.detect-changes.outputs.neo-bert == 'true' }}
       neural-forecasting-forecast-air-passenger-number: ${{ needs.detect-changes.outputs.neural-forecasting-forecast-air-passenger-number == 'true' }}
+      neural-ordinary-differential-equation: ${{ needs.detect-changes.outputs.neural-ordinary-differential-equation == 'true' }}
       nvidia-cosmos: ${{ needs.detect-changes.outputs.nvidia-cosmos == 'true' }}
       nvidia-dali: ${{ needs.detect-changes.outputs.nvidia-dali == 'true' }}
       nvidia-nemo: ${{ needs.detect-changes.outputs.nvidia-nemo == 'true' }}
