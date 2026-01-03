@@ -183,9 +183,6 @@ name: . Test Machine Learning
       hm-tinker:
         required: true
         type: boolean
-      hm-torchdiffeq:
-        required: true
-        type: boolean
       hm-torchtune:
         required: true
         type: boolean
@@ -226,6 +223,9 @@ name: . Test Machine Learning
         required: true
         type: boolean
       neural-forecasting-forecast-air-passenger-number:
+        required: true
+        type: boolean
+      neural-ordinary-differential-equation:
         required: true
         type: boolean
       nvidia-cosmos:
@@ -2335,39 +2335,6 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: generative-model/stable-diffusion
 
-  torchdiffeq-test:
-    name: torchdiffeq | Test
-    if: ${{ inputs.workflow || inputs.hm-torchdiffeq }}
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.1
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7.1.6
-        with:
-          version: 0.9.21
-          enable-cache: true
-          cache-dependency-glob: generative-model/hm-torchdiffeq/uv.lock
-      - name: Set up Python
-        uses: actions/setup-python@v6.1.0
-        with:
-          python-version-file: generative-model/hm-torchdiffeq/.python-version
-      - name: Install dependencies
-        working-directory: generative-model/hm-torchdiffeq
-        run: |
-          uv sync --dev
-      - name: Test
-        working-directory: generative-model/hm-torchdiffeq
-        run: |
-          uv run poe test-coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: hongbo-miao/hongbomiao.com
-          directory: generative-model/hm-torchdiffeq
-
   variational-autoencoder-test:
     name: Variational Autoencoder | Test
     if: ${{ inputs.workflow || inputs.variational-autoencoder }}
@@ -2400,6 +2367,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: generative-model/variational-autoencoder
+
+  neural-ordinary-differential-equation-test:
+    name: Neural Ordinary Differential Equation | Test
+    if: ${{ inputs.workflow || inputs.neural-ordinary-differential-equation }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: generative-model/neural-ordinary-differential-equation/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: generative-model/neural-ordinary-differential-equation/.python-version
+      - name: Install dependencies
+        working-directory: generative-model/neural-ordinary-differential-equation
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: generative-model/neural-ordinary-differential-equation
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: generative-model/neural-ordinary-differential-equation
 
   flow-matching-test:
     name: Flow Matching | Test

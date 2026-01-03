@@ -573,7 +573,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=ensemble-learning.boosting.hm-xgboost
     uv run poe static-type-check-python --package=evolutionary-algorithm.genetic-algorithm
     uv run poe static-type-check-python --package=generative-model.flow-matching
-    uv run poe static-type-check-python --package=generative-model.hm-torchdiffeq
+    uv run poe static-type-check-python --package=generative-model.neural-ordinary-differential-equation
     uv run poe static-type-check-python --package=generative-model.stable-diffusion
     uv run poe static-type-check-python --package=generative-model.variational-autoencoder
     uv run poe static-type-check-python --package=graph-neural-network
