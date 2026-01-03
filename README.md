@@ -522,7 +522,6 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **torchvision** - PyTorch computer vision models and utilities
   - **PyTorch Geometric** - PyTorch geometric deep learning extension
   - **TorchServe** - PyTorch models serving
-  - **torchdiffeq** - PyTorch differentiable ordinary differential equation (ODE) solvers
 - **Flax** - Neural network for JAX
   - **Optax** - Gradient processing and optimization for JAX
 - **Lightning** - Deep Learning framework
@@ -664,6 +663,8 @@ The diagram illustrates the repository's architecture, which is considered overl
 ### Generative Model
 
 - **Flow Matching** - Continuous-time generative modeling technique that learns a vector field to transport a simple distribution to a complex data distribution
+- **torchdiffeq** - PyTorch differentiable ordinary differential equation (ODE) solvers
+- **Neural Ordinary Differential Equation (Neural ODE)** - Neural network architecture that models continuous-time dynamics by parameterizing the derivative of hidden states as a neural network, solved using ordinary differential equation (ODE) solvers
 - **Variational Autoencoder (VAE)** - Latent-variable generative modeling technique that learns to map data to a probabilistic distribution and reconstruct it via an encoder-decoder architecture
 - **Diffusion Model** - Continuous-time generative modeling technique that learns to reverse a multi-step noising process to reconstruct data from Gaussian noise
 - **Stable Diffusion** - Latent diffusion model (LDM) architecture designed for high-resolution text-to-image (T2I) generation by performing the diffusion process in a compressed latent space
