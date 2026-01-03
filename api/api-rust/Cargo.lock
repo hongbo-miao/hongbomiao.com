@@ -151,15 +151,15 @@ dependencies = [
 
 [[package]]
 name = "async-graphql"
-version = "7.0.19"
+version = "7.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cc19c319ade1c390d20b3ef643b93476acc6b501d8e746a404c24f5670fcf891"
+checksum = "31b75c5a43a58890d6dcc02d03952456570671332bb0a5a947b1f09c699912a5"
 dependencies = [
  "async-graphql-derive",
  "async-graphql-parser",
  "async-graphql-value",
- "async-stream",
  "async-trait",
+ "asynk-strim",
  "base64",
  "bytes",
  "fast_chemail",
@@ -184,9 +184,9 @@ dependencies = [
 
 [[package]]
 name = "async-graphql-axum"
-version = "7.0.19"
+version = "7.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9b364d7988b41ad042e5b781927d289cb89cbb19020d65851f63ab04c9709b40"
+checksum = "599e663e170f69baa0b9f18f52cdfd701e01ade0ac1baef2c4bc488cb68e35c1"
 dependencies = [
  "async-graphql",
  "axum",
@@ -201,9 +201,9 @@ dependencies = [
 
 [[package]]
 name = "async-graphql-derive"
-version = "7.0.19"
+version = "7.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8cbbf64ecbc72994660670bb219be4deba4a8837663d71f66abc5185c16e8e1"
+checksum = "0c266ec9a094bbf2d088e016f71aa8d3be7f18c7343b2f0fe6d0e6c1e78977ea"
 dependencies = [
  "Inflector",
  "async-graphql-parser",
@@ -218,9 +218,9 @@ dependencies = [
 
 [[package]]
 name = "async-graphql-parser"
-version = "7.0.19"
+version = "7.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b07d48edec11aa7c3363b15dca3836ba536a142f102a70f4d916ac5c3fcf0463"
+checksum = "67e2188d3f1299087aa02cfb281f12414905ce63f425dbcfe7b589773468d771"
 dependencies = [
  "async-graphql-value",
  "pest",
@@ -230,9 +230,9 @@ dependencies = [
 
 [[package]]
 name = "async-graphql-value"
-version = "7.0.19"
+version = "7.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec4955873e99cfa472ce0f9425f43b5541dc71bc7fbec82e7413ea78e2675ccc"
+checksum = "527a4c6022fc4dac57b4f03f12395e9a391512e85ba98230b93315f8f45f27fc"
 dependencies = [
  "bytes",
  "indexmap",
@@ -318,28 +318,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "async-stream"
-version = "0.3.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0b5a71a6f37880a80d1d7f19efd781e4b5de42c88f0722cc13bcb6cc2cfe8476"
-dependencies = [
- "async-stream-impl",
- "futures-core",
- "pin-project-lite",
-]
-
-[[package]]
-name = "async-stream-impl"
-version = "0.3.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c7c24de15d275a1ecfd47a380fb4d5ec9bfe0933f309ed5e705b775596a3574d"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "async-trait"
 version = "0.1.89"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -348,6 +326,16 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "asynk-strim"
+version = "0.1.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "52697735bdaac441a29391a9e97102c74c6ef0f9b60a40cf109b1b404e29d2f6"
+dependencies = [
+ "futures-core",
+ "pin-project-lite",
 ]
 
 [[package]]
