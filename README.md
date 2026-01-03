@@ -449,10 +449,10 @@ The diagram illustrates the repository's architecture, which is considered overl
   - Covariate shift
   - Concept drift
   - Univariate drift
-    - Jensen-Shannen distance - categorical and continuous
+    - Jensen-Shannon distance - categorical and continuous
     - Hellinger - categorical and continuous
     - Wasserstein - continuous
-    - Kolgomorov-Smirnov - continuous
+    - Kolmogorov-Smirnov - continuous
     - L-infinity - categorical
     - Chi2 - categorical
   - Multivariate drift
