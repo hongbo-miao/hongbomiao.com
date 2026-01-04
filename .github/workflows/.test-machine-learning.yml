@@ -270,6 +270,9 @@ name: . Test Machine Learning
       streaming-sortformer-diarizer:
         required: true
         type: boolean
+      supervised-fine-tuning-low-rank-adaptation:
+        required: true
+        type: boolean
       variational-autoencoder:
         required: true
         type: boolean
@@ -2700,6 +2703,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-post-training/fine-tuning/hm-tinker
+
+  supervised-fine-tuning-low-rank-adaptation-test:
+    name: Supervised Fine-Tuning - Low-Rank Adaptation | Test
+    if: ${{ inputs.workflow || inputs.supervised-fine-tuning-low-rank-adaptation }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/supervised-fine-tuning/low-rank-adaptation/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: large-language-model-post-training/fine-tuning/supervised-fine-tuning/low-rank-adaptation/.python-version
+      - name: Install dependencies
+        working-directory: large-language-model-post-training/fine-tuning/supervised-fine-tuning/low-rank-adaptation
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: large-language-model-post-training/fine-tuning/supervised-fine-tuning/low-rank-adaptation
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: large-language-model-post-training/fine-tuning/supervised-fine-tuning/low-rank-adaptation
 
   fine-tune-whisper-test:
     name: Fine Tune Whisper | Test
