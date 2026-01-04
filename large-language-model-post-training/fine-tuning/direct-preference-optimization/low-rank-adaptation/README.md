@@ -1,8 +1,25 @@
-# Supervised Fine-Tuning (SFT) - Low-Rank Adaptation (LoRA)
+# Direct Preference Optimization (DPO) - Low-Rank Adaptation (LoRA)
 
 ## Core Idea
 
-Supervised Fine-Tuning (SFT) adapts a pre-trained language model to follow instructions by training on curated prompt-response pairs. Low-Rank Adaptation (LoRA) makes this process efficient by learning low-rank update matrices instead of modifying all model weights.
+Direct Preference Optimization (DPO) aligns language models with human preferences without training a separate reward model. Combined with Low-Rank Adaptation (LoRA), it enables efficient preference learning by training low-rank update matrices instead of modifying all model weights.
+
+### DPO Objective
+
+DPO directly optimizes the policy using preference data. Given a prompt $x$, a preferred response $y_w$ (winner), and a rejected response $y_l$ (loser), DPO minimizes:
+
+```math
+\mathcal{L}_\text{DPO}(\pi_\theta; \pi_\text{ref}) = -\mathbb{E}_{(x, y_w, y_l) \sim D} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_\text{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_\text{ref}(y_l|x)} \right) \right]
+```
+
+where:
+
+- $D$ is the preference dataset containing triplets $(x, y_w, y_l)$ where humans indicated $y_w$ is preferred over $y_l$
+- $\mathbb{E}_{(x, y_w, y_l) \sim D}$ is the expectation over samples drawn from $D$
+- $\pi_\theta$ is the policy being trained
+- $\pi_\text{ref}$ is the reference policy (frozen copy of the initial model)
+- $\beta$ is the temperature parameter controlling deviation from the reference
+- $\sigma$ is the sigmoid function
 
 ### LoRA Decomposition
 
@@ -21,29 +38,15 @@ W' = W + \Delta W = W + \frac{\alpha}{r} BA
 
 where $\alpha$ is a scaling factor and $r$ is the rank.
 
-### Training Objective
-
-SFT uses the standard language modeling cross-entropy loss on the response tokens:
-
-```math
-\mathcal{L}(\theta) = -\sum_{i=1}^{T} \log p_\theta(y_i \mid x, y_{\lt i})
-```
-
-where:
-
-- $x$ is the instruction/prompt
-- $y = (y_1, \dots, y_T)$ is the target response
-- Only response tokens contribute to the loss (prompt tokens are masked)
-
 ### Training Process
 
 In code:
 
-- Prepare instruction-response pairs from the dataset
-- Tokenize inputs with prompt template (e.g., `<|user|>\n{instruction}\n<|assistant|>\n{response}`)
-- Apply LoRA adapters to attention layers (typically $W_q$, $W_k$, $W_v$, $W_o$)
-- Forward pass through the model with LoRA weights
-- Compute cross-entropy loss on response tokens only
+- Prepare preference pairs from the dataset (prompt, chosen response, rejected response)
+- Tokenize both chosen and rejected responses with the same prompt
+- Apply LoRA adapters to attention and MLP layers
+- Compute log probabilities for both responses under policy and reference model
+- Calculate DPO loss based on preference margins
 - Backpropagate gradients through LoRA parameters (base model frozen)
 - Update LoRA weights with optimizer (e.g., AdamW)
 
