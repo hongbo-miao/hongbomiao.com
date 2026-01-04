@@ -584,6 +584,10 @@ The diagram illustrates the repository's architecture, which is considered overl
       - **DeepSpeed-MoE** - Optimized training and inference for Mixture of Experts (MoE) models
 - Large Language Model (LLM) Post-Training
   - Fine-Tuning
+    - **Supervised Fine-Tuning (SFT)** - Training technique that updates all model parameters using labeled instruction-response pairs
+    - **Low-Rank Adaptation (LoRA)** - Parameter-efficient fine-tuning method that trains low-rank decomposition matrices instead of full model weights
+    - **PEFT** - Hugging Face library implementing parameter-efficient fine-tuning methods including Low-Rank Adaptation (LoRA), prefix tuning, and adapters
+    - **TRL** - Hugging Face library for training large language models with reinforcement learning including Supervised Fine-Tuning (SFT), Proximal Policy Optimization (PPO), and Direct Preference Optimization (DPO)
     - **Unsloth** - Efficient large language model (LLM) fine-tuning on single GPU via custom Triton kernels
     - **torchtune** - PyTorch-native, modular distributed large language model (LLM) fine-tuning
     - **Axolotl** - YAML-driven distributed large language model (LLM) fine-tuning

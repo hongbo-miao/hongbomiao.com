@@ -661,6 +661,8 @@ jobs:
               - 'generative-model/stable-diffusion/**'
             streaming-sortformer-diarizer:
               - 'audio/speaker-diarization/streaming-sortformer-diarizer/**'
+            supervised-fine-tuning-low-rank-adaptation:
+              - 'large-language-model-post-training/fine-tuning/supervised-fine-tuning/low-rank-adaptation/**'
             surrogate-model:
               - 'scientific-computing/surrogate-model/**'
             taichi-count-primes:
@@ -949,6 +951,7 @@ jobs:
       speculative-decoding: ${{ steps.filter.outputs.speculative-decoding }}
       stable-diffusion: ${{ steps.filter.outputs.stable-diffusion }}
       streaming-sortformer-diarizer: ${{ steps.filter.outputs.streaming-sortformer-diarizer }}
+      supervised-fine-tuning-low-rank-adaptation: ${{ steps.filter.outputs.supervised-fine-tuning-low-rank-adaptation }}
       surrogate-model: ${{ steps.filter.outputs.surrogate-model }}
       taichi-count-primes: ${{ steps.filter.outputs.taichi-count-primes }}
       taichi-fluid-solver: ${{ steps.filter.outputs.taichi-fluid-solver }}
@@ -1356,6 +1359,7 @@ jobs:
       speculative-decoding: ${{ needs.detect-changes.outputs.speculative-decoding == 'true' }}
       stable-diffusion: ${{ needs.detect-changes.outputs.stable-diffusion == 'true' }}
       streaming-sortformer-diarizer: ${{ needs.detect-changes.outputs.streaming-sortformer-diarizer == 'true' }}
+      supervised-fine-tuning-low-rank-adaptation: ${{ needs.detect-changes.outputs.supervised-fine-tuning-low-rank-adaptation == 'true' }}
       variational-autoencoder: ${{ needs.detect-changes.outputs.variational-autoencoder == 'true' }}
       vision-language-action-infer: ${{ needs.detect-changes.outputs.vision-language-action-infer == 'true' }}
       vision-language-action-train: ${{ needs.detect-changes.outputs.vision-language-action-train == 'true' }}
