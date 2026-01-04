@@ -576,6 +576,7 @@ The diagram illustrates the repository's architecture, which is considered overl
       - **NeoBERT** - BERT-style encoder with Rotary Positional Embedding (RoPE), RMSNorm, SwiGLU activations, and a context length of 4,096 tokens.
   - Training Optimization
     - **Automatic Mixed Precision** - Mixed precision FP16/FP32 training
+    - **Accelerate** - Hugging Face library for distributed training across CPU, multi-GPU, and TPU with mixed precision (FP16/BFloat16/FP8) and DeepSpeed, Fully Sharded Data Parallel (FSDP), Megatron-LM integration
     - **DeepSpeed** - Deep learning optimization library for easy, efficient, and effective distributed training and inference
       - **Zero Redundancy Optimizer (ZeRO)** - Memory optimization through partitioning optimizer states, gradients, and parameters
       - **ZeRO-Infinity** - CPU/Non-Volatile Memory Express (NVMe) offloading for training models beyond GPU memory limits
@@ -586,6 +587,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - Fine-Tuning
     - **Supervised Fine-Tuning (SFT)** - Training technique that updates all model parameters using labeled instruction-response pairs
     - **Low-Rank Adaptation (LoRA)** - Parameter-efficient fine-tuning method that trains low-rank decomposition matrices instead of full model weights
+    - **Quantized Low-Rank Adaptation (QLoRA)** - Memory-efficient fine-tuning method that combines 4-bit quantization with Low-Rank Adaptation (LoRA) to enable training large models on limited GPU memory
     - **PEFT** - Hugging Face library implementing parameter-efficient fine-tuning methods including Low-Rank Adaptation (LoRA), prefix tuning, and adapters
     - **TRL** - Hugging Face library for training large language models with reinforcement learning including Supervised Fine-Tuning (SFT), Proximal Policy Optimization (PPO), and Direct Preference Optimization (DPO)
     - **Unsloth** - Efficient large language model (LLM) fine-tuning on single GPU via custom Triton kernels
