@@ -1,4 +1,4 @@
-# Supervised Fine-Tuning - Low-Rank Adaptation
+# Supervised Fine-Tuning (SFT) - Low-Rank Adaptation (LoRA)
 
 ## Core Idea
 
