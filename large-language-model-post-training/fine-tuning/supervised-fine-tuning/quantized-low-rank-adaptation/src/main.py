@@ -2,9 +2,11 @@ import logging
 from pathlib import Path
 
 import torch
+import torch.distributed
+from accelerate import PartialState
 from datasets import load_dataset
 from peft import LoraConfig
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from trl import SFTConfig, SFTTrainer
 
 logger = logging.getLogger(__name__)
@@ -15,11 +17,39 @@ OUTPUT_DIRECTORY = Path("output")
 
 
 def main() -> None:
+    # For multi-GPU QLoRA, use DDP (DistributedDataParallel) via accelerate.
+    # Each GPU loads its own copy of the 4-bit quantized model.
+    device_string = PartialState().process_index
+
+    # QLoRA (Quantized Low-Rank Adaptation) combines 4-bit quantization with LoRA.
+    # The base model weights are quantized to 4-bit NormalFloat (NF4), reducing memory by ~4x,
+    # while LoRA adapters remain in higher precision (bfloat16) for stable training.
+    # Memory: 4-bit base (~0.5 bytes/param) + bf16 LoRA adapters + bf16 optimizer states for LoRA only.
+    quantization_config = BitsAndBytesConfig(
+        # Enable 4-bit quantization for loading model weights.
+        # Reduces memory from 2 bytes/param (bf16) to ~0.5 bytes/param.
+        load_in_4bit=True,
+        # NF4 (4-bit NormalFloat) is optimized for normally distributed weights.
+        # Quantization levels are spaced according to a normal distribution, matching typical weight distributions.
+        # Alternative: "fp4" uses uniform spacing, slightly less accurate for neural network weights.
+        bnb_4bit_quant_type="nf4",
+        # Compute dtype for matrix multiplications during forward/backward pass.
+        # Weights are dequantized to this dtype before computation: $W_{dequant} = \text{dequant}(W_{4bit})$
+        # bfloat16 provides good balance of speed and numerical stability.
+        bnb_4bit_compute_dtype=torch.bfloat16,
+        # Double quantization: quantize the quantization constants themselves.
+        # Saves ~0.4 bits per parameter with minimal accuracy loss.
+        # The scaling factors $s$ are also quantized: $s_{quant} = \text{quant}(s)$
+        bnb_4bit_use_double_quant=True,
+    )
+
     logger.info(f"Loading model: {MODEL_NAME}")
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_NAME,
-        device_map="auto",
-        dtype=torch.bfloat16,
+        # For QLoRA with DDP, each process loads the model on its assigned GPU.
+        # PartialState().process_index returns the local rank (0, 1, 2, ...) for each process.
+        device_map={"": device_string},
+        quantization_config=quantization_config,
     )
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     if tokenizer.pad_token is None:
@@ -38,14 +68,10 @@ def main() -> None:
         remove_columns=dataset.column_names,
     )
 
-    # Low-Rank Adaptation (LoRA) decomposes weight updates into two smaller matrices,
-    # dramatically reducing trainable parameters while preserving model quality.
-    # Instead of updating full weight matrix $W \in \mathbb{R}^{d \times k}$, LoRA learns:
-    #
-    # $W' = W + \Delta W = W + \frac{\alpha}{r} BA$
-    #
-    # where $B \in \mathbb{R}^{d \times r}$ and $A \in \mathbb{R}^{r \times k}$ are low-rank matrices.
-    # This reduces trainable parameters from $d \times k$ to $r \times (d + k)$.
+    # QLoRA uses LoRA adapters on top of the 4-bit quantized base model.
+    # The LoRA weight update: $W' = W_{4bit} + \frac{\alpha}{r} BA$
+    # where $W_{4bit}$ is frozen and quantized, while $B$ and $A$ are trainable in bfloat16.
+    # This achieves near full fine-tuning quality at a fraction of the memory cost.
     lora_config = LoraConfig(
         # Rank $r$ of the low-rank matrices $A$ and $B$.
         # Trainable parameters per layer: $r \times (d_{in} + d_{out})$ instead of $d_{in} \times d_{out}$.
@@ -82,14 +108,14 @@ def main() -> None:
     training_config = SFTConfig(
         output_dir=str(OUTPUT_DIRECTORY),
         # Maximum sequence length $T$ for tokenization. Sequences longer than this are truncated.
-        # Memory scales as $O(T^2)$ for attention. 1024 is reasonable for most conversational data.
-        max_length=1024,
-        # Micro-batch size $b$ per GPU before gradient update. Larger = more stable gradients but more memory.
-        per_device_train_batch_size=8,
+        # Memory scales as $O(T^2)$ for attention. 512 is used for QLoRA to reduce memory usage.
+        max_length=512,
+        # Micro-batch size $b$ per GPU before gradient update. Reduced for QLoRA memory constraints.
+        per_device_train_batch_size=2,
         # Accumulate gradients over $k$ steps before updating weights.
         # Effective batch size: $B_{eff} = b \times k \times n_{gpu}$
-        # Here: $8 \times 2 = 16$ effective batch size (per GPU).
-        gradient_accumulation_steps=2,
+        # Here: $2 \times 8 = 16$ effective batch size (per GPU).
+        gradient_accumulation_steps=8,
         # Number of epochs $E$ (complete passes through the dataset).
         # 1 epoch is often enough for fine-tuning; more epochs risk overfitting.
         num_train_epochs=1,
@@ -101,7 +127,10 @@ def main() -> None:
         bf16=True,
         # Gradient checkpointing trades compute for memory by recomputing activations during backward pass.
         # Reduces memory from $O(L)$ to $O(\sqrt{L})$ where $L$ is number of layers. Slows training by ~20%.
-        gradient_checkpointing=False,
+        # Essential for QLoRA to fit larger models in memory.
+        gradient_checkpointing=True,
+        # Required for gradient checkpointing with LoRA to avoid errors with reentrant checkpointing.
+        gradient_checkpointing_kwargs={"use_reentrant": False},
         # Log training metrics (loss, learning rate, etc.) every N steps.
         logging_steps=10,
         # Save model checkpoint every N steps. Lower = more checkpoints but more disk usage.
@@ -124,6 +153,10 @@ def main() -> None:
     logger.info(f"Saving model to {OUTPUT_DIRECTORY}")
     trainer.save_model(str(OUTPUT_DIRECTORY))
     tokenizer.save_pretrained(str(OUTPUT_DIRECTORY))
+
+    # Clean up distributed process group to avoid resource leak warning.
+    if torch.distributed.is_initialized():
+        torch.distributed.destroy_process_group()
 
 
 if __name__ == "__main__":
