@@ -57,7 +57,7 @@ where:
 SFT uses the standard language modeling cross-entropy loss on the response tokens:
 
 ```math
-\mathcal{L}(\theta) = -\sum_{i=1}^{T} \log p_\theta(y_i \mid x, y_{<i})
+\mathcal{L}(\theta) = -\sum_{i=1}^{T} \log p_\theta(y_i \mid x, y_{\lt i})
 ```
 
 where:
