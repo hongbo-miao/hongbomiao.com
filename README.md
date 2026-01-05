@@ -587,6 +587,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - Fine-Tuning
     - **Supervised Fine-Tuning (SFT)** - Training technique that updates all model parameters using labeled instruction-response pairs
     - **Direct Preference Optimization (DPO)** - Alignment technique that directly optimizes language models on human preference data without requiring a separate reward model
+    - **Proximal Policy Optimization (PPO)** - Reinforcement learning algorithm that uses a clipped surrogate objective to enable stable policy updates while preventing destructively large parameter changes
+    - **Group Relative Policy Optimization (GRPO)** - Reinforcement learning algorithm that estimates baselines from group scores instead of critic models, reducing memory usage while maintaining training effectiveness
     - **Low-Rank Adaptation (LoRA)** - Parameter-efficient fine-tuning method that trains low-rank decomposition matrices instead of full model weights
     - **Quantized Low-Rank Adaptation (QLoRA)** - Memory-efficient fine-tuning method that combines 4-bit quantization with Low-Rank Adaptation (LoRA) to enable training large models on limited GPU memory
     - **PEFT** - Hugging Face library implementing parameter-efficient fine-tuning methods including Low-Rank Adaptation (LoRA), prefix tuning, and adapters
