@@ -347,6 +347,8 @@ jobs:
               - 'data-visualization/grafana/hm-panel-plugin/**'
             graph-neural-network:
               - 'graph-neural-network/**'
+            group-relative-policy-optimization-low-rank-adaptation:
+              - 'large-language-model-post-training/fine-tuning/group-relative-policy-optimization/low-rank-adaptation/**'
             hm-aerosandbox:
               - 'aerospace/hm-aerosandbox/**'
             hm-airflow:
@@ -799,6 +801,7 @@ jobs:
       grafana-hm-dashboard: ${{ steps.filter.outputs.grafana-hm-dashboard }}
       grafana-hm-panel-plugin: ${{ steps.filter.outputs.grafana-hm-panel-plugin }}
       graph-neural-network: ${{ steps.filter.outputs.graph-neural-network }}
+      group-relative-policy-optimization-low-rank-adaptation: ${{ steps.filter.outputs.group-relative-policy-optimization-low-rank-adaptation }}
       hm-aerosandbox: ${{ steps.filter.outputs.hm-aerosandbox }}
       hm-airflow: ${{ steps.filter.outputs.hm-airflow }}
       hm-autogluon: ${{ steps.filter.outputs.hm-autogluon }}
@@ -1294,6 +1297,7 @@ jobs:
       flow-matching: ${{ needs.detect-changes.outputs.flow-matching == 'true' }}
       gemma: ${{ needs.detect-changes.outputs.gemma == 'true' }}
       graph-neural-network: ${{ needs.detect-changes.outputs.graph-neural-network == 'true' }}
+      group-relative-policy-optimization-low-rank-adaptation: ${{ needs.detect-changes.outputs.group-relative-policy-optimization-low-rank-adaptation == 'true' }}
       hm-autogluon: ${{ needs.detect-changes.outputs.hm-autogluon == 'true' }}
       hm-axolotl: ${{ needs.detect-changes.outputs.hm-axolotl == 'true' }}
       hm-catboost: ${{ needs.detect-changes.outputs.hm-catboost == 'true' }}
