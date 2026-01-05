@@ -121,7 +121,7 @@ LoRA and QLoRA use different multi-GPU strategies due to quantization constraint
 │ Layers 0-15 │───>│ Layers 16-31│
 │   (bf16)    │    │   (bf16)    │
 └─────────────┘    └─────────────┘
-      ONE MODEL SPLIT ACROSS GPUS
+  ONE MODEL SPLIT ACROSS GPUS
 ```
 
 #### QLoRA: Data Parallelism (DDP)
