@@ -17,7 +17,7 @@ terraform {
     // https://registry.terraform.io/providers/argoproj-labs/argocd/latest
     argocd = {
       source  = "argoproj-labs/argocd"
-      version = "7.12.4"
+      version = "7.12.5"
     }
   }
   required_version = ">= 1.10"
