@@ -39,6 +39,9 @@ name: . Test Machine Learning
       dense-transformer:
         required: true
         type: boolean
+      direct-preference-optimization-low-rank-adaptation:
+        required: true
+        type: boolean
       feature-store:
         required: true
         type: boolean
@@ -2772,6 +2775,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: large-language-model-post-training/fine-tuning/supervised-fine-tuning/quantized-low-rank-adaptation
+
+  direct-preference-optimization-low-rank-adaptation-test:
+    name: Direct Preference Optimization - Low-Rank Adaptation | Test
+    if: ${{ inputs.workflow || inputs.direct-preference-optimization-low-rank-adaptation }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.1.6
+        with:
+          version: 0.9.21
+          enable-cache: true
+          cache-dependency-glob: large-language-model-post-training/fine-tuning/direct-preference-optimization/low-rank-adaptation/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: large-language-model-post-training/fine-tuning/direct-preference-optimization/low-rank-adaptation/.python-version
+      - name: Install dependencies
+        working-directory: large-language-model-post-training/fine-tuning/direct-preference-optimization/low-rank-adaptation
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: large-language-model-post-training/fine-tuning/direct-preference-optimization/low-rank-adaptation
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: large-language-model-post-training/fine-tuning/direct-preference-optimization/low-rank-adaptation
 
   fine-tune-whisper-test:
     name: Fine Tune Whisper | Test

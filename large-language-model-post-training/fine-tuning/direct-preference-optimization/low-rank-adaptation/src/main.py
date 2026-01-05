@@ -5,12 +5,12 @@ import torch
 from datasets import load_dataset
 from peft import LoraConfig
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from trl import SFTConfig, SFTTrainer
+from trl import DPOConfig, DPOTrainer
 
 logger = logging.getLogger(__name__)
 
 MODEL_NAME = "Qwen/Qwen3-0.6B"
-DATASET_NAME = "HuggingFaceH4/ultrachat_200k"
+DATASET_NAME = "trl-lib/ultrafeedback_binarized"
 OUTPUT_DIRECTORY = Path("output")
 
 
@@ -25,18 +25,14 @@ def main() -> None:
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
+    # DPO requires a preference dataset with "chosen" and "rejected" responses.
+    # In LLM context, "prompt" refers to the user's input/question that the model responds to.
+    # The ultrafeedback_binarized dataset uses conversational format:
+    # - "chosen": list of messages [{"role": "user", "content": prompt}, {"role": "assistant", "content": preferred_response}]
+    # - "rejected": list of messages [{"role": "user", "content": prompt}, {"role": "assistant", "content": less_preferred_response}]
+    # The DPOTrainer extracts the prompt from the first user message automatically.
     logger.info("Loading dataset")
-    dataset = load_dataset(DATASET_NAME, split="train_sft[:1000]")
-    formatted_dataset = dataset.map(
-        lambda example: {
-            "text": tokenizer.apply_chat_template(
-                example["messages"],
-                tokenize=False,
-                add_generation_prompt=False,
-            ),
-        },
-        remove_columns=dataset.column_names,
-    )
+    dataset = load_dataset(DATASET_NAME, split="train[:1000]")
 
     # Low-Rank Adaptation (LoRA) decomposes weight updates into two smaller matrices,
     # dramatically reducing trainable parameters while preserving model quality.
@@ -73,32 +69,49 @@ def main() -> None:
         task_type="CAUSAL_LM",
     )
 
-    # SFTConfig extends TrainingArguments with SFT-specific options.
-    # Supervised Fine-Tuning (SFT) trains the model to minimize the cross-entropy loss:
+    # DPOConfig extends TrainingArguments with DPO-specific options.
+    # Direct Preference Optimization (DPO) directly optimizes the policy using preference data
+    # without needing a separate reward model. The DPO loss is:
     #
-    # $\mathcal{L} = -\sum_{t=1}^{T} \log P(y_t | y_{<t}, x; \theta)$
+    # $\mathcal{L}_{DPO}(\pi_\theta; \pi_{ref}) = -\mathbb{E}_{(x, y_w, y_l) \sim D} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} \right) \right]$
     #
-    # where $x$ is the input, $y_t$ is the target token at position $t$, and $\theta$ are model parameters.
-    training_config = SFTConfig(
+    # where:
+    # - $D$ is the preference dataset containing triplets $(x, y_w, y_l)$ where humans indicated $y_w$ is preferred over $y_l$
+    # - $x$ is the prompt (user input/question)
+    # - $y_w$ is the preferred (chosen) response
+    # - $y_l$ is the rejected response
+    # - $\pi_\theta$ is the policy being trained
+    # - $\pi_{ref}$ is the reference policy (frozen copy of the initial model)
+    # - $\beta$ is the temperature parameter controlling deviation from the reference
+    # - $\sigma$ is the sigmoid function
+    training_config = DPOConfig(
         output_dir=str(OUTPUT_DIRECTORY),
         # Maximum sequence length $T$ for tokenization. Sequences longer than this are truncated.
         # Memory scales as $O(T^2)$ for attention. 1024 is reasonable for most conversational data.
         max_length=1024,
+        # Maximum length for the prompt portion. Prompts longer than this are truncated.
+        max_prompt_length=512,
         # Micro-batch size $b$ per GPU before gradient update. Larger = more stable gradients but more memory.
-        per_device_train_batch_size=8,
+        # DPO processes chosen and rejected pairs together, so effective samples = batch_size * 2.
+        per_device_train_batch_size=4,
         # Accumulate gradients over $k$ steps before updating weights.
         # Effective batch size: $B_{eff} = b \times k \times n_{gpu}$
-        # Here: $8 \times 2 = 16$ effective batch size (per GPU).
-        gradient_accumulation_steps=2,
+        # Here: $4 \times 4 = 16$ effective batch size (per GPU).
+        gradient_accumulation_steps=4,
         # Number of epochs $E$ (complete passes through the dataset).
         # 1 epoch is often enough for fine-tuning; more epochs risk overfitting.
         num_train_epochs=1,
         # Learning rate $\eta$ for AdamW optimizer. Update rule: $\theta_{t+1} = \theta_t - \eta \cdot \hat{m}_t / (\sqrt{\hat{v}_t} + \epsilon)$
-        # $2 \times 10^{-4}$ is typical for LoRA. Too high = unstable, too low = slow convergence.
-        learning_rate=2e-4,
+        # $5 \times 10^{-5}$ is typical for DPO (lower than SFT). Too high = unstable, too low = slow convergence.
+        learning_rate=5e-5,
         # Use bfloat16 (brain floating point): 1 sign + 8 exponent + 7 mantissa bits.
         # Same dynamic range as fp32 but less precision. Faster and less memory than fp32.
         bf16=True,
+        # Temperature parameter $\beta$ controlling deviation from reference policy.
+        # Higher $\beta$ = stronger preference optimization but may deviate more from reference.
+        # Lower $\beta$ = more conservative, stays closer to reference policy.
+        # Common values: 0.1 to 0.5. Default is 0.1.
+        beta=0.1,
         # Gradient checkpointing trades compute for memory by recomputing activations during backward pass.
         # Reduces memory from $O(L)$ to $O(\sqrt{L})$ where $L$ is number of layers. Slows training by ~20%.
         gradient_checkpointing=False,
@@ -110,10 +123,10 @@ def main() -> None:
         report_to="none",
     )
 
-    trainer = SFTTrainer(
+    trainer = DPOTrainer(
         model=model,
         args=training_config,
-        train_dataset=formatted_dataset,
+        train_dataset=dataset,
         processing_class=tokenizer,
         peft_config=lora_config,
     )

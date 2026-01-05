@@ -325,6 +325,8 @@ jobs:
               - 'data-storage/delta-lake/write-to-delta-lake/**'
             dinov3:
               - 'computer-vision/vision-transformer/dinov3/**'
+            direct-preference-optimization-low-rank-adaptation:
+              - 'large-language-model-post-training/fine-tuning/direct-preference-optimization/low-rank-adaptation/**'
             export-yolo-to-onnx:
               - 'computer-vision/export-yolo-to-onnx/**'
             feature-store:
@@ -781,6 +783,7 @@ jobs:
       dense-transformer: ${{ steps.filter.outputs.dense-transformer }}
       development-aws-glue-spark-scripts: ${{ steps.filter.outputs.development-aws-glue-spark-scripts }}
       dinov3: ${{ steps.filter.outputs.dinov3 }}
+      direct-preference-optimization-low-rank-adaptation: ${{ steps.filter.outputs.direct-preference-optimization-low-rank-adaptation }}
       dust-dds-publisher: ${{ steps.filter.outputs.dust-dds-publisher }}
       dust-dds-subscriber: ${{ steps.filter.outputs.dust-dds-subscriber }}
       ethereum: ${{ steps.filter.outputs.ethereum }}
@@ -1285,6 +1288,7 @@ jobs:
       convolutional-neural-network: ${{ needs.detect-changes.outputs.convolutional-neural-network == 'true' }}
       core-ml-tools: ${{ needs.detect-changes.outputs.core-ml-tools == 'true' }}
       dense-transformer: ${{ needs.detect-changes.outputs.dense-transformer == 'true' }}
+      direct-preference-optimization-low-rank-adaptation: ${{ needs.detect-changes.outputs.direct-preference-optimization-low-rank-adaptation == 'true' }}
       feature-store: ${{ needs.detect-changes.outputs.feature-store == 'true' }}
       fine-tune-whisper: ${{ needs.detect-changes.outputs.fine-tune-whisper == 'true' }}
       flow-matching: ${{ needs.detect-changes.outputs.flow-matching == 'true' }}
