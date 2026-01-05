@@ -32,7 +32,7 @@ where:
 - $D_\text{KL}(\pi_\theta \| \pi_\text{ref})$ is the KL divergence measuring how much the current policy has drifted from the reference policy, computed per-token as:
 
 ```math
-D_\text{KL}(\pi_\theta \| \pi_\text{ref}) = \sum_t \pi_\theta(y_t|x, y_{<t}) \log \frac{\pi_\theta(y_t|x, y_{<t})}{\pi_\text{ref}(y_t|x, y_{<t})}
+D_\text{KL}(\pi_\theta \| \pi_\text{ref}) = \sum_t \pi_\theta(y_t|x, y_{\lt t}) \log \frac{\pi_\theta(y_t|x, y_{\lt t})}{\pi_\text{ref}(y_t|x, y_{\lt t})}
 ```
 
 The KL penalty serves as a regularizer that prevents the policy from diverging too far from the reference model, which helps maintain response quality and prevents reward hacking.
