@@ -601,6 +601,7 @@ static-type-check-python:
     uv run poe static-type-check-python --package=large-language-model-post-training.fine-tuning.hm-tinker
     uv run poe static-type-check-python --package=large-language-model-post-training.fine-tuning.hm-torchtune
     uv run poe static-type-check-python --package=large-language-model-post-training.fine-tuning.hm-unsloth
+    uv run poe static-type-check-python --package=large-language-model-post-training.fine-tuning.proximal-policy-optimization.low-rank-adaptation
     uv run poe static-type-check-python --package=large-language-model-post-training.fine-tuning.supervised-fine-tuning.low-rank-adaptation
     uv run poe static-type-check-python --package=large-language-model-post-training.fine-tuning.supervised-fine-tuning.quantized-low-rank-adaptation
     uv run poe static-type-check-python --package=large-language-model-post-training.post-training-quantization
