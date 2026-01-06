@@ -643,6 +643,8 @@ jobs:
               - 'large-language-model-post-training/post-training-quantization/**'
             production-aws-glue-spark-scripts:
               - 'infrastructure/opentofu/environments/production/aws/general/files/aws-glue/spark-scripts/**'
+            proximal-policy-optimization-low-rank-adaptation:
+              - 'large-language-model-post-training/fine-tuning/proximal-policy-optimization/low-rank-adaptation/**'
             prometheus:
               - 'data-storage/prometheus/**'
             q-learning:
@@ -949,6 +951,7 @@ jobs:
       post-training-quantization: ${{ steps.filter.outputs.post-training-quantization }}
       production-aws-glue-spark-scripts: ${{ steps.filter.outputs.production-aws-glue-spark-scripts }}
       prometheus: ${{ steps.filter.outputs.prometheus }}
+      proximal-policy-optimization-low-rank-adaptation: ${{ steps.filter.outputs.proximal-policy-optimization-low-rank-adaptation }}
       q-learning: ${{ steps.filter.outputs.q-learning }}
       quantum-computing: ${{ steps.filter.outputs.quantum-computing }}
       qwen-vl: ${{ steps.filter.outputs.qwen-vl }}
@@ -1363,6 +1366,7 @@ jobs:
       open-clip: ${{ needs.detect-changes.outputs.open-clip == 'true' }}
       openvla: ${{ needs.detect-changes.outputs.openvla == 'true' }}
       post-training-quantization: ${{ needs.detect-changes.outputs.post-training-quantization == 'true' }}
+      proximal-policy-optimization-low-rank-adaptation: ${{ needs.detect-changes.outputs.proximal-policy-optimization-low-rank-adaptation == 'true' }}
       q-learning: ${{ needs.detect-changes.outputs.q-learning == 'true' }}
       qwen-vl: ${{ needs.detect-changes.outputs.qwen-vl == 'true' }}
       qwen3: ${{ needs.detect-changes.outputs.qwen3 == 'true' }}
