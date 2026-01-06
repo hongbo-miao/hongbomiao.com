@@ -105,7 +105,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **swift-transformers** - Transformers-like API with tokenization and Hugging Face Hub integration
 - **Core ML Tools** - Core ML model conversion, editing, and validation for iOS/macOS
 - **XCTest** - Unit testing, performance testing
-- **Slather** - Code coverage reports generating
+- **Slather** - Code coverage report generation
 - **Mint** - Package management
 
 ### Mobile - Android
@@ -115,7 +115,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ### Mobile - React Native
 
-- **Expo** - Universal native apps making platform
+- **Expo** - Platform for making universal native apps
 - **React Native** - Mobile application framework
 - **UI Kitten** - UI library
 - **React Native Testing Library** - React Native component testing
@@ -1510,7 +1510,7 @@ The website [supports HTTP/3](https://www.http3check.net/?host=hongbomiao.com).
 
 Images on the website are using AVIF format.
 
-The WebP is almost half the size of JPEG, and AVIF is under half the size of WebP.
+WebP is almost half the size of JPEG, and AVIF is under half the size of WebP.
 
 ### Security
 
