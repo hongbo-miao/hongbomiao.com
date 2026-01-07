@@ -15,6 +15,7 @@ ExecStart=/usr/bin/docker run \
   --gpus {{ speaches_gpu_devices }} \
   --detach=false \
   --env=HF_TOKEN={{ speaches_hugging_face_hub_token }} \
+  --env=PRELOAD_MODELS='{{ speaches_preload_models | to_json }}' \
   {{ speaches_docker_image }}
 ExecStop=/usr/bin/docker stop {{ speaches_container_name }}
 Restart=always

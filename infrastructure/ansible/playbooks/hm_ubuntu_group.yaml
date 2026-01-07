@@ -165,10 +165,11 @@
         ollama_gpu_devices: "'\"device=0\"'"
     - role: speaches
       vars:
-        speaches_docker_image: ghcr.io/speaches-ai/speaches:0.8.2-cuda
+        speaches_docker_image: ghcr.io/speaches-ai/speaches:0.9.0-rc.3-cuda
         speaches_port: 34796
         speaches_gpu_devices: "'\"device=0\"'"
         speaches_hugging_face_hub_token: "{{ hostvars[inventory_hostname]['hugging_face_hub_token'] }}"
+        speaches_preload_models: ["Systran/faster-whisper-medium.en"]
     - role: vllm
       vars:
         vllm_docker_image: docker.io/vllm/vllm-openai:v0.10.1.1
