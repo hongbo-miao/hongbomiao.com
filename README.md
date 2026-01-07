@@ -529,6 +529,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **AutoGluon** - Automated machine learning (AutoML) library
 - **OGB** - Open graph benchmark
 - **Optuna** - Hyperparameter optimization framework
+- **hydra-zen** - Pythonic configuration management built on Hydra
 - **DVC** - Data version control
 - **Feast** - Feature store
 - **Metaflow** - Machine learning orchestration
