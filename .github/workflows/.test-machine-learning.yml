@@ -162,6 +162,9 @@ name: . Test Machine Learning
       hm-optimum:
         required: true
         type: boolean
+      hm-optuna:
+        required: true
+        type: boolean
       hm-pydantic-ai-chat-pdf:
         required: true
         type: boolean
@@ -205,9 +208,6 @@ name: . Test Machine Learning
         required: true
         type: boolean
       hm-xgboost:
-        required: true
-        type: boolean
-      hyperparameter-optimization:
         required: true
         type: boolean
       kv-caching:
@@ -2452,9 +2452,9 @@ jobs:
           slug: hongbo-miao/hongbomiao.com
           directory: generative-model/flow-matching
 
-  hyperparameter-optimization-test:
-    name: Hyperparameter Optimization | Test
-    if: ${{ inputs.workflow || inputs.hyperparameter-optimization }}
+  optuna-test:
+    name: Optuna | Test
+    if: ${{ inputs.workflow || inputs.hm-optuna }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -2465,17 +2465,17 @@ jobs:
         with:
           version: 0.9.22
           enable-cache: true
-          cache-dependency-glob: machine-learning/hyperparameter-optimization/uv.lock
+          cache-dependency-glob: machine-learning/hyperparameter-optimization/hm-optuna/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: machine-learning/hyperparameter-optimization/.python-version
+          python-version-file: machine-learning/hyperparameter-optimization/hm-optuna/.python-version
       - name: Install dependencies
-        working-directory: machine-learning/hyperparameter-optimization
+        working-directory: machine-learning/hyperparameter-optimization/hm-optuna
         run: |
           uv sync --dev
       - name: Test
-        working-directory: machine-learning/hyperparameter-optimization
+        working-directory: machine-learning/hyperparameter-optimization/hm-optuna
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -2483,7 +2483,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: machine-learning/hyperparameter-optimization
+          directory: machine-learning/hyperparameter-optimization/hm-optuna
 
   post-training-quantization-test:
     name: Post-Training Quantization | Test
