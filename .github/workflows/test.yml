@@ -467,6 +467,8 @@ jobs:
               - 'multimodal-model/vision-language-action-model/hm-openpi/**'
             hm-optimum:
               - 'large-language-model-inference/hm-optimum/**'
+            hm-optuna:
+              - 'machine-learning/hyperparameter-optimization/hm-optuna/**'
             hm-pandas-analyze-transactions:
               - 'data-analytics/hm-pandas/analyze-transactions/**'
             hm-pathway-aggregate-hourly-events:
@@ -557,8 +559,6 @@ jobs:
               - 'ensemble-learning/boosting/hm-xgboost/**'
             hm-xxhash:
               - 'system-tool/hm-xxhash/**'
-            hyperparameter-optimization:
-              - 'machine-learning/hyperparameter-optimization/**'
             iads-config-reader:
               - 'data-visualization/iads/iads-data-manager/iads-config-reader/**'
             iads-data-producer:
@@ -863,6 +863,7 @@ jobs:
       hm-openaerostruct: ${{ steps.filter.outputs.hm-openaerostruct }}
       hm-openpi: ${{ steps.filter.outputs.hm-openpi }}
       hm-optimum: ${{ steps.filter.outputs.hm-optimum }}
+      hm-optuna: ${{ steps.filter.outputs.hm-optuna }}
       hm-pandas-analyze-transactions: ${{ steps.filter.outputs.hm-pandas-analyze-transactions }}
       hm-pathway-aggregate-hourly-events: ${{ steps.filter.outputs.hm-pathway-aggregate-hourly-events }}
       hm-polars-analyze-transactions-cpu: ${{ steps.filter.outputs.hm-polars-analyze-transactions-cpu }}
@@ -1335,6 +1336,7 @@ jobs:
       hm-olmocr: ${{ needs.detect-changes.outputs.hm-olmocr == 'true' }}
       hm-openpi: ${{ needs.detect-changes.outputs.hm-openpi == 'true' }}
       hm-optimum: ${{ needs.detect-changes.outputs.hm-optimum == 'true' }}
+      hm-optuna: ${{ needs.detect-changes.outputs.hm-optuna == 'true' }}
       hm-pydantic-ai-chat-pdf: ${{ needs.detect-changes.outputs.hm-pydantic-ai-chat-pdf == 'true' }}
       hm-scikit-learn: ${{ needs.detect-changes.outputs.hm-scikit-learn == 'true' }}
       hm-senko: ${{ needs.detect-changes.outputs.hm-senko == 'true' }}
@@ -1350,7 +1352,6 @@ jobs:
       hm-unsloth: ${{ needs.detect-changes.outputs.hm-unsloth == 'true' }}
       hm-whisperx: ${{ needs.detect-changes.outputs.hm-whisperx == 'true' }}
       hm-xgboost: ${{ needs.detect-changes.outputs.hm-xgboost == 'true' }}
-      hyperparameter-optimization: ${{ needs.detect-changes.outputs.hyperparameter-optimization == 'true' }}
       kv-caching: ${{ needs.detect-changes.outputs.kv-caching == 'true' }}
       liquid-neural-network: ${{ needs.detect-changes.outputs.liquid-neural-network == 'true' }}
       mamba2: ${{ needs.detect-changes.outputs.mamba2 == 'true' }}
