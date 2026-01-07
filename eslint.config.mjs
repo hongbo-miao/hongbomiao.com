@@ -133,6 +133,7 @@ export default [
       'convolutional-neural-network/wandb/**/*',
       'graph-neural-network/dataset/**/*',
       'graph-neural-network/wandb/**/*',
+      'machine-learning/configuration-management/hm-hydra-zen/outputs/**/*',
       'machine-learning/hm-autogluon/AutogluonModels/**/*',
       'machine-learning/hm-metaflow/flows/*/.metaflow/**/*',
       'machine-learning/hm-mlflow/experiments/*/lightning_logs/**/*',
