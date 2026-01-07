@@ -409,6 +409,8 @@ jobs:
               - 'machine-learning/hm-gradio/applications/classify-image/**'
             hm-hdf5:
               - 'data-storage/hm-hdf5/**'
+            hm-hydra-zen:
+              - 'machine-learning/configuration-management/hm-hydra-zen/**'
             hm-imagebind:
               - 'embedding/hm-imagebind/**'
             hm-jax:
@@ -834,6 +836,7 @@ jobs:
       hm-gliner: ${{ steps.filter.outputs.hm-gliner }}
       hm-gradio-classify-image: ${{ steps.filter.outputs.hm-gradio-classify-image }}
       hm-hdf5: ${{ steps.filter.outputs.hm-hdf5 }}
+      hm-hydra-zen: ${{ steps.filter.outputs.hm-hydra-zen }}
       hm-imagebind: ${{ steps.filter.outputs.hm-imagebind }}
       hm-jax: ${{ steps.filter.outputs.hm-jax }}
       hm-jiwer: ${{ steps.filter.outputs.hm-jiwer }}
@@ -1317,6 +1320,7 @@ jobs:
       hm-genesis: ${{ needs.detect-changes.outputs.hm-genesis == 'true' }}
       hm-gliner: ${{ needs.detect-changes.outputs.hm-gliner == 'true' }}
       hm-gradio-classify-image: ${{ needs.detect-changes.outputs.hm-gradio-classify-image == 'true' }}
+      hm-hydra-zen: ${{ needs.detect-changes.outputs.hm-hydra-zen == 'true' }}
       hm-imagebind: ${{ needs.detect-changes.outputs.hm-imagebind == 'true' }}
       hm-jiwer: ${{ needs.detect-changes.outputs.hm-jiwer == 'true' }}
       hm-kubeflow-calculate: ${{ needs.detect-changes.outputs.hm-kubeflow-calculate == 'true' }}
