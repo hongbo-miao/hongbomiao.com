@@ -75,7 +75,7 @@ version = "1.0.0"
 dependencies = [
  "anyhow",
  "async-nats",
- "capnp",
+ "capnp 0.23.2",
  "capnpc",
  "chrono",
  "dotenvy",
@@ -183,12 +183,21 @@ dependencies = [
 ]
 
 [[package]]
-name = "capnpc"
-version = "0.23.3"
+name = "capnp"
+version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad416fa35bb240c41f2794ecf1a95a41885f16a03e51bba4cb6845ce7db4bab3"
+checksum = "fe8af2e2d255489928e31504fa51d86a41d040179098a8ad6828e0d11c54dcd6"
 dependencies = [
- "capnp",
+ "embedded-io",
+]
+
+[[package]]
+name = "capnpc"
+version = "0.25.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d6cdfa6b0df161a71201367910265b97180541ecdb48bd08e05ef8694c295d1f"
+dependencies = [
+ "capnp 0.25.0",
 ]
 
 [[package]]
