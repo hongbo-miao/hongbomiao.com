@@ -12,10 +12,10 @@ resource "nebius_vpc_v1_pool" "main" {
   name       = var.pool_name
   version    = "IPV4"
   visibility = var.visibility
-  labels     = var.labels
   cidrs = [
     {
       cidr = var.ipv4_cidr_block
     }
   ]
+  labels = var.labels
 }
