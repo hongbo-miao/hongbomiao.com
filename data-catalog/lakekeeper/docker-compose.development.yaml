@@ -25,7 +25,7 @@ services:
       test: ["CMD", "/home/nonroot/lakekeeper", "healthcheck"]
       interval: 1s
       timeout: 10s
-      retries: 10
+      retries: 5
       start_period: 30s
 
   lakekeeper-bootstrap:
@@ -144,7 +144,7 @@ services:
       test: ["CMD", "trino", "--execute", "SELECT 1"]
       interval: 10s
       timeout: 10s
-      retries: 10
+      retries: 5
       start_period: 30s
 
   trino-initialize:

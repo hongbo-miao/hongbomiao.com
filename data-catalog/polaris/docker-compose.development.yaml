@@ -61,7 +61,7 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8182/q/health"]
       interval: 10s
       timeout: 5s
-      retries: 20
+      retries: 5
       start_period: 180s
 
   polaris-bootstrap:
@@ -123,7 +123,7 @@ services:
       test: ["CMD", "trino", "--execute", "SELECT 1"]
       interval: 10s
       timeout: 10s
-      retries: 10
+      retries: 5
       start_period: 30s
 
   trino-initialize:

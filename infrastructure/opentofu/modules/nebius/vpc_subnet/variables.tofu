@@ -7,13 +7,13 @@ variable "network_id" {
 variable "subnet_name" {
   type = string
 }
-variable "private_ipv4_cidr_block" {
-  type    = string
-  default = null
+variable "should_use_private_network_pools" {
+  type    = bool
+  default = false
 }
-variable "public_ipv4_cidr_block" {
-  type    = string
-  default = null
+variable "should_use_public_network_pools" {
+  type    = bool
+  default = false
 }
 variable "labels" {
   type    = map(string)
