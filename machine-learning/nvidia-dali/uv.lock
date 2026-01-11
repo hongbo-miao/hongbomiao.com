@@ -345,7 +345,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "numpy", specifier = "==2.4.1" },
-    { name = "nvidia-dali-cuda120", specifier = "==1.52.0" },
+    { name = "nvidia-dali-cuda120", specifier = "==1.53.0" },
     { name = "torch", specifier = "==2.9.1" },
 ]
 
@@ -358,20 +358,33 @@ dev = [
 
 [[package]]
 name = "nvidia-dali-cuda120"
-version = "1.52.0"
+version = "1.53.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "astunparse" },
     { name = "dm-tree" },
     { name = "gast" },
     { name = "makefun" },
-    { name = "nvidia-nvcomp-cu12" },
+    { name = "nvidia-libnvcomp-cu12" },
     { name = "nvidia-nvimgcodec-cu12", extra = ["all"] },
     { name = "nvtx" },
     { name = "packaging" },
     { name = "six" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8a/6e/e43f74033e2ae931f36e24161186932c330bdbbf8dae195d54bce2f90002/nvidia_dali_cuda120-1.52.0.tar.gz", hash = "sha256:27fd5380381c99bf68c12063b17646eff5da5d39c1eeb555a1fc414082dc290f", size = 1686, upload-time = "2025-10-28T14:32:53.865Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e0/12/e24d589a22e922c536f61a3d24e513f5ffe15a90cc50edaa500953e5bff9/nvidia_dali_cuda120-1.53.0-py3-none-manylinux_2_28_aarch64.whl", hash = "sha256:5cae8790dcfaf0ad44a8bfee747127a1f10bed14f577626ef3501cad434ac63c", size = 272895411, upload-time = "2026-01-07T14:47:12.093Z" },
+    { url = "https://files.pythonhosted.org/packages/35/15/84d729b4382d2c29b1ecb853994c19c2315f246b3f42dacac141df778c6b/nvidia_dali_cuda120-1.53.0-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:a4e0390ab173dd93e6e97299131b54e79b7a35fccc2f88fd312f8bce94612537", size = 390384976, upload-time = "2026-01-07T14:55:48.711Z" },
+]
+
+[[package]]
+name = "nvidia-libnvcomp-cu12"
+version = "5.1.0.21"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f8/23/b20f2381c7e92c704386428fe79736a13c50f452376453fdc60fcc0ec1b0/nvidia_libnvcomp_cu12-5.1.0.21-py3-none-manylinux_2_28_aarch64.whl", hash = "sha256:77dfb3cb8c8995dfa0279ba99b0501e03cbe77e876aab44f4693abdcfac549ce", size = 28802614, upload-time = "2025-12-02T19:05:08.101Z" },
+    { url = "https://files.pythonhosted.org/packages/08/ab/844fcbaa46cc1242632b4b94b4ffc210ec3d8d8f30ad8f7f1c27767389a9/nvidia_libnvcomp_cu12-5.1.0.21-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:68de61183edb9a870c9a608273a2b5da97dea18e3552096c61fafd9bb2689db0", size = 28958714, upload-time = "2025-12-02T19:01:40.466Z" },
+    { url = "https://files.pythonhosted.org/packages/c4/cc/c6e92d9587b9ad63c08b1b94c5ae2216319491d0bd4f40f2a9a431d4841f/nvidia_libnvcomp_cu12-5.1.0.21-py3-none-win_amd64.whl", hash = "sha256:1352c7c4264ee5357f8f20e4a8da7f2f91debe21d8968f44576a7f4b51f91533", size = 28490640, upload-time = "2025-12-02T19:07:28.096Z" },
+]
 
 [[package]]
 name = "nvidia-nccl-cu12"
@@ -382,28 +395,18 @@ wheels = [
 ]
 
 [[package]]
-name = "nvidia-nvcomp-cu12"
-version = "5.0.0.6"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/8b/96/530b265e36e23e1e8dd88c864d5479bfd116d9c6cd78c6e3bf91cdf68c62/nvidia_nvcomp_cu12-5.0.0.6-py3-none-manylinux_2_28_aarch64.whl", hash = "sha256:7af1093e866ee7a468753e3df94327fd63ba253dd119a2c04cd18df1761f4754", size = 32405061, upload-time = "2025-08-05T17:24:10.187Z" },
-    { url = "https://files.pythonhosted.org/packages/e3/b5/1c3b2493dbcd0f436715b3faba4bef4747743dbb1828ce7823e61423863c/nvidia_nvcomp_cu12-5.0.0.6-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:b5b8a9a3ed33c4a87bb9103fbe59c83b28e4559234447ad40cab11896557c031", size = 32758506, upload-time = "2025-08-05T17:21:22.422Z" },
-    { url = "https://files.pythonhosted.org/packages/cd/96/346d570be6699a49d6347de440d167f0dc9411f6f4fed18ecc2262cec804/nvidia_nvcomp_cu12-5.0.0.6-py3-none-win_amd64.whl", hash = "sha256:8be6bb6d88f17359d44922e19a9cbb3305e6a9030a01f5dd30d1caaea4b45a5a", size = 29642704, upload-time = "2025-08-05T17:19:33.91Z" },
-]
-
-[[package]]
 name = "nvidia-nvimgcodec-cu12"
-version = "0.6.0.32"
+version = "0.7.0.11"
 source = { registry = "https://pypi.org/simple" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/40/e2/5a986e7c43692e34f54ab1a2076081ec27109354d99b585334c96bb196d5/nvidia_nvimgcodec_cu12-0.6.0.32-py3-none-manylinux2014_aarch64.whl", hash = "sha256:3e758cc01581f3b809dd7c5e68dadde1a64020a835d3620dae54b98402d94419", size = 23915387, upload-time = "2025-08-11T20:47:40.04Z" },
-    { url = "https://files.pythonhosted.org/packages/57/57/128d1f7ebc6390a2d1976a5bfb89ad54a9ad6ec0e6f44056a19b5bca0ac3/nvidia_nvimgcodec_cu12-0.6.0.32-py3-none-manylinux2014_x86_64.whl", hash = "sha256:2502fa37db0388a9133c34ad277e10e8d98fd30c4c4eebb9ec4072b2a5468eb4", size = 29294907, upload-time = "2025-08-11T20:48:10.599Z" },
-    { url = "https://files.pythonhosted.org/packages/c8/54/b84a5bec22852279749ce7e4a8f68a6f771ed1c0f7864f5d9e575e529d43/nvidia_nvimgcodec_cu12-0.6.0.32-py3-none-win_amd64.whl", hash = "sha256:7e73ec14a8f5c436108c9babbbf96b2e4ea928e3f8cb28b379bf4104e91775cd", size = 36986076, upload-time = "2025-08-11T20:39:19.47Z" },
+    { url = "https://files.pythonhosted.org/packages/63/48/74d33dd126f84a4212480e2cf07504f457b5bae5acd33c0f6bf839ea17d4/nvidia_nvimgcodec_cu12-0.7.0.11-py3-none-manylinux_2_28_aarch64.whl", hash = "sha256:52d834be8122bb5b8fc3151cc3bedb95368b3e7ac76af0c4561772ab2a847b2b", size = 27409358, upload-time = "2025-12-02T09:28:16.358Z" },
+    { url = "https://files.pythonhosted.org/packages/73/b4/f06528ebcb82da84f4a96efe7a210c277767cb86ad2f61f8b1a17d17f251/nvidia_nvimgcodec_cu12-0.7.0.11-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:32d3457859c5784e4c0f6a2f56b6a9afec8fe646cec1cbe4bb5c320948d92dfe", size = 33735220, upload-time = "2025-12-02T09:30:02.546Z" },
+    { url = "https://files.pythonhosted.org/packages/be/79/95b36049a9504d59d79929e9f3bec001b270f29aec8486e5fb9783a9502c/nvidia_nvimgcodec_cu12-0.7.0.11-py3-none-win_amd64.whl", hash = "sha256:495e07e071fcb2115f7f1948a04f6c51f96d61b83c614af753f7cc1bf369a46c", size = 18448810, upload-time = "2025-12-02T09:20:33.838Z" },
 ]
 
 [package.optional-dependencies]
 all = [
-    { name = "nvidia-nvcomp-cu12" },
+    { name = "nvidia-libnvcomp-cu12" },
     { name = "nvidia-nvjpeg-cu12" },
     { name = "nvidia-nvjpeg2k-cu12" },
     { name = "nvidia-nvtiff-cu12" },
