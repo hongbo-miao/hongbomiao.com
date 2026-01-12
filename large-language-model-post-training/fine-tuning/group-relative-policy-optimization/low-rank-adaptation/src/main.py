@@ -25,9 +25,12 @@ Answer: John starts with 5 apples. He buys 3 more apples. So he has 5 + 3 = 8 ap
 #### 8"""
 
 
-def format_prompt(question: str) -> str:
-    """Format a GSM8K question with system prompt and instructions."""
-    return f"{SYSTEM_PROMPT}\n\nQuestion: {question}\nAnswer:"
+def build_messages(question: str) -> list[dict[str, str]]:
+    """Build chat messages for a GSM8K question."""
+    return [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": question},
+    ]
 
 
 def extract_answer(text: str) -> str | None:
@@ -102,12 +105,27 @@ def main() -> None:
     # GSM8K contains grade school math problems with step-by-step solutions and final answers.
     logger.info("Loading dataset")
     dataset = load_dataset(DATASET_NAME, "main", split="train[:1000]")
+
+    def format_prompt(example: dict[str, str]) -> dict[str, str]:
+        """
+        Format prompt using chat template with thinking mode disabled.
+
+        Qwen3 has thinking mode enabled by default, which generates <think> tokens
+        indefinitely. Setting enable_thinking=False prevents this and ensures the
+        model generates completions that can properly terminate with EOS.
+        """
+        messages = build_messages(example["question"])
+        prompt = tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True,
+            enable_thinking=False,
+        )
+        return {"prompt": prompt}
+
     # Format prompts with system instructions and few-shot example.
     # This teaches the model the expected output format (#### NUMBER).
-    dataset = dataset.map(
-        lambda example: {"prompt": format_prompt(example["question"])},
-        remove_columns=["question"],
-    )
+    dataset = dataset.map(format_prompt, remove_columns=["question"])
 
     # Low-Rank Adaptation (LoRA) decomposes weight updates into two smaller matrices,
     # dramatically reducing trainable parameters while preserving model quality.
@@ -195,10 +213,10 @@ def main() -> None:
         # Same dynamic range as fp32 but less precision. Faster and less memory than fp32.
         bf16=True,
         # KL penalty coefficient $\beta$ controlling deviation from reference policy.
-        # Higher $\beta$ = more conservative updates, stays closer to reference.
-        # Lower $\beta$ = allows more deviation for higher rewards.
-        # Common values: 0.01 to 0.1.
-        beta=0.04,
+        # TRL defaults to $\beta = 0.0$. This works well when the reward function is
+        # well-defined (e.g., exact match) and using LoRA which limits drift.
+        # Set to non-zero (e.g., 0.01-0.04) if you observe degenerate outputs.
+        beta=0.0,
         # Gradient checkpointing trades compute for memory by recomputing activations during backward pass.
         gradient_checkpointing=False,
         # Temperature $\tau$ for sampling during generation. Higher values increase diversity.
