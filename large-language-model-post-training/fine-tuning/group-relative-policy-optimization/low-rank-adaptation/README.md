@@ -37,6 +37,14 @@ D_\text{KL}(\pi_\theta \| \pi_\text{ref}) = \sum_t \pi_\theta(y_t|x, y_{\lt t}) 
 
 The KL penalty serves as a regularizer that prevents the policy from diverging too far from the reference model, which helps maintain response quality and prevents reward hacking.
 
+> **Note:** TRL defaults to $\beta = 0.0$, meaning the KL penalty is disabled by default. This works well when:
+>
+> - The reward function is well-defined and hard to game (e.g., exact match on answers)
+> - The task is constrained with clear correct/incorrect outcomes
+> - Using LoRA, which already limits drift from the base model
+>
+> Set $\beta > 0$ (e.g., 0.01-0.04) if you observe degenerate outputs, reward increasing but quality decreasing, or loss of coherence.
+
 ### Key Differences from PPO
 
 - No critic model needed (uses group statistics instead of value function)
