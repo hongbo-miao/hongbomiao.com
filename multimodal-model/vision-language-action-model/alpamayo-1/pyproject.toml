@@ -1,0 +1,29 @@
+[project]
+name = "alpamayo-1"
+version = "1.0.0"
+requires-python = "==3.12.12"
+dependencies = [
+  "alpamayo-r1",
+  "matplotlib==3.10.8",
+  "numpy==2.4.1",
+  "polars==1.37.0",
+]
+
+[dependency-groups]
+dev = [
+  "poethepoet==0.40.0",
+  "pytest-cov==7.0.0",
+  "pytest==9.0.2",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.9.0"
+
+[tool.uv.sources]
+alpamayo-r1 = { git = "https://github.com/NVlabs/alpamayo.git" }
+
+[tool.poe.tasks]
+dev = "python src/main.py"
+test = "pytest --verbose --verbose"
+test-coverage = "pytest --cov=. --cov-report=xml"
