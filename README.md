@@ -666,6 +666,7 @@ The diagram illustrates the repository's architecture, which is considered overl
   - Vision-Language-Action (VLA) Model
     - **OpenVLA** - Vision-language-action model for robotic manipulation that processes visual observations and language instructions to generate robot actions, fine-tuned from prism-dinosiglip-224px (DINOv2 ViT-L/14 and ViT-SO400M-14-SigLIP vision backbones, LLaMA 2 language model)
     - **openpi** - Flow-based and autoregressive vision-language-action models (π₀, π₀-FAST, π₀.₅) pre-trained on 10k+ hours of robot data for robotic manipulation across various platforms including ALOHA, DROID, and custom robots
+    - **Alpamayo 1** - Reasoning-based vision-language-action (VLA) model
 
 ### World Foundation Model (WFM)
 

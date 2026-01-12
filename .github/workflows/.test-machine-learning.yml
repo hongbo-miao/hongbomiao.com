@@ -12,6 +12,9 @@ name: . Test Machine Learning
       actor-critic-algorithm:
         required: true
         type: boolean
+      alpamayo-1:
+        required: true
+        type: boolean
       amazon-sagemaker-triton-resnet-50-deploy:
         required: true
         type: boolean
@@ -3441,6 +3444,39 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
           directory: multimodal-model/vision-language-action-model/hm-openpi
+
+  alpamayo-1-test:
+    name: Alpamayo 1 | Test
+    if: ${{ inputs.workflow || inputs.alpamayo-1 }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.1
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.2.0
+        with:
+          version: 0.9.24
+          enable-cache: true
+          cache-dependency-glob: multimodal-model/vision-language-action-model/alpamayo-1/uv.lock
+      - name: Set up Python
+        uses: actions/setup-python@v6.1.0
+        with:
+          python-version-file: multimodal-model/vision-language-action-model/alpamayo-1/.python-version
+      - name: Install dependencies
+        working-directory: multimodal-model/vision-language-action-model/alpamayo-1
+        run: |
+          uv sync --dev
+      - name: Test
+        working-directory: multimodal-model/vision-language-action-model/alpamayo-1
+        run: |
+          uv run poe test-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.5.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: hongbo-miao/hongbomiao.com
+          directory: multimodal-model/vision-language-action-model/alpamayo-1
 
   q-learning-test:
     name: Q-Learning | Test
