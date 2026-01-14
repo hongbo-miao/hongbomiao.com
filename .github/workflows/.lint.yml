@@ -1415,14 +1415,14 @@ jobs:
               --rm \
               --volume="$(pwd):/workspace" \
               --workdir=/workspace \
-              hdlc/verible:latest \
+              docker.io/hdlc/verible:latest \
               verible-verilog-lint
           git ls-files '**/*.v' | \
             xargs docker run \
               --rm \
               --volume="$(pwd):/workspace" \
               --workdir=/workspace \
-              hdlc/verible:latest \
+              docker.io/hdlc/verible:latest \
               verible-verilog-format \
                 --verify
 
