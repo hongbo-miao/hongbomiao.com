@@ -1,7 +1,6 @@
 use std::time::Duration;
 
-use tracing::Instrument;
-use tracing::{info, info_span};
+use tracing::{Instrument, info, info_span};
 use wtransport::endpoint::endpoint_side::Server;
 use wtransport::{Endpoint, Identity, ServerConfig};
 

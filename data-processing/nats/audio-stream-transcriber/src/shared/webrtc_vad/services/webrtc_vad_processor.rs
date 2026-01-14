@@ -1,11 +1,13 @@
+use std::collections::VecDeque;
+
+use tracing::{debug, error, info};
+use webrtc_vad::Vad;
+
 use crate::config::AppConfig;
 use crate::shared::audio::utils::encode_pcm_i16_to_flac_bytes::encode_pcm_i16_to_flac_bytes;
 use crate::shared::webrtc_vad::states::speech_state::SpeechState;
 use crate::shared::webrtc_vad::types::speech_segment::SpeechSegment;
 use crate::shared::webrtc_vad::types::webrtc_vad_process_result::WebRtcVadProcessResult;
-use std::collections::VecDeque;
-use tracing::{debug, error, info};
-use webrtc_vad::Vad;
 
 pub struct WebRtcVadProcessor;
 

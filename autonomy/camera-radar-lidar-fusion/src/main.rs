@@ -6,6 +6,15 @@
 mod config;
 mod shared;
 
+use std::collections::HashMap;
+use std::fs;
+use std::path::Path;
+
+use anyhow::{Context, Result, bail};
+use nalgebra::{Matrix3, Matrix4, Quaternion, UnitQuaternion};
+use rerun as rr;
+use serde::Deserialize;
+
 use crate::config::AppConfig;
 use crate::shared::annotation::services::log_annotation_context_to_rerun::log_annotation_context_to_rerun;
 use crate::shared::annotation::services::log_boxes_3d_to_rerun::log_boxes_3d_to_rerun;
@@ -44,13 +53,6 @@ use crate::shared::rerun::constants::entity_paths::{
     EGO_VEHICLE_TRAJECTORY_ENTITY_PATH, FUSION_PROJECTION_CAM_FRONT_ENTITY_PATH,
     LIDAR_TOP_ENTITY_PATH, OCCUPANCY_GRID_ENTITY_PATH, RADAR_ENTITY_PATH_PREFIX,
 };
-use anyhow::{Context, Result, bail};
-use nalgebra::{Matrix3, Matrix4, Quaternion, UnitQuaternion};
-use rerun as rr;
-use serde::Deserialize;
-use std::collections::HashMap;
-use std::fs;
-use std::path::Path;
 
 const CAMERA_NAMES: [&str; 6] = [
     "CAM_FRONT_LEFT",

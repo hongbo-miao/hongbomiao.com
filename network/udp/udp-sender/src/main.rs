@@ -3,10 +3,11 @@
 #![forbid(unsafe_code)]
 #![forbid(unused_must_use)]
 
+use std::time::Instant;
+
 use chrono::Utc;
 use prost::Message;
 use rand::Rng;
-use std::time::Instant;
 use tokio::net::UdpSocket;
 
 pub mod iot {

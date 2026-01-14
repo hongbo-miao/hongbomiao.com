@@ -1,18 +1,16 @@
+use std::thread;
+use std::time::Duration;
+
 use anyhow::{Context, Result};
-use dust_dds::{
-    domain::domain_participant_factory::DomainParticipantFactory,
-    infrastructure::{
-        qos::{DataWriterQos, QosKind},
-        qos_policy::{
-            DurabilityQosPolicy, DurabilityQosPolicyKind, HistoryQosPolicy, HistoryQosPolicyKind,
-            ReliabilityQosPolicy, ReliabilityQosPolicyKind,
-        },
-        status::NO_STATUS,
-        time::DurationKind,
-    },
-    listener::NO_LISTENER,
+use dust_dds::domain::domain_participant_factory::DomainParticipantFactory;
+use dust_dds::infrastructure::qos::{DataWriterQos, QosKind};
+use dust_dds::infrastructure::qos_policy::{
+    DurabilityQosPolicy, DurabilityQosPolicyKind, HistoryQosPolicy, HistoryQosPolicyKind,
+    ReliabilityQosPolicy, ReliabilityQosPolicyKind,
 };
-use std::{thread, time::Duration};
+use dust_dds::infrastructure::status::NO_STATUS;
+use dust_dds::infrastructure::time::DurationKind;
+use dust_dds::listener::NO_LISTENER;
 
 include!(concat!(env!("OUT_DIR"), "/hm_message.rs"));
 

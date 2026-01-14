@@ -1,7 +1,7 @@
-use hound::{SampleFormat, WavSpec, WavWriter};
 use std::io::Cursor;
 
 use anyhow::{Result, bail};
+use hound::{SampleFormat, WavSpec, WavWriter};
 
 pub fn convert_pcm_bytes_to_wav(pcm_data: &[u8]) -> Result<Vec<u8>> {
     let spec = WavSpec {

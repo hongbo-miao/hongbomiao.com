@@ -1,12 +1,8 @@
-use std::{
-    collections::{HashMap, HashSet},
-    sync::Arc,
-};
+use std::collections::{HashMap, HashSet};
+use std::sync::Arc;
 
-use tokio::{
-    sync::{RwLock, broadcast},
-    task::JoinHandle,
-};
+use tokio::sync::{RwLock, broadcast};
+use tokio::task::JoinHandle;
 
 use crate::shared::emergency_audio_stream::utils::process_emergency_audio_stream::process_emergency_audio_stream;
 

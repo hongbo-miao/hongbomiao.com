@@ -1,10 +1,11 @@
+use tracing::debug;
+
 use crate::config::AppConfig;
 use crate::shared::camera::types::camera_detection::CameraDetection;
 use crate::shared::fusion::types::fused_track::FusedTrack;
 use crate::shared::fusion::utils::calculate_fused_distance::calculate_fused_distance;
 use crate::shared::lidar::types::lidar_detection::LidarDetection;
 use crate::shared::radar::types::radar_detection::RadarDetection;
-use tracing::debug;
 
 pub fn create_fused_track(
     camera_detection: CameraDetection,

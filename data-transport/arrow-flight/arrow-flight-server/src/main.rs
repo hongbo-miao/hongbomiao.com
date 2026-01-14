@@ -3,6 +3,9 @@
 #![forbid(unsafe_code)]
 #![forbid(unused_must_use)]
 
+use std::collections::HashMap;
+use std::path::{Path, PathBuf};
+
 use arrow::array::RecordBatchReader;
 use arrow_flight::encode::FlightDataEncoderBuilder;
 use arrow_flight::error::FlightError;
@@ -16,11 +19,10 @@ use futures_util::future::{self, Ready};
 use futures_util::{TryStreamExt, stream};
 use parquet::arrow::arrow_reader::ParquetRecordBatchReader;
 use parquet::file::reader::{FileReader, SerializedFileReader};
-use std::collections::HashMap;
-use std::path::{Path, PathBuf};
 use tokio::fs;
 use tonic::codegen::Bytes;
-use tonic::{Request, Response, Status, Streaming, transport::Server};
+use tonic::transport::Server;
+use tonic::{Request, Response, Status, Streaming};
 
 struct FlightSqlServer {
     parquet_files: HashMap<String, PathBuf>,

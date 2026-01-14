@@ -1,7 +1,8 @@
-use crate::shared::map::types::ego_pose::EgoPose;
-use crate::shared::map::utils::derive_latitude_longitude::derive_latitude_longitude;
 use anyhow::Result;
 use rerun as rr;
+
+use crate::shared::map::types::ego_pose::EgoPose;
+use crate::shared::map::utils::derive_latitude_longitude::derive_latitude_longitude;
 
 pub fn log_ego_position_to_rerun(
     recording: &rr::RecordingStream,

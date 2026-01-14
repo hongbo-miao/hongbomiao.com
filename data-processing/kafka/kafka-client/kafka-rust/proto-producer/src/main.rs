@@ -3,6 +3,10 @@
 #![forbid(unsafe_code)]
 #![forbid(unused_must_use)]
 
+use std::env::args;
+use std::io::Result;
+use std::time::Duration;
+
 use chrono::Utc;
 use prost::Message;
 use rand::Rng;
@@ -12,9 +16,6 @@ use rdkafka::util::Timeout;
 use schema_registry_converter::async_impl::easy_proto_raw::EasyProtoRawEncoder;
 use schema_registry_converter::async_impl::schema_registry::SrSettings;
 use schema_registry_converter::schema_registry_common::SubjectNameStrategy;
-use std::env::args;
-use std::io::Result;
-use std::time::Duration;
 use tokio::time;
 
 pub mod iot {

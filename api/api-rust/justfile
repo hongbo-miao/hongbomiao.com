@@ -37,10 +37,10 @@ lint-rust-clippy-fix:
     cargo clippy --fix --allow-dirty --allow-staged
 
 lint-rust-rustfmt:
-    cargo fmt --all -- --check
+    cargo +nightly fmt --all -- --check
 
 lint-rust-rustfmt-fix:
-    cargo fmt --all
+    cargo +nightly fmt --all
 
 docker-build:
     cd ../.. && \

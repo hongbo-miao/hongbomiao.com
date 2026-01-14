@@ -1,8 +1,7 @@
-use axum::{
-    extract::{Query, ws::WebSocketUpgrade},
-    http::StatusCode,
-    response::IntoResponse,
-};
+use axum::extract::Query;
+use axum::extract::ws::WebSocketUpgrade;
+use axum::http::StatusCode;
+use axum::response::IntoResponse;
 use serde::Deserialize;
 use utoipa::ToSchema;
 
