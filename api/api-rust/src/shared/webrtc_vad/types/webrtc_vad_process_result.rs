@@ -1,6 +1,7 @@
+use std::collections::VecDeque;
+
 use crate::shared::webrtc_vad::states::speech_state::SpeechState;
 use crate::shared::webrtc_vad::types::speech_segment::SpeechSegment;
-use std::collections::VecDeque;
 
 #[derive(Debug)]
 pub struct WebRtcVadProcessResult {

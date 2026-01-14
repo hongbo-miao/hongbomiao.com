@@ -1,6 +1,7 @@
+use sqlx::PgPool;
+
 use crate::shared::database::types::pg_graphql_request::PgGraphqlRequest;
 use crate::shared::database::types::pg_graphql_response::PgGraphqlResponse;
-use sqlx::PgPool;
 
 pub async fn resolve_graphql(
     pool: &PgPool,

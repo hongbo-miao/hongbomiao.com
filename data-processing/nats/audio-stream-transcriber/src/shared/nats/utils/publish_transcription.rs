@@ -1,10 +1,11 @@
-use crate::shared::speaches::types::transcription_response::TranscriptionResponse;
-use crate::transcription_capnp;
 use anyhow::Result;
 use async_nats::header::{HeaderName, HeaderValue};
 use async_nats::jetstream;
 use tracing::{error, info};
 use uuid::Uuid;
+
+use crate::shared::speaches::types::transcription_response::TranscriptionResponse;
+use crate::transcription_capnp;
 
 pub async fn publish_transcription(
     jetstream_context: &jetstream::Context,

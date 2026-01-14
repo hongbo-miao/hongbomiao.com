@@ -10,13 +10,14 @@ mod openapi;
 mod shared;
 mod webtransport;
 
+use std::net::SocketAddr;
+use std::sync::Arc;
+use std::time::Duration;
+
 use anyhow::Result;
 use axum::Router;
 use axum::http::{HeaderValue, Method, StatusCode};
 use axum::routing::{get, post};
-use std::net::SocketAddr;
-use std::sync::Arc;
-use std::time::Duration;
 use tower_governor::GovernorLayer;
 use tower_governor::governor::GovernorConfigBuilder;
 use tower_governor::key_extractor::SmartIpKeyExtractor;
@@ -25,13 +26,12 @@ use tower_http::cors::{Any, CorsLayer};
 use tower_http::timeout::TimeoutLayer;
 use tower_http::trace::TraceLayer;
 use tracing::{error, info};
-
-use crate::openapi::ApiDoc;
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
 
 use crate::config::AppConfig;
 use crate::graphql::schema;
+use crate::openapi::ApiDoc;
 use crate::shared::application::types::application_state::ApplicationState;
 use crate::shared::database::utils::initialize_pool::initialize_pool;
 use crate::webtransport::services::webtransport_server::WebTransportServer;

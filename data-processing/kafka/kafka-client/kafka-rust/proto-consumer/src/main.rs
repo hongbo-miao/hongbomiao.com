@@ -3,13 +3,14 @@
 #![forbid(unsafe_code)]
 #![forbid(unused_must_use)]
 
+use std::env::args;
+
 use prost::Message;
 use rdkafka::config::ClientConfig;
 use rdkafka::consumer::{CommitMode, Consumer, StreamConsumer};
 use rdkafka::message::Message as KafkaMessage;
 use schema_registry_converter::async_impl::easy_proto_raw::EasyProtoRawDecoder;
 use schema_registry_converter::async_impl::schema_registry::SrSettings;
-use std::env::args;
 
 pub mod iot {
     include!(concat!(env!("OUT_DIR"), "/production.iot.rs"));

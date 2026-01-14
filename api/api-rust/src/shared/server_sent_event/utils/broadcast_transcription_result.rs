@@ -1,4 +1,5 @@
 use std::time::{SystemTime, UNIX_EPOCH};
+
 use tracing::{error, info};
 
 use crate::shared::server_sent_event::types::server_sent_event_message::ServerSentEventMessage;

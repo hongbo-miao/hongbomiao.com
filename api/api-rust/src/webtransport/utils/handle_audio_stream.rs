@@ -7,7 +7,6 @@ use wtransport::connection::Connection;
 use crate::shared::emergency_audio_stream::utils::emergency_audio_stream_manager::{
     FireAudioStreamManager, FireAudioStreamState,
 };
-
 use crate::webtransport::types::emergency_stream::FireAudioStreamIdentifier;
 
 pub async fn handle_audio_stream(

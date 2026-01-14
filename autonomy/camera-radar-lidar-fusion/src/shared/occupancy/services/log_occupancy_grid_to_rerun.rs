@@ -1,6 +1,7 @@
-use crate::shared::occupancy::types::occupancy_grid::{OccupancyGrid, VoxelState};
 use anyhow::Result;
 use rerun as rr;
+
+use crate::shared::occupancy::types::occupancy_grid::{OccupancyGrid, VoxelState};
 
 pub fn log_occupancy_grid_to_rerun(
     recording: &rr::RecordingStream,

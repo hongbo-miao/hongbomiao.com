@@ -1,10 +1,11 @@
-use crate::config::AppConfig;
-use crate::shared::nats::utils::process_message::process_message;
 use anyhow::{Context, Result};
 use async_nats::jetstream;
 use futures_util::StreamExt;
 use sqlx::PgPool;
 use tracing::{error, info, warn};
+
+use crate::config::AppConfig;
+use crate::shared::nats::utils::process_message::process_message;
 
 pub async fn subscribe_transcriptions_from_nats(pool: PgPool) -> Result<()> {
     let config = AppConfig::get();
