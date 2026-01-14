@@ -1,3 +1,7 @@
+use async_graphql::{Context, Object, SimpleObject};
+use sqlx::PgPool;
+use utoipa::ToSchema;
+
 use crate::shared::database::utils::execute_database_graphql::execute_database_graphql;
 use crate::shared::openai::types::chat_response::ChatResponse;
 use crate::shared::openai::utils::chat::chat;
@@ -7,9 +11,6 @@ use crate::shared::police_audio_stream::constants::police_streams::POLICE_STREAM
 use crate::shared::police_audio_stream::utils::police_stream_state::POLICE_STREAM_STATE;
 use crate::shared::python_parallel_calculation::types::python_calculation_response::PythonCalculationResponse;
 use crate::shared::python_parallel_calculation::utils::calculate_with_python::calculate_with_python;
-use async_graphql::{Context, Object, SimpleObject};
-use sqlx::PgPool;
-use utoipa::ToSchema;
 
 #[derive(SimpleObject, ToSchema)]
 pub struct HelloResponse {

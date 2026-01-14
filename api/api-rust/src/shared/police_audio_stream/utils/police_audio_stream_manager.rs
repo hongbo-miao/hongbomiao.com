@@ -1,12 +1,8 @@
-use std::{
-    collections::{HashMap, HashSet},
-    sync::Arc,
-};
+use std::collections::{HashMap, HashSet};
+use std::sync::Arc;
 
-use tokio::{
-    sync::{RwLock, broadcast},
-    task::JoinHandle,
-};
+use tokio::sync::{RwLock, broadcast};
+use tokio::task::JoinHandle;
 
 use crate::shared::police_audio_stream::constants::police_streams::POLICE_STREAMS;
 use crate::shared::police_audio_stream::utils::process_police_audio_stream::process_police_audio_stream;

@@ -1,5 +1,6 @@
-use crate::shared::radar::types::radar_detection::RadarDetection;
 use nalgebra::Vector3;
+
+use crate::shared::radar::types::radar_detection::RadarDetection;
 
 pub fn create_radar_detection(
     position_3d: Vector3<f64>,

@@ -1,6 +1,9 @@
-use axum::{extract::Query, http::StatusCode, response::Sse};
+use axum::extract::Query;
+use axum::http::StatusCode;
+use axum::response::Sse;
 use futures_util::stream::{self, Stream};
-use tokio_stream::{StreamExt, wrappers::BroadcastStream};
+use tokio_stream::StreamExt;
+use tokio_stream::wrappers::BroadcastStream;
 
 use crate::config::AppConfig;
 use crate::shared::server_sent_event::types::server_sent_event_query::ServerSentEventQuery;

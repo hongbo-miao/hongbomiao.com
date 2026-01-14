@@ -1,11 +1,13 @@
-use crate::shared::python_parallel_calculation::types::python_calculation_response::PythonCalculationResponse;
+use std::ffi::CString;
+use std::sync::Mutex;
+use std::time::Instant;
+
 use once_cell::sync::Lazy;
 use pyo3::types::{PyAny, PyAnyMethods, PyModule};
 use pyo3::{Py, Python};
 use rayon::prelude::{IntoParallelIterator, ParallelIterator};
-use std::ffi::CString;
-use std::sync::Mutex;
-use std::time::Instant;
+
+use crate::shared::python_parallel_calculation::types::python_calculation_response::PythonCalculationResponse;
 
 static PYTHON_MODULE_CODE: &str = include_str!("../scripts/compute_item.py");
 

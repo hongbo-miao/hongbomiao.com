@@ -1,5 +1,6 @@
-use crate::shared::lidar::types::lidar_detection::LidarDetection;
 use nalgebra::Vector3;
+
+use crate::shared::lidar::types::lidar_detection::LidarDetection;
 
 pub fn create_lidar_detection(
     position_3d: Vector3<f64>,

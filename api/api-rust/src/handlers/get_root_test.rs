@@ -1,6 +1,8 @@
-use crate::handlers::get_root::get_root;
-use axum::{Router, routing::get};
+use axum::Router;
+use axum::routing::get;
 use axum_test::TestServer;
+
+use crate::handlers::get_root::get_root;
 
 #[tokio::test]
 async fn test_root_handler() {

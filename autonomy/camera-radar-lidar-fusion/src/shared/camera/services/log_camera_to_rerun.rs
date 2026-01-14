@@ -1,10 +1,11 @@
+use std::path::Path;
+
 use anyhow::Result;
 use opencv::core::{AlgorithmHint, MatTraitConst};
 use opencv::imgcodecs::{IMREAD_COLOR, imread};
 use opencv::imgproc::{COLOR_BGR2RGB, cvt_color};
 use opencv::prelude::MatTraitConstManual;
 use rerun as rr;
-use std::path::Path;
 
 pub fn log_camera_to_rerun<P: AsRef<Path>>(
     recording: &rr::RecordingStream,

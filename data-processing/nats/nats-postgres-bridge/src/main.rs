@@ -5,11 +5,12 @@ mod transcription_capnp {
     include!(concat!(env!("OUT_DIR"), "/transcription_capnp.rs"));
 }
 
-use crate::config::AppConfig;
-use crate::shared::nats::services::subscribe_transcriptions_from_nats::subscribe_transcriptions_from_nats;
 use anyhow::{Context, Result};
 use sqlx::postgres::PgPoolOptions;
 use tracing::{error, info};
+
+use crate::config::AppConfig;
+use crate::shared::nats::services::subscribe_transcriptions_from_nats::subscribe_transcriptions_from_nats;
 
 #[tokio::main]
 async fn main() -> Result<()> {

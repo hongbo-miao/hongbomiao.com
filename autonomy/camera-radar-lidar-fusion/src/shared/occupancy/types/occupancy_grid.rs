@@ -1,5 +1,6 @@
-use nalgebra::Vector3;
 use std::collections::HashMap;
+
+use nalgebra::Vector3;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum VoxelState {

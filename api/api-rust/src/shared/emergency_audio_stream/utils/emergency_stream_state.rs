@@ -1,5 +1,6 @@
-use once_cell::sync::Lazy;
 use std::sync::Arc;
+
+use once_cell::sync::Lazy;
 
 use crate::shared::emergency_audio_stream::utils::emergency_audio_stream_manager::FireAudioStreamState;
 

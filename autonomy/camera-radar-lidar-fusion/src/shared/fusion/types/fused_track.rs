@@ -1,9 +1,10 @@
+use nalgebra::Vector4;
+use serde::{Deserialize, Serialize};
+
 use crate::config::AppConfig;
 use crate::shared::camera::types::camera_detection::CameraDetection;
 use crate::shared::lidar::types::lidar_detection::LidarDetection;
 use crate::shared::radar::types::radar_detection::RadarDetection;
-use nalgebra::Vector4;
-use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FusedTrack {

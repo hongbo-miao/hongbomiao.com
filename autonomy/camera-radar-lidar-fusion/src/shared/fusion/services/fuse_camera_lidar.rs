@@ -1,11 +1,13 @@
+use std::collections::HashSet;
+
+use tracing::info;
+
 use crate::config::AppConfig;
 use crate::shared::camera::types::camera_detection::CameraDetection;
 use crate::shared::fusion::services::associate_camera_lidar_detections::associate_camera_lidar_detections;
 use crate::shared::fusion::services::create_fused_track::create_fused_track;
 use crate::shared::fusion::types::fused_track::FusedTrack;
 use crate::shared::lidar::types::lidar_detection::LidarDetection;
-use std::collections::HashSet;
-use tracing::info;
 
 pub struct FusionResult {
     pub fused_tracks: Vec<FusedTrack>,

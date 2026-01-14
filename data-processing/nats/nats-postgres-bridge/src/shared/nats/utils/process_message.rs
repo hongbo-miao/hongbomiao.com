@@ -1,8 +1,9 @@
+use anyhow::{Context, Result};
+use sqlx::PgPool;
+
 use crate::shared::postgres::services::write_transcription_to_postgres::write_transcription_to_postgres;
 use crate::shared::transcripts::types::transcript::{Transcript, TranscriptWord};
 use crate::transcription_capnp;
-use anyhow::{Context, Result};
-use sqlx::PgPool;
 
 pub async fn process_message(pool: &PgPool, payload: &[u8]) -> Result<()> {
     let message_reader = capnp::serialize::read_message(
