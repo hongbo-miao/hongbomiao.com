@@ -3,10 +3,11 @@
 #![forbid(unsafe_code)]
 #![forbid(unused_must_use)]
 
-use prost::Message;
-use socket2::{Domain, Socket, Type};
 use std::error::Error;
 use std::net::SocketAddr;
+
+use prost::Message;
+use socket2::{Domain, Socket, Type};
 use tokio::net::UdpSocket;
 
 pub mod iot {

@@ -1,6 +1,7 @@
 use async_graphql::Schema;
 use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
-use axum::{extract::State, response::IntoResponse};
+use axum::extract::State;
+use axum::response::IntoResponse;
 use sqlx::PgPool;
 
 use super::mutation::Mutation;

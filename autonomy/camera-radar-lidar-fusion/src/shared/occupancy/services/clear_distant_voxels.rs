@@ -1,5 +1,6 @@
-use crate::shared::occupancy::types::occupancy_grid::OccupancyGrid;
 use nalgebra::Vector3;
+
+use crate::shared::occupancy::types::occupancy_grid::OccupancyGrid;
 
 pub fn clear_distant_voxels(occupancy_grid: &mut OccupancyGrid, max_distance: f32) {
     let origin = Vector3::new(0.0, 0.0, 0.0);

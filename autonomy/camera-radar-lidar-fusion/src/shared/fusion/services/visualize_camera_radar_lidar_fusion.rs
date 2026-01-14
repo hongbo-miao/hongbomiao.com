@@ -1,3 +1,14 @@
+use std::path::Path;
+
+use anyhow::{Context, Result};
+use nalgebra::{Matrix3, Matrix4, Vector3};
+use opencv::core::{Point, Rect, Scalar};
+use opencv::imgcodecs::imread;
+use opencv::imgproc::{HersheyFonts, LINE_8, get_text_size, put_text, rectangle};
+use opencv::prelude::MatTraitConst;
+use rerun as rr;
+use tracing::warn;
+
 use crate::config::AppConfig;
 use crate::shared::camera::services::detect_objects_in_camera::{
     YoloModel, detect_objects_in_camera,
@@ -15,15 +26,6 @@ use crate::shared::radar::services::load_radar_data::load_radar_data;
 use crate::shared::radar::utils::project_radar_to_camera::project_radar_to_camera;
 use crate::shared::rerun::constants::entity_paths::FUSION_PROJECTION_CAM_FRONT_ENTITY_PATH;
 use crate::shared::rerun::services::log_rerun_image::log_rerun_image;
-use anyhow::{Context, Result};
-use nalgebra::{Matrix3, Matrix4, Vector3};
-use opencv::core::{Point, Rect, Scalar};
-use opencv::imgcodecs::imread;
-use opencv::imgproc::{HersheyFonts, LINE_8, get_text_size, put_text, rectangle};
-use opencv::prelude::MatTraitConst;
-use rerun as rr;
-use std::path::Path;
-use tracing::warn;
 
 #[allow(clippy::too_many_arguments)]
 pub fn visualize_camera_radar_lidar_fusion<P: AsRef<Path>>(

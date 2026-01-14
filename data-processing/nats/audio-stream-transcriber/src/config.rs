@@ -1,5 +1,6 @@
-use anyhow::{Context, Result};
 use std::sync::OnceLock;
+
+use anyhow::{Context, Result};
 
 #[derive(Debug, Clone)]
 pub struct AppConfig {

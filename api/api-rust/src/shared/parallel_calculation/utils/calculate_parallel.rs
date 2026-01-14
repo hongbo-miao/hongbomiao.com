@@ -1,6 +1,8 @@
-use crate::shared::parallel_calculation::types::calculation_response::CalculationResponse;
-use rayon::prelude::{IntoParallelIterator, ParallelIterator};
 use std::time::Instant;
+
+use rayon::prelude::{IntoParallelIterator, ParallelIterator};
+
+use crate::shared::parallel_calculation::types::calculation_response::CalculationResponse;
 
 pub fn calculate_parallel(items_count: usize) -> CalculationResponse {
     let start_time = Instant::now();

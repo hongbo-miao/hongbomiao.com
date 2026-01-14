@@ -1,5 +1,7 @@
+use std::collections::VecDeque;
+use std::time::Duration;
+
 use ffmpeg_sidecar::command::FfmpegCommand;
-use std::{collections::VecDeque, time::Duration};
 use tokio::io::AsyncReadExt;
 use tokio::process::ChildStdout;
 use tokio::sync::broadcast;

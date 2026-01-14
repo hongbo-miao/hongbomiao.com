@@ -1,14 +1,16 @@
+use std::collections::VecDeque;
+use std::time::Duration;
+
+use async_nats::jetstream;
+use futures_util::StreamExt;
+use tracing::{error, info};
+use webrtc_vad::{SampleRate, Vad, VadMode};
+
 use crate::config::AppConfig;
 use crate::shared::nats::utils::publish_transcription::publish_transcription;
 use crate::shared::speaches::services::transcribe_audio::transcribe_audio;
 use crate::shared::webrtc_vad::services::webrtc_vad_processor::WebRtcVadProcessor;
 use crate::shared::webrtc_vad::states::speech_state::SpeechState;
-use async_nats::jetstream;
-use futures_util::StreamExt;
-use std::collections::VecDeque;
-use std::time::Duration;
-use tracing::{error, info};
-use webrtc_vad::{SampleRate, Vad, VadMode};
 
 pub async fn process_audio_stream_from_nats() -> Result<(), Box<dyn std::error::Error>> {
     let config = AppConfig::get();

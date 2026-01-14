@@ -1,7 +1,8 @@
-use crate::shared::transcripts::types::transcript::Transcript;
 use anyhow::Result;
 use sqlx::PgPool;
 use tracing::{error, info};
+
+use crate::shared::transcripts::types::transcript::Transcript;
 
 pub async fn write_transcription_to_postgres(pool: &PgPool, transcript: &Transcript) -> Result<()> {
     let words_json = serde_json::to_value(&transcript.words)?;

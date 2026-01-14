@@ -1,9 +1,10 @@
-use anyhow::{Context, Result, bail};
-use nalgebra::{Matrix4xX, Vector4};
 use std::convert::TryInto;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
+
+use anyhow::{Context, Result, bail};
+use nalgebra::{Matrix4xX, Vector4};
 
 pub fn load_lidar_data<P: AsRef<Path>>(lidar_file_path: P) -> Result<Matrix4xX<f32>> {
     let mut file = File::open(lidar_file_path.as_ref()).with_context(|| {

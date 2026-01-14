@@ -1,6 +1,5 @@
 mod config;
 
-use crate::config::AppConfig;
 use anyhow::Result;
 use async_nats::jetstream::context::PublishAckFuture;
 use ffmpeg_sidecar::child::FfmpegChild;
@@ -9,6 +8,8 @@ use tokio::io::AsyncReadExt;
 use tokio::process::ChildStdout;
 use tracing::{error, info};
 use uuid::Uuid;
+
+use crate::config::AppConfig;
 
 fn spawn_ffmpeg_process(stream_url: &str) -> Result<FfmpegChild, std::io::Error> {
     FfmpegCommand::new()

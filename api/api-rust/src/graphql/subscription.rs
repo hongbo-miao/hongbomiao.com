@@ -1,6 +1,7 @@
+use std::time::Duration;
+
 use async_graphql::{SimpleObject, Subscription};
 use futures_util::stream::Stream;
-use std::time::Duration;
 use tokio_stream::StreamExt;
 
 #[derive(SimpleObject)]

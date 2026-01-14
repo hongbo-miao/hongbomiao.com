@@ -1,10 +1,11 @@
-use anyhow::{Context, Result, bail};
-use flate2::read::ZlibDecoder;
-use nalgebra::{Matrix5xX, Vector5};
 use std::convert::TryInto;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Read};
 use std::path::Path;
+
+use anyhow::{Context, Result, bail};
+use flate2::read::ZlibDecoder;
+use nalgebra::{Matrix5xX, Vector5};
 
 pub fn load_radar_data<P: AsRef<Path>>(radar_file_path: P) -> Result<Matrix5xX<f32>> {
     let file = File::open(radar_file_path.as_ref()).with_context(|| {
