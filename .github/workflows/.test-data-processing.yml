@@ -80,7 +80,7 @@ jobs:
   ingest-flac-to-parquet-test:
     name: ingest-flac-to-parquet | Test
     if: ${{ inputs.workflow || inputs.hm-ingest-flac-to-parquet }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -113,7 +113,7 @@ jobs:
   cocoindex-embed-markdown-to-postgres-test:
     name: CocoIndex (embed-markdown-to-postgres) | Test
     if: ${{ inputs.workflow || inputs.hm-cocoindex-embed-markdown-to-postgres }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -146,7 +146,7 @@ jobs:
   pathway-aggregate-hourly-events-test:
     name: Pathway (aggregate-hourly-events) | Test
     if: ${{ inputs.workflow || inputs.hm-pathway-aggregate-hourly-events }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -212,7 +212,7 @@ jobs:
   spark-find-retired-people-python-test:
     name: Spark (find-retired-people-python) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-find-retired-people-python }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -245,7 +245,7 @@ jobs:
   spark-find-retired-people-scala-test:
     name: Spark (find-retired-people-scala) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-find-retired-people-scala }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -266,7 +266,7 @@ jobs:
   spark-find-taxi-top-routes-test:
     name: Spark (find-taxi-top-routes) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-find-taxi-top-routes }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -299,7 +299,7 @@ jobs:
   spark-find-taxi-top-routes-sql-test:
     name: Spark (find-taxi-top-routes-sql) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-find-taxi-top-routes-sql }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -332,7 +332,7 @@ jobs:
   spark-ingest-from-s3-to-kafka-test:
     name: Spark (ingest-from-s3-to-kafka) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-ingest-from-s3-to-kafka }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -353,7 +353,7 @@ jobs:
   spark-recommend-movies-test:
     name: Spark (recommend-movies) | Test
     if: ${{ inputs.workflow || inputs.hm-spark-recommend-movies }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -386,7 +386,7 @@ jobs:
   flink-stream-tweets-test:
     name: Flink (stream-tweets) | Test
     if: ${{ inputs.workflow || inputs.flink-stream-tweets }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -405,7 +405,7 @@ jobs:
   kafka-rust-proto-consumer-test:
     name: Kafka Rust (proto-consumer) | Test
     if: ${{ inputs.workflow || inputs.kafka-rust-proto-consumer }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -449,7 +449,7 @@ jobs:
   kafka-rust-proto-producer-test:
     name: Kafka Rust (proto-producer) | Test
     if: ${{ inputs.workflow || inputs.kafka-rust-proto-producer }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -493,7 +493,7 @@ jobs:
   kafka-rust-udp-kafka-bridge-test:
     name: Kafka Rust (udp-kafka-bridge) | Test
     if: ${{ inputs.workflow || inputs.kafka-rust-udp-kafka-bridge }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -537,7 +537,7 @@ jobs:
   kafka-rust-zeromq-kafka-bridge-test:
     name: Kafka Rust (zeromq-kafka-bridge) | Test
     if: ${{ inputs.workflow || inputs.kafka-rust-zeromq-kafka-bridge }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -581,7 +581,7 @@ jobs:
   nats-audio-file-publisher-test:
     name: NATS (audio-file-publisher) | Test
     if: ${{ inputs.workflow || inputs.nats-audio-file-publisher }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -614,7 +614,7 @@ jobs:
   nats-audio-file-subscriber-test:
     name: NATS (audio-file-subscriber) | Test
     if: ${{ inputs.workflow || inputs.nats-audio-file-subscriber }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -647,7 +647,7 @@ jobs:
   nats-audio-stream-publisher-test:
     name: NATS (audio-stream-publisher) | Test
     if: ${{ inputs.workflow || inputs.nats-audio-stream-publisher }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -669,7 +669,7 @@ jobs:
   nats-audio-stream-transcriber-test:
     name: NATS (audio-stream-transcriber) | Test
     if: ${{ inputs.workflow || inputs.nats-audio-stream-transcriber }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -697,7 +697,7 @@ jobs:
   nats-postgres-bridge-test:
     name: NATS (nats-postgres-bridge) | Test
     if: ${{ inputs.workflow || inputs.nats-postgres-bridge }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -725,7 +725,7 @@ jobs:
   nats-telemetry-stream-publisher-test:
     name: NATS (telemetry-stream-publisher) | Test
     if: ${{ inputs.workflow || inputs.nats-telemetry-stream-publisher }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -758,7 +758,7 @@ jobs:
   nats-telemetry-stream-subscriber-test:
     name: NATS (telemetry-stream-subscriber) | Test
     if: ${{ inputs.workflow || inputs.nats-telemetry-stream-subscriber }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout

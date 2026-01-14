@@ -44,7 +44,7 @@ jobs:
   grafana-hm-dashboard-test:
     name: Grafana (hm-dashboard) | Test
     if: ${{ inputs.workflow || inputs.grafana-hm-dashboard }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -77,7 +77,7 @@ jobs:
   grafana-hm-panel-plugin-test:
     name: Grafana (hm-panel-plugin) | Test
     if: ${{ inputs.workflow || inputs.grafana-hm-panel-plugin }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -106,7 +106,7 @@ jobs:
   pygwalker-test:
     name: PyGWalker | Test
     if: ${{ inputs.workflow || inputs.hm-pygwalker }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -139,7 +139,7 @@ jobs:
   plotly-heatmap-test:
     name: Plotly (heatmap) | Test
     if: ${{ inputs.workflow || inputs.plotly-heatmap }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -172,7 +172,7 @@ jobs:
   dash-csv-visualizer-test:
     name: Dash (csv-visualizer) | Test
     if: ${{ inputs.workflow || inputs.hm-dash-csv-visualizer }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -205,7 +205,7 @@ jobs:
   dash-parquet-visualizer-test:
     name: Dash (parquet-visualizer) | Test
     if: ${{ inputs.workflow || inputs.hm-dash-parquet-visualizer }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -304,7 +304,7 @@ jobs:
   iads-data-producer-test:
     name: IADS (iads-data-producer) | Test
     if: ${{ inputs.workflow || inputs.iads-data-producer }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
