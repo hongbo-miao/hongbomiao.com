@@ -1,6 +1,7 @@
-use crate::shared::occupancy::types::occupancy_grid::OccupancyGrid;
 use anyhow::Result;
 use nalgebra::{Matrix4xX, Vector3};
+
+use crate::shared::occupancy::types::occupancy_grid::OccupancyGrid;
 
 pub fn build_occupancy_grid_from_lidar(
     occupancy_grid: &mut OccupancyGrid,

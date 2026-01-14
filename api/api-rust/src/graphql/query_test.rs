@@ -1,5 +1,6 @@
-use crate::graphql::query::Query;
 use async_graphql::{EmptyMutation, EmptySubscription, Schema};
+
+use crate::graphql::query::Query;
 
 #[tokio::test]
 async fn test_hello_query() {

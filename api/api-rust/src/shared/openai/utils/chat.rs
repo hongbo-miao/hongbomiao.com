@@ -1,7 +1,8 @@
+use async_openai::Client;
+use async_openai::config::OpenAIConfig;
 use async_openai::types::chat::{
     ChatCompletionRequestUserMessageArgs, CreateChatCompletionRequestArgs,
 };
-use async_openai::{Client, config::OpenAIConfig};
 
 use crate::config::AppConfig;
 use crate::shared::openai::types::chat_response::ChatResponse;

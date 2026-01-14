@@ -1,4 +1,7 @@
-use std::{env, fs::File, io::Write, path::Path};
+use std::env;
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let generated_code = dust_dds_gen::compile_idl(Path::new("src/hm_message.idl"))?;

@@ -3,6 +3,12 @@
 #![forbid(unsafe_code)]
 #![forbid(unused_must_use)]
 
+use std::env;
+use std::error::Error;
+use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::{Arc, Mutex};
+use std::time::{Duration, Instant};
+
 use prost::Message;
 use rdkafka::ClientConfig;
 use rdkafka::producer::{FutureProducer, FutureRecord};
@@ -10,11 +16,6 @@ use rdkafka::util::Timeout;
 use schema_registry_converter::async_impl::easy_proto_raw::EasyProtoRawEncoder;
 use schema_registry_converter::async_impl::schema_registry::SrSettings;
 use schema_registry_converter::schema_registry_common::SubjectNameStrategy;
-use std::env;
-use std::error::Error;
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::{Arc, Mutex};
-use std::time::{Duration, Instant};
 use tokio::sync::mpsc;
 use zeromq::{Socket, SocketRecv, SubSocket};
 

@@ -1,7 +1,8 @@
-use anyhow::{Context, Result};
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
+
+use anyhow::{Context, Result};
 
 use crate::shared::map::types::ego_pose::EgoPose;
 

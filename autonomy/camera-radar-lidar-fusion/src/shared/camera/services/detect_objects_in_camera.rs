@@ -1,4 +1,5 @@
-use crate::shared::camera::types::camera_detection::CameraDetection;
+use std::path::Path;
+
 use anyhow::{Context, Result};
 use nalgebra::Vector4;
 use opencv::core::{CV_32F, Mat, Rect, Scalar, Size};
@@ -7,8 +8,9 @@ use opencv::imgproc::{INTER_LINEAR, resize};
 use opencv::prelude::{MatTraitConst, MatTraitConstManual};
 use ort::session::{Session, SessionOutputs};
 use ort::value::Value;
-use std::path::Path;
 use tracing::debug;
+
+use crate::shared::camera::types::camera_detection::CameraDetection;
 
 pub struct YoloModel {
     session: Session,

@@ -5,10 +5,11 @@ mod transcription_capnp {
     include!(concat!(env!("OUT_DIR"), "/transcription_capnp.rs"));
 }
 
-use crate::config::AppConfig;
-use crate::shared::nats::services::process_audio_stream_from_nats::process_audio_stream_from_nats;
 use anyhow::Result;
 use tracing::{error, info};
+
+use crate::config::AppConfig;
+use crate::shared::nats::services::process_audio_stream_from_nats::process_audio_stream_from_nats;
 
 #[tokio::main]
 async fn main() -> Result<()> {

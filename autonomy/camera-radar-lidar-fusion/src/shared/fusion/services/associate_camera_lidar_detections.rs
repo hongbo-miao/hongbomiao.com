@@ -1,8 +1,10 @@
+use std::collections::HashSet;
+
+use tracing::debug;
+
 use crate::shared::camera::types::camera_detection::CameraDetection;
 use crate::shared::fusion::utils::calculate_distance_lidar_to_bounding_box::calculate_distance_lidar_to_bounding_box;
 use crate::shared::lidar::types::lidar_detection::LidarDetection;
-use std::collections::HashSet;
-use tracing::debug;
 
 pub fn associate_camera_lidar_detections(
     camera_detections: &[CameraDetection],
