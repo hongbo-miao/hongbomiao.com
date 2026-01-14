@@ -15,7 +15,7 @@ concurrency:
 jobs:
   detect-changes:
     name: Detect Changes
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     permissions:
       pull-requests: read
@@ -1486,7 +1486,7 @@ jobs:
     needs: detect-changes
     if: ${{ false }}
     # if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.call-matlab-function-in-python == 'true' }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1524,7 +1524,7 @@ jobs:
     name: xxHash | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-xxhash == 'true' }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1558,7 +1558,7 @@ jobs:
     name: OPA | Test
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.api-go == 'true' }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1576,7 +1576,7 @@ jobs:
     needs: detect-changes
     if: ${{ false }}
     # if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.robot-operating-system == 'true' }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     container:
       image: ubuntu:noble
@@ -1597,7 +1597,7 @@ jobs:
     name: HM OPAL Client | Build
     needs: detect-changes
     if: ${{ needs.detect-changes.outputs.workflow == 'true' || needs.detect-changes.outputs.hm-opal-client == 'true' }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout

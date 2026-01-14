@@ -308,7 +308,7 @@ jobs:
   amazon-sagemaker-triton-resnet-50-deploy-test:
     name: Amazon SageMaker Triton ResNet 50 (Deploy) | Test
     if: ${{ inputs.workflow || inputs.amazon-sagemaker-triton-resnet-50-deploy }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -341,7 +341,7 @@ jobs:
   amazon-sagemaker-triton-resnet-50-infer-test:
     name: Amazon SageMaker Triton ResNet 50 (Infer) | Test
     if: ${{ inputs.workflow || inputs.amazon-sagemaker-triton-resnet-50-infer }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -374,7 +374,7 @@ jobs:
   scikit-learn-test:
     name: scikit-learn | Test
     if: ${{ inputs.workflow || inputs.hm-scikit-learn }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -407,7 +407,7 @@ jobs:
   xgboost-test:
     name: XGBoost | Test
     if: ${{ inputs.workflow || inputs.hm-xgboost }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -440,7 +440,7 @@ jobs:
   lightgbm-test:
     name: LightGBM | Test
     if: ${{ inputs.workflow || inputs.hm-lightgbm }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -473,7 +473,7 @@ jobs:
   catboost-test:
     name: CatBoost | Test
     if: ${{ inputs.workflow || inputs.hm-catboost }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -506,7 +506,7 @@ jobs:
   cuml-test:
     name: cuML | Test
     if: ${{ inputs.workflow || inputs.hm-cuml }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -539,7 +539,7 @@ jobs:
   gradio-classify-image-test:
     name: Gradio (classify-image) | Test
     if: ${{ inputs.workflow || inputs.hm-gradio-classify-image }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -572,7 +572,7 @@ jobs:
   streamlit-live-line-chart-test:
     name: Streamlit (live-line-chart) | Test
     if: ${{ inputs.workflow || inputs.hm-streamlit-live-line-chart }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -605,7 +605,7 @@ jobs:
   streamlit-map-test:
     name: Streamlit (map) | Test
     if: ${{ inputs.workflow || inputs.hm-streamlit-map }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -638,7 +638,7 @@ jobs:
   flax-test:
     name: Flax | Test
     if: ${{ inputs.workflow || inputs.hm-flax }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -671,7 +671,7 @@ jobs:
   autogluon-test:
     name: AutoGluon | Test
     if: ${{ inputs.workflow || inputs.hm-autogluon }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -705,7 +705,7 @@ jobs:
     name: NVIDIA DALI | Test
     if: ${{ false }}
     # if: ${{ inputs.workflow || inputs.nvidia-dali }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -738,7 +738,7 @@ jobs:
   modulus-test:
     name: NVIDIA Modulus | Test
     if: ${{ inputs.workflow || inputs.hm-nvidia-modulus }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -771,7 +771,7 @@ jobs:
   feature-store-test:
     name: Feature Store | Test
     if: ${{ inputs.workflow || inputs.feature-store }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -804,7 +804,7 @@ jobs:
   crawl4ai-test:
     name: Crawl4AI | Test
     if: ${{ inputs.workflow || inputs.hm-crawl4ai }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -837,7 +837,7 @@ jobs:
   firecrawl-test:
     name: Firecrawl | Test
     if: ${{ inputs.workflow || inputs.hm-firecrawl }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -870,7 +870,7 @@ jobs:
   mineru-test:
     name: MinerU | Test
     if: ${{ inputs.workflow || inputs.hm-mineru }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -903,7 +903,7 @@ jobs:
   olmocr-test:
     name: olmOCR | Test
     if: ${{ inputs.workflow || inputs.hm-olmocr }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -936,7 +936,7 @@ jobs:
   docling-test:
     name: Docling | Test
     if: ${{ inputs.workflow || inputs.hm-docling }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -969,7 +969,7 @@ jobs:
   dense-transformer-test:
     name: Dense Transformer | Test
     if: ${{ inputs.workflow || inputs.dense-transformer }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1002,7 +1002,7 @@ jobs:
   mixture-of-experts-test:
     name: Mixture of Experts | Test
     if: ${{ inputs.workflow || inputs.mixture-of-experts }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1035,7 +1035,7 @@ jobs:
   mamba2-test:
     name: Mamba 2 | Test
     if: ${{ inputs.workflow || inputs.mamba2 }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1068,7 +1068,7 @@ jobs:
   deepspeed-test:
     name: DeepSpeed | Test
     if: ${{ inputs.workflow || inputs.hm-deepspeed }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1101,7 +1101,7 @@ jobs:
   qwen3-test:
     name: Qwen3 | Test
     if: ${{ inputs.workflow || inputs.qwen3 }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1134,7 +1134,7 @@ jobs:
   modern-bert-test:
     name: ModernBERT | Test
     if: ${{ inputs.workflow || inputs.hm-modern-bert }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1167,7 +1167,7 @@ jobs:
   neo-bert-test:
     name: NeoBERT | Test
     if: ${{ inputs.workflow || inputs.neo-bert }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1200,7 +1200,7 @@ jobs:
   bert-test:
     name: BERT | Test
     if: ${{ inputs.workflow || inputs.hm-bert }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1233,7 +1233,7 @@ jobs:
   gliner-test:
     name: GLiNER | Test
     if: ${{ inputs.workflow || inputs.hm-gliner }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1266,7 +1266,7 @@ jobs:
   byte-pair-encoding-test:
     name: Byte-Pair Encoding | Test
     if: ${{ inputs.workflow || inputs.byte-pair-encoding }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1299,7 +1299,7 @@ jobs:
   model2vec-test:
     name: Model2Vec | Test
     if: ${{ inputs.workflow || inputs.hm-model2vec }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1332,7 +1332,7 @@ jobs:
   automatic-mixed-precision-test:
     name: Automatic Mixed Precision | Test
     if: ${{ inputs.workflow || inputs.automatic-mixed-precision }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1365,7 +1365,7 @@ jobs:
   sglang-test:
     name: SGLang | Test
     if: ${{ inputs.workflow || inputs.hm-sglang }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1405,7 +1405,7 @@ jobs:
   mlx-lm-test:
     name: MLX LM | Test
     if: ${{ inputs.workflow || inputs.hm-mlx-lm }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1438,7 +1438,7 @@ jobs:
   kv-caching-test:
     name: KV Caching | Test
     if: ${{ inputs.workflow || inputs.kv-caching }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1471,7 +1471,7 @@ jobs:
   speculative-decoding-test:
     name: Speculative Decoding | Test
     if: ${{ inputs.workflow || inputs.speculative-decoding }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1504,7 +1504,7 @@ jobs:
   gemma-test:
     name: Gemma | Test
     if: ${{ inputs.workflow || inputs.gemma }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1537,7 +1537,7 @@ jobs:
   hm-transformers-test:
     name: Transformers | Test
     if: ${{ inputs.workflow || inputs.hm-transformers }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1603,7 +1603,7 @@ jobs:
   metaflow-greet-test:
     name: Metaflow (greet) | Test
     if: ${{ inputs.workflow || inputs.hm-metaflow-greet }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1636,7 +1636,7 @@ jobs:
   kubeflow-calculate-test:
     name: Kubeflow (calculate) | Test
     if: ${{ inputs.workflow || inputs.hm-kubeflow-calculate }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1669,7 +1669,7 @@ jobs:
   kubeflow-classify-mnist-test:
     name: Kubeflow (classify-mnist) | Test
     if: ${{ inputs.workflow || inputs.hm-kubeflow-classify-mnist }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1702,7 +1702,7 @@ jobs:
   pydantic-ai-chat-pdf-test:
     name: PydanticAI (chat-pdf) | Test
     if: ${{ inputs.workflow || inputs.hm-pydantic-ai-chat-pdf }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1735,7 +1735,7 @@ jobs:
   langgraph-chat-pdf-test:
     name: LangGraph (chat-pdf) | Test
     if: ${{ inputs.workflow || inputs.hm-langgraph-chat-pdf }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1768,7 +1768,7 @@ jobs:
   llama-index-chat-pdf-test:
     name: LlamaIndex (chat-pdf) | Test
     if: ${{ inputs.workflow || inputs.hm-llama-index-chat-pdf }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1801,7 +1801,7 @@ jobs:
   model-context-protocol-test:
     name: Model Context Protocol | Test
     if: ${{ inputs.workflow || inputs.model-context-protocol }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1834,7 +1834,7 @@ jobs:
   mlflow-classify-mnist-test:
     name: MLflow (classify-mnist) | Test
     if: ${{ inputs.workflow || inputs.hm-mlflow-classify-mnist }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1867,7 +1867,7 @@ jobs:
   mlflow-predict-diabetes-test:
     name: MLflow (predict-diabetes) | Test
     if: ${{ inputs.workflow || inputs.hm-mlflow-predict-diabetes }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1900,7 +1900,7 @@ jobs:
   neural-forecasting-forecast-air-passenger-number-test:
     name: Neural Forecasting (forecast-air-passenger-number) | Test
     if: ${{ inputs.workflow || inputs.neural-forecasting-forecast-air-passenger-number }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1933,7 +1933,7 @@ jobs:
   webrtc-vad-test:
     name: WebRTC VAD | Test
     if: ${{ inputs.workflow || inputs.webrtc-vad }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -1999,7 +1999,7 @@ jobs:
   silero-vad-test:
     name: Silero VAD | Test
     if: ${{ inputs.workflow || inputs.hm-silero-vad }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2032,7 +2032,7 @@ jobs:
   senko-test:
     name: Senko | Test
     if: ${{ inputs.workflow || inputs.hm-senko }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2065,7 +2065,7 @@ jobs:
   diart-test:
     name: Diart | Test
     if: ${{ inputs.workflow || inputs.hm-diart }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2098,7 +2098,7 @@ jobs:
   streaming-sortformer-diarizer-test:
     name: Streaming Sortformer Diarizer | Test
     if: ${{ inputs.workflow || inputs.streaming-sortformer-diarizer }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2131,7 +2131,7 @@ jobs:
   librosa-test:
     name: Librosa | Test
     if: ${{ inputs.workflow || inputs.hm-librosa }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2164,7 +2164,7 @@ jobs:
   faster-whisper-test:
     name: Faster Whisper | Test
     if: ${{ inputs.workflow || inputs.hm-faster-whisper }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2197,7 +2197,7 @@ jobs:
   whisperx-test:
     name: WhisperX | Test
     if: ${{ inputs.workflow || inputs.hm-whisperx }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2230,7 +2230,7 @@ jobs:
   speaches-test:
     name: Speaches | Test
     if: ${{ inputs.workflow || inputs.hm-speaches }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2263,7 +2263,7 @@ jobs:
   nvidia-nemo-test:
     name: NVIDIA NeMo | Test
     if: ${{ inputs.workflow || inputs.nvidia-nemo }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2296,7 +2296,7 @@ jobs:
   jiwer-test:
     name: JiWER | Test
     if: ${{ inputs.workflow || inputs.hm-jiwer }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2329,7 +2329,7 @@ jobs:
   stable-diffusion-test:
     name: Stable Diffusion | Test
     if: ${{ inputs.workflow || inputs.stable-diffusion }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2362,7 +2362,7 @@ jobs:
   variational-autoencoder-test:
     name: Variational Autoencoder | Test
     if: ${{ inputs.workflow || inputs.variational-autoencoder }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2395,7 +2395,7 @@ jobs:
   neural-ordinary-differential-equation-test:
     name: Neural Ordinary Differential Equation | Test
     if: ${{ inputs.workflow || inputs.neural-ordinary-differential-equation }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2428,7 +2428,7 @@ jobs:
   flow-matching-test:
     name: Flow Matching | Test
     if: ${{ inputs.workflow || inputs.flow-matching }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2461,7 +2461,7 @@ jobs:
   hydra-zen-test:
     name: hydra-zen | Test
     if: ${{ inputs.workflow || inputs.hm-hydra-zen }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2494,7 +2494,7 @@ jobs:
   optuna-test:
     name: Optuna | Test
     if: ${{ inputs.workflow || inputs.hm-optuna }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2527,7 +2527,7 @@ jobs:
   post-training-quantization-test:
     name: Post-Training Quantization | Test
     if: ${{ inputs.workflow || inputs.post-training-quantization }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2593,7 +2593,7 @@ jobs:
   torchtune-test:
     name: torchtune | Test
     if: ${{ inputs.workflow || inputs.hm-torchtune }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2659,7 +2659,7 @@ jobs:
   llama-factory-test:
     name: LLaMA-Factory | Test
     if: ${{ inputs.workflow || inputs.hm-llama-factory }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2692,7 +2692,7 @@ jobs:
   swift-test:
     name: SWIFT | Test
     if: ${{ inputs.workflow || inputs.hm-swift }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2725,7 +2725,7 @@ jobs:
   tinker-test:
     name: Tinker | Test
     if: ${{ inputs.workflow || inputs.hm-tinker }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2758,7 +2758,7 @@ jobs:
   supervised-fine-tuning-low-rank-adaptation-test:
     name: Supervised Fine-Tuning - Low-Rank Adaptation | Test
     if: ${{ inputs.workflow || inputs.supervised-fine-tuning-low-rank-adaptation }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2791,7 +2791,7 @@ jobs:
   supervised-fine-tuning-quantized-low-rank-adaptation-test:
     name: Supervised Fine-Tuning - Quantized Low-Rank Adaptation | Test
     if: ${{ inputs.workflow || inputs.supervised-fine-tuning-quantized-low-rank-adaptation }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2824,7 +2824,7 @@ jobs:
   direct-preference-optimization-low-rank-adaptation-test:
     name: Direct Preference Optimization - Low-Rank Adaptation | Test
     if: ${{ inputs.workflow || inputs.direct-preference-optimization-low-rank-adaptation }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2857,7 +2857,7 @@ jobs:
   proximal-policy-optimization-low-rank-adaptation-test:
     name: Proximal Policy Optimization - Low-Rank Adaptation | Test
     if: ${{ inputs.workflow || inputs.proximal-policy-optimization-low-rank-adaptation }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2890,7 +2890,7 @@ jobs:
   group-relative-policy-optimization-low-rank-adaptation-test:
     name: Group Relative Policy Optimization - Low-Rank Adaptation | Test
     if: ${{ inputs.workflow || inputs.group-relative-policy-optimization-low-rank-adaptation }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2923,7 +2923,7 @@ jobs:
   fine-tune-whisper-test:
     name: Fine Tune Whisper | Test
     if: ${{ inputs.workflow || inputs.fine-tune-whisper }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2956,7 +2956,7 @@ jobs:
   core-ml-tools-test:
     name: Core ML Tools | Test
     if: ${{ inputs.workflow || inputs.core-ml-tools }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -2989,7 +2989,7 @@ jobs:
   convert-modern-bert-to-core-ml-test:
     name: Convert ModernBERT to Core ML | Test
     if: ${{ inputs.workflow || inputs.convert-modern-bert-to-core-ml }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3023,7 +3023,7 @@ jobs:
     name: DeepEval | Test
     # if: ${{ inputs.workflow || inputs.hm-deepeval }}
     if: ${{ false }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3089,7 +3089,7 @@ jobs:
   vision-language-action-train-test:
     name: Vision-Language-Action (Train) | Test
     if: ${{ inputs.workflow || inputs.vision-language-action-train }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3122,7 +3122,7 @@ jobs:
   vision-language-action-infer-test:
     name: Vision-Language-Action (Infer) | Test
     if: ${{ inputs.workflow || inputs.vision-language-action-infer }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3155,7 +3155,7 @@ jobs:
   genesis-test:
     name: Genesis | Test
     if: ${{ inputs.workflow || inputs.hm-genesis }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3188,7 +3188,7 @@ jobs:
   convolutional-neural-network-test:
     name: Convolutional Neural Network | Test
     if: ${{ inputs.workflow || inputs.convolutional-neural-network }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3221,7 +3221,7 @@ jobs:
   graph-neural-network-test:
     name: Graph Neural Network | Test
     if: ${{ inputs.workflow || inputs.graph-neural-network }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3254,7 +3254,7 @@ jobs:
   graph-neural-network-train:
     name: Graph Neural Network | Train
     if: ${{ inputs.workflow || inputs.graph-neural-network }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3283,7 +3283,7 @@ jobs:
   liquid-neural-network-test:
     name: Liquid Neural Network | Test
     if: ${{ inputs.workflow || inputs.liquid-neural-network }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3316,7 +3316,7 @@ jobs:
   open-clip-test:
     name: OpenCLIP | Test
     if: ${{ inputs.workflow || inputs.open-clip }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3349,7 +3349,7 @@ jobs:
   imagebind-test:
     name: ImageBind | Test
     if: ${{ inputs.workflow || inputs.hm-imagebind }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3382,7 +3382,7 @@ jobs:
   openvla-test:
     name: OpenVLA | Test
     if: ${{ inputs.workflow || inputs.openvla }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3415,7 +3415,7 @@ jobs:
   openpi-test:
     name: openpi | Test
     if: ${{ inputs.workflow || inputs.hm-openpi }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3481,7 +3481,7 @@ jobs:
   q-learning-test:
     name: Q-Learning | Test
     if: ${{ inputs.workflow || inputs.q-learning }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -3514,7 +3514,7 @@ jobs:
   actor-critic-algorithm-test:
     name: Actor-Critic Algorithm | Test
     if: ${{ inputs.workflow || inputs.actor-critic-algorithm }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout

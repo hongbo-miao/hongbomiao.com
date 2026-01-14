@@ -61,7 +61,7 @@ jobs:
   genetic-algorithm-test:
     name: Genetic Algorithm | Test
     if: ${{ inputs.workflow || inputs.genetic-algorithm }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -95,7 +95,7 @@ jobs:
   sunpy-test:
     name: SunPy | Test
     if: ${{ inputs.workflow || inputs.hm-sunpy }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -128,7 +128,7 @@ jobs:
   surrogate-model-test:
     name: surrogate-model | Test
     if: ${{ inputs.workflow || inputs.surrogate-model }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -228,7 +228,7 @@ jobs:
   triton-test:
     name: Triton | Test
     if: ${{ inputs.workflow || inputs.hm-triton }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -262,7 +262,7 @@ jobs:
   jax-test:
     name: JAX | Test
     if: ${{ inputs.workflow || inputs.hm-jax }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -296,7 +296,7 @@ jobs:
   quantum-computing-test:
     name: Quantum Computing | Test
     if: ${{ inputs.workflow || inputs.quantum-computing }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -330,7 +330,7 @@ jobs:
   ray-test:
     name: Ray | Test
     if: ${{ inputs.workflow || inputs.hm-ray }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -363,7 +363,7 @@ jobs:
   ray-calculate-test:
     name: Ray (calculate) | Test
     if: ${{ inputs.workflow || inputs.hm-ray-calculate }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -396,7 +396,7 @@ jobs:
   ray-daft-analysis-test:
     name: Ray (daft-analysis) | Test
     if: ${{ inputs.workflow || inputs.hm-ray-daft-analysis }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -429,7 +429,7 @@ jobs:
   ray-process-flight-data-test:
     name: Ray (process-flight-data) | Test
     if: ${{ inputs.workflow || inputs.hm-ray-process-flight-data }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -462,7 +462,7 @@ jobs:
   skypilot-test:
     name: SkyPilot | Test
     if: ${{ inputs.workflow || inputs.hm-skypilot }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout

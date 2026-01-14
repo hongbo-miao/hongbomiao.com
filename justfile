@@ -38,13 +38,13 @@ rbenv-install-list-latest-stable-versions:
     rbenv install --list
 
 rbenv-install:
-    rbenv install 3.4.5
+    rbenv install 4.0.0
 
 rbenv-list-versions:
     rbenv versions
 
 rbenv-uninstall:
-    rbenv uninstall --force 3.4.5
+    rbenv uninstall --force 4.0.0
 
 bundle-initialize:
     bundle init
@@ -59,8 +59,7 @@ bundle-update:
     bundle update
 
 bundle-add-platform:
-    bundle lock --add-platform x86_64-darwin-21
-    bundle lock --add-platform x86_64-linux
+    bundle lock --add-platform aarch64-linux
 
 # .NET
 dotnet-sdk-install:
