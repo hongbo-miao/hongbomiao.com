@@ -32,7 +32,7 @@ jobs:
   decode-can-blf-data-test:
     name: Decode CAN BLF Data | Test
     if: ${{ inputs.workflow || inputs.decode-can-blf-data }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -65,7 +65,7 @@ jobs:
   decode-can-mf4-data-test:
     name: Decode CAN MF4 Data | Test
     if: ${{ inputs.workflow || inputs.decode-can-mf4-data }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -98,7 +98,7 @@ jobs:
   decode-can-trc-data-test:
     name: Decode CAN TRC Data | Test
     if: ${{ inputs.workflow || inputs.decode-can-trc-data }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -131,7 +131,7 @@ jobs:
   format-can-data-test:
     name: Format CAN Data | Test
     if: ${{ inputs.workflow || inputs.format-can-data }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -164,7 +164,7 @@ jobs:
   serial-test:
     name: Serial | Test
     if: ${{ inputs.workflow || inputs.hm-serial }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
@@ -197,7 +197,7 @@ jobs:
   pack-unpack-data-test:
     name: Pack Unpack Data | Test
     if: ${{ inputs.workflow || inputs.pack-unpack-data }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
       - name: Checkout
