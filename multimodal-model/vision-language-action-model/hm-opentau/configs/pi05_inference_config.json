@@ -1,0 +1,116 @@
+{
+  "dataset_mixture": {
+    "datasets": [
+      {
+        "repo_id": "lerobot/droid_100"
+      }
+    ],
+    "weights": [1.0],
+    "action_freq": 30.0,
+    "image_resample_strategy": "nearest",
+    "vector_resample_strategy": "nearest"
+  },
+  "policy": {
+    "type": "pi05",
+    "pretrained_path": "TensorAuto/tPi0.5-libero",
+    "n_obs_steps": 1,
+    "normalization_mapping": {
+      "VISUAL": "IDENTITY",
+      "STATE": "MIN_MAX",
+      "ACTION": "MEAN_STD"
+    },
+    "input_features": {
+      "state": {
+        "type": "STATE",
+        "shape": [32]
+      },
+      "camera0": {
+        "type": "VISUAL",
+        "shape": [3, 224, 224]
+      },
+      "camera1": {
+        "type": "VISUAL",
+        "shape": [3, 224, 224]
+      }
+    },
+    "output_features": {
+      "actions": {
+        "type": "ACTION",
+        "shape": [32]
+      }
+    },
+    "device": null,
+    "use_amp": false,
+    "chunk_size": 10,
+    "n_action_steps": 10,
+    "max_state_dim": 32,
+    "max_action_dim": 32,
+    "resize_imgs_with_padding": [224, 224],
+    "empty_cameras": 0,
+    "tokenizer_max_length": 256,
+    "discrete_action_max_length": 60,
+    "proj_width": 1024,
+    "dropout": 0.1,
+    "num_steps": 10,
+    "init_strategy": "no_init",
+    "use_cache": true,
+    "attention_implementation": "eager",
+    "freeze_vision_encoder": true,
+    "train_expert_only": true,
+    "optimizer_lr": 2.5e-5,
+    "optimizer_betas": [0.9, 0.95],
+    "optimizer_eps": 1e-8,
+    "optimizer_weight_decay": 1e-10,
+    "scheduler_warmup_steps": 1000,
+    "scheduler_decay_steps": 30000,
+    "scheduler_decay_lr": 2.5e-6
+  },
+  "resume": false,
+  "seed": 1000,
+  "resolution": [224, 224],
+  "num_cams": 2,
+  "max_state_dim": 32,
+  "max_action_dim": 32,
+  "action_chunk": 10,
+  "loss_weighting": { "MSE": 10, "CE": 1 },
+  "num_workers": 4,
+  "batch_size": 2,
+  "gradient_accumulation_steps": 1,
+  "dataloader_batch_size": 2,
+  "prefetch_factor": 8,
+  "steps": 10,
+  "log_freq": 1,
+  "save_checkpoint": true,
+  "save_freq": 10,
+  "use_policy_training_preset": false,
+  "trace_nans": false,
+  "optimizer": {
+    "type": "adamw",
+    "lr": 2.5e-5,
+    "weight_decay": 1e-10,
+    "grad_clip_norm": 10.0,
+    "betas": [0.9, 0.95],
+    "eps": 1e-8
+  },
+  "scheduler": {
+    "type": "cosine_decay_with_warmup",
+    "num_warmup_steps": 1000,
+    "num_decay_steps": 30000,
+    "peak_lr": 2.5e-5,
+    "decay_lr": 2.5e-6
+  },
+  "wandb": {
+    "enable": true,
+    "entity": "wyautox-autox",
+    "project": "pi05",
+    "run_id": null,
+    "name": null,
+    "notes": "Dev config for pi0.5",
+    "tags": [],
+    "group": null,
+    "job_type": null,
+    "mode": null,
+    "allow_resume": true,
+    "disable_artifact": false
+  }
+}
