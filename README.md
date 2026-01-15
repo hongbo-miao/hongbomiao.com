@@ -1508,12 +1508,6 @@ The website [supports HTTP/3](https://www.http3check.net/?host=hongbomiao.com).
 
 [![HTTP/3 screenshot](https://github.com/hongbo-miao/hongbomiao.com/assets/3375461/fc3018df-74e9-4a0a-b8dc-b298eee69708)](https://www.http3check.net/?host=hongbomiao.com)
 
-### AVIF
-
-Images on the website are using AVIF format.
-
-WebP is almost half the size of JPEG, and AVIF is under half the size of WebP.
-
 ### Security
 
 Below is the [Mozilla HTTP observatory report](https://developer.mozilla.org/en-US/observatory/analyze?host=www.hongbomiao.com) for the website.
