@@ -1,0 +1,15 @@
+docker-compose-up:
+    docker compose --file=docker-compose.development.yaml up --detach
+    # http://localhost:8000/auth/login
+    # Username: admin
+    # Password: pass123
+
+docker-compose-stop:
+    docker compose --file=docker-compose.development.yaml stop
+
+docker-compose-down:
+    docker compose --file=docker-compose.development.yaml down --volumes
+
+docker-compose-restart:
+    docker compose --file=docker-compose.development.yaml down --volumes
+    docker compose --file=docker-compose.development.yaml up --detach
