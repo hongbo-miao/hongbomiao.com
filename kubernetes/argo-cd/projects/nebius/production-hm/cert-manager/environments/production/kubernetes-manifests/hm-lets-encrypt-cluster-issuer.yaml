@@ -1,0 +1,24 @@
+# https://cert-manager.io/docs/configuration/acme/dns01/cloudflare
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: hm-lets-encrypt-cluster-issuer
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
+    argocd.argoproj.io/hook: PostSync
+spec:
+  acme:
+    email: hongbo.miao@outlook.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: hm-lets-encrypt-cluster-issuer-account-secret
+    solvers:
+      - selector:
+          dnsZones:
+            - hongbomiao.com
+        dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: hm-cert-manager-cloudflare-secret
+              key: CLOUDFLARE_API_TOKEN

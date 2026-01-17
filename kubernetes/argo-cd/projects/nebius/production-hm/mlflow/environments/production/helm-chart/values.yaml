@@ -1,0 +1,60 @@
+# https://github.com/community-charts/helm-charts/blob/main/charts/mlflow/values.yaml
+---
+replicaCount: 3
+serviceAccount:
+  create: true
+backendStore:
+  databaseMigration: true
+  databaseConnectionCheck: true
+  postgres:
+    enabled: true
+    host: public-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+    port: 5432
+    database: mlflow_db
+    user: mlflow_user
+  existingDatabaseSecret:
+    name: hm-mlflow-secret
+    usernameKey: POSTGRES_USER_NAME
+    passwordKey: POSTGRES_PASSWORD
+artifactRoot:
+  s3:
+    enabled: true
+    bucket: production-hm-mlflow
+    existingSecret:
+      name: hm-mlflow-secret
+      keyOfAccessKeyId: OBJECT_STORAGE_ACCESS_KEY_ID
+      keyOfSecretAccessKey: OBJECT_STORAGE_SECRET_ACCESS_KEY
+extraEnvVars:
+  MLFLOW_OBJECT_STORAGE_ENDPOINT_URL: https://storage.us-central1.nebius.cloud
+# https://github.com/community-charts/helm-charts/issues/310#issuecomment-3702742603
+log:
+  enabled: false
+extraArgs:
+  allowedHosts: mlflow.hongbomiao.com
+  uvicornOpts: "--log-level info"
+postgresql:
+  enabled: false
+auth:
+  enabled: true
+  defaultPermission: READ
+  existingAdminSecret:
+    name: hm-mlflow-secret
+    usernameKey: MLFLOW_ADMIN_USER_NAME
+    passwordKey: MLFLOW_ADMIN_PASSWORD
+  postgres:
+    enabled: true
+    host: public-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+    port: 5432
+    database: mlflow_auth_db
+    user: mlflow_user
+    existingSecret:
+      name: hm-mlflow-secret
+      usernameKey: POSTGRES_USER_NAME
+      passwordKey: POSTGRES_PASSWORD
+resources:
+  requests:
+    cpu: 200m
+    memory: 1Gi
+  limits:
+    cpu: 500m
+    memory: 2Gi
