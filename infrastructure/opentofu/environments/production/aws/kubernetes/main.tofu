@@ -180,7 +180,7 @@ module "amazon_eks_cluster" {
     }
   }
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.amazon_eks_cluster_name
+    "hm_resource_name" = local.amazon_eks_cluster_name
   })
   depends_on = [
     module.amazon_eks_access_entry_iam
@@ -211,7 +211,7 @@ module "hm_karpenter" {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
   tags = merge(var.common_tags, {
-    "hm:resource_name" = "${local.amazon_eks_cluster_name}-karpenter"
+    "hm_resource_name" = "${local.amazon_eks_cluster_name}-karpenter"
   })
   depends_on = [
     module.kubernetes_namespace_hm_karpenter

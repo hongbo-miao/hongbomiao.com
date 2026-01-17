@@ -32,7 +32,7 @@ resource "aws_iam_role" "s3_csi_driver_mountpoint_role" {
     ]
   })
   tags = merge(var.common_tags, {
-    "hm:resource_name" = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
+    "hm_resource_name" = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
   })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy

@@ -22,7 +22,7 @@ resource "aws_iam_role" "sagemaker_notebook_instance_role" {
     ]
   })
   tags = merge(var.common_tags, {
-    "hm:resource_name" = "AmazonSageMakerExecutionRole-${var.amazon_sagemaker_notebook_instance_name}"
+    "hm_resource_name" = "AmazonSageMakerExecutionRole-${var.amazon_sagemaker_notebook_instance_name}"
   })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy

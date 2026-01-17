@@ -31,7 +31,7 @@ resource "aws_iam_role" "labelbox_iam_role" {
     ]
   })
   tags = merge(var.common_tags, {
-    "hm:resource_name" = "${local.aws_iam_role_name_prefix}-${var.labelbox_service_account_name}"
+    "hm_resource_name" = "${local.aws_iam_role_name_prefix}-${var.labelbox_service_account_name}"
   })
 }
 # https://docs.labelbox.com/docs/import-aws-s3-data

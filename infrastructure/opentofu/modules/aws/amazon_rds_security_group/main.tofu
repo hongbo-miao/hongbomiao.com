@@ -11,7 +11,7 @@ resource "aws_security_group" "rds_security_group" {
   name   = var.amazon_ec2_security_group_name
   vpc_id = var.amazon_vpc_id
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.amazon_ec2_security_group_name
+    "hm_resource_name" = var.amazon_ec2_security_group_name
   })
 }
 # Ingress - On-Site
@@ -27,7 +27,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site" {
   from_port         = 5432
   to_port           = 5432
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_on_site
+    "hm_resource_name" = local.ingress_rule_on_site
   })
 }
 locals {
@@ -41,7 +41,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn" {
   from_port         = 5432
   to_port           = 5432
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_vpn
+    "hm_resource_name" = local.ingress_rule_vpn
   })
 }
 locals {
@@ -55,7 +55,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc" {
   from_port         = 5432
   to_port           = 5432
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_vpc
+    "hm_resource_name" = local.ingress_rule_vpc
   })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
@@ -64,6 +64,6 @@ resource "aws_vpc_security_group_egress_rule" "egress_allow" {
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.amazon_ec2_security_group_name
+    "hm_resource_name" = var.amazon_ec2_security_group_name
   })
 }
