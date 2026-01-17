@@ -1,0 +1,7 @@
+seal:
+    kubeseal \
+        --controller-name sealed-secrets \
+        --controller-namespace production-hm-sealed-secrets \
+        --format yaml \
+        < secrets/hm-external-dns-secret.unsealed.yaml \
+        > kubernetes-manifests/hm-external-dns-secret.yaml

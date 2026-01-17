@@ -1,7 +1,13 @@
 variable "environment" {
   type = string
 }
+variable "tenant_id" {
+  type = string
+}
 variable "project_id" {
+  type = string
+}
+variable "vpc_network_id" {
   type = string
 }
 variable "vpc_subnet_id" {
@@ -9,4 +15,8 @@ variable "vpc_subnet_id" {
 }
 variable "common_labels" {
   type = map(string)
+}
+variable "mlflow_postgres_bootstrap_user_password" {
+  type      = string
+  sensitive = true
 }

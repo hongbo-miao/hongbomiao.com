@@ -1,0 +1,27 @@
+# https://github.com/kubernetes-sigs/external-dns/blob/master/charts/external-dns/values.yaml
+---
+image:
+  repository: registry.k8s.io/external-dns/external-dns
+sources:
+  - service
+  - ingress
+provider:
+  name: cloudflare
+env:
+  - name: CF_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: hm-external-dns-secret
+        key: CLOUDFLARE_API_TOKEN
+domainFilters:
+  - hongbomiao.com
+policy: upsert-only
+registry: txt
+txtOwnerId: hm-external-dns
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 256Mi

@@ -1,0 +1,7 @@
+seal:
+    kubeseal \
+        --controller-name sealed-secrets \
+        --controller-namespace production-hm-sealed-secrets \
+        --format yaml \
+        < secrets/hm-cert-manager-cloudflare-secret.unsealed.yaml \
+        > kubernetes-manifests/hm-cert-manager-cloudflare-secret.yaml
