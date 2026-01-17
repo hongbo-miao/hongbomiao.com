@@ -22,7 +22,7 @@ resource "aws_iam_role" "glue_databrew_role" {
     ]
   })
   tags = merge(var.common_tags, {
-    "hm:resource_name" = "AWSGlueDataBrewServiceRole-${var.aws_glue_databrew_job_nickname}"
+    "hm_resource_name" = "AWSGlueDataBrewServiceRole-${var.aws_glue_databrew_job_nickname}"
   })
 }
 

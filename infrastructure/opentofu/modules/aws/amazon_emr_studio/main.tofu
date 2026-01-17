@@ -17,6 +17,6 @@ resource "aws_emr_studio" "main" {
   vpc_id                      = "vpc-xxxxxxxxxxxxxxxxx"
   subnet_ids                  = ["subnet-xxxxxxxxxxxxxxxxx"]
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.amazon_emr_studio_name
+    "hm_resource_name" = var.amazon_emr_studio_name
   })
 }

@@ -11,6 +11,6 @@ resource "aws_key_pair" "main" {
   key_name   = var.key_name
   public_key = var.public_key
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.key_name
+    "hm_resource_name" = var.key_name
   })
 }

@@ -22,7 +22,7 @@ resource "aws_iam_role" "batch_job_definition_role" {
     ]
   })
   tags = merge(var.common_tags, {
-    "hm:resource_name" = "AWSBatchJobDefininationExecutionRole-${var.aws_batch_job_definition_nickname}"
+    "hm_resource_name" = "AWSBatchJobDefininationExecutionRole-${var.aws_batch_job_definition_nickname}"
   })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment

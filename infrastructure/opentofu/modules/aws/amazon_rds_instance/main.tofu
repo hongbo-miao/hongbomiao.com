@@ -32,7 +32,7 @@ resource "aws_db_instance" "rds_instance" {
   deletion_protection                   = true
   apply_immediately                     = true
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.amazon_rds_name
+    "hm_resource_name" = var.amazon_rds_name
   })
   lifecycle {
     prevent_destroy = true

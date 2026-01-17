@@ -22,7 +22,7 @@ resource "aws_iam_role" "emr_studio_role" {
     ]
   })
   tags = merge(var.common_tags, {
-    "hm:resource_name" = "AmazonEMRStudioServiceRole-${var.amazon_emr_studio_name}"
+    "hm_resource_name" = "AmazonEMRStudioServiceRole-${var.amazon_emr_studio_name}"
   })
 }
 

@@ -37,6 +37,6 @@ resource "aws_glue_job" "main" {
   }
 
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.aws_glue_job_name
+    "hm_resource_name" = var.aws_glue_job_name
   })
 }

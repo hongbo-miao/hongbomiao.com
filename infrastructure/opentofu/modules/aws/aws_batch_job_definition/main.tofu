@@ -30,6 +30,6 @@ resource "aws_batch_job_definition" "amin" {
     executionRoleArn = var.iam_role_arn
   })
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.aws_batch_job_definition_name
+    "hm_resource_name" = var.aws_batch_job_definition_name
   })
 }

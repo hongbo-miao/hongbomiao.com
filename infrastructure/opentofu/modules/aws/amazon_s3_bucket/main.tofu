@@ -10,7 +10,7 @@ terraform {
 resource "aws_s3_bucket" "main" {
   bucket = var.s3_bucket_name
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.s3_bucket_name
+    "hm_resource_name" = var.s3_bucket_name
   })
   lifecycle {
     prevent_destroy = true

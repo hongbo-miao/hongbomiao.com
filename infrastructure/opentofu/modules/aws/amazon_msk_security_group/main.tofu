@@ -11,7 +11,7 @@ resource "aws_security_group" "msk_security_group" {
   name   = var.amazon_ec2_security_group_name
   vpc_id = var.amazon_vpc_id
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.amazon_ec2_security_group_name
+    "hm_resource_name" = var.amazon_ec2_security_group_name
   })
 }
 # Ingress - On-Site
@@ -29,7 +29,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broke
   from_port         = 9094
   to_port           = 9094
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_on_site_kafka_broker_tls
+    "hm_resource_name" = local.ingress_rule_on_site_kafka_broker_tls
   })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broker_sasl_scram" {
@@ -40,7 +40,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broke
   from_port         = 9096
   to_port           = 9096
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_on_site_kafka_broker_sasl_scram
+    "hm_resource_name" = local.ingress_rule_on_site_kafka_broker_sasl_scram
   })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broker_iam" {
@@ -51,7 +51,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broke
   from_port         = 9098
   to_port           = 9098
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_on_site_kafka_broker_iam
+    "hm_resource_name" = local.ingress_rule_on_site_kafka_broker_iam
   })
 }
 # Ingress - VPN
@@ -68,7 +68,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn_kafka_broker_tl
   from_port         = 9094
   to_port           = 9094
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_vpn_kafka_broker_tls
+    "hm_resource_name" = local.ingress_rule_vpn_kafka_broker_tls
   })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn_kafka_broker_sasl_scram" {
@@ -79,7 +79,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn_kafka_broker_sa
   from_port         = 9096
   to_port           = 9096
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_vpn_kafka_broker_sasl_scram
+    "hm_resource_name" = local.ingress_rule_vpn_kafka_broker_sasl_scram
   })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn_kafka_broker_iam" {
@@ -90,7 +90,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpn_kafka_broker_ia
   from_port         = 9098
   to_port           = 9098
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_vpn_kafka_broker_iam
+    "hm_resource_name" = local.ingress_rule_vpn_kafka_broker_iam
   })
 }
 # Ingress - VPC
@@ -107,7 +107,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_tl
   from_port         = 9094
   to_port           = 9094
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_vpc_kafka_broker_tls
+    "hm_resource_name" = local.ingress_rule_vpc_kafka_broker_tls
   })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_sasl_scram" {
@@ -118,7 +118,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_sa
   from_port         = 9096
   to_port           = 9096
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_vpc_kafka_broker_sasl_scram
+    "hm_resource_name" = local.ingress_rule_vpc_kafka_broker_sasl_scram
   })
 }
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_iam" {
@@ -129,7 +129,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_ia
   from_port         = 9098
   to_port           = 9098
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.ingress_rule_vpc_kafka_broker_iam
+    "hm_resource_name" = local.ingress_rule_vpc_kafka_broker_iam
   })
 }
 # Egress
@@ -139,6 +139,6 @@ resource "aws_vpc_security_group_egress_rule" "egress_allow" {
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.amazon_ec2_security_group_name
+    "hm_resource_name" = var.amazon_ec2_security_group_name
   })
 }

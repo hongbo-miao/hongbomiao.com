@@ -22,7 +22,7 @@ resource "aws_db_parameter_group" "rds_parameter_group" {
     }
   }
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.parameter_group_name
+    "hm_resource_name" = var.parameter_group_name
   })
   lifecycle {
     create_before_destroy = true

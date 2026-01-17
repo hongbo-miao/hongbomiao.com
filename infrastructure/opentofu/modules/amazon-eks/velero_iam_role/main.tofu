@@ -31,7 +31,7 @@ resource "aws_iam_role" "velero_iam_role" {
     ]
   })
   tags = merge(var.common_tags, {
-    "hm:resource_name" = "${local.aws_iam_role_name_prefix}-${var.velero_service_account_name}"
+    "hm_resource_name" = "${local.aws_iam_role_name_prefix}-${var.velero_service_account_name}"
   })
 }
 # https://velero.io/docs/v1.0.0/aws-config/
