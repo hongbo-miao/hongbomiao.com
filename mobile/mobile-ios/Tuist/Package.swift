@@ -20,7 +20,7 @@ let package = Package(
     .package(url: "https://github.com/argmaxinc/WhisperKit", from: "0.15.0"),
     .package(url: "https://github.com/huggingface/swift-transformers", from: "1.1.6"),
     .package(url: "https://github.com/ml-explore/mlx-swift-lm", from: "2.29.3"),
-    .package(url: "https://github.com/mlalma/kokoro-ios", from: "1.0.10"),
+    .package(url: "https://github.com/mlalma/kokoro-ios", from: "1.0.11"),
     .package(url: "https://github.com/apple/ml-stable-diffusion.git", from: "1.1.1"),
   ]
 )
