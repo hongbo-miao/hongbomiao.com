@@ -1,0 +1,106 @@
+# https://github.com/goharbor/harbor-helm/blob/main/values.yaml
+---
+expose:
+  type: ingress
+  ingress:
+    hosts:
+      core: harbor.hongbomiao.com
+  tls:
+    enabled: false
+externalURL: https://harbor.hongbomiao.com
+existingSecretAdminPassword: hm-harbor-secret
+existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
+core:
+  replicas: 3
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+jobservice:
+  replicas: 3
+  jobLoggers:
+    - stdout
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+portal:
+  replicas: 3
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+registry:
+  replicas: 3
+  registry:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+  controller:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 100m
+        memory: 256Mi
+trivy:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+redis:
+  type: internal
+  internal:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 100m
+        memory: 256Mi
+persistence:
+  enabled: true
+  resourcePolicy: keep
+  persistentVolumeClaim:
+    trivy:
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      storageClass: production-hm-harbor-storage-class
+    redis:
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      storageClass: production-hm-harbor-storage-class
+  imageChartStorage:
+    type: s3
+    s3:
+      region: us-west-2
+      bucket: production-hm-harbor-bucket
+      existingSecret: hm-harbor-secret
+  existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
+database:
+  type: external
+  external:
+    host: production-hm-harbor-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
+    port: 5432
+    username: harbor_user
+    coreDatabase: harbor_db
+    existingSecret: hm-harbor-secret
+    sslmode: require

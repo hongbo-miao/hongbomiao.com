@@ -1,0 +1,38 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/valkey/values.yaml
+---
+global:
+  imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+  security:
+    allowInsecureImages: true
+auth:
+  enabled: true
+  sentinel: false
+  existingSecret: hm-ray-cluster-valkey-secret
+primary:
+  replicaCount: 1
+  persistence:
+    accessModes: ["ReadWriteOnce"]
+    size: 5Gi
+    storageClass: production-hm-ray-cluster-valkey-storage-class
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 1500m
+      memory: 1Gi
+replica:
+  replicaCount: 3
+  persistence:
+    accessModes: ["ReadWriteOnce"]
+    size: 5Gi
+    storageClass: production-hm-ray-cluster-valkey-storage-class
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 1500m
+      memory: 1Gi
+sentinel:
+  enabled: false

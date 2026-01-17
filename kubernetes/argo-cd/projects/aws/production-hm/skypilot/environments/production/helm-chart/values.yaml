@@ -1,0 +1,28 @@
+---
+apiService:
+  image: harbor.hongbomiao.com/docker-hub-proxy-cache/berkeleyskypilot/skypilot:0.10.0
+  dbConnectionSecretName: hm-skypilot-secret
+  enableUserManagement: true
+  initialBasicAuthSecret: hm-skypilot-secret
+ingress:
+  enabled: false
+ingress-nginx:
+  enabled: false
+storage:
+  enabled: true
+  storageClassName: production-hm-skypilot-storage-class
+  accessMode: ReadWriteOnce
+  size: 10Gi
+lambdaCredentials:
+  enabled: true
+  lambdaSecretName: lambda-secret
+runpodCredentials:
+  enabled: true
+  runpodSecretName: runpod-secret
+nebiusCredentials:
+  enabled: true
+  tenantId: tenant-xxxxxxxxxxxxxxxxxx
+  nebiusSecretName: nebius-secret
+vastCredentials:
+  enabled: true
+  vastSecretName: vast-secret

@@ -21,6 +21,7 @@ resource "argocd_application" "main" {
       path            = var.path
       directory {
         recurse = true
+        include = var.include
       }
     }
     destination {

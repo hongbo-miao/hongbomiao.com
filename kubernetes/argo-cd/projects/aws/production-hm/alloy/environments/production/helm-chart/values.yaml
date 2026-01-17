@@ -1,0 +1,353 @@
+# https://github.com/grafana/alloy/blob/main/operations/helm/charts/alloy/values.yaml
+---
+image:
+  registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+controller:
+  # https://github.com/grafana/beyla/blob/main/examples/k8s/unprivileged.yaml
+  hostPID: true
+alloy:
+  stabilityLevel: public-preview
+  securityContext:
+    # https://grafana.com/docs/grafana-cloud/send-data/alloy/reference/components/beyla/beyla.ebpf/
+    appArmorProfile:
+      type: Unconfined
+    # https://github.com/grafana/beyla/blob/main/examples/k8s/unprivileged.yaml
+    runAsUser: 0
+    # readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+      add:
+        - BPF
+        - CHECKPOINT_RESTORE
+        - DAC_READ_SEARCH
+        - NET_RAW
+        - PERFMON
+        - SYS_ADMIN
+        - SYS_PTRACE
+  extraEnv:
+    - name: LOKI_URL
+      value: http://loki-gateway.production-hm-loki.svc:80/loki/api/v1/push
+    - name: TEMPO_ENDPOINT
+      value: tempo-distributor.production-hm-tempo.svc:4317
+    - name: MIMIR_URL
+      value: http://mimir-distributor-headless.production-hm-mimir.svc:8080/api/v1/push
+  configMap:
+    content: |-
+      // https://grafana.com/docs/alloy/latest/configure/kubernetes/
+      // https://grafana.com/docs/alloy/latest/collect/logs-in-kubernetes/
+      logging {
+        level = "info"
+        format = "logfmt"
+      }
+
+      // https://grafana.com/docs/alloy/latest/reference/config-blocks/livedebugging/
+      livedebugging {
+        enabled = true
+      }
+
+      // hm Loki
+      // local.file_match discovers files on the local filesystem using glob patterns and the doublestar library. It returns an array of file paths.
+      local.file_match "node_logs" {
+        path_targets = [{
+            // Monitor syslog to scrape node-logs
+            __path__  = "/var/log/syslog",
+            job       = "node/syslog",
+            node_name = sys.env("HOSTNAME"),
+            cluster   = "hm-eks-cluster",
+        }]
+      }
+
+      // loki.source.file reads log entries from files and forwards them to other loki.* components.
+      // You can specify multiple loki.source.file components by giving them different labels.
+      loki.source.file "node_logs" {
+        targets    = local.file_match.node_logs.targets
+        forward_to = [loki.write.hm_loki.receiver]
+      }
+
+      // discovery.kubernetes allows you to find scrape targets from Kubernetes resources.
+      // It watches cluster state and ensures targets are continually synced with what is currently running in your cluster.
+      discovery.kubernetes "pod" {
+        role = "pod"
+      }
+
+      // discovery.relabel rewrites the label set of the input targets by applying one or more relabeling rules.
+      // If no rules are defined, then the input targets are exported as-is.
+      discovery.relabel "pod_logs" {
+        targets = discovery.kubernetes.pod.targets
+
+        // Label creation - "namespace" field from "__meta_kubernetes_namespace"
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          action = "replace"
+          target_label = "namespace"
+        }
+
+        // Label creation - "pod" field from "__meta_kubernetes_pod_name"
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          action = "replace"
+          target_label = "pod"
+        }
+
+        // Label creation - "container" field from "__meta_kubernetes_pod_container_name"
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          action = "replace"
+          target_label = "container"
+        }
+
+        // Label creation -  "app" field from "__meta_kubernetes_pod_label_app_kubernetes_io_name"
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+          action = "replace"
+          target_label = "app"
+        }
+
+        // Label creation -  "job" field from "__meta_kubernetes_namespace" and "__meta_kubernetes_pod_container_name"
+        // Concatenate values __meta_kubernetes_namespace/__meta_kubernetes_pod_container_name
+        rule {
+          source_labels = ["__meta_kubernetes_namespace", "__meta_kubernetes_pod_container_name"]
+          action = "replace"
+          target_label = "job"
+          separator = "/"
+          replacement = "$1"
+        }
+
+        // Label creation - "container" field from "__meta_kubernetes_pod_uid" and "__meta_kubernetes_pod_container_name"
+        // Concatenate values __meta_kubernetes_pod_uid/__meta_kubernetes_pod_container_name.log
+        rule {
+          source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
+          action = "replace"
+          target_label = "__path__"
+          separator = "/"
+          replacement = "/var/log/pods/*$1/*.log"
+        }
+
+        // Label creation -  "container_runtime" field from "__meta_kubernetes_pod_container_id"
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_id"]
+          action = "replace"
+          target_label = "container_runtime"
+          regex = "^(\\S+):\\/\\/.+$"
+          replacement = "$1"
+        }
+      }
+
+      // loki.source.kubernetes tails logs from Kubernetes containers using the Kubernetes API.
+      loki.source.kubernetes "pod_logs" {
+        targets    = discovery.relabel.pod_logs.output
+        forward_to = [loki.process.pod_logs.receiver]
+      }
+
+      // loki.process receives log entries from other Loki components, applies one or more processing stages,
+      // and forwards the results to the list of receivers in the component's arguments.
+      loki.process "pod_logs" {
+        stage.static_labels {
+            values = {
+              cluster = "hm-eks-cluster",
+            }
+        }
+        forward_to = [loki.write.hm_loki.receiver]
+      }
+
+      // loki.source.kubernetes_events tails events from the Kubernetes API and converts them
+      // into log lines to forward to other Loki components.
+      loki.source.kubernetes_events "cluster_events" {
+        job_name   = "integrations/kubernetes/eventhandler"
+        log_format = "logfmt"
+        forward_to = [
+          loki.process.cluster_events.receiver,
+        ]
+      }
+
+      // loki.process receives log entries from other loki components, applies one or more processing stages,
+      // and forwards the results to the list of receivers in the component's arguments.
+      loki.process "cluster_events" {
+        forward_to = [loki.write.hm_loki.receiver]
+        stage.static_labels {
+          values = {
+            cluster = "hm-eks-cluster",
+          }
+        }
+        stage.labels {
+          values = {
+            kubernetes_cluster_events = "job",
+          }
+        }
+      }
+
+      loki.write "hm_loki" {
+        endpoint {
+          url = env("LOKI_URL")
+          headers = {
+            "X-Scope-OrgID" = "hm",
+          }
+        }
+      }
+
+      // External service
+      // https://grafana.com/docs/tempo/latest/configuration/grafana-alloy/automatic-logging/
+      // https://grafana.com/docs/tempo/latest/configuration/grafana-alloy/service-graphs/
+      // https://grafana.com/docs/tempo/latest/configuration/grafana-alloy/span-metrics/
+      otelcol.receiver.otlp "external_service" {
+        http {
+          include_metadata = true
+        }
+        grpc {
+          include_metadata = true
+        }
+        output {
+          metrics = [otelcol.processor.batch.external_service.input]
+          logs    = [otelcol.processor.batch.external_service.input]
+          traces = [
+            otelcol.connector.servicegraph.external_service.input,
+            otelcol.connector.spanlogs.external_service.input,
+            otelcol.connector.spanmetrics.external_service.input,
+          ]
+        }
+      }
+
+      otelcol.connector.servicegraph "external_service" {
+        dimensions = ["http.method", "http.target"]
+        output {
+          metrics = [otelcol.processor.batch.external_service.input]
+        }
+      }
+
+      otelcol.connector.spanlogs "external_service" {
+        roots = true
+        output {
+          logs = [otelcol.processor.batch.external_service.input]
+        }
+      }
+
+      otelcol.connector.spanmetrics "external_service" {
+        dimension {
+          name = "http.method"
+          default = "GET"
+        }
+        dimension {
+          name = "http.target"
+        }
+        aggregation_temporality = "DELTA"
+        histogram {
+          explicit {
+            buckets = ["50ms", "100ms", "250ms", "1s", "5s", "10s"]
+          }
+        }
+        metrics_flush_interval = "15s"
+        namespace = "traces_spanmetrics"
+        output {
+          metrics = [otelcol.processor.batch.external_service.input]
+        }
+      }
+
+      otelcol.processor.batch "external_service" {
+        // Preserve the tenant_id metadata
+        metadata_keys = ["tenant_id"]
+        output {
+          metrics = [otelcol.exporter.otlp.hm_tempo_for_external_service.input]
+          logs = [otelcol.exporter.otlp.hm_tempo_for_external_service.input]
+          traces = [otelcol.exporter.otlp.hm_tempo_for_external_service.input]
+        }
+      }
+
+      // https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.auth.headers/
+      otelcol.auth.headers "hm_tempo_for_external_service" {
+        header {
+          key   = "X-Scope-OrgID"
+          from_context = "tenant_id"
+        }
+      }
+      otelcol.exporter.otlp "hm_tempo_for_external_service" {
+        client {
+          endpoint = env("TEMPO_ENDPOINT")
+          compression = "zstd"
+          auth = otelcol.auth.headers.hm_tempo_for_external_service.handler
+          tls {
+            insecure = true
+            insecure_skip_verify = true
+          }
+        }
+      }
+
+      // hm Beyla
+      // https://grafana.com/docs/grafana-cloud/send-data/alloy/reference/components/beyla/beyla.ebpf/
+      beyla.ebpf "hm_beyla" {
+        debug = true
+        open_port = "80,443,8000-8999"
+        attributes {
+          kubernetes {
+            enable = "true"
+          }
+        }
+        discovery {
+          services {
+            kubernetes {
+              namespace = "."
+            }
+          }
+        }
+        routes {
+          unmatched = "heuristic"
+        }
+        metrics {
+          features = [
+            "application",
+            "application_process",
+            "application_service_graph",
+            "application_span",
+            "network",
+          ]
+          instrumentations = ["*"]
+          network {
+            enable = true
+          }
+        }
+        output {
+          traces = [otelcol.processor.batch.hm_beyla.input]
+        }
+      }
+
+      // hm Beyla - Trace
+      otelcol.processor.batch "hm_beyla" {
+        output {
+          traces = [otelcol.exporter.otlp.hm_tempo_for_hm_beyla.input]
+        }
+      }
+      // https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.auth.headers/
+      otelcol.auth.headers "hm_tempo_for_hm_beyla" {
+        header {
+          key   = "X-Scope-OrgID"
+          value = "hm"
+        }
+      }
+      otelcol.exporter.otlp "hm_tempo_for_hm_beyla" {
+        client {
+          endpoint = env("TEMPO_ENDPOINT")
+          compression = "zstd"
+          auth = otelcol.auth.headers.hm_tempo_for_hm_beyla.handler
+          tls {
+            insecure = true
+            insecure_skip_verify = true
+          }
+        }
+      }
+
+      // hm Beyla - Metrics
+      // https://grafana.com/docs/alloy/latest/reference/components/beyla/beyla.ebpf/
+      prometheus.scrape "hm_beyla" {
+        targets = beyla.ebpf.hm_beyla.targets
+        honor_labels = true
+        forward_to = [prometheus.remote_write.hm_mimir.receiver]
+      }
+
+      prometheus.remote_write "hm_mimir" {
+        endpoint {
+          url = env("MIMIR_URL")
+          headers = {
+            "X-Scope-OrgID" = "hm",
+          }
+        }
+      }

@@ -13,3 +13,6 @@ variable "repository" {
 variable "path" {
   type = string
 }
+variable "include" {
+  type = string
+}

@@ -1,0 +1,59 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/mlflow/values.yaml
+---
+image:
+  registry: public.ecr.aws
+  repository: bitnami/mlflow
+run:
+  enabled: true
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/MLflowRunRole-hm-mlflow-run
+  resources:
+    requests:
+      cpu: 50m
+      memory: 16Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+tracking:
+  replicaCount: 2
+  auth:
+    enabled: true
+    existingSecret: hm-mlflow-secret
+    existingSecretUserKey: mlflow_admin_user_name
+    existingSecretPasswordKey: mlflow_admin_password
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/MLflowTrackingServerRole-hm-mlflow-tracking
+  persistence:
+    enabled: false
+  service:
+    type: ClusterIP
+  resources:
+    requests:
+      cpu: 200m
+      memory: 1Gi
+    limits:
+      cpu: 500m
+      memory: 2Gi
+postgresql:
+  enabled: false
+externalDatabase:
+  dialectDriver: postgresql
+  host: production-hm-mlflow-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
+  port: 5432
+  database: mlflow_db
+  authDatabase: mlflow_auth_db
+  user: mlflow_user
+  existingSecret: hm-mlflow-secret
+  existingSecretPasswordKey: postgres_password
+minio:
+  enabled: false
+externalS3:
+  # https://docs.aws.amazon.com/general/latest/gr/s3.html#s3_website_region_endpoints
+  host: s3.us-west-2.amazonaws.com
+  bucket: production-hm-mlflow
+  serveArtifacts: false
+  useCredentialsInSecret: false

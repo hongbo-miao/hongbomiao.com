@@ -1,0 +1,34 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/odoo/values.yaml
+---
+global:
+  imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+  security:
+    allowInsecureImages: true
+odooEmail: me@hongbomiao.com
+existingSecret: hm-odoo-secret
+service:
+  type: ClusterIP
+postgresql:
+  enabled: false
+externalDatabase:
+  create: false
+  host: production-hm-odoo-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com
+  port: 5432
+  database: odoo_db
+  user: odoo_user
+  postgresqlPostgresUser: postgres
+  existingSecret: hm-odoo-secret
+  existingSecretPasswordKey: POSTGRES_PASSWORD
+persistence:
+  enabled: true
+  resourcePolicy: keep
+  storageClass: production-hm-odoo-storage-class
+  accessModes: ["ReadWriteOnce"]
+  size: 100Gi
+resources:
+  requests:
+    cpu: 2
+    memory: 2Gi
+  limits:
+    cpu: 4
+    memory: 16Gi

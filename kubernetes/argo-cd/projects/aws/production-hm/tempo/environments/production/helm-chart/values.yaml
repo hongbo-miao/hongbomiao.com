@@ -1,0 +1,91 @@
+# https://github.com/grafana/helm-charts/blob/main/charts/tempo-distributed/values.yaml
+# https://grafana.com/docs/tempo/latest/setup/operator/object-storage/
+---
+global:
+  image:
+    registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+serviceAccount:
+  create: true
+  name: hm-tempo
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/TempoRole-hm-tempo
+multitenancyEnabled: true
+tempo:
+  structuredConfig:
+    # https://grafana.com/docs/tempo/latest/traceql/#stream-query-results
+    stream_over_http_enabled: true
+server:
+  logLevel: info
+gateway:
+  enabled: false
+distributor:
+  replicas: 3
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
+ingester:
+  replicas: 5
+compactor:
+  replicas: 3
+  config:
+    compaction:
+      # 31 days
+      block_retention: 744h
+querier:
+  replicas: 3
+queryFrontend:
+  replicas: 3
+memcached:
+  replicas: 3
+traces:
+  otlp:
+    http:
+      enabled: true
+    grpc:
+      enabled: true
+# https://grafana.com/docs/tempo/latest/configuration/#metrics-generator
+# https://github.com/grafana/helm-charts/tree/main/charts/tempo-distributed#activate-metrics-generator
+metricsGenerator:
+  enabled: true
+  config:
+    processor:
+      # https://grafana.com/docs/tempo/latest/operations/traceql-metrics/
+      local_blocks:
+        filter_server_spans: false
+    storage:
+      remote_write_add_org_id_header: true
+      remote_write:
+        - url: http://mimir-distributor-headless.production-hm-mimir.svc:8080/api/v1/push
+          headers:
+            X-Scope-OrgID: hm
+global_overrides:
+  defaults:
+    metrics_generator:
+      processors:
+        - local-blocks
+        - service-graphs
+        - span-metrics
+# https://grafana.com/docs/tempo/latest/setup/operator/object-storage/
+storage:
+  admin:
+    backend: s3
+    s3:
+      endpoint: s3.amazonaws.com
+      region: us-west-2
+      bucket: production-hm-tempo-admin-bucket
+  trace:
+    backend: s3
+    s3:
+      endpoint: s3.amazonaws.com
+      region: us-west-2
+      bucket: production-hm-tempo-trace-bucket
+    # https://grafana.com/docs/tempo/latest/configuration/compression/
+    block:
+      v2_encoding: zstd
+    wal:
+      v2_encoding: zstd
+reportingEnabled: false
