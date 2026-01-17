@@ -10,7 +10,7 @@ terraform {
 resource "aws_iam_user" "airbyte_user" {
   name = var.aws_iam_user_name
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.aws_iam_user_name
+    "hm_resource_name" = var.aws_iam_user_name
   })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy

@@ -11,7 +11,7 @@ resource "aws_iam_user" "hm_harbor_iam_user" {
   name = var.aws_iam_user_name
   path = "/hm/"
   tags = merge(var.common_tags, {
-    "hm:resource_name" = var.aws_iam_user_name
+    "hm_resource_name" = var.aws_iam_user_name
   })
 }
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy

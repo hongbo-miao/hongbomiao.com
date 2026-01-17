@@ -33,7 +33,7 @@ resource "aws_iam_role" "cert_manager_role" {
     ]
   })
   tags = merge(var.common_tags, {
-    "hm:resource_name" = local.aws_iam_role_name
+    "hm_resource_name" = local.aws_iam_role_name
   })
 }
 # https://cert-manager.io/docs/configuration/acme/dns01/route53

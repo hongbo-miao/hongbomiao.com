@@ -29,7 +29,7 @@ resource "awscc_databrew_job" "glue_databrew_profile_job" {
     }],
     [
       {
-        key   = "hm:resource_name"
+        key   = "hm_resource_name"
         value = var.aws_glue_databrew_profile_job_name
       }
     ]

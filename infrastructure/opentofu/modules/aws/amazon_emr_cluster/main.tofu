@@ -68,7 +68,7 @@ resource "aws_emr_cluster" "main" {
   step                   = var.steps
   service_role           = var.iam_role_arn
   tags = merge(var.common_tags, {
-    "hm:resource_name"                         = var.amazon_emr_cluster_name,
+    "hm_resource_name"                         = var.amazon_emr_cluster_name,
     "for-use-with-amazon-emr-managed-policies" = true
   })
   lifecycle {

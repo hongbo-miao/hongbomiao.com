@@ -23,7 +23,7 @@ resource "awscc_databrew_dataset" "glue_databrew_dataset_adsb_raw_parquet" {
     }],
     [
       {
-        key   = "hm:resource_name"
+        key   = "hm_resource_name"
         value = var.aws_glue_databrew_dataset_name
       }
     ]
