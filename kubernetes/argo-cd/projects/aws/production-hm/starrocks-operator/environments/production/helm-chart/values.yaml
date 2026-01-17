@@ -1,0 +1,13 @@
+# https://github.com/StarRocks/starrocks-kubernetes-operator/blob/main/helm-charts/charts/kube-starrocks/charts/operator/values.yaml
+---
+timeZone: UTC
+starrocksOperator:
+  image:
+    repository: harbor.hongbomiao.com/docker-hub-proxy-cache/starrocks/operator
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi

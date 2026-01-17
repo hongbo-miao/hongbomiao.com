@@ -1,0 +1,35 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/external-dns/values.yaml
+---
+image:
+  registry: public.ecr.aws
+  repository: bitnami/external-dns
+sources:
+  - service
+  - ingress
+  - gateway-httproute
+  # - gateway-grpcroute
+  # - gateway-tlsroute
+  # - gateway-tcproute
+  # - gateway-udproute
+provider: aws
+aws:
+  region: us-west-2
+  zoneType: public
+  txtOwnerId: Z1XXXXXXXXXXXXXXXXXXX
+  domainFilters:
+    - hongbomiao.com
+  registry: txt
+policy: upsert-only
+# https://github.com/aws/karpenter-provider-aws/issues/5631#issuecomment-2259779729
+dnsPolicy: Default
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/ExternalDNSRole-hm-external-dns-6c0
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 256Mi

@@ -21,8 +21,8 @@ services:
       DEFGUARD_URL: http://localhost:8000
       RUST_BACKTRACE: 1
     ports:
-      - '127.0.0.1:8000:8000' # REST API
-      - '127.0.0.1:50055:50055' # gRPC
+      - '127.0.0.1:8000:8000'  # REST API
+      - '127.0.0.1:50055:50055'  # gRPC
 
   defguard-gateway:
     image: ghcr.io/defguard/gateway:1.6.1
@@ -34,7 +34,7 @@ services:
       DEFGUARD_TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEZWZHdWFyZCIsInN1YiI6IlRlc3ROZXQiLCJjbGllbnRfaWQiOiIiLCJleHAiOjU5NjE3NDcwNzYsIm5iZiI6MTY2Njc3OTc4MSwicm9sZXMiOltdfQ.uEUMnw_gO23W0K2q3N1lToeP0D2zAY1swr8N-84sRHA
       RUST_LOG: debug
     ports:
-      - '127.0.0.1:50051:50051/udp' # WireGuard endpoint
+      - '127.0.0.1:50051:50051/udp'  # WireGuard endpoint
     cap_add:
       - NET_ADMIN
   defguard-postgres:

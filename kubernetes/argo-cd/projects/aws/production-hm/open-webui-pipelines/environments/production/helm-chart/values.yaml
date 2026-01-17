@@ -1,0 +1,20 @@
+# https://github.com/open-webui/helm-charts/blob/main/charts/pipelines/values.yaml
+---
+ingress:
+  enabled: false
+persistence:
+  enabled: true
+  existingClaim: hm-open-webui-pipelines-persistent-volume-claim
+extraEnvVars:
+  - name: PIPELINES_API_KEY
+    valueFrom:
+      secretKeyRef:
+        name: hm-open-webui-pipelines-secret
+        key: pipelines_api_key
+resources:
+  requests:
+    cpu: 1
+    memory: 1Gi
+  limits:
+    cpu: 2
+    memory: 2Gi

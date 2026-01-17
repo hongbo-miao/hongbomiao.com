@@ -1,0 +1,210 @@
+# https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+---
+global:
+  imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+replicas: 10
+admin:
+  existingSecret: hm-grafana-secret
+  userKey: GRAFANA_ADMIN_USER_NAME
+  passwordKey: GRAFANA_ADMIN_PASSWORD
+envValueFrom:
+  POSTGRES_USER_NAME:
+    secretKeyRef:
+      name: hm-grafana-secret
+      key: POSTGRES_USER_NAME
+  POSTGRES_PASSWORD:
+    secretKeyRef:
+      name: hm-grafana-secret
+      key: POSTGRES_PASSWORD
+# https://github.com/grafana/grafana/blob/main/conf/defaults.ini
+grafana.ini:
+  security:
+    # For Ray: https://docs.ray.io/en/latest/cluster/kubernetes/k8s-ecosystem/prometheus-grafana.html
+    allow_embedding: true
+  server:
+    root_url: https://grafana.hongbomiao.com
+  auth:
+    disable_login_form: true
+  auth.basic:
+    enabled: false
+  auth.google:
+    enabled: true
+    allow_sign_up: true
+    auto_login: false
+    client_id: xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com
+    client_secret: $__env{GOOGLE_CLIENT_SECRET}
+    scopes: openid email profile
+    auth_url: https://accounts.google.com/o/oauth2/v2/auth
+    token_url: https://oauth2.googleapis.com/token
+    api_url: https://openidconnect.googleapis.com/v1/userinfo
+    allowed_domains: hongbomiao.com
+    hosted_domain: hongbomiao.com
+    use_pkce: true
+    use_refresh_token: true
+  database:
+    type: postgres
+    host: production-hm-grafana-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com:5432
+    name: grafana_db
+    user: $__env{POSTGRES_USER_NAME}
+    password: $__env{POSTGRES_PASSWORD}
+    ssl_mode: require
+plugins:
+  - nline-plotlyjs-panel
+  - redis-datasource
+  - trino-datasource
+  - victoriametrics-metrics-datasource
+persistence:
+  enabled: false
+  type: pvc
+sidecar:
+  dashboards:
+    enabled: true
+    searchNamespace: ALL
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      cpu: 100m
+      memory: 512Mi
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    # deleteDatasources:
+    #   - name: xxx
+    datasources:
+      - name: hm-prometheus
+        type: prometheus
+        isDefault: true
+        url: http://prometheus-kube-pr-prometheus.production-hm-prometheus.svc:9090
+        access: proxy
+      - name: hm-mimir
+        type: prometheus
+        isDefault: false
+        url: http://mimir-query-frontend.production-hm-mimir.svc:8080/prometheus
+        access: proxy
+        jsonData:
+          prometheusType: Mimir
+          httpHeaderName1: X-Scope-OrgID
+        secureJsonData:
+          httpHeaderValue1: hm
+      - name: hm-loki
+        type: loki
+        isDefault: false
+        url: http://loki-gateway.production-hm-loki.svc:80
+        access: proxy
+        jsonData:
+          httpHeaderName1: X-Scope-OrgID
+        secureJsonData:
+          httpHeaderValue1: hm
+      - name: hm-tempo
+        type: tempo
+        isDefault: false
+        url: http://tempo-query-frontend.production-hm-tempo:3100
+        access: proxy
+        # https://grafana.com/docs/grafana/next/datasources/tempo/configure-tempo-data-source/#example-file
+        jsonData:
+          tracesToLogsV2:
+            datasourceUid: hm-loki
+            spanStartTimeShift: -1h
+            spanEndTimeShift: 1h
+            tags: ["job", "instance", "pod", "namespace"]
+            filterByTraceID: false
+            filterBySpanID: false
+            customQuery: true
+            query: method="$${__span.tags.method}"
+          tracesToMetrics:
+            datasourceUid: hm-prometheus
+            spanStartTimeShift: -1h
+            spanEndTimeShift: 1h
+            tags: [{key: "service.name", value: "service"}, {key: "job"}]
+            queries:
+              - name: Sample query
+                query: sum(rate(traces_spanmetrics_latency_bucket{$$__tags}[5m]))
+          serviceMap:
+            datasourceUid: hm-prometheus
+          nodeGraph:
+            enabled: true
+          search:
+            hide: false
+          traceQuery:
+            timeShiftEnabled: true
+            spanStartTimeShift: -1h
+            spanEndTimeShift: 1h
+          spanBar:
+            type: Tag
+            tag: http.path
+          streamingEnabled:
+            search: true
+          httpHeaderName1: X-Scope-OrgID
+        secureJsonData:
+          httpHeaderValue1: hm
+      - name: hm-starrocks
+        type: mysql
+        isDefault: false
+        url: kube-starrocks-fe-service.production-hm-starrocks.svc:9030
+        user: grafana_user
+        jsonData:
+          maxOpenConns: 100
+          maxIdleConns: 100
+          maxIdleConnsAuto: true
+          connMaxLifetime: 14400
+          timezone: UTC
+          timeInterval: 1ms
+        secureJsonData:
+          password: $__env{HM_STARROCKS_PASSWORD}
+      - name: hm-victoria-metrics-cluster
+        type: victoriametrics-metrics-datasource
+        isDefault: false
+        access: proxy
+        url: http://victoria-metrics-cluster-vmselect.production-hm-victoria-metrics-cluster.svc:8481/select/0/prometheus
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: hm-kubernetes-dashboards
+        orgId: 1
+        folder: Kubernetes
+        type: file
+        disableDeletion: true
+        editable: false
+        options:
+          path: /var/lib/grafana/dashboards/hm-kubernetes-dashboards
+      - name: hm-ray-dashboards
+        orgId: 1
+        folder: Ray
+        type: file
+        disableDeletion: true
+        editable: false
+        options:
+          path: /var/lib/grafana/dashboards/hm-ray-dashboards
+dashboards:
+  hm-kubernetes-dashboards:
+    hm-kubernetes-system-api-server-dashboard:
+      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+    hm-kubernetes-system-coredns-dashboard:
+      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+    hm-kubernetes-views-global-dashboard:
+      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+    hm-kubernetes-views-namespaces-dashboard:
+      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+    hm-kubernetes-views-nodes-dashboard:
+      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+    hm-kubernetes-views-pods-dashboard:
+      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+  hm-ray-dashboards:
+    hm-ray-data-grafana-dashboard:
+      url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/data_grafana_dashboard.json
+    hm-ray-default-grafana-dashboard:
+      url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/default_grafana_dashboard.json
+    hm-ray-serve-deployment-grafana-dashboard:
+      url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/serve_deployment_grafana_dashboard.json
+    hm-ray-serve-grafana-dashboard:
+      url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/serve_grafana_dashboard.json
+resources:
+  requests:
+    cpu: 1
+    memory: 1Gi
+  limits:
+    cpu: 2
+    memory: 4Gi

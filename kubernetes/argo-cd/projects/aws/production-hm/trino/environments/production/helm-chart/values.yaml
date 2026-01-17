@@ -1,0 +1,46 @@
+# https://github.com/trinodb/charts/blob/main/charts/trino/values.yaml
+---
+image:
+  registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+coordinator:
+  jvm:
+    maxHeapSize: 48G
+  resources:
+    requests:
+      cpu: 15
+      memory: 63Gi
+    limits:
+      cpu: 15
+      memory: 63Gi
+worker:
+  jvm:
+    maxHeapSize: 48G
+  resources:
+    requests:
+      cpu: 15
+      memory: 63Gi
+    limits:
+      cpu: 15
+      memory: 63Gi
+server:
+  workers: 10
+additionalConfigProperties:
+  - http-server.process-forwarded=true
+serviceAccount:
+  create: true
+  name: hm-trino
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/TrinoRole-hm-trino
+envFrom:
+  - secretRef:
+      name: hm-trino-secret
+catalogs:
+  postgresql: |
+    connector.name=postgresql
+    connection-url=jdbc:postgresql://production-hm-postgres.xxxxxxxxxxxx.us-west-2.rds.amazonaws.com:5432/iot_db
+    connection-user=${ENV:HM_POSTGRES_USER_NAME}
+    connection-password=${ENV:HM_POSTGRES_PASSWORD}
+  delta: |
+    connector.name=delta_lake
+    hive.metastore=glue
+    fs.native-s3.enabled=true
