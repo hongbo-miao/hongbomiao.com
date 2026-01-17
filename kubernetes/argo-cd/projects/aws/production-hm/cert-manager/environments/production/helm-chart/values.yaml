@@ -1,0 +1,51 @@
+# https://cert-manager.io/docs/configuration/acme/dns01/route53
+# https://github.com/cert-manager/cert-manager/blob/master/deploy/charts/cert-manager/values.yaml
+---
+crds:
+  enabled: false
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/CertManagerRole-hm-cert-manager-6c0
+# https://cert-manager.io/docs/configuration/acme/dns01/route53/#service-annotation
+securityContext:
+  fsGroup: 1001
+podDnsPolicy: None
+podDnsConfig:
+  nameservers:
+    - 1.1.1.1
+    - 8.8.8.8
+featureGates: ExperimentalGatewayAPISupport=true
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 256Mi
+startupapicheck:
+  enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+webhook:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi
+cainjector:
+  enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi

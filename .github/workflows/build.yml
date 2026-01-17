@@ -50,7 +50,7 @@ jobs:
             hm-confluent-schema-registry:
               - '.dockerignore'
               - '.github/workflows/build.yml'
-              - 'kubernetes/argo-cd/projects/production-hm/confluent-schema-registry/build/**'
+              - 'kubernetes/argo-cd/projects/aws/production-hm/confluent-schema-registry/build/**'
             hm-dash-parquet-visualizer:
               - 'data-visualization/hm-dash/parquet-visualizer/**'
             hm-kafka-iot-kafka-connect:
@@ -735,7 +735,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          file: ./kubernetes/argo-cd/projects/production-hm/confluent-schema-registry/build/Dockerfile
+          file: ./kubernetes/argo-cd/projects/aws/production-hm/confluent-schema-registry/build/Dockerfile
           push: true
           tags: ghcr.io/hongbo-miao/hm-confluent-schema-registry:latest
           cache-from: type=gha

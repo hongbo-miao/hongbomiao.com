@@ -1,0 +1,28 @@
+# https://github.com/tchiotludo/akhq/blob/dev/helm/akhq/values.yaml
+---
+image:
+  repository: harbor.hongbomiao.com/docker-hub-proxy-cache/tchiotludo/akhq
+configuration:
+  akhq:
+    connections:
+      production-hm-kakfa:
+        properties:
+          bootstrap.servers: b-1.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-2.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098,b-3.hmkafka.xxxxxx.xx.kafka.us-west-2.amazonaws.com:9098
+          security.protocol: SASL_SSL
+          sasl.mechanism: AWS_MSK_IAM
+          sasl.jaas.config: software.amazon.msk.auth.iam.IAMLoginModule required;
+          sasl.client.callback.handler.class: software.amazon.msk.auth.iam.IAMClientCallbackHandler
+        schema-registry:
+          type: confluent
+          url: http://confluent-schema-registry-service.production-hm-confluent-schema-registry.svc:8081
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/AKHQRole-hm-akhq
+resources:
+  requests:
+    cpu: 50m
+    memory: 512Mi
+  limits:
+    cpu: 300m
+    memory: 2Gi

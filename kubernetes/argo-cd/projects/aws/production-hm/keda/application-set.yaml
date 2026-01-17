@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: keda
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/aws/production-hm/keda/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-hm-keda'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://kedacore.github.io/charts
+          targetRevision: '{{.helmChartVersion}}'
+          chart: keda
+          helm:
+            releaseName: keda
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+      destination:
+        namespace: '{{.environment}}-hm-keda'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

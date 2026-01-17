@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: priority-class
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/aws/production-hm/priorty-class/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-hm-priority-class'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: ghcr.io/deliveryhero/helm-charts
+          targetRevision: '{{.helmChartVersion}}'
+          chart: priority-class
+          helm:
+            releaseName: priority-class
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+      destination:
+        namespace: '{{.environment}}-hm-priority-class'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

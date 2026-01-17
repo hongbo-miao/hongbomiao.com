@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kuberay-operator
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/aws/production-hm/kuberay-operator/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-hm-kuberay-operator'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://ray-project.github.io/kuberay-helm
+          targetRevision: '{{.helmChartVersion}}'
+          chart: kuberay-operator
+          helm:
+            releaseName: kuberay-operator
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+      destination:
+        namespace: '{{.environment}}-hm-kuberay-operator'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true
