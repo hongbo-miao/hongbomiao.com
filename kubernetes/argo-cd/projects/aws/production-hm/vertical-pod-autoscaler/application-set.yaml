@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: vertical-pod-autoscaler
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/aws/production-hm/vertical-pod-autoscaler/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-hm-vertical-pod-autoscaler'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://charts.fairwinds.com/stable
+          targetRevision: '{{.helmChartVersion}}'
+          chart: vpa
+          helm:
+            releaseName: vertical-pod-autoscaler
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+      destination:
+        namespace: '{{.environment}}-hm-vertical-pod-autoscaler'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

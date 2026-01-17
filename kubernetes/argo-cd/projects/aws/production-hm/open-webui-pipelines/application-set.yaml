@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: open-webui-pipelines
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/aws/production-hm/open-webui-pipelines/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-hm-open-webui-pipelines'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://helm.openwebui.com
+          targetRevision: '{{.helmChartVersion}}'
+          chart: pipelines
+          helm:
+            releaseName: open-webui-pipelines
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
+      destination:
+        namespace: '{{.environment}}-hm-open-webui-pipelines'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

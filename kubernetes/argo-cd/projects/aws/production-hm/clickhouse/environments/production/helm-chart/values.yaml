@@ -1,0 +1,26 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/clickhouse/values.yaml
+---
+global:
+  imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+  security:
+    allowInsecureImages: true
+auth:
+  username: admin
+  existingSecret: hm-clickhouse-secret
+  existingSecretKey: CLICKHOUSE_ADMIN_PASSWORD
+persistence:
+  enabled: true
+  accessModes: ["ReadWriteOnce"]
+  size: 100Gi
+  storageClass: production-hm-clickhouse-storage-class
+keeper:
+  enabled: true
+zookeeper:
+  enabled: false
+resources:
+  requests:
+    cpu: 200m
+    memory: 2Gi
+  limits:
+    cpu: 4
+    memory: 8Gi

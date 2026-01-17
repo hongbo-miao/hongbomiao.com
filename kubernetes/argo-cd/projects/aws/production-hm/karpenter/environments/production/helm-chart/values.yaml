@@ -1,0 +1,10 @@
+# https://github.com/aws/karpenter-provider-aws/blob/main/charts/karpenter/values.yaml
+---
+serviceAccount:
+  create: true
+  name: karpenter
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/KarpenterController-xxxxxxxxxxxxxxxxxxxxxxxxxx
+settings:
+  clusterName: hm-eks-cluster
+  interruptionQueue: Karpenter-hm-eks-cluster

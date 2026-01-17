@@ -1,0 +1,10 @@
+sealed-secrets-seal:
+    cat secrets/hm-ray-cluster-secret.unsealed.yaml | \
+    kubeseal \
+        --controller-namespace=production-hm-sealed-secrets \
+        --controller-name=hm-sealed-secrets \
+        --format=yaml \
+        > kubernetes-manifests/hm-ray-cluster-secret.yaml
+
+ray-cluster-delete:
+    kubectl delete raycluster hm-ray-cluster --namespace=production-hm-ray-cluster

@@ -1,0 +1,26 @@
+# https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-server
+# https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-server/values.yaml
+---
+global:
+  prefect:
+    image:
+      repository: harbor.hongbomiao.com/docker-hub-proxy-cache/prefecthq/prefect
+      prefectTag: 3.2.11-python3.12-kubernetes
+    prefectApiUrl: https://prefect.hongbomiao.com/api
+server:
+  basicAuth:
+    enabled: true
+    existingSecret: hm-prefect-server-secret
+  replicaCount: 3
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+postgresql:
+  enabled: false
+secret:
+  create: false
+  name: hm-prefect-server-secret

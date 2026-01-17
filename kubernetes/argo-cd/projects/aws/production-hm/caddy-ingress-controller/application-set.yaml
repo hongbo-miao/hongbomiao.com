@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: caddy-ingress-controller
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/aws/production-hm/caddy-ingress-controller/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-hm-caddy-ingress-controller'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://caddyserver.github.io/ingress
+          targetRevision: '{{.helmChartVersion}}'
+          chart: caddy-ingress-controller
+          helm:
+            releaseName: caddy-ingress-controller
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+      destination:
+        namespace: '{{.environment}}-hm-caddy-ingress-controller'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true
