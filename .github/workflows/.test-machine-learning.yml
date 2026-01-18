@@ -1078,17 +1078,17 @@ jobs:
         with:
           version: 0.9.26
           enable-cache: true
-          cache-dependency-glob: large-language-model-training/training-optimization/hm-deepspeed/uv.lock
+          cache-dependency-glob: large-language-model-pre-training/training-optimization/hm-deepspeed/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-training/training-optimization/hm-deepspeed/.python-version
+          python-version-file: large-language-model-pre-training/training-optimization/hm-deepspeed/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-training/training-optimization/hm-deepspeed
+        working-directory: large-language-model-pre-training/training-optimization/hm-deepspeed
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-training/training-optimization/hm-deepspeed
+        working-directory: large-language-model-pre-training/training-optimization/hm-deepspeed
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1096,7 +1096,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-training/training-optimization/hm-deepspeed
+          directory: large-language-model-pre-training/training-optimization/hm-deepspeed
 
   qwen3-test:
     name: Qwen3 | Test
@@ -1111,17 +1111,17 @@ jobs:
         with:
           version: 0.9.26
           enable-cache: true
-          cache-dependency-glob: large-language-model-training/training-paradigm/causal-language-model/qwen3/uv.lock
+          cache-dependency-glob: large-language-model-pre-training/training-paradigm/causal-language-model/qwen3/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-training/training-paradigm/causal-language-model/qwen3/.python-version
+          python-version-file: large-language-model-pre-training/training-paradigm/causal-language-model/qwen3/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-training/training-paradigm/causal-language-model/qwen3
+        working-directory: large-language-model-pre-training/training-paradigm/causal-language-model/qwen3
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-training/training-paradigm/causal-language-model/qwen3
+        working-directory: large-language-model-pre-training/training-paradigm/causal-language-model/qwen3
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1129,7 +1129,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-training/training-paradigm/causal-language-model/qwen3
+          directory: large-language-model-pre-training/training-paradigm/causal-language-model/qwen3
 
   modern-bert-test:
     name: ModernBERT | Test
@@ -1144,17 +1144,17 @@ jobs:
         with:
           version: 0.9.26
           enable-cache: true
-          cache-dependency-glob: large-language-model-training/training-paradigm/masked-language-model/modern-bert/uv.lock
+          cache-dependency-glob: large-language-model-pre-training/training-paradigm/masked-language-model/modern-bert/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-training/training-paradigm/masked-language-model/modern-bert/.python-version
+          python-version-file: large-language-model-pre-training/training-paradigm/masked-language-model/modern-bert/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-training/training-paradigm/masked-language-model/modern-bert
+        working-directory: large-language-model-pre-training/training-paradigm/masked-language-model/modern-bert
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-training/training-paradigm/masked-language-model/modern-bert
+        working-directory: large-language-model-pre-training/training-paradigm/masked-language-model/modern-bert
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1162,7 +1162,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-training/training-paradigm/masked-language-model/modern-bert
+          directory: large-language-model-pre-training/training-paradigm/masked-language-model/modern-bert
 
   neo-bert-test:
     name: NeoBERT | Test
@@ -1177,17 +1177,17 @@ jobs:
         with:
           version: 0.9.26
           enable-cache: true
-          cache-dependency-glob: large-language-model-training/training-paradigm/masked-language-model/neo-bert/uv.lock
+          cache-dependency-glob: large-language-model-pre-training/training-paradigm/masked-language-model/neo-bert/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-training/training-paradigm/masked-language-model/neo-bert/.python-version
+          python-version-file: large-language-model-pre-training/training-paradigm/masked-language-model/neo-bert/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-training/training-paradigm/masked-language-model/neo-bert
+        working-directory: large-language-model-pre-training/training-paradigm/masked-language-model/neo-bert
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-training/training-paradigm/masked-language-model/neo-bert
+        working-directory: large-language-model-pre-training/training-paradigm/masked-language-model/neo-bert
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1195,7 +1195,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-training/training-paradigm/masked-language-model/neo-bert
+          directory: large-language-model-pre-training/training-paradigm/masked-language-model/neo-bert
 
   bert-test:
     name: BERT | Test
@@ -1342,17 +1342,17 @@ jobs:
         with:
           version: 0.9.26
           enable-cache: true
-          cache-dependency-glob: large-language-model-training/training-optimization/automatic-mixed-precision/uv.lock
+          cache-dependency-glob: large-language-model-pre-training/training-optimization/automatic-mixed-precision/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-training/training-optimization/automatic-mixed-precision/.python-version
+          python-version-file: large-language-model-pre-training/training-optimization/automatic-mixed-precision/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-training/training-optimization/automatic-mixed-precision
+        working-directory: large-language-model-pre-training/training-optimization/automatic-mixed-precision
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-training/training-optimization/automatic-mixed-precision
+        working-directory: large-language-model-pre-training/training-optimization/automatic-mixed-precision
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -1360,7 +1360,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-training/training-optimization/automatic-mixed-precision
+          directory: large-language-model-pre-training/training-optimization/automatic-mixed-precision
 
   sglang-test:
     name: SGLang | Test
@@ -2999,17 +2999,17 @@ jobs:
         with:
           version: 0.9.26
           enable-cache: true
-          cache-dependency-glob: large-language-model-training/training-paradigm/masked-language-model/convert-modern-bert-to-core-ml/uv.lock
+          cache-dependency-glob: large-language-model-pre-training/training-paradigm/masked-language-model/convert-modern-bert-to-core-ml/uv.lock
       - name: Set up Python
         uses: actions/setup-python@v6.1.0
         with:
-          python-version-file: large-language-model-training/training-paradigm/masked-language-model/convert-modern-bert-to-core-ml/.python-version
+          python-version-file: large-language-model-pre-training/training-paradigm/masked-language-model/convert-modern-bert-to-core-ml/.python-version
       - name: Install dependencies
-        working-directory: large-language-model-training/training-paradigm/masked-language-model/convert-modern-bert-to-core-ml
+        working-directory: large-language-model-pre-training/training-paradigm/masked-language-model/convert-modern-bert-to-core-ml
         run: |
           uv sync --dev
       - name: Test
-        working-directory: large-language-model-training/training-paradigm/masked-language-model/convert-modern-bert-to-core-ml
+        working-directory: large-language-model-pre-training/training-paradigm/masked-language-model/convert-modern-bert-to-core-ml
         run: |
           uv run poe test-coverage
       - name: Upload coverage to Codecov
@@ -3017,7 +3017,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: hongbo-miao/hongbomiao.com
-          directory: large-language-model-training/training-paradigm/masked-language-model/convert-modern-bert-to-core-ml
+          directory: large-language-model-pre-training/training-paradigm/masked-language-model/convert-modern-bert-to-core-ml
 
   deepeval-test:
     name: DeepEval | Test
