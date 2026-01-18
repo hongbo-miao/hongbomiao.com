@@ -1,11 +1,14 @@
+HELM_RELEASE_NAME := "cilium"
+NAMESPACE := "kube-system"
+
 show-version:
-    cilium version --helm-release-name=cilium --namespace=kube-system
+    cilium version --namespace={{ NAMESPACE }} --helm-release-name={{ HELM_RELEASE_NAME }}
 
 show-status:
-    cilium status --wait --namespace=kube-system
+    cilium status --namespace={{ NAMESPACE }} --wait
 
 show-encryption-status:
-    kubectl --namespace=kube-system exec -i -t daemonset/cilium -- cilium encrypt status
+    kubectl --namespace={{ NAMESPACE }} exec -t daemonset/cilium -- cilium encrypt status
 
 test-connectivity:
-    cilium connectivity test --namespace=kube-system
+    cilium connectivity test --namespace={{ NAMESPACE }}
