@@ -567,7 +567,7 @@ The diagram illustrates the repository's architecture, which is considered overl
     - **Mixture of Experts (MoE)** - Sparse transformer that routes each token to top-k expert sub-networks, activating only a fraction of total parameters to scale model capacity efficiently
   - State Space Model (SSM)
     - **Mamba 2** - State space model architecture for efficient sequence modeling with linear-time complexity
-- Large Language Model (LLM) Training
+- Large Language Model (LLM) Pre-Training
   - Training Paradigm
     - Causal Language Model (CLM)
       - **Qwen3** - Decoder-only transformer model for autoregressive text generation
