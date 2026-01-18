@@ -4,9 +4,6 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: hm-lets-encrypt-cluster-issuer
-  annotations:
-    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
-    argocd.argoproj.io/hook: PostSync
 spec:
   acme:
     email: hongbo.miao@outlook.com

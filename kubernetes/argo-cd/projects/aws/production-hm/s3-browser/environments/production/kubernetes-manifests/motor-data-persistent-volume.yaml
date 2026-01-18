@@ -5,9 +5,6 @@ kind: PersistentVolume
 metadata:
   name: motor-data-persistent-volume
   namespace: production-hm-s3-browser
-  annotations:
-    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
-    argocd.argoproj.io/hook: PreSync
 spec:
   capacity:
     # This required value can be anything and is ignored by the CSI driver
