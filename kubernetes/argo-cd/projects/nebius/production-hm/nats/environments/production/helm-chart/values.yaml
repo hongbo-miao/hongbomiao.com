@@ -1,0 +1,37 @@
+# https://github.com/nats-io/k8s/blob/main/helm/charts/nats/values.yaml
+---
+config:
+  cluster:
+    enabled: true
+    replicas: 3
+  jetstream:
+    enabled: true
+    fileStore:
+      pvc:
+        size: 100Gi
+        storageClassName: production-hm-nats-storage-class
+  merge:
+    authorization:
+      token: << $NATS_AUTH_TOKEN >>
+container:
+  env:
+    NATS_AUTH_TOKEN:
+      valueFrom:
+        secretKeyRef:
+          name: hm-nats-secret
+          key: NATS_AUTH_TOKEN
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+service:
+  merge:
+    spec:
+      type: LoadBalancer
+    metadata:
+      annotations:
+        # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+        external-dns.alpha.kubernetes.io/hostname: nats.hongbomiao.com
