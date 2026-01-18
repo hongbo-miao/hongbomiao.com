@@ -1,8 +1,11 @@
-cilium-version:
-    cilium version --helm-release-name=hm-cilium --namespace=production-hm-cilium
+show-version:
+    cilium version --helm-release-name=cilium --namespace=kube-system
 
-cilium-status:
-    cilium status --wait --namespace=production-hm-cilium
+show-status:
+    cilium status --wait --namespace=kube-system
 
-cilium-test:
-    cilium connectivity test --namespace=production-hm-cilium
+show-encryption-status:
+    kubectl --namespace=kube-system exec -i -t daemonset/cilium -- cilium encrypt status
+
+test-connectivity:
+    cilium connectivity test --namespace=kube-system
