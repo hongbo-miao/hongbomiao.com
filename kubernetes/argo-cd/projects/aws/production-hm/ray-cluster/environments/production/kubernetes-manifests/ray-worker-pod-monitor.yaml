@@ -5,9 +5,6 @@ kind: PodMonitor
 metadata:
   name: ray-worker-pod-monitor
   namespace: production-hm-prometheus
-  annotations:
-    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
-    argocd.argoproj.io/hook: PostSync
   labels:
     release: hm-prometheus
     ray.io/cluster: hm-ray-cluster-kuberay

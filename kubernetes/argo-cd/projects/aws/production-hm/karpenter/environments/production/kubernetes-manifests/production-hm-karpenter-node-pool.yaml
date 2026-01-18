@@ -3,9 +3,6 @@ apiVersion: karpenter.sh/v1
 kind: NodePool
 metadata:
   name: production-hm-karpenter-node-pool
-  annotations:
-    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
-    argocd.argoproj.io/hook: PostSync
 spec:
   template:
     spec:

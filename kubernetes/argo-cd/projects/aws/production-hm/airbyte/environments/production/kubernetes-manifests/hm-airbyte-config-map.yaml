@@ -4,9 +4,6 @@ kind: ConfigMap
 metadata:
   name: hm-airbyte-config-map
   namespace: production-hm-airbyte
-  annotations:
-    # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks
-    argocd.argoproj.io/hook: PreSync
   labels:
     app.kubernetes.io/name: airbyte-config-map
     app.kubernetes.io/part-of: production-hm-airbyte
