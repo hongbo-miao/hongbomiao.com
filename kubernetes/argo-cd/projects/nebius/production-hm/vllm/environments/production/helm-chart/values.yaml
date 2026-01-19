@@ -1,0 +1,39 @@
+# https://github.com/vllm-project/production-stack/blob/main/helm/values.yaml
+---
+servingEngineSpec:
+  enableEngine: true
+  runtimeClassName: nebius-nvidia
+  modelSpec:
+    - name: qwen3-0-6b
+      repository: harbor.hongbomiao.com/docker-hub-proxy-cache/vllm/vllm-openai
+      # https://hub.docker.com/r/vllm/vllm-openai/tags
+      tag: v0.13.0
+      modelURL: Qwen/Qwen3-0.6B
+      replicaCount: 1
+      requestCPU: 2
+      requestGPU: 1
+      requestMemory: 2Gi
+      vllmConfig:
+        enablePrefixCaching: false
+        enableChunkedPrefill: false
+        maxModelLen: 4096
+        dtype: auto
+        tensorParallelSize: 1
+        gpuMemoryUtilization: 0.9
+        extraArgs:
+          - "--disable-log-requests"
+routerSpec:
+  enableRouter: true
+  repository: harbor.hongbomiao.com/docker-hub-proxy-cache/lmcache/lmstack-router
+  # https://hub.docker.com/r/lmcache/lmstack-router/tags
+  tag: 0.1.9.dev11-g5694032b8.d20260114
+  replicaCount: 1
+  serviceDiscovery: k8s
+  routingLogic: roundrobin
+  resources:
+    requests:
+      cpu: 500m
+      memory: 500Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
