@@ -1,0 +1,17 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hm-vllm-certificate
+  namespace: production-hm-vllm
+  labels:
+    app.kubernetes.io/name: hm-vllm-certificate
+    app.kubernetes.io/part-of: production-hm-vllm
+spec:
+  secretName: production-hm-vllm-certificate
+  issuerRef:
+    name: hm-lets-encrypt-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - vllm.hongbomiao.com
