@@ -88,9 +88,11 @@ persistence:
   imageChartStorage:
     type: s3
     s3:
-      region: us-west-2
-      bucket: production-hm-harbor-bucket
+      region: us-central1
+      endpoint: https://storage.us-central1.nebius.cloud
+      bucket: production-hm-harbor
       existingSecret: hm-harbor-secret
+      skipverify: true
 database:
   type: external
   external:
