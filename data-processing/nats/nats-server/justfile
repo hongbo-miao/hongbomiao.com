@@ -1,4 +1,5 @@
 STREAM_NAME := "xxx"
+NATS_SERVER_URL := "nats://xxx@nats.hongbomiao.com:4222"
 
 install:
     # NATS server
@@ -9,20 +10,23 @@ install:
 start:
     nats-server --jetstream
 
+account-info:
+    nats account info --server={{ NATS_SERVER_URL }}
+
 stream-list:
-    nats stream ls
+    nats stream ls --server={{ NATS_SERVER_URL }}
 
 stream-create:
-    nats stream add --config="{{ STREAM_NAME }}.json"
+    nats stream add --config="{{ STREAM_NAME }}.json" --server={{ NATS_SERVER_URL }}
 
 stream-delete:
-    nats stream delete "{{ STREAM_NAME }}" --force
+    nats stream delete "{{ STREAM_NAME }}" --force --server={{ NATS_SERVER_URL }}
 
 stream-info:
-    nats stream info "{{ STREAM_NAME }}"
+    nats stream info "{{ STREAM_NAME }}" --server={{ NATS_SERVER_URL }}
 
 consumer-list:
-    nats consumer ls "{{ STREAM_NAME }}"
+    nats consumer ls "{{ STREAM_NAME }}" --server={{ NATS_SERVER_URL }}
 
 stream-subscribe:
-    nats subscribe --stream="{{ STREAM_NAME }}"
+    nats subscribe --stream="{{ STREAM_NAME }}" --server={{ NATS_SERVER_URL }}
