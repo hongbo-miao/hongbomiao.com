@@ -19,6 +19,10 @@ resource "nebius_mk8s_v1_node_group" "main" {
       platform = var.platform
       preset   = var.preset
     }
+    gpu_settings = {
+      drivers_preset = var.drivers_preset
+    }
+    os = var.os
   }
   labels = var.labels
 }

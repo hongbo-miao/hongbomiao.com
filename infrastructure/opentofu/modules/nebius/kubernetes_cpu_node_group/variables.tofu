@@ -16,6 +16,9 @@ variable "platform" {
 variable "preset" {
   type = string
 }
+variable "os" {
+  type = string
+}
 variable "labels" {
   type = map(string)
 }
