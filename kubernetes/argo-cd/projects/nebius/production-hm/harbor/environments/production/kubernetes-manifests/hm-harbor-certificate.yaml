@@ -1,0 +1,17 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hm-harbor-certificate
+  namespace: production-hm-harbor
+  labels:
+    app.kubernetes.io/name: hm-harbor-certificate
+    app.kubernetes.io/part-of: production-hm-harbor
+spec:
+  secretName: production-hm-harbor-certificate
+  issuerRef:
+    name: hm-lets-encrypt-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - harbor.hongbomiao.com
