@@ -245,13 +245,15 @@ The diagram illustrates the repository's architecture, which is considered overl
 ## Cloud Native
 
 - **Sealed Secrets** - Kubernetes secret encrypting
-- **ExternalDNS** - Kubernetes services and Ingresses exposing
+- **CoreDNS** - DNS server
+- **ExternalDNS** - Kubernetes services and Ingresses with external DNS providers synchronizing
 - **cert-manager** - Kubernetes X.509 certificate management
 - **Harbor** - Container image registry
 - **Velero** - Kubernetes backup and disaster recovery
 - **Hasura** - GraphQL Engine
   - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
 - **Cilium** - eBPF-based networking, observability, security
+  - **Hubble** - Network and security observability platform
 - **Linkerd** - Service mesh
 - **Caddy** - Web server, reverse proxy, load balancer
 - **Traefik** - Web server, reverse proxy, load balancer
@@ -271,11 +273,11 @@ The diagram illustrates the repository's architecture, which is considered overl
 
 ## Monitoring
 
-- **Grafana** - Data visualization
-  - **Grafana Alloy** - OpenTelemetry Collector
+- **Grafana** - Observability and Data visualization
+  - **Grafana Alloy** - OpenTelemetry collector
   - **Grafana Beyla** - eBPF-based auto-instrumentation tool
   - **Grafana Loki** - Log aggregation system
-  - **Grafana Mimir** - Long-term storage for Prometheus
+  - **Grafana Mimir** - Prometheus metrics storage
   - **Grafana Tempo** - Distributed tracing backend
   - **Grafana k6** - Load testing
 - **Vector** - Log collector
