@@ -612,6 +612,8 @@ The diagram illustrates the repository's architecture, which is considered overl
   - **llama.cpp** - High-performance large language model (LLM) inference in C/C++
   - **MLX LM** - Large language model (LLM) inference for Apple silicon
   - **vLLM** - High-throughput large language model (LLM) inference
+    - **vLLM Production Stack** - Kubernetes-native reference system for cluster-wide vLLM deployment, request routing, and observability
+    - **LMCache** - Distributed key-value (KV) cache layer that enables cache sharing and offloading across instances to reduce Time to First Token (TTFT)​​
   - **SGLang** - High-throughput large language model (LLM) and vision language model (VLM) inference
   - **KV Caching** - Memory optimization technique caching key/value pairs from self-attention to accelerate auto-regressive decoding
   - **Speculative Decoding** - Acceleration technique using draft models

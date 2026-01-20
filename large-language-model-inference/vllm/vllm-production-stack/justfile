@@ -1,0 +1,15 @@
+VLLM_URL := "https://vllm.hongbomiao.com"
+TOKEN := "xxx"
+MODEL := "Qwen/Qwen3-0.6B"
+
+query:
+    curl {{ VLLM_URL }}/v1/chat/completions \
+        --header "Content-Type: application/json" \
+        --header "Authorization: Bearer {{ TOKEN }}" \
+        --data '{ \
+            "model": "{{ MODEL }}", \
+            "messages": [ \
+                {"role": "system", "content": "You are a helpful assistant."}, \
+                {"role": "user", "content": "What is gravity?"} \
+            ] \
+        }'
