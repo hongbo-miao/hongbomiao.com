@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production-prometheus
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/prometheus/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-prometheus'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://prometheus-community.github.io/helm-charts
+          targetRevision: '{{.helmChartVersion}}'
+          chart: kube-prometheus-stack
+          helm:
+            releaseName: prometheus
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+      destination:
+        namespace: '{{.environment}}-hm-prometheus'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

@@ -1,0 +1,17 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hm-grafana-certificate
+  namespace: production-hm-grafana
+  labels:
+    app.kubernetes.io/name: hm-grafana-certificate
+    app.kubernetes.io/part-of: production-hm-grafana
+spec:
+  secretName: production-hm-grafana-certificate
+  issuerRef:
+    name: hm-lets-encrypt-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - grafana.hongbomiao.com
