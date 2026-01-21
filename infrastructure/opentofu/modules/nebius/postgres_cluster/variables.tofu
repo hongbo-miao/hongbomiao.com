@@ -22,6 +22,9 @@ variable "bootstrap_user_password" {
 variable "public_access" {
   type = bool
 }
+variable "pooling_mode" {
+  type = string
+}
 variable "disk_size_gib" {
   type = number
 }

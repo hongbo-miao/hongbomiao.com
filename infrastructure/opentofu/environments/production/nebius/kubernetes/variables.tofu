@@ -16,6 +16,10 @@ variable "vpc_subnet_id" {
 variable "common_labels" {
   type = map(string)
 }
+variable "grafana_postgres_bootstrap_user_password" {
+  type      = string
+  sensitive = true
+}
 variable "harbor_postgres_bootstrap_user_password" {
   type      = string
   sensitive = true

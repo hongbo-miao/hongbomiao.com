@@ -20,7 +20,7 @@ resource "nebius_msp_postgresql_v1alpha1_cluster" "main" {
     version       = var.postgres_version
     public_access = var.public_access
     pooler_config = {
-      pooling_mode  = "TRANSACTION"
+      pooling_mode  = var.pooling_mode
       max_pool_size = 100
     }
     template = {
