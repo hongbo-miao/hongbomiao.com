@@ -12,6 +12,7 @@ module "hm_postgres_cluster" {
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
+  pooling_mode                 = "TRANSACTION"
   postgres_cluster_name        = "${var.environment}-hm-postgres-cluster"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"

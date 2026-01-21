@@ -64,6 +64,47 @@ module "argo_cd_helm_chart" {
   ]
 }
 
+# Grafana
+module "editors_group_member_hm_grafana_service_account" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = data.nebius_iam_v1_group.editors_group.id
+  member_id = module.hm_grafana_service_account.id
+  labels    = var.common_labels
+}
+module "hm_grafana_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "grafana-service-account"
+  labels               = var.common_labels
+}
+module "hm_grafana_object_storage" {
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-grafana"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "ENABLED"
+  labels                = var.common_labels
+}
+module "grafana_postgres_cluster" {
+  source                       = "../../../../modules/nebius/postgres_cluster"
+  project_id                   = var.project_id
+  network_id                   = var.vpc_network_id
+  postgres_version             = "16"
+  pooling_mode                 = "SESSION"
+  postgres_cluster_name        = "${var.environment}-grafana-postgres-cluster"
+  bootstrap_database_name      = "bootstrap_db"
+  bootstrap_user_name          = "bootstrap_user"
+  bootstrap_user_password      = var.grafana_postgres_bootstrap_user_password
+  public_access                = true
+  disk_size_gib                = 16
+  host_count                   = 1
+  platform                     = "cpu-d3"
+  preset                       = "4vcpu-16gb"
+  labels                       = var.common_labels
+  backup_window_start_time_utc = "9:00:00"
+  backup_retention_policy      = "14d"
+}
+
 # Harbor
 module "editors_group_member_hm_harbor_service_account" {
   source    = "../../../../modules/nebius/iam_group_membership"
@@ -90,6 +131,7 @@ module "harbor_postgres_cluster" {
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
+  pooling_mode                 = "SESSION"
   postgres_cluster_name        = "${var.environment}-harbor-postgres-cluster"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
@@ -100,7 +142,7 @@ module "harbor_postgres_cluster" {
   platform                     = "cpu-d3"
   preset                       = "4vcpu-16gb"
   labels                       = var.common_labels
-  backup_window_start_time_utc = "10:00:00"
+  backup_window_start_time_utc = "9:00:00"
   backup_retention_policy      = "14d"
 }
 
@@ -130,6 +172,7 @@ module "mlflow_postgres_cluster" {
   project_id                   = var.project_id
   network_id                   = var.vpc_network_id
   postgres_version             = "16"
+  pooling_mode                 = "SESSION"
   postgres_cluster_name        = "${var.environment}-mlflow-postgres-cluster"
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
@@ -140,6 +183,6 @@ module "mlflow_postgres_cluster" {
   platform                     = "cpu-d3"
   preset                       = "4vcpu-16gb"
   labels                       = var.common_labels
-  backup_window_start_time_utc = "10:00:00"
+  backup_window_start_time_utc = "9:00:00"
   backup_retention_policy      = "14d"
 }
