@@ -14,8 +14,8 @@ resource "harbor_config_auth" "google_auth" {
   oidc_endpoint      = "https://accounts.google.com"
   oidc_client_id     = var.oidc_client_id
   oidc_client_secret = var.oidc_client_secret
-  oidc_scope         = "openid,email"
-  oidc_user_claim    = "name"
+  oidc_scope         = "email,openid"
+  oidc_user_claim    = "email"
   oidc_verify_cert   = true
   oidc_auto_onboard  = true
 }

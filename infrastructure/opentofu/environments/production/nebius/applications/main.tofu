@@ -1,20 +1,28 @@
-data "nebius_iam_v1_group" "editors_group" {
-  name      = "editors"
-  parent_id = var.tenant_id
-}
-
 # MLflow
-module "editors_group_member_hm_mlflow_service_account" {
-  source    = "../../../../modules/nebius/iam_group_membership"
-  parent_id = data.nebius_iam_v1_group.editors_group.id
-  member_id = module.hm_mlflow_service_account.id
-  labels    = var.common_labels
-}
 module "hm_mlflow_service_account" {
   source               = "../../../../modules/nebius/iam_service_account"
   project_id           = var.project_id
   service_account_name = "mlflow-service-account"
   labels               = var.common_labels
+}
+module "hm_mlflow_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-mlflow-group"
+  labels     = var.common_labels
+}
+module "hm_mlflow_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_mlflow_iam_group.id
+  member_id = module.hm_mlflow_service_account.id
+  labels    = var.common_labels
+}
+module "hm_mlflow_access_permit" {
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_mlflow_iam_group.id
+  resource_id = module.hm_mlflow_data_object_storage.id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
 }
 module "hm_mlflow_data_object_storage" {
   source                = "../../../../modules/nebius/object_storage"
