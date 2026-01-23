@@ -103,7 +103,7 @@ module "grafana_postgres_cluster" {
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.grafana_postgres_bootstrap_user_password
-  public_access                = true
+  public_access                = false
   disk_size_gib                = 16
   host_count                   = 1
   platform                     = "cpu-d3"
@@ -157,7 +157,7 @@ module "harbor_postgres_cluster" {
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.harbor_postgres_bootstrap_user_password
-  public_access                = true
+  public_access                = false
   disk_size_gib                = 16
   host_count                   = 1
   platform                     = "cpu-d3"
@@ -165,6 +165,47 @@ module "harbor_postgres_cluster" {
   labels                       = var.common_labels
   backup_window_start_time_utc = "9:00:00"
   backup_retention_policy      = "14d"
+}
+
+
+# Loki
+module "hm_loki_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-loki-service-account"
+  labels               = var.common_labels
+}
+module "hm_loki_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-loki-group"
+  labels     = var.common_labels
+}
+module "hm_loki_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_loki_iam_group.id
+  member_id = module.hm_loki_service_account.id
+  labels    = var.common_labels
+}
+locals {
+  loki_buckets = toset(["admin", "chunk", "ruler"])
+}
+module "hm_loki_access_permit" {
+  for_each    = local.loki_buckets
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_loki_iam_group.id
+  resource_id = module.hm_loki_object_storage[each.key].id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
+}
+module "hm_loki_object_storage" {
+  for_each              = local.loki_buckets
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-loki-${each.key}"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "ENABLED"
+  labels                = var.common_labels
 }
 
 # MLflow
@@ -211,7 +252,7 @@ module "mlflow_postgres_cluster" {
   bootstrap_database_name      = "bootstrap_db"
   bootstrap_user_name          = "bootstrap_user"
   bootstrap_user_password      = var.mlflow_postgres_bootstrap_user_password
-  public_access                = true
+  public_access                = false
   disk_size_gib                = 16
   host_count                   = 1
   platform                     = "cpu-d3"
