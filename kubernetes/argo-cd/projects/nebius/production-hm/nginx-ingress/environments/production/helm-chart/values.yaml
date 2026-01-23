@@ -1,0 +1,18 @@
+# https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
+---
+controller:
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: false
+    controllerValue: k8s.io/ingress-nginx
+  replicaCount: 3
+  service:
+    type: LoadBalancer
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
