@@ -9,8 +9,6 @@ deploymentMode: Distributed
 serviceAccount:
   create: true
   name: hm-loki
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::272394222652:role/LokiRole-hm-loki
 loki:
   auth_enabled: true
   schemaConfig:
@@ -57,24 +55,28 @@ loki:
     delete_request_store: s3
   ruler:
     enable_api: true
+    alertmanager_url: http://prometheus-kube-prometheus-alertmanager.production-hm-prometheus:9093
     storage:
       type: s3
       s3:
-        region: us-west-2
-        bucketnames: production-hm-loki-ruler-bucket
+        region: us-central1
+        endpoint: https://storage.us-central1.nebius.cloud
+        bucketnames: production-hm-loki-ruler
         s3forcepathstyle: false
-      alertmanager_url: http://prometheus-kube-pr-alertmanager.production-hm-prometheus:9093
   storage:
     type: s3
     s3:
-      region: us-west-2
+      region: us-central1
+      endpoint: https://storage.us-central1.nebius.cloud
     bucketNames:
-      chunks: production-hm-loki-chunk-bucket
-      ruler: production-hm-loki-ruler-bucket
-      admin: production-hm-loki-admin-bucket
+      chunks: production-hm-loki-chunk
+      ruler: production-hm-loki-ruler
+      admin: production-hm-loki-admin
 gateway:
   enabled: true
   replicas: 3
+  nginxConfig:
+    resolver: coredns.kube-system.svc.cluster.local.
   resources:
     requests:
       cpu: 100m
@@ -85,6 +87,9 @@ gateway:
 indexGateway:
   replicas: 3
   maxUnavailable: 1
+  extraEnvFrom:
+    - secretRef:
+        name: hm-loki-secret
   resources:
     requests:
       cpu: 100m
@@ -107,6 +112,9 @@ distributor:
       cpu: 8
       memory: 8Gi
 ingester:
+  extraEnvFrom:
+    - secretRef:
+        name: hm-loki-secret
   zoneAwareReplication:
     enabled: true
   autoscaling:
@@ -137,6 +145,9 @@ queryFrontend:
       cpu: 200m
       memory: 1Gi
 queryScheduler:
+  extraEnvFrom:
+    - secretRef:
+        name: hm-loki-secret
   replicas: 3
   resources:
     requests:
@@ -146,6 +157,9 @@ queryScheduler:
       cpu: 500m
       memory: 2Gi
 querier:
+  extraEnvFrom:
+    - secretRef:
+        name: hm-loki-secret
   autoscaling:
     enabled: true
     minReplicas: 6
@@ -160,6 +174,9 @@ querier:
       cpu: 4
       memory: 2Gi
 compactor:
+  extraEnvFrom:
+    - secretRef:
+        name: hm-loki-secret
   replicas: 3
   resources:
     requests:

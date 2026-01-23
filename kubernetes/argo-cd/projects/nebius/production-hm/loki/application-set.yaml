@@ -11,10 +11,10 @@ spec:
         repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
         revision: main
         files:
-          - path: kubernetes/argo-cd/projects/aws/production-hm/loki/environments/*/config.yaml
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/loki/environments/*/config.yaml
   template:
     metadata:
-      name: '{{.environment}}-hm-loki'
+      name: '{{.environment}}-loki'
     spec:
       project: production-hm
       sources:
@@ -28,6 +28,9 @@ spec:
         - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
           targetRevision: main
           ref: config
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
       destination:
         namespace: '{{.environment}}-hm-loki'
         server: https://kubernetes.default.svc

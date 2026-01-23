@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: production-loki
+  name: production-alloy
   namespace: production-hm-argo-cd
 spec:
   goTemplate: true
@@ -11,25 +11,25 @@ spec:
         repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
         revision: main
         files:
-          - path: kubernetes/argo-cd/projects/aws/production-hm/loki/environments/*/config.yaml
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/alloy/environments/*/config.yaml
   template:
     metadata:
-      name: '{{.environment}}-hm-loki'
+      name: '{{.environment}}-hm-alloy'
     spec:
       project: production-hm
       sources:
         - repoURL: https://grafana.github.io/helm-charts
           targetRevision: '{{.helmChartVersion}}'
-          chart: loki
+          chart: alloy
           helm:
-            releaseName: loki
+            releaseName: alloy
             valueFiles:
               - '$config/{{.path.path}}/helm-chart/values.yaml'
         - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
           targetRevision: main
           ref: config
       destination:
-        namespace: '{{.environment}}-hm-loki'
+        namespace: '{{.environment}}-hm-alloy'
         server: https://kubernetes.default.svc
       syncPolicy:
         syncOptions:

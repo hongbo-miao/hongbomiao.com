@@ -6,7 +6,7 @@ controller:
   # https://github.com/grafana/beyla/blob/main/examples/k8s/unprivileged.yaml
   hostPID: true
 alloy:
-  stabilityLevel: public-preview
+  stabilityLevel: generally-available
   securityContext:
     # https://grafana.com/docs/grafana-cloud/send-data/alloy/reference/components/beyla/beyla.ebpf/
     appArmorProfile:
@@ -112,16 +112,6 @@ alloy:
           target_label = "job"
           separator = "/"
           replacement = "$1"
-        }
-
-        // Label creation - "container" field from "__meta_kubernetes_pod_uid" and "__meta_kubernetes_pod_container_name"
-        // Concatenate values __meta_kubernetes_pod_uid/__meta_kubernetes_pod_container_name.log
-        rule {
-          source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
-          action = "replace"
-          target_label = "__path__"
-          separator = "/"
-          replacement = "/var/log/pods/*$1/*.log"
         }
 
         // Label creation -  "container_runtime" field from "__meta_kubernetes_pod_container_id"

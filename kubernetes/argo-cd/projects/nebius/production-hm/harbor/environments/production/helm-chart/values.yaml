@@ -1,9 +1,21 @@
 # https://github.com/goharbor/harbor-helm/blob/main/values.yaml
 ---
 expose:
-  type: clusterIP
+  type: ingress
   tls:
-    enabled: false
+    enabled: true
+    certSource: secret
+    secret:
+      secretName: production-hm-harbor-certificate
+  ingress:
+    hosts:
+      core: harbor.hongbomiao.com
+    # https://serverfault.com/a/1197875/344438
+    className: nginx
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: harbor.hongbomiao.com
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
 externalURL: https://harbor.hongbomiao.com
 existingSecretAdminPassword: hm-harbor-secret
 existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
@@ -96,7 +108,7 @@ persistence:
 database:
   type: external
   external:
-    host: public-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
+    host: private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud
     port: 5432
     username: harbor_user
     coreDatabase: harbor_db
