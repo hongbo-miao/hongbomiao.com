@@ -1,5 +1,6 @@
 # https://github.com/goharbor/harbor-helm/blob/main/values.yaml
 ---
+logLevel: info
 expose:
   type: ingress
   tls:
@@ -14,8 +15,8 @@ expose:
     className: nginx
     annotations:
       external-dns.alpha.kubernetes.io/hostname: harbor.hongbomiao.com
-      nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
 externalURL: https://harbor.hongbomiao.com
 existingSecretAdminPassword: hm-harbor-secret
 existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
