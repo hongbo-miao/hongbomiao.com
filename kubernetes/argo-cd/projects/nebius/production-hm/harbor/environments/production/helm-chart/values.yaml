@@ -105,7 +105,8 @@ persistence:
       endpoint: https://storage.us-central1.nebius.cloud
       bucket: production-hm-harbor
       existingSecret: hm-harbor-secret
-      skipverify: true
+      # 32 MiB, needs to be a string
+      chunksize: "33554432"
 database:
   type: external
   external:
