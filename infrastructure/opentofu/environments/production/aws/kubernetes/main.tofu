@@ -188,18 +188,6 @@ module "amazon_eks_cluster" {
 }
 
 # Karpenter
-# Karpenter - Kubernetes namespace
-module "kubernetes_namespace_hm_karpenter" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-karpenter"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-# Karpenter - Karpenter
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest/submodules/karpenter
 module "hm_karpenter" {
   source = "terraform-aws-modules/eks/aws//modules/karpenter"
@@ -214,7 +202,7 @@ module "hm_karpenter" {
     "hm_resource_name" = "${local.amazon_eks_cluster_name}-karpenter"
   })
   depends_on = [
-    module.kubernetes_namespace_hm_karpenter
+    module.amazon_eks_cluster
   ]
 }
 
@@ -241,17 +229,6 @@ module "kubernetes_manifest_gateway_api" {
 }
 
 # Argo CD
-# Argo CD - Kubernetes namespace
-module "kubernetes_namespace_hm_argo_cd" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-argo-cd"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 # Argo CD - Helm chart
 module "argo_cd_helm_chart" {
   source              = "../../../../modules/kubernetes/helm_chart"
@@ -259,10 +236,10 @@ module "argo_cd_helm_chart" {
   chart_name          = "argo-cd"
   chart_version       = "8.3.1" # https://artifacthub.io/packages/helm/argo/argo-cd
   release_name        = "argo-cd"
-  namespace           = module.kubernetes_namespace_hm_argo_cd.namespace
+  namespace           = "${var.environment}-hm-argo-cd"
   my_values_yaml_path = "files/argo-cd/helm/my-values.yaml"
   depends_on = [
-    module.kubernetes_namespace_hm_argo_cd
+    module.amazon_eks_cluster
   ]
 }
 
@@ -279,17 +256,6 @@ module "external_dns_iam_role" {
   amazon_eks_cluster_name_hash         = local.amazon_eks_cluster_name_hash
   common_tags                          = var.common_tags
 }
-# ExternalDNS - Kubernetes namespace
-module "kubernetes_namespace_hm_external_dns" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-external-dns"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # cert-manager
 # cert-manager - IAM role
@@ -303,107 +269,6 @@ module "cert_manager_iam_role" {
   amazon_route53_hosted_zone_id        = var.amazon_route53_hosted_zone_id
   amazon_eks_cluster_name_hash         = local.amazon_eks_cluster_name_hash
   common_tags                          = var.common_tags
-}
-# cert-manager - Kubernetes namespace
-module "kubernetes_namespace_hm_cert_manager" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-cert-manager"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# priority-class
-# priority-class - Kubernetes namespace
-module "kubernetes_namespace_hm_priority_class" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-priority-class"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Keda - Kubernetes namespace
-module "kubernetes_namespace_hm_keda" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-keda"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Metrics Server
-# Metrics Server - Kubernetes namespace
-module "kubernetes_namespace_hm_metrics_server" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-metrics-server"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Vertical Pod Autoscaler
-# Vertical Pod Autoscaler - Kubernetes namespace
-module "kubernetes_namespace_hm_vertical_pod_autoscaler" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-vertical-pod-autoscaler"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Goldilocks (requires Metrics Server and Vertical Pod Autoscaler)
-# Goldilocks - Kubernetes namespace
-module "kubernetes_namespace_hm_goldilocks" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-goldilocks"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Traefik
-# Traefik - Kubernetes namespace
-module "kubernetes_namespace_hm_traefik" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-traefik"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Sealed Secrets
-# Sealed Secrets - Kubernetes namespace
-module "kubernetes_namespace_hm_sealed_secrets" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-sealed-secrets"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
 }
 
 # Velero
@@ -424,17 +289,6 @@ module "velero_iam_role" {
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   s3_bucket_name                       = module.s3_bucket_hm_velero.name
   common_tags                          = var.common_tags
-}
-# Velero - Kubernetes namespace
-module "kubernetes_namespace_hm_velero" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-velero"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
 }
 
 # Airbyte
@@ -511,17 +365,6 @@ module "airbyte_postgres_instance" {
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   common_tags               = var.common_tags
 }
-# Airbyte - Kubernetes namespace
-module "kubernetes_namespace_hm_airbyte" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-airbyte"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = true
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # Label Studio
 # Label Studio - S3 bucket
@@ -592,17 +435,6 @@ module "label_studio_postgres_instance" {
   vpc_security_group_ids    = [module.label_studio_postgres_security_group.id]
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   common_tags               = var.common_tags
-}
-# Label Studio - Kubernetes namespace
-module "kubernetes_namespace_hm_label_studio" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-label-studio"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
 }
 
 # MLflow
@@ -685,30 +517,8 @@ module "mlflow_postgres_instance" {
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   common_tags               = var.common_tags
 }
-# MLflow - Kubernetes namespace
-module "kubernetes_namespace_hm_mlflow" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-mlflow"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # Ray
-# KubeRay - Kubernetes namespace
-module "kubernetes_namespace_hm_kuberay_operator" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-kuberay-operator"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 # Ray Cluster - IAM role
 module "ray_cluster_iam_role" {
   providers                            = { aws = aws.production }
@@ -724,28 +534,6 @@ module "ray_cluster_iam_role" {
     "${var.environment}_motor_db"
   ]
   common_tags = var.common_tags
-}
-# Ray Cluster - Kubernetes namespace
-module "kubernetes_namespace_hm_ray_cluster" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-ray-cluster"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-# Ray Cluster Valkey - Kubernetes namespace
-module "kubernetes_namespace_hm_ray_cluster_valkey" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-ray-cluster-valkey"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
 }
 
 # SkyPilot
@@ -800,30 +588,6 @@ module "skypilot_postgres_instance" {
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   common_tags               = var.common_tags
 }
-# SkyPilot - Kubernetes namespace
-module "kubernetes_namespace_hm_skypilot" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-skypilot"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Prometheus
-# Prometheus - Kubernetes namespace
-module "kubernetes_namespace_hm_prometheus" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-prometheus"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # Mimir
 # Mimir - S3 bucket
@@ -861,17 +625,6 @@ module "mimir_iam_role" {
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   common_tags                          = var.common_tags
-}
-# Mimir - Kubernetes namespace
-module "kubernetes_namespace_hm_mimir" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-mimir"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
 }
 
 # Loki
@@ -911,30 +664,6 @@ module "loki_iam_role" {
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   common_tags                          = var.common_tags
 }
-# Loki - Kubernetes namespace
-module "kubernetes_namespace_hm_loki" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-loki"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Alloy
-# Alloy - Kubernetes namespace
-module "kubernetes_namespace_hm_alloy" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-alloy"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # Tempo
 # Tempo - S3 bucket
@@ -964,17 +693,6 @@ module "tempo_iam_role" {
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   common_tags                          = var.common_tags
-}
-# Tempo - Kubernetes namespace
-module "kubernetes_namespace_hm_tempo" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-tempo"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
 }
 
 # Grafana
@@ -1029,17 +747,6 @@ module "grafana_postgres_instance" {
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   common_tags               = var.common_tags
 }
-# Grafana - Kubernetes namespace
-module "kubernetes_namespace_hm_grafana" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-grafana"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # Prefect
 # Prefect - Postgres
@@ -1093,17 +800,6 @@ module "prefect_postgres_instance" {
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   common_tags               = var.common_tags
 }
-# Prefect Server - Kubernetes namespace
-module "kubernetes_namespace_hm_prefect_server" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-prefect-server"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 # Prefect Worker - IAM role
 module "prefect_worker_iam_role" {
   providers                            = { aws = aws.production }
@@ -1119,54 +815,6 @@ module "prefect_worker_iam_role" {
   ]
   common_tags = var.common_tags
 }
-# Prefect Worker - Kubernetes namespace
-module "kubernetes_namespace_hm_prefect_worker" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-prefect-worker"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Clickhouse
-# Clickhouse - Kubernetes namespace
-module "kubernetes_namespace_hm_clickhouse" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-clickhouse"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Doris
-# Doris Operator - Kubernetes namespace
-module "kubernetes_namespace_hm_doris_operator" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-doris-operator"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-# Doris - Kubernetes namespace
-module "kubernetes_namespace_hm_doris" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-doris"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # StarRocks
 # StarRocks - IAM role
@@ -1179,93 +827,6 @@ module "starrocks_iam_role" {
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   iot_data_s3_bucket_name              = "iot-data-bucket"
   common_tags                          = var.common_tags
-}
-# StarRocks Operator - Kubernetes namespace
-module "kubernetes_namespace_hm_starrocks_operator" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-starrocks-operator"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-# StarRocks - Kubernetes namespace
-module "kubernetes_namespace_hm_starrocks" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-starrocks"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# VictoriaMetrics Cluster - Kubernetes namespace
-module "kubernetes_namespace_hm_victoria_metrics_cluster" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-victoria-metrics-cluster"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Qdrant
-# Qdrant - Kubernetes namespace
-module "kubernetes_namespace_hm_qdrant" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-qdrant"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-
-# Valkey
-# Valkey - Kubernetes namespace
-module "kubernetes_namespace_hm_valkey" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-valkey"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Netdata
-# Netdata - Kubernetes namespace
-module "kubernetes_namespace_hm_netdata" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-netdata"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = true
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# OpenCost
-# OpenCost - Kubernetes namespace
-module "kubernetes_namespace_hm_opencost" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-opencost"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
 }
 
 # Confluent Schema Registry
@@ -1281,17 +842,6 @@ module "confluent_schema_registry_iam_role" {
   amazon_msk_arn                                     = "arn:aws:kafka:us-west-2:272394222652:cluster/production-iot-kafka/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-xx"
   common_tags                                        = var.common_tags
 }
-# Confluent Schema Registry - Kubernetes namespace
-module "kubernetes_namespace_hm_confluent_schema_registry" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-confluent-schema-registry"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # Redpanda Console
 # Redpanda Console - IAM role
@@ -1303,17 +853,6 @@ module "redpanda_console_iam_role" {
   amazon_eks_cluster_oidc_provider      = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn  = module.amazon_eks_cluster.oidc_provider_arn
   common_tags                           = var.common_tags
-}
-# Redpanda Console - Kubernetes namespace
-module "kubernetes_namespace_hm_redpanda_console" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-redpanda-console"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
 }
 
 # Kafbat UI
@@ -1327,17 +866,6 @@ module "kafbat_ui_iam_role" {
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   common_tags                          = var.common_tags
 }
-# Kafbat UI - Kubernetes namespace
-module "kubernetes_namespace_hm_kafbat_ui" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-kafbat-ui"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # LiteLLM
 # LiteLLM - IAM role
@@ -1349,41 +877,6 @@ module "litellm_iam_role" {
   amazon_eks_cluster_oidc_provider     = module.amazon_eks_cluster.oidc_provider
   amazon_eks_cluster_oidc_provider_arn = module.amazon_eks_cluster.oidc_provider_arn
   common_tags                          = var.common_tags
-}
-# LiteLLM - Kubernetes namespace
-module "kubernetes_namespace_hm_litellm" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-litellm"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# Open WebUI
-# Open WebUI - Kubernetes namespace
-module "kubernetes_namespace_hm_open_webui" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-open-webui"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-# Open WebUI Pipelines - Kubernetes namespace
-module "kubernetes_namespace_hm_open_webui_pipelines" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-open-webui-pipelines"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
 }
 
 # Harbor
@@ -1453,17 +946,6 @@ module "harbor_postgres_instance" {
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   common_tags               = var.common_tags
 }
-# Harbor - Kubernetes namespace
-module "kubernetes_namespace_hm_harbor" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-harbor"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # Odoo
 # Odoo - Postgres
@@ -1524,30 +1006,6 @@ module "odoo_postgres_instance" {
   cloudwatch_log_types      = ["postgresql", "upgrade"]
   common_tags               = var.common_tags
 }
-# Odoo - Kubernetes namespace
-module "kubernetes_namespace_hm_odoo" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-odoo"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
-
-# S3 Browser
-# S3 Browser - Kubernetes namespace
-module "kubernetes_namespace_hm_s3_browser" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-s3-browser"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
-}
 
 # Trino - IAM role
 module "trino_iam_role" {
@@ -1563,15 +1021,4 @@ module "trino_iam_role" {
     "${var.environment}_motor_db"
   ]
   common_tags = var.common_tags
-}
-# Trino - Kubernetes namespace
-module "kubernetes_namespace_hm_trino" {
-  source               = "../../../../modules/kubernetes/kubernetes_namespace"
-  kubernetes_namespace = "${var.environment}-hm-trino"
-  labels = {
-    "goldilocks.fairwinds.com/enabled" = "true"
-  }
-  depends_on = [
-    module.amazon_eks_cluster
-  ]
 }
