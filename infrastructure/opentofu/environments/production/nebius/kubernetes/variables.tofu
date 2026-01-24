@@ -28,3 +28,7 @@ variable "mlflow_postgres_bootstrap_user_password" {
   type      = string
   sensitive = true
 }
+variable "skypilot_postgres_bootstrap_user_password" {
+  type      = string
+  sensitive = true
+}

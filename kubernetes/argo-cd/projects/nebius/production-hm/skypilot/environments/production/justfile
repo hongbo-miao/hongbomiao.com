@@ -1,39 +1,39 @@
-sealed-secrets-seal-hm-skypilot-secret:
+seal-hm-skypilot-secret:
     cat secrets/hm-skypilot-secret.unsealed.yaml | \
     kubeseal \
         --controller-namespace=production-hm-sealed-secrets \
         --controller-name=sealed-secrets \
         --format=yaml \
-        > manifests/hm-skypilot-secret.yaml
+        > kubernetes-manifests/hm-skypilot-secret.yaml
 
-sealed-secrets-seal-lambda-secret:
+seal-lambda-secret:
     cat secrets/lambda-secret.unsealed.yaml | \
     kubeseal \
         --controller-namespace=production-hm-sealed-secrets \
         --controller-name=sealed-secrets \
         --format=yaml \
-        > manifests/lambda-secret.yaml
+        > kubernetes-manifests/lambda-secret.yaml
 
-sealed-secrets-seal-nebius-secret:
+seal-nebius-secret:
     cat secrets/nebius-secret.unsealed.yaml | \
     kubeseal \
         --controller-namespace=production-hm-sealed-secrets \
         --controller-name=sealed-secrets \
         --format=yaml \
-        > manifests/nebius-secret.yaml
+        > kubernetes-manifests/nebius-secret.yaml
 
-sealed-secrets-seal-runpod-secret:
+seal-runpod-secret:
     cat secrets/runpod-secret.unsealed.yaml | \
     kubeseal \
         --controller-namespace=production-hm-sealed-secrets \
         --controller-name=sealed-secrets \
         --format=yaml \
-        > manifests/runpod-secret.yaml
+        > kubernetes-manifests/runpod-secret.yaml
 
-sealed-secrets-seal-vast-secret:
+seal-vast-secret:
     cat secrets/vast-secret.unsealed.yaml | \
     kubeseal \
         --controller-namespace=production-hm-sealed-secrets \
         --controller-name=sealed-secrets \
         --format=yaml \
-        > manifests/vast-secret.yaml
+        > kubernetes-manifests/vast-secret.yaml

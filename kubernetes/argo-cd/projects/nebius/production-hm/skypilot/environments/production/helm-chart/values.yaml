@@ -1,0 +1,41 @@
+# https://artifacthub.io/packages/helm/skypilot/skypilot?modal=values
+---
+global:
+  imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+apiService:
+  dbConnectionSecretName: hm-skypilot-secret
+  initialBasicAuthSecret: hm-skypilot-secret
+  enableUserManagement: true
+ingress:
+  enabled: false
+ingress-nginx:
+  enabled: false
+storage:
+  enabled: true
+  storageClassName: production-hm-skypilot-storage-class
+  accessMode: ReadWriteOnce
+  size: 10Gi
+rbac:
+  manageSystemComponents: false
+# https://docs.skypilot.co/en/latest/reference/auth.html#oidc-oauth2-proxy-helm
+auth:
+  oauth:
+    enabled: true
+    oidc-issuer-url: https://accounts.google.com
+    client-details-from-secret: hm-skypilot-secret
+    email-domain: hongbomiao.com
+    use-https: true
+    session-store-type: redis
+lambdaCredentials:
+  enabled: true
+  lambdaSecretName: lambda-secret
+nebiusCredentials:
+  enabled: true
+  tenantId: tenant-xxxxxxxxxxxxxxxxxx
+  nebiusSecretName: nebius-secret
+runpodCredentials:
+  enabled: true
+  runpodSecretName: runpod-secret
+vastCredentials:
+  enabled: true
+  vastSecretName: vast-secret
