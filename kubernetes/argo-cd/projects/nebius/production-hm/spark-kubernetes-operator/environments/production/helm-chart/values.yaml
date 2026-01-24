@@ -1,0 +1,17 @@
+# https://github.com/apache/spark-kubernetes-operator/blob/main/build-tools/helm/spark-kubernetes-operator/values.yaml
+---
+image:
+  repository: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/spark-kubernetes-operator
+operatorDeployment:
+  replicas: 1
+  operatorPod:
+    operatorContainer:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+          ephemeral-storage: 2Gi
+        limits:
+          cpu: 1
+          memory: 2Gi
+          ephemeral-storage: 2Gi
