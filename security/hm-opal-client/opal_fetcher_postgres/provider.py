@@ -2,7 +2,7 @@
 
 import json
 from types import TracebackType
-from typing import Any, ClassVar
+from typing import Any, ClassVar, Self
 
 import asyncpg
 from asyncpg.exceptions import DataError
@@ -60,7 +60,7 @@ class PostgresFetchProvider(BaseFetchProvider):
     def parse_event(self, event: FetchEvent) -> PostgresFetchEvent:
         return PostgresFetchEvent(**event.dict(exclude={"config"}), config=event.config)
 
-    async def __aenter__(self) -> "PostgresFetchProvider":
+    async def __aenter__(self) -> Self:
         # self._event: PostgresFetchEvent  # type casting
 
         dsn: str = self._event.url
