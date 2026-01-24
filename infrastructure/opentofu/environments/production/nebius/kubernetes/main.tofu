@@ -1,3 +1,4 @@
+# Kubernetes
 module "hm_kubernetes_cluster" {
   source                  = "../../../../modules/nebius/kubernetes_cluster"
   project_id              = var.project_id
@@ -60,6 +61,7 @@ module "argo_cd_helm_chart" {
 }
 
 # Grafana
+# Grafana - service account
 module "hm_grafana_service_account" {
   source               = "../../../../modules/nebius/service_account"
   project_id           = var.project_id
@@ -85,6 +87,7 @@ module "hm_grafana_access_permit" {
   role        = "storage.object-editor"
   labels      = var.common_labels
 }
+# Grafana - object storage
 module "hm_grafana_object_storage" {
   source                = "../../../../modules/nebius/object_storage"
   project_id            = var.project_id
@@ -93,6 +96,7 @@ module "hm_grafana_object_storage" {
   versioning_policy     = "ENABLED"
   labels                = var.common_labels
 }
+# Grafana - Postgres
 module "grafana_postgres_cluster" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
@@ -114,6 +118,7 @@ module "grafana_postgres_cluster" {
 }
 
 # Harbor
+# Harbor - service account
 module "hm_harbor_service_account" {
   source               = "../../../../modules/nebius/service_account"
   project_id           = var.project_id
@@ -139,6 +144,7 @@ module "hm_harbor_access_permit" {
   role        = "storage.object-editor"
   labels      = var.common_labels
 }
+# Harbor - object storage
 module "hm_harbor_object_storage" {
   source                = "../../../../modules/nebius/object_storage"
   project_id            = var.project_id
@@ -147,6 +153,7 @@ module "hm_harbor_object_storage" {
   versioning_policy     = "ENABLED"
   labels                = var.common_labels
 }
+# Harbor - Postgres
 module "harbor_postgres_cluster" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
@@ -169,6 +176,7 @@ module "harbor_postgres_cluster" {
 
 
 # Loki
+# Loki - service account
 module "hm_loki_service_account" {
   source               = "../../../../modules/nebius/service_account"
   project_id           = var.project_id
@@ -198,6 +206,7 @@ module "hm_loki_access_permit" {
   role        = "storage.object-editor"
   labels      = var.common_labels
 }
+# Loki - object storage
 module "hm_loki_object_storage" {
   for_each              = local.loki_buckets
   source                = "../../../../modules/nebius/object_storage"
@@ -209,6 +218,7 @@ module "hm_loki_object_storage" {
 }
 
 # MLflow
+# MLflow - service account
 module "hm_mlflow_service_account" {
   source               = "../../../../modules/nebius/service_account"
   project_id           = var.project_id
@@ -234,6 +244,7 @@ module "hm_mlflow_access_permit" {
   role        = "storage.object-editor"
   labels      = var.common_labels
 }
+# MLflow - object storage
 module "hm_mlflow_object_storage" {
   source                = "../../../../modules/nebius/object_storage"
   project_id            = var.project_id
@@ -242,6 +253,7 @@ module "hm_mlflow_object_storage" {
   versioning_policy     = "ENABLED"
   labels                = var.common_labels
 }
+# MLflow - Postgres
 module "mlflow_postgres_cluster" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
@@ -263,6 +275,7 @@ module "mlflow_postgres_cluster" {
 }
 
 # SkyPilot
+# SkyPilot - Postgres
 module "skypilot_postgres_cluster" {
   source                       = "../../../../modules/nebius/postgres_cluster"
   project_id                   = var.project_id
