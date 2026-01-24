@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-grafana-certificate
-  namespace: production-hm-grafana
+  name: hm-qdrant-certificate
+  namespace: production-hm-qdrant
 spec:
-  commonName: grafana.hongbomiao.com
-  secretName: production-hm-grafana-certificate
+  commonName: qdrant.hongbomiao.com
+  secretName: hm-qdrant-certificate
   dnsNames:
-    - grafana.hongbomiao.com
+    - qdrant.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

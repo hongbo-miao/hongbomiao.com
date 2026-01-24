@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-trino-certificate
-  namespace: production-hm-trino
+  name: hm-open-webui-certificate
+  namespace: production-hm-open-webui
 spec:
-  commonName: trino.hongbomiao.com
-  secretName: production-hm-trino-certificate
+  commonName: open-webui.hongbomiao.com
+  secretName: hm-open-webui-certificate
   dnsNames:
-    - trino.hongbomiao.com
+    - open-webui.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

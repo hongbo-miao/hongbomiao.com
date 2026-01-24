@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-kafbat-ui-certificate
-  namespace: production-hm-kafbat-ui
+  name: hm-mlflow-certificate
+  namespace: production-hm-mlflow
 spec:
-  commonName: kafbat-ui.hongbomiao.com
-  secretName: production-hm-kafbat-ui-certificate
+  commonName: mlflow.hongbomiao.com
+  secretName: hm-mlflow-certificate
   dnsNames:
-    - kafbat-ui.hongbomiao.com
+    - mlflow.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

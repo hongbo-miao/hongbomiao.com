@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-redpanda-console-certificate
-  namespace: production-hm-redpanda-console
+  name: hm-odoo-certificate
+  namespace: production-hm-odoo
 spec:
-  commonName: redpanda-console.hongbomiao.com
-  secretName: production-hm-redpanda-console-certificate
+  commonName: odoo.hongbomiao.com
+  secretName: hm-odoo-certificate
   dnsNames:
-    - redpanda-console.hongbomiao.com
+    - odoo.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

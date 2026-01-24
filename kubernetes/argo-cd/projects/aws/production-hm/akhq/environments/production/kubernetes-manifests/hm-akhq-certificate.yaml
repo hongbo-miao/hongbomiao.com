@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-airbyte-certificate
-  namespace: production-hm-airbyte
+  name: hm-akhq-certificate
+  namespace: production-hm-akhq
 spec:
-  commonName: airbyte.hongbomiao.com
-  secretName: production-hm-airbyte-certificate
+  commonName: akhq.hongbomiao.com
+  secretName: hm-akhq-certificate
   dnsNames:
-    - airbyte.hongbomiao.com
+    - akhq.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

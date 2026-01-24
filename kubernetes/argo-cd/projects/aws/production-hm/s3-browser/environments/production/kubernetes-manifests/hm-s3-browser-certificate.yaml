@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-skypilot-certificate
-  namespace: production-hm-skypilot
+  name: hm-s3-browser-certificate
+  namespace: production-hm-s3-browser
 spec:
-  commonName: skypilot.hongbomiao.com
-  secretName: production-hm-skypilot-certificate
+  commonName: s3-browser.hongbomiao.com
+  secretName: hm-s3-browser-certificate
   dnsNames:
-    - skypilot.hongbomiao.com
+    - s3-browser.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

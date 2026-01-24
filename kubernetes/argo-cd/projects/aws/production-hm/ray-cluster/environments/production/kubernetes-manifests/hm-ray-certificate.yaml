@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-harbor-certificate
-  namespace: production-hm-harbor
+  name: hm-ray-certificate
+  namespace: production-hm-ray-cluster
 spec:
-  commonName: harbor.hongbomiao.com
-  secretName: production-hm-harbor-certificate
+  commonName: ray.hongbomiao.com
+  secretName: hm-ray-certificate
   dnsNames:
-    - harbor.hongbomiao.com
+    - ray.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

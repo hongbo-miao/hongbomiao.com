@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-netdata-certificate
-  namespace: production-hm-netdata
+  name: hm-redpanda-console-certificate
+  namespace: production-hm-redpanda-console
 spec:
-  commonName: netdata.hongbomiao.com
-  secretName: production-hm-netdata-certificate
+  commonName: redpanda-console.hongbomiao.com
+  secretName: hm-redpanda-console-certificate
   dnsNames:
-    - netdata.hongbomiao.com
+    - redpanda-console.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

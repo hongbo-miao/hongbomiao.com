@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-doris-certificate
-  namespace: production-hm-doris
+  name: hm-skypilot-certificate
+  namespace: production-hm-skypilot
 spec:
-  commonName: doris.hongbomiao.com
-  secretName: production-hm-doris-certificate
+  commonName: skypilot.hongbomiao.com
+  secretName: hm-skypilot-certificate
   dnsNames:
-    - doris.hongbomiao.com
+    - skypilot.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

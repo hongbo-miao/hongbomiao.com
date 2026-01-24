@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-odoo-certificate
-  namespace: production-hm-odoo
+  name: hm-clickhouse-certificate
+  namespace: production-hm-clickhouse
 spec:
-  commonName: odoo.hongbomiao.com
-  secretName: production-hm-odoo-certificate
+  commonName: clickhouse.hongbomiao.com
+  secretName: hm-clickhouse-certificate
   dnsNames:
-    - odoo.hongbomiao.com
+    - clickhouse.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-clickhouse-certificate
-  namespace: production-hm-clickhouse
+  name: hm-litellm-certificate
+  namespace: production-hm-litellm
 spec:
-  commonName: clickhouse.hongbomiao.com
-  secretName: production-hm-clickhouse-certificate
+  commonName: litellm.hongbomiao.com
+  secretName: hm-litellm-certificate
   dnsNames:
-    - clickhouse.hongbomiao.com
+    - litellm.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

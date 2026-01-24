@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-label-studio-certificate
-  namespace: production-hm-label-studio
+  name: hm-confluent-schema-registry-certificate
+  namespace: production-hm-confluent-schema-registry
 spec:
-  commonName: label-studio.hongbomiao.com
-  secretName: production-hm-label-studio-certificate
+  commonName: confluent-schema-registry.hongbomiao.com
+  secretName: hm-confluent-schema-registry-certificate
   dnsNames:
-    - label-studio.hongbomiao.com
+    - confluent-schema-registry.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

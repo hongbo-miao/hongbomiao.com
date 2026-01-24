@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-confluent-schema-registry-certificate
-  namespace: production-hm-confluent-schema-registry
+  name: hm-opencost-certificate
+  namespace: production-hm-opencost
 spec:
-  commonName: confluent-schema-registry.hongbomiao.com
-  secretName: production-hm-confluent-schema-registry-certificate
+  commonName: opencost.hongbomiao.com
+  secretName: hm-opencost-certificate
   dnsNames:
-    - confluent-schema-registry.hongbomiao.com
+    - opencost.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer

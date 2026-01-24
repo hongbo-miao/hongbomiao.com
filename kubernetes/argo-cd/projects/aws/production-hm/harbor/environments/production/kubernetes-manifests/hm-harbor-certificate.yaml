@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: production-hm-nessie-certificate
-  namespace: production-hm-nessie
+  name: hm-harbor-certificate
+  namespace: production-hm-harbor
 spec:
-  commonName: nessie.hongbomiao.com
-  secretName: production-hm-nessie-certificate
+  commonName: harbor.hongbomiao.com
+  secretName: hm-harbor-certificate
   dnsNames:
-    - nessie.hongbomiao.com
+    - harbor.hongbomiao.com
   issuerRef:
     kind: ClusterIssuer
     name: production-lets-encrypt-cluster-issuer
