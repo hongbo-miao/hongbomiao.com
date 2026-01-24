@@ -758,6 +758,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **AWS Batch** - Batch computing
 - **Open MPI** - High-performance computing (HPC) library
 - **Slurm** - Workload management
+- **Volcano** - Kubernetes batch scheduling system
 
 ### Cloud Computing
 
