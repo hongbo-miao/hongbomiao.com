@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hm-spark-history-server-service
+  namespace: production-hm-spark-history-server
+  labels:
+    app: hm-spark-history-server
+    app.kubernetes.io/name: hm-spark-history-server-service
+    app.kubernetes.io/part-of: production-hm-spark-history-server
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 18080
+      targetPort: http
+      protocol: TCP
+  selector:
+    app: hm-spark-history-server

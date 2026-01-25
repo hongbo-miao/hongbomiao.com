@@ -295,3 +295,40 @@ module "skypilot_postgres_cluster" {
   backup_window_start_time_utc = "9:00:00"
   backup_retention_policy      = "14d"
 }
+
+# Spark History Server
+# Spark History Server - service account
+module "hm_spark_history_server_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-spark-history-server-service-account"
+  labels               = var.common_labels
+}
+module "hm_spark_history_server_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-spark-history-server-group"
+  labels     = var.common_labels
+}
+module "hm_spark_history_server_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_spark_history_server_iam_group.id
+  member_id = module.hm_spark_history_server_service_account.id
+  labels    = var.common_labels
+}
+module "hm_spark_history_server_access_permit" {
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_spark_history_server_iam_group.id
+  resource_id = module.hm_spark_history_server_object_storage.id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
+}
+# Spark History Server - object storage
+module "hm_spark_history_server_object_storage" {
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-spark-history-server"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "DISABLED"
+  labels                = var.common_labels
+}

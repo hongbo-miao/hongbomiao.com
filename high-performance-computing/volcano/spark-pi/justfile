@@ -1,21 +1,2 @@
-NAMESPACE := "production-hm-spark-jobs"
-APPLICATION_NAME := "spark-pi"
-
-start:
-    kubectl apply --filename=spark-pi.yaml
-
-restart:
-    kubectl delete --filename=spark-pi.yaml --ignore-not-found=true
-    kubectl apply --filename=spark-pi.yaml
-
-delete:
-    kubectl delete --filename=spark-pi.yaml --ignore-not-found=true
-
-get:
-    kubectl get sparkapplication --namespace={{ NAMESPACE }}
-
-describe:
-    kubectl describe sparkapplication {{ APPLICATION_NAME }} --namespace={{ NAMESPACE }}
-
-log:
-    kubectl logs --follow {{ APPLICATION_NAME }}-driver --namespace={{ NAMESPACE }}
+run:
+    kubectl create --filename=spark-pi.yaml

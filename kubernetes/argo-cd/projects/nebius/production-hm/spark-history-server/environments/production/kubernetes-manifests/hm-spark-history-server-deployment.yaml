@@ -1,0 +1,90 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hm-spark-history-server-deployment
+  namespace: production-hm-spark-history-server
+  labels:
+    app: hm-spark-history-server
+    app.kubernetes.io/name: hm-spark-history-server-deployment
+    app.kubernetes.io/part-of: production-hm-spark-history-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hm-spark-history-server
+  template:
+    metadata:
+      labels:
+        app: hm-spark-history-server
+    spec:
+      serviceAccountName: hm-spark-history-server-service-account
+      initContainers:
+        - name: download-aws-jars
+          image: harbor.hongbomiao.com/docker-hub-proxy-cache/curlimages/curl:8.18.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              # https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-aws
+              curl --silent --fail --show-error --location --output /jars/hadoop-aws-3.4.2.jar https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.4.2/hadoop-aws-3.4.2.jar
+              # https://mvnrepository.com/artifact/software.amazon.awssdk/bundle
+              curl --silent --fail --show-error --location --output /jars/bundle-2.41.14.jar https://repo1.maven.org/maven2/software/amazon/awssdk/bundle/2.41.14/bundle-2.41.14.jar
+          volumeMounts:
+            - name: aws-jars
+              mountPath: /jars
+      containers:
+        - name: spark-history-server
+          image: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/spark:4.1.1-scala2.13-java21-python3-r-ubuntu
+          command:
+            - /opt/spark/sbin/start-history-server.sh
+          env:
+            - name: SPARK_NO_DAEMONIZE
+              value: "true"
+            - name: SPARK_HISTORY_OPTS
+              value: >-
+                -Dspark.history.fs.logDirectory=s3a://production-hm-spark-history-server/
+                -Dspark.hadoop.fs.s3a.endpoint=https://storage.us-central1.nebius.cloud
+                -Dspark.hadoop.fs.s3a.path.style.access=true
+                -Dspark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem
+            - name: SPARK_DIST_CLASSPATH
+              value: /opt/spark/aws-jars/*
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: hm-spark-history-server-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: hm-spark-history-server-secret
+                  key: AWS_SECRET_ACCESS_KEY
+          ports:
+            - name: http
+              containerPort: 18080
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          volumeMounts:
+            - name: aws-jars
+              mountPath: /opt/spark/aws-jars
+      volumes:
+        - name: aws-jars
+          emptyDir: {}

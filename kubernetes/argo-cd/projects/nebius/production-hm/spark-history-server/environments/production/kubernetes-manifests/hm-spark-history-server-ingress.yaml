@@ -1,0 +1,33 @@
+# https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-spark-history-server-ingress
+  namespace: production-hm-spark-history-server
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: spark.hongbomiao.com
+  labels:
+    app.kubernetes.io/name: hm-spark-history-server-ingress
+    app.kubernetes.io/part-of: production-hm-spark-history-server
+spec:
+  rules:
+    - host: spark.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-spark-history-server-service
+                port:
+                  number: 18080
+  tls:
+    - hosts:
+        - spark.hongbomiao.com
+      secretName: hm-spark-history-server-certificate
