@@ -20,9 +20,9 @@ prometheus:
     serviceMonitor:
       enabled: true
 podDisruptionBudget:
-  operator:
-    minAvailable: 2
   metricServer:
-    minAvailable: 2
+    maxUnavailable: 1
+  operator:
+    maxUnavailable: 1
   webhooks:
-    minAvailable: 2
+    maxUnavailable: 1
