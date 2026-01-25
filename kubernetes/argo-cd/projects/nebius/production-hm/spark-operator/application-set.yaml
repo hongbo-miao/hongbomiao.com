@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: production-spark-kubernetes-operator
+  name: production-spark-operator
   namespace: production-hm-argo-cd
 spec:
   goTemplate: true
@@ -11,10 +11,10 @@ spec:
         repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
         revision: main
         files:
-          - path: kubernetes/argo-cd/projects/nebius/production-hm/spark-kubernetes-operator/environments/*/config.yaml
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/spark-operator/environments/*/config.yaml
   template:
     metadata:
-      name: '{{.environment}}-spark-kubernetes-operator'
+      name: '{{.environment}}-spark-operator'
     spec:
       project: production-hm
       sources:
@@ -22,14 +22,14 @@ spec:
           targetRevision: '{{.helmChartVersion}}'
           chart: spark-kubernetes-operator
           helm:
-            releaseName: spark-kubernetes-operator
+            releaseName: spark-operator
             valueFiles:
               - '$config/{{.path.path}}/helm-chart/values.yaml'
         - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
           targetRevision: main
           ref: config
       destination:
-        namespace: '{{.environment}}-hm-spark-kubernetes-operator'
+        namespace: '{{.environment}}-hm-spark-operator'
         server: https://kubernetes.default.svc
       syncPolicy:
         syncOptions:
