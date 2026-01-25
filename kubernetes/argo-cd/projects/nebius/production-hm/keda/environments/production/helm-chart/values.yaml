@@ -1,0 +1,28 @@
+# https://github.com/kedacore/charts/blob/main/keda/values.yaml
+---
+operator:
+  replicaCount: 3
+metricsServer:
+  replicaCount: 3
+webhooks:
+  replicaCount: 3
+prometheus:
+  metricServer:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  operator:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  webhooks:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+podDisruptionBudget:
+  operator:
+    minAvailable: 2
+  metricServer:
+    minAvailable: 2
+  webhooks:
+    minAvailable: 2

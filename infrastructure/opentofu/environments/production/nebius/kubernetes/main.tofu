@@ -6,32 +6,74 @@ module "hm_kubernetes_cluster" {
   vpc_subnet_id           = var.vpc_subnet_id
   labels                  = var.common_labels
 }
-module "hm_kubernetes_cpu_node_group_lion" {
-  source         = "../../../../modules/nebius/kubernetes_cpu_node_group"
-  parent_id      = module.hm_kubernetes_cluster.id
-  name           = "node-group-lion"
-  min_node_count = 3
-  max_node_count = 100
-  # https://docs.nebius.com/compute/virtual-machines/types
-  platform = "cpu-d3"
-  preset   = "4vcpu-16gb"
-  # https://docs.nebius.com/terraform-provider/reference/resources/mk8s_v1_node_group#inner-value-description
-  os     = "ubuntu24.04"
-  labels = var.common_labels
+
+# Kubernetes - CPU node groups
+# https://docs.nebius.com/compute/virtual-machines/types
+# https://docs.nebius.com/terraform-provider/reference/resources/mk8s_v1_node_group#inner-value-description
+locals {
+  cloud_init_user_data = file("${path.module}/files/scripts/configure_sysctl.yaml")
+  cpu_node_groups = {
+    lion = {
+      min_node_count = 3
+      max_node_count = 100
+      preset         = "4vcpu-16gb"
+    },
+    badger = {
+      min_node_count = 3
+      max_node_count = 50
+      preset         = "8vcpu-32gb"
+    },
+    hyena = {
+      min_node_count = 0
+      max_node_count = 20
+      preset         = "16vcpu-64gb"
+    },
+    dingo = {
+      min_node_count = 0
+      max_node_count = 10
+      preset         = "32vcpu-128gb"
+    }
+  }
 }
-module "hm_kubernetes_gpu_node_group_dragon" {
-  source         = "../../../../modules/nebius/kubernetes_gpu_node_group"
-  parent_id      = module.hm_kubernetes_cluster.id
-  name           = "node-group-dragon"
-  min_node_count = 1
-  max_node_count = 10
-  # https://docs.nebius.com/compute/virtual-machines/types
-  platform = "gpu-h200-sxm"
-  preset   = "1gpu-16vcpu-200gb"
-  # https://docs.nebius.com/terraform-provider/reference/resources/mk8s_v1_node_group#inner-value-description
-  os             = "ubuntu24.04"
-  drivers_preset = "cuda12.8"
-  labels         = var.common_labels
+module "hm_kubernetes_cpu_node_group" {
+  for_each             = local.cpu_node_groups
+  source               = "../../../../modules/nebius/kubernetes_cpu_node_group"
+  parent_id            = module.hm_kubernetes_cluster.id
+  name                 = "node-group-${each.key}"
+  min_node_count       = each.value.min_node_count
+  max_node_count       = each.value.max_node_count
+  platform             = "cpu-d3"
+  preset               = each.value.preset
+  os                   = "ubuntu24.04"
+  cloud_init_user_data = local.cloud_init_user_data
+  labels               = var.common_labels
+}
+
+# Kubernetes - GPU node groups
+locals {
+  gpu_node_groups = {
+    dragon = {
+      min_node_count = 0
+      max_node_count = 10
+      platform       = "gpu-h200-sxm"
+      preset         = "1gpu-16vcpu-200gb"
+      drivers_preset = "cuda12.8"
+    }
+  }
+}
+module "hm_kubernetes_gpu_node_group" {
+  for_each             = local.gpu_node_groups
+  source               = "../../../../modules/nebius/kubernetes_gpu_node_group"
+  parent_id            = module.hm_kubernetes_cluster.id
+  name                 = "node-group-${each.key}"
+  min_node_count       = each.value.min_node_count
+  max_node_count       = each.value.max_node_count
+  platform             = each.value.platform
+  preset               = each.value.preset
+  os                   = "ubuntu24.04"
+  drivers_preset       = each.value.drivers_preset
+  cloud_init_user_data = local.cloud_init_user_data
+  labels               = var.common_labels
 }
 
 # Argo CD

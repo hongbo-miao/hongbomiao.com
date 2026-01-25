@@ -19,7 +19,8 @@ resource "nebius_mk8s_v1_node_group" "main" {
       platform = var.platform
       preset   = var.preset
     }
-    os = var.os
+    os                   = var.os
+    cloud_init_user_data = var.cloud_init_user_data != "" ? var.cloud_init_user_data : null
   }
   labels = var.labels
 }
