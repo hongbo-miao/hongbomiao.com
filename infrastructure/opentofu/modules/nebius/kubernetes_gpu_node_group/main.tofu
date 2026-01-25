@@ -22,7 +22,8 @@ resource "nebius_mk8s_v1_node_group" "main" {
     gpu_settings = {
       drivers_preset = var.drivers_preset
     }
-    os = var.os
+    os                   = var.os
+    cloud_init_user_data = var.cloud_init_user_data != "" ? var.cloud_init_user_data : null
   }
   labels = var.labels
 }

@@ -22,3 +22,7 @@ variable "os" {
 variable "labels" {
   type = map(string)
 }
+variable "cloud_init_user_data" {
+  type    = string
+  default = ""
+}

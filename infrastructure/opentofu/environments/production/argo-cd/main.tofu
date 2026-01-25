@@ -24,6 +24,7 @@ module "hm_project" {
     { group = "admissionregistration.k8s.io", kind = "MutatingWebhookConfiguration" },
     { group = "admissionregistration.k8s.io", kind = "ValidatingWebhookConfiguration" },
     { group = "apiextensions.k8s.io", kind = "CustomResourceDefinition" },
+    { group = "apiregistration.k8s.io", kind = "APIService" },
     { group = "cert-manager.io", kind = "ClusterIssuer" },
     { group = "networking.k8s.io", kind = "IngressClass" },
     { group = "rbac.authorization.k8s.io", kind = "ClusterRole" },

@@ -1,0 +1,7 @@
+write_files:
+  - path: /etc/sysctl.d/99-kubernetes-inotify.conf
+    content: |
+      fs.inotify.max_user_watches=1048576
+      fs.inotify.max_user_instances=8192
+runcmd:
+  - sysctl --system
