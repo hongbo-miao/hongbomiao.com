@@ -1,19 +1,16 @@
-# https://github.com/apache/spark-kubernetes-operator/blob/main/examples/pi-on-volcano.yaml
+# https://github.com/apache/spark-kubernetes-operator/blob/main/examples/pi-python.yaml
 ---
 apiVersion: spark.apache.org/v1
 kind: SparkApplication
 metadata:
-  generateName: spark-pi-
+  generateName: pyspark-pi-
   namespace: production-hm-spark-jobs
 spec:
-  jars: local:///opt/spark/examples/jars/spark-examples.jar
-  mainClass: org.apache.spark.examples.SparkPi
-  driverArgs:
-    - "20000"
+  pyFiles: local:///opt/spark/examples/src/main/python/pi.py
   sparkConf:
     spark.dynamicAllocation.enabled: "true"
-    spark.dynamicAllocation.maxExecutors: "3"
     spark.dynamicAllocation.shuffleTracking.enabled: "true"
+    spark.dynamicAllocation.maxExecutors: "3"
     spark.kubernetes.authenticate.driver.serviceAccountName: spark
     spark.kubernetes.container.image: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/spark:4.1.1-scala2.13-java21-python3-r-ubuntu
     spark.kubernetes.scheduler.name: volcano
