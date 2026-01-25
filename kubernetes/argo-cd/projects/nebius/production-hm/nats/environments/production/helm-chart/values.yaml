@@ -38,3 +38,8 @@ service:
       annotations:
         # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
         external-dns.alpha.kubernetes.io/hostname: nats.hongbomiao.com
+podDisruptionBudget:
+  enabled: true
+  merge:
+    spec:
+      maxUnavailable: 1
