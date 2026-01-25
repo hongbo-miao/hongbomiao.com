@@ -17,7 +17,21 @@ spec:
     spark.kubernetes.authenticate.driver.serviceAccountName: spark
     spark.kubernetes.container.image: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/spark:4.1.1-scala2.13-java21-python3-r-ubuntu
     spark.kubernetes.scheduler.name: volcano
+    # Spark History Server
+    spark.eventLog.enabled: "true"
+    spark.eventLog.dir: s3a://production-hm-spark-history-server/
+    spark.hadoop.fs.s3a.endpoint: https://storage.us-central1.nebius.cloud
+    spark.hadoop.fs.s3a.path.style.access: "true"
+    spark.hadoop.fs.s3a.impl: org.apache.hadoop.fs.s3a.S3AFileSystem
+    spark.jars.packages: org.apache.hadoop:hadoop-aws:3.4.2,software.amazon.awssdk:bundle:2.41.14
+    spark.jars.ivy: /tmp/.ivy2
+    spark.kubernetes.driver.secretKeyRef.AWS_ACCESS_KEY_ID: object-storage-secret:AWS_ACCESS_KEY_ID
+    spark.kubernetes.driver.secretKeyRef.AWS_SECRET_ACCESS_KEY: object-storage-secret:AWS_SECRET_ACCESS_KEY
+    spark.kubernetes.executor.secretKeyRef.AWS_ACCESS_KEY_ID: object-storage-secret:AWS_ACCESS_KEY_ID
+    spark.kubernetes.executor.secretKeyRef.AWS_SECRET_ACCESS_KEY: object-storage-secret:AWS_SECRET_ACCESS_KEY
   applicationTolerations:
     resourceRetainPolicy: OnFailure
+    # Auto-delete SparkApplication after completion
+    ttlAfterStopMillis: 60000
   runtimeVersions:
     sparkVersion: 4.1.1

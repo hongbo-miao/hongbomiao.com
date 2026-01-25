@@ -1,0 +1,32 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production-spark-history-server
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        directories:
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/spark-history-server/environments/*
+  template:
+    metadata:
+      name: '{{.path.basename}}-spark-history-server'
+    spec:
+      project: production-hm
+      source:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        targetRevision: main
+        path: '{{.path.path}}/kubernetes-manifests'
+      destination:
+        namespace: '{{.path.basename}}-hm-spark-history-server'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true
