@@ -316,6 +316,57 @@ module "mlflow_postgres_cluster" {
   backup_retention_policy      = "14d"
 }
 
+
+# Polaris
+module "hm_polaris_service_account" {
+  source               = "../../../../modules/nebius/service_account"
+  project_id           = var.project_id
+  service_account_name = "${var.environment}-polaris-service-account"
+  labels               = var.common_labels
+}
+module "hm_polaris_iam_group" {
+  source     = "../../../../modules/nebius/iam_group"
+  parent_id  = var.tenant_id
+  group_name = "${var.environment}-polaris-group"
+  labels     = var.common_labels
+}
+module "hm_polaris_iam_group_membership" {
+  source    = "../../../../modules/nebius/iam_group_membership"
+  parent_id = module.hm_polaris_iam_group.id
+  member_id = module.hm_polaris_service_account.id
+  labels    = var.common_labels
+}
+data "nebius_storage_v1_bucket" "hm_iceberg_object_storage" {
+  name      = "${var.environment}-hm-iceberg"
+  parent_id = var.project_id
+}
+module "hm_polaris_access_permit" {
+  source      = "../../../../modules/nebius/access_permit"
+  parent_id   = module.hm_polaris_iam_group.id
+  resource_id = data.nebius_storage_v1_bucket.hm_iceberg_object_storage.id
+  role        = "storage.object-editor"
+  labels      = var.common_labels
+}
+module "polaris_postgres_cluster" {
+  source                       = "../../../../modules/nebius/postgres_cluster"
+  project_id                   = var.project_id
+  network_id                   = var.vpc_network_id
+  postgres_version             = "16"
+  pooling_mode                 = "SESSION"
+  postgres_cluster_name        = "${var.environment}-polaris-postgres-cluster"
+  bootstrap_database_name      = "bootstrap_db"
+  bootstrap_user_name          = "bootstrap_user"
+  bootstrap_user_password      = var.polaris_postgres_bootstrap_user_password
+  public_access                = false
+  disk_size_gib                = 16
+  host_count                   = 1
+  platform                     = "cpu-d3"
+  preset                       = "4vcpu-16gb"
+  labels                       = var.common_labels
+  backup_window_start_time_utc = "9:00:00"
+  backup_retention_policy      = "14d"
+}
+
 # SkyPilot
 # SkyPilot - Postgres
 module "skypilot_postgres_cluster" {

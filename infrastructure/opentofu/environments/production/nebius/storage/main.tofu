@@ -26,3 +26,12 @@ module "hm_postgres_cluster" {
   backup_window_start_time_utc = "9:00:00"
   backup_retention_policy      = "14d"
 }
+
+module "hm_iceberg_object_storage" {
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-hm-iceberg"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "ENABLED"
+  labels                = var.common_labels
+}

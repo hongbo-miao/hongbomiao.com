@@ -1,0 +1,40 @@
+# https://github.com/apache/polaris/blob/main/helm/polaris/values.yaml
+---
+image:
+  repository: harbor.hongbomiao.com/docker-hub-proxy-cache/apache/polaris
+replicaCount: 3
+serviceAccount:
+  create: true
+persistence:
+  type: relational-jdbc
+  relationalJdbc:
+    secret:
+      name: hm-polaris-secret
+      username: POSTGRES_USER_NAME
+      password: POSTGRES_PASSWORD
+      jdbcUrl: POSTGRES_JDBC_URL
+storage:
+  secret:
+    name: hm-polaris-secret
+    awsAccessKeyId: AWS_ACCESS_KEY_ID
+    awsSecretAccessKey: AWS_SECRET_ACCESS_KEY
+extraEnv:
+  - name: AWS_ENDPOINT_URL_S3
+    value: https://storage.us-central1.nebius.cloud
+  - name: AWS_REGION
+    value: us-central1
+authentication:
+  tokenBroker:
+    type: rsa-key-pair
+    secret:
+      name: hm-polaris-secret
+      rsaKeyPair:
+        publicKey: public.pem
+        privateKey: private.pem
+resources:
+  requests:
+    cpu: 200m
+    memory: 1Gi
+  limits:
+    cpu: 500m
+    memory: 2Gi
