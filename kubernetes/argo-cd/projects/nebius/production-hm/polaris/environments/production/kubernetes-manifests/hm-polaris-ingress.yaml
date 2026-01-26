@@ -1,0 +1,33 @@
+# https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-polaris-ingress
+  namespace: production-hm-polaris
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: polaris.hongbomiao.com
+  labels:
+    app.kubernetes.io/name: hm-polaris-ingress
+    app.kubernetes.io/part-of: production-hm-polaris
+spec:
+  rules:
+    - host: polaris.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: polaris
+                port:
+                  number: 8181
+  tls:
+    - hosts:
+        - polaris.hongbomiao.com
+      secretName: hm-polaris-certificate
