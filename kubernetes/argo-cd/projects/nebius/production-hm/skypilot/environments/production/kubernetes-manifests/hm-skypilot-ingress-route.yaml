@@ -1,0 +1,31 @@
+# https://doc.traefik.io/traefik/routing/providers/kubernetes-crd
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hm-skypilot-ingress-route
+  namespace: production-hm-skypilot
+  annotations:
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: skypilot.hongbomiao.com
+  labels:
+    app.kubernetes.io/name: hm-skypilot-ingress-route
+    app.kubernetes.io/part-of: production-hm-skypilot
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`skypilot.hongbomiao.com`) && PathPrefix(`/oauth2`)
+      kind: Rule
+      services:
+        - name: skypilot-oauth2-proxy
+          port: 4180
+    - match: Host(`skypilot.hongbomiao.com`)
+      kind: Rule
+      middlewares:
+        - name: hm-skypilot-forward-authentication-middleware
+      services:
+        - name: skypilot-api-service
+          port: 80
+  tls:
+    secretName: hm-skypilot-certificate
