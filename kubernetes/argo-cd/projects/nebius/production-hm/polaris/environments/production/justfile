@@ -20,9 +20,9 @@ bootstrap-polaris:
         --rm \
         --stdin \
         --tty \
-        --env="quarkus.datasource.username=$(kubectl get secret hm-polaris-secret -n production-hm-polaris -o jsonpath='{.data.POSTGRES_USER_NAME}' | base64 --decode)" \
-        --env="quarkus.datasource.password=$(kubectl get secret hm-polaris-secret -n production-hm-polaris -o jsonpath='{.data.POSTGRES_PASSWORD}' | base64 --decode)" \
-        --env="quarkus.datasource.jdbc.url=$(kubectl get secret hm-polaris-secret -n production-hm-polaris -o jsonpath='{.data.POSTGRES_JDBC_URL}' | base64 --decode)" \
+        --env="quarkus.datasource.username=$(kubectl get secret hm-polaris-secret --namespace=production-hm-polaris --output=jsonpath='{.data.POSTGRES_USER_NAME}' | base64 --decode)" \
+        --env="quarkus.datasource.password=$(kubectl get secret hm-polaris-secret --namespace=production-hm-polaris --output=jsonpath='{.data.POSTGRES_PASSWORD}' | base64 --decode)" \
+        --env="quarkus.datasource.jdbc.url=$(kubectl get secret hm-polaris-secret --namespace=production-hm-polaris --output=jsonpath='{.data.POSTGRES_JDBC_URL}' | base64 --decode)" \
         -- \
         bootstrap \
             --realm=POLARIS \
@@ -30,8 +30,8 @@ bootstrap-polaris:
 
 list-principals:
     #!/usr/bin/env bash
-    TOKEN=$(curl --silent --request POST "https://polaris.hongbomiao.com/api/catalog/v1/oauth/tokens" \
+    TOKEN=$(curl --silent --fail --show-error --location "https://polaris.hongbomiao.com/api/catalog/v1/oauth/tokens" \
         --data "grant_type=client_credentials&client_id=polaris_admin_oryx&client_secret={{ POLARIS_CLIENT_SECRET }}&scope=PRINCIPAL_ROLE:service_admin" \
         | jq --raw-output '.access_token')
-    curl --silent --header "Authorization: Bearer $TOKEN" \
+    curl --silent --fail --show-error --location --header "Authorization: Bearer $TOKEN" \
         "https://polaris.hongbomiao.com/api/management/v1/principals" | jq .
