@@ -39,8 +39,16 @@ patches:
       name: skypilot-ingress
     patch: |
       $patch: delete
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: skypilot-ingress
   - target:
       kind: Ingress
       name: skypilot-oauth2-proxy
     patch: |
       $patch: delete
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: skypilot-oauth2-proxy
