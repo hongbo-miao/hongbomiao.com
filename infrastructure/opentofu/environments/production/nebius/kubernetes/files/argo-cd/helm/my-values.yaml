@@ -1,6 +1,10 @@
 # https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 ---
 configs:
+  cm:
+    # Enable Helm chart inflation in Kustomize
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/kustomize/#kustomizing-helm-charts
+    kustomize.buildOptions: --enable-helm
   params:
     server.insecure: true
 controller:
