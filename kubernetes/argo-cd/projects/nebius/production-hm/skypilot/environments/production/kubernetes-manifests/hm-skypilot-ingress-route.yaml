@@ -15,11 +15,21 @@ spec:
   entryPoints:
     - websecure
   routes:
+    # OAuth2 proxy routes (/oauth2/sign_in, /oauth2/callback, etc.)
     - match: Host(`skypilot.hongbomiao.com`) && PathPrefix(`/oauth2`)
       kind: Rule
       services:
         - name: skypilot-oauth2-proxy
           port: 4180
+    # Service account token bypass (Bearer sky_* tokens validated by SkyPilot API)
+    - match: Host(`skypilot.hongbomiao.com`) && HeadersRegexp(`Authorization`, `^Bearer sky_.+`)
+      kind: Rule
+      middlewares:
+        - name: hm-skypilot-service-account-token-middleware
+      services:
+        - name: skypilot-api-service
+          port: 80
+    # OAuth2 authentication for browser/other requests
     - match: Host(`skypilot.hongbomiao.com`)
       kind: Rule
       middlewares:
