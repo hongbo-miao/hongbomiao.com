@@ -16,6 +16,12 @@ module "hm_project" {
   source            = "../../../modules/argo-cd/argo_cd_project"
   project_name      = local.hm_project
   argo_cd_namespace = local.argo_cd_namespace
+  destination_namespaces = [
+    "${var.environment}-*",
+    "kube-system",
+    "skypilot-system",
+    local.argo_cd_namespace
+  ]
   namespace_resource_whitelist = [
     { group = "*", kind = "*" },
   ]
