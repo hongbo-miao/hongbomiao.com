@@ -40,6 +40,8 @@ prometheusOperator:
 prometheus:
   enabled: true
   prometheusSpec:
+    podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
     # https://grafana.com/docs/grafana-cloud/monitor-infrastructure/kubernetes-monitoring/configuration/config-other-methods/prometheus/remote-write-helm-operator/#create-a-helm-values-file-with-prometheus-remote_write-configuration
     remoteWrite:
       - url: http://mimir-distributor-headless.production-hm-mimir.svc:8080/api/v1/push

@@ -7,3 +7,6 @@ variable "folder_uid" {
 variable "config_json" {
   type = string
 }
+variable "uid_prefix" {
+  type = string
+}
