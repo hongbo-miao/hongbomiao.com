@@ -12,7 +12,52 @@ name: . Static Type Check
       python:
         required: true
         type: boolean
-      opentofu:
+      opentofu-production-airbyte:
+        required: true
+        type: boolean
+      opentofu-production-argo-cd:
+        required: true
+        type: boolean
+      opentofu-production-aws-general:
+        required: true
+        type: boolean
+      opentofu-production-aws-kubernetes:
+        required: true
+        type: boolean
+      opentofu-production-aws-network:
+        required: true
+        type: boolean
+      opentofu-production-aws-storage:
+        required: true
+        type: boolean
+      opentofu-production-harbor:
+        required: true
+        type: boolean
+      opentofu-production-grafana:
+        required: true
+        type: boolean
+      opentofu-production-nebius-applications:
+        required: true
+        type: boolean
+      opentofu-production-nebius-general:
+        required: true
+        type: boolean
+      opentofu-production-nebius-kubernetes:
+        required: true
+        type: boolean
+      opentofu-production-nebius-network:
+        required: true
+        type: boolean
+      opentofu-production-nebius-storage:
+        required: true
+        type: boolean
+      opentofu-production-snowflake-account:
+        required: true
+        type: boolean
+      opentofu-production-snowflake-data:
+        required: true
+        type: boolean
+      opentofu-production-snowflake-general:
         required: true
         type: boolean
       # Applications
@@ -266,7 +311,7 @@ jobs:
 
   static-type-check-opentofu-production-airbyte:
     name: OpenTofu (production/airbyte)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-airbyte }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -285,7 +330,7 @@ jobs:
 
   static-type-check-opentofu-production-argo-cd:
     name: OpenTofu (production/argo-cd)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-argo-cd }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -304,7 +349,7 @@ jobs:
 
   static-type-check-opentofu-production-aws-general:
     name: OpenTofu (production/aws/general)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-aws-general }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -323,7 +368,7 @@ jobs:
 
   static-type-check-opentofu-production-aws-kubernetes:
     name: OpenTofu (production/aws/kubernetes)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-aws-kubernetes }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -342,7 +387,7 @@ jobs:
 
   static-type-check-opentofu-production-aws-network:
     name: OpenTofu (production/aws/network)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-aws-network }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -361,7 +406,7 @@ jobs:
 
   static-type-check-opentofu-production-aws-storage:
     name: OpenTofu (production/aws/storage)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-aws-storage }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -380,7 +425,7 @@ jobs:
 
   static-type-check-opentofu-production-harbor:
     name: OpenTofu (production/harbor)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-harbor }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -397,9 +442,28 @@ jobs:
         run: |
           tofu validate
 
+  static-type-check-opentofu-production-grafana:
+    name: OpenTofu (production/grafana)
+    if: ${{ inputs.workflow || inputs.opentofu-production-grafana }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.8
+      - name: Initialize OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/grafana
+        run: |
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/grafana
+        run: |
+          tofu validate
+
   static-type-check-opentofu-production-nebius-applications:
     name: OpenTofu (production/nebius/applications)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-nebius-applications }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -418,7 +482,7 @@ jobs:
 
   static-type-check-opentofu-production-nebius-general:
     name: OpenTofu (production/nebius/general)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-nebius-general }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -437,7 +501,7 @@ jobs:
 
   static-type-check-opentofu-production-nebius-kubernetes:
     name: OpenTofu (production/nebius/kubernetes)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-nebius-kubernetes }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -456,7 +520,7 @@ jobs:
 
   static-type-check-opentofu-production-nebius-network:
     name: OpenTofu (production/nebius/network)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-nebius-network }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -475,7 +539,7 @@ jobs:
 
   static-type-check-opentofu-production-nebius-storage:
     name: OpenTofu (production/nebius/storage)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-nebius-storage }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -494,7 +558,7 @@ jobs:
 
   static-type-check-opentofu-production-snowflake-account:
     name: OpenTofu (production/snowflake/account)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-snowflake-account }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -513,7 +577,7 @@ jobs:
 
   static-type-check-opentofu-production-snowflake-data:
     name: OpenTofu (production/snowflake/data)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-snowflake-data }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:
@@ -532,7 +596,7 @@ jobs:
 
   static-type-check-opentofu-production-snowflake-general:
     name: OpenTofu (production/snowflake/general)
-    if: ${{ inputs.workflow || inputs.opentofu }}
+    if: ${{ inputs.workflow || inputs.opentofu-production-snowflake-general }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     steps:

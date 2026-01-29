@@ -44,5 +44,6 @@ resource "nebius_msp_postgresql_v1alpha1_cluster" "main" {
   labels = var.labels
   lifecycle {
     prevent_destroy = true
+    ignore_changes  = [bootstrap.user_password]
   }
 }

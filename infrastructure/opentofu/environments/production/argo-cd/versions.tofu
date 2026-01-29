@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket  = "production-hm-terraform-bucket"
+    bucket  = "production-hm-opentofu-bucket"
     key     = "production/argo-cd/terraform.tfstate"
     region  = "us-central1"
     profile = "nebius"
@@ -9,9 +9,9 @@ terraform {
     }
     # Skip AWS-specific validations as Nebius provides different settings
     skip_credentials_validation = true
+    skip_region_validation      = true
     skip_requesting_account_id  = true
     skip_s3_checksum            = true
-    skip_region_validation      = true
   }
   required_providers {
     // https://registry.terraform.io/providers/argoproj-labs/argocd/latest

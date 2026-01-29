@@ -14,9 +14,12 @@ resource "argocd_project" "main" {
   }
   spec {
     source_repos = ["*"]
-    destination {
-      server    = "https://kubernetes.default.svc"
-      namespace = "*"
+    dynamic "destination" {
+      for_each = var.destination_namespaces
+      content {
+        server    = "https://kubernetes.default.svc"
+        namespace = destination.value
+      }
     }
     dynamic "namespace_resource_whitelist" {
       for_each = var.namespace_resource_whitelist
