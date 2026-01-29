@@ -112,7 +112,7 @@ module "grafana_dashboard_kubernetes" {
   tags        = [var.managed_tag]
 }
 
-
+# Dashboard - NATS
 # Dashboard - NATS Server
 # https://github.com/nats-io/prometheus-nats-exporter/blob/main/walkthrough/README.md
 # Using non-helm dashboard version because the exporter uses the default "gnatsd_" metrics prefix.
@@ -191,7 +191,6 @@ module "grafana_dashboard_nats_server" {
   uid_prefix = "hm-"
   tags       = [var.managed_tag]
 }
-
 # Dashboard - NATS JetStream
 # https://github.com/nats-io/prometheus-nats-exporter/blob/main/walkthrough/README.md
 # Using non-helm dashboard version because the exporter uses the default "gnatsd_" metrics prefix.
