@@ -34,6 +34,42 @@ module "grafana_data_source_hm_loki" {
 }
 
 # Dashboard
+# Dashboard - Cilium
+locals {
+  cilium_dashboard_urls = {
+    "cilium-dashboard"                   = "https://raw.githubusercontent.com/cilium/cilium/main/install/kubernetes/cilium/files/cilium-agent/dashboards/cilium-dashboard.json"
+    "cilium-operator-dashboard"          = "https://raw.githubusercontent.com/cilium/cilium/main/install/kubernetes/cilium/files/cilium-operator/dashboards/cilium-operator-dashboard.json"
+    "hubble-dashboard"                   = "https://raw.githubusercontent.com/cilium/cilium/main/install/kubernetes/cilium/files/hubble/dashboards/hubble-dashboard.json"
+    "hubble-l7-http-metrics-by-workload" = "https://raw.githubusercontent.com/cilium/cilium/main/install/kubernetes/cilium/files/hubble/dashboards/hubble-l7-http-metrics-by-workload.json"
+  }
+  cilium_org_dashboard_combinations = flatten([
+    for org_id in local.org_ids : [
+      for dashboard_name in keys(local.cilium_dashboard_urls) : {
+        key            = "${org_id}-${dashboard_name}"
+        org_id         = org_id
+        dashboard_name = dashboard_name
+      }
+    ]
+  ])
+}
+data "http" "cilium_dashboards" {
+  for_each = local.cilium_dashboard_urls
+  url      = each.value
+}
+module "grafana_folder_cilium" {
+  source   = "../../../modules/grafana/grafana_folder"
+  for_each = toset(local.org_ids)
+  org_id   = each.value
+  title    = "Cilium"
+}
+module "grafana_dashboard_cilium" {
+  source      = "../../../modules/grafana/grafana_dashboard"
+  for_each    = { for combination in local.cilium_org_dashboard_combinations : combination.key => combination }
+  org_id      = each.value.org_id
+  folder_uid  = module.grafana_folder_cilium[each.value.org_id].uid
+  config_json = data.http.cilium_dashboards[each.value.dashboard_name].response_body
+  uid_prefix  = "hm-"
+}
 # Dashboard - Kubernetes
 locals {
   dashboard_urls = {
@@ -46,11 +82,10 @@ locals {
   }
   org_dashboard_combinations = flatten([
     for org_id in local.org_ids : [
-      for dashboard_name, dashboard_url in local.dashboard_urls : {
+      for dashboard_name in keys(local.dashboard_urls) : {
         key            = "${org_id}-${dashboard_name}"
         org_id         = org_id
         dashboard_name = dashboard_name
-        dashboard_url  = dashboard_url
       }
     ]
   ])
@@ -71,4 +106,5 @@ module "grafana_dashboard_kubernetes" {
   org_id      = each.value.org_id
   folder_uid  = module.grafana_folder_kubernetes[each.value.org_id].uid
   config_json = data.http.dashboards[each.value.dashboard_name].response_body
+  uid_prefix  = "hm-"
 }
