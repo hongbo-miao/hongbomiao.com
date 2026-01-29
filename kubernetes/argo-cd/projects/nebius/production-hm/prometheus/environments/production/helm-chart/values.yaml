@@ -40,6 +40,8 @@ prometheusOperator:
 prometheus:
   enabled: true
   prometheusSpec:
+    podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
     tsdb:
       outOfOrderTimeWindow: 30m
     resources:
@@ -49,6 +51,29 @@ prometheus:
       limits:
         cpu: 500m
         memory: 2Gi
+  additionalPodMonitors:
+    - name: cilium-agent
+      namespaceSelector:
+        matchNames:
+          - kube-system
+      selector:
+        matchLabels:
+          k8s-app: cilium
+      podMetricsEndpoints:
+        - port: prometheus
+          path: /metrics
+        - port: hubble-metrics
+          path: /metrics
+    - name: cilium-operator
+      namespaceSelector:
+        matchNames:
+          - kube-system
+      selector:
+        matchLabels:
+          name: cilium-operator
+      podMetricsEndpoints:
+        - port: prometheus
+          path: /metrics
 prometheus-node-exporter:
   resources:
     requests:
