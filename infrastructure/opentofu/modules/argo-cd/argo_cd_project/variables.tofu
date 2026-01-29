@@ -4,6 +4,9 @@ variable "project_name" {
 variable "argo_cd_namespace" {
   type = string
 }
+variable "destination_namespaces" {
+  type = list(string)
+}
 variable "namespace_resource_whitelist" {
   type = list(object({
     group = string

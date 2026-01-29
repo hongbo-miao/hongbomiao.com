@@ -30,7 +30,7 @@ grafana.ini:
   auth:
     disable_login_form: true
   auth.basic:
-    enabled: false
+    enabled: true
   auth.google:
     enabled: true
     allow_sign_up: true
@@ -80,11 +80,6 @@ datasources:
     # deleteDatasources:
     #   - name: xxx
     datasources:
-      - name: hm-prometheus
-        type: prometheus
-        isDefault: true
-        url: http://prometheus-kube-pr-prometheus.production-hm-prometheus.svc:9090
-        access: proxy
       - name: hm-mimir
         type: prometheus
         isDefault: false
@@ -92,15 +87,6 @@ datasources:
         access: proxy
         jsonData:
           prometheusType: Mimir
-          httpHeaderName1: X-Scope-OrgID
-        secureJsonData:
-          httpHeaderValue1: hm
-      - name: hm-loki
-        type: loki
-        isDefault: false
-        url: http://loki-gateway.production-hm-loki.svc:80
-        access: proxy
-        jsonData:
           httpHeaderName1: X-Scope-OrgID
         secureJsonData:
           httpHeaderValue1: hm
@@ -169,14 +155,6 @@ dashboardProviders:
   dashboardproviders.yaml:
     apiVersion: 1
     providers:
-      - name: hm-kubernetes-dashboards
-        orgId: 1
-        folder: Kubernetes
-        type: file
-        disableDeletion: true
-        editable: false
-        options:
-          path: /var/lib/grafana/dashboards/hm-kubernetes-dashboards
       - name: hm-ray-dashboards
         orgId: 1
         folder: Ray
@@ -186,19 +164,6 @@ dashboardProviders:
         options:
           path: /var/lib/grafana/dashboards/hm-ray-dashboards
 dashboards:
-  hm-kubernetes-dashboards:
-    hm-kubernetes-system-api-server-dashboard:
-      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
-    hm-kubernetes-system-coredns-dashboard:
-      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
-    hm-kubernetes-views-global-dashboard:
-      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
-    hm-kubernetes-views-namespaces-dashboard:
-      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
-    hm-kubernetes-views-nodes-dashboard:
-      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
-    hm-kubernetes-views-pods-dashboard:
-      url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
   hm-ray-dashboards:
     hm-ray-data-grafana-dashboard:
       url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/data_grafana_dashboard.json

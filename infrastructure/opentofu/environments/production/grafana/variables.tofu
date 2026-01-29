@@ -1,8 +1,8 @@
-variable "harbor_google_client_secret" {
+variable "grafana_admin_username" {
   type      = string
   sensitive = true
 }
-variable "hm_kubernetes_robot_secret" {
+variable "grafana_admin_password" {
   type      = string
   sensitive = true
 }
