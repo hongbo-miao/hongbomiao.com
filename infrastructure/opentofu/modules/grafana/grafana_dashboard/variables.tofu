@@ -10,3 +10,6 @@ variable "config_json" {
 variable "uid_prefix" {
   type = string
 }
+variable "tags" {
+  type = list(string)
+}

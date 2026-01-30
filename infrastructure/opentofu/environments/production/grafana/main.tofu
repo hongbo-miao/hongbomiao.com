@@ -69,7 +69,9 @@ module "grafana_dashboard_cilium" {
   folder_uid  = module.grafana_folder_cilium[each.value.org_id].uid
   config_json = data.http.cilium_dashboards[each.value.dashboard_name].response_body
   uid_prefix  = "hm-"
+  tags        = ["Managed by OpenTofu"]
 }
+
 # Dashboard - Kubernetes
 locals {
   dashboard_urls = {
@@ -107,4 +109,67 @@ module "grafana_dashboard_kubernetes" {
   folder_uid  = module.grafana_folder_kubernetes[each.value.org_id].uid
   config_json = data.http.dashboards[each.value.dashboard_name].response_body
   uid_prefix  = "hm-"
+  tags        = ["Managed by OpenTofu"]
+}
+
+# Dashboard - NATS
+locals {
+  nats_org_id = tostring(module.grafana_organization_hongbomiao.org_id)
+  # https://github.com/nats-io/prometheus-nats-exporter/blob/main/walkthrough/README.md
+  # Using non-helm dashboard versions because the exporter uses the default "gnatsd_" metrics prefix.
+  # The "-helm" versions expect "nats_" prefix which requires the "-prefix nats" flag on the exporter.
+  nats_dashboard_urls = {
+    "nats-jetstream" = "https://raw.githubusercontent.com/nats-io/prometheus-nats-exporter/main/walkthrough/grafana-jetstream-dash.json"
+    "nats-server"    = "https://raw.githubusercontent.com/nats-io/prometheus-nats-exporter/main/walkthrough/grafana-nats-dash.json"
+  }
+  nats_org_dashboard_combinations = [
+    for dashboard_name in keys(local.nats_dashboard_urls) : {
+      key            = "${local.nats_org_id}-${dashboard_name}"
+      org_id         = local.nats_org_id
+      dashboard_name = dashboard_name
+    }
+  ]
+  # Add explicit Prometheus datasource to each panel.
+  # The NATS Server dashboard has ${DS__NATS-PROMETHEUS} in panels (replaced later).
+  # The JetStream dashboard has no datasource in panels, so panels would use the default datasource.
+  # Adding explicit datasource ensures dashboards work regardless of which datasource is set as default.
+  nats_dashboard_processed = {
+    for key, combination in { for c in local.nats_org_dashboard_combinations : c.key => c } :
+    key => jsonencode(merge(
+      jsondecode(data.http.nats_dashboards[combination.dashboard_name].response_body),
+      {
+        panels = [
+          for panel in jsondecode(data.http.nats_dashboards[combination.dashboard_name].response_body).panels :
+          merge(panel, {
+            datasource = {
+              type = "prometheus"
+              uid  = module.grafana_data_source_hm_prometheus[combination.org_id].uid
+            }
+          })
+        ]
+      }
+    ))
+  }
+}
+data "http" "nats_dashboards" {
+  for_each = local.nats_dashboard_urls
+  url      = each.value
+}
+module "grafana_folder_nats" {
+  source = "../../../modules/grafana/grafana_folder"
+  org_id = local.nats_org_id
+  title  = "NATS"
+}
+module "grafana_dashboard_nats" {
+  source     = "../../../modules/grafana/grafana_dashboard"
+  for_each   = { for combination in local.nats_org_dashboard_combinations : combination.key => combination }
+  org_id     = each.value.org_id
+  folder_uid = module.grafana_folder_nats.uid
+  config_json = replace(
+    local.nats_dashboard_processed[each.key],
+    "$${DS__NATS-PROMETHEUS}",
+    module.grafana_data_source_hm_prometheus[each.value.org_id].uid
+  )
+  uid_prefix = "hm-"
+  tags       = ["Managed by OpenTofu"]
 }
