@@ -1,0 +1,28 @@
+# https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-nats-exporter/values.yaml
+---
+image:
+  repository: harbor.hongbomiao.com/docker-hub-proxy-cache/natsio/prometheus-nats-exporter
+config:
+  nats:
+    service: nats-headless
+    namespace: production-hm-nats
+    port: 8222
+  metrics:
+    accstatz: true
+    connz: true
+    connz_detailed: true
+    jsz: true
+    gatewayz: true
+    leafz: true
+    routez: true
+    subz: true
+    varz: true
+serviceMonitor:
+  enabled: true
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
