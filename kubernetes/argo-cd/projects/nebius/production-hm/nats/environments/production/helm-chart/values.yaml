@@ -14,6 +14,8 @@ config:
         size: 100Gi
         storageClassName: production-hm-nats-storage-class
   merge:
+    jetstream:
+      max_memory_store: 268435456  # 256Mi
     authorization:
       token: << $NATS_AUTH_TOKEN >>
 container:
