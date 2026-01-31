@@ -69,7 +69,7 @@ module "grafana_dashboard_cilium" {
   folder_uid  = module.grafana_folder_cilium[each.value.org_id].uid
   config_json = data.http.cilium_dashboards[each.value.dashboard_name].response_body
   uid_prefix  = "hm-"
-  tags        = ["Managed by OpenTofu"]
+  tags        = [var.managed_tag]
 }
 
 # Dashboard - Kubernetes
@@ -109,67 +109,128 @@ module "grafana_dashboard_kubernetes" {
   folder_uid  = module.grafana_folder_kubernetes[each.value.org_id].uid
   config_json = data.http.dashboards[each.value.dashboard_name].response_body
   uid_prefix  = "hm-"
-  tags        = ["Managed by OpenTofu"]
+  tags        = [var.managed_tag]
 }
 
-# Dashboard - NATS
+
+# Dashboard - NATS Server
+# https://github.com/nats-io/prometheus-nats-exporter/blob/main/walkthrough/README.md
+# Using non-helm dashboard version because the exporter uses the default "gnatsd_" metrics prefix.
+# The "-helm" version expects "nats_" prefix which requires the "-prefix nats" flag on the exporter.
 locals {
   nats_org_id = tostring(module.grafana_organization_hongbomiao.org_id)
-  # https://github.com/nats-io/prometheus-nats-exporter/blob/main/walkthrough/README.md
-  # Using non-helm dashboard versions because the exporter uses the default "gnatsd_" metrics prefix.
-  # The "-helm" versions expect "nats_" prefix which requires the "-prefix nats" flag on the exporter.
-  nats_dashboard_urls = {
-    "nats-jetstream" = "https://raw.githubusercontent.com/nats-io/prometheus-nats-exporter/main/walkthrough/grafana-jetstream-dash.json"
-    "nats-server"    = "https://raw.githubusercontent.com/nats-io/prometheus-nats-exporter/main/walkthrough/grafana-nats-dash.json"
-  }
-  nats_org_dashboard_combinations = [
-    for dashboard_name in keys(local.nats_dashboard_urls) : {
-      key            = "${local.nats_org_id}-${dashboard_name}"
-      org_id         = local.nats_org_id
-      dashboard_name = dashboard_name
-    }
-  ]
-  # Add explicit Prometheus datasource to each panel.
-  # The NATS Server dashboard has ${DS__NATS-PROMETHEUS} in panels (replaced later).
-  # The JetStream dashboard has no datasource in panels, so panels would use the default datasource.
-  # Adding explicit datasource ensures dashboards work regardless of which datasource is set as default.
-  nats_dashboard_processed = {
-    for key, combination in { for c in local.nats_org_dashboard_combinations : c.key => c } :
-    key => jsonencode(merge(
-      jsondecode(data.http.nats_dashboards[combination.dashboard_name].response_body),
-      {
-        panels = [
-          for panel in jsondecode(data.http.nats_dashboards[combination.dashboard_name].response_body).panels :
-          merge(panel, {
-            datasource = {
-              type = "prometheus"
-              uid  = module.grafana_data_source_hm_prometheus[combination.org_id].uid
-            }
-          })
-        ]
-      }
-    ))
+  # https://github.com/nats-io/prometheus-nats-exporter/pull/393
+  nats_server_variable = {
+    current     = {}
+    definition  = "label_values(gnatsd_varz_cpu, server_id)"
+    hide        = 0
+    includeAll  = true
+    label       = "Server"
+    multi       = true
+    name        = "server"
+    options     = []
+    query       = { query = "label_values(gnatsd_varz_cpu, server_id)", refId = "StandardVariableQuery" }
+    refresh     = 2
+    regex       = ""
+    skipUrlSync = false
+    sort        = 0
+    type        = "query"
   }
 }
-data "http" "nats_dashboards" {
-  for_each = local.nats_dashboard_urls
-  url      = each.value
+data "http" "nats_server_dashboard" {
+  url = "https://raw.githubusercontent.com/nats-io/prometheus-nats-exporter/main/walkthrough/grafana-nats-dash.json"
+}
+locals {
+  # https://github.com/nats-io/prometheus-nats-exporter/pull/393
+  nats_server_dashboard_processed = jsonencode(merge(
+    jsondecode(data.http.nats_server_dashboard.response_body),
+    {
+      templating = {
+        list = concat(
+          [merge(local.nats_server_variable, {
+            datasource = {
+              type = "prometheus"
+              uid  = module.grafana_data_source_hm_prometheus[local.nats_org_id].uid
+            }
+          })],
+          jsondecode(data.http.nats_server_dashboard.response_body).templating.list
+        )
+      }
+      panels = [
+        for panel in jsondecode(data.http.nats_server_dashboard.response_body).panels :
+        merge(panel, {
+          datasource = {
+            type = "prometheus"
+            uid  = module.grafana_data_source_hm_prometheus[local.nats_org_id].uid
+          }
+        })
+      ]
+    }
+  ))
+  # https://github.com/nats-io/prometheus-nats-exporter/pull/393
+  nats_server_dashboard_with_server_filter = replace(
+    local.nats_server_dashboard_processed,
+    "/\"expr\":\"(gnatsd_varz_\\w+)\"/",
+    "\"expr\":\"$1{server_id=~\\\"$$server\\\"}\""
+  )
 }
 module "grafana_folder_nats" {
   source = "../../../modules/grafana/grafana_folder"
   org_id = local.nats_org_id
   title  = "NATS"
 }
-module "grafana_dashboard_nats" {
+module "grafana_dashboard_nats_server" {
   source     = "../../../modules/grafana/grafana_dashboard"
-  for_each   = { for combination in local.nats_org_dashboard_combinations : combination.key => combination }
-  org_id     = each.value.org_id
+  org_id     = local.nats_org_id
   folder_uid = module.grafana_folder_nats.uid
   config_json = replace(
-    local.nats_dashboard_processed[each.key],
+    local.nats_server_dashboard_with_server_filter,
     "$${DS__NATS-PROMETHEUS}",
-    module.grafana_data_source_hm_prometheus[each.value.org_id].uid
+    module.grafana_data_source_hm_prometheus[local.nats_org_id].uid
   )
   uid_prefix = "hm-"
-  tags       = ["Managed by OpenTofu"]
+  tags       = [var.managed_tag]
+}
+
+# Dashboard - NATS JetStream
+# https://github.com/nats-io/prometheus-nats-exporter/blob/main/walkthrough/README.md
+# Using non-helm dashboard version because the exporter uses the default "gnatsd_" metrics prefix.
+data "http" "nats_jetstream_dashboard" {
+  url = "https://raw.githubusercontent.com/nats-io/prometheus-nats-exporter/main/walkthrough/grafana-jetstream-dash.json"
+}
+locals {
+  # https://github.com/nats-io/prometheus-nats-exporter/pull/393
+  nats_jetstream_dashboard_processed = jsonencode(merge(
+    jsondecode(data.http.nats_jetstream_dashboard.response_body),
+    {
+      templating = {
+        list = [
+          for variable in jsondecode(data.http.nats_jetstream_dashboard.response_body).templating.list :
+          merge(variable, {
+            datasource = {
+              type = "prometheus"
+              uid  = module.grafana_data_source_hm_prometheus[local.nats_org_id].uid
+            }
+          })
+        ]
+      }
+      panels = [
+        for panel in jsondecode(data.http.nats_jetstream_dashboard.response_body).panels :
+        merge(panel, {
+          datasource = {
+            type = "prometheus"
+            uid  = module.grafana_data_source_hm_prometheus[local.nats_org_id].uid
+          }
+        })
+      ]
+    }
+  ))
+}
+module "grafana_dashboard_nats_jetstream" {
+  source      = "../../../modules/grafana/grafana_dashboard"
+  org_id      = local.nats_org_id
+  folder_uid  = module.grafana_folder_nats.uid
+  config_json = local.nats_jetstream_dashboard_processed
+  uid_prefix  = "hm-"
+  tags        = [var.managed_tag]
 }
