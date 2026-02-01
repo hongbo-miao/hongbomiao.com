@@ -90,5 +90,11 @@ kube-state-metrics:
     limits:
       cpu: 200m
       memory: 1Gi
+coreDns:
+  service:
+    selector:
+      # Find the correct label with:
+      # kubectl get pods --namespace=kube-system --selector=app.kubernetes.io/name=coredns --output=jsonpath='{.items[0].metadata.labels}'
+      k8s-app: coredns
 grafana:
   enabled: false

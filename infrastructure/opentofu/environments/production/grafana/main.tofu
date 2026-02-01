@@ -68,13 +68,13 @@ module "grafana_dashboard_cilium" {
   org_id      = each.value.org_id
   folder_uid  = module.grafana_folder_cilium[each.value.org_id].uid
   config_json = data.http.cilium_dashboards[each.value.dashboard_name].response_body
-  uid_prefix  = "hm-"
+  uid_prefix  = var.grafana_dashboard_uid_prefix
   tags        = [var.managed_tag]
 }
 
 # Dashboard - Kubernetes
 locals {
-  dashboard_urls = {
+  kubernetes_dashboard_urls = {
     "k8s-system-api-server" = "https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json"
     "k8s-system-coredns"    = "https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json"
     "k8s-views-global"      = "https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json"
@@ -82,9 +82,9 @@ locals {
     "k8s-views-nodes"       = "https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json"
     "k8s-views-pods"        = "https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json"
   }
-  org_dashboard_combinations = flatten([
+  kubernetes_org_dashboard_combinations = flatten([
     for org_id in local.org_ids : [
-      for dashboard_name in keys(local.dashboard_urls) : {
+      for dashboard_name in keys(local.kubernetes_dashboard_urls) : {
         key            = "${org_id}-${dashboard_name}"
         org_id         = org_id
         dashboard_name = dashboard_name
@@ -92,8 +92,8 @@ locals {
     ]
   ])
 }
-data "http" "dashboards" {
-  for_each = local.dashboard_urls
+data "http" "kubernetes_dashboards" {
+  for_each = local.kubernetes_dashboard_urls
   url      = each.value
 }
 module "grafana_folder_kubernetes" {
@@ -104,11 +104,11 @@ module "grafana_folder_kubernetes" {
 }
 module "grafana_dashboard_kubernetes" {
   source      = "../../../modules/grafana/grafana_dashboard"
-  for_each    = { for combination in local.org_dashboard_combinations : combination.key => combination }
+  for_each    = { for combination in local.kubernetes_org_dashboard_combinations : combination.key => combination }
   org_id      = each.value.org_id
   folder_uid  = module.grafana_folder_kubernetes[each.value.org_id].uid
-  config_json = data.http.dashboards[each.value.dashboard_name].response_body
-  uid_prefix  = "hm-"
+  config_json = data.http.kubernetes_dashboards[each.value.dashboard_name].response_body
+  uid_prefix  = var.grafana_dashboard_uid_prefix
   tags        = [var.managed_tag]
 }
 
@@ -188,7 +188,7 @@ module "grafana_dashboard_nats_server" {
     "$${DS__NATS-PROMETHEUS}",
     module.grafana_data_source_hm_prometheus[local.nats_org_id].uid
   )
-  uid_prefix = "hm-"
+  uid_prefix = var.grafana_dashboard_uid_prefix
   tags       = [var.managed_tag]
 }
 # Dashboard - NATS JetStream
@@ -230,6 +230,6 @@ module "grafana_dashboard_nats_jetstream" {
   org_id      = local.nats_org_id
   folder_uid  = module.grafana_folder_nats.uid
   config_json = local.nats_jetstream_dashboard_processed
-  uid_prefix  = "hm-"
+  uid_prefix  = var.grafana_dashboard_uid_prefix
   tags        = [var.managed_tag]
 }
