@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     grafana = {
-      source = "grafana/grafana"
+      source = "registry.opentofu.org/grafana/grafana"
     }
   }
 }
 
-# https://registry.terraform.io/providers/grafana/grafana/latest/docs/resources/dashboard
+# https://search.opentofu.org/provider/grafana/grafana/latest/docs/resources/dashboard
 locals {
   dashboard_config = jsondecode(var.config_json)
   existing_tags    = try(local.dashboard_config.tags, [])

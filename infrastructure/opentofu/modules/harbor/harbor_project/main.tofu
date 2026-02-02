@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     harbor = {
-      source = "goharbor/harbor"
+      source = "registry.opentofu.org/goharbor/harbor"
     }
   }
 }
 
-# https://registry.terraform.io/providers/goharbor/harbor/latest/docs/resources/project
+# https://search.opentofu.org/provider/goharbor/harbor/latest/docs/resources/project
 resource "harbor_project" "main" {
   name                   = var.name
   public                 = var.public

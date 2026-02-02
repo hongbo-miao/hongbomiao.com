@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     helm = {
-      source = "hashicorp/helm"
+      source = "registry.opentofu.org/hashicorp/helm"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release
+# https://search.opentofu.org/provider/hashicorp/helm/latest/docs/resources/release
 resource "helm_release" "main" {
   repository   = var.repository
   chart        = var.chart_name

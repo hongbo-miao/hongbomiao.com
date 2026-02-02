@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     snowflake = {
-      source = "Snowflake-Labs/snowflake"
+      source = "registry.opentofu.org/snowflakedb/snowflake"
     }
   }
 }
 
-# https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest/docs/resources/schema
+# https://search.opentofu.org/provider/snowflakedb/snowflake/latest/docs/resources/schema
 resource "snowflake_schema" "main" {
   database                    = var.snowflake_database_name
   name                        = var.snowflake_schema_name

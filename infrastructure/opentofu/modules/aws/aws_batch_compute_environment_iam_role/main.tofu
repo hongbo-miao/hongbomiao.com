@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "batch_compute_environment_role" {
   name = "BatchComputeEnvironmentServiceRole-${var.aws_batch_compute_environment_nickname}"
   assume_role_policy = jsonencode({
@@ -25,7 +25,7 @@ resource "aws_iam_role" "batch_compute_environment_role" {
     "hm_resource_name" = "AWSBatchComputeEnvironmentServiceRole-${var.aws_batch_compute_environment_nickname}"
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role_policy_attachment" "batch_compute_environment_role_policy_attachment" {
   role       = aws_iam_role.batch_compute_environment_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSBatchServiceRole"

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -12,12 +12,12 @@ locals {
   aws_iam_role_name_prefix             = "${local.name_prefix}Role"
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_instance_profile
 resource "aws_iam_instance_profile" "kafka_manager_ec2_instance_profile" {
   name = "${local.aws_iam_instance_profile_name_prefix}-${var.kafka_manager_name}"
   role = aws_iam_role.kafka_manager_role.name
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "kafka_manager_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.kafka_manager_name}"
   assume_role_policy = jsonencode({
@@ -36,7 +36,7 @@ resource "aws_iam_role" "kafka_manager_role" {
     "hm_resource_name" = "${local.aws_iam_role_name_prefix}-${var.kafka_manager_name}"
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "kafka_manager_role_policy" {
   name = "${local.aws_iam_role_name_prefix}Policy-${var.kafka_manager_name}"
   role = aws_iam_role.kafka_manager_role.name

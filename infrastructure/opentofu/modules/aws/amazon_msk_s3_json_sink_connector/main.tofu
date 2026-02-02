@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/mskconnect_connector
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/mskconnect_connector
 resource "aws_mskconnect_connector" "msk_s3_json_sink_connector" {
   name = var.amazon_msk_connector_name
   # https://docs.confluent.io/kafka-connectors/s3-sink/current/configuration_options.html

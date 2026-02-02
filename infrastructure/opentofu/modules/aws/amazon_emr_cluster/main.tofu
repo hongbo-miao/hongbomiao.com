@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/emr_cluster
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/emr_cluster
 resource "aws_emr_cluster" "main" {
   name                              = var.amazon_emr_cluster_name
   release_label                     = var.amazon_emr_version

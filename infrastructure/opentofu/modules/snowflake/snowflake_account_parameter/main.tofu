@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     snowflake = {
-      source = "Snowflake-Labs/snowflake"
+      source = "registry.opentofu.org/snowflakedb/snowflake"
     }
   }
 }
 
-# https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest/docs/resources/account_parameter
+# https://search.opentofu.org/provider/snowflakedb/snowflake/latest/docs/resources/account_parameter
 resource "snowflake_account_parameter" "main" {
   key   = var.key
   value = var.value

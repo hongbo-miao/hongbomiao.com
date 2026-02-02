@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     snowflake = {
-      source = "Snowflake-Labs/snowflake"
+      source = "registry.opentofu.org/snowflakedb/snowflake"
     }
   }
 }
 
-# https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest/docs/resources/account_role
+# https://search.opentofu.org/provider/snowflakedb/snowflake/latest/docs/resources/account_role
 resource "snowflake_account_role" "main" {
   name = var.snowflake_role_name
 }

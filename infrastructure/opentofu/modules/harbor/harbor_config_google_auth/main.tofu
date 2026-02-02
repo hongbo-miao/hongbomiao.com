@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     harbor = {
-      source = "goharbor/harbor"
+      source = "registry.opentofu.org/goharbor/harbor"
     }
   }
 }
 
-# https://registry.terraform.io/providers/goharbor/harbor/latest/docs/resources/config_auth
+# https://search.opentofu.org/provider/goharbor/harbor/latest/docs/resources/config_auth
 resource "harbor_config_auth" "google_auth" {
   auth_mode          = "oidc_auth"
   primary_auth_mode  = var.primary_auth_mode

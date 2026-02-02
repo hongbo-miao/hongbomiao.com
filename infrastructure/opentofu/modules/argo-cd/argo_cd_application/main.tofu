@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     argocd = {
-      source = "argoproj-labs/argocd"
+      source = "registry.opentofu.org/argoproj-labs/argocd"
     }
   }
 }
 
-# https://registry.terraform.io/providers/claranet/argocd/latest/docs/resources/application
+# https://search.opentofu.org/provider/argoproj-labs/argocd/latest/docs/resources/application
 resource "argocd_application" "main" {
   metadata {
     name      = var.application_name

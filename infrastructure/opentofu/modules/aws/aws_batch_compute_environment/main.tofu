@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_compute_environment
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/batch_compute_environment
 resource "aws_batch_compute_environment" "main" {
   name = var.aws_batch_compute_environment_name
   compute_resources {

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -12,7 +12,7 @@ data "aws_region" "current" {}
 locals {
   aws_iam_role_name_prefix = "LiteLLMRole"
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "hm_litellm_iam_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.litellm_service_account_name}"
   assume_role_policy = jsonencode({
@@ -39,8 +39,8 @@ resource "aws_iam_role" "hm_litellm_iam_role" {
 }
 # https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-perform-actions-pt
 # https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html
-# https://registry.terraform.io/providers/vancluever/acme/latest/docs/guides/dns-providers-route53#least-privilege-policy-for-production-purposes
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/vancluever/acme/latest/docs/guides/dns-providers-route53#least-privilege-policy-for-production-purposes
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "hm_litellm_iam_role_policy" {
   name = "${local.aws_iam_role_name_prefix}Policy-${var.litellm_service_account_name}"
   role = aws_iam_role.hm_litellm_iam_role.name

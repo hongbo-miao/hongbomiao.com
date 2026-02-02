@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     awscc = {
-      source = "hashicorp/awscc"
+      source = "registry.opentofu.org/hashicorp/awscc"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/awscc/latest/docs/resources/databrew_job
+# https://search.opentofu.org/provider/hashicorp/awscc/latest/docs/resources/databrew_job
 resource "awscc_databrew_job" "glue_databrew_recipe_job" {
   name         = var.aws_glue_databrew_recipe_job_name
   role_arn     = var.iam_role_arn

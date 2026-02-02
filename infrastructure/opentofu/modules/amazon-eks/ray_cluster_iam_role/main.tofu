@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -12,7 +12,7 @@ data "aws_region" "current" {}
 locals {
   aws_iam_role_name_prefix = "RayClusterRole"
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "ray_cluster_iam_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.ray_cluster_service_account_name}"
   assume_role_policy = jsonencode({
@@ -37,7 +37,7 @@ resource "aws_iam_role" "ray_cluster_iam_role" {
     "hm_resource_name" = "${local.aws_iam_role_name_prefix}-${var.ray_cluster_service_account_name}"
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "mlflow_s3_policy" {
   name = "${local.aws_iam_role_name_prefix}MLflowS3Policy-${var.ray_cluster_service_account_name}"
   role = aws_iam_role.ray_cluster_iam_role.name
@@ -56,7 +56,7 @@ resource "aws_iam_role_policy" "mlflow_s3_policy" {
     ]
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "iot_data_s3_policy" {
   name = "${local.aws_iam_role_name_prefix}IotDataS3Policy-${var.ray_cluster_service_account_name}"
   role = aws_iam_role.ray_cluster_iam_role.name
@@ -86,7 +86,7 @@ resource "aws_iam_role_policy" "iot_data_s3_policy" {
     ]
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "aws_glue_policy" {
   name = "${local.aws_iam_role_name_prefix}AwsGluePolicy-${var.ray_cluster_service_account_name}"
   role = aws_iam_role.ray_cluster_iam_role.name

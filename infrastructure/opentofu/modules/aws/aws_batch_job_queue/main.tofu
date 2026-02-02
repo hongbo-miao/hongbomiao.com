@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_queue
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/batch_job_queue
 resource "aws_batch_job_queue" "main" {
   name     = var.aws_batch_job_queue_name
   state    = "ENABLED"

@@ -1,7 +1,7 @@
 # This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.opentofu.org/snowflake-labs/snowflake" {
+provider "registry.opentofu.org/snowflakedb/snowflake" {
   version     = "1.0.5"
   constraints = "1.0.5"
   hashes = [

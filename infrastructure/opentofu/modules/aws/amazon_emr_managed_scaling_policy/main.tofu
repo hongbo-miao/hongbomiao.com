@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/emr_managed_scaling_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/emr_managed_scaling_policy
 resource "aws_emr_managed_scaling_policy" "main" {
   cluster_id = var.amazon_emr_cluster_id
   compute_limits {

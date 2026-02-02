@@ -3,7 +3,7 @@ data "terraform_remote_state" "hm_terraform_remote_state_snowflake_data" {
   config = {
     region = "us-west-2"
     bucket = "hm-terraform-hongbomiao"
-    key    = "production/snowflake/data/terraform.tfstate"
+    key    = "production/snowflake/storage/terraform.tfstate"
   }
 }
 

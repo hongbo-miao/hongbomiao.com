@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/msk_cluster
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/msk_cluster
 resource "aws_msk_cluster" "main" {
   cluster_name           = var.amazon_msk_cluster_name
   kafka_version          = var.kafka_version

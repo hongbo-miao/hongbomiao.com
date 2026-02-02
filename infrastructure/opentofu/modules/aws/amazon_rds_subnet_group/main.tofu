@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/db_subnet_group
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/data-sources/db_subnet_group
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = var.subnet_group_name
   subnet_ids = var.subnet_ids

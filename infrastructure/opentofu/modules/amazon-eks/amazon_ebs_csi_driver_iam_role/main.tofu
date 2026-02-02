@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -11,7 +11,7 @@ locals {
   aws_iam_role_name   = "${local.aws_iam_role_prefix}-${var.amazon_eks_cluster_name}-${var.amazon_eks_cluster_name_hash}"
 }
 # https://docs.aws.amazon.com/eks/latest/userguide/csi-iam-role.html
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "ebs_csi_driver_role" {
   name = local.aws_iam_role_name
   assume_role_policy = jsonencode({
@@ -36,7 +36,7 @@ resource "aws_iam_role" "ebs_csi_driver_role" {
     "hm_resource_name" = local.aws_iam_role_name
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role_policy_attachment" "hm_amazon_emr_studio_iam_role_policy_attachment" {
   role       = aws_iam_role.ebs_csi_driver_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"

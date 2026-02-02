@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -10,7 +10,7 @@ locals {
   aws_iam_role_name_prefix = "S3CSIDriverMountpointRole"
 }
 # https://docs.aws.amazon.com/eks/latest/userguide/s3-csi.html
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "s3_csi_driver_mountpoint_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
   assume_role_policy = jsonencode({
@@ -35,7 +35,7 @@ resource "aws_iam_role" "s3_csi_driver_mountpoint_role" {
     "hm_resource_name" = "${local.aws_iam_role_name_prefix}-${var.amazon_eks_cluster_name}"
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "eks_cluster_s3_policy" {
   name = "${local.aws_iam_role_name_prefix}EksClusterS3Policy-${var.amazon_eks_cluster_name}"
   role = aws_iam_role.s3_csi_driver_mountpoint_role.name
@@ -66,7 +66,7 @@ resource "aws_iam_role_policy" "eks_cluster_s3_policy" {
     ]
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "iot_data_s3_policy" {
   name = "${local.aws_iam_role_name_prefix}IotDataS3Policy-${var.amazon_eks_cluster_name}"
   role = aws_iam_role.s3_csi_driver_mountpoint_role.name

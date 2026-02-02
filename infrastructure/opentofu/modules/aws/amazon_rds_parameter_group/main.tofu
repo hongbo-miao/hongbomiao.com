@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_parameter_group
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/db_parameter_group
 resource "aws_db_parameter_group" "rds_parameter_group" {
   name   = var.parameter_group_name
   family = var.family

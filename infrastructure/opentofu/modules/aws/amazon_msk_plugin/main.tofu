@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/mskconnect_custom_plugin
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/mskconnect_custom_plugin
 resource "aws_mskconnect_custom_plugin" "main" {
   name         = var.amazon_msk_plugin_name
   content_type = "ZIP"

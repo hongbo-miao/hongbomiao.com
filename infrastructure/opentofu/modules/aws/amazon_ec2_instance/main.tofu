@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/instance
 resource "aws_instance" "main" {
   ami                    = var.instance_ami
   instance_type          = var.instance_type

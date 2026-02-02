@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     awscc = {
-      source = "hashicorp/awscc"
+      source = "registry.opentofu.org/hashicorp/awscc"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/awscc/latest/docs/resources/databrew_dataset
+# https://search.opentofu.org/provider/hashicorp/awscc/latest/docs/resources/databrew_dataset
 resource "awscc_databrew_dataset" "glue_databrew_dataset_adsb_raw_parquet" {
   name = var.aws_glue_databrew_dataset_name
   input = {

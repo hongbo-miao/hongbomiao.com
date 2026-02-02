@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -10,7 +10,7 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 # https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-access-logs.html
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/s3_bucket_policy
 resource "aws_s3_bucket_policy" "network_load_balancer_s3_bucket_policy" {
   bucket = var.s3_bucket_name
   policy = jsonencode({

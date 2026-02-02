@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     harbor = {
-      source = "goharbor/harbor"
+      source = "registry.opentofu.org/goharbor/harbor"
     }
   }
 }
 
-# https://registry.terraform.io/providers/goharbor/harbor/latest/docs/resources/garbage_collection
+# https://search.opentofu.org/provider/goharbor/harbor/latest/docs/resources/garbage_collection
 resource "harbor_garbage_collection" "main" {
   schedule        = var.schedule
   delete_untagged = true

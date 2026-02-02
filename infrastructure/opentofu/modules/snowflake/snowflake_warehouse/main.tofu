@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     snowflake = {
-      source = "Snowflake-Labs/snowflake"
+      source = "registry.opentofu.org/snowflakedb/snowflake"
     }
   }
 }
 
-# https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest/docs/resources/warehouse
+# https://search.opentofu.org/provider/snowflakedb/snowflake/latest/docs/resources/warehouse
 resource "snowflake_warehouse" "main" {
   name                                = var.snowflake_warehouse_name
   warehouse_size                      = var.snowflake_warehouse_size

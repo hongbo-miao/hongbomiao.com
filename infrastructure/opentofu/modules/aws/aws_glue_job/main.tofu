@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/glue_job
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/glue_job
 # https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html
 resource "aws_glue_job" "main" {
   name              = var.aws_glue_job_name

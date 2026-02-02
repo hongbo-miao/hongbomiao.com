@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/security_group
 resource "aws_security_group" "rds_security_group" {
   name   = var.amazon_ec2_security_group_name
   vpc_id = var.amazon_vpc_id
@@ -18,7 +18,7 @@ resource "aws_security_group" "rds_security_group" {
 locals {
   ingress_rule_on_site = "on_site"
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site" {
   security_group_id = aws_security_group.rds_security_group.id
   description       = local.ingress_rule_on_site
@@ -58,7 +58,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc" {
     "hm_resource_name" = local.ingress_rule_vpc
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
 resource "aws_vpc_security_group_egress_rule" "egress_allow" {
   security_group_id = aws_security_group.rds_security_group.id
   cidr_ipv4         = "0.0.0.0/0"

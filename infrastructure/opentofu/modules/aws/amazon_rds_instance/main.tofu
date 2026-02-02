@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/db_instance
 resource "aws_db_instance" "rds_instance" {
   identifier                            = var.amazon_rds_name
   engine                                = var.amazon_rds_engine

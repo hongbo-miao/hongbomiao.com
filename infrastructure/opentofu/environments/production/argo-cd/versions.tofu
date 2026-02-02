@@ -14,7 +14,7 @@ terraform {
     skip_s3_checksum            = true
   }
   required_providers {
-    // https://registry.terraform.io/providers/argoproj-labs/argocd/latest
+    // https://search.opentofu.org/provider/argoproj-labs/argocd/latest
     argocd = {
       source  = "argoproj-labs/argocd"
       version = "7.12.5"

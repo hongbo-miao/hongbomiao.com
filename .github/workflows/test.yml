@@ -218,11 +218,6 @@ jobs:
               - '.sqlfluffignore'
               - 'pyproject.toml'
               - 'uv.lock'
-            opentofu:
-              - '**/*.tfvars'
-              - '**/*.tofu'
-              - '**/.terraform.lock.hcl'
-              - 'infrastructure/opentofu/**'
             opentofu-production-airbyte:
               - 'infrastructure/opentofu/environments/production/airbyte/**'
               - 'infrastructure/opentofu/modules/**'
@@ -241,11 +236,11 @@ jobs:
             opentofu-production-aws-storage:
               - 'infrastructure/opentofu/environments/production/aws/storage/**'
               - 'infrastructure/opentofu/modules/**'
-            opentofu-production-harbor:
-              - 'infrastructure/opentofu/environments/production/harbor/**'
-              - 'infrastructure/opentofu/modules/**'
             opentofu-production-grafana:
               - 'infrastructure/opentofu/environments/production/grafana/**'
+              - 'infrastructure/opentofu/modules/**'
+            opentofu-production-harbor:
+              - 'infrastructure/opentofu/environments/production/harbor/**'
               - 'infrastructure/opentofu/modules/**'
             opentofu-production-nebius-applications:
               - 'infrastructure/opentofu/environments/production/nebius/applications/**'
@@ -266,11 +261,19 @@ jobs:
               - 'infrastructure/opentofu/environments/production/snowflake/account/**'
               - 'infrastructure/opentofu/modules/**'
             opentofu-production-snowflake-data:
-              - 'infrastructure/opentofu/environments/production/snowflake/data/**'
+              - 'infrastructure/opentofu/environments/production/snowflake/storage/**'
               - 'infrastructure/opentofu/modules/**'
             opentofu-production-snowflake-general:
               - 'infrastructure/opentofu/environments/production/snowflake/general/**'
               - 'infrastructure/opentofu/modules/**'
+            opentofu-production-trino-gateway:
+              - 'infrastructure/opentofu/environments/production/trino-gateway/**'
+              - 'infrastructure/opentofu/modules/**'
+            opentofu:
+              - '**/*.tfvars'
+              - '**/*.tofu'
+              - '**/.terraform.lock.hcl'
+              - 'infrastructure/opentofu/**'
             toml:
               - '**/*.toml'
               - 'taplo.toml'
@@ -794,15 +797,14 @@ jobs:
       markdown: ${{ steps.filter.outputs.markdown }}
       matlab: ${{ steps.filter.outputs.matlab }}
       natural-language: ${{ steps.filter.outputs.natural-language }}
-      opentofu: ${{ steps.filter.outputs.opentofu }}
       opentofu-production-airbyte: ${{ steps.filter.outputs.opentofu-production-airbyte }}
       opentofu-production-argo-cd: ${{ steps.filter.outputs.opentofu-production-argo-cd }}
       opentofu-production-aws-general: ${{ steps.filter.outputs.opentofu-production-aws-general }}
       opentofu-production-aws-kubernetes: ${{ steps.filter.outputs.opentofu-production-aws-kubernetes }}
       opentofu-production-aws-network: ${{ steps.filter.outputs.opentofu-production-aws-network }}
       opentofu-production-aws-storage: ${{ steps.filter.outputs.opentofu-production-aws-storage }}
-      opentofu-production-harbor: ${{ steps.filter.outputs.opentofu-production-harbor }}
       opentofu-production-grafana: ${{ steps.filter.outputs.opentofu-production-grafana }}
+      opentofu-production-harbor: ${{ steps.filter.outputs.opentofu-production-harbor }}
       opentofu-production-nebius-applications: ${{ steps.filter.outputs.opentofu-production-nebius-applications }}
       opentofu-production-nebius-general: ${{ steps.filter.outputs.opentofu-production-nebius-general }}
       opentofu-production-nebius-kubernetes: ${{ steps.filter.outputs.opentofu-production-nebius-kubernetes }}
@@ -811,6 +813,8 @@ jobs:
       opentofu-production-snowflake-account: ${{ steps.filter.outputs.opentofu-production-snowflake-account }}
       opentofu-production-snowflake-data: ${{ steps.filter.outputs.opentofu-production-snowflake-data }}
       opentofu-production-snowflake-general: ${{ steps.filter.outputs.opentofu-production-snowflake-general }}
+      opentofu-production-trino-gateway: ${{ steps.filter.outputs.opentofu-production-trino-gateway }}
+      opentofu: ${{ steps.filter.outputs.opentofu }}
       python: ${{ steps.filter.outputs.python }}
       qml: ${{ steps.filter.outputs.qml }}
       ruby: ${{ steps.filter.outputs.ruby }}
@@ -1130,8 +1134,8 @@ jobs:
       opentofu-production-aws-kubernetes: ${{ needs.detect-changes.outputs.opentofu-production-aws-kubernetes == 'true' }}
       opentofu-production-aws-network: ${{ needs.detect-changes.outputs.opentofu-production-aws-network == 'true' }}
       opentofu-production-aws-storage: ${{ needs.detect-changes.outputs.opentofu-production-aws-storage == 'true' }}
-      opentofu-production-harbor: ${{ needs.detect-changes.outputs.opentofu-production-harbor == 'true' }}
       opentofu-production-grafana: ${{ needs.detect-changes.outputs.opentofu-production-grafana == 'true' }}
+      opentofu-production-harbor: ${{ needs.detect-changes.outputs.opentofu-production-harbor == 'true' }}
       opentofu-production-nebius-applications: ${{ needs.detect-changes.outputs.opentofu-production-nebius-applications == 'true' }}
       opentofu-production-nebius-general: ${{ needs.detect-changes.outputs.opentofu-production-nebius-general == 'true' }}
       opentofu-production-nebius-kubernetes: ${{ needs.detect-changes.outputs.opentofu-production-nebius-kubernetes == 'true' }}
@@ -1140,6 +1144,7 @@ jobs:
       opentofu-production-snowflake-account: ${{ needs.detect-changes.outputs.opentofu-production-snowflake-account == 'true' }}
       opentofu-production-snowflake-data: ${{ needs.detect-changes.outputs.opentofu-production-snowflake-data == 'true' }}
       opentofu-production-snowflake-general: ${{ needs.detect-changes.outputs.opentofu-production-snowflake-general == 'true' }}
+      opentofu-production-trino-gateway: ${{ needs.detect-changes.outputs.opentofu-production-trino-gateway == 'true' }}
       # Applications
       api-go: ${{ needs.detect-changes.outputs.api-go == 'true' }}
       api-node: ${{ needs.detect-changes.outputs.api-node == 'true' }}

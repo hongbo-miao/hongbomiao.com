@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "glue_databrew_role" {
   name = "GlueDataBrewServiceRole-${var.aws_glue_databrew_job_nickname}"
   assume_role_policy = jsonencode({
@@ -26,7 +26,7 @@ resource "aws_iam_role" "glue_databrew_role" {
   })
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "glue_databrew_role_input_policy" {
   name = "AwsGlueDataBrewServicePolicyForInputS3-${var.aws_glue_databrew_job_nickname}"
   role = aws_iam_role.glue_databrew_role.name
@@ -55,7 +55,7 @@ resource "aws_iam_role_policy" "glue_databrew_role_input_policy" {
   })
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "glue_databrew_role_output_policy" {
   name = "AwsGlueDataBrewServicePolicyForOutputS3-${var.aws_glue_databrew_job_nickname}"
   role = aws_iam_role.glue_databrew_role.name
@@ -100,7 +100,7 @@ resource "aws_iam_role_policy" "glue_databrew_role_output_policy" {
   })
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role_policy_attachment" "glue_databrew_role_policy_attachment" {
   role       = aws_iam_role.glue_databrew_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueDataBrewServiceRole"
