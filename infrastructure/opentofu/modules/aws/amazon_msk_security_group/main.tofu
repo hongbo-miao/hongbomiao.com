@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/security_group
 resource "aws_security_group" "msk_security_group" {
   name   = var.amazon_ec2_security_group_name
   vpc_id = var.amazon_vpc_id
@@ -20,7 +20,7 @@ locals {
   ingress_rule_on_site_kafka_broker_sasl_scram = "on_site_kafka_broker_sasl_scram"
   ingress_rule_on_site_kafka_broker_iam        = "on_site_kafka_broker_iam"
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
 resource "aws_vpc_security_group_ingress_rule" "ingress_rule_on_site_kafka_broker_tls" {
   security_group_id = aws_security_group.msk_security_group.id
   description       = local.ingress_rule_on_site_kafka_broker_tls
@@ -133,7 +133,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_rule_vpc_kafka_broker_ia
   })
 }
 # Egress
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
 resource "aws_vpc_security_group_egress_rule" "egress_allow" {
   security_group_id = aws_security_group.msk_security_group.id
   cidr_ipv4         = "0.0.0.0/0"

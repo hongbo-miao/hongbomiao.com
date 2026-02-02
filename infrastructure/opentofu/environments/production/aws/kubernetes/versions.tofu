@@ -5,27 +5,27 @@ terraform {
     key    = "production/aws/kubernetes/terraform.tfstate"
   }
   required_providers {
-    # https://registry.terraform.io/providers/hashicorp/aws/latest
+    # https://search.opentofu.org/provider/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"
       version = "6.30.0"
     }
-    # https://registry.terraform.io/providers/hashicorp/external/latest
+    # https://search.opentofu.org/provider/hashicorp/external/latest
     external = {
       source  = "hashicorp/external"
       version = "2.3.5"
     }
-    # https://registry.terraform.io/providers/hashicorp/helm/latest
+    # https://search.opentofu.org/provider/hashicorp/helm/latest
     helm = {
       source  = "hashicorp/helm"
       version = "3.1.1"
     }
-    # https://registry.terraform.io/providers/gavinbunney/kubectl/latest
+    # https://search.opentofu.org/provider/gavinbunney/kubectl/latest
     kubectl = {
       source  = "gavinbunney/kubectl"
       version = "1.19.0"
     }
-    # https://registry.terraform.io/providers/hashicorp/kubernetes/latest
+    # https://search.opentofu.org/provider/hashicorp/kubernetes/latest
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "3.0.1"

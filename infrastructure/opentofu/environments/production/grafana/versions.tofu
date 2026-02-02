@@ -14,12 +14,12 @@ terraform {
     skip_s3_checksum            = true
   }
   required_providers {
-    # https://registry.terraform.io/providers/grafana/grafana/latest
+    # https://search.opentofu.org/provider/grafana/grafana/latest
     grafana = {
       source  = "grafana/grafana"
       version = "4.25.0"
     }
-    # https://registry.terraform.io/providers/hashicorp/http/latest
+    # https://search.opentofu.org/provider/hashicorp/http/latest
     http = {
       source  = "hashicorp/http"
       version = "3.5.0"

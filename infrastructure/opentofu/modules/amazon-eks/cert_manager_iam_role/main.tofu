@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -11,7 +11,7 @@ locals {
   aws_iam_role_name        = "${local.aws_iam_role_prefix}-${var.cert_manager_service_account_name}-${var.amazon_eks_cluster_name_hash}"
   aws_iam_role_policy_name = "${local.aws_iam_role_prefix}Policy-${var.cert_manager_service_account_name}-${var.amazon_eks_cluster_name_hash}"
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "cert_manager_role" {
   name = local.aws_iam_role_name
   assume_role_policy = jsonencode({
@@ -37,8 +37,8 @@ resource "aws_iam_role" "cert_manager_role" {
   })
 }
 # https://cert-manager.io/docs/configuration/acme/dns01/route53
-# https://registry.terraform.io/providers/vancluever/acme/latest/docs/guides/dns-providers-route53#least-privilege-policy-for-production-purposes
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/vancluever/acme/latest/docs/guides/dns-providers-route53#least-privilege-policy-for-production-purposes
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "cert_manager_role_policy" {
   name = local.aws_iam_role_policy_name
   role = aws_iam_role.cert_manager_role.name

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -10,7 +10,7 @@ locals {
   aws_iam_role_name_prefix = "LabelboxRole"
 }
 # https://docs.labelbox.com/docs/import-aws-s3-data
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "labelbox_iam_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.labelbox_service_account_name}"
   assume_role_policy = jsonencode({
@@ -35,7 +35,7 @@ resource "aws_iam_role" "labelbox_iam_role" {
   })
 }
 # https://docs.labelbox.com/docs/import-aws-s3-data
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "labelbox_iam_role_s3_policy" {
   name = "${local.aws_iam_role_name_prefix}S3Policy-${var.labelbox_service_account_name}"
   role = aws_iam_role.labelbox_iam_role.name

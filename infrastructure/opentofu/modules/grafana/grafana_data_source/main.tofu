@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     grafana = {
-      source = "grafana/grafana"
+      source = "registry.opentofu.org/grafana/grafana"
     }
   }
 }
 
-# https://registry.terraform.io/providers/grafana/grafana/latest/docs/resources/data_source
+# https://search.opentofu.org/provider/grafana/grafana/latest/docs/resources/data_source
 resource "grafana_data_source" "main" {
   org_id                   = var.org_id
   name                     = var.name

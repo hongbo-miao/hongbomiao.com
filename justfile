@@ -466,6 +466,7 @@ static-type-check-opentofu:
     cd infrastructure/opentofu/environments/production/aws/kubernetes && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/aws/network && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/aws/storage && just static-type-check-opentofu
+    cd infrastructure/opentofu/environments/production/grafana && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/harbor && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/nebius/applications && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/nebius/general && just static-type-check-opentofu
@@ -473,8 +474,9 @@ static-type-check-opentofu:
     cd infrastructure/opentofu/environments/production/nebius/network && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/nebius/storage && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/snowflake/account && just static-type-check-opentofu
-    cd infrastructure/opentofu/environments/production/snowflake/data && just static-type-check-opentofu
     cd infrastructure/opentofu/environments/production/snowflake/general && just static-type-check-opentofu
+    cd infrastructure/opentofu/environments/production/snowflake/storage && just static-type-check-opentofu
+    cd infrastructure/opentofu/environments/production/trino-gateway && just static-type-check-opentofu
 
 static-type-check-python:
     uv run poe static-type-check-python --package=aerospace.flightradar24

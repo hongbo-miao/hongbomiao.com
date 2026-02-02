@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_user
 resource "aws_iam_user" "hm_harbor_iam_user" {
   name = var.aws_iam_user_name
   path = "/hm/"
@@ -14,7 +14,7 @@ resource "aws_iam_user" "hm_harbor_iam_user" {
     "hm_resource_name" = var.aws_iam_user_name
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_user_policy
 resource "aws_iam_user_policy" "hm_aws_iam_user_policy" {
   name = "S3ReadWritePolicy-${var.s3_bucket_name}"
   user = aws_iam_user.hm_harbor_iam_user.name

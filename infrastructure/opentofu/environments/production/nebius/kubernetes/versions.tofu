@@ -18,17 +18,17 @@ terraform {
       source  = "terraform-provider.storage.eu-north1.nebius.cloud/nebius/nebius"
       version = "0.5.164"
     }
-    # https://registry.terraform.io/providers/hashicorp/helm/latest
+    # https://search.opentofu.org/provider/hashicorp/helm/latest
     helm = {
       source  = "hashicorp/helm"
       version = "3.1.1"
     }
-    # https://registry.terraform.io/providers/gavinbunney/kubectl/latest
+    # https://search.opentofu.org/provider/gavinbunney/kubectl/latest
     kubectl = {
       source  = "gavinbunney/kubectl"
       version = "1.19.0"
     }
-    # https://registry.terraform.io/providers/hashicorp/kubernetes/latest
+    # https://search.opentofu.org/provider/hashicorp/kubernetes/latest
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "3.0.1"

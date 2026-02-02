@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -12,7 +12,7 @@ locals {
   aws_iam_role_policy_name = "${local.aws_iam_role_prefix}Policy-${var.external_dns_service_account_name}-${var.amazon_eks_cluster_name_hash}"
 }
 # https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "external_dns_role" {
   name = local.aws_iam_role_name
   assume_role_policy = jsonencode({
@@ -37,7 +37,7 @@ resource "aws_iam_role" "external_dns_role" {
     "hm_resource_name" = local.aws_iam_role_name
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 # https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md
 resource "aws_iam_role_policy" "external_dns_role_policy" {
   name = local.aws_iam_role_policy_name

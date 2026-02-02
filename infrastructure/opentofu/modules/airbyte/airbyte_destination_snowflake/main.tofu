@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     airbyte = {
-      source = "airbytehq/airbyte"
+      source = "registry.opentofu.org/airbytehq/airbyte"
     }
   }
 }
 
-# https://registry.terraform.io/providers/airbytehq/airbyte/latest/docs/resources/destination_snowflake
+# https://search.opentofu.org/provider/airbytehq/airbyte/latest/docs/resources/destination_snowflake
 resource "airbyte_destination_snowflake" "main" {
   name         = var.name
   workspace_id = var.workspace_id

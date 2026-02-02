@@ -5,7 +5,7 @@ terraform {
     key    = "production/aws/network/terraform.tfstate"
   }
   required_providers {
-    # https://registry.terraform.io/providers/hashicorp/aws/latest
+    # https://search.opentofu.org/provider/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"
       version = "6.30.0"

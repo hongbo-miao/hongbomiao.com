@@ -5,9 +5,9 @@ terraform {
     key    = "production/snowflake/general/terraform.tfstate"
   }
   required_providers {
-    # https://registry.terraform.io/providers/Snowflake-Labs/snowflake/latest
+    # https://search.opentofu.org/provider/snowflakedb/snowflake/latest
     snowflake = {
-      source  = "Snowflake-Labs/snowflake"
+      source  = "snowflakedb/snowflake"
       version = "1.0.5"
     }
   }

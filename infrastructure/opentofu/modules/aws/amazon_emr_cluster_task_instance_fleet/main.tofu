@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/emr_instance_fleet
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/emr_instance_fleet
 resource "aws_emr_instance_fleet" "main" {
   cluster_id           = var.amazon_emr_cluster_id
   name                 = "Task"

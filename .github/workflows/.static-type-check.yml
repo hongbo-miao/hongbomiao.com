@@ -30,10 +30,10 @@ name: . Static Type Check
       opentofu-production-aws-storage:
         required: true
         type: boolean
-      opentofu-production-harbor:
+      opentofu-production-grafana:
         required: true
         type: boolean
-      opentofu-production-grafana:
+      opentofu-production-harbor:
         required: true
         type: boolean
       opentofu-production-nebius-applications:
@@ -58,6 +58,9 @@ name: . Static Type Check
         required: true
         type: boolean
       opentofu-production-snowflake-general:
+        required: true
+        type: boolean
+      opentofu-production-trino-gateway:
         required: true
         type: boolean
       # Applications
@@ -575,25 +578,6 @@ jobs:
         run: |
           tofu validate
 
-  static-type-check-opentofu-production-snowflake-data:
-    name: OpenTofu (production/snowflake/data)
-    if: ${{ inputs.workflow || inputs.opentofu-production-snowflake-data }}
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.2
-      - name: Set up OpenTofu
-        uses: opentofu/setup-opentofu@v1.0.8
-      - name: Initialize OpenTofu
-        working-directory: infrastructure/opentofu/environments/production/snowflake/data
-        run: |
-          tofu init -backend=false
-      - name: Static type check OpenTofu
-        working-directory: infrastructure/opentofu/environments/production/snowflake/data
-        run: |
-          tofu validate
-
   static-type-check-opentofu-production-snowflake-general:
     name: OpenTofu (production/snowflake/general)
     if: ${{ inputs.workflow || inputs.opentofu-production-snowflake-general }}
@@ -610,6 +594,44 @@ jobs:
           tofu init -backend=false
       - name: Static type check OpenTofu
         working-directory: infrastructure/opentofu/environments/production/snowflake/general
+        run: |
+          tofu validate
+
+  static-type-check-opentofu-production-snowflake-data:
+    name: OpenTofu (production/snowflake/storage)
+    if: ${{ inputs.workflow || inputs.opentofu-production-snowflake-data }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.8
+      - name: Initialize OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/snowflake/storage
+        run: |
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/snowflake/storage
+        run: |
+          tofu validate
+
+  static-type-check-opentofu-production-trino-gateway:
+    name: OpenTofu (production/trino-gateway)
+    if: ${{ inputs.workflow || inputs.opentofu-production-trino-gateway }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Set up OpenTofu
+        uses: opentofu/setup-opentofu@v1.0.8
+      - name: Initialize OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/trino-gateway
+        run: |
+          tofu init -backend=false
+      - name: Static type check OpenTofu
+        working-directory: infrastructure/opentofu/environments/production/trino-gateway
         run: |
           tofu validate
 

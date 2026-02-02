@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/emr_studio
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/emr_studio
 resource "aws_emr_studio" "main" {
   name                        = var.amazon_emr_studio_name
   auth_mode                   = "IAM"

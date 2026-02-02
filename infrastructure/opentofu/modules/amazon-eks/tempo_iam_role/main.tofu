@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -9,7 +9,7 @@ terraform {
 locals {
   aws_iam_role_name_prefix = "TempoRole"
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "hm_tempo_iam_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.tempo_service_account_name}"
   assume_role_policy = jsonencode({
@@ -34,7 +34,7 @@ resource "aws_iam_role" "hm_tempo_iam_role" {
     "hm_resource_name" = "${local.aws_iam_role_name_prefix}-${var.tempo_service_account_name}"
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "hm_tempo_iam_role_policy" {
   name = "${local.aws_iam_role_name_prefix}Policy-${var.tempo_service_account_name}"
   role = aws_iam_role.hm_tempo_iam_role.name

@@ -5,12 +5,12 @@ terraform {
     key    = "production/harbor/terraform.tfstate"
   }
   required_providers {
-    # https://registry.terraform.io/providers/hashicorp/aws/latest
+    # https://search.opentofu.org/provider/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"
       version = "6.30.0"
     }
-    # https://registry.terraform.io/providers/goharbor/harbor/latest
+    # https://search.opentofu.org/provider/goharbor/harbor/latest
     harbor = {
       source  = "goharbor/harbor"
       version = "3.11.3"

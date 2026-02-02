@@ -1,13 +1,13 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition
-resource "aws_batch_job_definition" "amin" {
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/batch_job_definition
+resource "aws_batch_job_definition" "main" {
   name                  = var.aws_batch_job_definition_name
   type                  = "container"
   platform_capabilities = ["FARGATE"]

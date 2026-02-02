@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
   }
 }
@@ -9,7 +9,7 @@ terraform {
 locals {
   aws_iam_role_name_prefix = "VeleroRole"
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "velero_iam_role" {
   name = "${local.aws_iam_role_name_prefix}-${var.velero_service_account_name}"
   assume_role_policy = jsonencode({
@@ -35,7 +35,7 @@ resource "aws_iam_role" "velero_iam_role" {
   })
 }
 # https://velero.io/docs/v1.0.0/aws-config/
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "ec2_policy" {
   name = "${local.aws_iam_role_name_prefix}Ec2Policy-${var.velero_service_account_name}"
   role = aws_iam_role.velero_iam_role.name
@@ -59,7 +59,7 @@ resource "aws_iam_role_policy" "ec2_policy" {
     ]
   })
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_role_policy" "s3_policy" {
   name = "${local.aws_iam_role_name_prefix}S3Policy-${var.velero_service_account_name}"
   role = aws_iam_role.velero_iam_role.name
