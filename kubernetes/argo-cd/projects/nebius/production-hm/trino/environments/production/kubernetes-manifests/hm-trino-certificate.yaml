@@ -1,0 +1,17 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hm-trino-certificate
+  namespace: production-hm-trino
+  labels:
+    app.kubernetes.io/name: hm-trino-certificate
+    app.kubernetes.io/part-of: production-hm-trino
+spec:
+  secretName: hm-trino-certificate
+  issuerRef:
+    name: hm-lets-encrypt-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - trino.hongbomiao.com

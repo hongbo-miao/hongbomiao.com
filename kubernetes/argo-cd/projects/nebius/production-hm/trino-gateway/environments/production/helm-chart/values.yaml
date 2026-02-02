@@ -1,0 +1,67 @@
+# https://github.com/trinodb/charts/blob/main/charts/gateway/values.yaml
+---
+replicaCount: 3
+image:
+  repository: harbor.hongbomiao.com/docker-hub-proxy-cache/trinodb/trino-gateway
+  pullPolicy: IfNotPresent
+config:
+  serverConfig:
+    node.environment: production
+    http-server.http.port: 8080
+    http-server.http.enabled: true
+    http-server.process-forwarded: true
+  # https://trinodb.github.io/trino-gateway/security
+  presetUsers:
+    trino_gateway_admin_monkey:
+      password: ${ENV:TRINO_GATEWAY_ADMIN_PASSWORD}
+      privileges: ADMIN_API_USER
+    trino_user_hm:
+      password: ${ENV:TRINO_USER_HM_PASSWORD}
+      privileges: USER_API
+  authorization:
+    admin: (.*)ADMIN(.*)
+    user: (.*)USER(.*)
+    api: (.*)API(.*)
+  authentication:
+    defaultType: form
+    form:
+      selfSignKeyPair:
+        privateKeyRsa: /etc/trino-gateway/keys/private.pem
+        publicKeyRsa: /etc/trino-gateway/keys/public.pem
+  dataStore:
+    jdbcUrl: jdbc:postgresql://private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432/trino_gateway_db
+    user: ${ENV:POSTGRES_USER_NAME}
+    password: ${ENV:POSTGRES_PASSWORD}
+    driver: org.postgresql.Driver
+  clusterStatsConfiguration:
+    monitorType: INFO_API
+resources:
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    cpu: 1
+    memory: 2Gi
+serviceAccount:
+  create: true
+  name: hm-trino-gateway
+envFrom:
+  - secretRef:
+      name: hm-trino-gateway-secret
+volumes:
+  - name: trino-gateway-keys
+    secret:
+      secretName: hm-trino-gateway-secret
+      items:
+        - key: private.pem
+          path: private.pem
+        - key: public.pem
+          path: public.pem
+volumeMounts:
+  - name: trino-gateway-keys
+    mountPath: /etc/trino-gateway/keys
+    readOnly: true
+serviceMonitor:
+  enabled: true
+podDisruptionBudget:
+  minAvailable: 1
