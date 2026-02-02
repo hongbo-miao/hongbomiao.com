@@ -1,0 +1,33 @@
+# https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-trino-gateway-ingress
+  namespace: production-hm-trino-gateway
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: trino-gateway.hongbomiao.com
+  labels:
+    app.kubernetes.io/name: hm-trino-gateway-ingress
+    app.kubernetes.io/part-of: production-hm-trino-gateway
+spec:
+  rules:
+    - host: trino-gateway.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: trino-gateway
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - trino-gateway.hongbomiao.com
+      secretName: hm-trino-gateway-certificate

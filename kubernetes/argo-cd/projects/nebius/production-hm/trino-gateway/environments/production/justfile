@@ -1,0 +1,11 @@
+generate-rsa-key-pair:
+    openssl genrsa -out private.pem 4096
+    openssl rsa -in private.pem -pubout -out public.pem
+
+seal-secret:
+    cat secrets/hm-trino-gateway-secret.unsealed.yaml | \
+    kubeseal \
+        --controller-namespace=production-hm-sealed-secrets \
+        --controller-name=sealed-secrets \
+        --format=yaml \
+        > kubernetes-manifests/hm-trino-gateway-secret.yaml

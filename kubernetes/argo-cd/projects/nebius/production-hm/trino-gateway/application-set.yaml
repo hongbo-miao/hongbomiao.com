@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production-trino-gateway
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/trino-gateway/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-trino-gateway'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://trinodb.github.io/charts
+          targetRevision: '{{.helmChartVersion}}'
+          chart: trino-gateway
+          helm:
+            releaseName: trino-gateway
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
+      destination:
+        namespace: '{{.environment}}-hm-trino-gateway'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

@@ -1,0 +1,125 @@
+# https://github.com/trinodb/charts/blob/main/charts/trino/values.yaml
+---
+image:
+  registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+coordinator:
+  jvm:
+    maxHeapSize: 8G
+  config:
+    query:
+      maxMemoryPerNode: 4GB
+  resources:
+    requests:
+      cpu: 2
+      memory: 12Gi
+    limits:
+      cpu: 4
+      memory: 16Gi
+worker:
+  jvm:
+    maxHeapSize: 40G
+  config:
+    query:
+      maxMemoryPerNode: 20GB
+  resources:
+    requests:
+      cpu: 8
+      memory: 48Gi
+    limits:
+      cpu: 14
+      memory: 56Gi
+server:
+  config:
+    authenticationType: OAUTH2,PASSWORD
+    query:
+      # Total distributed memory limit across all nodes for a single query
+      maxMemory: 100GB
+  # https://medium.com/bestsecret-tech/maximize-performance-the-bestsecret-to-scaling-trino-clusters-with-keda-c209efe4a081
+  keda:
+    enabled: true
+    pollingInterval: 30 # How often KEDA checks metrics (seconds)
+    cooldownPeriod: 600 # Wait time after last trigger before scaling to 0 (seconds)
+    minReplicaCount: 1
+    maxReplicaCount: 10
+    # Fallback replicas if metrics are unavailable
+    fallback:
+      failureThreshold: 3 # Number of failures before fallback
+      replicas: 3 # Replicas to maintain during fallback
+    advanced:
+      horizontalPodAutoscalerConfig:
+        behavior:
+          # Gradual scale down to prevent disruption
+          scaleDown:
+            stabilizationWindowSeconds: 600 # Wait before scale down decision
+            policies:
+              # Remove 1 pod every 2 minutes
+              - type: Pods
+                value: 1
+                periodSeconds: 120
+          # Responsive scale up for demand
+          scaleUp:
+            stabilizationWindowSeconds: 0 # Immediate response
+            policies:
+              # Add up to 2 pods every 30 seconds for traffic spikes
+              - type: Pods
+                value: 2
+                periodSeconds: 30
+    triggers:
+      - type: prometheus
+        metricType: Value
+        metadata:
+          serverAddress: http://prometheus-kube-prometheus-prometheus.production-hm-prometheus.svc:9090
+          threshold: "1"
+          metricName: required_workers
+          query: max(trino_execution_clustersizemonitor_requiredworkers{namespace="production-hm-trino"})
+  coordinatorExtraConfig: |
+    http-server.authentication.oauth2.client-id=xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com
+    http-server.authentication.oauth2.client-secret=${ENV:GOOGLE_CLIENT_SECRET}
+    http-server.authentication.oauth2.issuer=https://accounts.google.com
+    http-server.authentication.oauth2.principal-field=email
+    http-server.authentication.oauth2.scopes=openid,email,profile
+    http-server.authentication.password.user-mapping.pattern=(.*)
+    http-server.process-forwarded=true
+    web-ui.authentication.type=oauth2
+    web-ui.enabled=true
+  additionalConfigFiles:
+    password-authenticator.properties: |
+      password-authenticator.name=file
+      file.password-file=/etc/trino/auth/password.db
+additionalConfigProperties:
+  - internal-communication.shared-secret=${ENV:INTERNAL_COMMUNICATION_SHARED_SECRET}
+auth:
+  passwordAuthSecret: hm-trino-secret
+serviceAccount:
+  create: true
+  name: hm-trino
+envFrom:
+  - secretRef:
+      name: hm-trino-secret
+serviceMonitor:
+  enabled: true
+jmx:
+  enabled: true
+  exporter:
+    enabled: true
+    image: harbor.hongbomiao.com/docker-hub-proxy-cache/bitnamilegacy/jmx-exporter:1.4.0
+    # https://github.com/prometheus/jmx_exporter?tab=readme-ov-file#configuration
+    # https://trino.io/docs/current/admin/jmx.html
+    configProperties: |
+      hostPort: localhost:9080
+      ssl: false
+      lowercaseOutputName: true
+      lowercaseOutputLabelNames: true
+      rules:
+        # Pattern: JMX MBean ObjectName format (domain<property=value><>attribute)
+        #   - trino.execution: JMX domain
+        #   - <name=ClusterSizeMonitor>: MBean property
+        #   - <>: no additional properties
+        #   - RequiredWorkers: attribute from @Managed annotation
+        # Source: https://github.com/trinodb/trino/blob/master/core/trino-main/src/main/java/io/trino/execution/ClusterSizeMonitor.java
+        #
+        # Name: Prometheus metric name (lowercase due to lowercaseOutputName: true)
+        # Discover metrics: kubectl run --namespace=production-hm-trino curl-tmp --rm --stdin --restart=Never --image=curlimages/curl -- curl --silent http://trino:5556/metrics | grep trino
+        - pattern: trino.execution<name=ClusterSizeMonitor><>RequiredWorkers
+          name: trino_execution_clustersizemonitor_requiredworkers
+          type: GAUGE
