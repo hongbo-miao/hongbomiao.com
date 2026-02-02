@@ -10,7 +10,7 @@ servingEngineSpec:
     - name: qwen3-0-6b
       repository: harbor.hongbomiao.com/docker-hub-proxy-cache/lmcache/vllm-openai
       # https://hub.docker.com/r/lmcache/vllm-openai/tags
-      tag: v0.3.12
+      tag: v0.3.13
       modelURL: Qwen/Qwen3-0.6B
       replicaCount: 1
       requestCPU: 2
@@ -22,14 +22,41 @@ servingEngineSpec:
         maxModelLen: 8192
         dtype: auto
         tensorParallelSize: 1
-        gpuMemoryUtilization: 0.9
+    - name: qwen3-0-6b-20260101
+      repository: harbor.hongbomiao.com/docker-hub-proxy-cache/lmcache/vllm-openai
+      # https://hub.docker.com/r/lmcache/vllm-openai/tags
+      tag: v0.3.13
+      modelURL: s3://production-hm-models/qwen3-0-6b-20260101
+      replicaCount: 1
+      env:
+        - name: AWS_ENDPOINT_URL
+          value: https://storage.us-central1.nebius.cloud
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: hm-vllm-secret
+              key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: hm-vllm-secret
+              key: AWS_SECRET_ACCESS_KEY
+      requestCPU: 2
+      requestGPU: 1
+      requestMemory: 2Gi
+      vllmConfig:
+        enablePrefixCaching: true
+        enableChunkedPrefill: true
+        maxModelLen: 8192
+        dtype: auto
+        tensorParallelSize: 1
         extraArgs:
-          - "--disable-log-requests"
+          - "--served-model-name=qwen3-0-6b-20260101"
 routerSpec:
   enableRouter: true
   repository: harbor.hongbomiao.com/docker-hub-proxy-cache/lmcache/lmstack-router
   # https://hub.docker.com/r/lmcache/lmstack-router/tags
-  tag: 0.1.9.dev11-g5694032b8.d20260114
+  tag: 0.1.10.dev2-gfd69fbc9e.d20260129
   replicaCount: 1
   serviceDiscovery: k8s
   routingLogic: roundrobin
