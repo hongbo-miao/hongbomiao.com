@@ -1,8 +1,5 @@
 provider "harbor" {
-  url = "https://harbor.hongbomiao.com"
-}
-
-provider "aws" {
-  alias  = "production"
-  region = "us-west-2"
+  url      = "https://harbor.hongbomiao.com"
+  username = var.harbor_username
+  password = var.harbor_password
 }
