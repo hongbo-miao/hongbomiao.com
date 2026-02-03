@@ -32,33 +32,42 @@ module "harbor_garbage_collection" {
   worker_number = 2
 }
 
-# Projects
-# Projects - docker-hub-proxy-cache
+# Project
+# Project - docker-hub-proxy-cache
 module "harbor_project_docker_hub_proxy_cache" {
   source      = "../../../modules/harbor/harbor_project"
   name        = "docker-hub-proxy-cache"
   public      = true
   registry_id = module.harbor_registry_docker_hub.id
 }
-# Projects - microsoft-artifact-registry-proxy-cache
+# Project - microsoft-artifact-registry-proxy-cache
 module "harbor_project_microsoft_artifact_registry_proxy_cache" {
   source      = "../../../modules/harbor/harbor_project"
   name        = "microsoft-artifact-registry-proxy-cache"
   public      = true
   registry_id = module.harbor_registry_microsoft_artifact_registry.id
 }
-# Projects - hongbomiao
-module "harbor_project_hm" {
+# Project - hongbomiao
+module "harbor_project_hm_application" {
   source = "../../../modules/harbor/harbor_project"
-  name   = "hongbomiao"
+  name   = "hm-application"
   public = false
 }
 
-# Robots
+# Robot
+# Robot - hm-kubernetes-robot
 module "harbor_robot_account_hm_kubernetes_robot" {
   source        = "../../../modules/harbor/harbor_robot_account"
   name          = "hm-kubernetes-robot"
   actions       = ["pull"]
-  project_names = [module.harbor_project_hm.name]
+  project_names = [module.harbor_project_hm_application.name]
   secret        = var.hm_kubernetes_robot_secret
+}
+# Robot - hm-application-project-robot
+module "harbor_robot_account_hm_application_robot" {
+  source        = "../../../modules/harbor/harbor_robot_account"
+  name          = "hm-application-project-robot"
+  actions       = ["pull", "push"]
+  project_names = [module.harbor_project_hm_application.name]
+  secret        = var.hm_application_robot_secret
 }
