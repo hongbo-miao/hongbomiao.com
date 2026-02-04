@@ -3,15 +3,15 @@ import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-def get_env_files() -> list[str]:
-    env = os.getenv("ENV")
-    match env:
-        case "production":
-            return [".env.production", ".env.production.local"]
+def get_environment_files() -> list[str]:
+    environment = os.getenv("ENVIRONMENT")
+    match environment:
         case "development" | "test":
             return [".env.development", ".env.development.local"]
+        case "production":
+            return [".env.production", ".env.production.local"]
         case _:
-            message = f"Invalid ENV value: {env}."
+            message = f"Invalid ENVIRONMENT value: {environment}."
             raise ValueError(message)
 
 
@@ -19,7 +19,7 @@ class Config(BaseSettings):
     SEED_USER_EMAIL: str
     SEED_USER_PASSWORD: str
 
-    model_config = SettingsConfigDict(env_file=get_env_files())
+    model_config = SettingsConfigDict(env_file=get_environment_files())
 
 
 config = Config.model_validate({})
