@@ -47,7 +47,7 @@ module "harbor_project_microsoft_artifact_registry_proxy_cache" {
   public      = true
   registry_id = module.harbor_registry_microsoft_artifact_registry.id
 }
-# Project - hongbomiao
+# Project - hm-application
 module "harbor_project_hm_application" {
   source = "../../../modules/harbor/harbor_project"
   name   = "hm-application"

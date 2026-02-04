@@ -17,7 +17,7 @@ sentry_sdk.init(
     dsn=config.SENTRY_DSN,
     integrations=[FastApiIntegration()],
     traces_sample_rate=1.0,
-    environment=config.ENV,
+    environment=config.ENVIRONMENT,
 )
 
 

@@ -21,5 +21,5 @@ required-version = ">=0.9.0"
 
 [tool.poe.tasks]
 dev = "locust --config=src/locust.conf"
-test = { cmd = "pytest --verbose --verbose", env = { ENV = "test" } }
-test-coverage = { cmd = "pytest --cov=. --cov-report=xml", env = { ENV = "test" } }
+test = { cmd = "pytest --verbose --verbose", env = { ENVIRONMENT = "test" } }
+test-coverage = { cmd = "pytest --cov=. --cov-report=xml", env = { ENVIRONMENT = "test" } }
