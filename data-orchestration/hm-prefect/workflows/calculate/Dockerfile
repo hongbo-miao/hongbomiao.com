@@ -1,4 +1,4 @@
-FROM docker.io/prefecthq/prefect:3.6.15-python3.12-kubernetes AS base
+FROM docker.io/prefecthq/prefect:3.6.16-python3.12-kubernetes AS base
 WORKDIR /opt/prefect/workflow
 
 FROM base AS builder
