@@ -1,0 +1,81 @@
+# https://github.com/actions/actions-runner-controller/blob/master/charts/gha-runner-scale-set/values.yaml
+---
+githubConfigUrl: https://github.com/hongbo-miao/hm
+githubConfigSecret: hm-gha-runner-scale-set-large-secret
+runnerScaleSetName: hm-gha-runner-scale-set-large
+minRunners: 0
+maxRunners: 10
+template:
+  spec:
+    initContainers:
+      - name: init-dind-externals
+        image: ghcr.io/actions/actions-runner:2.331.0
+        command:
+          - cp
+          - -r
+          - /home/runner/externals/.
+          - /home/runner/tmpDir/
+        volumeMounts:
+          - name: dind-externals
+            mountPath: /home/runner/tmpDir
+    containers:
+      - name: runner
+        image: ghcr.io/actions/actions-runner:2.331.0
+        command:
+          - /home/runner/run.sh
+        env:
+          - name: DOCKER_HOST
+            value: unix:///var/run/docker.sock
+          - name: RUNNER_WAIT_FOR_DOCKER_IN_SECONDS
+            value: "120"
+        resources:
+          requests:
+            cpu: 2000m
+            memory: 8Gi
+          limits:
+            cpu: 2000m
+            memory: 8Gi
+        volumeMounts:
+          - name: work
+            mountPath: /home/runner/_work
+          - name: dind-sock
+            mountPath: /var/run
+          - name: hostedtoolcache
+            mountPath: /opt/hostedtoolcache
+      - name: dind
+        image: harbor.hongbomiao.com/docker-hub-proxy-cache/library/docker:dind
+        args:
+          - dockerd
+          - --host=unix:///var/run/docker.sock
+          - --group=$(DOCKER_GROUP_GID)
+        env:
+          - name: DOCKER_GROUP_GID
+            value: "123"
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 4Gi
+          limits:
+            cpu: 2000m
+            memory: 4Gi
+        volumeMounts:
+          - name: work
+            mountPath: /home/runner/_work
+          - name: dind-sock
+            mountPath: /var/run
+          - name: dind-externals
+            mountPath: /home/runner/externals
+    volumes:
+      - name: work
+        emptyDir: {}
+      - name: dind-sock
+        emptyDir: {}
+      - name: dind-externals
+        emptyDir: {}
+      - name: hostedtoolcache
+        emptyDir: {}
+controllerServiceAccount:
+  namespace: production-hm-gha-runner-scale-set-controller
+  name: gha-runner-scale-set-controller-gha-rs-controller

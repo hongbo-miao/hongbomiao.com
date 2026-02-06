@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production-gha-runner-scale-set-controller
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/gha-runner-scale-set-controller/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-gha-runner-scale-set-controller'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: ghcr.io/actions/actions-runner-controller-charts
+          targetRevision: '{{.helmChartVersion}}'
+          chart: gha-runner-scale-set-controller
+          helm:
+            releaseName: gha-runner-scale-set-controller
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+      destination:
+        namespace: '{{.environment}}-hm-gha-runner-scale-set-controller'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

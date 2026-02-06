@@ -1,0 +1,15 @@
+# https://github.com/actions/actions-runner-controller/blob/master/charts/gha-runner-scale-set-controller/values.yaml
+---
+replicaCount: 3
+image:
+  repository: ghcr.io/actions/gha-runner-scale-set-controller
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
+flags:
+  logLevel: info
+  logFormat: json
