@@ -847,6 +847,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Diun** - Container image update notifier
 - **Discord** - ChatOps
 - **Opsgenie** - Incident management platform
+- **Actions Runner Controller (ARC)** - Kubernetes operator for self-hosted GitHub Actions runners
 - **[GitHub Actions](https://github.com/hongbo-miao/hongbomiao.com/actions)** - Continuous integration
 
 ## Authentication, Authorization, Security
