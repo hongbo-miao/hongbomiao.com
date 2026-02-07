@@ -29,6 +29,15 @@ wheels = [
 ]
 
 [[package]]
+name = "amplitude-analytics"
+version = "1.2.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/43/fc/a13b8e2ef83b1ad2be606d5d01a16d43d26cb5d3ef71d7c35e4f3bee2e1f/amplitude_analytics-1.2.1.tar.gz", hash = "sha256:909e271f48ebee5e58d0e9b8d675e09cad6304a50fbb5b57c910313beaf744ed", size = 22237, upload-time = "2025-11-19T18:38:45.845Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ee/c0/09f3038554d902379c4a887e567a70765a30c41d7a724827351a183ef774/amplitude_analytics-1.2.1-py3-none-any.whl", hash = "sha256:8d35823e99432e8e91276f1f7542b267c2c8e4e4297d41e2914a585fd73ca96c", size = 24641, upload-time = "2025-11-19T18:38:44.634Z" },
+]
+
+[[package]]
 name = "annotated-types"
 version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -813,11 +822,12 @@ wheels = [
 
 [[package]]
 name = "prefect"
-version = "3.6.15"
+version = "3.6.16"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiosqlite" },
     { name = "alembic" },
+    { name = "amplitude-analytics" },
     { name = "anyio" },
     { name = "apprise" },
     { name = "asgi-lifespan" },
@@ -871,16 +881,17 @@ dependencies = [
     { name = "websockets" },
     { name = "whenever" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0f/99/169c4d1cff1e6f11835f8427a510daa996af988b6a70cec0746344b88f22/prefect-3.6.15.tar.gz", hash = "sha256:783ff2ed5a29b62151facb567c4d596229b3d19520834e7cb3ae9c682b0704e0", size = 11070537, upload-time = "2026-01-30T00:50:00.264Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cf/e6/c2cbf73de1d0c9aff3d919799d69bca48c764634ccf9504edac62eb8f814/prefect-3.6.16.tar.gz", hash = "sha256:c9d74be562cfe790bd11f6ee9e70137489e2669ca198b6cb4136f0374dc347a5", size = 11092451, upload-time = "2026-02-05T20:01:54.047Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d7/95/2145b372daecb8d449530afb12e3e2cb3cd9aceeeecae8ba001dc1bb5ed2/prefect-3.6.15-py3-none-any.whl", hash = "sha256:eff2b5a1385677b9d94629b94428ddddbb9df63eadd8a870f05ef1ab124f9b84", size = 11799648, upload-time = "2026-01-30T00:49:57.145Z" },
+    { url = "https://files.pythonhosted.org/packages/31/20/bf72dceb26f60dde72e889d5881d45d404750ea12ad83d62faa9ac5664ed/prefect-3.6.16-py3-none-any.whl", hash = "sha256:6823730e6fbe365b89a9ec949557564e140f8912b34dcab69aa5d6f22af4047b", size = 11824793, upload-time = "2026-02-05T20:01:51.311Z" },
 ]
 
 [[package]]
 name = "prefect-client"
-version = "3.6.15"
+version = "3.6.16"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
+    { name = "amplitude-analytics" },
     { name = "anyio" },
     { name = "asgi-lifespan" },
     { name = "cachetools" },
@@ -921,9 +932,9 @@ dependencies = [
     { name = "websockets" },
     { name = "whenever" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0a/f9/005e1c17e0d25d9ff488bd8dd6c93a6988f3b6eb396ee84c42893295abca/prefect_client-3.6.15.tar.gz", hash = "sha256:73601527e46e10ccb1c2bd4cf107b7755f5e365610e0142cfc2169ccd814c11d", size = 731542, upload-time = "2026-01-30T00:50:46.79Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/37/29/17338e36b354c9f65e5de49389b658399d433f90ccef552512ad57700130/prefect_client-3.6.16.tar.gz", hash = "sha256:cadf75d98331ebb55f00b9998cf7f0f89b1b502dbc9c372fb973c427a1583c1e", size = 741009, upload-time = "2026-02-05T20:02:01.34Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/83/02/e4cfa5665430b79fbd1051bcaee86bab2c36a6772f32f3aa4480dd51983c/prefect_client-3.6.15-py3-none-any.whl", hash = "sha256:7a7efb3f8ff3dc4ba5967d9a81950c662d2cdc676684e9f856205b8a2c29f36d", size = 902765, upload-time = "2026-01-30T00:50:45.18Z" },
+    { url = "https://files.pythonhosted.org/packages/be/2a/2de5605c85840ec25ba2c799f702024c0a001aa3861ae5f48607c9637457/prefect_client-3.6.16-py3-none-any.whl", hash = "sha256:013b2dae9df9378c3a812499533ef7b0446df7265f9fc69d6f66f696f402d712", size = 917939, upload-time = "2026-02-05T20:01:59.129Z" },
 ]
 
 [[package]]
@@ -945,14 +956,14 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "prefect-client", specifier = "==3.6.15" },
+    { name = "prefect-client", specifier = "==3.6.16" },
     { name = "pydantic", specifier = "==2.12.5" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "poethepoet", specifier = "==0.40.0" },
-    { name = "prefect", specifier = "==3.6.15" },
+    { name = "prefect", specifier = "==3.6.16" },
     { name = "pytest", specifier = "==9.0.2" },
     { name = "pytest-cov", specifier = "==7.0.0" },
 ]
