@@ -35,6 +35,7 @@ module "hm_project" {
     { group = "networking.k8s.io", kind = "IngressClass" },
     { group = "rbac.authorization.k8s.io", kind = "ClusterRole" },
     { group = "rbac.authorization.k8s.io", kind = "ClusterRoleBinding" },
+    { group = "storage.k8s.io", kind = "CSIDriver" },
     { group = "storage.k8s.io", kind = "StorageClass" },
   ]
 }
