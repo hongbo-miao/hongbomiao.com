@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production-csi-s3
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/csi-s3/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-csi-s3'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://yandex-cloud.github.io/k8s-csi-s3/charts
+          targetRevision: '{{.helmChartVersion}}'
+          chart: csi-s3
+          helm:
+            releaseName: csi-s3
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+      destination:
+        namespace: '{{.environment}}-hm-csi-s3'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

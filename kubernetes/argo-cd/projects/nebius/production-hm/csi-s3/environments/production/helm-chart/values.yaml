@@ -1,0 +1,37 @@
+# https://github.com/yandex-cloud/k8s-csi-s3/blob/master/deploy/helm/csi-s3/values.yaml
+---
+storageClass:
+  create: true
+  name: csi-s3
+  mounter: geesefs
+  # --memory-limit: Cache memory in MiB
+  # --dir-mode 0555: Read-only directories (r-xr-xr-x)
+  # --file-mode 0444: Read-only files (r--r--r--)
+  mountOptions: "--memory-limit 1000 --dir-mode 0555 --file-mode 0444"
+secret:
+  # Using per-application secrets instead of a global secret
+  create: false
+csiAttacher:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      cpu: 50m
+      memory: 128Mi
+csiProvisioner:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      cpu: 50m
+      memory: 128Mi
+csiS3Plugin:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 256Mi

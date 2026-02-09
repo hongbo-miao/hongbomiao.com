@@ -250,6 +250,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **cert-manager** - Kubernetes X.509 certificate management
 - **Harbor** - Container image registry
 - **Velero** - Kubernetes backup and disaster recovery
+- **CSI for S3** - Container Storage Interface (CSI) driver for S3 and S3-compatible storage
 - **Hasura** - GraphQL Engine
   - **hasura-metric-adapter** - Hasura GraphQL Engine metric adapter
 - **Cilium** - eBPF-based networking, observability, security
