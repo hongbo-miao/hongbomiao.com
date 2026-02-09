@@ -102,6 +102,28 @@ module "argo_cd_helm_chart" {
   ]
 }
 
+# Gatus
+# Gatus - Postgres
+module "gatus_postgres_cluster" {
+  source                       = "../../../../modules/nebius/postgres_cluster"
+  project_id                   = var.project_id
+  network_id                   = var.vpc_network_id
+  postgres_version             = "16"
+  pooling_mode                 = "SESSION"
+  postgres_cluster_name        = "${var.environment}-gatus-postgres-cluster"
+  bootstrap_database_name      = "bootstrap_db"
+  bootstrap_user_name          = "bootstrap_user"
+  bootstrap_user_password      = var.gatus_postgres_bootstrap_user_password
+  public_access                = false
+  disk_size_gib                = 16
+  host_count                   = 1
+  platform                     = "cpu-d3"
+  preset                       = "4vcpu-16gb"
+  labels                       = var.common_labels
+  backup_window_start_time_utc = "9:00:00"
+  backup_retention_policy      = "14d"
+}
+
 # Grafana
 # Grafana - service account
 module "hm_grafana_service_account" {
@@ -151,7 +173,7 @@ module "grafana_postgres_cluster" {
   bootstrap_user_password      = var.grafana_postgres_bootstrap_user_password
   public_access                = false
   disk_size_gib                = 16
-  host_count                   = 1
+  host_count                   = 3
   platform                     = "cpu-d3"
   preset                       = "4vcpu-16gb"
   labels                       = var.common_labels
@@ -424,4 +446,26 @@ module "hm_spark_history_server_object_storage" {
   default_storage_class = "STANDARD"
   versioning_policy     = "DISABLED"
   labels                = var.common_labels
+}
+
+# Trino Gateway
+# Trino Gateway - Postgres
+module "trino_gateway_postgres_cluster" {
+  source                       = "../../../../modules/nebius/postgres_cluster"
+  project_id                   = var.project_id
+  network_id                   = var.vpc_network_id
+  postgres_version             = "16"
+  pooling_mode                 = "SESSION"
+  postgres_cluster_name        = "${var.environment}-trino-gateway-postgres-cluster"
+  bootstrap_database_name      = "bootstrap_db"
+  bootstrap_user_name          = "bootstrap_user"
+  bootstrap_user_password      = var.trino_gateway_postgres_bootstrap_user_password
+  public_access                = false
+  disk_size_gib                = 16
+  host_count                   = 3
+  platform                     = "cpu-d3"
+  preset                       = "4vcpu-16gb"
+  labels                       = var.common_labels
+  backup_window_start_time_utc = "9:00:00"
+  backup_retention_policy      = "14d"
 }

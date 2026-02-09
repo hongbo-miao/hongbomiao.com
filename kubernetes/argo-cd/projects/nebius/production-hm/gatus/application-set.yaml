@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production-gatus
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/gatus/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-gatus'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://twin.github.io/helm-charts
+          targetRevision: '{{.helmChartVersion}}'
+          chart: gatus
+          helm:
+            releaseName: gatus
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
+      destination:
+        namespace: '{{.environment}}-hm-gatus'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true

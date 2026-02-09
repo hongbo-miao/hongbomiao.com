@@ -1,0 +1,17 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hm-gatus-certificate
+  namespace: production-hm-gatus
+  labels:
+    app.kubernetes.io/name: hm-gatus-certificate
+    app.kubernetes.io/part-of: production-hm-gatus
+spec:
+  secretName: hm-gatus-certificate
+  issuerRef:
+    name: hm-lets-encrypt-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - gatus.hongbomiao.com

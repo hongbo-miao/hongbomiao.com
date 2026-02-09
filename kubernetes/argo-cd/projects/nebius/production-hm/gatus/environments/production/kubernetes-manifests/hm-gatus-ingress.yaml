@@ -1,0 +1,33 @@
+# https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-gatus-ingress
+  namespace: production-hm-gatus
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: gatus.hongbomiao.com
+  labels:
+    app.kubernetes.io/name: hm-gatus-ingress
+    app.kubernetes.io/part-of: production-hm-gatus
+spec:
+  rules:
+    - host: gatus.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gatus
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - gatus.hongbomiao.com
+      secretName: hm-gatus-certificate

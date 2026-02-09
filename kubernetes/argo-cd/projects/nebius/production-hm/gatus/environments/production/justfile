@@ -1,0 +1,7 @@
+seal-secret:
+    cat secrets/hm-gatus-secret.unsealed.yaml | \
+    kubeseal \
+        --controller-namespace=production-hm-sealed-secrets \
+        --controller-name=sealed-secrets \
+        --format=yaml \
+        > kubernetes-manifests/hm-gatus-secret.yaml

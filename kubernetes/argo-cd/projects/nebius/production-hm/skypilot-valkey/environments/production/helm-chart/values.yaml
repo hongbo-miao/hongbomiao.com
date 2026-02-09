@@ -1,0 +1,26 @@
+# https://github.com/valkey-io/valkey-helm/blob/main/valkey/values.yaml
+---
+global:
+  imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
+auth:
+  enabled: true
+  usersExistingSecret: hm-skypilot-valkey-secret
+  aclUsers:
+    default:
+      permissions: "~* &* +@all"
+      passwordKey: VALKEY_PASSWORD
+replica:
+  enabled: true
+  replicas: 3
+  persistence:
+    size: 1Gi
+    storageClass: production-hm-skypilot-valkey-storage-class
+    accessModes:
+      - ReadWriteOnce
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi

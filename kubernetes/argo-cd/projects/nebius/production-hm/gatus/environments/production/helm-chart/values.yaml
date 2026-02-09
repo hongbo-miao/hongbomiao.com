@@ -1,0 +1,91 @@
+# https://github.com/TwiN/helm-charts/blob/master/charts/gatus/values.yaml
+---
+image:
+  registry: harbor.hongbomiao.com/docker-hub-proxy-cache
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+env:
+  POSTGRES_USER_NAME:
+    valueFrom:
+      secretKeyRef:
+        name: hm-gatus-secret
+        key: POSTGRES_USER_NAME
+  POSTGRES_PASSWORD:
+    valueFrom:
+      secretKeyRef:
+        name: hm-gatus-secret
+        key: POSTGRES_PASSWORD
+config:
+  storage:
+    type: postgres
+    path: postgres://${POSTGRES_USER_NAME}:${POSTGRES_PASSWORD}@private-rw.postgresql-xxxxxxxxxxxxxxxxxx.backbone-xxxxxxxxxxxxxxxxxx.msp.us-central1.nebius.cloud:5432/gatus_db?sslmode=require
+    caching: true
+  endpoints:
+    - name: Grafana
+      group: production
+      url: https://grafana.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Harbor
+      group: production
+      url: https://harbor.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: MLflow
+      group: production
+      url: https://mlflow.hongbomiao.com/health
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: NATS
+      group: production
+      url: http://nats-headless.production-hm-nats.svc:8222/healthz
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Polaris
+      group: production
+      url: http://polaris-mgmt.production-hm-polaris.svc:8182/q/health
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: SkyPilot
+      group: production
+      url: https://skypilot.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Spark History Server
+      group: production
+      url: https://spark.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Trino
+      group: production
+      url: https://trino.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
+    - name: Trino Gateway
+      group: production
+      url: https://trino-gateway.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"

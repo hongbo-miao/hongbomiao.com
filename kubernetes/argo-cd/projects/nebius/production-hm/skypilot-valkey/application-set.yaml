@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: production-skypilot-valkey
+  namespace: production-hm-argo-cd
+spec:
+  goTemplate: true
+  generators:
+    - git:
+        repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+        revision: main
+        files:
+          - path: kubernetes/argo-cd/projects/nebius/production-hm/skypilot-valkey/environments/*/config.yaml
+  template:
+    metadata:
+      name: '{{.environment}}-skypilot-valkey'
+    spec:
+      project: production-hm
+      sources:
+        - repoURL: https://valkey.io/valkey-helm/
+          targetRevision: '{{.helmChartVersion}}'
+          chart: valkey
+          helm:
+            releaseName: skypilot-valkey
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          ref: config
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
+      destination:
+        namespace: '{{.environment}}-hm-skypilot-valkey'
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true
