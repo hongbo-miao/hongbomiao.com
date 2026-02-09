@@ -262,6 +262,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Telegraf** - Plugin-driven server agent
 - **Docker** - Container
 - **Skaffold** - Continuous development for Kubernetes applications
+- **Kustomize** - Template-free customization of Kubernetes manifests
 - **Multipass** - Virtual machine management
 - **Cloudflare Tunnel** - Tunneling
 - **Vertical Pod Autoscaler** - Kubernetes vertical pod autoscaler
