@@ -18,9 +18,19 @@ spec:
     spec:
       project: production-hm
       sources:
+        - repoURL: https://helm.skypilot.co
+          targetRevision: '{{.helmChartVersion}}'
+          chart: skypilot
+          helm:
+            releaseName: skypilot
+            valueFiles:
+              - '$config/{{.path.path}}/helm-chart/values.yaml'
         - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
           targetRevision: main
-          path: '{{.path.path}}'
+          ref: config
+        - repoURL: git@github.com:hongbo-miao/hongbomiao.com.git
+          targetRevision: main
+          path: '{{.path.path}}/kubernetes-manifests'
       destination:
         namespace: '{{.environment}}-hm-skypilot'
         server: https://kubernetes.default.svc

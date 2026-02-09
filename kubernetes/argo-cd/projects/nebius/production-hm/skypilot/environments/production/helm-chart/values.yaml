@@ -6,6 +6,13 @@ apiService:
   enableUserManagement: true
 ingress:
   enabled: true
+  host: skypilot.hongbomiao.com
+  ingressClassName: nginx
+  annotations:
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: skypilot.hongbomiao.com
+  tls:
+    enabled: true
   oauth2-proxy:
     enabled: true
     oidc-issuer-url: https://accounts.google.com
@@ -13,6 +20,7 @@ ingress:
     email-domain: hongbomiao.com
     use-https: true
     session-store-type: redis
+    redis-secret: hm-skypilot-secret
 ingress-nginx:
   enabled: false
 storage:
