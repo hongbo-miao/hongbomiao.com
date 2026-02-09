@@ -1,0 +1,7 @@
+seal-secret:
+    cat secrets/hm-skypilot-valkey-secret.unsealed.yaml | \
+    kubeseal \
+        --controller-namespace=production-hm-sealed-secrets \
+        --controller-name=sealed-secrets \
+        --format=yaml \
+        > kubernetes-manifests/hm-skypilot-valkey-secret.yaml

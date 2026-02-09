@@ -290,6 +290,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Jaeger** - Distributed tracing system
 - **Pixie** - Kubernetes application observability tool
 - **Netdata** - Distributed monitoring platform
+- **Gatus** - Health dashboard
 - **Elastic APM** - Application performance monitoring
 - **Kibana** - Elasticsearch visualization
 

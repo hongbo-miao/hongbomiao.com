@@ -1,10 +1,15 @@
 # https://github.com/kubernetes-sigs/external-dns/blob/master/charts/external-dns/values.yaml
 ---
+logLevel: info
 image:
   repository: registry.k8s.io/external-dns/external-dns
 sources:
   - service
   - ingress
+  - traefik-proxy
+extraArgs:
+  # https://kubernetes-sigs.github.io/external-dns/v0.14.1/tutorials/traefik-proxy/#disabling-resource-listeners
+  - --traefik-disable-legacy
 provider:
   name: cloudflare
 env:

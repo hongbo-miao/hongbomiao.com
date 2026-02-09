@@ -6,6 +6,14 @@ controller:
     enabled: true
     default: false
     controllerValue: k8s.io/ingress-nginx
+  # https://github.com/skypilot-org/skypilot/issues/8711
+  # Required for SkyPilot oauth2-proxy auth-snippet to bypass auth for Bearer tokens
+  allowSnippetAnnotations: true
+  # https://github.com/skypilot-org/skypilot/issues/8711
+  # Required for SkyPilot oauth2-proxy external auth annotations
+  config:
+    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#annotations-risk-level
+    annotations-risk-level: Critical
   replicaCount: 3
   service:
     type: LoadBalancer

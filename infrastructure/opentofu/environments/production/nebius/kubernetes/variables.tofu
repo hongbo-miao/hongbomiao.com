@@ -16,6 +16,10 @@ variable "vpc_subnet_id" {
 variable "common_labels" {
   type = map(string)
 }
+variable "gatus_postgres_bootstrap_user_password" {
+  type      = string
+  sensitive = true
+}
 variable "grafana_postgres_bootstrap_user_password" {
   type      = string
   sensitive = true
@@ -33,6 +37,10 @@ variable "polaris_postgres_bootstrap_user_password" {
   sensitive = true
 }
 variable "skypilot_postgres_bootstrap_user_password" {
+  type      = string
+  sensitive = true
+}
+variable "trino_gateway_postgres_bootstrap_user_password" {
   type      = string
   sensitive = true
 }
