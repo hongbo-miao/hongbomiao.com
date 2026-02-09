@@ -5,16 +5,13 @@ kind: Certificate
 metadata:
   name: hm-opencost-certificate
   namespace: production-hm-opencost
+  labels:
+    app.kubernetes.io/name: hm-opencost-certificate
+    app.kubernetes.io/part-of: production-hm-opencost
 spec:
-  commonName: opencost.hongbomiao.com
   secretName: hm-opencost-certificate
+  issuerRef:
+    name: hm-lets-encrypt-cluster-issuer
+    kind: ClusterIssuer
   dnsNames:
     - opencost.hongbomiao.com
-  issuerRef:
-    kind: ClusterIssuer
-    name: production-lets-encrypt-cluster-issuer
-  # https://letsencrypt.org/certificates
-  privateKey:
-    algorithm: ECDSA
-    size: 384
-    rotationPolicy: Always

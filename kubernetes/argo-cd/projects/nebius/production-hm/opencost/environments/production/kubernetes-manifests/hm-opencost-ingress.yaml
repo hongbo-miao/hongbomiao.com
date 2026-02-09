@@ -9,8 +9,10 @@ metadata:
     # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: opencost.hongbomiao.com
   labels:
-    app.kubernetes.io/name: opencost-ingress
+    app.kubernetes.io/name: hm-opencost-ingress
     app.kubernetes.io/part-of: production-hm-opencost
 spec:
   rules:
@@ -21,7 +23,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: hm-opencost
+                name: opencost
                 port:
                   number: 9090
   tls:
