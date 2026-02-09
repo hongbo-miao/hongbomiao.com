@@ -1,7 +1,7 @@
 import asyncio
 import logging
-from pathlib import Path
 
+from anyio import Path
 from crawl4ai import AsyncWebCrawler
 
 logger = logging.getLogger(__name__)
@@ -13,7 +13,7 @@ async def main() -> None:
             url="https://www.nytimes.com/section/business",
         )
         filename = "output.md"
-        Path(filename).write_text(result.markdown, encoding="utf-8")
+        await Path(filename).write_text(result.markdown, encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -1,9 +1,9 @@
 import asyncio
 import logging
 from collections.abc import Awaitable, Callable
-from pathlib import Path
 
 import nats
+from anyio import Path
 from nats.aio.msg import Msg
 
 logger = logging.getLogger(__name__)
@@ -21,9 +21,9 @@ def create_message_handler(
     async def handle_audio_message(message: Msg) -> None:
         try:
             subject_suffix = message.subject.removeprefix(f"{SUBJECT_PREFIX}.")
-            audio_path = data_directory.joinpath(f"{subject_suffix}.flac")
+            audio_path = data_directory / f"{subject_suffix}.flac"
 
-            audio_path.write_bytes(message.data)
+            await audio_path.write_bytes(message.data)
             await message.ack()
 
             logger.info(
@@ -45,7 +45,7 @@ async def main() -> None:
         jetstream_context = nats_client.jetstream()
 
         data_directory = Path("data")
-        data_directory.mkdir(parents=True, exist_ok=True)
+        await data_directory.mkdir(parents=True, exist_ok=True)
         logger.info(f"Saving audio files to: {data_directory}")
 
         message_handler = create_message_handler(data_directory)

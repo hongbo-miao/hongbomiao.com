@@ -1,9 +1,9 @@
 import asyncio
 import logging
-from pathlib import Path
 from uuid import uuid4
 
 import nats
+from anyio import Path
 from nats.js.client import JetStreamContext
 
 logger = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ async def publish_single_flac(
     audio_path: Path,
 ) -> bool:
     try:
-        flac_bytes = audio_path.read_bytes()
+        flac_bytes = await audio_path.read_bytes()
         subject = f"{SUBJECT_PREFIX}.{audio_path.stem}"
         ack = await jetstream_context.publish(
             subject,
@@ -41,7 +41,9 @@ async def publish_flac_files(
     jetstream_context: JetStreamContext,
     data_directory: Path,
 ) -> int:
-    audio_paths: list[Path] = sorted(data_directory.glob("*.flac"))
+    audio_paths: list[Path] = sorted(
+        [path async for path in data_directory.glob("*.flac")],
+    )
 
     if not audio_paths:
         logger.warning(f"No FLAC files found in {data_directory}")

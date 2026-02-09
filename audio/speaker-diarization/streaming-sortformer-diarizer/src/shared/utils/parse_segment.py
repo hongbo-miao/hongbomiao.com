@@ -9,5 +9,5 @@ def parse_segment(segment: str) -> tuple[float, float, str]:
         msg = f"Segment lacks numeric timestamps: {segment}"
         raise ValueError(msg)
 
-    speaker_identifier = segment.split()[-1]
+    speaker_identifier = segment.rsplit(maxsplit=1)[-1]
     return float(float_matches[0]), float(float_matches[1]), speaker_identifier
