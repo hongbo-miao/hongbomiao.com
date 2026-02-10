@@ -1,0 +1,21 @@
+# https://cert-manager.io/docs/usage/certificate
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hm-object-storage-browser-certificate
+  namespace: production-hm-object-storage-browser
+  labels:
+    app.kubernetes.io/name: hm-object-storage-browser-certificate
+    app.kubernetes.io/part-of: production-hm-object-storage-browser
+spec:
+  secretName: hm-object-storage-browser-certificate
+  issuerRef:
+    name: hm-lets-encrypt-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - object-storage-browser.hongbomiao.com
+  privateKey:
+    algorithm: ECDSA
+    size: 384
+    rotationPolicy: Always

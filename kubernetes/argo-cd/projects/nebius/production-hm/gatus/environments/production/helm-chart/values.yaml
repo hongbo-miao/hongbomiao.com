@@ -54,6 +54,13 @@ config:
       conditions:
         - "[STATUS] == 200"
         - "[RESPONSE_TIME] < 5000"
+    - name: OpenCost
+      group: production
+      url: https://opencost.hongbomiao.com
+      interval: 60s
+      conditions:
+        - "[STATUS] == 200"
+        - "[RESPONSE_TIME] < 5000"
     - name: Polaris
       group: production
       url: http://polaris-mgmt.production-hm-polaris.svc:8182/q/health

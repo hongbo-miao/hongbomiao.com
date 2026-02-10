@@ -27,6 +27,7 @@ module "hm_project" {
   ]
   cluster_resource_whitelist = [
     { group = "", kind = "Namespace" },
+    { group = "", kind = "PersistentVolume" },
     { group = "admissionregistration.k8s.io", kind = "MutatingWebhookConfiguration" },
     { group = "admissionregistration.k8s.io", kind = "ValidatingWebhookConfiguration" },
     { group = "apiextensions.k8s.io", kind = "CustomResourceDefinition" },

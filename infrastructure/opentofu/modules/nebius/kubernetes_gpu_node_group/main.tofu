@@ -22,6 +22,10 @@ resource "nebius_mk8s_v1_node_group" "main" {
     gpu_settings = {
       drivers_preset = var.drivers_preset
     }
+    boot_disk = {
+      type           = var.boot_disk_type
+      size_gibibytes = var.boot_disk_size_gibibytes
+    }
     os                   = var.os
     cloud_init_user_data = var.cloud_init_user_data != "" ? var.cloud_init_user_data : null
   }
