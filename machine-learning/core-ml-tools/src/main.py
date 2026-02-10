@@ -13,7 +13,7 @@ def extract_dimensions(shape_attribute: Any) -> list[int] | None:  # noqa: ANN40
         return None
     source = getattr(shape_attribute, "dimensions", shape_attribute)
     values = [getattr(dimension, "size", dimension) for dimension in source]
-    return values if values else None
+    return values or None
 
 
 def log_features(features: Iterable[Any], section_title: str) -> None:

@@ -12,7 +12,9 @@ logger = logging.getLogger(__name__)
 
 def get_cache_table_name(parquet_url: str) -> str:
     url_hash = xxhash.xxh128(parquet_url.encode()).hexdigest()
-    table_name = clean_table_name(get_file_true_stem(Path(parquet_url.split("/")[-1])))
+    table_name = clean_table_name(
+        get_file_true_stem(Path(parquet_url.rsplit("/", maxsplit=1)[-1])),
+    )
     return f"{table_name}_{url_hash}"
 
 

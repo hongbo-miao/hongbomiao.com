@@ -46,7 +46,7 @@ class ImageBindSearch:
 
     @staticmethod
     def download_file(client: httpx.Client, url: str, is_audio: bool) -> Path:
-        filename = url.split("/")[-1]
+        filename = url.rsplit("/", maxsplit=1)[-1]
         if not is_audio:
             filename = f"{filename}.jpg"
         local_file_path = DATA_DIR / Path(filename)
