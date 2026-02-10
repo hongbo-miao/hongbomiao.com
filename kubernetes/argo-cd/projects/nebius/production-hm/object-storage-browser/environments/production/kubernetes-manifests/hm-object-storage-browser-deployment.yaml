@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hm-object-storage-browser-deployment
+  namespace: production-hm-object-storage-browser
+  labels:
+    app: hm-object-storage-browser
+    app.kubernetes.io/name: hm-object-storage-browser-deployment
+    app.kubernetes.io/part-of: production-hm-object-storage-browser
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hm-object-storage-browser
+  template:
+    metadata:
+      labels:
+        app: hm-object-storage-browser
+    spec:
+      containers:
+        - name: caddy
+          image: harbor.hongbomiao.com/docker-hub-proxy-cache/caddy:2.10.2-alpine
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 8080
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "{
+                log {
+                  output stdout
+                }
+                auto_https off
+              }
+              :8080 {
+                encode zstd gzip
+                root * /srv
+                file_server browse
+              }" > /etc/caddy/Caddyfile
+              caddy run --config /etc/caddy/Caddyfile
+          volumeMounts:
+            - name: production-data-raw-volume
+              mountPath: /srv/production-data-raw
+            - name: production-data-processed-volume
+              mountPath: /srv/production-data-processed
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: production-data-raw-volume
+          persistentVolumeClaim:
+            claimName: production-data-raw-persistent-volume-claim
+        - name: production-data-processed-volume
+          persistentVolumeClaim:
+            claimName: production-data-processed-persistent-volume-claim

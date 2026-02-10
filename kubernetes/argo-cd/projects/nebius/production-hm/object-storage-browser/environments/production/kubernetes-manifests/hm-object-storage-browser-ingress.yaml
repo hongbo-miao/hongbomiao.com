@@ -1,0 +1,32 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hm-object-storage-browser-ingress
+  namespace: production-hm-object-storage-browser
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    # https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/ingress/#on-ingress
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
+    external-dns.alpha.kubernetes.io/hostname: object-storage-browser.hongbomiao.com
+  labels:
+    app.kubernetes.io/name: hm-object-storage-browser-ingress
+    app.kubernetes.io/part-of: production-hm-object-storage-browser
+spec:
+  rules:
+    - host: object-storage-browser.hongbomiao.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hm-object-storage-browser-service
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - object-storage-browser.hongbomiao.com
+      secretName: hm-object-storage-browser-certificate

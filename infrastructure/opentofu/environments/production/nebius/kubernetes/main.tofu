@@ -14,66 +14,80 @@ locals {
   cloud_init_user_data = file("${path.module}/files/scripts/configure_sysctl.yaml")
   cpu_node_groups = {
     lion = {
-      min_node_count = 3
-      max_node_count = 100
-      preset         = "4vcpu-16gb"
+      min_node_count           = 3
+      max_node_count           = 10
+      preset                   = "4vcpu-16gb"
+      boot_disk_type           = "NETWORK_SSD"
+      boot_disk_size_gibibytes = 256
     },
     badger = {
-      min_node_count = 3
-      max_node_count = 50
-      preset         = "8vcpu-32gb"
+      min_node_count           = 0
+      max_node_count           = 1000
+      preset                   = "8vcpu-32gb"
+      boot_disk_type           = "NETWORK_SSD"
+      boot_disk_size_gibibytes = 256
     },
     hyena = {
-      min_node_count = 0
-      max_node_count = 20
-      preset         = "16vcpu-64gb"
+      min_node_count           = 0
+      max_node_count           = 200
+      preset                   = "16vcpu-64gb"
+      boot_disk_type           = "NETWORK_SSD"
+      boot_disk_size_gibibytes = 256
     },
     dingo = {
-      min_node_count = 0
-      max_node_count = 10
-      preset         = "32vcpu-128gb"
+      min_node_count           = 0
+      max_node_count           = 100
+      preset                   = "32vcpu-128gb"
+      boot_disk_type           = "NETWORK_SSD"
+      boot_disk_size_gibibytes = 256
     }
   }
 }
 module "hm_kubernetes_cpu_node_group" {
-  for_each             = local.cpu_node_groups
-  source               = "../../../../modules/nebius/kubernetes_cpu_node_group"
-  parent_id            = module.hm_kubernetes_cluster.id
-  name                 = "node-group-${each.key}"
-  min_node_count       = each.value.min_node_count
-  max_node_count       = each.value.max_node_count
-  platform             = "cpu-d3"
-  preset               = each.value.preset
-  os                   = "ubuntu24.04"
-  cloud_init_user_data = local.cloud_init_user_data
-  labels               = var.common_labels
+  for_each                 = local.cpu_node_groups
+  source                   = "../../../../modules/nebius/kubernetes_cpu_node_group"
+  parent_id                = module.hm_kubernetes_cluster.id
+  name                     = "node-group-${each.key}"
+  min_node_count           = each.value.min_node_count
+  max_node_count           = each.value.max_node_count
+  platform                 = "cpu-d3"
+  preset                   = each.value.preset
+  os                       = "ubuntu24.04"
+  boot_disk_type           = each.value.boot_disk_type
+  boot_disk_size_gibibytes = each.value.boot_disk_size_gibibytes
+  cloud_init_user_data     = local.cloud_init_user_data
+  labels                   = var.common_labels
 }
 
 # Kubernetes - GPU node groups
 locals {
   gpu_node_groups = {
     dragon = {
-      min_node_count = 0
-      max_node_count = 10
-      platform       = "gpu-h200-sxm"
-      preset         = "1gpu-16vcpu-200gb"
-      drivers_preset = "cuda12.8"
+      min_node_count           = 0
+      max_node_count           = 10
+      platform                 = "gpu-h200-sxm"
+      preset                   = "1gpu-16vcpu-200gb"
+      drivers_preset           = "cuda12.8"
+      boot_disk_type           = "NETWORK_SSD"
+      boot_disk_size_gibibytes = 256
     }
   }
 }
 module "hm_kubernetes_gpu_node_group" {
-  for_each             = local.gpu_node_groups
-  source               = "../../../../modules/nebius/kubernetes_gpu_node_group"
-  parent_id            = module.hm_kubernetes_cluster.id
-  name                 = "node-group-${each.key}"
-  min_node_count       = each.value.min_node_count
-  max_node_count       = each.value.max_node_count
-  platform             = each.value.platform
-  preset               = each.value.preset
-  os                   = "ubuntu24.04"
-  drivers_preset       = each.value.drivers_preset
-  cloud_init_user_data = local.cloud_init_user_data
-  labels               = var.common_labels
+  for_each                 = local.gpu_node_groups
+  source                   = "../../../../modules/nebius/kubernetes_gpu_node_group"
+  parent_id                = module.hm_kubernetes_cluster.id
+  name                     = "node-group-${each.key}"
+  min_node_count           = each.value.min_node_count
+  max_node_count           = each.value.max_node_count
+  platform                 = each.value.platform
+  preset                   = each.value.preset
+  os                       = "ubuntu24.04"
+  drivers_preset           = each.value.drivers_preset
+  boot_disk_type           = each.value.boot_disk_type
+  boot_disk_size_gibibytes = each.value.boot_disk_size_gibibytes
+  cloud_init_user_data     = local.cloud_init_user_data
+  labels                   = var.common_labels
 }
 
 # Argo CD

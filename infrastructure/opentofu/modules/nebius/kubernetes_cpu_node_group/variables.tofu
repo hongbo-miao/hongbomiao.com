@@ -26,3 +26,9 @@ variable "cloud_init_user_data" {
   type    = string
   default = ""
 }
+variable "boot_disk_type" {
+  type = string
+}
+variable "boot_disk_size_gibibytes" {
+  type = number
+}

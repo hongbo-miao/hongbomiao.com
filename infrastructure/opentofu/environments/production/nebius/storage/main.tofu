@@ -1,7 +1,15 @@
-module "hm_object_storage" {
+module "data_raw_object_storage" {
   source                = "../../../../modules/nebius/object_storage"
   project_id            = var.project_id
-  object_storage_name   = "${var.environment}-hm-bucket"
+  object_storage_name   = "${var.environment}-data-raw"
+  default_storage_class = "STANDARD"
+  versioning_policy     = "ENABLED"
+  labels                = var.common_labels
+}
+module "data_processed_object_storage" {
+  source                = "../../../../modules/nebius/object_storage"
+  project_id            = var.project_id
+  object_storage_name   = "${var.environment}-data-processed"
   default_storage_class = "STANDARD"
   versioning_policy     = "ENABLED"
   labels                = var.common_labels

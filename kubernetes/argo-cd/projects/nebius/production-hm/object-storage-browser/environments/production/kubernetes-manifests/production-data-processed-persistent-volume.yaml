@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: production-data-processed-persistent-volume
+spec:
+  capacity:
+    # This required value can be anything and is ignored by the CSI S3 driver
+    storage: 1Ti
+  accessModes:
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: csi-s3
+  csi:
+    driver: ru.yandex.s3.csi
+    volumeHandle: production-data-processed
+    controllerPublishSecretRef:
+      name: hm-object-storage-browser-secret
+      namespace: production-hm-object-storage-browser
+    nodePublishSecretRef:
+      name: hm-object-storage-browser-secret
+      namespace: production-hm-object-storage-browser
+    nodeStageSecretRef:
+      name: hm-object-storage-browser-secret
+      namespace: production-hm-object-storage-browser
+    volumeAttributes:
+      capacity: 1Ti
+      mounter: geesefs
+      bucket: production-data-processed
+      options: "--memory-limit=1000 --dir-mode=0555 --file-mode=0444"
