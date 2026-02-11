@@ -1,4 +1,4 @@
-# https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+# https://github.com/grafana-community/helm-charts/blob/main/charts/grafana/values.yaml
 ---
 global:
   imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
@@ -69,6 +69,13 @@ sidecar:
     limits:
       cpu: 100m
       memory: 512Mi
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: grafana
 resources:
   requests:
     cpu: 200m
