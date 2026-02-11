@@ -11,12 +11,19 @@ auth:
       passwordKey: VALKEY_PASSWORD
 replica:
   enabled: true
-  replicas: 3
+  replicas: 2
   persistence:
     size: 1Gi
     storageClass: production-hm-skypilot-valkey-storage-class
     accessModes:
       - ReadWriteOnce
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: valkey
 resources:
   requests:
     cpu: 100m

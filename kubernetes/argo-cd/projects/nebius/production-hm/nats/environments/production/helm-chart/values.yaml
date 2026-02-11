@@ -40,6 +40,11 @@ service:
       annotations:
         # https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations
         external-dns.alpha.kubernetes.io/hostname: nats.hongbomiao.com
+podTemplate:
+  topologySpreadConstraints:
+    kubernetes.io/hostname:
+      maxSkew: 1
+      whenUnsatisfiable: DoNotSchedule
 podDisruptionBudget:
   enabled: true
   merge:

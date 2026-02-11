@@ -1,4 +1,4 @@
-# https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+# https://github.com/grafana-community/helm-charts/blob/main/charts/grafana/values.yaml
 ---
 global:
   imageRegistry: harbor.hongbomiao.com/docker-hub-proxy-cache
@@ -173,6 +173,13 @@ dashboards:
       url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/serve_deployment_grafana_dashboard.json
     hm-ray-serve-grafana-dashboard:
       url: https://raw.githubusercontent.com/ray-project/kuberay/refs/heads/master/config/grafana/serve_grafana_dashboard.json
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: grafana
 resources:
   requests:
     cpu: 1

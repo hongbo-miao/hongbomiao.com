@@ -53,6 +53,13 @@ auth:
       name: hm-mlflow-secret
       usernameKey: POSTGRES_USER_NAME
       passwordKey: POSTGRES_PASSWORD
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: mlflow
+        topologyKey: kubernetes.io/hostname
 resources:
   requests:
     cpu: 200m
