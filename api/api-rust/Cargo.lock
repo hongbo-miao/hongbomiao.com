@@ -2860,14 +2860,14 @@ dependencies = [
 
 [[package]]
 name = "rcgen"
-version = "0.13.2"
+version = "0.14.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75e669e5202259b5314d1ea5397316ad400819437857b90861765f24c4cf80a2"
+checksum = "10b99e0098aa4082912d4c649628623db6aba77335e4f4569ff5083a6448b32e"
 dependencies = [
- "pem",
  "ring",
  "rustls-pki-types",
  "time",
+ "x509-parser 0.18.1",
  "yasna",
 ]
 
@@ -3153,9 +3153,9 @@ dependencies = [
 
 [[package]]
 name = "rustls-pki-types"
-version = "1.13.0"
+version = "1.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "94182ad936a0c91c324cd46c6511b9510ed16af436d7b5bab34beab0afd55f7a"
+checksum = "be040f8b0a225e40375822a563fa9524378b9d63112f53e19ffff34df5d33fdd"
 dependencies = [
  "web-time",
  "zeroize",
@@ -5089,9 +5089,9 @@ checksum = "9edde0db4769d2dc68579893f2306b26c6ecfbe0ef499b013d731b7b9247e0b9"
 
 [[package]]
 name = "wtransport"
-version = "0.6.1"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3e5e745c8789c20095c9061d292098d4106660efe2d172efd8ae7a369fe28e3e"
+checksum = "e56b611f195638f3790e4e5a41e9d777643a6c324ae4ffd1f0f53f2738e7678c"
 dependencies = [
  "bytes",
  "pem",
@@ -5099,7 +5099,6 @@ dependencies = [
  "rcgen",
  "rustls",
  "rustls-native-certs 0.8.2",
- "rustls-pemfile",
  "rustls-pki-types",
  "sha2",
  "socket2 0.5.10",
@@ -5109,14 +5108,14 @@ dependencies = [
  "tracing",
  "url",
  "wtransport-proto",
- "x509-parser",
+ "x509-parser 0.17.0",
 ]
 
 [[package]]
 name = "wtransport-proto"
-version = "0.6.1"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a09d89a8dba201c2439d9d5eca55a0faa08909d69da50decdb5ec00be0ac504"
+checksum = "1627c5b59450278e9771aab35275d72bfa2788128c197c5af1e4a820c8737ef4"
 dependencies = [
  "httlib-huffman",
  "octets",
@@ -5136,6 +5135,24 @@ dependencies = [
  "lazy_static",
  "nom",
  "oid-registry",
+ "rusticata-macros",
+ "thiserror 2.0.17",
+ "time",
+]
+
+[[package]]
+name = "x509-parser"
+version = "0.18.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d43b0f71ce057da06bc0851b23ee24f3f86190b07203dd8f567d0b706a185202"
+dependencies = [
+ "asn1-rs",
+ "data-encoding",
+ "der-parser",
+ "lazy_static",
+ "nom",
+ "oid-registry",
+ "ring",
  "rusticata-macros",
  "thiserror 2.0.17",
  "time",
