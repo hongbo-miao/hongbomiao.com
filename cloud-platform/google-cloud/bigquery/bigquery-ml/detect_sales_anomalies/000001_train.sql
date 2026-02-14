@@ -1,5 +1,5 @@
 create or replace model `sales.hm_sales_anomalies_model`
-options(
+options (
     model_type = 'arima_plus',
     time_series_timestamp_col = 'date',
     time_series_data_col = 'total_amount_sold',

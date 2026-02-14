@@ -3,8 +3,8 @@
 create table cpu_metrics
 (
     `name` String,
-    `timestamp` datetime,
+    `timestamp` Datetime,
     `value` Float32
 )
-    engine = MergeTree
-        order by (name, timestamp)
+engine = MERGETREE
+order by (name, timestamp)

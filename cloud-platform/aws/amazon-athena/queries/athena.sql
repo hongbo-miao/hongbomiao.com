@@ -1,6 +1,6 @@
-show functions;
+show functions ;
 
-describe awsdatacatalog.production_hm_iot_db.motor;
+describe awsdatacatalog.production_hm_iot_db.motor ;
 
 -- Show table data description language (DDL)
-show create table awsdatacatalog.production_hm_iot_db.motor;
+show create table awsdatacatalog.production_hm_iot_db.motor ;

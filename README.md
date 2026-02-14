@@ -1003,7 +1003,7 @@ The diagram illustrates the repository's architecture, which is considered overl
 - **Scalafix** - Scala linter
 - **ShellCheck** - Shell linter
 - **Solhint** - Solidity linter
-- **SQLFluff** - SQL formatter and linter
+- **sqruff** - SQL formatter and linter
 - **swift-format** - Swift formatter and linter
 - **Taplo** - TOML formatter
 - **tsc** - TypeScript static type checker

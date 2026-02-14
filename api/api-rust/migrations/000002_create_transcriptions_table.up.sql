@@ -23,8 +23,12 @@ create table if not exists transcriptions (
     constraint unique_stream_timestamp unique (stream_id, timestamp_ns)
 );
 
-create index if not exists transcriptions_stream_id_idx on transcriptions (stream_id);
-create index if not exists transcriptions_timestamp_ns_idx on transcriptions (timestamp_ns);
+create index if not exists transcriptions_stream_id_idx on transcriptions (
+    stream_id
+);
+create index if not exists transcriptions_timestamp_ns_idx on transcriptions (
+    timestamp_ns
+);
 
 create or replace trigger update_updated_at
 before update

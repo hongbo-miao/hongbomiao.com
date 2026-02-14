@@ -28,7 +28,8 @@ from
                 dropoff_latitude as dropofflat,
                 passenger_count as passengers,
                 (tolls_amount + fare_amount) as total_fare,
-                daysofweek[ordinal(extract(dayofweek from pickup_datetime))] as dayofweek,
+                daysofweek[ordinal(extract(dayofweek from pickup_datetime))]
+                    as dayofweek,
                 extract(hour from pickup_datetime) as hourofday
             from
                 `nyc-tlc.yellow.trips`,
@@ -37,7 +38,10 @@ from
             where
                 trip_distance > 0
                 and fare_amount > 0
-                and mod(abs(farm_fingerprint(cast(pickup_datetime as string))), 1000) = params.eval
+                and mod(
+                    abs(farm_fingerprint(cast(pickup_datetime as string))), 1000
+                )
+                = params.eval
         )
 
         select *

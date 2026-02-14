@@ -10,7 +10,7 @@ with stanza as (
         data -> 'archive' -> (
             jsonb_array_length(data -> 'archive') - 1
         ) as current_archive
-    from jsonb_array_elements(monitor.pgbackrest_info()) as data
+    from jsonb_array_elements(monitor.pgbackrest_info()) as data  -- noqa: AL05
 )
 
 select
