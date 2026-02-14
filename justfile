@@ -101,10 +101,6 @@ jupyter-lab:
 jupyter-notebook-clean:
     uv run poe clean-jupyter-notebook
 
-# SQLFluff
-sqlfluff-dialect-list:
-    uv run poe sqlfluff-list-dialects
-
 # Rust
 rust-install-toolchain:
     rustup install
@@ -156,6 +152,10 @@ cargo-run-development:
 
 cargo-run-production:
     cargo run --release
+
+# sqruff
+sqruff-list-dialects:
+    uv run poe sqruff-list-dialects
 
 # Lint
 lint-ansible:
@@ -378,7 +378,8 @@ lint-solidity-fix:
 
 lint-sql:
     uv run poe lint-sql --dialect=athena cloud-platform/aws/amazon-athena/queries
-    uv run poe lint-sql --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
+    uv run poe lint-sql --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml/detect_sales_anomalies
+    uv run poe lint-sql --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml/predict_taxi_fare
     uv run poe lint-sql --dialect=clickhouse data-storage/clickhouse/cpu_metrics
     uv run poe lint-sql --dialect=postgres api/api-rust/migrations
     uv run poe lint-sql --dialect=postgres api/hasura-graphql-engine/migrations
@@ -389,7 +390,6 @@ lint-sql:
     uv run poe lint-sql --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
     uv run poe lint-sql --dialect=postgres data-storage/timescaledb/motor/migrations
     uv run poe lint-sql --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-    uv run poe lint-sql --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
     uv run poe lint-sql --dialect=snowflake data-storage/snowflake/queries
     uv run poe lint-sql --dialect=sparksql data-storage/delta-lake/queries
     uv run poe lint-sql --dialect=sqlite data-storage/sqlite/queries
@@ -398,7 +398,8 @@ lint-sql:
 
 lint-sql-fix:
     uv run poe lint-sql-fix --dialect=athena cloud-platform/aws/amazon-athena/queries
-    uv run poe lint-sql-fix --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml
+    uv run poe lint-sql-fix --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml/detect_sales_anomalies
+    uv run poe lint-sql-fix --dialect=bigquery cloud-platform/google-cloud/bigquery/bigquery-ml/predict_taxi_fare
     uv run poe lint-sql-fix --dialect=clickhouse data-storage/clickhouse/cpu_metrics
     uv run poe lint-sql-fix --dialect=postgres api/api-rust/migrations
     uv run poe lint-sql-fix --dialect=postgres api/hasura-graphql-engine/migrations
@@ -409,7 +410,6 @@ lint-sql-fix:
     uv run poe lint-sql-fix --dialect=postgres data-storage/timescaledb/dummy_iot/migrations
     uv run poe lint-sql-fix --dialect=postgres data-storage/timescaledb/motor/migrations
     uv run poe lint-sql-fix --dialect=postgres kubernetes/data/postgres/opa_db/migrations
-    uv run poe lint-sql-fix --dialect=postgres ops/argo-cd/applications/production-hm/airbyte/sql
     uv run poe lint-sql-fix --dialect=snowflake data-storage/snowflake/queries
     uv run poe lint-sql-fix --dialect=sparksql data-storage/delta-lake/queries
     uv run poe lint-sql-fix --dialect=sqlite data-storage/sqlite/queries

@@ -29,4 +29,5 @@ from
             select *
             from
                 new_data
-        ));
+        )
+    );

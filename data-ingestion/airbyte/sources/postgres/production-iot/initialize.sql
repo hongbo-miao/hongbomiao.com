@@ -14,7 +14,8 @@ grant usage on schema public to airbyte_user;
 grant select on all tables in schema public to airbyte_user;
 alter default privileges in schema public grant select on tables to airbyte_user;
 
-select pg_create_logical_replication_slot('airbyte_public_logical_replication_slot', 'pgoutput');
+select
+    pg_create_logical_replication_slot('airbyte_public_logical_replication_slot', 'pgoutput');
 -- List: select * from pg_replication_slots;
 -- Drop: select pg_drop_replication_slot('xxx_logical_replication_slot');
 

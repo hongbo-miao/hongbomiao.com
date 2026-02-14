@@ -27,7 +27,8 @@ options (model_type = 'linear_reg', labels = ['total_fare']) as (
             dropoff_latitude as dropofflat,
             passenger_count as passengers,
             (tolls_amount + fare_amount) as total_fare,
-            daysofweek[ordinal(extract(dayofweek from pickup_datetime))] as dayofweek,
+            daysofweek[ordinal(extract(dayofweek from pickup_datetime))]
+                as dayofweek,
             extract(hour from pickup_datetime) as hourofday
         from
             `nyc-tlc.yellow.trips`,
@@ -36,7 +37,10 @@ options (model_type = 'linear_reg', labels = ['total_fare']) as (
         where
             trip_distance > 0
             and fare_amount > 0
-            and mod(abs(farm_fingerprint(cast(pickup_datetime as string))), 1000) = params.train
+            and mod(
+                abs(farm_fingerprint(cast(pickup_datetime as string))), 1000
+            )
+            = params.train
     )
 
     select *
