@@ -8,7 +8,7 @@ terraform {
     # https://search.opentofu.org/provider/hashicorp/aws/latest
     aws = {
       source  = "hashicorp/aws"
-      version = "6.32.0"
+      version = "6.32.1"
     }
     # https://search.opentofu.org/provider/hashicorp/external/latest
     external = {
