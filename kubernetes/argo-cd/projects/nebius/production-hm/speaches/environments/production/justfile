@@ -1,0 +1,7 @@
+seal-speaches-secret:
+    cat secrets/speaches-secret.unsealed.yaml | \
+    kubeseal \
+        --controller-namespace=production-hm-sealed-secrets \
+        --controller-name=sealed-secrets \
+        --format=yaml \
+        > kubernetes-manifests/speaches-secret.yaml

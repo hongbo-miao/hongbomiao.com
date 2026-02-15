@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speaches-deployment
+  namespace: production-speaches
+  labels:
+    app.kubernetes.io/name: speaches
+    app.kubernetes.io/part-of: production-speaches
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: speaches
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: speaches
+    spec:
+      serviceAccountName: speaches-service-account
+      nodeSelector:
+        nvidia.com/mig.config: all-2g.35gb
+      containers:
+        - name: speaches
+          image: ghcr.io/speaches-ai/speaches:0.9.0-rc.3-cuda
+          ports:
+            - containerPort: 8000
+          env:
+            - name: HF_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: speaches-secret
+                  key: HF_TOKEN
+            - name: PRELOAD_MODELS
+              value: '["hongbo-miao/whisper-large-v3-turbo-20260101"]'
+          resources:
+            requests:
+              cpu: 100m
+              memory: 3Gi
+              nvidia.com/mig-2g.35gb: 1
+            limits:
+              cpu: 1
+              memory: 4Gi
+              nvidia.com/mig-2g.35gb: 1
