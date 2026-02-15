@@ -7,13 +7,13 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    ply_point_cloud = o3d.data.PLYPointCloud()
-    pcd = o3d.io.read_point_cloud(ply_point_cloud.path)
+    ply_point_cloud = o3d.data.PLYPointCloud()  # ty:ignore[possibly-missing-attribute]
+    pcd = o3d.io.read_point_cloud(ply_point_cloud.path)  # ty:ignore[possibly-missing-attribute]
     logger.info(pcd)
     logger.info(np.asarray(pcd.points))
 
-    demo_crop_data = o3d.data.DemoCropPointCloud()
-    vol = o3d.visualization.read_selection_polygon_volume(
+    demo_crop_data = o3d.data.DemoCropPointCloud()  # ty:ignore[possibly-missing-attribute]
+    vol = o3d.visualization.read_selection_polygon_volume(  # ty:ignore[possibly-missing-attribute]
         demo_crop_data.cropped_json_path,
     )
     chair = vol.crop_point_cloud(pcd)
@@ -29,7 +29,7 @@ def main() -> None:
     oriented_bounding_box = chair.get_oriented_bounding_box()
     oriented_bounding_box.color = (0, 1, 0)
 
-    o3d.visualization.draw_geometries(
+    o3d.visualization.draw_geometries(  # ty:ignore[possibly-missing-attribute]
         [pcd_without_chair, chair, axis_aligned_bounding_box, oriented_bounding_box],
         zoom=0.3412,
         front=[0.4, -0.2, -0.9],

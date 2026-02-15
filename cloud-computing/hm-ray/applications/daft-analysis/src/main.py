@@ -37,7 +37,7 @@ def analyze(event_name: str) -> None:
         table_name=table_name,
     )
     df = daft.read_deltalake(table)
-    result_df = df.where(df["_event_id"] == event_id).select(*column_names)
+    result_df = df.where(df["_event_id"] == event_id).select(*column_names)  # type: ignore[arg-type]
     result_df.show(5)
 
 

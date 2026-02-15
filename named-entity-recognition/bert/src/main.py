@@ -11,7 +11,7 @@ def main() -> None:
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForTokenClassification.from_pretrained(model_name)
 
-    nlp = pipeline(
+    nlp = pipeline(  # type: ignore[call-overload]
         "ner",
         model=model,
         tokenizer=tokenizer,

@@ -1,7 +1,7 @@
 from datetime import UTC, datetime
 from pathlib import Path
 
-from airflow.providers.amazon.aws.hooks.s3 import S3Hook
+from airflow.providers.amazon.aws.hooks.s3 import S3Hook  # ty:ignore[unresolved-import]
 from airflow.sdk import DAG, task
 
 with DAG(
@@ -30,4 +30,4 @@ with DAG(
         key="hm-airflow/taxi.csv",
         local_path="/tmp/",  # noqa: S108
     )
-    rename_file(file_name, "taxi.csv")
+    rename_file(file_name, "taxi.csv")  # ty:ignore[invalid-argument-type]

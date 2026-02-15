@@ -10,4 +10,4 @@ def load_audio_file(audio_file_path: Path) -> tuple[np.ndarray, int]:
         raise FileNotFoundError(msg)
 
     audio_data, sample_rate = librosa.load(audio_file_path)
-    return audio_data, sample_rate
+    return audio_data, sample_rate  # ty:ignore[invalid-return-type]

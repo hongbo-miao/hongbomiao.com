@@ -62,7 +62,7 @@ def extract_dinov2_features(
     image_tensor: torch.Tensor,
 ) -> torch.Tensor:
     with torch.no_grad():
-        features = dinov2.forward_features(image_tensor)
+        features = dinov2.forward_features(image_tensor)  # ty:ignore[call-non-callable]
         # Shape: (batch, num_patches, feature_dim) where num_patches = h * w
         patch_tokens = features["x_norm_patchtokens"]
         batch_size = patch_tokens.shape[0]

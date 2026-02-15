@@ -17,7 +17,7 @@ class Quotes(LanceModel):
 
 
 def create_and_populate_table(
-    db: lancedb.connect,
+    db: lancedb.DBConnection,
     df: pl.DataFrame,
 ) -> lancedb.table.Table:
     table = db.create_table("quotes", schema=Quotes, mode="overwrite")

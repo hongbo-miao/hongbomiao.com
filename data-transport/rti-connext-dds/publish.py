@@ -1,7 +1,7 @@
 import logging
 import time
 
-import rti.connextdds as dds
+import rti.connextdds as dds  # ty:ignore[unresolved-import]
 
 logger = logging.getLogger(__name__)
 

@@ -10,7 +10,7 @@ from docling.datamodel.pipeline_options import (
     TableStructureOptions,
 )
 from docling.document_converter import DocumentConverter, PdfFormatOption
-from langgraph.graph import Graph, MessagesState
+from langgraph.graph import Graph, MessagesState  # type: ignore[attr-defined]
 from openai import OpenAI
 from sentence_transformers import SentenceTransformer
 
@@ -64,7 +64,7 @@ def process_pdf(pdf_path: Path) -> list[str]:
 
 def setup_vector_store(
     texts: list[str],
-) -> tuple[faiss.IndexFlatIP, list[str], SentenceTransformer]:
+) -> tuple[faiss.IndexFlatIP, list[str], SentenceTransformer]:  # type: ignore[type-arg]
     # Initialize the sentence transformer model
     model = SentenceTransformer("all-MiniLM-L6-v2")
 
@@ -73,28 +73,28 @@ def setup_vector_store(
     faiss.normalize_L2(embeddings)
 
     # Create FAISS index
-    index = faiss.IndexFlatIP(embeddings.shape[1])
-    index.add(embeddings)
+    index = faiss.IndexFlatIP(embeddings.shape[1])  # type: ignore[attr-defined]
+    index.add(embeddings)  # type: ignore[arg-type]
 
-    return index, embeddings, model
+    return index, embeddings, model  # type: ignore[return-value]
 
 
 def retrieve_context(
     state: MessagesState,
-    index: faiss.IndexFlatIP,
+    index: faiss.IndexFlatIP,  # type: ignore
     chunks: list[str],
     model: SentenceTransformer,
 ) -> MessagesState:
     try:
         logger.info("Starting context retrieval")
-        query_embedding = model.encode([state["question"]])
+        query_embedding = model.encode([state["question"]])  # type: ignore[index]
         faiss.normalize_L2(query_embedding)
 
         k = 3  # Number of chunks to retrieve
-        _scores, indices = index.search(query_embedding, k)
+        _scores, indices = index.search(query_embedding, k)  # type: ignore[arg-type]
 
         relevant_chunks = [chunks[idx] for idx in indices[0]]
-        state["context"] = "\n".join(relevant_chunks)
+        state["context"] = "\n".join(relevant_chunks)  # type: ignore[index]
         logger.info("Context retrieval completed")
     except Exception:
         logger.exception("Error in retrieve_context.")
@@ -119,11 +119,11 @@ def generate_answer(state: MessagesState) -> MessagesState:
                         Answer the following question based on the provided context:
                         Context: {state["context"]}
                         Question: {state["question"]}
-                    """,
+                    """,  # type: ignore[index]
                 },
             ],
         )
-        state["answer"] = response.choices[0].message.content
+        state["answer"] = response.choices[0].message.content  # type: ignore[index]
     except Exception:
         logger.exception("Error in generate_answer.")
         raise
@@ -132,7 +132,7 @@ def generate_answer(state: MessagesState) -> MessagesState:
 
 
 def create_graph(
-    index: faiss.IndexFlatIP,
+    index: faiss.IndexFlatIP,  # type: ignore[type-arg]
     chunks: list[str],
     model: SentenceTransformer,
 ) -> Graph:
@@ -157,8 +157,8 @@ def chat_with_pdf(pdf_path: Path, question: str) -> str:
         index, _embeddings, model = setup_vector_store(chunks)
 
         # Create initial state
-        initial_state = MessagesState(
-            {"question": question, "context": "", "answer": ""},
+        initial_state = MessagesState(  # ty: ignore[missing-typed-dict-key]
+            {"question": question, "context": "", "answer": ""},  # ty:ignore[invalid-key]
         )
 
         # Create and run graph

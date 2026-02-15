@@ -70,8 +70,8 @@ def train_agent(
         torch.cuda.manual_seed_all(seed)
 
     environment = gym.make(environment_name)
-    state_dimension = environment.observation_space.shape[0]
-    action_dimension = environment.action_space.n
+    state_dimension = environment.observation_space.shape[0]  # type: ignore[index]
+    action_dimension = environment.action_space.n  # type: ignore[attr-defined]
 
     logger.info(f"Device: {device}")
     logger.info(f"Environment: {environment_name}")
@@ -119,7 +119,7 @@ def train_agent(
             is_done = terminated or truncated
             is_terminated = terminated
             rewards.append(float(reward))  # $r_t$
-            episode_reward += reward
+            episode_reward += float(reward)
 
             if is_done:
                 break

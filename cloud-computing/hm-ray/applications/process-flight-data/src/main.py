@@ -31,9 +31,9 @@ def process_flight_data(
 
     with tempfile.TemporaryDirectory() as tmp_dir:
         file_path = Path(tmp_dir) / Path(f"flight_data_{experiment_number}.csv")
-        df.to_csv(file_path, index=False)
-        with mlflow.start_run():
-            mlflow.log_artifact(str(file_path))
+        df.to_csv(file_path, index=False)  # type: ignore[attr-defined]
+        with mlflow.start_run():  # type: ignore[attr-defined]
+            mlflow.log_artifact(str(file_path))  # type: ignore[attr-defined]
             return df.head()
 
 

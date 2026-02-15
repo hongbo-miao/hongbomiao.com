@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 torch.serialization.add_safe_globals([DataEdgeAttr, DataTensorAttr, GlobalStorage])
 
 
-def fetch_dataset(config: argparse.Namespace) -> PygGraphPropPredDataset:
+def fetch_dataset(config: argparse.Namespace) -> tuple[PygGraphPropPredDataset, dict[str, torch.Tensor]]:
     # automatic data loading and splitting
     dataset = PygGraphPropPredDataset(name=config.dataset)
 
@@ -21,8 +21,8 @@ def fetch_dataset(config: argparse.Namespace) -> PygGraphPropPredDataset:
     elif config.feature == "simple":
         logger.info("using simple feature")
         # only retain the top two node/edge features
-        dataset.x = dataset.x[:, :2]
-        dataset.edge_attr = dataset.edge_attr[:, :2]
+        dataset.x = dataset.x[:, :2]  # type: ignore[union-attr]
+        dataset.edge_attr = dataset.edge_attr[:, :2]  # type: ignore[union-attr]
 
     split_idx = dataset.get_idx_split()
 
@@ -35,19 +35,19 @@ def get_dataloaders(
     config: argparse.Namespace,
 ) -> dict[str, DataLoader]:
     train_loader = DataLoader(
-        dataset[split_idx["train"]],
+        dataset[split_idx["train"]],  # type: ignore[arg-type]
         batch_size=config.batch_size,
         shuffle=True,
         num_workers=config.num_workers,
     )
     val_loader = DataLoader(
-        dataset[split_idx["valid"]],
+        dataset[split_idx["valid"]],  # type: ignore[arg-type]
         batch_size=config.batch_size,
         shuffle=False,
         num_workers=config.num_workers,
     )
     test_loader = DataLoader(
-        dataset[split_idx["test"]],
+        dataset[split_idx["test"]],  # type: ignore[arg-type]
         batch_size=config.batch_size,
         shuffle=False,
         num_workers=config.num_workers,

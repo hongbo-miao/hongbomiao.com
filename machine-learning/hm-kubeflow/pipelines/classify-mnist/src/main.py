@@ -1,7 +1,7 @@
 from kfp import client, dsl
 
 
-@dsl.component(
+@dsl.component(  # type: ignore[attr-defined]
     base_image="docker.io/python:3.10",
     packages_to_install=["torch==2.0.0", "torchvision==0.15.1", "lightning==2.0.5"],
 )
@@ -72,11 +72,11 @@ def train() -> None:
     )
 
 
-@dsl.pipeline
+@dsl.pipeline  # type: ignore[attr-defined]
 def classify_fashion_mnist() -> None:
     train()
 
 
 if __name__ == "__main__":
     kfp_client = client.Client(host="https://kubeflow.hongbomiao.com")
-    run = kfp_client.create_run_from_pipeline_func(classify_fashion_mnist)
+    run = kfp_client.create_run_from_pipeline_func(classify_fashion_mnist)  # type: ignore[arg-type]

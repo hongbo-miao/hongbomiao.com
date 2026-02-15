@@ -57,7 +57,7 @@ def main() -> None:
             """,  # noqa: S608
         )
         res = conn.execute(sql_query, {"event_id": event_id})
-        df = pd.DataFrame(res.fetchall(), columns=res.keys())
+        df = pd.DataFrame(res.fetchall(), columns=list(res.keys()))  # ty:ignore[invalid-argument-type]
         logger.info(df)
 
 

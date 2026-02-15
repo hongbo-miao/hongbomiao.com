@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 def write_protobuf_message(
     filename: Path,
-    proto_message: motor_pb2.Motor,
+    proto_message: motor_pb2.Motor,  # ty:ignore[unresolved-attribute]
 ) -> None:
     with filename.open("ab") as file:
         size: int = proto_message.ByteSize()
@@ -35,7 +35,7 @@ def read_protobuf_messages(filename: Path) -> pl.DataFrame:
             if len(message_data) != size:
                 break
 
-            motor: motor_pb2.Motor = motor_pb2.Motor()
+            motor: motor_pb2.Motor = motor_pb2.Motor()  # ty:ignore[unresolved-attribute]
             motor.ParseFromString(message_data)
 
             row: dict[str, Any] = {
@@ -51,15 +51,15 @@ def read_protobuf_messages(filename: Path) -> pl.DataFrame:
     return pl.DataFrame(data)
 
 
-def generate_motor_data(point_number: int) -> list[motor_pb2.Motor]:
+def generate_motor_data(point_number: int) -> list[motor_pb2.Motor]:  # ty:ignore[unresolved-attribute]
     motors = ["motor001", "motor002", "motor003"]
     start_time_ns = time.time_ns()
     interval_ns = 1_000_000_000
-    data: list[motor_pb2.Motor] = []
+    data: list[motor_pb2.Motor] = []  # ty:ignore[unresolved-attribute]
     random_number_generator = SystemRandom()
     for i in range(point_number):
         timestamp_ns: int = start_time_ns + (i * interval_ns)
-        motor = motor_pb2.Motor()
+        motor = motor_pb2.Motor()  # ty:ignore[unresolved-attribute]
         motor.id = random_number_generator.choice(motors)
         motor.timestamp_ns = timestamp_ns
         motor.temperature1 = random_number_generator.uniform(10.0, 100.0)
@@ -76,7 +76,7 @@ def main() -> None:
     motor_data_path: Path = Path("data/motor_data.pb")
     point_number: int = 20
 
-    motor_data: list[motor_pb2.Motor] = generate_motor_data(point_number)
+    motor_data: list[motor_pb2.Motor] = generate_motor_data(point_number)  # ty:ignore[unresolved-attribute]
     for motor in motor_data:
         write_protobuf_message(motor_data_path, motor)
 

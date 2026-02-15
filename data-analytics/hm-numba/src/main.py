@@ -24,10 +24,10 @@ def sum_of_squares_cpu_numba(n: int) -> float:
 
 
 @cuda.jit
-def sum_of_squares_cuda_kernel(n: int, result: cuda.devicearray.DeviceNDArray) -> None:
-    idx = cuda.grid(1)
+def sum_of_squares_cuda_kernel(n: int, result: cuda.devicearray.DeviceNDArray) -> None:  # ty:ignore[unresolved-attribute]
+    idx = cuda.grid(1)  # ty:ignore[possibly-missing-attribute]
     if idx < n:
-        cuda.atomic.add(result, 0, idx * idx)
+        cuda.atomic.add(result, 0, idx * idx)  # ty:ignore[possibly-missing-attribute, too-many-positional-arguments]
 
 
 def sum_of_squares_gpu_numba(n: int) -> float:
@@ -72,7 +72,7 @@ def main() -> None:
         logger.info(f"GPU Numba result: {gpu_numba_result}")
         logger.info(f"GPU Numba time: {gpu_numba_time} seconds")
         logger.info(f"GPU Numba speedup vs Python: {python_time / gpu_numba_time}x")
-    except cuda.CudaSupportError:
+    except cuda.CudaSupportError:  # ty:ignore[possibly-missing-attribute]
         logger.warning("CUDA GPU is not available")
 
 

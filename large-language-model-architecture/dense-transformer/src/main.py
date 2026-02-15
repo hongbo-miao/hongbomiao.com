@@ -28,7 +28,7 @@ def create_fixed_positional_encoding(dim: int, max_len: int = 5000) -> Tensor:
     )
     pe[:, 0::2] = torch.sin(position * div_term)
     pe[:, 1::2] = torch.cos(position * div_term)
-    return pe.unsqueeze(0).requires_grad_(requires_grad=False)
+    return pe.unsqueeze(0).requires_grad_(False)
 
 
 class EmbeddingsWithPositionalEncoding(nn.Module):
@@ -468,7 +468,7 @@ class Batch(UserDict):
         target_mask = (tgt != pad).unsqueeze(-2)
         return target_mask & create_causal_mask(tgt.size(-1)).type_as(target_mask.data)
 
-    def __getitem__(self, item: str) -> Tensor:
+    def __getitem__(self, item: str) -> Tensor:  # type: ignore[override]
         if isinstance(item, str):
             return self.data[item]
         message = "Invalid key. Only string keys are available"
@@ -556,8 +556,8 @@ def data_generator(
     for _i in range(nbatches):
         data = torch.randint(1, vocabulary_size, size=(batch_size, 10))
         data[:, 0] = 1
-        src = data.requires_grad_(requires_grad=False).clone().detach()
-        tgt = data.requires_grad_(requires_grad=False).clone().detach()
+        src = data.requires_grad_(False).clone().detach()
+        tgt = data.requires_grad_(False).clone().detach()
         yield Batch(src, tgt, pad=0)
 
 
@@ -662,13 +662,13 @@ def run_epoch(
             start = time.time()
             tokens = 0
 
-    return total_loss / total_tokens, train_state
+    return total_loss / total_tokens, train_state  # type: ignore[return-value]
 
 
 def run_toy_example(
     num_epochs: int = 10,
     pre_norm: bool = True,
-    device: str = "cpu",
+    device: str | torch.device = "cpu",
 ) -> None:
     """Run toy copy task training example."""
     vocabulary_size = 11

@@ -6,7 +6,7 @@ def main() -> None:
     pv.set_plot_theme("document")
     p = pv.Plotter()
     p.add_mesh(mesh)
-    p.add_bounding_box()
+    p.add_bounding_box()  # ty:ignore[missing-argument]
     p.show()
 
 

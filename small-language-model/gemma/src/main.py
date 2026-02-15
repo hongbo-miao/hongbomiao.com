@@ -24,7 +24,7 @@ def main() -> None:
 
     logger.info("Loading model...")
     model = AutoModelForCausalLM.from_pretrained(model_id)
-    model = model.to(device)
+    model = model.to(device)  # type: ignore[arg-type]
 
     messages = [
         {

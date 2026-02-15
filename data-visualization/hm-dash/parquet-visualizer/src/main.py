@@ -821,13 +821,13 @@ def update_graph(  # noqa: C901
     stored_data: StoredEventData | None,
 ) -> tuple[go.Figure, str]:
     if not signals or not stored_data:
-        return {}, "No signals selected or no data loaded"
+        return go.Figure(), "No signals selected or no data loaded"
 
     # Convert to list if it's a single value
     if isinstance(signals, str):
         signals = [signals]
     if not signals:  # If signals is empty list
-        return {}, "No signals selected"
+        return go.Figure(), "No signals selected"
     data_source: str = stored_data["data_source"]
     event_id: str = stored_data["event_id"]
 
@@ -835,7 +835,7 @@ def update_graph(  # noqa: C901
     signal_tables: dict[str, pa.Table] | None
     signal_tables, _ = load_data(data_source, event_id, signals)
     if not signal_tables:
-        return {}, "Failed to load signals data"
+        return go.Figure(), "Failed to load signals data"
 
     # Default range is the full dataset
     x_range: tuple[pd.Timestamp, pd.Timestamp] | None = None

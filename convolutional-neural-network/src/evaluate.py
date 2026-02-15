@@ -3,7 +3,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 
 
-def evaluate(net: nn.Module, data_loader: DataLoader, device: str) -> float:
+def evaluate(net: nn.Module, data_loader: DataLoader, device: torch.device) -> float:
     net.eval()
     correct = 0
     total = 0

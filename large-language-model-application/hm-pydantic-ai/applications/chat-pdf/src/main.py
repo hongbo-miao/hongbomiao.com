@@ -15,7 +15,7 @@ from docling.datamodel.pipeline_options import (
 from docling.document_converter import DocumentConverter, PdfFormatOption
 from pydantic import BaseModel, ConfigDict
 from pydantic_ai import Agent, RunContext
-from pydantic_ai.models.openai import OpenAIModel
+from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from sentence_transformers import SentenceTransformer
 
@@ -36,8 +36,8 @@ class ChatResponse(BaseModel):
     confidence_scores: list[float] = []
 
 
-def create_openai_model() -> OpenAIModel:
-    return OpenAIModel(
+def create_openai_model() -> OpenAIChatModel:
+    return OpenAIChatModel(
         model_name="claude-opus-4-5",
         provider=OpenAIProvider(
             base_url="https://litellm.hongbomiao.com/v1",
@@ -88,8 +88,8 @@ def set_up_vector_store(texts: list[str]) -> PDFContext:
     embeddings = np.array(embeddings, dtype=np.float32)
     faiss.normalize_L2(embeddings)
     # Create FAISS index
-    index = faiss.IndexFlatIP(embeddings.shape[1])
-    index.add(embeddings)
+    index = faiss.IndexFlatIP(embeddings.shape[1])  # type: ignore[attr-defined]
+    index.add(embeddings)  # type: ignore[arg-type]
     return PDFContext(
         chunks=texts,
         faiss_index=index,
@@ -155,7 +155,7 @@ async def ask_question(pdf_context: PDFContext, question: str) -> ChatResponse:
         # Let the agent handle tool calling automatically
         result = await chat_agent.run(
             f"Please answer this question about the PDF: {question}",
-            deps=pdf_context,
+            deps=pdf_context,  # type: ignore[arg-type]
         )
     except Exception as e:
         logger.exception("Error in ask_question")

@@ -32,4 +32,4 @@ def get_model(
         cache_state.model.eval()
         cache_state.patch_size = get_patch_size_from_model(cache_state.model, 16)
         logger.info(f"Using patch size: {cache_state.patch_size}")
-    return cache_state.model, cache_state.device, cache_state.patch_size
+    return cache_state.model, cache_state.device, cache_state.patch_size  # ty:ignore[invalid-return-type]

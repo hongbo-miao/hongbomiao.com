@@ -14,7 +14,7 @@ def main(audio_path: Path, transcription_file: Path) -> None:
     )
 
     segments, info = model.transcribe(
-        audio_path,
+        str(audio_path),
         beam_size=5,
         vad_filter=True,
         vad_parameters={"min_silence_duration_ms": 500, "speech_pad_ms": 400},

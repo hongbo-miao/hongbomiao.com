@@ -21,7 +21,7 @@ def main() -> None:
     logger.info(f"Loading nuScenes dataset from {nuscenes_dataset_directory_path}")
     nuscenes_instance = NuScenes(
         version=config.NUSCENES_VERSION,
-        dataroot=nuscenes_dataset_directory_path,
+        dataroot=nuscenes_dataset_directory_path,  # ty:ignore[invalid-argument-type]
         verbose=True,
     )
 

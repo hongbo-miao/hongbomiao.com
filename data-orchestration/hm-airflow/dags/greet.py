@@ -12,7 +12,7 @@ with DAG(
     params={
         "first_name": "Hongbo",
         "last_name": "Miao",
-    },
+    },  # ty:ignore[invalid-argument-type]
 ) as dag:
 
     @task(task_id="get_name")
@@ -56,10 +56,10 @@ with DAG(
 
     @task_group
     def initials_group_function(name: dict[str, str]) -> str:
-        return get_initials(transform_first_name(name), transform_last_name(name))
+        return get_initials(transform_first_name(name), transform_last_name(name))  # ty:ignore[invalid-argument-type, invalid-return-type]
 
     my_name = get_name()
     my_initials = initials_group_function(my_name)
-    run_greet = greet(my_initials)
+    run_greet = greet(my_initials)  # ty:ignore[invalid-argument-type]
 
     [my_initials, get_time] >> run_greet

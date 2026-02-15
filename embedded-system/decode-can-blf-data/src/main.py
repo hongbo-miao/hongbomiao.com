@@ -105,7 +105,7 @@ class BlfUtil:
         message.update(
             {
                 "arbitration_id": int(frame.arbitration_id),
-                "channel": int(frame.channel),
+                "channel": int(frame.channel),  # type: ignore[arg-type]
                 "dlc": int(frame.dlc),
                 "is_extended_id": bool(frame.is_extended_id),
                 "timestamp": float(frame.timestamp),

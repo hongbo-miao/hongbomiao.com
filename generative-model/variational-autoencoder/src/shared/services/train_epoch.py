@@ -33,10 +33,10 @@ def train_epoch(
                 "Epoch %s [%s/%s] Loss: %.4f",
                 epoch,
                 batch_idx * len(data),
-                len(train_loader.dataset),
+                len(train_loader.dataset),  # type: ignore[arg-type]
                 loss.item() / len(data),
             )
 
-    avg_loss = train_loss / len(train_loader.dataset)
+    avg_loss = train_loss / len(train_loader.dataset)  # type: ignore[arg-type]
     logger.info("====> Epoch %s Average loss: %.4f", epoch, avg_loss)
     return avg_loss

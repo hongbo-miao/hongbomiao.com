@@ -102,7 +102,7 @@ class MixtureOfExperts(nn.Module):
         # Example:     [160, 32]
         output_flat = torch.zeros(
             token_count,
-            self.experts[0].linear_2.out_features,
+            self.experts[0].linear_2.out_features,  # type: ignore[arg-type]
             device=input_tensor.device,
         )
 

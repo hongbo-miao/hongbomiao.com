@@ -12,11 +12,12 @@ class Mf4Util:
     def process_file(
         mf4_path: Path,
     ) -> pd.DataFrame:
+        mdf = MDF(mf4_path)
         try:
-            mdf = MDF(mf4_path)
             return mdf.to_dataframe()
         except Exception:
             logger.exception("Error processing MF4 file")
+            raise
         finally:
             mdf.close()
 

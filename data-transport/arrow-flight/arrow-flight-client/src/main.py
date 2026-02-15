@@ -31,7 +31,7 @@ def main() -> None:
     df = pl.from_arrow(arrow_table)
 
     # Select specific columns
-    result_df = df.select(
+    result_df = df.select(  # type: ignore[union-attr]
         [
             "timestamp",
             "current",

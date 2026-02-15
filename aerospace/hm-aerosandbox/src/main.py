@@ -120,7 +120,7 @@ def main() -> None:
     alpha = opti.variable(init_guess=5)
     vlm = asb.VortexLatticeMethod(
         airplane=airplane,
-        op_point=asb.OperatingPoint(velocity=25, alpha=alpha),
+        op_point=asb.OperatingPoint(velocity=25, alpha=alpha),  # ty:ignore[invalid-argument-type]
         align_trailing_vortices_with_wind=False,
     )
     aero = vlm.run()
@@ -148,7 +148,7 @@ def main() -> None:
     alpha = opti.variable(init_guess=5, lower_bound=0, upper_bound=30)
     op_point = asb.OperatingPoint(
         velocity=1,
-        alpha=alpha,
+        alpha=alpha,  # ty:ignore[invalid-argument-type]
     )
     vlm = asb.VortexLatticeMethod(
         airplane=airplane,

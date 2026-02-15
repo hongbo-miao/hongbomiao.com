@@ -102,7 +102,7 @@ def train_bpe_tokenizer(
 ) -> tuple[PreTrainedTokenizerBase, dict[tuple[str, str], str], list[str]]:
     """Train a BPE tokenizer on the given corpus."""
     logger.info("Loading GPT-2 tokenizer...")
-    tokenizer = AutoTokenizer.from_pretrained("gpt2")
+    tokenizer: PreTrainedTokenizerBase = AutoTokenizer.from_pretrained("gpt2")  # type: ignore[assignment]
 
     logger.info("Building word frequencies...")
     word_freqs = build_word_frequencies(corpus, tokenizer)

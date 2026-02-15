@@ -76,7 +76,7 @@ class StableDiffusionGenerator:
         generator = torch.Generator(device).manual_seed(seed)
         try:
             # Generate images
-            result = pipe(
+            result = pipe(  # type: ignore[operator]
                 prompt=prompt,
                 negative_prompt=negative_prompt,
                 num_images_per_prompt=image_number,

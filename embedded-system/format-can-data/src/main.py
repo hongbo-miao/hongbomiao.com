@@ -9,8 +9,8 @@ logger = logging.getLogger(__name__)
 
 def main() -> None:
     dbc = cantools.database.load_file(Path("src/dbc/engine.dbc"))
-    logger.info(dbc.messages)
-    eec1_message_definition = dbc.get_message_by_name("EEC1")
+    logger.info(dbc.messages)  # type: ignore[attr-defined]
+    eec1_message_definition = dbc.get_message_by_name("EEC1")  # type: ignore[attr-defined]
     logger.info(eec1_message_definition.signals)
 
     data = eec1_message_definition.encode({"EngineSpeed": 200.1})

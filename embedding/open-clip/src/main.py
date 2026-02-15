@@ -31,7 +31,7 @@ def main() -> None:
     db = lancedb.connect("data/lancedb")
 
     # Create or get the table
-    if "pets" in db:
+    if "pets" in db:  # type: ignore[operator]
         logger.info("Using existing table")
         table = db["pets"]
     else:

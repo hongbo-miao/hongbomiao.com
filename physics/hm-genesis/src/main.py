@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def main() -> None:
     # Initialize Genesis with GPU backend
-    gs.init(backend=gs.gpu)
+    gs.init(backend=gs.gpu)  # type: ignore[attr-defined]
 
     # Create scene with camera and simulation settings
     scene = gs.Scene(

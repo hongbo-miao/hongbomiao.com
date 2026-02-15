@@ -1,17 +1,17 @@
 from kfp import client, dsl
 
 
-@dsl.component
+@dsl.component  # type: ignore[attr-defined]
 def add(a: int, b: int) -> int:
     return a + b
 
 
-@dsl.component
+@dsl.component  # type: ignore[attr-defined]
 def multiply(a: int, b: int) -> int:
     return a * b
 
 
-@dsl.pipeline
+@dsl.pipeline  # type: ignore[attr-defined]
 def calculate(a: int, b: int) -> None:
     add_task = add(a=a, b=b)
     multiply(a=add_task.output, b=10)
@@ -20,6 +20,6 @@ def calculate(a: int, b: int) -> None:
 if __name__ == "__main__":
     kfp_client = client.Client(host="https://kubeflow.hongbomiao.com")
     run = kfp_client.create_run_from_pipeline_func(
-        calculate,
+        calculate,  # type: ignore
         arguments={"a": 1, "b": 2},
     )

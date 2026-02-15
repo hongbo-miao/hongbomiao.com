@@ -14,7 +14,7 @@ def chat_with_pdf(pdf_path: Path, question: str) -> str:
     index = VectorStoreIndex.from_documents(documents)
     query_engine = index.as_query_engine()
     res = query_engine.query(question)
-    return res.response
+    return res.response  # type: ignore[return-value]
 
 
 def main() -> None:

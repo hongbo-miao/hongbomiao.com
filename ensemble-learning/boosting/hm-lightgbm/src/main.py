@@ -67,7 +67,7 @@ def main() -> None:
 
     logger.info("Start evaluating LightGBM model on breast cancer dataset")
     prediction_probability_array = model.predict(feature_test_array)
-    prediction_label_array = (prediction_probability_array > 0.5).astype(int)
+    prediction_label_array = (prediction_probability_array > 0.5).astype(int)  # type: ignore[operator]
 
     accuracy_value = float(
         (prediction_label_array == label_test_array).sum() / label_test_array.shape[0],

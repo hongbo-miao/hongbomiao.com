@@ -8,45 +8,60 @@ from grafanalib.core import (
 )
 
 dashboard = Dashboard(
-    title="Python generated example dashboard",
-    description="Example dashboard using the Random Walk and default Prometheus datasource",
-    tags=["example"],
-    timezone="browser",
-    panels=[
+    title="Python generated example dashboard",  # ty: ignore[unknown-argument]
+    description="Example dashboard using the Random Walk and default Prometheus datasource",  # ty: ignore[unknown-argument]
+    tags=["example"],  # ty: ignore[unknown-argument]
+    timezone="browser",  # ty: ignore[unknown-argument]
+    panels=[  # ty: ignore[unknown-argument]
         TimeSeries(
-            title="Random Walk",
-            dataSource="default",
-            targets=[
+            title="Random Walk",  # ty: ignore[unknown-argument]
+            dataSource="default",  # ty: ignore[unknown-argument]
+            targets=[  # ty: ignore[unknown-argument]
                 Target(
-                    datasource="grafana",
-                    expr="example",
+                    datasource="grafana",  # ty: ignore[unknown-argument]
+                    expr="example",  # ty: ignore[unknown-argument]
                 ),
             ],
-            gridPos=GridPos(h=5, w=10, x=0, y=0),
+            gridPos=GridPos(  # ty: ignore[unknown-argument]
+                h=5,  # ty:ignore[unknown-argument]
+                w=10,  # ty:ignore[unknown-argument]
+                x=0,  # ty:ignore[unknown-argument]
+                y=0,  # ty:ignore[unknown-argument]
+            ),
         ),
         GaugePanel(
-            title="Random Walk",
-            dataSource="default",
-            targets=[
+            title="Random Walk",  # ty: ignore[unknown-argument]
+            dataSource="default",  # ty: ignore[unknown-argument]
+            targets=[  # ty: ignore[unknown-argument]
                 Target(
-                    datasource="grafana",
-                    expr="example",
+                    datasource="grafana",  # ty: ignore[unknown-argument]
+                    expr="example",  # ty: ignore[unknown-argument]
                 ),
             ],
-            gridPos=GridPos(h=5, w=5, x=10, y=0),
+            gridPos=GridPos(  # ty: ignore[unknown-argument]
+                h=5,  # ty:ignore[unknown-argument]
+                w=5,  # ty:ignore[unknown-argument]
+                x=10,  # ty:ignore[unknown-argument]
+                y=0,  # ty:ignore[unknown-argument]
+            ),
         ),
         TimeSeries(
-            title="Prometheus http requests",
-            dataSource="prometheus",
-            targets=[
+            title="Prometheus http requests",  # ty: ignore[unknown-argument]
+            dataSource="prometheus",  # ty: ignore[unknown-argument]
+            targets=[  # ty: ignore[unknown-argument]
                 Target(
-                    expr="rate(prometheus_http_requests_total[5m])",
-                    legendFormat="{{ handler }}",
-                    refId="A",
+                    expr="rate(prometheus_http_requests_total[5m])",  # ty: ignore[unknown-argument]
+                    legendFormat="{{ handler }}",  # ty: ignore[unknown-argument]
+                    refId="A",  # ty: ignore[unknown-argument]
                 ),
             ],
-            unit=OPS_FORMAT,
-            gridPos=GridPos(h=5, w=15, x=0, y=5),
+            unit=OPS_FORMAT,  # ty: ignore[unknown-argument]
+            gridPos=GridPos(  # ty: ignore[unknown-argument]
+                h=5,  # ty:ignore[unknown-argument]
+                w=15,  # ty:ignore[unknown-argument]
+                x=0,  # ty:ignore[unknown-argument]
+                y=5,  # ty:ignore[unknown-argument]
+            ),
         ),
     ],
 ).auto_panel_ids()

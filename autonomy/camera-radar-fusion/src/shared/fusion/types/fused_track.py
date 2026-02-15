@@ -42,7 +42,7 @@ class FusedTrack(BaseModel):
     @property
     def distance(self) -> float:
         """Distance from radar detection."""
-        return self.radar_detection.distance
+        return self.radar_detection.distance  # ty:ignore[invalid-return-type]
 
     @property
     def image_coordinate_x(self) -> float:

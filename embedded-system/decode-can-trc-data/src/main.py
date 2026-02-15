@@ -102,7 +102,7 @@ class TrcUtil:
                 )
                 message[field_name] = signal_value
 
-        message.update(
+        message.update(  # type: ignore[call-overload]
             {
                 "arbitration_id": frame.arbitration_id,
                 "channel": frame.channel,

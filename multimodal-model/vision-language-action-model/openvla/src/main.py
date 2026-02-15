@@ -17,7 +17,7 @@ def predict_action(
     instruction: str,
 ) -> list[float]:
     prompt = f"In: What action should the robot take to {instruction}?\nOut:"
-    inputs = processor(prompt, image).to(model.device, dtype=torch.bfloat16)
+    inputs = processor(prompt, image).to(model.device, dtype=torch.bfloat16)  # type: ignore[operator]
 
     action = model.predict_action(**inputs, unnorm_key="bridge_orig", do_sample=False)
     return action.tolist()

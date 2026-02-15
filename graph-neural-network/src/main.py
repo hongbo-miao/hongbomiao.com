@@ -18,7 +18,7 @@ reg_criterion = torch.nn.MSELoss()
 
 def train(
     model: nn.Module,
-    device: str,
+    device: torch.device,
     loader: DataLoader,
     optimizer: torch.optim.Optimizer,
     task_type: str,
@@ -55,7 +55,7 @@ def train(
 
 def evaluate(
     model: nn.Module,
-    device: str,
+    device: torch.device,
     loader: DataLoader,
     evaluator: Evaluator,
 ) -> dict:
@@ -90,7 +90,7 @@ def main() -> None:
     with wandb.init(
         entity="hongbo-miao",
         project="graph-neural-network",
-        config=args,
+        config=vars(args),
     ) as wb:
         config = wb.config
 
@@ -100,12 +100,12 @@ def main() -> None:
             else torch.device("cpu")
         )
 
-        dataset, split_idx = fetch_dataset(config)
+        dataset, split_idx = fetch_dataset(config)  # type: ignore[arg-type]
 
         # automatic evaluator. takes dataset name as input
         evaluator = Evaluator(config.dataset)
 
-        dataloaders = get_dataloaders(dataset, split_idx, config)
+        dataloaders = get_dataloaders(dataset, split_idx, config)  # type: ignore[arg-type]
         train_loader = dataloaders["train"]
         val_loader = dataloaders["val"]
         test_loader = dataloaders["test"]

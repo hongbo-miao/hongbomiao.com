@@ -23,23 +23,27 @@ def generate_random_color(
 def main(model_path: Path, image_path: Path) -> None:
     model = YOLO(model_path)
     image = cv2.imread(str(image_path))
+    if image is None:
+        message = f"Failed to load image: {image_path}"
+        raise ValueError(message)
     res = model(image)[0]
     detections = sv.Detections.from_ultralytics(res)
-    detections = detections[detections.confidence > 0.3]
+    if detections.confidence is not None:
+        detections = detections[detections.confidence > 0.3]
     class_names = model.names
     random_number_generator = SystemRandom()
 
-    for detection in detections:
+    for detection in detections:  # type: ignore[union-attr]
         logger.info(detection)
-        xyxy, _, _, class_id, _, _ = detection
+        xyxy, _, _, class_id, _, _ = detection  # type: ignore[misc]
 
-        x0, y0, x1, y1 = xyxy
+        x0, y0, x1, y1 = xyxy  # type: ignore[misc]
         x0 = int(x0)
         y0 = int(y0)
         x1 = int(x1)
         y1 = int(y1)
 
-        label = class_names[class_id]
+        label = class_names[class_id]  # type: ignore[index]
 
         if class_id not in class_colors:
             class_colors[class_id] = generate_random_color(random_number_generator)

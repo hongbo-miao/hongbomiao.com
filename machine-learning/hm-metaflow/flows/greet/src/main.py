@@ -16,12 +16,12 @@ class GreetFlow(FlowSpec):
     sum_value: int
     avg_value: float
 
-    greeting: str = Parameter(
+    greeting: str = Parameter(  # type: ignore[assignment]
         "name",
         default="World",
     )
 
-    multiplier: int = Parameter(
+    multiplier: int = Parameter(  # type: ignore[assignment]
         "multiplier",
         default=2,
     )

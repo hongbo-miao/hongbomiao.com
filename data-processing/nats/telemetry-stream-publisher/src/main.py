@@ -25,7 +25,7 @@ SENSOR_DEFINITIONS: dict[str, tuple[float, float]] = {
     "pressure_hpa": (950.0, 1050.0),
 }
 
-TELEMETRY_SCHEMA = capnp.load(str(Path(__file__).with_name("telemetry.capnp")))
+TELEMETRY_SCHEMA = capnp.load(str(Path(__file__).with_name("telemetry.capnp")))  # type: ignore[attr-defined]
 
 
 async def publish_random_telemetry_stream(

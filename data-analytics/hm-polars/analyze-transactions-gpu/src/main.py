@@ -44,7 +44,7 @@ def main() -> None:
 
     # Time the sum calculation
     start_time = time.time()
-    total_amount = transactions.select(pl.col("AMOUNT").sum()).collect(engine="gpu")
+    total_amount = transactions.select(pl.col("AMOUNT").sum()).collect(engine="gpu")  # ty:ignore[no-matching-overload]
     sum_time = time.time() - start_time
     logger.info(f"Total transaction amount: {total_amount}")
     logger.info(f"Sum calculation time: {sum_time:.2f} seconds")
@@ -60,7 +60,7 @@ def main() -> None:
                 pl.col("AMOUNT").count().alias("transaction_count"),
             ],
         )
-        .collect(engine=gpu_engine)
+        .collect(engine=gpu_engine)  # ty:ignore[no-matching-overload]
     )
     group_by_time = time.time() - start_time
     logger.info("Category statistics:")

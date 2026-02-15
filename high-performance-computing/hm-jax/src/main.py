@@ -8,12 +8,21 @@ logger = logging.getLogger(__name__)
 
 
 # The linear model
-def predict(w: float, b: float, x: jnp.ndarray) -> jnp.ndarray:
+def predict(
+    w: float | jnp.ndarray,
+    b: float | jnp.ndarray,
+    x: jnp.ndarray,
+) -> jnp.ndarray:
     return w * x + b
 
 
 # The loss function (mean squared error)
-def loss_fn(w: float, b: float, x: jnp.ndarray, y: jnp.ndarray) -> float:
+def loss_fn(
+    w: float | jnp.ndarray,
+    b: float | jnp.ndarray,
+    x: jnp.ndarray,
+    y: jnp.ndarray,
+) -> jnp.ndarray:
     predictions = predict(w, b, x)
     return jnp.mean((predictions - y) ** 2)
 

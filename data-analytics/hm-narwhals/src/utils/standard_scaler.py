@@ -17,4 +17,4 @@ class StandardScaler:
         return df.with_columns(
             (nw.col(col) - self._means[col]) / self._standard_deviations[col]
             for col in self._columns
-        )
+        )  # ty:ignore[invalid-argument-type]

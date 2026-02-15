@@ -1,3 +1,4 @@
+import torch
 from torch import nn
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
@@ -6,7 +7,7 @@ from torch.utils.data import DataLoader
 def train(
     net: nn.Module,
     data_loader: DataLoader,
-    device: str,
+    device: torch.device,
     optimizer: Optimizer,
     criterion: nn.Module,
 ) -> float:

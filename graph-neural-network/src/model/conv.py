@@ -24,13 +24,13 @@ class GINConv(MessagePassing):
         edge_embedding = self.bond_encoder(edge_attr)
         return self.mlp(
             (1 + self.eps) * x
-            + self.propagate(edge_index, x=x, edge_attr=edge_embedding),
+            + self.propagate(edge_index, x=x, edge_attr=edge_embedding),  # type: ignore[call-arg]
         )
 
-    def message(self, x_j: Tensor, edge_attr: Tensor) -> Tensor:
+    def message(self, x_j: Tensor, edge_attr: Tensor) -> Tensor:  # type: ignore[override]
         return F.relu(x_j + edge_attr)
 
-    def update(self, aggr_out: Tensor) -> Tensor:
+    def update(self, aggr_out: Tensor) -> Tensor:  # type: ignore[override]
         return aggr_out
 
 
@@ -58,19 +58,19 @@ class GCNConv(MessagePassing):
 
         norm = deg_inv_sqrt[n1] * deg_inv_sqrt[n2]  # [N]
 
-        return self.propagate(
-            edge_index,
+        return self.propagate(  # type: ignore[call-arg]
+            edge_index,  # type: ignore[arg-type]
             x=x,
             edge_attr=edge_embedding,
             norm=norm,
         ) + F.relu(x + self.root_emb.weight) * 1.0 / deg.view(-1, 1)
 
-    def message(self, x_j: Tensor, edge_attr: Tensor, norm: Tensor) -> Tensor:
+    def message(self, x_j: Tensor, edge_attr: Tensor, norm: Tensor) -> Tensor:  # type: ignore[override]
         # x_j: [E, out_channels]
         # edge_attr: [E, out_channels]
         return norm.view(-1, 1) * F.relu(x_j + edge_attr)
 
-    def update(self, aggr_out: Tensor) -> Tensor:
+    def update(self, aggr_out: Tensor) -> Tensor:  # type: ignore[override]
         # aggr_out: [N, out_channels]
         return aggr_out
 
@@ -146,7 +146,7 @@ class GNNNode(torch.nn.Module):
             for layer in range(self.num_layer):
                 node_representation += h_list[layer]
 
-        return node_representation
+        return node_representation  # type: ignore[return-value]
 
 
 class GNNVirtualNode(torch.nn.Module):
@@ -217,9 +217,9 @@ class GNNVirtualNode(torch.nn.Module):
 
         # virtual node embeddings for graphs
         virtualnode_embedding = self.virtualnode_embedding(
-            torch.zeros(batch[-1].item() + 1)
-            .to(edge_index.dtype)
-            .to(edge_index.device),
+            torch.zeros(batch[-1].item() + 1)  # type: ignore[union-attr]
+            .to(edge_index.dtype)  # type: ignore[union-attr]
+            .to(edge_index.device),  # type: ignore[union-attr]
         )
 
         h_list = [self.atom_encoder(x)]
@@ -271,4 +271,4 @@ class GNNVirtualNode(torch.nn.Module):
             for layer in range(self.num_layer):
                 node_representation += h_list[layer]
 
-        return node_representation
+        return node_representation  # type: ignore[return-value]

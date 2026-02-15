@@ -39,7 +39,7 @@ def download_resnet18(models_folder: Path) -> None:
         # Export to ONNX
         torch.onnx.export(
             model,
-            dummy_input,
+            dummy_input,  # ty:ignore[invalid-argument-type]
             model_path,
             export_params=True,
             opset_version=11,

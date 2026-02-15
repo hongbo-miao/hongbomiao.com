@@ -27,7 +27,7 @@ class LambdaDynamics(nn.Module):
 
     def forward(self, time_value: Tensor, state_value: Tensor) -> Tensor:
         del time_value
-        return torch.mm(state_value**3, self.system_matrix)
+        return torch.mm(state_value**3, self.system_matrix)  # ty:ignore[invalid-argument-type]
 
 
 class ODEFunction(nn.Module):

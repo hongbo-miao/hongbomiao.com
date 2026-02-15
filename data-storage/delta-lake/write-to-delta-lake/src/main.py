@@ -34,7 +34,7 @@ def main(row_count: int) -> None:
             ("temperature", pa.float64()),
         ],
     )
-    write_deltalake(
+    write_deltalake(  # type: ignore[call-overload]
         config.S3_PATH,
         df,
         mode="append",

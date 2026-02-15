@@ -14,7 +14,7 @@ SUBJECT_PREFIX = "SENSOR_TELEMETRY_STREAMS"
 STREAM_SUBJECT = f"{SUBJECT_PREFIX}.random"
 CONSUMER_NAME = "telemetry_consumer"
 
-TELEMETRY_SCHEMA = capnp.load(str(Path(__file__).with_name("telemetry.capnp")))
+TELEMETRY_SCHEMA = capnp.load(str(Path(__file__).with_name("telemetry.capnp")))  # type: ignore[attr-defined]
 
 
 def create_telemetry_message_handler() -> Callable[[Msg], Awaitable[None]]:
