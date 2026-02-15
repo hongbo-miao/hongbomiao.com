@@ -24,7 +24,7 @@ async def create_chat_completion(
     request: ChatCompletionRequest,
     fastapi_request: Request,
     memory_client: Annotated[Memory, Depends(get_memory_client)],
-) -> ChatCompletionResponse:
+) -> ChatCompletionResponse | StreamingResponse:
     try:
         document_context: DocumentLanceDbContext | None = (
             fastapi_request.app.state.document_context

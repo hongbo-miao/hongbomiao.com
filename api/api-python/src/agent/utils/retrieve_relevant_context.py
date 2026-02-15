@@ -32,6 +32,15 @@ def retrieve_relevant_context(
                 "source_pdf_set": set(),
             }
 
+        # Check the lance_table
+        if document_context.lance_table is None:
+            return {
+                "context": "LanceDB table is not available",
+                "relevant_chunks": [],
+                "confidence_scores": [],
+                "source_pdf_set": set(),
+            }
+
         # Encode the query
         query_embedding = document_context.model.encode([query])
         query_embedding = np.array(query_embedding, dtype=np.float32)

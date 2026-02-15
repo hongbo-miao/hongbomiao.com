@@ -66,10 +66,11 @@ async def create_streaming_completion(
     yield f"data: {final_response.model_dump_json()}\n\n"
     # Flush
     await asyncio.sleep(0)
-    add_conversation_to_memory(
-        memory_client=memory_client,
-        user_message=question,
-        assistant_message=full_answer,
-        user_id=request.user_id,
-    )
+    if request.user_id is not None:
+        add_conversation_to_memory(
+            memory_client=memory_client,
+            user_message=question,
+            assistant_message=full_answer,
+            user_id=request.user_id,
+        )
     yield "data: [DONE]\n\n"

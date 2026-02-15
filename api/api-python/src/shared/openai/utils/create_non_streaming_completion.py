@@ -36,12 +36,13 @@ async def create_non_streaming_completion(
         request.messages,
         response.answer,
     )
-    add_conversation_to_memory(
-        memory_client=memory_client,
-        user_message=question,
-        assistant_message=response.answer,
-        user_id=request.user_id,
-    )
+    if request.user_id is not None:
+        add_conversation_to_memory(
+            memory_client=memory_client,
+            user_message=question,
+            assistant_message=response.answer,
+            user_id=request.user_id,
+        )
     return ChatCompletionResponse(
         id=completion_id,
         created=created,

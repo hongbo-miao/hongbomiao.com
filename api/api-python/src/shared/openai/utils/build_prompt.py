@@ -4,6 +4,8 @@ from shared.memory.utils.search_memories import search_memories
 
 
 def build_prompt(memory_client: Memory, question: str, user_id: str | None) -> str:
+    if user_id is None:
+        return question
     memories = search_memories(
         memory_client=memory_client,
         query=question,

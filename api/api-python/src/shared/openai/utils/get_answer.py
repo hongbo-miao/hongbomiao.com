@@ -35,4 +35,4 @@ async def get_answer(
             source_pdf_set=set(),
         )
     else:
-        return result.output
+        return result.output  # type: ignore[return-value]

@@ -12,5 +12,6 @@ def load_embedding_model() -> SentenceTransformer:
         logger.info("Successfully loaded embedding model")
     except Exception:
         logger.exception("Failed to load model.")
+        raise
     else:
         return model

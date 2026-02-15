@@ -1,6 +1,7 @@
 import asyncio
 import json
 import time
+from collections.abc import Generator
 from random import SystemRandom
 from typing import Annotated
 
@@ -12,7 +13,7 @@ from shared.kafka.utils.report_delivery import report_delivery
 router = APIRouter()
 
 
-def get_producer() -> Producer:
+def get_producer() -> Generator[Producer, None, None]:
     producer = Producer({"bootstrap.servers": config.KAFKA_BOOTSTRAP_SERVERS})
     try:
         yield producer

@@ -38,7 +38,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
 
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(
-    CORSMiddleware,
+    CORSMiddleware,  # type: ignore[arg-type]
     allow_credentials=True,
     allow_headers=["*"],
     allow_methods=["GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],
@@ -48,4 +48,4 @@ app.include_router(completions.router)
 app.include_router(health.router)
 app.include_router(models.router)
 app.include_router(motor.router)
-app.add_exception_handler(HTTPException, handle_http_exception)
+app.add_exception_handler(HTTPException, handle_http_exception)  # type: ignore[arg-type]

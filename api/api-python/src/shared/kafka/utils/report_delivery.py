@@ -5,7 +5,7 @@ from confluent_kafka import cimpl
 logger = logging.getLogger(__name__)
 
 
-def report_delivery(err: cimpl.KafkaError, message: cimpl.Message) -> None:
+def report_delivery(err: cimpl.KafkaError | None, message: cimpl.Message) -> None:
     if err is not None:
         logger.error(f"Message delivery failed: {err}")
     else:
