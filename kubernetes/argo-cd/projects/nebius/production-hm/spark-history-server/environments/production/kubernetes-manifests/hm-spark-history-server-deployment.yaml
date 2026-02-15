@@ -5,18 +5,17 @@ metadata:
   name: hm-spark-history-server-deployment
   namespace: production-hm-spark-history-server
   labels:
-    app: hm-spark-history-server
-    app.kubernetes.io/name: hm-spark-history-server-deployment
+    app.kubernetes.io/name: spark-history-server
     app.kubernetes.io/part-of: production-hm-spark-history-server
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hm-spark-history-server
+      app.kubernetes.io/name: spark-history-server
   template:
     metadata:
       labels:
-        app: hm-spark-history-server
+        app.kubernetes.io/name: spark-history-server
     spec:
       serviceAccountName: hm-spark-history-server-service-account
       initContainers:

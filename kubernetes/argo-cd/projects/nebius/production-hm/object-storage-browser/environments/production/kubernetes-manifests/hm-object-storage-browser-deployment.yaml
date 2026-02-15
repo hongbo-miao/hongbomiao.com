@@ -5,18 +5,17 @@ metadata:
   name: hm-object-storage-browser-deployment
   namespace: production-hm-object-storage-browser
   labels:
-    app: hm-object-storage-browser
-    app.kubernetes.io/name: hm-object-storage-browser-deployment
+    app.kubernetes.io/name: object-storage-browser
     app.kubernetes.io/part-of: production-hm-object-storage-browser
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: hm-object-storage-browser
+      app.kubernetes.io/name: object-storage-browser
   template:
     metadata:
       labels:
-        app: hm-object-storage-browser
+        app.kubernetes.io/name: object-storage-browser
     spec:
       containers:
         - name: caddy
