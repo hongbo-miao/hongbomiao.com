@@ -17,7 +17,8 @@ variable "preset" {
   type = string
 }
 variable "drivers_preset" {
-  type = string
+  type    = string
+  default = null
 }
 variable "os" {
   type = string
@@ -34,4 +35,8 @@ variable "boot_disk_type" {
 }
 variable "boot_disk_size_gibibytes" {
   type = number
+}
+variable "node_labels" {
+  type    = map(string)
+  default = {}
 }

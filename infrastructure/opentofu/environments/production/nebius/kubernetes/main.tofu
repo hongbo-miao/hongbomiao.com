@@ -63,13 +63,18 @@ module "hm_kubernetes_cpu_node_group" {
 locals {
   gpu_node_groups = {
     dragon = {
-      min_node_count           = 0
-      max_node_count           = 10
-      platform                 = "gpu-h200-sxm"
-      preset                   = "1gpu-16vcpu-200gb"
-      drivers_preset           = "cuda12.8"
+      min_node_count = 0
+      max_node_count = 10
+      platform       = "gpu-h200-sxm"
+      preset         = "1gpu-16vcpu-200gb"
+      # Using base image without pre-installed drivers (required for MIG support)
+      drivers_preset           = null
       boot_disk_type           = "NETWORK_SSD"
-      boot_disk_size_gibibytes = 256
+      boot_disk_size_gibibytes = 1024
+      node_labels = {
+        # MIG profiles: all-disabled, all-1g.18gb, all-2g.35gb, all-4g.71gb, all-7g.141gb (H200)
+        "nvidia.com/mig.config" = "all-2g.35gb"
+      }
     }
   }
 }
